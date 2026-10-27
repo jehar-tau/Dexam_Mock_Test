@@ -1028,27 +1028,34 @@ To avoid the copyright trap:
 
 ## 13. Included mock-test pack
 
-The `Dexam_Mock_Test/` project root contains a working, self-contained mock-test web app and original content:
+The `Dexam_Mock_Test/` project root contains a working, self-contained multi-exam mock-test web app and original content:
 
-- `index.html` — app shell.
+- `index.html` — app shell and navigation.
 - `styles.css` — responsive dark/light design.
-- `data.js` — two original papers and drawing prompts.
-- `app.js` — timer, palette, autosave, scoring, review.
+- `exams.js` — UCEED, CEED, NIFT, and NID UG patterns, section models, and topic reference weights.
+- `data.js` — five original timed papers and four drawing prompts.
+- `practice-data.js` — 29 additional original topic-drill questions.
+- `app.js` — router, timer, palette, autosave, scoring, practice, progress, bookmarks, review, and JSON import.
 - `docs/drawing-prompts.md` — four original Part B prompts with rubrics.
-- `docs/answer-key.md` — answer key and paper blueprint for both papers.
-- `content/import-template.csv` — schema for importing questions you own or have licensed.
-- `README.md` — how to run, how to add papers, and the legal boundary.
+- `docs/answer-key.md` — answers and blueprints for all five papers.
+- `content/import-template.json` — working sample for the in-app importer.
+- `content/import-template.csv` — flat authoring/export schema.
+- `tools/validate-data.js` — data validation for IDs, answers, totals, and topic coverage.
+- `README.md` — how to run, add papers, import a licensed bank, and the legal boundary.
 
 **What it demonstrates**
 
+- Four exam tracks with separate patterns and marking models.
 - Exam-style palette and section navigation.
 - NAT numeric input with keypad.
 - MSQ partial credit.
 - MCQ negative marking.
 - Timer and auto-submit.
-- Autosave/resume.
-- Section and overall score breakdown.
+- Autosave/resume, bookmarks, and attempt history.
+- Topic-wise practice with instant feedback.
+- Section, overall, and topic score breakdowns.
 - Answer review with explanations.
+- JSON import for an owned or licensed question bank.
 - Responsive layout.
 - Original questions only.
 

@@ -1,0 +1,70 @@
+{
+  "papers": [
+    {
+      "id": "sample-uceed-1",
+      "examId": "uceed",
+      "year": 2026,
+      "mode": "imported",
+      "title": "Sample imported UCEED paper",
+      "subtitle": "Replace this with your own or licensed paper",
+      "description": "A one-question sample showing the JSON shape accepted by the in-app importer.",
+      "durationMinutes": 20,
+      "sections": [
+        {
+          "id": "mcq",
+          "title": "Section 1",
+          "label": "Multiple Choice",
+          "type": "MCQ",
+          "marks": 3,
+          "negative": 0.71,
+          "instructions": "Choose one option. Correct = +3. Wrong = −0.71.",
+          "questions": [
+            {
+              "id": "sample-uceed-1-q1",
+              "type": "MCQ",
+              "topic": "Spatial Reasoning",
+              "difficulty": "Easy",
+              "prompt": "How many faces does a cube have?",
+              "options": [
+                { "id": "A", "text": "4" },
+                { "id": "B", "text": "6" },
+                { "id": "C", "text": "8" },
+                { "id": "D", "text": "12" }
+              ],
+              "correctAnswer": "B",
+              "solution": "A cube has 6 faces, 12 edges, and 8 vertices.",
+              "source": "original",
+              "licence": "owned",
+              "status": "published",
+              "version": "1"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "drills": [
+    {
+      "id": "sample-drill-1",
+      "examId": "ceed",
+      "type": "MCQ",
+      "topic": "Design Awareness",
+      "difficulty": "Easy",
+      "marks": 3,
+      "negative": 0.5,
+      "prompt": "Which is the best example of an affordance?",
+      "options": [
+        { "id": "A", "text": "A handle shaped so it looks pullable" },
+        { "id": "B", "text": "A button hidden under a plain panel" },
+        { "id": "C", "text": "A label explaining how to open a door" },
+        { "id": "D", "text": "A warning sign next to a door" }
+      ],
+      "correctAnswer": "A",
+      "solution": "An affordance suggests how an object should be used. A handle that looks pullable communicates the action directly.",
+      "source": "original",
+      "licence": "owned",
+      "status": "published",
+      "version": "1"
+    }
+  ]
+}

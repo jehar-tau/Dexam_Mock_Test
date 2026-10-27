@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Dexam Mock Test — original design aptitude practice papers with a timed exam player, autosave, scoring, and answer review.">
+  <meta name="description" content="Dexam Mock Test — original UCEED, CEED, NIFT, and NID UG practice papers with timed mocks, topic practice, autosave, scoring, and answer review.">
   <title>Dexam Mock Test</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -11,10 +11,19 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="topbar">
-    <a class="brand" href="#home" id="brandHome" aria-label="Dexam Mock Test home">
+    <a class="brand" href="#/" id="brandHome" aria-label="Dexam Mock Test home">
       <span class="brand-mark" aria-hidden="true">DX</span>
       <span class="brand-text">Dexam <em>Mock Test</em></span>
     </a>
+    <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
+      <a href="#/" data-nav="home">Home</a>
+      <a href="#/exams" data-nav="exams">Exams</a>
+      <a href="#/practice" data-nav="practice">Practice</a>
+      <a href="#/mocks" data-nav="mocks">Mocks</a>
+      <a href="#/prompts" data-nav="prompts">Part B</a>
+      <a href="#/progress" data-nav="progress">Progress</a>
+      <a href="#/import" data-nav="import">Import</a>
+    </nav>
     <div class="top-actions">
       <span class="save-pill" id="saveStatus" aria-live="polite"></span>
       <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle colour mode" title="Toggle colour mode">
@@ -32,10 +41,12 @@
       <strong>Dexam Mock Test</strong>
       <p>Original practice content. Not affiliated with UCEED, CEED, NID, NIFT, or Roughworks.</p>
     </div>
-    <p class="footer-note">Prototype only · no backend · scores are local to this browser</p>
+    <p class="footer-note">Local prototype · autosave in this browser · import your licensed question bank to expand</p>
   </footer>
 
+  <script src="exams.js"></script>
   <script src="data.js"></script>
+  <script src="practice-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
