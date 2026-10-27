@@ -8,6 +8,7 @@ const root = path.join(__dirname, "..");
 require(path.join(root, "exams.js"));
 require(path.join(root, "data.js"));
 require(path.join(root, "practice-data.js"));
+require(path.join(root, "practice-batch-1.js"));
 
 const errors = [];
 const warnings = [];

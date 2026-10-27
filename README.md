@@ -5,7 +5,7 @@ A dependency-free design-entrance exam studio for **UCEED, CEED, NIFT, and NID U
 It ships with:
 
 - **4 exam tracks** with separate patterns, marking models, and topic maps.
-- **5 timed mini mocks** with **75 paper questions**, plus **29 topic drills** — **104 original questions** across NAT, MSQ, and MCQ.
+- **5 timed mini mocks** with **75 paper questions**, plus **153 topic drills** — **228 original questions** across NAT, MSQ, and MCQ.
 - **Topic practice** with instant feedback, explanations, and a topic summary.
 - **Part B Studio** with 4 original drawing prompts and criteria.
 - **Local progress**: autosave, resume, result review, attempt history, topic accuracy, and bookmarks.
@@ -53,11 +53,11 @@ node tools/validate-data.js
 
 | Exam | Papers | Bank questions | Topics covered | Paper marks |
 |---|---:|---:|---:|---:|
-| UCEED | 2 | 40 | 15 | 72 + 42 |
-| CEED | 1 | 22 | 14 | 53 |
-| NIFT | 1 | 28 | 16 | 20 |
-| NID UG | 1 | 14 | 8 | 10 |
-| **Total** | **5** | **104** | — | **197 paper marks** |
+| UCEED | 2 | 83 | 15 | 72 + 42 |
+| CEED | 1 | 55 | 14 | 53 |
+| NIFT | 1 | 57 | 16 | 20 |
+| NID UG | 1 | 33 | 8 | 10 |
+| **Total** | **5** | **228** | — | **197 paper marks** |
 
 These are **mini mocks**, not full-length official papers. They use the same section and marking model as the exam target, with a shorter or focused question count so a student can finish in one sitting. The NID UG mini mock matches the 8-question, 10-mark pattern; the other three are shortened versions of much longer papers.
 
@@ -85,6 +85,7 @@ Exam patterns change by year. A production product should version the blueprint 
 | `exams.js` | Exam catalogue, official section patterns, topic reference weights. |
 | `data.js` | Five timed papers and four Part B prompts. |
 | `practice-data.js` | 29 additional original topic-drill questions. |
+| `practice-batch-1.js` | 124 more original topic-drill questions, run after the starter set. |
 | `app.js` | Router, timer, palette, scoring, practice, progress, import, bookmarks, localStorage. |
 | `content/import-template.json` | Working sample for the in-app JSON importer. |
 | `content/import-template.csv` | Flat authoring/export schema for a spreadsheet-to-JSON pipeline. |

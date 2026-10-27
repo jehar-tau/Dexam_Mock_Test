@@ -1034,7 +1034,7 @@ The `Dexam_Mock_Test/` project root contains a working, self-contained multi-exa
 - `styles.css` — responsive dark/light design.
 - `exams.js` — UCEED, CEED, NIFT, and NID UG patterns, section models, and topic reference weights.
 - `data.js` — five original timed papers and four drawing prompts.
-- `practice-data.js` — 29 additional original topic-drill questions.
+- `practice-data.js` — 29 additional original topic-drill questions, with batch files in `practice-batch-*.js`.
 - `app.js` — router, timer, palette, autosave, scoring, practice, progress, bookmarks, review, and JSON import.
 - `docs/drawing-prompts.md` — four original Part B prompts with rubrics.
 - `docs/answer-key.md` — answers and blueprints for all five papers.
