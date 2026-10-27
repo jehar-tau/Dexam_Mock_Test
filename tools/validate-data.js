@@ -9,6 +9,7 @@ require(path.join(root, "exams.js"));
 require(path.join(root, "data.js"));
 require(path.join(root, "practice-data.js"));
 require(path.join(root, "practice-batch-1.js"));
+require(path.join(root, "practice-batch-2.js"));
 
 const errors = [];
 const warnings = [];

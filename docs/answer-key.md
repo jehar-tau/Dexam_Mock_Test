@@ -164,7 +164,7 @@ These are the answers for the five papers in `data.js`. Every question is origin
 
 ## Topic drills
 
-The 153 topic-drill questions in `practice-data.js` and `practice-batch-1.js` are answered and explained inside the app. They are not part of a timed paper, so they do not have a separate paper blueprint. Run `node tools/validate-data.js` after editing any question.
+The 275 topic-drill questions in `practice-data.js`, `practice-batch-1.js`, and `practice-batch-2.js` are answered and explained inside the app. They are not part of a timed paper, so they do not have a separate paper blueprint. Run `node tools/validate-data.js` after editing any question.
 
 ## Marking reminder
 

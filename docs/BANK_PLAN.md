@@ -2,7 +2,7 @@
 
 This file tracks how the app gets from the starter bank to a large, exam-pattern-aligned practice bank. The target is roughly **1,600 original questions**, built in batches so quality stays high and each batch loads cleanly into the existing engine.
 
-> Batch 1 is already in `practice-batch-1.js`. Send your own bank or pick a target exam and I'll keep filling batches in the same style.
+> Batch 1 and batch 2 are already in `practice-batch-1.js` and `practice-batch-2.js`. Send your own bank or pick a target exam and I'll keep filling batches in the same style.
 
 ## Why batches
 
@@ -18,6 +18,7 @@ Each batch is a self-contained file that appends to `window.PRACTICE_BANK`.
 |---|---|---:|
 | `practice-data.js` | Starter original drills (all four exams) | 29 |
 | `practice-batch-1.js` | Batch 1 drills across UCEED, CEED, NIFT, NID | ~125 |
+| `practice-batch-2.js` | UCEED-focused drills across all 15 UCEED topics | ~120 |
 | `practice-batch-2.js` | Batch 2 drills, focused on UCEED/CEED | ~250 |
 | `practice-batch-3.js` | Batch 3 drills, focused on NIFT/NID + archive | ~250 |
 | `practice-batch-4.js` | Batch 4 drills, building full-topic depth | ~300 |
