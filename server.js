@@ -599,6 +599,9 @@ function updateOfficialQuestion(id, payload) {
   const db = getOfficialDb();
   if (!db) throw new Error("SQLite is unavailable.");
   const allowed = {
+    prompt: "prompt",
+    optionsJson: "options_json",
+    questionType: "question_type",
     topic: "topic",
     subtopic: "subtopic",
     difficulty: "difficulty",
@@ -610,6 +613,14 @@ function updateOfficialQuestion(id, payload) {
     referenceUrl: "reference_url",
     status: "status"
   };
+  if (payload.optionsJson !== undefined) {
+    try {
+      const options = JSON.parse(payload.optionsJson);
+      if (!Array.isArray(options)) throw new Error("Options must be an array.");
+    } catch (error) {
+      throw new Error("Options must be valid JSON: " + error.message);
+    }
+  }
   const sets = [];
   const params = { id: id };
   Object.entries(allowed).forEach(([key, column]) => {

@@ -12,5 +12,8 @@ server/data/dexam.sqlite-shm
 server/data/dexam.sqlite-wal
 server/data/media/
 server/data/sources/
+server/data/.cache/
+server/data/user-bank.json
+server/data/mocks.json
 __pycache__/
 *.pyc

@@ -10,7 +10,7 @@ It ships with:
 - **Part B Studio** with 4 original drawing prompts and criteria.
 - **Local progress**: autosave, resume, result review, attempt history, topic accuracy, and bookmarks.
 - **A JSON importer** for an owned or licensed question bank.
-- **A local official-paper workspace** with PDF extraction, page images, answer-key matching, SQLite storage, and a review console. The 12-paper UCEED archive is local-only and not committed.
+- **A local official-paper workspace** with PDF/OCR extraction, page images, answer-key matching, SQLite storage, and a review console. The local archive currently covers 12 UCEED papers (2015–2026) and 22 NIFT paper records (2012–2014 compilations plus B.Des/B.F.T/M.Des/M.F.M samples). This data is local-only and not committed.
 
 This is an independent prototype. It is **not** a copy of Roughworks, and it does **not** include Roughworks' question bank. See [Legal boundary](#legal-boundary).
 
@@ -61,10 +61,23 @@ http://127.0.0.1:4174/
 The backend console includes an **Official paper intake** section. Upload a question-paper PDF you own or are licensed to use, optionally add an answer-key PDF, choose the exam/year, and import. The pipeline:
 
 - extracts question text and keeps a page image for every page;
+- uses macOS Vision OCR for scanned/image-only papers when `--ocr` is supplied;
 - stores each question with its paper, page, answer key, topic guess, and review status;
 - parses UCEED-style answer-key tables (NAT, MSQ, MCQ) when supplied;
-- deduplicates by normalized content hash;
+- supports page ranges so compilation PDFs can be split into separate papers;
+- deduplicates repeated items inside one paper while preserving the same question in multiple papers with separate provenance;
 - can optionally draft explanations through a local Ollama model.
+
+As of this import, the local workspace contains **34 paper records and 2,992 question records**:
+
+| Group | Papers | Questions | Notes |
+|---|---:|---:|---|
+| UCEED 2015–2026 | 12 | 874 | 57 answers from the 2026 key; 11 Part B records |
+| NIFT 2012–2014 + samples | 22 | 2,118 | scanned OCR; no answer keys; 21 CAT descriptive records |
+
+The original bank remains **496 questions** and is stored separately in `practice-*.js` and `data.js`.
+
+Admin upload is intended for embedded-text PDFs. For scanned NIFT booklets, or any compilation that needs a page range, use the CLI form below with `--ocr` and `--page-start` / `--page-end`.
 
 The same pipeline is available from the command line:
 
@@ -91,15 +104,47 @@ To ask a local Ollama model for independent first drafts, add:
 
 Those drafts are marked `ai-draft` and still need verification. The app never scrapes Roughworks or another third-party site. Treat every official PDF and every extracted page image according to the rights you actually hold.
 
+### Scanned PDFs and compilation papers
+
+The supplied NIFT PDFs are image-only and several are compilations of multiple booklets. Use `--ocr`, a page range, and the right default question type:
+
+```bash
+python3 tools/ingest_official_pdf.py \
+  --paper "/path/to/2012.pdf" \
+  --exam nift \
+  --year 2012 \
+  --paper-id nift-2012-written-set1 \
+  --title "NIFT 2012 written paper booklet 1" \
+  --page-start 6 \
+  --page-end 23 \
+  --default-type MCQ \
+  --no-gap-fill \
+  --ocr \
+  --image-format jpeg \
+  --db server/data/dexam.sqlite \
+  --media-root server/data/media \
+  --replace \
+  --json
+```
+
+- `--page-start` / `--page-end` isolate one paper from a compiled PDF.
+- `--default-type DESCRIPTIVE` is used for CAT/drawing papers; `MCQ` is used for written papers.
+- `--no-gap-fill` stops the importer from inventing records for blank pages.
+- `--image-format jpeg` keeps scanned-media storage smaller.
+- `--ocr` requires macOS with the Xcode command-line tools (`swiftc`). The helper is compiled once and cached at `server/data/.cache/ocr_vision`. On other platforms the importer falls back to embedded text only.
+
+OCR is a review aid, not a guarantee. Page images are retained so a reviewer can correct question text and missing options from the source.
+
 Local official-bank data lives in:
 
 ```text
 server/data/dexam.sqlite
 server/data/media/
 server/data/sources/
+server/data/.cache/
 ```
 
-Those paths and the SQLite WAL files are deliberately ignored by Git. The code and schema are tracked; the user-supplied paper data is not.
+Those paths, the SQLite WAL files, and runtime `user-bank.json` / `mocks.json` files are deliberately ignored by Git. The code and schema are tracked; the user-supplied paper data is not.
 
 ### Official-bank API
 
@@ -108,7 +153,7 @@ Those paths and the SQLite WAL files are deliberately ignored by Git. The code a
 | `GET /api/official/state` | Paper list, counts, answer coverage, review queue. |
 | `GET /api/official/questions?paperId=&type=&status=&search=&limit=&offset=` | Browse the official bank. |
 | `POST /api/official/import` | Accept base64 PDFs and run the extraction pipeline. |
-| `PATCH /api/official/questions/:id` | Save a manual topic, answer, explanation, reference URL, or review status. |
+| `PATCH /api/official/questions/:id` | Save question text, options, type, topic, answer, explanation, reference URL, or review status. |
 | `GET /media/:paperId/:file` | Page images used for visual questions. |
 
 ## What is in the app
@@ -166,14 +211,15 @@ Exam patterns change by year. A production product should version the blueprint 
 | `app.js` | Router, timer, palette, scoring, practice, progress, import, bookmarks, localStorage. |
 | `server.js` | Dependency-free Node backend, SQLite official-paper API, ingest/dedupe, and mock generation. |
 | `admin.html` / `admin.js` | Local backend console for uploads, bank browsing, review, and mock creation. |
-| `tools/ingest_official_pdf.py` | PyMuPDF extraction, answer-key parsing, page-image capture, and optional Ollama drafts. |
+| `tools/ingest_official_pdf.py` | PyMuPDF extraction, OCR fallback, answer-key parsing, page-image capture, paper-range splitting, and optional Ollama drafts. |
+| `tools/ocr_vision.swift` | macOS Vision OCR helper used for scanned NIFT papers; compiled and cached locally. |
 | `requirements.txt` | Python dependency for the official-paper pipeline. |
 | `content/import-template.json` | Working sample for the in-app JSON importer. |
 | `content/import-template.csv` | Flat authoring/export schema for a spreadsheet-to-JSON pipeline. |
 | `tools/validate-data.js` | Node validation for IDs, answers, totals, and topic coverage. |
 | `docs/answer-key.md` | Answer key and blueprint for the original papers. |
 | `docs/drawing-prompts.md` | Part B briefs, rubric, and self-review sheet. |
-| `docs/OFFICIAL_BANK.md` | Local UCEED paper archive, extraction caveats, and review workflow. |
+| `docs/OFFICIAL_BANK.md` | Local UCEED + NIFT paper archive, extraction/OCR caveats, paper splitting, and review workflow. |
 | `docs/ROUGHWORKS_ANALYSIS.md` | Full public-site product, content, technical, and business analysis. |
 
 ## Add a paper in code

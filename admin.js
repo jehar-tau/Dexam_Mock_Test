@@ -46,6 +46,9 @@ const officialQuestionsTbody = document.getElementById("officialQuestionsTbody")
 const officialMoreBtn = document.getElementById("officialMoreBtn");
 const officialEditor = document.getElementById("officialEditor");
 const editQuestionId = document.getElementById("editQuestionId");
+const editPrompt = document.getElementById("editPrompt");
+const editOptions = document.getElementById("editOptions");
+const editType = document.getElementById("editType");
 const editTopic = document.getElementById("editTopic");
 const editSubtopic = document.getElementById("editSubtopic");
 const editDifficulty = document.getElementById("editDifficulty");
@@ -173,10 +176,45 @@ function renderOfficialQuestions(result) {
   });
 }
 
+function parseOptionsInput(value) {
+  const text = String(value || "").trim();
+  if (!text) return [];
+  if (text.startsWith("[")) {
+    try {
+      const parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) {
+        return parsed
+          .map((item, index) => ({
+            id: String(item.id !== undefined ? item.id : index + 1),
+            text: String(item.text || "").trim()
+          }))
+          .filter((item) => item.text);
+      }
+    } catch (error) {
+      // Fall through to the line-based parser.
+    }
+  }
+  return text
+    .split(/\n+/)
+    .map((line, index) => {
+      const match = line.match(/^\s*[\(\[]?([A-Da-d1-9])[\)\].:]\s*(.*)$/);
+      if (match) {
+        return { id: match[1].toUpperCase(), text: match[2].trim() };
+      }
+      return { id: String(index + 1), text: line.trim() };
+    })
+    .filter((item) => item.text);
+}
+
 function openOfficialEditor(id) {
   const question = officialQuestionRows.find((item) => item.id === id);
   if (!question) return;
   editQuestionId.value = question.id;
+  editPrompt.value = question.prompt || "";
+  editOptions.value = (question.options || [])
+    .map((option) => `(${option.id || ""}) ${option.text || ""}`.trim())
+    .join("\n");
+  editType.value = question.type || "MCQ";
   editTopic.value = question.topic || "";
   editSubtopic.value = question.subtopic || "";
   editDifficulty.value = question.difficulty || "";
@@ -442,6 +480,9 @@ saveOfficialBtn.addEventListener("click", async (event) => {
   if (!id) return;
   officialEditMsg.textContent = "Saving…";
   const payload = {
+    prompt: editPrompt.value.trim(),
+    optionsJson: JSON.stringify(parseOptionsInput(editOptions.value)),
+    questionType: editType.value,
     topic: editTopic.value.trim(),
     subtopic: editSubtopic.value.trim(),
     difficulty: editDifficulty.value.trim(),

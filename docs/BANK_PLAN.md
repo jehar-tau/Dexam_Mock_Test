@@ -36,7 +36,7 @@ The original bank and the official-paper workspace are separate on purpose:
 | Original bank | Generated for this project | `practice-*.js` | Licence-clean practice and mock papers. |
 | Official workspace | PDFs the user owns or is licensed to use | Local SQLite + page images | Extraction, answer-key matching, independent solution review, and future pattern analysis. |
 
-The official lane uses `tools/ingest_official_pdf.py` and `server/data/dexam.sqlite`. It preserves page images for visual questions, stores provenance, and never fetches third-party solutions. The SQLite database, extracted page images, and uploaded source PDFs are ignored by Git.
+The official lane uses `tools/ingest_official_pdf.py` and `server/data/dexam.sqlite`. It preserves page images for visual questions, stores provenance, and never fetches third-party solutions. It currently holds **34 paper records / 2,992 question records** (874 UCEED, 2,118 NIFT). NIFT papers are scanned and use the macOS Vision OCR helper; compilation PDFs are split by page range so each booklet stays a separate paper. The SQLite database, extracted page images, uploaded source PDFs, and compiled OCR cache are ignored by Git.
 
 The next quality step for that lane is explanation drafting and verification. A local Ollama model can produce a first draft, which is stored as `ai-draft`; a human or stronger reasoning pass must then compare it with the official answer key and mark it `verified`.
 

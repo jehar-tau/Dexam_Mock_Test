@@ -107,7 +107,12 @@
   <section id="officialEditor" style="display:none">
     <h2>Review selected question</h2>
     <input type="hidden" id="editQuestionId" />
+    <label>Question text<textarea id="editPrompt" rows="5" placeholder="Correct OCR text or replace the prompt here."></textarea></label>
+    <label>Options<textarea id="editOptions" rows="5" placeholder="One option per line, e.g. (1) first option"></textarea></label>
     <div class="row">
+      <label>Type<select id="editType">
+        <option>MCQ</option><option>MSQ</option><option>NAT</option><option>DESCRIPTIVE</option>
+      </select></label>
       <label>Topic<input id="editTopic" /></label>
       <label>Subtopic<input id="editSubtopic" /></label>
       <label>Difficulty<input id="editDifficulty" /></label>
