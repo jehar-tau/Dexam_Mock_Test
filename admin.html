@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dexam Backend Console</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; background: #f4f5f7; color: #202124; }
+    header { margin-bottom: 24px; }
+    nav a { margin-right: 12px; }
+    h1,h2 { font-weight: 600; }
+    section { background: white; padding: 16px; margin-bottom: 16px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 8px; }
+    label { display: block; font-size: 13px; }
+    input, select { padding: 6px 8px; border: 1px solid #ccc; border-radius: 6px; }
+    button { padding: 8px 14px; border: 0; border-radius: 6px; background: #1a73e8; color: white; cursor: pointer; }
+    button.secondary { background: #deedff; color: #1a73e8; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th,td { text-align: left; border-bottom: 1px solid #eee; padding: 8px; vertical-align: top; }
+    th { background: #f6f8fa; }
+    .msg { font-size: 13px; margin-top: 8px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .card { background: #f6f8fa; padding: 12px; border-radius: 8px; }
+    .card small { display: block; color: #5f6368; }
+    pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+    .muted { color: #5f6368; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dexam Backend Console</h1>
+    <nav><a href="/">Open the mock app</a><a href="/api/state">Bank state</a></nav>
+  </header>
+
+  <section>
+    <h2>Upload question bank</h2>
+    <div class="row">
+      <label>Exam<select id="exam"></select></label>
+      <label>Topic<input id="topic" placeholder="e.g. Design Awareness" /></label>
+      <label>Difficulty<input id="difficulty" placeholder="e.g. Easy" /></label>
+      <label>Source<input id="source" placeholder="uploaded / owned" /></label>
+    </div>
+    <input type="file" id="files" multiple accept=".json,.csv" />
+    <button id="ingestBtn" class="btn">Ingest bank</button>
+    <p class="msg" id="uploadMsg"></p>
+  </section>
+
+  <section>
+    <h2>Bank overview</h2>
+    <div id="stats" class="cards"></div>
+  </section>
+
+  <section>
+    <h2>Questions</h2>
+    <input id="search" placeholder="Search prompts or solutions" /><button id="filterBtn" class="secondary btn">Filter</button>
+    <span class="muted" id="filterInfo"></span>
+    <table id="table">
+      <thead><tr><th>Exam</th><th>Topic</th><th>Type</th><th>Marks</th><th>Prompt</th><th>Answer / solution</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <button id="moreBtn" class="secondary btn">Show more</button>
+  </section>
+
+  <section>
+    <h2>Create mock paper</h2>
+    <div class="row">
+      <label>Exam<select id="mockExam"></select></label>
+      <label>Type<select id="mockType"><option>MCQ</option><option>MSQ</option><option>NAT</option></select></label>
+      <label>Topic<input id="mockTopic" placeholder="e.g. Pattern Recognition" /></label>
+      <label>Difficulty<input id="mockDifficulty" placeholder="e.g. Medium" /></label>
+      <label>Count<input id="mockCount" type="number" value="10" min="1" max="50" /></label>
+      <label>Duration (min)<input id="mockDuration" type="number" value="20" /></label>
+    </div>
+    <button id="buildMockBtn">Create mock</button>
+    <div class="msg" id="mockMsg"></div>
+    <pre id="mockOutput" style="display:none"></pre>
+  </section>
+
+  <section>
+    <h2>Saved mocks</h2>
+    <table id="mocks">
+      <thead><tr><th>Exam</th><th>Title</th><th>Duration</th><th>Questions</th><th>Total marks</th></tr></thead>
+      <tbody id="mocksTbody"></tbody>
+    </table>
+  </section>
+
+  <script src="admin.js"></script>
+</body>
+</html>

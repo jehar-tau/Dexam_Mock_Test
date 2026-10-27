@@ -1,0 +1,36 @@
+[
+  {
+    "id": "t1",
+    "examId": "uceed",
+    "type": "MCQ",
+    "topic": "Spatial Reasoning",
+    "difficulty": "Easy",
+    "marks": 3,
+    "negative": 0.71,
+    "prompt": "How many faces does a cube have?",
+    "options": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "6"
+      },
+      {
+        "id": "C",
+        "text": "8"
+      },
+      {
+        "id": "D",
+        "text": "12"
+      }
+    ],
+    "correctAnswer": "B",
+    "solution": "A cube has 6 faces.",
+    "source": "user",
+    "licence": "owned",
+    "status": "published",
+    "version": "1"
+  }
+]

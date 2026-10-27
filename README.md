@@ -5,7 +5,7 @@ A dependency-free design-entrance exam studio for **UCEED, CEED, NIFT, and NID U
 It ships with:
 
 - **4 exam tracks** with separate patterns, marking models, and topic maps.
-- **5 timed mini mocks** with **75 paper questions**, plus **275 topic drills** — **350 original questions** across NAT, MSQ, and MCQ. Batch 2 is UCEED-heavy.
+- **5 timed mini mocks** with **75 paper questions**, plus **421 topic drills** — **496 original questions** across NAT, MSQ, and MCQ. Batch 2 is UCEED-heavy, batch 3 is now in progress.
 - **Topic practice** with instant feedback, explanations, and a topic summary.
 - **Part B Studio** with 4 original drawing prompts and criteria.
 - **Local progress**: autosave, resume, result review, attempt history, topic accuracy, and bookmarks.

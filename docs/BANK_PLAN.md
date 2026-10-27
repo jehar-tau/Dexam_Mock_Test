@@ -2,7 +2,8 @@
 
 This file tracks how the app gets from the starter bank to a large, exam-pattern-aligned practice bank. The target is roughly **1,600 original questions**, built in batches so quality stays high and each batch loads cleanly into the existing engine.
 
-> Batch 1 and batch 2 are already in `practice-batch-1.js` and `practice-batch-2.js`. Send your own bank or pick a target exam and I'll keep filling batches in the same style.
+> Batch 1 and batch 2 are already in `practice-batch-1.js` and `practice-batch-2.js`.
+> Batch 3 has started in `practice-batch-3.js`, and I'll keep filling batches in the same style. Send your own bank if you want the importer to take over.
 
 ## Why batches
 

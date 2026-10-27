@@ -1,0 +1,111 @@
+[
+  {
+    "id": "generated-1793106795157",
+    "examId": "uceed",
+    "examName": "UCEED",
+    "year": "practice",
+    "mode": "custom",
+    "title": "Generated mock",
+    "subtitle": "Created from the local question bank",
+    "description": "A generated paper using the local bank. Topics: Spatial Reasoning · difficulty: any · question type: NAT",
+    "durationMinutes": 10,
+    "totalMarks": 20,
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Section 1",
+        "label": "Numerical Answer",
+        "type": "NAT",
+        "marks": 4,
+        "negative": 0,
+        "instructions": "Selected from the current bank.",
+        "questions": [
+          {
+            "id": "f1-nat-1",
+            "type": "NAT",
+            "topic": "Spatial Reasoning",
+            "difficulty": "Medium",
+            "prompt": "A 4 × 4 × 4 cube is painted on all six faces and then cut into 64 unit cubes. How many unit cubes have exactly two painted faces?",
+            "correctAnswer": 24,
+            "tolerance": 0.01,
+            "solution": "Only cubes along the edges have exactly two painted faces. There are 12 edges, and each edge has 4 − 2 = 2 such cubes after removing the corners. 12 × 2 = 24.",
+            "examId": "uceed",
+            "marks": 4,
+            "negative": 0,
+            "source": "seeded",
+            "licence": "owned",
+            "status": "published",
+            "version": "1"
+          },
+          {
+            "id": "f1-nat-4",
+            "type": "NAT",
+            "topic": "Spatial Reasoning",
+            "difficulty": "Medium",
+            "prompt": "How many rectangles of any size can be formed by the grid lines of a 5-column × 4-row grid?",
+            "correctAnswer": 150,
+            "tolerance": 0.01,
+            "solution": "A rectangle is chosen by picking 2 of the 6 vertical lines and 2 of the 5 horizontal lines. C(6,2) × C(5,2) = 15 × 10 = 150.",
+            "examId": "uceed",
+            "marks": 4,
+            "negative": 0,
+            "source": "seeded",
+            "licence": "owned",
+            "status": "published",
+            "version": "1"
+          },
+          {
+            "id": "f1-nat-6",
+            "type": "NAT",
+            "topic": "Spatial Reasoning",
+            "difficulty": "Medium",
+            "prompt": "A 6 cm cube is painted on all faces and cut into 2 cm cubes. How many of the resulting cubes have exactly one painted face?",
+            "correctAnswer": 6,
+            "tolerance": 0.01,
+            "solution": "The cube becomes 3 × 3 × 3. On each face, only the centre cube has exactly one painted face. There are 6 faces, so 6 cubes.",
+            "examId": "uceed",
+            "marks": 4,
+            "negative": 0,
+            "source": "seeded",
+            "licence": "owned",
+            "status": "published",
+            "version": "1"
+          },
+          {
+            "id": "s1-nat-1",
+            "type": "NAT",
+            "topic": "Spatial Reasoning",
+            "difficulty": "Easy",
+            "prompt": "A 3 × 3 × 3 cube is painted on all faces and cut into 27 unit cubes. How many unit cubes have no painted face?",
+            "correctAnswer": 1,
+            "tolerance": 0.01,
+            "solution": "Only the single cube at the centre is completely hidden from all six faces. Answer: 1.",
+            "examId": "uceed",
+            "marks": 4,
+            "negative": 0,
+            "source": "seeded",
+            "licence": "owned",
+            "status": "published",
+            "version": "1"
+          },
+          {
+            "id": "uceed-drill-b1-10",
+            "examId": "uceed",
+            "type": "NAT",
+            "topic": "Spatial Reasoning",
+            "difficulty": "Easy",
+            "marks": 4,
+            "negative": 0,
+            "prompt": "How many faces does a triangular prism have?",
+            "correctAnswer": 5,
+            "solution": "A triangular prism has 2 triangular ends and 3 rectangular sides, so 5 faces.",
+            "source": "original",
+            "licence": "owned",
+            "status": "published",
+            "version": "1"
+          }
+        ]
+      }
+    ]
+  }
+]
