@@ -10,6 +10,7 @@ It ships with:
 - **Part B Studio** with 4 original drawing prompts and criteria.
 - **Local progress**: autosave, resume, result review, attempt history, topic accuracy, and bookmarks.
 - **A JSON importer** for an owned or licensed question bank.
+- **A local official-paper workspace** with PDF extraction, page images, answer-key matching, SQLite storage, and a review console. The 12-paper UCEED archive is local-only and not committed.
 
 This is an independent prototype. It is **not** a copy of Roughworks, and it does **not** include Roughworks' question bank. See [Legal boundary](#legal-boundary).
 
@@ -35,6 +36,81 @@ Validate the question data:
 node tools/validate-data.js
 ```
 
+## Backend console
+
+Open:
+
+```text
+http://127.0.0.1:4174/admin.html
+```
+
+Start it with:
+
+```bash
+node server.js
+```
+
+The backend uses Node's built-in `node:sqlite`, so it has no npm dependencies. The static app stays live at:
+
+```text
+http://127.0.0.1:4174/
+```
+
+## Official paper workspace
+
+The backend console includes an **Official paper intake** section. Upload a question-paper PDF you own or are licensed to use, optionally add an answer-key PDF, choose the exam/year, and import. The pipeline:
+
+- extracts question text and keeps a page image for every page;
+- stores each question with its paper, page, answer key, topic guess, and review status;
+- parses UCEED-style answer-key tables (NAT, MSQ, MCQ) when supplied;
+- deduplicates by normalized content hash;
+- can optionally draft explanations through a local Ollama model.
+
+The same pipeline is available from the command line:
+
+```bash
+python3 -m pip install --user -r requirements.txt
+
+python3 tools/ingest_official_pdf.py \
+  --paper "/path/to/UCEED_2026_Question_Paper.pdf" \
+  --answers "/path/to/UCEED2026_Answer_Key.pdf" \
+  --exam uceed \
+  --year 2026 \
+  --title "UCEED 2026 official paper" \
+  --db server/data/dexam.sqlite \
+  --media-root server/data/media \
+  --replace \
+  --json
+```
+
+To ask a local Ollama model for independent first drafts, add:
+
+```bash
+--ollama-model qwen3.5:4b
+```
+
+Those drafts are marked `ai-draft` and still need verification. The app never scrapes Roughworks or another third-party site. Treat every official PDF and every extracted page image according to the rights you actually hold.
+
+Local official-bank data lives in:
+
+```text
+server/data/dexam.sqlite
+server/data/media/
+server/data/sources/
+```
+
+Those paths and the SQLite WAL files are deliberately ignored by Git. The code and schema are tracked; the user-supplied paper data is not.
+
+### Official-bank API
+
+| Endpoint | Purpose |
+|---|---|
+| `GET /api/official/state` | Paper list, counts, answer coverage, review queue. |
+| `GET /api/official/questions?paperId=&type=&status=&search=&limit=&offset=` | Browse the official bank. |
+| `POST /api/official/import` | Accept base64 PDFs and run the extraction pipeline. |
+| `PATCH /api/official/questions/:id` | Save a manual topic, answer, explanation, reference URL, or review status. |
+| `GET /media/:paperId/:file` | Page images used for visual questions. |
+
 ## What is in the app
 
 | Surface | What it does |
@@ -53,11 +129,11 @@ node tools/validate-data.js
 
 | Exam | Papers | Bank questions | Topics covered | Paper marks |
 |---|---:|---:|---:|---:|
-| UCEED | 2 | 205 | 15 | 72 + 42 |
-| CEED | 1 | 55 | 14 | 53 |
-| NIFT | 1 | 57 | 16 | 20 |
-| NID UG | 1 | 33 | 8 | 10 |
-| **Total** | **5** | **350** | — | **197 paper marks** |
+| UCEED | 2 | 244 | 15 | 72 + 42 |
+| CEED | 1 | 93 | 14 | 53 |
+| NIFT | 1 | 95 | 16 | 20 |
+| NID UG | 1 | 64 | 8 | 10 |
+| **Total** | **5** | **496** | — | **197 paper marks** |
 
 These are **mini mocks**, not full-length official papers. They use the same section and marking model as the exam target, with a shorter or focused question count so a student can finish in one sitting. The NID UG mini mock matches the 8-question, 10-mark pattern; the other three are shortened versions of much longer papers.
 
@@ -88,11 +164,16 @@ Exam patterns change by year. A production product should version the blueprint 
 | `practice-batch-1.js` | 124 more original topic-drill questions across all four exams. |
 | `practice-batch-2.js` | 122 UCEED-focused topic-drill questions. |
 | `app.js` | Router, timer, palette, scoring, practice, progress, import, bookmarks, localStorage. |
+| `server.js` | Dependency-free Node backend, SQLite official-paper API, ingest/dedupe, and mock generation. |
+| `admin.html` / `admin.js` | Local backend console for uploads, bank browsing, review, and mock creation. |
+| `tools/ingest_official_pdf.py` | PyMuPDF extraction, answer-key parsing, page-image capture, and optional Ollama drafts. |
+| `requirements.txt` | Python dependency for the official-paper pipeline. |
 | `content/import-template.json` | Working sample for the in-app JSON importer. |
 | `content/import-template.csv` | Flat authoring/export schema for a spreadsheet-to-JSON pipeline. |
 | `tools/validate-data.js` | Node validation for IDs, answers, totals, and topic coverage. |
 | `docs/answer-key.md` | Answer key and blueprint for the original papers. |
 | `docs/drawing-prompts.md` | Part B briefs, rubric, and self-review sheet. |
+| `docs/OFFICIAL_BANK.md` | Local UCEED paper archive, extraction caveats, and review workflow. |
 | `docs/ROUGHWORKS_ANALYSIS.md` | Full public-site product, content, technical, and business analysis. |
 
 ## Add a paper in code

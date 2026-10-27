@@ -5,12 +5,28 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 const url = require("url");
+const { execFile } = require("child_process");
+const { promisify } = require("util");
+
+const execFileAsync = promisify(execFile);
+let DatabaseSync = null;
+try {
+  ({ DatabaseSync } = require("node:sqlite"));
+} catch (error) {
+  console.warn("[dexam backend] node:sqlite unavailable: " + error.message);
+}
 
 const PORT = Number(process.env.PORT) || 4174;
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, "server", "data");
 const USER_BANK_FILE = path.join(DATA_DIR, "user-bank.json");
 const MOCKS_FILE = path.join(DATA_DIR, "mocks.json");
+const OFFICIAL_DB_FILE = path.join(DATA_DIR, "dexam.sqlite");
+const OFFICIAL_MEDIA_DIR = path.join(DATA_DIR, "media");
+const OFFICIAL_SOURCES_DIR = path.join(DATA_DIR, "sources");
+const INGEST_SCRIPT = path.join(ROOT, "tools", "ingest_official_pdf.py");
+const PYTHON_BIN = process.env.PYTHON || "python3";
+let officialDb = null;
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -386,6 +402,310 @@ function buildMock(payload) {
   return paper;
 }
 
+function getOfficialDb() {
+  if (!DatabaseSync) return null;
+  if (officialDb) return officialDb;
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  officialDb = new DatabaseSync(OFFICIAL_DB_FILE);
+  officialDb.exec("PRAGMA journal_mode = WAL;");
+  officialDb.exec(`
+    CREATE TABLE IF NOT EXISTS papers (
+      id TEXT PRIMARY KEY,
+      exam_id TEXT NOT NULL,
+      year INTEGER,
+      title TEXT NOT NULL,
+      source_note TEXT,
+      question_pdf TEXT,
+      answer_pdf TEXT,
+      page_count INTEGER DEFAULT 0,
+      imported_at TEXT,
+      status TEXT DEFAULT 'imported'
+    );
+    CREATE TABLE IF NOT EXISTS questions (
+      id TEXT PRIMARY KEY,
+      paper_id TEXT NOT NULL,
+      question_no TEXT,
+      question_type TEXT DEFAULT 'MCQ',
+      topic TEXT DEFAULT 'Unassigned',
+      subtopic TEXT DEFAULT '',
+      difficulty TEXT DEFAULT 'Unassessed',
+      prompt TEXT NOT NULL,
+      options_json TEXT,
+      answer_key TEXT,
+      answer_status TEXT DEFAULT 'pending',
+      explanation TEXT,
+      explanation_status TEXT DEFAULT 'pending',
+      explanation_source TEXT,
+      reference_url TEXT,
+      page_no INTEGER,
+      page_images_json TEXT,
+      figure_paths_json TEXT,
+      content_hash TEXT UNIQUE,
+      status TEXT DEFAULT 'review',
+      created_at TEXT,
+      updated_at TEXT,
+      FOREIGN KEY(paper_id) REFERENCES papers(id) ON DELETE CASCADE
+    );
+    CREATE TABLE IF NOT EXISTS imports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      paper_id TEXT,
+      files_json TEXT,
+      report_json TEXT,
+      created_at TEXT
+    );
+    CREATE INDEX IF NOT EXISTS idx_questions_paper ON questions(paper_id);
+    CREATE INDEX IF NOT EXISTS idx_questions_topic ON questions(topic);
+    CREATE INDEX IF NOT EXISTS idx_questions_status ON questions(status);
+  `);
+  return officialDb;
+}
+
+function parseJsonValue(value, fallback) {
+  if (!value) return fallback;
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function mediaUrl(value) {
+  const text = String(value || "").replace(/\\/g, "/");
+  const marker = "server/data/media/";
+  const index = text.indexOf(marker);
+  return index >= 0 ? "/media/" + text.slice(index + marker.length) : text;
+}
+
+function normalizeOfficialQuestion(row) {
+  if (!row) return null;
+  return {
+    id: row.id,
+    paperId: row.paper_id,
+    questionNo: row.question_no,
+    type: row.question_type,
+    topic: row.topic,
+    subtopic: row.subtopic,
+    difficulty: row.difficulty,
+    prompt: row.prompt,
+    options: parseJsonValue(row.options_json, []),
+    answerKey: row.answer_key || "",
+    answerStatus: row.answer_status,
+    explanation: row.explanation || "",
+    explanationStatus: row.explanation_status,
+    explanationSource: row.explanation_source || "",
+    referenceUrl: row.reference_url || "",
+    pageNo: row.page_no,
+    pageImages: parseJsonValue(row.page_images_json, []).map(mediaUrl),
+    figurePaths: parseJsonValue(row.figure_paths_json, []).map(mediaUrl),
+    status: row.status,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  };
+}
+
+function officialState() {
+  const db = getOfficialDb();
+  if (!db) {
+    return { available: false, papers: [], counts: { papers: 0, questions: 0, withAnswers: 0, withExplanations: 0, pendingReview: 0 } };
+  }
+  const papers = db.prepare(`
+    SELECT p.*,
+      (SELECT COUNT(*) FROM questions q WHERE q.paper_id = p.id) AS question_count,
+      (SELECT COUNT(*) FROM questions q WHERE q.paper_id = p.id AND q.answer_key IS NOT NULL AND q.answer_key <> '') AS answer_count,
+      (SELECT COUNT(*) FROM questions q WHERE q.paper_id = p.id AND q.explanation_status = 'pending') AS pending_count
+    FROM papers p
+    ORDER BY p.year DESC, p.exam_id ASC
+  `).all().map((row) => ({
+    id: row.id,
+    examId: row.exam_id,
+    year: row.year,
+    title: row.title,
+    pageCount: row.page_count,
+    questionCount: row.question_count,
+    answerCount: row.answer_count,
+    pendingCount: row.pending_count,
+    importedAt: row.imported_at,
+    questionPdf: row.question_pdf,
+    answerPdf: row.answer_pdf,
+    status: row.status
+  }));
+  const totals = db.prepare(`
+    SELECT
+      COUNT(*) AS questions,
+      SUM(CASE WHEN answer_key IS NOT NULL AND answer_key <> '' THEN 1 ELSE 0 END) AS with_answers,
+      SUM(CASE WHEN explanation IS NOT NULL AND explanation <> '' THEN 1 ELSE 0 END) AS with_explanations,
+      SUM(CASE WHEN status IN ('review', 'needs-verification') THEN 1 ELSE 0 END) AS pending_review
+    FROM questions
+  `).get();
+  return {
+    available: true,
+    papers: papers,
+    counts: {
+      papers: papers.length,
+      questions: totals.questions || 0,
+      withAnswers: totals.with_answers || 0,
+      withExplanations: totals.with_explanations || 0,
+      pendingReview: totals.pending_review || 0
+    }
+  };
+}
+
+function officialQuestions(query) {
+  const db = getOfficialDb();
+  if (!db) return { total: 0, questions: [] };
+  const clauses = [];
+  const params = {};
+  if (query.paperId) {
+    clauses.push("paper_id = :paperId");
+    params.paperId = query.paperId;
+  }
+  if (query.examId) {
+    clauses.push("paper_id IN (SELECT id FROM papers WHERE exam_id = :examId)");
+    params.examId = query.examId;
+  }
+  if (query.type) {
+    clauses.push("question_type = :type");
+    params.type = String(query.type).toUpperCase();
+  }
+  if (query.topic) {
+    clauses.push("topic = :topic");
+    params.topic = query.topic;
+  }
+  if (query.status) {
+    clauses.push("status = :status");
+    params.status = query.status;
+  }
+  if (query.explanationStatus) {
+    clauses.push("explanation_status = :explanationStatus");
+    params.explanationStatus = query.explanationStatus;
+  }
+  if (query.search) {
+    clauses.push("(prompt LIKE :search OR explanation LIKE :search OR topic LIKE :search)");
+    params.search = "%" + query.search + "%";
+  }
+  const where = clauses.length ? " WHERE " + clauses.join(" AND ") : "";
+  const total = db.prepare("SELECT COUNT(*) AS count FROM questions" + where).get(params).count;
+  const limit = Math.max(1, Math.min(500, Number(query.limit) || 50));
+  const offset = Math.max(0, Number(query.offset) || 0);
+  params.limit = limit;
+  params.offset = offset;
+  const rows = db.prepare(
+    "SELECT * FROM questions" + where + " ORDER BY paper_id DESC, CASE WHEN question_no GLOB 'B*' THEN 1 ELSE 0 END ASC, CAST(question_no AS INTEGER) ASC, question_no ASC LIMIT :limit OFFSET :offset"
+  ).all(params);
+  return { total: total, shown: rows.length, limit: limit, offset: offset, questions: rows.map(normalizeOfficialQuestion) };
+}
+
+function updateOfficialQuestion(id, payload) {
+  const db = getOfficialDb();
+  if (!db) throw new Error("SQLite is unavailable.");
+  const allowed = {
+    topic: "topic",
+    subtopic: "subtopic",
+    difficulty: "difficulty",
+    answerKey: "answer_key",
+    answerStatus: "answer_status",
+    explanation: "explanation",
+    explanationStatus: "explanation_status",
+    explanationSource: "explanation_source",
+    referenceUrl: "reference_url",
+    status: "status"
+  };
+  const sets = [];
+  const params = { id: id };
+  Object.entries(allowed).forEach(([key, column]) => {
+    if (payload[key] !== undefined) {
+      sets.push(column + " = :" + key);
+      params[key] = payload[key];
+    }
+  });
+  if (!sets.length) return null;
+  sets.push("updated_at = :updatedAt");
+  params.updatedAt = new Date().toISOString();
+  db.prepare("UPDATE questions SET " + sets.join(", ") + " WHERE id = :id").run(params);
+  return normalizeOfficialQuestion(db.prepare("SELECT * FROM questions WHERE id = ?").get(id));
+}
+
+function readRequestBody(req, limit) {
+  return new Promise((resolve, reject) => {
+    let body = "";
+    let size = 0;
+    req.on("data", (chunk) => {
+      size += chunk.length;
+      if (size > limit) {
+        reject(new Error("Upload is too large."));
+        req.destroy();
+        return;
+      }
+      body += chunk;
+    });
+    req.on("end", () => resolve(body));
+    req.on("error", reject);
+  });
+}
+
+function decodeBase64File(file, fallbackName) {
+  if (!file || !file.contentBase64) throw new Error("Missing file content.");
+  const raw = String(file.contentBase64).replace(/^data:[^;]+;base64,/, "");
+  return {
+    name: path.basename(file.name || fallbackName || "upload.pdf"),
+    buffer: Buffer.from(raw, "base64")
+  };
+}
+
+async function importOfficialPaper(payload) {
+  const examId = String(payload.examId || "").toLowerCase();
+  const year = Number(payload.year);
+  if (!["uceed", "ceed", "nift", "nid"].includes(examId)) {
+    throw new Error("Choose a valid exam.");
+  }
+  if (!Number.isFinite(year) || year < 2000 || year > 2100) {
+    throw new Error("Enter a valid exam year.");
+  }
+  const paperFile = decodeBase64File(payload.paper, examId + "-" + year + "-questions.pdf");
+  if (!paperFile.name.toLowerCase().endsWith(".pdf")) {
+    throw new Error("The question paper must be a PDF.");
+  }
+  fs.mkdirSync(OFFICIAL_SOURCES_DIR, { recursive: true });
+  const paperPath = path.join(OFFICIAL_SOURCES_DIR, examId + "-" + year + "-questions.pdf");
+  fs.writeFileSync(paperPath, paperFile.buffer);
+  const args = [
+    INGEST_SCRIPT,
+    "--paper", paperPath,
+    "--exam", examId,
+    "--year", String(year),
+    "--db", OFFICIAL_DB_FILE,
+    "--media-root", OFFICIAL_MEDIA_DIR,
+    "--replace",
+    "--json"
+  ];
+  if (payload.title) args.push("--title", String(payload.title));
+  if (payload.answers && payload.answers.contentBase64) {
+    const answerFile = decodeBase64File(payload.answers, examId + "-" + year + "-answers.pdf");
+    const answerExt = path.extname(answerFile.name).toLowerCase() || ".pdf";
+    if (![".pdf", ".txt", ".csv"].includes(answerExt)) {
+      throw new Error("The answer key must be a PDF, TXT, or CSV file.");
+    }
+    const answerPath = path.join(OFFICIAL_SOURCES_DIR, examId + "-" + year + "-answers" + answerExt);
+    fs.writeFileSync(answerPath, answerFile.buffer);
+    args.push("--answers", answerPath);
+  }
+  if (payload.ollamaModel) {
+    args.push("--ollama-model", String(payload.ollamaModel));
+  }
+  if (payload.ollamaUrl) {
+    args.push("--ollama-url", String(payload.ollamaUrl));
+  }
+  const result = await execFileAsync(PYTHON_BIN, args, {
+    cwd: ROOT,
+    timeout: 240000,
+    maxBuffer: 1024 * 1024 * 4
+  });
+  const lines = String(result.stdout || "").trim().split(/\r?\n/).filter(Boolean);
+  const report = lines.length ? JSON.parse(lines[lines.length - 1]) : {};
+  report.stderr = String(result.stderr || "").trim();
+  return report;
+}
+
 function resultJson(res, data, status) {
   res.writeHead(status || 200, { "Content-Type": "application/json; charset=utf-8" });
   res.end(JSON.stringify(data));
@@ -458,6 +778,35 @@ function api(req, res) {
     });
   }
   if (parsed.pathname === "/api/exams") return resultJson(res, seedExams);
+  if (parsed.pathname === "/api/official/state" && req.method === "GET") {
+    return resultJson(res, officialState());
+  }
+  if (parsed.pathname === "/api/official/questions" && req.method === "GET") {
+    return resultJson(res, officialQuestions(parsed.query));
+  }
+  if (parsed.pathname === "/api/official/import" && req.method === "POST") {
+    readRequestBody(req, 80 * 1024 * 1024)
+      .then((body) => {
+        const payload = JSON.parse(body || "{}");
+        return importOfficialPaper(payload);
+      })
+      .then((report) => resultJson(res, report))
+      .catch((error) => resultJson(res, { error: error.message, stderr: error.stderr || "" }, 400));
+    return;
+  }
+  const officialQuestionMatch = parsed.pathname.match(/^\/api\/official\/questions\/([^/]+)$/);
+  if (officialQuestionMatch && req.method === "PATCH") {
+    readRequestBody(req, 1024 * 1024)
+      .then((body) => {
+        const payload = JSON.parse(body || "{}");
+        const updated = updateOfficialQuestion(decodeURIComponent(officialQuestionMatch[1]), payload);
+        if (!updated) throw new Error("Question not found or no fields supplied.");
+        return updated;
+      })
+      .then((updated) => resultJson(res, { question: updated }))
+      .catch((error) => resultJson(res, { error: error.message }, 400));
+    return;
+  }
   if (parsed.pathname === "/api/mocks" && req.method === "GET") return resultJson(res, savedMocks);
   if (parsed.pathname === "/api/ingest" && req.method === "POST") {
     let body = "";
@@ -502,7 +851,15 @@ function api(req, res) {
 }
 
 function serveStatic(pathname, res) {
-  const finalPath = pathname === "/" ? "index.html" : pathname === "/admin" ? "admin.html" : pathname;
+  if (pathname.startsWith("/server/data")) {
+    res.writeHead(403);
+    res.end("Forbidden");
+    return;
+  }
+  let finalPath = pathname === "/" ? "index.html" : pathname === "/admin" ? "admin.html" : pathname;
+  if (pathname.startsWith("/media/")) {
+    finalPath = path.join("server", "data", "media", pathname.slice("/media/".length));
+  }
   const filePath = path.join(ROOT, finalPath);
   if (!filePath.startsWith(ROOT)) {
     res.writeHead(403);

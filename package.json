@@ -5,6 +5,7 @@
   "description": "Dependency-free design-entrance mock-test studio for UCEED, CEED, NIFT, and NID UG.",
   "scripts": {
     "serve": "python3 -m http.server 4173",
+    "backend": "node server.js",
     "check": "node tools/validate-data.js"
   }
 }

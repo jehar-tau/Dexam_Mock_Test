@@ -19,8 +19,7 @@ Each batch is a self-contained file that appends to `window.PRACTICE_BANK`.
 |---|---|---:|
 | `practice-data.js` | Starter original drills (all four exams) | 29 |
 | `practice-batch-1.js` | Batch 1 drills across UCEED, CEED, NIFT, NID | ~125 |
-| `practice-batch-2.js` | UCEED-focused drills across all 15 UCEED topics | ~120 |
-| `practice-batch-2.js` | Batch 2 drills, focused on UCEED/CEED | ~250 |
+| `practice-batch-2.js` | Batch 2 drills, focused on UCEED/CEED | ~120 |
 | `practice-batch-3.js` | Batch 3 drills, focused on NIFT/NID + archive | ~250 |
 | `practice-batch-4.js` | Batch 4 drills, building full-topic depth | ~300 |
 | `practice-batch-5.js` | Batch 5 drills, then paper-wise expansion | ~300 |
@@ -28,11 +27,25 @@ Each batch is a self-contained file that appends to `window.PRACTICE_BANK`.
 
 The final batch also gets woven into longer/minor mock papers so the timed-paper experience grows in parallel.
 
+## Official-paper lane
+
+The original bank and the official-paper workspace are separate on purpose:
+
+| Lane | Source | Storage | Purpose |
+|---|---|---|---|
+| Original bank | Generated for this project | `practice-*.js` | Licence-clean practice and mock papers. |
+| Official workspace | PDFs the user owns or is licensed to use | Local SQLite + page images | Extraction, answer-key matching, independent solution review, and future pattern analysis. |
+
+The official lane uses `tools/ingest_official_pdf.py` and `server/data/dexam.sqlite`. It preserves page images for visual questions, stores provenance, and never fetches third-party solutions. The SQLite database, extracted page images, and uploaded source PDFs are ignored by Git.
+
+The next quality step for that lane is explanation drafting and verification. A local Ollama model can produce a first draft, which is stored as `ai-draft`; a human or stronger reasoning pass must then compare it with the official answer key and mark it `verified`.
+
 ## What the app already has
 
 - **4 exam tracks** with official patterns and topic weights
 - **5 timed mini mocks** + **Part B studio**
 - **A JSON importer** for user-owned or licensed banks
+- **Official-paper extraction and review console** for owned/licensed PDFs
 - **Progress, bookmarks, topic accuracy** and **review**
 
 ## What needs to happen next

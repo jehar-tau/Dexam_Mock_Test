@@ -7,3 +7,10 @@ build/
 .env.*
 *.log
 .vercel/
+server/data/dexam.sqlite
+server/data/dexam.sqlite-shm
+server/data/dexam.sqlite-wal
+server/data/media/
+server/data/sources/
+__pycache__/
+*.pyc

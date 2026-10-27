@@ -23,7 +23,13 @@
     .card { background: #f6f8fa; padding: 12px; border-radius: 8px; }
     .card small { display: block; color: #5f6368; }
     pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+    textarea { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font: inherit; }
     .muted { color: #5f6368; font-size: 13px; }
+    .prompt { max-width: 560px; white-space: pre-wrap; }
+    .pill { display: inline-block; padding: 2px 7px; border-radius: 999px; background: #eef1f5; font-size: 12px; }
+    .pill.good { background: #e6f4ea; color: #137333; }
+    .pill.warn { background: #fef7e0; color: #b06000; }
+    .pill.bad { background: #fce8e6; color: #a50e0e; }
   </style>
 </head>
 <body>
@@ -43,6 +49,83 @@
     <input type="file" id="files" multiple accept=".json,.csv" />
     <button id="ingestBtn" class="btn">Ingest bank</button>
     <p class="msg" id="uploadMsg"></p>
+  </section>
+
+  <section>
+    <h2>Official paper intake</h2>
+    <p class="muted">Upload a question paper you own or are licensed to use. The local Python pipeline extracts text, saves page images, matches an optional answer key, and writes to <code>server/data/dexam.sqlite</code>. It does not scrape third-party sites.</p>
+    <div class="row">
+      <label>Exam<select id="officialExam"></select></label>
+      <label>Year<input id="officialYear" type="number" value="2026" min="2000" max="2100" /></label>
+      <label>Title<input id="officialTitle" placeholder="e.g. UCEED 2026 official paper" style="min-width:240px" /></label>
+    </div>
+    <div class="row">
+      <label>Question paper PDF<input type="file" id="officialPaper" accept=".pdf" /></label>
+      <label>Answer key (PDF/TXT/CSV, optional)<input type="file" id="officialAnswers" accept=".pdf,.txt,.csv" /></label>
+    </div>
+    <div class="row">
+      <label>Ollama model (optional)<input id="officialOllama" placeholder="qwen3.5:4b" /></label>
+      <button id="officialImportBtn">Import official paper</button>
+    </div>
+    <p class="msg" id="officialImportMsg"></p>
+    <pre id="officialImportReport" style="display:none"></pre>
+  </section>
+
+  <section>
+    <h2>Official paper bank</h2>
+    <div id="officialStats" class="cards"></div>
+    <table id="officialPapers">
+      <thead><tr><th>Paper</th><th>Year</th><th>Questions</th><th>Answers</th><th>Pending explanations</th><th></th></tr></thead>
+      <tbody id="officialPapersTbody"></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Official question review</h2>
+    <div class="row">
+      <label>Paper<select id="officialPaperFilter"><option value="">All papers</option></select></label>
+      <label>Type<select id="officialTypeFilter">
+        <option value="">All types</option><option>NAT</option><option>MSQ</option><option>MCQ</option><option>DESCRIPTIVE</option>
+      </select></label>
+      <label>Status<select id="officialStatusFilter">
+        <option value="">All statuses</option><option>review</option><option>needs-verification</option><option>verified</option><option>archived</option>
+      </select></label>
+      <label>Explanation<select id="officialExplanationFilter">
+        <option value="">All</option><option>pending</option><option>ai-draft</option><option>verified</option>
+      </select></label>
+      <label>Search<input id="officialSearch" placeholder="prompt, topic, explanation" /></label>
+      <button id="officialFilterBtn" class="secondary">Filter</button>
+    </div>
+    <p class="muted" id="officialQuestionInfo"></p>
+    <table id="officialQuestions">
+      <thead><tr><th>Q</th><th>Type</th><th>Topic</th><th>Answer</th><th>Prompt</th><th>Review</th></tr></thead>
+      <tbody id="officialQuestionsTbody"></tbody>
+    </table>
+    <button id="officialMoreBtn" class="secondary" style="display:none">Show more</button>
+  </section>
+
+  <section id="officialEditor" style="display:none">
+    <h2>Review selected question</h2>
+    <input type="hidden" id="editQuestionId" />
+    <div class="row">
+      <label>Topic<input id="editTopic" /></label>
+      <label>Subtopic<input id="editSubtopic" /></label>
+      <label>Difficulty<input id="editDifficulty" /></label>
+      <label>Answer key<input id="editAnswer" /></label>
+      <label>Status<select id="editStatus">
+        <option>review</option><option>needs-verification</option><option>verified</option><option>archived</option>
+      </select></label>
+      <label>Explanation status<select id="editExplanationStatus">
+        <option>pending</option><option>ai-draft</option><option>verified</option>
+      </select></label>
+    </div>
+    <label>Original explanation<textarea id="editExplanation" rows="8" placeholder="Write an independently produced explanation. Do not paste third-party explanations."></textarea></label>
+    <div class="row" style="margin-top:8px">
+      <label>Reference URL (optional)<input id="editReference" placeholder="Authorized reference link" style="min-width:320px" /></label>
+      <button id="saveOfficialBtn">Save review</button>
+      <button id="cancelOfficialBtn" class="secondary">Close</button>
+    </div>
+    <p class="msg" id="officialEditMsg"></p>
   </section>
 
   <section>
