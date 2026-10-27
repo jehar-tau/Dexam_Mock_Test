@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dexam Mock Test — original design aptitude practice papers with a timed exam player, autosave, scoring, and answer review.">
+  <title>Dexam Mock Test</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#home" id="brandHome" aria-label="Dexam Mock Test home">
+      <span class="brand-mark" aria-hidden="true">DX</span>
+      <span class="brand-text">Dexam <em>Mock Test</em></span>
+    </a>
+    <div class="top-actions">
+      <span class="save-pill" id="saveStatus" aria-live="polite"></span>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle colour mode" title="Toggle colour mode">
+        <span id="themeIcon" aria-hidden="true">◐</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="shell" tabindex="-1">
+    <div id="view"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>Dexam Mock Test</strong>
+      <p>Original practice content. Not affiliated with UCEED, CEED, NID, NIFT, or Roughworks.</p>
+    </div>
+    <p class="footer-note">Prototype only · no backend · scores are local to this browser</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
