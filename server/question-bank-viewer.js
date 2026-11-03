@@ -99,8 +99,14 @@ function getQuestions(query, res) {
   const skip = (pageNum - 1) * limit_num;
   const paged = questions.slice(skip, skip + limit_num);
 
+  // Add reviewState to each question
+  const pagedWithReviewState = paged.map(q => ({
+    ...q,
+    reviewState: reviewState[q.id] || { marked: false, flagged: false, notes: '' }
+  }));
+
   sendJSON(res, {
-    data: paged,
+    data: pagedWithReviewState,
     total,
     page: pageNum,
     limit: limit_num,

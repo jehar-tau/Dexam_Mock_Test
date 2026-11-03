@@ -686,6 +686,13 @@
             <div class="header">
                 <h1>📊 Question Bank</h1>
                 <div class="stats" id="stats"></div>
+                <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 4px; margin-top: 12px; font-size: 11px;">
+                    <div style="margin-bottom: 8px; font-weight: bold; color: #fff;">Review Progress:</div>
+                    <div id="reviewStats" style="color: #e0e0e0;">
+                        <div>✓ Reviewed: <strong>0</strong> | ⚠ Flagged: <strong>0</strong></div>
+                        <div style="margin-top: 5px;">Remaining: <strong>0</strong> (<strong>0%</strong>)</div>
+                    </div>
+                </div>
             </div>
 
             <div class="filters">
@@ -746,6 +753,37 @@
         let viewMode = 'review'; // 'review' or 'exam'
         let studentAnswer = null; // Store student's exam answer
         let studentMarking = null; // Store if student marked correct/incorrect
+
+        // Update review statistics
+        function updateReviewStats() {
+            const totalQuestions = allQuestions.length;
+            let reviewedCount = 0;
+            let flaggedCount = 0;
+
+            // Count reviewed and flagged questions
+            allQuestions.forEach(q => {
+                if (q.reviewState?.marked) reviewedCount++;
+                if (q.reviewState?.flagged) flaggedCount++;
+            });
+
+            const remainingCount = totalQuestions - reviewedCount;
+            const remainingPercent = totalQuestions > 0 ? Math.round((remainingCount / totalQuestions) * 100) : 0;
+
+            // Update the stats display
+            const statsHtml = `
+                <div style="margin-bottom: 5px;">
+                    <span style="margin-right: 12px;">✓ Reviewed: <strong>${reviewedCount}</strong></span>
+                    <span>⚠ Flagged: <strong>${flaggedCount}</strong></span>
+                </div>
+                <div style="margin-top: 5px;">
+                    Remaining: <strong>${remainingCount}</strong> (<strong>${remainingPercent}%</strong>)
+                </div>
+            `;
+            const reviewStatsDiv = document.getElementById('reviewStats');
+            if (reviewStatsDiv) {
+                reviewStatsDiv.innerHTML = statsHtml;
+            }
+        }
 
         // Initialize
         async function init() {
@@ -808,6 +846,7 @@
 
                 renderQuestionsList(data);
                 renderPagination(data);
+                updateReviewStats();
             } catch (err) {
                 console.error('Error loading questions:', err);
                 document.getElementById('questionsList').innerHTML = '<div class="error">Error loading questions</div>';
@@ -1036,8 +1075,21 @@
 
         function markForReviewAndNext() {
             document.getElementById('markedCheckbox').checked = true;
+
+            // Update local question data
+            if (currentQuestion && currentQuestion.reviewState) {
+                currentQuestion.reviewState.marked = true;
+            }
+
+            // Find and update in allQuestions array
+            const qIndex = allQuestions.findIndex(q => q.id === currentQuestion.id);
+            if (qIndex >= 0 && allQuestions[qIndex].reviewState) {
+                allQuestions[qIndex].reviewState.marked = true;
+            }
+
             updateReviewState();
-            
+            updateReviewStats();
+
             // Update button appearance
             const markBtn = document.getElementById('markBtn');
             if (markBtn) {
@@ -1045,14 +1097,27 @@
                 markBtn.disabled = true;
                 markBtn.style.opacity = '0.6';
             }
-            
+
             setTimeout(() => goToNextQuestion(), 300);
         }
 
         function flagIssueAndNext() {
             document.getElementById('flaggedCheckbox').checked = true;
+
+            // Update local question data
+            if (currentQuestion && currentQuestion.reviewState) {
+                currentQuestion.reviewState.flagged = true;
+            }
+
+            // Find and update in allQuestions array
+            const qIndex = allQuestions.findIndex(q => q.id === currentQuestion.id);
+            if (qIndex >= 0 && allQuestions[qIndex].reviewState) {
+                allQuestions[qIndex].reviewState.flagged = true;
+            }
+
             updateReviewState();
-            
+            updateReviewStats();
+
             // Update button appearance
             const flagBtn = document.getElementById('flagBtn');
             if (flagBtn) {
@@ -1060,7 +1125,7 @@
                 flagBtn.disabled = true;
                 flagBtn.style.opacity = '0.6';
             }
-            
+
             setTimeout(() => goToNextQuestion(), 300);
         }
 
