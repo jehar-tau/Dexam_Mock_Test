@@ -672,8 +672,8 @@
                         </div>
                     </div>
                     <div class="detail-actions">
-                        <button class="btn primary" onclick="markForReview()">✓ Mark for Review</button>
-                        <button class="btn secondary" onclick="flagIssue()">⚠ Flag Issue</button>
+                        <button class="btn primary" onclick="markForReviewAndNext()">✓ Mark & Next</button>
+                        <button class="btn secondary" onclick="flagIssueAndNext()">⚠ Flag & Next</button>
                     </div>
                 </div>
 
@@ -754,19 +754,41 @@
             }
         }
 
-        function markForReview() {
+        function markForReviewAndNext() {
             document.getElementById('markedCheckbox').checked = true;
             updateReviewState();
+            setTimeout(() => goToNextQuestion(), 300);
         }
 
-        function flagIssue() {
+        function flagIssueAndNext() {
             document.getElementById('flaggedCheckbox').checked = true;
             updateReviewState();
+            setTimeout(() => goToNextQuestion(), 300);
+        }
+
+        function goToNextQuestion() {
+            const currentIndex = allQuestions.findIndex(q => q.id === currentQuestion.id);
+            if (currentIndex >= 0 && currentIndex < allQuestions.length - 1) {
+                const nextQuestion = allQuestions[currentIndex + 1];
+                selectQuestion(nextQuestion.id);
+                // Scroll to top of detail view
+                setTimeout(() => {
+                    const detailContent = document.querySelector('.detail-content');
+                    if (detailContent) detailContent.scrollTop = 0;
+                }, 100);
+            } else if (currentIndex === allQuestions.length - 1) {
+                // If on last question of page, go to next page
+                if (currentPage < Math.ceil(data.total / 50)) {
+                    goToPage(currentPage + 1);
+                } else {
+                    alert('✓ Reached end of questions!');
+                }
+            }
         }
 
         function saveReviewState() {
             updateReviewState();
-            alert('Notes saved!');
+            alert('✓ Notes saved! Click "Mark & Next" to continue reviewing');
         }
 
         // Pagination
