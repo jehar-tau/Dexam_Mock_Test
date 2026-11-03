@@ -963,7 +963,7 @@
             // Wrap review content in review mode section
             const wrappedHtml = `
                 <div style="position: relative;">
-                    <div style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center;">
+                    <div id="modeToggleContainer" style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center;">
                         <button id="reviewModeBtn" class="mode-btn active" onclick="toggleViewMode('review')">📋 Review Mode</button>
                         <button id="examModeBtn" class="mode-btn" onclick="toggleViewMode('exam')">📝 Exam Mode</button>
                     </div>
@@ -1101,19 +1101,25 @@
             viewMode = mode;
             const reviewSection = document.getElementById('reviewMode');
             const examSection = document.getElementById('examMode');
-            const reviewBtn = document.getElementById('reviewModeBtn');
-            const examBtn = document.getElementById('examModeBtn');
+            const modeToggleContainer = document.getElementById('modeToggleContainer');
 
             if (mode === 'review') {
                 reviewSection.style.display = 'block';
                 examSection.style.display = 'none';
-                reviewBtn.classList.add('active');
-                examBtn.classList.remove('active');
+                // Show both buttons in review mode
+                if (modeToggleContainer) {
+                    modeToggleContainer.innerHTML = `
+                        <button id="reviewModeBtn" class="mode-btn active" onclick="toggleViewMode('review')">📋 Review Mode</button>
+                        <button id="examModeBtn" class="mode-btn" onclick="toggleViewMode('exam')">📝 Exam Mode</button>
+                    `;
+                }
             } else {
                 reviewSection.style.display = 'none';
                 examSection.style.display = 'block';
-                reviewBtn.classList.remove('active');
-                examBtn.classList.add('active');
+                // Show only review button in exam mode
+                if (modeToggleContainer) {
+                    modeToggleContainer.innerHTML = `<button class="mode-btn active" onclick="toggleViewMode('review')">← Back to Review</button>`;
+                }
             }
         }
 
