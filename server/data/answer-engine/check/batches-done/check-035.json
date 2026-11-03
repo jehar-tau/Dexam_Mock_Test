@@ -1,0 +1,652 @@
+[
+ {
+  "id": "nift-bft-written-sample-q58",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many spherical bullets can be made out of a lead cylinder 28 cm high and 6 cm radius, each bullet being 1.5 cm in diameter?",
+  "options": [
+   {
+    "position": "A",
+    "text": "1972"
+   },
+   {
+    "position": "B",
+    "text": "1279"
+   },
+   {
+    "position": "C",
+    "text": "1792"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q59",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "59",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A cylinder, a hemisphere and a cone is described on the same base and within the same height. Find the ratio of their volumes in the same order.",
+  "options": [
+   {
+    "position": "A",
+    "text": "2:1:3"
+   },
+   {
+    "position": "B",
+    "text": "1:2:3"
+   },
+   {
+    "position": "C",
+    "text": "3:2:1"
+   },
+   {
+    "position": "D",
+    "text": "3:1:2"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q61",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "61",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If the markup percentage of an article is 50% and discount percentage is also 20%, then the profit percentage will be",
+  "options": [
+   {
+    "position": "A",
+    "text": "10%"
+   },
+   {
+    "position": "B",
+    "text": "25%"
+   },
+   {
+    "position": "C",
+    "text": "30%"
+   },
+   {
+    "position": "D",
+    "text": "20%"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q71",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Find the L.C.M. of 2520 and 5265.",
+  "options": [
+   {
+    "position": "A",
+    "text": "249480"
+   },
+   {
+    "position": "B",
+    "text": "294840"
+   },
+   {
+    "position": "C",
+    "text": "284094"
+   },
+   {
+    "position": "D",
+    "text": "209484 (1) 28 (2) 30"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q86",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "86",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Rathore is married to Sharmila. Ramneek is married to Sharmila's sister Manjulika. Akhilesh is the son of Manjulika's husband Ramneek. How is Rathore related to Akhilesh?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Aunt"
+   },
+   {
+    "position": "B",
+    "text": "Uncle"
+   },
+   {
+    "position": "C",
+    "text": "Brother"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q88",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "(3 6 (4",
+  "options": [
+   {
+    "position": "A",
+    "text": "EREJTCION"
+   },
+   {
+    "position": "B",
+    "text": "NOITJECER t 'paka ma'a 3e & 'dogs are friendly, ra pa ka' aT ate 'cats are friendly' ait 'ma ka la' at atet & 'dogs are loving'. (2) loving (1) friendly (3) dogs (2) cats (1) friendly (3) are"
+   },
+   {
+    "position": "C",
+    "text": "TOINCEJER"
+   },
+   {
+    "position": "D",
+    "text": "NOITCEJER"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q103",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who were the first to colonize Goa?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Portuguese"
+   },
+   {
+    "position": "B",
+    "text": "French"
+   },
+   {
+    "position": "C",
+    "text": "Dutch"
+   },
+   {
+    "position": "D",
+    "text": "English"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q104",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "104",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following looted the temple of Somnath?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mahmud of Ghazni"
+   },
+   {
+    "position": "B",
+    "text": "Changhiz Khan"
+   },
+   {
+    "position": "C",
+    "text": "Mohammad Ghori"
+   },
+   {
+    "position": "D",
+    "text": "Nadir Shah"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q105",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "105",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Mahatma Gandhi started Satyagraha movement in 1919 in protest against the",
+  "options": [
+   {
+    "position": "A",
+    "text": "Simon Commission."
+   },
+   {
+    "position": "B",
+    "text": "Champaran wrongs."
+   },
+   {
+    "position": "C",
+    "text": "proposed Rowlatt Act."
+   },
+   {
+    "position": "D",
+    "text": "colonial exploitation of India."
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q106",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "106",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following was the Chairman of the Drafting Committee of the Indian Constitution?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Rajendra Prasad"
+   },
+   {
+    "position": "B",
+    "text": "Tej Bahadur Sapru"
+   },
+   {
+    "position": "C",
+    "text": "C. Rajagopalachari"
+   },
+   {
+    "position": "D",
+    "text": "B R Ambedkar"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q107",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "107",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who appoints/elects the Chairman of Public Accounts Committee (PAC) of the Parliament?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Union Cabinet of India"
+   },
+   {
+    "position": "B",
+    "text": "Speaker of Lok Sabha"
+   },
+   {
+    "position": "C",
+    "text": "President of India"
+   },
+   {
+    "position": "D",
+    "text": "Members of PAC"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q108",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "108",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In India, Ten Rupee notes bear the signature of",
+  "options": [
+   {
+    "position": "A",
+    "text": "President of India."
+   },
+   {
+    "position": "B",
+    "text": "Finance Minister of India."
+   },
+   {
+    "position": "C",
+    "text": "Secretary, Ministry of Finance, India."
+   },
+   {
+    "position": "D",
+    "text": "Governor, Reserve Bank of India."
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q109",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In which of the following banks one cannot open a personal account?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Commercial Bank"
+   },
+   {
+    "position": "B",
+    "text": "Cooperative Bank"
+   },
+   {
+    "position": "C",
+    "text": "Scheduled Bank"
+   },
+   {
+    "position": "D",
+    "text": "Reserve Bank of India"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q110",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "110",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Atmospheric pressure exerted on Earth is due to",
+  "options": [
+   {
+    "position": "A",
+    "text": "gravitational pull of the Earth."
+   },
+   {
+    "position": "B",
+    "text": "rotation of Earth."
+   },
+   {
+    "position": "C",
+    "text": "revolution of Earth."
+   },
+   {
+    "position": "D",
+    "text": "uneven heating of Earth."
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q111",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "111",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which instrument is used for measuring the Atmospheric Pressure?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Anemometer."
+   },
+   {
+    "position": "B",
+    "text": "Barometer."
+   },
+   {
+    "position": "C",
+    "text": "Hygrometer."
+   },
+   {
+    "position": "D",
+    "text": "Thermometer."
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q113",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "113",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Script', an online furniture, kitchen, home accessories etc. platform is a venture of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Future Group"
+   },
+   {
+    "position": "B",
+    "text": "Godrej"
+   },
+   {
+    "position": "C",
+    "text": "Hindware"
+   },
+   {
+    "position": "D",
+    "text": "Landmark"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q114",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "114",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Virasat', a range of jewellery collection which is promoted by Indian actress Deepika Padukone is from the house of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Joyalukkas Jewellery"
+   },
+   {
+    "position": "B",
+    "text": "Kalyan Jewellers"
+   },
+   {
+    "position": "C",
+    "text": "Tanishq"
+   },
+   {
+    "position": "D",
+    "text": "Malabar Gold and Diamonds"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q116",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "116",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'CANTABIL', the popular apparel brand name is from",
+  "options": [
+   {
+    "position": "A",
+    "text": "Italy"
+   },
+   {
+    "position": "B",
+    "text": "India"
+   },
+   {
+    "position": "C",
+    "text": "Singapore"
+   },
+   {
+    "position": "D",
+    "text": "Canada"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q117",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "117",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following is known as the 'Golden Fibre' in Indian textile industry?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Silk"
+   },
+   {
+    "position": "B",
+    "text": "Wool"
+   },
+   {
+    "position": "C",
+    "text": "Jute"
+   },
+   {
+    "position": "D",
+    "text": "Cotton"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q118",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "118",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which Indian film industry icon has been selected for the Dada Sahaeb Phalke award for the year 2018 for his/her contribution to the Indian film industry?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Manoj Kumar"
+   },
+   {
+    "position": "B",
+    "text": "Shashi Kapoor"
+   },
+   {
+    "position": "C",
+    "text": "Vinod Khanna"
+   },
+   {
+    "position": "D",
+    "text": "Amitabh Bachchan"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q119",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "119",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following has recently become the 26* chief of Indian Air Force (IAF)?",
+  "options": [
+   {
+    "position": "A",
+    "text": "BS Dhanoa"
+   },
+   {
+    "position": "B",
+    "text": "RKS Bhadauria"
+   },
+   {
+    "position": "C",
+    "text": "Karambir Singh"
+   },
+   {
+    "position": "D",
+    "text": "Igroop S Ghuman"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q120",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "120",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following is one of the three joint winners of the Nobel Prize in Physics 2019?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Peter J Ratcliffe"
+   },
+   {
+    "position": "B",
+    "text": "Michel Mayor"
+   },
+   {
+    "position": "C",
+    "text": "Gregg L Semenza"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q121",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "121",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In which city of Tamil Nadu, Prime Minister Narendra Modi met Chinese President Xi Jinping in October 2019?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Chidambaram"
+   },
+   {
+    "position": "B",
+    "text": "Kancheepuram"
+   },
+   {
+    "position": "C",
+    "text": "Mamallapuram"
+   },
+   {
+    "position": "D",
+    "text": "Mettupalayam"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q122",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which team has won the 7h edition of Vivo Pro Kabaddi League 2019?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bengal Warriors"
+   },
+   {
+    "position": "B",
+    "text": "Dabang Delhi KC"
+   },
+   {
+    "position": "C",
+    "text": "Patna Pirates"
+   },
+   {
+    "position": "D",
+    "text": "Haryana Steelers"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q123",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which country has recently honoured Prime Minister Narendra Modi with \"The King Hamad Order of the Renaissance\"?",
+  "options": [
+   {
+    "position": "A",
+    "text": "United Arab Emirates"
+   },
+   {
+    "position": "B",
+    "text": "Saudi Arabia"
+   },
+   {
+    "position": "C",
+    "text": "Jordan"
+   },
+   {
+    "position": "D",
+    "text": "Bahrain"
+   }
+  ]
+ }
+]

@@ -1,0 +1,602 @@
+{
+ "nift-2013-written-set4-q138": {
+  "needsContext": true,
+  "broken": false,
+  "why": "no question stem; section direction missing"
+ },
+ "nift-2013-written-set5-q1": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2013-written-set5-q2": {
+  "needsContext": true,
+  "broken": true,
+  "why": "synonym/antonym direction and target word not shown; option B merged with other question"
+ },
+ "nift-2013-written-set5-q4": {
+  "needsContext": true,
+  "broken": true,
+  "why": "synonym/antonym direction and target word not shown; option B merged with other question"
+ },
+ "nift-2013-written-set5-q6": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2013-written-set5-q7": {
+  "needsContext": true,
+  "broken": false,
+  "why": "bare word; section direction (plural form) missing"
+ },
+ "nift-2013-written-set5-q8": {
+  "needsContext": true,
+  "broken": false,
+  "why": "bare word; section direction (plural form) missing"
+ },
+ "nift-2013-written-set5-q9": {
+  "needsContext": true,
+  "broken": false,
+  "why": "bare word; section direction (plural form) missing"
+ },
+ "nift-2013-written-set5-q10": {
+  "needsContext": true,
+  "broken": false,
+  "why": "bare word; section direction (plural form) missing"
+ },
+ "nift-2013-written-set5-q11": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q12": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q13": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q14": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q15": {
+  "needsContext": true,
+  "broken": false,
+  "why": "idiom/phrase to be explained not marked; direction missing"
+ },
+ "nift-2013-written-set5-q16": {
+  "needsContext": true,
+  "broken": false,
+  "why": "idiom/phrase to be explained not marked; direction missing"
+ },
+ "nift-2013-written-set5-q17": {
+  "needsContext": true,
+  "broken": false,
+  "why": "idiom/phrase to be explained not marked; direction missing"
+ },
+ "nift-2013-written-set5-q18": {
+  "needsContext": true,
+  "broken": false,
+  "why": "idiom/phrase to be explained not marked; direction missing"
+ },
+ "nift-2013-written-set5-q47": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option C merged with stray text; only three options"
+ },
+ "nift-2013-written-set5-q51": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q56": {
+  "needsContext": false,
+  "broken": true,
+  "why": "currency symbols garbled; only three options"
+ },
+ "nift-2013-written-set5-q61": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q63": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q67": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q70": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q71": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q72": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q74": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q78": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q79": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q81": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q82": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q83": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D merged with next question"
+ },
+ "nift-2013-written-set5-q88": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q101": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q102": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q106": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q107": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q108": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q109": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q110": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt starts with a blank; option D merged with stray text"
+ },
+ "nift-2013-written-set5-q111": {
+  "needsContext": false,
+  "broken": true,
+  "why": "blank in stem; only three options"
+ },
+ "nift-2013-written-set5-q118": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q119": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q120": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q121": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q122": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q123": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q124": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2013-written-set5-q125": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q1": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-bdes-written-q2": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-bdes-written-q4": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-bdes-written-q5": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-bdes-written-q6": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-bdes-written-q7": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-bdes-written-q9": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-bdes-written-q10": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-bdes-written-q11": {
+  "needsContext": true,
+  "broken": false,
+  "why": "bare word; section direction (plural form) missing"
+ },
+ "nift-2014-bdes-written-q12": {
+  "needsContext": true,
+  "broken": true,
+  "why": "bare word; direction missing; footer noise in option D"
+ },
+ "nift-2014-bdes-written-q13": {
+  "needsContext": true,
+  "broken": false,
+  "why": "bare word; section direction (plural form) missing"
+ },
+ "nift-2014-bdes-written-q14": {
+  "needsContext": true,
+  "broken": false,
+  "why": "bare word; section direction (plural form) missing"
+ },
+ "nift-2014-bdes-written-q15": {
+  "needsContext": true,
+  "broken": true,
+  "why": "bare word; direction missing; option D merged with next section"
+ },
+ "nift-2014-bdes-written-q24": {
+  "needsContext": false,
+  "broken": true,
+  "why": "sentence stem truncated; option D merged with stray text"
+ },
+ "nift-2014-bdes-written-q25": {
+  "needsContext": false,
+  "broken": true,
+  "why": "blank missing from stem; footer noise in option D"
+ },
+ "nift-2014-bdes-written-q46": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q47": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q48": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q49": {
+  "needsContext": false,
+  "broken": true,
+  "why": "stray text in stem; only three options"
+ },
+ "nift-2014-bdes-written-q50": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option A merged with other questions"
+ },
+ "nift-2014-bdes-written-q52": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option A merged with other question"
+ },
+ "nift-2014-bdes-written-q57": {
+  "needsContext": false,
+  "broken": true,
+  "why": "stem missing profit rate; currency symbols garbled"
+ },
+ "nift-2014-bdes-written-q62": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q63": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q64": {
+  "needsContext": false,
+  "broken": true,
+  "why": "footer noise in option D"
+ },
+ "nift-2014-bdes-written-q65": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D merged with next question"
+ },
+ "nift-2014-bdes-written-q67": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q68": {
+  "needsContext": false,
+  "broken": true,
+  "why": "stem/option C garbled"
+ },
+ "nift-2014-bdes-written-q69": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D garbled"
+ },
+ "nift-2014-bdes-written-q70": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q76": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q77": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q78": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q79": {
+  "needsContext": true,
+  "broken": false,
+  "why": "odd-one-out/wrong-number direction missing"
+ },
+ "nift-2014-bdes-written-q80": {
+  "needsContext": true,
+  "broken": false,
+  "why": "odd-one-out/wrong-number direction missing"
+ },
+ "nift-2014-bdes-written-q81": {
+  "needsContext": true,
+  "broken": false,
+  "why": "odd-one-out/wrong-number direction missing"
+ },
+ "nift-2014-bdes-written-q82": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q84": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q85": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q86": {
+  "needsContext": false,
+  "broken": true,
+  "why": "stem garbled/merged ('Gauta If'); footer noise"
+ },
+ "nift-2014-bdes-written-q87": {
+  "needsContext": false,
+  "broken": true,
+  "why": "stray text in stem; only three options"
+ },
+ "nift-2014-bdes-written-q88": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q89": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q90": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q102": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q103": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D merged with stray text"
+ },
+ "nift-2014-bdes-written-q104": {
+  "needsContext": false,
+  "broken": true,
+  "why": "footer noise in option D"
+ },
+ "nift-2014-bdes-written-q105": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q107": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q108": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q109": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q122": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q124": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-bdes-written-q125": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-mdes-written-q1": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q2": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q3": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q4": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q5": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q6": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q7": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q8": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q9": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q10": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym direction and target word not shown"
+ },
+ "nift-2014-mdes-written-q12": {
+  "needsContext": true,
+  "broken": true,
+  "why": "idiom not marked; direction missing; footer noise in option D"
+ },
+ "nift-2014-mdes-written-q14": {
+  "needsContext": true,
+  "broken": false,
+  "why": "idiom/phrase not marked; direction missing"
+ },
+ "nift-2014-mdes-written-q15": {
+  "needsContext": true,
+  "broken": false,
+  "why": "idiom/phrase not marked; direction missing"
+ },
+ "nift-2014-mdes-written-q16": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-mdes-written-q20": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-mdes-written-q21": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ },
+ "nift-2014-mdes-written-q22": {
+  "needsContext": false,
+  "broken": false,
+  "why": ""
+ }
+}

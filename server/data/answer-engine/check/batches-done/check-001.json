@@ -1,0 +1,11 @@
+[
+ {
+  "id": "ceed-2019-q4",
+  "paper": "ceed-2019",
+  "questionNo": "4",
+  "type": "NAT",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2019/blocks/ceed-2019-q4.png",
+  "prompt": "How much distance (in cm) will the bicycle shown below travel, if the pedal makes 1.5 revolutions? (Assume π = 22/7).",
+  "options": []
+ }
+]

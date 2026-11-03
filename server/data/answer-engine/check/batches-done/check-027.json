@@ -1,0 +1,644 @@
+[
+ {
+  "id": "nift-2014-bdes-written-q1",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "This will gratify some people and surprise the rest.",
+  "options": [
+   {
+    "position": "A",
+    "text": "delight"
+   },
+   {
+    "position": "B",
+    "text": "sorrow"
+   },
+   {
+    "position": "C",
+    "text": "depress"
+   },
+   {
+    "position": "D",
+    "text": "annoy"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q2",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He heard my request with indifference.",
+  "options": [
+   {
+    "position": "A",
+    "text": "anger"
+   },
+   {
+    "position": "B",
+    "text": "disinterest"
+   },
+   {
+    "position": "C",
+    "text": "happiness"
+   },
+   {
+    "position": "D",
+    "text": "surprise"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q4",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "North Korea has been pursuing a clandestine nuclear weapons programme.",
+  "options": [
+   {
+    "position": "A",
+    "text": "openly"
+   },
+   {
+    "position": "B",
+    "text": "progressive"
+   },
+   {
+    "position": "C",
+    "text": "huge"
+   },
+   {
+    "position": "D",
+    "text": "secretive"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q5",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He addressed a mammoth political rally.",
+  "options": [
+   {
+    "position": "A",
+    "text": "peaceful"
+   },
+   {
+    "position": "B",
+    "text": "violent"
+   },
+   {
+    "position": "C",
+    "text": "huge"
+   },
+   {
+    "position": "D",
+    "text": "small"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q6",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "One should not go for transient solution of a problem.",
+  "options": [
+   {
+    "position": "A",
+    "text": "brief"
+   },
+   {
+    "position": "B",
+    "text": "temporary"
+   },
+   {
+    "position": "C",
+    "text": "permanent"
+   },
+   {
+    "position": "D",
+    "text": "voletile"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q7",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "To mitigate the severity of his punishment, he pleaded guilty to the change.",
+  "options": [
+   {
+    "position": "A",
+    "text": "reduce"
+   },
+   {
+    "position": "B",
+    "text": "increase"
+   },
+   {
+    "position": "C",
+    "text": "lessen"
+   },
+   {
+    "position": "D",
+    "text": "complicate"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q8",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The glass jar you are using is very fragile. (i) broad",
+  "options": [
+   {
+    "position": "A",
+    "text": "tall"
+   },
+   {
+    "position": "B",
+    "text": "strong"
+   },
+   {
+    "position": "C",
+    "text": "heavy"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q9",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He appeared elated on hearing the news.",
+  "options": [
+   {
+    "position": "A",
+    "text": "exasperated"
+   },
+   {
+    "position": "B",
+    "text": "depressed"
+   },
+   {
+    "position": "C",
+    "text": "desperate"
+   },
+   {
+    "position": "D",
+    "text": "anxious"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q10",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "We had a delectable meal yesterday.",
+  "options": [
+   {
+    "position": "A",
+    "text": "nice"
+   },
+   {
+    "position": "B",
+    "text": "tasty"
+   },
+   {
+    "position": "C",
+    "text": "heavy"
+   },
+   {
+    "position": "D",
+    "text": "unsavory"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q11",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Window",
+  "options": [
+   {
+    "position": "A",
+    "text": "Windows"
+   },
+   {
+    "position": "B",
+    "text": "Window"
+   },
+   {
+    "position": "C",
+    "text": "Windowes"
+   },
+   {
+    "position": "D",
+    "text": "Windoos"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q12",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Brush",
+  "options": [
+   {
+    "position": "A",
+    "text": "Brushs"
+   },
+   {
+    "position": "B",
+    "text": "Brushes"
+   },
+   {
+    "position": "C",
+    "text": "Brushies"
+   },
+   {
+    "position": "D",
+    "text": "Brushys BT1000/C/2K14/02 2"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q13",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Duty",
+  "options": [
+   {
+    "position": "A",
+    "text": "Dutys"
+   },
+   {
+    "position": "B",
+    "text": "Dutyes"
+   },
+   {
+    "position": "C",
+    "text": "Duties •"
+   },
+   {
+    "position": "D",
+    "text": "Dutyies"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q14",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Wife",
+  "options": [
+   {
+    "position": "A",
+    "text": "Wifes"
+   },
+   {
+    "position": "B",
+    "text": "Wifys"
+   },
+   {
+    "position": "C",
+    "text": "Wifies"
+   },
+   {
+    "position": "D",
+    "text": "Wives"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q15",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Tooth",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tooth"
+   },
+   {
+    "position": "B",
+    "text": "Tooths"
+   },
+   {
+    "position": "C",
+    "text": "Teeth"
+   },
+   {
+    "position": "D",
+    "text": "Toothies irections (Questions 16-20): Choose the option which best expresses the meaning of the underlined liom/phrase in the sentence. 5. Students turned a deaf ear to the instructions of the principal. (1) gave careful hearing (2) did not pay attention (3) were deadly opposed (4) posed indifferenc"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q24",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Make sure you put your name at",
+  "options": [
+   {
+    "position": "A",
+    "text": "the"
+   },
+   {
+    "position": "B",
+    "text": "an"
+   },
+   {
+    "position": "C",
+    "text": "a"
+   },
+   {
+    "position": "D",
+    "text": "of delicious."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q25",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Thank you for the lunch. It was",
+  "options": [
+   {
+    "position": "A",
+    "text": "totally"
+   },
+   {
+    "position": "B",
+    "text": "fairly"
+   },
+   {
+    "position": "C",
+    "text": "completely"
+   },
+   {
+    "position": "D",
+    "text": "absolutely BT1000/C/2K14/02 3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q46",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "36 men can complete a piece of work in 18 days. In how many days will 27 men complete the same work?",
+  "options": [
+   {
+    "position": "A",
+    "text": "12"
+   },
+   {
+    "position": "B",
+    "text": "18"
+   },
+   {
+    "position": "C",
+    "text": "22"
+   },
+   {
+    "position": "D",
+    "text": "24"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q47",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "At what rate percent per annum will a sum of money double in 16 years?",
+  "options": [
+   {
+    "position": "A",
+    "text": "6.25% p.a."
+   },
+   {
+    "position": "B",
+    "text": "7.0% p.a."
+   },
+   {
+    "position": "C",
+    "text": "6.5% p.a."
+   },
+   {
+    "position": "D",
+    "text": "7.25% p.a."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q49",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "49",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If seven spiders make seven webs in seven days, then one spider will make one web in how many days? 7",
+  "options": [
+   {
+    "position": "A",
+    "text": "1 d"
+   },
+   {
+    "position": "B",
+    "text": "7"
+   },
+   {
+    "position": "C",
+    "text": "49"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q50",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "On dividing a certain number by 342, we get 47 as the remainder. If the same number is divided by 18, what will be the remainder? if",
+  "options": [
+   {
+    "position": "A",
+    "text": "9 789x789×789+ 211x211x211 =?' g 51. Simplify: 789x789-789x211+211x211 (2) 1000 (3) 1020 (4) 1011 (1) 1010"
+   },
+   {
+    "position": "B",
+    "text": "13"
+   },
+   {
+    "position": "C",
+    "text": "11"
+   },
+   {
+    "position": "D",
+    "text": "15"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q57",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "57",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A person incurs 5% loss by selling a watch for ‹ 1140. At what price should the watch be sold to earn profit?",
+  "options": [
+   {
+    "position": "A",
+    "text": "7 1250"
+   },
+   {
+    "position": "B",
+    "text": "г 1260"
+   },
+   {
+    "position": "C",
+    "text": "F 1270"
+   },
+   {
+    "position": "D",
+    "text": "F 1255 3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q62",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The average of 20 numbers is zero. Of them, at the most, how many may be greater than zero?",
+  "options": [
+   {
+    "position": "A",
+    "text": "0"
+   },
+   {
+    "position": "B",
+    "text": "1"
+   },
+   {
+    "position": "C",
+    "text": "10"
+   },
+   {
+    "position": "D",
+    "text": "19"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q64",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "64",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Three numbers are in the ratio 4: 5: 6 and their average is 25. The largest number is",
+  "options": [
+   {
+    "position": "A",
+    "text": "30"
+   },
+   {
+    "position": "B",
+    "text": "32"
+   },
+   {
+    "position": "C",
+    "text": "36"
+   },
+   {
+    "position": "D",
+    "text": "42 BT1000/C/2K14/02 8"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q65",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "65",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The ages of two persons differ by 16 years. If 6 years ago, the elder one was 3 times as old as the younger one, find their present ages.",
+  "options": [
+   {
+    "position": "A",
+    "text": "12 & 28"
+   },
+   {
+    "position": "B",
+    "text": "13 & 29"
+   },
+   {
+    "position": "C",
+    "text": "14 & 30"
+   },
+   {
+    "position": "D",
+    "text": "15 & 31 f 66. Evaluate: (0.00032)3 (I) 2 (4) 125 25 75 175"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q67",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "67",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "An inspector rejects 0.08% of the meters as defective. How many meters will he examine to reject 2 meters?",
+  "options": [
+   {
+    "position": "A",
+    "text": "2400"
+   },
+   {
+    "position": "B",
+    "text": "2500"
+   },
+   {
+    "position": "C",
+    "text": "2300"
+   },
+   {
+    "position": "D",
+    "text": "2200"
+   }
+  ]
+ }
+]

@@ -1,0 +1,28 @@
+[
+ {
+  "id": "nift-2013-written-set1-q149",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "149",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The state where 'Kantha', type of embroidery popularly used in Saris is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bihar."
+   },
+   {
+    "position": "B",
+    "text": "West Bengal."
+   },
+   {
+    "position": "C",
+    "text": "Assam."
+   },
+   {
+    "position": "D",
+    "text": "Karnataka."
+   }
+  ]
+ }
+]

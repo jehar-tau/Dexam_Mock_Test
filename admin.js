@@ -39,6 +39,7 @@ const officialPaperFilter = document.getElementById("officialPaperFilter");
 const officialTypeFilter = document.getElementById("officialTypeFilter");
 const officialStatusFilter = document.getElementById("officialStatusFilter");
 const officialExplanationFilter = document.getElementById("officialExplanationFilter");
+const officialCropFilter = document.getElementById("officialCropFilter");
 const officialSearch = document.getElementById("officialSearch");
 const officialFilterBtn = document.getElementById("officialFilterBtn");
 const officialQuestionInfo = document.getElementById("officialQuestionInfo");
@@ -55,6 +56,9 @@ const editDifficulty = document.getElementById("editDifficulty");
 const editAnswer = document.getElementById("editAnswer");
 const editStatus = document.getElementById("editStatus");
 const editExplanationStatus = document.getElementById("editExplanationStatus");
+const editCropReview = document.getElementById("editCropReview");
+const editFigures = document.getElementById("editFigures");
+const editFigureList = document.getElementById("editFigureList");
 const editExplanation = document.getElementById("editExplanation");
 const editReference = document.getElementById("editReference");
 const saveOfficialBtn = document.getElementById("saveOfficialBtn");
@@ -66,7 +70,7 @@ let shown = 25;
 let filter = { search: "" };
 let officialState = null;
 let officialShown = 50;
-let officialFilter = { paperId: "", type: "", status: "", explanationStatus: "", search: "" };
+let officialFilter = { paperId: "", type: "", status: "", explanationStatus: "", cropReview: "", search: "" };
 let officialQuestionRows = [];
 
 function populateSelect(select, options, placeholder) {
@@ -156,6 +160,8 @@ function renderOfficialQuestions(result) {
     const page = question.pageImages && question.pageImages[0];
     const answerClass = question.answerKey ? "good" : "warn";
     const explanationClass = question.explanationStatus === "verified" ? "good" : question.explanationStatus === "ai-draft" ? "warn" : "bad";
+    const hasCrop = question.figurePaths && question.figurePaths.length;
+    const cropClass = question.cropReview === "approved" ? "good" : question.cropReview === "rejected" ? "bad" : "warn";
     const prompt = String(question.prompt || "").slice(0, 260);
     return `<tr>
       <td>${escapeHtml(question.questionNo)}</td>
@@ -165,7 +171,7 @@ function renderOfficialQuestions(result) {
       <td class="prompt">${escapeHtml(prompt)}${question.prompt && question.prompt.length > 260 ? "…" : ""}
         <div class="muted">${escapeHtml(question.id)} ${page ? `· <a href="${escapeHtml(page)}" target="_blank" rel="noreferrer">page image</a>` : ""}</div>
       </td>
-      <td><span class="pill ${explanationClass}">${escapeHtml(question.explanationStatus)}</span><br /><button class="secondary" data-edit="${escapeHtml(question.id)}">Edit</button></td>
+      <td><span class="pill ${explanationClass}">${escapeHtml(question.explanationStatus)}</span>${hasCrop ? `<br /><span class="pill ${cropClass}">crop ${escapeHtml(question.cropReview)}</span>` : ""}<br /><button class="secondary" data-edit="${escapeHtml(question.id)}">Edit</button></td>
     </tr>`;
   });
   officialQuestionsTbody.innerHTML = rows.join("");
@@ -221,6 +227,13 @@ function openOfficialEditor(id) {
   editAnswer.value = question.answerKey || "";
   editStatus.value = question.status || "review";
   editExplanationStatus.value = question.explanationStatus || "pending";
+  const figures = question.figurePaths || [];
+  editCropReview.value = question.cropReview || "pending";
+  editCropReview.disabled = !figures.length;
+  editFigures.style.display = figures.length ? "" : "none";
+  editFigureList.innerHTML = figures
+    .map((path) => `<a href="${escapeHtml(path)}" target="_blank" rel="noreferrer"><img src="${escapeHtml(path)}" alt="Figure crop for ${escapeHtml(question.id)}" style="max-width:100%;border:1px solid #ccc;margin-bottom:8px" /></a>`)
+    .join("");
   editExplanation.value = question.explanation || "";
   editReference.value = question.referenceUrl || "";
   officialEditor.style.display = "";
@@ -246,6 +259,7 @@ function loadOfficialQuestions() {
   if (officialFilter.type) params.set("type", officialFilter.type);
   if (officialFilter.status) params.set("status", officialFilter.status);
   if (officialFilter.explanationStatus) params.set("explanationStatus", officialFilter.explanationStatus);
+  if (officialFilter.cropReview) params.set("cropReview", officialFilter.cropReview);
   if (officialFilter.search) params.set("search", officialFilter.search);
   return fetch("/api/official/questions?" + params.toString())
     .then((response) => response.json())
@@ -462,6 +476,7 @@ officialFilterBtn.addEventListener("click", (event) => {
     type: officialTypeFilter.value,
     status: officialStatusFilter.value,
     explanationStatus: officialExplanationFilter.value,
+    cropReview: officialCropFilter.value,
     search: officialSearch.value.trim()
   };
   officialShown = 50;
@@ -493,6 +508,7 @@ saveOfficialBtn.addEventListener("click", async (event) => {
     explanationSource: "manual-review",
     referenceUrl: editReference.value.trim()
   };
+  if (!editCropReview.disabled) payload.cropReview = editCropReview.value;
   try {
     const response = await fetch("/api/official/questions/" + encodeURIComponent(id), {
       method: "PATCH",

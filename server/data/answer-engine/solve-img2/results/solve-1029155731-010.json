@@ -1,0 +1,104 @@
+{
+ "nift-2014-bdes-written-q56": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q61": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q74": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q95": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true,
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q96": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q97": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q98": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q99": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q101": {
+  "answer": "C",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q128": {
+  "answer": "C",
+  "confidence": "low",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-bdes-written-q145": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true,
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q146": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true,
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q148": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true,
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q150": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true,
+  "needsContext": true
+ }
+}

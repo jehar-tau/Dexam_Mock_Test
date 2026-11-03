@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 350px;
+            background: #fff;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .stat {
+            background: rgba(255,255,255,0.1);
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .filters {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .filter-group input {
+            font-size: 13px;
+        }
+
+        .questions-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .question-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 4px solid #ddd;
+        }
+
+        .question-item:hover {
+            background: #f9f9f9;
+            border-color: #3498db;
+            border-left-color: #3498db;
+        }
+
+        .question-item.active {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            border-left-color: #2196f3;
+        }
+
+        .question-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 6px;
+        }
+
+        .question-id {
+            font-weight: 600;
+            font-size: 12px;
+            color: #2196f3;
+        }
+
+        .question-tags {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 2px 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            color: #666;
+        }
+
+        .tag.exam {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .tag.type {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .tag.status {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .question-preview {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .question-detail {
+            flex: 1;
+            background: #fff;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-header {
+            background: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .detail-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .detail-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #f0f0f0;
+            border-color: #999;
+        }
+
+        .btn.primary {
+            background: #2196f3;
+            color: white;
+            border-color: #2196f3;
+        }
+
+        .btn.primary:hover {
+            background: #1976d2;
+        }
+
+        .btn.secondary {
+            background: #ff9800;
+            color: white;
+            border-color: #ff9800;
+        }
+
+        .btn.secondary:hover {
+            background: #f57c00;
+        }
+
+        .btn.success {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .detail-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            text-transform: uppercase;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 14px;
+            line-height: 1.6;
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            border-left: 3px solid #2196f3;
+        }
+
+        .figure-viewer {
+            margin-bottom: 15px;
+        }
+
+        .figure-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+
+        .figure-error {
+            background: #ffeaea;
+            padding: 10px;
+            border-radius: 4px;
+            color: #d32f2f;
+            font-size: 12px;
+        }
+
+        .options {
+            margin-bottom: 15px;
+        }
+
+        .option {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            border-left: 3px solid #9e9e9e;
+            font-size: 13px;
+        }
+
+        .option.empty {
+            color: #999;
+            font-style: italic;
+        }
+
+        .answer-key {
+            background: #e8f5e9;
+            padding: 12px;
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+            margin-bottom: 15px;
+        }
+
+        .answer-key-label {
+            font-size: 12px;
+            color: #388e3c;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .answer-key-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .review-section {
+            background: #fff9c4;
+            padding: 12px;
+            border-radius: 4px;
+            border-left: 3px solid #fbc02d;
+        }
+
+        .review-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            gap: 8px;
+        }
+
+        .review-checkbox input {
+            cursor: pointer;
+        }
+
+        .review-checkbox label {
+            cursor: pointer;
+            font-size: 13px;
+            flex: 1;
+        }
+
+        .review-notes {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .comparison {
+            background: #eceff1;
+            padding: 12px;
+            border-radius: 4px;
+            border-left: 3px solid #00838f;
+            font-size: 12px;
+        }
+
+        .comparison-status {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .pagination {
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .pagination button {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .pagination button:hover {
+            background: #f0f0f0;
+        }
+
+        .pagination button.active {
+            background: #2196f3;
+            color: white;
+            border-color: #2196f3;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: 40%;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .main {
+                height: 60%;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="header">
+                <h1>📊 Question Bank</h1>
+                <div class="stats" id="stats"></div>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Exam</label>
+                    <select id="examFilter">
+                        <option value="all">All Exams</option>
+                        <option value="UCEED">UCEED</option>
+                        <option value="NIFT">NIFT</option>
+                        <option value="NID">NID</option>
+                        <option value="CEED">CEED</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Type</label>
+                    <select id="typeFilter">
+                        <option value="all">All Types</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Status</label>
+                    <select id="statusFilter">
+                        <option value="all">All Statuses</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Search</label>
+                    <input type="text" id="searchInput" placeholder="Search questions...">
+                </div>
+            </div>
+
+            <div class="questions-list">
+                <div class="loading" id="questionsList">Loading questions...</div>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+        </div>
+
+        <div class="main">
+            <div class="question-detail">
+                <div class="empty-state" id="detailView">
+                    Select a question to view details
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+        let currentPage = 1;
+        let currentFilters = { exam: 'all', type: 'all', status: 'all', search: '' };
+        let currentQuestion = null;
+        let allQuestions = [];
+
+        // Initialize
+        async function init() {
+            await loadSummary();
+            await loadQuestions();
+        }
+
+        // Load summary and populate filters
+        async function loadSummary() {
+            try {
+                const res = await fetch(`${API_BASE}/summary`);
+                const summary = await res.json();
+
+                // Populate stats
+                const statsHtml = `
+                    <div class="stat"><div>Total</div><div class="stat-value">${summary.total_questions}</div></div>
+                    <div class="stat"><div>UCEED</div><div class="stat-value">${summary.exams.UCEED}</div></div>
+                    <div class="stat"><div>NIFT</div><div class="stat-value">${summary.exams.NIFT}</div></div>
+                    <div class="stat"><div>NID</div><div class="stat-value">${summary.exams.NID}</div></div>
+                `;
+                document.getElementById('stats').innerHTML = statsHtml;
+
+                // Populate type filter
+                const typeSelect = document.getElementById('typeFilter');
+                Object.keys(summary.types).sort().forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.textContent = `${type} (${summary.types[type]})`;
+                    typeSelect.appendChild(option);
+                });
+
+                // Populate status filter
+                const statusSelect = document.getElementById('statusFilter');
+                Object.keys(summary.statuses).sort().forEach(status => {
+                    const option = document.createElement('option');
+                    option.value = status;
+                    option.textContent = `${status} (${summary.statuses[status]})`;
+                    statusSelect.appendChild(option);
+                });
+            } catch (err) {
+                console.error('Error loading summary:', err);
+            }
+        }
+
+        // Load questions with current filters
+        async function loadQuestions() {
+            try {
+                const params = new URLSearchParams({
+                    exam: currentFilters.exam,
+                    type: currentFilters.type,
+                    status: currentFilters.status,
+                    search: currentFilters.search,
+                    page: currentPage,
+                    limit: 50
+                });
+
+                const res = await fetch(`${API_BASE}/questions?${params}`);
+                const data = await res.json();
+                allQuestions = data.data;
+
+                renderQuestionsList(data);
+                renderPagination(data);
+            } catch (err) {
+                console.error('Error loading questions:', err);
+                document.getElementById('questionsList').innerHTML = '<div class="error">Error loading questions</div>';
+            }
+        }
+
+        // Render questions list
+        function renderQuestionsList(data) {
+            const container = document.getElementById('questionsList');
+
+            if (data.data.length === 0) {
+                container.innerHTML = '<div class="empty-state">No questions found</div>';
+                return;
+            }
+
+            container.innerHTML = data.data.map(q => `
+                <div class="question-item" onclick="selectQuestion('${q.id}')">
+                    <div class="question-item-header">
+                        <div class="question-id">${q.id}</div>
+                        <div class="question-tags">
+                            <span class="tag exam">${q.exam}</span>
+                            <span class="tag type">${q.type}</span>
+                        </div>
+                    </div>
+                    <div class="question-preview">${q.question_text.substring(0, 100)}...</div>
+                </div>
+            `).join('');
+        }
+
+        // Render pagination
+        function renderPagination(data) {
+            const container = document.getElementById('pagination');
+            const pages = [];
+
+            for (let i = 1; i <= data.totalPages; i++) {
+                if (i === 1 || i === data.totalPages || (i >= data.page - 2 && i <= data.page + 2)) {
+                    pages.push(i);
+                }
+            }
+
+            const html = pages.map(p => `
+                <button class="${p === data.page ? 'active' : ''}" onclick="goToPage(${p})">
+                    ${p}
+                </button>
+            `).join('');
+
+            container.innerHTML = html;
+        }
+
+        // Select and display question
+        async function selectQuestion(id) {
+            try {
+                const res = await fetch(`${API_BASE}/questions/${id}`);
+                const question = await res.json();
+                currentQuestion = question;
+
+                // Mark as selected
+                document.querySelectorAll('.question-item').forEach((item, i) => {
+                    item.classList.toggle('active', allQuestions[i]?.id === id);
+                });
+
+                displayQuestion(question);
+            } catch (err) {
+                console.error('Error loading question:', err);
+            }
+        }
+
+        // Display question details
+        async function displayQuestion(q) {
+            const figureHtml = q.figure_image
+                ? `<div class="figure-viewer">
+                     <img src="${q.figure_image}" alt="Question figure" class="figure-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EImage not found%3C/text%3E%3C/svg%3E'">
+                   </div>`
+                : '';
+
+            const optionsHtml = q.options.length > 0
+                ? q.options.map((opt, i) => `<div class="option">${String.fromCharCode(65 + i)}. ${opt}</div>`).join('')
+                : '<div class="option empty">No options (Numerical Answer Type)</div>';
+
+            const comparisonRes = await fetch(`${API_BASE}/compare/${q.id}`);
+            const comparison = await comparisonRes.json();
+
+            const html = `
+                <div class="detail-header">
+                    <div>
+                        <div class="detail-title">${q.question_no}. ${q.question_text.substring(0, 80)}</div>
+                        <div class="detail-meta">
+                            Question ID: ${q.id} | ${q.exam} ${q.paper_id} | Type: ${q.type}
+                        </div>
+                    </div>
+                    <div class="detail-actions">
+                        <button class="btn primary" onclick="markForReview()">✓ Mark for Review</button>
+                        <button class="btn secondary" onclick="flagIssue()">⚠ Flag Issue</button>
+                    </div>
+                </div>
+
+                <div class="detail-content">
+                    <div class="section">
+                        <div class="section-title">Question</div>
+                        <div class="question-text">${q.question_text}</div>
+                    </div>
+
+                    ${figureHtml ? `<div class="section"><div class="section-title">Figure</div>${figureHtml}</div>` : ''}
+
+                    <div class="section">
+                        <div class="section-title">Options</div>
+                        <div class="options">${optionsHtml}</div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Answer</div>
+                        <div class="answer-key">
+                            <div class="answer-key-label">Answer Key (${q.answer_status})</div>
+                            <div class="answer-key-value">${q.answer_key}</div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Comparison</div>
+                        <div class="comparison">
+                            <div class="comparison-status">
+                                🔍 Machine Readable Bank: ✓ Present
+                            </div>
+                            <div class="comparison-status">
+                                🔍 Generic Bank: ${comparison.inGenericBank ? '✓ Found' : '✗ Not Found'}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Review & Notes</div>
+                        <div class="review-section">
+                            <div class="review-checkbox">
+                                <input type="checkbox" id="markedCheckbox" onchange="updateReviewState()">
+                                <label for="markedCheckbox">Mark for detailed review</label>
+                            </div>
+                            <div class="review-checkbox">
+                                <input type="checkbox" id="flaggedCheckbox" onchange="updateReviewState()">
+                                <label for="flaggedCheckbox">Flag issue found</label>
+                            </div>
+                            <textarea class="review-notes" id="notesTextarea" placeholder="Add notes about this question..." onchange="updateReviewState()"></textarea>
+                            <button class="btn success" style="margin-top: 8px; width: 100%;" onclick="saveReviewState()">Save Notes</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.querySelector('.question-detail').innerHTML = html;
+
+            // Load saved state
+            if (q.reviewState) {
+                document.getElementById('markedCheckbox').checked = q.reviewState.marked;
+                document.getElementById('flaggedCheckbox').checked = q.reviewState.flagged;
+                document.getElementById('notesTextarea').value = q.reviewState.notes;
+            }
+        }
+
+        async function updateReviewState() {
+            const marked = document.getElementById('markedCheckbox').checked;
+            const flagged = document.getElementById('flaggedCheckbox').checked;
+            const notes = document.getElementById('notesTextarea').value;
+
+            try {
+                await fetch(`${API_BASE}/questions/${currentQuestion.id}/mark`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ marked, flagged, notes })
+                });
+            } catch (err) {
+                console.error('Error updating review state:', err);
+            }
+        }
+
+        function markForReview() {
+            document.getElementById('markedCheckbox').checked = true;
+            updateReviewState();
+        }
+
+        function flagIssue() {
+            document.getElementById('flaggedCheckbox').checked = true;
+            updateReviewState();
+        }
+
+        function saveReviewState() {
+            updateReviewState();
+            alert('Notes saved!');
+        }
+
+        // Pagination
+        function goToPage(page) {
+            currentPage = page;
+            loadQuestions();
+            document.querySelector('.questions-list').scrollTop = 0;
+        }
+
+        // Event listeners
+        document.getElementById('examFilter').addEventListener('change', (e) => {
+            currentFilters.exam = e.target.value;
+            currentPage = 1;
+            loadQuestions();
+        });
+
+        document.getElementById('typeFilter').addEventListener('change', (e) => {
+            currentFilters.type = e.target.value;
+            currentPage = 1;
+            loadQuestions();
+        });
+
+        document.getElementById('statusFilter').addEventListener('change', (e) => {
+            currentFilters.status = e.target.value;
+            currentPage = 1;
+            loadQuestions();
+        });
+
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentFilters.search = e.target.value;
+                currentPage = 1;
+                loadQuestions();
+            }, 300);
+        });
+
+        // Start
+        init();
+    </script>
+</body>
+</html>

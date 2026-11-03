@@ -20,6 +20,9 @@ guard let image = NSImage(contentsOf: url),
     exit(2)
 }
 
+let markerPattern = try! NSRegularExpression(
+    pattern: "^\\s*(?:Q(?:uestion)?(?:\\s*(?:no|number)\\b)?\\s*[.:\\-]?\\s*)?\\d{1,3}\\s*[.):\\-]?", options: [.caseInsensitive])
+
 let request = VNRecognizeTextRequest()
 request.recognitionLevel = .accurate
 request.usesLanguageCorrection = true
@@ -31,13 +34,22 @@ do {
     for observation in request.results ?? [] {
         guard let candidate = observation.topCandidates(1).first else { continue }
         let box = observation.boundingBox
-        let payload: [String: Any] = [
+        var payload: [String: Any] = [
             "text": candidate.string,
             "x": box.origin.x,
             "y": box.origin.y,
             "w": box.size.width,
             "h": box.size.height
         ]
+        // The exact box of a leading question number ("Q.06", "Q7)", "28."), so crops can blank
+        // it out and questions can be mixed into new papers without their original numbers.
+        let text = candidate.string
+        if let match = markerPattern.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)),
+           let range = Range(match.range, in: text),
+           let marker = try? candidate.boundingBox(for: range) {
+            let rect = marker.boundingBox
+            payload["marker"] = ["x": rect.origin.x, "y": rect.origin.y, "w": rect.size.width, "h": rect.size.height]
+        }
         if let data = try? JSONSerialization.data(withJSONObject: payload),
            let line = String(data: data, encoding: .utf8) {
             print(line)

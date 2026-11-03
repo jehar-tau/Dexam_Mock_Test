@@ -1,0 +1,652 @@
+[
+ {
+  "id": "nift-2013-written-set3-q2",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Many species of animals have become extinct during the last hundred years.",
+  "options": [
+   {
+    "position": "A",
+    "text": "feeble"
+   },
+   {
+    "position": "B",
+    "text": "aggressive"
+   },
+   {
+    "position": "C",
+    "text": "scattered"
+   },
+   {
+    "position": "D",
+    "text": "non-existent"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q3",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The community is agog with speculation about the fate of the money collected.",
+  "options": [
+   {
+    "position": "A",
+    "text": "excited"
+   },
+   {
+    "position": "B",
+    "text": "worried"
+   },
+   {
+    "position": "C",
+    "text": "depressed"
+   },
+   {
+    "position": "D",
+    "text": "annoyed"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q5",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He urges to learn everything.",
+  "options": [
+   {
+    "position": "A",
+    "text": "desires"
+   },
+   {
+    "position": "B",
+    "text": "advises"
+   },
+   {
+    "position": "C",
+    "text": "supports"
+   },
+   {
+    "position": "D",
+    "text": "opposes"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q6",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A serene mind can never be the pioneer of a great revolution.",
+  "options": [
+   {
+    "position": "A",
+    "text": "nervous"
+   },
+   {
+    "position": "B",
+    "text": "jocular"
+   },
+   {
+    "position": "C",
+    "text": "earnest"
+   },
+   {
+    "position": "D",
+    "text": "agitated"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q7",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Matter expands on heating.",
+  "options": [
+   {
+    "position": "A",
+    "text": "shrinks"
+   },
+   {
+    "position": "B",
+    "text": "reduces"
+   },
+   {
+    "position": "C",
+    "text": "diminishes"
+   },
+   {
+    "position": "D",
+    "text": "contracts"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q8",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He climbed up a stationary wagon.",
+  "options": [
+   {
+    "position": "A",
+    "text": "moving"
+   },
+   {
+    "position": "B",
+    "text": "static"
+   },
+   {
+    "position": "C",
+    "text": "shunting"
+   },
+   {
+    "position": "D",
+    "text": "standing"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q9",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sheep",
+  "options": [
+   {
+    "position": "A",
+    "text": "sheep's"
+   },
+   {
+    "position": "B",
+    "text": "sheeps"
+   },
+   {
+    "position": "C",
+    "text": "sheepes"
+   },
+   {
+    "position": "D",
+    "text": "sheep"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q10",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Alumnus",
+  "options": [
+   {
+    "position": "A",
+    "text": "alumni"
+   },
+   {
+    "position": "B",
+    "text": "alumnus'"
+   },
+   {
+    "position": "C",
+    "text": "alumnuses"
+   },
+   {
+    "position": "D",
+    "text": "alumnus"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q11",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Toe",
+  "options": [
+   {
+    "position": "A",
+    "text": "toes"
+   },
+   {
+    "position": "B",
+    "text": "toss"
+   },
+   {
+    "position": "C",
+    "text": "tows"
+   },
+   {
+    "position": "D",
+    "text": "toe's"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q12",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Brake",
+  "options": [
+   {
+    "position": "A",
+    "text": "brakes"
+   },
+   {
+    "position": "B",
+    "text": "break"
+   },
+   {
+    "position": "C",
+    "text": "braks"
+   },
+   {
+    "position": "D",
+    "text": "brake's"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q13",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Thief",
+  "options": [
+   {
+    "position": "A",
+    "text": "thiefs MD 1400/B/2K13/02"
+   },
+   {
+    "position": "B",
+    "text": "thievs"
+   },
+   {
+    "position": "C",
+    "text": "thief's"
+   },
+   {
+    "position": "D",
+    "text": "thieves"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q14",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "One who despises persons of lower social position",
+  "options": [
+   {
+    "position": "A",
+    "text": "Prim"
+   },
+   {
+    "position": "B",
+    "text": "Snob"
+   },
+   {
+    "position": "C",
+    "text": "Prig"
+   },
+   {
+    "position": "D",
+    "text": "Aristocrat"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q15",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "One who is determined to exact full vengeance for wrongs done to him",
+  "options": [
+   {
+    "position": "A",
+    "text": "Vindicator"
+   },
+   {
+    "position": "B",
+    "text": "Usurer"
+   },
+   {
+    "position": "C",
+    "text": "Vindictive"
+   },
+   {
+    "position": "D",
+    "text": "Virulent"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q16",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "An associate in an office or institution",
+  "options": [
+   {
+    "position": "A",
+    "text": "Companion"
+   },
+   {
+    "position": "B",
+    "text": "Ally"
+   },
+   {
+    "position": "C",
+    "text": "Colleague"
+   },
+   {
+    "position": "D",
+    "text": "Accomplice"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q17",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The art of cutting trees and bushes into ornamental shapes",
+  "options": [
+   {
+    "position": "A",
+    "text": "Horticulture"
+   },
+   {
+    "position": "B",
+    "text": "Bonsai"
+   },
+   {
+    "position": "C",
+    "text": "Pruning"
+   },
+   {
+    "position": "D",
+    "text": "Topiary"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q18",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A formal written charge against a person for some crime or offence",
+  "options": [
+   {
+    "position": "A",
+    "text": "Rancor"
+   },
+   {
+    "position": "B",
+    "text": "Indictment"
+   },
+   {
+    "position": "C",
+    "text": "Animosity"
+   },
+   {
+    "position": "D",
+    "text": "Acrimony"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q19",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "To act in a fussy, uncertain way and not achieving much",
+  "options": [
+   {
+    "position": "A",
+    "text": "Fain"
+   },
+   {
+    "position": "B",
+    "text": "Faff"
+   },
+   {
+    "position": "C",
+    "text": "Trouble-maker"
+   },
+   {
+    "position": "D",
+    "text": "Annoying"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q21",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "21",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "I am afraid, the two brothers are at cross purposes.",
+  "options": [
+   {
+    "position": "A",
+    "text": "quarrel with each other"
+   },
+   {
+    "position": "B",
+    "text": "dislike each other"
+   },
+   {
+    "position": "C",
+    "text": "against each other"
+   },
+   {
+    "position": "D",
+    "text": "misunderstanding each other"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q22",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Some people have a habit of wearing their heart on their sleeve.",
+  "options": [
+   {
+    "position": "A",
+    "text": "avoiding being friendly with others"
+   },
+   {
+    "position": "B",
+    "text": "saying something which is not to be taken seriously"
+   },
+   {
+    "position": "C",
+    "text": "exposing their innermost feelings to others"
+   },
+   {
+    "position": "D",
+    "text": "wasting their time on unnecessary details."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q23",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The sight of the accident made my flesh creep.",
+  "options": [
+   {
+    "position": "A",
+    "text": "worried me"
+   },
+   {
+    "position": "B",
+    "text": "frightened me"
+   },
+   {
+    "position": "C",
+    "text": "confused me"
+   },
+   {
+    "position": "D",
+    "text": "drew my attention"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q24",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "She was received by her friends with open arms.",
+  "options": [
+   {
+    "position": "A",
+    "text": "indifferently"
+   },
+   {
+    "position": "B",
+    "text": "warmly"
+   },
+   {
+    "position": "C",
+    "text": "casually"
+   },
+   {
+    "position": "D",
+    "text": "coldly"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q25",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "There was a job for me to cut my teeth on.",
+  "options": [
+   {
+    "position": "A",
+    "text": "to try"
+   },
+   {
+    "position": "B",
+    "text": "to gain experience"
+   },
+   {
+    "position": "C",
+    "text": "to sharpen my wits MD 1400/B/2K13/02"
+   },
+   {
+    "position": "D",
+    "text": "to earn a decent salary"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q31",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "31",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "error.",
+  "options": [
+   {
+    "position": "A",
+    "text": "My brother went to church at"
+   },
+   {
+    "position": "B",
+    "text": "the Foundling Hospital on the morning,"
+   },
+   {
+    "position": "C",
+    "text": "still in ignorance of what"
+   },
+   {
+    "position": "D",
+    "text": "had happened on the previous night."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q67",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "67",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the least square number which is divisible by 3, 5, 6 and 9?",
+  "options": [
+   {
+    "position": "A",
+    "text": "900"
+   },
+   {
+    "position": "B",
+    "text": "700"
+   },
+   {
+    "position": "C",
+    "text": "500"
+   },
+   {
+    "position": "D",
+    "text": "None of these 2 = 1 +"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q71",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If one-third of one-fourth of a number is 15, then three-tenth of that number is",
+  "options": [
+   {
+    "position": "A",
+    "text": "35"
+   },
+   {
+    "position": "B",
+    "text": "36"
+   },
+   {
+    "position": "C",
+    "text": "45"
+   },
+   {
+    "position": "D",
+    "text": "54 . so that the result is a whole"
+   }
+  ]
+ }
+]

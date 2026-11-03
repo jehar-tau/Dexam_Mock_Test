@@ -1,0 +1,184 @@
+[
+ {
+  "id": "nift-2012-written-set4-q88",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A balloon leaves the earth at point A and rises at a uniform velocity. At the end of 1 minutes, 2 an observer situated at a distance of 200 m from A, finds the angular elevation of the balloon to be 600. What is the speed of the balloon ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "3•87 m/s"
+   },
+   {
+    "position": "B",
+    "text": "3 m/s"
+   },
+   {
+    "position": "C",
+    "text": "4•87 m/s"
+   },
+   {
+    "position": "D",
+    "text": "5•23 m/s"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q90",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "90",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A train after travelling 60 km meets with an accident and then proceeds at of its former rate 4 and arrives at the terminus 40 minutes late. Had the accident happened 25 km further on, it would have arrived 10 minutes sooner. What is the total distance ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "45 km"
+   },
+   {
+    "position": "B",
+    "text": "80 km"
+   },
+   {
+    "position": "C",
+    "text": "160 km"
+   },
+   {
+    "position": "D",
+    "text": "150 km"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q101",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "101",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "B is to the south-west of A, C is to the east of B and south-east of A, and D is to the north of C in line with BA. In what direction of A is D located ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "North"
+   },
+   {
+    "position": "B",
+    "text": "East"
+   },
+   {
+    "position": "C",
+    "text": "South-East"
+   },
+   {
+    "position": "D",
+    "text": "North-East"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q104",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "104",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set4/blocks/nift-2012-written-set4-q104.png",
+  "prompt": "A man pointing to a photograph says, grandmother: to i photograph she be lady in the photo man siate ephes ma char",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cousin"
+   },
+   {
+    "position": "B",
+    "text": "Sister-in-law"
+   },
+   {
+    "position": "C",
+    "text": "Mother"
+   },
+   {
+    "position": "D",
+    "text": "Mother-in-law"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q107",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "107",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set4/blocks/nift-2012-written-set4-q107.png",
+  "prompt": "Study the Venn-diagram to answer this question. Big triangle represents artists, small triangle represents scientists, Square represents dancers and Circle represents doctors. Which letter represents the artists who are neither doctors nor scientists nor dancers ? represents arties. With inel B E .",
+  "options": [
+   {
+    "position": "A",
+    "text": "A"
+   },
+   {
+    "position": "B",
+    "text": "D"
+   },
+   {
+    "position": "C",
+    "text": "F"
+   },
+   {
+    "position": "D",
+    "text": "G"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q108",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "108",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set4/blocks/nift-2012-written-set4-q108.png",
+  "prompt": "In the following diagram, hardworking people who are uneducated, dishonest and urban are represented by Educated Honest Urban' 12 Hardworking 10",
+  "options": [
+   {
+    "position": "A",
+    "text": "2"
+   },
+   {
+    "position": "B",
+    "text": "4"
+   },
+   {
+    "position": "C",
+    "text": "9"
+   },
+   {
+    "position": "D",
+    "text": "3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q134",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "134",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set4/blocks/nift-2012-written-set4-q134.png",
+  "prompt": "\"Symbol That Keeps The Magic Alive\". These words are written along with the logo of which o the following brands?",
+  "options": [
+   {
+    "position": "A",
+    "text": "NTC"
+   },
+   {
+    "position": "B",
+    "text": "Handloom Mark"
+   },
+   {
+    "position": "C",
+    "text": "Khadi Gramodyog"
+   },
+   {
+    "position": "D",
+    "text": "UP Handlooms"
+   }
+  ]
+ }
+]

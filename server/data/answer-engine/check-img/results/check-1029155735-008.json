@@ -1,0 +1,124 @@
+{
+ "nift-2013-written-set5-q21": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q29": {
+  "answer": "D",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2013-written-set5-q35": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2013-written-set5-q48": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q50": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q58": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q60": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q62": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q64": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q65": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q66": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q73": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q75": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q80": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q84": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q91": {
+  "answer": "D",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q105": {
+  "answer": "A",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q116": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q117": {
+  "answer": "C",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2013-written-set5-q133": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ }
+}

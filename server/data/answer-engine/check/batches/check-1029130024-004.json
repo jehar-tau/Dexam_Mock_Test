@@ -1,0 +1,54 @@
+[
+ {
+  "id": "nift-2012-written-set3-q115",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "115",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "/(? ×7) x 18 = 84",
+  "options": [
+   {
+    "position": "A",
+    "text": "3•11"
+   },
+   {
+    "position": "B",
+    "text": "3•12"
+   },
+   {
+    "position": "C",
+    "text": "3•13"
+   },
+   {
+    "position": "D",
+    "text": "3•14 +"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set3-q141",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "141",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Neena Haridas is the Editor of the Indian edition of which one of the following fashion & lifestyle magazines ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cosmopolitan"
+   },
+   {
+    "position": "B",
+    "text": "Marie Claire"
+   },
+   {
+    "position": "C",
+    "text": "Elle"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ }
+]

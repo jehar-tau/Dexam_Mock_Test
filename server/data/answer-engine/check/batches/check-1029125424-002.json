@@ -1,0 +1,37 @@
+[
+ {
+  "id": "nid-bdes-sample-2024-q1",
+  "paper": "nid-bdes-sample-2024",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q1.png",
+  "prompt": "Which one of the wall clocks below has the most functional design? (",
+  "options": []
+ },
+ {
+  "id": "nid-bdes-sample-2024-q14",
+  "paper": "nid-bdes-sample-2024",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q14.png",
+  "prompt": "Find the correct number that replaces ‘Question mark’ (?) to complete this equation.",
+  "options": [
+   {
+    "position": "A",
+    "text": "1"
+   },
+   {
+    "position": "B",
+    "text": "2"
+   },
+   {
+    "position": "C",
+    "text": "3"
+   },
+   {
+    "position": "D",
+    "text": "5"
+   }
+  ]
+ }
+]

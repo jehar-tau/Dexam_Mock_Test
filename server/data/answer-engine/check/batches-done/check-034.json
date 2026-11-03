@@ -1,0 +1,636 @@
+[
+ {
+  "id": "nift-bft-written-sample-q1",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Showing anger because of something unjust or unworthy",
+  "options": [
+   {
+    "position": "A",
+    "text": "Indignant"
+   },
+   {
+    "position": "B",
+    "text": "Vendetta"
+   },
+   {
+    "position": "C",
+    "text": "Sonnet"
+   },
+   {
+    "position": "D",
+    "text": "Absurd"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q2",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A person who studies the past, or who collects or buys and sells old and valuable objects.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ruffian"
+   },
+   {
+    "position": "B",
+    "text": "Antiquary"
+   },
+   {
+    "position": "C",
+    "text": "Junk-dealer"
+   },
+   {
+    "position": "D",
+    "text": "Crank"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q3",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Someone who talks a lot",
+  "options": [
+   {
+    "position": "A",
+    "text": "Licentious"
+   },
+   {
+    "position": "B",
+    "text": "Gullible"
+   },
+   {
+    "position": "C",
+    "text": "Voracious"
+   },
+   {
+    "position": "D",
+    "text": "Loquacious"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q4",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Something done in a quiet and secret way in order to avoid being noticed",
+  "options": [
+   {
+    "position": "A",
+    "text": "Repression"
+   },
+   {
+    "position": "B",
+    "text": "Surreptitious"
+   },
+   {
+    "position": "C",
+    "text": "Veracious"
+   },
+   {
+    "position": "D",
+    "text": "Heinous"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q6",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Salt",
+  "options": [
+   {
+    "position": "A",
+    "text": "Salty"
+   },
+   {
+    "position": "B",
+    "text": "Salts"
+   },
+   {
+    "position": "C",
+    "text": "Selt"
+   },
+   {
+    "position": "D",
+    "text": "Salties"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q7",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Louse",
+  "options": [
+   {
+    "position": "A",
+    "text": "Lice"
+   },
+   {
+    "position": "B",
+    "text": "Lices"
+   },
+   {
+    "position": "C",
+    "text": "Lause"
+   },
+   {
+    "position": "D",
+    "text": "Lices"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q8",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Knife",
+  "options": [
+   {
+    "position": "A",
+    "text": "Knive"
+   },
+   {
+    "position": "B",
+    "text": "Knives"
+   },
+   {
+    "position": "C",
+    "text": "Kniv"
+   },
+   {
+    "position": "D",
+    "text": "Knife"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q9",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Dwarf",
+  "options": [
+   {
+    "position": "A",
+    "text": "Dwarv"
+   },
+   {
+    "position": "B",
+    "text": "Dwarve"
+   },
+   {
+    "position": "C",
+    "text": "Dwarves"
+   },
+   {
+    "position": "D",
+    "text": "Dwarfe"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q15",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sudhir left his wife and family high and dry.",
+  "options": [
+   {
+    "position": "A",
+    "text": "to leave someone in a difficult situation"
+   },
+   {
+    "position": "B",
+    "text": "to leave a lot of wealth"
+   },
+   {
+    "position": "C",
+    "text": "to get married again"
+   },
+   {
+    "position": "D",
+    "text": "to fight"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q16",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Karan was in such an awful mood at dinner that I left early and just let him stew in his own juice.",
+  "options": [
+   {
+    "position": "A",
+    "text": "be in his own thoughts"
+   },
+   {
+    "position": "B",
+    "text": "keep to oneself"
+   },
+   {
+    "position": "C",
+    "text": "suffer for his own actions"
+   },
+   {
+    "position": "D",
+    "text": "suffer due to others"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q17",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Rajeev is biting off more than he can chew by taking up a part-time job along with his regular",
+  "options": [
+   {
+    "position": "A",
+    "text": "trying to do something which is too difficult 2) trying to help"
+   },
+   {
+    "position": "B",
+    "text": "having an intense desire for wealth"
+   },
+   {
+    "position": "C",
+    "text": "having an excessive desire for food"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q18",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "the wrongly spelt word.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ailment"
+   },
+   {
+    "position": "B",
+    "text": "Aliment"
+   },
+   {
+    "position": "C",
+    "text": "Element"
+   },
+   {
+    "position": "D",
+    "text": "Fillament"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q22",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The child has been missing yesterday. (I) since",
+  "options": [
+   {
+    "position": "A",
+    "text": "on"
+   },
+   {
+    "position": "B",
+    "text": "by"
+   },
+   {
+    "position": "C",
+    "text": "after"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q23",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He has spent his life Kolkata.",
+  "options": [
+   {
+    "position": "A",
+    "text": "at"
+   },
+   {
+    "position": "B",
+    "text": "in"
+   },
+   {
+    "position": "C",
+    "text": "from"
+   },
+   {
+    "position": "D",
+    "text": "with"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q24",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He was not able to give a satisfactory explanation _his absence.",
+  "options": [
+   {
+    "position": "A",
+    "text": "with"
+   },
+   {
+    "position": "B",
+    "text": "on"
+   },
+   {
+    "position": "C",
+    "text": "for"
+   },
+   {
+    "position": "D",
+    "text": "by"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q25",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It is a long time we last saw him.",
+  "options": [
+   {
+    "position": "A",
+    "text": "for"
+   },
+   {
+    "position": "B",
+    "text": "after"
+   },
+   {
+    "position": "C",
+    "text": "from"
+   },
+   {
+    "position": "D",
+    "text": "since 13-AM/N/XX-XX/ 3"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q46",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Ramesh purchased a watch and sold it at a profit of 20 percent. If he wished to calculate his profit as a percentage on his selling price, the same would be 00113%",
+  "options": [
+   {
+    "position": "A",
+    "text": "121%"
+   },
+   {
+    "position": "B",
+    "text": "162%"
+   },
+   {
+    "position": "C",
+    "text": "163%"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q47",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two radios are sold at 7835 each. One of them is sold at a gain of 20% and the other sold at a loss of 20%. The gain or loss in this transaction is",
+  "options": [
+   {
+    "position": "A",
+    "text": "loss 2%"
+   },
+   {
+    "position": "B",
+    "text": "loss 4%"
+   },
+   {
+    "position": "C",
+    "text": "loss 3%"
+   },
+   {
+    "position": "D",
+    "text": "loss 7%"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q48",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the sum of first five multiples of 495?",
+  "options": [
+   {
+    "position": "A",
+    "text": "7035"
+   },
+   {
+    "position": "B",
+    "text": "7295"
+   },
+   {
+    "position": "C",
+    "text": "7425"
+   },
+   {
+    "position": "D",
+    "text": "7545 49. Anuradha deposited in a finance company a sum of 797200 for 3 years and 6 months. She received 747628 as interest. Find her rate of interest. 1 (1) 11 % (2) 12 — % (3) 14% 2 (4) 142%"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q50",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A sum of money placed at compound interest doubles itself in 5 years. In how many years will it be eight times itself?",
+  "options": [
+   {
+    "position": "A",
+    "text": "30 years"
+   },
+   {
+    "position": "B",
+    "text": "15 years"
+   },
+   {
+    "position": "C",
+    "text": "20 years"
+   },
+   {
+    "position": "D",
+    "text": "40 years"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q52",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "52",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How long does a train 132 metres long running at the rate of 72 km. per hour takes to cross another train 110 metres in length?",
+  "options": [
+   {
+    "position": "A",
+    "text": "10 second"
+   },
+   {
+    "position": "B",
+    "text": "12.1 second"
+   },
+   {
+    "position": "C",
+    "text": "16 second"
+   },
+   {
+    "position": "D",
+    "text": "19 second"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q53",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A man can row upstream 15 km and downstream 23 km. taking 5 hours each time. Find the speed of the man in still water.",
+  "options": [
+   {
+    "position": "A",
+    "text": "3.1 km/hr"
+   },
+   {
+    "position": "B",
+    "text": "3.5 km/hr"
+   },
+   {
+    "position": "C",
+    "text": "3.8 km/hr"
+   },
+   {
+    "position": "D",
+    "text": "4.2 km/hr"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q54",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "54",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A and B can do a piece of work in 12 days, B and C in 15 days and C and A in 20 days. Find the time in which all will finish it together.",
+  "options": [
+   {
+    "position": "A",
+    "text": "14 days"
+   },
+   {
+    "position": "B",
+    "text": "13 days"
+   },
+   {
+    "position": "C",
+    "text": "10 days"
+   },
+   {
+    "position": "D",
+    "text": "15 days"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q56",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "56",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many kg. of salt costing ?6.00 a kg must be mixed with 16 kg of salt costing 78.25 per kg so that 25 percent may be gained by selling the mixture at 79.00 a kg?",
+  "options": [
+   {
+    "position": "A",
+    "text": "14 kg"
+   },
+   {
+    "position": "B",
+    "text": "12 kg"
+   },
+   {
+    "position": "C",
+    "text": "10 kg"
+   },
+   {
+    "position": "D",
+    "text": "15 kg"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q57",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "57",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A room is 20 metres long and 15 metres broad. Find the length of the carpet 75 cm. wide which is required to cover the floor of the room.",
+  "options": [
+   {
+    "position": "A",
+    "text": "300 m"
+   },
+   {
+    "position": "B",
+    "text": "380 m"
+   },
+   {
+    "position": "C",
+    "text": "440 m (L) 400 m"
+   }
+  ]
+ }
+]

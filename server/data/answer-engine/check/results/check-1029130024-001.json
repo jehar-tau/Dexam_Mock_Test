@@ -1,0 +1,151 @@
+{
+ "nift-2012-mdes-written-q1": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q6": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q20": {
+  "answer": "D",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q25": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q26": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q32": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q33": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q34": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q42": {
+  "answer": "C",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q48": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q49": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q50": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q64": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q65": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q76": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q81": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q86": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q98": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q111": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q121": {
+  "answer": "C",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q123": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q132": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q142": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": ""
+ }
+}

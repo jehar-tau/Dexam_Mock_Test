@@ -1,0 +1,172 @@
+{
+ "nift-2014-bdes-written-q22": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-bdes-written-q23": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-bdes-written-q26": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q27": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q29": {
+  "answer": "B",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q30": {
+  "answer": "C",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q31": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q32": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q33": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q34": {
+  "answer": "B",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q35": {
+  "answer": "A",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q37": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q39": {
+  "answer": "A",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q40": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q42": {
+  "answer": "B",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q44": {
+  "answer": "B",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q45": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q53": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-bdes-written-q54": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q55": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true,
+  "needsContext": true
+ },
+ "nift-2014-bdes-written-q56": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q58": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-bdes-written-q59": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-bdes-written-q61": {
+  "answer": "A",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2014-bdes-written-q72": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ }
+}

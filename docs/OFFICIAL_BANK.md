@@ -6,15 +6,38 @@ The extractor, schema, OCR helper, and review console are tracked in Git. The ex
 
 ## Current local archive
 
-The workspace currently contains **34 paper records and 2,992 question records**:
+As of 2026-10-28 the workspace contains **61 paper records and 4,183 question records**:
 
-| Group | Papers | Questions | Notes |
-|---|---:|---:|---|
-| UCEED 2015–2026 | 12 | 874 | 57 answer-key matches from the 2026 key |
-| NIFT 2012–2014 + samples | 22 | 2,118 | scanned OCR; no answer keys supplied |
-| **Total** | **34** | **2,992** | 32 descriptive records, 57 answered records |
+| Group | Papers | Questions | Answered |
+|---|---:|---:|---:|
+| UCEED 2015–2026 | 12 | 880 | 869 |
+| CEED 2010–2026 | 18 | 834 | 252 |
+| NIFT 2012–2014 + samples | 22 | 2,118 | 375 |
+| NID 2016–2020 + samples | 9 | 351 | 18 |
+| **Total** | **61** | **4,183** | **1,514** |
 
-All papers have rendered page images. NIFT uses JPEG page images; UCEED uses PNG. The local media directory is about **417 MB**.
+All papers have rendered page images. NIFT uses JPEG page images; the others use PNG. The local media directory is about **966 MB**.
+
+### CEED
+
+- 18 papers, 2010–2026. 2016 had two papers (`ceed-2016-paper1`, `ceed-2016-paper2`). The two supplied 2026 files are byte-identical, so 2026 was imported once.
+- 834 records: 740 Part A questions and 94 Part B questions.
+- Official keys for 2020–2025 (252 answers, every Part A question in those years). No keys were supplied for 2010–2019 or 2026.
+- The 2021 key PDF is a scanned image. It was transcribed by hand to `server/data/sources/answer-keys/CEED2021_Answer_Key_transcribed.txt` and cross-checked against Apple Vision OCR.
+- Key cells such as `7 OR 9`, `B OR B, C`, `94.2 (92.9 - 94.6)`, `DROPPED` and `FULL MARKS` are stored verbatim.
+
+| Paper | Format | Import flags |
+|---|---|---|
+| 2010 | Q1 split into 1.1–1.7; Q2–6 drawing tasks | `--default-type DESCRIPTIVE --no-gap-fill` |
+| 2011 | Scanned; same layout as 2010 | `--ocr --default-type DESCRIPTIVE --no-gap-fill` |
+| 2012 | Scanned; 40 MCQs + Part B | `--ocr --default-type MCQ --no-gap-fill` |
+| 2013 | `Question No. N`, options 1–4 | `--default-type MCQ --no-gap-fill` |
+| 2014 | `Q1:` with A–D | `--default-type MCQ` |
+| 2015–2024, 2026 | Sections read from the paper | none |
+| 2016 paper 2 | Q47–48 are on an image-only page | `--ocr` |
+| 2025 | Question numbers are not in the text layer | `--ocr --ocr-all --type-map 1-8:NAT,9-18:MSQ,19-44:MCQ` |
+
+Every CEED import used `--exam ceed --year YYYY --paper-id ceed-YYYY --replace`, plus `--answers` for 2020–2025.
 
 ### UCEED
 
@@ -106,29 +129,50 @@ When the paper states section ranges, the importer uses those ranges rather than
 
 NIFT written papers use `MCQ` by default. NIFT CAT/drawing papers use `DESCRIPTIVE` and `--no-gap-fill`.
 
+CEED papers state no "Questions X to Y belong to this section" ranges. The importer falls back to in-paper section headings ("Section II: MSQ", "PART A, Section II MULTIPLE SELECT QUESTIONS (MSQ)"): each section starts at the first question after its heading. `--type-map 1-8:NAT,9-18:MSQ,19-44:MCQ` overrides detection when a paper has no usable headings.
+
+| CEED years | NAT | MSQ | MCQ | Part B |
+|---|---:|---:|---:|---|
+| 2015 | 1–5 | 6–15 | 16–50 | 4 mandatory + 4 optional |
+| 2016 (both papers) | 1–10 | 11–20 | 21–50 | 3 mandatory + 4 optional |
+| 2017, 2019 | 1–10 | 11–20 | 21–45 | 8 |
+| 2018 | 1–8 | 9–16 | 17–41 | 8 |
+| 2020–2023 | 1–8 | 9–18 | 19–41 | 5 |
+| 2024–2026 | 1–8 | 9–18 | 19–44 | 5 |
+
+Answer keys with `SECTION – I (NAT)` headings (CEED) are read like UCEED's `SECTION – A (NAT)`. Each section's numbering starts at its first listed question rather than at a fixed number.
+
 ## Deduplication
 
 The importer deduplicates repeated items **inside one paper**. The content hash includes the paper id so the same question can be retained in multiple papers with separate page and provenance records. This keeps each paper complete; cross-paper duplicate analysis can be done later at mock-generation time if needed.
 
+Items with the same wording but a **different question number** are kept as separate questions, for example three "Which option will replace the question mark?" items that differ only in their images. The earlier `uceed-2024` import dropped Q32, Q42, Q43, Q44, Q46 and Q56 this way. On 2026-10-28 they were added back without re-importing the paper, so the existing rows kept their answers and figures. They have official answers from `UCEED2024_Answer_Key.pdf` and figure crops made by `regenerate_visual_questions.crop_question`.
+
 ## What is missing
 
-1. NIFT answer keys. None were supplied.
+1. NIFT answer keys. None were supplied. CEED keys for 2010–2019 and 2026.
 2. UCEED answer keys for 2015–2025.
 3. Independent explanations for every question. The 2026 UCEED key gives answers, not explanations.
 4. OCR review and option completion for the NIFT data-sufficiency, assertion–reason, and figure-based questions.
-5. Visual review for image-only UCEED questions where extracted text is empty or only a placeholder.
-6. Topic/subtopic review. The current topic is a keyword-based first pass and should not be treated as final.
-7. A reviewed bank of reference links. Do not add third-party links unless their use is permitted.
+5. Visual review for image-only UCEED questions where extracted text is empty or only a placeholder, and crop review (`crop_review`) for every picture question. CEED and NID have no question crops yet.
+6. Text options for MCQ/MSQ whose options are printed only inside the picture; these stay out of the bank even with an approved crop.
+7. Topic/subtopic review. The current topic is a keyword-based first pass and should not be treated as final.
+8. A reviewed bank of reference links. Do not add third-party links unless their use is permitted.
 
 ## Review workflow
 
 1. Open `http://127.0.0.1:4174/admin.html`.
 2. Use **Official question review** to filter by paper, type, status, or explanation state.
-3. Open the page image for visual questions.
+3. Open the page image for visual questions. For a question with a figure crop, the editor shows the crop: compare it with the page and set **Crop review** to `approved` or `rejected` (use the **Crop** filter to list `pending` crops). Only approved crops are served; the criteria are in `docs/PDF_QUESTION_REGENERATION.md` under "Crop review".
 4. Correct the question text or options when OCR missed them. The editor writes back through `PATCH /api/official/questions/:id`.
 5. Add an independently written explanation and mark it `verified`.
 6. Keep the official answer key intact. If the key has alternatives such as `B,C or B,C,D`, preserve that in the answer field.
 7. Never paste another site's explanation into the database. A reference URL is metadata, not a licence to copy.
+8. Rebuild the lanes after a review session: `python3 tools/build_generic_question_bank.py` then `python3 tools/build_question_recovery_queue.py`.
+
+## Publication lanes
+
+`tools/build_generic_question_bank.py` reads this database and writes the candidate-facing lanes. A question reaches the ready bank (`generic-question-bank.json`) only with a usable prompt, at least two structured options for MCQ/MSQ, a trusted answer (`official-key`, `matched-source`, `matched-source-positional`, or `independently-solved`), and, if it depends on a picture, a crop with `crop_review = 'approved'` whose files exist. SVG reconstruction is optional and deferred. Picture questions with a pending crop wait in `question-recovery-queue.json` under `review-clean-crop`. The full rule is in `docs/PDF_QUESTION_REGENERATION.md`, "Publication lanes and answer confidence".
 
 ## Re-import example
 
@@ -161,3 +205,13 @@ server/data/.cache/          compiled OCR helper and caches (ignored by Git)
 ```
 
 Runtime `server/data/user-bank.json` and `server/data/mocks.json` are also ignored. The original static bank remains in `data.js` and `practice-*.js`.
+
+## Export to dexam-platform (F038)
+
+`python3 tools/export_platform_bank.py` writes `server/data/exports/dexam-bank-export.json` in the platform's schema v1. It exports every question; anything the generic-bank rules would hold back (crop awaiting review, missing options, image-only, and so on) travels as `holds`, and the platform quarantines on those plus its own checks. Import it from the platform repository with:
+
+```bash
+pnpm assessment:import --file "<this repo>/server/data/exports/dexam-bank-export.json" --media "<this repo>/server/data/media" --dry-run
+```
+
+Re-run the export and import after every crop review, answer-key update or correction. The import is idempotent: unchanged questions are skipped, and a changed question becomes a new version that replaces the old one for new attempts.

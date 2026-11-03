@@ -1,0 +1,548 @@
+[
+ {
+  "id": "nid-bdes-2016-q3",
+  "paper": "nid-bdes-2016",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q3.png",
+  "prompt": "When you buy a mobile phone, you look for the SAR value of the handset. SAR is the Specific Absorption Rate of what the human body is exposed to?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Radio-frequency electrostatic field"
+   },
+   {
+    "position": "B",
+    "text": "Radio-frequency electromagnetic field"
+   },
+   {
+    "position": "C",
+    "text": "Microwave-frequency bioelectric field"
+   },
+   {
+    "position": "D",
+    "text": "Radioactive electromagnetic field"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q4",
+  "paper": "nid-bdes-2016",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q4.png",
+  "prompt": "Cartography is the study and practice of making what?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cars"
+   },
+   {
+    "position": "B",
+    "text": "Maps"
+   },
+   {
+    "position": "C",
+    "text": "Artwork"
+   },
+   {
+    "position": "D",
+    "text": "Carts"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q10",
+  "paper": "nid-bdes-2016",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q10.png",
+  "prompt": "Which is the most abundantly available fossil fuel in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Natural gas"
+   },
+   {
+    "position": "B",
+    "text": "Coal"
+   },
+   {
+    "position": "C",
+    "text": "Petroleum"
+   },
+   {
+    "position": "D",
+    "text": "Biogas"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q13",
+  "paper": "nid-bdes-2016",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q13.png",
+  "prompt": "What is the colour of the black box of a commercial aircraft?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Black"
+   },
+   {
+    "position": "B",
+    "text": "Green"
+   },
+   {
+    "position": "C",
+    "text": "Pink"
+   },
+   {
+    "position": "D",
+    "text": "Orange"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q14",
+  "paper": "nid-bdes-2016",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q14.png",
+  "prompt": "Which shape will match the cross section of a Ladylinger (vegetable)? (",
+  "options": [
+   {
+    "position": "A",
+    "text": "Octagon ("
+   },
+   {
+    "position": "B",
+    "text": "Hexagon ("
+   },
+   {
+    "position": "C",
+    "text": "Pentagon ("
+   },
+   {
+    "position": "D",
+    "text": "Septagon"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q16",
+  "paper": "nid-bdes-2016",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q16.png",
+  "prompt": "Which Indian sportsperson attained world number one in singles in 2015?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Saina Nehwal"
+   },
+   {
+    "position": "B",
+    "text": "Sania Mirza"
+   },
+   {
+    "position": "C",
+    "text": "Jwala Gutta"
+   },
+   {
+    "position": "D",
+    "text": "Ashwini Ponnappa"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q17",
+  "paper": "nid-bdes-2016",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q17.png",
+  "prompt": "The Industrial Revolution that took place in Europe around 1750 A.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Germany ("
+   },
+   {
+    "position": "B",
+    "text": "France ("
+   },
+   {
+    "position": "C",
+    "text": "Italy (D) England"
+   },
+   {
+    "position": "D",
+    "text": "began in which of the following countries? ("
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q19",
+  "paper": "nid-bdes-2016",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q19.png",
+  "prompt": "Which of these cities is located farthest east?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Singapore"
+   },
+   {
+    "position": "B",
+    "text": "Hong Kong"
+   },
+   {
+    "position": "C",
+    "text": "Manila"
+   },
+   {
+    "position": "D",
+    "text": "Jakarta"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q20",
+  "paper": "nid-bdes-2016",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q20.png",
+  "prompt": "Which of the following statements is false?",
+  "options": [
+   {
+    "position": "A",
+    "text": "The Mahabharata is attributed to Vyasa."
+   },
+   {
+    "position": "B",
+    "text": "Valmiki authored the Ramcharitmanas."
+   },
+   {
+    "position": "C",
+    "text": "Meghaduta was composed by Kalidasa."
+   },
+   {
+    "position": "D",
+    "text": "Yayati was written by Girish Karnad."
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q23",
+  "paper": "nid-bdes-2016",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q23.png",
+  "prompt": "Which is considered one of the four Old World river-valley civilisations, along with the Indus Valley, Egypt, and the Yellow River Valley of China?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mesoamerica"
+   },
+   {
+    "position": "B",
+    "text": "Mesopotamia"
+   },
+   {
+    "position": "C",
+    "text": "The Andes"
+   },
+   {
+    "position": "D",
+    "text": "Byzantium"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q25",
+  "paper": "nid-bdes-2016",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q25.png",
+  "prompt": "The rate of inflation in India was generally measured with reference to movement in which index?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Consumer Price Index"
+   },
+   {
+    "position": "B",
+    "text": "Cost of Living Index for Agricultural Labourers"
+   },
+   {
+    "position": "C",
+    "text": "Wholesale Price Index"
+   },
+   {
+    "position": "D",
+    "text": "Money supply"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q26",
+  "paper": "nid-bdes-2016",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q26.png",
+  "prompt": "Select the appropriate adjective for a winding river.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Labyrinthine"
+   },
+   {
+    "position": "B",
+    "text": "Wolverine"
+   },
+   {
+    "position": "C",
+    "text": "Serpentine"
+   },
+   {
+    "position": "D",
+    "text": "Intertwine"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q28",
+  "paper": "nid-bdes-2016",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q28.png",
+  "prompt": "Name the states associated with Madhubani and Warli folk art, respectively.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tamil Nadu and Telangana"
+   },
+   {
+    "position": "B",
+    "text": "Bihar and Maharashtra"
+   },
+   {
+    "position": "C",
+    "text": "Odisha and Gujarat"
+   },
+   {
+    "position": "D",
+    "text": "Kerala and Karnataka"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q32",
+  "paper": "nid-bdes-2016",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q32.png",
+  "prompt": "Fostering cultural collaboration is one of the objectives of which United Nations body?",
+  "options": [
+   {
+    "position": "A",
+    "text": "UNICEF"
+   },
+   {
+    "position": "B",
+    "text": "UNIDO"
+   },
+   {
+    "position": "C",
+    "text": "UNESCO"
+   },
+   {
+    "position": "D",
+    "text": "United Nations Organization"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q33",
+  "paper": "nid-bdes-2016",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q33.png",
+  "prompt": "Which of the materials listed below does not have the Earth as its direct source?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Clay"
+   },
+   {
+    "position": "B",
+    "text": "Metal"
+   },
+   {
+    "position": "C",
+    "text": "Leather"
+   },
+   {
+    "position": "D",
+    "text": "Plastic"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q35",
+  "paper": "nid-bdes-2016",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q35.png",
+  "prompt": "Apart from the light bulb, Thomas Edison is credited with the invention of which device?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Telegraph"
+   },
+   {
+    "position": "B",
+    "text": "Monograph"
+   },
+   {
+    "position": "C",
+    "text": "Phonograph"
+   },
+   {
+    "position": "D",
+    "text": "Seismograph"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q36",
+  "paper": "nid-bdes-2016",
+  "questionNo": "36",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q36.png",
+  "prompt": "Which country experienced an earthquake, a tsunami, and a nuclear accident in March 2011?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Pakistan"
+   },
+   {
+    "position": "B",
+    "text": "China"
+   },
+   {
+    "position": "C",
+    "text": "Japan"
+   },
+   {
+    "position": "D",
+    "text": "India"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q37",
+  "paper": "nid-bdes-2016",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q37.png",
+  "prompt": "Which country recycles much of its garbage to produce electricity and imports garbage from neighbouring countries?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sweden"
+   },
+   {
+    "position": "B",
+    "text": "Japan"
+   },
+   {
+    "position": "C",
+    "text": "Switzerland"
+   },
+   {
+    "position": "D",
+    "text": "Canada"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q38",
+  "paper": "nid-bdes-2016",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q38.png",
+  "prompt": "Who created Amar Chitra Katha?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Premchand"
+   },
+   {
+    "position": "B",
+    "text": "Baba Ramdev"
+   },
+   {
+    "position": "C",
+    "text": "Mohandas Pai"
+   },
+   {
+    "position": "D",
+    "text": "Anant Pai"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q53",
+  "paper": "nid-bdes-2016",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q53.png",
+  "prompt": "What is the common idea associated with the Vitruvian Man, the Vastu Purusha Mandala, and Le Modulor?",
+  "options": [
+   {
+    "position": "A",
+    "text": "All of them are only artworks."
+   },
+   {
+    "position": "B",
+    "text": "All refer to systems of proportion used in buildings or objects."
+   },
+   {
+    "position": "C",
+    "text": "The Vastu Purusha Mandala does not belong with the other visuals."
+   },
+   {
+    "position": "D",
+    "text": "None of the above is true."
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q69",
+  "paper": "nid-bdes-2016",
+  "questionNo": "69",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q69.png",
+  "prompt": "What is the connon word that can be used together with all of the following words? Blood, Cheese, Music, Moon (",
+  "options": [
+   {
+    "position": "A",
+    "text": "Red ("
+   },
+   {
+    "position": "B",
+    "text": "Blue ("
+   },
+   {
+    "position": "C",
+    "text": "Bone ("
+   },
+   {
+    "position": "D",
+    "text": "None of these Questions 70 to 81 carry 0.75 marks each. Please read the question carefully and select your response from the options provided. Study the given images carefully and answer the questions 70 to 73. 3"
+   }
+  ]
+ }
+]

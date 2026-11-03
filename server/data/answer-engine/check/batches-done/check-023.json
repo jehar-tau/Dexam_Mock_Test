@@ -1,0 +1,648 @@
+[
+ {
+  "id": "nift-2013-written-set3-q76",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "76",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two numbers are such that they are 40% and 50% of the third number. First number as a percentage of the second is",
+  "options": [
+   {
+    "position": "A",
+    "text": "80%"
+   },
+   {
+    "position": "B",
+    "text": "40%"
+   },
+   {
+    "position": "C",
+    "text": "25%"
+   },
+   {
+    "position": "D",
+    "text": "47%"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q77",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A student has to secure 45% marks to qualify for interview in a written examination. If he gets 79 marks and fails by 56 marks, what is the maximum marks set to qualify for interview ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "200"
+   },
+   {
+    "position": "B",
+    "text": "300"
+   },
+   {
+    "position": "C",
+    "text": "350"
+   },
+   {
+    "position": "D",
+    "text": "400"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q78",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "78",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Anita gave 10% in charity from her salary, and then 20% from the remaining she gave to her friend",
+  "options": [
+   {
+    "position": "A",
+    "text": "* 15000"
+   },
+   {
+    "position": "B",
+    "text": "* 10000"
+   },
+   {
+    "position": "C",
+    "text": "7 20000"
+   },
+   {
+    "position": "D",
+    "text": "& 9000 as loan. She is left now with ‹ 7200. What is the salary of Anita ?"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q97",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "97",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "FORMS → FPTPW :: CONVICT → ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "CPPYMHZ"
+   },
+   {
+    "position": "B",
+    "text": "CPOWJDU"
+   },
+   {
+    "position": "C",
+    "text": "CPPXKEV"
+   },
+   {
+    "position": "D",
+    "text": "CPPYLFW"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q98",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "98",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "123 → 987 :: 345 → ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "647"
+   },
+   {
+    "position": "B",
+    "text": "765"
+   },
+   {
+    "position": "C",
+    "text": "876"
+   },
+   {
+    "position": "D",
+    "text": "567"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q99",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "T, R, 0, K, F, Z, '?.",
+  "options": [
+   {
+    "position": "A",
+    "text": "S"
+   },
+   {
+    "position": "B",
+    "text": "T"
+   },
+   {
+    "position": "C",
+    "text": "U"
+   },
+   {
+    "position": "D",
+    "text": "V"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q101",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "101",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Touch: Feel :: Greet : ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Smile"
+   },
+   {
+    "position": "B",
+    "text": "Acknowledge"
+   },
+   {
+    "position": "C",
+    "text": "Success"
+   },
+   {
+    "position": "D",
+    "text": "Manners"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q102",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Carpenter: Chisel :: Cobbler : ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Anvil"
+   },
+   {
+    "position": "B",
+    "text": "Saw"
+   },
+   {
+    "position": "C",
+    "text": "Drill"
+   },
+   {
+    "position": "D",
+    "text": "Axe"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q103",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Medicine: Cure :: Law : ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Anarchy"
+   },
+   {
+    "position": "B",
+    "text": "Discipline"
+   },
+   {
+    "position": "C",
+    "text": "Treason"
+   },
+   {
+    "position": "D",
+    "text": "Etiquette"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q106",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "106",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "City 'M' is situated East of city 'N'. City 'O' is situated South of city N'. City 'P' is situated North of City 'O'. In which direction city 'N' is situated with respect of city 'P' ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "North"
+   },
+   {
+    "position": "B",
+    "text": "South"
+   },
+   {
+    "position": "C",
+    "text": "East"
+   },
+   {
+    "position": "D",
+    "text": "Cannot be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q108",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "108",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A clock shows 8.30. If the minute hand points to West, in what direction will the hour hand points ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "North"
+   },
+   {
+    "position": "B",
+    "text": "South"
+   },
+   {
+    "position": "C",
+    "text": "South-West"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q121",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "121",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sirpur National Dance and Music Festival was organized during January 2013 in",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bihar."
+   },
+   {
+    "position": "B",
+    "text": "Chhattisgarh."
+   },
+   {
+    "position": "C",
+    "text": "Assam."
+   },
+   {
+    "position": "D",
+    "text": "Madhya Pradesh."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q122",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The famous Indian Ad Guru and Creative Director South Asia of Ogilvy & Mather India who has won over 600 awards is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Prahlad Kakkar."
+   },
+   {
+    "position": "B",
+    "text": "Piyush Pandey."
+   },
+   {
+    "position": "C",
+    "text": "Prasoon Joshi."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q123",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Election Commission of India has announced the state assembly elections scheduled to be held in February 2013 for the states of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tripura, Nagaland and Meghalaya."
+   },
+   {
+    "position": "B",
+    "text": "Tripura, Mizoram and Assam."
+   },
+   {
+    "position": "C",
+    "text": "Mizoram, Nagaland and Assam."
+   },
+   {
+    "position": "D",
+    "text": "Meghalaya, Assam and Tripura."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q124",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "124",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The union budget is generally presented in the Parliament of India in the month of",
+  "options": [
+   {
+    "position": "A",
+    "text": "January."
+   },
+   {
+    "position": "B",
+    "text": "April."
+   },
+   {
+    "position": "C",
+    "text": "February."
+   },
+   {
+    "position": "D",
+    "text": "March."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q125",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "125",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which are the two major rivers of India, that flow from East to West?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ganga - Yamuna"
+   },
+   {
+    "position": "B",
+    "text": "Ganga - Brahmaputra"
+   },
+   {
+    "position": "C",
+    "text": "Godavari - Cauvery"
+   },
+   {
+    "position": "D",
+    "text": "Narmada - Tapti"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q126",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "126",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who amongst the following vote to elect the President of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Citizens of India above 18 years of age."
+   },
+   {
+    "position": "B",
+    "text": "The Chief Ministers of all the states of India."
+   },
+   {
+    "position": "C",
+    "text": "The Governors of all the states of India."
+   },
+   {
+    "position": "D",
+    "text": "All the MPs and MLAs in India"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q127",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "127",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which Indian state has \"Mekhla Chadar\" as the traditional dress for women ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Assam"
+   },
+   {
+    "position": "B",
+    "text": "Mizoram MD 1400/B/2K13/02 ( 17) and its surrounding area in"
+   },
+   {
+    "position": "C",
+    "text": "Orissa"
+   },
+   {
+    "position": "D",
+    "text": "Chhattisgarh"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q128",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "128",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The appliqué work of Pipli is a well known handicraft art in",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mirzapur (4) Polyester"
+   },
+   {
+    "position": "B",
+    "text": "Kolhapur"
+   },
+   {
+    "position": "C",
+    "text": "Puri"
+   },
+   {
+    "position": "D",
+    "text": "Udaipur"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q132",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "132",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The female tennis player who recently launched a lolly line \"Sugarpova\" with 12 flavors shaped as high heels, purses and tennis balls is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Svetlana Kuznetsova."
+   },
+   {
+    "position": "B",
+    "text": "Maria Sharapova."
+   },
+   {
+    "position": "C",
+    "text": "Victoria Azarenka. -, moulded by hand and offered in"
+   },
+   {
+    "position": "D",
+    "text": "Dominika Cibulkova."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q133",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "133",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Butter Sculptures' are a traditional art form of prayer after completion.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tibet"
+   },
+   {
+    "position": "B",
+    "text": "Assam"
+   },
+   {
+    "position": "C",
+    "text": "Nagaland"
+   },
+   {
+    "position": "D",
+    "text": "Tripura"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q134",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "134",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Lance Armstrong who was stripped of his seven 'Tour de France' titles for doping is associated with",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cycle Racing."
+   },
+   {
+    "position": "B",
+    "text": "Formula-1 Car Race."
+   },
+   {
+    "position": "C",
+    "text": "Marathon Race."
+   },
+   {
+    "position": "D",
+    "text": "Motorcycle Racing."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q137",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "137",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Planning Commission of India is a/an",
+  "options": [
+   {
+    "position": "A",
+    "text": "statutory body."
+   },
+   {
+    "position": "B",
+    "text": "executive body."
+   },
+   {
+    "position": "C",
+    "text": "autonomous body."
+   },
+   {
+    "position": "D",
+    "text": "None of these."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q139",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "139",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Gagan Narang is associated with which one of the following sports ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Shooting ( 18) MD 1400/B/2K13/02"
+   },
+   {
+    "position": "B",
+    "text": "Boxing"
+   },
+   {
+    "position": "C",
+    "text": "Swimming"
+   },
+   {
+    "position": "D",
+    "text": "Golf"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q140",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "140",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The name of the top sports award of India is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Arjuna."
+   },
+   {
+    "position": "B",
+    "text": "Rajiv Gandhi Khel Ratna."
+   },
+   {
+    "position": "C",
+    "text": "Dronacharya."
+   },
+   {
+    "position": "D",
+    "text": "Padma Shri."
+   }
+  ]
+ }
+]

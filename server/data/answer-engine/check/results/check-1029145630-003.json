@@ -1,0 +1,68 @@
+{
+ "nid-bdes-sample-2025-q1": {
+  "answer": "C",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q2": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q4": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q5": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q6": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q7": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q12": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q13": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q16": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q18": {
+  "answer": "C",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q19": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "nift-2014-mdes-written-q31": {
+  "answer": "C",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-mdes-written-q32": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-mdes-written-q33": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-mdes-written-q37": {
+  "answer": "C",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-mdes-written-q38": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-mdes-written-q39": {
+  "answer": "C",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-mdes-written-q40": {
+  "answer": "D",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-mdes-written-q42": {
+  "answer": "A",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2014-mdes-written-q60": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-mdes-written-q66": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-mdes-written-q70": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-mdes-written-q72": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-mdes-written-q115": {
+  "answer": "D",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-mdes-written-q118": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2014-mdes-written-q131": {
+  "answer": "C",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ }
+}

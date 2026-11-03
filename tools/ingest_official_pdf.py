@@ -28,11 +28,26 @@ try:
 except ImportError:
     fitz = None
 
+try:
+    from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageOps
+except ImportError:
+    Image = ImageDraw = ImageEnhance = ImageFilter = ImageOps = None
+
 
 TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(TOOLS_DIR)
 OCR_SOURCE = os.path.join(TOOLS_DIR, "ocr_vision.swift")
 OCR_CACHE_DIR = os.path.join(ROOT_DIR, "server", "data", ".cache")
+
+# Advertising/watermark lines in some supplied papers. These are not exam
+# content and should not leak into prompts, options, or explanations.
+BOILERPLATE_RE = re.compile(
+    r"(edge\.dqlabs|dq\s*labs|dqlabs|vijaydesign|vdds|vijay\s+deore|"
+    r"design\s+studio|705\s*722\s*2492|9591001000|for\s+nid\s+entrance|"
+    r"preparation\s+call|student\s+sketches|detailed\s+explanations|"
+    r"for\s+answers\s*,|facebook|instagram|youtube)",
+    re.I
+)
 
 
 SCHEMA = """
@@ -67,6 +82,7 @@ CREATE TABLE IF NOT EXISTS questions (
   page_no INTEGER,
   page_images_json TEXT,
   figure_paths_json TEXT,
+  crop_review TEXT DEFAULT 'pending',
   content_hash TEXT UNIQUE,
   status TEXT DEFAULT 'review',
   created_at TEXT,
@@ -287,7 +303,7 @@ def reconstruct_ocr_reading_order(items):
         x = float(item.get("x", 0))
         starts_question = bool(re.match(r"^\d{1,3}\.\s*$", text)) or (
             bool(re.match(r"^\d{1,3}\.\s+", text)) and x < 0.28
-        )
+        ) or bool(re.match(r"^[QO0]\s*\.?\s*\d{1,3}\s*[).:]", text))
         if rows and abs(y - rows[-1]["y"]) <= 0.004 and not starts_question:
             rows[-1]["items"].append(item)
         else:
@@ -333,11 +349,51 @@ def ocr_image(binary, image_path):
     return "\n".join(plain).strip()
 
 
+def enhance_scan(source_path, output_path, scale=2):
+    """Create a non-destructive, OCR-oriented derivative of a low-resolution page."""
+    if Image is None:
+        raise RuntimeError("Pillow is required for --enhance-scans")
+    with Image.open(source_path) as source:
+        image = ImageOps.exif_transpose(source).convert("L")
+        if scale > 1:
+            image = image.resize(
+                (image.width * scale, image.height * scale), Image.Resampling.LANCZOS
+            )
+        image = ImageOps.autocontrast(image, cutoff=1)
+        image = image.filter(ImageFilter.MedianFilter(size=3))
+        image = ImageEnhance.Contrast(image).enhance(1.25)
+        image = image.filter(ImageFilter.UnsharpMask(radius=1.4, percent=165, threshold=3))
+        image.save(output_path, format="PNG", optimize=True)
+
+
+def sanitize_coaching_watermarks(source_path, output_path, top_fraction=0.055, bottom_fraction=0.17):
+    """Remove known coaching-ad header/footer bands from a derived page render.
+
+    The source PDF remains unchanged. This mode is intentionally opt-in because
+    arbitrary papers may contain legitimate content in the same margin area.
+    """
+    if Image is None:
+        raise RuntimeError("Pillow is required for --sanitize-coaching-watermarks")
+    with Image.open(source_path) as source:
+        image = source.convert("RGB")
+        top = int(image.height * max(0.0, min(0.2, top_fraction)))
+        bottom = int(image.height * (1.0 - max(0.0, min(0.25, bottom_fraction))))
+        draw = ImageDraw.Draw(image)
+        if top:
+            draw.rectangle((0, 0, image.width, top), fill="white")
+        draw.rectangle((0, bottom, image.width, image.height), fill="white")
+        image.save(output_path, format="PNG", optimize=True)
+
+
 def extract_pdf_text_and_pages(
     pdf_path,
     media_dir,
     paper_id,
     use_ocr=False,
+    ocr_all=False,
+    enhance_scans=False,
+    enhancement_scale=2,
+    sanitize_watermarks=False,
     image_format="png",
     page_start=1,
     page_end=None
@@ -363,15 +419,37 @@ def extract_pdf_text_and_pages(
         page_no = index + 1
         current = index - first_index + 1
         text = page.get_text("text") or ""
-        pix = page.get_pixmap(dpi=170 if use_ocr else 144, alpha=False)
-        if use_ocr and ocr_binary and not text.strip():
+        pix = page.get_pixmap(dpi=200 if (use_ocr or enhance_scans) else 144, alpha=False)
+        image_name = "page-%03d%s" % (page_no, ext)
+        image_path = os.path.join(image_dir, image_name)
+        source_render_path = image_path
+        if sanitize_watermarks:
+            source_render_path = os.path.join(image_dir, "page-%03d-source.png" % page_no)
+            pix.save(source_render_path)
+            sanitize_coaching_watermarks(source_render_path, image_path)
+        elif ext == ".jpg":
+            pix.save(image_path, jpg_quality=90 if enhance_scans else 82)
+        else:
+            pix.save(image_path)
+        ocr_path = image_path
+        enhanced_rel = None
+        if enhance_scans:
+            enhanced_name = "page-%03d-enhanced.png" % page_no
+            enhanced_path = os.path.join(image_dir, enhanced_name)
+            enhance_scan(image_path, enhanced_path, max(1, int(enhancement_scale)))
+            ocr_path = enhanced_path
+            enhanced_rel = os.path.join("server", "data", "media", paper_id, enhanced_name)
+        if use_ocr and ocr_binary and (ocr_all or not text.strip()):
             temp_path = os.path.join(
                 tempfile.gettempdir(),
                 "dexam-ocr-%s-%03d.png" % (re.sub(r"[^a-zA-Z0-9_-]+", "-", paper_id), page_no)
             )
             try:
-                pix.save(temp_path)
-                text = ocr_image(ocr_binary, temp_path)
+                if enhance_scans:
+                    text = ocr_image(ocr_binary, ocr_path)
+                else:
+                    pix.save(temp_path)
+                    text = ocr_image(ocr_binary, temp_path)
             finally:
                 try:
                     os.remove(temp_path)
@@ -386,17 +464,12 @@ def extract_pdf_text_and_pages(
                 last_question_no = 0
             else:
                 text, last_question_no = repair_truncated_question_numbers(text, last_question_no)
-        image_name = "page-%03d%s" % (page_no, ext)
-        image_path = os.path.join(image_dir, image_name)
-        if ext == ".jpg":
-            pix.save(image_path, jpg_quality=82)
-        else:
-            pix.save(image_path)
         pages.append({
             "page_no": page_no,
             "text": text,
             "image_path": image_path,
-            "image_rel": os.path.join("server", "data", "media", paper_id, image_name)
+            "image_rel": os.path.join("server", "data", "media", paper_id, image_name),
+            "enhanced_image_rel": enhanced_rel,
         })
     return pages
 
@@ -502,6 +575,80 @@ def parse_section_map(text):
         for number in range(start, start + count):
             result[str(number)] = kind
         start += count
+    if result:
+        return result
+    return parse_section_headings(text)
+
+
+def heading_kind(label):
+    label = label.lower()
+    if label.startswith("nat") or "numerical" in label:
+        return "NAT"
+    if label.startswith("msq") or "select" in label:
+        return "MSQ"
+    if label.startswith("mcq") or "choice" in label:
+        return "MCQ"
+    return None
+
+
+def parse_section_headings(text):
+    """Map question numbers from in-paper section headings.
+
+    CEED papers head each block with "Section II: MSQ" or "PART A, Section II
+    MULTIPLE SELECT QUESTIONS (MSQ)" and then start numbering. Each section
+    runs from its first question marker to the next section's first marker.
+    Part B is numbered "B1".. so the open-ended last section never reaches it.
+    """
+    heading = re.compile(
+        r"Section\s+(?:I{1,3}|IV|VI?|[1-6])\s*[:.\-–]?\s*"
+        r"(NAT\d?|MSQ\d?|MCQ\d?|Numerical\s+Answer\s+Type|Multiple\s+Select|Multiple\s+Choice)",
+        re.I
+    )
+    marker = re.compile(
+        r"(?im)^\s*(?:Q(?:uestion)?\s*(?:no\.?)?\s*\.?\s*(\d{1,3})\b"
+        r"|Question\s+numbers?\s+(\d{1,3})\s*[-–]\s*\d{1,3})"
+    )
+    starts = []
+    for match in heading.finditer(text):
+        kind = heading_kind(match.group(1))
+        following = marker.search(text, match.end())
+        if not kind or not following:
+            continue
+        number = int(following.group(1) or following.group(2))
+        if not starts or number > starts[-1][0]:
+            starts.append((number, kind))
+    if len(starts) < 2:
+        return {}
+    result = {}
+    for index, (start, kind) in enumerate(starts):
+        end = starts[index + 1][0] - 1 if index + 1 < len(starts) else 200
+        for number in range(start, end + 1):
+            result[str(number)] = kind
+    return result
+
+
+def parse_type_map(text):
+    """Parse explicit ranges such as "1-88:MCQ,89-91:DESCRIPTIVE"."""
+    result = {}
+    for item in str(text or "").split(","):
+        item = item.strip()
+        if not item:
+            continue
+        range_text, separator, kind = item.partition(":")
+        kind = kind.strip().upper()
+        if not separator or kind not in ("NAT", "MSQ", "MCQ", "DESCRIPTIVE"):
+            raise SystemExit("Invalid --type-map item: %s" % item)
+        range_match = re.match(r"^\s*(\d+)\s*(?:-|to|–)\s*(\d+)\s*$", range_text)
+        if range_match:
+            start, end = int(range_match.group(1)), int(range_match.group(2))
+        elif re.match(r"^\s*\d+\s*$", range_text):
+            start = end = int(range_text)
+        else:
+            raise SystemExit("Invalid --type-map range: %s" % range_text)
+        if start > end:
+            raise SystemExit("Invalid --type-map range: %s" % range_text)
+        for number in range(start, end + 1):
+            result[str(number)] = kind
     return result
 
 
@@ -514,8 +661,9 @@ def parse_answer_key(text):
     answers = {}
     if not text:
         return answers
+    # UCEED keys head sections "SECTION – A (NAT)"; CEED uses "SECTION – I (NAT)".
     sections = list(re.finditer(
-        r"SECTION\s*[–\-]\s*[A-C]\s*\(\s*(NAT|MSQ|MCQ)\s*\)",
+        r"SECTION\s*[–\-]\s*(?:[A-C]|I{1,3})\s*\(\s*(NAT|MSQ|MCQ)\s*\)",
         text,
         re.I
     ))
@@ -531,6 +679,10 @@ def parse_answer_key(text):
                 and not re.match(r"^(key|keys|key\s+range)$", line, re.I)
             ]
             expected = 1 if kind == "NAT" else (15 if kind == "MSQ" else 30)
+            # Section starts differ by exam and year; trust the first number.
+            first = next((line for line in lines if re.match(r"^\d{1,3}$", line)), None)
+            if first:
+                expected = int(first)
             cursor = 0
             while cursor < len(lines) - 1:
                 number_text = lines[cursor]
@@ -570,6 +722,9 @@ def find_question_markers(text):
     # Prefer explicit Q markers so instructions like "1. The total duration..."
     # are never mistaken for questions.
     q_pattern = re.compile(r"(?m)^\s*Q(?:uestion)?\s*\.?\s*(\d{1,3})\s*[.)]?\s*")
+    # Vision sometimes reads a leading Q as O or 0, e.g. "028." for "Q28.".
+    # It also drops the punctuation after the number: "0.04 Shown below...".
+    ocr_q_pattern = re.compile(r"(?m)^\s*[QO0]\s*\.?\s*(\d{1,3})(?:\s*[).:]|\s+(?=[A-Z]))")
     numbered_pattern = re.compile(r"(?m)^\s*(\d{1,3})\s*[.):]\s+")
 
     def collect(pattern):
@@ -590,6 +745,24 @@ def find_question_markers(text):
         return unique
 
     markers = collect(q_pattern)
+    ocr_markers = collect(ocr_q_pattern)
+    if not markers:
+        markers = ocr_markers
+    elif ocr_markers:
+        # Fill gaps where OCR lost or changed the leading Q. Keep only numbers
+        # inside the observed question sequence so numbered instructions do not
+        # become questions.
+        seen = {item[0] for item in markers}
+        low, high = min(seen), max(seen)
+        first_position = markers[0][1]
+        recovered = [
+            item for item in ocr_markers
+            if item[0] not in seen
+            and low <= item[0] <= high + 1
+            and item[1] > first_position
+        ]
+        if recovered:
+            markers = sorted(markers + recovered, key=lambda item: item[1])
     if len(markers) >= 5:
         # A few official papers drop the punctuation after a question number.
         # Recover only bare numbers that fill a gap in the Q-marker sequence.
@@ -650,6 +823,8 @@ def clean_block_text(block):
     lines = []
     for line in str(block or "").splitlines():
         stripped = line.strip()
+        if BOILERPLATE_RE.search(stripped):
+            continue
         if re.match(r"^(UCEED|CEED|NIFT|NID)\s+\d{4}$", stripped, re.I):
             continue
         if re.match(r"^Page\s+\d+\s+of\s+\d+$", stripped, re.I):
@@ -663,7 +838,7 @@ def clean_block_text(block):
         if re.match(r"^Directions\b", stripped, re.I):
             break
         if re.match(r"^(Section\s+\d+|Part\s+[AB])\b", stripped, re.I):
-            break
+            continue
         lines.append(line.rstrip())
     text = "\n".join(lines).strip()
     text = re.split(r"\s+Directions\s+\(Questions", text, maxsplit=1, flags=re.I)[0].strip()
@@ -813,12 +988,72 @@ def fill_image_only_gaps(blocks, pages):
     return result
 
 
+def dotted_question_blocks(full, pages):
+    """Blocks for papers numbered "1.1", "Q 1.2" ... (CEED 2010-2011).
+
+    Old papers mix styles: Question 1 is split into 1.1-1.7 while Questions
+    2-6 are single drawing tasks. Sub-parts replace their parent; parents
+    without sub-parts stay whole. Returns None for normal papers (dozens of
+    top-level markers), so a stray "7.2" answer line never triggers this.
+    """
+    pattern = re.compile(
+        r"(?m)^[ \t]*(?:Q[ \t]*\.?[ \t]*)?(\d{1,2})[ \t]*\.[ \t]*(\d{1,2})[ \t]*(?:[\[(][^\n]{0,20})?$"
+    )
+    dotted, seen = [], set()
+    for match in pattern.finditer(full):
+        key = "%s.%s" % (int(match.group(1)), int(match.group(2)))
+        if key not in seen:
+            seen.add(key)
+            dotted.append((key, match.start(), match.end()))
+    normal = find_question_markers(full)
+    if len(dotted) < 5 or len(normal) >= 15:
+        return None
+    majors = {key.split(".")[0] for key, _, _ in dotted}
+
+    def inside_split_question(position):
+        # A bare number between 1.6 and 1.7 is an option label, not Question 6.
+        before = [key for key, s, _ in dotted if s < position]
+        after = [key for key, s, _ in dotted if s > position]
+        return bool(before and after and before[-1].split(".")[0] == after[0].split(".")[0])
+
+    markers = sorted(
+        dotted + [(str(n), s, e) for n, s, e in normal
+                  if str(n) not in majors and not inside_split_question(s)],
+        key=lambda item: item[1]
+    )
+    blocks = []
+    for index, (key, start, end) in enumerate(markers):
+        block_end = markers[index + 1][1] if index + 1 < len(markers) else len(full)
+        page_start = page_for_offset(pages, start)
+        blocks.append({
+            "question_no": key,
+            "raw": full[end:block_end].strip(),
+            "page_no": page_start["page_no"] if page_start else 1,
+            "page_images": page_images_for_range(pages, start, block_end)
+        })
+    return blocks
+
+
 def parse_questions(pages, fill_gaps=True):
     full = "\n".join(page["text"] for page in pages)
+    dotted = dotted_question_blocks(full, pages)
+    if dotted:
+        return dotted
     part_b_match = re.search(
         r"(?im)^\s*PART\s*[-–]?\s*B\s*(?:\([^)\n]{0,80}\))?\s*$",
         full
     )
+    if not part_b_match:
+        # Some papers put more on the heading line ("Part B Mandatory",
+        # "PART B QUESTION NO: 1 TO 3 ARE MANDATORY"). Accept that only after
+        # the highest-numbered Part A question, so instruction pages that
+        # mention Part B are never mistaken for it.
+        early = find_question_markers(full)
+        if len(early) >= 10:
+            floor = max(early, key=lambda item: item[0])[2]
+            part_b_match = re.compile(
+                r"(?im)^\s*(?:CEED\s+\d{4}\s+)?PART\s*[-–]?\s*B\b[^\n]{0,80}$"
+            ).search(full, floor)
     part_b_start = part_b_match.start() if part_b_match else None
     part_a = full[:part_b_start] if part_b_start is not None else full
     markers = find_question_markers(part_a)
@@ -846,6 +1081,18 @@ def parse_questions(pages, fill_gaps=True):
 
     part_b = full[part_b_start:]
     b_markers = find_question_markers(part_b)
+    # Optional discipline questions are often headed without their own
+    # number ("Part B Optional (Animation Design)", "Question 5a: Optional").
+    # Count each as a question unless a numbered marker follows right after.
+    optional = re.compile(
+        r"(?im)^\s*(?:CEED\s+\d{4}\s+)?(?:PART\s*B\s+Optional\b|Question\s+\d{1,2}\s*[a-d]\s*:)[^\n]*$"
+    )
+    extra = [
+        (0, match.start(), match.end()) for match in optional.finditer(part_b)
+        if not any(0 <= start - match.start() <= 150 for _, start, _ in b_markers)
+    ]
+    if extra:
+        b_markers = sorted(b_markers + extra, key=lambda item: item[1])
     if b_markers:
         offset = part_b_start
         adjusted = [(number, start + offset, end + offset) for number, start, end in b_markers]
@@ -922,11 +1169,16 @@ def main():
     parser.add_argument("--db", default="server/data/dexam.sqlite")
     parser.add_argument("--media-root", default="server/data/media")
     parser.add_argument("--ocr", action="store_true", help="Apply Apple Vision OCR to image-only pages")
+    parser.add_argument("--ocr-all", action="store_true", help="OCR every page, replacing embedded text (useful when embedded text is only a watermark layer)")
+    parser.add_argument("--enhance-scans", action="store_true", help="Create an OCR-oriented enhanced PNG while preserving each original render")
+    parser.add_argument("--enhancement-scale", type=int, default=2, choices=[1, 2, 3], help="Upscale factor for enhanced scan derivatives")
+    parser.add_argument("--sanitize-coaching-watermarks", action="store_true", help="Clear known coaching-ad header/footer bands from derived page images; preserves the source PDF")
     parser.add_argument("--image-format", default="png", choices=["png", "jpg", "jpeg"])
     parser.add_argument("--page-start", type=int, default=1, help="First PDF page to ingest (1-based)")
     parser.add_argument("--page-end", type=int, help="Last PDF page to ingest (inclusive)")
     parser.add_argument("--no-gap-fill", action="store_true", help="Do not synthesize records for blank pages inside a numbering gap")
     parser.add_argument("--default-type", choices=["NAT", "MSQ", "MCQ", "DESCRIPTIVE"], help="Fallback type when the paper gives no section or answer signal")
+    parser.add_argument("--type-map", help="Explicit types, e.g. 1-8:NAT,9-18:MSQ,19-44:MCQ; overrides detected sections")
     parser.add_argument("--ollama-model", help="Optional local Ollama model for independent solution drafts")
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     parser.add_argument("--replace", action="store_true", help="Replace questions for this paper id")
@@ -944,6 +1196,10 @@ def main():
         args.media_root,
         paper_id,
         use_ocr=args.ocr,
+        ocr_all=args.ocr_all,
+        enhance_scans=args.enhance_scans,
+        enhancement_scale=args.enhancement_scale,
+        sanitize_watermarks=args.sanitize_coaching_watermarks,
         image_format=args.image_format,
         page_start=args.page_start,
         page_end=args.page_end
@@ -951,6 +1207,8 @@ def main():
     answer_text = extract_text_from_answer_file(args.answers)
     answer_key = parse_answer_key(answer_text)
     section_map = parse_section_map("\n".join(page["text"] for page in pages))
+    if args.type_map:
+        section_map.update(parse_type_map(args.type_map))
     blocks = parse_questions(pages, fill_gaps=not args.no_gap_fill)
 
     os.makedirs(os.path.dirname(args.db) or ".", exist_ok=True)
@@ -1018,6 +1276,15 @@ def main():
         if not answer or not explanation:
             pending_review += 1
 
+        existing = conn.execute(
+            "SELECT question_no FROM questions WHERE content_hash = ? AND paper_id = ?",
+            (question_hash, paper_id)
+        ).fetchone()
+        if existing and existing[0] != question_no:
+            # Same wording under a different number, e.g. three "Which option
+            # will replace the question mark?" items that differ only in their
+            # images. Those are distinct questions, not repeats.
+            question_hash = content_hash(args.exam, "%s|%s" % (question_no, hash_prompt), options, paper_id)
         question_id = "%s-q%s" % (paper_id, re.sub(r"[^a-zA-Z0-9_-]+", "-", question_no))
         try:
             conn.execute(
@@ -1065,6 +1332,10 @@ def main():
         "page_start": args.page_start,
         "page_end": args.page_end,
         "ocr": bool(args.ocr),
+        "ocr_all": bool(args.ocr_all),
+        "enhance_scans": bool(args.enhance_scans),
+        "enhancement_scale": args.enhancement_scale if args.enhance_scans else None,
+        "coaching_watermarks_sanitized": bool(args.sanitize_coaching_watermarks),
         "image_format": args.image_format,
         "questions_found": len(blocks),
         "inserted": inserted,

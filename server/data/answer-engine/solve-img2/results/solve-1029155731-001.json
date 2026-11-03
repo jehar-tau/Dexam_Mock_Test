@@ -1,0 +1,123 @@
+{
+ "nift-2012-mdes-written-q9": {
+  "answer": "A",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q10": {
+  "answer": "A",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q12": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-2012-mdes-written-q16": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true,
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q18": {
+  "answer": "D",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true,
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q27": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true,
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q31": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q58": {
+  "answer": "A",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q59": {
+  "answer": "A",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q60": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q67": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true,
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q80": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q82": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q85": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q97": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true,
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q116": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q120": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true,
+  "badCrop": true
+ }
+}

@@ -1,0 +1,172 @@
+[
+ {
+  "id": "nift-2012-written-set3-q111",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "111",
+  "type": "MCQ",
+  "image": null,
+  "prompt": ", then the value of y +x 5",
+  "options": [
+   {
+    "position": "A",
+    "text": "1"
+   },
+   {
+    "position": "B",
+    "text": "2 7 7"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set3-q114",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "114",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If x * y = (x + 2) (y - 2) then 7 * 5 = ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "234"
+   },
+   {
+    "position": "B",
+    "text": "243"
+   },
+   {
+    "position": "C",
+    "text": "343 •"
+   },
+   {
+    "position": "D",
+    "text": "423"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set3-q115",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "115",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "/(? ×7) x 18 = 84",
+  "options": [
+   {
+    "position": "A",
+    "text": "3•11"
+   },
+   {
+    "position": "B",
+    "text": "3•12"
+   },
+   {
+    "position": "C",
+    "text": "3•13"
+   },
+   {
+    "position": "D",
+    "text": "3•14 +"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set3-q116",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "116",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If a2 + b2 = 45 and ab = 18, what is a 1 2",
+  "options": [
+   {
+    "position": "A",
+    "text": "#"
+   },
+   {
+    "position": "B",
+    "text": "+ 3 3"
+   },
+   {
+    "position": "C",
+    "text": "+"
+   },
+   {
+    "position": "D",
+    "text": "Cannot be determined 2"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set3-q122",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which country, given 'Most Favoured Nation' status by India in 1996, reciprocated the gesture in November 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Nepal"
+   },
+   {
+    "position": "B",
+    "text": "China"
+   },
+   {
+    "position": "C",
+    "text": "Canada"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set3-q134",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "134",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Arrow' is a leading international brand of brought to India in 1993 by Arvind group. Shoes",
+  "options": [
+   {
+    "position": "A",
+    "text": "Raymond"
+   },
+   {
+    "position": "B",
+    "text": "Shirts"
+   },
+   {
+    "position": "C",
+    "text": "NTC (4) None of these"
+   },
+   {
+    "position": "D",
+    "text": "Jeans \"Dressing Up New India\" is the tag line of which leading Indian textile brand ? Reliance"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set3-q141",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "141",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Neena Haridas is the Editor of the Indian edition of which one of the following fashion & lifestyle magazines ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cosmopolitan"
+   },
+   {
+    "position": "B",
+    "text": "Marie Claire"
+   },
+   {
+    "position": "C",
+    "text": "Elle"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ }
+]

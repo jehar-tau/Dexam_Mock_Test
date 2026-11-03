@@ -1,0 +1,186 @@
+[
+ {
+  "id": "nid-bdes-sample-2025-q1",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q1.png",
+  "prompt": "Find the odd one out? (",
+  "options": []
+ },
+ {
+  "id": "nid-bdes-sample-2025-q2",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q2.png",
+  "prompt": "Shown in the drawing below (Fig.01) is a set of two units that completes a puzzle. Find the same pair from the options below. Fig. 01 (",
+  "options": []
+ },
+ {
+  "id": "nid-bdes-sample-2025-q4",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q4.png",
+  "prompt": "Observe the ‘symbol’ which is a part of a logo. Which organization does this symbol/logo belong to?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Central Vigilance Commission"
+   },
+   {
+    "position": "B",
+    "text": "Fishery Management of India"
+   },
+   {
+    "position": "C",
+    "text": "National Fishery Management"
+   },
+   {
+    "position": "D",
+    "text": "National Vigilance Commission"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-sample-2025-q5",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q5.png",
+  "prompt": "Given below are 4 options of time, as shown in an analogue clock with minutes and hours hand. Identify the option in which the relationship between the minute and hour hand is different from the rest.",
+  "options": [
+   {
+    "position": "A",
+    "text": "3:16"
+   },
+   {
+    "position": "B",
+    "text": "10:15"
+   },
+   {
+    "position": "C",
+    "text": "4:22"
+   },
+   {
+    "position": "D",
+    "text": "12:00"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-sample-2025-q6",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q6.png",
+  "prompt": "How many equilateral triangles can you find in the 3- dimensional figure shown below?",
+  "options": [
+   {
+    "position": "A",
+    "text": "9"
+   },
+   {
+    "position": "B",
+    "text": "8"
+   },
+   {
+    "position": "C",
+    "text": "5"
+   },
+   {
+    "position": "D",
+    "text": "4"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-sample-2025-q7",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q7.png",
+  "prompt": "How many Circles are required to make the given pattern?",
+  "options": [
+   {
+    "position": "A",
+    "text": "13"
+   },
+   {
+    "position": "B",
+    "text": "15"
+   },
+   {
+    "position": "C",
+    "text": "12"
+   },
+   {
+    "position": "D",
+    "text": "17"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-sample-2025-q12",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q12.png",
+  "prompt": "Below are 4 Indian brand mascots, which of these represents a brand of washing powder? (",
+  "options": []
+ },
+ {
+  "id": "nid-bdes-sample-2025-q13",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q13.png",
+  "prompt": "Identify the beak of a pigeon. (",
+  "options": []
+ },
+ {
+  "id": "nid-bdes-sample-2025-q16",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q16.png",
+  "prompt": "Identify the road signs in the order as shown in the image.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Uneven Road, No Entry, Intersection, Speed limit, Narrow Road"
+   },
+   {
+    "position": "B",
+    "text": "Speed Breaker, Prohibited Road, T Section, Height Limit, Bridge"
+   },
+   {
+    "position": "C",
+    "text": "Speed Breaker, No Entry, Intersection, Height Limit, Narrow Road"
+   },
+   {
+    "position": "D",
+    "text": "Uneven Road, Prohibited Road, Intersection, Speed Limit, Bridge"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-sample-2025-q18",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q18.png",
+  "prompt": "Carefully observe the block. The block with question mark needs to be replaced with one of the blocks given below. Choose the block which will fit correctly. (",
+  "options": []
+ },
+ {
+  "id": "nid-bdes-sample-2025-q19",
+  "paper": "nid-bdes-sample-2025",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-q19.png",
+  "prompt": "Which cube can be made from the given 2D shape (Fig. 01)? Fig.01",
+  "options": []
+ }
+]

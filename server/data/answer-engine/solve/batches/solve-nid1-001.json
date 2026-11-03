@@ -1,0 +1,46 @@
+[
+ {
+  "id": "nid-bdes-2016-q55",
+  "paper": "nid-bdes-2016",
+  "questionNo": "55",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q55.png",
+  "prompt": "Find out the next \"Number' in the series: 2 3 (",
+  "options": [
+   {
+    "position": "A",
+    "text": "11 ("
+   },
+   {
+    "position": "B",
+    "text": "13 ("
+   },
+   {
+    "position": "C",
+    "text": "12 ("
+   },
+   {
+    "position": "D",
+    "text": "14"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2016-q89",
+  "paper": "nid-bdes-2016",
+  "questionNo": "89",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q89.png",
+  "prompt": "The water tap of the wash basin in a bathroom is leaking. It is mid-night and no professional help is available at that hour. Give five ideas to prevent water wastage and represent them through drawings with two-three lines of explanation each.",
+  "options": []
+ },
+ {
+  "id": "nid-bdes-2016-q90",
+  "paper": "nid-bdes-2016",
+  "questionNo": "90",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2016/blocks/nid-bdes-2016-q90.png",
+  "prompt": "\"Once upon a time, monkeys had no long tails and elephants had very short trunks. Until one •\"Complete the story and represent the same in FIVE frames given below with a caption of not more than two lines for each frame.",
+  "options": []
+ }
+]

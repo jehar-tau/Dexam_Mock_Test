@@ -1,0 +1,392 @@
+[
+ {
+  "id": "nift-bdes-written-sample-q81",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "81",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Aakriti said to Meenakumari, \"That person standing there is your mother's unmarried sister's only brother-in-law's son\". How is that person related to Meenakumari?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sister"
+   },
+   {
+    "position": "B",
+    "text": "Aunt"
+   },
+   {
+    "position": "C",
+    "text": "Brother"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q82",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "82",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "L, M, N, O, P and Q are sitting in a row all facing front. P and Q are sitting in the centre. L and M are sitting at the two ends. N is sitting to the right of L. Who is sitting to the immediate left of M?",
+  "options": [
+   {
+    "position": "A",
+    "text": "P"
+   },
+   {
+    "position": "B",
+    "text": "L"
+   },
+   {
+    "position": "C",
+    "text": "0"
+   },
+   {
+    "position": "D",
+    "text": "Q 83. If in a certain code, FLOWERS is written as SREWOLG, how will MOUNTAIN be written in that language? (1) NIATNUOM (2) NIATNOUN (3) NIATNUON (4) NIANTUON 84. Arzoo starts jogging from location A in south direction for 1 km and then takes a left turn and travels 3 km to reach location C. Now she "
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q83",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "83",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "FLOWERS MOUNTAIN",
+  "options": [
+   {
+    "position": "A",
+    "text": "NIATNUOM"
+   },
+   {
+    "position": "B",
+    "text": "NIATNOUN"
+   },
+   {
+    "position": "C",
+    "text": "NIATNUON"
+   },
+   {
+    "position": "D",
+    "text": "NIANTUON"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q85",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "85",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q85.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "8450 14"
+   },
+   {
+    "position": "B",
+    "text": "7400"
+   },
+   {
+    "position": "C",
+    "text": "{333.34"
+   },
+   {
+    "position": "D",
+    "text": "*206.67"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q86",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "86",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following metals is the most abundant in the Earth's crust?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Zinc"
+   },
+   {
+    "position": "B",
+    "text": "Copper"
+   },
+   {
+    "position": "C",
+    "text": "Aluminium"
+   },
+   {
+    "position": "D",
+    "text": "Iron"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q87",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "87",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following cities is the birthplace of Swami Vivekananda?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cuttack"
+   },
+   {
+    "position": "B",
+    "text": "Balasore"
+   },
+   {
+    "position": "C",
+    "text": "Calcutta"
+   },
+   {
+    "position": "D",
+    "text": "Kushinagar"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q88",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following famous Indian leaders coined the slogan 'Jai Jawan Jai Kisan'?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mahatma Gandhi"
+   },
+   {
+    "position": "B",
+    "text": "Pt Jawaharlal Nehru"
+   },
+   {
+    "position": "C",
+    "text": "Lal Bahadur Shastri"
+   },
+   {
+    "position": "D",
+    "text": "Sardar Vallabhbhai Patel"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q89",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "89",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following does not come under the purview of the Election Commission of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "To conduct the election of Prime Minister of India."
+   },
+   {
+    "position": "B",
+    "text": "To conduct the election of President of India."
+   },
+   {
+    "position": "C",
+    "text": "To give recognition to the political parties."
+   },
+   {
+    "position": "D",
+    "text": "To assign election symbols to the political parties."
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q90",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "90",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Constitution of India names our country as",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bharat"
+   },
+   {
+    "position": "B",
+    "text": "India, that is Bharat"
+   },
+   {
+    "position": "C",
+    "text": "Hindustan"
+   },
+   {
+    "position": "D",
+    "text": "Aryavarta"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q91",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "91",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Where is the headquarters of Asian Development Bank?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Manila"
+   },
+   {
+    "position": "B",
+    "text": "Kuala Lumpur"
+   },
+   {
+    "position": "C",
+    "text": "Tokyo"
+   },
+   {
+    "position": "D",
+    "text": "Colombo"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q92",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "92",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which among the following planets of our Solar system is the biggest in size?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Venus"
+   },
+   {
+    "position": "B",
+    "text": "Mercury"
+   },
+   {
+    "position": "C",
+    "text": "Earth"
+   },
+   {
+    "position": "D",
+    "text": "Mars"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q93",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "93",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Lines of Latitude and Longitude both",
+  "options": [
+   {
+    "position": "A",
+    "text": "pass through poles."
+   },
+   {
+    "position": "B",
+    "text": "run parallel to the equator."
+   },
+   {
+    "position": "C",
+    "text": "run parallel to each other."
+   },
+   {
+    "position": "D",
+    "text": "run perpendicular to each other. 11-PM/A/XX-XX/I 17 Dile than (+) DINATE (Z)"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q94",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "94",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which popular Indian film pair of actor-actress is the promoter of 'Trends', a fashion clothing range from the house of Reliance?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Vicky Kaushal and Janhvi Kapoor"
+   },
+   {
+    "position": "B",
+    "text": "Disha Patani and Tiger Shroff"
+   },
+   {
+    "position": "C",
+    "text": "Tamanna Bhatia and Sidharth Malhotra"
+   },
+   {
+    "position": "D",
+    "text": "Ayushmann Khurrana and Shraddha Kapoor"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q95",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "95",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Kantha, Baluchari, Tangail and Jamdani are the hand printed famous sarees from",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tamil Nadu"
+   },
+   {
+    "position": "B",
+    "text": "Gujarat"
+   },
+   {
+    "position": "C",
+    "text": "Madhya Pradesh"
+   },
+   {
+    "position": "D",
+    "text": "West Bengal to 96. 'BRAND FACTORY', a chain of retail stores offering a wide range of apparel brands belongs (1) Future Group (2) Bharti Retail (3) The ITC Group (4) Landmark Group"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q97",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "97",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Where did in USA, Prime Minister of India recently addressed close to 50,000 Indian-Americans at the Howdy, Modi! event along with US President?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Houston, Texas"
+   },
+   {
+    "position": "B",
+    "text": "Boston"
+   },
+   {
+    "position": "C",
+    "text": "San Diego, California"
+   },
+   {
+    "position": "D",
+    "text": "Chicago, Illinois"
+   }
+  ]
+ }
+]

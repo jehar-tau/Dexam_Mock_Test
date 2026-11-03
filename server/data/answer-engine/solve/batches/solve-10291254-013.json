@@ -1,0 +1,635 @@
+[
+ {
+  "id": "nift-2013-written-set3-q1",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q1.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "cooperation"
+   },
+   {
+    "position": "B",
+    "text": "courtesy"
+   },
+   {
+    "position": "C",
+    "text": "punctuality"
+   },
+   {
+    "position": "D",
+    "text": "skill"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q4",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Few teachers have been spared the problem of an obstreperous pupil in the class.",
+  "options": [
+   {
+    "position": "A",
+    "text": "awkward"
+   },
+   {
+    "position": "B",
+    "text": "lazy"
+   },
+   {
+    "position": "C",
+    "text": "hostile"
+   },
+   {
+    "position": "D",
+    "text": "cheerful"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q20",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "You must not mince matters; tell the truth.",
+  "options": [
+   {
+    "position": "A",
+    "text": "cut short"
+   },
+   {
+    "position": "B",
+    "text": "conceal facts"
+   },
+   {
+    "position": "C",
+    "text": "tell with frankness"
+   },
+   {
+    "position": "D",
+    "text": "comply with"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q26",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q26.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "grametic"
+   },
+   {
+    "position": "B",
+    "text": "distillry"
+   },
+   {
+    "position": "C",
+    "text": "distillery"
+   },
+   {
+    "position": "D",
+    "text": "distilery"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q27",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "27",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q27.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "distilry"
+   },
+   {
+    "position": "B",
+    "text": "sustenance"
+   },
+   {
+    "position": "C",
+    "text": "sustenense"
+   },
+   {
+    "position": "D",
+    "text": "sustinance"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q28",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q28.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q29",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "29",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q29.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "achievment"
+   },
+   {
+    "position": "B",
+    "text": "coriander ."
+   },
+   {
+    "position": "C",
+    "text": "corriandar"
+   },
+   {
+    "position": "D",
+    "text": "coreandor"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q32",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q32.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Any further cylinders that fell,"
+   },
+   {
+    "position": "B",
+    "text": "it was hoped, could be destroyed"
+   },
+   {
+    "position": "C",
+    "text": "at once by high explosives,"
+   },
+   {
+    "position": "D",
+    "text": "which was being rapidly manufactured and distributed."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q33",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q33.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "It was the first time that a grave"
+   },
+   {
+    "position": "B",
+    "text": "had opened in my road of life,"
+   },
+   {
+    "position": "C",
+    "text": "and the gape it made in the"
+   },
+   {
+    "position": "D",
+    "text": "smooth ground was wonderful."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q34",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q34.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "He disappeared into his bedroom"
+   },
+   {
+    "position": "B",
+    "text": "and returned in a few minutes"
+   },
+   {
+    "position": "C",
+    "text": "as the character of a amiable"
+   },
+   {
+    "position": "D",
+    "text": "and simple-minded nonconformist clergyman."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q35",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q35.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "As it pulled on, one of the loafing man at the corner"
+   },
+   {
+    "position": "B",
+    "text": "dashed forward to open the door in the hope of earning"
+   },
+   {
+    "position": "C",
+    "text": "a copper, but was elbowed away by another loafer,"
+   },
+   {
+    "position": "D",
+    "text": "who had rushed up with the same intention. (4 ) . MD 1400/B/2K13/02"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q38",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following has been referred to as a paradox ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "The literacy percentage increases and the number of illiterates decreases."
+   },
+   {
+    "position": "B",
+    "text": "The literacy percentage increases in proportion to the rate of increase in population. stage but not at the"
+   },
+   {
+    "position": "C",
+    "text": "The government is sensitive to the problem only at the planning implementation stage."
+   },
+   {
+    "position": "D",
+    "text": "The literacy percentage and the number of illiterates are both increasing."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q39",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is as important as the literacy campaign ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Checking the rapid growth of population."
+   },
+   {
+    "position": "B",
+    "text": "Starting correspondence courses and providing reading facilities."
+   },
+   {
+    "position": "C",
+    "text": "Awareness of the magnitude of the problem of illiteracy."
+   },
+   {
+    "position": "D",
+    "text": "Making sufficient provision for continued education."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q43",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How would India's national policy on climate change \"rev up our competitive advantage\" ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Technology to top solar energy possibly leading to other applications."
+   },
+   {
+    "position": "B",
+    "text": "NAMAs being put to economical use."
+   },
+   {
+    "position": "C",
+    "text": "By increasing the thermal efficiency in our coal-fired power plants, leading to boosting of power generation."
+   },
+   {
+    "position": "D",
+    "text": "Both (1) and (3) MD 1400/B/2K13/02 ( 6 ) Passage III an Culture is the cultivation of a plant or garden, not the eradication of its roots, it is nourishment. Culture is not understanding of the roots and seeds, their patient care and instructed knowledge, nor is it art, still less is its acquaintanc"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q45",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The culture of a community is said to deteriorate when",
+  "options": [
+   {
+    "position": "A",
+    "text": "there is a fall in its educational standards."
+   },
+   {
+    "position": "B",
+    "text": "the family life fails to play its part."
+   },
+   {
+    "position": "C",
+    "text": "there is universal education."
+   },
+   {
+    "position": "D",
+    "text": "it adopts the modern system of instruction."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q46",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The culture of a community is transmitted",
+  "options": [
+   {
+    "position": "A",
+    "text": "more by school than the family."
+   },
+   {
+    "position": "B",
+    "text": "more by the family than school."
+   },
+   {
+    "position": "C",
+    "text": "equally by both."
+   },
+   {
+    "position": "D",
+    "text": "by the peer group."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q48",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In the opinion of the writer, a successful businessman",
+  "options": [
+   {
+    "position": "A",
+    "text": "should not bother about popularity."
+   },
+   {
+    "position": "B",
+    "text": "is expected to have expensive tastes."
+   },
+   {
+    "position": "C",
+    "text": "is more popular if he appears to be doing nothing"
+   },
+   {
+    "position": "D",
+    "text": "must be extravagant before achieving success."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q50",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It seems that low paid people should",
+  "options": [
+   {
+    "position": "A",
+    "text": "feel guilty if they overspend."
+   },
+   {
+    "position": "B",
+    "text": "borrow money to meet their essential needs."
+   },
+   {
+    "position": "C",
+    "text": "not keep their creditors waiting."
+   },
+   {
+    "position": "D",
+    "text": "not pay their bills promptly."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q51",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "51",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How does the housewife, described by the writer, feel when she saves money ? She ....",
+  "options": [
+   {
+    "position": "A",
+    "text": "wishes she could sometimes be extravagant."
+   },
+   {
+    "position": "B",
+    "text": "is still troubled by a sense of guilt."
+   },
+   {
+    "position": "C",
+    "text": "wishes life were less burdensome."
+   },
+   {
+    "position": "D",
+    "text": "is content to be so thrifty."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q53",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q53.png",
+  "prompt": "The most suitable title for the above passage would be",
+  "options": [
+   {
+    "position": "A",
+    "text": "Nationalism a road to world unity."
+   },
+   {
+    "position": "B",
+    "text": "Nationalism breeds unity."
+   },
+   {
+    "position": "C",
+    "text": "Nationalism and national problems."
+   },
+   {
+    "position": "D",
+    "text": "Nationalism is not enough."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q54",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "54",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Aggressive nationalism",
+  "options": [
+   {
+    "position": "A",
+    "text": "isolates a country."
+   },
+   {
+    "position": "B",
+    "text": "endangers national unity."
+   },
+   {
+    "position": "C",
+    "text": "leads to stunted growth."
+   },
+   {
+    "position": "D",
+    "text": "breeds threat to international relations."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q55",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "55",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Negative national feeling can make a nation",
+  "options": [
+   {
+    "position": "A",
+    "text": "dangerous."
+   },
+   {
+    "position": "B",
+    "text": "indifferent."
+   },
+   {
+    "position": "C",
+    "text": "self-centred."
+   },
+   {
+    "position": "D",
+    "text": "selfish."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q57",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "57",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A humane attitude on the part of the supervisor towards his staff is necessary to",
+  "options": [
+   {
+    "position": "A",
+    "text": "get them to work."
+   },
+   {
+    "position": "B",
+    "text": "keep them happy."
+   },
+   {
+    "position": "C",
+    "text": "have a congenial atmosphere at workplace."
+   },
+   {
+    "position": "D",
+    "text": "get the best out of them."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q58",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Responsibility and accountability make a worker",
+  "options": [
+   {
+    "position": "A",
+    "text": "shirk his duties."
+   },
+   {
+    "position": "B",
+    "text": "do his job properly."
+   },
+   {
+    "position": "C",
+    "text": "tense and frightened."
+   },
+   {
+    "position": "D",
+    "text": "vulnerable before his supervisors"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q59",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "59",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Supervisors do not delegate responsibility and authority to their subordinates because",
+  "options": [
+   {
+    "position": "A",
+    "text": "subordinates are not capable enough."
+   },
+   {
+    "position": "B",
+    "text": "they can't trust their subordinates."
+   },
+   {
+    "position": "C",
+    "text": "they are apprehensive of losing their hold on the place of work."
+   },
+   {
+    "position": "D",
+    "text": "final responsibility is theirs."
+   }
+  ]
+ }
+]

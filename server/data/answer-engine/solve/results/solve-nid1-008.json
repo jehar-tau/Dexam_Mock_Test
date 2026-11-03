@@ -1,0 +1,44 @@
+{
+ "nid-mdes-sample-2025-q1": {
+  "answer": "A",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-mdes-sample-2025-q8": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-mdes-sample-2025-q9": {
+  "answer": "A",
+  "confidence": "low",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-mdes-sample-2025-q15": {
+  "answer": "A",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-mdes-sample-2025-q16": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-mdes-sample-2025-q17": {
+  "answer": "A",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-mdes-sample-2025-q18": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ }
+}

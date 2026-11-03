@@ -1,0 +1,567 @@
+[
+ {
+  "id": "ceed-2014-q26",
+  "paper": "ceed-2014",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q26.png",
+  "prompt": "What is the full form of MPEG?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Motion Pictures Experts Group"
+   },
+   {
+    "position": "B",
+    "text": "Magnetic Prism Exposure Grid"
+   },
+   {
+    "position": "C",
+    "text": "Motion Picture Entertainment Guild"
+   },
+   {
+    "position": "D",
+    "text": "Media Protocol Entertainment Guild"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q27",
+  "paper": "ceed-2014",
+  "questionNo": "27",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q27.png",
+  "prompt": "The film that Eisenstein is associated with ________________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Blow up"
+   },
+   {
+    "position": "B",
+    "text": "Bicycle Thieves"
+   },
+   {
+    "position": "C",
+    "text": "Battleship Potemkin"
+   },
+   {
+    "position": "D",
+    "text": "Roshomon"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q28",
+  "paper": "ceed-2014",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q28.png",
+  "prompt": "Identify the famous graphic designer from the list",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sabyasachi Mukherjee"
+   },
+   {
+    "position": "B",
+    "text": "Sudarshan Dheer"
+   },
+   {
+    "position": "C",
+    "text": "Dilip Chhabria"
+   },
+   {
+    "position": "D",
+    "text": "Hafeez Contractor"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q29",
+  "paper": "ceed-2014",
+  "questionNo": "29",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q29.png",
+  "prompt": "Identify the car manufacturer based on the visual shown here 9",
+  "options": [
+   {
+    "position": "A",
+    "text": "Rolls Royce"
+   },
+   {
+    "position": "B",
+    "text": "BMW"
+   },
+   {
+    "position": "C",
+    "text": "Maruti Suzuki"
+   },
+   {
+    "position": "D",
+    "text": "Land Rover"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q30",
+  "paper": "ceed-2014",
+  "questionNo": "30",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q30.png",
+  "prompt": "Identify the car brand from the visual shown",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cadillac"
+   },
+   {
+    "position": "B",
+    "text": "Vauxhall"
+   },
+   {
+    "position": "C",
+    "text": "Citroen"
+   },
+   {
+    "position": "D",
+    "text": "Dacia"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q31",
+  "paper": "ceed-2014",
+  "questionNo": "31",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q31.png",
+  "prompt": "A Pentagon is mirrored four times. What will the final image seen in the last Pentagon be? 10",
+  "options": []
+ },
+ {
+  "id": "ceed-2014-q32",
+  "paper": "ceed-2014",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q32.png",
+  "prompt": "You are shown two animation sequences (A and B) of a ball falling off a surface. Assuming that they were pushed with the same force, identify which animation sequence depicts the heavier ball ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ball in image A is heavier"
+   },
+   {
+    "position": "B",
+    "text": "Ball in the image B is heavier"
+   },
+   {
+    "position": "C",
+    "text": "Ball in image A and B are of equal weight"
+   },
+   {
+    "position": "D",
+    "text": "Can’t say"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q33",
+  "paper": "ceed-2014",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q33.png",
+  "prompt": "In the image shown identify the direction of the swinging pendulum around pivot point A.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Left to Right"
+   },
+   {
+    "position": "B",
+    "text": "Both the directions 11"
+   },
+   {
+    "position": "C",
+    "text": "None of the above"
+   },
+   {
+    "position": "D",
+    "text": "Right to Left"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q34",
+  "paper": "ceed-2014",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q34.png",
+  "prompt": "Choose the correct mid-point image to complete the walk cycle 12",
+  "options": []
+ },
+ {
+  "id": "ceed-2014-q35",
+  "paper": "ceed-2014",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q35.png",
+  "prompt": "A girl in a boat is riding a wave. Identify the correct drawing",
+  "options": []
+ },
+ {
+  "id": "ceed-2014-q36",
+  "paper": "ceed-2014",
+  "questionNo": "36",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q36.png",
+  "prompt": "Lost wax process is used in ________________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Turning"
+   },
+   {
+    "position": "B",
+    "text": "Casting"
+   },
+   {
+    "position": "C",
+    "text": "Forging"
+   },
+   {
+    "position": "D",
+    "text": "Welding"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q37",
+  "paper": "ceed-2014",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q37.png",
+  "prompt": "How many A4 size paper sheets will make A0 size?",
+  "options": [
+   {
+    "position": "A",
+    "text": "3"
+   },
+   {
+    "position": "B",
+    "text": "4"
+   },
+   {
+    "position": "C",
+    "text": "16"
+   },
+   {
+    "position": "D",
+    "text": "8"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q38",
+  "paper": "ceed-2014",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q38.png",
+  "prompt": "As per DIN standards, the dimension of A4 size paper is _________________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "210 by 297 mm"
+   },
+   {
+    "position": "B",
+    "text": "297 by 268 mm"
+   },
+   {
+    "position": "C",
+    "text": "236 by 278 mm"
+   },
+   {
+    "position": "D",
+    "text": "210 by 297 inches 13"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q39",
+  "paper": "ceed-2014",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q39.png",
+  "prompt": "Maximum acceptable slope (a:b) for wheel chair ramp is in the ratio of __________________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "1:8"
+   },
+   {
+    "position": "B",
+    "text": "1:12"
+   },
+   {
+    "position": "C",
+    "text": "1:3"
+   },
+   {
+    "position": "D",
+    "text": "1:20"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q40",
+  "paper": "ceed-2014",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q40.png",
+  "prompt": "What is the material used commonly in the manufacture of household plastic buckets?",
+  "options": [
+   {
+    "position": "A",
+    "text": "ABS"
+   },
+   {
+    "position": "B",
+    "text": "PVC"
+   },
+   {
+    "position": "C",
+    "text": "Nylon"
+   },
+   {
+    "position": "D",
+    "text": "HDPE"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q41",
+  "paper": "ceed-2014",
+  "questionNo": "41",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q41.png",
+  "prompt": "Jiggering & Jollying process is associated with ______________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ceramics"
+   },
+   {
+    "position": "B",
+    "text": "Mild steel"
+   },
+   {
+    "position": "C",
+    "text": "Aluminum"
+   },
+   {
+    "position": "D",
+    "text": "Bakelite"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q42",
+  "paper": "ceed-2014",
+  "questionNo": "42",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q42.png",
+  "prompt": "Carbon Foot Print refers to ________________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Environment Pollution"
+   },
+   {
+    "position": "B",
+    "text": "Photosynthesis in Plants"
+   },
+   {
+    "position": "C",
+    "text": "Carbon dating technique"
+   },
+   {
+    "position": "D",
+    "text": "Carbon Fiber Footwear 14"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q43",
+  "paper": "ceed-2014",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q43.png",
+  "prompt": "Pet bottles are best made using ________________ process.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Vacuum Forming"
+   },
+   {
+    "position": "B",
+    "text": "Injection molding"
+   },
+   {
+    "position": "C",
+    "text": "Blow molding"
+   },
+   {
+    "position": "D",
+    "text": "Roto-molding"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q44",
+  "paper": "ceed-2014",
+  "questionNo": "44",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q44.png",
+  "prompt": "Tyeb Mehta is a well known ________________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Animator"
+   },
+   {
+    "position": "B",
+    "text": "Painter"
+   },
+   {
+    "position": "C",
+    "text": "Automobile Designer"
+   },
+   {
+    "position": "D",
+    "text": "Fashion Designer"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q45",
+  "paper": "ceed-2014",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q45.png",
+  "prompt": "The symbol shown is associated with",
+  "options": [
+   {
+    "position": "A",
+    "text": "Amul"
+   },
+   {
+    "position": "B",
+    "text": "Life Insurance Corporation of India"
+   },
+   {
+    "position": "C",
+    "text": "Food Corporation of India"
+   },
+   {
+    "position": "D",
+    "text": "Nabard"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q46",
+  "paper": "ceed-2014",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q46.png",
+  "prompt": "Identify the odd one out from the list 15",
+  "options": []
+ },
+ {
+  "id": "ceed-2014-q47",
+  "paper": "ceed-2014",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q47.png",
+  "prompt": "The symbol shown is associated with",
+  "options": [
+   {
+    "position": "A",
+    "text": "National Savings Scheme"
+   },
+   {
+    "position": "B",
+    "text": "National Textile Corporation"
+   },
+   {
+    "position": "C",
+    "text": "Aadhar"
+   },
+   {
+    "position": "D",
+    "text": "National Literacy mission"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q48",
+  "paper": "ceed-2014",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q48.png",
+  "prompt": "Identify the musical instrument shown in this picture",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sarangi"
+   },
+   {
+    "position": "B",
+    "text": "Guitar"
+   },
+   {
+    "position": "C",
+    "text": "Sarod"
+   },
+   {
+    "position": "D",
+    "text": "Sitar"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q49",
+  "paper": "ceed-2014",
+  "questionNo": "49",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q49.png",
+  "prompt": "The visual shown here represents the golden proportion. Identify the correct ratio.",
+  "options": [
+   {
+    "position": "A",
+    "text": "a:a+b = 1: 1.618"
+   },
+   {
+    "position": "B",
+    "text": "a:a+b = 1: 6.182"
+   },
+   {
+    "position": "C",
+    "text": "a:a+b = 1: 4.352"
+   },
+   {
+    "position": "D",
+    "text": "a:a+b = 1: 1.928 16"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q50",
+  "paper": "ceed-2014",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q50.png",
+  "prompt": "Identify the correct cut and fold drawing to create the shown image. 17 CEED 2014 PART B QUESTION NO: 1 TO 3 ARE MANDATORY. ATTEMPT ANY ONE FROM QUESTION NO: 4, 5 AND 6. Sketching Question No. 1 Marks 20 Draw a freehand perspective drawing of a person opening the refrigerator door in the kitchen. OR Draw a freehand perspective drawing of a person standing next to a scooter parked on the street. Note: - DO NOT USE ANY DRAWING INSTRUMENTS LIKE RULER, COMPASS, SET-SQUARE etc. - DO NOT USE ANY FORM OF COLOUR - USE ONLY PENCILS Evaluation Criteria: Abilities in perspective drawing Light and shade and shadow Quality of lines Sense of scale and proportions Sense of composition 18 Creativity and Imagination Question 2 Marks 15 The illustration above is an artist’s impression of an incident in a club house. Narrate the incident in your own words, based on your creative imagination. Limit your description to less than 250 words. Evaluation Criteria: Originality of the narrative Imagination and Ideation Story telling ability 19 Question 3 Marks 15 Umbrellas are used mainly during the rainy season and usually remain unused during the rest of the year. Creatively generate 3 alternative uses of the umbrella other than just as protection from rain or sunshine. Illustrate your ideas in the form of sketches with short descriptions. Evaluation Criteria: Originality of the ideas Creativity and Innovation Imagination and Ideation 20 CEED 2014 Part B Optional (Visual Communication and Interaction",
+  "options": []
+ }
+]

@@ -22,11 +22,16 @@ const DATA_DIR = path.join(ROOT, "server", "data");
 const USER_BANK_FILE = path.join(DATA_DIR, "user-bank.json");
 const MOCKS_FILE = path.join(DATA_DIR, "mocks.json");
 const OFFICIAL_DB_FILE = path.join(DATA_DIR, "dexam.sqlite");
+const GENERIC_BANK_FILE = path.join(DATA_DIR, "generic-question-bank.json");
+const NEEDS_KEY_BANK_FILE = path.join(DATA_DIR, "needs-answer-key-bank.json");
+const PART_B_BANK_FILE = path.join(DATA_DIR, "part-b-question-bank.json");
 const OFFICIAL_MEDIA_DIR = path.join(DATA_DIR, "media");
 const OFFICIAL_SOURCES_DIR = path.join(DATA_DIR, "sources");
 const INGEST_SCRIPT = path.join(ROOT, "tools", "ingest_official_pdf.py");
 const PYTHON_BIN = process.env.PYTHON || "python3";
 let officialDb = null;
+let officialHasCropReview = false;
+const CROP_REVIEW_STATES = ["pending", "approved", "rejected"];
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -123,6 +128,8 @@ function normalizeQuestion(raw, defaults) {
     negative: negative,
     prompt: String(item.prompt || item.question || item.text || ""),
     options: options.length ? options : undefined,
+    figurePaths: Array.isArray(item.figurePaths) ? item.figurePaths.map(String) : undefined,
+    pageImages: Array.isArray(item.pageImages) ? item.pageImages.map(String) : undefined,
     correctAnswer: Array.isArray(correct) ? correct : (correct === undefined || correct === null || correct === "" ? undefined : correct),
     solution: String(item.solution || item.explanation || ""),
     source: item.source || defaults.source || "user",
@@ -440,6 +447,7 @@ function getOfficialDb() {
       page_no INTEGER,
       page_images_json TEXT,
       figure_paths_json TEXT,
+      crop_review TEXT DEFAULT 'pending',
       content_hash TEXT UNIQUE,
       status TEXT DEFAULT 'review',
       created_at TEXT,
@@ -457,6 +465,9 @@ function getOfficialDb() {
     CREATE INDEX IF NOT EXISTS idx_questions_topic ON questions(topic);
     CREATE INDEX IF NOT EXISTS idx_questions_status ON questions(status);
   `);
+  // Older databases gain this column through tools/migrate_crop_review.py, which backs up first.
+  officialHasCropReview = officialDb.prepare("PRAGMA table_info(questions)").all()
+    .some((column) => column.name === "crop_review");
   return officialDb;
 }
 
@@ -497,6 +508,7 @@ function normalizeOfficialQuestion(row) {
     pageNo: row.page_no,
     pageImages: parseJsonValue(row.page_images_json, []).map(mediaUrl),
     figurePaths: parseJsonValue(row.figure_paths_json, []).map(mediaUrl),
+    cropReview: row.crop_review || "pending",
     status: row.status,
     createdAt: row.created_at,
     updatedAt: row.updated_at
@@ -579,6 +591,10 @@ function officialQuestions(query) {
     clauses.push("explanation_status = :explanationStatus");
     params.explanationStatus = query.explanationStatus;
   }
+  if (query.cropReview && officialHasCropReview) {
+    clauses.push("figure_paths_json NOT IN ('', '[]') AND COALESCE(crop_review, 'pending') = :cropReview");
+    params.cropReview = query.cropReview;
+  }
   if (query.search) {
     clauses.push("(prompt LIKE :search OR explanation LIKE :search OR topic LIKE :search)");
     params.search = "%" + query.search + "%";
@@ -611,8 +627,19 @@ function updateOfficialQuestion(id, payload) {
     explanationStatus: "explanation_status",
     explanationSource: "explanation_source",
     referenceUrl: "reference_url",
-    status: "status"
+    status: "status",
+    cropReview: "crop_review"
   };
+  if (payload.cropReview !== undefined) {
+    if (!officialHasCropReview) throw new Error("crop_review column is missing; run tools/migrate_crop_review.py first.");
+    if (!CROP_REVIEW_STATES.includes(payload.cropReview)) {
+      throw new Error("Crop review must be one of: " + CROP_REVIEW_STATES.join(", ") + ".");
+    }
+    const current = db.prepare("SELECT figure_paths_json FROM questions WHERE id = ?").get(id);
+    if (payload.cropReview === "approved" && current && !parseJsonValue(current.figure_paths_json, []).length) {
+      throw new Error("Cannot approve a crop: this question has no figure crop.");
+    }
+  }
   if (payload.optionsJson !== undefined) {
     try {
       const options = JSON.parse(payload.optionsJson);
@@ -789,6 +816,36 @@ function api(req, res) {
     });
   }
   if (parsed.pathname === "/api/exams") return resultJson(res, seedExams);
+  if (parsed.pathname === "/api/generic-bank" && req.method === "GET") {
+    if (!fs.existsSync(GENERIC_BANK_FILE)) {
+      return resultJson(res, { schemaVersion: 1, questionCount: 0, topicCount: 0, topics: [] });
+    }
+    try {
+      return resultJson(res, JSON.parse(fs.readFileSync(GENERIC_BANK_FILE, "utf8")));
+    } catch (error) {
+      return resultJson(res, { error: "Generic bank is unavailable: " + error.message }, 500);
+    }
+  }
+  if (parsed.pathname === "/api/needs-answer-key-bank" && req.method === "GET") {
+    if (!fs.existsSync(NEEDS_KEY_BANK_FILE)) {
+      return resultJson(res, { schemaVersion: 1, questionCount: 0, questions: [] });
+    }
+    try {
+      return resultJson(res, JSON.parse(fs.readFileSync(NEEDS_KEY_BANK_FILE, "utf8")));
+    } catch (error) {
+      return resultJson(res, { error: "Needs-key bank is unavailable: " + error.message }, 500);
+    }
+  }
+  if (parsed.pathname === "/api/part-b-bank" && req.method === "GET") {
+    if (!fs.existsSync(PART_B_BANK_FILE)) {
+      return resultJson(res, { schemaVersion: 1, questionCount: 0, questions: [] });
+    }
+    try {
+      return resultJson(res, JSON.parse(fs.readFileSync(PART_B_BANK_FILE, "utf8")));
+    } catch (error) {
+      return resultJson(res, { error: "Part B bank is unavailable: " + error.message }, 500);
+    }
+  }
   if (parsed.pathname === "/api/official/state" && req.method === "GET") {
     return resultJson(res, officialState());
   }

@@ -1,0 +1,310 @@
+[
+ {
+  "id": "nift-2013-written-set3-q2",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q2.png",
+  "prompt": "Many species of animals have become extinct during the last hundred years.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q3",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q3.png",
+  "prompt": "The community is agog with speculation about the fate of the money collected.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q6",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q6.png",
+  "prompt": "A serene mind can never be the pioneer of a great revolution.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q7",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q7.png",
+  "prompt": "Matter expands on heating.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q8",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q8.png",
+  "prompt": "He climbed up a stationary wagon.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q26",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q26.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "grametic"
+   },
+   {
+    "position": "B",
+    "text": "distillry"
+   },
+   {
+    "position": "C",
+    "text": "distillery"
+   },
+   {
+    "position": "D",
+    "text": "distilery"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q27",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "27",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q27.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "distilry"
+   },
+   {
+    "position": "B",
+    "text": "sustenance"
+   },
+   {
+    "position": "C",
+    "text": "sustenense"
+   },
+   {
+    "position": "D",
+    "text": "sustinance"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q28",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q28.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q29",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "29",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q29.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "achievment"
+   },
+   {
+    "position": "B",
+    "text": "coriander ."
+   },
+   {
+    "position": "C",
+    "text": "corriandar"
+   },
+   {
+    "position": "D",
+    "text": "coreandor"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q32",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q32.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Any further cylinders that fell,"
+   },
+   {
+    "position": "B",
+    "text": "it was hoped, could be destroyed"
+   },
+   {
+    "position": "C",
+    "text": "at once by high explosives,"
+   },
+   {
+    "position": "D",
+    "text": "which was being rapidly manufactured and distributed."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q33",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q33.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "It was the first time that a grave"
+   },
+   {
+    "position": "B",
+    "text": "had opened in my road of life,"
+   },
+   {
+    "position": "C",
+    "text": "and the gape it made in the"
+   },
+   {
+    "position": "D",
+    "text": "smooth ground was wonderful."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q34",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q34.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "He disappeared into his bedroom"
+   },
+   {
+    "position": "B",
+    "text": "and returned in a few minutes"
+   },
+   {
+    "position": "C",
+    "text": "as the character of a amiable"
+   },
+   {
+    "position": "D",
+    "text": "and simple-minded nonconformist clergyman."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q35",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q35.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "As it pulled on, one of the loafing man at the corner"
+   },
+   {
+    "position": "B",
+    "text": "dashed forward to open the door in the hope of earning"
+   },
+   {
+    "position": "C",
+    "text": "a copper, but was elbowed away by another loafer,"
+   },
+   {
+    "position": "D",
+    "text": "who had rushed up with the same intention. (4 ) . MD 1400/B/2K13/02"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q36",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "36",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q36.png",
+  "prompt": "Which of the following appears unbelievable, according to the passage?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q38",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q38.png",
+  "prompt": "Which of the following has been referred to as a paradox ?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q45",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q45.png",
+  "prompt": "The culture of a community is said to deteriorate when",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q46",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q46.png",
+  "prompt": "The culture of a community is transmitted",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q49",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "49",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q49.png",
+  "prompt": "The phrase lavish with his hospitality' in the given passage signifies",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q58",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q58.png",
+  "prompt": "Responsibility and accountability make a worker",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q60",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "60",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q60.png",
+  "prompt": "Orientation of subordinates of common objectives and how to achieve them is",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q62",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q62.png",
+  "prompt": "People have little time to consider ideals and objectives because they",
+  "options": []
+ }
+]

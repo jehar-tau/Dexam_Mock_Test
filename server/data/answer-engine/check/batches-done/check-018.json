@@ -1,0 +1,648 @@
+[
+ {
+  "id": "nift-2013-written-set1-q1",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The house cannot accommodate more people.",
+  "options": [
+   {
+    "position": "A",
+    "text": "hold"
+   },
+   {
+    "position": "B",
+    "text": "allow"
+   },
+   {
+    "position": "C",
+    "text": "hide"
+   },
+   {
+    "position": "D",
+    "text": "associate"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q2",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The accident occurred due to his lapse.",
+  "options": [
+   {
+    "position": "A",
+    "text": "haste (2 error"
+   },
+   {
+    "position": "B",
+    "text": "ignorance"
+   },
+   {
+    "position": "C",
+    "text": "carelessness"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q3",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Only my neighbor succored me during my illness.",
+  "options": [
+   {
+    "position": "A",
+    "text": "nourished"
+   },
+   {
+    "position": "B",
+    "text": "treated"
+   },
+   {
+    "position": "C",
+    "text": "aided"
+   },
+   {
+    "position": "D",
+    "text": "attended"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q4",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He tried to cajole her, but it was in vain.",
+  "options": [
+   {
+    "position": "A",
+    "text": "enjoin"
+   },
+   {
+    "position": "B",
+    "text": "coax"
+   },
+   {
+    "position": "C",
+    "text": "rejoice"
+   },
+   {
+    "position": "D",
+    "text": "inspire"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q6",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "His boorish ways amused everyone.",
+  "options": [
+   {
+    "position": "A",
+    "text": "refined"
+   },
+   {
+    "position": "B",
+    "text": "funny"
+   },
+   {
+    "position": "C",
+    "text": "eccentric"
+   },
+   {
+    "position": "D",
+    "text": "friendly"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q7",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He has suspended his secretary on a flimsy ground.",
+  "options": [
+   {
+    "position": "A",
+    "text": "vigorous"
+   },
+   {
+    "position": "B",
+    "text": "strong"
+   },
+   {
+    "position": "C",
+    "text": "sound"
+   },
+   {
+    "position": "D",
+    "text": "salutary"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q9",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "City",
+  "options": [
+   {
+    "position": "A",
+    "text": "cities"
+   },
+   {
+    "position": "B",
+    "text": "citys"
+   },
+   {
+    "position": "C",
+    "text": "citis"
+   },
+   {
+    "position": "D",
+    "text": "cityes"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q10",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Buffalo",
+  "options": [
+   {
+    "position": "A",
+    "text": "buffaloes"
+   },
+   {
+    "position": "B",
+    "text": "bufalos"
+   },
+   {
+    "position": "C",
+    "text": "buffalose"
+   },
+   {
+    "position": "D",
+    "text": "buffaloce"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q11",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Half",
+  "options": [
+   {
+    "position": "A",
+    "text": "halfs"
+   },
+   {
+    "position": "B",
+    "text": "halffes"
+   },
+   {
+    "position": "C",
+    "text": "half"
+   },
+   {
+    "position": "D",
+    "text": "halves"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q12",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Duty",
+  "options": [
+   {
+    "position": "A",
+    "text": "dutys"
+   },
+   {
+    "position": "B",
+    "text": "duties"
+   },
+   {
+    "position": "C",
+    "text": "dutis"
+   },
+   {
+    "position": "D",
+    "text": "duty"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q13",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Tornado",
+  "options": [
+   {
+    "position": "A",
+    "text": "tornadoes"
+   },
+   {
+    "position": "B",
+    "text": "tornadose"
+   },
+   {
+    "position": "C",
+    "text": "tornadae"
+   },
+   {
+    "position": "D",
+    "text": ". tornado"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q14",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Decision made upon a political question by the votes of all qualified persons",
+  "options": [
+   {
+    "position": "A",
+    "text": ". Veto"
+   },
+   {
+    "position": "B",
+    "text": "Suffrage"
+   },
+   {
+    "position": "C",
+    "text": "Plebiscite"
+   },
+   {
+    "position": "D",
+    "text": "Franchise"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q15",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "• Informal business communication with a personal signature",
+  "options": [
+   {
+    "position": "A",
+    "text": "Agendum"
+   },
+   {
+    "position": "B",
+    "text": "corrigendum"
+   },
+   {
+    "position": "C",
+    "text": "Plagiarism"
+   },
+   {
+    "position": "D",
+    "text": "Memorandum"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q16",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Pertaining to the science of group cultures, conventions, etc.",
+  "options": [
+   {
+    "position": "A",
+    "text": "biological"
+   },
+   {
+    "position": "B",
+    "text": "philological"
+   },
+   {
+    "position": "C",
+    "text": "sociological"
+   },
+   {
+    "position": "D",
+    "text": "psychological"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q17",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Something, or someone, misplaced in time, either old-fashioned or futuristic",
+  "options": [
+   {
+    "position": "A",
+    "text": "incongruity"
+   },
+   {
+    "position": "B",
+    "text": "anachronism"
+   },
+   {
+    "position": "C",
+    "text": "chronicity"
+   },
+   {
+    "position": "D",
+    "text": "incorrigible"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q18",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A method of doing something, based on practical experience rather than theory or careful calculation.",
+  "options": [
+   {
+    "position": "A",
+    "text": "rule of thumb"
+   },
+   {
+    "position": "B",
+    "text": "rule of three"
+   },
+   {
+    "position": "C",
+    "text": "fact"
+   },
+   {
+    "position": "D",
+    "text": "law"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q19",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Any personal way of behaving, reacting or thinking; a personal peculiarity or eccentricity.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Idiocy"
+   },
+   {
+    "position": "B",
+    "text": "Idiolect"
+   },
+   {
+    "position": "C",
+    "text": "Idiosyncrasy"
+   },
+   {
+    "position": "D",
+    "text": "Ideologically"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q20",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It was out of place for him to talk on politics when the seminar was arranged to discuss recent trends in literature.",
+  "options": [
+   {
+    "position": "A",
+    "text": "foolish"
+   },
+   {
+    "position": "B",
+    "text": "strange"
+   },
+   {
+    "position": "C",
+    "text": "inappropriate"
+   },
+   {
+    "position": "D",
+    "text": "odd"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q21",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "21",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "When I saw him in the morning, he looked like a duck in a thunderstorm.",
+  "options": [
+   {
+    "position": "A",
+    "text": "timid"
+   },
+   {
+    "position": "B",
+    "text": "peaceful"
+   },
+   {
+    "position": "C",
+    "text": "distressed"
+   },
+   {
+    "position": "D",
+    "text": "indomitable"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q22",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "I am sure he means business.",
+  "options": [
+   {
+    "position": "A",
+    "text": "is earnest"
+   },
+   {
+    "position": "B",
+    "text": "is inquisitive"
+   },
+   {
+    "position": "C",
+    "text": "is a trader"
+   },
+   {
+    "position": "D",
+    "text": "is anxious to make profit"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q23",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The party stalwarts have advised the President to take it lying down for a while.",
+  "options": [
+   {
+    "position": "A",
+    "text": "show no reaction"
+   },
+   {
+    "position": "B",
+    "text": "take rest"
+   },
+   {
+    "position": "C",
+    "text": "be on the defensive"
+   },
+   {
+    "position": "D",
+    "text": "be cautious"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q24",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Childhood and innocence lie cheek by jow].",
+  "options": [
+   {
+    "position": "A",
+    "text": "together"
+   },
+   {
+    "position": "B",
+    "text": "one after another"
+   },
+   {
+    "position": "C",
+    "text": "side by side ."
+   },
+   {
+    "position": "D",
+    "text": "proportionately"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q25",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It was after a long time that the police was able to lay the thief by the heels.",
+  "options": [
+   {
+    "position": "A",
+    "text": "run fast after"
+   },
+   {
+    "position": "B",
+    "text": "play tricks on"
+   },
+   {
+    "position": "C",
+    "text": "chase and capture"
+   },
+   {
+    "position": "D",
+    "text": "arrest"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q66",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "66",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the product of place value and face value of 5 in 65231 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "28000"
+   },
+   {
+    "position": "B",
+    "text": "25000 67.. Which of the following is divisible by 15? (3) 3970 (4) 3580 (1) 3975 (2) 3575"
+   },
+   {
+    "position": "C",
+    "text": "27000"
+   },
+   {
+    "position": "D",
+    "text": "26000"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q68",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "68",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many numbers up to 700 are divisible by both 3 and 5?",
+  "options": [
+   {
+    "position": "A",
+    "text": "42"
+   },
+   {
+    "position": "B",
+    "text": "46"
+   },
+   {
+    "position": "C",
+    "text": "39 •"
+   },
+   {
+    "position": "D",
+    "text": "52"
+   }
+  ]
+ }
+]

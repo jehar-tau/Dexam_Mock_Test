@@ -1,0 +1,517 @@
+{
+ "nift-2012-written-set4-q99": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q100": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt truncated ('from my starting')"
+ },
+ "nift-2012-written-set4-q102": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q103": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q105": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q109": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q110": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q111": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q121": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q122": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q123": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option merged with next question text"
+ },
+ "nift-2012-written-set4-q124": {
+  "needsContext": true,
+  "broken": true,
+  "why": "stem missing ('Who is the activist' is in previous item)"
+ },
+ "nift-2012-written-set4-q125": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q126": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q127": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q128": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q129": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q130": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q131": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q132": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option merged with next question text"
+ },
+ "nift-2012-written-set4-q135": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q136": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q137": {
+  "needsContext": false,
+  "broken": true,
+  "why": "blank lost from prompt"
+ },
+ "nift-2012-written-set4-q138": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q139": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q140": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q141": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q142": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q143": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q144": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q145": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q146": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q147": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q148": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q149": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set4-q150": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D merged with exam instructions"
+ },
+ "nift-2013-written-set1-q1": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set1-q3": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set1-q4": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set1-q6": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set1-q7": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set1-q9": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2013-written-set1-q10": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2013-written-set1-q11": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2013-written-set1-q12": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2013-written-set1-q13": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2013-written-set1-q14": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q15": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q16": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q17": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q18": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q19": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q20": {
+  "needsContext": true,
+  "broken": false,
+  "why": "phrase to replace not marked; directions not stated"
+ },
+ "nift-2013-written-set1-q21": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q22": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q23": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q24": {
+  "needsContext": false,
+  "broken": true,
+  "why": "OCR garble 'jow]' in prompt"
+ },
+ "nift-2013-written-set1-q25": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q66": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option merged with next question text"
+ },
+ "nift-2013-written-set1-q68": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q69": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q70": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option B merged with stray text"
+ },
+ "nift-2013-written-set1-q76": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q77": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q78": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q79": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2013-written-set1-q80": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q81": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2013-written-set1-q82": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2013-written-set1-q85": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q86": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q87": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q88": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q89": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q90": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q94": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option B merged with another series; blank marker lost"
+ },
+ "nift-2013-written-set1-q96": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q99": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q101": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q103": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q104": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q108": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q109": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q110": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q116": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q117": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q120": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt merged with another question"
+ },
+ "nift-2013-written-set1-q122": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q123": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q124": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q125": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option merged with next question text"
+ },
+ "nift-2013-written-set1-q127": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q129": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q130": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q131": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q132": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q133": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q136": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q137": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q138": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q139": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q140": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q141": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q142": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q143": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q144": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q145": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q146": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q147": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q148": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set1-q149": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2013-written-set2-q1": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set2-q2": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set2-q3": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set2-q4": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set2-q5": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set2-q6": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2013-written-set2-q7": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2013-written-set2-q8": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2013-written-set2-q9": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ }
+}

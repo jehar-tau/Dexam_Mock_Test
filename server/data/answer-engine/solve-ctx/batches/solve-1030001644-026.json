@@ -1,0 +1,47 @@
+[
+ {
+  "id": "nift-mfm-written-sample-q144",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "144",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q144.png",
+  "prompt": "The state government wants to make sure that there is gainful employment.",
+  "options": []
+ },
+ {
+  "id": "nift-mfm-written-sample-q146",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "146",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q146.png",
+  "prompt": "A corporate tax benefit was extended by the government to Maruti Suzuki.",
+  "options": []
+ },
+ {
+  "id": "nift-mfm-written-sample-q147",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "147",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q147.png",
+  "prompt": "A recovery from the economic slowdown in Maruti Suzuki was expected.",
+  "options": []
+ },
+ {
+  "id": "nift-mfm-written-sample-q148",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "148",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q148.png",
+  "prompt": "There was a 30% drop in sales volumes of Maruti vehicles.",
+  "options": []
+ },
+ {
+  "id": "nift-mfm-written-sample-q149",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "149",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q149.png",
+  "prompt": "There was a confusion surrounding the expected GST benefit for vehicles.",
+  "options": []
+ }
+]

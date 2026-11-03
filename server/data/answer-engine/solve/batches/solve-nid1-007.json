@@ -1,0 +1,106 @@
+[
+ {
+  "id": "nid-mdes-sample-2024-q1",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q1.png",
+  "prompt": "Which design principle best describes the image given below?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Emphasis"
+   },
+   {
+    "position": "B",
+    "text": "Closure"
+   },
+   {
+    "position": "C",
+    "text": "Proportion"
+   },
+   {
+    "position": "D",
+    "text": "Scale"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q8",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q8.png",
+  "prompt": "Identify the brand from the logo provided.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Lamborghini"
+   },
+   {
+    "position": "B",
+    "text": "TATA"
+   },
+   {
+    "position": "C",
+    "text": "Tesla"
+   },
+   {
+    "position": "D",
+    "text": "Toyota"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q13",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q13.png",
+  "prompt": "Find the number of distinct trapeziums in the figure below (trapezium is defined as a quadrilateral in which at least one pair of opposite sides is parallel).",
+  "options": [
+   {
+    "position": "A",
+    "text": "11"
+   },
+   {
+    "position": "B",
+    "text": "12"
+   },
+   {
+    "position": "C",
+    "text": "13"
+   },
+   {
+    "position": "D",
+    "text": "14"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q14",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q14.png",
+  "prompt": "I am in a room with a mirrored floor and facing a wall that has a poster with some text on it. I look down at the mirrored floor and find the following words as the image of the poster: ‘total flop’ Which of the following must be printed on the poster for its image in the mirrored floor to read ‘total flop’?",
+  "options": [
+   {
+    "position": "A",
+    "text": "totgl flod"
+   },
+   {
+    "position": "B",
+    "text": "fofal tloq"
+   },
+   {
+    "position": "C",
+    "text": "fofgl tlob"
+   },
+   {
+    "position": "D",
+    "text": "total floq"
+   }
+  ]
+ }
+]

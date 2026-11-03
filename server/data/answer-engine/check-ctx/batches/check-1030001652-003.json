@@ -1,0 +1,83 @@
+[
+ {
+  "id": "nift-2012-written-set1-q33",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q33.png",
+  "prompt": "I disdain those who tell lies.",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q34",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q34.png",
+  "prompt": "One can acquire fame only by being truthful, honest and faithful.",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q35",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q35.png",
+  "prompt": "Always avoid late-night jobs.",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q36",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "36",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q36.png",
+  "prompt": "It was a voluntary gesture.",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q37",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q37.png",
+  "prompt": "Lily",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q38",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q38.png",
+  "prompt": "Box",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q45",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q45.png",
+  "prompt": "Harassed by repeated acts of injustice, he decided to put his foot down.",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q57",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "57",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q57.png",
+  "prompt": "status by subjecting",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q91",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "91",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q91.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ }
+]

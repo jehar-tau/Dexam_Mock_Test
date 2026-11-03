@@ -1,0 +1,22 @@
+{
+ "nift-mdes-written-sample-q105": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true
+ },
+ "nift-mdes-written-sample-q112": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-mdes-written-sample-q120": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ }
+}

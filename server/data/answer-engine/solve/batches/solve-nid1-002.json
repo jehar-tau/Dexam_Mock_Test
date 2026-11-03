@@ -1,0 +1,28 @@
+[
+ {
+  "id": "nid-bdes-2017-q47",
+  "paper": "nid-bdes-2017",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q47.png",
+  "prompt": "How many surfaces are there in the given three dimensional figure? The surface that is not visible in the figure is flat.",
+  "options": [
+   {
+    "position": "A",
+    "text": "12"
+   },
+   {
+    "position": "B",
+    "text": "18"
+   },
+   {
+    "position": "C",
+    "text": "16"
+   },
+   {
+    "position": "D",
+    "text": "14"
+   }
+  ]
+ }
+]

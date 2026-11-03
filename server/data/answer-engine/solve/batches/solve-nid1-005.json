@@ -1,0 +1,98 @@
+[
+ {
+  "id": "nid-bdes-sample-2024-q8",
+  "paper": "nid-bdes-sample-2024",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q8.png",
+  "prompt": "Five pencils (V, W, X, Y, Z) are arranged on the floor as shown in the image. Which of them are in the same plane?",
+  "options": [
+   {
+    "position": "A",
+    "text": "V and Z"
+   },
+   {
+    "position": "B",
+    "text": "V and Y"
+   },
+   {
+    "position": "C",
+    "text": "W and V"
+   },
+   {
+    "position": "D",
+    "text": "Z and W"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-sample-2024-q9",
+  "paper": "nid-bdes-sample-2024",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q9.png",
+  "prompt": "Which of the options below replaces the question marks as the logical next hexagon in the sequence? (",
+  "options": []
+ },
+ {
+  "id": "nid-bdes-sample-2024-q13",
+  "paper": "nid-bdes-sample-2024",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q13.png",
+  "prompt": "Can the cut wooden logs shown in the first sketch (Fig. 1) be fixed together without any changes to make the structure in the second image (Fig. 2)? Fig. 1 Fig. 2",
+  "options": [
+   {
+    "position": "A",
+    "text": "Yes"
+   },
+   {
+    "position": "B",
+    "text": "No"
+   },
+   {
+    "position": "C",
+    "text": "Maybe Yes"
+   },
+   {
+    "position": "D",
+    "text": "Maybe No Question Numbers 14 to 19 consist of 02 Marks each"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-sample-2024-q15",
+  "paper": "nid-bdes-sample-2024",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q15.png",
+  "prompt": "Identify the correct alternative which replaces the question mark in the square given below? (",
+  "options": []
+ },
+ {
+  "id": "nid-bdes-sample-2024-q16",
+  "paper": "nid-bdes-sample-2024",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q16.png",
+  "prompt": "It takes longer to cook food at high altitudes (hills/mountains) than places at low altitudes (e.g., near seashores). People living at higher altitudes have more hemoglobin than people from low altitudes. Vehicles at Chennai need to be tuned when brought to Shimla. Which of the statements given below are correct? 1. The boiling point of water does not change at all locations. 2. Boiling of water depends on pressure. 3. Oxygen is low at high altitudes. 4. The air fuel mixture of any vehicle remains the same at all locations.",
+  "options": [
+   {
+    "position": "A",
+    "text": "1 and 3"
+   },
+   {
+    "position": "B",
+    "text": "2 and 3"
+   },
+   {
+    "position": "C",
+    "text": "1 and 4"
+   },
+   {
+    "position": "D",
+    "text": "2 and 4"
+   }
+  ]
+ }
+]

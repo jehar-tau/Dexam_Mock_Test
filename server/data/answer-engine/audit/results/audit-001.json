@@ -1,0 +1,564 @@
+{
+ "nift-2012-mdes-written-q5": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q35": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-mdes-written-q36": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-mdes-written-q37": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-mdes-written-q38": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-mdes-written-q39": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-mdes-written-q40": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-mdes-written-q41": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-mdes-written-q43": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q45": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q46": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q47": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q51": {
+  "needsContext": false,
+  "broken": true,
+  "why": "blanks missing; option D merged with next question"
+ },
+ "nift-2012-mdes-written-q52": {
+  "needsContext": false,
+  "broken": true,
+  "why": "blank fragment; first part of sentence missing/merged"
+ },
+ "nift-2012-mdes-written-q53": {
+  "needsContext": false,
+  "broken": true,
+  "why": "blanks lost; option D merged with next question"
+ },
+ "nift-2012-mdes-written-q55": {
+  "needsContext": true,
+  "broken": true,
+  "why": "truncated to 'error.'; spot-the-error directions and sentence missing"
+ },
+ "nift-2012-mdes-written-q57": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt fragment; options merged with page footer"
+ },
+ "nift-2012-mdes-written-q62": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D merged with next question"
+ },
+ "nift-2012-mdes-written-q69": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q70": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q71": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q73": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2012-mdes-written-q75": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q77": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2012-mdes-written-q78": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2012-mdes-written-q79": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q88": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D merged with next question"
+ },
+ "nift-2012-mdes-written-q89": {
+  "needsContext": true,
+  "broken": true,
+  "why": "fragment continuing previous question; first half missing"
+ },
+ "nift-2012-mdes-written-q95": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q96": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt garbled; option C merged with next question"
+ },
+ "nift-2012-mdes-written-q99": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q101": {
+  "needsContext": false,
+  "broken": true,
+  "why": "stray quote marks/'?' in prompt and option D"
+ },
+ "nift-2012-mdes-written-q102": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q103": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt cut mid-sentence; continuation sits in option A"
+ },
+ "nift-2012-mdes-written-q104": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q105": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q106": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q107": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q108": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q109": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q122": {
+  "needsContext": false,
+  "broken": true,
+  "why": "options misaligned/merged (A='Ramanujan Bhaskara'), only 3 options"
+ },
+ "nift-2012-mdes-written-q125": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q126": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt garbled; option D merged with stray text"
+ },
+ "nift-2012-mdes-written-q127": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q128": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D merged with next question text"
+ },
+ "nift-2012-mdes-written-q129": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q130": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q134": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q137": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q138": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q139": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q140": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q141": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q144": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q145": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q146": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-mdes-written-q147": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D merged with next question"
+ },
+ "nift-2012-mdes-written-q149": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set1-q1": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage inference question; options garbled, missing D"
+ },
+ "nift-2012-written-set1-q2": {
+  "needsContext": true,
+  "broken": false,
+  "why": "passage-based"
+ },
+ "nift-2012-written-set1-q4": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; option C merged with next passage text"
+ },
+ "nift-2012-written-set1-q5": {
+  "needsContext": true,
+  "broken": true,
+  "why": "chart/graph question with only one-word prompt"
+ },
+ "nift-2012-written-set1-q6": {
+  "needsContext": true,
+  "broken": false,
+  "why": "passage-based"
+ },
+ "nift-2012-written-set1-q7": {
+  "needsContext": true,
+  "broken": false,
+  "why": "passage-based"
+ },
+ "nift-2012-written-set1-q8": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; option D merged with next passage"
+ },
+ "nift-2012-written-set1-q9": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; options merged"
+ },
+ "nift-2012-written-set1-q11": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; option D merged with next question"
+ },
+ "nift-2012-written-set1-q12": {
+  "needsContext": true,
+  "broken": true,
+  "why": "depends on passage; prompt/options garbled and merged with next passage"
+ },
+ "nift-2012-written-set1-q13": {
+  "needsContext": true,
+  "broken": false,
+  "why": "passage-based"
+ },
+ "nift-2012-written-set1-q15": {
+  "needsContext": true,
+  "broken": false,
+  "why": "passage-based"
+ },
+ "nift-2012-written-set1-q16": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; option D merged with next passage"
+ },
+ "nift-2012-written-set1-q17": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; stray text in options"
+ },
+ "nift-2012-written-set1-q18": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; prompt contains option markers, garbled"
+ },
+ "nift-2012-written-set1-q21": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; option C merged with answer choice list"
+ },
+ "nift-2012-written-set1-q22": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; option D truncated"
+ },
+ "nift-2012-written-set1-q23": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; prompt garbled"
+ },
+ "nift-2012-written-set1-q24": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; option D merged with next passage"
+ },
+ "nift-2012-written-set1-q26": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; option C merged with extra text"
+ },
+ "nift-2012-written-set1-q28": {
+  "needsContext": true,
+  "broken": false,
+  "why": "passage-based ('study referred to')"
+ },
+ "nift-2012-written-set1-q29": {
+  "needsContext": true,
+  "broken": false,
+  "why": "passage-based"
+ },
+ "nift-2012-written-set1-q30": {
+  "needsContext": true,
+  "broken": true,
+  "why": "passage-based; option D merged with page footer"
+ },
+ "nift-2012-written-set1-q31": {
+  "needsContext": true,
+  "broken": false,
+  "why": "blank/target word missing; directions unclear"
+ },
+ "nift-2012-written-set1-q32": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-written-set1-q33": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-written-set1-q34": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-written-set1-q35": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-written-set1-q36": {
+  "needsContext": true,
+  "broken": false,
+  "why": "synonym/antonym section directions and target word not stated"
+ },
+ "nift-2012-written-set1-q37": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2012-written-set1-q38": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2012-written-set1-q39": {
+  "needsContext": true,
+  "broken": false,
+  "why": "plural-form directions not stated"
+ },
+ "nift-2012-written-set1-q40": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set1-q41": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set1-q42": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option A merged with 'Photocopy'; only 3 options"
+ },
+ "nift-2012-written-set1-q43": {
+  "needsContext": false,
+  "broken": true,
+  "why": "option D merged with next question"
+ },
+ "nift-2012-written-set1-q45": {
+  "needsContext": false,
+  "broken": true,
+  "why": "stray dash in A; option D merged with footer"
+ },
+ "nift-2012-written-set1-q49": {
+  "needsContext": false,
+  "broken": true,
+  "why": "blanks lost; option D merged with next question"
+ },
+ "nift-2012-written-set1-q50": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt fragment; option C merged with next question"
+ },
+ "nift-2012-written-set1-q51": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt fragment; option D merged"
+ },
+ "nift-2012-written-set1-q52": {
+  "needsContext": false,
+  "broken": true,
+  "why": "second blank lost"
+ },
+ "nift-2012-written-set1-q57": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt fragment; options merged with extra text"
+ },
+ "nift-2012-written-set1-q61": {
+  "needsContext": false,
+  "broken": true,
+  "why": "expression garbled (missing fractions)"
+ },
+ "nift-2012-written-set1-q62": {
+  "needsContext": false,
+  "broken": true,
+  "why": "expression and option C garbled"
+ },
+ "nift-2012-written-set1-q64": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt truncated 'How many 2'"
+ },
+ "nift-2012-written-set1-q66": {
+  "needsContext": false,
+  "broken": true,
+  "why": "numbers/options garbled"
+ },
+ "nift-2012-written-set1-q67": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt garbled; option D merged with next question"
+ },
+ "nift-2012-written-set1-q68": {
+  "needsContext": false,
+  "broken": true,
+  "why": "fraction missing from expression"
+ },
+ "nift-2012-written-set1-q69": {
+  "needsContext": false,
+  "broken": true,
+  "why": "fraction garbled ('11th')"
+ },
+ "nift-2012-written-set1-q70": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set1-q72": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous; only 3 options"
+ },
+ "nift-2012-written-set1-q73": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set1-q74": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2012-written-set1-q75": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2012-written-set1-q76": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2012-written-set1-q77": {
+  "needsContext": false,
+  "broken": true,
+  "why": "rupee symbol OCR-garbled as digit/char, amounts ambiguous"
+ },
+ "nift-2012-written-set1-q78": {
+  "needsContext": false,
+  "broken": false
+ },
+ "nift-2012-written-set1-q79": {
+  "needsContext": true,
+  "broken": true,
+  "why": "question fragment; options merged with other questions"
+ },
+ "nift-2012-written-set1-q84": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt cut; continuation merged in option A; 3 options"
+ },
+ "nift-2012-written-set1-q87": {
+  "needsContext": true,
+  "broken": true,
+  "why": "truncated prompt; ask missing; 3 options"
+ },
+ "nift-2012-written-set1-q90": {
+  "needsContext": true,
+  "broken": true,
+  "why": "image-only question; options merged with next question"
+ },
+ "nift-2012-written-set1-q95": {
+  "needsContext": false,
+  "broken": true,
+  "why": "prompt fragment 'a.'; options merged with next question"
+ }
+}

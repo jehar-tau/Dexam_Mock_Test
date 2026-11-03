@@ -1,0 +1,227 @@
+[
+ {
+  "id": "nift-2013-written-set4-q51",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "51",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q51.png",
+  "prompt": "A train passes a man standing on the platform in 9 seconds and passes the platform completely in 33 seconds. If the length of the platform is 288 meters, what is the length of the train ?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q71",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q71.png",
+  "prompt": "Which of the following combinations of circles best represents athletes, sprinters and marathon . runners?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q75",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "75",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q75.png",
+  "prompt": "Figures ? Answer Figures (1) (2) (3)",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q76",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "76",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q76.png",
+  "prompt": "Figures + x + + ? + + x Answer Figures + + +",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q77",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q77.png",
+  "prompt": "? Answer Figures O-D",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q78",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "78",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q78.png",
+  "prompt": "Who types at a faster rate, Navin or Sapan ? I. The difference between their typing rates is 10 words per minute. II. Sapan types at a constant rate of 80 words per minute.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q79",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "79",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q79.png",
+  "prompt": "In a certain packinghouse, grapefruit are packed in bags and the bags are packed in cases. How many grapefruit are in each case that is packed ? I. The grapefruit are always packed 5 to a bag and the bags are always packed 8 to a case. II. Each case is always 80 percent full.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q80",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "80",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q80.png",
+  "prompt": "For a certain bottle and cork, what is the price of the cork ? I. The combined price of the bottle and the cork is 7 95. II. The price of the bottle is 7 75 more than the price of the cork.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q81",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "81",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q81.png",
+  "prompt": "If John is exactly 4 years older than Sunita, how old is John? I. Exactly 9 years ago John was 5 times as old as Sunita was then. II. Sunita is more than 9 years old.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q82",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "82",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q82.png",
+  "prompt": "Ram and Esha are in a line to purchase tickets. How many people are in the line? I. There are 20 people behind Ram and 20 people in front of Esha. Il. There are 5 people between Ram and Esha.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q83",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "83",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q83.png",
+  "prompt": "If and y are positive integers and x is a multiple of y, is y = 2 ? I. y 7 1 II. x + 2 is a multiple of y.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q84",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "84",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q84.png",
+  "prompt": "Statement : Should young entrepreneurs be encouraged ? Arguments: I. Yes, they will help in the industrial development in the country. II. Yes, they will reduce the burden on the employment market.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q85",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "85",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q85.png",
+  "prompt": "Statement: Should children be prevented completely from watching the television? Arguments: I. No, we get vital information regarding education through television. II. Yes, it hampers the study of children. ( 12) MM 1000/C/2K13/02",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q111",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "111",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q111.png",
+  "prompt": "Statements : I. Some players are singers. II. All singers are tall. Conclusions : I. Some players are tall. II. All players are tall.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q112",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "112",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q112.png",
+  "prompt": "Statements: I. All stones are water. II. some water are clean. Conclusions : I. Some water are stones. II. All clear are water.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q113",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "113",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q113.png",
+  "prompt": "Statements : I. Some scooters are trucks. II. All trucks are trains. Conclusions : I. Some scooters are trains. II. No truck is a scooter. ( 14) MM 1000/C/2K13/02",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q114",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "114",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q114.png",
+  "prompt": "Statement: Most people who stop smoking gain weight. Assumptions : I. If one stops smoking, one will gain weight. II. If one does not stop smoking, one will not gain weight.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q115",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "115",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q115.png",
+  "prompt": "Statement: Postal rates have been increased to meet the deficit. Assumptions : I. The present rates are very low. II. If the rates are not increased, the deficit cannot be met.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q116",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "116",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q116.png",
+  "prompt": "Statement : Warning : Smoking is injurious to health. Assumptions: I. Non-smoking promotes health. II. Really, this warning is not necessary.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q119",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "119",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q119.png",
+  "prompt": "Controlling the rising inflation in the country.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q120",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "120",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q120.png",
+  "prompt": "The inflation is as high as 8%.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q121",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "121",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q121.png",
+  "prompt": "Banks are offering 4% interest on saving deposits.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q122",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q122.png",
+  "prompt": "There was a strong inflow from Foreign Institutional Investors (FIls).",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q123",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q123.png",
+  "prompt": "Investors move towards assets such as gold and real estate. Passage 11 A slowing economy, rising fuel prices and high taxes hit Indian aviation in 2012. Strikes at Air India and a bleeding Kingfisher added to the heat because foreign airlines would not pick up stakes in cash-strapped Indian carriers unless steps are taken to stem high costs of aviation operations in India, International Air Transport Association (IATA) chief Tony Tyler said. \"No, I don't think it (allowing foreign airlines to invest in Indian carriers) is a game changer but it is a good thing,\" said Tyler. \"But it will not solve the problems of Indian aviation. It is a step in the right direction but not the panacea that some believe it is.\" \"As long as high taxes prevail, high airport costs and congestion, and poorly developed air navigation (services) means more congestion, high cost of operations exist, you are not going to get a lot of people to invest in airlines,\" the director-general and CEO of IATA said. Observing that there were restrictions on investing in airlines around the world, which was \"a problem for the industry\", Tyler said \"any move that we see in liberalizing is a good thing.\" \"But unless conditions in India are improved for airlines, you are not going to see a flood of foreign carriers coming into the industry. Because foreign capital needs a return just as anywhere else.\" he added.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q124",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "124",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q124.png",
+  "prompt": "Foreign capital should be invested in Indian aviation.",
+  "options": []
+ }
+]

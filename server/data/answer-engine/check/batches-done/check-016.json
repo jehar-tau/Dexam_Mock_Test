@@ -1,0 +1,652 @@
+[
+ {
+  "id": "nift-2012-written-set4-q95",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "95",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "a. Interview b. Selection c. Appointment d. Application",
+  "options": [
+   {
+    "position": "A",
+    "text": "d, a, b, c"
+   },
+   {
+    "position": "B",
+    "text": "a, b, d, c"
+   },
+   {
+    "position": "C",
+    "text": "c, a, b, d"
+   },
+   {
+    "position": "D",
+    "text": "b, a, d, c Sea b. Rivulet"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q97",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "97",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "2, 6, 14, 30, 62,",
+  "options": [
+   {
+    "position": "A",
+    "text": "128"
+   },
+   {
+    "position": "B",
+    "text": "126"
+   },
+   {
+    "position": "C",
+    "text": "120"
+   },
+   {
+    "position": "D",
+    "text": "130"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q98",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "98",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "99, 33, 88, 22, 77, \"9\"",
+  "options": [
+   {
+    "position": "A",
+    "text": "18"
+   },
+   {
+    "position": "B",
+    "text": "15"
+   },
+   {
+    "position": "C",
+    "text": "11"
+   },
+   {
+    "position": "D",
+    "text": "7"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q99",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "2Z5, 7Y7, 14X9, 23W11, 34V13,",
+  "options": [
+   {
+    "position": "A",
+    "text": "27U24"
+   },
+   {
+    "position": "B",
+    "text": "47U15"
+   },
+   {
+    "position": "C",
+    "text": "45U15"
+   },
+   {
+    "position": "D",
+    "text": "47V14"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q100",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "100",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "I went 15 m to the north, then turned west and covered 10 m, then turned south and covered 5 m and then turned east and covered 10 m. In what direction am I now from my starting",
+  "options": [
+   {
+    "position": "A",
+    "text": "North"
+   },
+   {
+    "position": "B",
+    "text": "South"
+   },
+   {
+    "position": "C",
+    "text": "East"
+   },
+   {
+    "position": "D",
+    "text": "West"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q102",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A walks a distance of 3 km towards North, then turns to his left and walks for 2 km. He again turns left and walks for 3 km. At this point he turns to his right and walks for 3 km. How many kilometers and in what direction is he from the starting point ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "5 km and West"
+   },
+   {
+    "position": "B",
+    "text": "3 km and South"
+   },
+   {
+    "position": "C",
+    "text": "2 km and South"
+   },
+   {
+    "position": "D",
+    "text": ".1 km and East"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q103",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Ankit is related to Binny and Chinky, Daizy is Chinky's mother. Also, Daizy is Binny's sister and Aruna is Binny's sister. How is Chinky related to Aruna ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Niece"
+   },
+   {
+    "position": "B",
+    "text": "Cousin"
+   },
+   {
+    "position": "C",
+    "text": "Sister"
+   },
+   {
+    "position": "D",
+    "text": "Aunt"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q105",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "105",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "When Anuj saw Manish, he recalled, \"He is the son of the father of my daughter's mother,\" Who is Manish to Anuj ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Brother-in-Law"
+   },
+   {
+    "position": "B",
+    "text": "Brother"
+   },
+   {
+    "position": "C",
+    "text": "Cousin"
+   },
+   {
+    "position": "D",
+    "text": "Uncle"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q109",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "MERMAID : FISH",
+  "options": [
+   {
+    "position": "A",
+    "text": "Unicorn : Goat"
+   },
+   {
+    "position": "B",
+    "text": "Centaur : Horse"
+   },
+   {
+    "position": "C",
+    "text": "Amadeus: Beast"
+   },
+   {
+    "position": "D",
+    "text": "Cupid : Nymph"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q110",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "110",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "CLOCK: TIME",
+  "options": [
+   {
+    "position": "A",
+    "text": "Shop : Boxes"
+   },
+   {
+    "position": "B",
+    "text": "People : Way"
+   },
+   {
+    "position": "C",
+    "text": "Books : Knowledge"
+   },
+   {
+    "position": "D",
+    "text": "Map : Place"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q111",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "111",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "COAT : GARMENT",
+  "options": [
+   {
+    "position": "A",
+    "text": "Flower : Beauty"
+   },
+   {
+    "position": "B",
+    "text": "Jack: Instrument"
+   },
+   {
+    "position": "C",
+    "text": "Bangle : Jewellery"
+   },
+   {
+    "position": "D",
+    "text": "Periscope: Tool"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q121",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "121",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Polar Satellite Launch Vehicle (PSLV-C18) of India put how many satellites into orbit on October 12, 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "4"
+   },
+   {
+    "position": "B",
+    "text": "1"
+   },
+   {
+    "position": "C",
+    "text": "2"
+   },
+   {
+    "position": "D",
+    "text": "3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q122",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following proposals are contained in the new draft National Telecom Policy 2011 announced by the Government of India in New Delhi in October 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Removal of national roaming charges"
+   },
+   {
+    "position": "B",
+    "text": "Allowing mobile users to keep the same number even while switching service areas"
+   },
+   {
+    "position": "C",
+    "text": ". Removal of distinction between local and STD calls"
+   },
+   {
+    "position": "D",
+    "text": "All these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q123",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Dada Saheb Phalke Award for lifetime achievement is presented by the Government of India for excellence in which field ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cinema"
+   },
+   {
+    "position": "B",
+    "text": "• Coaching in sports"
+   },
+   {
+    "position": "C",
+    "text": "Music"
+   },
+   {
+    "position": "D",
+    "text": "Dance Who is the activist"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q124",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "124",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "on a fast for the past eleven years seeking repeal of the Armed Forces (Special Forces) Act ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Irom Sharmila"
+   },
+   {
+    "position": "B",
+    "text": "Anna Hazare"
+   },
+   {
+    "position": "C",
+    "text": "Medha Patkar"
+   },
+   {
+    "position": "D",
+    "text": "Arundhati Roy"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q125",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "125",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Dibrugarh - Kanyakumari Vivek Express, India's longest train service, covers a distance of",
+  "options": [
+   {
+    "position": "A",
+    "text": "4,286 km"
+   },
+   {
+    "position": "B",
+    "text": "2,846 km"
+   },
+   {
+    "position": "C",
+    "text": "6,426 km"
+   },
+   {
+    "position": "D",
+    "text": "8,246 km"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q126",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "126",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who amongst the following was declared the world's smallest living woman, by the Guinnes: World Records in 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Jyotiba Phule"
+   },
+   {
+    "position": "B",
+    "text": "Jyotirmoyee Sikdar ."
+   },
+   {
+    "position": "C",
+    "text": "Jyoti Baba"
+   },
+   {
+    "position": "D",
+    "text": "Jyoti Amge"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q127",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "127",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A limited edition premium sarees range was launched in India during the 2011 Diwali festivi season by which foreign luxury brand ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Hermes"
+   },
+   {
+    "position": "B",
+    "text": "Burberry"
+   },
+   {
+    "position": "C",
+    "text": "United Colors of Benetton"
+   },
+   {
+    "position": "D",
+    "text": "Hidesign"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q128",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "128",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "\"Coming home to ... \". Complete this jingle of a leading suitings brand of India.",
+  "options": [
+   {
+    "position": "A",
+    "text": "OCM"
+   },
+   {
+    "position": "B",
+    "text": "Digjam"
+   },
+   {
+    "position": "C",
+    "text": "Dinesh"
+   },
+   {
+    "position": "D",
+    "text": "Siyaram's"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q129",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "129",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "\"Only Vimal, only Vimal, only Vimal, Vimal\". This jingle is of which leading textile/suitings branc of India ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "OCM"
+   },
+   {
+    "position": "B",
+    "text": "Digjam"
+   },
+   {
+    "position": "C",
+    "text": "Raymond"
+   },
+   {
+    "position": "D",
+    "text": "Reliance Textiles"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q130",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "130",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which leading Hindi film actor had been endorsing the Reid & Taylor brand of suitings ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Amitabh Bachchan"
+   },
+   {
+    "position": "B",
+    "text": "Salman Khan"
+   },
+   {
+    "position": "C",
+    "text": ", Shah Rukh Khan"
+   },
+   {
+    "position": "D",
+    "text": "Aamir Khan"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q131",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "131",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Finlay's', 'Raasa' and 'Entice' are the new brands under which one of the following textile makers?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Reliance"
+   },
+   {
+    "position": "B",
+    "text": ": Raymond"
+   },
+   {
+    "position": "C",
+    "text": "NTC"
+   },
+   {
+    "position": "D",
+    "text": "Garden Silks"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q132",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "132",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Jockey' is a leading international brand of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Men's Shirts"
+   },
+   {
+    "position": "B",
+    "text": "Men's Trousers"
+   },
+   {
+    "position": "C",
+    "text": "T-Shirts"
+   },
+   {
+    "position": "D",
+    "text": "Men's innerwear \"Tibre\" is a well-known national brand of"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q135",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "135",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following organizations set up by the Government of India has been scripting the journey of Khadi to acquire an elite, haute couture status, and helping villagers engaged in these industries ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "KVIC"
+   },
+   {
+    "position": "B",
+    "text": "Khadi Gramodyog Bhavan"
+   },
+   {
+    "position": "C",
+    "text": "NTC"
+   },
+   {
+    "position": "D",
+    "text": "Cauvery Silks"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q136",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "136",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The popular annual Kingfisher Swimsuit Calendar is a product of",
+  "options": [
+   {
+    "position": "A",
+    "text": "UB Group"
+   },
+   {
+    "position": "B",
+    "text": "Shaw Wallace"
+   },
+   {
+    "position": "C",
+    "text": "Chivas"
+   },
+   {
+    "position": "D",
+    "text": "Radico Khaitan"
+   }
+  ]
+ }
+]

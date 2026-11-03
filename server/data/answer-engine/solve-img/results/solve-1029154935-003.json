@@ -1,0 +1,31 @@
+{
+ "nift-2012-mdes-written-q119": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true,
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q120": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "needsContext": true,
+  "badCrop": true
+ },
+ "nift-2012-mdes-written-q131": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-2012-mdes-written-q135": {
+  "answer": "B",
+  "confidence": "low",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ }
+}

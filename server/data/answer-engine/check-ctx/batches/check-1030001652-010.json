@@ -1,0 +1,38 @@
+[
+ {
+  "id": "nift-2013-written-set2-q87",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "87",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set2/blocks/nift-2013-written-set2-q87.png",
+  "prompt": "Batsmen, Bowlers, All-rounders",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set2-q144",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "144",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set2/blocks/nift-2013-written-set2-q144.png",
+  "prompt": "What would the former employees of municipal corporations do, if New Public Management is implemented ?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set2-q145",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "145",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set2/blocks/nift-2013-written-set2-q145.png",
+  "prompt": "What can be inferred from the given situation ?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set2-q146",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "146",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set2/blocks/nift-2013-written-set2-q146.png",
+  "prompt": "What is the advantage of New Public Management over traditional system?",
+  "options": []
+ }
+]

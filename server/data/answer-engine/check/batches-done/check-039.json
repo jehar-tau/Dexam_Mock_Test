@@ -1,0 +1,648 @@
+[
+ {
+  "id": "nift-mfm-written-sample-q1",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The waiter was polite and efficient, but not obsequious.",
+  "options": [
+   {
+    "position": "A",
+    "text": "dull"
+   },
+   {
+    "position": "B",
+    "text": "sycophantic"
+   },
+   {
+    "position": "C",
+    "text": "dishonest"
+   },
+   {
+    "position": "D",
+    "text": "deceiving"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q2",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "My friend Satish always controverts the ideas that are almost universally accepted.",
+  "options": [
+   {
+    "position": "A",
+    "text": "subverts"
+   },
+   {
+    "position": "B",
+    "text": "contradicts"
+   },
+   {
+    "position": "C",
+    "text": "endorses"
+   },
+   {
+    "position": "D",
+    "text": "confuses"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q3",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The drunk driver had no idea that his foolish decision would reverberate and destroy the lives of five families.",
+  "options": [
+   {
+    "position": "A",
+    "text": "provoke"
+   },
+   {
+    "position": "B",
+    "text": "resound"
+   },
+   {
+    "position": "C",
+    "text": "grudge"
+   },
+   {
+    "position": "D",
+    "text": "dampen"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q4",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Vandana knew her husband was lying, but she still agreed to corroborate the story in the court.",
+  "options": [
+   {
+    "position": "A",
+    "text": "refute"
+   },
+   {
+    "position": "B",
+    "text": "substantiate"
+   },
+   {
+    "position": "C",
+    "text": "repudiation"
+   },
+   {
+    "position": "D",
+    "text": "rebuff"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q5",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The dim lighting of the restaurant makes eating there a lugubrious experience. (L) chilling",
+  "options": [
+   {
+    "position": "A",
+    "text": "gelid"
+   },
+   {
+    "position": "B",
+    "text": "elated"
+   },
+   {
+    "position": "C",
+    "text": "gloomy"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q6",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Someone who studies the characteristics of different varieties of human race and the relationship between them",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ethologist"
+   },
+   {
+    "position": "B",
+    "text": "Entomologist"
+   },
+   {
+    "position": "C",
+    "text": "Ethnologist"
+   },
+   {
+    "position": "D",
+    "text": "Euthenics"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q7",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Engaged in deep or serious thought",
+  "options": [
+   {
+    "position": "A",
+    "text": "Gullible"
+   },
+   {
+    "position": "B",
+    "text": "Pensive"
+   },
+   {
+    "position": "C",
+    "text": "Garrulous"
+   },
+   {
+    "position": "D",
+    "text": "Ravenous"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q9",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A person who sneaks into a country",
+  "options": [
+   {
+    "position": "A",
+    "text": "Violator"
+   },
+   {
+    "position": "B",
+    "text": "Invader"
+   },
+   {
+    "position": "C",
+    "text": "Infiltrator"
+   },
+   {
+    "position": "D",
+    "text": "Interferer"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q10",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A disease liable to be transmitted to people, organisms, etc. through air and water",
+  "options": [
+   {
+    "position": "A",
+    "text": "Catastrophic"
+   },
+   {
+    "position": "B",
+    "text": "Infectious"
+   },
+   {
+    "position": "C",
+    "text": "Epidemic"
+   },
+   {
+    "position": "D",
+    "text": "Plague 15-AM/K/XX-XX/I 3 68/"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q11",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Switch",
+  "options": [
+   {
+    "position": "A",
+    "text": "Switchs"
+   },
+   {
+    "position": "B",
+    "text": "Switch"
+   },
+   {
+    "position": "C",
+    "text": "Switches"
+   },
+   {
+    "position": "D",
+    "text": "Switche"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q12",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Cat",
+  "options": [
+   {
+    "position": "A",
+    "text": "Catty"
+   },
+   {
+    "position": "B",
+    "text": "Cats"
+   },
+   {
+    "position": "C",
+    "text": "Cat"
+   },
+   {
+    "position": "D",
+    "text": "Catts"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q13",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Scarf",
+  "options": [
+   {
+    "position": "A",
+    "text": "Scarves"
+   },
+   {
+    "position": "B",
+    "text": "Scarfse"
+   },
+   {
+    "position": "C",
+    "text": "Scarvies"
+   },
+   {
+    "position": "D",
+    "text": "Scarfes"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q14",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Pouch",
+  "options": [
+   {
+    "position": "A",
+    "text": "Pouch"
+   },
+   {
+    "position": "B",
+    "text": "Pouchs"
+   },
+   {
+    "position": "C",
+    "text": "Pouchies"
+   },
+   {
+    "position": "D",
+    "text": "Pouches"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q15",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Curriculum",
+  "options": [
+   {
+    "position": "A",
+    "text": "Curriculum"
+   },
+   {
+    "position": "B",
+    "text": "Curriculoms"
+   },
+   {
+    "position": "C",
+    "text": "Curriculume"
+   },
+   {
+    "position": "D",
+    "text": "Curricula"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q16",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Her desire to hoard everything in the house, even the pickle jars, was driven by avarice.",
+  "options": [
+   {
+    "position": "A",
+    "text": "cupidity"
+   },
+   {
+    "position": "B",
+    "text": "altruism"
+   },
+   {
+    "position": "C",
+    "text": "kindness"
+   },
+   {
+    "position": "D",
+    "text": "stealth"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q17",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "After taking a big bite of the carrots, the baby showed his repugnance by spitting out his mouthful.",
+  "options": [
+   {
+    "position": "A",
+    "text": "hatred"
+   },
+   {
+    "position": "B",
+    "text": "detestation"
+   },
+   {
+    "position": "C",
+    "text": "love"
+   },
+   {
+    "position": "D",
+    "text": "shock"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q18",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Some of the classic novels are too abstruse for beginning readers to understand.",
+  "options": [
+   {
+    "position": "A",
+    "text": "obvious"
+   },
+   {
+    "position": "B",
+    "text": "detested"
+   },
+   {
+    "position": "C",
+    "text": "detained"
+   },
+   {
+    "position": "D",
+    "text": "rebuilt"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q19",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Our special offers are intended to entice people to buy.",
+  "options": [
+   {
+    "position": "A",
+    "text": "allure"
+   },
+   {
+    "position": "B",
+    "text": "help"
+   },
+   {
+    "position": "C",
+    "text": "repulse"
+   },
+   {
+    "position": "D",
+    "text": "attract"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q20",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "She has always been tractable and obedient, even as a child.",
+  "options": [
+   {
+    "position": "A",
+    "text": "unsystematic"
+   },
+   {
+    "position": "B",
+    "text": "curious 15-AM/K/XX-XX/ 4"
+   },
+   {
+    "position": "C",
+    "text": "submissive"
+   },
+   {
+    "position": "D",
+    "text": "defiant"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q22",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "the political platform of the candidate which includes the core issues the candidate promises to resolve during his or her term in office.",
+  "options": [
+   {
+    "position": "A",
+    "text": "solve, whose"
+   },
+   {
+    "position": "B",
+    "text": "include, who"
+   },
+   {
+    "position": "C",
+    "text": "differ with, now"
+   },
+   {
+    "position": "D",
+    "text": "consider, which An economic recession is"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q23",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "_by rising unemployment, increase in government borrowing, _ of share and stock prices, and falling investment.",
+  "options": [
+   {
+    "position": "A",
+    "text": "characterized, decrease"
+   },
+   {
+    "position": "B",
+    "text": "visualized, abundance"
+   },
+   {
+    "position": "C",
+    "text": "imagined, variance"
+   },
+   {
+    "position": "D",
+    "text": "depicted, increase and that makes"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q24",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Banks are from other corporates in important corporate governance of banks not only different but also more critical.",
+  "options": [
+   {
+    "position": "A",
+    "text": "differentiated, manners, leads"
+   },
+   {
+    "position": "B",
+    "text": "diverse, policies"
+   },
+   {
+    "position": "C",
+    "text": "similar/same, perspectives"
+   },
+   {
+    "position": "D",
+    "text": "different, aspects"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q25",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The protection of basic human rights is an necessity for the development of an individual.",
+  "options": [
+   {
+    "position": "A",
+    "text": "conclusive, total"
+   },
+   {
+    "position": "B",
+    "text": "absolute, fullest"
+   },
+   {
+    "position": "C",
+    "text": "unconditional, marginal"
+   },
+   {
+    "position": "D",
+    "text": "provisional, essential"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q53",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The compound interest on a certain sum of money for 2 years is 7408 and simple interest is 2400. Find the rate of interest.",
+  "options": [
+   {
+    "position": "A",
+    "text": "3%"
+   },
+   {
+    "position": "B",
+    "text": "5%"
+   },
+   {
+    "position": "C",
+    "text": "4%"
+   },
+   {
+    "position": "D",
+    "text": "7%"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q54",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "54",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many seconds will a train 120 metres long running at the rate of 54 km. an hour take to pass a certain telegraph post?",
+  "options": [
+   {
+    "position": "A",
+    "text": "5 seconds"
+   },
+   {
+    "position": "B",
+    "text": "9 seconds"
+   },
+   {
+    "position": "C",
+    "text": "12 seconds"
+   },
+   {
+    "position": "D",
+    "text": "8 seconds"
+   }
+  ]
+ }
+]

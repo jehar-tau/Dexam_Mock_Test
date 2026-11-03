@@ -1,0 +1,505 @@
+[
+ {
+  "id": "nift-2013-written-set3-q1",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q1.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "cooperation"
+   },
+   {
+    "position": "B",
+    "text": "courtesy"
+   },
+   {
+    "position": "C",
+    "text": "punctuality"
+   },
+   {
+    "position": "D",
+    "text": "skill"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q26",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q26.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "grametic"
+   },
+   {
+    "position": "B",
+    "text": "distillry"
+   },
+   {
+    "position": "C",
+    "text": "distillery"
+   },
+   {
+    "position": "D",
+    "text": "distilery"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q27",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "27",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q27.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "distilry"
+   },
+   {
+    "position": "B",
+    "text": "sustenance"
+   },
+   {
+    "position": "C",
+    "text": "sustenense"
+   },
+   {
+    "position": "D",
+    "text": "sustinance"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q28",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q28.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set3-q29",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "29",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q29.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "achievment"
+   },
+   {
+    "position": "B",
+    "text": "coriander ."
+   },
+   {
+    "position": "C",
+    "text": "corriandar"
+   },
+   {
+    "position": "D",
+    "text": "coreandor"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q32",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q32.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Any further cylinders that fell,"
+   },
+   {
+    "position": "B",
+    "text": "it was hoped, could be destroyed"
+   },
+   {
+    "position": "C",
+    "text": "at once by high explosives,"
+   },
+   {
+    "position": "D",
+    "text": "which was being rapidly manufactured and distributed."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q33",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q33.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "It was the first time that a grave"
+   },
+   {
+    "position": "B",
+    "text": "had opened in my road of life,"
+   },
+   {
+    "position": "C",
+    "text": "and the gape it made in the"
+   },
+   {
+    "position": "D",
+    "text": "smooth ground was wonderful."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q34",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q34.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "He disappeared into his bedroom"
+   },
+   {
+    "position": "B",
+    "text": "and returned in a few minutes"
+   },
+   {
+    "position": "C",
+    "text": "as the character of a amiable"
+   },
+   {
+    "position": "D",
+    "text": "and simple-minded nonconformist clergyman."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q35",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q35.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "As it pulled on, one of the loafing man at the corner"
+   },
+   {
+    "position": "B",
+    "text": "dashed forward to open the door in the hope of earning"
+   },
+   {
+    "position": "C",
+    "text": "a copper, but was elbowed away by another loafer,"
+   },
+   {
+    "position": "D",
+    "text": "who had rushed up with the same intention. (4 ) . MD 1400/B/2K13/02"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q38",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following has been referred to as a paradox ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "The literacy percentage increases and the number of illiterates decreases."
+   },
+   {
+    "position": "B",
+    "text": "The literacy percentage increases in proportion to the rate of increase in population. stage but not at the"
+   },
+   {
+    "position": "C",
+    "text": "The government is sensitive to the problem only at the planning implementation stage."
+   },
+   {
+    "position": "D",
+    "text": "The literacy percentage and the number of illiterates are both increasing."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q45",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The culture of a community is said to deteriorate when",
+  "options": [
+   {
+    "position": "A",
+    "text": "there is a fall in its educational standards."
+   },
+   {
+    "position": "B",
+    "text": "the family life fails to play its part."
+   },
+   {
+    "position": "C",
+    "text": "there is universal education."
+   },
+   {
+    "position": "D",
+    "text": "it adopts the modern system of instruction."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q46",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The culture of a community is transmitted",
+  "options": [
+   {
+    "position": "A",
+    "text": "more by school than the family."
+   },
+   {
+    "position": "B",
+    "text": "more by the family than school."
+   },
+   {
+    "position": "C",
+    "text": "equally by both."
+   },
+   {
+    "position": "D",
+    "text": "by the peer group."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q58",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Responsibility and accountability make a worker",
+  "options": [
+   {
+    "position": "A",
+    "text": "shirk his duties."
+   },
+   {
+    "position": "B",
+    "text": "do his job properly."
+   },
+   {
+    "position": "C",
+    "text": "tense and frightened."
+   },
+   {
+    "position": "D",
+    "text": "vulnerable before his supervisors"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q60",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "60",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Orientation of subordinates of common objectives and how to achieve them is",
+  "options": [
+   {
+    "position": "A",
+    "text": "not very important."
+   },
+   {
+    "position": "B",
+    "text": "a must."
+   },
+   {
+    "position": "C",
+    "text": "not at all necessary."
+   },
+   {
+    "position": "D",
+    "text": "optional."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q62",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "People have little time to consider ideals and objectives because they",
+  "options": [
+   {
+    "position": "A",
+    "text": "consider these ideals meaningless."
+   },
+   {
+    "position": "B",
+    "text": "do not want to burden themselves with such ideas."
+   },
+   {
+    "position": "C",
+    "text": "have no inclination for such things."
+   },
+   {
+    "position": "D",
+    "text": "are excessively engaged in their routine activities."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q70",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If x = 7 - 4/3, then the value of *2+",
+  "options": [
+   {
+    "position": "A",
+    "text": "53"
+   },
+   {
+    "position": "B",
+    "text": "61"
+   },
+   {
+    "position": "C",
+    "text": "28"
+   },
+   {
+    "position": "D",
+    "text": "194"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q79",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "79",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A man gets double the amount in 7 years at a certain rate percent. In how many years, he gets 8",
+  "options": [
+   {
+    "position": "A",
+    "text": "56 years A man took a loan of ‹ 2400 to be paid back in 13 equal monthly installments of 7 200 each. If the"
+   },
+   {
+    "position": "B",
+    "text": "49 years"
+   },
+   {
+    "position": "C",
+    "text": "25 years"
+   },
+   {
+    "position": "D",
+    "text": "14 years times the amount at the same rate ?"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q80",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "80",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set3/blocks/nift-2013-written-set3-q80.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "15.38%"
+   },
+   {
+    "position": "B",
+    "text": "16.52%"
+   },
+   {
+    "position": "C",
+    "text": "14.25%"
+   },
+   {
+    "position": "D",
+    "text": "None of these rate of interest is simple, what is the rate percent ?"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q84",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "84",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "finish the work in 40 days, then together all will finish the work in",
+  "options": [
+   {
+    "position": "A",
+    "text": "13 days"
+   },
+   {
+    "position": "B",
+    "text": "15 days"
+   },
+   {
+    "position": "C",
+    "text": "20 days"
+   },
+   {
+    "position": "D",
+    "text": "30 days"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q130",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "130",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which Italian luxury major has entered into a joint venture with Genesis Luxury Fashion to sell its branded products in India exclusively ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Dior"
+   },
+   {
+    "position": "B",
+    "text": "Canali"
+   },
+   {
+    "position": "C",
+    "text": "Gucci"
+   },
+   {
+    "position": "D",
+    "text": "Canclini Tessile"
+   }
+  ]
+ }
+]

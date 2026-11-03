@@ -1,0 +1,167 @@
+[
+ {
+  "id": "nid-mdes-sample-2025-q1",
+  "paper": "nid-mdes-sample-2025",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2025/blocks/nid-mdes-sample-2025-q1.png",
+  "prompt": "If the word CREATIVE is coded as DSFBUJWF, then how is INNOVATE written in that code?",
+  "options": [
+   {
+    "position": "A",
+    "text": "JOPPWBUF"
+   },
+   {
+    "position": "B",
+    "text": "JOPPWBUV"
+   },
+   {
+    "position": "C",
+    "text": "JOPPWBUW"
+   },
+   {
+    "position": "D",
+    "text": "JOPPWBUX"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2025-q8",
+  "paper": "nid-mdes-sample-2025",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2025/blocks/nid-mdes-sample-2025-q8.png",
+  "prompt": "Which of the following stoves has better control mapping? Image Source: https://medium.com/@sachinrekhi/don-normans-principles-of-interaction-design-51025a2c0f33",
+  "options": [
+   {
+    "position": "A",
+    "text": "Both"
+   },
+   {
+    "position": "B",
+    "text": "None"
+   },
+   {
+    "position": "C",
+    "text": "2"
+   },
+   {
+    "position": "D",
+    "text": "1"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2025-q9",
+  "paper": "nid-mdes-sample-2025",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2025/blocks/nid-mdes-sample-2025-q9.png",
+  "prompt": "See the images below and identify which is not symmetrical. (",
+  "options": []
+ },
+ {
+  "id": "nid-mdes-sample-2025-q15",
+  "paper": "nid-mdes-sample-2025",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2025/blocks/nid-mdes-sample-2025-q15.png",
+  "prompt": "What is the comfortable seat height of any standard dining chair with respect to the human figure?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Around Knee area"
+   },
+   {
+    "position": "B",
+    "text": "Below the Knee area"
+   },
+   {
+    "position": "C",
+    "text": "Above the knee area"
+   },
+   {
+    "position": "D",
+    "text": "None of the above"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2025-q16",
+  "paper": "nid-mdes-sample-2025",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2025/blocks/nid-mdes-sample-2025-q16.png",
+  "prompt": "Which Design principle, the following image represents the best? Image source: https://www.wix.com/blog/7-principles-of-design-websites#viewer-durham 441593",
+  "options": [
+   {
+    "position": "A",
+    "text": "Contrast"
+   },
+   {
+    "position": "B",
+    "text": "Variety"
+   },
+   {
+    "position": "C",
+    "text": "Emphasis"
+   },
+   {
+    "position": "D",
+    "text": "Movement Question Numbers 17 to 18 consist of 02 Marks each."
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2025-q17",
+  "paper": "nid-mdes-sample-2025",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2025/blocks/nid-mdes-sample-2025-q17.png",
+  "prompt": "Research suggests that learning music from an early age has positive effects in child development. Based on this statement, what assumptions can we reasonably make? (1) Learning music early helps improve cognitive abilities. (2) If you start music at a young age, you will become good at it later. (3) It is easier to learn music when you are young.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Only assumption 1 is implied"
+   },
+   {
+    "position": "B",
+    "text": "Only assumption 2 is implied"
+   },
+   {
+    "position": "C",
+    "text": "Only assumption 3 is implied"
+   },
+   {
+    "position": "D",
+    "text": "All of them are implied"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2025-q18",
+  "paper": "nid-mdes-sample-2025",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2025/blocks/nid-mdes-sample-2025-q18.png",
+  "prompt": "A triad colour scheme contains 3 colours. Considered to be the most basic type of color scheme, a triadic color scheme is defined as any three colors located 120 degrees from each other on the color wheel. In some way, triadic schemes can be considered the most flexible of the three combination-types, as there are many directions you can go in to measure 120 degrees. Given is a picture of a color wheel.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Yellow + Yellow-Green + Green"
+   },
+   {
+    "position": "B",
+    "text": "Violet + Yellow + Orange"
+   },
+   {
+    "position": "C",
+    "text": "Blue Violet + Red-Orange + Yellow-Green"
+   },
+   {
+    "position": "D",
+    "text": "Green + Orange + Blue Violet M.Des. DAT Prelims Sample Test Paper CDAT 2024 (Common Design Aptitude Test)"
+   }
+  ]
+ }
+]

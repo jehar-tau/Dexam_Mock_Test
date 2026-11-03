@@ -1,0 +1,41 @@
+{
+  "reviewedAgainst": "server/data/media/nift-2012-mdes-written/page-043.jpg",
+  "questions": [
+    {
+      "id": "nift-2012-mdes-written-q104",
+      "prompt": "Ram travels 3 km towards west and turns left, goes 3 km; then turns right, goes 1 km and again turns right and travels 3 km. How far is he from the starting point?",
+      "options": [
+        {"id": "1", "text": "2 km"},
+        {"id": "2", "text": "3 km"},
+        {"id": "3", "text": "4 km"},
+        {"id": "4", "text": "5 km"}
+      ],
+      "answer": "3",
+      "explanation": "The route ends 4 km west of the starting point: 3 km west, 3 km south, 1 km west, then 3 km north."
+    },
+    {
+      "id": "nift-2012-mdes-written-q105",
+      "prompt": "A man travels 1 km east and turns to his right. After travelling 1 km, he again turns to the right. In which direction is he going?",
+      "options": [
+        {"id": "1", "text": "North"},
+        {"id": "2", "text": "East"},
+        {"id": "3", "text": "South"},
+        {"id": "4", "text": "West"}
+      ],
+      "answer": "4",
+      "explanation": "Facing east, the first right turn points south and the second right turn points west."
+    },
+    {
+      "id": "nift-2012-mdes-written-q106",
+      "prompt": "Gopal started from his house at 8:00 a.m. for his cycling practice. He went 8 km towards east, took a left turn and went 6 km, and again took a left turn and went 8 km. Then he decided to turn south-east and proceed till he reached the point where he had taken the first left turn. From there he took a right turn and reached his house at 10:30 a.m. What distance did Gopal cover on the south-east track?",
+      "options": [
+        {"id": "1", "text": "9 km"},
+        {"id": "2", "text": "10 km"},
+        {"id": "3", "text": "11 km"},
+        {"id": "4", "text": "12 km"}
+      ],
+      "answer": "2",
+      "explanation": "The south-east leg is the diagonal of a rectangle measuring 8 km by 6 km, so its length is sqrt(8² + 6²) = 10 km."
+    }
+  ]
+}

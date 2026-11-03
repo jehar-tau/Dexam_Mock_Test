@@ -1,0 +1,632 @@
+[
+ {
+  "id": "nift-mfm-written-sample-q57",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "57",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If * means adding 6 times the second number to the first number, then (1 * 2) * 3 equals?",
+  "options": [
+   {
+    "position": "A",
+    "text": "121"
+   },
+   {
+    "position": "B",
+    "text": "10"
+   },
+   {
+    "position": "C",
+    "text": "93"
+   },
+   {
+    "position": "D",
+    "text": "31"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q58",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The average weight of 36 students is 50 kg. It was found later that the weight of one of the student was misread as 73 kg whereas his actual weight was 37 kg. Find the correct average?",
+  "options": [
+   {
+    "position": "A",
+    "text": "49 kg"
+   },
+   {
+    "position": "B",
+    "text": "45 kg"
+   },
+   {
+    "position": "C",
+    "text": "47 kg"
+   },
+   {
+    "position": "D",
+    "text": "43 kg"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q59",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "59",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Suresh and Mahesh invested equal amounts in two banks for 2 years at 11% and 12% per annum. If Mahesh got 782 more, the sum invested by each is _",
+  "options": [
+   {
+    "position": "A",
+    "text": "24100"
+   },
+   {
+    "position": "B",
+    "text": "72500"
+   },
+   {
+    "position": "C",
+    "text": "<3200"
+   },
+   {
+    "position": "D",
+    "text": "X3700"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q70",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "11, 20, 33, 42, 55, \"?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "67"
+   },
+   {
+    "position": "B",
+    "text": "65"
+   },
+   {
+    "position": "C",
+    "text": "64"
+   },
+   {
+    "position": "D",
+    "text": "61"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q71",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A9P, C8R, E7T, *?' , ISX, K4Z",
+  "options": [
+   {
+    "position": "A",
+    "text": "FSW"
+   },
+   {
+    "position": "B",
+    "text": "HSX"
+   },
+   {
+    "position": "C",
+    "text": "G6V"
+   },
+   {
+    "position": "D",
+    "text": "G6T"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q72",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "72",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "KPG, LQF, MRE, NSD, '?', PUB",
+  "options": [
+   {
+    "position": "A",
+    "text": "OUC"
+   },
+   {
+    "position": "B",
+    "text": "UPC"
+   },
+   {
+    "position": "C",
+    "text": "ОРС"
+   },
+   {
+    "position": "D",
+    "text": "OTC"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q75",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "75",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "ABC, BDF, CFI, DHL, EJM, FLR",
+  "options": [
+   {
+    "position": "A",
+    "text": "BDF (2) 41$"
+   },
+   {
+    "position": "B",
+    "text": "DHL"
+   },
+   {
+    "position": "C",
+    "text": "FLR"
+   },
+   {
+    "position": "D",
+    "text": "EJM"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q86",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "86",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who became the first woman in India's military history to be posted in any Indian mission abroad by sending her to Moscow as deputy air attache?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Anupama Joshi"
+   },
+   {
+    "position": "B",
+    "text": "Anjali Singh"
+   },
+   {
+    "position": "C",
+    "text": "Shaliza Dhami"
+   },
+   {
+    "position": "D",
+    "text": "Bhawana Kanth"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q87",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "87",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who has become the first Lieutenant Governor of the new union territory of Jammu and Kashmir? (L) Radha Krishna Mathur",
+  "options": [
+   {
+    "position": "A",
+    "text": "Girish Chandra Murmu"
+   },
+   {
+    "position": "B",
+    "text": "Prahlad Singh Joshi"
+   },
+   {
+    "position": "C",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q88",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which country has won the 9th edition of 2019 men's Rugby World Cup played in Japan?",
+  "options": [
+   {
+    "position": "A",
+    "text": "England"
+   },
+   {
+    "position": "B",
+    "text": "New Zealand"
+   },
+   {
+    "position": "C",
+    "text": "South Africa"
+   },
+   {
+    "position": "D",
+    "text": "Wales"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q89",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "89",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which Asian country has recently announced to relocate its capital city to the province of East Kalimantan on the Island of Borneo?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Brunei"
+   },
+   {
+    "position": "B",
+    "text": "Indonesia"
+   },
+   {
+    "position": "C",
+    "text": "Thailand"
+   },
+   {
+    "position": "D",
+    "text": "Maldives"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q90",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "90",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In August 2019, which country has become first in the West Asia to launch the \"RuPay Card\", Indian indigenous system of electronic payment? (L) Israel",
+  "options": [
+   {
+    "position": "A",
+    "text": "United Arab Emirates"
+   },
+   {
+    "position": "B",
+    "text": "Saudi Arabia"
+   },
+   {
+    "position": "C",
+    "text": "Jordan"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q91",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "91",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which vitamin is provided by Sunlight to human body?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Vitamin A"
+   },
+   {
+    "position": "B",
+    "text": "Vitamin B"
+   },
+   {
+    "position": "C",
+    "text": "Vitamin C"
+   },
+   {
+    "position": "D",
+    "text": "Vitamin D"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q92",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "92",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "During India's freedom movement, the Simon Commission visited India to",
+  "options": [
+   {
+    "position": "A",
+    "text": "discuss the demand for the formation of Pakistan."
+   },
+   {
+    "position": "B",
+    "text": "enquire into the progress of responsible Government in India."
+   },
+   {
+    "position": "C",
+    "text": "see the important historical places."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q93",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "93",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who was the last Governor General of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Lord Wavell"
+   },
+   {
+    "position": "B",
+    "text": "Dr. Rajendra Prasad"
+   },
+   {
+    "position": "C",
+    "text": "Lord Mountbatten"
+   },
+   {
+    "position": "D",
+    "text": "C. Rajagopalachari"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q94",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "94",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following is popularly known as the Father of the Indian Constitution?",
+  "options": [
+   {
+    "position": "A",
+    "text": "B R Ambedkar"
+   },
+   {
+    "position": "B",
+    "text": "Mahatma Gandhi"
+   },
+   {
+    "position": "C",
+    "text": "Pt. Jawaharlal Nehru"
+   },
+   {
+    "position": "D",
+    "text": "Sardar Vallabhbhai Patel 15-AM/K/XX-XX/I 21 Pha Pal (1) tA PEE (2) ¿e pet la 12 (1) ah (2) 38 (t) '86 $ 222 1рs (2) I Be HI TA BE (1) NBE (2) 15-AM/K/XX-XXЛ 22"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q95",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "95",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who appoints the Chief Election Commissioner of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "President of India"
+   },
+   {
+    "position": "B",
+    "text": "Prime Minister of India"
+   },
+   {
+    "position": "C",
+    "text": "Parliament of India"
+   },
+   {
+    "position": "D",
+    "text": "Chief Justice of India"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q96",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "96",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The functions of the Comptroller and Auditor General of India include auditing and reporting on the receipts and expenditure of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Union Government only."
+   },
+   {
+    "position": "B",
+    "text": "State Government only."
+   },
+   {
+    "position": "C",
+    "text": "Union and State Governments."
+   },
+   {
+    "position": "D",
+    "text": "Union and State Governments and companies substantially financed by both of these."
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q97",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "97",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many members from the Anglo-Indian community can be nominated to Lok Sabha (Parliament of India) by the President of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Two"
+   },
+   {
+    "position": "B",
+    "text": "Four"
+   },
+   {
+    "position": "C",
+    "text": "Five"
+   },
+   {
+    "position": "D",
+    "text": "Six"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q98",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "98",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which is the largest Public Sector Bank in India? (L) Bank of Baroda",
+  "options": [
+   {
+    "position": "A",
+    "text": "State Bank of India"
+   },
+   {
+    "position": "B",
+    "text": "Punjab National Bank"
+   },
+   {
+    "position": "C",
+    "text": "Canara Bank"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q99",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What does 'Utility' in economics mean? (L) The capacity to provide comforts.",
+  "options": [
+   {
+    "position": "A",
+    "text": "The capacity to earn an income."
+   },
+   {
+    "position": "B",
+    "text": "The capacity to satisfy human wants."
+   },
+   {
+    "position": "C",
+    "text": "The capacity to satisfy human motives."
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q100",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "100",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the reason for cloudy nights being warmer than clear nights? (L) Clouds radiate heat",
+  "options": [
+   {
+    "position": "A",
+    "text": "Clouds prevent terrestrial radiation from escaping to the space"
+   },
+   {
+    "position": "B",
+    "text": "Clouds absorb the radiation from the sun"
+   },
+   {
+    "position": "C",
+    "text": "Clouds reflect the insolation"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q101",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "101",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Where are the Hot Deserts of the world generally found?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Near the Equator"
+   },
+   {
+    "position": "B",
+    "text": "Near the Doldrums"
+   },
+   {
+    "position": "C",
+    "text": "Near the Tropics"
+   },
+   {
+    "position": "D",
+    "text": "Near the Tundras"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q102",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following Indian states is landlocked?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Andhra Pradesh"
+   },
+   {
+    "position": "B",
+    "text": "Bihar"
+   },
+   {
+    "position": "C",
+    "text": "West Bengal"
+   },
+   {
+    "position": "D",
+    "text": "Kerala 15-AM/K/XX-XX/I 23 (1) Hpts lowse (z) UKe blojh (+) C Th B TẨN L DÁ T T C H TÁ C TN TôT (1 TENE (2) TE CN TUNN N faюpn Là Ца (2) H HỆ ĐẢN ST KH (e) () logh loas (z) CH BH (8) 18H 5K0 # Hhà (+) bh ĐHà (1) h TS W (+) Saj-Ф! lp lie t! (1) ₫-i, 4-ii, T-iii, E-iv (3) ₫-ii, «-iii, 7-i, E-iv ce l li"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q103",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which Indian celebrity launched his/her fashion brand 'One8', in collaboration with PUMA, comprising sportswear, performance apparels and footwear?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Akash Ambani"
+   },
+   {
+    "position": "B",
+    "text": "Varun Dhawan"
+   },
+   {
+    "position": "C",
+    "text": "Virat Kohli"
+   },
+   {
+    "position": "D",
+    "text": "Manika Batra"
+   }
+  ]
+ }
+]

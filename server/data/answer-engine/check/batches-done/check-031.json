@@ -1,0 +1,470 @@
+[
+ {
+  "id": "nift-2014-mdes-written-q85",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "85",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "275, 7Y7, 14X9, 23W11, 34V13,'?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "27U24"
+   },
+   {
+    "position": "B",
+    "text": "45U15"
+   },
+   {
+    "position": "C",
+    "text": "47U15"
+   },
+   {
+    "position": "D",
+    "text": "47V14 as"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q96",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "96",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "and the fourth one is different. Choose the odd one.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Basketball"
+   },
+   {
+    "position": "B",
+    "text": "Hockey"
+   },
+   {
+    "position": "C",
+    "text": "Football"
+   },
+   {
+    "position": "D",
+    "text": "Cricket"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q98",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "98",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Pointing to Karim, Nagma said, \"he is the son of my father's only son.\" How is Karim's mother related to Nagma?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Daughter"
+   },
+   {
+    "position": "B",
+    "text": "Aunt"
+   },
+   {
+    "position": "C",
+    "text": "Sister-in-law"
+   },
+   {
+    "position": "D",
+    "text": "Sister"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q99",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A man is facing West. He turns 45° in the clockwise direction and then another 180° in the same direction and then 270° in the anti-clockwise direction. Which direction is he facing now?",
+  "options": [
+   {
+    "position": "A",
+    "text": "West"
+   },
+   {
+    "position": "B",
+    "text": "North-West"
+   },
+   {
+    "position": "C",
+    "text": "South-West"
+   },
+   {
+    "position": "D",
+    "text": "South"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q100",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "100",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What will be the difference between the sum of the odd digits and the sum of the even digits in the number 857423?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Zero"
+   },
+   {
+    "position": "B",
+    "text": "One"
+   },
+   {
+    "position": "C",
+    "text": "Two"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q101",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "101",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is/are well known commercial varieties of silk that are produced in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Muga"
+   },
+   {
+    "position": "B",
+    "text": "Mulberry"
+   },
+   {
+    "position": "C",
+    "text": "Oak Tussar"
+   },
+   {
+    "position": "D",
+    "text": "All these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q102",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which place was the first successful cotton textile mill established in India in 1854?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Calcutta"
+   },
+   {
+    "position": "B",
+    "text": "Bombay"
+   },
+   {
+    "position": "C",
+    "text": "Surat"
+   },
+   {
+    "position": "D",
+    "text": "Ahmedabad"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q104",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "104",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which technique of painting was popularized by the European artists during the colonial period in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Oil painting."
+   },
+   {
+    "position": "B",
+    "text": "Charcoal painting."
+   },
+   {
+    "position": "C",
+    "text": "Watercolour painting."
+   },
+   {
+    "position": "D",
+    "text": "Spray painting."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q105",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "105",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Xylys', the popular Swiss made watches, are promoted in India by which Indian company?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Titan"
+   },
+   {
+    "position": "B",
+    "text": "Maxima"
+   },
+   {
+    "position": "C",
+    "text": "Ajanta"
+   },
+   {
+    "position": "D",
+    "text": "Timex"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q116",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "116",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who, among the following Indian film actors, endorsed the 'Garnier' range of men's skin cream?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Shahrukh Khan"
+   },
+   {
+    "position": "B",
+    "text": "John Abraham"
+   },
+   {
+    "position": "C",
+    "text": "Shahid Kapoor"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q117",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "117",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who wrote the book 'Indika\"?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Kautilya"
+   },
+   {
+    "position": "B",
+    "text": "Ashoka"
+   },
+   {
+    "position": "C",
+    "text": "Megasthenes"
+   },
+   {
+    "position": "D",
+    "text": "Seleukus"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q119",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "119",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Name the microorganism which causes the plant disease 'Rust of Wheat'.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bacteria"
+   },
+   {
+    "position": "B",
+    "text": "Virus"
+   },
+   {
+    "position": "C",
+    "text": "Algae"
+   },
+   {
+    "position": "D",
+    "text": "Fungi"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q120",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "120",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In which country is the volcanic mountain 'Mt. Kilimanjaro' located?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Japan"
+   },
+   {
+    "position": "B",
+    "text": "USA"
+   },
+   {
+    "position": "C",
+    "text": "Indonesia"
+   },
+   {
+    "position": "D",
+    "text": "Tanzania"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q121",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "121",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The 2020 Olympic Games are scheduled to be held in",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tokyo."
+   },
+   {
+    "position": "B",
+    "text": "Istanbul."
+   },
+   {
+    "position": "C",
+    "text": "Madrid."
+   },
+   {
+    "position": "D",
+    "text": "London."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q122",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "On which day of 2013 was the celestial event, a 'Super Moon', observed in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "8 October"
+   },
+   {
+    "position": "B",
+    "text": "14 August"
+   },
+   {
+    "position": "C",
+    "text": "27 September"
+   },
+   {
+    "position": "D",
+    "text": "23 June"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q123",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Android' a Linux based operating system used in mobiles is created by which company?",
+  "options": [
+   {
+    "position": "A",
+    "text": "BlackBerry"
+   },
+   {
+    "position": "B",
+    "text": "Apple"
+   },
+   {
+    "position": "C",
+    "text": "Google"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q124",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "124",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Tears you apart', a nationwide National Family Welfare, Government of India. _ Control Campaign is launched by Ministry of Health and",
+  "options": [
+   {
+    "position": "A",
+    "text": "AIDS"
+   },
+   {
+    "position": "B",
+    "text": "Malnutrition"
+   },
+   {
+    "position": "C",
+    "text": "Population"
+   },
+   {
+    "position": "D",
+    "text": "Tobacco"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q125",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "125",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The commonly used gender symbols for female and male have been adopted from the symbols of which two planets of our solar system?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Jupiter and Mars"
+   },
+   {
+    "position": "B",
+    "text": "Venus and Mars"
+   },
+   {
+    "position": "C",
+    "text": "Venus and Mercury"
+   },
+   {
+    "position": "D",
+    "text": "Uranus and Mercury 15"
+   }
+  ]
+ }
+]

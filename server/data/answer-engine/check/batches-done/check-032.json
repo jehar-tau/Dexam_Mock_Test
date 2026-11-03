@@ -1,0 +1,652 @@
+[
+ {
+  "id": "nift-bdes-written-sample-q22",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following is not a synonym of 'fallacy'?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Erroneous belief"
+   },
+   {
+    "position": "B",
+    "text": "Myth"
+   },
+   {
+    "position": "C",
+    "text": "Canard"
+   },
+   {
+    "position": "D",
+    "text": "Platitude"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q23",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following is not an antonym of illustrious?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Unknown"
+   },
+   {
+    "position": "B",
+    "text": "Nameless"
+   },
+   {
+    "position": "C",
+    "text": "Anonymous"
+   },
+   {
+    "position": "D",
+    "text": "Distinguished"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q25",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Contentious means",
+  "options": [
+   {
+    "position": "A",
+    "text": "given."
+   },
+   {
+    "position": "B",
+    "text": "debatable."
+   },
+   {
+    "position": "C",
+    "text": "obvious."
+   },
+   {
+    "position": "D",
+    "text": "without doubt. 11-PM/A/XX-XX/I 5 62/"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q26",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "the correctly spelt word.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sporadic"
+   },
+   {
+    "position": "B",
+    "text": "Sporiadic"
+   },
+   {
+    "position": "C",
+    "text": "Spordiac"
+   },
+   {
+    "position": "D",
+    "text": "Spordaic"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q31",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "31",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Nucleus",
+  "options": [
+   {
+    "position": "A",
+    "text": "Nucleuses"
+   },
+   {
+    "position": "B",
+    "text": "Nucleusis"
+   },
+   {
+    "position": "C",
+    "text": "Nuclei"
+   },
+   {
+    "position": "D",
+    "text": "Nucleis"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q32",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sheep",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sheep"
+   },
+   {
+    "position": "B",
+    "text": "Sheeps"
+   },
+   {
+    "position": "C",
+    "text": "Sheepes"
+   },
+   {
+    "position": "D",
+    "text": "Sheepps"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q33",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Tomato",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tomatoes"
+   },
+   {
+    "position": "B",
+    "text": "Tomatose"
+   },
+   {
+    "position": "C",
+    "text": "Tomattos"
+   },
+   {
+    "position": "D",
+    "text": "Tomatoess"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q34",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Loaf",
+  "options": [
+   {
+    "position": "A",
+    "text": "Loafs"
+   },
+   {
+    "position": "B",
+    "text": "Loaves"
+   },
+   {
+    "position": "C",
+    "text": "Loaffs"
+   },
+   {
+    "position": "D",
+    "text": "Loafes"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q35",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "News",
+  "options": [
+   {
+    "position": "A",
+    "text": "Newses"
+   },
+   {
+    "position": "B",
+    "text": "News"
+   },
+   {
+    "position": "C",
+    "text": "Newsses"
+   },
+   {
+    "position": "D",
+    "text": "Newssess"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q36",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "36",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Flamboyant",
+  "options": [
+   {
+    "position": "A",
+    "text": "Honourable"
+   },
+   {
+    "position": "B",
+    "text": "Outgoing"
+   },
+   {
+    "position": "C",
+    "text": "Flashy"
+   },
+   {
+    "position": "D",
+    "text": "Modest"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q37",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Wizard",
+  "options": [
+   {
+    "position": "A",
+    "text": "Clever"
+   },
+   {
+    "position": "B",
+    "text": "Sharp"
+   },
+   {
+    "position": "C",
+    "text": "Beginner"
+   },
+   {
+    "position": "D",
+    "text": "Fast"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q38",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Stupendous",
+  "options": [
+   {
+    "position": "A",
+    "text": "Great"
+   },
+   {
+    "position": "B",
+    "text": "Ordinary"
+   },
+   {
+    "position": "C",
+    "text": "Noisy"
+   },
+   {
+    "position": "D",
+    "text": "Poor"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q39",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Desolate",
+  "options": [
+   {
+    "position": "A",
+    "text": "Docile"
+   },
+   {
+    "position": "B",
+    "text": "Fertile"
+   },
+   {
+    "position": "C",
+    "text": "Quiet •"
+   },
+   {
+    "position": "D",
+    "text": "Clever"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q40",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Crafty",
+  "options": [
+   {
+    "position": "A",
+    "text": "Expert"
+   },
+   {
+    "position": "B",
+    "text": "Perfect"
+   },
+   {
+    "position": "C",
+    "text": "Naive"
+   },
+   {
+    "position": "D",
+    "text": "Honest 11-PM/A/XX-XX/I 6"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q41",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "41",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Jeopardy",
+  "options": [
+   {
+    "position": "A",
+    "text": "Peace"
+   },
+   {
+    "position": "B",
+    "text": "Danger"
+   },
+   {
+    "position": "C",
+    "text": "Happy"
+   },
+   {
+    "position": "D",
+    "text": "Satisfied"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q42",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "42",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Paradox",
+  "options": [
+   {
+    "position": "A",
+    "text": "Puzzle"
+   },
+   {
+    "position": "B",
+    "text": "Solution"
+   },
+   {
+    "position": "C",
+    "text": "Agreement"
+   },
+   {
+    "position": "D",
+    "text": "Answer"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q43",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Meticulous",
+  "options": [
+   {
+    "position": "A",
+    "text": "Careful"
+   },
+   {
+    "position": "B",
+    "text": "Easygoing"
+   },
+   {
+    "position": "C",
+    "text": "Careless"
+   },
+   {
+    "position": "D",
+    "text": "Dark"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q44",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "44",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Melancholy",
+  "options": [
+   {
+    "position": "A",
+    "text": "Thrill"
+   },
+   {
+    "position": "B",
+    "text": "Sad"
+   },
+   {
+    "position": "C",
+    "text": "Lucky"
+   },
+   {
+    "position": "D",
+    "text": "Celebrate"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q45",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Enigma",
+  "options": [
+   {
+    "position": "A",
+    "text": "Solution"
+   },
+   {
+    "position": "B",
+    "text": "Mystery"
+   },
+   {
+    "position": "C",
+    "text": "Beauty"
+   },
+   {
+    "position": "D",
+    "text": "Natural"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q46",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Stir up a hornet's nest",
+  "options": [
+   {
+    "position": "A",
+    "text": "avoid problems"
+   },
+   {
+    "position": "B",
+    "text": "make lot of friends"
+   },
+   {
+    "position": "C",
+    "text": "create trouble"
+   },
+   {
+    "position": "D",
+    "text": "annoy others"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q47",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "To break the ice",
+  "options": [
+   {
+    "position": "A",
+    "text": "to start a conversation"
+   },
+   {
+    "position": "B",
+    "text": "to start quarrelling"
+   },
+   {
+    "position": "C",
+    "text": "to end a fight"
+   },
+   {
+    "position": "D",
+    "text": "to end the hostility"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q48",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Midas touch",
+  "options": [
+   {
+    "position": "A",
+    "text": "touch softly"
+   },
+   {
+    "position": "B",
+    "text": "please somebody"
+   },
+   {
+    "position": "C",
+    "text": "ability to succeed in all projects"
+   },
+   {
+    "position": "D",
+    "text": "ability to destroy anything"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q49",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "49",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Blow the lid off",
+  "options": [
+   {
+    "position": "A",
+    "text": "secret desire"
+   },
+   {
+    "position": "B",
+    "text": "hide something"
+   },
+   {
+    "position": "C",
+    "text": "open"
+   },
+   {
+    "position": "D",
+    "text": "make public"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q50",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In the offing",
+  "options": [
+   {
+    "position": "A",
+    "text": "likely to happen"
+   },
+   {
+    "position": "B",
+    "text": "getting closed"
+   },
+   {
+    "position": "C",
+    "text": "not needed"
+   },
+   {
+    "position": "D",
+    "text": "trigger 11-PM/A/XX-XX/I 7 62/ 81J0 8I÷8I 'IS ilele 1ae tllt 1 8IX8I÷8I (D) (Z) (E) (4) VZE 312 322 69 (1) IL (z) (3) 72 VL (t) 'ES 9 (D) 6 (z) (3) 3 (4) 2 32.4 ajk V x (1) 1000 (2) 200 00I (€) O1 (t)"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q52",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "52",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sum of the two numbers is 17 whereas sum of their squares is 145. Find the product of the two numbers.",
+  "options": [
+   {
+    "position": "A",
+    "text": "69"
+   },
+   {
+    "position": "B",
+    "text": "71"
+   },
+   {
+    "position": "C",
+    "text": "72"
+   },
+   {
+    "position": "D",
+    "text": "74"
+   }
+  ]
+ }
+]
