@@ -26,7 +26,9 @@ function loadReviewState() {
 // Save review state to file
 function saveReviewState() {
   try {
-    fs.writeFileSync(REVIEW_STATE_FILE, JSON.stringify(reviewState, null, 2), 'utf8');
+    const tmp = REVIEW_STATE_FILE + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify(reviewState, null, 2), 'utf8');
+    fs.renameSync(tmp, REVIEW_STATE_FILE);
   } catch (err) {
     console.error('Error saving review state:', err.message);
   }
@@ -35,8 +37,7 @@ function saveReviewState() {
 // Load question banks on startup
 function loadBanks() {
   try {
-    const mrPath = path.join(__dirname, '../dexam-bank-machine-readable.json');
-    machineReadableBank = JSON.parse(fs.readFileSync(mrPath, 'utf8'));
+    machineReadableBank = require('./lib/reviewed-papers').loadBank();
     console.log(`Loaded machine-readable bank: ${machineReadableBank.summary.total_questions} questions`);
   } catch (err) {
     console.error('Error loading machine-readable bank:', err.message);
@@ -93,7 +94,7 @@ function getQuestions(query, res) {
   }
 
   let questions = [...machineReadableBank.questions];
-  const { exam = 'all', type = 'all', status = 'all', search = '', page = '1', limit = '50' } = query;
+  const { exam = 'all', type = 'all', status = 'all', search = '', page = '1', limit = '50', review = 'all', session = '' } = query;
 
   if (exam !== 'all') {
     questions = questions.filter(q => q.exam === exam);
@@ -105,6 +106,17 @@ function getQuestions(query, res) {
 
   if (status !== 'all') {
     questions = questions.filter(q => q.answer_status === status);
+  }
+
+  if (review === 'pending') {
+    questions = questions.filter(q => !reviewState[q.id]?.marked && !reviewState[q.id]?.flagged);
+  } else if (review === 'reviewed') {
+    questions = questions.filter(q => reviewState[q.id]?.marked || reviewState[q.id]?.flagged);
+  } else if (review === 'flagged') {
+    questions = questions.filter(q => reviewState[q.id]?.flagged);
+  }
+  if (session) {
+    questions = questions.filter(q => reviewState[q.id]?.session === session);
   }
 
   if (search) {
@@ -182,10 +194,36 @@ function markQuestion(id, body, res) {
   reviewState[id] = {
     marked: marked !== undefined ? marked : reviewState[id]?.marked || false,
     flagged: flagged !== undefined ? flagged : reviewState[id]?.flagged || false,
-    notes: notes !== undefined ? notes : reviewState[id]?.notes || ''
+    notes: notes !== undefined ? notes : reviewState[id]?.notes || '',
+    session: body.session || reviewState[id]?.session || '',
+    at: new Date().toISOString()
   };
   saveReviewState();
   sendJSON(res, { success: true, state: reviewState[id] });
+}
+
+// API: Review stats (whole bank)
+function getReviewStats(res) {
+  const total = machineReadableBank ? machineReadableBank.questions.length : 0;
+  const entries = Object.values(reviewState);
+  const done = entries.filter(e => e.marked || e.flagged).length;
+  const flagged = entries.filter(e => e.flagged).length;
+  const sessions = {};
+  entries.forEach(e => { if (e.session) sessions[e.session] = (sessions[e.session] || 0) + 1; });
+  sendJSON(res, {
+    total, reviewed: done, flagged, remaining: total - done,
+    remainingPercent: total ? Math.round(((total - done) / total) * 100) : 0,
+    sessions
+  });
+}
+
+// API: Save a timestamped backup snapshot
+function saveBackup(res) {
+  const dir = path.join(__dirname, 'review-backups');
+  fs.mkdirSync(dir, { recursive: true });
+  const name = `review-state-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+  fs.writeFileSync(path.join(dir, name), JSON.stringify(reviewState, null, 2), 'utf8');
+  sendJSON(res, { success: true, file: `server/review-backups/${name}`, count: Object.keys(reviewState).length });
 }
 
 // API: Compare with generic bank
@@ -274,6 +312,19 @@ const server = http.createServer((req, res) => {
   if (pathname.startsWith('/api/compare/') && req.method === 'GET') {
     const id = pathname.replace('/api/compare/', '');
     return compareQuestion(id, res);
+  }
+
+  if (pathname === '/api/review-stats' && req.method === 'GET') {
+    return getReviewStats(res);
+  }
+
+  if (pathname === '/api/review-save' && req.method === 'POST') {
+    return saveBackup(res);
+  }
+
+  if (pathname === '/api/review-export' && req.method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Content-Disposition': 'attachment; filename="review-state.json"' });
+    return res.end(JSON.stringify(reviewState, null, 2));
   }
 
   if (pathname === '/api/summary' && req.method === 'GET') {

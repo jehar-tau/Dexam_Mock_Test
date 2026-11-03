@@ -688,10 +688,16 @@
                 <div class="stats" id="stats"></div>
                 <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 4px; margin-top: 12px; font-size: 11px;">
                     <div style="margin-bottom: 8px; font-weight: bold; color: #fff;">Review Progress:</div>
-                    <div id="reviewStats" style="color: #e0e0e0;">
-                        <div>✓ Reviewed: <strong>0</strong> | ⚠ Flagged: <strong>0</strong></div>
-                        <div style="margin-top: 5px;">Remaining: <strong>0</strong> (<strong>0%</strong>)</div>
+                    <div id="reviewStats" style="color: #e0e0e0;">Loading...</div>
+                    <div style="margin-top: 10px; display: flex; gap: 6px; align-items: center;">
+                        <select id="sessionSelect" style="flex: 1; padding: 4px; font-size: 11px;"></select>
+                        <button onclick="newSession()" style="padding: 4px 8px; font-size: 11px; cursor: pointer;">+ Session</button>
                     </div>
+                    <div style="margin-top: 8px; display: flex; gap: 6px;">
+                        <button onclick="saveProgress()" style="flex: 1; padding: 6px; font-size: 11px; cursor: pointer; background: #27ae60; color: #fff; border: 0; border-radius: 3px;">💾 Save Progress</button>
+                        <a href="/api/review-export" style="flex: 1; padding: 6px; font-size: 11px; text-align: center; background: #3498db; color: #fff; border-radius: 3px; text-decoration: none;">⬇ Export</a>
+                    </div>
+                    <div id="saveMsg" style="margin-top: 6px; color: #9be29b;"></div>
                 </div>
             </div>
 
@@ -722,6 +728,15 @@
                 </div>
 
                 <div class="filter-group">
+                    <label>Review</label>
+                    <select id="reviewFilter">
+                        <option value="pending">To review (hide reviewed)</option>
+                        <option value="all">All questions</option>
+                        <option value="reviewed">Reviewed only</option>
+                        <option value="flagged">Flagged only</option>
+                    </select>
+                </div>
+                <div class="filter-group">
                     <label>Search</label>
                     <input type="text" id="searchInput" placeholder="Search questions...">
                 </div>
@@ -746,7 +761,8 @@
     <script>
         const API_BASE = '/api';
         let currentPage = 1;
-        let currentFilters = { exam: 'all', type: 'all', status: 'all', search: '' };
+        let currentFilters = { exam: 'all', type: 'all', status: 'all', search: '', review: 'pending' };
+        let reviewSession = (() => { try { return localStorage.getItem('reviewSession') || ''; } catch (e) { return ''; } })() || ('Session ' + new Date().toISOString().slice(0, 10));
         let currentQuestion = null;
         let allQuestions = [];
         let currentTotalPages = 1;
@@ -754,34 +770,45 @@
         let studentAnswer = null; // Store student's exam answer
         let studentMarking = null; // Store if student marked correct/incorrect
 
-        // Update review statistics
-        function updateReviewStats() {
-            const totalQuestions = allQuestions.length;
-            let reviewedCount = 0;
-            let flaggedCount = 0;
+        const keyLabel = (k) => /^[1-4]$/.test(String(k)) ? `${k} (= option ${'ABCD'[k-1]})` : k;
+        const optText = (o) => (o && typeof o === 'object') ? o.text : o;
 
-            // Count reviewed and flagged questions
-            allQuestions.forEach(q => {
-                if (q.reviewState?.marked) reviewedCount++;
-                if (q.reviewState?.flagged) flaggedCount++;
-            });
+        // Update review statistics (whole bank, from server)
+        async function updateReviewStats() {
+            try {
+                const st = await (await fetch(`${API_BASE}/review-stats`)).json();
+                document.getElementById('reviewStats').innerHTML = `
+                    <div>✓ Reviewed: <strong>${st.reviewed}</strong> | ⚠ Flagged: <strong>${st.flagged}</strong></div>
+                    <div style="margin-top: 5px;">Remaining: <strong>${st.remaining}</strong> of ${st.total} (<strong>${st.remainingPercent}%</strong>)</div>`;
+                const sel = document.getElementById('sessionSelect');
+                const names = new Set(Object.keys(st.sessions));
+                names.add(reviewSession);
+                sel.innerHTML = [...names].map(n => `<option value="${n.replace(/"/g, '&quot;')}" ${n === reviewSession ? 'selected' : ''}>${n} (${st.sessions[n] || 0})</option>`).join('');
+            } catch (err) {
+                console.error('Error loading review stats:', err);
+            }
+        }
 
-            const remainingCount = totalQuestions - reviewedCount;
-            const remainingPercent = totalQuestions > 0 ? Math.round((remainingCount / totalQuestions) * 100) : 0;
+        function newSession() {
+            const name = prompt('Name for the new review session:', 'Session ' + new Date().toLocaleString());
+            if (!name) return;
+            reviewSession = name;
+            try { localStorage.setItem('reviewSession', name); } catch (e) {}
+            updateReviewStats();
+        }
 
-            // Update the stats display
-            const statsHtml = `
-                <div style="margin-bottom: 5px;">
-                    <span style="margin-right: 12px;">✓ Reviewed: <strong>${reviewedCount}</strong></span>
-                    <span>⚠ Flagged: <strong>${flaggedCount}</strong></span>
-                </div>
-                <div style="margin-top: 5px;">
-                    Remaining: <strong>${remainingCount}</strong> (<strong>${remainingPercent}%</strong>)
-                </div>
-            `;
-            const reviewStatsDiv = document.getElementById('reviewStats');
-            if (reviewStatsDiv) {
-                reviewStatsDiv.innerHTML = statsHtml;
+        document.getElementById('sessionSelect').addEventListener('change', (e) => {
+            reviewSession = e.target.value.replace(/ \(\d+\)$/, '');
+            try { localStorage.setItem('reviewSession', reviewSession); } catch (e2) {}
+        });
+
+        async function saveProgress() {
+            const msg = document.getElementById('saveMsg');
+            try {
+                const r = await (await fetch(`${API_BASE}/review-save`, { method: 'POST' })).json();
+                msg.textContent = `Saved ${r.count} reviews → ${r.file}`;
+            } catch (err) {
+                msg.textContent = 'Save failed';
             }
         }
 
@@ -836,6 +863,7 @@
                     type: currentFilters.type,
                     status: currentFilters.status,
                     search: currentFilters.search,
+                    review: currentFilters.review,
                     page: currentPage,
                     limit: 50
                 });
@@ -924,7 +952,7 @@
                 : '';
 
             const optionsHtml = q.options.length > 0
-                ? q.options.map((opt, i) => `<div class="option">${String.fromCharCode(65 + i)}. ${opt}</div>`).join('')
+                ? q.options.map((opt, i) => `<div class="option">${String.fromCharCode(65 + i)}. ${optText(opt)}</div>`).join('')
                 : '<div class="option empty">No options (Numerical Answer Type)</div>';
 
             const comparisonRes = await fetch(`${API_BASE}/compare/${q.id}`);
@@ -947,13 +975,14 @@
                 <div class="detail-content">
                     <div class="section">
                         <div class="section-title">Question</div>
+                        ${q.context_text ? `<div class="question-text" style="background:#fff8e1;border-left-color:#f39c12;margin-bottom:8px;"><em>Directions (read from the page, may be imperfect):</em> ${q.context_text}</div>` : ''}
                         <div class="question-text">${q.question_text}</div>
                     </div>
 
                     ${figureHtml ? `<div class="section"><div class="section-title">Figure</div>${figureHtml}</div>` : ''}
 
                     <div class="section">
-                        <div class="section-title">Options</div>
+                        <div class="section-title">Options${q.options_source === 'ocr' ? ' <span style="font-size:11px;color:#e67e22;text-transform:none;">(machine-read from the question image, verify)</span>' : ''}</div>
                         <div class="options">${optionsHtml}</div>
                     </div>
 
@@ -961,7 +990,7 @@
                         <div class="section-title">Answer</div>
                         <div class="answer-key">
                             <div class="answer-key-label">Answer Key (${q.answer_status})</div>
-                            <div class="answer-key-value">${q.answer_key}</div>
+                            <div class="answer-key-value">${keyLabel(q.answer_key)}</div>
                         </div>
                     </div>
 
@@ -1066,86 +1095,46 @@
                 await fetch(`${API_BASE}/questions/${currentQuestion.id}/mark`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ marked, flagged, notes })
+                    body: JSON.stringify({ marked, flagged, notes, session: reviewSession })
                 });
             } catch (err) {
                 console.error('Error updating review state:', err);
             }
         }
 
-        function markForReviewAndNext() {
+        async function markForReviewAndNext() {
             document.getElementById('markedCheckbox').checked = true;
-
-            // Update local question data
-            if (currentQuestion && currentQuestion.reviewState) {
-                currentQuestion.reviewState.marked = true;
-            }
-
-            // Find and update in allQuestions array
-            const qIndex = allQuestions.findIndex(q => q.id === currentQuestion.id);
-            if (qIndex >= 0 && allQuestions[qIndex].reviewState) {
-                allQuestions[qIndex].reviewState.marked = true;
-            }
-
-            updateReviewState();
-            updateReviewStats();
-
-            // Update button appearance
-            const markBtn = document.getElementById('markBtn');
-            if (markBtn) {
-                markBtn.textContent = '✓ Reviewed';
-                markBtn.disabled = true;
-                markBtn.style.opacity = '0.6';
-            }
-
-            setTimeout(() => goToNextQuestion(), 300);
+            await finishReview();
         }
 
-        function flagIssueAndNext() {
+        async function flagIssueAndNext() {
             document.getElementById('flaggedCheckbox').checked = true;
-
-            // Update local question data
-            if (currentQuestion && currentQuestion.reviewState) {
-                currentQuestion.reviewState.flagged = true;
-            }
-
-            // Find and update in allQuestions array
-            const qIndex = allQuestions.findIndex(q => q.id === currentQuestion.id);
-            if (qIndex >= 0 && allQuestions[qIndex].reviewState) {
-                allQuestions[qIndex].reviewState.flagged = true;
-            }
-
-            updateReviewState();
-            updateReviewStats();
-
-            // Update button appearance
-            const flagBtn = document.getElementById('flagBtn');
-            if (flagBtn) {
-                flagBtn.textContent = '⚠ Flagged';
-                flagBtn.disabled = true;
-                flagBtn.style.opacity = '0.6';
-            }
-
-            setTimeout(() => goToNextQuestion(), 300);
+            await finishReview();
         }
 
-        function goToNextQuestion() {
-            const currentIndex = allQuestions.findIndex(q => q.id === currentQuestion.id);
-            if (currentIndex >= 0 && currentIndex < allQuestions.length - 1) {
-                const nextQuestion = allQuestions[currentIndex + 1];
-                selectQuestion(nextQuestion.id);
-                // Scroll to top of detail view
-                setTimeout(() => {
-                    const detailContent = document.querySelector('.detail-content');
-                    if (detailContent) detailContent.scrollTop = 0;
-                }, 100);
-            } else if (currentIndex === allQuestions.length - 1) {
-                // If on last question of page, go to next page
-                if (currentPage < currentTotalPages) {
-                    goToPage(currentPage + 1);
-                } else {
-                    alert('✓ Reached end of questions!');
-                }
+        // Save to server first, then advance; reviewed questions drop out of the "To review" list
+        async function finishReview() {
+            document.getElementById('markBtn')?.setAttribute('disabled', true);
+            document.getElementById('flagBtn')?.setAttribute('disabled', true);
+            await updateReviewState();
+
+            const hide = currentFilters.review === 'pending';
+            const idx = allQuestions.findIndex(q => q.id === currentQuestion.id);
+            const next = allQuestions[idx + 1];
+
+            await updateReviewStats();
+            await loadQuestions();
+
+            let target = null;
+            if (hide) {
+                target = next && allQuestions.find(q => q.id === next.id) ? next : allQuestions[0];
+            } else {
+                target = next || null;
+            }
+            if (target) {
+                selectQuestion(target.id);
+            } else {
+                alert('✓ Nothing left in this list!');
             }
         }
 
@@ -1212,7 +1201,7 @@
 
                     <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                         <div style="font-weight: bold; margin-bottom: 10px; color: #2e7d32;">Answer Key:</div>
-                        <div style="font-size: 18px; color: #1b5e20; font-weight: bold;">${q.answer_key}</div>
+                        <div style="font-size: 18px; color: #1b5e20; font-weight: bold;">${keyLabel(q.answer_key)}</div>
                     </div>
 
                     <div class="exam-answer-area">
@@ -1282,7 +1271,7 @@
                 <div class="options-grid">
                     ${q.options.map((opt, i) => `
                         <button class="option-btn" onclick="selectMCQ(this, '${String.fromCharCode(65 + i)}')">
-                            <strong style="color: #3498db; margin-right: 10px;">${String.fromCharCode(65 + i)}:</strong> ${opt}
+                            <strong style="color: #3498db; margin-right: 10px;">${String.fromCharCode(65 + i)}:</strong> ${optText(opt)}
                         </button>
                     `).join('')}
                 </div>
@@ -1378,6 +1367,12 @@
 
         document.getElementById('statusFilter').addEventListener('change', (e) => {
             currentFilters.status = e.target.value;
+            currentPage = 1;
+            loadQuestions();
+        });
+
+        document.getElementById('reviewFilter').addEventListener('change', (e) => {
+            currentFilters.review = e.target.value;
             currentPage = 1;
             loadQuestions();
         });

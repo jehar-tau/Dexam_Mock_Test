@@ -815,6 +815,10 @@ function api(req, res) {
       questions: filtered.slice(offset, offset + limit)
     });
   }
+  if (parsed.pathname === "/api/reviewed-papers" && req.method === "GET") {
+    const built = require("./server/lib/reviewed-papers").build();
+    return resultJson(res, { papers: built.papers, publishable: built.publishable });
+  }
   if (parsed.pathname === "/api/exams") return resultJson(res, seedExams);
   if (parsed.pathname === "/api/generic-bank" && req.method === "GET") {
     if (!fs.existsSync(GENERIC_BANK_FILE)) {

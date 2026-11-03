@@ -27,6 +27,7 @@
     practice: null,
     customData: null,
     officialPapers: [],
+    reviewedPapers: [],
     importMessage: "",
     importErrors: [],
     saveFlashTimer: null
@@ -178,7 +179,7 @@
   }
 
   function getPaper(paperId) {
-    return allPapers().find((paper) => paper.id === paperId) || null;
+    return allPapers().concat(state.reviewedPapers || []).find((paper) => paper.id === paperId) || null;
   }
 
   function allPapers() {
@@ -196,6 +197,16 @@
     if (!key) return undefined;
     if (question.type === "MSQ") return key.split(/[,;&/]+/).map((value) => value.trim()).filter(Boolean);
     return key;
+  }
+
+  async function loadReviewedPapers() {
+    try {
+      const response = await fetch("/api/reviewed-papers");
+      if (!response.ok) return;
+      state.reviewedPapers = (await response.json()).papers || [];
+    } catch (error) {
+      state.reviewedPapers = [];
+    }
   }
 
   async function loadOfficialPapers() {
@@ -641,6 +652,7 @@
     if (parts[0] === "exams") return { name: "exams" };
     if (parts[0] === "exam") return { name: "exam", examId: parts[1] || "" };
     if (parts[0] === "mocks") return { name: "mocks" };
+    if (parts[0] === "papers") return { name: "papers", examId: parts[1] || "" };
     if (parts[0] === "practice-session") return { name: "practice-session" };
     if (parts[0] === "practice") {
       return {
@@ -664,6 +676,7 @@
       exam: "exams",
       paper: "exams",
       mocks: "mocks",
+      papers: "papers",
       result: "mocks",
       practice: "practice",
       "practice-session": "practice",
@@ -1392,6 +1405,23 @@
       '<div class="exam-top"><div><a class="btn btn-quiet" href="#/">← Home</a></div><div class="exam-title"><h1>Question bank</h1><span>Topic-wise reusable practice sets</span></div><div class="badge">' + papers.length + " sets</div></div>" +
       groups +
       '<div class="studio-banner"><div><h2>One bank, many future papers.</h2><p>New source papers are normalized into topic-based objective questions before they enter this library.</p></div><a class="btn btn-ghost" href="#/progress">Open progress</a></div>';
+  }
+
+  function renderPapers(examId) {
+    const all = state.reviewedPapers || [];
+    const exams = ["uceed", "nid", "nift"];
+    const active = exams.indexOf(examId) >= 0 ? examId : "";
+    const shown = active ? all.filter((paper) => paper.examId === active) : all;
+    const tabs = ['<a class="btn ' + (active ? "btn-quiet" : "btn-ghost") + '" href="#/papers">All</a>']
+      .concat(exams.map((id) => '<a class="btn ' + (active === id ? "btn-ghost" : "btn-quiet") + '" href="#/papers/' + id + '">' + id.toUpperCase() + " (" + all.filter((paper) => paper.examId === id).length + ")</a>"))
+      .join(" ");
+    const body = shown.length
+      ? '<div class="paper-grid">' + shown.map(paperCard).join("") + "</div>"
+      : '<p class="empty-state">No reviewed papers yet for this exam. Papers appear here once their questions are reviewed and cleared.</p>';
+    $("#view").innerHTML =
+      '<div class="exam-top"><div><a class="btn btn-quiet" href="#/">← Home</a></div><div class="exam-title"><h1>Exam papers</h1><span>UCEED, NID and NIFT past papers · reviewed questions only</span></div><div class="badge">' + all.length + " papers</div></div>" +
+      '<div class="section-head"><div><p class="eyebrow">Exam-specific papers</p><h2>Take a full past paper.</h2><p>Only questions that have been reviewed, cleared and have an answer key are included. Scoring uses a practice model, not the official marking scheme.</p></div></div>' +
+      '<p style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px">' + tabs + "</p>" + body;
   }
 
   function renderPracticeSetup(examId, topic) {
@@ -2344,6 +2374,7 @@
     else if (route.name === "exams") renderExams();
     else if (route.name === "exam") renderExamHub(route.examId);
     else if (route.name === "mocks") renderMocks();
+    else if (route.name === "papers") renderPapers(route.examId);
     else if (route.name === "practice") renderPracticeSetup(route.examId, route.topic);
     else if (route.name === "practice-session") {
       state.practice = readJSON(PRACTICE_KEY);
@@ -2435,6 +2466,7 @@
     });
 
     await loadOfficialPapers();
+    await loadReviewedPapers();
     renderRoute();
   }
 

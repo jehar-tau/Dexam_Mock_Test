@@ -6,6 +6,7 @@ It ships with:
 
 - **4 exam tracks** with separate patterns, marking models, and topic maps.
 - **5 timed mini mocks** with **75 paper questions**, plus **421 topic drills** — **496 original questions** across NAT, MSQ, and MCQ. Batch 2 is UCEED-heavy, batch 3 is now in progress.
+- **Exam papers** (`#/papers`): UCEED, NID and NIFT past papers built only from questions that were reviewed in the Question Bank Viewer, not flagged, and have an answer key.
 - **Topic practice** with instant feedback, explanations, and a topic summary.
 - **Part B Studio** with 4 original drawing prompts and criteria.
 - **Local progress**: autosave, resume, result review, attempt history, topic accuracy, and bookmarks.
