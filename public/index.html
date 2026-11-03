@@ -519,6 +519,7 @@
         let currentFilters = { exam: 'all', type: 'all', status: 'all', search: '' };
         let currentQuestion = null;
         let allQuestions = [];
+        let currentTotalPages = 1;
 
         // Initialize
         async function init() {
@@ -612,6 +613,7 @@
 
         // Render pagination
         function renderPagination(data) {
+            currentTotalPages = data.totalPages;
             const container = document.getElementById('pagination');
             const pages = [];
 
@@ -650,21 +652,6 @@
 
         // Display question details
         async function displayQuestion(q) {
-            // Reset button states for new question
-            const markBtn = document.getElementById('markBtn');
-            const flagBtn = document.getElementById('flagBtn');
-            
-            if (markBtn) {
-                markBtn.textContent = '✓ Mark & Next';
-                markBtn.disabled = false;
-                markBtn.style.opacity = '1';
-            }
-            if (flagBtn) {
-                flagBtn.textContent = '⚠ Flag & Next';
-                flagBtn.disabled = false;
-                flagBtn.style.opacity = '1';
-            }
-            
             const figureHtml = q.figure_image
                 ? `<div class="figure-viewer">
                      <img src="/${q.figure_image}" alt="Question figure" class="figure-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2216%22%3EImage not found%3C/text%3E%3C/text%3E%3C/svg%3E'">
@@ -745,6 +732,36 @@
 
             document.querySelector('.question-detail').innerHTML = html;
 
+            // Check if question is already marked or flagged and update button states
+            const isMarked = q.reviewState?.marked || false;
+            const isFlagged = q.reviewState?.flagged || false;
+
+            const markBtn = document.getElementById('markBtn');
+            const flagBtn = document.getElementById('flagBtn');
+
+            if (markBtn) {
+                if (isMarked) {
+                    markBtn.textContent = '✓ Reviewed';
+                    markBtn.disabled = true;
+                    markBtn.style.opacity = '0.6';
+                } else {
+                    markBtn.textContent = '✓ Mark & Next';
+                    markBtn.disabled = false;
+                    markBtn.style.opacity = '1';
+                }
+            }
+            if (flagBtn) {
+                if (isFlagged) {
+                    flagBtn.textContent = '⚠ Flagged';
+                    flagBtn.disabled = true;
+                    flagBtn.style.opacity = '0.6';
+                } else {
+                    flagBtn.textContent = '⚠ Flag & Next';
+                    flagBtn.disabled = false;
+                    flagBtn.style.opacity = '1';
+                }
+            }
+
             // Load saved state
             if (q.reviewState) {
                 document.getElementById('markedCheckbox').checked = q.reviewState.marked;
@@ -811,7 +828,7 @@
                 }, 100);
             } else if (currentIndex === allQuestions.length - 1) {
                 // If on last question of page, go to next page
-                if (currentPage < Math.ceil(data.total / 50)) {
+                if (currentPage < currentTotalPages) {
                     goToPage(currentPage + 1);
                 } else {
                     alert('✓ Reached end of questions!');
