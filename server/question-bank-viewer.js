@@ -4,6 +4,7 @@ const path = require('path');
 const url = require('url');
 
 const PORT = 3000;
+const PROJECT_ROOT = path.resolve(__dirname, '..');
 let machineReadableBank = null;
 let genericBank = null;
 let reviewState = {};
@@ -31,12 +32,13 @@ function loadBanks() {
 function serveFile(filePath, res) {
   fs.readFile(filePath, (err, data) => {
     if (err) {
+      console.error(`Error reading file ${filePath}:`, err.message);
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       res.end('404 Not Found');
       return;
     }
 
-    const ext = path.extname(filePath);
+    const ext = path.extname(filePath).toLowerCase();
     const contentTypes = {
       '.html': 'text/html',
       '.css': 'text/css',
@@ -44,11 +46,12 @@ function serveFile(filePath, res) {
       '.json': 'application/json',
       '.png': 'image/png',
       '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
       '.gif': 'image/gif',
       '.svg': 'image/svg+xml'
     };
 
-    const contentType = contentTypes[ext] || 'text/plain';
+    const contentType = contentTypes[ext] || 'application/octet-stream';
     res.writeHead(200, { 'Content-Type': contentType });
     res.end(data);
   });
@@ -69,22 +72,18 @@ function getQuestions(query, res) {
   let questions = [...machineReadableBank.questions];
   const { exam = 'all', type = 'all', status = 'all', search = '', page = '1', limit = '50' } = query;
 
-  // Filter by exam
   if (exam !== 'all') {
     questions = questions.filter(q => q.exam === exam);
   }
 
-  // Filter by type
   if (type !== 'all') {
     questions = questions.filter(q => q.type === type);
   }
 
-  // Filter by answer status
   if (status !== 'all') {
     questions = questions.filter(q => q.answer_status === status);
   }
 
-  // Search in question text
   if (search) {
     const searchLower = search.toLowerCase();
     questions = questions.filter(q =>
@@ -94,7 +93,6 @@ function getQuestions(query, res) {
     );
   }
 
-  // Pagination
   const total = questions.length;
   const pageNum = parseInt(page) || 1;
   const limit_num = parseInt(limit) || 50;
@@ -205,7 +203,6 @@ function parsePostBody(req, callback) {
 
 // Main request handler
 const server = http.createServer((req, res) => {
-  // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -217,15 +214,22 @@ const server = http.createServer((req, res) => {
   }
 
   const parsedUrl = url.parse(req.url, true);
-  const pathname = parsedUrl.pathname;
+  let pathname = parsedUrl.pathname;
   const query = parsedUrl.query;
+
+  // Decode URL
+  try {
+    pathname = decodeURIComponent(pathname);
+  } catch (e) {
+    pathname = parsedUrl.pathname;
+  }
 
   // API Routes
   if (pathname === '/api/questions' && req.method === 'GET') {
     return getQuestions(query, res);
   }
 
-  if (pathname.startsWith('/api/questions/') && req.method === 'GET') {
+  if (pathname.startsWith('/api/questions/') && req.method === 'GET' && !pathname.endsWith('/mark')) {
     const id = pathname.replace('/api/questions/', '');
     if (id && !id.includes('/')) {
       return getQuestion(id, res);
@@ -246,26 +250,22 @@ const server = http.createServer((req, res) => {
     return getSummary(res);
   }
 
-  // Serve static files
-  let filePath = path.join(__dirname, '../public', pathname);
-
+  // Static file routes
   if (pathname === '/') {
-    filePath = path.join(__dirname, '../public/index.html');
-  }
-
-  // Prevent directory traversal
-  const realPath = path.resolve(filePath);
-  const publicDir = path.resolve(path.join(__dirname, '../public'));
-  const mediaDir = path.resolve(path.join(__dirname, './data/media'));
-
-  if (!realPath.startsWith(publicDir) && !realPath.startsWith(mediaDir)) {
-    res.writeHead(403, { 'Content-Type': 'text/plain' });
-    res.end('403 Forbidden');
-    return;
-  }
-
-  if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+    const filePath = path.join(__dirname, '../public/index.html');
     return serveFile(filePath, res);
+  }
+
+  // Serve from public folder
+  if (pathname.startsWith('/') && !pathname.startsWith('/api/')) {
+    const filePath = path.join(PROJECT_ROOT, pathname);
+    const realPath = path.resolve(filePath);
+    
+    if (realPath.startsWith(PROJECT_ROOT)) {
+      if (fs.existsSync(realPath) && fs.statSync(realPath).isFile()) {
+        return serveFile(realPath, res);
+      }
+    }
   }
 
   res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -275,4 +275,5 @@ const server = http.createServer((req, res) => {
 loadBanks();
 server.listen(PORT, () => {
   console.log(`Question Bank Viewer running on http://localhost:${PORT}`);
+  console.log(`Project root: ${PROJECT_ROOT}`);
 });
