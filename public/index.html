@@ -455,6 +455,229 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        /* Exam Mode Styles */
+        .mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            gap: 10px;
+            display: flex;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .exam-section {
+            display: none;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .exam-section.active {
+            display: block;
+        }
+
+        .exam-answer-area {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .keypad-input {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .keypad-display {
+            font-size: 32px;
+            font-weight: bold;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            min-height: 60px;
+            color: #333;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .keypad-btn {
+            padding: 15px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .keypad-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .keypad-btn.delete {
+            grid-column: span 1;
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .keypad-btn.clear {
+            grid-column: span 2;
+            background: #ffa500;
+            color: white;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .option-btn:hover {
+            border-color: #3498db;
+            background: #f0f8ff;
+        }
+
+        .option-btn.selected {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .option-btn.msq {
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .option-btn.msq::before {
+            content: '☐';
+            position: absolute;
+            left: 15px;
+            font-size: 20px;
+        }
+
+        .option-btn.msq.selected::before {
+            content: '☑';
+            color: white;
+        }
+
+        .drawing-canvas {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            display: block;
+            margin-bottom: 10px;
+            cursor: crosshair;
+        }
+
+        .canvas-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .canvas-buttons button {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .canvas-buttons button:hover {
+            background: #f0f0f0;
+        }
+
+        .answer-box {
+            background: #f0f9ff;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+
+        .answer-label {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .answer-key-display {
+            font-size: 18px;
+            color: #27ae60;
+            font-weight: bold;
+            background: #e8f5e9;
+            padding: 10px 15px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .review-decision {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff9e6;
+            border-radius: 8px;
+            border: 2px solid #ffc107;
+        }
+
+        .review-decision label {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .review-decision input {
+            margin-right: 8px;
+        }
+
+        .textarea-input {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            resize: vertical;
+        }
     </style>
 </head>
 <body>
@@ -520,6 +743,9 @@
         let currentQuestion = null;
         let allQuestions = [];
         let currentTotalPages = 1;
+        let viewMode = 'review'; // 'review' or 'exam'
+        let studentAnswer = null; // Store student's exam answer
+        let studentMarking = null; // Store if student marked correct/incorrect
 
         // Initialize
         async function init() {
@@ -730,7 +956,29 @@
                 </div>
             `;
 
-            document.querySelector('.question-detail').innerHTML = html;
+            // Reset studentAnswer and studentMarking for new question
+            studentAnswer = null;
+            studentMarking = null;
+
+            // Wrap review content in review mode section
+            const wrappedHtml = `
+                <div style="position: relative;">
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center;">
+                        <button id="reviewModeBtn" class="mode-btn active" onclick="toggleViewMode('review')">📋 Review Mode</button>
+                        <button id="examModeBtn" class="mode-btn" onclick="toggleViewMode('exam')">📝 Exam Mode</button>
+                    </div>
+
+                    <div id="reviewMode">
+                        ${html}
+                    </div>
+
+                    <div id="examMode" style="display: none;">
+                        ${renderExamMode(q)}
+                    </div>
+                </div>
+            `;
+
+            document.querySelector('.question-detail').innerHTML = wrappedHtml;
 
             // Check if question is already marked or flagged and update button states
             const isMarked = q.reviewState?.marked || false;
@@ -846,6 +1094,202 @@
             currentPage = page;
             loadQuestions();
             document.querySelector('.questions-list').scrollTop = 0;
+        }
+
+        // Exam Mode Functions
+        function toggleViewMode(mode) {
+            viewMode = mode;
+            const reviewSection = document.getElementById('reviewMode');
+            const examSection = document.getElementById('examMode');
+            const reviewBtn = document.getElementById('reviewModeBtn');
+            const examBtn = document.getElementById('examModeBtn');
+
+            if (mode === 'review') {
+                reviewSection.style.display = 'block';
+                examSection.style.display = 'none';
+                reviewBtn.classList.add('active');
+                examBtn.classList.remove('active');
+            } else {
+                reviewSection.style.display = 'none';
+                examSection.style.display = 'block';
+                reviewBtn.classList.remove('active');
+                examBtn.classList.add('active');
+            }
+        }
+
+        function renderExamMode(q) {
+            let examHtml = `
+                <div style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">
+                    <h2 style="margin-bottom: 20px;">Question ${q.question_no}</h2>
+
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <div style="font-weight: bold; margin-bottom: 10px;">Question:</div>
+                        <div>${q.question_text}</div>
+            `;
+
+            // Show figure if available
+            if (q.figure_image) {
+                examHtml += `
+                        <div style="margin-top: 15px;">
+                            <img src="/${q.figure_image}" alt="Question figure" style="max-width: 100%; height: auto; border-radius: 4px;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2216%22%3EImage not found%3C/text%3E%3C/svg%3E'">
+                        </div>
+                `;
+            }
+
+            examHtml += `
+                    </div>
+
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <div style="font-weight: bold; margin-bottom: 10px; color: #2e7d32;">Answer Key:</div>
+                        <div style="font-size: 18px; color: #1b5e20; font-weight: bold;">${q.answer_key}</div>
+                    </div>
+
+                    <div class="exam-answer-area">
+                        <div style="font-weight: bold; margin-bottom: 15px;">Student Answer Input:</div>
+            `;
+
+            // Render based on question type
+            if (q.type === 'NAT') {
+                examHtml += renderNATInput(q);
+            } else if (q.type === 'MCQ') {
+                examHtml += renderMCQInput(q);
+            } else if (q.type === 'MSQ') {
+                examHtml += renderMSQInput(q);
+            } else if (q.type === 'DESCRIPTIVE') {
+                examHtml += renderDescriptiveInput(q);
+            }
+
+            examHtml += `
+                    </div>
+
+                    <div class="review-decision">
+                        <div style="font-weight: bold; margin-bottom: 10px;">📊 Reviewer Decision:</div>
+                        <div>
+                            <label>
+                                <input type="radio" name="marking_${q.id}" value="correct" onchange="studentMarking = 'correct'"> ✓ Mark as Correct
+                            </label>
+                            <label>
+                                <input type="radio" name="marking_${q.id}" value="incorrect" onchange="studentMarking = 'incorrect'"> ✗ Mark as Incorrect
+                            </label>
+                            <label>
+                                <input type="radio" name="marking_${q.id}" value="partial" onchange="studentMarking = 'partial'"> ⚠ Partial Credit
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return examHtml;
+        }
+
+        function renderNATInput(q) {
+            return `
+                <div class="keypad-input">
+                    <div class="keypad-display" id="natDisplay">0</div>
+                    <div class="keypad">
+                        <button class="keypad-btn" onclick="addNATDigit('7')">7</button>
+                        <button class="keypad-btn" onclick="addNATDigit('8')">8</button>
+                        <button class="keypad-btn" onclick="addNATDigit('9')">9</button>
+                        <button class="keypad-btn" onclick="addNATDigit('4')">4</button>
+                        <button class="keypad-btn" onclick="addNATDigit('5')">5</button>
+                        <button class="keypad-btn" onclick="addNATDigit('6')">6</button>
+                        <button class="keypad-btn" onclick="addNATDigit('1')">1</button>
+                        <button class="keypad-btn" onclick="addNATDigit('2')">2</button>
+                        <button class="keypad-btn" onclick="addNATDigit('3')">3</button>
+                        <button class="keypad-btn" onclick="addNATDigit('0')">0</button>
+                        <button class="keypad-btn" onclick="addNATDigit('.')">.</button>
+                        <button class="keypad-btn delete" onclick="deleteNATDigit()">← Del</button>
+                        <button class="keypad-btn clear" onclick="clearNAT()">Clear</button>
+                    </div>
+                    <div style="margin-top: 15px; text-align: center; color: #666;">Student will enter: <strong id="natValue">0</strong></div>
+                </div>
+            `;
+        }
+
+        function renderMCQInput(q) {
+            return `
+                <div class="options-grid">
+                    ${q.options.map((opt, i) => `
+                        <button class="option-btn" onclick="selectMCQ(this, '${String.fromCharCode(65 + i)}')">
+                            <strong style="color: #3498db; margin-right: 10px;">${String.fromCharCode(65 + i)}:</strong> ${opt}
+                        </button>
+                    `).join('')}
+                </div>
+                <div style="text-align: center; color: #666;">Selected: <strong id="mcqValue">None</strong></div>
+            `;
+        }
+
+        function renderMSQInput(q) {
+            const options = q.answer_key.split('').filter(c => /[A-Z]/.test(c));
+            return `
+                <div class="options-grid">
+                    ${['A', 'B', 'C', 'D'].map(opt => `
+                        <button class="option-btn msq" onclick="toggleMSQ(this, '${opt}')">
+                            <strong style="color: #3498db; margin-right: 10px;">${opt}:</strong> Option ${opt}
+                        </button>
+                    `).join('')}
+                </div>
+                <div style="text-align: center; color: #666;">Selected: <strong id="msqValue">None</strong></div>
+            `;
+        }
+
+        function renderDescriptiveInput(q) {
+            return `
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: bold;">Student Writing Area / Drawing Canvas:</label>
+                    <div style="border: 2px dashed #999; padding: 20px; background: #fafafa; border-radius: 8px; text-align: center; color: #999; min-height: 250px;">
+                        [Student would draw/write here in exam]<br><br>
+                        <small>50 Marks | Drawing/Writing</small>
+                    </div>
+                </div>
+                <div style="text-align: center; color: #666; margin-top: 15px;">
+                    No auto-grading. Reviewer must evaluate the response.
+                </div>
+            `;
+        }
+
+        function addNATDigit(digit) {
+            if (!studentAnswer) studentAnswer = '';
+            if (digit === '.' && studentAnswer.includes('.')) return;
+            if (studentAnswer === '0' && digit !== '.') studentAnswer = digit;
+            else studentAnswer += digit;
+            updateNATDisplay();
+        }
+
+        function deleteNATDigit() {
+            if (studentAnswer) {
+                studentAnswer = studentAnswer.slice(0, -1) || '0';
+                updateNATDisplay();
+            }
+        }
+
+        function clearNAT() {
+            studentAnswer = '0';
+            updateNATDisplay();
+        }
+
+        function updateNATDisplay() {
+            document.getElementById('natDisplay').textContent = studentAnswer || '0';
+            document.getElementById('natValue').textContent = studentAnswer || '0';
+        }
+
+        function selectMCQ(btn, option) {
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            studentAnswer = option;
+            document.getElementById('mcqValue').textContent = option;
+        }
+
+        function toggleMSQ(btn, option) {
+            btn.classList.toggle('selected');
+            if (!studentAnswer) studentAnswer = '';
+            if (btn.classList.contains('selected')) {
+                if (!studentAnswer.includes(option)) studentAnswer += option;
+            } else {
+                studentAnswer = studentAnswer.replace(option, '');
+            }
+            studentAnswer = Array.from(studentAnswer).sort().join('');
+            document.getElementById('msqValue').textContent = studentAnswer || 'None';
         }
 
         // Event listeners
