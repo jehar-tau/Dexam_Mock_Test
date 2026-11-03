@@ -5,9 +5,32 @@ const url = require('url');
 
 const PORT = 3000;
 const PROJECT_ROOT = path.resolve(__dirname, '..');
+const REVIEW_STATE_FILE = path.join(__dirname, 'review-state.json');
 let machineReadableBank = null;
 let genericBank = null;
 let reviewState = {};
+
+// Load review state from file
+function loadReviewState() {
+  try {
+    if (fs.existsSync(REVIEW_STATE_FILE)) {
+      const data = fs.readFileSync(REVIEW_STATE_FILE, 'utf8');
+      reviewState = JSON.parse(data);
+      console.log(`Loaded review state for ${Object.keys(reviewState).length} questions`);
+    }
+  } catch (err) {
+    console.error('Error loading review state:', err.message);
+  }
+}
+
+// Save review state to file
+function saveReviewState() {
+  try {
+    fs.writeFileSync(REVIEW_STATE_FILE, JSON.stringify(reviewState, null, 2), 'utf8');
+  } catch (err) {
+    console.error('Error saving review state:', err.message);
+  }
+}
 
 // Load question banks on startup
 function loadBanks() {
@@ -161,6 +184,7 @@ function markQuestion(id, body, res) {
     flagged: flagged !== undefined ? flagged : reviewState[id]?.flagged || false,
     notes: notes !== undefined ? notes : reviewState[id]?.notes || ''
   };
+  saveReviewState();
   sendJSON(res, { success: true, state: reviewState[id] });
 }
 
@@ -279,6 +303,7 @@ const server = http.createServer((req, res) => {
 });
 
 loadBanks();
+loadReviewState();
 server.listen(PORT, () => {
   console.log(`Question Bank Viewer running on http://localhost:${PORT}`);
   console.log(`Project root: ${PROJECT_ROOT}`);
