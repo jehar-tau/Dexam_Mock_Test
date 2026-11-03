@@ -1,0 +1,609 @@
+[
+ {
+  "id": "nift-bdes-written-sample-q15",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What does the phrase \"it brings man up against his limitations\", mean ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "It makes man feel hopeless about his limitations."
+   },
+   {
+    "position": "B",
+    "text": "It makes man aware of his limitations."
+   },
+   {
+    "position": "C",
+    "text": "It compels man to fight against his limitations."
+   },
+   {
+    "position": "D",
+    "text": "It persuades man to overcome his limitations. Passage-III Reasoning is an argument in which certain things being laid down, something other than these necessarily comes about through them. It is a 'demonstration', when the premises from which the reasoning starts are true and primary, or are such th"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q17",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A 'First Principle' is",
+  "options": [
+   {
+    "position": "A",
+    "text": "anything that is generally accepted."
+   },
+   {
+    "position": "B",
+    "text": "a belief that is true and primary."
+   },
+   {
+    "position": "C",
+    "text": "things that are generally accepted but are not really such."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q18",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which form of reasoning draws from neither true and primary, nor yet generally accepted ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Dialectic"
+   },
+   {
+    "position": "B",
+    "text": "Demonstration"
+   },
+   {
+    "position": "C",
+    "text": "Contentious"
+   },
+   {
+    "position": "D",
+    "text": "Misreasoning"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q21",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "21",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Arguments which are derived from premises that are believed to be true on their own strength are",
+  "options": [
+   {
+    "position": "A",
+    "text": "Dialectical."
+   },
+   {
+    "position": "B",
+    "text": "Demonstrative."
+   },
+   {
+    "position": "C",
+    "text": "Contentious."
+   },
+   {
+    "position": "D",
+    "text": "Misreasoning"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q24",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following statements is correct?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Opinions that are generally accepted may not be true and primary."
+   },
+   {
+    "position": "B",
+    "text": "Opinions that are true and primary can never be the premises for reasoning."
+   },
+   {
+    "position": "C",
+    "text": "Arguments that start from false statements or figures do not lead to the correct conclusions."
+   },
+   {
+    "position": "D",
+    "text": "Misreasoning can only be used to prove geometrical theorems."
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q27",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "27",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q27.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Agreggate"
+   },
+   {
+    "position": "B",
+    "text": "Agregate"
+   },
+   {
+    "position": "C",
+    "text": "Aggregate"
+   },
+   {
+    "position": "D",
+    "text": "Agreegate (2) Remmitance"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q28",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q28.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-bdes-written-sample-q29",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "29",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q29.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Acolade"
+   },
+   {
+    "position": "B",
+    "text": "Accolade"
+   },
+   {
+    "position": "C",
+    "text": "Acollade"
+   },
+   {
+    "position": "D",
+    "text": "Accollade"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q30",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "30",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q30.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Etiquete"
+   },
+   {
+    "position": "B",
+    "text": "Ettiquete"
+   },
+   {
+    "position": "C",
+    "text": "Etiquette"
+   },
+   {
+    "position": "D",
+    "text": "Etiquette"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q64",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "64",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A man can row his boat with the stream at 5 km. per hour and against the stream at 3 hour. How much distance he can go in his boat in a lake (still water) in 2 hours?",
+  "options": [
+   {
+    "position": "A",
+    "text": "7 km"
+   },
+   {
+    "position": "B",
+    "text": "6.5 km"
+   },
+   {
+    "position": "C",
+    "text": "8.5 km"
+   },
+   {
+    "position": "D",
+    "text": "9.5 km"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q78",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "78",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "4, 10, 18, 22, 28, 34",
+  "options": [
+   {
+    "position": "A",
+    "text": "10"
+   },
+   {
+    "position": "B",
+    "text": "18"
+   },
+   {
+    "position": "C",
+    "text": "22"
+   },
+   {
+    "position": "D",
+    "text": "34"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q79",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "79",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "04F, NSE, M6C, L7C, K8B -",
+  "options": [
+   {
+    "position": "A",
+    "text": "04F"
+   },
+   {
+    "position": "B",
+    "text": "NSE"
+   },
+   {
+    "position": "C",
+    "text": "M60"
+   },
+   {
+    "position": "D",
+    "text": "K8B"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q81",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "81",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Aakriti said to Meenakumari, \"That person standing there is your mother's unmarried sister's only brother-in-law's son\". How is that person related to Meenakumari?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sister"
+   },
+   {
+    "position": "B",
+    "text": "Aunt"
+   },
+   {
+    "position": "C",
+    "text": "Brother"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q83",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "83",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "FLOWERS MOUNTAIN",
+  "options": [
+   {
+    "position": "A",
+    "text": "NIATNUOM"
+   },
+   {
+    "position": "B",
+    "text": "NIATNOUN"
+   },
+   {
+    "position": "C",
+    "text": "NIATNUON"
+   },
+   {
+    "position": "D",
+    "text": "NIANTUON"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q85",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "85",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q85.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "8450 14"
+   },
+   {
+    "position": "B",
+    "text": "7400"
+   },
+   {
+    "position": "C",
+    "text": "{333.34"
+   },
+   {
+    "position": "D",
+    "text": "*206.67"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q86",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "86",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following metals is the most abundant in the Earth's crust?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Zinc"
+   },
+   {
+    "position": "B",
+    "text": "Copper"
+   },
+   {
+    "position": "C",
+    "text": "Aluminium"
+   },
+   {
+    "position": "D",
+    "text": "Iron"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q87",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "87",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following cities is the birthplace of Swami Vivekananda?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cuttack"
+   },
+   {
+    "position": "B",
+    "text": "Balasore"
+   },
+   {
+    "position": "C",
+    "text": "Calcutta"
+   },
+   {
+    "position": "D",
+    "text": "Kushinagar"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q88",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following famous Indian leaders coined the slogan 'Jai Jawan Jai Kisan'?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mahatma Gandhi"
+   },
+   {
+    "position": "B",
+    "text": "Pt Jawaharlal Nehru"
+   },
+   {
+    "position": "C",
+    "text": "Lal Bahadur Shastri"
+   },
+   {
+    "position": "D",
+    "text": "Sardar Vallabhbhai Patel"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q89",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "89",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following does not come under the purview of the Election Commission of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "To conduct the election of Prime Minister of India."
+   },
+   {
+    "position": "B",
+    "text": "To conduct the election of President of India."
+   },
+   {
+    "position": "C",
+    "text": "To give recognition to the political parties."
+   },
+   {
+    "position": "D",
+    "text": "To assign election symbols to the political parties."
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q90",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "90",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Constitution of India names our country as",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bharat"
+   },
+   {
+    "position": "B",
+    "text": "India, that is Bharat"
+   },
+   {
+    "position": "C",
+    "text": "Hindustan"
+   },
+   {
+    "position": "D",
+    "text": "Aryavarta"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q91",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "91",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Where is the headquarters of Asian Development Bank?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Manila"
+   },
+   {
+    "position": "B",
+    "text": "Kuala Lumpur"
+   },
+   {
+    "position": "C",
+    "text": "Tokyo"
+   },
+   {
+    "position": "D",
+    "text": "Colombo"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q92",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "92",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which among the following planets of our Solar system is the biggest in size?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Venus"
+   },
+   {
+    "position": "B",
+    "text": "Mercury"
+   },
+   {
+    "position": "C",
+    "text": "Earth"
+   },
+   {
+    "position": "D",
+    "text": "Mars"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q93",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "93",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Lines of Latitude and Longitude both",
+  "options": [
+   {
+    "position": "A",
+    "text": "pass through poles."
+   },
+   {
+    "position": "B",
+    "text": "run parallel to the equator."
+   },
+   {
+    "position": "C",
+    "text": "run parallel to each other."
+   },
+   {
+    "position": "D",
+    "text": "run perpendicular to each other. 11-PM/A/XX-XX/I 17 Dile than (+) DINATE (Z)"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q97",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "97",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Where did in USA, Prime Minister of India recently addressed close to 50,000 Indian-Americans at the Howdy, Modi! event along with US President?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Houston, Texas"
+   },
+   {
+    "position": "B",
+    "text": "Boston"
+   },
+   {
+    "position": "C",
+    "text": "San Diego, California"
+   },
+   {
+    "position": "D",
+    "text": "Chicago, Illinois"
+   }
+  ]
+ }
+]

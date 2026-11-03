@@ -1,0 +1,606 @@
+[
+ {
+  "id": "nift-mfm-written-sample-q8",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q8.png",
+  "prompt": "A number of stars grouped together forming a recognizable pattern",
+  "options": [
+   {
+    "position": "A",
+    "text": "Solar System"
+   },
+   {
+    "position": "B",
+    "text": "Constellation"
+   },
+   {
+    "position": "C",
+    "text": "Asteroids"
+   },
+   {
+    "position": "D",
+    "text": "Galaxy"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q21",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "21",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Management can be called an exact science because management involves the study of human beings and human behaviour and the of the experiments carried out to evolve the principles of management are not capable of being accurately (L) roles, responded",
+  "options": [
+   {
+    "position": "A",
+    "text": "outcomes, predicted"
+   },
+   {
+    "position": "B",
+    "text": "aftermaths, announced"
+   },
+   {
+    "position": "C",
+    "text": "resultants, answered The voters must"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q26",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q26.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-mfm-written-sample-q27",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "27",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q27.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Resuscitate"
+   },
+   {
+    "position": "B",
+    "text": "Resusiciate"
+   },
+   {
+    "position": "C",
+    "text": "Resosciate"
+   },
+   {
+    "position": "D",
+    "text": "Resusciate"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q28",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q28.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Resosciation"
+   },
+   {
+    "position": "B",
+    "text": "Resuscitation"
+   },
+   {
+    "position": "C",
+    "text": "Resusication"
+   },
+   {
+    "position": "D",
+    "text": "Resusciation"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q29",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "29",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q29.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Apothesios"
+   },
+   {
+    "position": "B",
+    "text": "Apothesis"
+   },
+   {
+    "position": "C",
+    "text": "Apotheosis"
+   },
+   {
+    "position": "D",
+    "text": "Apotheisous (2) Imborgalio"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q30",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "30",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mfm-written-sample/blocks/nift-mfm-written-sample-q30.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-mfm-written-sample-q43",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following short-comings of Indian industrialists has been highlighted by the author ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "They invest an unreasonably high amount on diversification and expansion."
+   },
+   {
+    "position": "B",
+    "text": "They are more concerned for immediate net gains than for developmental activities."
+   },
+   {
+    "position": "C",
+    "text": "They are reluctant to maintain the shopkeeper mentality."
+   },
+   {
+    "position": "D",
+    "text": "They are less concerned for payment of dividends to shareholders."
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q45",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Why did Henry Ford stress the need for a more stable middle class?",
+  "options": [
+   {
+    "position": "A",
+    "text": "They are mostly service oriented."
+   },
+   {
+    "position": "B",
+    "text": "They do not have shopkeeper mentality."
+   },
+   {
+    "position": "C",
+    "text": "They can afford to buy more and more goods and services."
+   },
+   {
+    "position": "D",
+    "text": "They are most unstable."
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q46",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The planning horizon has hardly ever exceeded five years' implies",
+  "options": [
+   {
+    "position": "A",
+    "text": "planning should not be for a period of less than five years."
+   },
+   {
+    "position": "B",
+    "text": "the planning process is very time consuming."
+   },
+   {
+    "position": "C",
+    "text": "five-year period is too short for successful implementation of plans."
+   },
+   {
+    "position": "D",
+    "text": "the planners are not inclined to think of future. Passage-V Entrepreneurs and investors, who had only recently found innovative ways to invest in education as : business are concerned about the financial impact of the Supreme Court ruling last week upholdin the Right to Education Act. All schools, e"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q51",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "51",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A contractor pays 25% more to a male worker than what he pays to the female worker. How much percent less does the contractor pay to the female worker than the male worker?",
+  "options": [
+   {
+    "position": "A",
+    "text": "20%"
+   },
+   {
+    "position": "B",
+    "text": "21%"
+   },
+   {
+    "position": "C",
+    "text": "22%"
+   },
+   {
+    "position": "D",
+    "text": "24%"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q52",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "52",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Mr. X bought a pocket calculator which he sold at a loss of 10%. His loss on the selling price is",
+  "options": [
+   {
+    "position": "A",
+    "text": "33 - %"
+   },
+   {
+    "position": "B",
+    "text": "20 % 3"
+   },
+   {
+    "position": "C",
+    "text": "172%"
+   },
+   {
+    "position": "D",
+    "text": "112%"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q55",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "55",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A retailer buys a cellphone at a discount of 15% and sells it for 75865. Thus, he makes a profit of 15%. The discount is",
+  "options": [
+   {
+    "position": "A",
+    "text": "<200"
+   },
+   {
+    "position": "B",
+    "text": "7850"
+   },
+   {
+    "position": "C",
+    "text": "7750"
+   },
+   {
+    "position": "D",
+    "text": "2900"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q56",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "56",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A boy was asked to find the value of of a number. Instead of multiplying the number by 12, he divided the number by and his answer exceeded the correct answer by 950. Find the correct answer.",
+  "options": [
+   {
+    "position": "A",
+    "text": "490"
+   },
+   {
+    "position": "B",
+    "text": "470"
+   },
+   {
+    "position": "C",
+    "text": "510"
+   },
+   {
+    "position": "D",
+    "text": "475"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q60",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "60",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Out of 144 persons working in an office, 56 are men and the remaining are women. Find the",
+  "options": [
+   {
+    "position": "A",
+    "text": "S (z) d"
+   },
+   {
+    "position": "B",
+    "text": "'S9 2 1 1638 12-L5-25k (E) 1Pb (+) OCHE (1) N#V-TON (e) N% VX10 N (+) WXV-1ON(D WX V + 7-N (2)"
+   },
+   {
+    "position": "C",
+    "text": "13 '79 83 89 d"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q61",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "61",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following pairs sits adjacent to each other?",
+  "options": [
+   {
+    "position": "A",
+    "text": "S and Q"
+   },
+   {
+    "position": "B",
+    "text": "P and Q"
+   },
+   {
+    "position": "C",
+    "text": "R and S"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q62",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Whieh of the following pairs represents politicians from parties who sit opposite each other?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Shourya Sena and Progress"
+   },
+   {
+    "position": "B",
+    "text": "NJP and BCP"
+   },
+   {
+    "position": "C",
+    "text": "Shourya Sena and NJP"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q63",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "63",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who amongst the following is the politician from NJP?",
+  "options": [
+   {
+    "position": "A",
+    "text": "P"
+   },
+   {
+    "position": "B",
+    "text": "Q"
+   },
+   {
+    "position": "C",
+    "text": "R"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q64",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "64",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following politicians sits to the immediate left of the politician from BCP?",
+  "options": [
+   {
+    "position": "A",
+    "text": "P"
+   },
+   {
+    "position": "B",
+    "text": "S"
+   },
+   {
+    "position": "C",
+    "text": "R"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q65",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "65",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following statements is true according to the arrangement?",
+  "options": [
+   {
+    "position": "A",
+    "text": "P is from Progress and sits opposite the politician from NJP"
+   },
+   {
+    "position": "B",
+    "text": "R is from JP and sits adjacent to the politician from Shourya Sena"
+   },
+   {
+    "position": "C",
+    "text": "R is not from Progress and sits to the immediate right of Q"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q66",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "66",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is the relation between N and A if it is known that N % L # A?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Uncle 2) Grand father"
+   },
+   {
+    "position": "B",
+    "text": "Brother-in law"
+   },
+   {
+    "position": "C",
+    "text": "Father"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q67",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "67",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following shows that N is the uncle of M?",
+  "options": [
+   {
+    "position": "A",
+    "text": "N@L-Ax M"
+   },
+   {
+    "position": "B",
+    "text": "N- L+ A x M"
+   },
+   {
+    "position": "C",
+    "text": "N @L- A #M"
+   },
+   {
+    "position": "D",
+    "text": "N @Lx A % M 15-AM/K/XX-XX/I 15 N, A Ti &? (2) N-L% A (3) N + L % A (4) N@LxA (1) N- Lx A (1) 484 (3) 919T"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q69",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "69",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If it is known that N% L @ D x M, how is N related to M?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sister"
+   },
+   {
+    "position": "B",
+    "text": "Uncle"
+   },
+   {
+    "position": "C",
+    "text": "Maternal Grandfather"
+   },
+   {
+    "position": "D",
+    "text": "Father"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q73",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "73",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "E3T, D4S, CSR, D6R, A7P, 280",
+  "options": [
+   {
+    "position": "A",
+    "text": "CSR"
+   },
+   {
+    "position": "B",
+    "text": "ЕЗТ"
+   },
+   {
+    "position": "C",
+    "text": "D6R"
+   },
+   {
+    "position": "D",
+    "text": "Z80"
+   }
+  ]
+ },
+ {
+  "id": "nift-mfm-written-sample-q74",
+  "paper": "nift-mfm-written-sample",
+  "questionNo": "74",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "ABC, DCF, EEI, HFL, EGP, LIR",
+  "options": [
+   {
+    "position": "A",
+    "text": "DCF"
+   },
+   {
+    "position": "B",
+    "text": "HFL"
+   },
+   {
+    "position": "C",
+    "text": "LIR"
+   },
+   {
+    "position": "D",
+    "text": "EGP"
+   }
+  ]
+ }
+]

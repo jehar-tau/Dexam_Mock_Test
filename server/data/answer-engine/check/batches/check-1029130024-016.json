@@ -1,0 +1,618 @@
+[
+ {
+  "id": "nift-mdes-written-sample-q2",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mdes-written-sample/blocks/nift-mdes-written-sample-q2.png",
+  "prompt": "Which of the following audiences would find the above passage most useful ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Software engineers"
+   },
+   {
+    "position": "B",
+    "text": "Financial service providers"
+   },
+   {
+    "position": "C",
+    "text": "New entrepreneurs"
+   },
+   {
+    "position": "D",
+    "text": "Internet Service providers 12-PM/M/XX-XX/I 3 63/"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q3",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Why does the writer state that in e-commerce economies of scale are undermined?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Because it reinforces the built-in assumptions about the interconnection between price and volume."
+   },
+   {
+    "position": "B",
+    "text": "Because volumes cannot be expected in e-commerce, cost per transaction may remain more or less the same."
+   },
+   {
+    "position": "C",
+    "text": "Because e-commerce has the potential to create large volumes which may eventually push up the cost per transaction."
+   },
+   {
+    "position": "D",
+    "text": "Because the advantage that a business may derive through volume becomes available even at small scales."
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q8",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The energy disparity ... as wide as .... worldwide scale, the first sentence of third paragraph means",
+  "options": [
+   {
+    "position": "A",
+    "text": "disparity in urban and rural is observed in all nations."
+   },
+   {
+    "position": "B",
+    "text": "in no other nation such disparity is observed"
+   },
+   {
+    "position": "C",
+    "text": "developed countries consume more energy than developing countries."
+   },
+   {
+    "position": "D",
+    "text": "worldwide scale is different for rural and urban areas."
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q12",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following statements is true ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Industrial sector uses 50% of total energy used in India."
+   },
+   {
+    "position": "B",
+    "text": "Energy consumption in India is 26% of world consumption."
+   },
+   {
+    "position": "C",
+    "text": "The household sector has shown considerable increase in energy use."
+   },
+   {
+    "position": "D",
+    "text": "Use of oil has increased from 40% to 80%. 12-PM/M/XX-XX/I 5"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q14",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "consumption of energy in India ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Present level of development in India"
+   },
+   {
+    "position": "B",
+    "text": "International norm of 1 litre of oil per day per person"
+   },
+   {
+    "position": "C",
+    "text": "Disparity in use of energy in rural and urban areas"
+   },
+   {
+    "position": "D",
+    "text": "None of these Passage-Ill Work expands so as to fill the time available for its completion. The general recognition of this fact is shown in the proverbial phrase, 'It is the busiest man who has time to spare.' Thus, an elderly lady at leisure can spend the entire day writing a postcard to her niece"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q15",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who is the person likely to take more time to do work ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "A busy man"
+   },
+   {
+    "position": "B",
+    "text": "A man of leisure"
+   },
+   {
+    "position": "C",
+    "text": "An elderly person"
+   },
+   {
+    "position": "D",
+    "text": "An exhausted person"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q16",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the total time spent by the elderly lady in writing a postcard?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Three minutes"
+   },
+   {
+    "position": "B",
+    "text": "Four hours and five minutes"
+   },
+   {
+    "position": "C",
+    "text": "Half an hour"
+   },
+   {
+    "position": "D",
+    "text": "A full day"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q17",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What does the expression 'pillar box' stand for ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "A box attached to the pillar"
+   },
+   {
+    "position": "B",
+    "text": "A box in the pillar"
+   },
+   {
+    "position": "C",
+    "text": "Box office"
+   },
+   {
+    "position": "D",
+    "text": "A pillar-type post box"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q18",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What happens when the time to be spent on some work increases?",
+  "options": [
+   {
+    "position": "A",
+    "text": "The work is done smoothly"
+   },
+   {
+    "position": "B",
+    "text": "The work is done leisurely"
+   },
+   {
+    "position": "C",
+    "text": "The work consumes all the time"
+   },
+   {
+    "position": "D",
+    "text": "The work needs additional time"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q19",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Explain the sentence : 'Work expands so as to fill the time available for its completion'.",
+  "options": [
+   {
+    "position": "A",
+    "text": "The more work there is to be done, the more the time needed."
+   },
+   {
+    "position": "B",
+    "text": "Whatever time is available for a given amount of work, all of it will be used."
+   },
+   {
+    "position": "C",
+    "text": "If you have more time, you can do more work."
+   },
+   {
+    "position": "D",
+    "text": "If you have some important work to do, you should always have some additional time. 6 Passage-IV Recent technological advancement in manned and unmanned undersea vehicles, overcome some of the limitations of divers equipment. Without a vehicle, divers often became sluggish and their mental concentra"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q21",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "21",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How is a radio-equipped buoy most likely to be operated ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "By operators inside the vehicle and underwater."
+   },
+   {
+    "position": "B",
+    "text": "By operators outside the vehicle on a ship."
+   },
+   {
+    "position": "C",
+    "text": "By operators outside the vehicle on a diving platform."
+   },
+   {
+    "position": "D",
+    "text": "By operators outside the vehicle in a laboratory on the shore."
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q23",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Divers have had problems in concentrating underwater because",
+  "options": [
+   {
+    "position": "A",
+    "text": "the pressure affected their minds."
+   },
+   {
+    "position": "B",
+    "text": "they got distracted."
+   },
+   {
+    "position": "C",
+    "text": "they did not think clearly."
+   },
+   {
+    "position": "D",
+    "text": "the pressure destroyed their mental processes."
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q24",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Undersea vehicles",
+  "options": [
+   {
+    "position": "A",
+    "text": "are too small for a man to fit inside."
+   },
+   {
+    "position": "B",
+    "text": "are very slow to respond."
+   },
+   {
+    "position": "C",
+    "text": "have the same limitations that divers have."
+   },
+   {
+    "position": "D",
+    "text": "make direct observations of the ocean floor. 12-PM/M/XX-XX/I 7 Passage-V A new US study has warned that adolescents who take performance enhancing anabolic steroids are more likely to have adverse neural and behavioural consequences, like aggression and moodiness, because of the steroids' affect on "
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q25",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The drug that boosts serotonin uptake is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Prozac."
+   },
+   {
+    "position": "B",
+    "text": "Melanin."
+   },
+   {
+    "position": "C",
+    "text": "Erythrocytes."
+   },
+   {
+    "position": "D",
+    "text": "Penicillin."
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q27",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "27",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Why do adolescents develop neural disorders ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "The effect of steroids hampers the growth of the brain."
+   },
+   {
+    "position": "B",
+    "text": "Prozac, if taken in excess by adolescents, makes them aggressive."
+   },
+   {
+    "position": "C",
+    "text": "Due to a decrease in the level of serotonin in the blood."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q29",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "29",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Upon which breed of mammals were the experiments carried out ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sicilian gangsters"
+   },
+   {
+    "position": "B",
+    "text": "Italian hamsters"
+   },
+   {
+    "position": "C",
+    "text": "Syrian hamsters"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q37",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mdes-written-sample/blocks/nift-mdes-written-sample-q37.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-mdes-written-sample-q38",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mdes-written-sample/blocks/nift-mdes-written-sample-q38.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Repertiore"
+   },
+   {
+    "position": "B",
+    "text": "Repartoire"
+   },
+   {
+    "position": "C",
+    "text": "Repertoire"
+   },
+   {
+    "position": "D",
+    "text": "Repartiore (2) Ostantatious"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q39",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mdes-written-sample/blocks/nift-mdes-written-sample-q39.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-mdes-written-sample-q40",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-mdes-written-sample/blocks/nift-mdes-written-sample-q40.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Nuance"
+   },
+   {
+    "position": "B",
+    "text": "Nuaence"
+   },
+   {
+    "position": "C",
+    "text": "Nuanice"
+   },
+   {
+    "position": "D",
+    "text": "Nueance 12-PM/M/XX-XX/I 9 63/"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q56",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "56",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The current of the river is fast flowing and treacherous.",
+  "options": [
+   {
+    "position": "A",
+    "text": "delusive"
+   },
+   {
+    "position": "B",
+    "text": "loyal"
+   },
+   {
+    "position": "C",
+    "text": "precarious"
+   },
+   {
+    "position": "D",
+    "text": "perfidious"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q57",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "57",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A serene mind can never be the pioneer of a great revolution.",
+  "options": [
+   {
+    "position": "A",
+    "text": "tranquil"
+   },
+   {
+    "position": "B",
+    "text": "jocular"
+   },
+   {
+    "position": "C",
+    "text": "earnest"
+   },
+   {
+    "position": "D",
+    "text": "agitated"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q58",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Our special offers are intended to entice people to buy.",
+  "options": [
+   {
+    "position": "A",
+    "text": "allure"
+   },
+   {
+    "position": "B",
+    "text": "help"
+   },
+   {
+    "position": "C",
+    "text": "attract"
+   },
+   {
+    "position": "D",
+    "text": "repulse"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q59",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "59",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Garima went to sleep in languor after coming back from work.",
+  "options": [
+   {
+    "position": "A",
+    "text": "hate"
+   },
+   {
+    "position": "B",
+    "text": "vigour"
+   },
+   {
+    "position": "C",
+    "text": "ecstasy"
+   },
+   {
+    "position": "D",
+    "text": "fatigue"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q60",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "60",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He has always been hard-working and frugal.",
+  "options": [
+   {
+    "position": "A",
+    "text": "extravagant"
+   },
+   {
+    "position": "B",
+    "text": "crafty"
+   },
+   {
+    "position": "C",
+    "text": "thrifty"
+   },
+   {
+    "position": "D",
+    "text": "inane 12-PM/M/XX-XX/I 11 63/ L '19 - 0t O1 08 L -68 (2) 6 I LZ (8) ZE (t) -Oz (D) OI 0S69≥ (D) OOSLA (z) 08ZL$ (€) SLELE (+) •E9 C tn th th th tit hà tit ci th tin, dah t tn th thin hin BM %I2 (1) B0 %22 (2) B %5 (+) *t9 TH HI HÀ TH (+) H2 %=8 (1) Ha %70 (2) pe I (1) pk E (E) hk t (t) •99 LI EI IE 6"
+   }
+  ]
+ }
+]

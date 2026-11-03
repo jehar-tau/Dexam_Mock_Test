@@ -1,0 +1,38 @@
+[
+ {
+  "id": "nift-bdes-written-sample-q70",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q70.png",
+  "prompt": "Successive discount of 10% and 5% is equivalent to",
+  "options": []
+ },
+ {
+  "id": "nift-bdes-written-sample-q77",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q77.png",
+  "prompt": "A8B, C7D, E6F, *?' , I4J, K3L",
+  "options": []
+ },
+ {
+  "id": "nift-bdes-written-sample-q80",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "80",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q80.png",
+  "prompt": "APL, ZQK, YRJ, XSI, WTK, VUG",
+  "options": []
+ },
+ {
+  "id": "nift-bdes-written-sample-q83",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "83",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-bdes-written-sample/blocks/nift-bdes-written-sample-q83.png",
+  "prompt": "FLOWERS MOUNTAIN",
+  "options": []
+ }
+]

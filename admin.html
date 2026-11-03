@@ -93,6 +93,9 @@
       <label>Explanation<select id="officialExplanationFilter">
         <option value="">All</option><option>pending</option><option>ai-draft</option><option>verified</option>
       </select></label>
+      <label>Crop<select id="officialCropFilter">
+        <option value="">All</option><option>pending</option><option>approved</option><option>rejected</option>
+      </select></label>
       <label>Search<input id="officialSearch" placeholder="prompt, topic, explanation" /></label>
       <button id="officialFilterBtn" class="secondary">Filter</button>
     </div>
@@ -107,6 +110,10 @@
   <section id="officialEditor" style="display:none">
     <h2>Review selected question</h2>
     <input type="hidden" id="editQuestionId" />
+    <div id="editFigures" style="display:none">
+      <p class="muted">Figure crop. Approve only if it holds the whole figure and any picture options exactly as printed (no rotation, mirroring, missing or extra elements) and nothing else: no paper header, page number, printed question number or prompt text, neighbouring question, or answer marks. Approved crops are served to candidates as-is.</p>
+      <div id="editFigureList"></div>
+    </div>
     <label>Question text<textarea id="editPrompt" rows="5" placeholder="Correct OCR text or replace the prompt here."></textarea></label>
     <label>Options<textarea id="editOptions" rows="5" placeholder="One option per line, e.g. (1) first option"></textarea></label>
     <div class="row">
@@ -122,6 +129,9 @@
       </select></label>
       <label>Explanation status<select id="editExplanationStatus">
         <option>pending</option><option>ai-draft</option><option>verified</option>
+      </select></label>
+      <label>Crop review<select id="editCropReview">
+        <option>pending</option><option>approved</option><option>rejected</option>
       </select></label>
     </div>
     <label>Original explanation<textarea id="editExplanation" rows="8" placeholder="Write an independently produced explanation. Do not paste third-party explanations."></textarea></label>

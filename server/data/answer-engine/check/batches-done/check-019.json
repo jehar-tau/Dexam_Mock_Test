@@ -1,0 +1,652 @@
+[
+ {
+  "id": "nift-2013-written-set1-q69",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "69",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which is the smallest prime number?",
+  "options": [
+   {
+    "position": "A",
+    "text": "0"
+   },
+   {
+    "position": "B",
+    "text": "1"
+   },
+   {
+    "position": "C",
+    "text": "2"
+   },
+   {
+    "position": "D",
+    "text": "3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q70",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "11 times of a number gives 132. The number is",
+  "options": [
+   {
+    "position": "A",
+    "text": "11"
+   },
+   {
+    "position": "B",
+    "text": "12 20. as mixed fraction."
+   },
+   {
+    "position": "C",
+    "text": "13.2"
+   },
+   {
+    "position": "D",
+    "text": "13"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q76",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "76",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "25% of a number is 20, what is 40% of that number?",
+  "options": [
+   {
+    "position": "A",
+    "text": "80"
+   },
+   {
+    "position": "B",
+    "text": "40"
+   },
+   {
+    "position": "C",
+    "text": "32"
+   },
+   {
+    "position": "D",
+    "text": "136"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q77",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If A's height is 50% less than that of B, how much per cent B's height is more than that of A ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "100%"
+   },
+   {
+    "position": "B",
+    "text": "80%"
+   },
+   {
+    "position": "C",
+    "text": "150%"
+   },
+   {
+    "position": "D",
+    "text": "50%"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q78",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "78",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A number when decreased by 25% becomes 90. The number is",
+  "options": [
+   {
+    "position": "A",
+    "text": "150"
+   },
+   {
+    "position": "B",
+    "text": "120"
+   },
+   {
+    "position": "C",
+    "text": "175"
+   },
+   {
+    "position": "D",
+    "text": "125"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q79",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "79",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Find SI if P = 7 1000, R = 20% per annum, T = 4 yrs.",
+  "options": [
+   {
+    "position": "A",
+    "text": "R 400"
+   },
+   {
+    "position": "B",
+    "text": "* 600"
+   },
+   {
+    "position": "C",
+    "text": "7 800"
+   },
+   {
+    "position": "D",
+    "text": "7 850"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q80",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "80",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In how many years, a sum will become four times itself at the rate of 12% per annum ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "28 yrs"
+   },
+   {
+    "position": "B",
+    "text": "25 yrs"
+   },
+   {
+    "position": "C",
+    "text": "22 yrs"
+   },
+   {
+    "position": "D",
+    "text": "27 yrs"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q81",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "81",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What will be the compound interest on F 9375 at 8% per annum for 2 yrs?",
+  "options": [
+   {
+    "position": "A",
+    "text": "F 1560"
+   },
+   {
+    "position": "B",
+    "text": "* 1512"
+   },
+   {
+    "position": "C",
+    "text": "< 1590"
+   },
+   {
+    "position": "D",
+    "text": "* 1548"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q82",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "82",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The difference between compound and simple interests on a sum for 2 years at 8% per annum is • F 64. The sum is",
+  "options": [
+   {
+    "position": "A",
+    "text": "7. 12000"
+   },
+   {
+    "position": "B",
+    "text": "R 11000"
+   },
+   {
+    "position": "C",
+    "text": "7 9000"
+   },
+   {
+    "position": "D",
+    "text": "R 10000"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q85",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "85",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A man, a woman and a boy can do a job in 3, 4 and 12 days respectively. How many boys must assist the man and woman to complete the job in one and a half days?",
+  "options": [
+   {
+    "position": "A",
+    "text": "12"
+   },
+   {
+    "position": "B",
+    "text": "6"
+   },
+   {
+    "position": "C",
+    "text": "3"
+   },
+   {
+    "position": "D",
+    "text": "1"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q86",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "86",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If 0.75 : x :: 5: 8, then find x",
+  "options": [
+   {
+    "position": "A",
+    "text": "12"
+   },
+   {
+    "position": "B",
+    "text": "0.12"
+   },
+   {
+    "position": "C",
+    "text": "1.2"
+   },
+   {
+    "position": "D",
+    "text": "120"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q87",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "87",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two whole numbers whose sum is 15, cannot be in the ratio",
+  "options": [
+   {
+    "position": "A",
+    "text": "1:4"
+   },
+   {
+    "position": "B",
+    "text": "3:2"
+   },
+   {
+    "position": "C",
+    "text": "1:6"
+   },
+   {
+    "position": "D",
+    "text": "1:2"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q88",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If 5 times a number is equal to 7 times another number, then the ratio between the two numbers is",
+  "options": [
+   {
+    "position": "A",
+    "text": "5:7"
+   },
+   {
+    "position": "B",
+    "text": "7:5"
+   },
+   {
+    "position": "C",
+    "text": "4:5"
+   },
+   {
+    "position": "D",
+    "text": "3:7"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q89",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "89",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the time taken by a train running at 18 km/h to cross a man standing on a platform, length of the train is 120 m ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "22 sec"
+   },
+   {
+    "position": "B",
+    "text": "44 sec"
+   },
+   {
+    "position": "C",
+    "text": "12 sec"
+   },
+   {
+    "position": "D",
+    "text": "24 sec"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q90",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "90",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two men starting from the same place walk at the rates of 4 km/h and 4.6 km/h, respectively. What time will they take to be 3 km apart, if they walk in the same direction ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "8 h"
+   },
+   {
+    "position": "B",
+    "text": "4h"
+   },
+   {
+    "position": "C",
+    "text": "5 h"
+   },
+   {
+    "position": "D",
+    "text": "6h"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q94",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "94",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "2, 4, 8, 16, 32, ...., 128",
+  "options": [
+   {
+    "position": "A",
+    "text": "64"
+   },
+   {
+    "position": "B",
+    "text": "65 1 1 , 1, 5, ......"
+   },
+   {
+    "position": "C",
+    "text": "66"
+   },
+   {
+    "position": "D",
+    "text": "67"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q96",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "96",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "4, 7, 5, 9, ..., 11, 7, 13",
+  "options": [
+   {
+    "position": "A",
+    "text": "6"
+   },
+   {
+    "position": "B",
+    "text": "8"
+   },
+   {
+    "position": "C",
+    "text": "9"
+   },
+   {
+    "position": "D",
+    "text": "3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q99",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sonam is walking facing West, then turns 90° in clockwise direction, and then turns 90º in clockwise direction again. In which direction is she finally moving?",
+  "options": [
+   {
+    "position": "A",
+    "text": "South"
+   },
+   {
+    "position": "B",
+    "text": "North"
+   },
+   {
+    "position": "C",
+    "text": "East"
+   },
+   {
+    "position": "D",
+    "text": "West"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q101",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "101",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Kamal drives his bike and goes to college. He comes back following the same route. He again drives from his house towards North and reaches the market. What is the direction of his house with respect to market?",
+  "options": [
+   {
+    "position": "A",
+    "text": "South"
+   },
+   {
+    "position": "B",
+    "text": "East"
+   },
+   {
+    "position": "C",
+    "text": "North-East"
+   },
+   {
+    "position": "D",
+    "text": "Cannot be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q103",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A family consists of a husband and wife, their three sons and two daughters, three wives of three sons. How many females are in this family ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "5"
+   },
+   {
+    "position": "B",
+    "text": "6"
+   },
+   {
+    "position": "C",
+    "text": "7"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q104",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "104",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "L is the father of N and P. P is the son of L but N is not the son of L. How is N related to L?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Daughter"
+   },
+   {
+    "position": "B",
+    "text": "Son-in-law"
+   },
+   {
+    "position": "C",
+    "text": "Mother"
+   },
+   {
+    "position": "D",
+    "text": "Niece"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q108",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "108",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "FG: BC :: RI:?",
+  "options": [
+   {
+    "position": "A",
+    "text": "NO"
+   },
+   {
+    "position": "B",
+    "text": "NE"
+   },
+   {
+    "position": "C",
+    "text": "MF"
+   },
+   {
+    "position": "D",
+    "text": "ST"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q109",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "EDC: RQP :: MLK: ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "XYZ"
+   },
+   {
+    "position": "B",
+    "text": "PQR"
+   },
+   {
+    "position": "C",
+    "text": "ZYX"
+   },
+   {
+    "position": "D",
+    "text": "NOP"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q110",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "110",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "L: 0:: D:?",
+  "options": [
+   {
+    "position": "A",
+    "text": "W"
+   },
+   {
+    "position": "B",
+    "text": "X"
+   },
+   {
+    "position": "C",
+    "text": "Y"
+   },
+   {
+    "position": "D",
+    "text": "Z"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q116",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "116",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If in a certain language, POPULAR is coded as QPQVMBS, then which word would be coded as GBNPVT ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "EAMOSU"
+   },
+   {
+    "position": "B",
+    "text": "FAMOUS"
+   },
+   {
+    "position": "C",
+    "text": "FASOUM"
+   },
+   {
+    "position": "D",
+    "text": "FASAUM"
+   }
+  ]
+ }
+]

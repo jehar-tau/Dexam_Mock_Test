@@ -1,0 +1,236 @@
+[
+ {
+  "id": "nid-bdes-2017-q3",
+  "paper": "nid-bdes-2017",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q3.png",
+  "prompt": "Which of the following is not yet a UNESCO World Heritage Site in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Great Living Chola Temples, Tanjavur, Tarnil Nadu"
+   },
+   {
+    "position": "B",
+    "text": "Sunderban National Park, West Bengal"
+   },
+   {
+    "position": "C",
+    "text": "River Island of Majuli, Midstream of Brahmaputra, Assam"
+   },
+   {
+    "position": "D",
+    "text": "Virupaksha Temple, Hampi, Kamataka"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2017-q4",
+  "paper": "nid-bdes-2017",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q4.png",
+  "prompt": "What would be the best choice for a window to keep the outside heat away?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Single-pane glass."
+   },
+   {
+    "position": "B",
+    "text": "Double-pane glass without a gap in belween."
+   },
+   {
+    "position": "C",
+    "text": "Double-pane glass with water filled in between."
+   },
+   {
+    "position": "D",
+    "text": "Double-pane glass with air in between."
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2017-q5",
+  "paper": "nid-bdes-2017",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q5.png",
+  "prompt": "Identify the organization which uses the given symbol.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Panda Rescue Initiative"
+   },
+   {
+    "position": "B",
+    "text": "Forest Research Institute"
+   },
+   {
+    "position": "C",
+    "text": "World Wide Fund for Nature"
+   },
+   {
+    "position": "D",
+    "text": "People for Ethical Treatment of Animals"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2017-q6",
+  "paper": "nid-bdes-2017",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q6.png",
+  "prompt": "Which of the following is the correct breathing pattern?",
+  "options": [
+   {
+    "position": "A",
+    "text": "As you breathe in, the chest expands first and then the stomach."
+   },
+   {
+    "position": "B",
+    "text": "As you breathe in, the stomach seems to expand first and then the chest."
+   },
+   {
+    "position": "C",
+    "text": "Only the chest expands."
+   },
+   {
+    "position": "D",
+    "text": "Only the stomach expands."
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2017-q22",
+  "paper": "nid-bdes-2017",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q22.png",
+  "prompt": "Which is true for the figures shown, moving from left to right? ('Area' and 'Perimeter' refer to the total area and perimeter of the black shapes in each figure)?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Area increases and perimeter increases"
+   },
+   {
+    "position": "B",
+    "text": "Area decreases and perimeter increases"
+   },
+   {
+    "position": "C",
+    "text": "Area increases and Perimeter decreases"
+   },
+   {
+    "position": "D",
+    "text": "Area decreases and Perimeter decreases"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2017-q26",
+  "paper": "nid-bdes-2017",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q26.png",
+  "prompt": "You are booking a ticket to travel by air from Trivandrum to Ahmedabad and the flight time is around sunrise. Which location would give you a view of the sunrise from your seat?",
+  "options": [
+   {
+    "position": "A",
+    "text": "A window seat on the right of the plane"
+   },
+   {
+    "position": "B",
+    "text": "A window seat on the left of the plane"
+   },
+   {
+    "position": "C",
+    "text": "A window seat in the front of the plane"
+   },
+   {
+    "position": "D",
+    "text": "A window seat in the back of the plane NICHING CHEONUS NONETO CAN 414Y 10100 4114 14910119116 select your response from the options provided."
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2017-q33",
+  "paper": "nid-bdes-2017",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q33.png",
+  "prompt": "Meaning of this quote by Isaac Newton is close to which one of the following four options? \"If I have seen further than others, it is by standing upon the shoulders of giants. \"",
+  "options": [
+   {
+    "position": "A",
+    "text": "Copying Giant's work leads to new knowledge"
+   },
+   {
+    "position": "B",
+    "text": "New knowledge builds on existing knowledge"
+   },
+   {
+    "position": "C",
+    "text": "Knowledge is self conscious"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2017-q70",
+  "paper": "nid-bdes-2017",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q70.png",
+  "prompt": "A car can average 20 km per hour up a hill, and 60 km per hour down the same road. What is the average speed for the whole trip? (",
+  "options": [
+   {
+    "position": "A",
+    "text": "25 km per hour ("
+   },
+   {
+    "position": "B",
+    "text": "30 km per hour ("
+   },
+   {
+    "position": "C",
+    "text": "35 km per hour ("
+   },
+   {
+    "position": "D",
+    "text": "40 km per hour"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2017-q74",
+  "paper": "nid-bdes-2017",
+  "questionNo": "74",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2017/blocks/nid-bdes-2017-q74.png",
+  "prompt": "A wooden table is placed against a cardboard wall. You are given a red candle, a box of metal thumb pins, and a safety matchbox, and asked to aftix the lit candle to the wall so that it will not drip wax onto the table below. Which of the following is the most efficient way to achieve the task?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Empty the box of thumb pins, use the thumb pins to nail the box to the wall, put the candle into the box, and light the candle with the match."
+   },
+   {
+    "position": "B",
+    "text": "Pin the match box to the wall and put the candle on the box and light the candle with the match"
+   },
+   {
+    "position": "C",
+    "text": "Pin the candle to the wall without using the thumb pin box at an angle of 45 degrees and then light the candle with the match."
+   },
+   {
+    "position": "D",
+    "text": "Melt some of the candle's wax and use it as an adhesive to stick the candle to the wall at parallel to the wall surface and then light the candle."
+   }
+  ]
+ }
+]

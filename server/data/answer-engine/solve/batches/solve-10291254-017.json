@@ -1,0 +1,615 @@
+[
+ {
+  "id": "nift-2013-written-set5-q19",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q19.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set5-q20",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q20.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "exagerate"
+   },
+   {
+    "position": "B",
+    "text": "exadgerate"
+   },
+   {
+    "position": "C",
+    "text": "acquisence"
+   },
+   {
+    "position": "D",
+    "text": "acquissence"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q22",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "error.",
+  "options": [
+   {
+    "position": "A",
+    "text": "When dinner was done,"
+   },
+   {
+    "position": "B",
+    "text": "my master went out to his labourers, and,"
+   },
+   {
+    "position": "C",
+    "text": "as I could discover by his voice and gesture,"
+   },
+   {
+    "position": "D",
+    "text": "gave his family strict charges to take care of me."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q23",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q23.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Most of them, and especially those"
+   },
+   {
+    "position": "B",
+    "text": "who deal in the astronomical part,"
+   },
+   {
+    "position": "C",
+    "text": "have great faith in judicial astrology,"
+   },
+   {
+    "position": "D",
+    "text": "although he is ashamed to own it publicly."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q24",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q24.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "From comparing notes afterwards it was but a hour and a quarter,"
+   },
+   {
+    "position": "B",
+    "text": "yet it appeared to me that"
+   },
+   {
+    "position": "C",
+    "text": "the night must have almost gone,"
+   },
+   {
+    "position": "D",
+    "text": "and the dawn be breaking above us."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q25",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q25.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "The supper party given by Mr. Julius Hershey"
+   },
+   {
+    "position": "B",
+    "text": "to a few friends at the evening of the 30th"
+   },
+   {
+    "position": "C",
+    "text": "will long be remembered"
+   },
+   {
+    "position": "D",
+    "text": "in catering circles."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q27",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "27",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What appears to have been the logic in awarding the Nobel Peace Prize for 2009 to President Obama ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Recognition of the track record of his achievements in terms of global peace initiatives."
+   },
+   {
+    "position": "B",
+    "text": "Assertion of faith in his sincerity and capability to push forward with bold peace initiatives."
+   },
+   {
+    "position": "C",
+    "text": "The global influence of the US,as a Super Power."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q32",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following aspects are directly related to immigrants ? A Benefits to parent countries by way of new ideas, jobs and better schooling. B Boost in economic output through investments in new businesses and initiatives. C Enrichment of individual, formally and community life.",
+  "options": [
+   {
+    "position": "A",
+    "text": "A & B MT 1000/D/2K13/02 ( 5) Passage III Nature is like business. Business sense dictates that we guard our capital and live from the interest. Nature's capital is the enormous diversity of living things. Without it, we cannot feed ourselves, cure ourselves of illness or provide industry with the ra"
+   },
+   {
+    "position": "B",
+    "text": "B & C"
+   },
+   {
+    "position": "C",
+    "text": "A & C"
+   },
+   {
+    "position": "D",
+    "text": "A, B & C"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q37",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is mentioned as the immediate cause for the destruction of plant species ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Soil Erosion"
+   },
+   {
+    "position": "B",
+    "text": "Destruction of habitat"
+   },
+   {
+    "position": "C",
+    "text": "Cultivation"
+   },
+   {
+    "position": "D",
+    "text": "Agricultural practices MT 1000/D/2K13/02 ( 6) Passage IV Motivations for ruralism in under developed countries are understandably different from those in developed countries. There, it is a sheer physical necessity for the very act of man's survival. In the Third World countries, which are predomina"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q38",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "People are taking growing interest in Rural Development because",
+  "options": [
+   {
+    "position": "A",
+    "text": "nothing worthwhile can be done in the near future."
+   },
+   {
+    "position": "B",
+    "text": "they have now become optimistic about it."
+   },
+   {
+    "position": "C",
+    "text": "they have realised the indispensability of it."
+   },
+   {
+    "position": "D",
+    "text": "they have been suffering from severe health problems."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q41",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "41",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following best describes the two divergent worlds of the modern cities ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Commercial and industrial exploitation."
+   },
+   {
+    "position": "B",
+    "text": "Patrons of western products and custodians of imperial interests."
+   },
+   {
+    "position": "C",
+    "text": "A few rich people and many poor people."
+   },
+   {
+    "position": "D",
+    "text": "Posh area and affluent people. MT 1000/D/2K13/02 (7) Passage V A great deal of discussion continues as to the real extent of global environmental degradation and its implications. What few people challenge however, is that the renewable natural resources of developing countries are today subject to "
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q42",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "42",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Some of the developing countries of Asia and Africa have",
+  "options": [
+   {
+    "position": "A",
+    "text": "formulated very ambitious plans of protecting habitat in the region."
+   },
+   {
+    "position": "B",
+    "text": "laid a great stress on the conservation of natural resources in their educational endeavour."
+   },
+   {
+    "position": "C",
+    "text": "carefully dovetailed environmental conservation with the overall strategy of planned economic development."
+   },
+   {
+    "position": "D",
+    "text": "sought help of the US experts in solving the problem of environmental degradation."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q43",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Technical know-how developed in the US",
+  "options": [
+   {
+    "position": "A",
+    "text": "cannot be easily assimilated by the technocrats of the developing countries."
+   },
+   {
+    "position": "B",
+    "text": "can be properly utilised on the basis of developing countries being able to launch an in-depth study of their specific problems."
+   },
+   {
+    "position": "C",
+    "text": "can be easily borrowed by the developing countries to solve the problem of environmental degradation."
+   },
+   {
+    "position": "D",
+    "text": "can be very effective in solving the problem of resource management in tropical countries."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q44",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "44",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "There has been a pronounced deterioration of habitat all over the globe because of",
+  "options": [
+   {
+    "position": "A",
+    "text": "rigorous operation of the Malthusian principle."
+   },
+   {
+    "position": "B",
+    "text": "unprecedented urbanisation and dislocation of self contained rural communities."
+   },
+   {
+    "position": "C",
+    "text": "optimum degree of industrialisation in the developing countries."
+   },
+   {
+    "position": "D",
+    "text": "large scale deforestation and desertification."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q45",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The poor people of the developing world can lead a happy and contented life if",
+  "options": [
+   {
+    "position": "A",
+    "text": "there is a North-South dialogue and aid flows freely to the developing world."
+   },
+   {
+    "position": "B",
+    "text": "industries based on agriculture are widely developed."
+   },
+   {
+    "position": "C",
+    "text": "economic development takes place within the ambit of conservation of natural resources."
+   },
+   {
+    "position": "D",
+    "text": "there is an assured supply of food and medical care. MT 1000/D/2K13/02 (8) (0.96)3 - (0.1)3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q46",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "is simplified to (0.96)2 + (0.096) + (0.1)2",
+  "options": [
+   {
+    "position": "A",
+    "text": "1.06"
+   },
+   {
+    "position": "B",
+    "text": "0.995"
+   },
+   {
+    "position": "C",
+    "text": "0.86"
+   },
+   {
+    "position": "D",
+    "text": "0.97"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q60",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "60",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If 8 women collect 200 kg of tea leaves in 10 hours. How many more (in kg) of tea leaves will 12 women collect in 8 hours?",
+  "options": [
+   {
+    "position": "A",
+    "text": "40 kg"
+   },
+   {
+    "position": "B",
+    "text": "50 kg"
+   },
+   {
+    "position": "C",
+    "text": "100 kg MT 1000/D/2K13/02 ( 9)"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q62",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The ratio of age of Aman and his mother is 3: 11. The difference of their ages is 24 years. What will be the ratio of their ages after 3 years ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "1:3"
+   },
+   {
+    "position": "B",
+    "text": "4:9"
+   },
+   {
+    "position": "C",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q68",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "68",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A uniform electric field in a region between two oppositely charged plates. An electron is released from rest at the surface of negative charged plate and strikes the surface of oppositely charged plate 2 cm away, in time 1.5x10-8 s. What is the magnitude of the electric field between the plates ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "5 × 103 V/m"
+   },
+   {
+    "position": "B",
+    "text": "4 × 103 V/m"
+   },
+   {
+    "position": "C",
+    "text": "1 × 103 V/m"
+   },
+   {
+    "position": "D",
+    "text": "2 × 103 V/m"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q69",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "69",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q69.png",
+  "prompt": "A conducting wire, whose resistance R, has a semi-circular shape of radius r as shown in the figure. If the potential difference between the ends a and b is V, what is the magnitude of the magnetic field, at the centre of the wire ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "HoV/4Rr"
+   },
+   {
+    "position": "B",
+    "text": "HoV/2Rr •"
+   },
+   {
+    "position": "C",
+    "text": "uoV/Rr"
+   },
+   {
+    "position": "D",
+    "text": "2uoV/4Rr"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q73",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "73",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If three coins are tossed simultaneously, the probability of getting at least one head is",
+  "options": [
+   {
+    "position": "A",
+    "text": "1 7"
+   },
+   {
+    "position": "B",
+    "text": "₴"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q75",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "75",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The area enclosed between the curves y? = 4x and x2 = 4y is 16",
+  "options": [
+   {
+    "position": "A",
+    "text": "8 3"
+   },
+   {
+    "position": "B",
+    "text": "32"
+   },
+   {
+    "position": "C",
+    "text": "16"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q76",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "76",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who amongst the following are the three lady members?",
+  "options": [
+   {
+    "position": "A",
+    "text": "E, H and J"
+   },
+   {
+    "position": "B",
+    "text": "E, G and J"
+   },
+   {
+    "position": "C",
+    "text": "G, H and J"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q77",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is true about J?",
+  "options": [
+   {
+    "position": "A",
+    "text": "J is a male member"
+   },
+   {
+    "position": "B",
+    "text": "Gender of J cannot be determined"
+   },
+   {
+    "position": "C",
+    "text": "Position of J cannot be determined."
+   },
+   {
+    "position": "D",
+    "text": "None of these."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set5-q84",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "84",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "F and G are girls, A and D are brothers and A is a doctor. E is an engineer married to one of the brothers and has two children. B is married to D and G is their child. Who is C?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cousin-cousin (3) Brother-sister (4) None of these (2) Father-daughter Which of the following diagrams best depicts cousins, nephews and males ? (2) (3) (4) Out of a total of 120 musicians in a club, 5% can play all the three instruments guitar, violin and"
+   },
+   {
+    "position": "B",
+    "text": "F's father"
+   },
+   {
+    "position": "C",
+    "text": "E's daughter"
+   },
+   {
+    "position": "D",
+    "text": "A's son Amit's mother-in-law's granddaughter is Madhuri's niece. What could be the relations between Amit and Madhuri ?"
+   }
+  ]
+ }
+]

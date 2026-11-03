@@ -1,0 +1,38 @@
+[
+ {
+  "id": "nift-2013-written-set4-q51",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "51",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q51.png",
+  "prompt": "A train passes a man standing on the platform in 9 seconds and passes the platform completely in 33 seconds. If the length of the platform is 288 meters, what is the length of the train ?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q75",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "75",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q75.png",
+  "prompt": "Figures ? Answer Figures (1) (2) (3)",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q76",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "76",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q76.png",
+  "prompt": "Figures + x + + ? + + x Answer Figures + + +",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set4-q77",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set4/blocks/nift-2013-written-set4-q77.png",
+  "prompt": "? Answer Figures O-D",
+  "options": []
+ }
+]

@@ -1,0 +1,28 @@
+{
+ "nift-bdes-written-sample-q70": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-bdes-written-sample-q77": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-bdes-written-sample-q80": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": "",
+  "badCrop": true
+ },
+ "nift-bdes-written-sample-q83": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ }
+}

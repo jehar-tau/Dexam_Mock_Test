@@ -1,0 +1,522 @@
+[
+ {
+  "id": "nift-2013-written-set1-q5",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He has been commended for all that he did.",
+  "options": [
+   {
+    "position": "A",
+    "text": "dismissed"
+   },
+   {
+    "position": "B",
+    "text": "condemned"
+   },
+   {
+    "position": "C",
+    "text": "censured"
+   },
+   {
+    "position": "D",
+    "text": "rejected"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q8",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The scene was indeed captivating.",
+  "options": [
+   {
+    "position": "A",
+    "text": "hateful"
+   },
+   {
+    "position": "B",
+    "text": "disgusting"
+   },
+   {
+    "position": "C",
+    "text": "repulsive"
+   },
+   {
+    "position": "D",
+    "text": "obscene"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q26",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q26.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "dielect"
+   },
+   {
+    "position": "B",
+    "text": "diallect"
+   },
+   {
+    "position": "C",
+    "text": "adeltration (3) adelteration (4) adulteration"
+   },
+   {
+    "position": "D",
+    "text": "dialect"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q28",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q28.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "gorgette"
+   },
+   {
+    "position": "B",
+    "text": "georgette"
+   },
+   {
+    "position": "C",
+    "text": "gorgete"
+   },
+   {
+    "position": "D",
+    "text": "georget"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q31",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "31",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "error.",
+  "options": [
+   {
+    "position": "A",
+    "text": "If you don't act now"
+   },
+   {
+    "position": "B",
+    "text": "the Himalayan flora"
+   },
+   {
+    "position": "C",
+    "text": "was eventually"
+   },
+   {
+    "position": "D",
+    "text": "be destroyed"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q32",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q32.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "The Romans, according to their custom of identifying their deities"
+   },
+   {
+    "position": "B",
+    "text": "with those of the Greek gods whose attributes"
+   },
+   {
+    "position": "C",
+    "text": "were similar to their own, declared Cronus to be identical"
+   },
+   {
+    "position": "D",
+    "text": "from their old agricultural divinity Saturn."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q33",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q33.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "A temple was erected to him"
+   },
+   {
+    "position": "B",
+    "text": "at the foot of the Capitoline Hill,"
+   },
+   {
+    "position": "C",
+    "text": "at which were deposited the"
+   },
+   {
+    "position": "D",
+    "text": "public treasury and the laws of the state."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q34",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q34.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "The division in the world being"
+   },
+   {
+    "position": "B",
+    "text": "now satisfactorily arranged,"
+   },
+   {
+    "position": "C",
+    "text": "it would seem that all things ought to have"
+   },
+   {
+    "position": "D",
+    "text": "gone on smoothly, but such was not the case."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q35",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q35.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sadly, he never"
+   },
+   {
+    "position": "B",
+    "text": "reached his ambition"
+   },
+   {
+    "position": "C",
+    "text": "of playing for"
+   },
+   {
+    "position": "D",
+    "text": "his country."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q37",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The crowd was protesting against",
+  "options": [
+   {
+    "position": "A",
+    "text": "the closing of workshops."
+   },
+   {
+    "position": "B",
+    "text": "the misdoings of Thimonier."
+   },
+   {
+    "position": "C",
+    "text": "the newly invented sewing machine."
+   },
+   {
+    "position": "D",
+    "text": "Thimonier keeping the invention a secret."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q38",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The aim of the crowd was to",
+  "options": [
+   {
+    "position": "A",
+    "text": "kill Thimonier."
+   },
+   {
+    "position": "B",
+    "text": "drive Thimonier away."
+   },
+   {
+    "position": "C",
+    "text": "bring discredit to Thimonier."
+   },
+   {
+    "position": "D",
+    "text": "destroy the sewing machines."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q39",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The people thought that",
+  "options": [
+   {
+    "position": "A",
+    "text": "their lives were in danger."
+   },
+   {
+    "position": "B",
+    "text": "Thimonier was mad."
+   },
+   {
+    "position": "C",
+    "text": "the sewing machine was dangerous."
+   },
+   {
+    "position": "D",
+    "text": "Thimonier was depriving them of their livelihood."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q40",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Shutters were being closed hastily because the shopkeepers",
+  "options": [
+   {
+    "position": "A",
+    "text": "wanted to attack the crowd."
+   },
+   {
+    "position": "B",
+    "text": "wanted to protect Thimonier."
+   },
+   {
+    "position": "C",
+    "text": "feared their shops would be invaded."
+   },
+   {
+    "position": "D",
+    "text": "wanted to show their solidarity with the crowd. Passage II The greatest enemy of mankind, as people have discovered is not science, but war. Science merely reflects the social forces by which it is surrounded. It is found that when there is peace; science is constructive, when there is war, science "
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q42",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "42",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The war can be stopped, if",
+  "options": [
+   {
+    "position": "A",
+    "text": "weapons invented by science are not used to launch a war."
+   },
+   {
+    "position": "B",
+    "text": "science is restricted to be utilised only during war time."
+   },
+   {
+    "position": "C",
+    "text": "science is not allowed to lead us to utter destruction."
+   },
+   {
+    "position": "D",
+    "text": "we replace force and lawlessness by law and international government."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q43",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "According to the writer, the main problem we are faced with is to",
+  "options": [
+   {
+    "position": "A",
+    "text": "prevent scientists from participating in destructive activities."
+   },
+   {
+    "position": "B",
+    "text": "abolish war."
+   },
+   {
+    "position": "C",
+    "text": "stop scientific activities everywhere."
+   },
+   {
+    "position": "D",
+    "text": "stop science from reflecting social forces."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q102",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q102.png",
+  "prompt": "Showing a photograph to a friend, Ravi says, \"She is the grand daughter of the elder brother of my father\". How is the girl related to Ravi ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Niece"
+   },
+   {
+    "position": "B",
+    "text": "Sister"
+   },
+   {
+    "position": "C",
+    "text": "Aunt •"
+   },
+   {
+    "position": "D",
+    "text": "Sister-in-law"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q111",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "111",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "TZW : 28 :: QYS :?",
+  "options": [
+   {
+    "position": "A",
+    "text": "35"
+   },
+   {
+    "position": "B",
+    "text": "160"
+   },
+   {
+    "position": "C",
+    "text": "38"
+   },
+   {
+    "position": "D",
+    "text": "158"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q115",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "115",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q115.png",
+  "prompt": "In a certain code, 'this is the tree' is written as 2153, 'the green tree' is written as 573 and 'tree of life' is written as 309. Which symbol stands for 'the' ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "2"
+   },
+   {
+    "position": "B",
+    "text": "3"
+   },
+   {
+    "position": "C",
+    "text": "5"
+   },
+   {
+    "position": "D",
+    "text": "0"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q134",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "134",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Caprese', the international fashion brand has entered the Indian market with fashionable ladies handbags is from",
+  "options": [
+   {
+    "position": "A",
+    "text": "Germany."
+   },
+   {
+    "position": "B",
+    "text": "Italy."
+   },
+   {
+    "position": "C",
+    "text": "France."
+   },
+   {
+    "position": "D",
+    "text": "UK."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q150",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "150",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The sport persons who are the new National Icons for Election Commission of India (ECI) are",
+  "options": [
+   {
+    "position": "A",
+    "text": "Saina Nehwal and M C Mary Kom."
+   },
+   {
+    "position": "B",
+    "text": "Yogeshwar Dutt and Vijender Singh."
+   },
+   {
+    "position": "C",
+    "text": "Sushil Kumar and Gagan Narang."
+   },
+   {
+    "position": "D",
+    "text": "Sachin Tendulkar and Sania Mirza."
+   }
+  ]
+ }
+]

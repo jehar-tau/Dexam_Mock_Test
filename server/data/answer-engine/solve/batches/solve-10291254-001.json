@@ -1,0 +1,565 @@
+[
+ {
+  "id": "nift-2012-mdes-written-q1",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many component manufacturers does the German car major Volkswagen have in India presently ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "About 100"
+   },
+   {
+    "position": "B",
+    "text": "Over 200"
+   },
+   {
+    "position": "C",
+    "text": "None presently"
+   },
+   {
+    "position": "D",
+    "text": "Can't say"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q6",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "are the different types of employees considered 'undesirable' for any organisation ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Victims, learners and seasonal experts."
+   },
+   {
+    "position": "B",
+    "text": "Victims, innovation blockers and learners."
+   },
+   {
+    "position": "C",
+    "text": "Victims, non-believers and know-it-alls."
+   },
+   {
+    "position": "D",
+    "text": "Victims, innovators and know-it-alls."
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q14",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How has competition from foreign brands affected the Indian biscuit market ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Only the three largest manufacturers survived; while the smaller ones withered away."
+   },
+   {
+    "position": "B",
+    "text": "The range of categories available to the Indian consumers has expanded"
+   },
+   {
+    "position": "C",
+    "text": "The foreign brands got restricted to premium categories only; leaving the field open to domestic brands in non-premium categories. (1) A & B (2) B & C (3) B only (4) A, B & C"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q20",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-mdes-written/blocks/nift-2012-mdes-written-q20.png",
+  "prompt": "It can be inferred from the passage that (1) urban growth is pushing the farmers to shake off their habitual laziness and incr farm output. growing urban demand for farm produce is leading to unhealthy competitiveness amo farmers. food packaging industries would have to come up in villages to keep pace with u: demands for convenience foods. (4). growing urbanization will lead to improvements in rural lifestyles also. MD 1000/B/2K12/02 ( 6 ) Passage VI If you think that most poor people in the world live in the poorest countries, you are, mistaken. A new study of 165 billion of the world's poor shows that 72 per cent (1,189 million) live in middle income countries compared with 459 million in low income countries. What's more, higher percentage (586 million) live in 'severe poverty' in middle income countries than in low income countries (285 million), says the study. Nearly three quarters of the poor live in middle income countries. Another key finding is that 50 per cent (827 million) of the poor live in South Asia, which includes India, and 29 per cent (473 million) in Sub-Saharan Africa. \"Multi-dimensionally\" poor people in middle income countries have simply been bypassed as their nation's comparative wealth increased, says the study. The poverty measure used in the study took into account a range of deprivations in areas such as education, malnutrition, child mortality, sanitation and services. The researchers analysed the most recent publicly available household survey ",
+  "options": []
+ },
+ {
+  "id": "nift-2012-mdes-written-q22",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following factors are considered relevant in measuring poverty ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Income"
+   },
+   {
+    "position": "B",
+    "text": "Education"
+   },
+   {
+    "position": "C",
+    "text": "Nutrition (1) A only (2) A & B (3) A & C (4) A, B & C"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q23",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Countries are categorized as middle-income or low-income depending on",
+  "options": [
+   {
+    "position": "A",
+    "text": "the national average yearly income."
+   },
+   {
+    "position": "B",
+    "text": "and (2) (4) Neither (1) nor (2)"
+   },
+   {
+    "position": "C",
+    "text": "the number of poor people in the country."
+   },
+   {
+    "position": "D",
+    "text": "Both"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q25",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Espression', the international brand, has presence in which of the following countries ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Italy, US, China, UK"
+   },
+   {
+    "position": "B",
+    "text": "Romania, Ireland, Spain, Korea"
+   },
+   {
+    "position": "C",
+    "text": "India, US, UK, Italy"
+   },
+   {
+    "position": "D",
+    "text": "All these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q26",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Italian coffee chain Lavazza entered the Indian market in which year ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "2007"
+   },
+   {
+    "position": "B",
+    "text": "2011"
+   },
+   {
+    "position": "C",
+    "text": "Expected to enter some time in 2012"
+   },
+   {
+    "position": "D",
+    "text": "Can't say"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q28",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The range of clothing offered by Turtle includes",
+  "options": [
+   {
+    "position": "A",
+    "text": "Menswear"
+   },
+   {
+    "position": "B",
+    "text": "Casualwear"
+   },
+   {
+    "position": "C",
+    "text": "Denim (1) A & B (2) A & C (3) A only (4) A, B & C"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q29",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "29",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Turtle is looking at possible collaborators from which of the following countries in order to launch its own casualwear clothing ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "UK"
+   },
+   {
+    "position": "B",
+    "text": "Bangladesh"
+   },
+   {
+    "position": "C",
+    "text": "India (1) A only (2) A & B (3) A, B & C (4) A & C"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q31",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "31",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "logical paragraph.",
+  "options": [
+   {
+    "position": "A",
+    "text": "They also become spoiled and tyrannical."
+   },
+   {
+    "position": "B",
+    "text": "But hire a former enemy and he will be more loyal than a friend, because he has more tr prove."
+   },
+   {
+    "position": "C",
+    "text": "If you have no enemies, find a way to make them."
+   },
+   {
+    "position": "D",
+    "text": "In fact, you have more to fear from friends than from enemies. E. Be wary of friends - they will betray you more quickly, for they are easily aroused to envy (1) CDBEA (2) CEDAB (3) ECDAB (4) EABDC"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q32",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-mdes-written/blocks/nift-2012-mdes-written-q32.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "The problem is that you often do not know your friends as you imagine."
+   },
+   {
+    "position": "B",
+    "text": "It is natural to want to employ your friends when you find yourself in times of need."
+   },
+   {
+    "position": "C",
+    "text": "The world is a harsh place, and your friends soften the harshness."
+   },
+   {
+    "position": "D",
+    "text": "Why depend on a stranger when you have a friend at hand ? E. Besides, you know them. (1) CBDEA (2) BCEDA (3) CBADE (4) CDBEA A. They brought gifts to the babe in the manger."
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q33",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-mdes-written/blocks/nift-2012-mdes-written-q33.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-2012-mdes-written-q34",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-mdes-written/blocks/nift-2012-mdes-written-q34.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "He was a great heavy fellow from the Middle West."
+   },
+   {
+    "position": "B",
+    "text": "He was on a flying visit to New York to fetch his wife."
+   },
+   {
+    "position": "C",
+    "text": "Mrs Ramsay was a very pretty little thing"
+   },
+   {
+    "position": "D",
+    "text": "Ramsay was in the American Consular service. E. He was on his way back to resume his post. (1) DAEBC (2) DABCE (3) BCEAD (4) ABCED"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q42",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "42",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It was a unanimous decision.",
+  "options": [
+   {
+    "position": "A",
+    "text": "uncertain"
+   },
+   {
+    "position": "B",
+    "text": "partial"
+   },
+   {
+    "position": "C",
+    "text": "discordant"
+   },
+   {
+    "position": "D",
+    "text": "divergent"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q48",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-mdes-written/blocks/nift-2012-mdes-written-q48.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "hetrogenous"
+   },
+   {
+    "position": "B",
+    "text": "hetrogeneous"
+   },
+   {
+    "position": "C",
+    "text": "heterogenous"
+   },
+   {
+    "position": "D",
+    "text": "heterogeneous"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q49",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "49",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-mdes-written/blocks/nift-2012-mdes-written-q49.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "brethoren"
+   },
+   {
+    "position": "B",
+    "text": "aliennate allienate"
+   },
+   {
+    "position": "C",
+    "text": "brothren"
+   },
+   {
+    "position": "D",
+    "text": "brethren brethron"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q50",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-mdes-written/blocks/nift-2012-mdes-written-q50.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-2012-mdes-written-q56",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "56",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If you don't act now",
+  "options": [
+   {
+    "position": "A",
+    "text": "the Himalayan flora"
+   },
+   {
+    "position": "B",
+    "text": "will eventually"
+   },
+   {
+    "position": "C",
+    "text": "be destroyed."
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q58",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "message clearly.",
+  "options": [
+   {
+    "position": "A",
+    "text": "To anyone in later times who knew of Hari Seldon only as a legendary demigod, it would seem almost sacrilegious for him not to have white hair. To anyone in later times who had known of Hari Seldon only as a legendary demigod, it would seem almost sacrilegious for him not to have white hair."
+   },
+   {
+    "position": "B",
+    "text": "There were over two hundred assistant district attorneys in New York City and five district"
+   },
+   {
+    "position": "C",
+    "text": "To anyone in later times who know of Hari Seldon only as a legendary demigod, it would seem almost sacrilegious for him not to have white hair."
+   },
+   {
+    "position": "D",
+    "text": "To anyone in later times who have known of Hari Seldon only as a legendary demigod, it would seem almost sacrilegious for him not to have white hair."
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q59",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "59",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "attorneys, one for each borough. There were to be over two hundred assistant district attorneys in New York City and five district attorneys, one for each borough.",
+  "options": [
+   {
+    "position": "A",
+    "text": "In the year 1878 I could take my degree of Doctor of Medicine of the University of London,"
+   },
+   {
+    "position": "B",
+    "text": "There was to be over two hundred assistant district attorneys in New York City and five district attorneys, one for each borough."
+   },
+   {
+    "position": "C",
+    "text": "There is over two hundred assistant district attorneys in New York City and five district attorneys, one for each borough."
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q61",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "61",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "4, then the value y +x",
+  "options": [
+   {
+    "position": "A",
+    "text": "1"
+   },
+   {
+    "position": "B",
+    "text": "1"
+   },
+   {
+    "position": "C",
+    "text": "2 7"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q64",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "64",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If x * y = (x + 2) (y - 2) then 7 * 5 = ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "234"
+   },
+   {
+    "position": "B",
+    "text": "243"
+   },
+   {
+    "position": "C",
+    "text": "343"
+   },
+   {
+    "position": "D",
+    "text": "423"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q65",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "65",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "/(? x 7) x 18 = 84",
+  "options": [
+   {
+    "position": "A",
+    "text": "3•11"
+   },
+   {
+    "position": "B",
+    "text": "3•12"
+   },
+   {
+    "position": "C",
+    "text": "3•13"
+   },
+   {
+    "position": "D",
+    "text": "3•14"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q67",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "67",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is in decreasing (descending) order ? 1 21 3 3 5 6",
+  "options": [
+   {
+    "position": "A",
+    "text": "2 50' 10 6 4' 8 7 5 17 1 3 5 13 97"
+   },
+   {
+    "position": "B",
+    "text": "12' 16' 36' 3 5, 7 16' 104 MD 1000/B/2K12/02 ( 12 ) 2 A man spends of his salary on food, to of his salary on house rent and of the salary on 8 clothes. He still has * 1400 left with him. What is his salary ? (1) * 7500 (2) 7 5000 (3) F 10000 (4) * 8000"
+   }
+  ]
+ }
+]

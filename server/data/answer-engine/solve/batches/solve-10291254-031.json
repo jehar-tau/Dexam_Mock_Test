@@ -1,0 +1,80 @@
+[
+ {
+  "id": "nift-mdes-written-sample-q103",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following relations shows that L is the daughter-in-law of R?",
+  "options": [
+   {
+    "position": "A",
+    "text": "L * D% R"
+   },
+   {
+    "position": "B",
+    "text": "L * D - R"
+   },
+   {
+    "position": "C",
+    "text": "L+D x R"
+   },
+   {
+    "position": "D",
+    "text": "L + D % R"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q104",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "104",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If L * D x R is true, what is the relationship between L and R?",
+  "options": [
+   {
+    "position": "A",
+    "text": "L is the father of R"
+   },
+   {
+    "position": "B",
+    "text": "L is the mother of R"
+   },
+   {
+    "position": "C",
+    "text": "L is the aunt of R"
+   },
+   {
+    "position": "D",
+    "text": "L is the uncle of R"
+   }
+  ]
+ },
+ {
+  "id": "nift-mdes-written-sample-q105",
+  "paper": "nift-mdes-written-sample",
+  "questionNo": "105",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If L x D * R is true, what is the relationship between L and R?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Father-in-law"
+   },
+   {
+    "position": "B",
+    "text": "Brother-in-law"
+   },
+   {
+    "position": "C",
+    "text": "Mother-in-law"
+   },
+   {
+    "position": "D",
+    "text": "Sister-in-law 23 TE Je (7) achot (1) La ChA Ch (8) Mocle (1) NuB (2) 18109114 (E) At (1) NE N (1) 2e 12 (z) 18H Ц+ (+) 12-PM/M/XX-XX/I 24"
+   }
+  ]
+ }
+]

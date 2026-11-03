@@ -1,0 +1,3110 @@
+[
+ {
+  "id": "nift-2014-mdes-written-q23",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A place where gambling is practiced.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bar"
+   },
+   {
+    "position": "B",
+    "text": "Theatre"
+   },
+   {
+    "position": "C",
+    "text": "Hotel"
+   },
+   {
+    "position": "D",
+    "text": "Casino MT1000/E/2K14/02 3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q46",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If a, b, c are in A.P. as well as in G.P. then",
+  "options": [
+   {
+    "position": "A",
+    "text": "a = b‡ c"
+   },
+   {
+    "position": "B",
+    "text": "a #b = c"
+   },
+   {
+    "position": "C",
+    "text": "a 7b‡ c"
+   },
+   {
+    "position": "D",
+    "text": ". a = b = c"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q47",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The locus of a point such that the ratio of its distance from two given points is constant is a",
+  "options": [
+   {
+    "position": "A",
+    "text": "circle"
+   },
+   {
+    "position": "B",
+    "text": "straight line"
+   },
+   {
+    "position": "C",
+    "text": "ellipse"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q48",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The limit of the function 1/x as x tends to ∞ is",
+  "options": [
+   {
+    "position": "A",
+    "text": "00"
+   },
+   {
+    "position": "B",
+    "text": "0"
+   },
+   {
+    "position": "C",
+    "text": "- 00 •"
+   },
+   {
+    "position": "D",
+    "text": "3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q49",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "49",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If cos 5A = a cos A + b cos® A + c cos A + d, then",
+  "options": [
+   {
+    "position": "A",
+    "text": "a = 20"
+   },
+   {
+    "position": "B",
+    "text": "b= - 20"
+   },
+   {
+    "position": "C",
+    "text": "c = 18"
+   },
+   {
+    "position": "D",
+    "text": "b = 15"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q52",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "52",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Three pipes A, B and C can fill a tank in 6 hours. After working at it together for 2 hours, C is closed and A and B can fill the remaining part in 7 hours. The number of hours taken by C alone to fill the tank is",
+  "options": [
+   {
+    "position": "A",
+    "text": "10 hrs."
+   },
+   {
+    "position": "B",
+    "text": "12 hrs."
+   },
+   {
+    "position": "C",
+    "text": "14 hrs."
+   },
+   {
+    "position": "D",
+    "text": "16 hrs. 11"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q53",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sound is said to travel in air at about 1100 feet per second. A man hears the axe striking the tree, 5 seconds after he sees it strike the tree. How far is the man from the wood chopper?",
+  "options": [
+   {
+    "position": "A",
+    "text": "2197 ft"
+   },
+   {
+    "position": "B",
+    "text": "2420 ft"
+   },
+   {
+    "position": "C",
+    "text": "2500 ft"
+   },
+   {
+    "position": "D",
+    "text": "2629 ft"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q54",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "54",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two goods trains each 500 m long, are running in opposite directions on parallel tracks. Their speeds are 45 km/hr and 30 km/hr respectively. Find the time taken by the slower train to pass the driver of the faster",
+  "options": [
+   {
+    "position": "A",
+    "text": "12 sec"
+   },
+   {
+    "position": "B",
+    "text": "48 sec"
+   },
+   {
+    "position": "C",
+    "text": "60 sec"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q55",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "55",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A boat takes 90 minutes less to travel 36 miles downstream than to travel the same distance upstream. If the speed of the boat in still water is 10 mph, the speed of the stream is",
+  "options": [
+   {
+    "position": "A",
+    "text": "2 mph"
+   },
+   {
+    "position": "B",
+    "text": "2.5 mph"
+   },
+   {
+    "position": "C",
+    "text": "3 mph"
+   },
+   {
+    "position": "D",
+    "text": "4 mph"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q56",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "56",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A dishonest milkman professes to sell his milk at cost price but he mixes it with water and thereby gains 25%. The percentage of water in the mixture is",
+  "options": [
+   {
+    "position": "A",
+    "text": "4%"
+   },
+   {
+    "position": "B",
+    "text": "6.5%"
+   },
+   {
+    "position": "C",
+    "text": "20%"
+   },
+   {
+    "position": "D",
+    "text": "25%"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q57",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "57",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The compound interest on a certain sum for 2 years at 10% per annum is F 525. The simple interest on the same sum for double the time at half the rate percent per annum is",
+  "options": [
+   {
+    "position": "A",
+    "text": "* 400"
+   },
+   {
+    "position": "B",
+    "text": "F 500"
+   },
+   {
+    "position": "C",
+    "text": "* 600"
+   },
+   {
+    "position": "D",
+    "text": "7 800 MT1000/E/2K14/02 9 On dividing a certain number by 342, we get 47 as the remainder. If the same number is divided by 18, what will be the remainder? (1) 9 (2) 13 (3) 11 (4) 15"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q59",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "59",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Find the smallest number of five digits exactly divisible by 16, 24, 36 and 54.",
+  "options": [
+   {
+    "position": "A",
+    "text": "10364"
+   },
+   {
+    "position": "B",
+    "text": "10368"
+   },
+   {
+    "position": "C",
+    "text": "10366"
+   },
+   {
+    "position": "D",
+    "text": "10362"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q62",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Find the average of all prime numbers between 30 and 50.",
+  "options": [
+   {
+    "position": "A",
+    "text": "39.8"
+   },
+   {
+    "position": "B",
+    "text": "39.7"
+   },
+   {
+    "position": "C",
+    "text": "40.1"
+   },
+   {
+    "position": "D",
+    "text": "40.2"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q63",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "63",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If the sum of two numbers is 42 and their product is 437, then find the absolute difference between the numbers.",
+  "options": [
+   {
+    "position": "A",
+    "text": "4"
+   },
+   {
+    "position": "B",
+    "text": "5"
+   },
+   {
+    "position": "C",
+    "text": "6"
+   },
+   {
+    "position": "D",
+    "text": "3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q64",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "64",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The ages of two persons differ by 16 years. If 6 years ago, the elder one was 3 times as old as the younger one, find their present ages.",
+  "options": [
+   {
+    "position": "A",
+    "text": "12 & 28"
+   },
+   {
+    "position": "B",
+    "text": "13 & 29"
+   },
+   {
+    "position": "C",
+    "text": "14 & 30"
+   },
+   {
+    "position": "D",
+    "text": "15 & 31"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q65",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "65",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "An inspector rejects 0.08% of the meters as defective. How many meters will he examine to reject 2 meters?",
+  "options": [
+   {
+    "position": "A",
+    "text": "2400"
+   },
+   {
+    "position": "B",
+    "text": "2500"
+   },
+   {
+    "position": "C",
+    "text": "2300"
+   },
+   {
+    "position": "D",
+    "text": "2200"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q67",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "67",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A person incurs 5% loss by selling a watch for # 1140. At what price should the watch be sold to earn 5% profit?",
+  "options": [
+   {
+    "position": "A",
+    "text": "7 1250"
+   },
+   {
+    "position": "B",
+    "text": "F 1260"
+   },
+   {
+    "position": "C",
+    "text": "< 1270"
+   },
+   {
+    "position": "D",
+    "text": "7 1255"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q68",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "68",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two numbers are respectively 20% and 50% more than a third number. The ratio of the two numbers is:",
+  "options": [
+   {
+    "position": "A",
+    "text": "2:5"
+   },
+   {
+    "position": "B",
+    "text": "3:5"
+   },
+   {
+    "position": "C",
+    "text": "4:5"
+   },
+   {
+    "position": "D",
+    "text": "6:7 10"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q69",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "69",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "36 men can complete a piece of work in 18 days. In how many days will 27 men complete the same work?",
+  "options": [
+   {
+    "position": "A",
+    "text": "12"
+   },
+   {
+    "position": "B",
+    "text": "18"
+   },
+   {
+    "position": "C",
+    "text": "22"
+   },
+   {
+    "position": "D",
+    "text": "24"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q75",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "75",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If a particle moves in a circle, describing equal angles in equal times, its velocity vector",
+  "options": [
+   {
+    "position": "A",
+    "text": "changes in direction"
+   },
+   {
+    "position": "B",
+    "text": "remains always constant"
+   },
+   {
+    "position": "C",
+    "text": "changes both in magnitude and direction"
+   },
+   {
+    "position": "D",
+    "text": "neither changes in magnitude nor in direction"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q81",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "81",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "1,6, 15, \"?', 45, 66, 91",
+  "options": [
+   {
+    "position": "A",
+    "text": "25"
+   },
+   {
+    "position": "B",
+    "text": "26"
+   },
+   {
+    "position": "C",
+    "text": "27"
+   },
+   {
+    "position": "D",
+    "text": "28"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q82",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "82",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "2, 5, 9, 19,37, \"?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "73"
+   },
+   {
+    "position": "B",
+    "text": "75"
+   },
+   {
+    "position": "C",
+    "text": "76"
+   },
+   {
+    "position": "D",
+    "text": "78"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q83",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "83",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "4, 8, 28, 80, 244, '?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "278"
+   },
+   {
+    "position": "B",
+    "text": "428"
+   },
+   {
+    "position": "C",
+    "text": "628"
+   },
+   {
+    "position": "D",
+    "text": "728"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q84",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "84",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "KM5, IP8, GS11, EV14, '?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "BX17"
+   },
+   {
+    "position": "B",
+    "text": "BY17"
+   },
+   {
+    "position": "C",
+    "text": "CY17"
+   },
+   {
+    "position": "D",
+    "text": "CY18"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q85",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "85",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "275, 7Y7, 14X9, 23W11, 34V13,'?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "27U24"
+   },
+   {
+    "position": "B",
+    "text": "45U15"
+   },
+   {
+    "position": "C",
+    "text": "47U15"
+   },
+   {
+    "position": "D",
+    "text": "47V14 as"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q98",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "98",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Pointing to Karim, Nagma said, \"he is the son of my father's only son.\" How is Karim's mother related to Nagma?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Daughter"
+   },
+   {
+    "position": "B",
+    "text": "Aunt"
+   },
+   {
+    "position": "C",
+    "text": "Sister-in-law"
+   },
+   {
+    "position": "D",
+    "text": "Sister"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q99",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A man is facing West. He turns 45° in the clockwise direction and then another 180° in the same direction and then 270° in the anti-clockwise direction. Which direction is he facing now?",
+  "options": [
+   {
+    "position": "A",
+    "text": "West"
+   },
+   {
+    "position": "B",
+    "text": "North-West"
+   },
+   {
+    "position": "C",
+    "text": "South-West"
+   },
+   {
+    "position": "D",
+    "text": "South"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q100",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "100",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What will be the difference between the sum of the odd digits and the sum of the even digits in the number 857423?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Zero"
+   },
+   {
+    "position": "B",
+    "text": "One"
+   },
+   {
+    "position": "C",
+    "text": "Two"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q101",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "101",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is/are well known commercial varieties of silk that are produced in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Muga"
+   },
+   {
+    "position": "B",
+    "text": "Mulberry"
+   },
+   {
+    "position": "C",
+    "text": "Oak Tussar"
+   },
+   {
+    "position": "D",
+    "text": "All these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q102",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which place was the first successful cotton textile mill established in India in 1854?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Calcutta"
+   },
+   {
+    "position": "B",
+    "text": "Bombay"
+   },
+   {
+    "position": "C",
+    "text": "Surat"
+   },
+   {
+    "position": "D",
+    "text": "Ahmedabad"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q104",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "104",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which technique of painting was popularized by the European artists during the colonial period in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Oil painting."
+   },
+   {
+    "position": "B",
+    "text": "Charcoal painting."
+   },
+   {
+    "position": "C",
+    "text": "Watercolour painting."
+   },
+   {
+    "position": "D",
+    "text": "Spray painting."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q105",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "105",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Xylys', the popular Swiss made watches, are promoted in India by which Indian company?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Titan"
+   },
+   {
+    "position": "B",
+    "text": "Maxima"
+   },
+   {
+    "position": "C",
+    "text": "Ajanta"
+   },
+   {
+    "position": "D",
+    "text": "Timex"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q113",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "113",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following banks in India introduced the 'Rubyx' debit card promoting it as inspired by the gemstone 'Ruby'?",
+  "options": [
+   {
+    "position": "A",
+    "text": "YES Bank"
+   },
+   {
+    "position": "B",
+    "text": "ICICI"
+   },
+   {
+    "position": "C",
+    "text": "Axis"
+   },
+   {
+    "position": "D",
+    "text": "HDFC"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q116",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "116",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who, among the following Indian film actors, endorsed the 'Garnier' range of men's skin cream?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Shahrukh Khan"
+   },
+   {
+    "position": "B",
+    "text": "John Abraham"
+   },
+   {
+    "position": "C",
+    "text": "Shahid Kapoor"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q117",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "117",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who wrote the book 'Indika\"?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Kautilya"
+   },
+   {
+    "position": "B",
+    "text": "Ashoka"
+   },
+   {
+    "position": "C",
+    "text": "Megasthenes"
+   },
+   {
+    "position": "D",
+    "text": "Seleukus"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q119",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "119",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Name the microorganism which causes the plant disease 'Rust of Wheat'.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bacteria"
+   },
+   {
+    "position": "B",
+    "text": "Virus"
+   },
+   {
+    "position": "C",
+    "text": "Algae"
+   },
+   {
+    "position": "D",
+    "text": "Fungi"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q120",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "120",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In which country is the volcanic mountain 'Mt. Kilimanjaro' located?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Japan"
+   },
+   {
+    "position": "B",
+    "text": "USA"
+   },
+   {
+    "position": "C",
+    "text": "Indonesia"
+   },
+   {
+    "position": "D",
+    "text": "Tanzania"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q121",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "121",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The 2020 Olympic Games are scheduled to be held in",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tokyo."
+   },
+   {
+    "position": "B",
+    "text": "Istanbul."
+   },
+   {
+    "position": "C",
+    "text": "Madrid."
+   },
+   {
+    "position": "D",
+    "text": "London."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q122",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "On which day of 2013 was the celestial event, a 'Super Moon', observed in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "8 October"
+   },
+   {
+    "position": "B",
+    "text": "14 August"
+   },
+   {
+    "position": "C",
+    "text": "27 September"
+   },
+   {
+    "position": "D",
+    "text": "23 June"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q123",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Android' a Linux based operating system used in mobiles is created by which company?",
+  "options": [
+   {
+    "position": "A",
+    "text": "BlackBerry"
+   },
+   {
+    "position": "B",
+    "text": "Apple"
+   },
+   {
+    "position": "C",
+    "text": "Google"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q124",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "124",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Tears you apart', a nationwide National Family Welfare, Government of India. _ Control Campaign is launched by Ministry of Health and",
+  "options": [
+   {
+    "position": "A",
+    "text": "AIDS"
+   },
+   {
+    "position": "B",
+    "text": "Malnutrition"
+   },
+   {
+    "position": "C",
+    "text": "Population"
+   },
+   {
+    "position": "D",
+    "text": "Tobacco"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q125",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "125",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The commonly used gender symbols for female and male have been adopted from the symbols of which two planets of our solar system?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Jupiter and Mars"
+   },
+   {
+    "position": "B",
+    "text": "Venus and Mars"
+   },
+   {
+    "position": "C",
+    "text": "Venus and Mercury"
+   },
+   {
+    "position": "D",
+    "text": "Uranus and Mercury 15"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q127",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "127",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Big lenders have seen a surge in retail loan offtake over the seven months of the fiscal. Rising salaries coupled with pent-up demand for new homes and cars have given the desired shot in the arm to retail lending by banks across the country. For some like HDFC Bank and Axis Bank, October has been the best month in terms of retail assets growth. Others such as ICICI Bank and Bank of Baroda have also witnessed significant improvement in credit offtake on the back of rising home and auto loans, said bankers.",
+  "options": [
+   {
+    "position": "A",
+    "text": "There has been an upsurge in the retail loans market this fiscal with October being the best month for most leading banks such as HDFC, ICICI etc."
+   },
+   {
+    "position": "B",
+    "text": "October witnessed peaking of the retail bank loans market this fiscal, the revival made possible by rising salaries leading to an increased demand for home and auto loans across the country."
+   },
+   {
+    "position": "C",
+    "text": "HDFC, ICICI, AXIS, BoB are the leading banks that collectively led the revival of the home and auto loans market across the country, with October as the best month."
+   },
+   {
+    "position": "D",
+    "text": "After a long period of lull, October saw the revival of retail loan markets as evidenced by the performance of HDFC, AXIS, ICICI and other leading banks across the country."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q128",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "128",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In what can be seen as a positive impact of global warming, large blooms of tiny marine plants called \"phytoplankton\", that can absorb carbon dioxide from the atmosphere. are flourishing in the area opened up by massive ice melting in Antarctica. Without ice cover, the water gets exposed to light and circulatior of nutrients that help the plants move in and take up extra amounts of carbon dioxide, becoming wha scientists call a \"carbon sink\". This is really massive— it's like having a new forest the size of Wales, said Professor Llyod Peck, a near-shore marine biologist from the British Antarctic Survey.",
+  "options": [
+   {
+    "position": "A",
+    "text": "An exciting fallout of the melting of ice in Antarctica due to global warming is the creation o 'Carbon sinks' by blooming marine plants."
+   },
+   {
+    "position": "B",
+    "text": "The melting of ice in the Antarctic region due to global warming has resulted in the blooming of tin! marine plants called phytoplankton that absorb massive quantities of carbon-di-oxide."
+   },
+   {
+    "position": "C",
+    "text": "Global warming has resulted in some benefits as well, in the form of growth of vegetation in the hitherto barren Antarctic region."
+   },
+   {
+    "position": "D",
+    "text": "The discovery of phytoplankton blooms in the Antarctic waters has got the scientists excited becaus it is a positive fallout of global warming. MT1000/E/2K14/02 16"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q129",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "129",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Internet is about to get more accessible for millions worldwide with the imminent approval of a new multilingual address system that uses Asian and Arabic scripts, a global regulator said on Monday. The Internet Corporation for Assigned Names and Numbers (ICANN) said it would declare an end to the exclusive use of Latin characters for website addresses on Friday the final day of its six-day conference in Seoul. \"This is the biggest change technically to the Internet since it was invented 40 years ago,\" Peter conference. Dengate Thrush, Chairman of the ICANN board in charge of reviewing. the change, told a press",
+  "options": [
+   {
+    "position": "A",
+    "text": "The ICANN board has plans to abolish exclusive use of Latin characters in the addresses and introduce both Arabic and Asian scripts to make Internet more broad-based."
+   },
+   {
+    "position": "B",
+    "text": "Multilingual internet addresses with Chinese, Arabic, Korean and Japanese characters would soon be a reality as the ICANN board has approved this move."
+   },
+   {
+    "position": "C",
+    "text": "Exclusive use of Latin American characters in internet addresses over the last 40 years has hindered the growth of internet in Asian and Arabic countries."
+   },
+   {
+    "position": "D",
+    "text": "Internet is to get more accessible soon with the move by global regulator ICANN to introduce a multi-lingual address system that uses Asian and Arabic scripts, instead of just Latin characters."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q130",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "130",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The enrolment of first-time graduate students from India has registered a 16 per cent decline in comparison to last year while that of China has increased by the same level, says a latest report. \"First- time enrolment of students increased by 16 per cent from China and by 22 per cent from the Middle East. However, there was a 16 per cent decline from India and 13 per cent decline from South Korea,\" the Council of Graduate Schools (CGS) has said in its report. India sends one of the largest numbers of international students to the US for higher studies along with China and South Korea and the sharp drop of 16 per cent, follows two years of modest decline, two percent in 2008 and eight per cent in 2007. The report also pointed that there was no growth in first-time enrolment of international students in the US graduate schools from 2008 to 2009.",
+  "options": [
+   {
+    "position": "A",
+    "text": "The overall number of first-time enrolment of international students in US graduate schools has remained static with the Middle East showing growth and Asian countries reflecting a mixed trend"
+   },
+   {
+    "position": "B",
+    "text": "India and South Korea are gradually veering away from sending its students to the US for higher studies, whereas China, North Korea and the Middle East are sending higher numbers thereby even out the overall numbers."
+   },
+   {
+    "position": "C",
+    "text": "The CGS has published a report to assess the trends in first-time enrolment of international student populations in graduate schools in the US."
+   },
+   {
+    "position": "D",
+    "text": "India, China and South Korea together account for a sizeable contingent of international students enrolling in US graduate schools for the first-time, and help to keep the overall numbers stable even if there is a decline in numbers from other countries."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q134",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "134",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Parle wants to increase business in the cream biscuit segment due to",
+  "options": [
+   {
+    "position": "A",
+    "text": "not much competition."
+   },
+   {
+    "position": "B",
+    "text": "low cost of production."
+   },
+   {
+    "position": "C",
+    "text": "high growth in this segment."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q135",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "135",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In the past, which of the following has been the most popular brand for making glucose biscuits?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Britannia"
+   },
+   {
+    "position": "B",
+    "text": "Kraft Foods"
+   },
+   {
+    "position": "C",
+    "text": "Parle"
+   },
+   {
+    "position": "D",
+    "text": "ITC"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q136",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "136",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Currently which of the following has the second largest share in the cream biscuit segment?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Parle MT1000/E/2K14/02 18"
+   },
+   {
+    "position": "B",
+    "text": "ITC"
+   },
+   {
+    "position": "C",
+    "text": "Kraft Food"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q139",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "139",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Presently, Ashok Leyland has how many manufacturing units in Southern India for Boss vehicle?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Three"
+   },
+   {
+    "position": "B",
+    "text": "Only one ."
+   },
+   {
+    "position": "C",
+    "text": "None"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q140",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "140",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "As per the passage, which of the following statements is not true?",
+  "options": [
+   {
+    "position": "A",
+    "text": "During the past two years, market for heavy and intermediate CVs has gone down."
+   },
+   {
+    "position": "B",
+    "text": "Ashok Leyland does not want to launch Boss Vehicle immediately on all-India basis."
+   },
+   {
+    "position": "C",
+    "text": "Ashok Leyland is not eyeing a bigger share of intermediate CV segment. 19"
+   },
+   {
+    "position": "D",
+    "text": "All these"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q1",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What did the author find out about the theory that honesty is the best policy ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "It is a useless theory."
+   },
+   {
+    "position": "B",
+    "text": "It is correct on many occasions."
+   },
+   {
+    "position": "C",
+    "text": "It is correct for all businessmen"
+   },
+   {
+    "position": "D",
+    "text": "It is correct only occasionally."
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q3",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What do economists and ethicists want us to believe ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Businessmen are honest only at times."
+   },
+   {
+    "position": "B",
+    "text": "Businessmen should be honest at all times."
+   },
+   {
+    "position": "C",
+    "text": "Businessmen cannot be honest at all times."
+   },
+   {
+    "position": "D",
+    "text": "Businessmen turn dishonest at times."
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q6",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is false according to the passage?",
+  "options": [
+   {
+    "position": "A",
+    "text": "People are generally honest because it pays in the long run."
+   },
+   {
+    "position": "B",
+    "text": "Virtuous behaviour earns the self-respect of others."
+   },
+   {
+    "position": "C",
+    "text": "Economists believe that all businessmen are dishonest."
+   },
+   {
+    "position": "D",
+    "text": "Generally people are honest to earn self-respect."
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q22",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following is not a synonym of 'fallacy'?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Erroneous belief"
+   },
+   {
+    "position": "B",
+    "text": "Myth"
+   },
+   {
+    "position": "C",
+    "text": "Canard"
+   },
+   {
+    "position": "D",
+    "text": "Platitude"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q23",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following is not an antonym of illustrious?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Unknown"
+   },
+   {
+    "position": "B",
+    "text": "Nameless"
+   },
+   {
+    "position": "C",
+    "text": "Anonymous"
+   },
+   {
+    "position": "D",
+    "text": "Distinguished"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q25",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Contentious means",
+  "options": [
+   {
+    "position": "A",
+    "text": "given."
+   },
+   {
+    "position": "B",
+    "text": "debatable."
+   },
+   {
+    "position": "C",
+    "text": "obvious."
+   },
+   {
+    "position": "D",
+    "text": "without doubt. 11-PM/A/XX-XX/I 5 62/"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q26",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "the correctly spelt word.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sporadic"
+   },
+   {
+    "position": "B",
+    "text": "Sporiadic"
+   },
+   {
+    "position": "C",
+    "text": "Spordiac"
+   },
+   {
+    "position": "D",
+    "text": "Spordaic"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q31",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "31",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Nucleus",
+  "options": [
+   {
+    "position": "A",
+    "text": "Nucleuses"
+   },
+   {
+    "position": "B",
+    "text": "Nucleusis"
+   },
+   {
+    "position": "C",
+    "text": "Nuclei"
+   },
+   {
+    "position": "D",
+    "text": "Nucleis"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q32",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sheep",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sheep"
+   },
+   {
+    "position": "B",
+    "text": "Sheeps"
+   },
+   {
+    "position": "C",
+    "text": "Sheepes"
+   },
+   {
+    "position": "D",
+    "text": "Sheepps"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q33",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Tomato",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tomatoes"
+   },
+   {
+    "position": "B",
+    "text": "Tomatose"
+   },
+   {
+    "position": "C",
+    "text": "Tomattos"
+   },
+   {
+    "position": "D",
+    "text": "Tomatoess"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q34",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Loaf",
+  "options": [
+   {
+    "position": "A",
+    "text": "Loafs"
+   },
+   {
+    "position": "B",
+    "text": "Loaves"
+   },
+   {
+    "position": "C",
+    "text": "Loaffs"
+   },
+   {
+    "position": "D",
+    "text": "Loafes"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q35",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "News",
+  "options": [
+   {
+    "position": "A",
+    "text": "Newses"
+   },
+   {
+    "position": "B",
+    "text": "News"
+   },
+   {
+    "position": "C",
+    "text": "Newsses"
+   },
+   {
+    "position": "D",
+    "text": "Newssess"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q36",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "36",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Flamboyant",
+  "options": [
+   {
+    "position": "A",
+    "text": "Honourable"
+   },
+   {
+    "position": "B",
+    "text": "Outgoing"
+   },
+   {
+    "position": "C",
+    "text": "Flashy"
+   },
+   {
+    "position": "D",
+    "text": "Modest"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q37",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Wizard",
+  "options": [
+   {
+    "position": "A",
+    "text": "Clever"
+   },
+   {
+    "position": "B",
+    "text": "Sharp"
+   },
+   {
+    "position": "C",
+    "text": "Beginner"
+   },
+   {
+    "position": "D",
+    "text": "Fast"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q38",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Stupendous",
+  "options": [
+   {
+    "position": "A",
+    "text": "Great"
+   },
+   {
+    "position": "B",
+    "text": "Ordinary"
+   },
+   {
+    "position": "C",
+    "text": "Noisy"
+   },
+   {
+    "position": "D",
+    "text": "Poor"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q39",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Desolate",
+  "options": [
+   {
+    "position": "A",
+    "text": "Docile"
+   },
+   {
+    "position": "B",
+    "text": "Fertile"
+   },
+   {
+    "position": "C",
+    "text": "Quiet •"
+   },
+   {
+    "position": "D",
+    "text": "Clever"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q40",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Crafty",
+  "options": [
+   {
+    "position": "A",
+    "text": "Expert"
+   },
+   {
+    "position": "B",
+    "text": "Perfect"
+   },
+   {
+    "position": "C",
+    "text": "Naive"
+   },
+   {
+    "position": "D",
+    "text": "Honest 11-PM/A/XX-XX/I 6"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q41",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "41",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Jeopardy",
+  "options": [
+   {
+    "position": "A",
+    "text": "Peace"
+   },
+   {
+    "position": "B",
+    "text": "Danger"
+   },
+   {
+    "position": "C",
+    "text": "Happy"
+   },
+   {
+    "position": "D",
+    "text": "Satisfied"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q42",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "42",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Paradox",
+  "options": [
+   {
+    "position": "A",
+    "text": "Puzzle"
+   },
+   {
+    "position": "B",
+    "text": "Solution"
+   },
+   {
+    "position": "C",
+    "text": "Agreement"
+   },
+   {
+    "position": "D",
+    "text": "Answer"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q43",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Meticulous",
+  "options": [
+   {
+    "position": "A",
+    "text": "Careful"
+   },
+   {
+    "position": "B",
+    "text": "Easygoing"
+   },
+   {
+    "position": "C",
+    "text": "Careless"
+   },
+   {
+    "position": "D",
+    "text": "Dark"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q44",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "44",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Melancholy",
+  "options": [
+   {
+    "position": "A",
+    "text": "Thrill"
+   },
+   {
+    "position": "B",
+    "text": "Sad"
+   },
+   {
+    "position": "C",
+    "text": "Lucky"
+   },
+   {
+    "position": "D",
+    "text": "Celebrate"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q45",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Enigma",
+  "options": [
+   {
+    "position": "A",
+    "text": "Solution"
+   },
+   {
+    "position": "B",
+    "text": "Mystery"
+   },
+   {
+    "position": "C",
+    "text": "Beauty"
+   },
+   {
+    "position": "D",
+    "text": "Natural"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q46",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Stir up a hornet's nest",
+  "options": [
+   {
+    "position": "A",
+    "text": "avoid problems"
+   },
+   {
+    "position": "B",
+    "text": "make lot of friends"
+   },
+   {
+    "position": "C",
+    "text": "create trouble"
+   },
+   {
+    "position": "D",
+    "text": "annoy others"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q47",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "To break the ice",
+  "options": [
+   {
+    "position": "A",
+    "text": "to start a conversation"
+   },
+   {
+    "position": "B",
+    "text": "to start quarrelling"
+   },
+   {
+    "position": "C",
+    "text": "to end a fight"
+   },
+   {
+    "position": "D",
+    "text": "to end the hostility"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q48",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Midas touch",
+  "options": [
+   {
+    "position": "A",
+    "text": "touch softly"
+   },
+   {
+    "position": "B",
+    "text": "please somebody"
+   },
+   {
+    "position": "C",
+    "text": "ability to succeed in all projects"
+   },
+   {
+    "position": "D",
+    "text": "ability to destroy anything"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q49",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "49",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Blow the lid off",
+  "options": [
+   {
+    "position": "A",
+    "text": "secret desire"
+   },
+   {
+    "position": "B",
+    "text": "hide something"
+   },
+   {
+    "position": "C",
+    "text": "open"
+   },
+   {
+    "position": "D",
+    "text": "make public"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q50",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In the offing",
+  "options": [
+   {
+    "position": "A",
+    "text": "likely to happen"
+   },
+   {
+    "position": "B",
+    "text": "getting closed"
+   },
+   {
+    "position": "C",
+    "text": "not needed"
+   },
+   {
+    "position": "D",
+    "text": "trigger 11-PM/A/XX-XX/I 7 62/ 81J0 8I÷8I 'IS ilele 1ae tllt 1 8IX8I÷8I (D) (Z) (E) (4) VZE 312 322 69 (1) IL (z) (3) 72 VL (t) 'ES 9 (D) 6 (z) (3) 3 (4) 2 32.4 ajk V x (1) 1000 (2) 200 00I (€) O1 (t)"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q52",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "52",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sum of the two numbers is 17 whereas sum of their squares is 145. Find the product of the two numbers.",
+  "options": [
+   {
+    "position": "A",
+    "text": "69"
+   },
+   {
+    "position": "B",
+    "text": "71"
+   },
+   {
+    "position": "C",
+    "text": "72"
+   },
+   {
+    "position": "D",
+    "text": "74"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q58",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The salary of a school teacher was increased by 25% and later it was decreased by 25%. If he now draws 7937.50, what was the original salary?",
+  "options": [
+   {
+    "position": "A",
+    "text": "*980"
+   },
+   {
+    "position": "B",
+    "text": "7985"
+   },
+   {
+    "position": "C",
+    "text": "7990"
+   },
+   {
+    "position": "D",
+    "text": "71000 59. A man sold a book at a profit of 25 percent of S.P. The percentage of profit on his cost price of the book is (1) 33-% (2) 162% (3) 662% (4) 502% 60. The average age of 10 men is increased by 2 years when one of them is of 25 years age, is replaced by a new man. The age of the new man is h"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q62",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In how many minimum number of complete years, a sum of money put out at 25 percent compound interest will be more than doubled?",
+  "options": [
+   {
+    "position": "A",
+    "text": "3 years"
+   },
+   {
+    "position": "B",
+    "text": "6 years"
+   },
+   {
+    "position": "C",
+    "text": "4 years"
+   },
+   {
+    "position": "D",
+    "text": "9 years"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q63",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "63",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A train of length x metres passes a man standing on the platform in 7 seconds. If the speed of the train is 72 km. an hour, find x.",
+  "options": [
+   {
+    "position": "A",
+    "text": "140 m"
+   },
+   {
+    "position": "B",
+    "text": "127 m - km. per"
+   },
+   {
+    "position": "C",
+    "text": "133 m"
+   },
+   {
+    "position": "D",
+    "text": "137 m"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q66",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "66",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In what proportion must sugar at 716.60 a kg. be mixed with sugar at 716.45 a kg so that the mixture may be worth 716.54 a kg.?",
+  "options": [
+   {
+    "position": "A",
+    "text": "2:5"
+   },
+   {
+    "position": "B",
+    "text": "2:3"
+   },
+   {
+    "position": "C",
+    "text": "3:2"
+   },
+   {
+    "position": "D",
+    "text": "3:4"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q67",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "67",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The difference between the highest and lowest two digit numbers is",
+  "options": [
+   {
+    "position": "A",
+    "text": "88 When 50 is added to the 50% of a number, then the number becomes itself. The required number is (2) 100 (3) 150 (4) 500 (1) 375"
+   },
+   {
+    "position": "B",
+    "text": "89"
+   },
+   {
+    "position": "C",
+    "text": "22"
+   },
+   {
+    "position": "D",
+    "text": "99"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q70",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Successive discount of 10% and 5% is equivalent to",
+  "options": [
+   {
+    "position": "A",
+    "text": "16.5% 11 Tq thà 1h Bkh Kh (1) (2 1àmg ta 101a 10 (1(1) T àk tha Bk kà (t) (à Đàn 3 tk Ca (2) 10t (1(2) *IL ZL Tha lên khn thn ta tinni man (ai) laaice Jelach 'EL 187 1 0Đ3 pcbals H tển t tn há đà th tàn t t ti thà tà tà tà t tà t ta ii ta . Ta Đ Cá thá t tá tà tá tàn t tin t t à ti nn h can . facbal"
+   },
+   {
+    "position": "B",
+    "text": "15%"
+   },
+   {
+    "position": "C",
+    "text": "15.5%"
+   },
+   {
+    "position": "D",
+    "text": "14.5%"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q75",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "75",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "11, 23, 35, 47, 59, \"?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "67"
+   },
+   {
+    "position": "B",
+    "text": "71"
+   },
+   {
+    "position": "C",
+    "text": "72"
+   },
+   {
+    "position": "D",
+    "text": "78"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q76",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "76",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "U7Z, V6A, W5B, X4C, Y3D, \"?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "Z1F"
+   },
+   {
+    "position": "B",
+    "text": "Z2E"
+   },
+   {
+    "position": "C",
+    "text": "X3F"
+   },
+   {
+    "position": "D",
+    "text": "Y4G"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q77",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A8B, C7D, E6F, *?' , I4J, K3L",
+  "options": [
+   {
+    "position": "A",
+    "text": "FSG"
+   },
+   {
+    "position": "B",
+    "text": "D3H"
+   },
+   {
+    "position": "C",
+    "text": "GSH"
+   },
+   {
+    "position": "D",
+    "text": "G6H 11-PM/A/XX-XX/I 13"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q80",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "80",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "APL, ZQK, YRJ, XSI, WTK, VUG",
+  "options": [
+   {
+    "position": "A",
+    "text": "ZQK"
+   },
+   {
+    "position": "B",
+    "text": "YRJ (2) згідт (1) 787 (3) 715 82 (4) Q (2) L (3) 0 (1) P"
+   },
+   {
+    "position": "C",
+    "text": "WTK"
+   },
+   {
+    "position": "D",
+    "text": "VUG"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q99",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Veteran gymnast Simon Biles, who has achieved her record 19th world title at the 2019 World Artistic Gymnastics Championships is from",
+  "options": [
+   {
+    "position": "A",
+    "text": "Germany"
+   },
+   {
+    "position": "B",
+    "text": "USA"
+   },
+   {
+    "position": "C",
+    "text": "Bulgaria"
+   },
+   {
+    "position": "D",
+    "text": "Canada"
+   }
+  ]
+ },
+ {
+  "id": "nift-bdes-written-sample-q100",
+  "paper": "nift-bdes-written-sample",
+  "questionNo": "100",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Former Indian Cricketer Sourav Ganguly has been recently elected as the of the Board of Control for Cricket in India (BCCI).",
+  "options": [
+   {
+    "position": "A",
+    "text": "Chairman"
+   },
+   {
+    "position": "B",
+    "text": "Director"
+   },
+   {
+    "position": "C",
+    "text": "President"
+   },
+   {
+    "position": "D",
+    "text": "Chief Selector 19"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q1",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Showing anger because of something unjust or unworthy",
+  "options": [
+   {
+    "position": "A",
+    "text": "Indignant"
+   },
+   {
+    "position": "B",
+    "text": "Vendetta"
+   },
+   {
+    "position": "C",
+    "text": "Sonnet"
+   },
+   {
+    "position": "D",
+    "text": "Absurd"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q2",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A person who studies the past, or who collects or buys and sells old and valuable objects.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ruffian"
+   },
+   {
+    "position": "B",
+    "text": "Antiquary"
+   },
+   {
+    "position": "C",
+    "text": "Junk-dealer"
+   },
+   {
+    "position": "D",
+    "text": "Crank"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q3",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Someone who talks a lot",
+  "options": [
+   {
+    "position": "A",
+    "text": "Licentious"
+   },
+   {
+    "position": "B",
+    "text": "Gullible"
+   },
+   {
+    "position": "C",
+    "text": "Voracious"
+   },
+   {
+    "position": "D",
+    "text": "Loquacious"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q4",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Something done in a quiet and secret way in order to avoid being noticed",
+  "options": [
+   {
+    "position": "A",
+    "text": "Repression"
+   },
+   {
+    "position": "B",
+    "text": "Surreptitious"
+   },
+   {
+    "position": "C",
+    "text": "Veracious"
+   },
+   {
+    "position": "D",
+    "text": "Heinous"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q6",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Salt",
+  "options": [
+   {
+    "position": "A",
+    "text": "Salty"
+   },
+   {
+    "position": "B",
+    "text": "Salts"
+   },
+   {
+    "position": "C",
+    "text": "Selt"
+   },
+   {
+    "position": "D",
+    "text": "Salties"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q7",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Louse",
+  "options": [
+   {
+    "position": "A",
+    "text": "Lice"
+   },
+   {
+    "position": "B",
+    "text": "Lices"
+   },
+   {
+    "position": "C",
+    "text": "Lause"
+   },
+   {
+    "position": "D",
+    "text": "Lices"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q8",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Knife",
+  "options": [
+   {
+    "position": "A",
+    "text": "Knive"
+   },
+   {
+    "position": "B",
+    "text": "Knives"
+   },
+   {
+    "position": "C",
+    "text": "Kniv"
+   },
+   {
+    "position": "D",
+    "text": "Knife"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q9",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Dwarf",
+  "options": [
+   {
+    "position": "A",
+    "text": "Dwarv"
+   },
+   {
+    "position": "B",
+    "text": "Dwarve"
+   },
+   {
+    "position": "C",
+    "text": "Dwarves"
+   },
+   {
+    "position": "D",
+    "text": "Dwarfe"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q15",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sudhir left his wife and family high and dry.",
+  "options": [
+   {
+    "position": "A",
+    "text": "to leave someone in a difficult situation"
+   },
+   {
+    "position": "B",
+    "text": "to leave a lot of wealth"
+   },
+   {
+    "position": "C",
+    "text": "to get married again"
+   },
+   {
+    "position": "D",
+    "text": "to fight"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q16",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Karan was in such an awful mood at dinner that I left early and just let him stew in his own juice.",
+  "options": [
+   {
+    "position": "A",
+    "text": "be in his own thoughts"
+   },
+   {
+    "position": "B",
+    "text": "keep to oneself"
+   },
+   {
+    "position": "C",
+    "text": "suffer for his own actions"
+   },
+   {
+    "position": "D",
+    "text": "suffer due to others"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q17",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Rajeev is biting off more than he can chew by taking up a part-time job along with his regular",
+  "options": [
+   {
+    "position": "A",
+    "text": "trying to do something which is too difficult 2) trying to help"
+   },
+   {
+    "position": "B",
+    "text": "having an intense desire for wealth"
+   },
+   {
+    "position": "C",
+    "text": "having an excessive desire for food"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q18",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "the wrongly spelt word.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ailment"
+   },
+   {
+    "position": "B",
+    "text": "Aliment"
+   },
+   {
+    "position": "C",
+    "text": "Element"
+   },
+   {
+    "position": "D",
+    "text": "Fillament"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q23",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He has spent his life Kolkata.",
+  "options": [
+   {
+    "position": "A",
+    "text": "at"
+   },
+   {
+    "position": "B",
+    "text": "in"
+   },
+   {
+    "position": "C",
+    "text": "from"
+   },
+   {
+    "position": "D",
+    "text": "with"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q24",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He was not able to give a satisfactory explanation _his absence.",
+  "options": [
+   {
+    "position": "A",
+    "text": "with"
+   },
+   {
+    "position": "B",
+    "text": "on"
+   },
+   {
+    "position": "C",
+    "text": "for"
+   },
+   {
+    "position": "D",
+    "text": "by"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q25",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It is a long time we last saw him.",
+  "options": [
+   {
+    "position": "A",
+    "text": "for"
+   },
+   {
+    "position": "B",
+    "text": "after"
+   },
+   {
+    "position": "C",
+    "text": "from"
+   },
+   {
+    "position": "D",
+    "text": "since 13-AM/N/XX-XX/ 3"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q47",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two radios are sold at 7835 each. One of them is sold at a gain of 20% and the other sold at a loss of 20%. The gain or loss in this transaction is",
+  "options": [
+   {
+    "position": "A",
+    "text": "loss 2%"
+   },
+   {
+    "position": "B",
+    "text": "loss 4%"
+   },
+   {
+    "position": "C",
+    "text": "loss 3%"
+   },
+   {
+    "position": "D",
+    "text": "loss 7%"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q48",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the sum of first five multiples of 495?",
+  "options": [
+   {
+    "position": "A",
+    "text": "7035"
+   },
+   {
+    "position": "B",
+    "text": "7295"
+   },
+   {
+    "position": "C",
+    "text": "7425"
+   },
+   {
+    "position": "D",
+    "text": "7545 49. Anuradha deposited in a finance company a sum of 797200 for 3 years and 6 months. She received 747628 as interest. Find her rate of interest. 1 (1) 11 % (2) 12 — % (3) 14% 2 (4) 142%"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q50",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A sum of money placed at compound interest doubles itself in 5 years. In how many years will it be eight times itself?",
+  "options": [
+   {
+    "position": "A",
+    "text": "30 years"
+   },
+   {
+    "position": "B",
+    "text": "15 years"
+   },
+   {
+    "position": "C",
+    "text": "20 years"
+   },
+   {
+    "position": "D",
+    "text": "40 years"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q52",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "52",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How long does a train 132 metres long running at the rate of 72 km. per hour takes to cross another train 110 metres in length?",
+  "options": [
+   {
+    "position": "A",
+    "text": "10 second"
+   },
+   {
+    "position": "B",
+    "text": "12.1 second"
+   },
+   {
+    "position": "C",
+    "text": "16 second"
+   },
+   {
+    "position": "D",
+    "text": "19 second"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q53",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A man can row upstream 15 km and downstream 23 km. taking 5 hours each time. Find the speed of the man in still water.",
+  "options": [
+   {
+    "position": "A",
+    "text": "3.1 km/hr"
+   },
+   {
+    "position": "B",
+    "text": "3.5 km/hr"
+   },
+   {
+    "position": "C",
+    "text": "3.8 km/hr"
+   },
+   {
+    "position": "D",
+    "text": "4.2 km/hr"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q54",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "54",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A and B can do a piece of work in 12 days, B and C in 15 days and C and A in 20 days. Find the time in which all will finish it together.",
+  "options": [
+   {
+    "position": "A",
+    "text": "14 days"
+   },
+   {
+    "position": "B",
+    "text": "13 days"
+   },
+   {
+    "position": "C",
+    "text": "10 days"
+   },
+   {
+    "position": "D",
+    "text": "15 days"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q56",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "56",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many kg. of salt costing ?6.00 a kg must be mixed with 16 kg of salt costing 78.25 per kg so that 25 percent may be gained by selling the mixture at 79.00 a kg?",
+  "options": [
+   {
+    "position": "A",
+    "text": "14 kg"
+   },
+   {
+    "position": "B",
+    "text": "12 kg"
+   },
+   {
+    "position": "C",
+    "text": "10 kg"
+   },
+   {
+    "position": "D",
+    "text": "15 kg"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q58",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many spherical bullets can be made out of a lead cylinder 28 cm high and 6 cm radius, each bullet being 1.5 cm in diameter?",
+  "options": [
+   {
+    "position": "A",
+    "text": "1972"
+   },
+   {
+    "position": "B",
+    "text": "1279"
+   },
+   {
+    "position": "C",
+    "text": "1792"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q59",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "59",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A cylinder, a hemisphere and a cone is described on the same base and within the same height. Find the ratio of their volumes in the same order.",
+  "options": [
+   {
+    "position": "A",
+    "text": "2:1:3"
+   },
+   {
+    "position": "B",
+    "text": "1:2:3"
+   },
+   {
+    "position": "C",
+    "text": "3:2:1"
+   },
+   {
+    "position": "D",
+    "text": "3:1:2"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q61",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "61",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If the markup percentage of an article is 50% and discount percentage is also 20%, then the profit percentage will be",
+  "options": [
+   {
+    "position": "A",
+    "text": "10%"
+   },
+   {
+    "position": "B",
+    "text": "25%"
+   },
+   {
+    "position": "C",
+    "text": "30%"
+   },
+   {
+    "position": "D",
+    "text": "20%"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q71",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Find the L.C.M. of 2520 and 5265.",
+  "options": [
+   {
+    "position": "A",
+    "text": "249480"
+   },
+   {
+    "position": "B",
+    "text": "294840"
+   },
+   {
+    "position": "C",
+    "text": "284094"
+   },
+   {
+    "position": "D",
+    "text": "209484 (1) 28 (2) 30"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q86",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "86",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Rathore is married to Sharmila. Ramneek is married to Sharmila's sister Manjulika. Akhilesh is the son of Manjulika's husband Ramneek. How is Rathore related to Akhilesh?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Aunt"
+   },
+   {
+    "position": "B",
+    "text": "Uncle"
+   },
+   {
+    "position": "C",
+    "text": "Brother"
+   },
+   {
+    "position": "D",
+    "text": "Can't be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q88",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "(3 6 (4",
+  "options": [
+   {
+    "position": "A",
+    "text": "EREJTCION"
+   },
+   {
+    "position": "B",
+    "text": "NOITJECER t 'paka ma'a 3e & 'dogs are friendly, ra pa ka' aT ate 'cats are friendly' ait 'ma ka la' at atet & 'dogs are loving'. (2) loving (1) friendly (3) dogs (2) cats (1) friendly (3) are"
+   },
+   {
+    "position": "C",
+    "text": "TOINCEJER"
+   },
+   {
+    "position": "D",
+    "text": "NOITCEJER"
+   }
+  ]
+ },
+ {
+  "id": "nift-bft-written-sample-q103",
+  "paper": "nift-bft-written-sample",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who were the first to colonize Goa?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Portuguese"
+   },
+   {
+    "position": "B",
+    "text": "French"
+   },
+   {
+    "position": "C",
+    "text": "Dutch"
+   },
+   {
+    "position": "D",
+    "text": "English"
+   }
+  ]
+ }
+]

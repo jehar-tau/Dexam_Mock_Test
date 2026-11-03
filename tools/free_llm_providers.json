@@ -1,0 +1,59 @@
+{
+  "_comment": "Free-tier LLM providers with an OpenAI-compatible /chat/completions endpoint (from https://github.com/mnfst/awesome-free-llm-apis). Model names change: run `tools/free_llm_reader.py models --provider NAME` once a key is set and copy a current vision model id here. Keys are read from environment variables, loaded from the git-ignored file .env.free-llms.",
+  "gemini": {
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "model": "gemini-2.5-flash",
+    "key_env": "GEMINI_API_KEY",
+    "vision": true,
+    "rpm": 8,
+    "privacy": "Free-tier prompts may be used by Google to improve its products."
+  },
+  "groq": {
+    "base_url": "https://api.groq.com/openai/v1",
+    "model": "qwen/qwen3.8-27b",
+    "key_env": "GROQ_API_KEY",
+    "vision": true,
+    "rpm": 20,
+    "privacy": "Groq free tier."
+  },
+  "mistral": {
+    "base_url": "https://api.mistral.ai/v1",
+    "model": "mistral-small-latest",
+    "key_env": "MISTRAL_API_KEY",
+    "vision": true,
+    "rpm": 30,
+    "privacy": "Free-mode prompts may be used to train Mistral models unless you opt out."
+  },
+  "cohere": {
+    "base_url": "https://api.cohere.ai/compatibility/v1",
+    "model": "command-a-vision-07-2025",
+    "key_env": "COHERE_API_KEY",
+    "vision": true,
+    "rpm": 15,
+    "privacy": "Trial key; non-commercial use only."
+  },
+  "cloudflare": {
+    "base_url": "https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1",
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "key_env": "CLOUDFLARE_API_TOKEN",
+    "vision": true,
+    "rpm": 20,
+    "privacy": "Cloudflare Workers AI free allowance (10,000 neurons a day)."
+  },
+  "kilo": {
+    "base_url": "https://api.kilo.ai/api/gateway",
+    "model": "nvidia/nemotron-3.5-super-vl:free",
+    "key_env": null,
+    "vision": true,
+    "rpm": 3,
+    "privacy": "No key; shared free pool of third-party models, 200 requests an hour."
+  },
+  "llm7": {
+    "base_url": "https://api.llm7.io/v1",
+    "model": "gpt-oss:20b",
+    "key_env": null,
+    "vision": false,
+    "rpm": 15,
+    "privacy": "Anonymous gateway; text questions only."
+  }
+}

@@ -1,0 +1,496 @@
+[
+ {
+  "id": "nift-2014-mdes-written-q11",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Our politicians are often in a Catch-22 situation",
+  "options": [
+   {
+    "position": "A",
+    "text": "dangerous"
+   },
+   {
+    "position": "B",
+    "text": "absurd"
+   },
+   {
+    "position": "C",
+    "text": "hopeful"
+   },
+   {
+    "position": "D",
+    "text": "depressive"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q17",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-mdes-written/blocks/nift-2014-mdes-written-q17.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Embarrassment"
+   },
+   {
+    "position": "B",
+    "text": "Embarassment"
+   },
+   {
+    "position": "C",
+    "text": "Embarrasment"
+   },
+   {
+    "position": "D",
+    "text": "Emberressment"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q18",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-mdes-written/blocks/nift-2014-mdes-written-q18.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Milennium"
+   },
+   {
+    "position": "B",
+    "text": "Millenium"
+   },
+   {
+    "position": "C",
+    "text": "Millennium"
+   },
+   {
+    "position": "D",
+    "text": "Milenium"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q19",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-mdes-written/blocks/nift-2014-mdes-written-q19.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Assasination"
+   },
+   {
+    "position": "B",
+    "text": "Asasination"
+   },
+   {
+    "position": "C",
+    "text": "Asassination"
+   },
+   {
+    "position": "D",
+    "text": "Assassination"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q24",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Work is one thing P and without it that is necessary R to keep the world going S we all should die",
+  "options": [
+   {
+    "position": "A",
+    "text": "SRPQ"
+   },
+   {
+    "position": "B",
+    "text": "RPQS"
+   },
+   {
+    "position": "C",
+    "text": "QRP S"
+   },
+   {
+    "position": "D",
+    "text": "QP SR"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q25",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The claim is not P of any kind Q but R that is without morality S that science is actively anti-moral",
+  "options": [
+   {
+    "position": "A",
+    "text": "SQRP"
+   },
+   {
+    "position": "B",
+    "text": "RPQS"
+   },
+   {
+    "position": "C",
+    "text": "PSQR"
+   },
+   {
+    "position": "D",
+    "text": "RQ SP"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q34",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the comparison made between fever in our body and climate changes?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Like fever increases the body temperature, climate changes are making the Earth hot."
+   },
+   {
+    "position": "B",
+    "text": "Like fever is a symptom showing the body has some problems, climate changes show that the Earth has some problems."
+   },
+   {
+    "position": "C",
+    "text": "The comparison is made just to intensify the problems being discussed about our planet."
+   },
+   {
+    "position": "D",
+    "text": "The fever comparison shows how ecosystems work."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q50",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Amit started a business investing 7 45,000. After 3 months, Patel joined him with a capital of * 60,000. After another 6 months, Rahim joined them with a capital of & 90,000. At the end of the year, they made a profit of 7 16,500. The share of Rahim is",
+  "options": [
+   {
+    "position": "A",
+    "text": "F 3200"
+   },
+   {
+    "position": "B",
+    "text": "г 3300"
+   },
+   {
+    "position": "C",
+    "text": "& 3100"
+   },
+   {
+    "position": "D",
+    "text": "€ 3500"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q51",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "51",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The curve y -e* + x = O has a vertical tangent at the point",
+  "options": [
+   {
+    "position": "A",
+    "text": "(1,1)"
+   },
+   {
+    "position": "B",
+    "text": "at no point"
+   },
+   {
+    "position": "C",
+    "text": "(0,1)"
+   },
+   {
+    "position": "D",
+    "text": "(1, 0)"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q61",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "61",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If V3 = 1.732, find the value of /192- - J48 - V75 correct to 3 places of decimal.",
+  "options": [
+   {
+    "position": "A",
+    "text": "1.673"
+   },
+   {
+    "position": "B",
+    "text": "1.652"
+   },
+   {
+    "position": "C",
+    "text": "1.732"
+   },
+   {
+    "position": "D",
+    "text": "1.372"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q71",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "There are 6 boxes numbered 1, 2, 3, 4, 5, 6. Each box is to be filled up either with a red or a green ball in such a way that atleast 1 box contains a green ball and the boxes containing green balls are consecutively numbered. The total number of ways in which this can be done is",
+  "options": [
+   {
+    "position": "A",
+    "text": "60"
+   },
+   {
+    "position": "B",
+    "text": "33"
+   },
+   {
+    "position": "C",
+    "text": "21"
+   },
+   {
+    "position": "D",
+    "text": "5"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q73",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "73",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-mdes-written/blocks/nift-2014-mdes-written-q73.png",
+  "prompt": "What is the sum of the total surface areas of all the cubes formed when a cuboid of size 5.2 m x 13 m x 39 m is cut completely into the least possible number of cubes, all of which are identical.",
+  "options": [
+   {
+    "position": "A",
+    "text": "6164 sq m"
+   },
+   {
+    "position": "B",
+    "text": "30452 sq m"
+   },
+   {
+    "position": "C",
+    "text": "6084 sq m"
+   },
+   {
+    "position": "D",
+    "text": "6760 sq m"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q74",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "74",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-mdes-written/blocks/nift-2014-mdes-written-q74.png",
+  "prompt": "There are two right pyramids with a square base. The two pyramids are similar in shape. The height of the first pyramid is 30 m and that of the smaller is 22.5 m. 36 men take 32 days to build the first pyramid. How many days would 54 men of the same efficiency take to build the second pyramid?",
+  "options": [
+   {
+    "position": "A",
+    "text": "20"
+   },
+   {
+    "position": "B",
+    "text": "11"
+   },
+   {
+    "position": "C",
+    "text": "25"
+   },
+   {
+    "position": "D",
+    "text": "9"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q106",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "106",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is not a component of the processes of change of population?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Birth Rate."
+   },
+   {
+    "position": "B",
+    "text": "Death Rate."
+   },
+   {
+    "position": "C",
+    "text": "Migration."
+   },
+   {
+    "position": "D",
+    "text": "Sex Ratio."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q109",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Oxemberg, Opulento, Beach Pebble and MSD' brand of formal, casuals and denims range of clothes is from the house of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Siyaram Mills."
+   },
+   {
+    "position": "B",
+    "text": "Arvind Mills."
+   },
+   {
+    "position": "C",
+    "text": "Grasim Ind."
+   },
+   {
+    "position": "D",
+    "text": "Digjam Ltd"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q110",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "110",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In Tibet, the Brahmaputra river is called by the name",
+  "options": [
+   {
+    "position": "A",
+    "text": "Meghanpo."
+   },
+   {
+    "position": "B",
+    "text": "Manaspo."
+   },
+   {
+    "position": "C",
+    "text": "Tsangpo."
+   },
+   {
+    "position": "D",
+    "text": "Brahmapo. MT1000/E/2K14/02 14"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q111",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "111",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Where was the 20* Asian Athletics Championships held?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Delhi"
+   },
+   {
+    "position": "B",
+    "text": "Bengaluru"
+   },
+   {
+    "position": "C",
+    "text": "Hyderabad"
+   },
+   {
+    "position": "D",
+    "text": "Pune"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q112",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "112",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Indian cricketer M S Dhoni has launched his own signature brand of _",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sun Glasses"
+   },
+   {
+    "position": "B",
+    "text": "Perfumes _named '7 by MS DHONI."
+   },
+   {
+    "position": "C",
+    "text": "Clothes"
+   },
+   {
+    "position": "D",
+    "text": "Wrist Watches"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-mdes-written-q114",
+  "paper": "nift-2014-mdes-written",
+  "questionNo": "114",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-mdes-written/blocks/nift-2014-mdes-written-q114.png",
+  "prompt": "Which movie won the best picture award in the 85* Oscar Awards in 2013?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Lincoln"
+   },
+   {
+    "position": "B",
+    "text": "Les Miserables"
+   },
+   {
+    "position": "C",
+    "text": "Amour"
+   },
+   {
+    "position": "D",
+    "text": "Argo"
+   }
+  ]
+ }
+]

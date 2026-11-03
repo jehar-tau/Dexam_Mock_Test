@@ -1,0 +1,28 @@
+[
+ {
+  "id": "ceed-2018-q33",
+  "paper": "ceed-2018",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2018/blocks/ceed-2018-q33.png",
+  "prompt": "Government of India has mandated a safety feature called “Automotive Headlights On” (AHO) in 2-wheelers. According to this, the vehicle headlight needs to remain perpetually in the ON mode when the vehicle is running and cannot be turned off even during the day. Which option best explains the reason for this mandate?",
+  "options": [
+   {
+    "position": "A",
+    "text": "People do not turn their headlights ON while driving at night."
+   },
+   {
+    "position": "B",
+    "text": "With the headlights ON, the pedestrians and oncoming vehicle drivers can notice the vehicle more easily."
+   },
+   {
+    "position": "C",
+    "text": "With the headlights ON, the vehicle rider can see the pedestrians much more clearly."
+   },
+   {
+    "position": "D",
+    "text": "It is a fancy feature that will enhance the aesthetics of the vehicle. 18"
+   }
+  ]
+ }
+]

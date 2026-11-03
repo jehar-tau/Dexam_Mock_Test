@@ -1,0 +1,372 @@
+[
+ {
+  "id": "nift-2013-written-set3-q109",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If 'A ÷ C + D + B' which one of the following statements is true ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "A is the daughter of B"
+   },
+   {
+    "position": "B",
+    "text": "B is the aunt of A"
+   },
+   {
+    "position": "C",
+    "text": "A is the aunt of B"
+   },
+   {
+    "position": "D",
+    "text": "A is the mother of B"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q110",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "110",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If'A - C + B' which one of the following statements is true ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "A is the daughter of B"
+   },
+   {
+    "position": "B",
+    "text": "B is the aunt of A"
+   },
+   {
+    "position": "C",
+    "text": "A is the mother of B"
+   },
+   {
+    "position": "D",
+    "text": "A is the aunt of B"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q111",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "111",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If'A x C ÷ B', which one of the following statements is true ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "B is the daughter of A"
+   },
+   {
+    "position": "B",
+    "text": "A is the son of B"
+   },
+   {
+    "position": "C",
+    "text": "A is the mother of B"
+   },
+   {
+    "position": "D",
+    "text": "A is the aunt of B"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q112",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "112",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many engineers are dancers?",
+  "options": [
+   {
+    "position": "A",
+    "text": "50"
+   },
+   {
+    "position": "B",
+    "text": "70"
+   },
+   {
+    "position": "C",
+    "text": "75"
+   },
+   {
+    "position": "D",
+    "text": "42"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q113",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "113",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many females are not musicians?",
+  "options": [
+   {
+    "position": "A",
+    "text": "55"
+   },
+   {
+    "position": "B",
+    "text": "67"
+   },
+   {
+    "position": "C",
+    "text": "76"
+   },
+   {
+    "position": "D",
+    "text": "38"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q114",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "114",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many dancers are musicians but are not engineers by profession ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "27"
+   },
+   {
+    "position": "B",
+    "text": "12"
+   },
+   {
+    "position": "C",
+    "text": "22"
+   },
+   {
+    "position": "D",
+    "text": "15"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q129",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "129",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which is the largest segment of Indian Man-Made-Fibre (MMF) and rayon textile industry?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Jute"
+   },
+   {
+    "position": "B",
+    "text": "Cotton"
+   },
+   {
+    "position": "C",
+    "text": "Silk"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q130",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "130",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which Italian luxury major has entered into a joint venture with Genesis Luxury Fashion to sell its branded products in India exclusively ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Dior"
+   },
+   {
+    "position": "B",
+    "text": "Canali"
+   },
+   {
+    "position": "C",
+    "text": "Gucci"
+   },
+   {
+    "position": "D",
+    "text": "Canclini Tessile"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q131",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "131",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which is the television launched recently by Samsung Electronics having transparent screen and folding flexibility?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Samsung Desire"
+   },
+   {
+    "position": "B",
+    "text": "Samsung Passion"
+   },
+   {
+    "position": "C",
+    "text": "Samsung Teaser"
+   },
+   {
+    "position": "D",
+    "text": "Samsung Tizen"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q135",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "135",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Paris Hilton, the famous American heiress, fashion designer and socialite was on the visit to India in December 2012 for",
+  "options": [
+   {
+    "position": "A",
+    "text": "India Resort Fashion Week in Goa."
+   },
+   {
+    "position": "B",
+    "text": "Personal visit to Jaipur and Udaipur."
+   },
+   {
+    "position": "C",
+    "text": "India Lakme Fashion Week."
+   },
+   {
+    "position": "D",
+    "text": "None of these. (4) Spice Jet."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q136",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "136",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which airlines in India slashed its domestic air fare as a promotional offer from Feb-April 2013?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Jet."
+   },
+   {
+    "position": "B",
+    "text": "Indigo."
+   },
+   {
+    "position": "C",
+    "text": "Air India."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q138",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "138",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the followings are the Trade Associations in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "American Chamber of Commerce."
+   },
+   {
+    "position": "B",
+    "text": "Forex Association of India."
+   },
+   {
+    "position": "C",
+    "text": "Indian Venture Capital Association. (4) All these (2) B & C (3) A & C (1) A & B"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q143",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "143",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "is the embroidered Quilt, the famous folk art both of Bangladesh and West Bengal.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Kasuti"
+   },
+   {
+    "position": "B",
+    "text": "Nakshi Kantha has played leading role for the first time in the movie 144. The famous Indian sports person \"Rajdhani Express\" released in January 2013 (1) Mahesh Bhupati (2) Sachin Tendulkar (4) Sania Mirza (3) Leander Paes"
+   },
+   {
+    "position": "C",
+    "text": "Zardozi"
+   },
+   {
+    "position": "D",
+    "text": "Kani"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q145",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "145",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The facility which was launched to enable a person to go to any bank branch to deposit money in the savings account held in any other bank is called",
+  "options": [
+   {
+    "position": "A",
+    "text": "NEFT System."
+   },
+   {
+    "position": "B",
+    "text": "E- POSTAL ORDER."
+   },
+   {
+    "position": "C",
+    "text": "MOBILE BANKING."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q150",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "150",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following statements) is/are correct about Marketing Development Assistance (MDA) scheme of Ministry of Commerce and Industry, Govt of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "MDA is a government grant available to exporters for their export promotion activities."
+   },
+   {
+    "position": "B",
+    "text": "MDA is only available for participation in the international fairs/exhibitions held abroad if participation is under the banner of EPCH/ITPO or FIEO by EPCH members. (4) None of these (2) A and B (3) Only B (1) Only A"
+   }
+  ]
+ }
+]

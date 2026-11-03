@@ -1,0 +1,20 @@
+[
+ {
+  "id": "nift-2012-written-set3-q132",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "132",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set3/blocks/nift-2012-written-set3-q132.png",
+  "prompt": "UN has how many principal organs ?",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set3-q139",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "139",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set3/blocks/nift-2012-written-set3-q139.png",
+  "prompt": "Formula One car racing event was held in India for the first time in 2011, in",
+  "options": []
+ }
+]

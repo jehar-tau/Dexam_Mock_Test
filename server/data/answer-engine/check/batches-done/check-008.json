@@ -1,0 +1,284 @@
+[
+ {
+  "id": "nid-mdes-sample-2024-q2",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q2.png",
+  "prompt": "What does UI-UX stand for in design?",
+  "options": [
+   {
+    "position": "A",
+    "text": "User Inside-Under Xebec"
+   },
+   {
+    "position": "B",
+    "text": "Universal Interest-Uni Xenon"
+   },
+   {
+    "position": "C",
+    "text": "User Interface-User Experience"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q3",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q3.png",
+  "prompt": "Which are the key tenets of Universal Design?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Accessibility, Usability, and Inclusivity"
+   },
+   {
+    "position": "B",
+    "text": "Producibility, Compatibility, and Longevity"
+   },
+   {
+    "position": "C",
+    "text": "Communication, Aesthetics, and Serviceability"
+   },
+   {
+    "position": "D",
+    "text": "Affordability, Recyclability, and Transparency"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q4",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q4.png",
+  "prompt": "What is the significance of the Iterative design process?",
+  "options": [
+   {
+    "position": "A",
+    "text": "It allows for ideating and testing design ideas in quickly"
+   },
+   {
+    "position": "B",
+    "text": "It makes design solutions functionally viable and cost effective"
+   },
+   {
+    "position": "C",
+    "text": "It helps enhance the user experience of design"
+   },
+   {
+    "position": "D",
+    "text": "All of the above"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q5",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q5.png",
+  "prompt": "Below is the work of American Sculptor Alexander Calder. It is called ‘the wire sculpture’. Identify a design principle applied in it.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Symmetrical Balance"
+   },
+   {
+    "position": "B",
+    "text": "Asymmetrical Balance"
+   },
+   {
+    "position": "C",
+    "text": "Radial Balance"
+   },
+   {
+    "position": "D",
+    "text": "Crystallographic Balance"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q6",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q6.png",
+  "prompt": "United Nations Development Program plays a critical role in helping several countries across the world to achieve the Sustainable Development Goals. Identify the total number of sustainable development goals mentioned this year.",
+  "options": [
+   {
+    "position": "A",
+    "text": "15"
+   },
+   {
+    "position": "B",
+    "text": "17"
+   },
+   {
+    "position": "C",
+    "text": "19"
+   },
+   {
+    "position": "D",
+    "text": "22"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q7",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q7.png",
+  "prompt": "Which country will host the G20 summit in 2024?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Japan"
+   },
+   {
+    "position": "B",
+    "text": "Indonesia"
+   },
+   {
+    "position": "C",
+    "text": "Brazil"
+   },
+   {
+    "position": "D",
+    "text": "China"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q9",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q9.png",
+  "prompt": "Identify, which of the following is a weaving technique?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Warp and Weft"
+   },
+   {
+    "position": "B",
+    "text": "Layered Cut"
+   },
+   {
+    "position": "C",
+    "text": "Flemish Bond"
+   },
+   {
+    "position": "D",
+    "text": "Inlay Work"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q10",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q10.png",
+  "prompt": "How many layers is a tetra packet made of?",
+  "options": [
+   {
+    "position": "A",
+    "text": "4"
+   },
+   {
+    "position": "B",
+    "text": "6"
+   },
+   {
+    "position": "C",
+    "text": "8"
+   },
+   {
+    "position": "D",
+    "text": "7 Question Numbers 11 to 15 consist of 02 Marks each."
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q11",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q11.png",
+  "prompt": "Read the statements below: (i) Many corporate houses are conducting yoga classes for their employees. (ii) There is an increasing awareness about mental and physical health in society, particularly among middle-aged groups of people. State which of the following is the most accurate inference?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Statement II is the effect and statement I is its cause."
+   },
+   {
+    "position": "B",
+    "text": "Statement I is the effect and statement II is its cause."
+   },
+   {
+    "position": "C",
+    "text": "Statements I and II are different independent causes."
+   },
+   {
+    "position": "D",
+    "text": "Statements I and II are effects of independent causes."
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q12",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q12.png",
+  "prompt": "If a kangaroo in its native geographic natural habitat in the world were to look up at the sky on a clear night, which of the following is it likely to see?",
+  "options": [
+   {
+    "position": "A",
+    "text": "The northern pole star"
+   },
+   {
+    "position": "B",
+    "text": "The southern pole star"
+   },
+   {
+    "position": "C",
+    "text": "Both (A) and (B)"
+   },
+   {
+    "position": "D",
+    "text": "Neither (A) nor (B)"
+   }
+  ]
+ },
+ {
+  "id": "nid-mdes-sample-2024-q15",
+  "paper": "nid-mdes-sample-2024",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-mdes-sample-2024/blocks/nid-mdes-sample-2024-q15.png",
+  "prompt": "In a series of numbers, the first term is 5, and each subsequent term is obtained by multiplying the previous term by -2. What is the 10th term in this series?",
+  "options": [
+   {
+    "position": "A",
+    "text": "-1280"
+   },
+   {
+    "position": "B",
+    "text": "1280"
+   },
+   {
+    "position": "C",
+    "text": "-2560"
+   },
+   {
+    "position": "D",
+    "text": "2560"
+   }
+  ]
+ }
+]

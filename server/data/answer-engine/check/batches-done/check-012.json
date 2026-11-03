@@ -1,0 +1,336 @@
+[
+ {
+  "id": "nift-2012-mdes-written-q130",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "130",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Jockey' is a leading international brand of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Men's Shirts"
+   },
+   {
+    "position": "B",
+    "text": "Men's Trousers"
+   },
+   {
+    "position": "C",
+    "text": "T-Shirts"
+   },
+   {
+    "position": "D",
+    "text": "Men's innerwear"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q134",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "134",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The popular annual Kingfisher Swimsuit Calendar is a product of",
+  "options": [
+   {
+    "position": "A",
+    "text": "UB Group"
+   },
+   {
+    "position": "B",
+    "text": "Shaw Wallace"
+   },
+   {
+    "position": "C",
+    "text": "Chivas"
+   },
+   {
+    "position": "D",
+    "text": "Radico Khaitan"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q137",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "137",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who sang the popular half-Tamil, half-English song with the words \"Kolaveri Kolaveri Di\" ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Dhanush"
+   },
+   {
+    "position": "B",
+    "text": "K.J. Yesudas"
+   },
+   {
+    "position": "C",
+    "text": "S.P. Balasubramaniam"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q138",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "138",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Fashion Design Council of India organized 'India Fashion Week' is held",
+  "options": [
+   {
+    "position": "A",
+    "text": "once in two years"
+   },
+   {
+    "position": "B",
+    "text": "once a year"
+   },
+   {
+    "position": "C",
+    "text": "once in three months"
+   },
+   {
+    "position": "D",
+    "text": "twice a year"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q139",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "139",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which internationally acclaimed artist of India died in London at the age of 97 years, in June 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Film star Dev Anand"
+   },
+   {
+    "position": "B",
+    "text": "Painter MF Hussain"
+   },
+   {
+    "position": "C",
+    "text": "Singer Jagjit Singh"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q140",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "140",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The nationally revered song \"Vande Mataram\" was composed by",
+  "options": [
+   {
+    "position": "A",
+    "text": "Rabindranath Tagore"
+   },
+   {
+    "position": "B",
+    "text": "Bankim Chandra Chatterji"
+   },
+   {
+    "position": "C",
+    "text": "Harivanshrai Bachchan"
+   },
+   {
+    "position": "D",
+    "text": "Sarojini Naidu"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q141",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "141",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which day is observed as World Day of the Handicapped ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "December 3"
+   },
+   {
+    "position": "B",
+    "text": "December 4"
+   },
+   {
+    "position": "C",
+    "text": "December 5"
+   },
+   {
+    "position": "D",
+    "text": "December 6"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q144",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "144",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "South India's first metro rail service was flagged off on October 20, 2011 in which State ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Andhra Pradesh"
+   },
+   {
+    "position": "B",
+    "text": "Kerala"
+   },
+   {
+    "position": "C",
+    "text": "Tamil Nadu"
+   },
+   {
+    "position": "D",
+    "text": "Karnataka"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q145",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "145",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Name the famous Hollywood actor whose eight years tenure as Governor of California, U.S.A., ended in January 2011.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Richard Burton"
+   },
+   {
+    "position": "B",
+    "text": "Ronald Reagan"
+   },
+   {
+    "position": "C",
+    "text": "Arnold Schwarzenegger"
+   },
+   {
+    "position": "D",
+    "text": "Jimmy Carter"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q146",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "146",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "India's longest rail bridge is located in which State ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "West Bengal"
+   },
+   {
+    "position": "B",
+    "text": "Kerala"
+   },
+   {
+    "position": "C",
+    "text": "Assam"
+   },
+   {
+    "position": "D",
+    "text": "Tamil Nadu"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q147",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "147",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The first international cricket player to cross a career aggregate of 10,000 runs in Test matches",
+  "options": [
+   {
+    "position": "A",
+    "text": "Allan Border"
+   },
+   {
+    "position": "B",
+    "text": "Ricky Ponting"
+   },
+   {
+    "position": "C",
+    "text": "Sachin Tendulkar"
+   },
+   {
+    "position": "D",
+    "text": "Sunil Gavaskar The 150th birth anniversary of Rabindranath Tagore, the noted poet of India, is presently being celebrated jointly by India and (1) Bangladesh (2) France (4) None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q149",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "149",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many spokes does the navy blue wheel or chakra on the national flag of India have ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "32"
+   },
+   {
+    "position": "B",
+    "text": "24"
+   },
+   {
+    "position": "C",
+    "text": "36"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q150",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "150",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In which State of India is Majuli, the largest river island in the world, located ? Assam",
+  "options": [
+   {
+    "position": "A",
+    "text": "Manipur"
+   },
+   {
+    "position": "B",
+    "text": "Meghalaya"
+   },
+   {
+    "position": "C",
+    "text": "Nagaland MD 1000/B/2K12/02 ( 19 )"
+   }
+  ]
+ }
+]

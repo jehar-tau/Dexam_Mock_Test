@@ -17,3 +17,9 @@ server/data/user-bank.json
 server/data/mocks.json
 __pycache__/
 *.pyc
+
+# Review work product (local data)
+server/review-state.json
+server/review-state.json.tmp
+server/review-backups/
+server/data/exports/review-split/

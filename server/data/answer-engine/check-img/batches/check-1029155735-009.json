@@ -1,0 +1,74 @@
+[
+ {
+  "id": "nift-2014-bdes-written-q22",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-bdes-written/blocks/nift-2014-bdes-written-q22.png",
+  "prompt": "Would you like to go",
+  "options": []
+ },
+ {
+  "id": "nift-2014-bdes-written-q23",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-bdes-written/blocks/nift-2014-bdes-written-q23.png",
+  "prompt": "I am going to stay",
+  "options": []
+ },
+ {
+  "id": "nift-2014-bdes-written-q53",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-bdes-written/blocks/nift-2014-bdes-written-q53.png",
+  "prompt": "If V3 = 1.732, find the value of V192 -",
+  "options": []
+ },
+ {
+  "id": "nift-2014-bdes-written-q58",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-bdes-written/blocks/nift-2014-bdes-written-q58.png",
+  "prompt": "Which of the following fractions is greater than - and less than",
+  "options": []
+ },
+ {
+  "id": "nift-2014-bdes-written-q59",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "59",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-bdes-written/blocks/nift-2014-bdes-written-q59.png",
+  "prompt": "Find the value of 2×3 3x4* 4x5* 5x6+.+ 9x10",
+  "options": []
+ },
+ {
+  "id": "nift-2014-bdes-written-q72",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "72",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-bdes-written/blocks/nift-2014-bdes-written-q72.png",
+  "prompt": "Common root of 2 sin'x + sin 2x = 2 and sin 2x + cos 2x = tan x is TC TC -",
+  "options": []
+ },
+ {
+  "id": "nift-2014-bdes-written-q106",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "106",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-bdes-written/blocks/nift-2014-bdes-written-q106.png",
+  "prompt": "Who has become the first brand ambassador of Border Security Force (BSF)?",
+  "options": []
+ },
+ {
+  "id": "nift-2014-bdes-written-q138",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "138",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2014-bdes-written/blocks/nift-2014-bdes-written-q138.png",
+  "prompt": "Lenovo has entered the market of mobile phones due to which of the following reasons?",
+  "options": []
+ }
+]

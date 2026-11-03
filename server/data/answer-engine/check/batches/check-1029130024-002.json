@@ -1,0 +1,29 @@
+[
+ {
+  "id": "nift-2012-written-set1-q91",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "91",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q91.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q108",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "108",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q108.png",
+  "prompt": "In the following diagram, which of the following represents the educated men but not urban ? 8 10 7 Men 12 6 13 Government employees 9 14 Urban 11",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set1-q109",
+  "paper": "nift-2012-written-set1",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set1/blocks/nift-2012-written-set1-q109.png",
+  "prompt": "In the following diagram, which of the following represents a man who is urban as well as a government employee ? 8 10 7 Men 12 6 13 Government employees 4 9 14 Urban 11",
+  "options": []
+ }
+]

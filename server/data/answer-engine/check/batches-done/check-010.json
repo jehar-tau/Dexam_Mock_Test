@@ -1,0 +1,640 @@
+[
+ {
+  "id": "nift-2012-mdes-written-q5",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What does the \"pink slip\" signify ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "A cheque towards bonus for a job well done."
+   },
+   {
+    "position": "B",
+    "text": "Orders for termination from the job."
+   },
+   {
+    "position": "C",
+    "text": "A surprise gift wrapped in pink color paper."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q35",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Since he promised to do so, I presume he will come.",
+  "options": [
+   {
+    "position": "A",
+    "text": "think"
+   },
+   {
+    "position": "B",
+    "text": "guess"
+   },
+   {
+    "position": "C",
+    "text": "suppose"
+   },
+   {
+    "position": "D",
+    "text": "believe"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q36",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "36",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He is quite meticulous in his dealings with others.",
+  "options": [
+   {
+    "position": "A",
+    "text": "reserved"
+   },
+   {
+    "position": "B",
+    "text": "haughty"
+   },
+   {
+    "position": "C",
+    "text": "indifferent"
+   },
+   {
+    "position": "D",
+    "text": "very careful"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q37",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The data compiled by the organization was very useful.",
+  "options": [
+   {
+    "position": "A",
+    "text": "analysed"
+   },
+   {
+    "position": "B",
+    "text": "enclosed"
+   },
+   {
+    "position": "C",
+    "text": "collected"
+   },
+   {
+    "position": "D",
+    "text": "published"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q38",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He rides the high horse because of his high connections.",
+  "options": [
+   {
+    "position": "A",
+    "text": "is famous"
+   },
+   {
+    "position": "B",
+    "text": "talks flatteringly"
+   },
+   {
+    "position": "C",
+    "text": "puts on airs"
+   },
+   {
+    "position": "D",
+    "text": "is prosperous"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q39",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Such a scene attracts the onlookers.",
+  "options": [
+   {
+    "position": "A",
+    "text": "instigates"
+   },
+   {
+    "position": "B",
+    "text": "annoys"
+   },
+   {
+    "position": "C",
+    "text": "repels"
+   },
+   {
+    "position": "D",
+    "text": "revolts"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q40",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "This window-glass is transparent.",
+  "options": [
+   {
+    "position": "A",
+    "text": "opaque"
+   },
+   {
+    "position": "B",
+    "text": "translucent"
+   },
+   {
+    "position": "C",
+    "text": "solid"
+   },
+   {
+    "position": "D",
+    "text": "fragile"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q41",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "41",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The government is taking measures to augment the country's food supply.",
+  "options": [
+   {
+    "position": "A",
+    "text": "prohibit"
+   },
+   {
+    "position": "B",
+    "text": "decrease"
+   },
+   {
+    "position": "C",
+    "text": "surpass"
+   },
+   {
+    "position": "D",
+    "text": "compensate"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q43",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Pertaining to the science of group cultures, conventions, etc",
+  "options": [
+   {
+    "position": "A",
+    "text": "biological"
+   },
+   {
+    "position": "B",
+    "text": "philological"
+   },
+   {
+    "position": "C",
+    "text": "sociological"
+   },
+   {
+    "position": "D",
+    "text": "psychological"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q44",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "44",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Student of the meaning and psychology of words",
+  "options": [
+   {
+    "position": "A",
+    "text": "philanderer"
+   },
+   {
+    "position": "B",
+    "text": "etymologist entomologist"
+   },
+   {
+    "position": "C",
+    "text": "semanticist"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q45",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Something, or someone, out of time",
+  "options": [
+   {
+    "position": "A",
+    "text": "incongruity"
+   },
+   {
+    "position": "B",
+    "text": "anachronism"
+   },
+   {
+    "position": "C",
+    "text": "chronicity"
+   },
+   {
+    "position": "D",
+    "text": "incorrigible"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q46",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A method of doing something, based on practical experience rather than theory or careful calculation.",
+  "options": [
+   {
+    "position": "A",
+    "text": "rule of thumb"
+   },
+   {
+    "position": "B",
+    "text": "rule of three"
+   },
+   {
+    "position": "C",
+    "text": "fact"
+   },
+   {
+    "position": "D",
+    "text": "law"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q47",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "correctly spelt. Choose the correctly spelt word",
+  "options": [
+   {
+    "position": "A",
+    "text": "bouquete"
+   },
+   {
+    "position": "B",
+    "text": "bouquet"
+   },
+   {
+    "position": "C",
+    "text": "boquet"
+   },
+   {
+    "position": "D",
+    "text": "bouquette"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q51",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "51",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "We must prevent endangered wild animal species from becoming in order that our future generation may the great diversity of animal life.",
+  "options": [
+   {
+    "position": "A",
+    "text": "rare, escape"
+   },
+   {
+    "position": "B",
+    "text": "outdated, know"
+   },
+   {
+    "position": "C",
+    "text": "volatile, notice"
+   },
+   {
+    "position": "D",
+    "text": "extinct, enjoy The mill workers were not"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q52",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "52",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "with their low wages, and non-payment of wages for the last three months fuel to the flames.",
+  "options": [
+   {
+    "position": "A",
+    "text": "good, put"
+   },
+   {
+    "position": "B",
+    "text": "satisfied, added"
+   },
+   {
+    "position": "C",
+    "text": "joyful, poured"
+   },
+   {
+    "position": "D",
+    "text": "pleased, directed"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q53",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Though he is reputed for his technical _, his books were sadly. of the work of others as he lacked originality.",
+  "options": [
+   {
+    "position": "A",
+    "text": "advice, unconscious"
+   },
+   {
+    "position": "B",
+    "text": "skill, independent"
+   },
+   {
+    "position": "C",
+    "text": "knowledge, ignorant"
+   },
+   {
+    "position": "D",
+    "text": "expertise, derivative Nothing is so"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q54",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "54",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "to a nation as an extreme of self partiality, and the total want of of what others will naturally hope or fear. detrimental, concern",
+  "options": [
+   {
+    "position": "A",
+    "text": "repugnant, sense"
+   },
+   {
+    "position": "B",
+    "text": "unethical, discretion"
+   },
+   {
+    "position": "C",
+    "text": "fatal, consideration"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q55",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "55",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "error.",
+  "options": [
+   {
+    "position": "A",
+    "text": "When you are"
+   },
+   {
+    "position": "B",
+    "text": "going to"
+   },
+   {
+    "position": "C",
+    "text": "finish"
+   },
+   {
+    "position": "D",
+    "text": "making this design ?"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q57",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "57",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "One way route is",
+  "options": [
+   {
+    "position": "A",
+    "text": "a mean of"
+   },
+   {
+    "position": "B",
+    "text": "reducing traffic"
+   },
+   {
+    "position": "C",
+    "text": "in congested areas of Delhi. MD 1000/B/2K12/02 (11 )"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q62",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Three-fourths of one-fifth of a number is 60. The number is",
+  "options": [
+   {
+    "position": "A",
+    "text": "300"
+   },
+   {
+    "position": "B",
+    "text": "400"
+   },
+   {
+    "position": "C",
+    "text": "450"
+   },
+   {
+    "position": "D",
+    "text": "1200 The value of 92 x 184 ÷ 316 is"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q69",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "69",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How much is to be added with 0•685 of 325 to get 300 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "66•356"
+   },
+   {
+    "position": "B",
+    "text": "45-365"
+   },
+   {
+    "position": "C",
+    "text": "77-375"
+   },
+   {
+    "position": "D",
+    "text": "23-563"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q70",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many times does 2/3 of 1/2 go into half of third ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "2"
+   },
+   {
+    "position": "B",
+    "text": "1/2"
+   },
+   {
+    "position": "C",
+    "text": "1/3"
+   },
+   {
+    "position": "D",
+    "text": "2/3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q71",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The ratio of number of boys and girls in a school is 3: 2. If 20% of the boys and 25% of the girls are holding scholarship, what is the percentage of school students who hold scholarship ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "22%"
+   },
+   {
+    "position": "B",
+    "text": "45%"
+   },
+   {
+    "position": "C",
+    "text": "36%"
+   },
+   {
+    "position": "D",
+    "text": "55%"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q73",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "73",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If the price of one kg of cornflakes is increased by 25%, the increase is 7 10. What is the new price of cornflakes per kg ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "7 60"
+   },
+   {
+    "position": "B",
+    "text": "* 35"
+   },
+   {
+    "position": "C",
+    "text": "7 70"
+   },
+   {
+    "position": "D",
+    "text": "* 50"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-mdes-written-q75",
+  "paper": "nift-2012-mdes-written",
+  "questionNo": "75",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Simple Interest on a certain sum is 16 over 25 of the sum. What is the rate percent and time, if both are equal ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "8% and 8 years"
+   },
+   {
+    "position": "B",
+    "text": "7% and 7 years"
+   },
+   {
+    "position": "C",
+    "text": "5% and 5 years"
+   },
+   {
+    "position": "D",
+    "text": "None of these 1"
+   }
+  ]
+ }
+]

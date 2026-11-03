@@ -1,0 +1,111 @@
+{
+  "note": "Dexam original NID DAT Prelims mocks on the 2026 pattern: one 3-hour, 100-mark, pen-and-paper drawing paper of six tasks with sub-parts (no objective section). Task themes follow the 2026 paper's types (visual storytelling, alternative uses, opinion plus visual communication, safety design, redesign for users, visual metaphor); every prompt here is written by Dexam.",
+  "minutes": 180,
+  "totalMarks": 100,
+  "papers": [
+    {
+      "id": "nid-bdes-dat-mock-01",
+      "level": "bdes",
+      "title": "NID DAT B.Des drawing mock 1",
+      "tasks": [
+        { "marks": 15, "prompt": "Visual storytelling\nAn old tailor in a small town receives a torn school uniform the night before a girl's first day at a new school.\nDraw THREE frames that tell this story: (a) the moment the uniform arrives, (b) the night of work, showing that time has passed, (c) the next morning.\nUse light and shade to show the time of day. Do not write dialogue inside the frames." },
+        { "marks": 15, "prompt": "Alternative uses\nYou are given an empty glass jar with a metal lid (about 15 cm tall).\nWithout breaking it, show THREE new practical uses for the jar in a home or classroom. For each use, draw the jar in use with the people or objects around it, and write a one-line title." },
+        { "marks": 20, "prompt": "Opinion and visual communication\n(a) In about 100 words, give your opinion: should cities ban single-use plastic cups at street tea stalls? Give one reason for and one against. (8 marks)\n(b) Design THREE square social-media posts for a campaign that encourages tea-stall customers to carry their own cup. Each post must use a different visual idea; keep the text to five words or fewer per post. (12 marks)" },
+        { "marks": 15, "prompt": "Design for safety\nYoung children often trap their fingers in the hinge side of doors at home.\nPropose THREE different solutions that prevent this, without removing the door. Draw each solution in use and add short notes on how it works and how it is fitted." },
+        { "marks": 15, "prompt": "Redesign for different users\nRedesign a lunch box for THREE users: (a) a construction worker who eats on site, (b) a hospital patient eating in bed, (c) a family on a long train journey.\nFor each, draw two views of the lunch box (no background) and write two lines on what you changed and why." },
+        { "marks": 20, "prompt": "Visual metaphor\nDraw a single pair of shoes that expresses the idea \"a long journey\". Use only the shoes, their condition and what is on or around them to tell the idea; no people.\nGive the drawing a title and write a description of not more than 150 words explaining your choices." }
+      ]
+    },
+    {
+      "id": "nid-bdes-dat-mock-02",
+      "level": "bdes",
+      "title": "NID DAT B.Des drawing mock 2",
+      "tasks": [
+        { "marks": 15, "prompt": "Visual storytelling\nA boy finds a lost kite stuck on a neighbour's rooftop during the kite festival.\nDraw THREE frames: (a) the discovery, (b) the attempt to get it back, (c) an unexpected ending.\nThe frames must show the same place from three different viewpoints." },
+        { "marks": 15, "prompt": "Alternative uses\nYou are given a used bicycle tyre (without the wheel).\nShow THREE practical uses for it in a school playground or garden. Draw each use clearly with its surroundings and give each a short title." },
+        { "marks": 20, "prompt": "Opinion and visual communication\n(a) In about 100 words, give your opinion: should mobile phones be allowed in classrooms for learning? (8 marks)\n(b) Design THREE posters (A4, portrait) for a school notice board that promote one hour of screen-free time each evening. Use a different visual approach for each poster. (12 marks)" },
+        { "marks": 15, "prompt": "Design for safety\nElderly people often slip in bathrooms.\nPropose THREE design ideas that reduce the chance of a fall, other than grab bars. Draw each idea in use and explain it in two or three lines." },
+        { "marks": 15, "prompt": "Redesign for different users\nRedesign an umbrella for THREE users: (a) a street vendor who sits under it all day, (b) a person who uses a wheelchair, (c) a school child walking home.\nFor each, draw the umbrella in use and one close-up detail of your key change." },
+        { "marks": 20, "prompt": "Visual metaphor\nDraw a key (or a set of keys) that expresses the idea \"trust\". Show it in a setting of your choice.\nGive the drawing a title and write a description of not more than 150 words." }
+      ]
+    },
+    {
+      "id": "nid-bdes-dat-mock-03",
+      "level": "bdes",
+      "title": "NID DAT B.Des drawing mock 3",
+      "tasks": [
+        { "marks": 15, "prompt": "Visual storytelling\nA stray dog waits every evening at a bus stop for someone who no longer comes.\nDraw THREE frames: (a) a usual evening, (b) the season changes while the dog keeps waiting, (c) a new beginning.\nShow the passing of time through the surroundings, not through text." },
+        { "marks": 15, "prompt": "Alternative uses\nYou are given a wooden ice-cream stick bundle (about 50 sticks) and a roll of string.\nShow THREE useful objects you could make for a small kitchen. Draw each object in use and label its parts." },
+        { "marks": 20, "prompt": "Opinion and visual communication\n(a) In about 100 words, give your opinion: is it better to repair old things or to buy new ones? (8 marks)\n(b) Design THREE stickers (round, 8 cm) for a neighbourhood repair shop that make repairing feel modern and proud. (12 marks)" },
+        { "marks": 15, "prompt": "Design for safety\nPedestrians find it hard to cross a busy road near a market at night.\nPropose THREE design solutions (signs, lighting, objects or street furniture) that make crossing safer. Draw the street scene with each solution in place." },
+        { "marks": 15, "prompt": "Redesign for different users\nRedesign a water tap for THREE places: (a) a railway platform, (b) a primary school, (c) a temple courtyard.\nFor each, draw the tap and the people using it, and note how it saves water." },
+        { "marks": 20, "prompt": "Visual metaphor\nDraw a window (seen from inside a room) that expresses the idea \"hope\". You may show anything through or around the window.\nGive the drawing a title and write a description of not more than 150 words." }
+      ]
+    },
+    {
+      "id": "nid-bdes-dat-mock-04",
+      "level": "bdes",
+      "title": "NID DAT B.Des drawing mock 4",
+      "tasks": [
+        { "marks": 15, "prompt": "Visual storytelling\nA grandmother teaches her grandson to make rotis for the first time.\nDraw THREE frames: (a) the first failed attempt, (b) the lesson, (c) the proud result.\nFocus on hands and expressions; use close-up and wide views." },
+        { "marks": 15, "prompt": "Alternative uses\nYou are given an old suitcase with a broken zip.\nShow THREE new uses for it in a small apartment. Draw each use and give it a title." },
+        { "marks": 20, "prompt": "Opinion and visual communication\n(a) In about 100 words, give your opinion: should every school have a vegetable garden that students look after? (8 marks)\n(b) Design THREE illustrated labels for seed packets the students would sell: tomato, spinach and sunflower. Each label must include the plant's name. (12 marks)" },
+        { "marks": 15, "prompt": "Design for safety\nDelivery riders often ride long hours in heavy rain.\nPropose THREE products or features that keep them safer and more comfortable while riding. Draw each in use with short notes." },
+        { "marks": 15, "prompt": "Redesign for different users\nRedesign a chair for THREE users: (a) a guard who sits outside a gate all night, (b) a child learning to write, (c) a musician playing the tabla.\nFor each, draw the chair in two views and note what you changed." },
+        { "marks": 20, "prompt": "Visual metaphor\nDraw a tree that expresses the idea \"family\". You may show roots, branches, birds or any objects you choose.\nGive the drawing a title and write a description of not more than 150 words." }
+      ]
+    },
+    {
+      "id": "nid-bdes-dat-mock-05",
+      "level": "bdes",
+      "title": "NID DAT B.Des drawing mock 5",
+      "tasks": [
+        { "marks": 15, "prompt": "Visual storytelling\nA power cut happens during a wedding in a village.\nDraw THREE frames: (a) the moment the lights go out, (b) how the guests respond, (c) how the celebration continues.\nUse strong contrast of light and dark." },
+        { "marks": 15, "prompt": "Alternative uses\nYou are given a plastic crate (the kind used for milk packets).\nShow THREE practical uses for it at a bus stop, a shop and a home. Draw each use and give it a title." },
+        { "marks": 20, "prompt": "Opinion and visual communication\n(a) In about 100 words, give your opinion: should public libraries stay open at night? (8 marks)\n(b) Design THREE bookmarks (5 cm x 18 cm) that a library could give away to invite young people at night. (12 marks)" },
+        { "marks": 15, "prompt": "Design for safety\nCooking gas cylinders are often carried up stairs by hand.\nPropose THREE design ideas that make carrying or moving a cylinder safer. Draw each idea in use." },
+        { "marks": 15, "prompt": "Redesign for different users\nRedesign a school bag for THREE users: (a) a child who walks 4 km to school, (b) a child who uses crutches, (c) a child who travels by crowded bus.\nDraw each bag (two views) and note your key changes." },
+        { "marks": 20, "prompt": "Visual metaphor\nDraw a ladder that expresses the idea \"ambition\". Show where it stands and where it leads.\nGive the drawing a title and write a description of not more than 150 words." }
+      ]
+    },
+    {
+      "id": "nid-mdes-dat-mock-01",
+      "level": "mdes",
+      "title": "NID DAT M.Des drawing mock 1",
+      "tasks": [
+        { "marks": 15, "prompt": "Observation and storytelling\nDraw THREE frames that show how a busy hospital waiting area changes from 7 am to 11 pm. Show people, objects and light. Add one line under each frame describing what a designer would notice." },
+        { "marks": 15, "prompt": "Rethinking an object\nTake a standard steel tiffin box. Propose THREE new product ideas that keep its stacking principle but serve a different purpose. Draw each with a short description." },
+        { "marks": 20, "prompt": "Point of view and communication\n(a) In about 150 words, argue whether design schools should require every student to spend a month working with a craftsperson. (8 marks)\n(b) Design THREE posts for a campaign that celebrates a local craft of your choice. Each post must work without text. (12 marks)" },
+        { "marks": 15, "prompt": "Problem identification\nObserve (from memory) a vegetable market. Identify FOUR problems faced by sellers or buyers. Select ONE and draw TWO design solutions, with notes." },
+        { "marks": 15, "prompt": "Design for a system\nDesign a simple system that helps a housing society share tools (ladders, drills, pressure cookers) among families. Draw the key touchpoints: where tools are kept, how they are borrowed and how they are returned." },
+        { "marks": 20, "prompt": "Visual metaphor\nUsing only a thread or rope, create an image that expresses \"connection between generations\". Give it a title and a description of not more than 200 words." }
+      ]
+    },
+    {
+      "id": "nid-mdes-dat-mock-02",
+      "level": "mdes",
+      "title": "NID DAT M.Des drawing mock 2",
+      "tasks": [
+        { "marks": 15, "prompt": "Observation and storytelling\nDraw THREE frames showing the journey of a letter or parcel from a village post office to a city flat. Show the people and vehicles involved." },
+        { "marks": 15, "prompt": "Rethinking an object\nTake an ordinary clothes peg. Propose THREE new products for a kitchen or an office that build on how a peg works. Draw each and explain the mechanism." },
+        { "marks": 20, "prompt": "Point of view and communication\n(a) In about 150 words, give your view: should public spaces in cities be designed for silence? (8 marks)\n(b) Design THREE signs for a \"quiet zone\" in a railway station that people understand without reading. (12 marks)" },
+        { "marks": 15, "prompt": "Problem identification\nThink of a government office where people wait to submit forms. Identify FOUR problems they face. Select ONE and draw TWO design solutions with notes." },
+        { "marks": 15, "prompt": "Design for a service\nDesign the experience of returning a borrowed umbrella at a metro station on a rainy day. Draw the main steps from the user's point of view and any objects needed." },
+        { "marks": 20, "prompt": "Visual metaphor\nDraw a bridge that expresses the idea \"understanding\". Give it a title and a description of not more than 200 words." }
+      ]
+    },
+    {
+      "id": "nid-mdes-dat-mock-03",
+      "level": "mdes",
+      "title": "NID DAT M.Des drawing mock 3",
+      "tasks": [
+        { "marks": 15, "prompt": "Observation and storytelling\nDraw THREE frames showing a monsoon day at a roadside tea stall: before the rain, during the downpour, after the rain." },
+        { "marks": 15, "prompt": "Rethinking an object\nTake a matchbox. Propose THREE new products that use its sliding-drawer principle for medicine, stationery or jewellery. Draw each with notes." },
+        { "marks": 20, "prompt": "Point of view and communication\n(a) In about 150 words, give your view: should every new product carry a label telling how to repair it? (8 marks)\n(b) Design THREE icons for such a repair label: easy to repair, repair needs a specialist, parts available locally. (12 marks)" },
+        { "marks": 15, "prompt": "Problem identification\nObserve (from memory) a school bus pick-up point. Identify FOUR problems faced by children, parents or drivers. Select ONE and draw TWO design solutions with notes." },
+        { "marks": 15, "prompt": "Design for different contexts\nDesign a portable light for THREE contexts: a fisherman at night, a student in a home without electricity, a night-shift nurse. Draw each with two views and notes." },
+        { "marks": 20, "prompt": "Visual metaphor\nDraw a pair of hands that expresses the idea \"responsibility\". The hands may hold or do anything. Give it a title and a description of not more than 200 words." }
+      ]
+    }
+  ]
+}

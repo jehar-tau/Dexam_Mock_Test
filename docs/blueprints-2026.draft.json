@@ -1,0 +1,466 @@
+{
+  "blueprintVersion": "2026-draft-1",
+  "cycle": 2026,
+  "status": "draft-awaiting-owner-confirmation",
+  "preparedOn": "2026-10-28",
+  "companionDoc": "docs/BLUEPRINTS_2026_DRAFT.md",
+  "notes": [
+    "Generation targets for the 2026 cycle only; re-verify every cycle.",
+    "verification.status is 'verified' only when the value was read in an official document listed under sources.",
+    "Dexam simulates paper answer booklets with JPG/PNG/PDF uploads; no exam below has an official candidate upload window."
+  ],
+  "sources": {
+    "U26": "https://www.uceed.iitb.ac.in/2026/assets/downloads/docs/UCEED2026_Information_Brochure.pdf",
+    "U26QP": "https://www.uceed.iitb.ac.in/2026/assets/downloads/qps/UCEED_2026_Question_Paper.pdf",
+    "U26A": "https://web.archive.org/web/20260422113517/https://www.uceed.iitb.ac.in/2026/announcements.html",
+    "U25A": "https://web.archive.org/web/20250420/https://www.uceed.iitb.ac.in/2025/announcements.html",
+    "U24A": "https://web.archive.org/web/20240420/https://www.uceed.iitb.ac.in/2024/announcements.html",
+    "U23A": "https://web.archive.org/web/20230420/https://www.uceed.iitb.ac.in/2023/announcements.html",
+    "U27": "https://www.uceed.iitb.ac.in/2027/assets/downloads/docs/UCEED2027_Information_Brochure.pdf",
+    "C26": "https://www.ceed.iitb.ac.in/2026/downloads/CEED2026_Brochure.pdf",
+    "C26QP": "https://www.ceed.iitb.ac.in/2026/downloads/CEED_2026_Question_Paper.pdf",
+    "C26H": "https://web.archive.org/web/20260311130045/https://www.ceed.iitb.ac.in/2026/",
+    "C25H": "https://web.archive.org/web/20250320/https://www.ceed.iitb.ac.in/2025/",
+    "C24H": "https://web.archive.org/web/20240320/https://www.ceed.iitb.ac.in/2024/",
+    "C23H": "https://web.archive.org/web/20230320/https://www.ceed.iitb.ac.in/2023/",
+    "N26B": "https://cdnbbsr.s3waas.gov.in/s388a839f2f6f1427879fc33ee4acf4f66/uploads/2025/12/202512081380584374.pdf",
+    "N26G": "https://cdnbbsr.s3waas.gov.in/s388a839f2f6f1427879fc33ee4acf4f66/uploads/2025/12/20251211838753519.pdf",
+    "N26P": "https://cdnbbsr.s3waas.gov.in/s388a839f2f6f1427879fc33ee4acf4f66/uploads/2025/12/202512112081484205.pdf",
+    "N26L": "https://web.archive.org/web/20260115/https://exams.nta.nic.in/niftee/",
+    "N26R": "https://web.archive.org/web/20260611222529/https://nift.ac.in/sites/default/files/inline-files/Press%20Release%20for%20the%20declaration%20of%20final%20results%20NIFTEE%202026.pdf",
+    "N27B": "https://www.nift.ac.in/sites/default/files/2026-10/Information%20Bulletin%20-NIFTEE%202027%20-16.10.2026.pdf",
+    "D26B": "https://web.archive.org/web/20250911142532/https://admissions.nid.edu/NIDA2026/download/BDes_AdmissionsHandbook2026-27.pdf",
+    "D26M": "https://web.archive.org/web/20250911154914/https://admissions.nid.edu/NIDA2026/download/MDes_AdmissionsHandbook2026-27.pdf",
+    "D26SB": "https://web.archive.org/web/20250911145702/https://admissions.nid.edu/NIDA2026/download/SamplePaper_DATPrelims_BDes.pdf",
+    "D26SM": "https://web.archive.org/web/20250911142349/https://admissions.nid.edu/NIDA2026/download/SamplePaper_DATPrelims_MDes.pdf",
+    "D26FR": "https://web.archive.org/web/20260519124926/https://admissions.nid.edu/NIDA2026/BDes2026ImportantInstructionsFinalResult.pdf"
+  },
+  "unofficialSources": {
+    "careers360_nid_2026_analysis": "https://design.careers360.com/articles/nid-dat-2026-exam-analysis",
+    "careers360_nid_2026_part_a": "https://design.careers360.com/articles/nid-dat-2026-prelims-question-paper-part-a",
+    "shiksha_nid_2026_bdes_analysis": "https://www.shiksha.com/design/articles/nid-dat-2026-exam-analysis-for-b-des-blogId-216840",
+    "collegedekho_nid_paper_analysis": "https://www.collegedekho.com/exam/nid-dat/paper-analysis"
+  },
+  "scoringRules": {
+    "msqLadderIITB2026": {
+      "description": "UCEED/CEED 2026 MSQ: four options, one or more correct.",
+      "rules": [
+        { "when": "chosen set equals the correct set exactly", "marks": 4 },
+        { "when": "all four options correct and exactly three chosen, none wrong", "marks": 3 },
+        { "when": "three or more options correct and exactly two chosen, both correct, none wrong", "marks": 2 },
+        { "when": "two or more options correct and exactly one chosen, it is correct, none wrong", "marks": 1 },
+        { "when": "nothing chosen", "marks": 0 },
+        { "when": "any other case (any incorrect option chosen)", "marks": -1 }
+      ],
+      "verification": { "status": "verified", "sources": ["U26", "C26"] }
+    }
+  },
+  "exams": {
+    "uceed": {
+      "label": "UCEED 2026",
+      "examDate": "2026-01-18",
+      "durationMin": 180,
+      "totalMarks": 300,
+      "language": "English",
+      "parts": [
+        {
+          "id": "A",
+          "mode": "computer",
+          "durationMin": 120,
+          "order": 1,
+          "lockedAfterTimeUp": true,
+          "marks": 200,
+          "questionOrderMayVaryPerCandidate": true,
+          "sections": [
+            { "id": "1", "type": "NAT", "count": 14, "marksCorrect": 4, "marksWrong": 0, "marksUnattempted": 0, "sectionMarks": 56, "answerInput": "virtual-keyboard-number" },
+            { "id": "2", "type": "MSQ", "count": 15, "options": 4, "scoring": "msqLadderIITB2026", "sectionMarks": 60 },
+            { "id": "3", "type": "MCQ", "count": 28, "options": 4, "marksCorrect": 3, "marksWrong": -0.71, "marksUnattempted": 0, "sectionMarks": 84 }
+          ],
+          "verification": { "status": "verified", "sources": ["U26", "U26QP"] }
+        },
+        {
+          "id": "B",
+          "mode": "screen-question-paper-answer-booklet",
+          "durationMin": 60,
+          "order": 2,
+          "startsAfterPartA": true,
+          "marks": 100,
+          "tasks": [
+            { "type": "DESCRIPTIVE", "subtype": "drawing", "name": "Sketching", "count": 1, "marks": 50, "rubric": ["attention to detail and observation 10", "sense of perspective 10", "visual composition 10", "quality of lines 10", "light and shade 10"] },
+            { "type": "DESCRIPTIVE", "subtype": "drawing", "name": "Design Aptitude", "count": 1, "marks": 50, "rubric": ["functional suitability for end user 10", "attention to detail and explanation of features 10", "uniqueness of solution 10", "3D form and visual graphics 10", "quality of presentation 10"] }
+          ],
+          "materials": "own pencils, shades of black only; no colours; A4 writing board allowed",
+          "answerSubmission": "paper answer book collected at end of exam",
+          "officialUploadWindow": null,
+          "evaluation": "two independent examiners; average if difference <= 10, else third examiner/moderator",
+          "verification": { "status": "verified", "sources": ["U26", "U26QP"] }
+        }
+      ],
+      "shortlisting": {
+        "basis": "Part A marks",
+        "formula": "delta = mean + sd/2 (all candidates' Part A marks)",
+        "categoryMultipliers": { "OPEN": 1.0, "OBC-NCL": 0.9, "GEN-EWS": 0.9, "SC": 0.5, "ST": 0.5, "PwD": 0.5 },
+        "partBEvaluatedOnlyIfShortlisted": true,
+        "verification": { "status": "verified", "sources": ["U26"] }
+      },
+      "ranking": { "basis": "Part A + Part B", "tieBreak": ["Part B", "Part A Section 2 (MSQ)", "Part A Section 1 (NAT)"], "verification": { "status": "verified", "sources": ["U26"] } },
+      "syllabusPartA": ["visualization and spatial reasoning", "practical and scientific knowledge", "observation and design sensitivity", "environment and society", "analytical and logical reasoning", "language", "creativity"],
+      "nextCycleChanges2027": {
+        "partAShortlistCap": 6400,
+        "partBQualifyingCutoff": { "OPEN": 15, "OBC-NCL/EWS": 13.5, "SC/ST/PwD": 7.5 },
+        "verification": { "status": "verified", "sources": ["U27"] }
+      }
+    },
+    "ceed": {
+      "label": "CEED 2026",
+      "examDate": "2026-01-18",
+      "durationMin": 180,
+      "totalMarks": 250,
+      "language": "English",
+      "parts": [
+        {
+          "id": "A",
+          "mode": "computer",
+          "clock": "09:00-10:00",
+          "durationMin": 60,
+          "order": 1,
+          "lockedAfterTimeUp": true,
+          "cannotReturnAfterPartBStarts": true,
+          "marks": 150,
+          "sections": [
+            { "id": "I", "type": "NAT", "count": 8, "questionNumbers": "1-8", "marksCorrect": 4, "marksWrong": 0, "marksUnattempted": 0, "sectionMarks": 32, "answerInput": "virtual-keyboard-number" },
+            { "id": "II", "type": "MSQ", "count": 10, "questionNumbers": "9-18", "options": 4, "scoring": "msqLadderIITB2026", "sectionMarks": 40 },
+            { "id": "III", "type": "MCQ", "count": 26, "questionNumbers": "19-44", "options": 4, "marksCorrect": 3, "marksWrong": -0.5, "marksUnattempted": 0, "sectionMarks": 78 }
+          ],
+          "verification": { "status": "verified", "sources": ["C26", "C26QP"] }
+        },
+        {
+          "id": "B",
+          "mode": "screen-question-paper-answer-booklet",
+          "clock": "10:00-12:00",
+          "durationMin": 120,
+          "order": 2,
+          "marks": 100,
+          "tasks": [
+            { "type": "DESCRIPTIVE", "subtype": "drawing", "name": "Sketching", "count": 1, "marks": 20, "paperOrder2026": 1 },
+            { "type": "DESCRIPTIVE", "subtype": "drawing", "name": "Creativity", "count": 1, "marks": 20, "paperOrder2026": 2 },
+            { "type": "DESCRIPTIVE", "subtype": "drawing", "name": "Visual Sensitivity", "count": 1, "marks": 20, "paperOrder2026": 3 },
+            { "type": "DESCRIPTIVE", "subtype": "drawing", "name": "Form Sensitivity", "count": 1, "marks": 20, "paperOrder2026": 4 },
+            { "type": "DESCRIPTIVE", "subtype": "drawing+written", "name": "Problem Identification", "count": 1, "marks": 20, "paperOrder2026": 5 }
+          ],
+          "partialMarks": true,
+          "negativeMarks": false,
+          "materials": "own pens, pencils, sketch pens and colours; no drawing sheets",
+          "answerSubmission": "paper answer booklet; candidate ticks an on-screen box per answered question",
+          "officialUploadWindow": null,
+          "verification": { "status": "verified", "sources": ["C26", "C26QP"], "note": "Brochure table lists Form Sensitivity as Q3 and Visual Sensitivity as Q4; the 2026 paper reversed them." }
+        }
+      ],
+      "shortlisting": {
+        "basis": "Part A marks",
+        "formula": "delta = mean + sd/2 (all candidates' Part A marks)",
+        "categoryMultipliers": { "GEN": 1.0, "OBC-NCL": 0.9, "GEN-EWS": 0.9, "SC": 0.5, "ST": 0.5, "PwD": 0.5 },
+        "partBEvaluatedOnlyIfShortlisted": true,
+        "verification": { "status": "verified", "sources": ["C26"] }
+      },
+      "finalScore": { "formula": "0.25 * partA + 0.75 * partB", "verification": { "status": "verified", "sources": ["C26"] } },
+      "syllabusPartA": ["visualization and spatial reasoning", "practical and scientific knowledge", "observation and design sensitivity", "environment and society", "analytical and logical reasoning", "language", "creativity", "art and design knowledge", "design methods and practices"]
+    },
+    "nift_bdes": {
+      "label": "NIFT 2026 B.Des",
+      "examDate": "2026-02-08",
+      "stages": [
+        {
+          "id": "GAT",
+          "mode": "computer",
+          "clock": "10:00-12:00",
+          "durationMin": 120,
+          "language": "English/Hindi",
+          "sections": [
+            { "name": "Communication Ability and English Comprehension", "type": "MCQ", "count": 40 },
+            { "name": "Quantitative Ability", "type": "MCQ", "count": 20 },
+            { "name": "Analytical and Logical Ability", "type": "MCQ", "count": 15 },
+            { "name": "General Knowledge and Current Affairs", "type": "MCQ", "count": 25 }
+          ],
+          "totalQuestions": 100,
+          "marksCorrect": 1,
+          "marksWrong": -0.25,
+          "marksUnattempted": 0,
+          "sectionLocking": { "value": null, "verification": { "status": "unverified" } },
+          "weight": 0.30,
+          "verification": { "status": "verified", "sources": ["N26B", "N26G"] }
+        },
+        {
+          "id": "CAT",
+          "mode": "paper",
+          "clock": "15:00-18:00",
+          "durationMin": 180,
+          "tasks": { "type": "DESCRIPTIVE", "subtype": "drawing", "count": 3 },
+          "taskMarks": { "value": null, "verification": { "status": "unverified", "note": "not published" } },
+          "materials": "own colouring and drawing material; physical question booklet with response space",
+          "answerSubmission": "paper booklet at centre",
+          "officialUploadWindow": null,
+          "weight": 0.50,
+          "verification": { "status": "verified", "sources": ["N26B", "N26G"] }
+        },
+        {
+          "id": "SituationTest",
+          "date": "2026-04-26",
+          "mode": "in-person-hands-on",
+          "shortlistRatio": "1:4 category-wise and programme-wise on GAT+CAT",
+          "task": "build a 3D model from a supplied material kit (no outside material) plus an English write-up explaining the concept; judged on the spot by a jury",
+          "componentMarks": {
+            "value": { "model3D": 50, "writeUp": 20, "overallPresentation": 30 },
+            "verification": { "status": "unverified", "note": "From the NIFTEE 2027 bulletin (N27B); the 2026 documents list parameters without marks." }
+          },
+          "officialUploadWindow": null,
+          "weight": 0.20,
+          "verification": { "status": "verified", "sources": ["N26G", "N26R"] }
+        }
+      ],
+      "tieBreak": ["CAT", "GAT", "Communication", "Quantitative", "Analytical", "General Knowledge"],
+      "countsMayVaryYearToYear": true
+    },
+    "nift_bftech": {
+      "label": "NIFT 2026 B.F.Tech",
+      "examDate": "2026-02-08",
+      "stages": [
+        {
+          "id": "GAT-SectionA",
+          "mode": "computer",
+          "durationMin": 120,
+          "sections": [
+            { "name": "Communication Ability and English Comprehension", "type": "MCQ", "count": 40 },
+            { "name": "Quantitative Ability", "type": "MCQ", "count": 20 },
+            { "name": "Analytical and Logical Ability", "type": "MCQ", "count": 15 },
+            { "name": "General Knowledge and Current Affairs", "type": "MCQ", "count": 25 }
+          ],
+          "totalQuestions": 100,
+          "marksCorrect": 1,
+          "marksWrong": -0.25,
+          "weight": 0.30,
+          "verification": { "status": "verified", "sources": ["N26B", "N26G"] }
+        },
+        {
+          "id": "GAT-SectionB",
+          "mode": "computer",
+          "durationMin": 60,
+          "sections": [
+            { "name": "Quantitative Ability", "type": "MCQ", "count": 15 },
+            { "name": "Analytical and Logical Ability", "type": "MCQ", "count": 15 },
+            { "name": "Case Study", "type": "MCQ", "count": 20 }
+          ],
+          "totalQuestions": 50,
+          "marksCorrect": 1,
+          "marksWrong": -0.25,
+          "weight": 0.70,
+          "verification": { "status": "verified", "sources": ["N26B", "N26G"] }
+        }
+      ],
+      "clock": "10:00-13:00",
+      "sectionLocking": { "value": null, "verification": { "status": "unverified", "note": "Section A (2 h) and Section B (1 h) are timed separately; locking not stated." } },
+      "stage2": null,
+      "verificationStage2": { "status": "verified", "sources": ["N26R"], "note": "No second phase for B.F.Tech." }
+    },
+    "nift_mdes": {
+      "label": "NIFT 2026 M.Des",
+      "examDate": "2026-02-08",
+      "stages": [
+        {
+          "id": "GAT",
+          "mode": "computer",
+          "clock": "10:00-12:00",
+          "durationMin": 120,
+          "sections": [
+            { "name": "Communication Ability and English Comprehension", "type": "MCQ", "count": 50 },
+            { "name": "Quantitative Ability", "type": "MCQ", "count": 20 },
+            { "name": "Analytical and Logical Ability", "type": "MCQ", "count": 25 },
+            { "name": "General Knowledge and Current Affairs", "type": "MCQ", "count": 25 }
+          ],
+          "totalQuestions": 120,
+          "marksCorrect": 1,
+          "marksWrong": -0.25,
+          "weight": 0.30,
+          "verification": { "status": "verified", "sources": ["N26B", "N26G"] }
+        },
+        {
+          "id": "CAT",
+          "mode": "paper",
+          "clock": "15:00-18:00",
+          "durationMin": 180,
+          "tasks": { "type": "DESCRIPTIVE", "subtype": "drawing", "count": 3 },
+          "taskCountVerification": { "status": "unverified", "note": "Inferred from the M.F.M + M.Des combo row '150 + 3'." },
+          "officialUploadWindow": null,
+          "weight": 0.40,
+          "verification": { "status": "verified", "sources": ["N26B", "N26G"] }
+        },
+        {
+          "id": "PersonalInterview",
+          "location": "New Delhi",
+          "dates": "2026-04-06/2026-04-11",
+          "parameters": ["career orientation", "aptness for programme", "achievements", "communication", "general awareness"],
+          "marksPerParameter": 20,
+          "weight": 0.30,
+          "verification": { "status": "verified", "sources": ["N26G", "N26R"] }
+        }
+      ],
+      "countsMayVaryYearToYear": true
+    },
+    "nid_bdes_prelims": {
+      "label": "NID DAT 2026 B.Des Prelims",
+      "examDate": "2025-12-21",
+      "mode": "paper-and-pencil",
+      "language": "English",
+      "durationMin": { "value": null, "verification": { "status": "unverified", "note": "Announced only in the admit card." } },
+      "officialGrid": null,
+      "officialGridVerification": { "status": "verified", "sources": ["D26B"], "note": "Handbook publishes no counts, sections, marks or negative marking; questions 'may involve text and visuals'." },
+      "weightInFinalResult": 0,
+      "weightVerification": { "status": "verified", "sources": ["D26B"] },
+      "shortlistForMains": "1.5 x seats per category",
+      "mains": { "components": { "studioSensitivityTest": 0.60, "inPersonSensitivityTest": 0.40 }, "verification": { "status": "verified", "sources": ["D26B"] } },
+      "officialUploadWindow": null,
+      "ownerClaimAllDrawing": {
+        "claim": "2026 Prelims was entirely drawing-based with no aptitude/objective section",
+        "status": "unverified",
+        "supportedBy": ["careers360_nid_2026_analysis", "careers360_nid_2026_part_a", "shiksha_nid_2026_bdes_analysis"],
+        "conflictsWith": ["D26SB"],
+        "note": "Official sample paper for the 2026 cycle has an objective Part I (1/2/3-mark items) plus 15-mark drawing tasks. NID published no 2026 paper."
+      },
+      "templates": {
+        "default": "all-drawing-pending-owner-counts",
+        "alternatives": ["mixed-objective-and-drawing-per-official-sample"]
+      }
+    },
+    "nid_mdes_prelims": {
+      "label": "NID DAT 2026 M.Des Prelims",
+      "examDate": "2025-12-21",
+      "mode": "paper-and-pencil",
+      "language": "English",
+      "commonPaperAllStreams": true,
+      "durationMin": { "value": null, "verification": { "status": "unverified" } },
+      "officialGrid": null,
+      "officialGridVerification": { "status": "verified", "sources": ["D26M"] },
+      "weightInFinalResult": 0,
+      "weightVerification": { "status": "verified", "sources": ["D26M"] },
+      "mains": { "components": { "studioTest": 0.40, "interview": 0.60 }, "verification": { "status": "verified", "sources": ["D26M"] } },
+      "officialUploadWindow": null,
+      "ownerClaimAllDrawing": {
+        "claim": "2026 Prelims was entirely drawing-based with no aptitude/objective section",
+        "status": "unverified",
+        "conflictsWith": ["D26SM"],
+        "note": "Owner claim is stated for NID 2026 generally; no official or unofficial source checked confirms the M.Des paper format."
+      },
+      "templates": {
+        "default": "pending-owner-confirmation",
+        "alternatives": ["all-drawing", "mixed-objective-and-drawing-per-official-sample"]
+      }
+    }
+  },
+  "topicQuotas": {
+    "method": "Largest-remainder allocation over assigned (non-'Unassigned') questions in the local bank, read-only. Topics are a keyword first pass; all rows are still in review.",
+    "bankSnapshot": "server/data/dexam.sqlite as of 2026-10-28 (4,183 questions; 1,171 Unassigned)",
+    "uceed": {
+      "basisPapers": ["uceed-2024", "uceed-2025", "uceed-2026"],
+      "NAT": { "slots": 14, "unassignedShareExcluded": 0.02, "quota": { "Spatial Reasoning": 6, "Numerical Reasoning": 3, "Visual Reasoning": 3, "Analytical Reasoning": 2 } },
+      "MSQ": { "slots": 15, "unassignedShareExcluded": 0.22, "quota": { "Spatial Reasoning": 6, "Visual Reasoning": 5, "Design Awareness": 1, "Materials": 1, "Numerical Reasoning": 1, "Pattern Recognition": 1 } },
+      "MCQ": { "slots": 28, "unassignedShareExcluded": 0.20, "quota": { "Spatial Reasoning": 7, "Visual Reasoning": 6, "Analytical Reasoning": 5, "Materials": 2, "Numerical Reasoning": 2, "Colour Theory": 1, "Design History": 1, "General Knowledge": 1, "Indian Culture": 1, "Language": 1, "Pattern Recognition": 1 } },
+      "imageDependentShare": { "NAT": 0.79, "MSQ": 0.76, "MCQ": 0.70 }
+    },
+    "ceed": {
+      "basisPapers": ["ceed-2024", "ceed-2025", "ceed-2026"],
+      "NAT": { "slots": 8, "unassignedShareExcluded": 0.0, "quota": { "Spatial Reasoning": 4, "Visual Reasoning": 2, "Language": 1, "Numerical Reasoning": 1 } },
+      "MSQ": { "slots": 10, "unassignedShareExcluded": 0.07, "quota": { "Spatial Reasoning": 4, "Materials": 2, "Visual Reasoning": 2, "Analytical Reasoning": 1, "Numerical Reasoning": 1 } },
+      "MCQ": { "slots": 26, "unassignedShareExcluded": 0.15, "quota": { "Spatial Reasoning": 9, "Visual Reasoning": 5, "Analytical Reasoning": 3, "Materials": 3, "Numerical Reasoning": 3, "Design Awareness": 1, "Design History": 1, "Language": 1 } },
+      "imageDependentShare": null,
+      "imageDependentShareNote": "CEED rows have no figure paths recorded in the bank."
+    },
+    "nift": {
+      "quotaSource": "official GAT section counts (see exams.nift_*)",
+      "bankTopicMapping": {
+        "Communication Ability and English Comprehension": ["Language", "English", "Unassigned (NIFT rows, after re-tagging)"],
+        "Quantitative Ability": ["Numerical Reasoning"],
+        "Analytical and Logical Ability": ["Analytical Reasoning", "Spatial Reasoning", "Visual Reasoning", "Pattern Recognition"],
+        "General Knowledge and Current Affairs": ["General Knowledge", "Indian Culture", "Design History", "Colour Theory", "Materials", "Design Awareness"],
+        "Case Study": []
+      },
+      "notes": "Bank NIFT papers are 2012-2014 plus undated samples; current-affairs items need date checks. No tagged Case Study pool."
+    },
+    "nid": {
+      "quota": null,
+      "notes": "No quota until the owner confirms the 2026 Prelims format. Bank NID rows: 2020 B.Des paper and 2024/2025 official samples only."
+    }
+  },
+  "selectionInputs": {
+    "uceedPartA": {
+      "formulaVerifiedFor": 2026,
+      "formulaAssumedFor": [2023, 2024, 2025],
+      "rounding": "2 dp, half-up (brochure says mu, sigma, delta are rounded to two decimals)",
+      "years": {
+        "2026": { "mean": 70.86, "sd": 25.77, "cutoff": { "OPEN": 83.75, "OBC-NCL/EWS": 75.38, "SC/ST/PwD": 41.88 }, "meanSdSource": "U26A" },
+        "2025": { "mean": 61.50, "sd": 25.69, "cutoff": { "OPEN": 74.35, "OBC-NCL/EWS": 66.92, "SC/ST/PwD": 37.18 }, "meanSdSource": "U25A" },
+        "2024": { "mean": 43.91, "sd": 23.03, "cutoff": { "OPEN": 55.43, "OBC-NCL/EWS": 49.89, "SC/ST/PwD": 27.72 }, "meanSdSource": "U24A" },
+        "2023": { "mean": 57.63, "sd": 24.52, "cutoff": { "OPEN": 69.89, "OBC-NCL/EWS": 62.90, "SC/ST/PwD": 34.95 }, "meanSdSource": "U23A" }
+      },
+      "cutoffStatus": "computed from official mean/sd; not published as category numbers"
+    },
+    "uceedSeats2026_27": {
+      "total": 245,
+      "byInstitute": { "IIT Bombay": 37, "IIT Delhi": 20, "IIT Guwahati": 56, "IIT Hyderabad": 30, "IIT Roorkee": 20, "IIITDM Jabalpur": 66, "IIT Indore": 16 },
+      "byCategory": { "OPEN": 94, "OPEN-PwD": 3, "EWS": 24, "EWS-PwD": 2, "OBC-NCL": 61, "OBC-NCL-PwD": 5, "SC": 35, "SC-PwD": 2, "ST": 18, "ST-PwD": 1 },
+      "verification": { "status": "verified", "sources": ["U27"] }
+    },
+    "uceedApplicants": { "value": null, "verification": { "status": "unverified", "note": "No official registered/appeared/qualified counts found." } },
+    "ceedPartA": {
+      "formulaVerifiedFor": 2026,
+      "formulaAssumedFor": [2023, 2024, 2025],
+      "years": {
+        "2026": { "mean": 39.35, "sd": 16.89, "cutoff": { "GEN": 47.80, "OBC-NCL/EWS": 43.02, "SC/ST/PwD": 23.90 }, "meanSdSource": "C26H" },
+        "2025": { "mean": 45.48, "sd": 16.98, "cutoff": { "GEN": 53.97, "OBC-NCL/EWS": 48.57, "SC/ST/PwD": 26.99 }, "meanSdSource": "C25H" },
+        "2024": { "mean": 41.90, "sd": 16.72, "cutoff": { "GEN": 50.26, "OBC-NCL/EWS": 45.23, "SC/ST/PwD": 25.13 }, "meanSdSource": "C24H" },
+        "2023": { "mean": 22.59, "sd": 11.82, "cutoff": { "GEN": 28.50, "OBC-NCL/EWS": 25.65, "SC/ST/PwD": 14.25 }, "meanSdSource": "C23H" }
+      },
+      "cutoffStatus": "computed from official mean/sd; not published as category numbers"
+    },
+    "ceedSeats": { "value": null, "verification": { "status": "unverified", "note": "Set per admitting institute; no consolidated official matrix found." } },
+    "ceedApplicants": { "value": null, "verification": { "status": "unverified", "note": "No official counts found." } },
+    "nift2026Applicants": {
+      "stage1": {
+        "uniqueCandidatesRegistered": 21307,
+        "GAT": { "registered": 21307, "appeared": 18867 },
+        "CAT": { "registered": 18940, "appeared": 16729 },
+        "byProgramme": {
+          "B.Des": { "gatRegistered": 13916, "gatAppeared": 12546, "catRegistered": 13916, "catAppeared": 12486 },
+          "B.F.Tech": { "gatRegistered": 1179, "gatAppeared": 982 },
+          "B.F.Tech+B.Des": { "gatRegistered": 3433, "gatAppeared": 2947, "catRegistered": 3433, "catAppeared": 2892 },
+          "M.Des": { "gatRegistered": 1079, "gatAppeared": 929, "catRegistered": 1079, "catAppeared": 921 },
+          "M.F.M+M.Des": { "gatRegistered": 512, "gatAppeared": 442, "catRegistered": 512, "catAppeared": 430 }
+        },
+        "gatRegisteredByCategory": { "OPEN": 12046, "OBC-NCL": 5248, "SC": 2134, "ST": 995, "EWS": 884 }
+      },
+      "stage2": {
+        "B.Des situation test": { "registered": 9886, "appeared": 8647 },
+        "B.F.Tech & B.Des (both)": { "registered": 2064, "appeared": 1717 },
+        "M.Des interview": { "registered": 680, "appeared": 553 },
+        "M.Des & M.F.M interview": { "registered": 442, "appeared": 355 }
+      },
+      "verification": { "status": "verified", "sources": ["N26R"] }
+    },
+    "nift2026Seats": {
+      "scope": "regular + state domicile; NRI supernumerary excluded",
+      "B.Des": { "total": 3423, "byDiscipline": { "Accessory Design": 637, "Fashion Communication": 719, "Fashion Design": 801, "Fashion Interiors": 82, "Knitwear Design": 351, "Leather Design": 152, "Textile Design": 681 } },
+      "B.F.Tech": 591,
+      "M.Des": 275,
+      "M.F.M": 719,
+      "M.F.Tech": 68,
+      "grandTotal": 5076,
+      "verification": { "status": "verified", "sources": ["N26G"] }
+    },
+    "nid2026Seats": {
+      "scope": "Indian nationals; overseas supernumerary extra",
+      "B.Des": { "total": 428, "byCampus": { "Ahmedabad": 128, "Andhra Pradesh": 75, "Haryana": 75, "Madhya Pradesh": 75, "Assam": 75 }, "notes": "NID MP total intake 86 incl. 11 overseas; Ahmedabad has 15% overseas supernumerary." },
+      "M.Des": { "total": 347, "structure": "17 disciplines x 19 + 2 disciplines x 12 (Ceramic & Glass, Toy & Game)" },
+      "verification": { "status": "verified", "sources": ["D26B", "D26M"] }
+    },
+    "nid2026Applicants": { "value": null, "verification": { "status": "unverified", "note": "Not published in any official document found." } }
+  }
+}

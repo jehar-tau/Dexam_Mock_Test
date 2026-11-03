@@ -1,0 +1,648 @@
+[
+ {
+  "id": "nift-2014-bdes-written-q68",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "68",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A bag marked at - 80 is sold for - 68. The rate of discount is",
+  "options": [
+   {
+    "position": "A",
+    "text": "12%"
+   },
+   {
+    "position": "B",
+    "text": "15%"
+   },
+   {
+    "position": "C",
+    "text": "17|1 - %"
+   },
+   {
+    "position": "D",
+    "text": "20% 17"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q69",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "69",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If2A = 3B= 4C, then A : B : C is",
+  "options": [
+   {
+    "position": "A",
+    "text": "2:3:4"
+   },
+   {
+    "position": "B",
+    "text": "4:3:2"
+   },
+   {
+    "position": "C",
+    "text": "6:4:3"
+   },
+   {
+    "position": "D",
+    "text": "20: 15:2"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q70",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two numbers are respectively 20% and 50% more than a third number. The ratio of the two numbers is:",
+  "options": [
+   {
+    "position": "A",
+    "text": "2:5"
+   },
+   {
+    "position": "B",
+    "text": "3:5"
+   },
+   {
+    "position": "C",
+    "text": "4:5"
+   },
+   {
+    "position": "D",
+    "text": "6:7"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q76",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "76",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sachin Tendulkar : Cricket",
+  "options": [
+   {
+    "position": "A",
+    "text": "Saina Nehwal : Tennis ."
+   },
+   {
+    "position": "B",
+    "text": "Mary Kom : Weightlifting"
+   },
+   {
+    "position": "C",
+    "text": "Sunil Chhetri : Football"
+   },
+   {
+    "position": "D",
+    "text": "Sushil Kumar : Boxing"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q77",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Rajasthan : Jaipur",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mizoram : Aizawl"
+   },
+   {
+    "position": "B",
+    "text": "Tripura: Silvassa"
+   },
+   {
+    "position": "C",
+    "text": "Tamil Nadu: Trivandrum"
+   },
+   {
+    "position": "D",
+    "text": "Uttarakhand : Lucknow"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q78",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "78",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Bihu : Assam",
+  "options": [
+   {
+    "position": "A",
+    "text": "Lavani : Gujarat"
+   },
+   {
+    "position": "B",
+    "text": "Bharatanatyam : Kerala"
+   },
+   {
+    "position": "C",
+    "text": "Garba: Maharashtra"
+   },
+   {
+    "position": "D",
+    "text": "Kuchipudi : Andhra Pradesh"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q79",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "79",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "3, 8, 15, 24, 34, 48, 63",
+  "options": [
+   {
+    "position": "A",
+    "text": "15"
+   },
+   {
+    "position": "B",
+    "text": "24"
+   },
+   {
+    "position": "C",
+    "text": "48"
+   },
+   {
+    "position": "D",
+    "text": "34"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q80",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "80",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "BFD, MQO, RVT, EJG, PTR, CGE",
+  "options": [
+   {
+    "position": "A",
+    "text": "RVT"
+   },
+   {
+    "position": "B",
+    "text": "PTR"
+   },
+   {
+    "position": "C",
+    "text": "EJG"
+   },
+   {
+    "position": "D",
+    "text": "CGE"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q81",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "81",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "41, 43, 47, 53, 61, 71, 73, 81",
+  "options": [
+   {
+    "position": "A",
+    "text": "61"
+   },
+   {
+    "position": "B",
+    "text": "71"
+   },
+   {
+    "position": "C",
+    "text": "73"
+   },
+   {
+    "position": "D",
+    "text": "81"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q82",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "82",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "8, 24, 12, 36, 18, 54, \"?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "27"
+   },
+   {
+    "position": "B",
+    "text": "108"
+   },
+   {
+    "position": "C",
+    "text": "68"
+   },
+   {
+    "position": "D",
+    "text": "72"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q84",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "84",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "71, 76, 69, 74, 67, 72, \"?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "77"
+   },
+   {
+    "position": "B",
+    "text": "80"
+   },
+   {
+    "position": "C",
+    "text": "•65"
+   },
+   {
+    "position": "D",
+    "text": "76"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q85",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "85",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If in a certain code language the word 'FLOWER' is written as 'GNRAJX', how will the word 'SAND' coded in the same language?",
+  "options": [
+   {
+    "position": "A",
+    "text": "TDPZ"
+   },
+   {
+    "position": "B",
+    "text": "OQPS"
+   },
+   {
+    "position": "C",
+    "text": "TCRI"
+   },
+   {
+    "position": "D",
+    "text": "TCQH"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q86",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "86",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Mohan is taller than Shyam but shorter than Ramesh. Ramesh is taller than Rajat but shorter than Gauta If Shyam is taller than Rajat, who is the shortest among all?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Gautam"
+   },
+   {
+    "position": "B",
+    "text": "Rajat"
+   },
+   {
+    "position": "C",
+    "text": "Shyam"
+   },
+   {
+    "position": "D",
+    "text": "Ramesh BT1000/C/2K14/02 10"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q87",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "87",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The average age of A, B and C is 18 years. If B is two years older than A and five years younger than C, then what is the age of C? 2) 19 years",
+  "options": [
+   {
+    "position": "A",
+    "text": "22 years"
+   },
+   {
+    "position": "B",
+    "text": "15 years"
+   },
+   {
+    "position": "C",
+    "text": "17 years"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q88",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Pointing to a person, a man said to a woman, \"His mother is the only daughter of your father\". How is the woman related to that person?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Wife"
+   },
+   {
+    "position": "B",
+    "text": "Daughter"
+   },
+   {
+    "position": "C",
+    "text": "Sister"
+   },
+   {
+    "position": "D",
+    "text": "Mother"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q89",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "89",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If in a certain code language 'RJI' means 'GIVE ME FOOD' and 'NPQR' means 'I LOVE GOOD FOOD' and 'SBN' means 'LOVE YOUR COUNTRY'. Find out the meaning of the letter 'N'.",
+  "options": [
+   {
+    "position": "A",
+    "text": "GOOD"
+   },
+   {
+    "position": "B",
+    "text": "YOUR"
+   },
+   {
+    "position": "C",
+    "text": "LOVE"
+   },
+   {
+    "position": "D",
+    "text": "COUNTRY"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q90",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "90",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Ravi starts from his house and walks straight towards East. After walking 75 mtrs he turns left and walks 25 mtrs. Again he turns left and walks 25 mtrs. Once again, he turns left and walks 25 mtrs. How far is he now from his house?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Zero"
+   },
+   {
+    "position": "B",
+    "text": "50 mtrs"
+   },
+   {
+    "position": "C",
+    "text": "150 mtrs"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q102",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which disease/disorder is caused by the deficiency of Vitamin A?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Beriberi"
+   },
+   {
+    "position": "B",
+    "text": "Scurvy"
+   },
+   {
+    "position": "C",
+    "text": "Loss of vision"
+   },
+   {
+    "position": "D",
+    "text": "Rickets"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q103",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following is the Director-General, UNESCO?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Le Luong Minh"
+   },
+   {
+    "position": "B",
+    "text": "Peter Tomka"
+   },
+   {
+    "position": "C",
+    "text": "Irina Bokova"
+   },
+   {
+    "position": "D",
+    "text": "None of these gas."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q104",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "104",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In the composition of air, about four-fifth of its part is the",
+  "options": [
+   {
+    "position": "A",
+    "text": "Oxygen"
+   },
+   {
+    "position": "B",
+    "text": "Carbon-dioxide"
+   },
+   {
+    "position": "C",
+    "text": "Nitrogen"
+   },
+   {
+    "position": "D",
+    "text": "Ethane BT1000/C/2K14/02 12"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q105",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "105",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'RAGA Pearls', the popular women's watch is from the house of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Timex."
+   },
+   {
+    "position": "B",
+    "text": "Titan."
+   },
+   {
+    "position": "C",
+    "text": "Citizen."
+   },
+   {
+    "position": "D",
+    "text": "HMT:"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q107",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "107",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "According to the provisional population totals of Census 2011, the sex ratio of population in India is",
+  "options": [
+   {
+    "position": "A",
+    "text": "925"
+   },
+   {
+    "position": "B",
+    "text": "931"
+   },
+   {
+    "position": "C",
+    "text": "940"
+   },
+   {
+    "position": "D",
+    "text": "948"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q108",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "108",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "\"BURBERRY', the internationally popular fashion brand, is from",
+  "options": [
+   {
+    "position": "A",
+    "text": "The USA."
+   },
+   {
+    "position": "B",
+    "text": "UK."
+   },
+   {
+    "position": "C",
+    "text": "France."
+   },
+   {
+    "position": "D",
+    "text": "Italy."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q109",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who, among the following Indian film actors, endorsed the 'Garnier' range of men's skin cream?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Shahrukh Khan"
+   },
+   {
+    "position": "B",
+    "text": "John Abraham"
+   },
+   {
+    "position": "C",
+    "text": "Shahid Kapoor"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q122",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following Mughul Emperors installed a Chain of Justice outside his palace?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Jahangir"
+   },
+   {
+    "position": "B",
+    "text": "Aurangzeb"
+   },
+   {
+    "position": "C",
+    "text": "Shah Jahan"
+   },
+   {
+    "position": "D",
+    "text": "Akbar"
+   }
+  ]
+ }
+]

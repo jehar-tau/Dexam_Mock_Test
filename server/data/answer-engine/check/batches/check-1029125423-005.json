@@ -1,0 +1,601 @@
+[
+ {
+  "id": "ceed-2014-q1",
+  "paper": "ceed-2014",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q1.png",
+  "prompt": ": The film ‘Ship of Theseus’ was directed by",
+  "options": [
+   {
+    "position": "A",
+    "text": "Anand Patwardhan"
+   },
+   {
+    "position": "B",
+    "text": "Satyajit Ray"
+   },
+   {
+    "position": "C",
+    "text": "Karan Johar"
+   },
+   {
+    "position": "D",
+    "text": "Anand Gandhi"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q2",
+  "paper": "ceed-2014",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q2.png",
+  "prompt": ": Author of the book ‘India After Gandhi’ is",
+  "options": [
+   {
+    "position": "A",
+    "text": "V. S. Ramachandran"
+   },
+   {
+    "position": "B",
+    "text": "Ramachandra Guha"
+   },
+   {
+    "position": "C",
+    "text": "Jawaharlal Nehru"
+   },
+   {
+    "position": "D",
+    "text": "M.J. Akbar"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q3",
+  "paper": "ceed-2014",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q3.png",
+  "prompt": ": Zaha Hadid is well known as_______________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "a fashion photographer"
+   },
+   {
+    "position": "B",
+    "text": "a fashion designer"
+   },
+   {
+    "position": "C",
+    "text": "a singer"
+   },
+   {
+    "position": "D",
+    "text": "an architect"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q4",
+  "paper": "ceed-2014",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q4.png",
+  "prompt": ": The famous temple that was affected in June-July 2013 floods in Uttarakhand is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Badrinath"
+   },
+   {
+    "position": "B",
+    "text": "Somnath"
+   },
+   {
+    "position": "C",
+    "text": "Kedarnath"
+   },
+   {
+    "position": "D",
+    "text": "Bhimashanker"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q5",
+  "paper": "ceed-2014",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q5.png",
+  "prompt": ": ________________ is an example of monolithic temple architecture.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Trimbakeshwar temple"
+   },
+   {
+    "position": "B",
+    "text": "Meenakshi temple"
+   },
+   {
+    "position": "C",
+    "text": "Kailashnath temple"
+   },
+   {
+    "position": "D",
+    "text": "Akshardham temple 2"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q6",
+  "paper": "ceed-2014",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q6.png",
+  "prompt": ": With a 50 mm lens when you change aperture from 2.8 to 8, the depth of field of the image will",
+  "options": [
+   {
+    "position": "A",
+    "text": "Increase"
+   },
+   {
+    "position": "B",
+    "text": "Decrease"
+   },
+   {
+    "position": "C",
+    "text": "Remain unchanged"
+   },
+   {
+    "position": "D",
+    "text": "None of the above"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q7",
+  "paper": "ceed-2014",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q7.png",
+  "prompt": ": Postscript in digital printing was developed by ________________ .",
+  "options": [
+   {
+    "position": "A",
+    "text": "Apple"
+   },
+   {
+    "position": "B",
+    "text": "Microsoft"
+   },
+   {
+    "position": "C",
+    "text": "Google"
+   },
+   {
+    "position": "D",
+    "text": "Adobe"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q8",
+  "paper": "ceed-2014",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q8.png",
+  "prompt": ": The following lithograph was done by __________________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Kathe Kollwitz"
+   },
+   {
+    "position": "B",
+    "text": "Edward Munch"
+   },
+   {
+    "position": "C",
+    "text": "Yeng Li Pen"
+   },
+   {
+    "position": "D",
+    "text": "Wu Tao Zu"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q9",
+  "paper": "ceed-2014",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q9.png",
+  "prompt": ": Which of the following animals is not depicted In Ashoka Pillar ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bull"
+   },
+   {
+    "position": "B",
+    "text": "Horse"
+   },
+   {
+    "position": "C",
+    "text": "Lion"
+   },
+   {
+    "position": "D",
+    "text": "Tiger 3"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q10",
+  "paper": "ceed-2014",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q10.png",
+  "prompt": ": Identify the ‘India Design Mark’ symbol.",
+  "options": []
+ },
+ {
+  "id": "ceed-2014-q11",
+  "paper": "ceed-2014",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q11.png",
+  "prompt": ": Identify the famous Indian artist who painted the picture below",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ghulam Mohammad Shaikh"
+   },
+   {
+    "position": "B",
+    "text": "Amrita Shergil"
+   },
+   {
+    "position": "C",
+    "text": "Raja Ravi Varma"
+   },
+   {
+    "position": "D",
+    "text": "Abhinindranath Tagore 4"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q12",
+  "paper": "ceed-2014",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q12.png",
+  "prompt": ": Identify the following monument",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bharhut Stupa"
+   },
+   {
+    "position": "B",
+    "text": "Sanchi Stupa"
+   },
+   {
+    "position": "C",
+    "text": "Kushinagar Stupa"
+   },
+   {
+    "position": "D",
+    "text": "Bavikond Stupa"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q13",
+  "paper": "ceed-2014",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q13.png",
+  "prompt": "One of the methods of 3D printing is called ________________",
+  "options": [
+   {
+    "position": "A",
+    "text": "Laser Microscopy"
+   },
+   {
+    "position": "B",
+    "text": "Surface scanning microscopy"
+   },
+   {
+    "position": "C",
+    "text": "Stereolithography"
+   },
+   {
+    "position": "D",
+    "text": "Offset Printing"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q14",
+  "paper": "ceed-2014",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q14.png",
+  "prompt": "Boot space of a car refers to ________________",
+  "options": [
+   {
+    "position": "A",
+    "text": "Luggage space"
+   },
+   {
+    "position": "B",
+    "text": "Engine Envelope"
+   },
+   {
+    "position": "C",
+    "text": "Place to keep shoes"
+   },
+   {
+    "position": "D",
+    "text": "Petrol Tank 5"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q15",
+  "paper": "ceed-2014",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q15.png",
+  "prompt": "Identify the organization which uses the symbol shown here.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Trade Fair Authority of India"
+   },
+   {
+    "position": "B",
+    "text": "Indian Institute of Foreign Trade"
+   },
+   {
+    "position": "C",
+    "text": "Indian Institute of Packaging"
+   },
+   {
+    "position": "D",
+    "text": "Trade Union Federation of India"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q16",
+  "paper": "ceed-2014",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q16.png",
+  "prompt": "What is the maximum number of circular discs of equal size, which can be placed around a similar disc, such that the central disc is touched by all others but there is no overlap between any of the discs?",
+  "options": [
+   {
+    "position": "A",
+    "text": "6"
+   },
+   {
+    "position": "B",
+    "text": "8"
+   },
+   {
+    "position": "C",
+    "text": "12"
+   },
+   {
+    "position": "D",
+    "text": "10"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q17",
+  "paper": "ceed-2014",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q17.png",
+  "prompt": "A platonic solid with 12 sides is called ________________.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tetrahedron"
+   },
+   {
+    "position": "B",
+    "text": "Cube"
+   },
+   {
+    "position": "C",
+    "text": "Icosahedron"
+   },
+   {
+    "position": "D",
+    "text": "Dodecahedron"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q18",
+  "paper": "ceed-2014",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q18.png",
+  "prompt": "Which among these is not a dance form in India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Kathak"
+   },
+   {
+    "position": "B",
+    "text": "Mohiniyattam"
+   },
+   {
+    "position": "C",
+    "text": "Odissi"
+   },
+   {
+    "position": "D",
+    "text": "Thumri"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q19",
+  "paper": "ceed-2014",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q19.png",
+  "prompt": "Identify the correct sentence",
+  "options": [
+   {
+    "position": "A",
+    "text": "Which of your two colleagues are here"
+   },
+   {
+    "position": "B",
+    "text": "Which of your two colleagues is here"
+   },
+   {
+    "position": "C",
+    "text": "Which of two colleagues are here"
+   },
+   {
+    "position": "D",
+    "text": "Which of the two colleagues are here 6"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q20",
+  "paper": "ceed-2014",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q20.png",
+  "prompt": "Complete the sentence: ………………………………………………. his carelessness our car was ruined",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cause of"
+   },
+   {
+    "position": "B",
+    "text": "Since"
+   },
+   {
+    "position": "C",
+    "text": "For"
+   },
+   {
+    "position": "D",
+    "text": "Due to"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q21",
+  "paper": "ceed-2014",
+  "questionNo": "21",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q21.png",
+  "prompt": "How many surfaces are there in the illustration shown?",
+  "options": [
+   {
+    "position": "A",
+    "text": "14"
+   },
+   {
+    "position": "B",
+    "text": "16"
+   },
+   {
+    "position": "C",
+    "text": "17"
+   },
+   {
+    "position": "D",
+    "text": "15"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q22",
+  "paper": "ceed-2014",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q22.png",
+  "prompt": "Identify the drawing with correct perspective. 7",
+  "options": []
+ },
+ {
+  "id": "ceed-2014-q23",
+  "paper": "ceed-2014",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q23.png",
+  "prompt": "Identify this tribal art form of India",
+  "options": [
+   {
+    "position": "A",
+    "text": "Warli"
+   },
+   {
+    "position": "B",
+    "text": "Saura"
+   },
+   {
+    "position": "C",
+    "text": "Madhubani"
+   },
+   {
+    "position": "D",
+    "text": "Gond"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2014-q24",
+  "paper": "ceed-2014",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q24.png",
+  "prompt": "Plan of a three dimensional object is shown here. Identify the correct front view of the object from amongst the four images shown below . 8",
+  "options": []
+ },
+ {
+  "id": "ceed-2014-q25",
+  "paper": "ceed-2014",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2014/blocks/ceed-2014-q25.png",
+  "prompt": "What is the meaning of ‘latent’?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Worthy"
+   },
+   {
+    "position": "B",
+    "text": "Veiled"
+   },
+   {
+    "position": "C",
+    "text": "Latterly"
+   },
+   {
+    "position": "D",
+    "text": "Flanking"
+   }
+  ]
+ }
+]

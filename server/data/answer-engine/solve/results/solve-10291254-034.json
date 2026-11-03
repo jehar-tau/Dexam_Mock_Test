@@ -1,0 +1,44 @@
+{
+ "nift-mfm-written-sample-q131": {
+  "answer": "A",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-mfm-written-sample-q132": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-mfm-written-sample-q133": {
+  "answer": null,
+  "confidence": "low",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-mfm-written-sample-q134": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-mfm-written-sample-q135": {
+  "answer": "D",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-mfm-written-sample-q145": {
+  "answer": "C",
+  "confidence": "low",
+  "method": "solved",
+  "source": ""
+ },
+ "nift-mfm-written-sample-q150": {
+  "answer": "A",
+  "confidence": "low",
+  "method": "solved",
+  "source": ""
+ }
+}

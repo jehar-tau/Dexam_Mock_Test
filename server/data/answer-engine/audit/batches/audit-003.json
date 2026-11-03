@@ -1,0 +1,3118 @@
+[
+ {
+  "id": "nift-2012-written-set4-q99",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "2Z5, 7Y7, 14X9, 23W11, 34V13,",
+  "options": [
+   {
+    "position": "A",
+    "text": "27U24"
+   },
+   {
+    "position": "B",
+    "text": "47U15"
+   },
+   {
+    "position": "C",
+    "text": "45U15"
+   },
+   {
+    "position": "D",
+    "text": "47V14"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q100",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "100",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "I went 15 m to the north, then turned west and covered 10 m, then turned south and covered 5 m and then turned east and covered 10 m. In what direction am I now from my starting",
+  "options": [
+   {
+    "position": "A",
+    "text": "North"
+   },
+   {
+    "position": "B",
+    "text": "South"
+   },
+   {
+    "position": "C",
+    "text": "East"
+   },
+   {
+    "position": "D",
+    "text": "West"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q102",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A walks a distance of 3 km towards North, then turns to his left and walks for 2 km. He again turns left and walks for 3 km. At this point he turns to his right and walks for 3 km. How many kilometers and in what direction is he from the starting point ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "5 km and West"
+   },
+   {
+    "position": "B",
+    "text": "3 km and South"
+   },
+   {
+    "position": "C",
+    "text": "2 km and South"
+   },
+   {
+    "position": "D",
+    "text": ".1 km and East"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q103",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Ankit is related to Binny and Chinky, Daizy is Chinky's mother. Also, Daizy is Binny's sister and Aruna is Binny's sister. How is Chinky related to Aruna ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Niece"
+   },
+   {
+    "position": "B",
+    "text": "Cousin"
+   },
+   {
+    "position": "C",
+    "text": "Sister"
+   },
+   {
+    "position": "D",
+    "text": "Aunt"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q105",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "105",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "When Anuj saw Manish, he recalled, \"He is the son of the father of my daughter's mother,\" Who is Manish to Anuj ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Brother-in-Law"
+   },
+   {
+    "position": "B",
+    "text": "Brother"
+   },
+   {
+    "position": "C",
+    "text": "Cousin"
+   },
+   {
+    "position": "D",
+    "text": "Uncle"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q109",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "MERMAID : FISH",
+  "options": [
+   {
+    "position": "A",
+    "text": "Unicorn : Goat"
+   },
+   {
+    "position": "B",
+    "text": "Centaur : Horse"
+   },
+   {
+    "position": "C",
+    "text": "Amadeus: Beast"
+   },
+   {
+    "position": "D",
+    "text": "Cupid : Nymph"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q110",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "110",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "CLOCK: TIME",
+  "options": [
+   {
+    "position": "A",
+    "text": "Shop : Boxes"
+   },
+   {
+    "position": "B",
+    "text": "People : Way"
+   },
+   {
+    "position": "C",
+    "text": "Books : Knowledge"
+   },
+   {
+    "position": "D",
+    "text": "Map : Place"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q111",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "111",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "COAT : GARMENT",
+  "options": [
+   {
+    "position": "A",
+    "text": "Flower : Beauty"
+   },
+   {
+    "position": "B",
+    "text": "Jack: Instrument"
+   },
+   {
+    "position": "C",
+    "text": "Bangle : Jewellery"
+   },
+   {
+    "position": "D",
+    "text": "Periscope: Tool"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q121",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "121",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Polar Satellite Launch Vehicle (PSLV-C18) of India put how many satellites into orbit on October 12, 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "4"
+   },
+   {
+    "position": "B",
+    "text": "1"
+   },
+   {
+    "position": "C",
+    "text": "2"
+   },
+   {
+    "position": "D",
+    "text": "3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q122",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following proposals are contained in the new draft National Telecom Policy 2011 announced by the Government of India in New Delhi in October 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Removal of national roaming charges"
+   },
+   {
+    "position": "B",
+    "text": "Allowing mobile users to keep the same number even while switching service areas"
+   },
+   {
+    "position": "C",
+    "text": ". Removal of distinction between local and STD calls"
+   },
+   {
+    "position": "D",
+    "text": "All these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q123",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Dada Saheb Phalke Award for lifetime achievement is presented by the Government of India for excellence in which field ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cinema"
+   },
+   {
+    "position": "B",
+    "text": "• Coaching in sports"
+   },
+   {
+    "position": "C",
+    "text": "Music"
+   },
+   {
+    "position": "D",
+    "text": "Dance Who is the activist"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q124",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "124",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "on a fast for the past eleven years seeking repeal of the Armed Forces (Special Forces) Act ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Irom Sharmila"
+   },
+   {
+    "position": "B",
+    "text": "Anna Hazare"
+   },
+   {
+    "position": "C",
+    "text": "Medha Patkar"
+   },
+   {
+    "position": "D",
+    "text": "Arundhati Roy"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q125",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "125",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Dibrugarh - Kanyakumari Vivek Express, India's longest train service, covers a distance of",
+  "options": [
+   {
+    "position": "A",
+    "text": "4,286 km"
+   },
+   {
+    "position": "B",
+    "text": "2,846 km"
+   },
+   {
+    "position": "C",
+    "text": "6,426 km"
+   },
+   {
+    "position": "D",
+    "text": "8,246 km"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q126",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "126",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who amongst the following was declared the world's smallest living woman, by the Guinnes: World Records in 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Jyotiba Phule"
+   },
+   {
+    "position": "B",
+    "text": "Jyotirmoyee Sikdar ."
+   },
+   {
+    "position": "C",
+    "text": "Jyoti Baba"
+   },
+   {
+    "position": "D",
+    "text": "Jyoti Amge"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q127",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "127",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A limited edition premium sarees range was launched in India during the 2011 Diwali festivi season by which foreign luxury brand ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Hermes"
+   },
+   {
+    "position": "B",
+    "text": "Burberry"
+   },
+   {
+    "position": "C",
+    "text": "United Colors of Benetton"
+   },
+   {
+    "position": "D",
+    "text": "Hidesign"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q128",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "128",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "\"Coming home to ... \". Complete this jingle of a leading suitings brand of India.",
+  "options": [
+   {
+    "position": "A",
+    "text": "OCM"
+   },
+   {
+    "position": "B",
+    "text": "Digjam"
+   },
+   {
+    "position": "C",
+    "text": "Dinesh"
+   },
+   {
+    "position": "D",
+    "text": "Siyaram's"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q129",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "129",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "\"Only Vimal, only Vimal, only Vimal, Vimal\". This jingle is of which leading textile/suitings branc of India ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "OCM"
+   },
+   {
+    "position": "B",
+    "text": "Digjam"
+   },
+   {
+    "position": "C",
+    "text": "Raymond"
+   },
+   {
+    "position": "D",
+    "text": "Reliance Textiles"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q130",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "130",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which leading Hindi film actor had been endorsing the Reid & Taylor brand of suitings ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Amitabh Bachchan"
+   },
+   {
+    "position": "B",
+    "text": "Salman Khan"
+   },
+   {
+    "position": "C",
+    "text": ", Shah Rukh Khan"
+   },
+   {
+    "position": "D",
+    "text": "Aamir Khan"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q131",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "131",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Finlay's', 'Raasa' and 'Entice' are the new brands under which one of the following textile makers?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Reliance"
+   },
+   {
+    "position": "B",
+    "text": ": Raymond"
+   },
+   {
+    "position": "C",
+    "text": "NTC"
+   },
+   {
+    "position": "D",
+    "text": "Garden Silks"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q132",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "132",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Jockey' is a leading international brand of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Men's Shirts"
+   },
+   {
+    "position": "B",
+    "text": "Men's Trousers"
+   },
+   {
+    "position": "C",
+    "text": "T-Shirts"
+   },
+   {
+    "position": "D",
+    "text": "Men's innerwear \"Tibre\" is a well-known national brand of"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q135",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "135",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following organizations set up by the Government of India has been scripting the journey of Khadi to acquire an elite, haute couture status, and helping villagers engaged in these industries ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "KVIC"
+   },
+   {
+    "position": "B",
+    "text": "Khadi Gramodyog Bhavan"
+   },
+   {
+    "position": "C",
+    "text": "NTC"
+   },
+   {
+    "position": "D",
+    "text": "Cauvery Silks"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q136",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "136",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The popular annual Kingfisher Swimsuit Calendar is a product of",
+  "options": [
+   {
+    "position": "A",
+    "text": "UB Group"
+   },
+   {
+    "position": "B",
+    "text": "Shaw Wallace"
+   },
+   {
+    "position": "C",
+    "text": "Chivas"
+   },
+   {
+    "position": "D",
+    "text": "Radico Khaitan"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q137",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "137",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Royale Touch' is a well known brand of endorsed by leading Hindi film actor Saif Al Khan.",
+  "options": [
+   {
+    "position": "A",
+    "text": "paints"
+   },
+   {
+    "position": "B",
+    "text": "suitings"
+   },
+   {
+    "position": "C",
+    "text": "shoes"
+   },
+   {
+    "position": "D",
+    "text": "shirts"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q138",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "138",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Vasuki Sunkavalli of Hyderabad, India won which of the following titles in the event conductec in July 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Miss Universe India"
+   },
+   {
+    "position": "B",
+    "text": "Miss Universe"
+   },
+   {
+    "position": "C",
+    "text": "Miss World India"
+   },
+   {
+    "position": "D",
+    "text": "Miss World"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q139",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "139",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who sang the popular half-Tamil, half-English song with the words \"Kolaveri Kolaveri Di\"?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Dhanush"
+   },
+   {
+    "position": "B",
+    "text": "K.J. Yesudas"
+   },
+   {
+    "position": "C",
+    "text": "S.P. Balasubramaniam"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q140",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "140",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Fashion Design Council of India organized 'India Fashion Week' is held",
+  "options": [
+   {
+    "position": "A",
+    "text": "once in two years"
+   },
+   {
+    "position": "B",
+    "text": "once a year"
+   },
+   {
+    "position": "C",
+    "text": "once in three months"
+   },
+   {
+    "position": "D",
+    "text": "twice a year"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q141",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "141",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following options is the correct expansion of UNWTO ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "United Nations World Tourism Organisation"
+   },
+   {
+    "position": "B",
+    "text": "United Nations World Trade Organisation"
+   },
+   {
+    "position": "C",
+    "text": "United Nations World Technology Organisation"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q142",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "142",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The international award Pulitzer Prize, presented by Columbia University, USA, is given for excellence in",
+  "options": [
+   {
+    "position": "A",
+    "text": "newspaper journalism."
+   },
+   {
+    "position": "B",
+    "text": "literary achievements."
+   },
+   {
+    "position": "C",
+    "text": "musical composition."
+   },
+   {
+    "position": "D",
+    "text": "All these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q143",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "143",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In which State of India is Majuli, the largest river island in the world, located ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Assam"
+   },
+   {
+    "position": "B",
+    "text": "Manipur"
+   },
+   {
+    "position": "C",
+    "text": "Meghalaya"
+   },
+   {
+    "position": "D",
+    "text": "Nagaland"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q144",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "144",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Delhi-Mumbai Industrial Corridor is a 1,483 km project running through seven States including which of the following ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "UP - Haryana - Rajasthan - Gujarat - MP"
+   },
+   {
+    "position": "B",
+    "text": "UP - Uttarakhand - Rajasthan - Gujarat - MP"
+   },
+   {
+    "position": "C",
+    "text": "UP - Uttarakhand - Punjab - Rajasthan - Gujarat"
+   },
+   {
+    "position": "D",
+    "text": "UP - Haryana - Rajasthan - Punjab - Gujarat"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q145",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "145",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which country, given Most Favoured Nation status by India in 1996, reciprocated the gesture in November 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Nepal"
+   },
+   {
+    "position": "B",
+    "text": "China"
+   },
+   {
+    "position": "C",
+    "text": "Canada"
+   },
+   {
+    "position": "D",
+    "text": "Pakistan"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q146",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "146",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "World AIDS Day is observed on _ every year.",
+  "options": [
+   {
+    "position": "A",
+    "text": "December 31"
+   },
+   {
+    "position": "B",
+    "text": "October 1"
+   },
+   {
+    "position": "C",
+    "text": "December 1 •"
+   },
+   {
+    "position": "D",
+    "text": "October 31"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q147",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "147",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Name the film about Mark Zuckerberg's popular social networking site Facebook,' that won four awards at the 2011 Golden Globe Awards ceremony ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "The Facebook"
+   },
+   {
+    "position": "B",
+    "text": "The Social Network"
+   },
+   {
+    "position": "C",
+    "text": "The Twitter Network"
+   },
+   {
+    "position": "D",
+    "text": "The Linked In"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q148",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "148",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many 'Fundamental Rights' does the Constitution of India offer to all its citizens ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "4"
+   },
+   {
+    "position": "B",
+    "text": "5"
+   },
+   {
+    "position": "C",
+    "text": "6."
+   },
+   {
+    "position": "D",
+    "text": "7"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q149",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "149",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The coin of what denomination went out of circulation in India with effect from June 30, 2011 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "50 paise"
+   },
+   {
+    "position": "B",
+    "text": "25 paise"
+   },
+   {
+    "position": "C",
+    "text": "One rupee"
+   },
+   {
+    "position": "D",
+    "text": "10 paise"
+   }
+  ]
+ },
+ {
+  "id": "nift-2012-written-set4-q150",
+  "paper": "nift-2012-written-set4",
+  "questionNo": "150",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Nirupama Rao of the Indian Foreign Service is currently the Indian envoy to which of the following countries ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "UK"
+   },
+   {
+    "position": "B",
+    "text": "France"
+   },
+   {
+    "position": "C",
+    "text": "USA"
+   },
+   {
+    "position": "D",
+    "text": "None of these MT 1000/Z/2K12/02 (19 ) INSTRUCTIONS TO CANDIDATES 1. Do not open this booklet until asked to do so. 2. Do not leave the examination hall until the test is over and permitted by the invigilator. Fill up the necessary information in the space provided on the cover of the Question 3. Boo"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q1",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The house cannot accommodate more people.",
+  "options": [
+   {
+    "position": "A",
+    "text": "hold"
+   },
+   {
+    "position": "B",
+    "text": "allow"
+   },
+   {
+    "position": "C",
+    "text": "hide"
+   },
+   {
+    "position": "D",
+    "text": "associate"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q3",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Only my neighbor succored me during my illness.",
+  "options": [
+   {
+    "position": "A",
+    "text": "nourished"
+   },
+   {
+    "position": "B",
+    "text": "treated"
+   },
+   {
+    "position": "C",
+    "text": "aided"
+   },
+   {
+    "position": "D",
+    "text": "attended"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q4",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He tried to cajole her, but it was in vain.",
+  "options": [
+   {
+    "position": "A",
+    "text": "enjoin"
+   },
+   {
+    "position": "B",
+    "text": "coax"
+   },
+   {
+    "position": "C",
+    "text": "rejoice"
+   },
+   {
+    "position": "D",
+    "text": "inspire"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q6",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "His boorish ways amused everyone.",
+  "options": [
+   {
+    "position": "A",
+    "text": "refined"
+   },
+   {
+    "position": "B",
+    "text": "funny"
+   },
+   {
+    "position": "C",
+    "text": "eccentric"
+   },
+   {
+    "position": "D",
+    "text": "friendly"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q7",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He has suspended his secretary on a flimsy ground.",
+  "options": [
+   {
+    "position": "A",
+    "text": "vigorous"
+   },
+   {
+    "position": "B",
+    "text": "strong"
+   },
+   {
+    "position": "C",
+    "text": "sound"
+   },
+   {
+    "position": "D",
+    "text": "salutary"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q9",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "City",
+  "options": [
+   {
+    "position": "A",
+    "text": "cities"
+   },
+   {
+    "position": "B",
+    "text": "citys"
+   },
+   {
+    "position": "C",
+    "text": "citis"
+   },
+   {
+    "position": "D",
+    "text": "cityes"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q10",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Buffalo",
+  "options": [
+   {
+    "position": "A",
+    "text": "buffaloes"
+   },
+   {
+    "position": "B",
+    "text": "bufalos"
+   },
+   {
+    "position": "C",
+    "text": "buffalose"
+   },
+   {
+    "position": "D",
+    "text": "buffaloce"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q11",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Half",
+  "options": [
+   {
+    "position": "A",
+    "text": "halfs"
+   },
+   {
+    "position": "B",
+    "text": "halffes"
+   },
+   {
+    "position": "C",
+    "text": "half"
+   },
+   {
+    "position": "D",
+    "text": "halves"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q12",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Duty",
+  "options": [
+   {
+    "position": "A",
+    "text": "dutys"
+   },
+   {
+    "position": "B",
+    "text": "duties"
+   },
+   {
+    "position": "C",
+    "text": "dutis"
+   },
+   {
+    "position": "D",
+    "text": "duty"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q13",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Tornado",
+  "options": [
+   {
+    "position": "A",
+    "text": "tornadoes"
+   },
+   {
+    "position": "B",
+    "text": "tornadose"
+   },
+   {
+    "position": "C",
+    "text": "tornadae"
+   },
+   {
+    "position": "D",
+    "text": ". tornado"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q14",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Decision made upon a political question by the votes of all qualified persons",
+  "options": [
+   {
+    "position": "A",
+    "text": ". Veto"
+   },
+   {
+    "position": "B",
+    "text": "Suffrage"
+   },
+   {
+    "position": "C",
+    "text": "Plebiscite"
+   },
+   {
+    "position": "D",
+    "text": "Franchise"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q15",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "• Informal business communication with a personal signature",
+  "options": [
+   {
+    "position": "A",
+    "text": "Agendum"
+   },
+   {
+    "position": "B",
+    "text": "corrigendum"
+   },
+   {
+    "position": "C",
+    "text": "Plagiarism"
+   },
+   {
+    "position": "D",
+    "text": "Memorandum"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q16",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Pertaining to the science of group cultures, conventions, etc.",
+  "options": [
+   {
+    "position": "A",
+    "text": "biological"
+   },
+   {
+    "position": "B",
+    "text": "philological"
+   },
+   {
+    "position": "C",
+    "text": "sociological"
+   },
+   {
+    "position": "D",
+    "text": "psychological"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q17",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Something, or someone, misplaced in time, either old-fashioned or futuristic",
+  "options": [
+   {
+    "position": "A",
+    "text": "incongruity"
+   },
+   {
+    "position": "B",
+    "text": "anachronism"
+   },
+   {
+    "position": "C",
+    "text": "chronicity"
+   },
+   {
+    "position": "D",
+    "text": "incorrigible"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q18",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A method of doing something, based on practical experience rather than theory or careful calculation.",
+  "options": [
+   {
+    "position": "A",
+    "text": "rule of thumb"
+   },
+   {
+    "position": "B",
+    "text": "rule of three"
+   },
+   {
+    "position": "C",
+    "text": "fact"
+   },
+   {
+    "position": "D",
+    "text": "law"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q19",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Any personal way of behaving, reacting or thinking; a personal peculiarity or eccentricity.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Idiocy"
+   },
+   {
+    "position": "B",
+    "text": "Idiolect"
+   },
+   {
+    "position": "C",
+    "text": "Idiosyncrasy"
+   },
+   {
+    "position": "D",
+    "text": "Ideologically"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q20",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It was out of place for him to talk on politics when the seminar was arranged to discuss recent trends in literature.",
+  "options": [
+   {
+    "position": "A",
+    "text": "foolish"
+   },
+   {
+    "position": "B",
+    "text": "strange"
+   },
+   {
+    "position": "C",
+    "text": "inappropriate"
+   },
+   {
+    "position": "D",
+    "text": "odd"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q21",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "21",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "When I saw him in the morning, he looked like a duck in a thunderstorm.",
+  "options": [
+   {
+    "position": "A",
+    "text": "timid"
+   },
+   {
+    "position": "B",
+    "text": "peaceful"
+   },
+   {
+    "position": "C",
+    "text": "distressed"
+   },
+   {
+    "position": "D",
+    "text": "indomitable"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q22",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "I am sure he means business.",
+  "options": [
+   {
+    "position": "A",
+    "text": "is earnest"
+   },
+   {
+    "position": "B",
+    "text": "is inquisitive"
+   },
+   {
+    "position": "C",
+    "text": "is a trader"
+   },
+   {
+    "position": "D",
+    "text": "is anxious to make profit"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q23",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The party stalwarts have advised the President to take it lying down for a while.",
+  "options": [
+   {
+    "position": "A",
+    "text": "show no reaction"
+   },
+   {
+    "position": "B",
+    "text": "take rest"
+   },
+   {
+    "position": "C",
+    "text": "be on the defensive"
+   },
+   {
+    "position": "D",
+    "text": "be cautious"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q24",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Childhood and innocence lie cheek by jow].",
+  "options": [
+   {
+    "position": "A",
+    "text": "together"
+   },
+   {
+    "position": "B",
+    "text": "one after another"
+   },
+   {
+    "position": "C",
+    "text": "side by side ."
+   },
+   {
+    "position": "D",
+    "text": "proportionately"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q25",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It was after a long time that the police was able to lay the thief by the heels.",
+  "options": [
+   {
+    "position": "A",
+    "text": "run fast after"
+   },
+   {
+    "position": "B",
+    "text": "play tricks on"
+   },
+   {
+    "position": "C",
+    "text": "chase and capture"
+   },
+   {
+    "position": "D",
+    "text": "arrest"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q66",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "66",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the product of place value and face value of 5 in 65231 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "28000"
+   },
+   {
+    "position": "B",
+    "text": "25000 67.. Which of the following is divisible by 15? (3) 3970 (4) 3580 (1) 3975 (2) 3575"
+   },
+   {
+    "position": "C",
+    "text": "27000"
+   },
+   {
+    "position": "D",
+    "text": "26000"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q68",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "68",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many numbers up to 700 are divisible by both 3 and 5?",
+  "options": [
+   {
+    "position": "A",
+    "text": "42"
+   },
+   {
+    "position": "B",
+    "text": "46"
+   },
+   {
+    "position": "C",
+    "text": "39 •"
+   },
+   {
+    "position": "D",
+    "text": "52"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q69",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "69",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which is the smallest prime number?",
+  "options": [
+   {
+    "position": "A",
+    "text": "0"
+   },
+   {
+    "position": "B",
+    "text": "1"
+   },
+   {
+    "position": "C",
+    "text": "2"
+   },
+   {
+    "position": "D",
+    "text": "3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q70",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "11 times of a number gives 132. The number is",
+  "options": [
+   {
+    "position": "A",
+    "text": "11"
+   },
+   {
+    "position": "B",
+    "text": "12 20. as mixed fraction."
+   },
+   {
+    "position": "C",
+    "text": "13.2"
+   },
+   {
+    "position": "D",
+    "text": "13"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q76",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "76",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "25% of a number is 20, what is 40% of that number?",
+  "options": [
+   {
+    "position": "A",
+    "text": "80"
+   },
+   {
+    "position": "B",
+    "text": "40"
+   },
+   {
+    "position": "C",
+    "text": "32"
+   },
+   {
+    "position": "D",
+    "text": "136"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q77",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If A's height is 50% less than that of B, how much per cent B's height is more than that of A ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "100%"
+   },
+   {
+    "position": "B",
+    "text": "80%"
+   },
+   {
+    "position": "C",
+    "text": "150%"
+   },
+   {
+    "position": "D",
+    "text": "50%"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q78",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "78",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A number when decreased by 25% becomes 90. The number is",
+  "options": [
+   {
+    "position": "A",
+    "text": "150"
+   },
+   {
+    "position": "B",
+    "text": "120"
+   },
+   {
+    "position": "C",
+    "text": "175"
+   },
+   {
+    "position": "D",
+    "text": "125"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q79",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "79",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Find SI if P = 7 1000, R = 20% per annum, T = 4 yrs.",
+  "options": [
+   {
+    "position": "A",
+    "text": "R 400"
+   },
+   {
+    "position": "B",
+    "text": "* 600"
+   },
+   {
+    "position": "C",
+    "text": "7 800"
+   },
+   {
+    "position": "D",
+    "text": "7 850"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q80",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "80",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In how many years, a sum will become four times itself at the rate of 12% per annum ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "28 yrs"
+   },
+   {
+    "position": "B",
+    "text": "25 yrs"
+   },
+   {
+    "position": "C",
+    "text": "22 yrs"
+   },
+   {
+    "position": "D",
+    "text": "27 yrs"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q81",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "81",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What will be the compound interest on F 9375 at 8% per annum for 2 yrs?",
+  "options": [
+   {
+    "position": "A",
+    "text": "F 1560"
+   },
+   {
+    "position": "B",
+    "text": "* 1512"
+   },
+   {
+    "position": "C",
+    "text": "< 1590"
+   },
+   {
+    "position": "D",
+    "text": "* 1548"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q82",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "82",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The difference between compound and simple interests on a sum for 2 years at 8% per annum is • F 64. The sum is",
+  "options": [
+   {
+    "position": "A",
+    "text": "7. 12000"
+   },
+   {
+    "position": "B",
+    "text": "R 11000"
+   },
+   {
+    "position": "C",
+    "text": "7 9000"
+   },
+   {
+    "position": "D",
+    "text": "R 10000"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q85",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "85",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A man, a woman and a boy can do a job in 3, 4 and 12 days respectively. How many boys must assist the man and woman to complete the job in one and a half days?",
+  "options": [
+   {
+    "position": "A",
+    "text": "12"
+   },
+   {
+    "position": "B",
+    "text": "6"
+   },
+   {
+    "position": "C",
+    "text": "3"
+   },
+   {
+    "position": "D",
+    "text": "1"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q86",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "86",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If 0.75 : x :: 5: 8, then find x",
+  "options": [
+   {
+    "position": "A",
+    "text": "12"
+   },
+   {
+    "position": "B",
+    "text": "0.12"
+   },
+   {
+    "position": "C",
+    "text": "1.2"
+   },
+   {
+    "position": "D",
+    "text": "120"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q87",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "87",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two whole numbers whose sum is 15, cannot be in the ratio",
+  "options": [
+   {
+    "position": "A",
+    "text": "1:4"
+   },
+   {
+    "position": "B",
+    "text": "3:2"
+   },
+   {
+    "position": "C",
+    "text": "1:6"
+   },
+   {
+    "position": "D",
+    "text": "1:2"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q88",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If 5 times a number is equal to 7 times another number, then the ratio between the two numbers is",
+  "options": [
+   {
+    "position": "A",
+    "text": "5:7"
+   },
+   {
+    "position": "B",
+    "text": "7:5"
+   },
+   {
+    "position": "C",
+    "text": "4:5"
+   },
+   {
+    "position": "D",
+    "text": "3:7"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q89",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "89",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the time taken by a train running at 18 km/h to cross a man standing on a platform, length of the train is 120 m ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "22 sec"
+   },
+   {
+    "position": "B",
+    "text": "44 sec"
+   },
+   {
+    "position": "C",
+    "text": "12 sec"
+   },
+   {
+    "position": "D",
+    "text": "24 sec"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q90",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "90",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two men starting from the same place walk at the rates of 4 km/h and 4.6 km/h, respectively. What time will they take to be 3 km apart, if they walk in the same direction ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "8 h"
+   },
+   {
+    "position": "B",
+    "text": "4h"
+   },
+   {
+    "position": "C",
+    "text": "5 h"
+   },
+   {
+    "position": "D",
+    "text": "6h"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q94",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "94",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "2, 4, 8, 16, 32, ...., 128",
+  "options": [
+   {
+    "position": "A",
+    "text": "64"
+   },
+   {
+    "position": "B",
+    "text": "65 1 1 , 1, 5, ......"
+   },
+   {
+    "position": "C",
+    "text": "66"
+   },
+   {
+    "position": "D",
+    "text": "67"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q96",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "96",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "4, 7, 5, 9, ..., 11, 7, 13",
+  "options": [
+   {
+    "position": "A",
+    "text": "6"
+   },
+   {
+    "position": "B",
+    "text": "8"
+   },
+   {
+    "position": "C",
+    "text": "9"
+   },
+   {
+    "position": "D",
+    "text": "3"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q99",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sonam is walking facing West, then turns 90° in clockwise direction, and then turns 90º in clockwise direction again. In which direction is she finally moving?",
+  "options": [
+   {
+    "position": "A",
+    "text": "South"
+   },
+   {
+    "position": "B",
+    "text": "North"
+   },
+   {
+    "position": "C",
+    "text": "East"
+   },
+   {
+    "position": "D",
+    "text": "West"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q101",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "101",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Kamal drives his bike and goes to college. He comes back following the same route. He again drives from his house towards North and reaches the market. What is the direction of his house with respect to market?",
+  "options": [
+   {
+    "position": "A",
+    "text": "South"
+   },
+   {
+    "position": "B",
+    "text": "East"
+   },
+   {
+    "position": "C",
+    "text": "North-East"
+   },
+   {
+    "position": "D",
+    "text": "Cannot be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q103",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A family consists of a husband and wife, their three sons and two daughters, three wives of three sons. How many females are in this family ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "5"
+   },
+   {
+    "position": "B",
+    "text": "6"
+   },
+   {
+    "position": "C",
+    "text": "7"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q104",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "104",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "L is the father of N and P. P is the son of L but N is not the son of L. How is N related to L?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Daughter"
+   },
+   {
+    "position": "B",
+    "text": "Son-in-law"
+   },
+   {
+    "position": "C",
+    "text": "Mother"
+   },
+   {
+    "position": "D",
+    "text": "Niece"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q108",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "108",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "FG: BC :: RI:?",
+  "options": [
+   {
+    "position": "A",
+    "text": "NO"
+   },
+   {
+    "position": "B",
+    "text": "NE"
+   },
+   {
+    "position": "C",
+    "text": "MF"
+   },
+   {
+    "position": "D",
+    "text": "ST"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q109",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "EDC: RQP :: MLK: ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "XYZ"
+   },
+   {
+    "position": "B",
+    "text": "PQR"
+   },
+   {
+    "position": "C",
+    "text": "ZYX"
+   },
+   {
+    "position": "D",
+    "text": "NOP"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q110",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "110",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "L: 0:: D:?",
+  "options": [
+   {
+    "position": "A",
+    "text": "W"
+   },
+   {
+    "position": "B",
+    "text": "X"
+   },
+   {
+    "position": "C",
+    "text": "Y"
+   },
+   {
+    "position": "D",
+    "text": "Z"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q116",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "116",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If in a certain language, POPULAR is coded as QPQVMBS, then which word would be coded as GBNPVT ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "EAMOSU"
+   },
+   {
+    "position": "B",
+    "text": "FAMOUS"
+   },
+   {
+    "position": "C",
+    "text": "FASOUM"
+   },
+   {
+    "position": "D",
+    "text": "FASAUM"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q117",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "117",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If white is called blue, blue is called red, red is called yellow, yellow is called green, green is called black, black is called violet and violet is called orange, then what would the colour of human blood be ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Red"
+   },
+   {
+    "position": "B",
+    "text": "Green"
+   },
+   {
+    "position": "C",
+    "text": "Yellow"
+   },
+   {
+    "position": "D",
+    "text": "Violet"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q120",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "120",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Prior to 1998, Indian sugar industry was considerably lower in the world ranking of large nations. 121, Recently, who made the \"Gangnam Style\" rapper dance as worldwide phenomenon?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Enrique Iglesias"
+   },
+   {
+    "position": "B",
+    "text": "Park Jae-Sang"
+   },
+   {
+    "position": "C",
+    "text": "Yo Yo Honey Singh"
+   },
+   {
+    "position": "D",
+    "text": "Shah Rukh Khan"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q122",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In which city of India, the Children Science Congress and the Women Science Congress was organized in January 2013 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Pune"
+   },
+   {
+    "position": "B",
+    "text": "Delhi"
+   },
+   {
+    "position": "C",
+    "text": "Kolkata"
+   },
+   {
+    "position": "D",
+    "text": "Hyderabad"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q123",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is common about Rina Dhaka, Ritu Kumar, Malini Ramani and Ritu Beri ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Fashion Designing"
+   },
+   {
+    "position": "B",
+    "text": "Ramp Modelling"
+   },
+   {
+    "position": "C",
+    "text": "Television Acting"
+   },
+   {
+    "position": "D",
+    "text": "Novel Writing"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q124",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "124",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of the following countries is the most populous in the world currently ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "India"
+   },
+   {
+    "position": "B",
+    "text": "USA"
+   },
+   {
+    "position": "C",
+    "text": "UK"
+   },
+   {
+    "position": "D",
+    "text": "China"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q125",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "125",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What does www' in any website address stand for ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "World Wide Web"
+   },
+   {
+    "position": "B",
+    "text": "World Wide Word"
+   },
+   {
+    "position": "C",
+    "text": "Web Wide World"
+   },
+   {
+    "position": "D",
+    "text": "Web Wide Word • 126. What was Mahatma Gandhi's profession before he plunged into the freedom movement in India? (1) Doctor (2) Teacher (4) None of these (3) Lawyer"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q127",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "127",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The bollywood actress who is associated with leading footwear brand FLITE by Relaxo is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Kareena Kapoor."
+   },
+   {
+    "position": "B",
+    "text": "Katrina Kaif."
+   },
+   {
+    "position": "C",
+    "text": "Anushka Sharma."
+   },
+   {
+    "position": "D",
+    "text": "Preeti Jhangiani."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q129",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "129",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Mr Cyrus P Mistry is the Chairman of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tata Group."
+   },
+   {
+    "position": "B",
+    "text": "Infosys."
+   },
+   {
+    "position": "C",
+    "text": "Reliance Ind."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q130",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "130",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Actor Aamir Khan made his television debut in an issue based reality show titled",
+  "options": [
+   {
+    "position": "A",
+    "text": "Chak-De-India."
+   },
+   {
+    "position": "B",
+    "text": "Satyamev Jayate."
+   },
+   {
+    "position": "C",
+    "text": "India Got Talent."
+   },
+   {
+    "position": "D",
+    "text": "Big Boss-6."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q131",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "131",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Flying Licence or Scheduled Operator Permit of which private operator in India has expired in December 2012 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Jet"
+   },
+   {
+    "position": "B",
+    "text": "Indigo"
+   },
+   {
+    "position": "C",
+    "text": "King Fisher"
+   },
+   {
+    "position": "D",
+    "text": "Spice Jet"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q132",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "132",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Kaziranga National Park, internationally famous for the one-horned Rhino, is in",
+  "options": [
+   {
+    "position": "A",
+    "text": "Uttar Pradesh."
+   },
+   {
+    "position": "B",
+    "text": "West Bengal."
+   },
+   {
+    "position": "C",
+    "text": "Sikkim."
+   },
+   {
+    "position": "D",
+    "text": "Assam."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q133",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "133",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Audi' has acquired position of one of the top selling luxury cars in India belongs to which country?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Itally"
+   },
+   {
+    "position": "B",
+    "text": "Germany"
+   },
+   {
+    "position": "C",
+    "text": "Brazil"
+   },
+   {
+    "position": "D",
+    "text": "UK"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q136",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "136",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following banks in India is 'not' a nationalized bank ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Andhra Bank"
+   },
+   {
+    "position": "B",
+    "text": "Punjab National Bank"
+   },
+   {
+    "position": "C",
+    "text": "Dena Bank"
+   },
+   {
+    "position": "D",
+    "text": "Federal Bank"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q137",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "137",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The constitution of India came into effect on",
+  "options": [
+   {
+    "position": "A",
+    "text": "15th August 1947."
+   },
+   {
+    "position": "B",
+    "text": "26th January 1950."
+   },
+   {
+    "position": "C",
+    "text": "26th November 1949."
+   },
+   {
+    "position": "D",
+    "text": "26th January 1948."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q138",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "138",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Vishisht Seva Medal' is an award given by the Government of India for meritorious service in",
+  "options": [
+   {
+    "position": "A",
+    "text": "Civil services."
+   },
+   {
+    "position": "B",
+    "text": "Judicial services."
+   },
+   {
+    "position": "C",
+    "text": "Para military services."
+   },
+   {
+    "position": "D",
+    "text": "Armed forces."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q139",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "139",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Zodiac' is a leading Indian brand of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Men's Wear."
+   },
+   {
+    "position": "B",
+    "text": "Jewellery."
+   },
+   {
+    "position": "C",
+    "text": "Home Furnishing."
+   },
+   {
+    "position": "D",
+    "text": "Watches."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q140",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "140",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The name of the largest enclosed inland body of water on the Earth is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Caspian Sea."
+   },
+   {
+    "position": "B",
+    "text": "Aral Sea."
+   },
+   {
+    "position": "C",
+    "text": "Ontario."
+   },
+   {
+    "position": "D",
+    "text": "Michigan."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q141",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "141",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "To which game the trophy 'Davis Cup' is related ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Lawn Tennis"
+   },
+   {
+    "position": "B",
+    "text": "Hockey"
+   },
+   {
+    "position": "C",
+    "text": "Handball"
+   },
+   {
+    "position": "D",
+    "text": "Cricket"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q142",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "142",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the distance of running in a Marathon Race set by the IAAF ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "26 miles 385 yards"
+   },
+   {
+    "position": "B",
+    "text": "26 miles 405 yards"
+   },
+   {
+    "position": "C",
+    "text": "26 miles 180 yards"
+   },
+   {
+    "position": "D",
+    "text": "26 miles"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q143",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "143",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following Chinese travellers visited the kingdom of Harshavardhana?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Hiuen Tsang"
+   },
+   {
+    "position": "B",
+    "text": "I-tsing"
+   },
+   {
+    "position": "C",
+    "text": "Fa-Hien"
+   },
+   {
+    "position": "D",
+    "text": "Sun Shuyun"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q144",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "144",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who is the president of the \"Fashion Design Council of India\" (FDCI)?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sunil Sethi"
+   },
+   {
+    "position": "B",
+    "text": "Ritu Kumar"
+   },
+   {
+    "position": "C",
+    "text": "Nida Mahmood"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q145",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "145",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Famous Actress Hema Malini is the promoter of which one of the following products ? •",
+  "options": [
+   {
+    "position": "A",
+    "text": "Kent Water Purifier"
+   },
+   {
+    "position": "B",
+    "text": "Aqua Guard Water Purifier"
+   },
+   {
+    "position": "C",
+    "text": "Pureit Water Purifier"
+   },
+   {
+    "position": "D",
+    "text": "Whirlpool Water Purifier"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q146",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "146",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "\"Maggi\" the famous food product brand belongs to which company ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Hindustan Unilever Ltd"
+   },
+   {
+    "position": "B",
+    "text": "Nestle"
+   },
+   {
+    "position": "C",
+    "text": "McVitie's"
+   },
+   {
+    "position": "D",
+    "text": "Parle"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q147",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "147",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "\"Hello honey bunny .... you are my pumpkin pumpkin....\" This jingle is of which well known telecom company of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Airtel"
+   },
+   {
+    "position": "B",
+    "text": "Vodafone"
+   },
+   {
+    "position": "C",
+    "text": "Idea"
+   },
+   {
+    "position": "D",
+    "text": "Reliance"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q148",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "148",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which country is the leading cotton producer in the world ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "India"
+   },
+   {
+    "position": "B",
+    "text": "USA"
+   },
+   {
+    "position": "C",
+    "text": "China"
+   },
+   {
+    "position": "D",
+    "text": "Pakistan"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q149",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "149",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The state where 'Kantha', type of embroidery popularly used in Saris is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bihar."
+   },
+   {
+    "position": "B",
+    "text": "West Bengal."
+   },
+   {
+    "position": "C",
+    "text": "Assam."
+   },
+   {
+    "position": "D",
+    "text": "Karnataka."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set2-q1",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The number of aboriginal inhabitants in Australia is considerable.",
+  "options": [
+   {
+    "position": "A",
+    "text": "primitive"
+   },
+   {
+    "position": "B",
+    "text": "ancient"
+   },
+   {
+    "position": "C",
+    "text": "unoriginal"
+   },
+   {
+    "position": "D",
+    "text": "irrational"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set2-q2",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The American policy did much to escalate the conflict.",
+  "options": [
+   {
+    "position": "A",
+    "text": "spread in a wider area"
+   },
+   {
+    "position": "B",
+    "text": "scale up"
+   },
+   {
+    "position": "C",
+    "text": "reduce in intensity"
+   },
+   {
+    "position": "D",
+    "text": "put an end to"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set2-q3",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The country's resources should be judiciously used.",
+  "options": [
+   {
+    "position": "A",
+    "text": "sparingly"
+   },
+   {
+    "position": "B",
+    "text": "reasonably"
+   },
+   {
+    "position": "C",
+    "text": "inadequately"
+   },
+   {
+    "position": "D",
+    "text": "immensely"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set2-q4",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He has a delicate constitution.",
+  "options": [
+   {
+    "position": "A",
+    "text": "fit"
+   },
+   {
+    "position": "B",
+    "text": "ungainly"
+   },
+   {
+    "position": "C",
+    "text": "strong"
+   },
+   {
+    "position": "D",
+    "text": "rugged"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set2-q5",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "His appointment was confirmed last month.",
+  "options": [
+   {
+    "position": "A",
+    "text": "disappointment"
+   },
+   {
+    "position": "B",
+    "text": "discharge"
+   },
+   {
+    "position": "C",
+    "text": "suspension"
+   },
+   {
+    "position": "D",
+    "text": "dismissal"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set2-q6",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It used to be said that travel broadens one's outlook.",
+  "options": [
+   {
+    "position": "A",
+    "text": "restricts"
+   },
+   {
+    "position": "B",
+    "text": "contracts"
+   },
+   {
+    "position": "C",
+    "text": "shrinks"
+   },
+   {
+    "position": "D",
+    "text": "narrows"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set2-q7",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Anomaly",
+  "options": [
+   {
+    "position": "A",
+    "text": "anomalys"
+   },
+   {
+    "position": "B",
+    "text": "anomaly's"
+   },
+   {
+    "position": "C",
+    "text": "anomalice"
+   },
+   {
+    "position": "D",
+    "text": "anomalies"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set2-q8",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Louse",
+  "options": [
+   {
+    "position": "A",
+    "text": "lice"
+   },
+   {
+    "position": "B",
+    "text": "louses"
+   },
+   {
+    "position": "C",
+    "text": "louse's"
+   },
+   {
+    "position": "D",
+    "text": "lousies"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set2-q9",
+  "paper": "nift-2013-written-set2",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Mouse",
+  "options": [
+   {
+    "position": "A",
+    "text": "mice"
+   },
+   {
+    "position": "B",
+    "text": "mouses"
+   },
+   {
+    "position": "C",
+    "text": "mousse"
+   },
+   {
+    "position": "D",
+    "text": "mouse"
+   }
+  ]
+ }
+]

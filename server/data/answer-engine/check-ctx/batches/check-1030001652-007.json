@@ -1,0 +1,329 @@
+[
+ {
+  "id": "nift-2013-written-set1-q5",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q5.png",
+  "prompt": "He has been commended for all that he did.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q6",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q6.png",
+  "prompt": "His boorish ways amused everyone.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q7",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q7.png",
+  "prompt": "He has suspended his secretary on a flimsy ground.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q8",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q8.png",
+  "prompt": "The scene was indeed captivating.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q26",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q26.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "dielect"
+   },
+   {
+    "position": "B",
+    "text": "diallect"
+   },
+   {
+    "position": "C",
+    "text": "adeltration (3) adelteration (4) adulteration"
+   },
+   {
+    "position": "D",
+    "text": "dialect"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q28",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q28.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "gorgette"
+   },
+   {
+    "position": "B",
+    "text": "georgette"
+   },
+   {
+    "position": "C",
+    "text": "gorgete"
+   },
+   {
+    "position": "D",
+    "text": "georget"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q32",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q32.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "The Romans, according to their custom of identifying their deities"
+   },
+   {
+    "position": "B",
+    "text": "with those of the Greek gods whose attributes"
+   },
+   {
+    "position": "C",
+    "text": "were similar to their own, declared Cronus to be identical"
+   },
+   {
+    "position": "D",
+    "text": "from their old agricultural divinity Saturn."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q33",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q33.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "A temple was erected to him"
+   },
+   {
+    "position": "B",
+    "text": "at the foot of the Capitoline Hill,"
+   },
+   {
+    "position": "C",
+    "text": "at which were deposited the"
+   },
+   {
+    "position": "D",
+    "text": "public treasury and the laws of the state."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q34",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q34.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "The division in the world being"
+   },
+   {
+    "position": "B",
+    "text": "now satisfactorily arranged,"
+   },
+   {
+    "position": "C",
+    "text": "it would seem that all things ought to have"
+   },
+   {
+    "position": "D",
+    "text": "gone on smoothly, but such was not the case."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q35",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q35.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sadly, he never"
+   },
+   {
+    "position": "B",
+    "text": "reached his ambition"
+   },
+   {
+    "position": "C",
+    "text": "of playing for"
+   },
+   {
+    "position": "D",
+    "text": "his country."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q37",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q37.png",
+  "prompt": "The crowd was protesting against",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q38",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q38.png",
+  "prompt": "The aim of the crowd was to",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q39",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q39.png",
+  "prompt": "The people thought that",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q40",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q40.png",
+  "prompt": "Shutters were being closed hastily because the shopkeepers",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q41",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "41",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q41.png",
+  "prompt": "According to the author, the real enemy of mankind is not science but war, because",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q42",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "42",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q42.png",
+  "prompt": "The war can be stopped, if",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q43",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q43.png",
+  "prompt": "According to the writer, the main problem we are faced with is to",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q44",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "44",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q44.png",
+  "prompt": "Our mounting capacity to destroy can be kept under control by",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q45",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q45.png",
+  "prompt": "Which of the following statements is not implied in the passage ?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q51",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "51",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q51.png",
+  "prompt": "What seems to be the purpose of the author in writing this passage?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q56",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "56",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q56.png",
+  "prompt": "According to the passage, a journalist's work includes",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q61",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "61",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q61.png",
+  "prompt": "Which of the following styles has been adopted by the author?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q62",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q62.png",
+  "prompt": "The author feels that increasing per capita use of energy is",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q112",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "112",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q112.png",
+  "prompt": "Figures ? Answer Figures",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set1-q113",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "113",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q113.png",
+  "prompt": "Д ЛАДЛАДАЛ ? Answer Figures (1) (2) (3) (4)",
+  "options": []
+ }
+]

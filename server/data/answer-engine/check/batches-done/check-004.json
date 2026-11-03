@@ -1,0 +1,314 @@
+[
+ {
+  "id": "nid-bdes-2018-q1",
+  "paper": "nid-bdes-2018",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q1.png",
+  "prompt": "Which one of the pairs given below is correctly matched?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Harappan civilisation: Painted greyware"
+   },
+   {
+    "position": "B",
+    "text": "The Mughals: Ajanta painting"
+   },
+   {
+    "position": "C",
+    "text": "The Kushans: Gandhara school of art"
+   },
+   {
+    "position": "D",
+    "text": "The Marathas: Pahari School of Painting"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q7",
+  "paper": "nid-bdes-2018",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q7.png",
+  "prompt": "Match the following Materials with their respective Processes. Materials Processes M1- Textile PI- Blowing M2- Stone P2- Carving M3- Metal P3- Weaving M4- Glass P4- Casting",
+  "options": [
+   {
+    "position": "A",
+    "text": "M1 - P3, M2- P2, M3- P4, M4- P1"
+   },
+   {
+    "position": "B",
+    "text": "M1- P2, M2- P3, M3- P4, M4- P1"
+   },
+   {
+    "position": "C",
+    "text": "M1- P3, M2- PI, M3- P4, M4- P2"
+   },
+   {
+    "position": "D",
+    "text": "M1 - P4, M2- P2, M3- P3, M4- P1"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q10",
+  "paper": "nid-bdes-2018",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q10.png",
+  "prompt": "Which of the following refers to 'The Study of Insects\"? (",
+  "options": [
+   {
+    "position": "A",
+    "text": "Anthropology ("
+   },
+   {
+    "position": "B",
+    "text": "Insectology ("
+   },
+   {
+    "position": "C",
+    "text": "Entomology ("
+   },
+   {
+    "position": "D",
+    "text": "Etymology"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q11",
+  "paper": "nid-bdes-2018",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q11.png",
+  "prompt": "The major part of agricultural land in India is under which kind of crop? (",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cash crops ("
+   },
+   {
+    "position": "B",
+    "text": "Food crops ("
+   },
+   {
+    "position": "C",
+    "text": "Oilseeds ("
+   },
+   {
+    "position": "D",
+    "text": "Plantation crops"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q14",
+  "paper": "nid-bdes-2018",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q14.png",
+  "prompt": "'Demography' is the statistical study of (",
+  "options": [
+   {
+    "position": "A",
+    "text": "Human behavior ("
+   },
+   {
+    "position": "B",
+    "text": "Human settlement ("
+   },
+   {
+    "position": "C",
+    "text": "Human life ("
+   },
+   {
+    "position": "D",
+    "text": "Human populations"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q18",
+  "paper": "nid-bdes-2018",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q18.png",
+  "prompt": "The essential condition for the formation of shadow is,",
+  "options": [
+   {
+    "position": "A",
+    "text": "there should be an opaque material."
+   },
+   {
+    "position": "B",
+    "text": "there should be a source of light and screen."
+   },
+   {
+    "position": "C",
+    "text": "the object must be placed in the path of light."
+   },
+   {
+    "position": "D",
+    "text": "All of the above (B) Jhelum (D) Brahmaputra"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q27",
+  "paper": "nid-bdes-2018",
+  "questionNo": "27",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q27.png",
+  "prompt": "Pointing to a man in a sketch, a woman said, \"His brother's father is the only son of my grandfather.\" How is the woman related to the man in the sketch? (",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mother ("
+   },
+   {
+    "position": "B",
+    "text": "Sister ("
+   },
+   {
+    "position": "C",
+    "text": "Aunt ("
+   },
+   {
+    "position": "D",
+    "text": "Daughter"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q29",
+  "paper": "nid-bdes-2018",
+  "questionNo": "29",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q29.png",
+  "prompt": "If it takes 5 machines 5 minutes each to make $ laddoos, how long would it take 100 machines to make 100 laddoos? (",
+  "options": [
+   {
+    "position": "A",
+    "text": "5 ("
+   },
+   {
+    "position": "B",
+    "text": "20. ("
+   },
+   {
+    "position": "C",
+    "text": "100 ("
+   },
+   {
+    "position": "D",
+    "text": "25"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q30",
+  "paper": "nid-bdes-2018",
+  "questionNo": "30",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q30.png",
+  "prompt": "Out of the 26 English alphabets, how many 'capital' alphabets can be made using straight lines only? (",
+  "options": [
+   {
+    "position": "A",
+    "text": "13 ("
+   },
+   {
+    "position": "B",
+    "text": "15 ("
+   },
+   {
+    "position": "C",
+    "text": "16 ("
+   },
+   {
+    "position": "D",
+    "text": "17"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q40",
+  "paper": "nid-bdes-2018",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q40.png",
+  "prompt": "Population of a village increases by 10% per year. Find the total population after 3 years if present population is 1000. (",
+  "options": [
+   {
+    "position": "A",
+    "text": "1300 ("
+   },
+   {
+    "position": "B",
+    "text": "1301 ("
+   },
+   {
+    "position": "C",
+    "text": "1331 ("
+   },
+   {
+    "position": "D",
+    "text": "1030"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q41",
+  "paper": "nid-bdes-2018",
+  "questionNo": "41",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q41.png",
+  "prompt": "Mr \"X\" and Mr \"y\" are good friends. Mr \"X\" borrows 72 lakhs (without any interest) from Mr \"Y\" and agrees to pay back 'Half of the 'outstanding amount' every year. How many years Mr \"X\" takes to pay back the entire money? (",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sixteen Years ("
+   },
+   {
+    "position": "B",
+    "text": "Thirty Two Years ("
+   },
+   {
+    "position": "C",
+    "text": "Sixty Four Years ("
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nid-bdes-2018-q45",
+  "paper": "nid-bdes-2018",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nid-bdes-2018/blocks/nid-bdes-2018-q45.png",
+  "prompt": "If the earth took 365 days to spin once about its own axis (as opposed to one day), then the consequence of this would be that,",
+  "options": [
+   {
+    "position": "A",
+    "text": "there would be no seasons."
+   },
+   {
+    "position": "B",
+    "text": "one half of the earth would be in permanent darkness and the other in permanent daylight."
+   },
+   {
+    "position": "C",
+    "text": "days and nights would be of equal length at all places on earth at all times."
+   },
+   {
+    "position": "D",
+    "text": "the sun would be overhead everywhere on earth."
+   }
+  ]
+ }
+]

@@ -1,0 +1,50 @@
+[
+ {
+  "id": "nift-2014-bdes-written-q123",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Mitten' is a kind of",
+  "options": [
+   {
+    "position": "A",
+    "text": "cap. (I) socks."
+   },
+   {
+    "position": "B",
+    "text": "glove."
+   },
+   {
+    "position": "C",
+    "text": "coat."
+   }
+  ]
+ },
+ {
+  "id": "nift-2014-bdes-written-q125",
+  "paper": "nift-2014-bdes-written",
+  "questionNo": "125",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who has become the 40** Chief Justice of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "A K Pathak"
+   },
+   {
+    "position": "B",
+    "text": "Altamas Kabir"
+   },
+   {
+    "position": "C",
+    "text": "P Sathasivam"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ }
+]

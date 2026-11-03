@@ -1,0 +1,38 @@
+[
+ {
+  "id": "nift-2012-written-set3-q117",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "117",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set3/blocks/nift-2012-written-set3-q117.png",
+  "prompt": "?",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set3-q118",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "118",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set3/blocks/nift-2012-written-set3-q118.png",
+  "prompt": "D (1) (2) (4)",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set3-q119",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "119",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set3/blocks/nift-2012-written-set3-q119.png",
+  "prompt": "D (1)",
+  "options": []
+ },
+ {
+  "id": "nift-2012-written-set3-q120",
+  "paper": "nift-2012-written-set3",
+  "questionNo": "120",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2012-written-set3/blocks/nift-2012-written-set3-q120.png",
+  "prompt": "? (1) (2) (3) (4)",
+  "options": []
+ }
+]

@@ -1,0 +1,648 @@
+[
+ {
+  "id": "nift-2013-written-set1-q5",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He has been commended for all that he did.",
+  "options": [
+   {
+    "position": "A",
+    "text": "dismissed"
+   },
+   {
+    "position": "B",
+    "text": "condemned"
+   },
+   {
+    "position": "C",
+    "text": "censured"
+   },
+   {
+    "position": "D",
+    "text": "rejected"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q8",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The scene was indeed captivating.",
+  "options": [
+   {
+    "position": "A",
+    "text": "hateful"
+   },
+   {
+    "position": "B",
+    "text": "disgusting"
+   },
+   {
+    "position": "C",
+    "text": "repulsive"
+   },
+   {
+    "position": "D",
+    "text": "obscene"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q26",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q26.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "dielect"
+   },
+   {
+    "position": "B",
+    "text": "diallect"
+   },
+   {
+    "position": "C",
+    "text": "adeltration (3) adelteration (4) adulteration"
+   },
+   {
+    "position": "D",
+    "text": "dialect"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q28",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "28",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q28.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "gorgette"
+   },
+   {
+    "position": "B",
+    "text": "georgette"
+   },
+   {
+    "position": "C",
+    "text": "gorgete"
+   },
+   {
+    "position": "D",
+    "text": "georget"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q31",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "31",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "error.",
+  "options": [
+   {
+    "position": "A",
+    "text": "If you don't act now"
+   },
+   {
+    "position": "B",
+    "text": "the Himalayan flora"
+   },
+   {
+    "position": "C",
+    "text": "was eventually"
+   },
+   {
+    "position": "D",
+    "text": "be destroyed"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q32",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q32.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "The Romans, according to their custom of identifying their deities"
+   },
+   {
+    "position": "B",
+    "text": "with those of the Greek gods whose attributes"
+   },
+   {
+    "position": "C",
+    "text": "were similar to their own, declared Cronus to be identical"
+   },
+   {
+    "position": "D",
+    "text": "from their old agricultural divinity Saturn."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q33",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q33.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "A temple was erected to him"
+   },
+   {
+    "position": "B",
+    "text": "at the foot of the Capitoline Hill,"
+   },
+   {
+    "position": "C",
+    "text": "at which were deposited the"
+   },
+   {
+    "position": "D",
+    "text": "public treasury and the laws of the state."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q34",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q34.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "The division in the world being"
+   },
+   {
+    "position": "B",
+    "text": "now satisfactorily arranged,"
+   },
+   {
+    "position": "C",
+    "text": "it would seem that all things ought to have"
+   },
+   {
+    "position": "D",
+    "text": "gone on smoothly, but such was not the case."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q35",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set1/blocks/nift-2013-written-set1-q35.png",
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sadly, he never"
+   },
+   {
+    "position": "B",
+    "text": "reached his ambition"
+   },
+   {
+    "position": "C",
+    "text": "of playing for"
+   },
+   {
+    "position": "D",
+    "text": "his country."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q37",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The crowd was protesting against",
+  "options": [
+   {
+    "position": "A",
+    "text": "the closing of workshops."
+   },
+   {
+    "position": "B",
+    "text": "the misdoings of Thimonier."
+   },
+   {
+    "position": "C",
+    "text": "the newly invented sewing machine."
+   },
+   {
+    "position": "D",
+    "text": "Thimonier keeping the invention a secret."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q38",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "38",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The aim of the crowd was to",
+  "options": [
+   {
+    "position": "A",
+    "text": "kill Thimonier."
+   },
+   {
+    "position": "B",
+    "text": "drive Thimonier away."
+   },
+   {
+    "position": "C",
+    "text": "bring discredit to Thimonier."
+   },
+   {
+    "position": "D",
+    "text": "destroy the sewing machines."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q39",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The people thought that",
+  "options": [
+   {
+    "position": "A",
+    "text": "their lives were in danger."
+   },
+   {
+    "position": "B",
+    "text": "Thimonier was mad."
+   },
+   {
+    "position": "C",
+    "text": "the sewing machine was dangerous."
+   },
+   {
+    "position": "D",
+    "text": "Thimonier was depriving them of their livelihood."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q40",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Shutters were being closed hastily because the shopkeepers",
+  "options": [
+   {
+    "position": "A",
+    "text": "wanted to attack the crowd."
+   },
+   {
+    "position": "B",
+    "text": "wanted to protect Thimonier."
+   },
+   {
+    "position": "C",
+    "text": "feared their shops would be invaded."
+   },
+   {
+    "position": "D",
+    "text": "wanted to show their solidarity with the crowd. Passage II The greatest enemy of mankind, as people have discovered is not science, but war. Science merely reflects the social forces by which it is surrounded. It is found that when there is peace; science is constructive, when there is war, science "
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q42",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "42",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The war can be stopped, if",
+  "options": [
+   {
+    "position": "A",
+    "text": "weapons invented by science are not used to launch a war."
+   },
+   {
+    "position": "B",
+    "text": "science is restricted to be utilised only during war time."
+   },
+   {
+    "position": "C",
+    "text": "science is not allowed to lead us to utter destruction."
+   },
+   {
+    "position": "D",
+    "text": "we replace force and lawlessness by law and international government."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q43",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "According to the writer, the main problem we are faced with is to",
+  "options": [
+   {
+    "position": "A",
+    "text": "prevent scientists from participating in destructive activities."
+   },
+   {
+    "position": "B",
+    "text": "abolish war."
+   },
+   {
+    "position": "C",
+    "text": "stop scientific activities everywhere."
+   },
+   {
+    "position": "D",
+    "text": "stop science from reflecting social forces."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q44",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "44",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Our mounting capacity to destroy can be kept under control by",
+  "options": [
+   {
+    "position": "A",
+    "text": "encouraging social forces."
+   },
+   {
+    "position": "B",
+    "text": "education and broadmindedness."
+   },
+   {
+    "position": "C",
+    "text": "insight and constructive thinking."
+   },
+   {
+    "position": "D",
+    "text": "Both (2). and (3) together."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q47",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "India's strange contradiction of development is",
+  "options": [
+   {
+    "position": "A",
+    "text": "people are resourceful but new equipment is not given to them."
+   },
+   {
+    "position": "B",
+    "text": "people are resourceful but they are neglected."
+   },
+   {
+    "position": "C",
+    "text": "labour is not earnest and therefore it is no longer a liability."
+   },
+   {
+    "position": "D",
+    "text": "labour is inefficient but still it is pampered."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q48",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Capital-intensive operations can lead to",
+  "options": [
+   {
+    "position": "A",
+    "text": "strict labour laws."
+   },
+   {
+    "position": "B",
+    "text": "new labour laws."
+   },
+   {
+    "position": "C",
+    "text": "too many labour laws."
+   },
+   {
+    "position": "D",
+    "text": "irrelevant labour laws."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q49",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "49",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Labour-intensive operations can lead to",
+  "options": [
+   {
+    "position": "A",
+    "text": "better relations between labour and management."
+   },
+   {
+    "position": "B",
+    "text": "fear of unemployment."
+   },
+   {
+    "position": "C",
+    "text": "industrial process needing to employ many people."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q50",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following statements on confrontation between labour and management is false?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Too much governmental interference between labour and management."
+   },
+   {
+    "position": "B",
+    "text": "Conflicting attitude of labour and management."
+   },
+   {
+    "position": "C",
+    "text": "Establishment of capital-intensive industries."
+   },
+   {
+    "position": "D",
+    "text": "Neglect of labour-intensive operations. Passage IV The goals of our present system of primary and secondary schooling is to prepare students for the examination system which will take them to the best technical institutions in the country. While the teaching of science and mathematics has over the y"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q58",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is most important for a journalist?",
+  "options": [
+   {
+    "position": "A",
+    "text": "He must be able to interpret the news correctly."
+   },
+   {
+    "position": "B",
+    "text": "He must know how to sort out the news."
+   },
+   {
+    "position": "C",
+    "text": "He must be able to write effectively."
+   },
+   {
+    "position": "D",
+    "text": "He must know how to gather the right news."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q60",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "60",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the basic requisite for exclusive and exhaustive coverage of newspapers?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Forecast of tomorrow's news from today's news."
+   },
+   {
+    "position": "B",
+    "text": "Collecting the news of a 'real scoop'."
+   },
+   {
+    "position": "C",
+    "text": "Selection of a small portion of the gathered news."
+   },
+   {
+    "position": "D",
+    "text": "Effective style of writing Passage VI In terms of the total energy consumed by different sectors, the largest consumer is understandably the industrial sector, which accounts for nearly half the total energy used in the country today. This is followed by the transport sector which consumes about 25%"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q63",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "63",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following statements is true?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Industrial sector uses 50% of total energy used in India."
+   },
+   {
+    "position": "B",
+    "text": "Energy consumption in India is 26% of world consumption."
+   },
+   {
+    "position": "C",
+    "text": "The household sector has shown considerable increase in energy use."
+   },
+   {
+    "position": "D",
+    "text": "Use of oil has increased from 40% to 80%."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q64",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "64",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The energy disparity .... as wide as ... worldwide scale', means",
+  "options": [
+   {
+    "position": "A",
+    "text": "disparity in urban and rural is observed in all nations."
+   },
+   {
+    "position": "B",
+    "text": "in no other nation such disparity is observed."
+   },
+   {
+    "position": "C",
+    "text": "developed countries consume more energy than developing countries."
+   },
+   {
+    "position": "D",
+    "text": "worldwide scale is different for rural and urban areas."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set1-q71",
+  "paper": "nift-2013-written-set1",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Express 3 2 2 4-",
+  "options": [
+   {
+    "position": "A",
+    "text": "5"
+   },
+   {
+    "position": "B",
+    "text": "3 3 3 3."
+   },
+   {
+    "position": "C",
+    "text": "32 6"
+   }
+  ]
+ }
+]

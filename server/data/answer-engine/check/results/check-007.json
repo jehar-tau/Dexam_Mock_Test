@@ -1,0 +1,38 @@
+{
+ "nid-bdes-sample-2025-q3": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q8": {
+  "answer": "B",
+  "confidence": "medium",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q9": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q14": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q15": {
+  "answer": "C",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ },
+ "nid-bdes-sample-2025-q17": {
+  "answer": "B",
+  "confidence": "high",
+  "method": "solved",
+  "source": ""
+ }
+}

@@ -1,0 +1,56 @@
+[
+ {
+  "id": "nift-2013-written-set5-q22",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q22.png",
+  "prompt": "error.",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set5-q52",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "52",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q52.png",
+  "prompt": "In an examination 70% of the candidates passed in History and 50% in Geography and 20% students failed in both the subjects. If 500 students passed in both the subjects, then how many candidates appeared for the exam ? (3) 2500 (4) None of these",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set5-q53",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q53.png",
+  "prompt": "80% of a smaller number is 4 less than 40% of a larger number. The larger number is 85 greater than the smaller one. The sum of these two numbers is",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set5-q128",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "128",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q128.png",
+  "prompt": "Statements : I. All umbrellas are aeroplanes. II. Some aeroplanes are birds. Conclusions : I. Some umbrellas are birds. II. All birds are umbrellas. MT 1000/D/2K13/02 ( 15 )",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set5-q144",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "144",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q144.png",
+  "prompt": "What is the primary objective behind Eveready launching a new product range ?",
+  "options": []
+ },
+ {
+  "id": "nift-2013-written-set5-q149",
+  "paper": "nift-2013-written-set5",
+  "questionNo": "149",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/nift-2013-written-set5/blocks/nift-2013-written-set5-q149.png",
+  "prompt": "There is a perceptible change in the choices of the customers in recent times with regard to lifestyle products.",
+  "options": []
+ }
+]

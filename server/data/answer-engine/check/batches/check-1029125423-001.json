@@ -1,0 +1,278 @@
+[
+ {
+  "id": "ceed-2012-q1",
+  "paper": "ceed-2012",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q1.png",
+  "prompt": "Horse Cow Elephant Dog (",
+  "options": [
+   {
+    "position": "A",
+    "text": "("
+   },
+   {
+    "position": "B",
+    "text": "("
+   },
+   {
+    "position": "C",
+    "text": "("
+   },
+   {
+    "position": "D",
+    "text": "At what time of the day was this photograph taken in Central India?"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2012-q2",
+  "paper": "ceed-2012",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q2.png",
+  "prompt": "11: AM 2 PM 5 PM 8 PM (",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q3",
+  "paper": "ceed-2012",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q3.png",
+  "prompt": "A cube is shown with its shadow. Identify the one with the correct shadow. (",
+  "options": [
+   {
+    "position": "A",
+    "text": "("
+   },
+   {
+    "position": "B",
+    "text": "("
+   },
+   {
+    "position": "C",
+    "text": "("
+   },
+   {
+    "position": "D",
+    "text": "CEED 2012 - B 3 identify the person from the photograph shown below."
+   }
+  ]
+ },
+ {
+  "id": "ceed-2012-q4",
+  "paper": "ceed-2012",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q4.png",
+  "prompt": "S C Bose Jyoti Basu Farooque Abdulla Arun Jaitley",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q5",
+  "paper": "ceed-2012",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q5.png",
+  "prompt": "Identify the logo of State Bank of India.",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q6",
+  "paper": "ceed-2012",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q6.png",
+  "prompt": "4 br Abc Abc Abc",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q7",
+  "paper": "ceed-2012",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q7.png",
+  "prompt": "Ball point pen Gel pen Chalk Calligraphic pen",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q8",
+  "paper": "ceed-2012",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q8.png",
+  "prompt": "Elephant Crocodile Monkey Leopard (",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q9",
+  "paper": "ceed-2012",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q9.png",
+  "prompt": "Identify the photograph most suitable for use in Identity cards. (",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q10",
+  "paper": "ceed-2012",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q10.png",
+  "prompt": "Identify the logo of Mahindra & Mahindra. (",
+  "options": [
+   {
+    "position": "A",
+    "text": "("
+   },
+   {
+    "position": "B",
+    "text": "("
+   },
+   {
+    "position": "C",
+    "text": "("
+   },
+   {
+    "position": "D",
+    "text": "CEED 2012 - B 5"
+   }
+  ]
+ },
+ {
+  "id": "ceed-2012-q11",
+  "paper": "ceed-2012",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q11.png",
+  "prompt": "A sequence of frames from an animation is given below, where one frame is missing. Select the one from the given options to complete the sequence.",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q12",
+  "paper": "ceed-2012",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q12.png",
+  "prompt": "Knowledge Enlightenment Darkness Education",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q13",
+  "paper": "ceed-2012",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q13.png",
+  "prompt": "Rabindranath Jamini Roy Nandalal Bose M F Hussain Tagore",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q14",
+  "paper": "ceed-2012",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q14.png",
+  "prompt": "comfortable to use.",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q15",
+  "paper": "ceed-2012",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q15.png",
+  "prompt": "Identify the state to which the given image belongs. Tamil Nadu Kerala Maharashtra Karnataka",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q16",
+  "paper": "ceed-2012",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q16.png",
+  "prompt": "Drawing of an unfolded toothpaste pack is shown below. Identify the correct one.",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q17",
+  "paper": "ceed-2012",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q17.png",
+  "prompt": ". A character from an animation film is shown below. Identify the name of the character. Chintu Mowgli Jimmy Chottu",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q18",
+  "paper": "ceed-2012",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q18.png",
+  "prompt": "Identify the skin texture of elephant from the images given below.",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q19",
+  "paper": "ceed-2012",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q19.png",
+  "prompt": "Gujarat Manipur Bengal Orissa",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q20",
+  "paper": "ceed-2012",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q20.png",
+  "prompt": "nature of the reflective surface. ТАЯ МАг Convex Cylindrical Concave Flat",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q21",
+  "paper": "ceed-2012",
+  "questionNo": "21",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q21.png",
+  "prompt": "RGB as used in light theory stands for: Red, Green, Black Red, Green, Blue Red, Green, Brown Red, Gold, Black",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q22",
+  "paper": "ceed-2012",
+  "questionNo": "22",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q22.png",
+  "prompt": "M K Gandhi stands for: Mohandas Mohandas Mohanbhai Mohandas Karamchand Karimchand Kishorbhai Gandhi Keshubhai Gandhi Gandhi Gandhi",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q23",
+  "paper": "ceed-2012",
+  "questionNo": "23",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q23.png",
+  "prompt": "Grape Mango Coconut Apple",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q24",
+  "paper": "ceed-2012",
+  "questionNo": "24",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q24.png",
+  "prompt": "Shyam Benegal Satyajit Ray Mani Kaul Govind Nihalani",
+  "options": []
+ },
+ {
+  "id": "ceed-2012-q25",
+  "paper": "ceed-2012",
+  "questionNo": "25",
+  "type": "MCQ",
+  "image": "/Users/snehalkumarshinde/Documents/Default Project/Dexam_Mock_Test/server/data/media/ceed-2012/blocks/ceed-2012-q25.png",
+  "prompt": "Identify the designer from the following: Paul Klee Pablo Picasso Van Gogh da Vinci",
+  "options": []
+ }
+]

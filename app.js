@@ -26,6 +26,8 @@
     result: null,
     practice: null,
     customData: null,
+    officialPapers: [],
+    reviewedPapers: [],
     importMessage: "",
     importErrors: [],
     saveFlashTimer: null
@@ -49,6 +51,44 @@
 
   function nl2br(value) {
     return esc(value).replace(/\n/g, "<br>");
+  }
+
+  function renderQuestionFigures(question) {
+    if (question.figure) return '<div class="q-figure">' + question.figure + "</div>";
+    const paths = Array.isArray(question.figurePaths) && question.figurePaths.length
+      ? question.figurePaths
+      : [];
+    if (!paths.length) return "";
+    return (
+      '<div class="q-figure q-figure-gallery" aria-label="Question figures">' +
+      paths.map((path, index) =>
+        '<button class="q-figure-button" type="button" data-figure-src="' + esc(path) +
+        '" aria-label="Open question figure ' + (index + 1) + '">' +
+        '<img src="' + esc(path) + '" alt="Question figure ' + (index + 1) + '" loading="eager"></button>'
+      ).join("") +
+      '<p class="q-figure-hint">Select the image to inspect it at full size.</p></div>'
+    );
+  }
+
+  function bindQuestionFigureViewer() {
+    $$('[data-figure-src]').forEach((button) => {
+      button.addEventListener("click", () => {
+        let dialog = $("#figureViewer");
+        if (!dialog) {
+          dialog = document.createElement("dialog");
+          dialog.id = "figureViewer";
+          dialog.className = "figure-viewer";
+          dialog.innerHTML = '<button class="figure-viewer-close" type="button" aria-label="Close figure">×</button><img alt="Expanded question figure">';
+          document.body.appendChild(dialog);
+          $(".figure-viewer-close", dialog).addEventListener("click", () => dialog.close());
+          dialog.addEventListener("click", (event) => {
+            if (event.target === dialog) dialog.close();
+          });
+        }
+        $("img", dialog).src = button.dataset.figureSrc;
+        dialog.showModal();
+      });
+    });
   }
 
   function round(value) {
@@ -139,11 +179,92 @@
   }
 
   function getPaper(paperId) {
-    return allPapers().find((paper) => paper.id === paperId) || null;
+    return allPapers().concat(state.reviewedPapers || []).find((paper) => paper.id === paperId) || null;
   }
 
   function allPapers() {
-    return (window.MOCK_PAPERS || []).concat(getCustomData().papers || []);
+    return (window.MOCK_PAPERS || []).concat(getCustomData().papers || [], state.officialPapers || []);
+  }
+
+  function genericMarks(type) {
+    if (type === "NAT") return { marks: 4, negative: 0 };
+    if (type === "MSQ") return { marks: 4, negative: 1 };
+    return { marks: 3, negative: 0 };
+  }
+
+  function genericCorrectAnswer(question) {
+    const key = String(question.answer || "").trim();
+    if (!key) return undefined;
+    if (question.type === "MSQ") return key.split(/[,;&/]+/).map((value) => value.trim()).filter(Boolean);
+    return key;
+  }
+
+  async function loadReviewedPapers() {
+    try {
+      const response = await fetch("/api/reviewed-papers");
+      if (!response.ok) return;
+      state.reviewedPapers = (await response.json()).papers || [];
+    } catch (error) {
+      state.reviewedPapers = [];
+    }
+  }
+
+  async function loadOfficialPapers() {
+    try {
+      const response = await fetch("/api/generic-bank");
+      if (!response.ok) return;
+      const bank = await response.json();
+      const papers = [];
+      (bank.topics || []).forEach((topic) => {
+        const questions = topic.questions || [];
+        for (let offset = 0; offset < questions.length; offset += 50) {
+          const slice = questions.slice(offset, offset + 50);
+          const grouped = new Map();
+          slice.forEach((question) => {
+            const type = question.type || "MCQ";
+            if (!grouped.has(type)) grouped.set(type, []);
+            const marking = genericMarks(type);
+            grouped.get(type).push({
+              id: question.id,
+              type,
+              topic: question.topic || topic.name,
+              difficulty: question.difficulty || "Unassessed",
+              prompt: question.prompt,
+              options: question.options,
+              correctAnswer: genericCorrectAnswer(question),
+              solution: question.explanation || "Explanation pending review.",
+              marks: marking.marks,
+              negative: marking.negative
+            });
+          });
+          const sections = Array.from(grouped.entries()).map(([type, items], index) => ({
+            id: "topic-section-" + (index + 1),
+            title: type === "NAT" ? "Numerical Answer" : type === "MSQ" ? "Multiple Select" : "Multiple Choice",
+            label: type,
+            type,
+            marks: items[0] ? items[0].marks : 1,
+            negative: items[0] ? items[0].negative : 0,
+            questions: items
+          }));
+          papers.push({
+            id: "topic-" + topic.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + (Math.floor(offset / 50) + 1),
+            examId: "generic",
+            examName: "Question Bank",
+            year: "",
+            mode: "topic-bank",
+            title: topic.name + (questions.length > 50 ? " · Set " + (Math.floor(offset / 50) + 1) : ""),
+            subtitle: "Topic practice · reusable question bank",
+            description: "A reusable topic-based practice set.",
+            durationMinutes: Math.max(20, Math.ceil(slice.length * 1.5)),
+            totalMarks: sections.reduce((sum, section) => sum + section.questions.reduce((part, question) => part + Number(question.marks || 0), 0), 0),
+            sections
+          });
+        }
+      });
+      state.officialPapers = papers;
+    } catch (error) {
+      state.officialPapers = [];
+    }
   }
 
   function flattenPaper(paper) {
@@ -531,6 +652,7 @@
     if (parts[0] === "exams") return { name: "exams" };
     if (parts[0] === "exam") return { name: "exam", examId: parts[1] || "" };
     if (parts[0] === "mocks") return { name: "mocks" };
+    if (parts[0] === "papers") return { name: "papers", examId: parts[1] || "" };
     if (parts[0] === "practice-session") return { name: "practice-session" };
     if (parts[0] === "practice") {
       return {
@@ -554,6 +676,7 @@
       exam: "exams",
       paper: "exams",
       mocks: "mocks",
+      papers: "papers",
       result: "mocks",
       practice: "practice",
       "practice-session": "practice",
@@ -824,7 +947,7 @@
       '<section class="question-card">' +
       '<div class="q-kicker"><div class="q-kicker-left"><span class="q-counter">Question ' + (index + 1) + " of " + total + "</span><span>" + esc(question.topic) + "</span><span>·</span><span>" + esc(question.difficulty) + '</span></div><span>' + esc(marking) + "</span></div>" +
       '<div class="q-prompt">' + nl2br(question.prompt) + "</div>" +
-      (question.figure ? '<div class="q-figure">' + question.figure + "</div>" : "") +
+      renderQuestionFigures(question) +
       renderQuestionBody(question) +
       '<div class="q-note">' + esc(note) + "</div>" +
       '<div class="exam-actions">' +
@@ -907,6 +1030,7 @@
 
     updatePalette();
     updateTimerDisplay();
+    bindQuestionFigureViewer();
   }
 
   function statusLabel(status) {
@@ -947,6 +1071,7 @@
       '</span><span class="review-title">' + esc(question.prompt).slice(0, 120) +
       '</span></div><span class="badge">' + formatScore(outcome.score) + " marks</span></summary>" +
       '<div class="review-body"><div class="review-prompt">' + nl2br(question.prompt) + "</div>" +
+      renderQuestionFigures(question) +
       options +
       '<div class="answer-line"><span>Your answer: <strong>' + esc(answerText) +
       "</strong></span><span>Correct answer: <strong>" + esc(correctAnswerText(question)) + "</strong></span></div>" +
@@ -1270,22 +1395,33 @@
   }
 
   function renderMocks() {
-    const exams = window.EXAM_CATALOG || [];
-    const groups = exams
-      .map((exam) => {
-        const papers = papersForExam(exam.id);
-        if (!papers.length) return "";
-        return (
-          '<div class="section-head"><div><p class="eyebrow">' + esc(exam.name) + '</p><h2>' + esc(exam.officialPattern) + "</h2><p>" + esc(exam.tagline) + "</p></div><a class=\"btn btn-quiet\" href=\"#/exam/" + esc(exam.id) + '">Exam hub</a></div>' +
-          '<div class="paper-grid">' + papers.map(paperCard).join("") + "</div>"
-        );
-      })
-      .join("");
+    const papers = papersForExam("generic");
+    const groups = papers.length
+      ? '<div class="section-head"><div><p class="eyebrow">Reusable bank</p><h2>Practice by topic.</h2><p>Objective, machine-readable questions with source-paper branding and written tasks removed.</p></div></div>' +
+        '<div class="paper-grid">' + papers.map(paperCard).join("") + "</div>"
+      : '<p class="empty-state">The generic bank has not been generated yet.</p>';
 
     $("#view").innerHTML =
-      '<div class="exam-top"><div><a class="btn btn-quiet" href="#/">← Home</a></div><div class="exam-title"><h1>Mock library</h1><span>Timed papers across four exams</span></div><div class="badge">' + allPapers().length + " papers</div></div>" +
+      '<div class="exam-top"><div><a class="btn btn-quiet" href="#/">← Home</a></div><div class="exam-title"><h1>Question bank</h1><span>Topic-wise reusable practice sets</span></div><div class="badge">' + papers.length + " sets</div></div>" +
       groups +
-      '<div class="studio-banner"><div><h2>Full-length papers are an import problem, not an engine problem.</h2><p>The player already supports NAT, MSQ, MCQ, section marking, negative marking, and partial credit. Add a licensed bank and a paper blueprint to run a full-length mock.</p></div><a class="btn btn-ghost" href="#/progress">Open progress</a></div>';
+      '<div class="studio-banner"><div><h2>One bank, many future papers.</h2><p>New source papers are normalized into topic-based objective questions before they enter this library.</p></div><a class="btn btn-ghost" href="#/progress">Open progress</a></div>';
+  }
+
+  function renderPapers(examId) {
+    const all = state.reviewedPapers || [];
+    const exams = ["uceed", "nid", "nift"];
+    const active = exams.indexOf(examId) >= 0 ? examId : "";
+    const shown = active ? all.filter((paper) => paper.examId === active) : all;
+    const tabs = ['<a class="btn ' + (active ? "btn-quiet" : "btn-ghost") + '" href="#/papers">All</a>']
+      .concat(exams.map((id) => '<a class="btn ' + (active === id ? "btn-ghost" : "btn-quiet") + '" href="#/papers/' + id + '">' + id.toUpperCase() + " (" + all.filter((paper) => paper.examId === id).length + ")</a>"))
+      .join(" ");
+    const body = shown.length
+      ? '<div class="paper-grid">' + shown.map(paperCard).join("") + "</div>"
+      : '<p class="empty-state">No reviewed papers yet for this exam. Papers appear here once their questions are reviewed and cleared.</p>';
+    $("#view").innerHTML =
+      '<div class="exam-top"><div><a class="btn btn-quiet" href="#/">← Home</a></div><div class="exam-title"><h1>Exam papers</h1><span>UCEED, NID and NIFT past papers · reviewed questions only</span></div><div class="badge">' + all.length + " papers</div></div>" +
+      '<div class="section-head"><div><p class="eyebrow">Exam-specific papers</p><h2>Take a full past paper.</h2><p>Only questions that have been reviewed, cleared and have an answer key are included. Scoring uses a practice model, not the official marking scheme.</p></div></div>' +
+      '<p style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px">' + tabs + "</p>" + body;
   }
 
   function renderPracticeSetup(examId, topic) {
@@ -2238,6 +2374,7 @@
     else if (route.name === "exams") renderExams();
     else if (route.name === "exam") renderExamHub(route.examId);
     else if (route.name === "mocks") renderMocks();
+    else if (route.name === "papers") renderPapers(route.examId);
     else if (route.name === "practice") renderPracticeSetup(route.examId, route.topic);
     else if (route.name === "practice-session") {
       state.practice = readJSON(PRACTICE_KEY);
@@ -2289,7 +2426,7 @@
     }
   }
 
-  function init() {
+  async function init() {
     let savedTheme = "dark";
     try {
       const stored = localStorage.getItem(THEME_KEY);
@@ -2328,6 +2465,8 @@
       if (state.practice) savePractice();
     });
 
+    await loadOfficialPapers();
+    await loadReviewedPapers();
     renderRoute();
   }
 

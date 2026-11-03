@@ -1,0 +1,3066 @@
+[
+ {
+  "id": "nift-2013-written-set3-q71",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If one-third of one-fourth of a number is 15, then three-tenth of that number is",
+  "options": [
+   {
+    "position": "A",
+    "text": "35"
+   },
+   {
+    "position": "B",
+    "text": "36"
+   },
+   {
+    "position": "C",
+    "text": "45"
+   },
+   {
+    "position": "D",
+    "text": "54 . so that the result is a whole"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q76",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "76",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two numbers are such that they are 40% and 50% of the third number. First number as a percentage of the second is",
+  "options": [
+   {
+    "position": "A",
+    "text": "80%"
+   },
+   {
+    "position": "B",
+    "text": "40%"
+   },
+   {
+    "position": "C",
+    "text": "25%"
+   },
+   {
+    "position": "D",
+    "text": "47%"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q77",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "77",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A student has to secure 45% marks to qualify for interview in a written examination. If he gets 79 marks and fails by 56 marks, what is the maximum marks set to qualify for interview ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "200"
+   },
+   {
+    "position": "B",
+    "text": "300"
+   },
+   {
+    "position": "C",
+    "text": "350"
+   },
+   {
+    "position": "D",
+    "text": "400"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q78",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "78",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Anita gave 10% in charity from her salary, and then 20% from the remaining she gave to her friend",
+  "options": [
+   {
+    "position": "A",
+    "text": "* 15000"
+   },
+   {
+    "position": "B",
+    "text": "* 10000"
+   },
+   {
+    "position": "C",
+    "text": "7 20000"
+   },
+   {
+    "position": "D",
+    "text": "& 9000 as loan. She is left now with ‹ 7200. What is the salary of Anita ?"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q97",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "97",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "FORMS → FPTPW :: CONVICT → ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "CPPYMHZ"
+   },
+   {
+    "position": "B",
+    "text": "CPOWJDU"
+   },
+   {
+    "position": "C",
+    "text": "CPPXKEV"
+   },
+   {
+    "position": "D",
+    "text": "CPPYLFW"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q98",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "98",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "123 → 987 :: 345 → ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "647"
+   },
+   {
+    "position": "B",
+    "text": "765"
+   },
+   {
+    "position": "C",
+    "text": "876"
+   },
+   {
+    "position": "D",
+    "text": "567"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q99",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "99",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "T, R, 0, K, F, Z, '?.",
+  "options": [
+   {
+    "position": "A",
+    "text": "S"
+   },
+   {
+    "position": "B",
+    "text": "T"
+   },
+   {
+    "position": "C",
+    "text": "U"
+   },
+   {
+    "position": "D",
+    "text": "V"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q101",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "101",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Touch: Feel :: Greet : ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Smile"
+   },
+   {
+    "position": "B",
+    "text": "Acknowledge"
+   },
+   {
+    "position": "C",
+    "text": "Success"
+   },
+   {
+    "position": "D",
+    "text": "Manners"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q102",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Carpenter: Chisel :: Cobbler : ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Anvil"
+   },
+   {
+    "position": "B",
+    "text": "Saw"
+   },
+   {
+    "position": "C",
+    "text": "Drill"
+   },
+   {
+    "position": "D",
+    "text": "Axe"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q103",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Medicine: Cure :: Law : ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Anarchy"
+   },
+   {
+    "position": "B",
+    "text": "Discipline"
+   },
+   {
+    "position": "C",
+    "text": "Treason"
+   },
+   {
+    "position": "D",
+    "text": "Etiquette"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q106",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "106",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "City 'M' is situated East of city 'N'. City 'O' is situated South of city N'. City 'P' is situated North of City 'O'. In which direction city 'N' is situated with respect of city 'P' ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "North"
+   },
+   {
+    "position": "B",
+    "text": "South"
+   },
+   {
+    "position": "C",
+    "text": "East"
+   },
+   {
+    "position": "D",
+    "text": "Cannot be determined"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q121",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "121",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Sirpur National Dance and Music Festival was organized during January 2013 in",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bihar."
+   },
+   {
+    "position": "B",
+    "text": "Chhattisgarh."
+   },
+   {
+    "position": "C",
+    "text": "Assam."
+   },
+   {
+    "position": "D",
+    "text": "Madhya Pradesh."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q122",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "122",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The famous Indian Ad Guru and Creative Director South Asia of Ogilvy & Mather India who has won over 600 awards is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Prahlad Kakkar."
+   },
+   {
+    "position": "B",
+    "text": "Piyush Pandey."
+   },
+   {
+    "position": "C",
+    "text": "Prasoon Joshi."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q123",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "123",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Election Commission of India has announced the state assembly elections scheduled to be held in February 2013 for the states of",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tripura, Nagaland and Meghalaya."
+   },
+   {
+    "position": "B",
+    "text": "Tripura, Mizoram and Assam."
+   },
+   {
+    "position": "C",
+    "text": "Mizoram, Nagaland and Assam."
+   },
+   {
+    "position": "D",
+    "text": "Meghalaya, Assam and Tripura."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q124",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "124",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The union budget is generally presented in the Parliament of India in the month of",
+  "options": [
+   {
+    "position": "A",
+    "text": "January."
+   },
+   {
+    "position": "B",
+    "text": "April."
+   },
+   {
+    "position": "C",
+    "text": "February."
+   },
+   {
+    "position": "D",
+    "text": "March."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q125",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "125",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which are the two major rivers of India, that flow from East to West?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ganga - Yamuna"
+   },
+   {
+    "position": "B",
+    "text": "Ganga - Brahmaputra"
+   },
+   {
+    "position": "C",
+    "text": "Godavari - Cauvery"
+   },
+   {
+    "position": "D",
+    "text": "Narmada - Tapti"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q126",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "126",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who amongst the following vote to elect the President of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Citizens of India above 18 years of age."
+   },
+   {
+    "position": "B",
+    "text": "The Chief Ministers of all the states of India."
+   },
+   {
+    "position": "C",
+    "text": "The Governors of all the states of India."
+   },
+   {
+    "position": "D",
+    "text": "All the MPs and MLAs in India"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q127",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "127",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which Indian state has \"Mekhla Chadar\" as the traditional dress for women ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Assam"
+   },
+   {
+    "position": "B",
+    "text": "Mizoram MD 1400/B/2K13/02 ( 17) and its surrounding area in"
+   },
+   {
+    "position": "C",
+    "text": "Orissa"
+   },
+   {
+    "position": "D",
+    "text": "Chhattisgarh"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q128",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "128",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The appliqué work of Pipli is a well known handicraft art in",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mirzapur (4) Polyester"
+   },
+   {
+    "position": "B",
+    "text": "Kolhapur"
+   },
+   {
+    "position": "C",
+    "text": "Puri"
+   },
+   {
+    "position": "D",
+    "text": "Udaipur"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q132",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "132",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The female tennis player who recently launched a lolly line \"Sugarpova\" with 12 flavors shaped as high heels, purses and tennis balls is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Svetlana Kuznetsova."
+   },
+   {
+    "position": "B",
+    "text": "Maria Sharapova."
+   },
+   {
+    "position": "C",
+    "text": "Victoria Azarenka. -, moulded by hand and offered in"
+   },
+   {
+    "position": "D",
+    "text": "Dominika Cibulkova."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q133",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "133",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Butter Sculptures' are a traditional art form of prayer after completion.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tibet"
+   },
+   {
+    "position": "B",
+    "text": "Assam"
+   },
+   {
+    "position": "C",
+    "text": "Nagaland"
+   },
+   {
+    "position": "D",
+    "text": "Tripura"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q134",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "134",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Lance Armstrong who was stripped of his seven 'Tour de France' titles for doping is associated with",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cycle Racing."
+   },
+   {
+    "position": "B",
+    "text": "Formula-1 Car Race."
+   },
+   {
+    "position": "C",
+    "text": "Marathon Race."
+   },
+   {
+    "position": "D",
+    "text": "Motorcycle Racing."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q137",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "137",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The Planning Commission of India is a/an",
+  "options": [
+   {
+    "position": "A",
+    "text": "statutory body."
+   },
+   {
+    "position": "B",
+    "text": "executive body."
+   },
+   {
+    "position": "C",
+    "text": "autonomous body."
+   },
+   {
+    "position": "D",
+    "text": "None of these."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q139",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "139",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Gagan Narang is associated with which one of the following sports ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Shooting ( 18) MD 1400/B/2K13/02"
+   },
+   {
+    "position": "B",
+    "text": "Boxing"
+   },
+   {
+    "position": "C",
+    "text": "Swimming"
+   },
+   {
+    "position": "D",
+    "text": "Golf"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q140",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "140",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The name of the top sports award of India is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Arjuna."
+   },
+   {
+    "position": "B",
+    "text": "Rajiv Gandhi Khel Ratna."
+   },
+   {
+    "position": "C",
+    "text": "Dronacharya."
+   },
+   {
+    "position": "D",
+    "text": "Padma Shri."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q141",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "141",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Arunachal Pradesh has common border with which of the following countries ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bhutan, China & Myanmar"
+   },
+   {
+    "position": "B",
+    "text": "Bhutan, Bangladesh & China"
+   },
+   {
+    "position": "C",
+    "text": "Myanmar, Bangladesh & China"
+   },
+   {
+    "position": "D",
+    "text": "Bhutan, Bangladesh & Myanmar"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q142",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "142",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following received the prestigious award Padma Shri in 2013 in the field of Fashion Designing?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ritu Beri"
+   },
+   {
+    "position": "B",
+    "text": "Ritu Kumar"
+   },
+   {
+    "position": "C",
+    "text": "Manish Malhotra"
+   },
+   {
+    "position": "D",
+    "text": "J J Valaya"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q146",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "146",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The first winner of five crores on TV game show \"Kaun Banega Crorepati-6\" in January 2013 hosted by actor Amitabh Bachchan is",
+  "options": [
+   {
+    "position": "A",
+    "text": "Surjeet Kair."
+   },
+   {
+    "position": "B",
+    "text": "Sunmeet Kaur."
+   },
+   {
+    "position": "C",
+    "text": "Kiran Sawhney."
+   },
+   {
+    "position": "D",
+    "text": "Sushil Kumar."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q147",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "147",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which leading Indian company has joined hands with Yash Raj Films to bring Bed Linen Collection named as Mohabbatein Bed Linen, Hum Tum Bed Linen and DDLJ Bed Linen ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Bombay Dyeing"
+   },
+   {
+    "position": "B",
+    "text": "Raymond"
+   },
+   {
+    "position": "C",
+    "text": "Mafatlal"
+   },
+   {
+    "position": "D",
+    "text": "DIGJAM"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q148",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "148",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one of India's largest e-commerce player in the fashion and life style category has bought New-York based SherSingh.com, an online private label selling sports life style apparel ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "e-Bay"
+   },
+   {
+    "position": "B",
+    "text": "myntra.com"
+   },
+   {
+    "position": "C",
+    "text": "SmileGroup"
+   },
+   {
+    "position": "D",
+    "text": "Fashion and You"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set3-q149",
+  "paper": "nift-2013-written-set3",
+  "questionNo": "149",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who has been selected as a Fashion Director of famous fashion brand 'Satya Paul' in December 2012 ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ritu Beri"
+   },
+   {
+    "position": "B",
+    "text": "Masaba Gupta"
+   },
+   {
+    "position": "C",
+    "text": "Mindira Wirk"
+   },
+   {
+    "position": "D",
+    "text": "Ritu Kumar"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q1",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "1",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If you lack in magnanimity, all your wealth and luxury is useless.",
+  "options": [
+   {
+    "position": "A",
+    "text": "planning"
+   },
+   {
+    "position": "B",
+    "text": "purposiveness"
+   },
+   {
+    "position": "C",
+    "text": "management"
+   },
+   {
+    "position": "D",
+    "text": "generosity"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q2",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "2",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The soldier displayed exceptional courage and saved the Major from the enemy's hand.",
+  "options": [
+   {
+    "position": "A",
+    "text": "new"
+   },
+   {
+    "position": "B",
+    "text": "strange"
+   },
+   {
+    "position": "C",
+    "text": "abnormal"
+   },
+   {
+    "position": "D",
+    "text": "unusual"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q3",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "3",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The host looked quite jaded by the time the party was over.",
+  "options": [
+   {
+    "position": "A",
+    "text": "miserable"
+   },
+   {
+    "position": "B",
+    "text": "cheerful"
+   },
+   {
+    "position": "C",
+    "text": "inspiring"
+   },
+   {
+    "position": "D",
+    "text": "exhausted"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q4",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "4",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Every detail of the painting is prominent enough to be seen.",
+  "options": [
+   {
+    "position": "A",
+    "text": "negligible"
+   },
+   {
+    "position": "B",
+    "text": "insignificant"
+   },
+   {
+    "position": "C",
+    "text": "trifling"
+   },
+   {
+    "position": "D",
+    "text": "inconspicuous"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q5",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "5",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It was universally characterized as a progressive measure.",
+  "options": [
+   {
+    "position": "A",
+    "text": "abhorrent"
+   },
+   {
+    "position": "B",
+    "text": "retrograde"
+   },
+   {
+    "position": "C",
+    "text": "obstructive"
+   },
+   {
+    "position": "D",
+    "text": "regressive"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q6",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "6",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He abandoned his family.",
+  "options": [
+   {
+    "position": "A",
+    "text": "saved"
+   },
+   {
+    "position": "B",
+    "text": "supported"
+   },
+   {
+    "position": "C",
+    "text": "pleased"
+   },
+   {
+    "position": "D",
+    "text": "encouraged"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q7",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "7",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Prey",
+  "options": [
+   {
+    "position": "A",
+    "text": "Preys"
+   },
+   {
+    "position": "B",
+    "text": "praise"
+   },
+   {
+    "position": "C",
+    "text": "Prey's"
+   },
+   {
+    "position": "D",
+    "text": "Prey"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q8",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "8",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Lady",
+  "options": [
+   {
+    "position": "A",
+    "text": "ladys"
+   },
+   {
+    "position": "B",
+    "text": "lady"
+   },
+   {
+    "position": "C",
+    "text": "ladis"
+   },
+   {
+    "position": "D",
+    "text": "ladies"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q9",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "9",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Volcano",
+  "options": [
+   {
+    "position": "A",
+    "text": "volconos"
+   },
+   {
+    "position": "B",
+    "text": "volcanoes"
+   },
+   {
+    "position": "C",
+    "text": "volcanose"
+   },
+   {
+    "position": "D",
+    "text": "volcanae"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q10",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "10",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Shelf",
+  "options": [
+   {
+    "position": "A",
+    "text": "shelves"
+   },
+   {
+    "position": "B",
+    "text": "shelfs"
+   },
+   {
+    "position": "C",
+    "text": "shellfs"
+   },
+   {
+    "position": "D",
+    "text": "shelffes"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q11",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "11",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "One who does not care for literature or art",
+  "options": [
+   {
+    "position": "A",
+    "text": "Barbarian"
+   },
+   {
+    "position": "B",
+    "text": "Philistine"
+   },
+   {
+    "position": "C",
+    "text": "Illiterate"
+   },
+   {
+    "position": "D",
+    "text": "Primitive"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q12",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "12",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A political leader who tries to stir up people",
+  "options": [
+   {
+    "position": "A",
+    "text": "Demagogue"
+   },
+   {
+    "position": "B",
+    "text": "Dictator"
+   },
+   {
+    "position": "C",
+    "text": "Statesman"
+   },
+   {
+    "position": "D",
+    "text": "Martinet"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q13",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "13",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A name adopted by an author in his writings",
+  "options": [
+   {
+    "position": "A",
+    "text": "Title"
+   },
+   {
+    "position": "B",
+    "text": "Nomenclature"
+   },
+   {
+    "position": "C",
+    "text": "Nickname"
+   },
+   {
+    "position": "D",
+    "text": "Pseudonym"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q14",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "14",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "To belittle someone",
+  "options": [
+   {
+    "position": "A",
+    "text": "Oviate"
+   },
+   {
+    "position": "B",
+    "text": "Titillate"
+   },
+   {
+    "position": "C",
+    "text": "Adulate"
+   },
+   {
+    "position": "D",
+    "text": "Disparage"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q15",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "15",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A breakwater built to check land erosion",
+  "options": [
+   {
+    "position": "A",
+    "text": "Lagoon"
+   },
+   {
+    "position": "B",
+    "text": "Groyne"
+   },
+   {
+    "position": "C",
+    "text": "Channel ."
+   },
+   {
+    "position": "D",
+    "text": "Terrace"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q16",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "16",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He is a queer fish, I have failed to understand him.",
+  "options": [
+   {
+    "position": "A",
+    "text": "funny person"
+   },
+   {
+    "position": "B",
+    "text": "sensitive person"
+   },
+   {
+    "position": "C",
+    "text": "strange person"
+   },
+   {
+    "position": "D",
+    "text": "quarrelsome person"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q17",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "17",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He knew she was dead but was completely at sea about the cause of her death.",
+  "options": [
+   {
+    "position": "A",
+    "text": "anxious"
+   },
+   {
+    "position": "B",
+    "text": "confused"
+   },
+   {
+    "position": "C",
+    "text": "ignorant"
+   },
+   {
+    "position": "D",
+    "text": "certain"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q18",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "18",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It is clear that the ideas of both reformers ran in the same groove.",
+  "options": [
+   {
+    "position": "A",
+    "text": "promoted each other"
+   },
+   {
+    "position": "B",
+    "text": "clashed with each other"
+   },
+   {
+    "position": "C",
+    "text": "advanced in harmony"
+   },
+   {
+    "position": "D",
+    "text": "moved in different directions"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q19",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "19",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "He burnt his fingers by interfering in his neighbour's affairs.",
+  "options": [
+   {
+    "position": "A",
+    "text": "got rebuked"
+   },
+   {
+    "position": "B",
+    "text": "got himself insulted"
+   },
+   {
+    "position": "C",
+    "text": "burnt himself"
+   },
+   {
+    "position": "D",
+    "text": "got himself into trouble"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q20",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "20",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "When the police came, the thieves took to their heels.",
+  "options": [
+   {
+    "position": "A",
+    "text": "were taken by surprise"
+   },
+   {
+    "position": "B",
+    "text": "took flight"
+   },
+   {
+    "position": "C",
+    "text": "took shelter in a tall building"
+   },
+   {
+    "position": "D",
+    "text": "unconditionally surrendered"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q21",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "21",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "correctly spelt. Choose the correctly spelt word.",
+  "options": [
+   {
+    "position": "A",
+    "text": "tariff"
+   },
+   {
+    "position": "B",
+    "text": "tarriff"
+   },
+   {
+    "position": "C",
+    "text": "tarif"
+   },
+   {
+    "position": "D",
+    "text": "tarrif"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q26",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "26",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "error.",
+  "options": [
+   {
+    "position": "A",
+    "text": "It was on that particular ill-fated"
+   },
+   {
+    "position": "B",
+    "text": "voyage that a Lusitania was"
+   },
+   {
+    "position": "C",
+    "text": "torpedoed by a rogue submarine"
+   },
+   {
+    "position": "D",
+    "text": "and sunk with all hands."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q31",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "31",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "It is implied in the passage that",
+  "options": [
+   {
+    "position": "A",
+    "text": "cities in some of the developing countries such as India have not been able to reap the real benefits of urbanization due to lack of proper planning."
+   },
+   {
+    "position": "B",
+    "text": "urbanization is not a desirable phenomenon."
+   },
+   {
+    "position": "C",
+    "text": "urbanisation offers the solution for all the problems that smaller cities face."
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q32",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "32",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What, according to the author, are the main components of a 'formal city'?",
+  "options": [
+   {
+    "position": "A",
+    "text": "The historical core, the colonial enclave and the newly-developed areas."
+   },
+   {
+    "position": "B",
+    "text": "Pre-independence and post-independence areas."
+   },
+   {
+    "position": "C",
+    "text": "New city and old city."
+   },
+   {
+    "position": "D",
+    "text": "Planned city and the unplanned city."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q33",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "33",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which one or more of the following factor is/are recommended by the UN - Habitat report as essential for planned urbanization and growth.",
+  "options": [
+   {
+    "position": "A",
+    "text": "The master plan proposed by the first National Commission on urbanization."
+   },
+   {
+    "position": "B",
+    "text": "The strategic spatial planning system."
+   },
+   {
+    "position": "C",
+    "text": "A strong institutional framework for planning, encouraging people's participation. (1) A only (2) B & C (3) A, B& C . (4) A & C"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q34",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "34",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The caption that aptly sums up the contents of this passage is",
+  "options": [
+   {
+    "position": "A",
+    "text": "challenges of urbanization - the strategic way forward"
+   },
+   {
+    "position": "B",
+    "text": "the phenomenon of urbanisation - boon or bane ?"
+   },
+   {
+    "position": "C",
+    "text": "urbanization - a monster out of control"
+   },
+   {
+    "position": "D",
+    "text": "None of these Passage II The Genetic Engineering Approval recommendation that Bt brinjal be commercialized is a significant marker in the country's slow and somewhat hesitant embrace of agri- biotechnology. The nod has come a full seven years after approval for the country's first transgenic crop — "
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q35",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "35",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following statements pertaining to Bt brinjal is not implied in the passage ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "It is the country's first transgenic food crop."
+   },
+   {
+    "position": "B",
+    "text": "GEAC has approved its commercialization."
+   },
+   {
+    "position": "C",
+    "text": "Its approval process by GEAC took seven years."
+   },
+   {
+    "position": "D",
+    "text": "Its approval for commercialization could trigger off the approvals for several other transgenic food crops by GEAC."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q36",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "36",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following captions is most apt for this passage ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Agri-Biotechnology: Signifies the dawn of a new era in food crops."
+   },
+   {
+    "position": "B",
+    "text": "The coming of age of Agri-Biotechnology in India."
+   },
+   {
+    "position": "C",
+    "text": "GEAC-rendering yeoman service in the area of Agri-Biotechnology."
+   },
+   {
+    "position": "D",
+    "text": "Agri-Biotechnology: a global phenomenon. MM 1000/C/2K13/02 ( 5)"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q37",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "37",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which country or group of countries is/are generally average to the concept of genetically modified foods as per the passage ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "India (3) B only (4) A, B & C (2) A only (1) A & B Which one of the following statements is not true ? (1) Certain sections in India are opposed to the concept of agri-biotechnology due to vested interests. (2) Agri-Biotechnology holds great promise for India where agricultural productivity and food"
+   },
+   {
+    "position": "B",
+    "text": "Europe C. U.S.A."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q39",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "39",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following short comings of Indian industrialists has been highlighted by the author ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "They invest unreasonable high amount on diversification and expansion."
+   },
+   {
+    "position": "B",
+    "text": "They are more concerned for immediate net gains than for developmental activities."
+   },
+   {
+    "position": "C",
+    "text": "They are reluctant to maintain the shopkeepers' mentality."
+   },
+   {
+    "position": "D",
+    "text": "They are less concerned for payment of dividends to shareholders."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q40",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "40",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The leading industrialist attributes industrial sickness mainly to",
+  "options": [
+   {
+    "position": "A",
+    "text": "lacunae in five-year plans."
+   },
+   {
+    "position": "B",
+    "text": "preoccupations of managers with matters unrelated to business."
+   },
+   {
+    "position": "C",
+    "text": "higher profits and larger dividends to shareholders."
+   },
+   {
+    "position": "D",
+    "text": "lack of foresight among managers."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q41",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "41",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The planning horizon has hardly ever exceeded five years implies",
+  "options": [
+   {
+    "position": "A",
+    "text": "planning should not be for a period of less than five years."
+   },
+   {
+    "position": "B",
+    "text": "the planning process is very time consuming."
+   },
+   {
+    "position": "C",
+    "text": "the planners are not inclined to think of future."
+   },
+   {
+    "position": "D",
+    "text": "five-year period is too short for successful implementation of plans. ( 6) MM 1000/C/2K13/02"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q42",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "42",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In order to improve the condition of Indian industries, the industrialist should do all of the following except",
+  "options": [
+   {
+    "position": "A",
+    "text": "giving up the narrow mentality which very small shopkeepers generally have."
+   },
+   {
+    "position": "B",
+    "text": "striving to earn long term profits."
+   },
+   {
+    "position": "C",
+    "text": "encouraging competition from industrialists within the country and from abroad"
+   },
+   {
+    "position": "D",
+    "text": "resorting to long-term planning for industrial growth and expansion in diverse fields. Passage IV The public distribution system, which provides food at low prices, is a subject of vital concern. There is a growing realisation that though India has enough food to feed its masses two square meals a d"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q43",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "43",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is the main reason for insufficient supply of enough food to the poorest?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mismanagement of foodstocks."
+   },
+   {
+    "position": "B",
+    "text": "Absence of proper public distribution system."
+   },
+   {
+    "position": "C",
+    "text": "Production of food is less than the demand."
+   },
+   {
+    "position": "D",
+    "text": "Government's apathy towards the poor. MM 1000/C/2K13/02 ( 7)"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q44",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "44",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What, according to the passage, is the main purpose of public policy in the long run ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Reducing the cost of living index by increasing supplies."
+   },
+   {
+    "position": "B",
+    "text": "Providing enough food to all the citizens."
+   },
+   {
+    "position": "C",
+    "text": "Good standard of living through productive employment."
+   },
+   {
+    "position": "D",
+    "text": "Equalising per capita income across different strata of society."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q45",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "45",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is true of public distribution system ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "It has improved its effectiveness over the years."
+   },
+   {
+    "position": "B",
+    "text": "It has remained effective only in the cities."
+   },
+   {
+    "position": "C",
+    "text": "It is unique in the world because of its effectiveness."
+   },
+   {
+    "position": "D",
+    "text": "It has reached the remotest corner of the country."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q46",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "46",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What should be an appropriate step to make the PDS effective ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "To make it target group oriented."
+   },
+   {
+    "position": "B",
+    "text": "To increase the amount of food grains per ration card."
+   },
+   {
+    "position": "C",
+    "text": "To decrease the allotment of foodgrains to urban sector."
+   },
+   {
+    "position": "D",
+    "text": "To reduce administrative cost. Passage V Educational planning should aim at meeting the educational needs of the entire population of all age groups. While the traditional structure of education as a three layer hierarchy from the primary stage to the university represents me core, we should not ove"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q47",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "47",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "According to the passage, the present education structures assume which of the following?",
+  "options": [
+   {
+    "position": "A",
+    "text": "All people can be educated as per their needs."
+   },
+   {
+    "position": "B",
+    "text": "Present educational planning is very much practical."
+   },
+   {
+    "position": "C",
+    "text": "Education is a one time process."
+   },
+   {
+    "position": "D",
+    "text": "Simple rearrangement of the present educational system is a must."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q48",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "48",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What should be the major characteristic of the future educational system ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Different modules with same function."
+   },
+   {
+    "position": "B",
+    "text": "Same module for different groups."
+   },
+   {
+    "position": "C",
+    "text": "Rearrangement of various course contents."
+   },
+   {
+    "position": "D",
+    "text": "None of these ( 8 ) MM 1000/C/2K13/02 19. According to the author, educational plan should attempt to (1) encourage conventional schools and colleges. (2) decide a terminal point to education. (3) overlook the people on the periphery. (4) fulfil the educational needs of everyone."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q50",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "50",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "According to the author, what measures should open university adopt to meet modern conditions?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Develop various programmes for adult learners."
+   },
+   {
+    "position": "B",
+    "text": "Open more colleges on traditional lines."
+   },
+   {
+    "position": "C",
+    "text": "Cater to the needs of those who represent 'core'."
+   },
+   {
+    "position": "D",
+    "text": "Primary education should be under the control of open universities."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q52",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "52",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Two men A and B walk from P to Q at a distance of 21 km at rates 3 and 4 km an hour, respectively. B reaches Q and returns immediately and meets A at R. The distance from P to R is",
+  "options": [
+   {
+    "position": "A",
+    "text": "14 km"
+   },
+   {
+    "position": "B",
+    "text": "16 km"
+   },
+   {
+    "position": "C",
+    "text": "18 km"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q53",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "53",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Divide F 671 among A, B, C such that if their shares be increased by F 3, 7 7 and R 9 respectively, the remainder shall be in the ratio 1: 2: 3.",
+  "options": [
+   {
+    "position": "A",
+    "text": "7 105, 7 223 and 7 330"
+   },
+   {
+    "position": "B",
+    "text": "< 112, 7 223 and F 336"
+   },
+   {
+    "position": "C",
+    "text": "F 110, 7 225 and F 336"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q54",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "54",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A sum was put at simple interest at a certain rate for 2 years. Had it been put at 3% higher rate, it would have fetched 7 300 more. The sum is",
+  "options": [
+   {
+    "position": "A",
+    "text": "7 5000"
+   },
+   {
+    "position": "B",
+    "text": "7 5400"
+   },
+   {
+    "position": "C",
+    "text": "7 5300"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q55",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "55",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A sum of & 1550 was lent partly at 5% and partly at 8% per annum simple interest. The total interest received after 3 years was 7 300. The ratio of money lent at 5% to that lent at 8% is",
+  "options": [
+   {
+    "position": "A",
+    "text": "31:6"
+   },
+   {
+    "position": "B",
+    "text": "8:5"
+   },
+   {
+    "position": "C",
+    "text": "5:8"
+   },
+   {
+    "position": "D",
+    "text": "16:15"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q56",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "56",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A man buys a house for & 5 lakhs and rents it. He puts 12- -% of each month's rent aside for • repairs, pays 7 1660 as annual taxes and realizes 10% on his investments thereafter. The monthly rent of the house is",
+  "options": [
+   {
+    "position": "A",
+    "text": "7 2460"
+   },
+   {
+    "position": "B",
+    "text": "2 2500"
+   },
+   {
+    "position": "C",
+    "text": "7 4920"
+   },
+   {
+    "position": "D",
+    "text": "F 5000"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q57",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "57",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If 1 is added to the denominator of a fraction, the fraction becomes . If 1 is added to the numerator, the fraction becomes 1. The fraction is 5",
+  "options": [
+   {
+    "position": "A",
+    "text": "7"
+   },
+   {
+    "position": "B",
+    "text": "10"
+   },
+   {
+    "position": "C",
+    "text": "2 11"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q58",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "58",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "A number when divided by a certain divisor gives remainder 241, when twice the number was divided by the same divisor, the remainder was 112. What will be the divisor ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "370"
+   },
+   {
+    "position": "B",
+    "text": "365"
+   },
+   {
+    "position": "C",
+    "text": "380"
+   },
+   {
+    "position": "D",
+    "text": "456"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q59",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "59",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "In which of the following pairs of numbers it is true that their sum is 11 times their product ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "1, 1/11"
+   },
+   {
+    "position": "B",
+    "text": "1, 1/10"
+   },
+   {
+    "position": "C",
+    "text": "1, 1/12"
+   },
+   {
+    "position": "D",
+    "text": "1, 10 Evaluate 3 ÷"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q60",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "60",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "(8 - 5) ÷ 3(4-2) ÷ 2+ 13 68",
+  "options": [
+   {
+    "position": "A",
+    "text": "17 13"
+   },
+   {
+    "position": "B",
+    "text": "17"
+   },
+   {
+    "position": "C",
+    "text": "13 13 68 MM 1000/C/2K13/02 ( 9)"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q61",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "61",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is a correct statement?",
+  "options": [
+   {
+    "position": "A",
+    "text": "V is between P and S."
+   },
+   {
+    "position": "B",
+    "text": "S is 2nd to the left of V."
+   },
+   {
+    "position": "C",
+    "text": "R is third to the left of P."
+   },
+   {
+    "position": "D",
+    "text": "P is to the immediate left of S."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q62",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "62",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "What is the position ofT?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Between R and V"
+   },
+   {
+    "position": "B",
+    "text": "To the immediate left of V"
+   },
+   {
+    "position": "C",
+    "text": "2nd to the left of R"
+   },
+   {
+    "position": "D",
+    "text": "2nd to the left of Q"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q63",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "63",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "RADIO → UCHKT:: AUDIO → \"?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "CVHKT"
+   },
+   {
+    "position": "B",
+    "text": "BWHKT"
+   },
+   {
+    "position": "C",
+    "text": "DXHKT •"
+   },
+   {
+    "position": "D",
+    "text": "DWHKT"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q64",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "64",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "R → 36, RAT → 78 :: FAN → \"?'",
+  "options": [
+   {
+    "position": "A",
+    "text": "21"
+   },
+   {
+    "position": "B",
+    "text": "36"
+   },
+   {
+    "position": "C",
+    "text": "50"
+   },
+   {
+    "position": "D",
+    "text": "42"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q65",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "65",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "3, 11, 23, 39, ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "58"
+   },
+   {
+    "position": "B",
+    "text": "59"
+   },
+   {
+    "position": "C",
+    "text": "60"
+   },
+   {
+    "position": "D",
+    "text": "61"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q66",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "66",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "R, O, L, I, F, ?, 4",
+  "options": [
+   {
+    "position": "A",
+    "text": "A Tendulkar hits a ball towards North in a one day international cricket match between India and"
+   },
+   {
+    "position": "B",
+    "text": "C"
+   },
+   {
+    "position": "C",
+    "text": "E"
+   },
+   {
+    "position": "D",
+    "text": "I"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q67",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "67",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Pakistan. A Pakistani fielder, Shahid Afridi comes straight from East to field the ball. Which direction does Shahid Afridi come from, to field the ball?",
+  "options": [
+   {
+    "position": "A",
+    "text": "South If North-West becomes West and South-East becomes East. North-East becomes North and all"
+   },
+   {
+    "position": "B",
+    "text": "North"
+   },
+   {
+    "position": "C",
+    "text": "West"
+   },
+   {
+    "position": "D",
+    "text": "East"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q68",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "68",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "other directions are changed in a similar manner, then what will be the direction of South ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "South-West"
+   },
+   {
+    "position": "B",
+    "text": "South-East Mohan is the son of Arun's father's sister. Prakash is the son of Reva, who is the mother of Vikas and grandmother of Arun. Pranab is the father of Neela and the grandfather of Mohan. Reva is the wife of Pranab. How is the wife of Vikas related to Neela ? (4) None of these (2) Sister-in-l"
+   },
+   {
+    "position": "C",
+    "text": "North-East"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q70",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "70",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Introducing Shyam, a lady said, \"The father of his father-in-law is my father-in-law\". How is Shyam related to the lady ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Husband"
+   },
+   {
+    "position": "B",
+    "text": "Son-in-law"
+   },
+   {
+    "position": "C",
+    "text": "Father"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q71",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "71",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following combinations of circles best represents athletes, sprinters and marathon . runners?",
+  "options": [
+   {
+    "position": "A",
+    "text": "\"CO There are 50 students admitted to a nursery class. Some students can speak only English and some"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q72",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "72",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "can speak only Hindi. Ten students can speak both English and Hindi. If the number of students who can speak English is 21, then how many students can speak Hindi, how many can speak only . Hindi and how many can speak only English respectively ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "39, 29 and 11 ( 10 ) MM 1000/C/2K13/02"
+   },
+   {
+    "position": "B",
+    "text": "37, 27 and 13"
+   },
+   {
+    "position": "C",
+    "text": "28, 18 and 22"
+   },
+   {
+    "position": "D",
+    "text": "21, 11 and 29"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q73",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "73",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Rectangle : Pentagon :",
+  "options": [
+   {
+    "position": "A",
+    "text": "Triangle : Rectangle"
+   },
+   {
+    "position": "B",
+    "text": "Diagonal: Perimeter"
+   },
+   {
+    "position": "C",
+    "text": "Side: Angle"
+   },
+   {
+    "position": "D",
+    "text": "Circle: Square"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q74",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "74",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Simmer : Boil ::",
+  "options": [
+   {
+    "position": "A",
+    "text": "Glide : Drift"
+   },
+   {
+    "position": "B",
+    "text": "Drizzle: Downpour"
+   },
+   {
+    "position": "C",
+    "text": "Gambol: Play"
+   },
+   {
+    "position": "D",
+    "text": "Stagnate: Flow"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q86",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "86",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Android' a Linux based operating system used in mobiles created by which company ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Oracle"
+   },
+   {
+    "position": "B",
+    "text": "Apple"
+   },
+   {
+    "position": "C",
+    "text": "Google"
+   },
+   {
+    "position": "D",
+    "text": "Microsoft"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q87",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "87",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who won the \"CEAT International Cricketer\" award of the year 2011 - 2012?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Hashim Amla"
+   },
+   {
+    "position": "B",
+    "text": "Virat Kohli"
+   },
+   {
+    "position": "C",
+    "text": "Mike Hussey"
+   },
+   {
+    "position": "D",
+    "text": "Alastair Cook"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q88",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "88",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "D'Décor', the well known international brand in fabrics and textures is endorsed by which Bollywood couple ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sanjay Dutt - Manyata"
+   },
+   {
+    "position": "B",
+    "text": "Shah Rukh Khan - Gauri"
+   },
+   {
+    "position": "C",
+    "text": "Saif Ali Khan - Karishma Kapoor"
+   },
+   {
+    "position": "D",
+    "text": "Abhishek Bachchan - Aishwarya Rai Athletics Federation ?"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q89",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "89",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who is named the 'Male Athlete of The Year' in November 2012 by International Amateur",
+  "options": [
+   {
+    "position": "A",
+    "text": "Usain Bolt"
+   },
+   {
+    "position": "B",
+    "text": "Allyson Felix"
+   },
+   {
+    "position": "C",
+    "text": "Lionel Messi"
+   },
+   {
+    "position": "D",
+    "text": "Ryan Bailey"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q90",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "90",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The 'croma', well known Indian Electronics Megastore belongs to which enterprise ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Tata Group"
+   },
+   {
+    "position": "B",
+    "text": "Reliance Ind"
+   },
+   {
+    "position": "C",
+    "text": "HCL Technologies"
+   },
+   {
+    "position": "D",
+    "text": "Bharti Enterprises"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q91",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "91",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is correct about the Reliance Retail Chain ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Reliance-digital"
+   },
+   {
+    "position": "B",
+    "text": "Reliance-fresh (1) A&B"
+   },
+   {
+    "position": "C",
+    "text": "Reliance-supper"
+   },
+   {
+    "position": "D",
+    "text": "Reliance-mart (2) B&D (3) B, C & D (4) All these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q92",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "92",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Runway' lines of high fashion garments unveiled by which well known Indian textile brands?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Raymond Group •"
+   },
+   {
+    "position": "B",
+    "text": "Monte Carlo"
+   },
+   {
+    "position": "C",
+    "text": "Digjam Ltd"
+   },
+   {
+    "position": "D",
+    "text": "Max Fashion"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q94",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "94",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "How many Textile Exports Promotion Councils work in cooperation with Govt. of India?",
+  "options": [
+   {
+    "position": "A",
+    "text": "New Zealand"
+   },
+   {
+    "position": "B",
+    "text": "Pakistan"
+   },
+   {
+    "position": "C",
+    "text": "Turkey (4) Australia"
+   },
+   {
+    "position": "D",
+    "text": "None of these Indian Woolen Industries import raw wool mainly from which country ?"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q95",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "95",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "is called 'Golden Fibre' in Indian textile industry.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cotton"
+   },
+   {
+    "position": "B",
+    "text": "Century Mills"
+   },
+   {
+    "position": "C",
+    "text": "Arvind Mills (3) Mandhana Ind (4) Reliance Ind Which Indian automobile manufacturer company partnered with Snapdeal.com the online market place for selling its two-wheelers ? (1) Bajaj (2) Mahindra (3) Hero (4) TVS"
+   },
+   {
+    "position": "D",
+    "text": "Wool Which Indian apparel firm opened the first flagship 'Being Human' store in Mumbai in January"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q98",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "98",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "'Adidas Group', the international sports goods manufacturer is from",
+  "options": [
+   {
+    "position": "A",
+    "text": "Germany"
+   },
+   {
+    "position": "B",
+    "text": "USA"
+   },
+   {
+    "position": "C",
+    "text": "Italy '"
+   },
+   {
+    "position": "D",
+    "text": "Spain 'Reid & Taylor', the leading luxury suiting brand of India belongs to which textile industry? (1) OCM (2) S. Kumar (3) Raymond (4) Reliance"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q100",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "100",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Tamil song \"Pi's Lullaby...\", from the film 'The Life of Pi' nominated for the Oscar 2013 award in music (original song) category is sung by",
+  "options": [
+   {
+    "position": "A",
+    "text": "Mychael Dana"
+   },
+   {
+    "position": "B",
+    "text": "Jayashree Ramnath"
+   },
+   {
+    "position": "C",
+    "text": "A R Rehman"
+   },
+   {
+    "position": "D",
+    "text": "None of these"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q101",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "101",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which state has won the 'Krishi Karman Award 2012' for the highest production of food grains ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Punjab"
+   },
+   {
+    "position": "B",
+    "text": "Bihar"
+   },
+   {
+    "position": "C",
+    "text": "Madhya Pradesh"
+   },
+   {
+    "position": "D",
+    "text": "Maharashtra"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q102",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "102",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who among the following Indian athletes has won back to back medals at the Olympic Games?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Vijay Kumar"
+   },
+   {
+    "position": "B",
+    "text": "Vijender Singh"
+   },
+   {
+    "position": "C",
+    "text": "Sushil Kumar"
+   },
+   {
+    "position": "D",
+    "text": "Saina Nehwal"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q103",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "103",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "(Image-only question - see page image.)",
+  "options": [
+   {
+    "position": "A",
+    "text": ". Mo Yan is the first Chinese citizen who won the Nobel Prize in Literature for 2012."
+   },
+   {
+    "position": "B",
+    "text": "Xi Jinping"
+   },
+   {
+    "position": "C",
+    "text": "Zhang Ping"
+   },
+   {
+    "position": "D",
+    "text": "Hu Jintao MM 1000/C/2K13/02 ( 13) (4) India"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q104",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "104",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who won the ICC twenty20 cricket world cup in 2012?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sri Lanka"
+   },
+   {
+    "position": "B",
+    "text": "West Indies"
+   },
+   {
+    "position": "C",
+    "text": "England"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q105",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "105",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which of the following is/are the Textile Research Associations (TRAs) financially supported by Ministry of Textiles ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Wool Research Association (WRA)"
+   },
+   {
+    "position": "B",
+    "text": "Man Made Textiles Research Association (MANTRA)"
+   },
+   {
+    "position": "C",
+    "text": "Bombay Textiles Research Association (BTRA) (4) All these (4) LMD Music"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q106",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "106",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The musical label launched by legendary singer Lata Mangeshkar to promote non-film music is",
+  "options": [
+   {
+    "position": "A",
+    "text": "LM Music"
+   },
+   {
+    "position": "B",
+    "text": "NF Music"
+   },
+   {
+    "position": "C",
+    "text": "ML Music"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q107",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "107",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Who won the best male actor award in 70th annual Golden Globe Awards organized in January",
+  "options": [
+   {
+    "position": "A",
+    "text": "Sacha Baron Cohen has been named as the Flying Sikh of India. (4) Mohinder Singh"
+   },
+   {
+    "position": "B",
+    "text": "Daniel Day Lewis"
+   },
+   {
+    "position": "C",
+    "text": "Huge Jackman"
+   },
+   {
+    "position": "D",
+    "text": "Jason Bateman"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q108",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "108",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "_",
+  "options": [
+   {
+    "position": "A",
+    "text": "Ajit Pal Singh"
+   },
+   {
+    "position": "B",
+    "text": "Milkha Singh"
+   },
+   {
+    "position": "C",
+    "text": "Joginder Singh"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q109",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "109",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "_is the southernmost tip of republic of India.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Cape Comorin"
+   },
+   {
+    "position": "B",
+    "text": "Indira Point"
+   },
+   {
+    "position": "C",
+    "text": "Point Calimere"
+   },
+   {
+    "position": "D",
+    "text": "Kovalam"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q110",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "110",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Which newspaper was started by Lokmanya Balgangadhar Tilak to serve the cause of India's freedom struggle ?",
+  "options": [
+   {
+    "position": "A",
+    "text": "Kesari"
+   },
+   {
+    "position": "B",
+    "text": "Gadar"
+   },
+   {
+    "position": "C",
+    "text": "Free Hindustan"
+   },
+   {
+    "position": "D",
+    "text": "Swadesh Mitra"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q117",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "117",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Statement : The company has decided to increase the price of all its products to tackle the precarious financial position. Assumptions : I. The company may be able to wipe out the entire losses incurred earlier by this decision. II. The buyer may continue to buy its products even after the increase. III. The company has adequate resources to continue production for few more months.",
+  "options": [
+   {
+    "position": "A",
+    "text": "None is implicit"
+   },
+   {
+    "position": "B",
+    "text": "II and III are implicit"
+   },
+   {
+    "position": "C",
+    "text": "I and II are implicit"
+   },
+   {
+    "position": "D",
+    "text": "Only II is implicit"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q118",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "118",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Statement: The State Govt. has unilaterally increased octroi by five per cent on all commodities entering into the State without seeking approval of the Central Govt. Assumptions : I. The State Govt. may be able to implements its decision. II. The Central Govt. may agree to support the State Govt's decision.",
+  "options": [
+   {
+    "position": "A",
+    "text": "All are implicit III. The State Govt. may be able to earn considerable amount through the additional octroi."
+   },
+   {
+    "position": "B",
+    "text": "I and II are implicit"
+   },
+   {
+    "position": "C",
+    "text": "None is implicit"
+   },
+   {
+    "position": "D",
+    "text": "II and III are implicit"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q134",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "134",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "If there are shortcomings in you, do not try to conceal them; if they are revealed before others, allow them to be thoroughly revealed. But certainly attempt to hide your virtues. Feel abashed through humility when your virtues are revealed before others. Avoid advertising your own virtues. If you can't restrain yourself from looking at others, try to see only their virtues, their good deeds, their good disposition and manners.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Blowing one's own trumpet amounts to shamelessness,"
+   },
+   {
+    "position": "B",
+    "text": "Always look for plus points of a person."
+   },
+   {
+    "position": "C",
+    "text": "Being open about our shortcomings gives us a chance to improve."
+   },
+   {
+    "position": "D",
+    "text": "Humility is the finest virtue of human beings."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q135",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "135",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "Auditors are called the conscience keepers of society. Every time there is a scam in the corporate world, auditor's role comes under the scanner. Society expects that once a financial statement has been certified by an auditor, the latter is liable for it. And the auditor believes that once he has hold them accountable for their actions. carried out his duties as per parameters, he need not go beyond that. The need of the hour is to",
+  "options": [
+   {
+    "position": "A",
+    "text": "Auditor's job is to verify the company's accounts as per parameters."
+   },
+   {
+    "position": "B",
+    "text": "Auditors are not responsible for financial bungling in company's accounts if any vital information is concealed by the management."
+   },
+   {
+    "position": "C",
+    "text": "Whenever any scam surfaces, auditors role comes under scan."
+   },
+   {
+    "position": "D",
+    "text": "It is high time that auditors' role is redefined to make them accountable along with that of management. MM 1000/C/2K13/02 ( 17 )"
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q136",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "136",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "India is no doubt the world's largest democracy but it is increasingly distorted, inequitable and ugly one. Democracy has now become a venal mobocracy where majoritarianism, money and muscle power have hijacked the system. Two of the sacred institutional cows that were perceived to have been untouched - the military and media - are both now under the scanner for succumbing to this scourge of corruption and nepotism.",
+  "options": [
+   {
+    "position": "A",
+    "text": "India is world's largest democracy."
+   },
+   {
+    "position": "B",
+    "text": "Corruption and favoritism have pervaded in each and every field of society."
+   },
+   {
+    "position": "C",
+    "text": "Our democracy is ailing from multiple problems like ochlocracy, corruption and muscle power."
+   },
+   {
+    "position": "D",
+    "text": "Rot has seeped into institutions like press and defense."
+   }
+  ]
+ },
+ {
+  "id": "nift-2013-written-set4-q137",
+  "paper": "nift-2013-written-set4",
+  "questionNo": "137",
+  "type": "MCQ",
+  "image": null,
+  "prompt": "The world is not crying for men of talent or \"larger brains\". What the world needs is men of action, men who do not wait for opportunity but create their own opportunity right where they stand. It is not the dreamers that move our civilization forward; it is the doers. Ideas alone are of little value until they are followed by action.",
+  "options": [
+   {
+    "position": "A",
+    "text": "Being visionary alone is not enough, it is equally important to translate that vision into reality."
+   },
+   {
+    "position": "B",
+    "text": "There is no dearth of dreamers; doers are in short supply."
+   },
+   {
+    "position": "C",
+    "text": "History is always made by the action oriented people."
+   },
+   {
+    "position": "D",
+    "text": "A man who believes in action can find opportunity wherever he goes."
+   }
+  ]
+ }
+]
