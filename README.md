@@ -1,5 +1,20 @@
 # Dexam Mock Test
 
+## DesignMocks website and student portal
+
+The independent **DesignMocks** website is in [`apps/designmocks`](apps/designmocks). It includes the Discovery landing pages, original timed sample, student workspace/attempt UI, Google/Supabase integration and server-side Razorpay order/webhook code. Sign-in acceptance, merchant setup and real-bank release are still launch work; checkout remains closed.
+
+```bash
+npm run designmocks:install
+npm run designmocks:dev
+```
+
+Open **http://127.0.0.1:4190/** for the website, or **http://127.0.0.1:4190/portal-preview** for the explicitly fictional inside-portal preview. Run `npm run designmocks:check` for the app's unit, readiness-fixture, build and preview-isolation checks. See [setup and hosting](apps/designmocks/README.md) and [launch checklist](apps/designmocks/docs/LAUNCH_CHECKLIST.md).
+
+The question-bank studio, review tooling and existing root commands below remain separate. Adding the website does not import the private workstation bank, publish questions, or connect academy student accounts. No automatic production deployment is configured by this change.
+
+---
+
 A dependency-free design-entrance exam studio for **UCEED, CEED, NIFT, and NID UG**.
 
 It ships with:

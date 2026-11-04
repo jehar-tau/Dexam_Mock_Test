@@ -1,0 +1,111 @@
+// Read-only setup smoke checks. This never creates users, orders or payments.
+import assert from "node:assert/strict";
+import { readFile, mkdir, writeFile } from "node:fs/promises";
+try {
+  process.loadEnvFile(".env.local");
+} catch {}
+const project = JSON.parse(
+  await readFile(new URL("../supabase/project.json", import.meta.url), "utf8"),
+);
+const base = process.env.VITE_SUPABASE_URL,
+  key = process.env.VITE_SUPABASE_ANON_KEY;
+assert.equal(
+  base,
+  `https://${project.project_ref}.supabase.co`,
+  "Explicit independent project URL required",
+);
+assert.ok(key, "A public anon key is required; never use a service key");
+assert.ok(!key.startsWith("sb_secret_"), "Server keys are not allowed here");
+if (key.split(".").length === 3) {
+  const payload = JSON.parse(Buffer.from(key.split(".")[1], "base64url"));
+  assert.equal(payload.role, "anon", "Only the public anon role is allowed");
+}
+const results = [];
+async function request(path, method = "GET", body, headers = {}) {
+  const response = await fetch(base + path, {
+    method,
+    headers: { apikey: key, "Content-Type": "application/json", ...headers },
+    body: body === undefined ? undefined : JSON.stringify(body),
+    signal: AbortSignal.timeout(30000),
+  });
+  const text = await response.text();
+  return { status: response.status, data: text ? JSON.parse(text) : null };
+}
+let response = await request(
+  "/rest/v1/plans?select=id,amount,currency,duration_months",
+);
+assert.equal(response.status, 200);
+assert.deepEqual(response.data, [
+  { id: "annual", amount: 119300, currency: "INR", duration_months: 12 },
+]);
+results.push({ check: "authoritative annual plan", status: 200, passed: true });
+for (const name of [
+  "prepare_order",
+  "my_pass",
+  "available_papers",
+  "my_attempt_history",
+]) {
+  response = await request("/rest/v1/rpc/" + name, "POST", {});
+  assert.ok(
+    [401, 403].includes(response.status),
+    name + " must reject anonymous execution",
+  );
+  assert.equal(response.data?.code, "42501");
+  results.push({
+    check: "anonymous " + name + " denied",
+    status: response.status,
+    passed: true,
+  });
+}
+response = await request("/auth/v1/settings");
+assert.equal(response.status, 200);
+assert.equal(
+  response.data.disable_signup,
+  true,
+  "This check is for the closed setup stage only",
+);
+results.push({
+  check: "new registrations closed during setup",
+  status: 200,
+  passed: true,
+  googleEnabled: Boolean(response.data.external?.google),
+});
+for (const [name, body, status] of [
+  ["create-order", { plan: "annual" }, 503],
+  ["attempt-media", { attemptId: "00000000-0000-4000-8000-000000000001" }, 401],
+  ["payment-webhook", {}, 503],
+]) {
+  response = await request("/functions/v1/" + name, "POST", body, {
+    Origin: project.frontend_origin,
+  });
+  assert.equal(response.status, status, name + " setup gate");
+  results.push({ check: name + " setup/identity gate", status, passed: true });
+}
+response = await request(
+  "/functions/v1/create-order",
+  "POST",
+  { plan: "annual" },
+  { Origin: "https://invalid.example" },
+);
+assert.equal(response.status, 403);
+results.push({
+  check: "unapproved checkout origin denied",
+  status: 403,
+  passed: true,
+});
+await mkdir("test-results", { recursive: true });
+await writeFile(
+  "test-results/hosted-smoke.json",
+  JSON.stringify(results, null, 2) + "\n",
+);
+console.log(
+  JSON.stringify(
+    {
+      project: project.name,
+      checks: results.length,
+      passed: results.every((result) => result.passed),
+    },
+    null,
+    2,
+  ),
+);

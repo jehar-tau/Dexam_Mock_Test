@@ -6,6 +6,11 @@
   "scripts": {
     "serve": "python3 -m http.server 4173",
     "backend": "node server.js",
-    "check": "node tools/validate-data.js"
+    "check": "node tools/validate-data.js",
+    "designmocks:install": "npm ci --prefix apps/designmocks",
+    "designmocks:dev": "npm run dev --prefix apps/designmocks",
+    "designmocks:build": "npm run build --prefix apps/designmocks",
+    "designmocks:test": "npm test --prefix apps/designmocks",
+    "designmocks:check": "npm run check --prefix apps/designmocks"
   }
 }
