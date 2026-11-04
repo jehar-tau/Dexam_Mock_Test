@@ -365,6 +365,7 @@
   }
 
   function correctAnswerText(question) {
+    if (question.type === "DESCRIPTIVE") return "Not auto-scored";
     if (question.type === "NAT") return String(question.correctAnswer);
     if (question.type === "MSQ") {
       return (question.correctAnswer || []).map((id) => optionText(question, id)).join(" · ");
@@ -373,6 +374,7 @@
   }
 
   function userAnswerText(question, answer) {
+    if (question.type === "DESCRIPTIVE") return answer ? "Done on paper" : "—";
     if (question.type === "NAT") {
       return answer === undefined || answer === null || String(answer).trim() === ""
         ? "—"
@@ -396,6 +398,7 @@
         : answer !== undefined && answer !== null && String(answer).trim() !== "";
 
     if (!answered) return { score: 0, status: "unattempted" };
+    if (question.type === "DESCRIPTIVE") return { score: 0, status: "drawn" };
 
     if (question.type === "NAT") {
       const numeric = Number(answer);
@@ -441,6 +444,7 @@
       let unattempted = 0;
 
       sectionQuestions.forEach((question) => {
+        if (question.type === "DESCRIPTIVE") return;
         const outcome = scoreQuestion(question, answers[question.id]);
         score += outcome.score;
         if (outcome.status === "correct") correct += 1;
@@ -821,6 +825,12 @@
   }
 
   function renderQuestionBody(question) {
+    if (question.type === "DESCRIPTIVE") {
+      return (
+        '<label class="option"><input type="checkbox" id="drawingDone"' + (state.answers[question.id] ? " checked" : "") + ">" +
+        '<span class="option-body"><span>I have finished this task on paper</span></span></label>'
+      );
+    }
     if (question.type === "NAT") {
       const value = state.answers[question.id] == null ? "" : String(state.answers[question.id]);
       const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "back"];
@@ -909,7 +919,9 @@
     const isLast = index === total - 1;
     const negative = Number(question.negative || 0);
     const marking =
-      question.type === "NAT"
+      question.type === "DESCRIPTIVE"
+        ? "Part B · not auto-scored"
+        : question.type === "NAT"
         ? "+" + question.marks + " correct · 0 wrong"
         : question.type === "MSQ"
           ? "+" + question.marks + " all correct · +1 per correct option" +
@@ -917,7 +929,9 @@
           : "+" + question.marks + " correct" + (negative ? " · −" + negative + " wrong" : " · 0 wrong");
 
     const note =
-      question.type === "MSQ"
+      question.type === "DESCRIPTIVE"
+        ? "Part B: draw or write your answer on paper, then tick the box. Judge your sheet against every instruction in the brief."
+        : question.type === "MSQ"
         ? "Multiple answers may be correct. Partial credit: +1 per correct option if no wrong option is selected."
         : question.type === "NAT"
           ? "Answers are hidden until submission. Use the keypad or type a number."
@@ -1006,6 +1020,16 @@
       button.addEventListener("click", () => applyKey(button.dataset.key, question));
     });
 
+    const drawingDone = $("#drawingDone");
+    if (drawingDone) {
+      drawingDone.addEventListener("change", () => {
+        if (drawingDone.checked) state.answers[question.id] = "done";
+        else delete state.answers[question.id];
+        saveProgress();
+        updatePalette();
+      });
+    }
+
     $$("[data-option]").forEach((input) => {
       input.addEventListener("change", () => {
         if (question.type === "MSQ") {
@@ -1037,6 +1061,7 @@
     if (status === "correct") return "Correct";
     if (status === "wrong") return "Wrong";
     if (status === "partial") return "Partial";
+    if (status === "drawn") return "Done on paper";
     return "Unattempted";
   }
 
@@ -1107,6 +1132,7 @@
 
     const topicStats = {};
     questions.forEach((question) => {
+      if (question.type === "DESCRIPTIVE") return;
       if (!topicStats[question.topic]) topicStats[question.topic] = { total: 0, attempted: 0, correct: 0, score: 0 };
       const outcome = scoreQuestion(question, answers[question.id]);
       topicStats[question.topic].total += 1;
@@ -1409,7 +1435,7 @@
 
   function renderPapers(examId) {
     const all = state.reviewedPapers || [];
-    const exams = ["uceed", "nid", "nift"];
+    const exams = ["uceed", "ceed", "nid", "nift"];
     const active = exams.indexOf(examId) >= 0 ? examId : "";
     const shown = active ? all.filter((paper) => paper.examId === active) : all;
     const tabs = ['<a class="btn ' + (active ? "btn-quiet" : "btn-ghost") + '" href="#/papers">All</a>']
@@ -1419,7 +1445,7 @@
       ? '<div class="paper-grid">' + shown.map(paperCard).join("") + "</div>"
       : '<p class="empty-state">No reviewed papers yet for this exam. Papers appear here once their questions are reviewed and cleared.</p>';
     $("#view").innerHTML =
-      '<div class="exam-top"><div><a class="btn btn-quiet" href="#/">← Home</a></div><div class="exam-title"><h1>Exam papers</h1><span>UCEED, NID and NIFT past papers · reviewed questions only</span></div><div class="badge">' + all.length + " papers</div></div>" +
+      '<div class="exam-top"><div><a class="btn btn-quiet" href="#/">← Home</a></div><div class="exam-title"><h1>Exam papers</h1><span>UCEED and CEED mocks · UCEED, CEED, NID and NIFT past papers · reviewed questions only</span></div><div class="badge">' + all.length + " papers</div></div>" +
       '<div class="section-head"><div><p class="eyebrow">Exam-specific papers</p><h2>Take a full past paper.</h2><p>Only questions that have been reviewed, cleared and have an answer key are included. Scoring uses a practice model, not the official marking scheme.</p></div></div>' +
       '<p style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px">' + tabs + "</p>" + body;
   }
