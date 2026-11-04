@@ -825,7 +825,21 @@ function api(req, res) {
       return resultJson(res, { schemaVersion: 1, questionCount: 0, topicCount: 0, topics: [] });
     }
     try {
-      return resultJson(res, JSON.parse(fs.readFileSync(GENERIC_BANK_FILE, "utf8")));
+      const bank = JSON.parse(fs.readFileSync(GENERIC_BANK_FILE, "utf8"));
+      const { readJson, REVIEW_STATE_FILE } = require("./server/lib/reviewed-papers");
+      const reviews = readJson(REVIEW_STATE_FILE, {});
+      // Students only see questions the owner reviewed and did not flag
+      const cleared = (question) => {
+        const review = reviews[String(question.id).replace(/^generic-/, "")];
+        return !!(review && review.marked && !review.flagged);
+      };
+      bank.topics = (bank.topics || [])
+        .map((topic) => ({ ...topic, questions: (topic.questions || []).filter(cleared) }))
+        .filter((topic) => topic.questions.length);
+      bank.topics.forEach((topic) => { if ("questionCount" in topic) topic.questionCount = topic.questions.length; });
+      bank.topicCount = bank.topics.length;
+      bank.questionCount = bank.topics.reduce((n, topic) => n + topic.questions.length, 0);
+      return resultJson(res, bank);
     } catch (error) {
       return resultJson(res, { error: "Generic bank is unavailable: " + error.message }, 500);
     }
