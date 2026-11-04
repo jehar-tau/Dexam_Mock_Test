@@ -1,0 +1,30 @@
+{
+  "name": "designmocks",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4190 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4191 --strictPort",
+    "test": "node --test tests/*.test.mjs",
+    "test:hosted-setup": "node scripts/check-hosted-setup.mjs",
+    "test:bank-readiness": "python3 -m unittest discover -s tests -p \"*_test.py\"",
+    "check": "npm test && npm run test:bank-readiness && npm run build && node scripts/check-preview-isolation.mjs",
+    "test:database": "bash scripts/check-database.sh"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.117.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "7.18.5"
+  },
+  "devDependencies": {
+    "vite": "8.3.5",
+    "@vitejs/plugin-react": "6.1.2",
+    "axe-core": "4.14.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

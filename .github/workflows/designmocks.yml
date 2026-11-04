@@ -1,0 +1,51 @@
+name: DesignMocks checks
+
+on:
+  pull_request:
+    paths: ['apps/designmocks/**', '.github/workflows/designmocks.yml', 'package.json']
+  push:
+    branches: [main]
+    paths: ['apps/designmocks/**', '.github/workflows/designmocks.yml', 'package.json']
+
+permissions:
+  contents: read
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/designmocks
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: designmocks_fixture_only
+          POSTGRES_DB: designmocks_ci
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: apps/designmocks/package-lock.json
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npm run check
+      - run: npm audit --omit=dev --audit-level=high
+      - name: Type-check server functions
+        run: npx --yes deno@2.9.6 check supabase/functions/create-order/index.ts supabase/functions/payment-webhook/index.ts supabase/functions/attempt-media/index.ts
+      - name: Verify disposable database
+        env:
+          DESIGNMOCKS_TEST_DATABASE_URL: postgresql://postgres:designmocks_fixture_only@localhost:5432/designmocks_ci
+        run: npm run test:database

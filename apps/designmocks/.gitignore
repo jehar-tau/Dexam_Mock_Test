@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.log
+test-results/
+.openai/*.local.*
+supabase/.temp/
+supabase/.branches/
+private-import/
+__pycache__/

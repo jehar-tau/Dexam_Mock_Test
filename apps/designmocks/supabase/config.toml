@@ -1,0 +1,21 @@
+project_id = "designmocks-independent"
+
+[functions.create-order]
+verify_jwt = false
+
+[functions.payment-webhook]
+verify_jwt = false
+
+[functions.attempt-media]
+verify_jwt = false
+
+# Exact preview callbacks only. Sign-ups stay closed during provider setup.
+[auth]
+site_url = "https://designmocks-studio.snehal1155.chatgpt.site"
+additional_redirect_urls = ["https://designmocks-studio.snehal1155.chatgpt.site/account/callback"]
+enable_signup = false
+enable_anonymous_sign_ins = false
+
+[auth.hook.before_user_created]
+enabled = true
+uri = "pg-functions://postgres/public/before_designmocks_user_created"
