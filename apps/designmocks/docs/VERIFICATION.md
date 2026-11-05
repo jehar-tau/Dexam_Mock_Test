@@ -1,6 +1,14 @@
 # Verification
 
-## Current acceptance — 6 November 2026
+## Current hosted backend — 6 November 2026
+
+All 19 current source migrations are applied/tracked in the separate DMocks project. The portal batch used the exact four-migration baseline and closed-test/empty-commerce/assessment guards, and retained the existing owner Google account. Source PR #21 passes 26 browser journeys; PR #22 passes 28 journeys and the All India release regression before merge. No Dexam project was changed.
+
+The new portal-grant catalogue suite fails against the original inherited PUBLIC grant and passes with the narrow hardening migration. All 19 migrations and existing/release/grant/media/signup suites pass in isolated PostgreSQL 17; hosted catalogue assertions also pass. `DMOCKS_AUTH_STAGE=controlled DMOCKS_BACKEND_STAGE=portal npm run test:hosted-setup` passes 27/27 read-only HTTP checks after the grant transaction commits. An initial overlapping smoke request reached the previous grant state and was rejected by the verifier; only the post-commit rerun is counted as passed.
+
+The hosted state remains one owner Google account, zero orders/passes/questions, tester-only signup and sales false. Bank import, actual student paper delivery, phone verification, drawing, moderation, operations and public-launch acceptance remain incomplete. Database installation does not prove these flows work end to end. Razorpay remains deferred by the owner.
+
+## Controlled Google acceptance — 6 November 2026 (before portal installation)
 
 CI infrastructure note: run `42090968253` timed out during optional system-font downloads from the Ubuntu mirror, before browser journeys ran. Its successful unit/build steps do not constitute a passed merge gate. The regular browser command now installs matching Chromium without repeating optional system-package installation; minimal Linux environments have an explicit one-time system-dependency command. All desktop/mobile tests remain mandatory in the rerun.
 
