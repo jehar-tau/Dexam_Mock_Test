@@ -127,6 +127,7 @@ Every releasable slice must include focused unit coverage, database/authorizatio
 - [x] Add separated development/staging/production configuration, scale indexes and batched private-media signing.
 - [x] Add an admin allow-list, human-reviewed question-draft queue, signed-in bug reporting and admin replies/statuses.
 - [x] Prove the new migrations and authorization rules on disposable PostgreSQL 17.
+- [x] Add a service-role-only, idempotent canonical-bank importer that reads `origin/main`, imports only explicit empty-holds records and keeps objective readiness separate from import eligibility.
 - [ ] Export current Exam-app import state and reconcile every external key/content hash.
 - [ ] Obtain the Cloudboard/Claude source manifest; prove the 290 owner-provided items and any later pushes.
 - [ ] Decide whether DMocks imports the proven Dexam modules or the products converge on one shared package/repository. Recommendation: extract and reuse the assessment domain rather than fork it.
