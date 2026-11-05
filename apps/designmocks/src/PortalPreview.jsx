@@ -3,6 +3,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { WorkspaceView } from "./Workspace.jsx";
 import { Arrow } from "./Art.jsx";
+import { PortalShell } from "./PortalShell.jsx";
 
 const example = {
   access: { active: true, expiresAt: "2027-11-05T00:00:00+05:30" },
@@ -57,6 +58,6 @@ export default function PortalPreview() {
       <h2>Small observations. Useful habits.</h2>
       <div className="paper-list">{topics.map(t => <article key={t.name}><span className="eyebrow">{t.name}</span><h3>Try this tomorrow.</h3><p>{t.note}</p></article>)}</div>
       <Link className="button" to="/sample">Try it with your own answers <Arrow /></Link>
-    </section> : <WorkspaceView data={example} papers={papers} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : "/sample"} />}
+    </section> : <PortalShell><WorkspaceView data={example} papers={papers} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : "/sample"} /></PortalShell>}
   </>;
 }
