@@ -15,6 +15,8 @@
     "test:e2e:install": "playwright install chromium",
     "test:hosted-setup": "node scripts/check-hosted-setup.mjs",
     "test:bank-readiness": "python3 -m unittest discover -s tests -p \"*_test.py\"",
+    "bank:manifest": "node scripts/question-bank-import.mjs --ref origin/main",
+    "bank:import": "node scripts/question-bank-import.mjs --ref origin/main --apply",
     "check": "npm test && npm run test:bank-readiness && npm run build && node scripts/check-preview-isolation.mjs && npm run test:e2e",
     "test:database": "bash scripts/check-database.sh"
   },
