@@ -8,7 +8,7 @@ The owner-connected custom domain **https://dmocks.com** has active DNS/provider
 
 Supabase is on the existing Free organisation. No paid plan was enabled here. Production availability, backups, load limits and any paid upgrade still require a reviewed launch decision. Do not create another login/project just to get past a setup problem.
 
-The hosted database now has all 19 current source migrations: the original four, the merged portal modules, the All India result-release fix and the portal RPC grant hardening. Three foundation Edge Functions and private paper/drawing buckets are present. Installation is not end-to-end module acceptance: no real bank, released event, paid pass, theory material or evaluated drawing has been installed. Public registration remains restricted to the one owner tester and sales remain disabled.
+The hosted database now has all 20 current source migrations: the original four, the merged portal modules, the All India result-release fix the portal RPC grant hardening and the safe-update-compatible bank finalization fix. Three foundation Edge Functions and private paper/drawing buckets are present. Installation is not end-to-end module acceptance: 2,582 canonical hold-free records are privately imported; none has publication/rights approval. No released event, paid pass, theory material or evaluated drawing has been installed. Public registration remains restricted to the one owner tester and sales remain disabled.
 
 ## Controlled Google acceptance
 

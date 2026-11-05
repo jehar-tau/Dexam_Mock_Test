@@ -1,6 +1,14 @@
 # Verification
 
-## Current hosted backend — 6 November 2026
+## Current private bank acceptance — 6 November 2026
+
+The exact canonical main export at `5e04ea6b5bcbdf344b601d0092ad316ff0e34555` is privately imported: 2,582 eligible rows, 1,939 excluded, 161 current asset-free runtime conversions, zero publication/rights approvals. Source SHA-256 is `dd7702650b6e8ffeb348d0b558ecdd2bfbc1e565f2a392536518a3cebc8962be`. The provider ledger records completed run `9b12d4cf-b0a0-4fc5-bd64-15068739134b`, with expected/recorded/membership counts all 2,582. A complete importer replay returns the same run. No question payload, key or service credential was printed or added to the app source/browser bundle.
+
+Supabase rejected the prior unqualified finalizer update with HTTP 400 / SQLSTATE 21000 (safe-update WHERE requirement). Migration `202611060003` updates only rows with changed active states; the service-only boundary is preserved. The focused suite fails with the old finalizer and passes with the fix, proving changed-row behavior, retired-row handling, retry idempotence and rejection of incomplete runs. All 20 migrations and the existing/release/grant/finalization/media/signup suites pass in isolated PostgreSQL 17. Provider completion and replay also pass; the hosted ledger now has 20 migrations.
+
+A read-only local media inventory found all 2,085 referenced PNGs under the original workstation media root. Each matches the canonical digest and dimensions; total 273,263,304 bytes, with no missing/unsafe/mismatched files. This is local-source evidence only, not Storage upload/signing or browser delivery acceptance. The 161 current runtime candidates all carry official/unlicensed labels; no question is approved or released. Source marking/section/media fidelity and usage-rights clearance remain publication gates.
+
+## Portal installation and grants — 6 November 2026 (before bank import)
 
 All 19 current source migrations are applied/tracked in the separate DMocks project. The portal batch used the exact four-migration baseline and closed-test/empty-commerce/assessment guards, and retained the existing owner Google account. Source PR #21 passes 26 browser journeys; PR #22 passes 28 journeys and the All India release regression before merge. No Dexam project was changed.
 
