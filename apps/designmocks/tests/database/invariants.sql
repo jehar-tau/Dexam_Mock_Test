@@ -57,6 +57,9 @@ select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002'
 select pg_temp.assert_true(jsonb_array_length(public.admin_bank_questions(25,0))=10,'admin sees imported bank queue');
 select public.admin_review_bank_question('fixture-bank-q'||g,true,true,'Fictional rights confirmation') from generate_series(1,10) g;
 select pg_temp.assert_true((public.topic_catalog()->0->>'questions')::integer=10,'approved topic catalogue count');
+select public.admin_configure_exam_mock('uceed',10,900,1,true);
+select pg_temp.assert_true((public.admin_exam_mock_blueprints()->3->>'enabled')::boolean,'admin releases exam mock');
+select public.save_candidate_profile('Fictional Free Student','+919222222222',2028,'Pune',array['uceed']);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 select pg_temp.assert_true((public.my_candidate_profile()->>'phoneVerified')::boolean and (public.my_candidate_profile()->>'completed')::boolean,'service verification completes profile');
 select pg_temp.assert_true((public.save_candidate_profile('Asha Rao','+919111111111',2028,'Pune',array['uceed'])->>'phoneVerified')::boolean=false,'phone change clears verification');
@@ -80,10 +83,18 @@ select public.fulfil_verified_payment('evt_1','order_fictional123','pay_fictiona
 select public.fulfil_verified_payment('evt_1','order_fictional123','pay_fictional123',119300,'INR');
 select public.fulfil_verified_payment('evt_2','order_fictional123','pay_fictional123',119300,'INR');
 select public.verify_candidate_phone('00000000-0000-4000-8000-000000000001','+919111111111');
+select public.verify_candidate_phone('00000000-0000-4000-8000-000000000002','+919222222222');
 reset role;
 select pg_temp.assert_true((select count(*)=1 and min(expires_at)=now()+interval '12 months' from dm_private.passes),'one calendar-year pass after retries');
 set local role authenticated;
 select set_config('request.jwt.claim.role','authenticated',true);
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+select pg_temp.assert_true((public.exam_mock_catalog()->3->>'freeAttemptLimit')::integer=1,'free exam allowance exposed from server');
+select set_config('test.free_exam_attempt',public.start_exam_mock('uceed')::text,true);
+select pg_temp.assert_true(jsonb_array_length(public.read_attempt(current_setting('test.free_exam_attempt')::uuid)->'questions')=10,'free exam mock frozen');
+select public.submit_attempt(current_setting('test.free_exam_attempt')::uuid);
+select pg_temp.reject('select public.start_exam_mock(''uceed'')','free exam allowance enforced');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 select pg_temp.assert_true((public.my_pass()->>'active')::boolean,'purchased pass active');
 select pg_temp.reject('select public.prepare_order()','duplicate active purchase');
 select set_config('test.topic_attempt',public.start_topic_practice('fixture','uceed',10,900)::text,true);
@@ -130,7 +141,7 @@ select pg_temp.reject('select public.read_attempt(current_setting(''test.attempt
 select pg_temp.reject('select public.submit_attempt(current_setting(''test.attempt_id'')::uuid)','other student submission');
 select pg_temp.reject('select public.save_answer(current_setting(''test.attempt_id'')::uuid,''20000000-0000-4000-8000-000000000001'',''"A"'')','other student save');
 select pg_temp.reject('select public.start_attempt(''10000000-0000-4000-8000-000000000001'')','unpaid test start');
-select pg_temp.assert_true(public.my_attempt_history()='[]'::jsonb,'history isolated');
+select pg_temp.assert_true(jsonb_array_length(public.my_attempt_history())=1 and public.my_attempt_history()->0->>'title'='UCEED exam-wise mock','history isolated to own exam attempt');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 reset role;
 update dm_private.answer_keys set key='{"kind":"mcq","correct":["A"]}' where question_id='20000000-0000-4000-8000-000000000001';
