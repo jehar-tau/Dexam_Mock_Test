@@ -5,6 +5,7 @@ import { platform, loadDashboard } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
 import { PortalShell } from "./PortalShell.jsx";
 import { QuestionReport } from "./QuestionReport.jsx";
+import { DrawingUploads } from "./DrawingUploads.jsx";
 
 const rpc = async (name, args) => {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -620,6 +621,7 @@ export function Attempt() {
                   disabled={busy || left === 0}
                 />
               </label>
+              <DrawingUploads attemptId={id} questionId={q.id} />
             </>
           )}
           {["nat", "drawing"].includes(q.kind) && (
