@@ -140,6 +140,32 @@ export function WorkspaceView({
               <a href="#your-papers">Choose a released paper →</a>
             </article>
           </div>
+          {data.analytics?.activeAttempt && (
+            <div className="notice">
+              <b>Continue where you left off.</b>{" "}
+              {data.analytics.activeAttempt.title}{" "}
+              <Link to={`/attempt/${data.analytics.activeAttempt.id}`}>
+                Resume attempt →
+              </Link>
+            </div>
+          )}
+          {data.analytics?.topics?.length > 0 && (
+            <>
+              <h2>Your topic picture.</h2>
+              <div className="dashboard-stats">
+                {data.analytics.topics.slice(0, 3).map((topic) => (
+                  <article key={topic.topic}>
+                    <span>{topic.topic}</span>
+                    <h2>{topic.accuracy}%</h2>
+                    <p>
+                      {topic.correct} correct from {topic.answered} answered
+                    </p>
+                    <Link to="/dashboard/practice">Practise this topic →</Link>
+                  </article>
+                ))}
+              </div>
+            </>
+          )}
           <h2 id="your-papers">Your papers.</h2>
           {papers.length ? (
             <div className="paper-list">

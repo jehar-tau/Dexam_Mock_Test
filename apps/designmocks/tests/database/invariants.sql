@@ -236,5 +236,10 @@ select pg_temp.assert_true((public.admin_drawing_queue()->0->>'uploadCount')::in
 select public.admin_review_drawing((public.admin_drawing_queue()->0->>'reviewId')::uuid,'{"composition":8,"clarity":7}'::jsonb,'Fictional reviewed feedback',15,null);
 reset role;
 select pg_temp.assert_true((select count(*)=1 from dm_private.drawing_review_audit where action='review'),'drawing review writes immutable audit event');
+set local role authenticated;
+select set_config('request.jwt.claim.role','authenticated',true);
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
+select pg_temp.assert_true((public.my_overview_analytics()->>'completed')::integer>=1,'overview analytics are isolated to signed-in student attempts');
+select pg_temp.assert_true(jsonb_typeof(public.my_overview_analytics()->'topics')='array','overview returns topic performance');
 rollback;
 \echo 'PASS: commerce, RLS, ownership, deadlines, grading, reports and retry invariants'

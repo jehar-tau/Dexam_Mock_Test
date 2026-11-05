@@ -37,13 +37,19 @@ export async function googleLogin() {
 }
 export async function loadDashboard() {
   if (!platform) return { attempts: [], access: null };
-  const [attempts, access] = await Promise.all([
+  const [attempts, access, analytics] = await Promise.all([
     platform.rpc("my_attempt_history"),
     platform.rpc("my_pass"),
+    platform.rpc("my_overview_analytics"),
   ]);
   if (attempts.error) throw attempts.error;
   if (access.error) throw access.error;
-  return { attempts: attempts.data ?? [], access: access.data };
+  if (analytics.error) throw analytics.error;
+  return {
+    attempts: attempts.data ?? [],
+    access: access.data,
+    analytics: analytics.data,
+  };
 }
 let checkoutScript;
 async function razorpay() {
