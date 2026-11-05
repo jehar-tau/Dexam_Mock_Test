@@ -115,6 +115,8 @@ export function Admin() {
     [bank, setBank] = useState([]),
     [blueprints, setBlueprints] = useState([]),
     [allIndia, setAllIndia] = useState([]),
+    [lessons, setLessons] = useState([]),
+    [drawings, setDrawings] = useState([]),
     [questionReports, setQuestionReports] = useState([]),
     [bankRights, setBankRights] = useState({}),
     [message, setMessage] = useState("");
@@ -124,13 +126,15 @@ export function Admin() {
       const ok = await rpc("is_dmocks_admin");
       setAllowed(ok);
       if (ok) {
-        const [d, b, q, m, a, r] = await Promise.all([
+        const [d, b, q, m, a, r, l, w] = await Promise.all([
           rpc("admin_question_drafts"),
           rpc("admin_bug_reports"),
           rpc("admin_bank_questions", { p_limit: 25, p_offset: 0 }),
           rpc("admin_exam_mock_blueprints"),
           rpc("admin_all_india_events"),
           rpc("admin_reported_questions"),
+          rpc("admin_learning_lessons"),
+          rpc("admin_drawing_queue"),
         ]);
         setDrafts(d);
         setBugs(b);
@@ -138,6 +142,8 @@ export function Admin() {
         setBlueprints(m);
         setAllIndia(a);
         setQuestionReports(r);
+        setLessons(l);
+        setDrawings(w);
       }
     } catch (e) {
       setMessage(e.message);
@@ -254,6 +260,44 @@ export function Admin() {
       setMessage(e.message);
     }
   };
+  const addLesson = async (event) => {
+    event.preventDefault();
+    const f = new FormData(event.currentTarget);
+    try {
+      await rpc("admin_upsert_learning_lesson", {
+        p_id: null,
+        p_slug: f.get("slug"),
+        p_exam: f.get("exam"),
+        p_topic: f.get("topic"),
+        p_title: f.get("title"),
+        p_summary: f.get("summary"),
+        p_body: f.get("body"),
+        p_ordinal: Number(f.get("ordinal")),
+        p_publish: f.get("publish") === "on",
+        p_rights_confirmed: f.get("rights") === "on",
+      });
+      event.currentTarget.reset();
+      await load();
+    } catch (e) {
+      setMessage(e.message);
+    }
+  };
+  const reviewDrawing = async (event, id) => {
+    event.preventDefault();
+    const f = new FormData(event.currentTarget);
+    try {
+      await rpc("admin_review_drawing", {
+        p_review_id: id,
+        p_criterion_marks: JSON.parse(f.get("criteria")),
+        p_comments: f.get("comments"),
+        p_score: Number(f.get("score")),
+        p_override_reason: null,
+      });
+      await load();
+    } catch (e) {
+      setMessage(e.message);
+    }
+  };
   return (
     <section className="wrap section admin-page">
       <span className="eyebrow">DMOCKS OPERATIONS</span>
@@ -271,6 +315,94 @@ export function Admin() {
       )}
       {allowed && (
         <>
+          <h2>Drawing review queue</h2>
+          <div className="admin-list">
+            {drawings.map((d) => (
+              <article key={d.reviewId}>
+                <b>Anonymous submission · {d.uploadCount} images</b>
+                <span className="status-pill">{d.status}</span>
+                {d.status !== "reviewed" && (
+                  <form
+                    className="admin-form"
+                    onSubmit={(e) => reviewDrawing(e, d.reviewId)}
+                  >
+                    <label>
+                      Criterion marks JSON
+                      <textarea
+                        name="criteria"
+                        required
+                        defaultValue={'{"composition":0,"clarity":0}'}
+                      />
+                    </label>
+                    <label>
+                      Score
+                      <input
+                        name="score"
+                        type="number"
+                        min="0"
+                        step="0.5"
+                        required
+                      />
+                    </label>
+                    <label>
+                      Feedback
+                      <textarea name="comments" required minLength="5" />
+                    </label>
+                    <button>Save human review</button>
+                  </form>
+                )}
+              </article>
+            ))}
+          </div>
+          <h2>Publish a theory lesson</h2>
+          <form className="admin-form" onSubmit={addLesson}>
+            <label>
+              Slug
+              <input name="slug" pattern="[a-z0-9-]+" required />
+            </label>
+            <label>
+              Exam
+              <select name="exam">
+                {["uceed", "nid", "nift", "ceed"].map((x) => (
+                  <option key={x}>{x}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Topic
+              <input name="topic" required />
+            </label>
+            <label>
+              Title
+              <input name="title" minLength="5" required />
+            </label>
+            <label>
+              Summary
+              <textarea name="summary" minLength="10" required />
+            </label>
+            <label>
+              Lesson body
+              <textarea name="body" minLength="20" rows="10" required />
+            </label>
+            <label>
+              Order
+              <input
+                name="ordinal"
+                type="number"
+                min="1"
+                defaultValue="1"
+                required
+              />
+            </label>
+            <label>
+              <input name="rights" type="checkbox" /> Rights confirmed
+            </label>
+            <label>
+              <input name="publish" type="checkbox" /> Publish now
+            </label>
+            <button>Save lesson</button>
+          </form>
+          <p>{lessons.length} lessons in the catalogue.</p>
           <h2>Reported questions</h2>
           <p>
             Questions enter this queue only after the report threshold. A human
