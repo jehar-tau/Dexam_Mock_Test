@@ -241,5 +241,8 @@ select set_config('request.jwt.claim.role','authenticated',true);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 select pg_temp.assert_true((public.my_overview_analytics()->>'completed')::integer>=1,'overview analytics are isolated to signed-in student attempts');
 select pg_temp.assert_true(jsonb_typeof(public.my_overview_analytics()->'topics')='array','overview returns topic performance');
+select set_config('test.revision_attempt',public.start_attempt('10000000-0000-4000-8000-000000000001')::text,true);
+select pg_temp.assert_true((public.save_answer_revision(current_setting('test.revision_attempt')::uuid,'20000000-0000-4000-8000-000000000001','"A"',2)->>'accepted')::boolean,'newer answer revision accepted');
+select pg_temp.assert_true(not(public.save_answer_revision(current_setting('test.revision_attempt')::uuid,'20000000-0000-4000-8000-000000000001','"B"',1)->>'accepted')::boolean,'stale answer revision rejected');
 rollback;
 \echo 'PASS: commerce, RLS, ownership, deadlines, grading, reports and retry invariants'
