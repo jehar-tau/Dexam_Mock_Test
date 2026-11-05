@@ -1,5 +1,12 @@
 # DMocks — owner decisions
 
+## Current updates — 6 November 2026
+
+- Owner-connected `dmocks.com` is active with HTTPS and remains owner-private.
+- Controlled Google sign-in works against the standalone Supabase project; the signup hook admits only the owner tester. Public registration and paid access remain closed.
+- The owner explicitly deferred Razorpay integration until later. Preserve disabled checkout and do not request credentials or continue merchant setup until resumed. Before any future use, replace/deactivate the old Test pair exposed during setup; do not store or repeat it.
+- The canonical development checkout is `designmocks-github`, app subdirectory `apps/designmocks`. The separate `design-mocks` checkout is a managed publication mirror. Older setup/status notes below are historical; PROVIDER_SETUP.md is current.
+
 4 November 2026:
 
 - A separate website and revenue stream, with a different name from Dexam.

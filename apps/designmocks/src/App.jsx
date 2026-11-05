@@ -16,7 +16,6 @@ import {
   SAMPLE_STORAGE,
 } from "./sample.mjs";
 import { Workspace, Attempt } from "./Workspace.jsx";
-import { Admin, BugReport } from "./Admin.jsx";
 import { PortalModule } from "./PortalShell.jsx";
 import {
   CandidateProfile,
@@ -30,9 +29,12 @@ import { Learn, LearnPreview } from "./Learn.jsx";
 import { Community, CommunityPreview } from "./Community.jsx";
 import { DrawingUploadsPreview } from "./DrawingUploads.jsx";
 import { useAuthState } from "./useAuth.js";
+import { authCallbackMessage } from "./authConfiguration.mjs";
 import {
   platform,
   portalReady,
+  authReady,
+  testLoginMode,
   termsVersion,
   googleLogin,
   beginCheckout,
@@ -41,6 +43,8 @@ import {
 const PortalPreview = import.meta.env.DEV
   ? React.lazy(() => import("./PortalPreview.jsx"))
   : null;
+const Admin = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.Admin })));
+const BugReport = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.BugReport })));
 
 function Logo() {
   return (
@@ -160,10 +164,9 @@ function Layout({ children }) {
       </a>
       {!portalReady && (
         <div className="preview-strip">
-          A FIRST LOOK{" "}
+          {testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
           <span>
-            Explore the sample. Student sign-in and paid checkout are being
-            connected.
+            {testLoginMode ? "Google sign-in is limited to approved testers. Purchases are closed." : "Explore the sample. Student sign-in and paid checkout are being connected."}
           </span>
         </div>
       )}
@@ -971,24 +974,51 @@ function Plans() {
   );
 }
 function Account() {
-  const { session, loading } = useAuthState();
+  const { session, loading, authError } = useAuthState();
   const [accepted, setAccepted] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
+  const [sessionStatus, setSessionStatus] = useState("");
+  const [error, setError] = useState(() => authCallbackMessage(window.location.search, window.location.hash));
   const login = async () => {
-    if (!accepted) return;
+    if (!testLoginMode && !accepted) return;
     setBusy(true);
     setError("");
     try {
-      sessionStorage.setItem("designmocks-pending-terms", termsVersion);
+      if (!testLoginMode) sessionStorage.setItem("designmocks-pending-terms", termsVersion);
       await googleLogin();
     } catch (e) {
       setError(e.message);
       setBusy(false);
     }
   };
+  const refreshTestSession = async () => {
+    setBusy(true);
+    setSessionStatus("");
+    try {
+      const { error } = await platform.auth.refreshSession();
+      if (error) throw error;
+      setSessionStatus("Test session refreshed successfully.");
+    } catch {
+      setSessionStatus("Could not refresh the test session. Please sign in again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  const signOut = async () => {
+    setBusy(true);
+    setError("");
+    setSessionStatus("");
+    try {
+      const { error } = await platform.auth.signOut({ scope: "local" });
+      if (error) throw error;
+    } catch {
+      setError("Could not sign out. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
   useEffect(() => {
-    if (!session || !platform) return;
+    if (!session || !platform || testLoginMode) return;
     const version = sessionStorage.getItem("designmocks-pending-terms");
     if (version && version === termsVersion) {
       platform
@@ -1020,25 +1050,29 @@ function Account() {
         <Spark size={34} />
         <h2>{session ? "Welcome back." : "Come on in."}</h2>
         <p>
-          {session
-            ? "Your DMocks workspace is ready."
-            : "Sign in or create your account with Google."}
+            {session
+            ? "Your Google account is connected."
+            : testLoginMode ? "Private Google sign-in check for approved testers." : "Sign in or create your account with Google."}
         </p>
         {loading ? (
           <p role="status">Checking your account…</p>
         ) : session ? (
           <>
             <p className="signed-in">Signed in as {session.user.email}</p>
-            <Button to="/dashboard">Open your workspace</Button>
-            <Button to="/onboarding" quiet>
+            {testLoginMode && <p className="notice">Google sign-in succeeded. This is a private setup check. Public registration and purchases are closed; no paid access has been granted.</p>}
+            {testLoginMode && <button className="button quiet" disabled={busy} onClick={refreshTestSession}>Refresh test session</button>}
+            {sessionStatus && <p role="status">{sessionStatus}</p>}
+            {!testLoginMode && <Button to="/dashboard">Open your workspace</Button>}
+            {!testLoginMode && <Button to="/onboarding" quiet>
               Complete your profile
-            </Button>
-            <Button to="/plans" quiet>
+            </Button>}
+            {!testLoginMode && <Button to="/plans" quiet>
               View the annual pass
-            </Button>
+            </Button>}
             <button
               className="text-button"
-              onClick={() => platform.auth.signOut()}
+              disabled={busy}
+              onClick={signOut}
             >
               Sign out
             </button>
@@ -1061,24 +1095,24 @@ function Account() {
               )}
               <button
                 className="google-button"
-                disabled={!portalReady || busy || !accepted}
+                disabled={!authReady || busy || (!testLoginMode && !accepted)}
                 onClick={login}
               >
                 <GoogleIcon />
-                {busy ? "Opening Google…" : "Continue with Google"}
+                {busy ? "Opening Google…" : testLoginMode ? "Test Google sign-in" : "Continue with Google"}
               </button>
             </>
-            {!portalReady && (
+            {!authReady && (
               <div className="notice">
                 Google sign-in is being connected for this new app. You can
                 explore the full sample experience now.
               </div>
             )}
-            <p className="account-terms">
+            {testLoginMode ? <p className="account-terms">Only server-approved test accounts can complete this check. It does not accept draft purchase terms, create an order or unlock a paid pass.</p> : <p className="account-terms">
               Creating a new account requires accepting the published terms and
               privacy notice in the Google sign-in launch flow. That flow will
               open once the new account setup is active.
-            </p>
+            </p>}
             <div className="inline-links">
               <Link to="/terms">Terms & access</Link>
               <Link to="/privacy">Privacy</Link>
@@ -1088,9 +1122,9 @@ function Account() {
             </Link>
           </>
         )}
-        {error && (
+        {(error || authError) && (
           <p className="error" role="alert">
-            {error}
+            {error || authError}
           </p>
         )}
         <span className="account-footnote">
@@ -1583,6 +1617,7 @@ export default function App() {
   const location = useLocation();
   return (
     <Layout>
+      <React.Suspense fallback={<p className="wrap" role="status">Opening your workspace…</p>}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tests" element={<Tests />} />
@@ -1662,6 +1697,7 @@ export default function App() {
         <Route path="/terms" element={<Policies type="terms" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </React.Suspense>
     </Layout>
   );
 }

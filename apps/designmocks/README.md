@@ -1,6 +1,6 @@
 # DMocks
 
-The independent DMocks website and student portal, inside `jehar-tau/Dexam_Mock_Test` at `apps/designmocks`. Approved offer: **₹1,193 for one year**, one payment, no automatic renewal. Selected domain `dmocks.com` is available according to the registry check on 5 November 2026, but is not yet purchased.
+The independent DMocks website and student portal, inside `jehar-tau/Dexam_Mock_Test` at `apps/designmocks`. Approved offer: **₹1,193 for one year**, one payment, no automatic renewal. The owner-connected **https://dmocks.com** domain is active with HTTPS; hosting remains owner-private.
 
 ## Run locally
 
@@ -19,11 +19,13 @@ From this app directory, use `npm ci`, `npm run dev`, `npm run check` or `npm ru
 
 Discovery landing/catalogue/exam/annual-pass pages; light/dark mode; an original five-question timed sample with saved answers, flags, feedback and answer review; Google login integration; the protected account workspace and server-timed MCQ/MSQ/NAT attempts; private raster image signing; a server-created Razorpay order and signed payment webhook. Drawing currently means offline drawing and self-review, not uploads or human evaluation.
 
-Real provider acceptance and reviewed-bank publication are incomplete. Google is enabled in the standalone Supabase project, but actual OAuth login/callback is not yet verified. Registration, the browser portal and sales remain closed. The question-bank work in the repository root is not automatically loaded into or exposed by this website.
+Real provider acceptance and reviewed-bank publication are incomplete. Actual Google OAuth/PKCE, cancellation, persistence, SDK refresh, sign-out and returning login pass locally against the standalone Supabase project. Registration is restricted by the server signup hook to one approved owner tester; public registration, the released portal and sales remain closed. The question-bank work in the repository root is not automatically loaded into or exposed by this website. The owner deferred Razorpay integration on 6 November; checkout must remain disabled until they resume it.
 
 ## Configuration and existing preview
 
 Copy `.env.example` to `.env.local` and enter only the standalone project's **public** URL/anon key. Keep `VITE_PORTAL_ENABLED=false` and the terms version blank until launch acceptance. Never put Google client secrets, Supabase service-role keys or Razorpay secrets into Vite variables, source or chat.
+
+For approved login acceptance only, set `VITE_TEST_LOGIN_ENABLED=true` with `VITE_DEPLOYMENT_ENV=development` locally or `staging` for a private hosted build. This mode does not accept draft purchase terms, expose the unfinished workspace or enable checkout. Production releases reject it. Both login switches default false; do not combine them. The server allowlist remains the actual registration boundary.
 
 The separate Supabase project is `tiodqzvvujxvxssvjdis` (Mumbai). Four migrations are applied/tracked, three Edge Functions deployed, and the closed signup hook configured. Use an explicit project reference and app working directory for provider operations; never target the academy's staging/production project. Do not rerun migrations blindly against an existing database.
 
@@ -37,13 +39,13 @@ npm audit --omit=dev --audit-level=high
 npx --yes deno@2.9.6 check supabase/functions/create-order/index.ts supabase/functions/payment-webhook/index.ts supabase/functions/attempt-media/index.ts
 ```
 
-`check` runs sample/payment unit tests, Python readiness fixtures, the production build and a bundle check excluding local preview/QA content. The repository's DesignMocks workflow also checks server function types and the database using an isolated disposable PostgreSQL 17 service, without provider secrets.
+`check` runs unit tests, Python readiness fixtures, the production build, a bundle check excluding local preview/QA content and desktop/mobile browser journeys. Run it with both login switches false for the configuration-free CI fixture. The repository's DesignMocks workflow also checks server function types and the database using an isolated disposable PostgreSQL 17 service, without provider secrets.
 
-For database verification, install `psql` and create an **empty disposable localhost PostgreSQL 17 database**. Set `DESIGNMOCKS_TEST_DATABASE_URL` for that database, then run `npm run test:database`. The script rejects remote hosts and non-empty databases, bootstraps mock Auth/Storage catalogues and applies all four migrations before exercising transactional invariants. This bootstrap must never run on an actual Supabase or student database. It does not simulate real OAuth, Storage SDK signing or merchant acceptance.
+For database verification, install `psql` and create an **empty disposable localhost PostgreSQL 17 database**. Set `DESIGNMOCKS_TEST_DATABASE_URL` for that database, then run `npm run test:database`. The script rejects remote hosts and non-empty databases, bootstraps mock Auth/Storage catalogues and applies all current migrations before exercising transactional invariants. This bootstrap must never run on an actual Supabase or student database. It does not simulate real OAuth, Storage SDK signing or merchant acceptance. The hosted project still has only migrations 001–004.
 
 For local browser accessibility checks, open `/?audit=1`, expand Local accessibility QA and run the check. The panel is excluded from production. Mobile, dark mode, keyboard use and live provider acceptance still require their appropriate checks.
 
-`npm run test:hosted-setup` is a separate read-only test for the currently closed standalone project. It needs ignored public client configuration and creates no users, orders or payments. Update its stage-specific expectations when providers/registration are deliberately activated.
+`DMOCKS_AUTH_STAGE=controlled npm run test:hosted-setup` checks the current controlled-login stage. Its default `closed` stage expects globally disabled registration. This read-only HTTP test needs ignored public client configuration and creates no users, orders or payments; the private allowlist and hook decisions require separate SQL/provider acceptance evidence.
 
 ## Launch status
 

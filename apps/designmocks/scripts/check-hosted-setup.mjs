@@ -21,6 +21,8 @@ if (key.split(".").length === 3) {
   assert.equal(payload.role, "anon", "Only the public anon role is allowed");
 }
 const results = [];
+const authStage = process.env.DMOCKS_AUTH_STAGE || "closed";
+assert.ok(["closed", "controlled"].includes(authStage), "Explicit closed or controlled Auth test stage required");
 async function request(path, method = "GET", body, headers = {}) {
   const response = await fetch(base + path, {
     method,
@@ -61,11 +63,12 @@ response = await request("/auth/v1/settings");
 assert.equal(response.status, 200);
 assert.equal(
   response.data.disable_signup,
-  true,
-  "This check is for the closed setup stage only",
+  authStage === "closed",
+  "Auth registration switch does not match the selected setup stage",
 );
+if (authStage === "controlled") assert.equal(response.data.external?.google, true);
 results.push({
-  check: "new registrations closed during setup",
+  check: authStage === "closed" ? "new registrations globally closed" : "Google enabled for controlled-hook acceptance (allowlist verified separately)",
   status: 200,
   passed: true,
   googleEnabled: Boolean(response.data.external?.google),

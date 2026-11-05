@@ -1,59 +1,55 @@
-# DesignMocks provider setup
+# DMocks provider setup
 
-The owner confirmed on 4 November 2026 that a new setup is needed. The independent **DesignMocks** Supabase project is now created and configured on the existing Free organization in Mumbai: `tiodqzvvujxvxssvjdis`. All three migrations are applied and tracked; `create-order`, `payment-webhook` and `attempt-media` are deployed. No paid subscription or domain purchase was made. Google OAuth and Razorpay merchant configuration remain pending.
+Current evidence: 6 November 2026. The GitHub app is `jehar-tau/Dexam_Mock_Test/apps/designmocks`; its separate Supabase project is **DesignMocks**, `tiodqzvvujxvxssvjdis`, Mumbai. The existing academy/Dexam projects and merchant credentials are not used.
 
-## Supabase: keep the owner login, separate the project
+## Hosting and environment
 
-Use the existing owner login. DesignMocks needs its **own project**, database, Auth user store, API keys and Storage bucket. A second personal login is unnecessary for isolation or cost savings.
+The owner-connected custom domain **https://dmocks.com** has active DNS/provider validation and HTTPS. The existing Sites project remains `appgprj_6aeac2a10f708191a6fd4160cec11651`, owner-private with no external visitors. A GitHub push does not deploy that Site. Publish only app source through its separate managed checkout; never archive the bank repository root.
 
-Billing is organization-based. Start the setup in a separate **Free organization/project** if the owner's free-project allowance permits it. The official limit is two active Free projects across organizations where the user is an Owner or Administrator. A new login is not the cost-control mechanism. The dashboard confirmed the existing organization is **Free**. The owner created DesignMocks as its second project; **Dexam Staging** remains separate. Both projects share organization quotas, while databases, Auth users, keys and Storage are independent.
+Supabase is on the existing Free organisation. No paid plan was enabled here. Production availability, backups, load limits and any paid upgrade still require a reviewed launch decision. Do not create another login/project just to get past a setup problem.
 
-For a paid launch, compare an additional Micro project in an existing Pro organization (typically about US$10/month incremental compute) against a separate Pro organization (starts at US$25/month with one Micro project's compute credit). Taxes, extra compute and usage may add cost. Keep any paid upgrade an explicit owner decision. Free projects can pause after one week of inactivity; it is a setup option, not a promise of paid-exam availability.
+The hosted database currently has migrations 001–004, three Edge Functions and the private paper-media bucket. Later portal migrations on GitHub have not yet been applied to this hosted project. Local/CI implementation evidence does not establish hosted release readiness.
 
-Sources checked 4 November 2026:
+## Controlled Google acceptance
 
-- https://supabase.com/pricing
-- https://supabase.com/docs/guides/platform/billing-on-supabase
+The owner created **DesignMocks Web** in Google Cloud project `designmocks-auth-2026` and entered the credentials directly in Supabase. Real Google sign-in has now passed from the local app: account selection, basic identity consent, Supabase callback, PKCE exchange, page-reload persistence, refresh-token rotation through the SDK, sign-out and returning-account sign-in. The returning login retains a single Auth account. Actual cancellation displays a safe retry message. No credential/session token was copied into source or logs by the app.
 
-The owner generated/stored the database password and created the new project in Mumbai. All three migrations were applied using the authenticated CLI Management API with the explicit DesignMocks project reference, then recorded in migration history. The existing Dexam project was not linked/reset/seeded. `launch_settings.sales_enabled=false`, test mode and a private `paper-media` bucket are verified.
+The server-owned `dm_private.registration_policy` is `testers`; exactly one approved business test account is in `registration_testers`. The global Auth signup switch must be on for Google to create that tester, but the wired before-user-created hook rejects non-Google, anonymous, missing-email and non-allowlisted creation. Public registration is still closed. A real Auth email/password signup probe returns the hook's 403 denial; transactional tests cover unknown Google addresses and the other policy modes. Anonymous student RPCs remain denied. The owner test account has no paid pass, accepted purchase policy or order.
 
-## Google login
+Approved callback destinations are exact:
 
-Create a distinct Web OAuth client for DesignMocks in the owner's Google Cloud setup. Complete its consent configuration, use the actual operator/contact information, and request only the basic identity scopes. Configure Google in the **new** Supabase project's Auth settings. Google's authorized callback is `https://<new-project-ref>.supabase.co/auth/v1/callback`.
+- `https://dmocks.com/account/callback`
+- `https://designmocks-studio.snehal1155.chatgpt.site/account/callback` (retained preview)
+- `http://127.0.0.1:4190/account/callback` (controlled local acceptance)
 
-The Supabase site URL is configured as `https://designmocks-studio.snehal1155.chatgpt.site`, with only its exact `/account/callback` URL allowed. New registrations and anonymous sign-in remain disabled during setup. Replace the origin and callback together when the final domain is ready. Use localhost only for development. Do not use broad production redirect wildcards. The frontend uses PKCE and records acceptance of the published policy version after authentication; checkout checks that version again on the server.
+Google's provider redirect remains `https://tiodqzvvujxvxssvjdis.supabase.co/auth/v1/callback`. Do not substitute the app callback for it. The request uses `openid email profile`, without Gmail, Drive or other API access. Google branding still displays the Supabase host in the consent screen; complete the actual product branding/domain setup before public launch.
 
-Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google
+Frontend switches are separate:
 
-## Razorpay
+- `VITE_TEST_LOGIN_ENABLED=true` permits the labelled controlled login screen only for development/staging/test deployments. It does not grant a paid entitlement or accept draft terms.
+- `VITE_PORTAL_ENABLED=true` is reserved for a released portal with its published `VITE_TERMS_VERSION`. It cannot be combined with controlled login mode.
+- Both default false. Browser configuration accepts public publishable/anon keys only. Service and merchant secrets remain server-only. A production release rejects controlled login; an explicitly staged build is required for the private hosted acceptance screen.
 
-The owner must complete any required merchant onboarding/KYC. Use the separate DesignMocks merchant configuration and secret storage, not Dexam's keys. Start in Test mode. Set the new project's Edge Function secrets: `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`, `PUBLIC_APP_ORIGIN`. Do not send secrets in chat or commit them.
+Use `DMOCKS_AUTH_STAGE=controlled npm run test:hosted-setup` to check the current setup stage. This read-only HTTP suite checks the switches/gates, not the private allowlist by itself. The allowlist and live hook are verified separately.
 
-Deploy `create-order`, `payment-webhook`, `attempt-media` to the isolated project. The two student endpoints validate the bearer identity using Supabase Auth. The payment webhook validates the exact request body with HMAC-SHA256. Configure `payment.captured` for its webhook URL. The browser success handler only waits for verified access; it cannot create a pass.
+Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
 
-Verify test-mode order creation, cancellation, incorrect signatures, retry delivery, exact ₹1,193 amount, one calendar year of access, duplicate-purchase protection and reconciliation. Refund/revocation, support and invoice operations need an agreed production procedure before selling. There is no recurring subscription.
+## Razorpay — deferred by owner on 6 November
 
-References:
+The owner explicitly asked to do Razorpay integration later. Do not continue merchant configuration, request replacement credentials or enable checkout until they resume this work. The incident-remediation requirement below remains outstanding for that future setup.
 
-- https://razorpay.com/docs/payments/server-integration/nodejs/integration-steps
-- https://razorpay.com/docs/webhooks/validate-test
+The separate merchant onboarding has reached website details and offers Test API keys. The setup modal displayed a Test secret in tool output on 6 November. Treat that old Test pair as compromised: the owner must regenerate it and deactivate the old pair before any use. It was not installed in the app or Supabase. Do not repeat it in chat, documentation or logs.
 
-## Activate only after acceptance
+A Supabase **Edge Function Secrets** form was prepared for `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`, with no values entered by the agent. When integration resumes, the owner must paste and save replacements directly; browser credential-handling rules require owner entry. `RAZORPAY_WEBHOOK_SECRET` and actual Test webhook configuration remain additional setup steps; no webhook secret is configured yet.
 
-The reviewed real bank is not in this repository or preview. Import it through a controlled server-side process, map marking schemes/sections and private image paths, confirm publication/rights flags and compare representative scored attempts to the human-reviewed keys. Drawing is currently offline self-review; do not offer uploads/human evaluation until that service exists.
+The current server functions intentionally reject unconfigured checkout/webhook requests. `launch_settings.sales_enabled=false`, `environment_mode=test` and null purchase-policy version remain in force. `PUBLIC_APP_ORIGIN` is currently the old preview origin and must be deliberately aligned to the final checkout test origin when configuring payment acceptance. Do not enable live orders or change existing academy merchant settings.
 
-Publish final operator, privacy, younger-student, purchase/refund and tax notices. Set the same published policy version in the database and browser. Configure the public URL/anon key in the frontend; keep the service key server-only. Enable the student portal, then validate the actual Google redirect and Razorpay Test flow. A live switch follows owner approval after those checks. Do not advertise this owner-private preview as an operating paid service.
+Before live sales, test server-created ₹1,193 orders, matching Test keys, successful/failed/cancelled simulated payments, exact-body signed webhook delivery, amount/currency/order binding, retries and out-of-order events, annual expiry, duplicate-purchase prevention and approved refund/revocation/reconciliation handling. Browser success callbacks never grant access.
 
-## Current owner handoff
+References: https://razorpay.com/docs/payments/dashboard/account-settings/api-keys and https://razorpay.com/docs/webhooks/validate-test
 
-The owner accepted Google Cloud’s initial terms and the Google API Services User Data Policy. A dedicated project, **DesignMocks** (`designmocks-auth-2026`), is created under `designexam.com@gmail.com`, without enabling billing or a free trial. App registration was saved with the DesignMocks name, academy support/contact email and External audience in testing mode. The Web OAuth client form is prepared with the exact preview origin and callback. Its actual creation/credential pair has not been verified. After the owner reported saving credentials, refreshed Supabase UI and public Auth settings still show Google disabled. The Client IDs field contains the app name `DesignMocks`, which must be replaced with the Google-generated ID ending `.apps.googleusercontent.com`. The owner must enter its matching secret directly and save the enabled provider. No secret was revealed. The intended callback is `https://tiodqzvvujxvxssvjdis.supabase.co/auth/v1/callback`.
+## Remaining release gates
 
-Migration 004 installs `before_designmocks_user_created` and server-owned registration policy/tester tables. The Auth hook is configured, with policy `closed` and global signup still disabled. It checks Auth-owned provider metadata, rejects non-Google/anonymous/missing-email requests, and supports a controlled allowlist before a later approved public launch. Browser roles cannot read/change the policy or invoke the hook. Transactional decision tests and Auth-role grant checks pass; the Management API cannot impersonate `supabase_auth_admin`, so actual hook execution is explicitly deferred to the real OAuth test. Reference: https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
+Serve only the canonical main-branch empty-holds bank through the reviewed private import path. Reconcile runtime/media/key readiness and exact exam blueprints; do not equate import eligibility with paper publication. Apply and verify the merged portal backend before opening its modules. Phone verification, drawing review, moderation, theory material, operational limits and policy decisions remain tracked in PRODUCT_EXECUTION_PLAN.md.
 
-`PUBLIC_APP_ORIGIN` is set in the new project’s Edge Function secret store. Razorpay credentials are absent, so order creation and the webhook return a closed-setup response. The new public Supabase URL/anon key are stored only in ignored `.env.local`, with the browser portal still disabled. Service-role and merchant secrets are not in the source or browser.
-
-Razorpay is still at the business-PAN onboarding stage in the owner’s tab. The owner must complete merchant onboarding directly in Razorpay. Identity/bank details and merchant secrets must not be sent in chat.
-
-## 5 November verified update
-
-The owner completed Google credential entry directly in Supabase. The correct independent project now reports Google enabled via its public Auth settings; 10/10 hosted setup checks pass. Credentials were not read into source/chat. Registration and the browser portal remain closed, so an actual owner-only OAuth callback test is still pending. Earlier disabled-provider observations above describe the preceding handoff, not the current saved state.
+Final operator/contact, younger-student, privacy, purchase/refund, tax/invoice, retention/deletion, backup and monitoring decisions are still needed. The owner must approve public registration and live payments after concrete acceptance evidence. Neither the private Site nor the owner Google login test is a public paid launch.

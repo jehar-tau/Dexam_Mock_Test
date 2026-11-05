@@ -1,17 +1,21 @@
 import { createClient } from "@supabase/supabase-js";
-import { validatePortalConfiguration } from "./environment.js";
+import { environment } from "./environment.js";
+import { resolveAuthConfiguration } from "./authConfiguration.mjs";
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
 // This app must have its own provider project; no Dexam values are imported.
 export const termsVersion = import.meta.env.VITE_TERMS_VERSION;
-export const portalReady = validatePortalConfiguration({
-  enabled: import.meta.env.VITE_PORTAL_ENABLED === "true",
+export const { authReady, portalReady, testLoginMode } = resolveAuthConfiguration({
+  mode: environment.mode,
+  deployment: environment.deployment,
+  portalEnabled: import.meta.env.VITE_PORTAL_ENABLED === "true",
+  testLoginEnabled: import.meta.env.VITE_TEST_LOGIN_ENABLED === "true",
   url,
   key,
   termsVersion,
 });
-export const platform = portalReady
+export const platform = authReady
   ? createClient(url, key, {
       auth: {
         persistSession: true,
@@ -30,7 +34,7 @@ export async function googleLogin() {
     provider: "google",
     options: {
       redirectTo: window.location.origin + "/account/callback",
-      scopes: "email profile",
+      scopes: "openid email profile",
     },
   });
   if (error) throw error;
@@ -70,7 +74,7 @@ async function razorpay() {
   return checkoutScript;
 }
 export async function beginCheckout(onState) {
-  if (!platform)
+  if (!platform || !portalReady)
     throw new Error(
       "Payments are not active in this preview. No charge has been made.",
     );

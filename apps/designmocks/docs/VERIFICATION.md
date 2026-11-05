@@ -1,4 +1,21 @@
-# Verification — 4 November 2026
+# Verification
+
+## Current acceptance — 6 November 2026
+
+This section supersedes historical provider/status notes below. Source baseline: `48ff649a7240e8b769735132ddb3b4d09e5dbbee` plus the controlled-login feature diff. Newer main-branch portal features are preserved. Hosted Supabase still has migrations 001–004; local migrations 005–017 are not described as hosted/released.
+
+- Actual Google acceptance through the local app passes: business account selection, basic `openid email profile` consent, cancellation, Supabase callback and PKCE exchange, page reload, explicit SDK session refresh, local sign-out and returning login. Callback codes are removed by the SDK; no tokens are included in evidence. Hosted-domain callback acceptance remains pending.
+- Hosted SQL confirms one Google-linked owner account, zero orders and zero passes. The server policy is `testers` with exactly one approved address. The global signup switch is enabled solely so this restrictive hook can admit Google testers. Public registration is closed.
+- A real Auth email/password fixture request is rejected by the live hook with 403. Transactional decision/grant tests pass for closed, tester, unknown Google, anonymous, missing-email and non-Google cases. A real second Google account was not used; unknown-address evidence is transactional.
+- `DMOCKS_AUTH_STAGE=controlled npm run test:hosted-setup`: 10/10 read-only checks pass. This suite does not itself inspect the private allowlist or prove merchant acceptance.
+- 20 JavaScript unit tests and 4 Python readiness fixtures pass. Default-disabled production build passes; local preview/audit markers are absent. Production dependencies report zero audit vulnerabilities.
+- All 17 current migrations plus access/payment/scoring/media/signup invariants pass in an owned, network-isolated disposable PostgreSQL 17 container. This is database evidence, not a claim of actual OAuth/payment/Storage-provider simulation or complete coverage of every portal module.
+- Manual application-scoped axe checks on the signed-in account at 1728px in light and dark themes report zero WCAG A/AA violations, no incomplete checks and no overflow. Initial whole-document findings were two unrelated injected extension widgets; the development panel now explicitly scopes `#root`. Mobile and automated browser evidence are recorded separately when complete.
+- Parent-workspace screenshots: `output/visual-audit/dmocks-google-session-verified.png`. No real bank was imported or published by these login checks.
+
+Payments remain unconfigured and sales disabled. The owner deferred Razorpay on 6 November. The old exposed Test key pair must be replaced/deactivated before future use; no merchant secret was committed or installed. Final policy, hosted portal migration, private bank delivery, operating readiness and public-launch approval gates remain open.
+
+## Historical evidence — 4 November 2026
 
 This evidence applies to the independent DesignMocks preview. It is not inherited from the existing Dexam platform.
 

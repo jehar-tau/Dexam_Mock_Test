@@ -1,5 +1,12 @@
 import { test, expect } from "@playwright/test";
 
+test("cancelled Google callback explains the failure without reflecting provider details", async ({ page }) => {
+  await page.goto("/account/callback?error=access_denied&error_description=private-fixture");
+  await expect(page.getByRole("alert")).toContainText("Google sign-in was cancelled");
+  await expect(page.getByRole("alert")).not.toContainText("private-fixture");
+  await expect(page.getByRole("button", { name: "Continue with Google", exact: true })).toBeDisabled();
+});
+
 test("DMocks branding and support entry point render", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveTitle(/DMocks/);
