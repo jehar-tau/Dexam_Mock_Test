@@ -147,7 +147,8 @@ Exit: a free candidate can sign in, complete the non-phone profile, navigate, an
 ### Phase 2 — assessment core
 
 - Port immutable attempt snapshots, server deadlines, autosave revisions, scoring and results.
-- Ship exam-wise mocks and topic practice against reconciled ready content.
+- [x] Ship paid topic-practice generation for 10/20/30 questions and 15/30/45-minute server timers, gated by canonical import, deterministic runtime conversion, explicit content/rights approval and verified profiles.
+- [ ] Ship exam-wise mocks against reconciled ready content.
 - Add in-exam question reporting and its reviewer queue before broad bank release. General bug reporting and the admin reply workflow are complete.
 
 Exit: load, authorization, disconnect/reconnect, deadline and scoring tests pass with no key leakage.

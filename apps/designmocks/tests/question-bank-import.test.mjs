@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildManifest, objectiveReady } from "../scripts/question-bank-import.mjs";
+import { buildManifest, objectiveReady, runtimeQuestion } from "../scripts/question-bank-import.mjs";
 
 const question = (changes = {}) => ({ externalKey: "fixture-q1", type: "MCQ", prompt: "Which fixture is valid?", options: [{ key: "A", text: "One" }, { key: "B", text: "Two" }], answer: { raw: "A", status: "official-key" }, topic: "observation", licence: "owner-authorized", holds: [], provenance: { exam: "uceed" }, ...changes });
 const bank = (questions) => ({ schemaVersion: 1, exportedAt: "2026-11-05T00:00:00Z", questions });
@@ -31,4 +31,10 @@ test("empty holds never bypass objective scoring requirements", () => {
   assert.equal(objectiveReady(question({ answer: { raw: null, status: "pending" } })), false);
   assert.equal(objectiveReady(question({ options: [] })), false);
   assert.equal(objectiveReady(question({ type: "DESCRIPTIVE", options: [], answer: null })), false);
+});
+
+test("runtime conversion is deterministic and excludes unresolved media", () => {
+  assert.deepEqual(runtimeQuestion(question()).key, { kind: "mcq", correct: ["A"] });
+  assert.equal(runtimeQuestion(question({ visualDependency: true, assets: [{ path: "missing.png" }] })), null);
+  assert.equal(runtimeQuestion(question({ answer: { raw: "Z", status: "official-key" } })), null);
 });
