@@ -244,5 +244,12 @@ select pg_temp.assert_true(jsonb_typeof(public.my_overview_analytics()->'topics'
 select set_config('test.revision_attempt',public.start_attempt('10000000-0000-4000-8000-000000000001')::text,true);
 select pg_temp.assert_true((public.save_answer_revision(current_setting('test.revision_attempt')::uuid,'20000000-0000-4000-8000-000000000001','"A"',2)->>'accepted')::boolean,'newer answer revision accepted');
 select pg_temp.assert_true(not(public.save_answer_revision(current_setting('test.revision_attempt')::uuid,'20000000-0000-4000-8000-000000000001','"B"',1)->>'accepted')::boolean,'stale answer revision rejected');
+reset role;set local role service_role;select set_config('request.jwt.claim.role','service_role',true);
+select set_config('test.intake_asset',public.register_question_intake_asset('intake/fixture.pdf','fixture.pdf','application/pdf',2048,'00000000-0000-4000-8000-000000000002')::text,true);
+reset role;set local role authenticated;select set_config('request.jwt.claim.role','authenticated',true);select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
+select pg_temp.reject('select public.admin_question_intake_assets()','student cannot inspect private question intake');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+select pg_temp.assert_true(jsonb_array_length(public.admin_question_intake_assets())=1,'admin sees private intake metadata');
+select public.admin_promote_intake_asset(current_setting('test.intake_asset')::uuid,'{"prompt":"Extracted fictional question","holds":[]}'::jsonb);
 rollback;
 \echo 'PASS: commerce, RLS, ownership, deadlines, grading, reports and retry invariants'
