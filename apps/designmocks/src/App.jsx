@@ -20,6 +20,7 @@ import { Admin, BugReport } from "./Admin.jsx";
 import { PortalModule } from "./PortalShell.jsx";
 import { CandidateProfile, CandidateProfilePreview } from "./CandidateProfile.jsx";
 import { TopicPractice, TopicPracticePreview } from "./TopicPractice.jsx";
+import { ExamMocks, ExamMocksPreview } from "./ExamMocks.jsx";
 import { useAuthState } from "./useAuth.js";
 import {
   platform,
@@ -1582,7 +1583,7 @@ export default function App() {
         <Route path="/account/callback" element={<Account />} />
         <Route path="/dashboard" element={<Workspace />} />
         <Route path="/onboarding" element={<CandidateProfile />} />
-        <Route path="/dashboard/mocks" element={<PortalModule module="mocks" />} />
+        <Route path="/dashboard/mocks" element={<ExamMocks />} />
         <Route path="/dashboard/all-india" element={<PortalModule module="all-india" />} />
         <Route path="/dashboard/practice" element={<TopicPractice />} />
         <Route path="/dashboard/learn" element={<PortalModule module="learn" />} />
@@ -1592,6 +1593,7 @@ export default function App() {
         {import.meta.env.DEV && <Route path="/portal-preview/*" element={<React.Suspense fallback={<p className="wrap" role="status">Opening the portal preview…</p>}><PortalPreview /></React.Suspense>} />}
         {import.meta.env.DEV && <Route path="/profile-preview" element={<CandidateProfilePreview />} />}
         {import.meta.env.DEV && <Route path="/topic-practice-preview" element={<TopicPracticePreview />} />}
+        {import.meta.env.DEV && <Route path="/exam-mocks-preview" element={<ExamMocksPreview />} />}
 
         <Route
           path="/attempt/:id"

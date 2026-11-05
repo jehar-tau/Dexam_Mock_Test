@@ -22,8 +22,7 @@ test("student modules require authentication", async ({ page }) => {
 
 test("fictional portal preview exposes every requested navigation area", async ({ page }) => {
   await page.goto("/portal-preview");
-  const mobileMenu = page.getByRole("button", { name: "Student menu" });
-  if (await mobileMenu.isVisible()) await mobileMenu.click();
+  if ((page.viewportSize()?.width ?? 1000) < 900) await page.getByRole("button", { name: "Student menu" }).click();
   const navigation = page.getByRole("navigation", { name: "Student workspace" });
   for (const name of ["Overview", "Exam-wise mocks", "All India mocks", "Topic practice", "Learn", "Community"]) {
     await expect(navigation.getByRole("link", { name })).toBeVisible();
@@ -51,4 +50,12 @@ test("topic practice creates a constrained timed-session preview", async ({ page
   await expect(page.getByLabel("Topic")).toHaveValue("general-aptitude");
   await page.getByRole("button", { name: "Start practice" }).click();
   await expect(page.getByText("Preview created: 20 general-aptitude questions · 30 minutes")).toBeVisible();
+});
+
+test("exam-wise mocks show release and free-attempt states", async ({ page }) => {
+  await page.goto("/exam-mocks-preview");
+  await expect(page.getByText("1 free attempt left")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Not released" })).toHaveCount(2);
+  await page.locator("article").filter({ hasText: "UCEED" }).getByRole("button", { name: "Start mock" }).click();
+  await expect(page.getByText("Preview: UCEED mock created")).toBeVisible();
 });

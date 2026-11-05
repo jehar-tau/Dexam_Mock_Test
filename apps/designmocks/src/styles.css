@@ -2427,6 +2427,10 @@ svg {
 .practice-builder .button { grid-column: 1/-1; justify-self: start; }
 .admin-list .profile-check { display: flex; gap: .65rem; align-items: flex-start; margin: 1rem 0; }
 @media(max-width:700px){.practice-builder{grid-template-columns:1fr}}
+.exam-mock-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin-top: 2rem; }
+.exam-mock-grid article { padding: 1.5rem; border: 1px solid var(--line); background: var(--paper); }
+.exam-mock-grid h2 { margin-block: .5rem; }
+@media(max-width:700px){.exam-mock-grid{grid-template-columns:1fr}}
 @media (max-width: 700px) {
   html {
     scroll-padding-top: 100px;
