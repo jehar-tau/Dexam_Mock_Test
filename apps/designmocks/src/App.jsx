@@ -21,6 +21,7 @@ import { PortalModule } from "./PortalShell.jsx";
 import { CandidateProfile, CandidateProfilePreview } from "./CandidateProfile.jsx";
 import { TopicPractice, TopicPracticePreview } from "./TopicPractice.jsx";
 import { ExamMocks, ExamMocksPreview } from "./ExamMocks.jsx";
+import { AllIndia, AllIndiaHighlights, AllIndiaPreview } from "./AllIndia.jsx";
 import { useAuthState } from "./useAuth.js";
 import {
   platform,
@@ -634,6 +635,7 @@ function Home() {
         ))}
       </div>
       <Catalogue />
+      <AllIndiaHighlights />
       <section className="wrap section" id="how">
         <div className="section-heading">
           <div>
@@ -1584,7 +1586,7 @@ export default function App() {
         <Route path="/dashboard" element={<Workspace />} />
         <Route path="/onboarding" element={<CandidateProfile />} />
         <Route path="/dashboard/mocks" element={<ExamMocks />} />
-        <Route path="/dashboard/all-india" element={<PortalModule module="all-india" />} />
+        <Route path="/dashboard/all-india" element={<AllIndia />} />
         <Route path="/dashboard/practice" element={<TopicPractice />} />
         <Route path="/dashboard/learn" element={<PortalModule module="learn" />} />
         <Route path="/dashboard/community" element={<PortalModule module="community" />} />
@@ -1594,6 +1596,7 @@ export default function App() {
         {import.meta.env.DEV && <Route path="/profile-preview" element={<CandidateProfilePreview />} />}
         {import.meta.env.DEV && <Route path="/topic-practice-preview" element={<TopicPracticePreview />} />}
         {import.meta.env.DEV && <Route path="/exam-mocks-preview" element={<ExamMocksPreview />} />}
+        {import.meta.env.DEV && <Route path="/all-india-preview" element={<AllIndiaPreview />} />}
 
         <Route
           path="/attempt/:id"
