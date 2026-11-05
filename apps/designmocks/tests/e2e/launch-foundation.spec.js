@@ -68,3 +68,12 @@ test("All India mocks expose one open attempt and privacy-safe released ranks", 
   await expect(page.getByText("Candidate-A1B2C3")).toBeVisible();
   await expect(page.getByText("#1")).toBeVisible();
 });
+
+test("students can submit a structured question report", async ({ page }) => {
+  await page.goto("/question-report-preview");
+  await page.getByRole("button", { name: "Report question" }).click();
+  await page.getByLabel("What is wrong?").selectOption("incomplete");
+  await page.getByLabel("Details (optional)").fill("The final sentence is missing.");
+  await page.getByRole("button", { name: "Send report" }).click();
+  await expect(page.getByText("Report received. 2 of 5 reports recorded.")).toBeVisible();
+});

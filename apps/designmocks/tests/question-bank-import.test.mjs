@@ -34,7 +34,7 @@ test("empty holds never bypass objective scoring requirements", () => {
 });
 
 test("runtime conversion is deterministic and excludes unresolved media", () => {
-  assert.deepEqual(runtimeQuestion(question()).key, { kind: "mcq", correct: ["A"] });
+  assert.deepEqual(runtimeQuestion(question()).key, { kind: "mcq", correct: ["A"], sourceExternalKey: "fixture-q1" });
   assert.equal(runtimeQuestion(question({ visualDependency: true, assets: [{ path: "missing.png" }] })), null);
   assert.equal(runtimeQuestion(question({ answer: { raw: "Z", status: "official-key" } })), null);
 });

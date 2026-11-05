@@ -8,7 +8,7 @@ begin
   begin execute statement; exception when others then return; end;
   raise exception 'FAIL, unexpectedly allowed: %',label;
 end $$;
-insert into auth.users(id) values('00000000-0000-4000-8000-000000000001'),('00000000-0000-4000-8000-000000000002');
+insert into auth.users(id) values('00000000-0000-4000-8000-000000000001'),('00000000-0000-4000-8000-000000000002'),('00000000-0000-4000-8000-000000000003');
 insert into dm_private.admins(user_id) values('00000000-0000-4000-8000-000000000002');
 set local role anon;
 select pg_temp.assert_true((select amount from public.plans)=119300,'public server price');
@@ -178,5 +178,32 @@ select pg_temp.assert_true((select marks=4 and outcome='correct' from dm_private
 select pg_temp.assert_true((select marks=-1 from dm_private.score_response('msq','{"kind":"msq","correct":["A","B"]}','["A","C"]','{"correct":4,"wrong":-1,"partial":true}')),'MSQ wrong selection penalty');
 select pg_temp.assert_true((select marks=4 from dm_private.score_response('mcq','{"kind":"full_marks"}',null,'{"correct":4,"wrong":-1}')),'full marks key');
 select pg_temp.assert_true((select marks=0 and outcome='unanswered' from dm_private.score_response('nat','{"kind":"nat","accepted":[{"exact":3}]}','null','{"correct":4,"wrong":0}')),'unanswered NAT');
+reset role;
+update public.launch_settings set question_report_threshold=3;
+update dm_private.attempt_items set key=key||'{"sourceExternalKey":"fixture-bank-q1"}'::jsonb where attempt_id=current_setting('test.attempt_id')::uuid and question_id='20000000-0000-4000-8000-000000000001';
+insert into dm_private.attempts(id,user_id,paper_id,deadline) values
+('30000000-0000-4000-8000-000000000002','00000000-0000-4000-8000-000000000002','10000000-0000-4000-8000-000000000001',now()+interval '1 hour'),
+('30000000-0000-4000-8000-000000000003','00000000-0000-4000-8000-000000000003','10000000-0000-4000-8000-000000000001',now()+interval '1 hour');
+insert into dm_private.attempt_items(attempt_id,question_id,ordinal,prompt,options,points,negative_points,topic,kind,marking,media,key,explanation)
+select a.id,i.question_id,i.ordinal,i.prompt,i.options,i.points,i.negative_points,i.topic,i.kind,i.marking,i.media,i.key,i.explanation
+from dm_private.attempt_items i cross join (values
+('30000000-0000-4000-8000-000000000002'::uuid),('30000000-0000-4000-8000-000000000003'::uuid)) a(id)
+where i.attempt_id=current_setting('test.attempt_id')::uuid and i.question_id='20000000-0000-4000-8000-000000000001';
+set local role authenticated;
+select set_config('request.jwt.claim.role','authenticated',true);
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
+select pg_temp.assert_true((public.report_attempt_question(current_setting('test.attempt_id')::uuid,'20000000-0000-4000-8000-000000000001','incorrect','Fictional report')->>'queued')::boolean=false,'first report remains below threshold');
+select pg_temp.reject('select public.report_attempt_question(current_setting(''test.attempt_id'')::uuid,''20000000-0000-4000-8000-000000000001'',''incorrect'',null)','one report per student and source question');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000003',true);
+select public.report_attempt_question('30000000-0000-4000-8000-000000000003','20000000-0000-4000-8000-000000000001','incomplete',null);
+select pg_temp.reject('select public.admin_reported_questions()','non-admin cannot see reported-question queue');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+select pg_temp.assert_true((public.report_attempt_question('30000000-0000-4000-8000-000000000002','20000000-0000-4000-8000-000000000001','media',null)->>'queued')::boolean,'threshold creates review queue');
+select pg_temp.assert_true((public.admin_reported_questions()->0->>'reportCount')::integer=3,'admin sees aggregated report count');
+select public.admin_resolve_reported_question('fixture-bank-q1','retire','Confirmed by human reviewer');
+reset role;
+select pg_temp.assert_true((select not active and not owner_approved from dm_private.bank_questions where external_key='fixture-bank-q1'),'retirement disables canonical question');
+update dm_private.bank_questions set active=true,owner_approved=true where external_key='fixture-bank-q1';
+select pg_temp.assert_true((select not active and not owner_approved from dm_private.bank_questions where external_key='fixture-bank-q1'),'local hold survives future import-style updates');
 rollback;
-\echo 'PASS: commerce, RLS, ownership, deadlines, grading and retry invariants'
+\echo 'PASS: commerce, RLS, ownership, deadlines, grading, reports and retry invariants'

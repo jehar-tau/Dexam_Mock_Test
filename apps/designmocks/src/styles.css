@@ -3837,6 +3837,10 @@ svg {
 .admin-actions { display: flex; gap: .75rem; }
 .admin-reply { grid-template-columns: minmax(120px,.5fr) 2fr auto; margin: 1rem 0 0; }
 @media (max-width: 700px) { .admin-reply { grid-template-columns: 1fr; } }
+.question-report { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.question-report-form { display: grid; gap: 1rem; max-width: 560px; margin-top: 1rem; padding: 1rem; background: var(--warm); }
+.question-report-form label { display: grid; gap: .4rem; font-weight: 700; }
+.question-report-form select, .question-report-form textarea { width: 100%; padding: .75rem; color: inherit; background: var(--paper); border: 1px solid var(--line); font: inherit; }
 .portal-shell { display: grid; grid-template-columns: 260px minmax(0,1fr); min-height: 70vh; border-top: 1px solid var(--line); }
 .portal-sidebar { position: sticky; top: 0; align-self: start; min-height: 70vh; padding: 2rem 1.25rem; border-right: 1px solid var(--line); background: var(--paper); }
 .portal-sidebar > .eyebrow { display: block; padding: 0 .75rem 1.25rem; }
