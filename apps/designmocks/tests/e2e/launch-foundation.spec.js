@@ -135,3 +135,18 @@ test("learning path opens a theory lesson", async ({ page }) => {
     page.getByText("Preview lesson opened: Notice before you decide"),
   ).toBeVisible();
 });
+
+test("community accepts a structured discussion post", async ({ page }) => {
+  await page.goto("/community-preview");
+  await page.getByLabel("Topic").fill("perspective");
+  await page
+    .getByLabel("Question title")
+    .fill("How should I check perspective?");
+  await page
+    .getByLabel("Your approach or question")
+    .fill("I use horizon lines first, but I want a reliable checking method.");
+  await page.getByRole("button", { name: "Post to community" }).click();
+  await expect(
+    page.getByText("Preview post created: How should I check perspective?"),
+  ).toBeVisible();
+});

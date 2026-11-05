@@ -27,6 +27,7 @@ import { ExamMocks, ExamMocksPreview } from "./ExamMocks.jsx";
 import { AllIndia, AllIndiaHighlights, AllIndiaPreview } from "./AllIndia.jsx";
 import { QuestionReportPreview } from "./QuestionReport.jsx";
 import { Learn, LearnPreview } from "./Learn.jsx";
+import { Community, CommunityPreview } from "./Community.jsx";
 import { useAuthState } from "./useAuth.js";
 import {
   platform,
@@ -1594,10 +1595,7 @@ export default function App() {
         <Route path="/dashboard/all-india" element={<AllIndia />} />
         <Route path="/dashboard/practice" element={<TopicPractice />} />
         <Route path="/dashboard/learn" element={<Learn />} />
-        <Route
-          path="/dashboard/community"
-          element={<PortalModule module="community" />}
-        />
+        <Route path="/dashboard/community" element={<Community />} />
         <Route path="/report" element={<BugReport />} />
         <Route path="/admin" element={<Admin />} />
         {import.meta.env.DEV && (
@@ -1642,6 +1640,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/learn-preview" element={<LearnPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/community-preview" element={<CommunityPreview />} />
         )}
 
         <Route
