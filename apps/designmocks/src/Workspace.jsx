@@ -245,6 +245,7 @@ export function Attempt() {
     offset = useRef(0),
     autoSubmitted = useRef(false),
     pending = useRef(Promise.resolve());
+  const revisions = useRef({});
   const q = attempt?.questions[index];
   useEffect(() => {
     let alive = true;
@@ -321,10 +322,12 @@ export function Attempt() {
     const work = pending.current
       .catch(() => {})
       .then(() =>
-        rpc("save_answer", {
+        rpc("save_answer_revision", {
           p_attempt_id: id,
           p_question_id: q.id,
           p_answer: value,
+          p_revision: (revisions.current[q.id] =
+            (revisions.current[q.id] || Date.now()) + 1),
         }),
       );
     pending.current = work;
