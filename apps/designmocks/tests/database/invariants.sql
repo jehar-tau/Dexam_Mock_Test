@@ -205,5 +205,13 @@ reset role;
 select pg_temp.assert_true((select not active and not owner_approved from dm_private.bank_questions where external_key='fixture-bank-q1'),'retirement disables canonical question');
 update dm_private.bank_questions set active=true,owner_approved=true where external_key='fixture-bank-q1';
 select pg_temp.assert_true((select not active and not owner_approved from dm_private.bank_questions where external_key='fixture-bank-q1'),'local hold survives future import-style updates');
+set local role authenticated;
+select set_config('request.jwt.claim.role','authenticated',true);
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+select set_config('test.lesson_id',public.admin_upsert_learning_lesson(null,'notice-first','uceed','observation','Notice before deciding','Separate observation from assumption.','A fictional rights-cleared lesson body for database verification.',1,true,true)::text,true);
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
+select pg_temp.assert_true(jsonb_array_length(public.learning_catalog())=1,'student sees published rights-cleared lesson');
+select public.complete_learning_lesson(current_setting('test.lesson_id')::uuid);
+select pg_temp.assert_true((public.learning_catalog()->0->>'completed')::boolean,'lesson completion is recorded');
 rollback;
 \echo 'PASS: commerce, RLS, ownership, deadlines, grading, reports and retry invariants'

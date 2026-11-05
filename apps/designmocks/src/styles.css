@@ -3841,6 +3841,7 @@ svg {
 .question-report-form { display: grid; gap: 1rem; max-width: 560px; margin-top: 1rem; padding: 1rem; background: var(--warm); }
 .question-report-form label { display: grid; gap: .4rem; font-weight: 700; }
 .question-report-form select, .question-report-form textarea { width: 100%; padding: .75rem; color: inherit; background: var(--paper); border: 1px solid var(--line); font: inherit; }
+.learn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:2rem 0}.learn-grid article{padding:1.5rem;border:1px solid var(--line);background:var(--paper)}.learn-grid .status-pill{margin-left:0}.lesson-body{max-width:70ch;white-space:pre-wrap;line-height:1.8}
 .portal-shell { display: grid; grid-template-columns: 260px minmax(0,1fr); min-height: 70vh; border-top: 1px solid var(--line); }
 .portal-sidebar { position: sticky; top: 0; align-self: start; min-height: 70vh; padding: 2rem 1.25rem; border-right: 1px solid var(--line); background: var(--paper); }
 .portal-sidebar > .eyebrow { display: block; padding: 0 .75rem 1.25rem; }
