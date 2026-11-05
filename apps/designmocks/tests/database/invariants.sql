@@ -219,5 +219,22 @@ select pg_temp.reject('select public.admin_moderate_community(''post'',current_s
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select public.admin_moderate_community('post',current_setting('test.community_post')::uuid,'lock','Fictional moderation check');
 select pg_temp.assert_true((public.community_feed(null,null)->0->>'status')='locked','moderator can lock with audit trail');
+reset role;
+update dm_private.attempts set upload_deadline=now()+interval '15 minutes' where id=current_setting('test.attempt_id')::uuid;
+set local role service_role;
+select set_config('request.jwt.claim.role','service_role',true);
+select set_config('test.drawing_upload',public.register_drawing_upload(current_setting('test.attempt_id')::uuid,'20000000-0000-4000-8000-000000000004','drawings/fixture/page-one.png',1,'image/png',1024)::text,true);
+reset role;
+insert into dm_private.drawing_reviews(attempt_id,question_id) values(current_setting('test.attempt_id')::uuid,'20000000-0000-4000-8000-000000000004');
+set local role authenticated;
+select set_config('request.jwt.claim.role','authenticated',true);
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
+select pg_temp.assert_true(jsonb_array_length(public.my_drawing_uploads(current_setting('test.attempt_id')::uuid,'20000000-0000-4000-8000-000000000004'))=1,'student sees own private drawing upload metadata');
+select pg_temp.reject('select public.admin_drawing_queue()','student cannot see anonymous drawing review queue');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+select pg_temp.assert_true((public.admin_drawing_queue()->0->>'uploadCount')::integer=1,'admin sees anonymous drawing review queue');
+select public.admin_review_drawing((public.admin_drawing_queue()->0->>'reviewId')::uuid,'{"composition":8,"clarity":7}'::jsonb,'Fictional reviewed feedback',15,null);
+reset role;
+select pg_temp.assert_true((select count(*)=1 from dm_private.drawing_review_audit where action='review'),'drawing review writes immutable audit event');
 rollback;
 \echo 'PASS: commerce, RLS, ownership, deadlines, grading, reports and retry invariants'

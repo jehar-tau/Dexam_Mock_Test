@@ -150,3 +150,18 @@ test("community accepts a structured discussion post", async ({ page }) => {
     page.getByText("Preview post created: How should I check perspective?"),
   ).toBeVisible();
 });
+
+test("drawing submission accepts ordered raster pages", async ({ page }) => {
+  await page.goto("/drawing-uploads-preview");
+  await page.locator('input[type="file"]').setInputFiles([
+    { name: "page-one.png", mimeType: "image/png", buffer: Buffer.from("one") },
+    {
+      name: "page-two.jpg",
+      mimeType: "image/jpeg",
+      buffer: Buffer.from("two"),
+    },
+  ]);
+  await expect(page.getByText("page-one.png")).toBeVisible();
+  await expect(page.getByText("page-two.jpg")).toBeVisible();
+  await expect(page.getByText("Drawing images saved privately.")).toBeVisible();
+});

@@ -28,6 +28,7 @@ import { AllIndia, AllIndiaHighlights, AllIndiaPreview } from "./AllIndia.jsx";
 import { QuestionReportPreview } from "./QuestionReport.jsx";
 import { Learn, LearnPreview } from "./Learn.jsx";
 import { Community, CommunityPreview } from "./Community.jsx";
+import { DrawingUploadsPreview } from "./DrawingUploads.jsx";
 import { useAuthState } from "./useAuth.js";
 import {
   platform,
@@ -1643,6 +1644,12 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/community-preview" element={<CommunityPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route
+            path="/drawing-uploads-preview"
+            element={<DrawingUploadsPreview />}
+          />
         )}
 
         <Route
