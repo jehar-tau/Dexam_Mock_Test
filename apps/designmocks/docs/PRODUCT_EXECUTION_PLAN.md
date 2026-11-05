@@ -133,7 +133,8 @@ Exit: zero unexplained bank differences and an approved migration/convergence de
 
 ### Phase 1 — portal shell and identity
 
-- Build Overview and the seven-item navigation with responsive/accessible states.
+- [x] Build the server-backed Overview shell and responsive student navigation for exam mocks, All India mocks, topic practice, Learn and Community.
+- [ ] Replace the locked module states as each server capability passes its release gate.
 - Enable Google sign-in and profile onboarding; keep phone verification behind provider setup.
 - Implement free/paid route capabilities and exact empty/loading/error/locked states.
 

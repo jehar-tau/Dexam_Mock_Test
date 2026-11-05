@@ -3810,3 +3810,22 @@ svg {
 .admin-actions { display: flex; gap: .75rem; }
 .admin-reply { grid-template-columns: minmax(120px,.5fr) 2fr auto; margin: 1rem 0 0; }
 @media (max-width: 700px) { .admin-reply { grid-template-columns: 1fr; } }
+.portal-shell { display: grid; grid-template-columns: 260px minmax(0,1fr); min-height: 70vh; border-top: 1px solid var(--line); }
+.portal-sidebar { position: sticky; top: 0; align-self: start; min-height: 70vh; padding: 2rem 1.25rem; border-right: 1px solid var(--line); background: var(--paper); }
+.portal-sidebar > .eyebrow { display: block; padding: 0 .75rem 1.25rem; }
+.portal-sidebar nav { display: grid; gap: .25rem; }
+.portal-sidebar nav a { display: flex; align-items: center; gap: .75rem; min-height: 48px; padding: .6rem .75rem; border-radius: 6px; color: var(--muted); }
+.portal-sidebar nav a i { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 50%; font-style: normal; font-size: .75rem; }
+.portal-sidebar nav a.active { color: var(--ink); background: var(--warm); font-weight: 700; }
+.portal-account-link { display: inline-block; margin: 2rem .75rem 0; font-size: .9rem; text-decoration: underline; text-underline-offset: 3px; }
+.portal-content { min-width: 0; }
+.portal-content .workspace { padding-inline: clamp(1.5rem,5vw,5rem); }
+.portal-module { width: min(760px,calc(100% - 3rem)); margin-inline: auto; }
+.portal-module > p { max-width: 62ch; font-size: 1.1rem; }
+.portal-menu-button { display: none; }
+@media (max-width: 900px) {
+  .portal-shell { display: block; }
+  .portal-menu-button { display: block; margin: 1rem 1.5rem 0; padding: .65rem .9rem; color: inherit; background: var(--paper); border: 1px solid var(--line); }
+  .portal-sidebar { display: none; position: static; min-height: 0; border: 0; border-bottom: 1px solid var(--line); }
+  .portal-sidebar.is-open { display: block; }
+}

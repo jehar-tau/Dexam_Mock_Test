@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Art, Arrow } from "./Art.jsx";
 import { platform, loadDashboard } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
+import { PortalShell } from "./PortalShell.jsx";
 
 const rpc = async (name, args) => {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -66,7 +67,7 @@ export function Workspace() {
     }
   };
   if (!session && !loading) return <SignInGate />;
-  return <WorkspaceView data={data} papers={papers} error={error} busy={busy} loading={loading} onStart={start} />;
+  return <PortalShell><WorkspaceView data={data} papers={papers} error={error} busy={busy} loading={loading} onStart={start} /></PortalShell>;
 }
 
 // Shared presentation only. Live identity checks and RPCs stay in Workspace.
