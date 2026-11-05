@@ -8,7 +8,7 @@ The owner-connected custom domain **https://dmocks.com** has active DNS/provider
 
 Supabase is on the existing Free organisation. No paid plan was enabled here. Production availability, backups, load limits and any paid upgrade still require a reviewed launch decision. Do not create another login/project just to get past a setup problem.
 
-The hosted database currently has migrations 001–004, three Edge Functions and the private paper-media bucket. Later portal migrations on GitHub have not yet been applied to this hosted project. Local/CI implementation evidence does not establish hosted release readiness.
+The hosted database now has all 19 current source migrations: the original four, the merged portal modules, the All India result-release fix and the portal RPC grant hardening. Three foundation Edge Functions and private paper/drawing buckets are present. Installation is not end-to-end module acceptance: no real bank, released event, paid pass, theory material or evaluated drawing has been installed. Public registration remains restricted to the one owner tester and sales remain disabled.
 
 ## Controlled Google acceptance
 
@@ -30,7 +30,7 @@ Frontend switches are separate:
 - `VITE_PORTAL_ENABLED=true` is reserved for a released portal with its published `VITE_TERMS_VERSION`. It cannot be combined with controlled login mode.
 - Both default false. Browser configuration accepts public publishable/anon keys only. Service and merchant secrets remain server-only. A production release rejects controlled login; an explicitly staged build is required for the private hosted acceptance screen.
 
-Use `DMOCKS_AUTH_STAGE=controlled npm run test:hosted-setup` to check the current setup stage. This read-only HTTP suite checks the switches/gates, not the private allowlist by itself. The allowlist and live hook are verified separately.
+Use `DMOCKS_AUTH_STAGE=controlled DMOCKS_BACKEND_STAGE=portal npm run test:hosted-setup` to check the current setup stage (27 read-only checks). The default foundation backend stage retains the original 10 checks. This read-only HTTP suite checks the switches/gates, not the private allowlist by itself. The allowlist and live hook are verified separately.
 
 Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
 
@@ -50,6 +50,6 @@ References: https://razorpay.com/docs/payments/dashboard/account-settings/api-ke
 
 ## Remaining release gates
 
-Serve only the canonical main-branch empty-holds bank through the reviewed private import path. Reconcile runtime/media/key readiness and exact exam blueprints; do not equate import eligibility with paper publication. Apply and verify the merged portal backend before opening its modules. Phone verification, drawing review, moderation, theory material, operational limits and policy decisions remain tracked in PRODUCT_EXECUTION_PLAN.md.
+Serve only the canonical main-branch empty-holds bank through the reviewed private import path. Reconcile runtime/media/key readiness and exact exam blueprints; do not equate import eligibility with paper publication. Complete provider/browser acceptance of the installed portal backend before opening its modules. Phone verification, drawing review, moderation, theory material, operational limits and policy decisions remain tracked in PRODUCT_EXECUTION_PLAN.md.
 
 Final operator/contact, younger-student, privacy, purchase/refund, tax/invoice, retention/deletion, backup and monitoring decisions are still needed. The owner must approve public registration and live payments after concrete acceptance evidence. Neither the private Site nor the owner Google login test is a public paid launch.

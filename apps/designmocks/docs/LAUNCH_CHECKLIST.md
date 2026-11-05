@@ -32,7 +32,8 @@ Owner instruction: keep working until the independent mock-test service is compl
 ## Paper delivery and assessment
 
 - [x] Located and audited the owner-selected canonical `origin/main:server/data/exports/dexam-bank-export.json`; the newer PRODUCT_EXECUTION_PLAN and QUESTION_BANK_AUDIT supersede the old workstation scan for source eligibility.
-- [ ] Build a controlled private import/dry-run pipeline; keep real question content and keys out of Git and the public browser bundle.
+- [x] Implement the canonical-source importer and verify dry-run/eligibility/runtime fixtures; no real question content is in the app source or browser bundle.
+- [ ] Accept the actual private hosted import and exact paper/media manifests before publication.
 - [ ] Implement and verify paper-specific sections, timing, marking and locking against the reviewed blueprints; do not present the flat prototype as a complete official exam simulation.
 - [ ] Verify image delivery, saved/resumed attempts, deadline enforcement and immutable submitted answers with representative reviewed papers.
 - [ ] Finish useful section/topic reporting, explanations and practice recommendations. Drawing remains clearly separate from objective scores; do not promise human evaluation until that service is implemented and approved.
@@ -92,3 +93,9 @@ Razorpay integration was explicitly deferred by the owner on 6 November. A Test 
 The controlled-login frontend was published owner-private through the existing Site identity (source `82719b545456c564d9190e957c0027606f3c893a`). Actual `dmocks.com` OAuth/PKCE, reload, refresh and sign-out pass. Hosted SQL still confirms one Google-linked owner account, zero orders/passes, tester policy and sales disabled. Google branding settings now use DMocks and the owned domain; the consent chooser may continue displaying the Supabase callback host, and final public-policy/verification work remains.
 
 A source review found submitted All India attempts exposing keys and derived correctness before explicit result release. A new migration masks attempt/history/analytics responses until release, and the UI shows a pending state. Focused database regression checks fail against the old reader and pass with the fix, including ordinary-practice feedback and fair deadline-capped ranking. This migration is not yet applied to the hosted backend; assessment modules remain unreleased.
+
+### 6 November: portal database installation and API grants
+
+All 19 source migrations are now applied/tracked in the standalone project. The merged 14-migration portal batch was applied atomically from `6be3ac9833518343aae24b7bd27a90c93e7071bb`, guarded by the exact four-migration baseline, closed test-mode sales, one tester and empty assessment/commerce tables. A subsequent narrow hardening migration removes inherited PUBLIC execute from eight portal/admin RPCs while retaining authenticated grants and their internal owner/admin checks.
+
+The new catalogue test detects the original inherited grant and passes after hardening. All existing database suites, the All India embargo suite and grant checks pass in disposable PostgreSQL 17. The grant catalogue checks also pass on hosted Supabase. The expanded read-only portal HTTP smoke suite passes 27/27, including anonymous denials for the new read RPCs and the intentionally public alias-only ranking route. One owner Auth account remains; no orders, passes, attempts, bank questions or public access were created. This supersedes the earlier four-migration status, without claiming paper/provider acceptance or a public launch.

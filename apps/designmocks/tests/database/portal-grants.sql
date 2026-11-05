@@ -1,0 +1,33 @@
+-- Read-only catalogue assertions: anonymous role includes inherited PUBLIC grants.
+\set ON_ERROR_STOP on
+do $$
+declare signature text;
+begin
+ foreach signature in array array[
+  'public.is_dmocks_admin()',
+  'public.submit_bug_report(text,text,text)',
+  'public.my_bug_reports()',
+  'public.admin_bug_reports()',
+  'public.admin_reply_bug_report(uuid,text,text)',
+  'public.admin_create_question_draft(text,text,jsonb)',
+  'public.admin_question_drafts()',
+  'public.admin_review_question_draft(uuid,text,text)',
+  'public.admin_bank_questions(integer,integer)',
+  'public.my_candidate_profile()',
+  'public.topic_catalog()',
+  'public.exam_mock_catalog()',
+  'public.admin_exam_mock_blueprints()',
+  'public.admin_all_india_events()',
+  'public.all_india_event_catalog()',
+  'public.learning_catalog()',
+  'public.admin_learning_lessons()',
+  'public.community_feed(text,text)',
+  'public.admin_drawing_queue()',
+  'public.my_overview_analytics()'
+ ] loop
+  if has_function_privilege('anon',signature,'EXECUTE') then raise exception 'Anonymous execute unexpectedly granted: %',signature; end if;
+  if not has_function_privilege('authenticated',signature,'EXECUTE') then raise exception 'Authenticated route grant missing: %',signature; end if;
+ end loop;
+ if not has_function_privilege('anon','public.public_all_india_top_ten()','EXECUTE') then raise exception 'Intentionally public alias-only ranking endpoint lost its grant'; end if;
+end $$;
+\echo 'PASS: portal RPC anonymous/authenticated execution boundaries.'

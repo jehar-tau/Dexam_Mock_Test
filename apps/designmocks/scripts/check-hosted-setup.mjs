@@ -23,6 +23,8 @@ if (key.split(".").length === 3) {
 const results = [];
 const authStage = process.env.DMOCKS_AUTH_STAGE || "closed";
 assert.ok(["closed", "controlled"].includes(authStage), "Explicit closed or controlled Auth test stage required");
+const backendStage = process.env.DMOCKS_BACKEND_STAGE || "foundation";
+assert.ok(["foundation", "portal"].includes(backendStage), "Explicit foundation or portal backend stage required");
 async function request(path, method = "GET", body, headers = {}) {
   const response = await fetch(base + path, {
     method,
@@ -46,6 +48,13 @@ for (const name of [
   "my_pass",
   "available_papers",
   "my_attempt_history",
+  ...(backendStage === "portal" ? [
+    "is_dmocks_admin", "my_bug_reports", "admin_bug_reports", "admin_question_drafts",
+    "admin_bank_questions", "my_candidate_profile", "topic_catalog", "exam_mock_catalog",
+    "admin_exam_mock_blueprints", "admin_all_india_events", "all_india_event_catalog",
+    "learning_catalog", "admin_learning_lessons", "community_feed", "admin_drawing_queue",
+    "my_overview_analytics",
+  ] : []),
 ]) {
   response = await request("/rest/v1/rpc/" + name, "POST", {});
   assert.ok(
@@ -58,6 +67,12 @@ for (const name of [
     status: response.status,
     passed: true,
   });
+}
+if (backendStage === "portal") {
+  response = await request("/rest/v1/rpc/public_all_india_top_ten", "POST", {});
+  assert.equal(response.status, 200, "Alias-only public ranking remains available");
+  assert.ok(Array.isArray(response.data));
+  results.push({ check: "public ranking route available", status: 200, passed: true });
 }
 response = await request("/auth/v1/settings");
 assert.equal(response.status, 200);
