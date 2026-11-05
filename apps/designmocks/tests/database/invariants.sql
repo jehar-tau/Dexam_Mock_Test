@@ -59,12 +59,14 @@ select public.admin_review_bank_question('fixture-bank-q'||g,true,true,'Fictiona
 select pg_temp.assert_true((public.topic_catalog()->0->>'questions')::integer=10,'approved topic catalogue count');
 select public.admin_configure_exam_mock('uceed',10,900,1,true);
 select pg_temp.assert_true((public.admin_exam_mock_blueprints()->3->>'enabled')::boolean,'admin releases exam mock');
+select set_config('test.all_india_event',public.admin_create_all_india_event('uceed','Fictional All India Mock',now()+interval '1 hour',10,900)::text,true);
 select public.save_candidate_profile('Fictional Free Student','+919222222222',2028,'Pune',array['uceed']);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 select pg_temp.assert_true((public.my_candidate_profile()->>'phoneVerified')::boolean and (public.my_candidate_profile()->>'completed')::boolean,'service verification completes profile');
 select pg_temp.assert_true((public.save_candidate_profile('Asha Rao','+919111111111',2028,'Pune',array['uceed'])->>'phoneVerified')::boolean=false,'phone change clears verification');
 select pg_temp.reject('select * from dm_private.bank_questions','student private bank access');
 reset role;
+update dm_private.all_india_events set starts_at=now()-interval '1 day',ends_at=now()+interval '9 days',review_ends_at=now()+interval '19 days' where id=current_setting('test.all_india_event')::uuid;
 update public.launch_settings set sales_enabled=true,policy_version='v1';
 set local role authenticated;
 select pg_temp.reject('select public.prepare_order()','unaccepted terms');
@@ -101,6 +103,21 @@ select set_config('test.topic_attempt',public.start_topic_practice('fixture','uc
 select pg_temp.assert_true(jsonb_array_length(public.read_attempt(current_setting('test.topic_attempt')::uuid)->'questions')=10,'topic attempt freezes requested count');
 select pg_temp.assert_true(not ((public.read_attempt(current_setting('test.topic_attempt')::uuid)->'questions'->0) ? 'correctKey'),'topic answer keys hidden');
 select public.submit_attempt(current_setting('test.topic_attempt')::uuid);
+select set_config('test.all_india_attempt',public.start_all_india_attempt(current_setting('test.all_india_event')::uuid)::text,true);
+select pg_temp.assert_true(jsonb_array_length(public.read_attempt(current_setting('test.all_india_attempt')::uuid)->'questions')=10,'All India fixed paper frozen');
+select pg_temp.reject('select public.start_all_india_attempt(current_setting(''test.all_india_event'')::uuid)','All India one attempt per account');
+select public.submit_attempt(current_setting('test.all_india_attempt')::uuid);
+reset role;
+update dm_private.all_india_events set starts_at=now()-interval '21 days',ends_at=now()-interval '11 days',review_ends_at=now()-interval '1 day' where id=current_setting('test.all_india_event')::uuid;
+set local role authenticated;
+select set_config('request.jwt.claim.role','authenticated',true);
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+select public.admin_release_all_india_results(current_setting('test.all_india_event')::uuid);
+select pg_temp.assert_true((public.admin_all_india_events()->0->>'resultsReleasedAt') is not null,'admin releases reviewed All India result');
+reset role;
+set local role anon;
+select pg_temp.assert_true(public.public_all_india_top_ten()->0->'topTen'->0->>'alias' like 'Candidate-%','public results use generated alias');
+select pg_temp.assert_true((public.public_all_india_top_ten()->0->'topTen'->0->>'rank')::integer=1,'public rank released');
 reset role;
 insert into dm_private.papers(id,title,exam,duration_seconds) values('10000000-0000-4000-8000-000000000001','Fictional QA paper','uceed',600);
 insert into dm_private.questions(id,paper_id,ordinal,prompt,options,points,topic,kind,marking,reviewed) values
@@ -116,6 +133,7 @@ insert into dm_private.answer_keys values
 ('20000000-0000-4000-8000-000000000004','{"kind":"self_review"}','Compare your drawing with the published rubric.'),
 ('20000000-0000-4000-8000-000000000005','{"kind":"dropped"}','Excluded.');
 set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 select pg_temp.assert_true(public.available_papers()='[]'::jsonb,'unreleased catalogue hidden');
 select pg_temp.reject('select public.start_attempt(''10000000-0000-4000-8000-000000000001'')','unreleased paper');
 reset role;

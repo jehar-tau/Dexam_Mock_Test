@@ -155,8 +155,9 @@ Exit: load, authorization, disconnect/reconnect, deadline and scoring tests pass
 
 ### Phase 3 — All India mocks
 
-- Admin event/paper workflow, fixed-paper pinning, registration/window/review/release phases, one-attempt constraint, cohort rank and tie rules.
-- Public top-ten component with privacy policy and consent.
+- [x] Add the admin event workflow with one fixed paper, a ten-day attempt window, a ten-day review window, paid/verified entry, one attempt per account and explicit result release.
+- [x] Reproduce cohort ranks by score and then elapsed time; keep ranks hidden before release and publish generated aliases rather than student identities.
+- [x] Add public top-ten results to the main site and each candidate's released rank to the portal.
 
 Exit: a synthetic cohort completes the same paper; ranks remain hidden until controlled release and reproduce from frozen scores.
 

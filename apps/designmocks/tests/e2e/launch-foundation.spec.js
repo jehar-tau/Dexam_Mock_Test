@@ -16,7 +16,7 @@ test("bug reporting fails closed for signed-out visitors", async ({ page }) => {
 
 test("student modules require authentication", async ({ page }) => {
   await page.goto("/dashboard/all-india");
-  await expect(page.getByRole("heading", { name: /Sign in to continue/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Sign in for All India mocks/ })).toBeVisible();
   await expect(page.locator("#main").getByRole("link", { name: "Student sign in" })).toBeVisible();
 });
 
@@ -58,4 +58,13 @@ test("exam-wise mocks show release and free-attempt states", async ({ page }) =>
   await expect(page.getByRole("button", { name: "Not released" })).toHaveCount(2);
   await page.locator("article").filter({ hasText: "UCEED" }).getByRole("button", { name: "Start mock" }).click();
   await expect(page.getByText("Preview: UCEED mock created")).toBeVisible();
+});
+
+test("All India mocks expose one open attempt and privacy-safe released ranks", async ({ page }) => {
+  await page.goto("/all-india-preview");
+  await expect(page.getByText("NID All India Mock 01")).toBeVisible();
+  await page.getByRole("button", { name: "Start once" }).click();
+  await expect(page.getByText("Preview attempt created once: open")).toBeVisible();
+  await expect(page.getByText("Candidate-A1B2C3")).toBeVisible();
+  await expect(page.getByText("#1")).toBeVisible();
 });
