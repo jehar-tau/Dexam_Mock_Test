@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/jehar-tau/Dexam_Mock_Test.git",
+  "branch": "main",
+  "path": "server/data/exports/dexam-bank-export.json",
+  "schemaVersion": 1,
+  "eligibilityRule": {
+    "field": "holds",
+    "operator": "array-length-equals",
+    "value": 0
+  },
+  "failClosed": true
+}

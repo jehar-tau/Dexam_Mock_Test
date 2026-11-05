@@ -11,6 +11,7 @@
     "designmocks:dev": "npm run dev --prefix apps/designmocks",
     "designmocks:build": "npm run build --prefix apps/designmocks",
     "designmocks:test": "npm test --prefix apps/designmocks",
-    "designmocks:check": "npm run check --prefix apps/designmocks"
+    "designmocks:check": "npm run check --prefix apps/designmocks",
+    "audit:bank": "node tools/audit_question_bank.mjs --ref origin/main"
   }
 }

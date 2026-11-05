@@ -55,6 +55,8 @@ Deno.serve(async (request) => {
   );
   const media: Record<string, unknown[]> = Object.create(null);
   try {
+    const paths: string[] = [];
+    const owners: string[] = [];
     for (const item of attempt.questions) {
       media[item.id] = [];
       for (const image of item.media ?? []) {
@@ -65,12 +67,20 @@ Deno.serve(async (request) => {
           !/^papers\/[a-zA-Z0-9_/-]+\.(png|jpe?g|webp)$/i.test(image.path)
         )
           throw new Error("Invalid bank media");
-        const { data, error } = await admin.storage
-          .from("paper-media")
-          .createSignedUrl(image.path, mediaTtl);
-        if (error || !data?.signedUrl) throw new Error("Media unavailable");
-        media[item.id].push({ url: data.signedUrl });
+        paths.push(image.path);
+        owners.push(item.id);
       }
+    }
+    if (paths.length) {
+      const { data, error } = await admin.storage
+        .from("paper-media")
+        .createSignedUrls(paths, mediaTtl);
+      if (error || !data || data.length !== paths.length)
+        throw new Error("Media unavailable");
+      data.forEach((signed, index) => {
+        if (!signed.signedUrl) throw new Error("Media unavailable");
+        media[owners[index]].push({ url: signed.signedUrl });
+      });
     }
     return reply({ media });
   } catch {

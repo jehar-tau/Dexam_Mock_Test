@@ -1,0 +1,47 @@
+import React, { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { platform } from "./platform.js";
+import { useAuthState } from "./useAuth.js";
+
+async function rpc(name, args) {
+  if (!platform) throw new Error("Student services are not connected yet.");
+  const { data, error } = await platform.rpc(name, args);
+  if (error) throw error;
+  return data;
+}
+
+function Gate({ session, loading }) {
+  if (loading) return <p role="status">Checking your account…</p>;
+  if (!session) return <p>Please <Link to="/account">sign in</Link> to continue.</p>;
+  return null;
+}
+
+export function BugReport() {
+  const { session, loading } = useAuthState();
+  const [reports, setReports] = useState([]), [message, setMessage] = useState(""), [busy, setBusy] = useState(false);
+  const load = useCallback(() => session && rpc("my_bug_reports").then(setReports).catch((e) => setMessage(e.message)), [session]);
+  useEffect(load, [load]);
+  const submit = async (event) => {
+    event.preventDefault(); setBusy(true); setMessage("");
+    const form = new FormData(event.currentTarget);
+    try {
+      await rpc("submit_bug_report", { p_title: form.get("title"), p_description: form.get("description"), p_page_url: window.location.href });
+      event.currentTarget.reset(); setMessage("Thanks — your report is now in the review queue."); await load();
+    } catch (e) { setMessage(e.message); } finally { setBusy(false); }
+  };
+  return <section className="wrap section admin-page"><span className="eyebrow">HELP US IMPROVE</span><h1>Report a <em>problem.</em></h1><Gate session={session} loading={loading} />{session && <><form className="admin-form" onSubmit={submit}><label>Short title<input name="title" minLength="5" maxLength="140" required /></label><label>What happened?<textarea name="description" minLength="10" maxLength="5000" rows="6" required /></label><button className="button" disabled={busy}>{busy ? "Sending…" : "Send report"}</button></form>{message && <p role="status">{message}</p>}<h2>Your reports</h2><div className="admin-list">{reports.map((r) => <article key={r.id}><b>{r.title}</b><span className="status-pill">{r.status}</span><p>{r.description}</p>{r.adminReply && <p><strong>Team reply:</strong> {r.adminReply}</p>}</article>)}</div></>}</section>;
+}
+
+export function Admin() {
+  const { session, loading } = useAuthState();
+  const [allowed, setAllowed] = useState(null), [drafts, setDrafts] = useState([]), [bugs, setBugs] = useState([]), [message, setMessage] = useState("");
+  const load = useCallback(async () => {
+    if (!session) return;
+    try { const ok = await rpc("is_dmocks_admin"); setAllowed(ok); if (ok) { const [d, b] = await Promise.all([rpc("admin_question_drafts"), rpc("admin_bug_reports")]); setDrafts(d); setBugs(b); } } catch (e) { setMessage(e.message); }
+  }, [session]);
+  useEffect(() => { load(); }, [load]);
+  const addDraft = async (event) => { event.preventDefault(); const form = new FormData(event.currentTarget); try { const payload = JSON.parse(form.get("payload")); await rpc("admin_create_question_draft", { p_source_type: form.get("sourceType"), p_source_name: form.get("sourceName"), p_payload: payload }); event.currentTarget.reset(); await load(); } catch (e) { setMessage(e.message); } };
+  const review = async (id, decision) => { try { await rpc("admin_review_question_draft", { p_id: id, p_decision: decision, p_note: null }); await load(); } catch (e) { setMessage(e.message); } };
+  const reply = async (event, id) => { event.preventDefault(); const form = new FormData(event.currentTarget); try { await rpc("admin_reply_bug_report", { p_id: id, p_status: form.get("status"), p_reply: form.get("reply") }); await load(); } catch (e) { setMessage(e.message); } };
+  return <section className="wrap section admin-page"><span className="eyebrow">DMOCKS OPERATIONS</span><h1>Admin <em>review.</em></h1><Gate session={session} loading={loading} />{session && allowed === false && <p className="error">This account is not an administrator.</p>}{message && <p className="error" role="alert">{message}</p>}{allowed && <><h2>Add a question draft</h2><p>Manual, extracted, and AI-generated questions all enter the same human review queue. Approval does not directly edit the Git question bank.</p><form className="admin-form" onSubmit={addDraft}><label>Source<select name="sourceType"><option value="manual">Manual</option><option value="pdf">PDF extraction</option><option value="photo">Photo extraction</option><option value="ai">AI draft</option></select></label><label>Source name<input name="sourceName" /></label><label>Question JSON<textarea name="payload" rows="10" required placeholder={'{"prompt":"…","holds":[]}'}/></label><button className="button">Queue draft</button></form><h2>Question review queue</h2><div className="admin-list">{drafts.map((d) => <article key={d.id}><b>{d.sourceName || d.sourceType}</b><span className="status-pill">{d.status}</span><pre>{JSON.stringify(d.payload, null, 2)}</pre>{d.status === "pending" && <div className="admin-actions"><button onClick={() => review(d.id,"approved")}>Approve for export</button><button onClick={() => review(d.id,"rejected")}>Reject</button></div>}</article>)}</div><h2>Bug reports</h2><div className="admin-list">{bugs.map((b) => <article key={b.id}><b>{b.title}</b><p>{b.description}</p><form className="admin-reply" onSubmit={(e) => reply(e,b.id)}><select name="status" defaultValue={b.status}><option>open</option><option>investigating</option><option>fixed</option><option>closed</option></select><input name="reply" defaultValue={b.adminReply || ""} placeholder="Reply to reporter"/><button>Save</button></form></article>)}</div></>}</section>;
+}

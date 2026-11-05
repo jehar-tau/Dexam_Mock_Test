@@ -1,6 +1,6 @@
-# DesignMocks
+# DMocks
 
-The independent DesignMocks website and student portal, inside `jehar-tau/Dexam_Mock_Test` at `apps/designmocks`. Approved offer: **₹1,193 for one year**, one payment, no automatic renewal. Proposed domain `designmocks.in` is not purchased.
+The independent DMocks website and student portal, inside `jehar-tau/Dexam_Mock_Test` at `apps/designmocks`. Approved offer: **₹1,193 for one year**, one payment, no automatic renewal. Selected domain `dmocks.com` is available according to the registry check on 5 November 2026, but is not yet purchased.
 
 ## Run locally
 

@@ -3799,3 +3799,14 @@ svg {
 .portal-preview-note p { max-width: 70ch; }
 .portal-preview-links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
 .portal-preview-links [aria-current="page"] { text-decoration-thickness: 3px; }
+.admin-page { max-width: 900px; }
+.admin-form, .admin-reply { display: grid; gap: 1rem; margin: 1.5rem 0 3rem; }
+.admin-form label { display: grid; gap: .5rem; font-weight: 700; }
+.admin-form input, .admin-form textarea, .admin-form select, .admin-reply input, .admin-reply select { width: 100%; padding: .85rem; color: inherit; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
+.admin-list { display: grid; gap: 1rem; margin-bottom: 4rem; }
+.admin-list article { padding: 1.25rem; border: 1px solid var(--line); background: var(--paper); }
+.admin-list pre { max-height: 320px; overflow: auto; white-space: pre-wrap; }
+.status-pill { display: inline-block; margin-left: .75rem; padding: .2rem .5rem; border: 1px solid var(--line); border-radius: 999px; font-size: .8rem; text-transform: uppercase; }
+.admin-actions { display: flex; gap: .75rem; }
+.admin-reply { grid-template-columns: minmax(120px,.5fr) 2fr auto; margin: 1rem 0 0; }
+@media (max-width: 700px) { .admin-reply { grid-template-columns: 1fr; } }

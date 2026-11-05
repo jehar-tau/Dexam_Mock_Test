@@ -1,4 +1,4 @@
-# DesignMocks — owner decisions
+# DMocks — owner decisions
 
 4 November 2026:
 
@@ -7,7 +7,7 @@
 - The owner selected **fully separate app, student accounts and payments**, rather than routing students into Dexam.
 - The owner confirmed the papers have been human-reviewed. This is content-review confirmation, not a record of production import, exam-blueprint verification or content-rights clearance.
 - **₹1,193 for one year**, plus **Google login and Razorpay**. Working interpretation stated in chat: a single annual pass covering the catalogue, one payment, no automatic renewal. No extra plan or invented discount is offered.
-- **DesignMocks** is the provisional name. Registry checks found designmocks.in available on 4 November at 10:54 IST; it has not been purchased. designmocks.com is registered. See the task workspace's `output/mock-brand-domain-research.md` for alternatives/evidence.
+- **DMocks** is the selected brand, paired with `dmocks.com`. The Verisign RDAP registry returned no registration record for `dmocks.com` on 5 November 2026; availability is not guaranteed until purchase. `designmocks.com` remains registered by another party.
 
 ## Isolation and availability
 
@@ -28,7 +28,7 @@ The standalone store, pricing, original timed sample and report can be reviewed 
 
 ## Academy attribution
 
-The owner requested “DesignMocks by Design Exam Academy”, with the academy name in smaller type and occasional traffic links. The header and footer use that byline, linking to designexam.com. The footer and annual-pass sidebar point to the academy’s courses for mentor-led preparation. Accounts, paid access and the test service remain independent. No cross-site tracking or automatic redirect is added.
+The owner requested “DMocks by Design Exam Academy”, with the academy name in smaller type and occasional traffic links. The header and footer use that byline, linking to designexam.com. The footer and annual-pass sidebar point to the academy’s courses for mentor-led preparation. Accounts, paid access and the test service remain independent. No cross-site tracking or automatic redirect is added.
 
 ## Google setup progress
 

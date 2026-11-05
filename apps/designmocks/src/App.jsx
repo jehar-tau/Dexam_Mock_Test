@@ -16,6 +16,7 @@ import {
   SAMPLE_STORAGE,
 } from "./sample.mjs";
 import { Workspace, Attempt } from "./Workspace.jsx";
+import { Admin, BugReport } from "./Admin.jsx";
 import { useAuthState } from "./useAuth.js";
 import {
   platform,
@@ -32,7 +33,7 @@ const PortalPreview = import.meta.env.DEV
 function Logo() {
   return (
     <div className="brand-lockup">
-      <Link to="/" className="logo" aria-label="DesignMocks home">
+      <Link to="/" className="logo" aria-label="DMocks home">
         <span className="logo-symbol" aria-hidden="true">
           <i />
           <i />
@@ -40,7 +41,7 @@ function Logo() {
           <i />
         </span>
         <span>
-          design<span>mocks</span>
+          d<span>mocks</span>
           <b>.</b>
         </span>
       </Link>
@@ -223,6 +224,7 @@ function Layout({ children }) {
             <Link to="/sample">Try the sample</Link>
             <Link to="/plans">One-year pass</Link>
             <Link to="/account">Student sign in</Link>
+            <Link to="/report">Report a problem</Link>
             <a href={brand.supportUrl} target="_blank" rel="noreferrer">
               Talk to the team <span aria-hidden="true">↗</span>
             </a>
@@ -240,7 +242,7 @@ function Layout({ children }) {
         </div>
         <div className="wrap footer-bottom">
           <span>
-            © {new Date().getFullYear()} DesignMocks. Stay curious.{" "}
+            © {new Date().getFullYear()} DMocks. Stay curious.{" "}
             <Spark size={15} />
           </span>
           <p>
@@ -518,7 +520,7 @@ function PassPanel() {
           </div>
         </div>
         <div className="pass-price">
-          <span>THE DESIGNMOCKS ANNUAL PASS</span>
+          <span>THE DMOCKS ANNUAL PASS</span>
           <div>
             {money(brand.price)}
             <small>/ year</small>
@@ -537,11 +539,11 @@ function PassPanel() {
 const faqs = [
   [
     "Do I need to join a coaching course?",
-    "No. DesignMocks is a separate mock-test platform. The annual pass is for students who want to practise independently.",
+    "No. DMocks is a separate mock-test platform. The annual pass is for students who want to practise independently.",
   ],
   [
     "What does the ₹1,193 pass cover?",
-    "One year of access to the DesignMocks mock-test catalogue, starting from a successfully verified payment. It is a single payment, with no automatic renewal.",
+    "One year of access to the DMocks mock-test catalogue, starting from a successfully verified payment. It is a single payment, with no automatic renewal.",
   ],
   [
     "Can I try the experience first?",
@@ -1006,7 +1008,7 @@ function Account() {
         <h2>{session ? "Welcome back." : "Come on in."}</h2>
         <p>
           {session
-            ? "Your DesignMocks workspace is ready."
+            ? "Your DMocks workspace is ready."
             : "Sign in or create your account with Google."}
         </p>
         {loading ? (
@@ -1076,7 +1078,7 @@ function Account() {
           </p>
         )}
         <span className="account-footnote">
-          A separate DesignMocks account. Your coaching enrolment is not
+          A separate DMocks account. Your coaching enrolment is not
           required.
         </span>
       </div>
@@ -1215,7 +1217,7 @@ function Sample() {
     <section className="wrap sample-run">
       <div className="runner-top">
         <div>
-          <span className="eyebrow">DESIGNMOCKS / EXPERIENCE SAMPLE</span>
+          <span className="eyebrow">DMOCKS / EXPERIENCE SAMPLE</span>
           <h1>One question at a time.</h1>
         </div>
         <div
@@ -1477,7 +1479,7 @@ function Policies({ type }) {
   const privacy = type === "privacy";
   return (
     <section className="wrap policy section">
-      <span className="eyebrow">DESIGNMOCKS / FIRST-LOOK PREVIEW</span>
+      <span className="eyebrow">DMOCKS / FIRST-LOOK PREVIEW</span>
       <h1>
         {privacy
           ? "Your space. Your information."
@@ -1500,7 +1502,7 @@ function Policies({ type }) {
           <h2>Student accounts</h2>
           <p>
             Once activated, Google sign-in will be used for a separate
-            DesignMocks account. Only the basic Google account details required
+            DMocks account. Only the basic Google account details required
             for sign-in will be requested. The production privacy notice will
             identify the operator, processors, retention periods, deletion
             process and any requirements for younger students before
@@ -1543,7 +1545,7 @@ function Policies({ type }) {
           </p>
           <h2>Independent preparation</h2>
           <p>
-            DesignMocks is an independent practice platform and is not
+            DMocks is an independent practice platform and is not
             affiliated with NID, NIFT, IITs or their examinations.
           </p>
         </>
@@ -1575,6 +1577,8 @@ export default function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/account/callback" element={<Account />} />
         <Route path="/dashboard" element={<Workspace />} />
+        <Route path="/report" element={<BugReport />} />
+        <Route path="/admin" element={<Admin />} />
         {import.meta.env.DEV && <Route path="/portal-preview/*" element={<React.Suspense fallback={<p className="wrap" role="status">Opening the portal preview…</p>}><PortalPreview /></React.Suspense>} />}
 
         <Route
