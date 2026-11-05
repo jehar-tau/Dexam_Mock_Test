@@ -30,3 +30,15 @@ test("fictional portal preview exposes every requested navigation area", async (
   }
   await expect(page.getByText("Sample Student")).toBeVisible();
 });
+
+test("candidate profile validates and saves the complete preview flow", async ({ page }) => {
+  await page.goto("/profile-preview");
+  await page.getByRole("button", { name: "Save profile" }).click();
+  await expect(page.getByText("Enter your full name.")).toBeVisible();
+  await page.getByLabel("Student name").fill("Asha Rao");
+  await page.getByLabel("Phone number").fill("+919876543210");
+  await page.getByLabel("City").fill("Pune");
+  await page.getByLabel("UCEED").check();
+  await page.getByRole("button", { name: "Save profile" }).click();
+  await expect(page.getByText("Preview profile saved for this session.")).toBeVisible();
+});

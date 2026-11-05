@@ -18,6 +18,7 @@ import {
 import { Workspace, Attempt } from "./Workspace.jsx";
 import { Admin, BugReport } from "./Admin.jsx";
 import { PortalModule } from "./PortalShell.jsx";
+import { CandidateProfile, CandidateProfilePreview } from "./CandidateProfile.jsx";
 import { useAuthState } from "./useAuth.js";
 import {
   platform,
@@ -1018,6 +1019,7 @@ function Account() {
           <>
             <p className="signed-in">Signed in as {session.user.email}</p>
             <Button to="/dashboard">Open your workspace</Button>
+            <Button to="/onboarding" quiet>Complete your profile</Button>
             <Button to="/plans" quiet>
               View the annual pass
             </Button>
@@ -1578,6 +1580,7 @@ export default function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/account/callback" element={<Account />} />
         <Route path="/dashboard" element={<Workspace />} />
+        <Route path="/onboarding" element={<CandidateProfile />} />
         <Route path="/dashboard/mocks" element={<PortalModule module="mocks" />} />
         <Route path="/dashboard/all-india" element={<PortalModule module="all-india" />} />
         <Route path="/dashboard/practice" element={<PortalModule module="practice" />} />
@@ -1586,6 +1589,7 @@ export default function App() {
         <Route path="/report" element={<BugReport />} />
         <Route path="/admin" element={<Admin />} />
         {import.meta.env.DEV && <Route path="/portal-preview/*" element={<React.Suspense fallback={<p className="wrap" role="status">Opening the portal preview…</p>}><PortalPreview /></React.Suspense>} />}
+        {import.meta.env.DEV && <Route path="/profile-preview" element={<CandidateProfilePreview />} />}
 
         <Route
           path="/attempt/:id"

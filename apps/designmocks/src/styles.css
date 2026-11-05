@@ -2410,6 +2410,17 @@ svg {
     padding: 24px;
   }
 }
+.candidate-profile { max-width: 760px; }
+.candidate-profile > p { max-width: 62ch; }
+.candidate-profile-form { display: grid; gap: 1.25rem; margin-top: 2rem; }
+.candidate-profile-form > label { display: grid; gap: .45rem; font-weight: 700; }
+.candidate-profile-form input, .candidate-profile-form select { width: 100%; padding: .85rem; color: inherit; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
+.candidate-profile-form label > span, .candidate-profile-form fieldset > span { color: var(--error,#9b2c2c); font-size: .9rem; }
+.candidate-profile-form small { color: var(--muted); font-weight: 400; }
+.candidate-profile-form fieldset { display: grid; gap: .65rem; padding: 1rem; border: 1px solid var(--line); }
+.candidate-profile-form legend { padding-inline: .35rem; font-weight: 700; }
+.candidate-profile-form .profile-check { display: flex; align-items: center; gap: .65rem; }
+.candidate-profile-form .profile-check input { width: auto; }
 @media (max-width: 700px) {
   html {
     scroll-padding-top: 100px;

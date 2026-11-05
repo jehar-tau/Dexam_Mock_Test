@@ -138,7 +138,8 @@ Exit: zero unexplained bank differences and an approved migration/convergence de
 
 - [x] Build the server-backed Overview shell and responsive student navigation for exam mocks, All India mocks, topic practice, Learn and Community.
 - [ ] Replace the locked module states as each server capability passes its release gate.
-- Enable Google sign-in and profile onboarding; keep phone verification behind provider setup.
+- [x] Add candidate onboarding for name, E.164 phone, appearing year, city and selected exams; phone remains explicitly unverified until a service-role OTP callback confirms the exact number.
+- [ ] Enable the production Google provider and select an India OTP provider; both require owner-controlled hosted configuration and credentials.
 - Implement free/paid route capabilities and exact empty/loading/error/locked states.
 
 Exit: a free candidate can sign in, complete the non-phone profile, navigate, and see correct locks without accessing paid data.
