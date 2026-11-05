@@ -23,6 +23,28 @@ export function objectiveReady(question) {
   return true;
 }
 
+export function runtimeQuestion(question) {
+  if (!objectiveReady(question) || question.visualDependency || (question.assets?.length ?? 0) > 0) return null;
+  const options = (question.options || []).map((option) => ({ id: String(option.key), label: String(option.text || option.key) }));
+  const raw = String(question.answer.raw).trim();
+  let key;
+  if (question.type === "MCQ") {
+    if (!options.some((option) => option.id === raw)) return null;
+    key = { kind: "mcq", correct: [raw] };
+  } else if (question.type === "MSQ") {
+    const selected = raw.split(/[^A-Za-z0-9]+/).filter(Boolean);
+    const keys = selected.length > 1 ? selected : raw.split("").filter((part) => options.some((option) => option.id === part));
+    if (!keys.length || keys.some((part) => !options.some((option) => option.id === part))) return null;
+    key = { kind: "msq", correct: [...new Set(keys)].sort() };
+  } else {
+    const exact = Number(raw);
+    if (!Number.isFinite(exact)) return null;
+    key = { kind: "nat", accepted: [{ exact }] };
+  }
+  const points = Number(question.taskMarks) > 0 ? Number(question.taskMarks) : 1;
+  return { prompt: question.prompt, options, kind: question.type.toLowerCase(), marking: { correct: points, wrong: 0 }, media: [], points, negativePoints: 0, topic: question.topic || "unclassified", key, explanation: question.explanation || `Answer key: ${raw}` };
+}
+
 export function buildManifest(bank, sourceCommit = "0".repeat(40)) {
   if (bank?.schemaVersion !== 1 || !Array.isArray(bank.questions)) throw new Error("Unsupported question-bank export");
   if (!/^[0-9a-f]{40}$/i.test(sourceCommit)) throw new Error("A full Git commit SHA is required");
@@ -31,6 +53,7 @@ export function buildManifest(bank, sourceCommit = "0".repeat(40)) {
   const eligible = bank.questions.filter((question) => question.holds.length === 0);
   const records = eligible.map((question) => {
     if (!question.externalKey || !question.prompt || !question.provenance?.exam) throw new Error(`Eligible question is incomplete: ${question.externalKey || "missing-key"}`);
+    const runtime = runtimeQuestion(question);
     return {
       externalKey: question.externalKey,
       contentSha256: sha256(stableJson(question)),
@@ -39,6 +62,7 @@ export function buildManifest(bank, sourceCommit = "0".repeat(40)) {
       topic: question.topic || "unclassified",
       licence: question.licence || "unknown",
       objectiveReady: objectiveReady(question),
+      runtime,
       payload: question,
     };
   });
@@ -52,6 +76,7 @@ export function buildManifest(bank, sourceCommit = "0".repeat(40)) {
     eligibleTotal: records.length,
     heldTotal: bank.questions.length - records.length,
     objectiveReadyTotal: records.filter((record) => record.objectiveReady).length,
+    runtimeReadyTotal: records.filter((record) => record.runtime).length,
     records,
   };
 }
@@ -73,7 +98,11 @@ async function rpc(url, key, name, body) {
 export async function applyManifest(manifest, { url, serviceRoleKey, batchSize = 100 }) {
   if (!url || !serviceRoleKey) throw new Error("DMOCKS_SUPABASE_URL and DMOCKS_SUPABASE_SERVICE_ROLE_KEY are required");
   const runId = await rpc(url, serviceRoleKey, "begin_question_bank_import", { p_source_commit: manifest.sourceCommit, p_source_path: manifest.sourcePath, p_source_sha256: manifest.sourceSha256, p_schema_version: manifest.schemaVersion, p_source_total: manifest.sourceTotal, p_eligible_total: manifest.eligibleTotal, p_held_total: manifest.heldTotal });
-  for (let index = 0; index < manifest.records.length; index += batchSize) await rpc(url, serviceRoleKey, "import_question_bank_batch", { p_run_id: runId, p_records: manifest.records.slice(index, index + batchSize) });
+  for (let index = 0; index < manifest.records.length; index += batchSize) {
+    const records = manifest.records.slice(index, index + batchSize);
+    await rpc(url, serviceRoleKey, "import_question_bank_batch", { p_run_id: runId, p_records: records });
+    await rpc(url, serviceRoleKey, "upsert_question_bank_runtime_batch", { p_records: records.map(({ externalKey, contentSha256, runtime }) => ({ externalKey, contentSha256, runtime })) });
+  }
   await rpc(url, serviceRoleKey, "finish_question_bank_import", { p_run_id: runId });
   return runId;
 }

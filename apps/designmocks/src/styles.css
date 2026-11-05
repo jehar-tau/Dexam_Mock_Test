@@ -2421,6 +2421,12 @@ svg {
 .candidate-profile-form legend { padding-inline: .35rem; font-weight: 700; }
 .candidate-profile-form .profile-check { display: flex; align-items: center; gap: .65rem; }
 .candidate-profile-form .profile-check input { width: auto; }
+.practice-builder { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin-top: 2rem; }
+.practice-builder label { display: grid; gap: .45rem; font-weight: 700; }
+.practice-builder select { width: 100%; padding: .85rem; color: inherit; background: var(--paper); border: 1px solid var(--line); font: inherit; }
+.practice-builder .button { grid-column: 1/-1; justify-self: start; }
+.admin-list .profile-check { display: flex; gap: .65rem; align-items: flex-start; margin: 1rem 0; }
+@media(max-width:700px){.practice-builder{grid-template-columns:1fr}}
 @media (max-width: 700px) {
   html {
     scroll-padding-top: 100px;

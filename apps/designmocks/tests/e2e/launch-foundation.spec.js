@@ -42,3 +42,13 @@ test("candidate profile validates and saves the complete preview flow", async ({
   await page.getByRole("button", { name: "Save profile" }).click();
   await expect(page.getByText("Preview profile saved for this session.")).toBeVisible();
 });
+
+test("topic practice creates a constrained timed-session preview", async ({ page }) => {
+  await page.goto("/topic-practice-preview");
+  await page.getByLabel("Exam").selectOption("nift");
+  await page.getByLabel("Questions").selectOption("20");
+  await page.getByLabel("Time").selectOption("1800");
+  await expect(page.getByLabel("Topic")).toHaveValue("general-aptitude");
+  await page.getByRole("button", { name: "Start practice" }).click();
+  await expect(page.getByText("Preview created: 20 general-aptitude questions · 30 minutes")).toBeVisible();
+});
