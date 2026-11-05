@@ -117,6 +117,7 @@ export function Admin() {
     [allIndia, setAllIndia] = useState([]),
     [lessons, setLessons] = useState([]),
     [drawings, setDrawings] = useState([]),
+    [intake, setIntake] = useState([]),
     [questionReports, setQuestionReports] = useState([]),
     [bankRights, setBankRights] = useState({}),
     [message, setMessage] = useState("");
@@ -126,7 +127,7 @@ export function Admin() {
       const ok = await rpc("is_dmocks_admin");
       setAllowed(ok);
       if (ok) {
-        const [d, b, q, m, a, r, l, w] = await Promise.all([
+        const [d, b, q, m, a, r, l, w, i] = await Promise.all([
           rpc("admin_question_drafts"),
           rpc("admin_bug_reports"),
           rpc("admin_bank_questions", { p_limit: 25, p_offset: 0 }),
@@ -135,6 +136,7 @@ export function Admin() {
           rpc("admin_reported_questions"),
           rpc("admin_learning_lessons"),
           rpc("admin_drawing_queue"),
+          rpc("admin_question_intake_assets"),
         ]);
         setDrafts(d);
         setBugs(b);
@@ -144,6 +146,7 @@ export function Admin() {
         setQuestionReports(r);
         setLessons(l);
         setDrawings(w);
+        setIntake(i);
       }
     } catch (e) {
       setMessage(e.message);
@@ -298,6 +301,37 @@ export function Admin() {
       setMessage(e.message);
     }
   };
+  const uploadIntake = async (event) => {
+    event.preventDefault();
+    const f = new FormData(event.currentTarget),
+      body = new FormData();
+    body.set("file", f.get("file"));
+    try {
+      const { data, error } = await platform.functions.invoke(
+        "question-intake",
+        { body },
+      );
+      if (error) throw error;
+      setMessage(`${data.name} uploaded privately for extraction.`);
+      event.currentTarget.reset();
+      await load();
+    } catch (e) {
+      setMessage(e.message);
+    }
+  };
+  const promoteIntake = async (event, id) => {
+    event.preventDefault();
+    const f = new FormData(event.currentTarget);
+    try {
+      await rpc("admin_promote_intake_asset", {
+        p_asset_id: id,
+        p_payload: JSON.parse(f.get("payload")),
+      });
+      await load();
+    } catch (e) {
+      setMessage(e.message);
+    }
+  };
   return (
     <section className="wrap section admin-page">
       <span className="eyebrow">DMOCKS OPERATIONS</span>
@@ -315,6 +349,44 @@ export function Admin() {
       )}
       {allowed && (
         <>
+          <h2>PDF and photo question intake</h2>
+          <form className="admin-form" onSubmit={uploadIntake}>
+            <label>
+              Private source file
+              <input
+                name="file"
+                type="file"
+                accept="application/pdf,image/png,image/jpeg,image/webp"
+                required
+              />
+            </label>
+            <button>Upload for extraction</button>
+          </form>
+          <div className="admin-list">
+            {intake.map((x) => (
+              <article key={x.id}>
+                <b>{x.name}</b>
+                <span className="status-pill">{x.status}</span>
+                {x.status !== "reviewed" && (
+                  <form
+                    className="admin-form"
+                    onSubmit={(e) => promoteIntake(e, x.id)}
+                  >
+                    <label>
+                      Extracted question JSON
+                      <textarea
+                        name="payload"
+                        required
+                        rows="8"
+                        placeholder={'{"prompt":"…","holds":[]}'}
+                      />
+                    </label>
+                    <button>Send to human review</button>
+                  </form>
+                )}
+              </article>
+            ))}
+          </div>
           <h2>Drawing review queue</h2>
           <div className="admin-list">
             {drawings.map((d) => (
