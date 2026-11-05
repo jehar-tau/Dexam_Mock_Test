@@ -117,6 +117,8 @@ Use a Reddit-style topic/thread structure with Quora-style answer quality, not a
 
 ## Delivery sequence
 
+Every releasable slice must include focused unit coverage, database/authorization invariants when it changes server behavior, and Playwright end-to-end coverage on desktop and mobile for the visible user journey. `npm run check` is the merge gate; a feature is not complete while any applicable layer is missing or failing.
+
 ### Phase 0 — truth and foundations (active)
 
 - [x] Record the product brief and reuse map.

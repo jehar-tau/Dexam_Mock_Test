@@ -20,7 +20,7 @@ export function BugReport() {
   const { session, loading } = useAuthState();
   const [reports, setReports] = useState([]), [message, setMessage] = useState(""), [busy, setBusy] = useState(false);
   const load = useCallback(() => session && rpc("my_bug_reports").then(setReports).catch((e) => setMessage(e.message)), [session]);
-  useEffect(load, [load]);
+  useEffect(() => { load(); }, [load]);
   const submit = async (event) => {
     event.preventDefault(); setBusy(true); setMessage("");
     const form = new FormData(event.currentTarget);
