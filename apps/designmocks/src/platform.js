@@ -1,12 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
+import { validatePortalConfiguration } from "./environment.js";
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
 // This app must have its own provider project; no Dexam values are imported.
 export const termsVersion = import.meta.env.VITE_TERMS_VERSION;
-export const portalReady =
-  import.meta.env.VITE_PORTAL_ENABLED === "true" &&
-  Boolean(url && key && termsVersion);
+export const portalReady = validatePortalConfiguration({
+  enabled: import.meta.env.VITE_PORTAL_ENABLED === "true",
+  url,
+  key,
+  termsVersion,
+});
 export const platform = portalReady
   ? createClient(url, key, {
       auth: {
@@ -77,7 +81,7 @@ export async function beginCheckout(onState) {
     order_id: data.orderId,
     amount: data.amount,
     currency: data.currency,
-    name: "DesignMocks",
+    name: "DMocks",
     description: "One year of mock-test access",
     theme: { color: "#244735" },
     handler: () => onState("verifying"),

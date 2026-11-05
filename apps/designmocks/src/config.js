@@ -1,6 +1,6 @@
 export const brand = {
-  name: "DesignMocks",
-  proposedDomain: "designmocks.in",
+  name: "DMocks",
+  domain: "dmocks.com",
   description: "Design entrance mock tests.",
   price: 1193,
   currency: "INR",
