@@ -213,5 +213,11 @@ select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001'
 select pg_temp.assert_true(jsonb_array_length(public.learning_catalog())=1,'student sees published rights-cleared lesson');
 select public.complete_learning_lesson(current_setting('test.lesson_id')::uuid);
 select pg_temp.assert_true((public.learning_catalog()->0->>'completed')::boolean,'lesson completion is recorded');
+select set_config('test.community_post',public.create_community_post('uceed','observation','A fictional community question','This is a sufficiently detailed fictional discussion prompt.')::text,true);
+select pg_temp.assert_true(jsonb_array_length(public.community_feed(null,null))=1,'signed-in student sees community post');
+select pg_temp.reject('select public.admin_moderate_community(''post'',current_setting(''test.community_post'')::uuid,''hide'',null)','student cannot moderate community');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+select public.admin_moderate_community('post',current_setting('test.community_post')::uuid,'lock','Fictional moderation check');
+select pg_temp.assert_true((public.community_feed(null,null)->0->>'status')='locked','moderator can lock with audit trail');
 rollback;
 \echo 'PASS: commerce, RLS, ownership, deadlines, grading, reports and retry invariants'
