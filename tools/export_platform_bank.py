@@ -34,6 +34,8 @@ DB = ROOT / "server/data/dexam.sqlite"
 MEDIA_ROOT = ROOT / "server/data/media"
 OUTPUT = ROOT / "server/data/exports/dexam-bank-export.json"
 REVIEW_OUTPUT = ROOT / "server/data/exports/dexam-review.json"
+REVIEW_STATE = ROOT / "server/review-state.json"
+VIEWER_BANK = ROOT / "dexam-bank-machine-readable.json"
 MEDIA_MARKER = "server/data/media/"
 
 
@@ -77,6 +79,10 @@ def workstation_holds(kind, prompt, options, figures, crop_review):
 def main():
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
+    owner_reviews = json.loads(REVIEW_STATE.read_text()) if REVIEW_STATE.is_file() else {}
+    # The image the owner looked at in the question-bank viewer for each question
+    viewer_images = {q["id"]: media_relative(q.get("figure_image"))
+                     for q in json.loads(VIEWER_BANK.read_text())["questions"]} if VIEWER_BANK.is_file() else {}
     papers = {row["id"]: row for row in conn.execute("SELECT * FROM papers")}
     paper_sha = {}
 
@@ -103,6 +109,14 @@ def main():
         block = row["block_path"] if "block_path" in row.keys() else None
         block_file = ROOT / block if block else None
         block_ready = bool(block_file and block_file.is_file())
+        owner = owner_reviews.get(row["id"]) or {}
+        owner_cleared = bool(owner.get("marked")) and not owner.get("flagged")
+        # A cleared owner review approves the crop only if the owner saw the image that will be
+        # served; an explicitly rejected crop stays rejected.
+        images = {media_relative(path) for path in ([block] if block_ready else []) + figures} - {None}
+        owner_saw_image = not images or viewer_images.get(row["id"]) in images
+        if owner_cleared and owner_saw_image and crop_review == "pending":
+            crop_review = "approved"
         # The exact printed block is what students see once its crop is approved. Until then a
         # text-only question keeps its text display; a picture question (or a drawing task whose
         # prompt points at a picture) waits for the review.
@@ -129,6 +143,11 @@ def main():
         for reason in ("context-missing", "broken-text"):
             if reason in (notes.get("reasons") or []):
                 holds.append(reason)
+        # The owner's review (question-bank viewer) is the final gate: a flag beats a review.
+        if owner.get("flagged"):
+            holds.append("owner-flagged")
+        elif not owner.get("marked"):
+            holds.append("awaiting-owner-review")
 
         assets = []
         for position, figure in enumerate(figures):

@@ -2,10 +2,10 @@
   "version": "1.0",
   "exported_at": "2026-11-03T10:21:10Z",
   "summary": {
-    "total_questions": 4521,
+    "total_questions": 4737,
     "exams": {
       "UCEED": 880,
-      "NIFT": 2118,
+      "NIFT": 2334,
       "NID": 689,
       "CEED": 834
     }
@@ -81340,6 +81340,6486 @@
       "answer_key": "",
       "answer_status": "pending",
       "source_paper": "CEED 2010"
+    },
+    {
+      "id": "nift-original-batch-4-q1",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "1",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: abundant",
+      "options": [
+        {
+          "position": "A",
+          "text": "plentiful"
+        },
+        {
+          "position": "B",
+          "text": "meagre"
+        },
+        {
+          "position": "C",
+          "text": "rare"
+        },
+        {
+          "position": "D",
+          "text": "scarce"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q2",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "2",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: candid",
+      "options": [
+        {
+          "position": "A",
+          "text": "secretive"
+        },
+        {
+          "position": "B",
+          "text": "frank"
+        },
+        {
+          "position": "C",
+          "text": "polite"
+        },
+        {
+          "position": "D",
+          "text": "shy"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q3",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "3",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: diligent",
+      "options": [
+        {
+          "position": "A",
+          "text": "careless"
+        },
+        {
+          "position": "B",
+          "text": "hardworking"
+        },
+        {
+          "position": "C",
+          "text": "clever"
+        },
+        {
+          "position": "D",
+          "text": "lazy"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q4",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "4",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: frugal",
+      "options": [
+        {
+          "position": "A",
+          "text": "wealthy"
+        },
+        {
+          "position": "B",
+          "text": "generous"
+        },
+        {
+          "position": "C",
+          "text": "wasteful"
+        },
+        {
+          "position": "D",
+          "text": "thrifty"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q5",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "5",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: obsolete",
+      "options": [
+        {
+          "position": "A",
+          "text": "valuable"
+        },
+        {
+          "position": "B",
+          "text": "fragile"
+        },
+        {
+          "position": "C",
+          "text": "modern"
+        },
+        {
+          "position": "D",
+          "text": "outdated"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q6",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "6",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: reluctant",
+      "options": [
+        {
+          "position": "A",
+          "text": "eager"
+        },
+        {
+          "position": "B",
+          "text": "unwilling"
+        },
+        {
+          "position": "C",
+          "text": "ready"
+        },
+        {
+          "position": "D",
+          "text": "hasty"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q7",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "7",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: vivid",
+      "options": [
+        {
+          "position": "A",
+          "text": "ordinary"
+        },
+        {
+          "position": "B",
+          "text": "vague"
+        },
+        {
+          "position": "C",
+          "text": "dim"
+        },
+        {
+          "position": "D",
+          "text": "striking and clear"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q8",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "8",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: ephemeral",
+      "options": [
+        {
+          "position": "A",
+          "text": "ancient"
+        },
+        {
+          "position": "B",
+          "text": "heavy"
+        },
+        {
+          "position": "C",
+          "text": "short-lived"
+        },
+        {
+          "position": "D",
+          "text": "eternal"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q9",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "9",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: benevolent",
+      "options": [
+        {
+          "position": "A",
+          "text": "kind"
+        },
+        {
+          "position": "B",
+          "text": "cruel"
+        },
+        {
+          "position": "C",
+          "text": "selfish"
+        },
+        {
+          "position": "D",
+          "text": "strict"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q10",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "10",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: conceal",
+      "options": [
+        {
+          "position": "A",
+          "text": "hide"
+        },
+        {
+          "position": "B",
+          "text": "reveal"
+        },
+        {
+          "position": "C",
+          "text": "polish"
+        },
+        {
+          "position": "D",
+          "text": "mend"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q11",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "11",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: eloquent",
+      "options": [
+        {
+          "position": "A",
+          "text": "boring"
+        },
+        {
+          "position": "B",
+          "text": "silent"
+        },
+        {
+          "position": "C",
+          "text": "fluent and persuasive"
+        },
+        {
+          "position": "D",
+          "text": "clumsy"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q12",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "12",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: fragile",
+      "options": [
+        {
+          "position": "A",
+          "text": "rough"
+        },
+        {
+          "position": "B",
+          "text": "heavy"
+        },
+        {
+          "position": "C",
+          "text": "delicate"
+        },
+        {
+          "position": "D",
+          "text": "sturdy"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q13",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "13",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: hostile",
+      "options": [
+        {
+          "position": "A",
+          "text": "lazy"
+        },
+        {
+          "position": "B",
+          "text": "friendly"
+        },
+        {
+          "position": "C",
+          "text": "calm"
+        },
+        {
+          "position": "D",
+          "text": "unfriendly"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q14",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "14",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: inevitable",
+      "options": [
+        {
+          "position": "A",
+          "text": "doubtful"
+        },
+        {
+          "position": "B",
+          "text": "unavoidable"
+        },
+        {
+          "position": "C",
+          "text": "avoidable"
+        },
+        {
+          "position": "D",
+          "text": "rare"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q15",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "15",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: meticulous",
+      "options": [
+        {
+          "position": "A",
+          "text": "extremely careful"
+        },
+        {
+          "position": "B",
+          "text": "noisy"
+        },
+        {
+          "position": "C",
+          "text": "careless"
+        },
+        {
+          "position": "D",
+          "text": "quick"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q16",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "16",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: prudent",
+      "options": [
+        {
+          "position": "A",
+          "text": "foolish"
+        },
+        {
+          "position": "B",
+          "text": "rash"
+        },
+        {
+          "position": "C",
+          "text": "wise and careful"
+        },
+        {
+          "position": "D",
+          "text": "bold"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q17",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "17",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: resilient",
+      "options": [
+        {
+          "position": "A",
+          "text": "slow"
+        },
+        {
+          "position": "B",
+          "text": "weak"
+        },
+        {
+          "position": "C",
+          "text": "rigid"
+        },
+        {
+          "position": "D",
+          "text": "able to recover quickly"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q18",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "18",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: sceptical",
+      "options": [
+        {
+          "position": "A",
+          "text": "doubtful"
+        },
+        {
+          "position": "B",
+          "text": "cheerful"
+        },
+        {
+          "position": "C",
+          "text": "eager"
+        },
+        {
+          "position": "D",
+          "text": "trusting"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q19",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "19",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: trivial",
+      "options": [
+        {
+          "position": "A",
+          "text": "vital"
+        },
+        {
+          "position": "B",
+          "text": "unimportant"
+        },
+        {
+          "position": "C",
+          "text": "huge"
+        },
+        {
+          "position": "D",
+          "text": "costly"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q20",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "20",
+      "type": "MCQ",
+      "question_text": "Choose the word closest in meaning to: zealous",
+      "options": [
+        {
+          "position": "A",
+          "text": "indifferent"
+        },
+        {
+          "position": "B",
+          "text": "calm"
+        },
+        {
+          "position": "C",
+          "text": "tired"
+        },
+        {
+          "position": "D",
+          "text": "enthusiastic"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q21",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "21",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: ancient",
+      "options": [
+        {
+          "position": "A",
+          "text": "rare"
+        },
+        {
+          "position": "B",
+          "text": "modern"
+        },
+        {
+          "position": "C",
+          "text": "old"
+        },
+        {
+          "position": "D",
+          "text": "historic"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q22",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "22",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: generous",
+      "options": [
+        {
+          "position": "A",
+          "text": "polite"
+        },
+        {
+          "position": "B",
+          "text": "wealthy"
+        },
+        {
+          "position": "C",
+          "text": "kind"
+        },
+        {
+          "position": "D",
+          "text": "stingy"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q23",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "23",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: expand",
+      "options": [
+        {
+          "position": "A",
+          "text": "grow"
+        },
+        {
+          "position": "B",
+          "text": "spread"
+        },
+        {
+          "position": "C",
+          "text": "stretch"
+        },
+        {
+          "position": "D",
+          "text": "contract"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q24",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "24",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: victory",
+      "options": [
+        {
+          "position": "A",
+          "text": "defeat"
+        },
+        {
+          "position": "B",
+          "text": "battle"
+        },
+        {
+          "position": "C",
+          "text": "triumph"
+        },
+        {
+          "position": "D",
+          "text": "success"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q25",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "25",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: transparent",
+      "options": [
+        {
+          "position": "A",
+          "text": "thin"
+        },
+        {
+          "position": "B",
+          "text": "opaque"
+        },
+        {
+          "position": "C",
+          "text": "bright"
+        },
+        {
+          "position": "D",
+          "text": "clear"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q26",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "26",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: optimistic",
+      "options": [
+        {
+          "position": "A",
+          "text": "cheerful"
+        },
+        {
+          "position": "B",
+          "text": "positive"
+        },
+        {
+          "position": "C",
+          "text": "pessimistic"
+        },
+        {
+          "position": "D",
+          "text": "hopeful"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q27",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "27",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: rapid",
+      "options": [
+        {
+          "position": "A",
+          "text": "slow"
+        },
+        {
+          "position": "B",
+          "text": "fierce"
+        },
+        {
+          "position": "C",
+          "text": "sudden"
+        },
+        {
+          "position": "D",
+          "text": "quick"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q28",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "28",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: humble",
+      "options": [
+        {
+          "position": "A",
+          "text": "modest"
+        },
+        {
+          "position": "B",
+          "text": "gentle"
+        },
+        {
+          "position": "C",
+          "text": "poor"
+        },
+        {
+          "position": "D",
+          "text": "arrogant"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q29",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "29",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: scarce",
+      "options": [
+        {
+          "position": "A",
+          "text": "limited"
+        },
+        {
+          "position": "B",
+          "text": "rare"
+        },
+        {
+          "position": "C",
+          "text": "abundant"
+        },
+        {
+          "position": "D",
+          "text": "tiny"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q30",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "30",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: permanent",
+      "options": [
+        {
+          "position": "A",
+          "text": "fixed"
+        },
+        {
+          "position": "B",
+          "text": "constant"
+        },
+        {
+          "position": "C",
+          "text": "lasting"
+        },
+        {
+          "position": "D",
+          "text": "temporary"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q31",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "31",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: cautious",
+      "options": [
+        {
+          "position": "A",
+          "text": "careful"
+        },
+        {
+          "position": "B",
+          "text": "reckless"
+        },
+        {
+          "position": "C",
+          "text": "alert"
+        },
+        {
+          "position": "D",
+          "text": "timid"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q32",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "32",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: ascend",
+      "options": [
+        {
+          "position": "A",
+          "text": "climb"
+        },
+        {
+          "position": "B",
+          "text": "descend"
+        },
+        {
+          "position": "C",
+          "text": "mount"
+        },
+        {
+          "position": "D",
+          "text": "rise"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q33",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "33",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: accept",
+      "options": [
+        {
+          "position": "A",
+          "text": "reject"
+        },
+        {
+          "position": "B",
+          "text": "receive"
+        },
+        {
+          "position": "C",
+          "text": "welcome"
+        },
+        {
+          "position": "D",
+          "text": "agree"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q34",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "34",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: brave",
+      "options": [
+        {
+          "position": "A",
+          "text": "bold"
+        },
+        {
+          "position": "B",
+          "text": "strong"
+        },
+        {
+          "position": "C",
+          "text": "fearless"
+        },
+        {
+          "position": "D",
+          "text": "cowardly"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q35",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "35",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: clarity",
+      "options": [
+        {
+          "position": "A",
+          "text": "brightness"
+        },
+        {
+          "position": "B",
+          "text": "purity"
+        },
+        {
+          "position": "C",
+          "text": "confusion"
+        },
+        {
+          "position": "D",
+          "text": "clearness"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q36",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "36",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: complex",
+      "options": [
+        {
+          "position": "A",
+          "text": "tangled"
+        },
+        {
+          "position": "B",
+          "text": "elaborate"
+        },
+        {
+          "position": "C",
+          "text": "difficult"
+        },
+        {
+          "position": "D",
+          "text": "simple"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q37",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "37",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: vague",
+      "options": [
+        {
+          "position": "A",
+          "text": "doubtful"
+        },
+        {
+          "position": "B",
+          "text": "hazy"
+        },
+        {
+          "position": "C",
+          "text": "unclear"
+        },
+        {
+          "position": "D",
+          "text": "precise"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q38",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "38",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: barren",
+      "options": [
+        {
+          "position": "A",
+          "text": "empty"
+        },
+        {
+          "position": "B",
+          "text": "bare"
+        },
+        {
+          "position": "C",
+          "text": "fertile"
+        },
+        {
+          "position": "D",
+          "text": "dry"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q39",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "39",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: harmony",
+      "options": [
+        {
+          "position": "A",
+          "text": "music"
+        },
+        {
+          "position": "B",
+          "text": "discord"
+        },
+        {
+          "position": "C",
+          "text": "unity"
+        },
+        {
+          "position": "D",
+          "text": "peace"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q40",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "40",
+      "type": "MCQ",
+      "question_text": "Choose the word opposite in meaning to: diminish",
+      "options": [
+        {
+          "position": "A",
+          "text": "fade"
+        },
+        {
+          "position": "B",
+          "text": "shrink"
+        },
+        {
+          "position": "C",
+          "text": "reduce"
+        },
+        {
+          "position": "D",
+          "text": "increase"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q41",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "41",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nShe ___ to the market every Sunday.",
+      "options": [
+        {
+          "position": "A",
+          "text": "goes"
+        },
+        {
+          "position": "B",
+          "text": "going"
+        },
+        {
+          "position": "C",
+          "text": "go"
+        },
+        {
+          "position": "D",
+          "text": "gone"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q42",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "42",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nIf I ___ you, I would apologise.",
+      "options": [
+        {
+          "position": "A",
+          "text": "be"
+        },
+        {
+          "position": "B",
+          "text": "were"
+        },
+        {
+          "position": "C",
+          "text": "am"
+        },
+        {
+          "position": "D",
+          "text": "was"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q43",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "43",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nNeither of the two boys ___ present.",
+      "options": [
+        {
+          "position": "A",
+          "text": "was"
+        },
+        {
+          "position": "B",
+          "text": "are"
+        },
+        {
+          "position": "C",
+          "text": "were"
+        },
+        {
+          "position": "D",
+          "text": "have"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q44",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "44",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nHe has been working here ___ 2015.",
+      "options": [
+        {
+          "position": "A",
+          "text": "since"
+        },
+        {
+          "position": "B",
+          "text": "from"
+        },
+        {
+          "position": "C",
+          "text": "at"
+        },
+        {
+          "position": "D",
+          "text": "for"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q45",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "45",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nEach of the students ___ given a certificate.",
+      "options": [
+        {
+          "position": "A",
+          "text": "were"
+        },
+        {
+          "position": "B",
+          "text": "have been"
+        },
+        {
+          "position": "C",
+          "text": "are"
+        },
+        {
+          "position": "D",
+          "text": "was"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q46",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "46",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nI look forward to ___ you.",
+      "options": [
+        {
+          "position": "A",
+          "text": "have met"
+        },
+        {
+          "position": "B",
+          "text": "meet"
+        },
+        {
+          "position": "C",
+          "text": "meeting"
+        },
+        {
+          "position": "D",
+          "text": "met"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q47",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "47",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nShe is senior ___ me.",
+      "options": [
+        {
+          "position": "A",
+          "text": "to"
+        },
+        {
+          "position": "B",
+          "text": "from"
+        },
+        {
+          "position": "C",
+          "text": "over"
+        },
+        {
+          "position": "D",
+          "text": "than"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q48",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "48",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nWe have lived in this city ___ ten years.",
+      "options": [
+        {
+          "position": "A",
+          "text": "since"
+        },
+        {
+          "position": "B",
+          "text": "for"
+        },
+        {
+          "position": "C",
+          "text": "by"
+        },
+        {
+          "position": "D",
+          "text": "from"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q49",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "49",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\n___ honest man is respected everywhere.",
+      "options": [
+        {
+          "position": "A",
+          "text": "No article"
+        },
+        {
+          "position": "B",
+          "text": "The"
+        },
+        {
+          "position": "C",
+          "text": "An"
+        },
+        {
+          "position": "D",
+          "text": "A"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q50",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "50",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nHe is studying at ___ university in Pune.",
+      "options": [
+        {
+          "position": "A",
+          "text": "a"
+        },
+        {
+          "position": "B",
+          "text": "no article"
+        },
+        {
+          "position": "C",
+          "text": "an"
+        },
+        {
+          "position": "D",
+          "text": "the"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q51",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "51",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nBy the time we arrived, the film ___.",
+      "options": [
+        {
+          "position": "A",
+          "text": "started"
+        },
+        {
+          "position": "B",
+          "text": "has started"
+        },
+        {
+          "position": "C",
+          "text": "starts"
+        },
+        {
+          "position": "D",
+          "text": "had started"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q52",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "52",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nThe teacher, along with her students, ___ going on a trip.",
+      "options": [
+        {
+          "position": "A",
+          "text": "were"
+        },
+        {
+          "position": "B",
+          "text": "are"
+        },
+        {
+          "position": "C",
+          "text": "have"
+        },
+        {
+          "position": "D",
+          "text": "is"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q53",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "53",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nI wish I ___ taller.",
+      "options": [
+        {
+          "position": "A",
+          "text": "will be"
+        },
+        {
+          "position": "B",
+          "text": "were"
+        },
+        {
+          "position": "C",
+          "text": "was"
+        },
+        {
+          "position": "D",
+          "text": "am"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q54",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "54",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nHardly had he left ___ it began to rain.",
+      "options": [
+        {
+          "position": "A",
+          "text": "then"
+        },
+        {
+          "position": "B",
+          "text": "because"
+        },
+        {
+          "position": "C",
+          "text": "when"
+        },
+        {
+          "position": "D",
+          "text": "than"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q55",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "55",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nHe is good ___ mathematics.",
+      "options": [
+        {
+          "position": "A",
+          "text": "at"
+        },
+        {
+          "position": "B",
+          "text": "on"
+        },
+        {
+          "position": "C",
+          "text": "with"
+        },
+        {
+          "position": "D",
+          "text": "in"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q56",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "56",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nThe bridge was named ___ the architect.",
+      "options": [
+        {
+          "position": "A",
+          "text": "from"
+        },
+        {
+          "position": "B",
+          "text": "after"
+        },
+        {
+          "position": "C",
+          "text": "to"
+        },
+        {
+          "position": "D",
+          "text": "on"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q57",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "57",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nPlease divide the sweets ___ the two children.",
+      "options": [
+        {
+          "position": "A",
+          "text": "across"
+        },
+        {
+          "position": "B",
+          "text": "among"
+        },
+        {
+          "position": "C",
+          "text": "between"
+        },
+        {
+          "position": "D",
+          "text": "within"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q58",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "58",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nShe prefers tea ___ coffee.",
+      "options": [
+        {
+          "position": "A",
+          "text": "from"
+        },
+        {
+          "position": "B",
+          "text": "to"
+        },
+        {
+          "position": "C",
+          "text": "over than"
+        },
+        {
+          "position": "D",
+          "text": "than"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q59",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "59",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nThe furniture ___ delivered yesterday.",
+      "options": [
+        {
+          "position": "A",
+          "text": "have been"
+        },
+        {
+          "position": "B",
+          "text": "was"
+        },
+        {
+          "position": "C",
+          "text": "are"
+        },
+        {
+          "position": "D",
+          "text": "were"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q60",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "60",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nHe asked me where I ___.",
+      "options": [
+        {
+          "position": "A",
+          "text": "had live"
+        },
+        {
+          "position": "B",
+          "text": "lived"
+        },
+        {
+          "position": "C",
+          "text": "am living"
+        },
+        {
+          "position": "D",
+          "text": "live"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q61",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "61",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nNot only the students but also the teacher ___ confused.",
+      "options": [
+        {
+          "position": "A",
+          "text": "were"
+        },
+        {
+          "position": "B",
+          "text": "are"
+        },
+        {
+          "position": "C",
+          "text": "was"
+        },
+        {
+          "position": "D",
+          "text": "have"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q62",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "62",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nI have never ___ such a beautiful painting.",
+      "options": [
+        {
+          "position": "A",
+          "text": "see"
+        },
+        {
+          "position": "B",
+          "text": "saw"
+        },
+        {
+          "position": "C",
+          "text": "seeing"
+        },
+        {
+          "position": "D",
+          "text": "seen"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q63",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "63",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nThe children are afraid ___ the dark.",
+      "options": [
+        {
+          "position": "A",
+          "text": "of"
+        },
+        {
+          "position": "B",
+          "text": "from"
+        },
+        {
+          "position": "C",
+          "text": "at"
+        },
+        {
+          "position": "D",
+          "text": "with"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q64",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "64",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nHe will call you as soon as he ___ home.",
+      "options": [
+        {
+          "position": "A",
+          "text": "reached"
+        },
+        {
+          "position": "B",
+          "text": "will reach"
+        },
+        {
+          "position": "C",
+          "text": "reaches"
+        },
+        {
+          "position": "D",
+          "text": "is reaching"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q65",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "65",
+      "type": "MCQ",
+      "question_text": "Fill in the blank:\nDespite ___ hard, she failed the test.",
+      "options": [
+        {
+          "position": "A",
+          "text": "works"
+        },
+        {
+          "position": "B",
+          "text": "worked"
+        },
+        {
+          "position": "C",
+          "text": "working"
+        },
+        {
+          "position": "D",
+          "text": "work"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q66",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "66",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nThe number of students have increased this year compared to last year.",
+      "options": [
+        {
+          "position": "A",
+          "text": "this year"
+        },
+        {
+          "position": "B",
+          "text": "The number of students"
+        },
+        {
+          "position": "C",
+          "text": "compared to last year."
+        },
+        {
+          "position": "D",
+          "text": "have increased"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q67",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "67",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nShe do not know the answer to the question.",
+      "options": [
+        {
+          "position": "A",
+          "text": "to the question."
+        },
+        {
+          "position": "B",
+          "text": "She do"
+        },
+        {
+          "position": "C",
+          "text": "not know"
+        },
+        {
+          "position": "D",
+          "text": "the answer"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q68",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "68",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nEach of the boys have completed his homework.",
+      "options": [
+        {
+          "position": "A",
+          "text": "Each of the boys"
+        },
+        {
+          "position": "B",
+          "text": "completed"
+        },
+        {
+          "position": "C",
+          "text": "his homework."
+        },
+        {
+          "position": "D",
+          "text": "have"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q69",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "69",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nHe is more taller than his brother.",
+      "options": [
+        {
+          "position": "A",
+          "text": "than"
+        },
+        {
+          "position": "B",
+          "text": "more taller"
+        },
+        {
+          "position": "C",
+          "text": "his brother."
+        },
+        {
+          "position": "D",
+          "text": "He is"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q70",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "70",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nI have seen him yesterday at the station.",
+      "options": [
+        {
+          "position": "A",
+          "text": "at the station."
+        },
+        {
+          "position": "B",
+          "text": "I have"
+        },
+        {
+          "position": "C",
+          "text": "seen him"
+        },
+        {
+          "position": "D",
+          "text": "yesterday"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q71",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "71",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nDespite of the rain, the match was played.",
+      "options": [
+        {
+          "position": "A",
+          "text": "the match"
+        },
+        {
+          "position": "B",
+          "text": "the rain,"
+        },
+        {
+          "position": "C",
+          "text": "was played."
+        },
+        {
+          "position": "D",
+          "text": "Despite of"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q72",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "72",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nThe teacher gave us many advices before the exam.",
+      "options": [
+        {
+          "position": "A",
+          "text": "advices"
+        },
+        {
+          "position": "B",
+          "text": "us many"
+        },
+        {
+          "position": "C",
+          "text": "before the exam."
+        },
+        {
+          "position": "D",
+          "text": "The teacher gave"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q73",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "73",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nNeither the manager nor the clerks was present.",
+      "options": [
+        {
+          "position": "A",
+          "text": "present."
+        },
+        {
+          "position": "B",
+          "text": "Neither the manager"
+        },
+        {
+          "position": "C",
+          "text": "nor the clerks"
+        },
+        {
+          "position": "D",
+          "text": "was"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q74",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "74",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nShe told to me that she was leaving.",
+      "options": [
+        {
+          "position": "A",
+          "text": "leaving."
+        },
+        {
+          "position": "B",
+          "text": "to me"
+        },
+        {
+          "position": "C",
+          "text": "She told"
+        },
+        {
+          "position": "D",
+          "text": "that she was"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q75",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "75",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nThe scenery of the hills are breathtaking.",
+      "options": [
+        {
+          "position": "A",
+          "text": "are"
+        },
+        {
+          "position": "B",
+          "text": "The scenery"
+        },
+        {
+          "position": "C",
+          "text": "breathtaking."
+        },
+        {
+          "position": "D",
+          "text": "of the hills"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q76",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "76",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nI am looking forward to meet you soon.",
+      "options": [
+        {
+          "position": "A",
+          "text": "looking forward"
+        },
+        {
+          "position": "B",
+          "text": "to meet"
+        },
+        {
+          "position": "C",
+          "text": "I am"
+        },
+        {
+          "position": "D",
+          "text": "you soon."
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q77",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "77",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nIf it will rain tomorrow, we shall stay at home.",
+      "options": [
+        {
+          "position": "A",
+          "text": "tomorrow,"
+        },
+        {
+          "position": "B",
+          "text": "stay at home."
+        },
+        {
+          "position": "C",
+          "text": "If it will rain"
+        },
+        {
+          "position": "D",
+          "text": "we shall"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q78",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "78",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nShe is one of the best student in the class.",
+      "options": [
+        {
+          "position": "A",
+          "text": "She is"
+        },
+        {
+          "position": "B",
+          "text": "in the class."
+        },
+        {
+          "position": "C",
+          "text": "one of the best"
+        },
+        {
+          "position": "D",
+          "text": "student"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q79",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "79",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nHe has been living here since five years.",
+      "options": [
+        {
+          "position": "A",
+          "text": "five years."
+        },
+        {
+          "position": "B",
+          "text": "been living"
+        },
+        {
+          "position": "C",
+          "text": "here since"
+        },
+        {
+          "position": "D",
+          "text": "He has"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q80",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "80",
+      "type": "MCQ",
+      "question_text": "Find the part of the sentence that has an error:\nThe jury gave it's verdict.",
+      "options": [
+        {
+          "position": "A",
+          "text": "gave"
+        },
+        {
+          "position": "B",
+          "text": "verdict."
+        },
+        {
+          "position": "C",
+          "text": "it's"
+        },
+        {
+          "position": "D",
+          "text": "The jury"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q81",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "81",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: A person who loves books",
+      "options": [
+        {
+          "position": "A",
+          "text": "bibliographer"
+        },
+        {
+          "position": "B",
+          "text": "librarian"
+        },
+        {
+          "position": "C",
+          "text": "bibliophile"
+        },
+        {
+          "position": "D",
+          "text": "novelist"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q82",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "82",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: An unusual fear of heights",
+      "options": [
+        {
+          "position": "A",
+          "text": "agoraphobia"
+        },
+        {
+          "position": "B",
+          "text": "hydrophobia"
+        },
+        {
+          "position": "C",
+          "text": "claustrophobia"
+        },
+        {
+          "position": "D",
+          "text": "acrophobia"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q83",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "83",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: A person who speaks many languages",
+      "options": [
+        {
+          "position": "A",
+          "text": "linguist"
+        },
+        {
+          "position": "B",
+          "text": "interpreter"
+        },
+        {
+          "position": "C",
+          "text": "orator"
+        },
+        {
+          "position": "D",
+          "text": "polyglot"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q84",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "84",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: A person who walks in their sleep",
+      "options": [
+        {
+          "position": "A",
+          "text": "insomniac"
+        },
+        {
+          "position": "B",
+          "text": "hypnotist"
+        },
+        {
+          "position": "C",
+          "text": "narcoleptic"
+        },
+        {
+          "position": "D",
+          "text": "somnambulist"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q85",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "85",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: A remedy supposed to cure all ills",
+      "options": [
+        {
+          "position": "A",
+          "text": "tonic"
+        },
+        {
+          "position": "B",
+          "text": "panacea"
+        },
+        {
+          "position": "C",
+          "text": "antidote"
+        },
+        {
+          "position": "D",
+          "text": "placebo"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q86",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "86",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: Handwriting that cannot be read",
+      "options": [
+        {
+          "position": "A",
+          "text": "unreadable ink"
+        },
+        {
+          "position": "B",
+          "text": "illegible"
+        },
+        {
+          "position": "C",
+          "text": "eligible"
+        },
+        {
+          "position": "D",
+          "text": "legible"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q87",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "87",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: A place where bees are kept",
+      "options": [
+        {
+          "position": "A",
+          "text": "aviary"
+        },
+        {
+          "position": "B",
+          "text": "orchard"
+        },
+        {
+          "position": "C",
+          "text": "apiary"
+        },
+        {
+          "position": "D",
+          "text": "aquarium"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q88",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "88",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: One who eats too much",
+      "options": [
+        {
+          "position": "A",
+          "text": "gourmet"
+        },
+        {
+          "position": "B",
+          "text": "ascetic"
+        },
+        {
+          "position": "C",
+          "text": "vegetarian"
+        },
+        {
+          "position": "D",
+          "text": "glutton"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q89",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "89",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: A person who does not believe in God",
+      "options": [
+        {
+          "position": "A",
+          "text": "optimist"
+        },
+        {
+          "position": "B",
+          "text": "atheist"
+        },
+        {
+          "position": "C",
+          "text": "theist"
+        },
+        {
+          "position": "D",
+          "text": "pacifist"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q90",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "90",
+      "type": "MCQ",
+      "question_text": "Choose the one word that can be substituted for: The study of birds",
+      "options": [
+        {
+          "position": "A",
+          "text": "ornithology"
+        },
+        {
+          "position": "B",
+          "text": "entomology"
+        },
+        {
+          "position": "C",
+          "text": "geology"
+        },
+        {
+          "position": "D",
+          "text": "ecology"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q91",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "91",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: to break the ice",
+      "options": [
+        {
+          "position": "A",
+          "text": "to cause an accident"
+        },
+        {
+          "position": "B",
+          "text": "to start a conversation in a social setting"
+        },
+        {
+          "position": "C",
+          "text": "to melt frozen water"
+        },
+        {
+          "position": "D",
+          "text": "to end a friendship"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q92",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "92",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: a piece of cake",
+      "options": [
+        {
+          "position": "A",
+          "text": "a hard task"
+        },
+        {
+          "position": "B",
+          "text": "something very easy"
+        },
+        {
+          "position": "C",
+          "text": "a birthday gift"
+        },
+        {
+          "position": "D",
+          "text": "a small portion"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q93",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "93",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: once in a blue moon",
+      "options": [
+        {
+          "position": "A",
+          "text": "at night"
+        },
+        {
+          "position": "B",
+          "text": "very rarely"
+        },
+        {
+          "position": "C",
+          "text": "very often"
+        },
+        {
+          "position": "D",
+          "text": "every month"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q94",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "94",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: to spill the beans",
+      "options": [
+        {
+          "position": "A",
+          "text": "to make a mess"
+        },
+        {
+          "position": "B",
+          "text": "to cook a meal"
+        },
+        {
+          "position": "C",
+          "text": "to waste food"
+        },
+        {
+          "position": "D",
+          "text": "to reveal a secret"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q95",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "95",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: to hit the nail on the head",
+      "options": [
+        {
+          "position": "A",
+          "text": "to miss the point"
+        },
+        {
+          "position": "B",
+          "text": "to build a house"
+        },
+        {
+          "position": "C",
+          "text": "to hurt oneself"
+        },
+        {
+          "position": "D",
+          "text": "to say exactly the right thing"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q96",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "96",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: under the weather",
+      "options": [
+        {
+          "position": "A",
+          "text": "slightly unwell"
+        },
+        {
+          "position": "B",
+          "text": "very happy"
+        },
+        {
+          "position": "C",
+          "text": "in a storm"
+        },
+        {
+          "position": "D",
+          "text": "outdoors"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q97",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "97",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: to cost an arm and a leg",
+      "options": [
+        {
+          "position": "A",
+          "text": "to cause an injury"
+        },
+        {
+          "position": "B",
+          "text": "to be cheap"
+        },
+        {
+          "position": "C",
+          "text": "to be a fair price"
+        },
+        {
+          "position": "D",
+          "text": "to be very expensive"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q98",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "98",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: the ball is in your court",
+      "options": [
+        {
+          "position": "A",
+          "text": "you must wait"
+        },
+        {
+          "position": "B",
+          "text": "you are playing sport"
+        },
+        {
+          "position": "C",
+          "text": "it is your turn to act"
+        },
+        {
+          "position": "D",
+          "text": "you have lost"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q99",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "99",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: to burn the midnight oil",
+      "options": [
+        {
+          "position": "A",
+          "text": "to light a lamp"
+        },
+        {
+          "position": "B",
+          "text": "to sleep early"
+        },
+        {
+          "position": "C",
+          "text": "to waste fuel"
+        },
+        {
+          "position": "D",
+          "text": "to work late into the night"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q100",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "100",
+      "type": "MCQ",
+      "question_text": "Choose the meaning of the idiom: to bite the bullet",
+      "options": [
+        {
+          "position": "A",
+          "text": "to be afraid"
+        },
+        {
+          "position": "B",
+          "text": "to eat quickly"
+        },
+        {
+          "position": "C",
+          "text": "to refuse a job"
+        },
+        {
+          "position": "D",
+          "text": "to face something unpleasant bravely"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q101",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "101",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nCotton and the Cost of Cloth\nCotton is the most widely used natural fibre in clothing, but it is also one of the thirstiest crops in the world. Growing enough cotton for a single shirt can require thousands of litres of water, much of it drawn from rivers and underground reserves that local communities also depend on. Farmers in dry regions often have little choice but to irrigate heavily to protect their harvests. In recent years, some growers have turned to drip irrigation and rain-fed methods, which use far less water. Designers too have begun to blend cotton with recycled fibres, stretching each harvest further. These changes are modest, but together they show that the fashion industry can reduce its footprint without giving up comfort.\n\nWhat is the main idea of the passage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Recycled fibres are cheaper than cotton."
+        },
+        {
+          "position": "B",
+          "text": "Drip irrigation is banned in dry regions."
+        },
+        {
+          "position": "C",
+          "text": "Cotton should no longer be used in clothing."
+        },
+        {
+          "position": "D",
+          "text": "Cotton farming uses a lot of water, but practices are slowly improving."
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q102",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "102",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nCotton and the Cost of Cloth\nCotton is the most widely used natural fibre in clothing, but it is also one of the thirstiest crops in the world. Growing enough cotton for a single shirt can require thousands of litres of water, much of it drawn from rivers and underground reserves that local communities also depend on. Farmers in dry regions often have little choice but to irrigate heavily to protect their harvests. In recent years, some growers have turned to drip irrigation and rain-fed methods, which use far less water. Designers too have begun to blend cotton with recycled fibres, stretching each harvest further. These changes are modest, but together they show that the fashion industry can reduce its footprint without giving up comfort.\n\nAccording to the passage, why do farmers in dry regions irrigate heavily?",
+      "options": [
+        {
+          "position": "A",
+          "text": "To protect their harvests"
+        },
+        {
+          "position": "B",
+          "text": "To lower the price of cotton"
+        },
+        {
+          "position": "C",
+          "text": "To grow recycled fibres"
+        },
+        {
+          "position": "D",
+          "text": "Because rivers are always full"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q103",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "103",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nCotton and the Cost of Cloth\nCotton is the most widely used natural fibre in clothing, but it is also one of the thirstiest crops in the world. Growing enough cotton for a single shirt can require thousands of litres of water, much of it drawn from rivers and underground reserves that local communities also depend on. Farmers in dry regions often have little choice but to irrigate heavily to protect their harvests. In recent years, some growers have turned to drip irrigation and rain-fed methods, which use far less water. Designers too have begun to blend cotton with recycled fibres, stretching each harvest further. These changes are modest, but together they show that the fashion industry can reduce its footprint without giving up comfort.\n\nThe word 'modest' as used in the passage most nearly means",
+      "options": [
+        {
+          "position": "A",
+          "text": "shy and quiet"
+        },
+        {
+          "position": "B",
+          "text": "very expensive"
+        },
+        {
+          "position": "C",
+          "text": "small in size or extent"
+        },
+        {
+          "position": "D",
+          "text": "completely useless"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q104",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "104",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nCotton and the Cost of Cloth\nCotton is the most widely used natural fibre in clothing, but it is also one of the thirstiest crops in the world. Growing enough cotton for a single shirt can require thousands of litres of water, much of it drawn from rivers and underground reserves that local communities also depend on. Farmers in dry regions often have little choice but to irrigate heavily to protect their harvests. In recent years, some growers have turned to drip irrigation and rain-fed methods, which use far less water. Designers too have begun to blend cotton with recycled fibres, stretching each harvest further. These changes are modest, but together they show that the fashion industry can reduce its footprint without giving up comfort.\n\nWhich of the following is mentioned as a way to use less water?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Using thicker shirts"
+        },
+        {
+          "position": "B",
+          "text": "Growing more cotton"
+        },
+        {
+          "position": "C",
+          "text": "Importing water"
+        },
+        {
+          "position": "D",
+          "text": "Drip irrigation"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q105",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "105",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nCotton and the Cost of Cloth\nCotton is the most widely used natural fibre in clothing, but it is also one of the thirstiest crops in the world. Growing enough cotton for a single shirt can require thousands of litres of water, much of it drawn from rivers and underground reserves that local communities also depend on. Farmers in dry regions often have little choice but to irrigate heavily to protect their harvests. In recent years, some growers have turned to drip irrigation and rain-fed methods, which use far less water. Designers too have begun to blend cotton with recycled fibres, stretching each harvest further. These changes are modest, but together they show that the fashion industry can reduce its footprint without giving up comfort.\n\nThe author's attitude towards the changes in the industry is best described as",
+      "options": [
+        {
+          "position": "A",
+          "text": "completely indifferent"
+        },
+        {
+          "position": "B",
+          "text": "highly sarcastic"
+        },
+        {
+          "position": "C",
+          "text": "cautiously hopeful"
+        },
+        {
+          "position": "D",
+          "text": "openly hostile"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q106",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "106",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Return of the Handloom\nFor decades, the handloom was seen as a relic of the past, replaced by faster and cheaper power looms. Yet in many Indian villages the clack of the loom never stopped. Weavers inherited their skills from their parents and carried patterns in their memory rather than on paper. Today, young designers are visiting these villages and working with weavers to create contemporary clothing. The collaboration benefits both sides: designers gain authentic textures that machines cannot copy, while weavers receive fair prices and steady orders. Critics warn that a sudden fashion trend can fade as quickly as it rises, leaving craftspeople worse off. Lasting success, they argue, will depend on building long-term relationships rather than chasing novelty.\n\nWhat is the passage mainly about?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Designers and weavers working together to revive handloom"
+        },
+        {
+          "position": "B",
+          "text": "The invention of the power loom"
+        },
+        {
+          "position": "C",
+          "text": "The decline of weaving in India"
+        },
+        {
+          "position": "D",
+          "text": "Why villages should avoid fashion"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q107",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "107",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Return of the Handloom\nFor decades, the handloom was seen as a relic of the past, replaced by faster and cheaper power looms. Yet in many Indian villages the clack of the loom never stopped. Weavers inherited their skills from their parents and carried patterns in their memory rather than on paper. Today, young designers are visiting these villages and working with weavers to create contemporary clothing. The collaboration benefits both sides: designers gain authentic textures that machines cannot copy, while weavers receive fair prices and steady orders. Critics warn that a sudden fashion trend can fade as quickly as it rises, leaving craftspeople worse off. Lasting success, they argue, will depend on building long-term relationships rather than chasing novelty.\n\nAccording to the passage, how did weavers traditionally keep their patterns?",
+      "options": [
+        {
+          "position": "A",
+          "text": "In computer files"
+        },
+        {
+          "position": "B",
+          "text": "In their memory"
+        },
+        {
+          "position": "C",
+          "text": "In museum records"
+        },
+        {
+          "position": "D",
+          "text": "On paper charts"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q108",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "108",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Return of the Handloom\nFor decades, the handloom was seen as a relic of the past, replaced by faster and cheaper power looms. Yet in many Indian villages the clack of the loom never stopped. Weavers inherited their skills from their parents and carried patterns in their memory rather than on paper. Today, young designers are visiting these villages and working with weavers to create contemporary clothing. The collaboration benefits both sides: designers gain authentic textures that machines cannot copy, while weavers receive fair prices and steady orders. Critics warn that a sudden fashion trend can fade as quickly as it rises, leaving craftspeople worse off. Lasting success, they argue, will depend on building long-term relationships rather than chasing novelty.\n\nWhat do designers gain from the collaboration?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Authentic textures that machines cannot copy"
+        },
+        {
+          "position": "B",
+          "text": "Fewer orders"
+        },
+        {
+          "position": "C",
+          "text": "Free fabric"
+        },
+        {
+          "position": "D",
+          "text": "Cheaper power looms"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q109",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "109",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Return of the Handloom\nFor decades, the handloom was seen as a relic of the past, replaced by faster and cheaper power looms. Yet in many Indian villages the clack of the loom never stopped. Weavers inherited their skills from their parents and carried patterns in their memory rather than on paper. Today, young designers are visiting these villages and working with weavers to create contemporary clothing. The collaboration benefits both sides: designers gain authentic textures that machines cannot copy, while weavers receive fair prices and steady orders. Critics warn that a sudden fashion trend can fade as quickly as it rises, leaving craftspeople worse off. Lasting success, they argue, will depend on building long-term relationships rather than chasing novelty.\n\nThe word 'relic' as used in the passage most nearly means",
+      "options": [
+        {
+          "position": "A",
+          "text": "a religious building"
+        },
+        {
+          "position": "B",
+          "text": "a costly gift"
+        },
+        {
+          "position": "C",
+          "text": "something left over from the past"
+        },
+        {
+          "position": "D",
+          "text": "a modern invention"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q110",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "110",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Return of the Handloom\nFor decades, the handloom was seen as a relic of the past, replaced by faster and cheaper power looms. Yet in many Indian villages the clack of the loom never stopped. Weavers inherited their skills from their parents and carried patterns in their memory rather than on paper. Today, young designers are visiting these villages and working with weavers to create contemporary clothing. The collaboration benefits both sides: designers gain authentic textures that machines cannot copy, while weavers receive fair prices and steady orders. Critics warn that a sudden fashion trend can fade as quickly as it rises, leaving craftspeople worse off. Lasting success, they argue, will depend on building long-term relationships rather than chasing novelty.\n\nWhat concern do critics raise?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Designers dislike texture"
+        },
+        {
+          "position": "B",
+          "text": "Looms are too noisy"
+        },
+        {
+          "position": "C",
+          "text": "A fashion trend may fade and leave craftspeople worse off"
+        },
+        {
+          "position": "D",
+          "text": "Weavers charge too much"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q111",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "111",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nWhat Colours Tell Us\nColours do more than decorate; they send messages. Red is often linked with energy and urgency, which is why it appears on warning signs and sale posters. Blue suggests calm and trust, a reason banks and technology companies choose it for their logos. Yellow catches the eye quickly, yet too much of it can tire the viewer. Designers know that these associations are not universal. In some cultures white stands for mourning rather than purity, and a colour that comforts one audience may confuse another. A careful designer therefore studies the audience before choosing a palette, treating colour as a language with many dialects.\n\nWhat is the central point of the passage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Colours carry meanings that can differ between cultures."
+        },
+        {
+          "position": "B",
+          "text": "Red is the best colour for every product."
+        },
+        {
+          "position": "C",
+          "text": "Banks choose logos at random."
+        },
+        {
+          "position": "D",
+          "text": "Yellow should never be used."
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q112",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "112",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nWhat Colours Tell Us\nColours do more than decorate; they send messages. Red is often linked with energy and urgency, which is why it appears on warning signs and sale posters. Blue suggests calm and trust, a reason banks and technology companies choose it for their logos. Yellow catches the eye quickly, yet too much of it can tire the viewer. Designers know that these associations are not universal. In some cultures white stands for mourning rather than purity, and a colour that comforts one audience may confuse another. A careful designer therefore studies the audience before choosing a palette, treating colour as a language with many dialects.\n\nWhy do banks and technology companies often choose blue?",
+      "options": [
+        {
+          "position": "A",
+          "text": "It is the cheapest dye"
+        },
+        {
+          "position": "B",
+          "text": "It signals danger"
+        },
+        {
+          "position": "C",
+          "text": "It suggests calm and trust"
+        },
+        {
+          "position": "D",
+          "text": "It tires the viewer"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q113",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "113",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nWhat Colours Tell Us\nColours do more than decorate; they send messages. Red is often linked with energy and urgency, which is why it appears on warning signs and sale posters. Blue suggests calm and trust, a reason banks and technology companies choose it for their logos. Yellow catches the eye quickly, yet too much of it can tire the viewer. Designers know that these associations are not universal. In some cultures white stands for mourning rather than purity, and a colour that comforts one audience may confuse another. A careful designer therefore studies the audience before choosing a palette, treating colour as a language with many dialects.\n\nWhat does the author mean by 'a language with many dialects'?",
+      "options": [
+        {
+          "position": "A",
+          "text": "All colours mean the same thing"
+        },
+        {
+          "position": "B",
+          "text": "Colour meanings vary across groups of people"
+        },
+        {
+          "position": "C",
+          "text": "Colours can be spoken aloud"
+        },
+        {
+          "position": "D",
+          "text": "Designers must learn many languages"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q114",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "114",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nWhat Colours Tell Us\nColours do more than decorate; they send messages. Red is often linked with energy and urgency, which is why it appears on warning signs and sale posters. Blue suggests calm and trust, a reason banks and technology companies choose it for their logos. Yellow catches the eye quickly, yet too much of it can tire the viewer. Designers know that these associations are not universal. In some cultures white stands for mourning rather than purity, and a colour that comforts one audience may confuse another. A careful designer therefore studies the audience before choosing a palette, treating colour as a language with many dialects.\n\nAccording to the passage, in some cultures white stands for",
+      "options": [
+        {
+          "position": "A",
+          "text": "urgency"
+        },
+        {
+          "position": "B",
+          "text": "trust"
+        },
+        {
+          "position": "C",
+          "text": "energy"
+        },
+        {
+          "position": "D",
+          "text": "mourning"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q115",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "115",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nWhat Colours Tell Us\nColours do more than decorate; they send messages. Red is often linked with energy and urgency, which is why it appears on warning signs and sale posters. Blue suggests calm and trust, a reason banks and technology companies choose it for their logos. Yellow catches the eye quickly, yet too much of it can tire the viewer. Designers know that these associations are not universal. In some cultures white stands for mourning rather than purity, and a colour that comforts one audience may confuse another. A careful designer therefore studies the audience before choosing a palette, treating colour as a language with many dialects.\n\nWhich of the following can be inferred from the passage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "A designer should research the audience before choosing colours."
+        },
+        {
+          "position": "B",
+          "text": "Yellow is used in all logos."
+        },
+        {
+          "position": "C",
+          "text": "Red is unsafe to use."
+        },
+        {
+          "position": "D",
+          "text": "Blue is disliked in some countries."
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q116",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "116",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nA Library in Every Neighbourhood\nA public library is more than a room full of books. For many families it is the only place where children can read freely, use a computer, or finish homework in quiet. Librarians often help older residents fill in forms and teach beginners how to search for information. When budgets are tight, libraries are sometimes the first services to be cut because their benefits are hard to count in rupees. Yet studies of towns with active libraries suggest higher reading levels and stronger community ties. Protecting such spaces is therefore not a luxury but an investment whose returns appear slowly and quietly over many years.\n\nWhat is the author's main argument?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Public libraries deserve protection because they benefit communities."
+        },
+        {
+          "position": "B",
+          "text": "Budgets should never be cut."
+        },
+        {
+          "position": "C",
+          "text": "Computers should replace books."
+        },
+        {
+          "position": "D",
+          "text": "Libraries should charge a fee."
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q117",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "117",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nA Library in Every Neighbourhood\nA public library is more than a room full of books. For many families it is the only place where children can read freely, use a computer, or finish homework in quiet. Librarians often help older residents fill in forms and teach beginners how to search for information. When budgets are tight, libraries are sometimes the first services to be cut because their benefits are hard to count in rupees. Yet studies of towns with active libraries suggest higher reading levels and stronger community ties. Protecting such spaces is therefore not a luxury but an investment whose returns appear slowly and quietly over many years.\n\nWhy are libraries often among the first services to be cut?",
+      "options": [
+        {
+          "position": "A",
+          "text": "They cost nothing to run"
+        },
+        {
+          "position": "B",
+          "text": "They are rarely used"
+        },
+        {
+          "position": "C",
+          "text": "Librarians prefer closing them"
+        },
+        {
+          "position": "D",
+          "text": "Their benefits are hard to measure in money"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q118",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "118",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nA Library in Every Neighbourhood\nA public library is more than a room full of books. For many families it is the only place where children can read freely, use a computer, or finish homework in quiet. Librarians often help older residents fill in forms and teach beginners how to search for information. When budgets are tight, libraries are sometimes the first services to be cut because their benefits are hard to count in rupees. Yet studies of towns with active libraries suggest higher reading levels and stronger community ties. Protecting such spaces is therefore not a luxury but an investment whose returns appear slowly and quietly over many years.\n\nThe word 'luxury' as used in the passage most nearly means",
+      "options": [
+        {
+          "position": "A",
+          "text": "a type of book"
+        },
+        {
+          "position": "B",
+          "text": "a basic need"
+        },
+        {
+          "position": "C",
+          "text": "a rule"
+        },
+        {
+          "position": "D",
+          "text": "an unnecessary extra"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q119",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "119",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nA Library in Every Neighbourhood\nA public library is more than a room full of books. For many families it is the only place where children can read freely, use a computer, or finish homework in quiet. Librarians often help older residents fill in forms and teach beginners how to search for information. When budgets are tight, libraries are sometimes the first services to be cut because their benefits are hard to count in rupees. Yet studies of towns with active libraries suggest higher reading levels and stronger community ties. Protecting such spaces is therefore not a luxury but an investment whose returns appear slowly and quietly over many years.\n\nWhich of the following is NOT mentioned in the passage as something libraries offer?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Quiet space for homework"
+        },
+        {
+          "position": "B",
+          "text": "Repair of household appliances"
+        },
+        {
+          "position": "C",
+          "text": "Help for older residents with forms"
+        },
+        {
+          "position": "D",
+          "text": "Free computer use"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q120",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "120",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nA Library in Every Neighbourhood\nA public library is more than a room full of books. For many families it is the only place where children can read freely, use a computer, or finish homework in quiet. Librarians often help older residents fill in forms and teach beginners how to search for information. When budgets are tight, libraries are sometimes the first services to be cut because their benefits are hard to count in rupees. Yet studies of towns with active libraries suggest higher reading levels and stronger community ties. Protecting such spaces is therefore not a luxury but an investment whose returns appear slowly and quietly over many years.\n\nWhat do studies of towns with active libraries suggest?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Lower school attendance"
+        },
+        {
+          "position": "B",
+          "text": "Cheaper housing"
+        },
+        {
+          "position": "C",
+          "text": "Fewer public services"
+        },
+        {
+          "position": "D",
+          "text": "Higher reading levels and stronger community ties"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q121",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "121",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Value of Water\nRain falls unevenly across the country, and much of it runs off the land before it can be stored. Traditional communities solved this problem with ponds, stepwells and small check dams that held water for the dry months. Many of these structures were later neglected as pipes and pumps arrived. Today, villages that have revived their old tanks report that wells stay full for longer and crops survive weak monsoons. The lesson is not that modern technology is useless, but that it works best alongside local knowledge. A system that respects the land it serves tends to last longer than one imposed from outside.\n\nWhat is the main message of the passage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Stepwells are unsafe."
+        },
+        {
+          "position": "B",
+          "text": "Pumps should be removed from villages."
+        },
+        {
+          "position": "C",
+          "text": "Reviving traditional water systems can help when combined with modern methods."
+        },
+        {
+          "position": "D",
+          "text": "Monsoons are always reliable."
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q122",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "122",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Value of Water\nRain falls unevenly across the country, and much of it runs off the land before it can be stored. Traditional communities solved this problem with ponds, stepwells and small check dams that held water for the dry months. Many of these structures were later neglected as pipes and pumps arrived. Today, villages that have revived their old tanks report that wells stay full for longer and crops survive weak monsoons. The lesson is not that modern technology is useless, but that it works best alongside local knowledge. A system that respects the land it serves tends to last longer than one imposed from outside.\n\nWhy were many traditional structures neglected?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Farmers disliked water"
+        },
+        {
+          "position": "B",
+          "text": "Rain stopped falling"
+        },
+        {
+          "position": "C",
+          "text": "They were too small"
+        },
+        {
+          "position": "D",
+          "text": "Pipes and pumps arrived"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q123",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "123",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Value of Water\nRain falls unevenly across the country, and much of it runs off the land before it can be stored. Traditional communities solved this problem with ponds, stepwells and small check dams that held water for the dry months. Many of these structures were later neglected as pipes and pumps arrived. Today, villages that have revived their old tanks report that wells stay full for longer and crops survive weak monsoons. The lesson is not that modern technology is useless, but that it works best alongside local knowledge. A system that respects the land it serves tends to last longer than one imposed from outside.\n\nWhat happened in villages that revived their old tanks?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Pumps stopped working"
+        },
+        {
+          "position": "B",
+          "text": "Wells stayed full for longer"
+        },
+        {
+          "position": "C",
+          "text": "Crops failed"
+        },
+        {
+          "position": "D",
+          "text": "Rain increased"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q124",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "124",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Value of Water\nRain falls unevenly across the country, and much of it runs off the land before it can be stored. Traditional communities solved this problem with ponds, stepwells and small check dams that held water for the dry months. Many of these structures were later neglected as pipes and pumps arrived. Today, villages that have revived their old tanks report that wells stay full for longer and crops survive weak monsoons. The lesson is not that modern technology is useless, but that it works best alongside local knowledge. A system that respects the land it serves tends to last longer than one imposed from outside.\n\nThe word 'imposed' as used in the passage most nearly means",
+      "options": [
+        {
+          "position": "A",
+          "text": "borrowed by"
+        },
+        {
+          "position": "B",
+          "text": "forced on"
+        },
+        {
+          "position": "C",
+          "text": "removed from"
+        },
+        {
+          "position": "D",
+          "text": "offered freely"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q125",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "125",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nThe Value of Water\nRain falls unevenly across the country, and much of it runs off the land before it can be stored. Traditional communities solved this problem with ponds, stepwells and small check dams that held water for the dry months. Many of these structures were later neglected as pipes and pumps arrived. Today, villages that have revived their old tanks report that wells stay full for longer and crops survive weak monsoons. The lesson is not that modern technology is useless, but that it works best alongside local knowledge. A system that respects the land it serves tends to last longer than one imposed from outside.\n\nThe author would most likely agree that",
+      "options": [
+        {
+          "position": "A",
+          "text": "tradition should replace science"
+        },
+        {
+          "position": "B",
+          "text": "local knowledge and technology work best together"
+        },
+        {
+          "position": "C",
+          "text": "technology alone is enough"
+        },
+        {
+          "position": "D",
+          "text": "only cities need water planning"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q126",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "126",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nAttention in the Age of the Screen\nA buzzing phone can interrupt a thought in less than a second, but recovering that thought may take several minutes. Researchers who study attention say that frequent switching between tasks leaves people tired and prone to errors. Many students believe they can study while checking messages, yet tests often show lower recall among those who do so. Simple habits help: silencing notifications, setting short blocks of focused time, and keeping the phone in another room. These steps feel strict at first, but they free the mind to follow an idea through to its end, which is where real understanding usually begins.\n\nWhat is the passage mainly about?",
+      "options": [
+        {
+          "position": "A",
+          "text": "How constant interruptions harm attention and how to reduce them"
+        },
+        {
+          "position": "B",
+          "text": "How to type faster"
+        },
+        {
+          "position": "C",
+          "text": "The history of messaging"
+        },
+        {
+          "position": "D",
+          "text": "Why phones should be banned"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q127",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "127",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nAttention in the Age of the Screen\nA buzzing phone can interrupt a thought in less than a second, but recovering that thought may take several minutes. Researchers who study attention say that frequent switching between tasks leaves people tired and prone to errors. Many students believe they can study while checking messages, yet tests often show lower recall among those who do so. Simple habits help: silencing notifications, setting short blocks of focused time, and keeping the phone in another room. These steps feel strict at first, but they free the mind to follow an idea through to its end, which is where real understanding usually begins.\n\nAccording to the passage, what often happens after an interruption?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Notifications stop"
+        },
+        {
+          "position": "B",
+          "text": "Recovering the thought can take several minutes"
+        },
+        {
+          "position": "C",
+          "text": "The thought is improved"
+        },
+        {
+          "position": "D",
+          "text": "The phone switches off"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q128",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "128",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nAttention in the Age of the Screen\nA buzzing phone can interrupt a thought in less than a second, but recovering that thought may take several minutes. Researchers who study attention say that frequent switching between tasks leaves people tired and prone to errors. Many students believe they can study while checking messages, yet tests often show lower recall among those who do so. Simple habits help: silencing notifications, setting short blocks of focused time, and keeping the phone in another room. These steps feel strict at first, but they free the mind to follow an idea through to its end, which is where real understanding usually begins.\n\nWhich habit is NOT suggested by the author?",
+      "options": [
+        {
+          "position": "A",
+          "text": "Setting short blocks of focused time"
+        },
+        {
+          "position": "B",
+          "text": "Silencing notifications"
+        },
+        {
+          "position": "C",
+          "text": "Checking messages every few minutes"
+        },
+        {
+          "position": "D",
+          "text": "Keeping the phone in another room"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q129",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "129",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nAttention in the Age of the Screen\nA buzzing phone can interrupt a thought in less than a second, but recovering that thought may take several minutes. Researchers who study attention say that frequent switching between tasks leaves people tired and prone to errors. Many students believe they can study while checking messages, yet tests often show lower recall among those who do so. Simple habits help: silencing notifications, setting short blocks of focused time, and keeping the phone in another room. These steps feel strict at first, but they free the mind to follow an idea through to its end, which is where real understanding usually begins.\n\nThe word 'recall' as used in the passage most nearly means",
+      "options": [
+        {
+          "position": "A",
+          "text": "a loud sound"
+        },
+        {
+          "position": "B",
+          "text": "a request to return"
+        },
+        {
+          "position": "C",
+          "text": "the ability to remember"
+        },
+        {
+          "position": "D",
+          "text": "a phone model"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q130",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "130",
+      "type": "MCQ",
+      "question_text": "Read the passage and answer the question.\n\nAttention in the Age of the Screen\nA buzzing phone can interrupt a thought in less than a second, but recovering that thought may take several minutes. Researchers who study attention say that frequent switching between tasks leaves people tired and prone to errors. Many students believe they can study while checking messages, yet tests often show lower recall among those who do so. Simple habits help: silencing notifications, setting short blocks of focused time, and keeping the phone in another room. These steps feel strict at first, but they free the mind to follow an idea through to its end, which is where real understanding usually begins.\n\nThe tone of the passage is best described as",
+      "options": [
+        {
+          "position": "A",
+          "text": "informative and practical"
+        },
+        {
+          "position": "B",
+          "text": "doubtful and confused"
+        },
+        {
+          "position": "C",
+          "text": "humorous and careless"
+        },
+        {
+          "position": "D",
+          "text": "angry and bitter"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q131",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "131",
+      "type": "MCQ",
+      "question_text": "What is 75% of 600?",
+      "options": [
+        {
+          "position": "A",
+          "text": "450"
+        },
+        {
+          "position": "B",
+          "text": "405"
+        },
+        {
+          "position": "C",
+          "text": "472"
+        },
+        {
+          "position": "D",
+          "text": "495"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q132",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "132",
+      "type": "MCQ",
+      "question_text": "What is 10% of 400?",
+      "options": [
+        {
+          "position": "A",
+          "text": "44"
+        },
+        {
+          "position": "B",
+          "text": "36"
+        },
+        {
+          "position": "C",
+          "text": "42"
+        },
+        {
+          "position": "D",
+          "text": "40"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q133",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "133",
+      "type": "MCQ",
+      "question_text": "What is 15% of 240?",
+      "options": [
+        {
+          "position": "A",
+          "text": "37"
+        },
+        {
+          "position": "B",
+          "text": "39"
+        },
+        {
+          "position": "C",
+          "text": "33"
+        },
+        {
+          "position": "D",
+          "text": "36"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q134",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "134",
+      "type": "MCQ",
+      "question_text": "What is 45% of 400?",
+      "options": [
+        {
+          "position": "A",
+          "text": "189"
+        },
+        {
+          "position": "B",
+          "text": "162"
+        },
+        {
+          "position": "C",
+          "text": "198"
+        },
+        {
+          "position": "D",
+          "text": "180"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q135",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "135",
+      "type": "MCQ",
+      "question_text": "A price of Rs 1000 is increased by 30% and then decreased by 25%. What is the final price?",
+      "options": [
+        {
+          "position": "A",
+          "text": "999"
+        },
+        {
+          "position": "B",
+          "text": "927"
+        },
+        {
+          "position": "C",
+          "text": "1023"
+        },
+        {
+          "position": "D",
+          "text": "975"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q136",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "136",
+      "type": "MCQ",
+      "question_text": "A price of Rs 500 is increased by 30% and then decreased by 20%. What is the final price?",
+      "options": [
+        {
+          "position": "A",
+          "text": "494"
+        },
+        {
+          "position": "B",
+          "text": "533"
+        },
+        {
+          "position": "C",
+          "text": "546"
+        },
+        {
+          "position": "D",
+          "text": "520"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q137",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "137",
+      "type": "MCQ",
+      "question_text": "A price of Rs 800 is increased by 20% and then decreased by 20%. What is the final price?",
+      "options": [
+        {
+          "position": "A",
+          "text": "806"
+        },
+        {
+          "position": "B",
+          "text": "787"
+        },
+        {
+          "position": "C",
+          "text": "730"
+        },
+        {
+          "position": "D",
+          "text": "768"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q138",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "138",
+      "type": "MCQ",
+      "question_text": "A student scores 120 marks out of 250. What is the percentage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "50"
+        },
+        {
+          "position": "B",
+          "text": "53"
+        },
+        {
+          "position": "C",
+          "text": "48"
+        },
+        {
+          "position": "D",
+          "text": "43"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q139",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "139",
+      "type": "MCQ",
+      "question_text": "Two numbers are in the ratio 2:3 and their sum is 15. What is the larger number?",
+      "options": [
+        {
+          "position": "A",
+          "text": "6"
+        },
+        {
+          "position": "B",
+          "text": "9"
+        },
+        {
+          "position": "C",
+          "text": "12"
+        },
+        {
+          "position": "D",
+          "text": "10"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q140",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "140",
+      "type": "MCQ",
+      "question_text": "Two numbers are in the ratio 3:5 and their sum is 56. What is the larger number?",
+      "options": [
+        {
+          "position": "A",
+          "text": "35"
+        },
+        {
+          "position": "B",
+          "text": "38"
+        },
+        {
+          "position": "C",
+          "text": "42"
+        },
+        {
+          "position": "D",
+          "text": "28"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q141",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "141",
+      "type": "MCQ",
+      "question_text": "Two numbers are in the ratio 3:5 and their sum is 32. What is the larger number?",
+      "options": [
+        {
+          "position": "A",
+          "text": "22"
+        },
+        {
+          "position": "B",
+          "text": "16"
+        },
+        {
+          "position": "C",
+          "text": "20"
+        },
+        {
+          "position": "D",
+          "text": "24"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q142",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "142",
+      "type": "MCQ",
+      "question_text": "Two numbers are in the ratio 4:5 and their sum is 63. What is the larger number?",
+      "options": [
+        {
+          "position": "A",
+          "text": "28"
+        },
+        {
+          "position": "B",
+          "text": "38"
+        },
+        {
+          "position": "C",
+          "text": "35"
+        },
+        {
+          "position": "D",
+          "text": "42"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q143",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "143",
+      "type": "MCQ",
+      "question_text": "The ages of two friends are in the ratio 3:5. If the difference of their ages is 14 years, what is the age of the elder friend?",
+      "options": [
+        {
+          "position": "A",
+          "text": "38"
+        },
+        {
+          "position": "B",
+          "text": "28"
+        },
+        {
+          "position": "C",
+          "text": "35"
+        },
+        {
+          "position": "D",
+          "text": "42"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q144",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "144",
+      "type": "MCQ",
+      "question_text": "The ages of two friends are in the ratio 2:3. If the difference of their ages is 12 years, what is the age of the elder friend?",
+      "options": [
+        {
+          "position": "A",
+          "text": "24"
+        },
+        {
+          "position": "B",
+          "text": "48"
+        },
+        {
+          "position": "C",
+          "text": "42"
+        },
+        {
+          "position": "D",
+          "text": "36"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q145",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "145",
+      "type": "MCQ",
+      "question_text": "The ages of two friends are in the ratio 4:7. If the difference of their ages is 12 years, what is the age of the elder friend?",
+      "options": [
+        {
+          "position": "A",
+          "text": "28"
+        },
+        {
+          "position": "B",
+          "text": "30"
+        },
+        {
+          "position": "C",
+          "text": "32"
+        },
+        {
+          "position": "D",
+          "text": "24"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q146",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "146",
+      "type": "MCQ",
+      "question_text": "The sum of 5 numbers is 75. What is their average?",
+      "options": [
+        {
+          "position": "A",
+          "text": "16"
+        },
+        {
+          "position": "B",
+          "text": "13"
+        },
+        {
+          "position": "C",
+          "text": "17"
+        },
+        {
+          "position": "D",
+          "text": "15"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q147",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "147",
+      "type": "MCQ",
+      "question_text": "The sum of 8 numbers is 320. What is their average?",
+      "options": [
+        {
+          "position": "A",
+          "text": "38"
+        },
+        {
+          "position": "B",
+          "text": "42"
+        },
+        {
+          "position": "C",
+          "text": "41"
+        },
+        {
+          "position": "D",
+          "text": "40"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q148",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "148",
+      "type": "MCQ",
+      "question_text": "The sum of 5 numbers is 100. What is their average?",
+      "options": [
+        {
+          "position": "A",
+          "text": "20"
+        },
+        {
+          "position": "B",
+          "text": "21"
+        },
+        {
+          "position": "C",
+          "text": "18"
+        },
+        {
+          "position": "D",
+          "text": "22"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q149",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "149",
+      "type": "MCQ",
+      "question_text": "The sum of 5 numbers is 160. What is their average?",
+      "options": [
+        {
+          "position": "A",
+          "text": "30"
+        },
+        {
+          "position": "B",
+          "text": "34"
+        },
+        {
+          "position": "C",
+          "text": "32"
+        },
+        {
+          "position": "D",
+          "text": "33"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q150",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "150",
+      "type": "MCQ",
+      "question_text": "The average of 6 numbers is 28. A new number 56 is included. What is the new average?",
+      "options": [
+        {
+          "position": "A",
+          "text": "34"
+        },
+        {
+          "position": "B",
+          "text": "32"
+        },
+        {
+          "position": "C",
+          "text": "31"
+        },
+        {
+          "position": "D",
+          "text": "33"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q151",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "151",
+      "type": "MCQ",
+      "question_text": "A shirt bought for Rs 500 is sold for Rs 550. What is the profit percentage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "15"
+        },
+        {
+          "position": "B",
+          "text": "10"
+        },
+        {
+          "position": "C",
+          "text": "12"
+        },
+        {
+          "position": "D",
+          "text": "5"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q152",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "152",
+      "type": "MCQ",
+      "question_text": "A shirt bought for Rs 500 is sold for Rs 625. What is the profit percentage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "25"
+        },
+        {
+          "position": "B",
+          "text": "20"
+        },
+        {
+          "position": "C",
+          "text": "27"
+        },
+        {
+          "position": "D",
+          "text": "30"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q153",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "153",
+      "type": "MCQ",
+      "question_text": "A shirt bought for Rs 250 is sold for Rs 325. What is the profit percentage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "35"
+        },
+        {
+          "position": "B",
+          "text": "25"
+        },
+        {
+          "position": "C",
+          "text": "30"
+        },
+        {
+          "position": "D",
+          "text": "32"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q154",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "154",
+      "type": "MCQ",
+      "question_text": "A shirt bought for Rs 1200 is sold for Rs 1320. What is the profit percentage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "15"
+        },
+        {
+          "position": "B",
+          "text": "5"
+        },
+        {
+          "position": "C",
+          "text": "12"
+        },
+        {
+          "position": "D",
+          "text": "10"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q155",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "155",
+      "type": "MCQ",
+      "question_text": "A shirt bought for Rs 800 is sold for Rs 1000. What is the profit percentage?",
+      "options": [
+        {
+          "position": "A",
+          "text": "27"
+        },
+        {
+          "position": "B",
+          "text": "30"
+        },
+        {
+          "position": "C",
+          "text": "20"
+        },
+        {
+          "position": "D",
+          "text": "25"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q156",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "156",
+      "type": "MCQ",
+      "question_text": "A bag is sold for Rs 1200 at a profit of 20%. What is its cost price?",
+      "options": [
+        {
+          "position": "A",
+          "text": "1000"
+        },
+        {
+          "position": "B",
+          "text": "1050"
+        },
+        {
+          "position": "C",
+          "text": "1100"
+        },
+        {
+          "position": "D",
+          "text": "900"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q157",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "157",
+      "type": "MCQ",
+      "question_text": "A bag is sold for Rs 600 at a profit of 20%. What is its cost price?",
+      "options": [
+        {
+          "position": "A",
+          "text": "550"
+        },
+        {
+          "position": "B",
+          "text": "500"
+        },
+        {
+          "position": "C",
+          "text": "450"
+        },
+        {
+          "position": "D",
+          "text": "525"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q158",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "158",
+      "type": "MCQ",
+      "question_text": "A bag is sold for Rs 1080 at a profit of 20%. What is its cost price?",
+      "options": [
+        {
+          "position": "A",
+          "text": "900"
+        },
+        {
+          "position": "B",
+          "text": "945"
+        },
+        {
+          "position": "C",
+          "text": "990"
+        },
+        {
+          "position": "D",
+          "text": "810"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q159",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "159",
+      "type": "MCQ",
+      "question_text": "A jacket has a marked price of Rs 800. A discount of 25% is offered. What is the selling price?",
+      "options": [
+        {
+          "position": "A",
+          "text": "570"
+        },
+        {
+          "position": "B",
+          "text": "615"
+        },
+        {
+          "position": "C",
+          "text": "630"
+        },
+        {
+          "position": "D",
+          "text": "600"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q160",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "160",
+      "type": "MCQ",
+      "question_text": "A jacket has a marked price of Rs 1500. A discount of 10% is offered. What is the selling price?",
+      "options": [
+        {
+          "position": "A",
+          "text": "1283"
+        },
+        {
+          "position": "B",
+          "text": "1383"
+        },
+        {
+          "position": "C",
+          "text": "1350"
+        },
+        {
+          "position": "D",
+          "text": "1417"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q161",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "161",
+      "type": "MCQ",
+      "question_text": "A jacket has a marked price of Rs 1000. A discount of 25% is offered. What is the selling price?",
+      "options": [
+        {
+          "position": "A",
+          "text": "750"
+        },
+        {
+          "position": "B",
+          "text": "768"
+        },
+        {
+          "position": "C",
+          "text": "787"
+        },
+        {
+          "position": "D",
+          "text": "713"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q162",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "162",
+      "type": "MCQ",
+      "question_text": "What is the simple interest on Rs 5000 at 5% per annum for 3 years?",
+      "options": [
+        {
+          "position": "A",
+          "text": "675"
+        },
+        {
+          "position": "B",
+          "text": "787"
+        },
+        {
+          "position": "C",
+          "text": "750"
+        },
+        {
+          "position": "D",
+          "text": "825"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q163",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "163",
+      "type": "MCQ",
+      "question_text": "What is the simple interest on Rs 5000 at 4% per annum for 4 years?",
+      "options": [
+        {
+          "position": "A",
+          "text": "800"
+        },
+        {
+          "position": "B",
+          "text": "720"
+        },
+        {
+          "position": "C",
+          "text": "840"
+        },
+        {
+          "position": "D",
+          "text": "880"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q164",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "164",
+      "type": "MCQ",
+      "question_text": "What is the simple interest on Rs 8000 at 4% per annum for 3 years?",
+      "options": [
+        {
+          "position": "A",
+          "text": "960"
+        },
+        {
+          "position": "B",
+          "text": "1056"
+        },
+        {
+          "position": "C",
+          "text": "1008"
+        },
+        {
+          "position": "D",
+          "text": "864"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q165",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "165",
+      "type": "MCQ",
+      "question_text": "What is the simple interest on Rs 2000 at 6% per annum for 3 years?",
+      "options": [
+        {
+          "position": "A",
+          "text": "396"
+        },
+        {
+          "position": "B",
+          "text": "360"
+        },
+        {
+          "position": "C",
+          "text": "324"
+        },
+        {
+          "position": "D",
+          "text": "378"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q166",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "166",
+      "type": "MCQ",
+      "question_text": "A sum of Rs 2000 earns simple interest of Rs 400 in 2 years. What is the rate per annum?",
+      "options": [
+        {
+          "position": "A",
+          "text": "8"
+        },
+        {
+          "position": "B",
+          "text": "11"
+        },
+        {
+          "position": "C",
+          "text": "10"
+        },
+        {
+          "position": "D",
+          "text": "12"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q167",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "167",
+      "type": "MCQ",
+      "question_text": "A sum of Rs 5000 earns simple interest of Rs 2000 in 4 years. What is the rate per annum?",
+      "options": [
+        {
+          "position": "A",
+          "text": "8"
+        },
+        {
+          "position": "B",
+          "text": "10"
+        },
+        {
+          "position": "C",
+          "text": "11"
+        },
+        {
+          "position": "D",
+          "text": "12"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q168",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "168",
+      "type": "MCQ",
+      "question_text": "A bus travels at 45 km/h for 2 hours. How far does it travel?",
+      "options": [
+        {
+          "position": "A",
+          "text": "68"
+        },
+        {
+          "position": "B",
+          "text": "101"
+        },
+        {
+          "position": "C",
+          "text": "112"
+        },
+        {
+          "position": "D",
+          "text": "90"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q169",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "169",
+      "type": "MCQ",
+      "question_text": "A bus travels at 60 km/h for 2 hours. How far does it travel?",
+      "options": [
+        {
+          "position": "A",
+          "text": "135"
+        },
+        {
+          "position": "B",
+          "text": "90"
+        },
+        {
+          "position": "C",
+          "text": "150"
+        },
+        {
+          "position": "D",
+          "text": "120"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q170",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "170",
+      "type": "MCQ",
+      "question_text": "A bus travels at 50 km/h for 5 hours. How far does it travel?",
+      "options": [
+        {
+          "position": "A",
+          "text": "262"
+        },
+        {
+          "position": "B",
+          "text": "250"
+        },
+        {
+          "position": "C",
+          "text": "275"
+        },
+        {
+          "position": "D",
+          "text": "225"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q171",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "171",
+      "type": "MCQ",
+      "question_text": "A bus travels at 72 km/h for 2 hours. How far does it travel?",
+      "options": [
+        {
+          "position": "A",
+          "text": "180"
+        },
+        {
+          "position": "B",
+          "text": "108"
+        },
+        {
+          "position": "C",
+          "text": "144"
+        },
+        {
+          "position": "D",
+          "text": "162"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q172",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "172",
+      "type": "MCQ",
+      "question_text": "A cyclist covers 240 km in 3 hours. What is the average speed in km/h?",
+      "options": [
+        {
+          "position": "A",
+          "text": "80"
+        },
+        {
+          "position": "B",
+          "text": "85"
+        },
+        {
+          "position": "C",
+          "text": "82"
+        },
+        {
+          "position": "D",
+          "text": "75"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q173",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "173",
+      "type": "MCQ",
+      "question_text": "A cyclist covers 180 km in 5 hours. What is the average speed in km/h?",
+      "options": [
+        {
+          "position": "A",
+          "text": "38"
+        },
+        {
+          "position": "B",
+          "text": "36"
+        },
+        {
+          "position": "C",
+          "text": "41"
+        },
+        {
+          "position": "D",
+          "text": "31"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q174",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "174",
+      "type": "MCQ",
+      "question_text": "A cyclist covers 240 km in 5 hours. What is the average speed in km/h?",
+      "options": [
+        {
+          "position": "A",
+          "text": "43"
+        },
+        {
+          "position": "B",
+          "text": "50"
+        },
+        {
+          "position": "C",
+          "text": "48"
+        },
+        {
+          "position": "D",
+          "text": "53"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q175",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "175",
+      "type": "MCQ",
+      "question_text": "Convert 72 km/h to metres per second.",
+      "options": [
+        {
+          "position": "A",
+          "text": "21"
+        },
+        {
+          "position": "B",
+          "text": "20"
+        },
+        {
+          "position": "C",
+          "text": "22"
+        },
+        {
+          "position": "D",
+          "text": "18"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q176",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "176",
+      "type": "MCQ",
+      "question_text": "Convert 90 km/h to metres per second.",
+      "options": [
+        {
+          "position": "A",
+          "text": "26"
+        },
+        {
+          "position": "B",
+          "text": "25"
+        },
+        {
+          "position": "C",
+          "text": "27"
+        },
+        {
+          "position": "D",
+          "text": "23"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q177",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "177",
+      "type": "MCQ",
+      "question_text": "A can finish a job in 6 days and B in 12 days. Working together, how many days will they take?",
+      "options": [
+        {
+          "position": "A",
+          "text": "3"
+        },
+        {
+          "position": "B",
+          "text": "2"
+        },
+        {
+          "position": "C",
+          "text": "4"
+        },
+        {
+          "position": "D",
+          "text": "5"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q178",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "178",
+      "type": "MCQ",
+      "question_text": "A can finish a job in 20 days and B in 30 days. Working together, how many days will they take?",
+      "options": [
+        {
+          "position": "A",
+          "text": "12"
+        },
+        {
+          "position": "B",
+          "text": "11"
+        },
+        {
+          "position": "C",
+          "text": "13"
+        },
+        {
+          "position": "D",
+          "text": "10"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q179",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "179",
+      "type": "MCQ",
+      "question_text": "A can finish a job in 8 days and B in 24 days. Working together, how many days will they take?",
+      "options": [
+        {
+          "position": "A",
+          "text": "6"
+        },
+        {
+          "position": "B",
+          "text": "7"
+        },
+        {
+          "position": "C",
+          "text": "4"
+        },
+        {
+          "position": "D",
+          "text": "5"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q180",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "180",
+      "type": "MCQ",
+      "question_text": "5 workers complete a job in 12 days. How many days will 10 workers take at the same rate?",
+      "options": [
+        {
+          "position": "A",
+          "text": "4"
+        },
+        {
+          "position": "B",
+          "text": "5"
+        },
+        {
+          "position": "C",
+          "text": "6"
+        },
+        {
+          "position": "D",
+          "text": "7"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q181",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "181",
+      "type": "MCQ",
+      "question_text": "6 workers complete a job in 10 days. How many days will 12 workers take at the same rate?",
+      "options": [
+        {
+          "position": "A",
+          "text": "4"
+        },
+        {
+          "position": "B",
+          "text": "6"
+        },
+        {
+          "position": "C",
+          "text": "3"
+        },
+        {
+          "position": "D",
+          "text": "5"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q182",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "182",
+      "type": "MCQ",
+      "question_text": "If 4x + 18 = 26, what is the value of x?",
+      "options": [
+        {
+          "position": "A",
+          "text": "3"
+        },
+        {
+          "position": "B",
+          "text": "2"
+        },
+        {
+          "position": "C",
+          "text": "4"
+        },
+        {
+          "position": "D",
+          "text": "1"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q183",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "183",
+      "type": "MCQ",
+      "question_text": "If 6x + 13 = 67, what is the value of x?",
+      "options": [
+        {
+          "position": "A",
+          "text": "8"
+        },
+        {
+          "position": "B",
+          "text": "10"
+        },
+        {
+          "position": "C",
+          "text": "7"
+        },
+        {
+          "position": "D",
+          "text": "9"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q184",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "184",
+      "type": "MCQ",
+      "question_text": "If 7x + 5 = 82, what is the value of x?",
+      "options": [
+        {
+          "position": "A",
+          "text": "10"
+        },
+        {
+          "position": "B",
+          "text": "9"
+        },
+        {
+          "position": "C",
+          "text": "12"
+        },
+        {
+          "position": "D",
+          "text": "11"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q185",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "185",
+      "type": "MCQ",
+      "question_text": "If 5x + 4 = 64, what is the value of x?",
+      "options": [
+        {
+          "position": "A",
+          "text": "13"
+        },
+        {
+          "position": "B",
+          "text": "11"
+        },
+        {
+          "position": "C",
+          "text": "10"
+        },
+        {
+          "position": "D",
+          "text": "12"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q186",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "186",
+      "type": "MCQ",
+      "question_text": "If 3x + 2 = 32, what is the value of x?",
+      "options": [
+        {
+          "position": "A",
+          "text": "11"
+        },
+        {
+          "position": "B",
+          "text": "9"
+        },
+        {
+          "position": "C",
+          "text": "10"
+        },
+        {
+          "position": "D",
+          "text": "8"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q187",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "187",
+      "type": "MCQ",
+      "question_text": "The sum of two numbers is 7 and their difference is 3. What is the larger number?",
+      "options": [
+        {
+          "position": "A",
+          "text": "3"
+        },
+        {
+          "position": "B",
+          "text": "4"
+        },
+        {
+          "position": "C",
+          "text": "6"
+        },
+        {
+          "position": "D",
+          "text": "5"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q188",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "188",
+      "type": "MCQ",
+      "question_text": "The sum of two numbers is 17 and their difference is 7. What is the larger number?",
+      "options": [
+        {
+          "position": "A",
+          "text": "11"
+        },
+        {
+          "position": "B",
+          "text": "12"
+        },
+        {
+          "position": "C",
+          "text": "13"
+        },
+        {
+          "position": "D",
+          "text": "10"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q189",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "189",
+      "type": "MCQ",
+      "question_text": "Find the next number: 5, 11, 17, 23, 29, ?",
+      "options": [
+        {
+          "position": "A",
+          "text": "34"
+        },
+        {
+          "position": "B",
+          "text": "35"
+        },
+        {
+          "position": "C",
+          "text": "33"
+        },
+        {
+          "position": "D",
+          "text": "36"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q190",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "190",
+      "type": "MCQ",
+      "question_text": "Find the next number: 4, 10, 16, 22, 28, ?",
+      "options": [
+        {
+          "position": "A",
+          "text": "34"
+        },
+        {
+          "position": "B",
+          "text": "32"
+        },
+        {
+          "position": "C",
+          "text": "35"
+        },
+        {
+          "position": "D",
+          "text": "33"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q191",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "191",
+      "type": "MCQ",
+      "question_text": "Find the next number: 5, 13, 21, 29, 37, ?",
+      "options": [
+        {
+          "position": "A",
+          "text": "43"
+        },
+        {
+          "position": "B",
+          "text": "45"
+        },
+        {
+          "position": "C",
+          "text": "44"
+        },
+        {
+          "position": "D",
+          "text": "46"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q192",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "192",
+      "type": "MCQ",
+      "question_text": "Find the next number: 2, 4, 8, 16, 32, ?",
+      "options": [
+        {
+          "position": "A",
+          "text": "62"
+        },
+        {
+          "position": "B",
+          "text": "64"
+        },
+        {
+          "position": "C",
+          "text": "66"
+        },
+        {
+          "position": "D",
+          "text": "65"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q193",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "193",
+      "type": "MCQ",
+      "question_text": "Find the next number: 3, 9, 27, 81, 243, ?",
+      "options": [
+        {
+          "position": "A",
+          "text": "726"
+        },
+        {
+          "position": "B",
+          "text": "729"
+        },
+        {
+          "position": "C",
+          "text": "730"
+        },
+        {
+          "position": "D",
+          "text": "732"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q194",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "194",
+      "type": "MCQ",
+      "question_text": "Find the next number: 36, 49, 64, 81, ?",
+      "options": [
+        {
+          "position": "A",
+          "text": "102"
+        },
+        {
+          "position": "B",
+          "text": "98"
+        },
+        {
+          "position": "C",
+          "text": "100"
+        },
+        {
+          "position": "D",
+          "text": "101"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q195",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "195",
+      "type": "MCQ",
+      "question_text": "Find the next number: 4, 9, 16, 25, ?",
+      "options": [
+        {
+          "position": "A",
+          "text": "34"
+        },
+        {
+          "position": "B",
+          "text": "36"
+        },
+        {
+          "position": "C",
+          "text": "38"
+        },
+        {
+          "position": "D",
+          "text": "37"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q196",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "196",
+      "type": "MCQ",
+      "question_text": "What is the area of a rectangle 7 cm long and 11 cm wide (in cm\u00b2)?",
+      "options": [
+        {
+          "position": "A",
+          "text": "70"
+        },
+        {
+          "position": "B",
+          "text": "77"
+        },
+        {
+          "position": "C",
+          "text": "80"
+        },
+        {
+          "position": "D",
+          "text": "84"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q197",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "197",
+      "type": "MCQ",
+      "question_text": "What is the area of a rectangle 9 cm long and 6 cm wide (in cm\u00b2)?",
+      "options": [
+        {
+          "position": "A",
+          "text": "45"
+        },
+        {
+          "position": "B",
+          "text": "58"
+        },
+        {
+          "position": "C",
+          "text": "54"
+        },
+        {
+          "position": "D",
+          "text": "63"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q198",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "198",
+      "type": "MCQ",
+      "question_text": "What is the area of a rectangle 7 cm long and 3 cm wide (in cm\u00b2)?",
+      "options": [
+        {
+          "position": "A",
+          "text": "14"
+        },
+        {
+          "position": "B",
+          "text": "24"
+        },
+        {
+          "position": "C",
+          "text": "21"
+        },
+        {
+          "position": "D",
+          "text": "28"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q199",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "199",
+      "type": "MCQ",
+      "question_text": "What is the perimeter of a rectangle 13 cm by 4 cm (in cm)?",
+      "options": [
+        {
+          "position": "A",
+          "text": "34"
+        },
+        {
+          "position": "B",
+          "text": "32"
+        },
+        {
+          "position": "C",
+          "text": "36"
+        },
+        {
+          "position": "D",
+          "text": "35"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q200",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "200",
+      "type": "MCQ",
+      "question_text": "What is the perimeter of a rectangle 11 cm by 5 cm (in cm)?",
+      "options": [
+        {
+          "position": "A",
+          "text": "33"
+        },
+        {
+          "position": "B",
+          "text": "32"
+        },
+        {
+          "position": "C",
+          "text": "34"
+        },
+        {
+          "position": "D",
+          "text": "30"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q201",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "201",
+      "type": "MCQ",
+      "question_text": "What is the perimeter of a rectangle 17 cm by 5 cm (in cm)?",
+      "options": [
+        {
+          "position": "A",
+          "text": "46"
+        },
+        {
+          "position": "B",
+          "text": "42"
+        },
+        {
+          "position": "C",
+          "text": "45"
+        },
+        {
+          "position": "D",
+          "text": "44"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q202",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "202",
+      "type": "MCQ",
+      "question_text": "A triangle has base 18 cm and height 7 cm. What is its area in cm\u00b2?",
+      "options": [
+        {
+          "position": "A",
+          "text": "63"
+        },
+        {
+          "position": "B",
+          "text": "66"
+        },
+        {
+          "position": "C",
+          "text": "60"
+        },
+        {
+          "position": "D",
+          "text": "64"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q203",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "203",
+      "type": "MCQ",
+      "question_text": "A triangle has base 14 cm and height 9 cm. What is its area in cm\u00b2?",
+      "options": [
+        {
+          "position": "A",
+          "text": "64"
+        },
+        {
+          "position": "B",
+          "text": "60"
+        },
+        {
+          "position": "C",
+          "text": "63"
+        },
+        {
+          "position": "D",
+          "text": "66"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q204",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "204",
+      "type": "MCQ",
+      "question_text": "What is the area of a circle of radius 14 cm? (Use \u03c0 = 22/7; answer in cm\u00b2)",
+      "options": [
+        {
+          "position": "A",
+          "text": "638"
+        },
+        {
+          "position": "B",
+          "text": "616"
+        },
+        {
+          "position": "C",
+          "text": "627"
+        },
+        {
+          "position": "D",
+          "text": "594"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q205",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "205",
+      "type": "MCQ",
+      "question_text": "What is the area of a circle of radius 21 cm? (Use \u03c0 = 22/7; answer in cm\u00b2)",
+      "options": [
+        {
+          "position": "A",
+          "text": "1408"
+        },
+        {
+          "position": "B",
+          "text": "1397"
+        },
+        {
+          "position": "C",
+          "text": "1386"
+        },
+        {
+          "position": "D",
+          "text": "1364"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q206",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "206",
+      "type": "MCQ",
+      "question_text": "What is the LCM of 16 and 24?",
+      "options": [
+        {
+          "position": "A",
+          "text": "56"
+        },
+        {
+          "position": "B",
+          "text": "48"
+        },
+        {
+          "position": "C",
+          "text": "40"
+        },
+        {
+          "position": "D",
+          "text": "52"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q207",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "207",
+      "type": "MCQ",
+      "question_text": "What is the LCM of 15 and 20?",
+      "options": [
+        {
+          "position": "A",
+          "text": "63"
+        },
+        {
+          "position": "B",
+          "text": "67"
+        },
+        {
+          "position": "C",
+          "text": "60"
+        },
+        {
+          "position": "D",
+          "text": "53"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q208",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "208",
+      "type": "MCQ",
+      "question_text": "What is the LCM of 12 and 18?",
+      "options": [
+        {
+          "position": "A",
+          "text": "30"
+        },
+        {
+          "position": "B",
+          "text": "36"
+        },
+        {
+          "position": "C",
+          "text": "39"
+        },
+        {
+          "position": "D",
+          "text": "42"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q209",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "209",
+      "type": "MCQ",
+      "question_text": "What is the HCF of 28 and 42?",
+      "options": [
+        {
+          "position": "A",
+          "text": "15"
+        },
+        {
+          "position": "B",
+          "text": "14"
+        },
+        {
+          "position": "C",
+          "text": "12"
+        },
+        {
+          "position": "D",
+          "text": "16"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q210",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "210",
+      "type": "MCQ",
+      "question_text": "What is the HCF of 18 and 45?",
+      "options": [
+        {
+          "position": "A",
+          "text": "11"
+        },
+        {
+          "position": "B",
+          "text": "7"
+        },
+        {
+          "position": "C",
+          "text": "9"
+        },
+        {
+          "position": "D",
+          "text": "10"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "C",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q211",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "211",
+      "type": "MCQ",
+      "question_text": "What is 5/6 + 1/3?",
+      "options": [
+        {
+          "position": "A",
+          "text": "7/6"
+        },
+        {
+          "position": "B",
+          "text": "11/9"
+        },
+        {
+          "position": "C",
+          "text": "2/3"
+        },
+        {
+          "position": "D",
+          "text": "10/9"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q212",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "212",
+      "type": "MCQ",
+      "question_text": "What is 2/3 + 1/7?",
+      "options": [
+        {
+          "position": "A",
+          "text": "17/21"
+        },
+        {
+          "position": "B",
+          "text": "3/10"
+        },
+        {
+          "position": "C",
+          "text": "6/7"
+        },
+        {
+          "position": "D",
+          "text": "16/21"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q213",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "213",
+      "type": "MCQ",
+      "question_text": "What is 3/4 + 1/5?",
+      "options": [
+        {
+          "position": "A",
+          "text": "1"
+        },
+        {
+          "position": "B",
+          "text": "19/20"
+        },
+        {
+          "position": "C",
+          "text": "9/10"
+        },
+        {
+          "position": "D",
+          "text": "4/9"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q214",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "214",
+      "type": "MCQ",
+      "question_text": "A father is 4 times as old as his son. The son is 12 years old. How old will the father be after 5 years?",
+      "options": [
+        {
+          "position": "A",
+          "text": "58"
+        },
+        {
+          "position": "B",
+          "text": "53"
+        },
+        {
+          "position": "C",
+          "text": "48"
+        },
+        {
+          "position": "D",
+          "text": "55"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "B",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q215",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "215",
+      "type": "MCQ",
+      "question_text": "A father is 4 times as old as his son. The son is 9 years old. How old will the father be after 5 years?",
+      "options": [
+        {
+          "position": "A",
+          "text": "41"
+        },
+        {
+          "position": "B",
+          "text": "36"
+        },
+        {
+          "position": "C",
+          "text": "46"
+        },
+        {
+          "position": "D",
+          "text": "43"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "A",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
+    },
+    {
+      "id": "nift-original-batch-4-q216",
+      "exam": "NIFT",
+      "paper_id": "nift-original-batch-4",
+      "question_no": "216",
+      "type": "MCQ",
+      "question_text": "A father is 3 times as old as his son. The son is 13 years old. How old will the father be after 5 years?",
+      "options": [
+        {
+          "position": "A",
+          "text": "39"
+        },
+        {
+          "position": "B",
+          "text": "49"
+        },
+        {
+          "position": "C",
+          "text": "46"
+        },
+        {
+          "position": "D",
+          "text": "44"
+        }
+      ],
+      "figure_image": null,
+      "answer_key": "D",
+      "answer_status": "original-authored",
+      "source_paper": "NIFT Original (Dexam)"
     }
   ]
 }
