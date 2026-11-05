@@ -45,6 +45,8 @@ For database verification, install `psql` and create an **empty disposable local
 
 For local browser accessibility checks, open `/?audit=1`, expand Local accessibility QA and run the check. The panel is excluded from production. Mobile, dark mode, keyboard use and live provider acceptance still require their appropriate checks.
 
+`test:e2e` installs the matching Chromium build and runs every desktop/mobile journey. On a minimal Linux host, install system libraries once with `npm run test:e2e:system-deps`. The GitHub Ubuntu image already supplies the native runtime libraries; downloading optional system fonts on every run previously exhausted the 15-minute job limit. Missing runtime dependencies still fail browser launch and the merge gate; no browser tests are skipped.
+
 `DMOCKS_AUTH_STAGE=controlled npm run test:hosted-setup` checks the current controlled-login stage. Its default `closed` stage expects globally disabled registration. This read-only HTTP test needs ignored public client configuration and creates no users, orders or payments; the private allowlist and hook decisions require separate SQL/provider acceptance evidence.
 
 ## Launch status

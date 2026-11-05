@@ -2,6 +2,8 @@
 
 ## Current acceptance — 6 November 2026
 
+CI infrastructure note: run `42090968253` timed out during optional system-font downloads from the Ubuntu mirror, before browser journeys ran. Its successful unit/build steps do not constitute a passed merge gate. The regular browser command now installs matching Chromium without repeating optional system-package installation; minimal Linux environments have an explicit one-time system-dependency command. All desktop/mobile tests remain mandatory in the rerun.
+
 This section supersedes historical provider/status notes below. Source baseline: `48ff649a7240e8b769735132ddb3b4d09e5dbbee` plus the controlled-login feature diff. Newer main-branch portal features are preserved. Hosted Supabase still has migrations 001–004; local migrations 005–017 are not described as hosted/released.
 
 - Actual Google acceptance through the local app passes: business account selection, basic `openid email profile` consent, cancellation, Supabase callback and PKCE exchange, page reload, explicit SDK session refresh, local sign-out and returning login. Callback codes are removed by the SDK; no tokens are included in evidence. Hosted-domain callback acceptance remains pending.
