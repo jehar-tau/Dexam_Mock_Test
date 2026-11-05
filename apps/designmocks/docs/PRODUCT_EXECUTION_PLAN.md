@@ -149,7 +149,7 @@ Exit: a free candidate can sign in, complete the non-phone profile, navigate, an
 - Port immutable attempt snapshots, server deadlines, autosave revisions, scoring and results.
 - [x] Ship paid topic-practice generation for 10/20/30 questions and 15/30/45-minute server timers, gated by canonical import, deterministic runtime conversion, explicit content/rights approval and verified profiles.
 - [x] Ship configurable exam-wise mock generation for UCEED, NID, NIFT and CEED with scrambled/frozen reviewed questions, server timers, verified profiles and an administrator-controlled 0–2 free-attempt allowance before the annual-pass gate.
-- Add in-exam question reporting and its reviewer queue before broad bank release. General bug reporting and the admin reply workflow are complete.
+- [x] Add in-exam question reporting with one report per student/source question, a five-report threshold, an administrator review queue and human-controlled retirement that persists across later canonical imports. General bug reporting and the admin reply workflow are complete.
 
 Exit: load, authorization, disconnect/reconnect, deadline and scoring tests pass with no key leakage.
 

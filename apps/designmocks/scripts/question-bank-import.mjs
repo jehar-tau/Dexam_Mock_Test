@@ -41,6 +41,7 @@ export function runtimeQuestion(question) {
     if (!Number.isFinite(exact)) return null;
     key = { kind: "nat", accepted: [{ exact }] };
   }
+  key.sourceExternalKey = question.externalKey;
   const points = Number(question.taskMarks) > 0 ? Number(question.taskMarks) : 1;
   return { prompt: question.prompt, options, kind: question.type.toLowerCase(), marking: { correct: points, wrong: 0 }, media: [], points, negativePoints: 0, topic: question.topic || "unclassified", key, explanation: question.explanation || `Answer key: ${raw}` };
 }

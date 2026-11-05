@@ -18,10 +18,14 @@ import {
 import { Workspace, Attempt } from "./Workspace.jsx";
 import { Admin, BugReport } from "./Admin.jsx";
 import { PortalModule } from "./PortalShell.jsx";
-import { CandidateProfile, CandidateProfilePreview } from "./CandidateProfile.jsx";
+import {
+  CandidateProfile,
+  CandidateProfilePreview,
+} from "./CandidateProfile.jsx";
 import { TopicPractice, TopicPracticePreview } from "./TopicPractice.jsx";
 import { ExamMocks, ExamMocksPreview } from "./ExamMocks.jsx";
 import { AllIndia, AllIndiaHighlights, AllIndiaPreview } from "./AllIndia.jsx";
+import { QuestionReportPreview } from "./QuestionReport.jsx";
 import { useAuthState } from "./useAuth.js";
 import {
   platform,
@@ -1023,7 +1027,9 @@ function Account() {
           <>
             <p className="signed-in">Signed in as {session.user.email}</p>
             <Button to="/dashboard">Open your workspace</Button>
-            <Button to="/onboarding" quiet>Complete your profile</Button>
+            <Button to="/onboarding" quiet>
+              Complete your profile
+            </Button>
             <Button to="/plans" quiet>
               View the annual pass
             </Button>
@@ -1085,8 +1091,7 @@ function Account() {
           </p>
         )}
         <span className="account-footnote">
-          A separate DMocks account. Your coaching enrolment is not
-          required.
+          A separate DMocks account. Your coaching enrolment is not required.
         </span>
       </div>
     </section>
@@ -1508,12 +1513,11 @@ function Policies({ type }) {
           </p>
           <h2>Student accounts</h2>
           <p>
-            Once activated, Google sign-in will be used for a separate
-            DMocks account. Only the basic Google account details required
-            for sign-in will be requested. The production privacy notice will
-            identify the operator, processors, retention periods, deletion
-            process and any requirements for younger students before
-            registration opens.
+            Once activated, Google sign-in will be used for a separate DMocks
+            account. Only the basic Google account details required for sign-in
+            will be requested. The production privacy notice will identify the
+            operator, processors, retention periods, deletion process and any
+            requirements for younger students before registration opens.
           </p>
           <h2>Payments</h2>
           <p>
@@ -1552,8 +1556,8 @@ function Policies({ type }) {
           </p>
           <h2>Independent preparation</h2>
           <p>
-            DMocks is an independent practice platform and is not
-            affiliated with NID, NIFT, IITs or their examinations.
+            DMocks is an independent practice platform and is not affiliated
+            with NID, NIFT, IITs or their examinations.
           </p>
         </>
       )}
@@ -1588,15 +1592,56 @@ export default function App() {
         <Route path="/dashboard/mocks" element={<ExamMocks />} />
         <Route path="/dashboard/all-india" element={<AllIndia />} />
         <Route path="/dashboard/practice" element={<TopicPractice />} />
-        <Route path="/dashboard/learn" element={<PortalModule module="learn" />} />
-        <Route path="/dashboard/community" element={<PortalModule module="community" />} />
+        <Route
+          path="/dashboard/learn"
+          element={<PortalModule module="learn" />}
+        />
+        <Route
+          path="/dashboard/community"
+          element={<PortalModule module="community" />}
+        />
         <Route path="/report" element={<BugReport />} />
         <Route path="/admin" element={<Admin />} />
-        {import.meta.env.DEV && <Route path="/portal-preview/*" element={<React.Suspense fallback={<p className="wrap" role="status">Opening the portal preview…</p>}><PortalPreview /></React.Suspense>} />}
-        {import.meta.env.DEV && <Route path="/profile-preview" element={<CandidateProfilePreview />} />}
-        {import.meta.env.DEV && <Route path="/topic-practice-preview" element={<TopicPracticePreview />} />}
-        {import.meta.env.DEV && <Route path="/exam-mocks-preview" element={<ExamMocksPreview />} />}
-        {import.meta.env.DEV && <Route path="/all-india-preview" element={<AllIndiaPreview />} />}
+        {import.meta.env.DEV && (
+          <Route
+            path="/portal-preview/*"
+            element={
+              <React.Suspense
+                fallback={
+                  <p className="wrap" role="status">
+                    Opening the portal preview…
+                  </p>
+                }
+              >
+                <PortalPreview />
+              </React.Suspense>
+            }
+          />
+        )}
+        {import.meta.env.DEV && (
+          <Route
+            path="/profile-preview"
+            element={<CandidateProfilePreview />}
+          />
+        )}
+        {import.meta.env.DEV && (
+          <Route
+            path="/topic-practice-preview"
+            element={<TopicPracticePreview />}
+          />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/exam-mocks-preview" element={<ExamMocksPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/all-india-preview" element={<AllIndiaPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route
+            path="/question-report-preview"
+            element={<QuestionReportPreview />}
+          />
+        )}
 
         <Route
           path="/attempt/:id"

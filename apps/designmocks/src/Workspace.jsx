@@ -4,6 +4,7 @@ import { Art, Arrow } from "./Art.jsx";
 import { platform, loadDashboard } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
 import { PortalShell } from "./PortalShell.jsx";
+import { QuestionReport } from "./QuestionReport.jsx";
 
 const rpc = async (name, args) => {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -67,11 +68,32 @@ export function Workspace() {
     }
   };
   if (!session && !loading) return <SignInGate />;
-  return <PortalShell><WorkspaceView data={data} papers={papers} error={error} busy={busy} loading={loading} onStart={start} /></PortalShell>;
+  return (
+    <PortalShell>
+      <WorkspaceView
+        data={data}
+        papers={papers}
+        error={error}
+        busy={busy}
+        loading={loading}
+        onStart={start}
+      />
+    </PortalShell>
+  );
 }
 
 // Shared presentation only. Live identity checks and RPCs stay in Workspace.
-export function WorkspaceView({ data, papers = [], error = "", busy = "", loading = false, onStart, attemptHref = (id) => "/attempt/" + id, startLabel = "Start or resume", passLabel = "YOUR PASS" }) {
+export function WorkspaceView({
+  data,
+  papers = [],
+  error = "",
+  busy = "",
+  loading = false,
+  onStart,
+  attemptHref = (id) => "/attempt/" + id,
+  startLabel = "Start or resume",
+  passLabel = "YOUR PASS",
+}) {
   return (
     <section className="wrap section workspace">
       <span className="eyebrow">YOUR PRACTICE SPACE</span>
@@ -612,6 +634,17 @@ export function Attempt() {
           <p className="save-status" role="status">
             {saved || "Answers are saved to your account."}
           </p>
+          <QuestionReport
+            disabled={busy}
+            onSubmit={({ reason, details }) =>
+              rpc("report_attempt_question", {
+                p_attempt_id: id,
+                p_question_id: q.id,
+                p_reason: reason,
+                p_details: details,
+              })
+            }
+          />
           <div className="runner-actions">
             <button
               className="text-button"
