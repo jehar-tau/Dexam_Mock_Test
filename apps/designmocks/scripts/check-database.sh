@@ -19,6 +19,7 @@ for migration in supabase/migrations/*.sql; do
   psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f "$migration"
 done
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/invariants.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-release.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/media-invariants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/tests/controlled_signup.sql
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'

@@ -1,5 +1,15 @@
 import { test, expect } from "@playwright/test";
 
+test("submitted All India attempts show release status without premature feedback", async ({ page }) => {
+  await page.goto("/portal-preview/pending");
+  await expect(page.getByRole("heading", { name: /Your work is saved/ })).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("Marks, topic feedback, answer keys and ranks stay private");
+  await expect(page.getByRole("status")).toContainText("1 December 2026");
+  await expect(page.getByRole("button", { name: /answer review/i })).toHaveCount(0);
+  await expect(page.getByText("objective marks", { exact: true })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "All India mocks", exact: false }).last()).toBeVisible();
+});
+
 test("cancelled Google callback explains the failure without reflecting provider details", async ({ page }) => {
   await page.goto("/account/callback?error=access_denied&error_description=private-fixture");
   await expect(page.getByRole("alert")).toContainText("Google sign-in was cancelled");

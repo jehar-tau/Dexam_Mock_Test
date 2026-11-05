@@ -12,7 +12,7 @@ The hosted database currently has migrations 001–004, three Edge Functions and
 
 ## Controlled Google acceptance
 
-The owner created **DesignMocks Web** in Google Cloud project `designmocks-auth-2026` and entered the credentials directly in Supabase. Real Google sign-in has now passed from the local app: account selection, basic identity consent, Supabase callback, PKCE exchange, page-reload persistence, refresh-token rotation through the SDK, sign-out and returning-account sign-in. The returning login retains a single Auth account. Actual cancellation displays a safe retry message. No credential/session token was copied into source or logs by the app.
+The owner created **DesignMocks Web** in Google Cloud project `designmocks-auth-2026` and entered the credentials directly in Supabase. Real Google sign-in has now passed from both the local app and the owner-private `dmocks.com` publication: account selection, basic identity consent, Supabase callback, PKCE exchange, page-reload persistence, refresh-token rotation through the SDK, sign-out and returning-account sign-in. The returning login retains a single Auth account. Actual cancellation displays a safe retry message. No credential/session token was copied into source or logs by the app.
 
 The server-owned `dm_private.registration_policy` is `testers`; exactly one approved business test account is in `registration_testers`. The global Auth signup switch must be on for Google to create that tester, but the wired before-user-created hook rejects non-Google, anonymous, missing-email and non-allowlisted creation. Public registration is still closed. A real Auth email/password signup probe returns the hook's 403 denial; transactional tests cover unknown Google addresses and the other policy modes. Anonymous student RPCs remain denied. The owner test account has no paid pass, accepted purchase policy or order.
 
@@ -22,7 +22,7 @@ Approved callback destinations are exact:
 - `https://designmocks-studio.snehal1155.chatgpt.site/account/callback` (retained preview)
 - `http://127.0.0.1:4190/account/callback` (controlled local acceptance)
 
-Google's provider redirect remains `https://tiodqzvvujxvxssvjdis.supabase.co/auth/v1/callback`. Do not substitute the app callback for it. The request uses `openid email profile`, without Gmail, Drive or other API access. Google branding still displays the Supabase host in the consent screen; complete the actual product branding/domain setup before public launch.
+Google's provider redirect remains `https://tiodqzvvujxvxssvjdis.supabase.co/auth/v1/callback`. Do not substitute the app callback for it. The request uses `openid email profile`, without Gmail, Drive or other API access. Google branding settings now save DMocks as the app name, `https://dmocks.com` as the home page and `dmocks.com` as an authorized domain, with the Testing audience preserved. The account chooser still identifies the Supabase callback host. Final public privacy/terms URLs, logo and any required verification remain public-launch work; do not attach draft notices as final policies.
 
 Frontend switches are separate:
 

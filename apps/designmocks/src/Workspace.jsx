@@ -202,10 +202,10 @@ export function WorkspaceView({
                   <Arrow size={17} />
                 </Link>
                 <span>
-                  {a.status === "active" ? "Continue / submit" : "View report"}
+                  {a.status === "active" ? "Continue / submit" : a.resultsPending ? "View status" : "View report"}
                 </span>
                 <span>
-                  {a.status === "submitted"
+                  {a.resultsPending ? "Awaiting release" : a.status === "submitted"
                     ? `${a.score} / ${a.total}`
                     : "In progress"}
                 </span>
@@ -227,6 +227,23 @@ const hasAnswer = (answer) =>
   Array.isArray(answer)
     ? answer.length > 0
     : answer !== null && answer !== undefined && answer !== "";
+export function PendingAttemptResult({ title, reviewEndsAt }) {
+  const releaseDate = reviewEndsAt && !Number.isNaN(Date.parse(reviewEndsAt))
+    ? new Date(reviewEndsAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
+    : null;
+  return <section className="wrap section sample-result">
+    <Link className="back-link" to="/dashboard/all-india">← All India mocks</Link>
+    <span className="eyebrow">{title} / SUBMITTED</span>
+    <h1>Your work is saved.<br />Results come <em>after review.</em></h1>
+    <div className="notice" role="status">
+      <p>Your answers are locked. Marks, topic feedback, answer keys and ranks stay private until the team releases this event’s results.</p>
+      {releaseDate && <p>Review closes on {releaseDate}. The team can publish results after that date.</p>}
+    </div>
+    <p>You can continue with other practice while you wait. Return to All India mocks to check the release status.</p>
+    <Link className="button" to="/dashboard">Back to your workspace <Arrow /></Link>
+  </section>;
+}
+
 export function Attempt() {
   const { session, loading } = useAuthState();
   const { id } = useParams();
@@ -400,6 +417,7 @@ export function Attempt() {
       </section>
     );
   if (attempt.status === "submitted") {
+    if (attempt.resultsPending) return <PendingAttemptResult title={attempt.title} reviewEndsAt={attempt.reviewEndsAt} />;
     const topics = [
       ...new Set(
         attempt.questions

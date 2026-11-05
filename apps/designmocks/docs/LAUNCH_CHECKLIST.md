@@ -25,7 +25,9 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [x] Verified basic identity scopes and server-controlled owner/tester access; actual Auth hook denial and owner Google callback pass.
 - [x] Enabled labelled owner-only Google testing; the signup hook remains allowlisted and sales remain closed.
 - [x] Local actual Google callback/PKCE, consent, reload persistence, SDK refresh, sign-out, returning-account reuse and cancellation verified.
-- [ ] Repeat actual Google callback acceptance on the private custom-domain publication; complete Google product branding.
+- [x] Actual Google callback/PKCE, reload persistence, refresh and sign-out pass on the private `dmocks.com` publication.
+- [x] Google app name/home page/authorized domain saved as DMocks / `dmocks.com`; Testing audience preserved.
+- [ ] Complete public Google branding verification and final public privacy/terms links before registration opens.
 
 ## Paper delivery and assessment
 
@@ -84,3 +86,9 @@ Newer main-branch portal features are preserved; PR #20 question intake is a sep
 Google local acceptance now passes with exactly one owner Auth account and zero orders/passes. Registration mode is `testers`, with one allowlisted address; the global Auth signup switch is on solely because the restrictive hook must run for Google account creation. Public registration is not open. Cancellation, persistence, token refresh, sign-out and returning login are verified.
 
 Razorpay integration was explicitly deferred by the owner on 6 November. A Test secret appeared in setup tool output and must be regenerated/deactivated before future use. No merchant key was committed or installed, and sales remain false. Do not keep requesting credentials or configuring payments while deferred. Older disabled-Google/PAN/domain-availability notes above are historical; PROVIDER_SETUP.md describes the current verified state.
+
+### 6 November: hosted Google and event-release checks
+
+The controlled-login frontend was published owner-private through the existing Site identity (source `82719b545456c564d9190e957c0027606f3c893a`). Actual `dmocks.com` OAuth/PKCE, reload, refresh and sign-out pass. Hosted SQL still confirms one Google-linked owner account, zero orders/passes, tester policy and sales disabled. Google branding settings now use DMocks and the owned domain; the consent chooser may continue displaying the Supabase callback host, and final public-policy/verification work remains.
+
+A source review found submitted All India attempts exposing keys and derived correctness before explicit result release. A new migration masks attempt/history/analytics responses until release, and the UI shows a pending state. Focused database regression checks fail against the old reader and pass with the fix, including ordinary-practice feedback and fair deadline-capped ranking. This migration is not yet applied to the hosted backend; assessment modules remain unreleased.

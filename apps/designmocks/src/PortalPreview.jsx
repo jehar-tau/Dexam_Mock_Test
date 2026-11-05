@@ -1,7 +1,7 @@
 // Development-only visual preview. No provider calls, sessions or entitlements.
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { WorkspaceView } from "./Workspace.jsx";
+import { WorkspaceView, PendingAttemptResult } from "./Workspace.jsx";
 import { Arrow } from "./Art.jsx";
 import { PortalShell } from "./PortalShell.jsx";
 
@@ -28,6 +28,7 @@ export default function PortalPreview() {
   const location = useLocation();
   const navigate = useNavigate();
   const report = location.pathname.endsWith("/report");
+  const pending = location.pathname.endsWith("/pending");
   return <>
     <section className="wrap portal-preview-note" aria-label="Preview information">
       <span className="eyebrow">STUDENT PORTAL PREVIEW</span>
@@ -36,9 +37,10 @@ export default function PortalPreview() {
         <Link to="/portal-preview" aria-current={!report ? "page" : undefined}>Your workspace</Link>
         <Link to="/sample">Try the original sample</Link>
         <Link to="/portal-preview/report" aria-current={report ? "page" : undefined}>Example report</Link>
+        <Link to="/portal-preview/pending" aria-current={pending ? "page" : undefined}>Example pending result</Link>
       </div>
     </section>
-    {report ? <section className="wrap section sample-result">
+    {pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" /> : report ? <section className="wrap section sample-result">
       <Link className="back-link" to="/portal-preview">← Your preview workspace</Link>
       <div className="result-title">
         <div>
