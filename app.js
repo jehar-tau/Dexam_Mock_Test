@@ -2326,6 +2326,7 @@
       const paper = getPaper(result.paperId);
       if (!paper) return;
       flattenPaper(paper).forEach((question) => {
+        if (question.type === "DESCRIPTIVE") return;
         const outcome = scoreQuestion(question, (result.answers || {})[question.id]);
         if (!topicStats[question.topic]) topicStats[question.topic] = { total: 0, correct: 0, attempted: 0, score: 0 };
         topicStats[question.topic].total += 1;

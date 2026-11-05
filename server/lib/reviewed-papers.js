@@ -135,12 +135,14 @@ function buildMixedMocks(objective, drawings) {
   const queues = { NAT: [], MSQ: [], MCQ: [] };
   stableShuffle(objective.filter((q) => POOLED_EXAMS.includes(q.exam))).forEach((q) => queues[q.type].push(q));
   const drawingQueue = stableShuffle(drawings);
+  // An exam without a usable blueprint gets no mocks rather than taking the papers API down
   const plans = POOLED_EXAMS.map((exam) => {
     const bp = blueprints[exam.toLowerCase()];
-    const partA = bp.parts.find((p) => p.id === 'A');
-    const partB = bp.parts.find((p) => p.id === 'B');
-    return { exam, bp, partA, partB, tasks: partB.tasks.reduce((n, t) => n + t.count, 0) };
-  });
+    const partA = bp && (bp.parts || []).find((p) => p.id === 'A');
+    const partB = bp && (bp.parts || []).find((p) => p.id === 'B');
+    if (!partA || !partB) return null;
+    return { exam, bp, partA, partB, tasks: (partB.tasks || []).reduce((n, t) => n + t.count, 0) };
+  }).filter(Boolean);
   const take = (queue, n) => (queue.length >= n ? queue.splice(0, n) : null);
   const mocks = [];
   // Interleave the exams so every mock of either exam gets fresh questions; no question repeats across any mock
