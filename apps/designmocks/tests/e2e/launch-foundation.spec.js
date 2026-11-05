@@ -168,6 +168,19 @@ test("community accepts a structured discussion post", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("community opens a thread and supports member actions", async ({ page }) => {
+  await page.goto("/community-preview");
+  await page.getByRole("button", { name: "Open discussion" }).click();
+  await expect(page.getByRole("region", { name: "Discussion thread" })).toBeVisible();
+  await page.getByLabel("Add a reply").fill("Separating facts from inferences helps me check the answer.");
+  await page.getByRole("button", { name: "Reply" }).click();
+  await expect(page.getByText("Preview reply added.")).toBeVisible();
+  await page.getByRole("button", { name: "Mark helpful" }).click();
+  await expect(page.getByText("Marked helpful.")).toBeVisible();
+  await page.getByRole("button", { name: "Report" }).click();
+  await expect(page.getByText("Report sent for moderator review.")).toBeVisible();
+});
+
 test("drawing submission accepts ordered raster pages", async ({ page }) => {
   await page.goto("/drawing-uploads-preview");
   await page.locator('input[type="file"]').setInputFiles([
