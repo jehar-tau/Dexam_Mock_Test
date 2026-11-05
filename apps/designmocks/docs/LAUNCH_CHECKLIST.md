@@ -33,7 +33,8 @@ Owner instruction: keep working until the independent mock-test service is compl
 
 - [x] Located and audited the owner-selected canonical `origin/main:server/data/exports/dexam-bank-export.json`; the newer PRODUCT_EXECUTION_PLAN and QUESTION_BANK_AUDIT supersede the old workstation scan for source eligibility.
 - [x] Implement the canonical-source importer and verify dry-run/eligibility/runtime fixtures; no real question content is in the app source or browser bundle.
-- [ ] Accept the actual private hosted import and exact paper/media manifests before publication.
+- [x] Import the exact canonical hold-free set privately and verify full replay against the same completed run.
+- [ ] Complete private media upload/delivery and exact paper/marking/section manifests before publication.
 - [ ] Implement and verify paper-specific sections, timing, marking and locking against the reviewed blueprints; do not present the flat prototype as a complete official exam simulation.
 - [ ] Verify image delivery, saved/resumed attempts, deadline enforcement and immutable submitted answers with representative reviewed papers.
 - [ ] Finish useful section/topic reporting, explanations and practice recommendations. Drawing remains clearly separate from objective scores; do not promise human evaluation until that service is implemented and approved.
@@ -99,3 +100,11 @@ A source review found submitted All India attempts exposing keys and derived cor
 All 19 source migrations are now applied/tracked in the standalone project. The merged 14-migration portal batch was applied atomically from `6be3ac9833518343aae24b7bd27a90c93e7071bb`, guarded by the exact four-migration baseline, closed test-mode sales, one tester and empty assessment/commerce tables. A subsequent narrow hardening migration removes inherited PUBLIC execute from eight portal/admin RPCs while retaining authenticated grants and their internal owner/admin checks.
 
 The new catalogue test detects the original inherited grant and passes after hardening. All existing database suites, the All India embargo suite and grant checks pass in disposable PostgreSQL 17. The grant catalogue checks also pass on hosted Supabase. The expanded read-only portal HTTP smoke suite passes 27/27, including anonymous denials for the new read RPCs and the intentionally public alias-only ranking route. One owner Auth account remains; no orders, passes, attempts, bank questions or public access were created. This supersedes the earlier four-migration status, without claiming paper/provider acceptance or a public launch.
+
+### 6 November: real private bank import completed
+
+Canonical source `5e04ea6b5bcbdf344b601d0092ad316ff0e34555`, source SHA-256 `dd7702650b6e8ffeb348d0b558ecdd2bfbc1e565f2a392536518a3cebc8962be`: 4,521 total, 2,582 hold-free imported and 1,939 excluded. Run `9b12d4cf-b0a0-4fc5-bd64-15068739134b` is completed; repeating the complete importer reuses that run. The service credential was obtained and consumed inside one short-lived process and never printed, written to source or placed in chat. No permissions or bank approval flags were widened.
+
+Actual hosted acceptance found Supabase safe-update protection rejecting the old finalizer's unqualified whole-table update (HTTP 400 / SQLSTATE 21000). Migration `202611060003` updates only changed active states. The regression detects the old behavior; local suites and the real provider completion/replay pass. Hosted migration count is now 20.
+
+There are 161 asset-free runtime candidates, all labelled official/unlicensed. The 48 Dexam-original and 290 owner-provided hold-free records currently require visual/media work. All 2,085 unique referenced PNGs were found read-only under the original bank workstation's `server/data/media` and match the canonical SHA-256 and dimensions; total 273,263,304 bytes. They are ignored local media, absent from the Git source and have not yet been uploaded to DMocks Storage. Every imported record remains unapproved with rights false; no student paper is released.
