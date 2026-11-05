@@ -20,11 +20,12 @@ run.onclick = async () => {
   panel.style.visibility = "hidden";
   try {
     const report = await axe.run(
-      { exclude: ["#dev-audit"] },
+      { include: ["#root"], exclude: ["#dev-audit"] },
       { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21aa"] } },
     );
     const result = {
       route: location.pathname,
+      scope: "#root (application only; browser extensions excluded)",
       theme: document.documentElement.dataset.theme,
       width: innerWidth,
       overflow: document.documentElement.scrollWidth > innerWidth,

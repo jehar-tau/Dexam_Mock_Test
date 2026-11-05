@@ -13,7 +13,8 @@ do $$ begin
     raise exception 'Auth hook grants missing';
   end if;
 end $$;
-insert into dm_private.registration_testers(email) values ('tester@example.invalid');
+update dm_private.registration_policy set mode='closed';
+insert into dm_private.registration_testers(email) values ('tester@example.invalid') on conflict do nothing;
 do $$ begin
   if not (public.before_designmocks_user_created('{"user":{"email":"tester@example.invalid","app_metadata":{"provider":"google"}}}') ? 'error') then
     raise exception 'Closed mode admitted tester';

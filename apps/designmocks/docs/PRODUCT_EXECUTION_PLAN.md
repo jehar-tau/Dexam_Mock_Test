@@ -136,6 +136,8 @@ Exit: zero unexplained bank differences and an approved migration/convergence de
 
 ### Phase 1 — portal shell and identity
 
+6 November provider evidence: Google is enabled and controlled local OAuth/PKCE, cancellation, persistence, refresh, sign-out and returning login pass. Only the owner tester is admitted by the server hook. This is not public registration or a hosted release of the later portal migrations. Razorpay is explicitly deferred by the owner; keep sales disabled while other implementation continues.
+
 - [x] Build the server-backed Overview shell and responsive student navigation for exam mocks, All India mocks, topic practice, Learn and Community.
 - [ ] Replace the locked module states as each server capability passes its release gate.
 - [x] Add candidate onboarding for name, E.164 phone, appearing year, city and selected exams; phone remains explicitly unverified until a service-role OTP callback confirms the exact number.

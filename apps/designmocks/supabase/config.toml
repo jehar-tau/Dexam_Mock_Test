@@ -9,11 +9,11 @@ verify_jwt = false
 [functions.attempt-media]
 verify_jwt = false
 
-# Exact preview callbacks only. Sign-ups stay closed during provider setup.
+# Exact owned-origin callbacks. The server hook admits allowlisted Google testers only; public registration remains closed.
 [auth]
-site_url = "https://designmocks-studio.snehal1155.chatgpt.site"
-additional_redirect_urls = ["https://designmocks-studio.snehal1155.chatgpt.site/account/callback"]
-enable_signup = false
+site_url = "https://dmocks.com"
+additional_redirect_urls = ["https://dmocks.com/account/callback", "https://designmocks-studio.snehal1155.chatgpt.site/account/callback", "http://127.0.0.1:4190/account/callback"]
+enable_signup = true
 enable_anonymous_sign_ins = false
 
 [auth.hook.before_user_created]
