@@ -19,7 +19,7 @@ From this app directory, use `npm ci`, `npm run dev`, `npm run check` or `npm ru
 
 Discovery landing/catalogue/exam/annual-pass pages; light/dark mode; an original five-question timed sample with saved answers, flags, feedback and answer review; Google login integration; the protected account workspace and server-timed MCQ/MSQ/NAT attempts; private raster image signing; a server-created Razorpay order and signed payment webhook. Drawing currently means offline drawing and self-review, not uploads or human evaluation.
 
-Real provider acceptance and reviewed-bank publication are incomplete. Actual Google OAuth/PKCE, cancellation, persistence, SDK refresh, sign-out and returning login pass locally against the standalone Supabase project. Registration is restricted by the server signup hook to one approved owner tester; public registration, the released portal and sales remain closed. The question-bank work in the repository root is not automatically loaded into or exposed by this website. The owner deferred Razorpay integration on 6 November; checkout must remain disabled until they resume it.
+Real provider acceptance and reviewed-bank publication are incomplete. Actual Google OAuth/PKCE, cancellation, persistence, SDK refresh, sign-out and returning login pass locally and on the private `dmocks.com` publication against the standalone Supabase project. Registration is restricted by the server signup hook to one approved owner tester; public registration, the released portal and sales remain closed. The question-bank work in the repository root is not automatically loaded into or exposed by this website. The owner deferred Razorpay integration on 6 November; checkout must remain disabled until they resume it.
 
 ## Configuration and existing preview
 
