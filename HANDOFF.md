@@ -71,13 +71,17 @@ npm run build
 npm run check
 ```
 
+`npm run test:database` needs an empty, disposable localhost PostgreSQL 17 in `DESIGNMOCKS_TEST_DATABASE_URL`. CI provides one; locally, a throwaway `postgres:17` Docker container works. Copy both `tests/` and the whole `supabase/` folder into it, because the suite also runs `supabase/tests/controlled_signup.sql`.
+
 Choose verification proportional to the change. The complete `npm run check` includes unit, readiness, build, isolation, server-type, and Playwright checks and may take substantially longer than a focused check. Follow `apps/designmocks/README.md` for database, hosted-provider, accessibility, and private-media procedures; never point destructive or bootstrap checks at a real provider database.
 
 ## Current durable status
 
-As of 6 November 2026:
+As of 7 November 2026:
 
-- Another Codex build was actively writing sequential exam-part changes when this handoff was introduced. Treat all pre-existing application changes as in-progress user work and inspect them before editing.
+- Sequential UCEED/CEED Part A → Part B sessions (PR #53), the combined exam report (#54) and audited launch-readiness gates (#55) are merged to `main`.
+- NIFT 2027 B.Des. GAT (100 MCQ, 120 minutes, +1/−0.25) is implemented on PR #56 and not yet merged. Its blueprint stays unreleased. The NIFT CAT, B.F.Tech. Section B, other NIFT programmes and NID are not modelled.
+- Any runtime write resets a bank question's `owner_approved` and `rights_confirmed` (`dm_private.reset_bank_review_on_change`), so freshly materialized questions need `admin_review_bank_question` again before a blueprint counts them.
 - The app includes the public catalogue/offer experience, timed sample, protected workspace foundations, reporting/moderation/operations work, and server-side payment/provider foundations described in the README.
 - Controlled Google login and the private canonical bank/image import have documented acceptance, but later local provider migrations and capabilities still require deliberate staging promotion and representative hosted acceptance.
 - Public registration, the released portal, sales, and checkout remain closed.
@@ -95,10 +99,10 @@ Before switching agents or pausing for quota reset:
 
 ## Latest session checkpoint
 
-- Branch: `feature/dmocks-nift-2027-gat` (from `main` at `15c0722`, after PR #55). The sequential exam-part work referenced by the first handoff is merged (PR #53); combined report (#54) and launch readiness gates (#55) are merged too.
-- Latest outcome pursued: verified NIFT 2027 B.Des. GAT exam mock context (100 MCQ, 120 minutes, +1/−0.25), checked on 6 November 2026 against the NIFTEE 2027 Information Bulletin (16 October 2026), printed pages 18–20, sections 3.4 and 3.7.
-- Uncommitted changes: `apps/designmocks/scripts/question-runtime.mjs` (`niftee-2027-bdes-v1` rule), `scripts/materialize-bank-runtime.mjs` (routes NIFT records to the new RPC; plan version `verified-2027-v2`), `supabase/migrations/202611060121_verified_nift_bdes_gat.sql` (fixed NIFT blueprint and service-only `upsert_nift_question_bank_runtime_batch`; blueprint is not enabled), `src/ExamMocks.jsx` (preview fixture), `tests/database/verified-nift.sql`, `tests/database/portal-grants.sql`, `scripts/check-database.sh`, `tests/question-runtime.test.mjs`, `tests/e2e/launch-foundation.spec.js`, and docs (`README.md`, `docs/EXAM_RULES.md`, `docs/LAUNCH_CHECKLIST.md`).
-- Checks passed: `npm test` (55/55), `npm run build`, `check-preview-isolation.mjs`, Playwright `exam-wise mocks` on chromium and mobile-chromium. Offline compile of `origin/main` canonical bank: 155 of 298 eligible NIFT records compile, all four-option, single-key, hold-free, figure-free (enough for 100).
-- PR: https://github.com/jehar-tau/Dexam_Mock_Test/pull/56 (Auto-fix on). First CI run failed because the NIFT database test skipped the fresh review that runtime changes require; fixed in `17385a2`. `npm run test:database` then passed in full against a disposable `postgres:17` Docker container.
-- Not run locally: the full `npm run check`, `test:server-types`, and the hosted `runtime:manifest`/`runtime:apply`.
-- Next action: wait for PR #56 CI, then owner review and merge. Hosted materialization and releasing the NIFT blueprint need explicit owner authorization. The NIFT CAT and NID contexts remain unmodelled.
+- Branch: `feature/dmocks-nift-2027-gat`, pushed, working tree clean. Commits on top of `main` (`15c0722`): `987986d` (NIFT GAT context), `17385a2` (database test reviews the materialized runtime before checking readiness), `92579c1` and this handoff update.
+- PR: https://github.com/jehar-tau/Dexam_Mock_Test/pull/56, open, mergeable, CI `app` passing at `92579c1`, awaiting owner review. Auto-fix was enabled in the Claude Code session that opened it.
+- Outcome delivered: verified NIFT 2027 B.Des. GAT exam mock context, checked on 6 November 2026 against the NIFTEE 2027 Information Bulletin (16 October 2026), printed pages 18–20, sections 3.4 and 3.7.
+- Changed: `scripts/question-runtime.mjs` (`niftee-2027-bdes-v1` rule), `scripts/materialize-bank-runtime.mjs` (routes NIFT records to the new RPC; plan version `verified-2027-v2`), `supabase/migrations/202611060121_verified_nift_bdes_gat.sql` (fixed NIFT blueprint, not enabled; service-only `upsert_nift_question_bank_runtime_batch`), `src/ExamMocks.jsx` (preview fixture), database tests (`verified-nift.sql`, `portal-grants.sql`, `scripts/check-database.sh`), unit and e2e tests, and docs (`README.md`, `docs/EXAM_RULES.md`, `docs/LAUNCH_CHECKLIST.md`). Paths are under `apps/designmocks/`.
+- Checks passed: CI `app` (full `npm run check`, `npm audit --omit=dev`, server-function type check, full database suite); locally `npm test` (55/55), `npm run build`, preview isolation, Playwright `exam-wise mocks`, and the full `npm run test:database` on disposable `postgres:17`. Offline compile of the `origin/main` canonical bank: 155 of 298 eligible NIFT records compile, all four-option, single-key, hold-free and figure-free (enough for 100).
+- Not done: hosted `runtime:manifest`/`runtime:apply` for NIFT, re-review of the materialized NIFT questions, and releasing the NIFT blueprint. All three need explicit owner authorization.
+- Next action: owner reviews and merges PR #56. Then, only if authorized, run hosted NIFT materialization and review, and record the evidence in `docs/VERIFICATION.md`.
