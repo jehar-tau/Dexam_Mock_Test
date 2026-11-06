@@ -27,6 +27,8 @@ begin
   'public.my_overview_analytics()'
   ,'public.admin_question_intake_assets()'
   ,'public.admin_promote_intake_asset(uuid,jsonb)'
+  ,'public.admin_promote_intake_candidate(uuid,jsonb)'
+  ,'public.admin_reject_intake_candidate(uuid)'
   ,'public.admin_drawing_review_media_paths(uuid)'
   ,'public.admin_release_drawing_review(uuid)'
   ,'public.admin_set_paper_upload_grace(uuid,integer)'
@@ -46,5 +48,7 @@ begin
  if not has_function_privilege('authenticated','public.save_answer_revision(uuid,uuid,jsonb,bigint)','EXECUTE') then raise exception 'Revisioned autosave grant missing'; end if;
  if has_function_privilege('authenticated','public.prune_attempt_rate_buckets(timestamptz)','EXECUTE') then raise exception 'Rate-bucket retention must remain service-only'; end if;
  if not has_function_privilege('service_role','public.prune_attempt_rate_buckets(timestamptz)','EXECUTE') then raise exception 'Rate-bucket service retention grant missing'; end if;
+ if has_function_privilege('authenticated','public.claim_question_intake_asset(uuid)','EXECUTE') then raise exception 'Intake worker claim must remain service-only'; end if;
+ if not has_function_privilege('service_role','public.complete_question_intake_asset(uuid,text,text,jsonb)','EXECUTE') then raise exception 'Intake completion service grant missing'; end if;
 end $$;
 \echo 'PASS: portal RPC anonymous/authenticated execution boundaries.'
