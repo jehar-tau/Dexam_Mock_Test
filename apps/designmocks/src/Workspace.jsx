@@ -298,10 +298,10 @@ export function Attempt() {
     setSaved("");
   }, [q?.id]);
   useEffect(() => {
-    if (attempt?.status !== "active") return;
+    if (attempt?.status !== "active" && !(attempt?.status === "submitted" && attempt.uploadDeadline)) return;
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
-  }, [attempt?.status]);
+  }, [attempt?.status, attempt?.uploadDeadline]);
   useEffect(() => {
     if (confirm && !dialog.current?.open) dialog.current?.showModal();
   }, [confirm]);
@@ -426,6 +426,10 @@ export function Attempt() {
           .map((item) => item.topic),
       ),
     ];
+    const uploadSeconds = attempt.uploadDeadline
+      ? Math.max(0, Math.ceil((Date.parse(attempt.uploadDeadline) - now - offset.current) / 1000))
+      : 0;
+    const drawingUploadOpen = uploadSeconds > 0;
     return (
       <section className="wrap section sample-result">
         <Link className="back-link" to="/dashboard">
@@ -441,7 +445,7 @@ export function Attempt() {
             <p>
               Objective answers are marked with the paper’s reviewed key.
               Drawing is excluded from this score and remains a separate
-              self-review exercise.
+              teacher-reviewed submission.
             </p>
           </div>
           <div className="sample-score">
@@ -452,6 +456,22 @@ export function Attempt() {
             <p>objective marks</p>
           </div>
         </div>
+        {drawingUploadOpen && (
+          <section className="drawing-upload-window" aria-label="Drawing upload window">
+            <span className="eyebrow">FIXED UPLOAD WINDOW</span>
+            <h2>Upload your drawing pages now.</h2>
+            <p>
+              Upload or replace pages by {new Date(attempt.uploadDeadline).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}. This server deadline keeps running through power or internet loss and cannot be restarted.
+            </p>
+            <p role="timer"><b>{Math.floor(uploadSeconds / 60)}:{String(uploadSeconds % 60).padStart(2, "0")}</b> remaining to upload</p>
+            {attempt.questions.filter((item) => item.kind === "drawing").map((item) => (
+              <article key={item.id}>
+                <h3>{item.prompt}</h3>
+                <DrawingUploads attemptId={attempt.id} questionId={item.id} />
+              </article>
+            ))}
+          </section>
+        )}
         <div className="result-grid">
           <article>
             <span className="eyebrow">A GLIMPSE OF EACH TOPIC</span>
