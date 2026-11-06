@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { platform } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
+import { DrawingReviewMedia } from "./DrawingReviewMedia.jsx";
 
 async function rpc(name, args) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -393,6 +394,7 @@ export function Admin() {
               <article key={d.reviewId}>
                 <b>Anonymous submission · {d.uploadCount} images</b>
                 <span className="status-pill">{d.status}</span>
+                <DrawingReviewMedia reviewId={d.reviewId} />
                 {d.status !== "reviewed" && (
                   <form
                     className="admin-form"
