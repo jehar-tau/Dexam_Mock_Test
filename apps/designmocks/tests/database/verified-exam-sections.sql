@@ -17,6 +17,8 @@ select pg_temp.section_reject('select public.admin_configure_exam_mock(''uceed''
 select pg_temp.section_reject('select public.admin_configure_exam_mock(''uceed'',57,3600,1,true)','verified clock cannot be changed');
 select pg_temp.section_assert((public.admin_exam_mock_blueprints()->0->'sectionCounts'->>'mcq')::integer=26 and(public.admin_exam_mock_blueprints()->0->>'durationSeconds')::integer=3600,'CEED verified Part A manifest is fixed');
 select public.admin_configure_exam_mock('uceed',57,7200,1,true);
+select public.admin_upsert_learning_lesson(null,'verified-section-theory','uceed','verified-section',
+  'Fictional section theory','A fictional lesson summary.','An original test lesson body for release verification.',1,true,true);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000071',true);
 select pg_temp.section_assert((public.exam_mock_catalog()->3->>'sectionLabel')='Part A','catalog declares verified section');
 select set_config('test.section_attempt',public.start_exam_mock('uceed')::text,true);
@@ -28,7 +30,15 @@ select pg_temp.section_assert((select bool_and(kind='mcq')from dm_private.attemp
 select pg_temp.section_assert((select duration_seconds=7200 and title='UCEED 2027 Part A mock'from dm_private.papers p join dm_private.attempts a on a.paper_id=p.id where a.id=current_setting('test.section_attempt')::uuid),'verified clock and title are frozen');
 set local role authenticated;select set_config('request.jwt.claim.role','authenticated',true);select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000071',true);
 select pg_temp.section_assert(public.read_attempt(current_setting('test.section_attempt')::uuid)->'questions'=public.read_attempt(current_setting('test.section_attempt')::uuid)->'questions','reconnect reads the same immutable snapshot');
+select public.save_answer_revision(current_setting('test.section_attempt')::uuid,current_setting('test.section_question')::uuid,'"1"',1);
 select public.submit_attempt(current_setting('test.section_attempt')::uuid);
+select pg_temp.section_assert((select o->'objectiveAccuracy'='null'::jsonb and o->'exams'='[]'::jsonb and o->'topics'='[]'::jsonb
+  and (o->>'waitingForResults')::integer=1 from public.my_overview_analytics() o),
+  'overview withholds Part A correctness and percentage before full release');
+select pg_temp.section_assert((public.learning_progress()->'recommendation'->>'answered')::integer=0,
+  'Learn uses its default recommendation while Part A is sealed');
+select pg_temp.section_assert((public.my_attempt_history()->0->>'resultsPending')::boolean
+  and public.my_attempt_history()->0->'score'='null'::jsonb,'history withholds Part A marks while the exam is sealed');
 select pg_temp.section_reject('select public.start_exam_mock_part_b(current_setting(''test.section_attempt'')::uuid)','Part B cannot start before the fixed Part A clock ends');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000072',true);
 select pg_temp.section_reject('select public.start_exam_mock_part_b(current_setting(''test.section_attempt'')::uuid)','another user cannot open the student session');
@@ -49,6 +59,11 @@ select pg_temp.section_assert(public.read_attempt(current_setting('test.section_
 reset role;update dm_private.attempts set upload_deadline=now()-interval '1 second'where id=current_setting('test.part_b_attempt')::uuid;
 set local role authenticated;select set_config('request.jwt.claim.role','authenticated',true);select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000071',true);
 select pg_temp.section_assert(not(public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'resultsPending')::boolean and(public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'combinedTotal')::numeric=300,'combined report releases objective and drawing totals after review/upload gates');
+select pg_temp.section_assert((select (o->>'objectiveAccuracy')::integer=100 and (o->>'objectiveAnswered')::integer=1
+  and (o->>'waitingForResults')::integer=0 from public.my_overview_analytics() o),
+  'overview incorporates Part A only after full release');
+select pg_temp.section_assert((public.learning_progress()->'recommendation'->>'answered')::integer=1
+  and (public.learning_progress()->'recommendation'->>'accuracy')::integer=100,'Learn incorporates released topic performance');
 select pg_temp.section_reject('select public.save_answer_revision(current_setting(''test.section_attempt'')::uuid,current_setting(''test.section_question'')::uuid,''"1"'',1)','submitted snapshot rejects later answers');
 select pg_temp.section_reject('select public.start_exam_mock(''uceed'')','free allowance is enforced after one attempt');
 rollback;

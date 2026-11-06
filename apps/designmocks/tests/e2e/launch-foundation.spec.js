@@ -86,6 +86,10 @@ test("fictional portal preview exposes every requested navigation area", async (
     await expect(navigation.getByRole("link", { name })).toBeVisible();
   }
   await expect(page.getByText("Sample Student")).toBeVisible();
+  await expect(page.getByText("1 submitted attempt is awaiting results.")).toBeVisible();
+  const pending = page.locator("article").filter({ hasText: "Example cohort awaiting release" });
+  await expect(pending).toContainText("Awaiting release");
+  await expect(pending.getByRole("link")).toHaveAttribute("href", "/portal-preview/pending");
   await expect(page.getByLabel("Performance snapshot")).toContainText("80%");
   await expect(page.getByText("Visual hierarchy", { exact: true }).first()).toBeVisible();
   await expect(page.getByText("2 released", { exact: true })).toBeVisible();

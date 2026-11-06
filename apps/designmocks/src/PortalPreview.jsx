@@ -9,7 +9,8 @@ import { DrawingUploadWindow, previewDrawingMedia } from "./DrawingUploads.jsx";
 const example = {
   access: { active: true, expiresAt: "2027-11-05T00:00:00+05:30" },
   analytics: {
-    completed: 1,
+    completed: 2,
+    waitingForResults: 1,
     objectiveAnswered: 25,
     objectiveAccuracy: 80,
     recommendedTopic: { topic: "Visual hierarchy", answered: 10, accuracy: 70 },
@@ -23,6 +24,7 @@ const example = {
   },
   attempts: [
     { id: "example-result", title: "Visual thinking · example result", status: "submitted", score: 80, total: 100 },
+    { id: "example-pending", title: "Example cohort awaiting release", status: "submitted", resultsPending: true },
     { id: "original-sample", title: "Your five-question experience sample", status: "active" },
   ],
 };
@@ -91,6 +93,6 @@ export default function PortalPreview() {
       <h2>Small observations. Useful habits.</h2>
       <div className="paper-list">{topics.map(t => <article key={t.name}><span className="eyebrow">{t.name}</span><h3>Try this tomorrow.</h3><p>{t.note}</p></article>)}</div>
       <Link className="button" to="/sample">Try it with your own answers <Arrow /></Link>
-    </section> : <PortalShell><WorkspaceView data={example} papers={papers} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : "/sample"} /></PortalShell>}
+    </section> : <PortalShell><WorkspaceView data={example} papers={papers} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/sample"} /></PortalShell>}
   </>;
 }

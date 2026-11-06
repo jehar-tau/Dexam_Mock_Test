@@ -176,6 +176,7 @@ select public.save_answer_revision(current_setting('test.attempt_id')::uuid,'200
 select public.save_answer_revision(current_setting('test.attempt_id')::uuid,'20000000-0000-4000-8000-000000000002','["A"]',1);
 select public.save_answer_revision(current_setting('test.attempt_id')::uuid,'20000000-0000-4000-8000-000000000003','"3.15"',1);
 select public.save_answer_revision(current_setting('test.attempt_id')::uuid,'20000000-0000-4000-8000-000000000004','"A fictional self-review note."',1);
+select public.save_answer_revision(current_setting('test.attempt_id')::uuid,'20000000-0000-4000-8000-000000000005','"A"',1);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select pg_temp.reject('select public.read_attempt(current_setting(''test.attempt_id'')::uuid)','other student attempt read');
 select pg_temp.reject('select public.submit_attempt(current_setting(''test.attempt_id'')::uuid)','other student submission');

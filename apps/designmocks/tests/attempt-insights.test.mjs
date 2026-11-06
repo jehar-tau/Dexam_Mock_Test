@@ -26,3 +26,12 @@ test("weakest answered topic becomes the deterministic recommendation",()=>{
   ]);
   assert.deepEqual(value.recommended,{key:"spatial",total:2,answered:2,correct:0,accuracy:0});
 });
+
+test("sealed outcomes and unanswered full-mark items cannot inflate reported accuracy", () => {
+  const result = buildAttemptInsights([
+    { kind: "mcq", topic: "sealed", answer: "A" },
+    { kind: "mcq", topic: "layout", answer: "A", outcome: "correct" },
+    { kind: "nat", topic: "layout", answer: null, outcome: "full_marks" },
+  ]);
+  assert.deepEqual(result.topics, [{ key: "layout", total: 2, answered: 1, correct: 1, accuracy: 100 }]);
+});
