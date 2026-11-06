@@ -42,5 +42,9 @@ begin
  if not has_function_privilege('service_role','public.finalize_expired_attempts(integer)','EXECUTE') then raise exception 'Service bulk finalizer grant missing'; end if;
  if has_function_privilege('authenticated','public.record_drawing_ai_suggestion(uuid,text,text,text,jsonb,text,numeric,numeric,jsonb)','EXECUTE') then raise exception 'Drawing AI writer must remain service-only'; end if;
  if not has_function_privilege('service_role','public.record_drawing_ai_suggestion(uuid,text,text,text,jsonb,text,numeric,numeric,jsonb)','EXECUTE') then raise exception 'Drawing AI service writer grant missing'; end if;
+ if has_function_privilege('authenticated','public.save_answer(uuid,uuid,jsonb)','EXECUTE') then raise exception 'Legacy unrevisioned answer writer must remain private'; end if;
+ if not has_function_privilege('authenticated','public.save_answer_revision(uuid,uuid,jsonb,bigint)','EXECUTE') then raise exception 'Revisioned autosave grant missing'; end if;
+ if has_function_privilege('authenticated','public.prune_attempt_rate_buckets(timestamptz)','EXECUTE') then raise exception 'Rate-bucket retention must remain service-only'; end if;
+ if not has_function_privilege('service_role','public.prune_attempt_rate_buckets(timestamptz)','EXECUTE') then raise exception 'Rate-bucket service retention grant missing'; end if;
 end $$;
 \echo 'PASS: portal RPC anonymous/authenticated execution boundaries.'
