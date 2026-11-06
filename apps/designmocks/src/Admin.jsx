@@ -4,6 +4,7 @@ import { platform } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
 import { DrawingReviewMedia } from "./DrawingReviewMedia.jsx";
 import { CommunityModerationQueue } from "./CommunityModeration.jsx";
+import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
 
 async function rpc(name, args) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -120,6 +121,7 @@ export function Admin() {
     [lessons, setLessons] = useState([]),
     [drawings, setDrawings] = useState([]),
     [communityReports, setCommunityReports] = useState([]),
+    [aiDrafts, setAiDrafts] = useState([]),
     [intake, setIntake] = useState([]),
     [questionReports, setQuestionReports] = useState([]),
     [bankRights, setBankRights] = useState({}),
@@ -130,7 +132,7 @@ export function Admin() {
       const ok = await rpc("is_dmocks_admin");
       setAllowed(ok);
       if (ok) {
-        const [d, b, q, m, a, r, l, w, i, c] = await Promise.all([
+        const [d, b, q, m, a, r, l, w, i, c, ai] = await Promise.all([
           rpc("admin_question_drafts"),
           rpc("admin_bug_reports"),
           rpc("admin_bank_questions", { p_limit: 25, p_offset: 0 }),
@@ -141,6 +143,7 @@ export function Admin() {
           rpc("admin_drawing_queue"),
           rpc("admin_question_intake_assets"),
           rpc("admin_community_report_queue"),
+          rpc("admin_ai_draft_requests"),
         ]);
         setDrafts(d);
         setBugs(b);
@@ -152,6 +155,7 @@ export function Admin() {
         setDrawings(w);
         setIntake(i);
         setCommunityReports(c);
+        setAiDrafts(ai);
       }
     } catch (e) {
       setMessage(e.message);
@@ -175,6 +179,12 @@ export function Admin() {
     } catch (e) {
       setMessage(e.message);
     }
+  };
+  const generateAiDraft = async (input) => {
+    const { data, error } = await platform.functions.invoke("ai-question-draft", { body: input });
+    if (error) throw error;
+    if (data?.error) throw new Error(data.error);
+    await load();
   };
   const review = async (id, decision) => {
     try {
@@ -566,6 +576,7 @@ export function Admin() {
             </label>
             <button className="button">Queue draft</button>
           </form>
+          <AiQuestionDrafting requests={aiDrafts} onGenerate={generateAiDraft} />
           <h2>All India mock events</h2>
           <p>
             Each event freezes one paper for every candidate, stays open for ten
