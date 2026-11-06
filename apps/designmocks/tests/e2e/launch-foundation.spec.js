@@ -149,6 +149,9 @@ test("students can submit a structured question report", async ({ page }) => {
 
 test("learning path opens a theory lesson", async ({ page }) => {
   await page.goto("/learn-preview");
+  await expect(page.getByLabel("Learning progress")).toContainText("50% complete");
+  await expect(page.getByLabel("Learning progress")).toContainText("40% accuracy");
+  await expect(page.getByText("Recommended next", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Start lesson" }).click();
   await expect(
     page.getByText("Preview lesson opened: Notice before you decide"),
