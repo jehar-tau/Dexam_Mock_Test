@@ -1,13 +1,27 @@
-// Authentication testing and paid/public portal release are separate switches.
-export function resolveAuthConfiguration({ mode, deployment, portalEnabled = false, testLoginEnabled = false, url, key, termsVersion }) {
-  if (portalEnabled && testLoginEnabled)
-    throw new Error("Choose controlled login testing or the released portal, not both.");
+const closed = Object.freeze({ authReady: false, portalReady: false, testLoginMode: false, stagingPortalMode: false, checkoutReady: false });
+
+export function resolveAuthConfiguration({
+  mode, deployment, origin, stagingTarget,
+  portalEnabled = false, testLoginEnabled = false, stagingPortalEnabled = false, url, key, termsVersion,
+}) {
+  if ([portalEnabled, testLoginEnabled, stagingPortalEnabled].filter(Boolean).length > 1)
+    throw new Error("Choose one mode for sign-in or portal access.");
   if (testLoginEnabled && !["development", "staging", "test"].includes(deployment))
     throw new Error("Controlled login testing cannot be enabled in a production release.");
   if (testLoginEnabled && mode === "production" && deployment === "development")
     throw new Error("Use an explicitly staged build for controlled login; do not ship development login configuration.");
-  if (!portalEnabled && !testLoginEnabled)
-    return { authReady: false, portalReady: false, testLoginMode: false };
+  if (!portalEnabled && !testLoginEnabled && !stagingPortalEnabled) return closed;
+  if (portalEnabled && (deployment === "staging" || mode === "staging"))
+    throw new Error("Use private staging portal mode for staging acceptance.");
+  if (portalEnabled && deployment === "production" && stagingTarget?.url && url?.toLowerCase() === stagingTarget.url)
+    throw new Error("The production portal requires a separate Supabase project.");
+  if (stagingPortalEnabled) {
+    if (deployment !== "staging" || mode !== "staging")
+      throw new Error("The private portal requires an explicit staging build.");
+    if (!stagingTarget?.url || !stagingTarget.origin || url !== stagingTarget.url)
+      throw new Error("The private portal requires the designated DMocks staging project.");
+    if (origin !== stagingTarget.origin) return closed;
+  }
   if (!url || !key || !/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url))
     throw new Error("Google login needs the independent Supabase HTTPS URL and public client key.");
   if (key.startsWith("sb_secret_"))
@@ -22,7 +36,13 @@ export function resolveAuthConfiguration({ mode, deployment, portalEnabled = fal
   }
   if (portalEnabled && !termsVersion)
     throw new Error("The released portal requires its published terms version.");
-  return { authReady: true, portalReady: portalEnabled, testLoginMode: testLoginEnabled };
+  return {
+    authReady: true,
+    portalReady: portalEnabled || stagingPortalEnabled,
+    testLoginMode: testLoginEnabled,
+    stagingPortalMode: stagingPortalEnabled,
+    checkoutReady: portalEnabled,
+  };
 }
 
 export function authCallbackMessage(search = "", hash = "") {

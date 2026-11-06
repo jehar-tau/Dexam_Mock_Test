@@ -25,7 +25,9 @@ Real provider acceptance and reviewed-bank publication are incomplete. Actual Go
 
 Copy `.env.example` to `.env.local` and enter only the standalone project's **public** URL/anon key. Keep `VITE_PORTAL_ENABLED=false` and the terms version blank until launch acceptance. Never put Google client secrets, Supabase service-role keys or Razorpay secrets into Vite variables, source or chat.
 
-For approved login acceptance only, set `VITE_TEST_LOGIN_ENABLED=true` with `VITE_DEPLOYMENT_ENV=development` locally or `staging` for a private hosted build. This mode does not accept draft purchase terms, expose the unfinished workspace or enable checkout. Production releases reject it. Both login switches default false; do not combine them. The server allowlist remains the actual registration boundary.
+For approved login acceptance only, set `VITE_TEST_LOGIN_ENABLED=true` with `VITE_DEPLOYMENT_ENV=development` locally or `staging` for a private hosted build. This mode opens the controlled account screen for sign-in, refresh and sign-out. The server allowlist remains the registration boundary.
+
+For the full private staging portal, build with `VITE_DEPLOYMENT_ENV=staging`, `VITE_STAGING_PORTAL_ENABLED=true` and `npm run build:staging`. Use the project and exact preview origin in `supabase/project.json`. The backend must have migration `202611060128_private_staging_portal.sql` and admit only confirmed Google testers while sales are closed. The browser builds for controlled login, private staging and public release are mutually exclusive. Private staging opens the portal after the server check and keeps purchase terms and checkout closed. See [provider setup](docs/PROVIDER_SETUP.md) for the rollout checks.
 
 The separate Supabase project is `tiodqzvvujxvxssvjdis` (Mumbai). The restrictive signup hook is configured. Later source migrations and Edge Functions remain local until a deliberate staging promotion; source presence is not hosted acceptance. The canonical hold-free bank is privately imported and remains unapproved; private canonical image delivery is accepted. Use an explicit project reference and app working directory for provider operations; never target the academy's staging/production project. Do not rerun migrations blindly against an existing database.
 
@@ -48,6 +50,8 @@ For local browser accessibility checks, open `/?audit=1`, expand Local accessibi
 `test:e2e` installs the matching Chromium build and runs every desktop/mobile journey. On a minimal Linux host, install system libraries once with `npm run test:e2e:system-deps`. The GitHub Ubuntu image already supplies the native runtime libraries; downloading optional system fonts on every run previously exhausted the 15-minute job limit. Missing runtime dependencies still fail browser launch and the merge gate; no browser tests are skipped.
 
 `DMOCKS_AUTH_STAGE=controlled DMOCKS_BACKEND_STAGE=portal npm run test:hosted-setup` checks the current controlled-login and installed-portal stage. Its default `closed` stage expects globally disabled registration. The default `foundation` backend stage checks only the original endpoints. This read-only HTTP test needs ignored public client configuration and creates no users, orders or payments; the private allowlist and hook decisions require separate SQL/provider acceptance evidence.
+
+Set `DMOCKS_BACKEND_STAGE=staging` and `DMOCKS_AUTH_STAGE=controlled` to check the staging RPC boundaries and exact-origin Edge preflights after promotion. Playwright serves the staging artifact locally and intercepts the provider requests for desktop and mobile.
 
 ## Launch status
 
