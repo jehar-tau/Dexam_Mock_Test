@@ -21,6 +21,7 @@ begin
   'public.admin_resolve_privacy_request(uuid,text,text)',
   'public.my_exam_mock_session(uuid)',
   'public.start_exam_mock_part_b(uuid)',
+  'public.my_exam_mock_report(uuid)',
   'public.admin_bank_questions(integer,integer)',
   'public.my_candidate_profile()',
   'public.topic_catalog()',
