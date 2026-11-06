@@ -42,11 +42,14 @@ import { ExamPartTransitionPreview } from "./ExamPartTransition.jsx";
 import { useAuthState } from "./useAuth.js";
 import { clearDeviceAnswers } from "./attempt-answer-journal.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
+import { StagingAccessMessage, StagingPortalGate, useStagingPortalAccess } from "./StagingPortal.jsx";
 import {
   platform,
   portalReady,
   authReady,
   testLoginMode,
+  stagingPortalMode,
+  checkoutReady,
   termsVersion,
   googleLogin,
   beginCheckout,
@@ -176,11 +179,12 @@ function Layout({ children }) {
       <a className="skip" href="#main">
         Skip to content
       </a>
-      {!portalReady && (
+      {(!portalReady || stagingPortalMode) && (
         <div className="preview-strip">
-          {testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
+          {stagingPortalMode ? "PRIVATE STAGING" : testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
           <span>
-            {testLoginMode ? "Google sign-in is limited to approved testers. Purchases are closed." : "Explore the sample. Student sign-in and paid checkout are being connected."}
+            {stagingPortalMode ? "Portal acceptance for approved testers. Checkout is closed." :
+              testLoginMode ? "Google sign-in is limited to approved testers. Purchases are closed." : "Explore the sample. Student sign-in and paid checkout are being connected."}
           </span>
         </div>
       )}
@@ -828,7 +832,7 @@ function Plans() {
     return () => clearInterval(id);
   }, [status]);
   const pay = async () => {
-    if (!accepted) return;
+    if (!checkoutReady || !accepted) return;
     setError("");
     setStatus("opening");
     try {
@@ -892,13 +896,12 @@ function Plans() {
               </li>
             ))}
           </ul>
-          {!portalReady && (
+          {!checkoutReady && (
             <div className="notice">
-              Paid access is not open in this preview. Explore the free sample
-              while the separate sign-in and checkout are connected.
+              {stagingPortalMode ? "Checkout is closed in staging." : "Paid access is not open in this preview. Explore the free sample while the separate sign-in and checkout are connected."}
             </div>
           )}
-          {session && portalReady && status !== "paid" && (
+          {session && checkoutReady && status !== "paid" && (
             <label className="terms-checkbox">
               <input
                 type="checkbox"
@@ -920,7 +923,7 @@ function Plans() {
             <button
               className="button full"
               disabled={
-                !portalReady ||
+                !checkoutReady ||
                 !accepted ||
                 ["opening", "verifying", "checkout"].includes(status)
               }
@@ -989,6 +992,8 @@ function Plans() {
 }
 function Account() {
   const { session, loading, authError } = useAuthState();
+  const stagingAccess = useStagingPortalAccess(session);
+  const workspaceAvailable = portalReady && stagingAccess === "allowed";
   const accountId = session?.user.id;
   const [accepted, setAccepted] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -997,11 +1002,11 @@ function Account() {
   const [reviewerAccountId, setReviewerAccountId] = useState(null);
   const [error, setError] = useState(() => authCallbackMessage(window.location.search, window.location.hash));
   const login = async () => {
-    if (!testLoginMode && !accepted) return;
+    if (checkoutReady && !accepted) return;
     setBusy(true);
     setError("");
     try {
-      if (!testLoginMode) sessionStorage.setItem("designmocks-pending-terms", termsVersion);
+      if (checkoutReady) sessionStorage.setItem("designmocks-pending-terms", termsVersion);
       await googleLogin();
     } catch (e) {
       setError(e.message);
@@ -1036,7 +1041,7 @@ function Account() {
     }
   };
   useEffect(() => {
-    if (!session || !platform || testLoginMode) return;
+    if (!session || !checkoutReady) return;
     const version = sessionStorage.getItem("designmocks-pending-terms");
     if (version && version === termsVersion) {
       platform
@@ -1051,16 +1056,16 @@ function Account() {
     }
   }, [session]);
   const loadPrivacyRequests = useCallback(() => session && platform.rpc("my_privacy_requests").then(({data,error})=>{if(error)throw error;setPrivacyRequests(data)}).catch(()=>setSessionStatus("Could not load account privacy requests.")),[session]);
-  useEffect(()=>{if(session&&!testLoginMode)loadPrivacyRequests()},[session,loadPrivacyRequests]);
+  useEffect(()=>{if(session&&workspaceAvailable)loadPrivacyRequests()},[session,workspaceAvailable,loadPrivacyRequests]);
   useEffect(() => {
     setReviewerAccountId(null);
-    if (!accountId || !portalReady) return;
+    if (!accountId || !workspaceAvailable) return;
     const controller = new AbortController();
     platform.rpc("can_review_drawings").abortSignal(controller.signal).then(({ data, error }) => {
       if (!controller.signal.aborted && !error && data === true) setReviewerAccountId(accountId);
     });
     return () => controller.abort();
-  }, [accountId]);
+  }, [accountId, workspaceAvailable]);
   return (
     <section className="wrap account-layout">
       <div>
@@ -1081,7 +1086,8 @@ function Account() {
         <p>
             {session
             ? "Your Google account is connected."
-            : testLoginMode ? "Private Google sign-in check for approved testers." : "Sign in or create your account with Google."}
+            : stagingPortalMode ? "Sign in with an approved Google account for staging." :
+              testLoginMode ? "Private Google sign-in check for approved testers." : "Sign in or create your account with Google."}
         </p>
         {loading ? (
           <p role="status">Checking your account…</p>
@@ -1089,17 +1095,18 @@ function Account() {
           <>
             <p className="signed-in">Signed in as {session.user.email}</p>
             {testLoginMode && <p className="notice">Google sign-in succeeded. This is a private setup check. Public registration and purchases are closed; no paid access has been granted.</p>}
-            {testLoginMode && <button className="button quiet" disabled={busy} onClick={refreshTestSession}>Refresh test session</button>}
+            {stagingPortalMode && <StagingAccessMessage access={stagingAccess} />}
+            {(testLoginMode || stagingPortalMode) && <button className="button quiet" disabled={busy} onClick={refreshTestSession}>Refresh test session</button>}
             {sessionStatus && <p role="status">{sessionStatus}</p>}
-            {!testLoginMode && <Button to="/dashboard">Open your workspace</Button>}
-            {reviewerAccountId === accountId && <Button to="/review/drawings" quiet>Review drawings</Button>}
-            {!testLoginMode && <Button to="/onboarding" quiet>
+            {workspaceAvailable && <Button to="/dashboard">{stagingPortalMode ? "Open staging workspace" : "Open your workspace"}</Button>}
+            {workspaceAvailable && reviewerAccountId === accountId && <Button to="/review/drawings" quiet>Review drawings</Button>}
+            {workspaceAvailable && <Button to="/onboarding" quiet>
               Complete your profile
             </Button>}
-            {!testLoginMode && <Button to="/plans" quiet>
+            {checkoutReady && <Button to="/plans" quiet>
               View the annual pass
             </Button>}
-            {!testLoginMode && <AccountPrivacy requests={privacyRequests} onExport={async()=>{const{data,error}=await platform.rpc("export_my_account_data");if(error)throw error;return data}} onRequestDeletion={async()=>{const{error}=await platform.rpc("request_account_deletion");if(error)throw error;await loadPrivacyRequests()}} onCancel={async(id)=>{const{error}=await platform.rpc("cancel_my_privacy_request",{p_id:id});if(error)throw error;await loadPrivacyRequests()}}/>}
+            {workspaceAvailable && <AccountPrivacy requests={privacyRequests} onExport={async()=>{const{data,error}=await platform.rpc("export_my_account_data");if(error)throw error;return data}} onRequestDeletion={async()=>{const{error}=await platform.rpc("request_account_deletion");if(error)throw error;await loadPrivacyRequests()}} onCancel={async(id)=>{const{error}=await platform.rpc("cancel_my_privacy_request",{p_id:id});if(error)throw error;await loadPrivacyRequests()}}/>}
             <button
               className="text-button"
               disabled={busy}
@@ -1111,7 +1118,7 @@ function Account() {
         ) : (
           <>
             <>
-              {portalReady && (
+              {checkoutReady && (
                 <label className="terms-checkbox">
                   <input
                     type="checkbox"
@@ -1126,11 +1133,11 @@ function Account() {
               )}
               <button
                 className="google-button"
-                disabled={!authReady || busy || (!testLoginMode && !accepted)}
+                disabled={!authReady || busy || (checkoutReady && !accepted)}
                 onClick={login}
               >
                 <GoogleIcon />
-                {busy ? "Opening Google…" : testLoginMode ? "Test Google sign-in" : "Continue with Google"}
+                {busy ? "Opening Google…" : stagingPortalMode ? "Sign in to staging with Google" : testLoginMode ? "Test Google sign-in" : "Continue with Google"}
               </button>
             </>
             {!authReady && (
@@ -1139,7 +1146,8 @@ function Account() {
                 explore the full sample experience now.
               </div>
             )}
-            {testLoginMode ? <p className="account-terms">Only server-approved test accounts can complete this check. It does not accept draft purchase terms, create an order or unlock a paid pass.</p> : <p className="account-terms">
+            {stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
+              testLoginMode ? <p className="account-terms">Only server-approved test accounts can complete this check. It does not accept draft purchase terms, create an order or unlock a paid pass.</p> : <p className="account-terms">
               Creating a new account requires accepting the published terms and
               privacy notice in the Google sign-in launch flow. That flow will
               open once the new account setup is active.
@@ -1666,7 +1674,7 @@ export default function App() {
         <Route path="/plans" element={<Plans />} />
         <Route path="/account" element={<Account />} />
         <Route path="/account/callback" element={<Account />} />
-        <Route element={testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
+        <Route element={stagingPortalMode ? <StagingPortalGate /> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
           <Route path="/dashboard" element={<Workspace />} />
           <Route path="/onboarding" element={<CandidateProfile />} />
           <Route path="/dashboard/mocks" element={<ExamMocks />} />

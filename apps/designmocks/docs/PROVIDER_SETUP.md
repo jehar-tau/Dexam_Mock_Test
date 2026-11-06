@@ -1,6 +1,6 @@
 # DMocks provider setup
 
-Current evidence: 6 November 2026. The GitHub app is `jehar-tau/Dexam_Mock_Test/apps/designmocks`; its separate Supabase project is **DesignMocks**, `tiodqzvvujxvxssvjdis`, Mumbai. The existing academy/Dexam projects and merchant credentials are not used.
+Current evidence: 7 November 2026. The GitHub app is `jehar-tau/Dexam_Mock_Test/apps/designmocks`; its separate Supabase project is **DesignMocks**, `tiodqzvvujxvxssvjdis`, Mumbai. The existing academy/Dexam projects and merchant credentials are not used.
 
 ## Hosting and environment
 
@@ -8,7 +8,7 @@ The owner-connected custom domain **https://dmocks.com** has active DNS/provider
 
 Supabase is on the existing Free organisation. No paid plan was enabled here. Production availability, backups, load limits and any paid upgrade still require a reviewed launch decision. Do not create another login/project just to get past a setup problem.
 
-The hosted database was last verified with 25 applied migrations. The later portal, Learn, Community, analytics, operations, throttling, advisory and extraction migrations and functions require staging promotion and end-to-end acceptance. The 2,582 privately imported canonical hold-free records await publication and rights approval. Public registration remains restricted to the one owner tester and sales remain disabled.
+The 7 November read-only inventory verified 25 applied migrations through `202611060102`, with `202611060006_ai_question_drafting.sql` missing from the earlier range. The active Edge Functions are `create-order`, `payment-webhook` and `attempt-media`. The stage admission RPC and later provider capabilities await promotion. The project has one confirmed allowlisted Google account, `test` mode, closed sales and zero orders, passes or published papers. The 2,582 privately imported canonical hold-free records await publication and rights approval.
 
 AI-assisted question drafting is closed by default. Deploy `ai-question-draft` only after setting `OPENAI_API_KEY` and an explicitly approved `OPENAI_DRAFT_MODEL` in the Edge Function secret store. The browser never receives either value. Every request is audited, may reference only active rights-approved bank keys, and can create only a held `pending` draft; a human administrator must review it before any later export or bank promotion.
 
@@ -35,10 +35,13 @@ Google's provider redirect remains `https://tiodqzvvujxvxssvjdis.supabase.co/aut
 Frontend switches are separate:
 
 - `VITE_TEST_LOGIN_ENABLED=true` permits the controlled account screen for development/staging/test deployments. Direct portal, profile, report, teacher, admin and attempt links show a closed-workspace notice in that build. The Supabase signup hook and server authorization govern actual accounts and RPCs.
-- `VITE_PORTAL_ENABLED=true` is reserved for a released portal with its published `VITE_TERMS_VERSION`. It cannot be combined with controlled login mode.
-- Both default false. Browser configuration accepts public publishable/anon keys only. Service and merchant secrets remain server-only. A production release rejects controlled login; an explicitly staged build is required for the private hosted acceptance screen.
+- `VITE_STAGING_PORTAL_ENABLED=true` opens the full workspace in an explicit `staging` build only on `staging_frontend_origin` and the designated DMocks Supabase project. It requires a confirmed Google account on the current allowlist, tester-only registration policy and test settings with sales closed. The browser checks admission before mounting protected routes. Account and data RPCs retain their own server authorization.
+- `VITE_PORTAL_ENABLED=true` is reserved for a released portal with its published `VITE_TERMS_VERSION`. Production builds require a separate backend from the designated staging project.
+- The three switches default false and are mutually exclusive. Browser configuration accepts public publishable/anon keys only. Service and merchant secrets belong in server secret stores.
 
-Use `DMOCKS_AUTH_STAGE=controlled DMOCKS_BACKEND_STAGE=portal npm run test:hosted-setup` to check the current setup stage (27 read-only checks). The default foundation backend stage retains the original 10 checks. This read-only HTTP suite checks the switches/gates, not the private allowlist by itself. The allowlist and live hook are verified separately.
+Use `DMOCKS_AUTH_STAGE=controlled DMOCKS_BACKEND_STAGE=staging npm run test:hosted-setup` after promotion to check anonymous RPC denial, closed checkout and exact-origin media preflights. Use the default `foundation` backend stage to check the original endpoints. Verify the private allowlist and the real Google callback separately.
+
+Review the pending migration ledger before applying changes. The earlier AI schema gap requires explicit inclusion in the reviewed plan, and model-backed functions require separate rights, consent and cost approval. Deploy the matching media and intake-upload functions for the staging origin before the browser acceptance run. Keep the `dmocks.com` deployment on its own approved artifact. The current private Site serves both names, so replacing its artifact requires a hosting decision even though staging sign-in is pinned to the preview hostname.
 
 Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
 

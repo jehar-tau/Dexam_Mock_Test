@@ -1,16 +1,20 @@
 import { createClient } from "@supabase/supabase-js";
 import { environment } from "./environment.js";
 import { resolveAuthConfiguration } from "./authConfiguration.mjs";
+import { project_ref, staging_frontend_origin } from "../supabase/project.json";
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
 // This app must have its own provider project; no Dexam values are imported.
 export const termsVersion = import.meta.env.VITE_TERMS_VERSION;
-export const { authReady, portalReady, testLoginMode } = resolveAuthConfiguration({
+export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkoutReady } = resolveAuthConfiguration({
   mode: environment.mode,
   deployment: environment.deployment,
+  origin: window.location.origin,
+  stagingTarget: { url: `https://${project_ref}.supabase.co`, origin: staging_frontend_origin },
   portalEnabled: import.meta.env.VITE_PORTAL_ENABLED === "true",
   testLoginEnabled: import.meta.env.VITE_TEST_LOGIN_ENABLED === "true",
+  stagingPortalEnabled: import.meta.env.VITE_STAGING_PORTAL_ENABLED === "true",
   url,
   key,
   termsVersion,
@@ -76,7 +80,7 @@ async function razorpay() {
   return checkoutScript;
 }
 export async function beginCheckout(onState) {
-  if (!platform || !portalReady)
+  if (!platform || !checkoutReady)
     throw new Error(
       "Payments are not active in this preview. No charge has been made.",
     );

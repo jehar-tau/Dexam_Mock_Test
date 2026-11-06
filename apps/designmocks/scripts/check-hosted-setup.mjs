@@ -15,8 +15,8 @@ assert.equal(
   "Explicit independent project URL required",
 );
 assert.ok(key, "A public anon key is required; never use a service key");
-assert.ok(!key.startsWith("sb_secret_"), "Server keys are not allowed here");
-if (key.split(".").length === 3) {
+if (!key.startsWith("sb_publishable_")) {
+  assert.equal(key.split(".").length, 3, "A publishable or legacy anon key is required");
   const payload = JSON.parse(Buffer.from(key.split(".")[1], "base64url"));
   assert.equal(payload.role, "anon", "Only the public anon role is allowed");
 }
@@ -24,7 +24,10 @@ const results = [];
 const authStage = process.env.DMOCKS_AUTH_STAGE || "closed";
 assert.ok(["closed", "controlled"].includes(authStage), "Explicit closed or controlled Auth test stage required");
 const backendStage = process.env.DMOCKS_BACKEND_STAGE || "foundation";
-assert.ok(["foundation", "portal"].includes(backendStage), "Explicit foundation or portal backend stage required");
+assert.ok(["foundation", "portal", "staging"].includes(backendStage), "Choose foundation, portal or staging backend checks");
+const staging = backendStage === "staging";
+if (staging) assert.equal(authStage, "controlled", "Staging requires the controlled Auth stage");
+const origin = staging ? project.staging_frontend_origin : project.frontend_origin;
 async function request(path, method = "GET", body, headers = {}) {
   const response = await fetch(base + path, {
     method,
@@ -33,7 +36,7 @@ async function request(path, method = "GET", body, headers = {}) {
     signal: AbortSignal.timeout(30000),
   });
   const text = await response.text();
-  return { status: response.status, data: text ? JSON.parse(text) : null };
+  return { status: response.status, data: text ? JSON.parse(text) : null, allowOrigin: response.headers.get("access-control-allow-origin") };
 }
 let response = await request(
   "/rest/v1/plans?select=id,amount,currency,duration_months",
@@ -48,7 +51,7 @@ for (const name of [
   "my_pass",
   "available_papers",
   "my_attempt_history",
-  ...(backendStage === "portal" ? [
+  ...(backendStage !== "foundation" ? [
     "is_dmocks_admin", "my_bug_reports", "admin_bug_reports", "admin_question_drafts", "export_my_account_data", "request_account_deletion", "my_privacy_requests", "admin_privacy_requests",
     "admin_bank_questions", "my_candidate_profile", "topic_catalog", "exam_mock_catalog",
     "admin_exam_mock_blueprints", "admin_all_india_events", "all_india_event_catalog",
@@ -56,6 +59,7 @@ for (const name of [
     "my_overview_analytics",
     "canonical_bank_media_manifest", "admin_question_intake_assets",
   ] : []),
+  ...(staging ? ["can_enter_staging_portal", "can_review_drawings", "my_drawing_review_page", "admin_drawing_reviewers"] : []),
 ]) {
   response = await request("/rest/v1/rpc/" + name, "POST", {});
   assert.ok(
@@ -69,7 +73,7 @@ for (const name of [
     passed: true,
   });
 }
-if (backendStage === "portal") {
+if (backendStage !== "foundation") {
   response = await request("/rest/v1/rpc/admin_export_question_draft", "POST", {
     p_draft_id: "00000000-0000-4000-8000-000000000000",
     p_external_key: "hosted-smoke-fixture",
@@ -104,7 +108,7 @@ for (const [name, body, status] of [
   ["payment-webhook", {}, 503],
 ]) {
   response = await request("/functions/v1/" + name, "POST", body, {
-    Origin: project.frontend_origin,
+    Origin: origin,
   });
   assert.equal(response.status, status, name + " setup gate");
   results.push({ check: name + " setup/identity gate", status, passed: true });
@@ -121,15 +125,28 @@ results.push({
   status: 403,
   passed: true,
 });
+if (staging) {
+  for (const name of ["attempt-media", "drawing-media", "drawing-review-media", "community-media", "question-intake"]) {
+    response = await request("/functions/v1/" + name, "OPTIONS", undefined, {
+      Origin: origin,
+      "Access-Control-Request-Method": "POST",
+      "Access-Control-Request-Headers": "authorization,apikey,content-type,x-client-info",
+    });
+    assert.equal(response.status, 204, name + " staging preflight");
+    assert.equal(response.allowOrigin, origin, name + " staging origin");
+    results.push({ check: name + " accepts the staging origin", status: 204, passed: true });
+  }
+}
 await mkdir("test-results", { recursive: true });
 await writeFile(
-  "test-results/hosted-smoke.json",
+  staging ? "test-results/hosted-staging-smoke.json" : "test-results/hosted-smoke.json",
   JSON.stringify(results, null, 2) + "\n",
 );
 console.log(
   JSON.stringify(
     {
       project: project.name,
+      backendStage,
       checks: results.length,
       passed: results.every((result) => result.passed),
     },

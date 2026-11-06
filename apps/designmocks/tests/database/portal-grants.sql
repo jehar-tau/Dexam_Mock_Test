@@ -24,6 +24,7 @@ begin
   'public.my_exam_mock_report(uuid)',
   'public.admin_bank_questions(integer,integer)',
   'public.my_candidate_profile()',
+  'public.can_enter_staging_portal()',
   'public.topic_catalog()',
   'public.exam_mock_catalog()',
   'public.admin_exam_mock_blueprints()',

@@ -1,6 +1,6 @@
 # DesignMocks completion checklist
 
-Owner instruction: keep working until the independent mock-test service is complete. Last reconciled: 6 November 2026. A checked item means verified completion, not merely code present. Never mark a provider integration complete on the basis of a login, quota error or unconfigured endpoint.
+Owner instruction: keep working until the independent mock-test service is complete. Last reconciled: 7 November 2026. A checked item means verified completion, not merely code present. Never mark a provider integration complete on the basis of a login, quota error or unconfigured endpoint.
 
 ## Completed foundation
 
@@ -28,6 +28,8 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [x] Actual Google callback/PKCE, reload persistence, refresh and sign-out pass on the private `dmocks.com` publication.
 - [x] Google app name/home page/authorized domain saved as DMocks / `dmocks.com`; Testing audience preserved.
 - [x] Desktop and mobile fixture sessions can refresh and sign out from the controlled account screen. Direct student, attempt and administrator routes stay closed in that build.
+- [x] Verify a separate staging portal build with exact-origin and project guards, server-checked tester access, and closed checkout. Desktop and mobile tests exercise the built artifact.
+- [ ] Promote the staging database and functions, then verify tester admission and a representative exam journey on the private deployment.
 - [ ] Complete public Google branding verification and final public privacy/terms links before registration opens.
 
 ## Paper delivery and assessment
@@ -82,11 +84,11 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [ ] Present the finished service and real costs for final public/live-payment approval. Preserve the owner-private audience until that approval.
 - [ ] Enable approved production registration/papers/payments, verify the public customer journey, and hand over the live URL, configuration inventory and operating instructions.
 
-## Current verified state — 6 November 2026
+## Current verified state — 7 November 2026
 
 This section supersedes older handoffs. Google is enabled and actual owner login works locally and on the owner-private `dmocks.com` Site. Registration remains tester-only (one approved owner), with sales disabled, zero orders/passes and zero released papers. Razorpay is deferred by the owner; do not request or install merchant keys until resumed.
 
-The standalone hosted project was last provider-verified with 25 applied migrations. Later portal, assessment, drawing, Learn, Community and operations migrations still require staging promotion and hosted acceptance. See the operations runbook for the matching drawing UI, functions and database changes.
+The standalone project has 25 applied migrations and three active functions as of the 7 November read-only check. The earlier AI drafting migration `202611060006` is absent from the ledger, before already applied `202611060101` and `202611060102`. The matching staging migrations and functions need promotion before hosted acceptance. See the provider setup and operations runbook for the rollout.
 
 The canonical export has 4,521 records: 2,582 explicit empty-holds rows imported privately, 1,939 excluded. Full server-payload comparison and importer replay pass. All 2,085 referenced PNGs (273,263,304 bytes) are now privately uploaded, downloaded and hash-verified, with matching registered dimensions/size. All original PNGs also pass full Pillow decode. Source files remain outside the app and browser bundle. No rights/publication flags were approved.
 
@@ -96,7 +98,7 @@ Actual owner-browser acceptance rendered a 1496 × 687 image through the existin
 
 The verified 2027 UCEED/CEED compiler converts 1,502 objective questions with private images (830 UCEED, 672 CEED). Hosted materialization and replay verified every one of the 2,582 runtime decisions against the canonical content hash and compiled JSON. Repeating the original canonical import preserves the runtime records. The NIFT B.Des. GAT compiler and blueprint passed locally. NID and the remaining NIFT contexts need verified programme-specific rules. The 48 Dexam-original records have no supplied input-image assets. The bank still needs publication approval.
 
-Current local checks passed 70 JavaScript tests, four Python fixtures, 68 desktop/mobile journeys, build and preview isolation, server-function type checks, and all 51 migrations and suites on disposable PostgreSQL 17. The managed Site was last verified with source through PR #24. Actual deployed-bank/Cloudboard reconciliation, provider-backed full-paper acceptance, staging capacity, extraction/drawing provider acceptance, rights, policies and public-launch approval remain open.
+Current local checks passed 71 JavaScript tests, four Python fixtures, 74 desktop/mobile journeys, build and preview isolation, server-function type checks, and all 52 migrations and suites on disposable PostgreSQL 17. The managed Site was last verified with source through PR #24. Actual deployed-bank/Cloudboard reconciliation, provider-backed full-paper acceptance, staging capacity, extraction/drawing provider acceptance, rights, policies and public-launch approval remain open.
 
 Keep the goal active while meaningful independent work remains. An owner/provider dependency blocks that item only. Never request credentials or personal identity/payment details in chat, change Dexam services, or turn elapsed time into approval.
 

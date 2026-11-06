@@ -18,5 +18,11 @@ select 'launch-nid-'||n,md5(n::text)||md5(n::text),'nid','MCQ','launch-fixture',
 update dm_private.exam_mock_blueprints set enabled=true where exam='nid';update dm_private.launch_gate_attestations set approved=true,evidence='Fictional complete evidence';update public.launch_settings set policy_version='fictional-v1';
 update public.launch_settings set sales_enabled=true where singleton;
 select pg_temp.launch_assert((select sales_enabled from public.launch_settings where singleton),'guard allows activation only after every database gate passes');
+update auth.users set email='staging-fixture@example.invalid',email_confirmed_at=now(),raw_app_meta_data='{"provider":"google"}'
+  where id='00000000-0000-4000-8000-000000000091';
+insert into dm_private.registration_testers(email) values ('staging-fixture@example.invalid');
+update dm_private.registration_policy set mode='testers' where id;
+set local role authenticated;
+select pg_temp.launch_assert(not public.can_enter_staging_portal(),'enabled sales disable staging admission');
 rollback;
 \echo 'PASS: launch gates are admin-only, evidenced, audited and sales remain fail-closed.'
