@@ -6,6 +6,7 @@ dist/
 !.env.*.example
 *.log
 test-results/
+capacity-fixtures/
 .openai/*.local.*
 supabase/.temp/
 supabase/.branches/

@@ -23,7 +23,8 @@
     "check": "npm test && npm run test:bank-readiness && npm run build && node scripts/check-preview-isolation.mjs && npm run test:e2e",
     "test:database": "bash scripts/check-database.sh",
     "runtime:manifest": "node scripts/materialize-bank-runtime.mjs --ref origin/main",
-    "runtime:apply": "node scripts/materialize-bank-runtime.mjs --ref origin/main --apply"
+    "runtime:apply": "node scripts/materialize-bank-runtime.mjs --ref origin/main --apply",
+    "capacity:run": "node scripts/capacity-load.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.117.2",

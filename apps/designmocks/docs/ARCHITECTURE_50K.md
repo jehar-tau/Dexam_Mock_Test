@@ -44,6 +44,12 @@ Static frontend traffic is served at the edge. Authentication, PostgreSQL, row-l
 4. Production: manual release approval, reviewed migration plan, backup verification, secrets present and sales still disabled.
 5. Enable registration gradually, then sales separately. Monitor for 30 minutes at each cohort size.
 
+### Capacity test procedure
+
+The checked-in `config/capacity-plan.example.json` defines the required 150 sessions, including 75 synthetic active attempts, and the launch SLO thresholds. Copy it into ignored `test-results/`, replace only the staging target, and create an ignored `capacity-fixtures/fixtures.json` containing 75 short-lived synthetic records with `accessToken`, `attemptId`, `questionId` and `answer`. Never use owner or student accounts.
+
+Run `CAPACITY_ANON_KEY=... CAPACITY_ALLOW_STAGING_LOAD=https://exact-staging-origin npm run capacity:run -- --plan test-results/capacity-plan.json --fixtures capacity-fixtures/fixtures.json --execute`. The harness refuses `dmocks.com`, credential-bearing URLs, origin escapes, missing fixtures and unacknowledged remote targets. Its output contains aggregate latency/error data and at most request names/statuses—never tokens, request bodies or response bodies. A green harness unit test is not staging capacity evidence; preserve the dated staging result and provider metrics before checking the load-test promotion gate.
+
 ## Required provider work before launch
 
 - Keep the existing DMocks Supabase project as staging. Create one new production project in a Pro organization before launch. Pro is selected for non-pausing production service and daily backups, not because 100 concurrent users require enterprise infrastructure. Size compute from staging load-test evidence rather than the lifetime account count.
