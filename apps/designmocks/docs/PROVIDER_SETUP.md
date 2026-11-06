@@ -34,7 +34,7 @@ Google's provider redirect remains `https://tiodqzvvujxvxssvjdis.supabase.co/aut
 
 Frontend switches are separate:
 
-- `VITE_TEST_LOGIN_ENABLED=true` permits the labelled controlled login screen only for development/staging/test deployments. It does not grant a paid entitlement or accept draft terms.
+- `VITE_TEST_LOGIN_ENABLED=true` permits the controlled account screen for development/staging/test deployments. Direct portal, profile, report, admin and attempt links show a closed-workspace notice in that build. The Supabase signup hook and server authorization govern actual accounts and RPCs.
 - `VITE_PORTAL_ENABLED=true` is reserved for a released portal with its published `VITE_TERMS_VERSION`. It cannot be combined with controlled login mode.
 - Both default false. Browser configuration accepts public publishable/anon keys only. Service and merchant secrets remain server-only. A production release rejects controlled login; an explicitly staged build is required for the private hosted acceptance screen.
 

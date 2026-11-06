@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Link,
   NavLink,
+  Outlet,
   Route,
   Routes,
   useLocation,
@@ -1630,6 +1631,16 @@ function NotFound() {
     </section>
   );
 }
+
+function ControlledLoginPortalNotice() {
+  return <section className="wrap page-intro">
+    <span className="eyebrow">CONTROLLED GOOGLE LOGIN</span>
+    <h1>The workspace is <em>closed.</em></h1>
+    <p>Use the account page to check Google sign-in, session refresh and sign-out.</p>
+    <Button to="/account">Go to account</Button>
+  </section>;
+}
+
 export default function App() {
   const location = useLocation();
   return (
@@ -1642,15 +1653,18 @@ export default function App() {
         <Route path="/plans" element={<Plans />} />
         <Route path="/account" element={<Account />} />
         <Route path="/account/callback" element={<Account />} />
-        <Route path="/dashboard" element={<Workspace />} />
-        <Route path="/onboarding" element={<CandidateProfile />} />
-        <Route path="/dashboard/mocks" element={<ExamMocks />} />
-        <Route path="/dashboard/all-india" element={<AllIndia />} />
-        <Route path="/dashboard/practice" element={<TopicPractice />} />
-        <Route path="/dashboard/learn" element={<Learn />} />
-        <Route path="/dashboard/community" element={<Community />} />
-        <Route path="/report" element={<BugReport />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route element={testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
+          <Route path="/dashboard" element={<Workspace />} />
+          <Route path="/onboarding" element={<CandidateProfile />} />
+          <Route path="/dashboard/mocks" element={<ExamMocks />} />
+          <Route path="/dashboard/all-india" element={<AllIndia />} />
+          <Route path="/dashboard/practice" element={<TopicPractice />} />
+          <Route path="/dashboard/learn" element={<Learn />} />
+          <Route path="/dashboard/community" element={<Community />} />
+          <Route path="/report" element={<BugReport />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/attempt/:id" element={<Attempt key={location.pathname} />} />
+        </Route>
         {import.meta.env.DEV && (
           <Route
             path="/portal-preview/*"
@@ -1740,10 +1754,6 @@ export default function App() {
           <Route path="/exam-part-transition-preview" element={<ExamPartTransitionPreview />} />
         )}
 
-        <Route
-          path="/attempt/:id"
-          element={<Attempt key={location.pathname} />}
-        />
         <Route path="/sample" element={<Sample />} />
         <Route path="/sample/result" element={<SampleResult />} />
         <Route path="/privacy" element={<Policies type="privacy" />} />
