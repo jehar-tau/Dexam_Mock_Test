@@ -1,6 +1,16 @@
 # Verification
 
-## Verified runtime conversion — 6 November 2026
+## Hosted runtime acceptance — 6 November 2026
+
+PR #30 (`e8b606bf1fdfdcfb0fb0a3bbaae26c9ce0339c13`) and its main-branch check pass: 34 JavaScript tests, four Python fixtures, 34 desktop/mobile browser journeys, build/isolation, dependency audit (zero vulnerabilities), server types and all 25 database migrations/suites.
+
+The hosted project was inspected at the exact 23-version baseline with one owner, sales false, 2,582 bank rows, 2,085 media rows and zero approvals/attempts/papers/orders/passes. Current main’s community moderation schema plus verified runtime migration `202611060102` were installed atomically under those guards; the ledger now has 25 entries.
+
+Actual materialization and complete replay each process all 2,582 canonical rows: 1,502 supported runtime questions (830 UCEED, 672 CEED), all with private figures. Every stored content hash/runtime JSON/approval flag matches the full in-memory plan; no payloads or credentials are included in this evidence. Anonymous RPC execution returns 401. The 29 controlled/portal HTTP checks pass. Replaying the original completed canonical import reuses run `9b12d4cf-b0a0-4fc5-bd64-15068739134b` and preserves all runtime records exactly (aggregate runtime digest `409cddc6c75c5df1ea819ca9be2c59c417aa5593aa81b1e413fd78227ca59457`). Evidence: ignored `test-results/runtime-provider-acceptance.json` and `runtime-canonical-replay.json`.
+
+Final counts remain one owner, zero question approvals, zero attempts/papers/orders/passes and sales false. NID/NIFT contexts, complete parts/clocks, drawing/provider workflows, content rights and full-paper acceptance remain pending. Razorpay remains owner-deferred. The owner-private Site was not redeployed by this operator/backend slice.
+
+## Verified runtime dry-run — 6 November 2026 (before hosted apply)
 
 Source `0988192fdaa45e6df86baa8519e87212fa5788de` retains canonical bank SHA `dd7702650b6e8ffeb348d0b558ecdd2bfbc1e565f2a392536518a3cebc8962be`. An actual service-only read of the hosted image catalogue produces 1,502 supported objective conversions: UCEED 830 and CEED 672, all with verified private images. Plan SHA `369f9bc9fa73f10481b29b5d2175cda9483f40f91b622818390966fb175c4dba`. This is a dry-run, not a hosted runtime write or paper release. NID/NIFT stay unavailable until their contexts are verified.
 
