@@ -393,7 +393,11 @@ select pg_temp.assert_true(public.my_overview_analytics()->'exams'->0->>'exam'='
 select pg_temp.assert_true((public.my_overview_analytics()->'drawingReviews'->>'released')::integer=1,'overview exposes drawing review status without private feedback');
 select set_config('test.revision_attempt',public.start_attempt('10000000-0000-4000-8000-000000000001')::text,true);
 select pg_temp.assert_true((public.save_answer_revision(current_setting('test.revision_attempt')::uuid,'20000000-0000-4000-8000-000000000001','"A"',2)->>'accepted')::boolean,'newer answer revision accepted');
-select pg_temp.assert_true(not(public.save_answer_revision(current_setting('test.revision_attempt')::uuid,'20000000-0000-4000-8000-000000000001','"B"',1)->>'accepted')::boolean,'stale answer revision rejected');
+select pg_temp.assert_true((select not(r->>'accepted')::boolean and (r->>'revision')::integer=2 and r->>'answer'='A'
+  from public.save_answer_revision(current_setting('test.revision_attempt')::uuid,'20000000-0000-4000-8000-000000000001','"B"',1) r),
+  'stale retry receives only the attempt owner’s authoritative answer and revision');
+select pg_temp.assert_true((public.read_attempt(current_setting('test.revision_attempt')::uuid)->'questions'->0->>'answerRevision')::integer=2,
+  'resumed attempt includes the latest server answer revision');
 reset role;
 insert into dm_private.attempt_rate_buckets(user_id,action,window_start,action_count)values('00000000-0000-4000-8000-000000000001','autosave',date_bin(interval'1 minute',clock_timestamp(),timestamptz'2000-01-01'),120)on conflict(user_id,action,window_start)do update set action_count=120;
 insert into dm_private.attempt_rate_buckets(user_id,action,window_start,action_count)values('00000000-0000-4000-8000-000000000003','submit',date_bin(interval'1 hour',clock_timestamp(),timestamptz'2000-01-01'),10);
@@ -404,6 +408,23 @@ select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000003'
 select pg_temp.reject('select public.submit_attempt(''30000000-0000-4000-8000-000000000099'')','submission hour limit enforced');
 reset role;
 select pg_temp.assert_true((select status='active'from dm_private.attempts where id='30000000-0000-4000-8000-000000000099'),'rate-limited submission remains active');
+update dm_private.attempts set deadline=now()+interval '1 millisecond' where id=current_setting('test.revision_attempt')::uuid;
+select pg_temp.assert_true((select clock_timestamp()>deadline and deadline>now() from dm_private.attempts
+  where id=current_setting('test.revision_attempt')::uuid),'fixture deadline expired after the transaction began');
+set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
+do $$begin
+  begin
+    perform public.save_answer_revision(current_setting('test.revision_attempt')::uuid,'20000000-0000-4000-8000-000000000001','"B"',3);
+  exception when raise_exception then
+    if sqlerrm='Answer window closed' then return; end if;
+    raise;
+  end;
+  raise exception 'Accepted an answer after the server wall-clock deadline';
+end $$;
+select pg_temp.assert_true((select r->>'status'='submitted' and r->'questions'->0->>'answer'='A'
+  from public.read_attempt(current_setting('test.revision_attempt')::uuid) r),'recovery after cutoff submits only the latest accepted answer');
+reset role;
 insert into auth.users(id)values('00000000-0000-4000-8000-000000000004');
 insert into dm_private.attempts(user_id,paper_id,deadline)select'00000000-0000-4000-8000-000000000004','10000000-0000-4000-8000-000000000001',now()+interval'1 hour'from generate_series(1,10);
 select pg_temp.reject('insert into dm_private.attempts(user_id,paper_id,deadline)values(''00000000-0000-4000-8000-000000000004'',''10000000-0000-4000-8000-000000000001'',now()+interval''1 hour'')','attempt-start hour limit enforced');

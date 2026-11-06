@@ -39,6 +39,7 @@ import { AttemptInsightsPreview } from "./AttemptInsights.jsx";
 import { AccountPrivacy, AccountPrivacyPreview } from "./AccountPrivacy.jsx";
 import { ExamPartTransitionPreview } from "./ExamPartTransition.jsx";
 import { useAuthState } from "./useAuth.js";
+import { clearDeviceAnswers } from "./attempt-answer-journal.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import {
   platform,
@@ -1023,6 +1024,7 @@ function Account() {
     try {
       const { error } = await platform.auth.signOut({ scope: "local" });
       if (error) throw error;
+      if (session?.user.id) clearDeviceAnswers(session.user.id);
     } catch {
       setError("Could not sign out. Please try again.");
     } finally {
