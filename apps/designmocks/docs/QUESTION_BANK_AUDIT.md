@@ -59,3 +59,7 @@ Before DMocks serves the bank:
 6. Require zero unexplained IDs and a signed owner review of the ready/quarantined totals.
 
 The existing Exam app remains the reference implementation and should be the migration source. DMocks should not create a second incompatible bank schema.
+
+The comparison gate is implemented as `npm run bank:reconcile -- --canonical <bank-export.json> --snapshot <deployed-state.json> [--cloudboard <manual-push-manifest.json>]`. The deployed snapshot contract is illustrated by `DEPLOYED_BANK_SNAPSHOT.example.json`: one record per unique stable external key, the SHA-256 of the exact canonical JSON question, and a state of `ready`, `review`, `quarantined` or `retired`. Retired keys absent from the current canonical export are explicitly classified; all other missing, changed, unexpected or held-but-ready keys fail the command with exit 2. Output contains stable keys and counts only—never prompts or answer keys.
+
+The workstation does not currently provide a usable current Exam-app snapshot: `server/data/dexam.sqlite` is zero bytes. The dated 28 October backup is readable but predates later imports and contains 3,343 questions, so it is evidence of history, not current deployment state, and was not substituted. A current staging export and the Cloudboard/Claude manual-push manifest are still required to make the reconciliation pass.
