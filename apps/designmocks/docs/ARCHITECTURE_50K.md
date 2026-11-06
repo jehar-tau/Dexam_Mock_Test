@@ -31,6 +31,7 @@ Static frontend traffic is served at the edge. Authentication, PostgreSQL, row-l
 
 - Daily database backups plus point-in-time recovery for production; run a quarterly restore drill into an isolated project.
 - Payment webhook events are immutable and idempotent. Alert on retry growth, signature failures and fulfilment errors.
+- Expired attempts finalize from the latest accepted answer revisions when the student next opens the portal. Production should additionally invoke the service-only `finalize_expired_attempts(500)` RPC once per minute until it returns zero; it is bounded and idempotent. Alert when an active attempt remains more than two minutes past its deadline. Do not expose the service credential to the browser.
 - Add error tracking with environment and release tags, uptime checks for `/`, auth callback and a synthetic test-mode checkout, and database alerts for CPU, memory, connections, replication lag and storage.
 - Define SLOs: 99.9% monthly availability, p95 page load under 2.5s in India, p95 authenticated API under 500ms excluding external payment calls, and zero unverified entitlements.
 - Roll out migrations before frontend releases. Keep the previous frontend artifact deployable and use forward-compatible migrations; never roll back by deleting production data.

@@ -41,6 +41,8 @@ export async function googleLogin() {
 }
 export async function loadDashboard() {
   if (!platform) return { attempts: [], access: null };
+  const finalized = await platform.rpc("finalize_my_expired_attempts");
+  if (finalized.error) throw finalized.error;
   const [attempts, access, analytics] = await Promise.all([
     platform.rpc("my_attempt_history"),
     platform.rpc("my_pass"),
