@@ -18,11 +18,12 @@ export function CommunityView({
   onReport = () => {},
   message = "",
 }) {
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    onSubmit(Object.fromEntries(f));
-    e.currentTarget.reset();
+    const form = e.currentTarget;
+    const f = new FormData(form);
+    const saved = await onSubmit(Object.fromEntries(f), f.getAll("images").filter((file) => file.size));
+    if (saved !== false) form.reset();
   };
   return (
     <section className="wrap section community-page">
@@ -57,6 +58,11 @@ export function CommunityView({
           Your approach or question
           <textarea name="body" required minLength="20" maxLength="5000" />
         </label>
+        <label>
+          Question images (optional, up to 3)
+          <input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple />
+          <small>Use only your own or permitted images. Remove names, faces and other personal details.</small>
+        </label>
         <button className="button">Post to community</button>
       </form>
       {message && <p role="status">{message}</p>}
@@ -85,18 +91,24 @@ export function CommunityView({
           <span className="eyebrow">{thread.exam} · {thread.topic}</span>
           <h2>{thread.title}</h2>
           <p>{thread.body}</p>
+          {thread.media?.map((image, index) => <img className="community-image" key={image.id} src={image.url} alt={`Question attachment ${index + 1}`} />)}
           <form
             className="community-reply"
-            onSubmit={(event) => {
+            onSubmit={async (event) => {
               event.preventDefault();
-              const body = new FormData(event.currentTarget).get("body");
-              onComment(thread.id, null, body);
-              event.currentTarget.reset();
+              const element = event.currentTarget;
+              const form = new FormData(element);
+              const saved = await onComment(thread.id, null, form.get("body"), form.getAll("images").filter((file) => file.size));
+              if (saved !== false) element.reset();
             }}
           >
             <label>
               Add a reply
               <textarea name="body" minLength="2" maxLength="3000" required />
+            </label>
+            <label>
+              Solution images (optional, up to 3)
+              <input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple />
             </label>
             <button className="button">Reply</button>
           </form>
@@ -104,6 +116,7 @@ export function CommunityView({
             {thread.comments.map((comment) => (
               <article key={comment.id}>
                 <p>{comment.body}</p>
+                {comment.media?.map((image, index) => <img className="community-image" key={image.id} src={image.url} alt={`Solution attachment ${index + 1}`} />)}
                 <small>By {comment.author} · {comment.helpful} helpful</small>
                 <div className="community-actions">
                   <button className="text-button" onClick={() => onHelpful(comment.id)}>
@@ -130,6 +143,29 @@ export function Community() {
     rpc("community_feed", { p_exam: null, p_topic: null })
       .then(setPosts)
       .catch((e) => setMessage(e.message));
+  const uploadMedia = async (targetType, targetId, files = []) => {
+    if (files.length > 3) throw new Error("Choose no more than three images.");
+    for (const [index, file] of files.entries()) {
+      const body = new FormData();
+      body.set("targetType", targetType);
+      body.set("targetId", targetId);
+      body.set("ordinal", String(index + 1));
+      body.set("file", file);
+      const { error } = await platform.functions.invoke("community-media", { body });
+      if (error) throw error;
+    }
+  };
+  const openThread = async (id) => {
+    const value = await rpc("community_thread", { p_post_id: id });
+    const targets = [{ type: "post", value }, ...value.comments.map((comment) => ({ type: "comment", value: comment }))];
+    await Promise.all(targets.map(async ({ type, value: target }) => {
+      if (!target.assetCount) return;
+      const { data, error } = await platform.functions.invoke("community-media", { body: { targetType: type, targetId: target.id } });
+      if (error) throw error;
+      target.media = data.media;
+    }));
+    return value;
+  };
   useEffect(() => {
     if (session) load();
   }, [session]);
@@ -151,16 +187,19 @@ export function Community() {
         onOpen={async (id) => {
           if (!id) return setThread(null);
           try {
-            setThread(await rpc("community_thread", { p_post_id: id }));
+            setThread(await openThread(id));
           } catch (e) { setMessage(e.message); }
         }}
-        onComment={async (postId, parentId, body) => {
+        onComment={async (postId, parentId, body, files) => {
           try {
-            await rpc("add_community_comment", { p_post_id: postId, p_parent_id: parentId, p_body: body });
-            setThread(await rpc("community_thread", { p_post_id: postId }));
+            if (files.length > 3) throw new Error("Choose no more than three images.");
+            const commentId = await rpc("add_community_comment", { p_post_id: postId, p_parent_id: parentId, p_body: body });
+            await uploadMedia("comment", commentId, files);
+            setThread(await openThread(postId));
             setMessage("Reply added.");
             await load();
-          } catch (e) { setMessage(e.message); }
+            return true;
+          } catch (e) { setMessage(e.message); return false; }
         }}
         onHelpful={async (commentId) => {
           try {
@@ -174,18 +213,22 @@ export function Community() {
             setMessage("Report sent for moderator review.");
           } catch (e) { setMessage(e.message); }
         }}
-        onSubmit={async (f) => {
+        onSubmit={async (f, files) => {
           try {
-            await rpc("create_community_post", {
+            if (files.length > 3) throw new Error("Choose no more than three images.");
+            const postId = await rpc("create_community_post", {
               p_exam: f.exam,
               p_topic: f.topic,
               p_title: f.title,
               p_body: f.body,
             });
+            await uploadMedia("post", postId, files);
             setMessage("Your post is live.");
             await load();
+            return true;
           } catch (e) {
             setMessage(e.message);
+            return false;
           }
         }}
       />
@@ -198,7 +241,8 @@ export function CommunityPreview() {
     id: "1", exam: "uceed", topic: "observation",
     title: "How do you separate observation from assumption?",
     body: "I list visible facts first, then write interpretations separately.",
-    comments: [{ id: "c1", body: "Try labelling each statement fact or inference.", author: "Ravi", helpful: 2 }],
+    media: [{ id: "m1", url: "/favicon.svg" }],
+    comments: [{ id: "c1", body: "Try labelling each statement fact or inference.", author: "Ravi", helpful: 2, media: [{ id: "m2", url: "/favicon.svg" }] }],
   };
   return (
     <CommunityView
@@ -219,7 +263,7 @@ export function CommunityPreview() {
       onComment={() => setM("Preview reply added.")}
       onHelpful={() => setM("Marked helpful.")}
       onReport={() => setM("Report sent for moderator review.")}
-      onSubmit={(f) => setM(`Preview post created: ${f.title}`)}
+      onSubmit={(f, files) => setM(`Preview post created: ${f.title} · ${files.length} image${files.length === 1 ? "" : "s"}`)}
     />
   );
 }
