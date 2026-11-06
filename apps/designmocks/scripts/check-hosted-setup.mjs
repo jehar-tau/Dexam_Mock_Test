@@ -49,7 +49,7 @@ for (const name of [
   "available_papers",
   "my_attempt_history",
   ...(backendStage === "portal" ? [
-    "is_dmocks_admin", "my_bug_reports", "admin_bug_reports", "admin_question_drafts",
+    "is_dmocks_admin", "my_bug_reports", "admin_bug_reports", "admin_question_drafts", "export_my_account_data", "request_account_deletion", "my_privacy_requests", "admin_privacy_requests",
     "admin_bank_questions", "my_candidate_profile", "topic_catalog", "exam_mock_catalog",
     "admin_exam_mock_blueprints", "admin_all_india_events", "all_india_event_catalog",
     "learning_catalog", "admin_learning_lessons", "community_feed", "admin_drawing_queue",

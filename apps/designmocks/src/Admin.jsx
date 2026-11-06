@@ -146,6 +146,7 @@ export function Admin() {
     [aiDrafts, setAiDrafts] = useState([]),
     [intake, setIntake] = useState([]),
     [questionReports, setQuestionReports] = useState([]),
+    [privacyRequests, setPrivacyRequests] = useState([]),
     [health, setHealth] = useState(),
     [bankRights, setBankRights] = useState({}),
     [message, setMessage] = useState("");
@@ -155,7 +156,7 @@ export function Admin() {
       const ok = await rpc("is_dmocks_admin");
       setAllowed(ok);
       if (ok) {
-        const [d, b, q, m, a, r, l, w, i, c, ai, h] = await Promise.all([
+        const [d, b, q, m, a, r, l, w, i, c, ai, h, privacy] = await Promise.all([
           rpc("admin_question_drafts"),
           rpc("admin_bug_reports"),
           rpc("admin_bank_questions", { p_limit: 25, p_offset: 0 }),
@@ -168,6 +169,7 @@ export function Admin() {
           rpc("admin_community_report_queue"),
           rpc("admin_ai_draft_requests"),
           rpc("admin_operational_health"),
+          rpc("admin_privacy_requests"),
         ]);
         setDrafts(d);
         setBugs(b);
@@ -181,6 +183,7 @@ export function Admin() {
         setCommunityReports(c);
         setAiDrafts(ai);
         setHealth(h);
+        setPrivacyRequests(privacy);
       }
     } catch (e) {
       setMessage(e.message);
@@ -242,6 +245,12 @@ export function Admin() {
     } catch (e) {
       setMessage(e.message);
     }
+  };
+  const resolvePrivacy = async (event, id) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    try { await rpc("admin_resolve_privacy_request", { p_id:id, p_status:form.get("status"), p_note:form.get("note") }); await load(); }
+    catch (e) { setMessage(e.message); }
   };
   const reviewBank = async (key, approved) => {
     try {
@@ -778,6 +787,11 @@ export function Admin() {
                 </form>
               </article>
             ))}
+          </div>
+          <h2>Account privacy requests</h2>
+          <p>Closing a deletion request records completion of the separately verified operator process; this control never deletes an account by itself.</p>
+          <div className="admin-list">
+            {privacyRequests.length===0?<p>No account privacy requests.</p>:privacyRequests.map(request=><article key={request.id}><b>{request.type.replaceAll("_"," ")}</b><span className="status-pill">{request.status.replaceAll("_"," ")}</span><small>Private account reference: {request.userId}</small>{["open","in_progress"].includes(request.status)&&<form className="admin-reply" onSubmit={event=>resolvePrivacy(event,request.id)}><select name="status" defaultValue={request.status==="open"?"in_progress":request.status}><option value="in_progress">in progress</option><option value="closed">closed after verified handling</option><option value="declined">declined</option></select><input name="note" minLength="10" maxLength="2000" required placeholder="Operator action and retention note"/><button>Save privacy status</button></form>}{request.adminNote&&<p>{request.adminNote}</p>}</article>)}
           </div>
         </>
       )}

@@ -29,11 +29,20 @@ select set_config('test.bug_id',public.submit_bug_report('Fictional bug','A fict
 select pg_temp.assert_true(jsonb_array_length(public.my_bug_reports())=1,'reporter sees own bug');
 select pg_temp.reject('select public.admin_bug_reports()','student admin report access');
 select pg_temp.reject('select public.admin_operational_health()','student operational health access');
+select pg_temp.reject('select public.admin_privacy_requests()','student privacy queue access');
+select pg_temp.assert_true(public.export_my_account_data()->>'accountId'='00000000-0000-4000-8000-000000000001','student exports only own account identity');
+select set_config('test.privacy_id',public.request_account_deletion()::text,true);
+select pg_temp.assert_true(public.request_account_deletion()::text=current_setting('test.privacy_id'),'active deletion request is idempotent');
+select pg_temp.assert_true(public.my_privacy_requests()->0->>'status'='open','student sees own deletion request');
 select pg_temp.reject('select public.admin_create_question_draft(''manual'',''test'',''{}'')','student draft creation');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select pg_temp.assert_true(public.is_dmocks_admin(),'admin identity');
 select pg_temp.assert_true(public.admin_operational_health()->>'status' in('healthy','attention','degraded'),'admin sees privacy-safe operational health');
 select pg_temp.assert_true(jsonb_array_length(public.admin_bug_reports())=1,'admin sees bug queue');
+select pg_temp.assert_true(jsonb_array_length(public.admin_privacy_requests())=1,'admin sees privacy request queue');
+select public.admin_resolve_privacy_request(current_setting('test.privacy_id')::uuid,'in_progress','Identity verification pending in fixture.');
+select pg_temp.assert_true(public.admin_privacy_requests()->0->>'status'='in_progress','admin records privacy handling state');
+select pg_temp.reject('select public.admin_resolve_privacy_request(current_setting(''test.privacy_id'')::uuid,''closed'',''short'')','privacy resolution requires operator note');
 select public.admin_reply_bug_report(current_setting('test.bug_id')::uuid,'fixed','Fixed in a fictional build.');
 select set_config('test.draft_id',public.admin_create_question_draft('manual','Fictional source','{"prompt":"Fictional question","holds":[]}'::jsonb)::text,true);
 select public.admin_review_question_draft(current_setting('test.draft_id')::uuid,'approved','Reviewed in test');
@@ -46,6 +55,7 @@ select pg_temp.assert_true(public.admin_export_question_draft(current_setting('t
 select pg_temp.assert_true((select d->'export'->'payload'->'holds'='[]'::jsonb and d->'export'->'payload'->>'externalKey'='fixture-original-001' and char_length(d->'export'->>'contentSha256')=64 from jsonb_array_elements(public.admin_question_drafts())d where d->>'id'=current_setting('test.export_draft_id')),'immutable empty-holds artifact recorded');
 select pg_temp.reject('select public.admin_export_question_draft(current_setting(''test.export_draft_id'')::uuid,''fixture-original-002'',true,''Original DMocks authored question'')','draft cannot export twice');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
+select pg_temp.reject('select public.cancel_my_privacy_request(current_setting(''test.privacy_id'')::uuid)','in-progress deletion cannot be cancelled by student');
 select pg_temp.reject('select public.admin_export_question_draft(current_setting(''test.export_draft_id'')::uuid,''student-key'',true,''Student cannot export this question'')','student cannot export draft');
 select pg_temp.assert_true((public.my_bug_reports()->0->>'adminReply')='Fixed in a fictional build.','reporter sees admin reply');
 select pg_temp.reject('select public.begin_question_bank_import(repeat(''a'',40),''server/data/exports/dexam-bank-export.json'',repeat(''b'',64),1,1,1,0)','student bank import');

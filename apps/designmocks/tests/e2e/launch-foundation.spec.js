@@ -110,6 +110,20 @@ test("released results recommend a preselected focused practice session", async 
   await expect(page.getByLabel("Topic")).toHaveValue("observation");
 });
 
+test("account privacy controls export data and create a reversible deletion request", async ({ page }) => {
+  await page.goto("/account-privacy-preview");
+  const downloadPromise=page.waitForEvent("download");
+  await page.getByRole("button",{name:"Download my data"}).click();
+  const download=await downloadPromise;
+  expect(download.suggestedFilename()).toMatch(/^dmocks-account-export-\d{4}-\d{2}-\d{2}\.json$/);
+  await expect(page.getByRole("status")).toContainText("downloaded");
+  await page.getByRole("button",{name:"Request account deletion"}).click();
+  await expect(page.getByText("Deletion request: open")).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("account remains active");
+  await page.getByRole("button",{name:"Cancel deletion request"}).click();
+  await expect(page.getByRole("button",{name:"Request account deletion"})).toBeVisible();
+});
+
 test("topic practice creates a constrained timed-session preview", async ({
   page,
 }) => {
