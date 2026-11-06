@@ -58,6 +58,7 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [ ] Implement agreed retention, deletion/support and younger-student handling before public registration.
 - [ ] Complete unit/database/browser/provider acceptance checks, accessibility/mobile reflow and the real exam bank checks; resolve blocking findings.
 - [ ] Prepare monitoring, recovery/backup and support/reconciliation runbooks appropriate to the selected hosting tier.
+- [ ] Execute the guarded 150-session staging capacity plan with 75 synthetic active attempts; retain p95/error evidence and provider CPU/connection metrics. The harness and safety tests are implemented, but no external load run has been authorized or claimed.
 - [x] GitHub app source merged in the selected private repository; existing owner-private Sites target and custom-domain hosting path verified.
 - [x] Owner-connected `dmocks.com` is active with HTTPS; verified through Sites domain state. No purchase was made by this continuation.
 - [x] Custom-domain DNS/TLS and exact Google/Supabase callback allowlist configured.
@@ -69,7 +70,7 @@ Owner instruction: keep working until the independent mock-test service is compl
 
 This section supersedes older handoffs. Google is enabled and actual owner login works locally and on the owner-private `dmocks.com` Site. Registration remains tester-only (one approved owner), with sales disabled, zero orders/passes and zero released papers. Razorpay is deferred by the owner; do not request or install merchant keys until resumed.
 
-The standalone hosted project has 25 applied migrations, including current main's intake/review-media schemas `202611060101` canonical media registration, current community moderation and `202611060102` verified runtime validation. Schema installation does not establish acceptance of the new drawing/intake Edge Functions or human-review operations.
+The standalone hosted project was last provider-verified with 25 applied migrations. Local source now contains 36 migrations; the later portal, Learn, Community, analytics, expiry, operations, abuse-control and drawing-advisory migrations still require an explicit staging promotion and hosted acceptance. Schema installation alone does not establish acceptance of drawing/intake Edge Functions or human-review operations.
 
 The canonical export has 4,521 records: 2,582 explicit empty-holds rows imported privately, 1,939 excluded. Full server-payload comparison and importer replay pass. All 2,085 referenced PNGs (273,263,304 bytes) are now privately uploaded, downloaded and hash-verified, with matching registered dimensions/size. All original PNGs also pass full Pillow decode. Source files remain outside the app and browser bundle. No rights/publication flags were approved.
 
@@ -79,7 +80,7 @@ Actual owner-browser acceptance rendered a 1496 × 687 image through the existin
 
 The verified 2027 UCEED/CEED compiler now converts 1,502 objective questions with private images (830 UCEED, 672 CEED). Real provider materialization and replay pass; every one of the 2,582 runtime decisions matches the canonical content hash and compiled JSON. Repeating the original canonical import preserves the runtime records. This supersedes the earlier 161-question prototype adapter with guessed +1/0 marks. NID/NIFT contexts remain unavailable until their programme-specific rules are verified. The 48 Dexam-original records have no supplied input-image assets; descriptive questions need the proper drawing response/review workflow. No approvals or paper releases were made.
 
-Current checks: 34 JavaScript tests, four Python fixtures, 34 desktop/mobile browser journeys, production build/preview isolation, dependency audit, server types, PostgreSQL 17 suites across all 25 migrations, and 29 read-only hosted HTTP checks pass. PR #30 is merged, with main CI green. The managed Site currently contains source through PR #24; later UI features require deliberate owner-private publication. Actual full-paper sections/clocks, drawing acceptance, rights, policies and public-launch approval remain open.
+Current local checks: 40 JavaScript tests, four Python fixtures, 40 desktop/mobile browser journeys, production build/preview isolation, dependency audit, server types and PostgreSQL 17 suites across all 36 source migrations pass. The 29 read-only hosted HTTP checks are older provider evidence and do not prove the 11 pending migrations. Main CI is green through PR #42. The managed Site currently contains source through PR #24; later UI features require deliberate owner-private publication. Actual full-paper sections/clocks, staging capacity, drawing provider acceptance, rights, policies and public-launch approval remain open.
 
 Keep the goal active while meaningful independent work remains. An owner/provider dependency blocks that item only. Never request credentials or personal identity/payment details in chat, change Dexam services, or turn elapsed time into approval.
 

@@ -1,0 +1,109 @@
+import { readFile } from "node:fs/promises";
+import { pathToFileURL } from "node:url";
+
+const percentile = (values, p) => values.length === 0 ? 0 : [...values].sort((a, b) => a - b)[Math.max(0, Math.ceil(values.length * p) - 1)];
+const interpolate = (value, fixture) => String(value).replaceAll(/\{([A-Za-z][A-Za-z0-9]*)\}/g, (_, key) => {
+  if (!(key in fixture)) throw new Error(`Missing fixture value: ${key}`);
+  return String(fixture[key]);
+});
+const interpolateValue = (value, fixture) => {
+  if (typeof value === "string") {
+    const exact = value.match(/^\{([A-Za-z][A-Za-z0-9]*)\}$/);
+    if (exact) {
+      if (!(exact[1] in fixture)) throw new Error(`Missing fixture value: ${exact[1]}`);
+      return fixture[exact[1]];
+    }
+    return interpolate(value, fixture);
+  }
+  if (Array.isArray(value)) return value.map(item => interpolateValue(item, fixture));
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, interpolateValue(item, fixture)]));
+  return value;
+};
+
+export function validateCapacityPlan(plan) {
+  if (!plan || plan.version !== 1) throw new Error("Capacity plan version must be 1");
+  const target = new URL(plan.target);
+  if (!["http:", "https:"].includes(target.protocol) || target.username || target.password || target.search || target.hash) throw new Error("Capacity target must be a credential-free HTTP(S) origin");
+  if (["dmocks.com", "www.dmocks.com"].includes(target.hostname)) throw new Error("Production capacity tests are forbidden");
+  if (!Number.isInteger(plan.sessions) || plan.sessions < 1 || plan.sessions > 500) throw new Error("sessions must be between 1 and 500");
+  if (!Number.isInteger(plan.activeAttempts) || plan.activeAttempts < 0 || plan.activeAttempts > plan.sessions) throw new Error("activeAttempts must be between 0 and sessions");
+  if (!Number.isInteger(plan.iterations) || plan.iterations < 1 || plan.iterations > 100) throw new Error("iterations must be between 1 and 100");
+  for (const kind of ["browser", "activeAttempt"]) {
+    if (!Array.isArray(plan.scenarios?.[kind]) || plan.scenarios[kind].length === 0) throw new Error(`${kind} scenario is required`);
+    for (const request of plan.scenarios[kind]) {
+      if (!request.name || !["GET", "POST"].includes(request.method) || !String(request.path).startsWith("/")) throw new Error(`Invalid ${kind} request`);
+      if (String(request.path).startsWith("//")) throw new Error("Request paths must stay on the target origin");
+    }
+  }
+  const thresholds = plan.thresholds ?? {};
+  if (!(thresholds.maxErrorRate >= 0 && thresholds.maxErrorRate <= 1) || !(thresholds.publicP95Ms > 0) || !(thresholds.authenticatedP95Ms > 0)) throw new Error("Capacity thresholds are required");
+  return { ...plan, target: target.origin };
+}
+
+function requestHeaders(spec, fixture, env) {
+  return Object.fromEntries(Object.entries(spec.headers ?? {}).map(([name, value]) => {
+    const raw = typeof value === "object" && value !== null && value.env ? env[value.env] : value;
+    if (raw === undefined || raw === "") throw new Error(`Missing request header value for ${name}`);
+    return [name, interpolate(raw, fixture)];
+  }));
+}
+
+export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetch, env = process.env } = {}) {
+  const plan = validateCapacityPlan(rawPlan);
+  if (plan.activeAttempts > fixtures.length) throw new Error(`Need ${plan.activeAttempts} synthetic active-attempt fixtures`);
+  const local = ["127.0.0.1", "localhost", "[::1]"].includes(new URL(plan.target).hostname);
+  if (!local && env.CAPACITY_ALLOW_STAGING_LOAD !== plan.target) throw new Error("Set CAPACITY_ALLOW_STAGING_LOAD to the exact staging origin before remote execution");
+  const samples = { browser: [], activeAttempt: [] }, errors = [];
+  const runRequest = async (kind, spec, fixture) => {
+    const url = new URL(interpolate(spec.path, fixture), plan.target);
+    if (url.origin !== plan.target) throw new Error("Capacity request escaped the target origin");
+    const started = performance.now();
+    try {
+      const response = await fetchImpl(url, {
+        method: spec.method,
+        headers: requestHeaders(spec, fixture, env),
+        body: spec.body === undefined ? undefined : JSON.stringify(interpolateValue(spec.body, fixture)),
+        signal: AbortSignal.timeout(spec.timeoutMs ?? 5000),
+      });
+      const elapsed = performance.now() - started;
+      samples[kind].push(elapsed);
+      if (!response.ok) errors.push({ kind, name: spec.name, status: response.status });
+      await response.body?.cancel?.();
+    } catch (error) {
+      samples[kind].push(performance.now() - started);
+      errors.push({ kind, name: spec.name, status: 0, error: error.name });
+    }
+  };
+  await Promise.all(Array.from({ length: plan.sessions }, async (_, index) => {
+    const kind = index < plan.activeAttempts ? "activeAttempt" : "browser";
+    const fixture = { sessionId: index + 1, revision: 1, ...(fixtures[index] ?? {}) };
+    for (let iteration = 0; iteration < plan.iterations; iteration += 1) {
+      fixture.revision = iteration + 1;
+      for (const request of plan.scenarios[kind]) await runRequest(kind, request, fixture);
+    }
+  }));
+  const total = samples.browser.length + samples.activeAttempt.length;
+  const summary = {
+    target: plan.target,
+    sessions: plan.sessions,
+    activeAttempts: plan.activeAttempts,
+    requests: total,
+    errors: errors.length,
+    errorRate: total === 0 ? 0 : errors.length / total,
+    browserP95Ms: Math.round(percentile(samples.browser, 0.95)),
+    authenticatedP95Ms: Math.round(percentile(samples.activeAttempt, 0.95)),
+  };
+  summary.passed = summary.errorRate <= plan.thresholds.maxErrorRate && summary.browserP95Ms <= plan.thresholds.publicP95Ms && summary.authenticatedP95Ms <= plan.thresholds.authenticatedP95Ms;
+  return { summary, failures: errors.slice(0, 20) };
+}
+
+async function main() {
+  const args = process.argv.slice(2), planPath = args[args.indexOf("--plan") + 1], fixturePath = args[args.indexOf("--fixtures") + 1];
+  if (!planPath || !fixturePath || !args.includes("--execute")) throw new Error("Usage: node scripts/capacity-load.mjs --plan PLAN.json --fixtures SYNTHETIC.json --execute");
+  const plan = JSON.parse(await readFile(planPath, "utf8")), fixtures = JSON.parse(await readFile(fixturePath, "utf8"));
+  const result = await runCapacityTest(plan, { fixtures });
+  process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
+  if (!result.summary.passed) process.exitCode = 1;
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main().catch(error => { process.stderr.write(`${error.message}\n`); process.exitCode = 1; });
