@@ -34,6 +34,7 @@ import { CommunityModerationPreview } from "./CommunityModeration.jsx";
 import { AiQuestionDraftingPreview } from "./AiQuestionDrafting.jsx";
 import { OperationalHealthPreview } from "./OperationalHealth.jsx";
 import { QuestionDraftExportPreview } from "./QuestionDraftExport.jsx";
+import { AttemptInsightsPreview } from "./AttemptInsights.jsx";
 import { useAuthState } from "./useAuth.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import {
@@ -1716,6 +1717,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/question-draft-export-preview" element={<QuestionDraftExportPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/attempt-insights-preview" element={<AttemptInsightsPreview />} />
         )}
 
         <Route
