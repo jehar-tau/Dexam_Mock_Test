@@ -262,3 +262,13 @@ test("operations health exposes privacy-safe actionable counters", async ({ page
   await expect(health).toContainText("Failed intake jobs");
   await expect(health).toContainText("contain no student identity");
 });
+
+test("offline answer stays queued and reconnects without changing revision", async ({ page }) => {
+  await page.goto("/attempt-sync-preview");
+  await page.getByRole("button", { name: "Choose B while offline" }).click();
+  await expect(page.getByRole("status")).toContainText("1 answer waiting to sync");
+  await expect(page.getByText("Server answer:")).toContainText("—");
+  await page.getByRole("button", { name: "Reconnect and retry" }).click();
+  await expect(page.getByRole("status")).toContainText("All answers saved");
+  await expect(page.getByText("Server answer:")).toContainText("B");
+});

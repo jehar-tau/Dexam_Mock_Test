@@ -15,7 +15,7 @@ import {
   restoreSample,
   SAMPLE_STORAGE,
 } from "./sample.mjs";
-import { Workspace, Attempt } from "./Workspace.jsx";
+import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
 import { PortalModule } from "./PortalShell.jsx";
 import {
   CandidateProfile,
@@ -1705,6 +1705,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/operations-health-preview" element={<OperationalHealthPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/attempt-sync-preview" element={<AttemptSyncPreview />} />
         )}
 
         <Route
