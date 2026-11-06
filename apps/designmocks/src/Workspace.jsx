@@ -6,6 +6,7 @@ import { useAuthState } from "./useAuth.js";
 import { PortalShell } from "./PortalShell.jsx";
 import { QuestionReport } from "./QuestionReport.jsx";
 import { DrawingUploads } from "./DrawingUploads.jsx";
+import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 
 const rpc = async (name, args) => {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -512,7 +513,7 @@ export function Attempt() {
                 <h3>{item.prompt}</h3>
                 <p>
                   {item.kind === "drawing"
-                    ? "Drawing · self-review"
+                    ? "Drawing · separate human review"
                     : item.outcome.replaceAll("_", " ")}
                 </p>
                 <p>
@@ -522,6 +523,7 @@ export function Attempt() {
                     : (item.answer ?? "Not answered")}
                 </p>
                 <p>{item.explanation}</p>
+                {item.kind === "drawing" && <DrawingReviewStatus review={item.drawingReview} />}
               </article>
             ))}
           </div>
@@ -655,9 +657,8 @@ export function Attempt() {
           ) : (
             <>
               <div className="notice">
-                Draw on paper within the time limit. Compare your work with the
-                guidance after submitting. No drawing upload or human evaluation
-                is included in this version.
+                Draw on paper within the time limit and upload clear ordered pages.
+                A teacher can review submitted pages separately from the objective score.
               </div>
               <label className="drawing-note">
                 Your self-review notes (optional)

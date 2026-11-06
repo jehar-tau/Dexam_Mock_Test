@@ -27,6 +27,7 @@ begin
   ,'public.admin_question_intake_assets()'
   ,'public.admin_promote_intake_asset(uuid,jsonb)'
   ,'public.admin_drawing_review_media_paths(uuid)'
+  ,'public.admin_release_drawing_review(uuid)'
  ] loop
   if has_function_privilege('anon',signature,'EXECUTE') then raise exception 'Anonymous execute unexpectedly granted: %',signature; end if;
   if not has_function_privilege('authenticated',signature,'EXECUTE') then raise exception 'Authenticated route grant missing: %',signature; end if;
