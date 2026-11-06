@@ -158,15 +158,20 @@ export function WorkspaceView({
               </Link>
             </div>
           )}
-          {data.analytics?.objectiveAccuracy != null && (
+          {data.analytics?.waitingForResults > 0 && <p className="notice" role="status">
+            {data.analytics.waitingForResults === 1 ? "1 submitted attempt is awaiting results." :
+              `${data.analytics.waitingForResults} submitted attempts are awaiting results.`}
+          </p>}
+          {(data.analytics?.objectiveAccuracy != null || data.analytics?.drawingReviews?.pending > 0 ||
+            data.analytics?.drawingReviews?.released > 0) && (
             <>
               <h2>Your performance snapshot.</h2>
               <div className="dashboard-stats analytics-snapshot" aria-label="Performance snapshot">
-                <article>
+                {data.analytics.objectiveAccuracy != null && <article>
                   <span>OBJECTIVE ACCURACY</span>
                   <h2>{data.analytics.objectiveAccuracy}%</h2>
                   <p>Across {data.analytics.objectiveAnswered} released answered questions.</p>
-                </article>
+                </article>}
                 <article>
                   <span>DRAWING REVIEWS</span>
                   <h2>{data.analytics.drawingReviews?.released ?? 0} released</h2>
@@ -549,6 +554,7 @@ export function Attempt() {
           </div>
         </div>
         {uploadWindow}
+        {!attempt.examResultsPending && <>
         <div className="result-grid">
           <article>
             <span className="eyebrow">A GLIMPSE OF EACH TOPIC</span>
@@ -591,9 +597,10 @@ export function Attempt() {
           </article>
         </div>
         <AttemptInsights questions={attempt.questions} />
+        </>}
         <ExamSessionReport report={examReport} />
         <ExamPartTransition session={examSession} busy={busy} onStart={async partA=>{setBusy(true);try{const next=await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA});navigate(`/attempt/${next}`)}catch(e){setError(e.message);setBusy(false)}}}/>
-        <div className="review-toggle">
+        {!attempt.examResultsPending && <div className="review-toggle">
           <h2>Explore the explanations.</h2>
           <button
             className="text-button"
@@ -602,8 +609,8 @@ export function Attempt() {
           >
             {review ? "Close" : "Open"} answer review
           </button>
-        </div>
-        {review && (
+        </div>}
+        {!attempt.examResultsPending && review && (
           <div className="answer-review">
             {attempt.questions.map((item, i) => (
               <article key={item.id}>

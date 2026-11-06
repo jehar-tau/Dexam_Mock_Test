@@ -101,6 +101,6 @@ Before switching agents or pausing for quota reset:
 
 - PR #56 merged the NIFT 2027 B.Des. GAT contract in `74a81fd`. Offline compilation produced 155 of 298 eligible NIFT records. Hosted materialization, replay, rights review and blueprint release are pending.
 - PR #57 bound drawing uploads to the authenticated student and added versioned teacher claims, grading and audited overrides. PR #58 linked that workflow to fixed All India drawing windows and combined cohort results. Both merged after GitHub CI.
-- Attempt recovery journals unsynced answers until the server acknowledges or finalizes the attempt. The server revision wins conflicts and the original server deadline determines which answers count.
-- Local evidence includes 65 JavaScript tests, four Python fixtures, 56 browser journeys, the server-function type check, and all 48 migrations with transactional suites on disposable PostgreSQL 17.
+- PR #59 added a device journal for unsynced answers. The server revision wins conflicts and the original server deadline determines which answers count.
+- Overview and Learn derive performance only from released attempts. Local evidence includes 66 JavaScript tests, four Python fixtures, 56 browser journeys, the server-function type check, and all 49 migrations with transactional suites on disposable PostgreSQL 17.
 - Provider acceptance requires the matching migrations, drawing media functions and UI in an isolated staging environment. The representative provider journey, content rights, owner theory export and deferred payments are tracked in the launch checklist.
