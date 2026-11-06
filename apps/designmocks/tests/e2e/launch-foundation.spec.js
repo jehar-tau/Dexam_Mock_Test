@@ -272,3 +272,14 @@ test("offline answer stays queued and reconnects without changing revision", asy
   await expect(page.getByRole("status")).toContainText("All answers saved");
   await expect(page.getByText("Server answer:")).toContainText("B");
 });
+
+test("admin corrects an extracted question before human review", async ({ page }) => {
+  await page.goto("/intake-extraction-preview");
+  await expect(page.getByText("CANDIDATE 1 · PAGE 2 · 84%" )).toBeVisible();
+  const payload = page.getByLabel("Review and correct question JSON");
+  await expect(payload).toContainText("intake-human-review");
+  await payload.fill('{"type":"MCQ","prompt":"Human-corrected fictional question","holds":["intake-human-review"]}');
+  await page.getByRole("button", { name: "Send to human review" }).click();
+  await expect(page.getByText("promoted")).toBeVisible();
+  await expect(payload).toBeDisabled();
+});

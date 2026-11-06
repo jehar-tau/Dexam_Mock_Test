@@ -49,6 +49,7 @@ const PortalPreview = import.meta.env.DEV
   ? React.lazy(() => import("./PortalPreview.jsx"))
   : null;
 const Admin = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.Admin })));
+const IntakeExtractionPreview = import.meta.env.DEV ? React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.IntakeExtractionPreview }))) : null;
 const BugReport = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.BugReport })));
 
 function Logo() {
@@ -1708,6 +1709,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/attempt-sync-preview" element={<AttemptSyncPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/intake-extraction-preview" element={<IntakeExtractionPreview />} />
         )}
 
         <Route

@@ -25,6 +25,26 @@ function Gate({ session, loading }) {
   return null;
 }
 
+export function IntakeExtractionQueue({ assets = [], onExtract, onPromote, onReject }) {
+  return <div className="admin-list">{assets.length === 0 ? <p>No private source files uploaded.</p> : assets.map((asset) => <article key={asset.id}>
+    <b>{asset.name}</b><span className="status-pill">{asset.status}</span>
+    {asset.error && <p className="error">{asset.error}</p>}
+    {["uploaded", "failed"].includes(asset.status) && <button onClick={() => onExtract(asset.id)}>Extract with configured model</button>}
+    {asset.status === "extracting" && <p role="status">Extraction in progress…</p>}
+    {(asset.candidates ?? []).map((candidate) => <form key={candidate.id} className="admin-form" onSubmit={(event) => { event.preventDefault(); onPromote(candidate.id, new FormData(event.currentTarget).get("payload")); }}>
+      <span className="eyebrow">CANDIDATE {candidate.ordinal}{candidate.pageNumber ? ` · PAGE ${candidate.pageNumber}` : ""}{candidate.confidence != null ? ` · ${Math.round(candidate.confidence * 100)}%` : ""}</span>
+      <label>Review and correct question JSON<textarea name="payload" required rows="10" defaultValue={JSON.stringify(candidate.payload, null, 2)} disabled={candidate.status !== "pending"} /></label>
+      {candidate.status === "pending" ? <div className="admin-actions"><button>Send to human review</button><button type="button" onClick={() => onReject(candidate.id)}>Reject extraction</button></div> : <span className="status-pill">{candidate.status}</span>}
+    </form>)}
+  </article>)}</div>;
+}
+
+export function IntakeExtractionPreview() {
+  const [assets, setAssets] = useState([{ id: "asset", name: "fictional-paper.pdf", status: "extracted", candidates: [{ id: "candidate", ordinal: 1, pageNumber: 2, confidence: 0.84, status: "pending", payload: { type: "MCQ", prompt: "Fictional extracted observation question", options: [], answer: null, holds: ["intake-human-review"] } }] }]);
+  const update = (id, status) => setAssets(current => current.map(asset => ({ ...asset, candidates: asset.candidates?.map(candidate => candidate.id === id ? { ...candidate, status } : candidate) })));
+  return <section className="wrap section admin-page"><span className="eyebrow">PRIVATE INTAKE PREVIEW</span><h1>Extract, correct, then <em>review.</em></h1><IntakeExtractionQueue assets={assets} onExtract={() => {}} onPromote={(id) => update(id, "promoted")} onReject={(id) => update(id, "rejected")} /></section>;
+}
+
 export function BugReport() {
   const { session, loading } = useAuthState();
   const [reports, setReports] = useState([]),
@@ -346,18 +366,29 @@ export function Admin() {
       setMessage(e.message);
     }
   };
-  const promoteIntake = async (event, id) => {
-    event.preventDefault();
-    const f = new FormData(event.currentTarget);
+  const extractIntake = async (id) => {
     try {
-      await rpc("admin_promote_intake_asset", {
-        p_asset_id: id,
-        p_payload: JSON.parse(f.get("payload")),
+      const { data, error } = await platform.functions.invoke("question-intake-extract", { body: { assetId: id } });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      setMessage(`${data.questions} question candidate${data.questions === 1 ? "" : "s"} extracted for review.`);
+      await load();
+    } catch (e) { setMessage(e.message); }
+  };
+  const promoteIntake = async (id, payloadJson) => {
+    try {
+      await rpc("admin_promote_intake_candidate", {
+        p_candidate_id: id,
+        p_payload: JSON.parse(payloadJson),
       });
       await load();
     } catch (e) {
       setMessage(e.message);
     }
+  };
+  const rejectIntake = async (id) => {
+    try { await rpc("admin_reject_intake_candidate", { p_candidate_id: id }); await load(); }
+    catch (e) { setMessage(e.message); }
   };
   return (
     <section className="wrap section admin-page">
@@ -391,31 +422,7 @@ export function Admin() {
             </label>
             <button>Upload for extraction</button>
           </form>
-          <div className="admin-list">
-            {intake.map((x) => (
-              <article key={x.id}>
-                <b>{x.name}</b>
-                <span className="status-pill">{x.status}</span>
-                {x.status !== "reviewed" && (
-                  <form
-                    className="admin-form"
-                    onSubmit={(e) => promoteIntake(e, x.id)}
-                  >
-                    <label>
-                      Extracted question JSON
-                      <textarea
-                        name="payload"
-                        required
-                        rows="8"
-                        placeholder={'{"prompt":"…","holds":[]}'}
-                      />
-                    </label>
-                    <button>Send to human review</button>
-                  </form>
-                )}
-              </article>
-            ))}
-          </div>
+          <IntakeExtractionQueue assets={intake} onExtract={extractIntake} onPromote={promoteIntake} onReject={rejectIntake} />
           <h2>Drawing review queue</h2>
           <DrawingReviewQueue drawings={drawings} onReview={reviewDrawing} onRelease={releaseDrawing} />
           <h2>Community moderation</h2>
