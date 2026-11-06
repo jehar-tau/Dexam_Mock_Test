@@ -7,6 +7,7 @@ import { CommunityModerationQueue } from "./CommunityModeration.jsx";
 import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
 import { OperationalHealth } from "./OperationalHealth.jsx";
 import { QuestionDraftExport } from "./QuestionDraftExport.jsx";
+import { LaunchReadiness } from "./LaunchReadiness.jsx";
 
 async function rpc(name, args) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -148,6 +149,7 @@ export function Admin() {
     [questionReports, setQuestionReports] = useState([]),
     [privacyRequests, setPrivacyRequests] = useState([]),
     [health, setHealth] = useState(),
+    [readiness, setReadiness] = useState(),
     [bankRights, setBankRights] = useState({}),
     [message, setMessage] = useState("");
   const load = useCallback(async () => {
@@ -156,7 +158,7 @@ export function Admin() {
       const ok = await rpc("is_dmocks_admin");
       setAllowed(ok);
       if (ok) {
-        const [d, b, q, m, a, r, l, w, i, c, ai, h, privacy] = await Promise.all([
+        const [d, b, q, m, a, r, l, w, i, c, ai, h, privacy, launch] = await Promise.all([
           rpc("admin_question_drafts"),
           rpc("admin_bug_reports"),
           rpc("admin_bank_questions", { p_limit: 25, p_offset: 0 }),
@@ -170,6 +172,7 @@ export function Admin() {
           rpc("admin_ai_draft_requests"),
           rpc("admin_operational_health"),
           rpc("admin_privacy_requests"),
+          rpc("admin_launch_readiness"),
         ]);
         setDrafts(d);
         setBugs(b);
@@ -184,6 +187,7 @@ export function Admin() {
         setAiDrafts(ai);
         setHealth(h);
         setPrivacyRequests(privacy);
+        setReadiness(launch);
       }
     } catch (e) {
       setMessage(e.message);
@@ -425,6 +429,8 @@ export function Admin() {
         <>
           <h2>Operational health</h2>
           <OperationalHealth health={health} />
+          <h2>Launch readiness</h2>
+          <LaunchReadiness readiness={readiness} onSetGate={async(gate,approved,evidence)=>{try{await rpc("admin_set_launch_gate",{p_gate:gate,p_approved:approved,p_evidence:evidence});await load()}catch(e){setMessage(e.message)}}}/>
           <h2>PDF and photo question intake</h2>
           <form className="admin-form" onSubmit={uploadIntake}>
             <label>

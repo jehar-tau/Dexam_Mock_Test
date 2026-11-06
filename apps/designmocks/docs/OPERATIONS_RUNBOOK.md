@@ -52,3 +52,5 @@ Each invocation drains at most ten batches of 500 expired attempts, prunes only 
 ## Release checklist
 
 Before promotion: green GitHub CI, disposable PostgreSQL 17 suites, staging migrations, synthetic desktop/mobile journey, private-media denial checks, backup evidence and aggregate health with no degraded counters. Keep registration and sales disabled during deployment. Enable them only by separate owner-approved production decisions.
+
+The administrator launch-readiness panel records evidence for content rights, privacy/terms, refund policy, child safety, drawing operations, provider acceptance, backup/restore and capacity acceptance. Approvals are audited and reversible. The database refuses a disabled-to-enabled sales transition unless every gate is approved, a policy version exists and at least one enabled exam blueprint passes its verified manifest. Recording all gates still does not activate sales or public registration.

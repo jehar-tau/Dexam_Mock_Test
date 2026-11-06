@@ -307,6 +307,16 @@ test("operations health exposes privacy-safe actionable counters", async ({ page
   await expect(health).toContainText("contain no student identity");
 });
 
+test("launch readiness keeps sales closed until every evidenced gate passes",async({page})=>{
+  await page.goto("/launch-readiness-preview");
+  const readiness=page.getByLabel("Launch readiness");
+  await expect(readiness).toContainText("closed");
+  await expect(readiness).toContainText("Sales disabled");
+  await expect(readiness).toContainText("Content publication rights");
+  await expect(readiness).toContainText("Backup and restore drill");
+  await expect(readiness).toContainText("does not activate registration, publish papers or enable sales");
+});
+
 test("offline answer stays queued and reconnects without changing revision", async ({ page }) => {
   await page.goto("/attempt-sync-preview");
   await page.getByRole("button", { name: "Choose B while offline" }).click();

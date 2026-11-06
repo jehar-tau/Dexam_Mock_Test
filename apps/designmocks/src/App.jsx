@@ -33,6 +33,7 @@ import { DrawingReviewLifecyclePreview } from "./DrawingReviewQueue.jsx";
 import { CommunityModerationPreview } from "./CommunityModeration.jsx";
 import { AiQuestionDraftingPreview } from "./AiQuestionDrafting.jsx";
 import { OperationalHealthPreview } from "./OperationalHealth.jsx";
+import { LaunchReadinessPreview } from "./LaunchReadiness.jsx";
 import { QuestionDraftExportPreview } from "./QuestionDraftExport.jsx";
 import { AttemptInsightsPreview } from "./AttemptInsights.jsx";
 import { AccountPrivacy, AccountPrivacyPreview } from "./AccountPrivacy.jsx";
@@ -1714,6 +1715,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/operations-health-preview" element={<OperationalHealthPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/launch-readiness-preview" element={<LaunchReadinessPreview />} />
         )}
         {import.meta.env.DEV && (
           <Route path="/attempt-sync-preview" element={<AttemptSyncPreview />} />
