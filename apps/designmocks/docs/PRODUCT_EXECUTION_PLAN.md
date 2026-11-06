@@ -175,7 +175,8 @@ Exit: human-reviewed drawing results are reliable without AI; AI cannot publish 
 
 ### Phase 5 — Learn and Community
 
-- Import and review the owner's theory documents; create learning paths and practice links.
+- [x] Verify the Learn editor for drafts, rights-confirmed publication, withdrawal and revisions. Keep student progress when a lesson is republished.
+- [ ] Import and review the owner's theory documents, link the lessons to reviewed topic pools and verify the Learn workflow in staging.
 - Build moderated posts/comments/helpful-answer workflow and operational moderation tools.
 
 Exit: content rights, moderation coverage, reporting, retention and child-safety checks pass.

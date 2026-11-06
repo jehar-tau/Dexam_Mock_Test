@@ -1,54 +1,15 @@
 import { expect, test } from "@playwright/test";
 import { fileURLToPath } from "node:url";
+import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider as stubProvider } from "./portal-fixture.js";
 
-test.use({ baseURL: "http://127.0.0.1:4599" });
+test.use({ baseURL: portalFixtureURL });
 
 const accountId = "00000000-0000-4000-8000-000000000092";
 const reviewerId = "00000000-0000-4000-8000-000000000093";
 const drawingId = "40000000-0000-4000-8000-000000000001";
 const denied = { code: "42501", message: "Drawing reviewer access required" };
 
-async function stubProvider(page, respond) {
-  const calls = [];
-  const unexpected = [];
-  const headers = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-supabase-api-version",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-  };
-  await page.route("https://dmocks-portal-fixture.supabase.co/**", async (route) => {
-    const request = route.request();
-    if (request.method() === "OPTIONS") return route.fulfill({ status: 204, headers });
-    const path = new URL(request.url()).pathname;
-    const procedure = path.split("/").at(-1);
-    const input = request.postDataJSON() ?? {};
-    calls.push([procedure, input]);
-    const result = respond(procedure, input);
-    if (result === undefined) {
-      unexpected.push(path);
-      return route.abort();
-    }
-    return route.fulfill({ json: result, headers, status: result?.code === "42501" ? 403 : 200 });
-  });
-  return { calls, unexpected };
-}
-
-async function seedSession(page) {
-  const expiresAt = Math.floor(Date.now() / 1000) + 3600;
-  const user = {
-    id: accountId,
-    email: "drawing-fixture@example.invalid",
-    app_metadata: { provider: "google" },
-    user_metadata: {},
-    aud: "authenticated",
-  };
-  const jwt = `${Buffer.from('{"alg":"HS256","typ":"JWT"}').toString("base64url")}.${Buffer.from(JSON.stringify({
-    sub: user.id, aud: "authenticated", role: "authenticated", exp: expiresAt,
-  })).toString("base64url")}.fixture`;
-  await page.evaluate((session) => {
-    localStorage.setItem("sb-dmocks-portal-fixture-auth-token", JSON.stringify(session));
-  }, { user, access_token: jwt, refresh_token: "fixture-refresh", expires_at: expiresAt, expires_in: 3600, token_type: "bearer" });
-}
+const seedSession = (page) => seedPortalSession(page, { id: accountId, email: "drawing-fixture@example.invalid" });
 
 const availableDrawing = {
   reviewId: drawingId, version: 0, prompt: "Sketch an original station sign.",
@@ -163,24 +124,16 @@ test("signed-out visitors and students cannot open the teacher queue", async ({ 
 test("an administrator grants and revokes an existing account's reviewer access", async ({ page }) => {
   let roster = [];
   let returned = false;
-  const adminLists = new Set([
-    "admin_question_drafts", "admin_bug_reports", "admin_bank_questions", "admin_exam_mock_blueprints",
-    "admin_all_india_events", "admin_reported_questions", "admin_learning_lessons", "admin_question_intake_assets",
-    "admin_community_report_queue", "admin_ai_draft_requests", "admin_privacy_requests",
-  ]);
   const { calls, unexpected } = await stubProvider(page, (procedure, input) => {
-    if (adminLists.has(procedure)) return [];
     switch (procedure) {
       case "is_dmocks_admin": return true;
-      case "admin_operational_health": return { status: "healthy", checkedAt: "2026-11-06T12:00:00Z" };
-      case "admin_launch_readiness": return { gates: [], readyForSales: false, salesEnabled: false };
       case "admin_drawing_queue": return returned ? [availableDrawing] : [];
       case "admin_drawing_reviewers": return roster;
       case "admin_set_drawing_reviewer":
         roster = input.p_enabled ? [{ userId: input.p_user_id }] : [];
         returned = !input.p_enabled;
         return true;
-      default: return undefined;
+      default: return emptyAdminRead(procedure);
     }
   });
   await page.goto("/admin");

@@ -34,6 +34,10 @@ begin
   'public.learning_catalog()',
   'public.learning_progress()',
   'public.admin_learning_lessons()',
+  'public.read_learning_lesson(text)',
+  'public.complete_learning_lesson(uuid)',
+  'public.admin_save_learning_draft(uuid,integer,text,text,text,text,text,text,integer)',
+  'public.admin_set_learning_publication(uuid,integer,boolean,text)',
   'public.community_feed(text,text)',
   'public.admin_drawing_queue()',
   'public.my_overview_analytics()'
@@ -62,6 +66,9 @@ begin
   if not has_function_privilege('authenticated',signature,'EXECUTE') then raise exception 'Authenticated route grant missing: %',signature; end if;
  end loop;
  if not has_function_privilege('anon','public.public_all_india_top_ten()','EXECUTE') then raise exception 'Intentionally public alias-only ranking endpoint lost its grant'; end if;
+ if has_table_privilege('authenticated','dm_private.learning_publication_audit','SELECT,INSERT,UPDATE,DELETE') then
+  raise exception 'Learning publication evidence must remain private';
+ end if;
  if has_table_privilege('authenticated','dm_private.drawing_reviewers','SELECT,INSERT,UPDATE,DELETE')
    or has_table_privilege('authenticated','dm_private.drawing_reviewer_audit','SELECT,INSERT,UPDATE,DELETE')
    or has_function_privilege('authenticated','dm_private.drawing_review_cards(text,uuid,integer,boolean)','EXECUTE')
