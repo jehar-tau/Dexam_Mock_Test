@@ -198,3 +198,10 @@ test("drawing submission accepts ordered raster pages", async ({ page }) => {
   await expect(page.getByText("page-one.png")).not.toBeVisible();
   await expect(page.getByText("Drawing image removed.")).toBeVisible();
 });
+
+test("teacher can open anonymous private drawing pages", async ({ page }) => {
+  await page.goto("/drawing-review-preview");
+  await page.getByRole("button", { name: "Open private images" }).click();
+  await expect(page.getByRole("img", { name: "Anonymous drawing page 1" })).toBeVisible();
+  await expect(page.getByText("Page 1")).toBeVisible();
+});
