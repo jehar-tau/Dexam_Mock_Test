@@ -13,9 +13,9 @@ export function compileRuntimeManifest(manifest,mediaCatalog){
   const runtime=runtimeQuestion(record.payload,{rule:RULES_2027[record.exam],mediaCatalog});
   const summary=byExam[record.exam]??={ready:0,objective:0,drawing:0,unavailable:0,withImages:0};
   if(runtime){summary.ready++;summary[runtime.kind==='drawing'?'drawing':'objective']++;if(runtime.media.length)summary.withImages++;}else summary.unavailable++;
-  return{externalKey:record.externalKey,contentSha256:record.contentSha256,runtime};
+  return{externalKey:record.externalKey,contentSha256:record.contentSha256,exam:record.exam,runtime};
  });
- return{sourceCommit:manifest.sourceCommit,sourceSha256:manifest.sourceSha256,version:'iitb-2027-v1',byExam,total:records.length,ready:records.filter(r=>r.runtime).length,planSha256:sha256(stableJson(records)),records};
+ return{sourceCommit:manifest.sourceCommit,sourceSha256:manifest.sourceSha256,version:'verified-2027-v2',byExam,total:records.length,ready:records.filter(r=>r.runtime).length,planSha256:sha256(stableJson(records)),records};
 }
 export async function runtimeOperator({url,serviceRoleKey}){
  const project=JSON.parse(await readFile(new URL('../supabase/project.json',import.meta.url),'utf8'));
@@ -30,7 +30,7 @@ export async function runtimeOperator({url,serviceRoleKey}){
  }
  return{media:()=>rpc('canonical_bank_media_manifest'),apply:async plan=>{
   let recorded=0;
-  for(let offset=0;offset<plan.records.length;offset+=100){const batch=plan.records.slice(offset,offset+100);const count=await rpc('upsert_question_bank_runtime_batch',{p_records:batch});assert.equal(count,batch.length,'Runtime registration count mismatch');recorded+=count;}
+  for(const [exam,records]of Object.entries(Object.groupBy(plan.records,record=>record.exam==='nift'?'nift':'other'))){for(let offset=0;offset<records.length;offset+=100){const batch=records.slice(offset,offset+100);const count=await rpc(exam==='nift'?'upsert_nift_question_bank_runtime_batch':'upsert_question_bank_runtime_batch',{p_records:batch});assert.equal(count,batch.length,'Runtime registration count mismatch');recorded+=count;}}
   return recorded;
  }};
 }
