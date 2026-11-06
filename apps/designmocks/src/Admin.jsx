@@ -5,6 +5,7 @@ import { useAuthState } from "./useAuth.js";
 import { DrawingReviewQueue } from "./DrawingReviewQueue.jsx";
 import { CommunityModerationQueue } from "./CommunityModeration.jsx";
 import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
+import { OperationalHealth } from "./OperationalHealth.jsx";
 
 async function rpc(name, args) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -124,6 +125,7 @@ export function Admin() {
     [aiDrafts, setAiDrafts] = useState([]),
     [intake, setIntake] = useState([]),
     [questionReports, setQuestionReports] = useState([]),
+    [health, setHealth] = useState(),
     [bankRights, setBankRights] = useState({}),
     [message, setMessage] = useState("");
   const load = useCallback(async () => {
@@ -132,7 +134,7 @@ export function Admin() {
       const ok = await rpc("is_dmocks_admin");
       setAllowed(ok);
       if (ok) {
-        const [d, b, q, m, a, r, l, w, i, c, ai] = await Promise.all([
+        const [d, b, q, m, a, r, l, w, i, c, ai, h] = await Promise.all([
           rpc("admin_question_drafts"),
           rpc("admin_bug_reports"),
           rpc("admin_bank_questions", { p_limit: 25, p_offset: 0 }),
@@ -144,6 +146,7 @@ export function Admin() {
           rpc("admin_question_intake_assets"),
           rpc("admin_community_report_queue"),
           rpc("admin_ai_draft_requests"),
+          rpc("admin_operational_health"),
         ]);
         setDrafts(d);
         setBugs(b);
@@ -156,6 +159,7 @@ export function Admin() {
         setIntake(i);
         setCommunityReports(c);
         setAiDrafts(ai);
+        setHealth(h);
       }
     } catch (e) {
       setMessage(e.message);
@@ -372,6 +376,8 @@ export function Admin() {
       )}
       {allowed && (
         <>
+          <h2>Operational health</h2>
+          <OperationalHealth health={health} />
           <h2>PDF and photo question intake</h2>
           <form className="admin-form" onSubmit={uploadIntake}>
             <label>

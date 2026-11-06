@@ -32,6 +32,7 @@ import { DrawingReviewMediaPreview } from "./DrawingReviewMedia.jsx";
 import { DrawingReviewLifecyclePreview } from "./DrawingReviewQueue.jsx";
 import { CommunityModerationPreview } from "./CommunityModeration.jsx";
 import { AiQuestionDraftingPreview } from "./AiQuestionDrafting.jsx";
+import { OperationalHealthPreview } from "./OperationalHealth.jsx";
 import { useAuthState } from "./useAuth.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import {
@@ -1701,6 +1702,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/ai-question-drafting-preview" element={<AiQuestionDraftingPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/operations-health-preview" element={<OperationalHealthPreview />} />
         )}
 
         <Route

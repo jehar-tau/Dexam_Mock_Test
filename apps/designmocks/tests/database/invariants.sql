@@ -28,9 +28,11 @@ select pg_temp.reject('select public.verify_candidate_phone(''00000000-0000-4000
 select set_config('test.bug_id',public.submit_bug_report('Fictional bug','A fictional problem for the database test.','https://dmocks.com/tests')::text,true);
 select pg_temp.assert_true(jsonb_array_length(public.my_bug_reports())=1,'reporter sees own bug');
 select pg_temp.reject('select public.admin_bug_reports()','student admin report access');
+select pg_temp.reject('select public.admin_operational_health()','student operational health access');
 select pg_temp.reject('select public.admin_create_question_draft(''manual'',''test'',''{}'')','student draft creation');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select pg_temp.assert_true(public.is_dmocks_admin(),'admin identity');
+select pg_temp.assert_true(public.admin_operational_health()->>'status' in('healthy','attention','degraded'),'admin sees privacy-safe operational health');
 select pg_temp.assert_true(jsonb_array_length(public.admin_bug_reports())=1,'admin sees bug queue');
 select public.admin_reply_bug_report(current_setting('test.bug_id')::uuid,'fixed','Fixed in a fictional build.');
 select set_config('test.draft_id',public.admin_create_question_draft('manual','Fictional source','{"prompt":"Fictional question","holds":[]}'::jsonb)::text,true);
