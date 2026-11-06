@@ -38,7 +38,15 @@ select public.admin_reply_bug_report(current_setting('test.bug_id')::uuid,'fixed
 select set_config('test.draft_id',public.admin_create_question_draft('manual','Fictional source','{"prompt":"Fictional question","holds":[]}'::jsonb)::text,true);
 select public.admin_review_question_draft(current_setting('test.draft_id')::uuid,'approved','Reviewed in test');
 select pg_temp.assert_true((public.admin_question_drafts()->0->>'status')='approved','admin draft approval');
+select pg_temp.reject('select public.admin_export_question_draft(current_setting(''test.draft_id'')::uuid,''fixture-original-001'',false,''Original DMocks authored question'')','draft export requires rights confirmation');
+select pg_temp.reject('select public.admin_export_question_draft(current_setting(''test.draft_id'')::uuid,''fixture-original-001'',true,''Original DMocks authored question'')','incomplete canonical draft cannot export');
+select set_config('test.export_draft_id',public.admin_create_question_draft('manual','Canonical fixture','{"prompt":"Fictional canonical question","type":"MCQ","provenance":{"exam":"uceed"},"holds":["human-review"]}'::jsonb)::text,true);
+select public.admin_review_question_draft(current_setting('test.export_draft_id')::uuid,'approved','Reviewed in test');
+select pg_temp.assert_true(public.admin_export_question_draft(current_setting('test.export_draft_id')::uuid,'fixture-original-001',true,'Original DMocks authored question')->>'publicationState'='git-review-required','export remains outside canonical Git bank');
+select pg_temp.assert_true((select d->'export'->'payload'->'holds'='[]'::jsonb and d->'export'->'payload'->>'externalKey'='fixture-original-001' and char_length(d->'export'->>'contentSha256')=64 from jsonb_array_elements(public.admin_question_drafts())d where d->>'id'=current_setting('test.export_draft_id')),'immutable empty-holds artifact recorded');
+select pg_temp.reject('select public.admin_export_question_draft(current_setting(''test.export_draft_id'')::uuid,''fixture-original-002'',true,''Original DMocks authored question'')','draft cannot export twice');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
+select pg_temp.reject('select public.admin_export_question_draft(current_setting(''test.export_draft_id'')::uuid,''student-key'',true,''Student cannot export this question'')','student cannot export draft');
 select pg_temp.assert_true((public.my_bug_reports()->0->>'adminReply')='Fixed in a fictional build.','reporter sees admin reply');
 select pg_temp.reject('select public.begin_question_bank_import(repeat(''a'',40),''server/data/exports/dexam-bank-export.json'',repeat(''b'',64),1,1,1,0)','student bank import');
 reset role;

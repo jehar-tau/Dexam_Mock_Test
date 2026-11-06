@@ -90,6 +90,17 @@ test("candidate profile validates and saves the complete preview flow", async ({
   ).toBeVisible();
 });
 
+test("approved question drafts create a rights-gated Git review artifact", async ({ page }) => {
+  await page.goto("/question-draft-export-preview");
+  await expect(page.getByText("Export never publishes directly.")).toBeVisible();
+  await page.getByLabel("Stable external key").fill("dmocks-uceed-observation-001");
+  await page.getByLabel("Rights record").fill("Original DMocks question authored for this bank.");
+  await page.getByLabel(/I confirm DMocks/).check();
+  await page.getByRole("button", { name: "Create canonical review artifact" }).click();
+  await expect(page.getByText("Not published — Git review required.")).toBeVisible();
+  await expect(page.getByText("dmocks-uceed-observation-001", { exact: true })).toBeVisible();
+});
+
 test("topic practice creates a constrained timed-session preview", async ({
   page,
 }) => {
