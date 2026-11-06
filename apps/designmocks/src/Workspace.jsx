@@ -7,7 +7,8 @@ import { PortalShell } from "./PortalShell.jsx";
 import { QuestionReport } from "./QuestionReport.jsx";
 import { DrawingUploads, DrawingUploadWindow } from "./DrawingUploads.jsx";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
-import { createAnswerSyncQueue } from "./attempt-sync.js";
+import { createAnswerSyncQueue, validAttemptAnswer } from "./attempt-sync.js";
+import { createAttemptAnswerJournal, pruneDeviceAnswers } from "./attempt-answer-journal.js";
 import { AttemptInsights } from "./AttemptInsights.jsx";
 import { ExamPartTransition, ExamSessionReport } from "./ExamPartTransition.jsx";
 
@@ -288,7 +289,8 @@ export function Attempt() {
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [confirm, setConfirm] = useState(false),
-    [syncState, setSyncState] = useState({ kind: "saved", pending: 0, error: null }),
+    [syncState, setSyncState] = useState({ kind: "saved", pending: 0 }),
+    [reconnects, setReconnects] = useState(0),
     [now, setNow] = useState(Date.now()),
     [review, setReview] = useState(false),
     [media, setMedia] = useState({}),
@@ -297,8 +299,12 @@ export function Attempt() {
   const dialog = useRef(),
     offset = useRef(0),
     autoSubmitted = useRef(false),
-    answerSync = useRef(null);
+    answerSync = useRef(null),
+    saveTimer = useRef(null),
+    shownQuestion = useRef(null);
   const q = attempt?.questions[index];
+  shownQuestion.current = q?.id;
+  const userId = session?.user.id;
   const answerFor = (item) => answerSync.current?.hasPending(item.id) ? answerSync.current.pendingAnswer(item.id) : item.answer;
   useEffect(() => {
     let alive = true;
@@ -306,31 +312,53 @@ export function Attempt() {
     setIndex(0);
     setDraft(null);
     setError("");
+    setBusy(false);
+    setConfirm(false);
     setFlagged([]);
     setMedia({});
     setExamSession(null);
     setExamReport(null);
+    setSyncState({ kind: "saved", pending: 0 });
     autoSubmitted.current = false;
-    answerSync.current = createAnswerSyncQueue({
-      send: async ({ questionId, answer, revision }) => {
-        if (typeof navigator !== "undefined" && !navigator.onLine) throw new Error("You appear to be offline.");
-        return rpc("save_answer_revision", { p_attempt_id: id, p_question_id: questionId, p_answer: answer, p_revision: revision });
-      },
-      onSaved: ({ questionId, answer }) => setAttempt((current) => current ? ({ ...current, questions: current.questions.map(item => item.id === questionId ? { ...item, answer } : item) }) : current),
-      onStatus: (state) => {
-        setSyncState(state);
-        if (state.kind === "saved") setError((current) => current.startsWith("Your answer is waiting to sync.") ? "" : current);
-      },
-    });
-    if (session)
+    answerSync.current = null;
+    if (userId)
       rpc("read_attempt", { p_id: id })
         .then((data) => {
-          if (alive) {
-            offset.current = new Date(data.serverNow).getTime() - Date.now();
-            setAttempt(data);
-            rpc("my_exam_mock_session",{p_attempt_id:id}).then(value=>alive&&setExamSession(value)).catch(()=>{});
-            rpc("my_exam_mock_report",{p_attempt_id:id}).then(value=>alive&&setExamReport(value)).catch(()=>{});
+          if (!alive) return;
+          const serverTime = Date.parse(data.serverNow);
+          const deadline = Date.parse(data.deadline);
+          const clientTime = Date.now();
+          offset.current = serverTime - clientTime;
+          setNow(clientTime);
+          pruneDeviceAnswers(userId, serverTime);
+          const journal = createAttemptAnswerJournal({ userId, attemptId: id, deadline });
+          const queue = createAnswerSyncQueue({
+            journal,
+            revisionSeed: () => Date.now() + offset.current,
+            send: async ({ questionId, answer, revision }) => {
+              if (!alive || !navigator.onLine) throw new Error("Connection unavailable.");
+              return rpc("save_answer_revision", { p_attempt_id: id, p_question_id: questionId, p_answer: answer, p_revision: revision });
+            },
+            onSaved: ({ questionId, answer, revision, accepted }) => {
+              if (!alive) return;
+              setAttempt((current) => current?.status === "active" ? {
+                ...current,
+                questions: current.questions.map((item) => item.id === questionId ? { ...item, answer, answerRevision: revision } : item),
+              } : current);
+              if (!accepted && shownQuestion.current === questionId && !queue.hasPending(questionId)) setDraft(answer);
+            },
+            onStatus: (state) => { if (alive) setSyncState(state); },
+          });
+          answerSync.current = queue;
+          setAttempt(data);
+          if (data.status === "active") {
+            queue.restore(data.questions);
+            if (queue.pendingCount() && navigator.onLine) queue.flush();
+          } else {
+            queue.discard();
           }
+          rpc("my_exam_mock_session", { p_attempt_id: id }).then((value) => alive && setExamSession(value)).catch(() => {});
+          rpc("my_exam_mock_report", { p_attempt_id: id }).then((value) => alive && setExamReport(value)).catch(() => {});
         })
         .catch(() => {
           if (alive)
@@ -340,18 +368,28 @@ export function Attempt() {
         });
     return () => {
       alive = false;
+      clearTimeout(saveTimer.current);
     };
-  }, [session?.user.id, id]);
+  }, [userId, id]);
   useEffect(() => {
     const queued = q && answerSync.current?.hasPending(q.id) ? answerSync.current.pendingAnswer(q.id) : q?.answer;
     setDraft(queued ?? null);
     setSyncState((state) => state.pending ? state : { kind: "saved", pending: 0, error: null });
   }, [q?.id]);
   useEffect(() => {
-    const retry = () => answerSync.current?.flush();
+    if (attempt?.status !== "active") return;
+    const retry = () => {
+      const clientTime = Date.now();
+      setNow(clientTime);
+      if (clientTime + offset.current < Date.parse(attempt.deadline)) answerSync.current?.flush();
+      else {
+        autoSubmitted.current = false;
+        setReconnects((count) => count + 1);
+      }
+    };
     window.addEventListener("online", retry);
     return () => window.removeEventListener("online", retry);
-  }, [id]);
+  }, [attempt?.status, attempt?.deadline, id]);
   useEffect(() => {
     if (
       attempt?.status !== "active" &&
@@ -400,41 +438,47 @@ export function Attempt() {
         ),
       )
     : 0;
-  const save = async (value) => {
-    if (!q || attempt.status !== "active") return false;
-    setBusy(true);
-    setError("");
-    try {
-      const result = await answerSync.current.enqueue(q.id, value);
-      if (!result.saved) setError("Your answer is waiting to sync. The exam clock continues; reconnect and retry before the deadline.");
-      return result.saved;
-    } finally {
-      setBusy(false);
+  const record = (value, defer = false) => {
+    if (!q || busy || left === 0 || !validAttemptAnswer(q, value)) return;
+    clearTimeout(saveTimer.current);
+    answerSync.current?.enqueue(q.id, value, { defer });
+    if (defer) {
+      saveTimer.current = setTimeout(() => {
+        if (Date.now() + offset.current < Date.parse(attempt.deadline)) answerSync.current?.flush();
+      }, 500);
     }
   };
   const pick = (value) => {
     setDraft(value);
-    save(value);
+    record(value);
+  };
+  const typeAnswer = (value) => {
+    setDraft(value);
+    record(value === "" ? null : value, true);
   };
   const submit = async () => {
     if (busy) return;
+    const queue = answerSync.current;
+    clearTimeout(saveTimer.current);
     setBusy(true);
     setError("");
     try {
-      if (left > 0) {
-        const sync = await answerSync.current.flush();
+      if (Date.now() + offset.current < Date.parse(attempt.deadline)) {
+        const sync = await queue.flush();
         if (!sync.saved) throw new Error("Reconnect and save the waiting answers before submitting.");
-      } else answerSync.current.discard();
+      }
       const result = await rpc("submit_attempt", { p_id: id });
+      if (result.status === "submitted") queue.discard();
+      if (answerSync.current !== queue) return;
       setAttempt(result);
       rpc("my_exam_mock_session",{p_attempt_id:id}).then(setExamSession).catch(()=>{});
       rpc("my_exam_mock_report",{p_attempt_id:id}).then(setExamReport).catch(()=>{});
       setConfirm(false);
       dialog.current?.close();
     } catch (e) {
-      setError("Couldn’t submit. " + e.message);
+      if (answerSync.current === queue) setError("Couldn’t submit. " + e.message);
     } finally {
-      setBusy(false);
+      if (answerSync.current === queue) setBusy(false);
     }
   };
   useEffect(() => {
@@ -447,13 +491,8 @@ export function Attempt() {
       autoSubmitted.current = true;
       submit();
     }
-  }, [left, busy, attempt?.status]);
-  const move = async (next) => {
-    if (["nat", "drawing"].includes(q.kind) && draft !== answerFor(q)) {
-      await save(draft === "" ? null : draft);
-    }
-    setIndex(next);
-  };
+  }, [left, busy, attempt?.status, reconnects]);
+  const move = (next) => setIndex(next);
   if (!session && !loading) return <SignInGate />;
   if (!attempt)
     return (
@@ -619,7 +658,7 @@ export function Attempt() {
           <small>remaining</small>
         </div>
       </div>
-      {error && (
+      {error && !confirm && (
         <p className="error" role="alert">
           {error}
         </p>
@@ -711,7 +750,7 @@ export function Attempt() {
                 inputMode="decimal"
                 value={draft ?? ""}
                 maxLength={64}
-                onChange={(e) => setDraft(e.target.value)}
+                onChange={(e) => typeAnswer(e.target.value)}
                 disabled={busy || left === 0}
               />
             </label>
@@ -726,7 +765,7 @@ export function Attempt() {
                 <textarea
                   value={draft ?? ""}
                   maxLength={4000}
-                  onChange={(e) => setDraft(e.target.value)}
+                  onChange={(e) => typeAnswer(e.target.value)}
                   disabled={busy || left === 0}
                 />
               </label>
@@ -736,16 +775,20 @@ export function Attempt() {
           {["nat", "drawing"].includes(q.kind) && (
             <button
               className="button quiet save-answer"
-              disabled={busy || left === 0}
-              onClick={() => save(draft === "" ? null : draft)}
+              disabled={busy || left === 0 || !validAttemptAnswer(q, draft === "" ? null : draft)}
+              onClick={() => record(draft === "" ? null : draft)}
             >
               Save answer <Arrow />
             </button>
           )}
+          {q.kind === "nat" && draft && !validAttemptAnswer(q, draft) &&
+            <p>Enter a whole number or decimal to save this answer.</p>}
           <p className="save-status" role="status">
-            {syncState.kind === "saving" ? "Saving…" : syncState.pending ? `${syncState.pending} answer${syncState.pending === 1 ? "" : "s"} waiting to sync.` : "Answers are saved to your account."}
+            {syncState.kind === "saving" ? "Saving…" : syncState.pending
+              ? syncState.deviceSaved ? "Answers saved on this device. Waiting to sync." : "Answers waiting to sync. Keep this page open."
+              : "Answers are saved to your account."}
           </p>
-          {syncState.pending > 0 && <button className="text-button" type="button" disabled={busy} onClick={() => answerSync.current.flush()}>Retry waiting answers</button>}
+          {syncState.pending > 0 && left > 0 && <button className="text-button" type="button" disabled={busy} onClick={() => answerSync.current.flush()}>Retry waiting answers</button>}
           <QuestionReport
             disabled={busy}
             onSubmit={({ reason, details }) =>
@@ -790,10 +833,8 @@ export function Attempt() {
             ) : (
               <button
                 className="button"
-                disabled={busy}
-                onClick={async () => {
-                  if (await save(draft === "" ? null : draft)) setConfirm(true);
-                }}
+                disabled={busy || left === 0}
+                onClick={() => setConfirm(true)}
               >
                 Review & submit <Arrow />
               </button>
@@ -828,15 +869,12 @@ export function Attempt() {
           <button
             className="button quiet"
             disabled={busy || left === 0}
-            onClick={async () => {
-              if (await save(draft === "" ? null : draft)) setConfirm(true);
-            }}
+            onClick={() => setConfirm(true)}
           >
             Submit attempt <Arrow />
           </button>
           <small>
-            The server enforces the deadline. Use “Save answer” for numerical
-            answers and notes before leaving this page.
+            Answers autosave as you work. Reconnect before the server deadline to sync anything waiting on this device.
           </small>
         </aside>
       </div>
@@ -853,7 +891,10 @@ export function Attempt() {
             of {attempt.questions.length} answered. {flagged.length} marked to
             revisit.
           </p>
-          <p>Submission locks this attempt and opens your answer review.</p>
+          <p>{attempt.reviewEndsAt
+            ? "Submission locks your answers. Results appear after the cohort is released."
+            : "Submission locks your answers."}</p>
+          {error && <p className="error" role="alert">{error}</p>}
           <div>
             <button className="button" disabled={busy} onClick={submit}>
               Submit & view report <Arrow />
@@ -876,12 +917,36 @@ export function Attempt() {
 }
 
 export function AttemptSyncPreview() {
-  const online = useRef(false), queue = useRef(null);
-  const [state, setState] = useState({ kind: "saved", pending: 0 }), [serverAnswer, setServerAnswer] = useState("—");
-  if (!queue.current) queue.current = createAnswerSyncQueue({
-    revisionSeed: () => 100,
-    send: async ({ answer }) => { if (!online.current) throw new Error("offline fixture"); setServerAnswer(answer); },
-    onStatus: setState,
-  });
-  return <section className="wrap section admin-page"><span className="eyebrow">OFFLINE SYNC PREVIEW</span><h1>Answers survive a <em>reconnect.</em></h1><p role="status">{state.pending ? `${state.pending} answer waiting to sync.` : state.kind === "saving" ? "Saving…" : "All answers saved."}</p><p>Server answer: <b>{serverAnswer}</b></p><button className="button" onClick={() => queue.current.enqueue("q1", "B")}>Choose B while offline</button>{state.pending > 0 && <button className="button quiet" onClick={() => { online.current = true; queue.current.flush(); }}>Reconnect and retry</button>}</section>;
+  const online = useRef(false);
+  const queue = useRef(null);
+  const [state, setState] = useState({ kind: "saved", pending: 0 });
+  const [serverAnswer, setServerAnswer] = useState("—");
+  const [serverRevision, setServerRevision] = useState("—");
+  useEffect(() => {
+    const journal = createAttemptAnswerJournal({ userId: "preview-user", attemptId: "preview-sync", deadline: 4102444800000 });
+    queue.current = createAnswerSyncQueue({
+      journal,
+      revisionSeed: () => 100,
+      send: async ({ answer, revision }) => {
+        if (!online.current) throw new Error("offline fixture");
+        setServerAnswer(answer);
+        setServerRevision(revision);
+        return { accepted: true, answer, revision };
+      },
+      onStatus: setState,
+    });
+    queue.current.restore([{ id: "q1", answerRevision: 0, kind: "mcq", options: [{ id: "B" }] }]);
+  }, []);
+  return <section className="wrap section admin-page">
+    <span className="eyebrow">OFFLINE SYNC PREVIEW</span>
+    <h1>Answers survive a <em>reconnect.</em></h1>
+    <p role="status">{state.pending ? `${state.pending} answer waiting to sync.` : state.kind === "saving" ? "Saving…" : "All answers saved."}</p>
+    <p>Server answer: <b>{serverAnswer}</b></p>
+    <p>Server revision: <b>{serverRevision}</b></p>
+    <button className="button" type="button" onClick={() => queue.current?.enqueue("q1", "B")}>Choose B while offline</button>
+    {state.pending > 0 && <button className="button quiet" type="button" onClick={() => {
+      online.current = true;
+      queue.current.flush();
+    }}>Reconnect and retry</button>}
+  </section>;
 }

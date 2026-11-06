@@ -380,14 +380,19 @@ test("launch readiness keeps sales closed until every evidenced gate passes",asy
   await expect(readiness).toContainText("does not activate registration, publish papers or enable sales");
 });
 
-test("offline answer stays queued and reconnects without changing revision", async ({ page }) => {
+test("offline answer survives a reload and reconnects without changing revision", async ({ page }) => {
   await page.goto("/attempt-sync-preview");
   await page.getByRole("button", { name: "Choose B while offline" }).click();
   await expect(page.getByRole("status")).toContainText("1 answer waiting to sync");
   await expect(page.getByText("Server answer:")).toContainText("—");
+  await page.reload();
+  await expect(page.getByRole("status")).toContainText("1 answer waiting to sync");
   await page.getByRole("button", { name: "Reconnect and retry" }).click();
   await expect(page.getByRole("status")).toContainText("All answers saved");
   await expect(page.getByText("Server answer:")).toContainText("B");
+  await expect(page.getByText("Server revision:")).toContainText("100");
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Reconnect and retry" })).toHaveCount(0);
 });
 
 test("admin corrects an extracted question before human review", async ({ page }) => {

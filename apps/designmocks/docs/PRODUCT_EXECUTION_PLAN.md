@@ -62,7 +62,7 @@ Phone verification requires a provider, abuse limits, consent wording, recovery 
 - Registration opens before a published ten-day attempt window. The owner brief also mentions a ten-day checking/release period; treat attempt window and result-review window as separate configurable dates.
 - One attempt per account, enforced by a unique server constraint, not the UI.
 - The server clock continues during power or internet loss. Reconnecting resumes the same immutable attempt with only the real remaining time. The attempt never restarts and lost time is not restored automatically.
-- Every answer change is written locally first and queued to an idempotent server autosave with a monotonic revision. Reconnect flushes pending changes. The server accepts no writes after the deadline.
+- The app journals unsynced valid answers on the device before sending them. Reopening the same active attempt restores pending answers and reconciles their revisions with the server. The server accepts no writes after the deadline.
 - At the deadline, the server finalizes the latest accepted answers. This is fairer and safer than forcing a complete retake after an outage.
 - Objective scoring is deterministic. Drawing grades remain sealed until the cohort is released. Objective-only cohorts rank by score, then elapsed exam time. Drawing cohorts rank by combined score and share rank on equal marks because every candidate has the full drawing and upload windows.
 - The marketing site may show the top ten only under a disclosed public-ranking policy; the exam overview shows the signed-in candidate's rank and cohort statistics.
@@ -149,7 +149,7 @@ Exit: a free candidate can sign in, complete the non-phone profile, navigate, an
 
 ### Phase 2 — assessment core
 
-- Port immutable attempt snapshots, server deadlines, autosave revisions, scoring and results.
+- [x] Implement immutable attempt snapshots, server deadlines, revisioned autosave, reconnect/reload recovery, scoring and result release. Provider acceptance of representative papers is tracked separately.
 - [x] Ship paid topic-practice generation for 10/20/30 questions and 15/30/45-minute server timers, gated by canonical import, deterministic runtime conversion, explicit content/rights approval and verified profiles.
 - [x] Ship configurable exam-wise mock generation for UCEED, NID, NIFT and CEED with scrambled/frozen reviewed questions, server timers, verified profiles and an administrator-controlled 0–2 free-attempt allowance before the annual-pass gate.
 - [x] Add in-exam question reporting with one report per student/source question, a five-report threshold, an administrator review queue and human-controlled retirement that persists across later canonical imports. General bug reporting and the admin reply workflow are complete.
