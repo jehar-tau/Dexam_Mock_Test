@@ -13,4 +13,6 @@ Sources: [UCEED 2027 brochure, printed pages 29–31](https://www.uceed.iitb.ac.
 
 The compiler uses only `iitb-2027-v1`; it never applies this context to NID/NIFT. It preserves original source payloads and records the target context separately. Raw numeric exact/range notation is parsed strictly and preserved as decimal text. Unsupported notation is held for explicit review; no numerical tolerance or answer is inferred. Figures must match the registered private SHA-256, dimensions and object path.
 
-Before publishing any exam, accept its complete section counts/order, separate part clocks and server-enforced locking, objective scoring, drawing/upload/review behavior, full attempt/report flow and content rights. A converted question is not a released paper or approved question.
+The exam-wise generator now freezes the verified objective part exactly: UCEED Part A contains 14 NAT, 15 MSQ and 28 MCQ in that order with a 120-minute server clock; CEED Part A contains 8 NAT, 10 MSQ and 26 MCQ with a 60-minute server clock. Administrators may release or close these blueprints and set the free allowance, but cannot edit their counts or clocks. NID/NIFT remain unstructured and unreleased until programme-specific rules are verified.
+
+Before publishing a complete exam, accept the separate Part B clock and transition, drawing/upload/review behavior, full attempt/report flow and content rights. A converted question or verified Part A generator is not a released complete paper or approved question.

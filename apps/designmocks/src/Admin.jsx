@@ -655,6 +655,7 @@ export function Admin() {
                 <p>
                   {m.reviewedQuestions} reviewed runtime questions available.
                 </p>
+                {m.sectionLabel && <p><b>{m.structureVersion} · {m.sectionLabel}</b><br />{Object.entries(m.sectionCounts).map(([kind,count]) => `${kind.toUpperCase()} ${count}`).join(" · ")} · fixed server manifest</p>}
                 <form
                   className="admin-reply"
                   onSubmit={(e) => configureMock(e, m.exam)}
@@ -665,6 +666,7 @@ export function Admin() {
                     min="10"
                     max="100"
                     defaultValue={m.questionCount}
+                    readOnly={Boolean(m.structureVersion)}
                     aria-label={`${m.exam} question count`}
                   />
                   <input
@@ -673,6 +675,7 @@ export function Admin() {
                     min="900"
                     max="21600"
                     defaultValue={m.durationSeconds}
+                    readOnly={Boolean(m.structureVersion)}
                     aria-label={`${m.exam} duration seconds`}
                   />
                   <select
