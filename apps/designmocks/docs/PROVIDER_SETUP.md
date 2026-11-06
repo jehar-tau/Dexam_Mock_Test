@@ -10,7 +10,9 @@ Supabase is on the existing Free organisation. No paid plan was enabled here. Pr
 
 The 7 November read-only inventory verified 25 applied migrations through `202611060102`, with `202611060006_ai_question_drafting.sql` missing from the earlier range. The active Edge Functions are `create-order`, `payment-webhook` and `attempt-media`. The stage admission RPC and later provider capabilities await promotion. The project has one confirmed allowlisted Google account, `test` mode, closed sales and zero orders, passes or published papers. The 2,582 privately imported canonical hold-free records await publication and rights approval.
 
-AI-assisted question drafting is closed by default. Deploy `ai-question-draft` only after setting `OPENAI_API_KEY` and an explicitly approved `OPENAI_DRAFT_MODEL` in the Edge Function secret store. The browser never receives either value. Every request is audited, may reference only active rights-approved bank keys, and can create only a held `pending` draft; a human administrator must review it before any later export or bank promotion.
+AI-assisted question drafting is closed by default. Deploy `ai-question-draft` with migrations `202611060006_ai_question_drafting.sql` and `202611060129_canonical_ai_drafts.sql` after the model, cost and processing approvals. Set `OPENAI_API_KEY` and the approved `OPENAI_DRAFT_MODEL` in the Edge Function secret store. The server requires active, hold-free references with owner approval and rights clearance. It sends reference prompts and calibration fields, with private answers, images and source metadata excluded.
+
+The server saves the generated item in canonical format with its exam and option keys. Objective answers stay pending and the draft retains its human-review hold. After human review and a separate rights record, export marks the objective answer reviewed and clears the hold in the Git review artifact. Local acceptance passed through the actual importer and UCEED compiler with a fictional model response.
 
 PDF/photo extraction is also closed by default. The local `question-intake-extract` worker requires `OPENAI_API_KEY` plus a separately approved `OPENAI_INTAKE_MODEL`; without both it returns 503 before claiming a file. When enabled, the private source file is sent to the configured model provider, so approve source rights, image-processing consent, retention and cost before deployment. Files above 10 MB must be split. Structured candidates are bounded to 100, retain page/confidence provenance, receive an immutable `intake-human-review` hold and can only enter the existing draft queue after an administrator corrects and promotes each candidate. Rejecting a candidate is audited; neither extraction nor promotion publishes it to the bank.
 
@@ -42,6 +44,14 @@ Frontend switches are separate:
 Use `DMOCKS_AUTH_STAGE=controlled DMOCKS_BACKEND_STAGE=staging npm run test:hosted-setup` after promotion to check anonymous RPC denial, closed checkout and exact-origin media preflights. Use the default `foundation` backend stage to check the original endpoints. Verify the private allowlist and the real Google callback separately.
 
 Review the pending migration ledger before applying changes. The earlier AI schema gap requires explicit inclusion in the reviewed plan, and model-backed functions require separate rights, consent and cost approval. Deploy the matching media and intake-upload functions for the staging origin before the browser acceptance run. Keep the `dmocks.com` deployment on its own approved artifact. The current private Site serves both names, so replacing its artifact requires a hosting decision even though staging sign-in is pinned to the preview hostname.
+
+From `apps/designmocks`, the read-only deployment rehearsal is
+
+```bash
+npm exec --yes --package=supabase@3.0.0 -- supabase db push --dry-run --skip-vault --include-all --remote=tiodqzvvujxvxssvjdis
+```
+
+The 7 November run through migration `202611060128` listed 27 pending migrations, starting with the older `202611060006` gap. Supabase labels this target as the project's production branch. It serves the current owner-private site while the app plan assigns it to staging. Review the fresh plan against the current main commit before any hosted change. [Supabase CLI targeting and dry runs](https://supabase.com/docs/guides/local-development/local-and-hosted-projects)
 
 Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
 

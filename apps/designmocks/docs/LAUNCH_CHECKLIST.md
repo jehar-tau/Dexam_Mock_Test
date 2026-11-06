@@ -56,6 +56,8 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [ ] Import reviewed theory material and verify the Learn lifecycle with synthetic accounts in hosted staging.
 - [ ] Confirm content-rights/publication authorization before releasing paid official-paper practice. Human review is already confirmed; rights are a separate recorded launch prerequisite.
 - [x] Implement private PDF/photo upload, single-worker extraction lifecycle, strict structured candidates, per-question correction/rejection and mandatory human-review holds. Provider deployment remains closed pending source rights, consent, retention, model and cost approval.
+- [x] Verify rights-cleared AI references and human-reviewed canonical draft exports in PostgreSQL and desktop/mobile. A fictional model response passed the real importer and UCEED runtime compiler in isolated Supabase.
+- [ ] Approve AI processing and verify real model output in staging before enabling the generation service.
 
 ## Payments and access
 
@@ -98,7 +100,7 @@ Actual owner-browser acceptance rendered a 1496 × 687 image through the existin
 
 The verified 2027 UCEED/CEED compiler converts 1,502 objective questions with private images (830 UCEED, 672 CEED). Hosted materialization and replay verified every one of the 2,582 runtime decisions against the canonical content hash and compiled JSON. Repeating the original canonical import preserves the runtime records. The NIFT B.Des. GAT compiler and blueprint passed locally. NID and the remaining NIFT contexts need verified programme-specific rules. The 48 Dexam-original records have no supplied input-image assets. The bank still needs publication approval.
 
-Current local checks passed 71 JavaScript tests, four Python fixtures, 74 desktop/mobile journeys, build and preview isolation, server-function type checks, and all 52 migrations and suites on disposable PostgreSQL 17. The managed Site was last verified with source through PR #24. Actual deployed-bank/Cloudboard reconciliation, provider-backed full-paper acceptance, staging capacity, extraction/drawing provider acceptance, rights, policies and public-launch approval remain open.
+Current local checks passed 72 JavaScript tests, four Python fixtures, 76 desktop/mobile journeys, build and preview isolation, server-function type checks, and all 53 migrations and suites on disposable PostgreSQL 17. The managed Site was last verified with source through PR #24. Actual deployed-bank/Cloudboard reconciliation, provider-backed full-paper acceptance, staging capacity, extraction/drawing provider acceptance, rights, policies and public-launch approval remain open.
 
 Keep the goal active while meaningful independent work remains. An owner/provider dependency blocks that item only. Never request credentials or personal identity/payment details in chat, change Dexam services, or turn elapsed time into approval.
 

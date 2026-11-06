@@ -1,2 +1,68 @@
-import{createClient}from"npm:@supabase/supabase-js@2.117.2";import{buildAiDraftRequest,parseAiDraftResponse}from"../_shared/ai-draft.mjs";
-Deno.serve(async request=>{const origin=Deno.env.get("PUBLIC_APP_ORIGIN"),headers={"Access-Control-Allow-Origin":origin??"https://invalid.invalid","Access-Control-Allow-Headers":"authorization, apikey, content-type, x-client-info","Access-Control-Allow-Methods":"POST, OPTIONS","Content-Type":"application/json","Cache-Control":"no-store",Vary:"Origin"},respond=(body:unknown,status=200)=>new Response(JSON.stringify(body),{status,headers});if(!origin||request.headers.get("origin")!==origin)return respond({error:"Origin not allowed"},403);if(request.method==="OPTIONS")return new Response(null,{status:204,headers});const url=Deno.env.get("SUPABASE_URL"),anon=Deno.env.get("SUPABASE_ANON_KEY"),service=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY"),apiKey=Deno.env.get("OPENAI_API_KEY"),model=Deno.env.get("OPENAI_DRAFT_MODEL");if(!url||!anon||!service||!apiKey||!model)return respond({error:"AI drafting is not configured"},503);const student=createClient(url,anon,{global:{headers:{Authorization:request.headers.get("authorization")??""}},auth:{persistSession:false}}),admin=createClient(url,service,{auth:{persistSession:false}});let requestId:string|undefined;try{const body=await request.json(),created=await student.rpc("admin_create_ai_draft_request",{p_exam:body.exam,p_topic:body.topic,p_question_type:body.questionType,p_instruction:body.instruction,p_basis_external_keys:body.basisExternalKeys});if(created.error)throw created.error;requestId=created.data;const basis=await student.rpc("admin_ai_draft_basis",{p_request_id:requestId});if(basis.error)throw basis.error;const ai=await fetch("https://api.openai.com/v1/responses",{method:"POST",headers:{Authorization:`Bearer ${apiKey}`,"Content-Type":"application/json"},body:JSON.stringify(buildAiDraftRequest({...basis.data,model}))});const response=await ai.json();if(!ai.ok)throw new Error(response?.error?.message??"AI provider request failed");const payload=parseAiDraftResponse(response),completed=await admin.rpc("complete_ai_draft_request",{p_request_id:requestId,p_model:model,p_response_id:response.id,p_payload:payload});if(completed.error)throw completed.error;return respond({requestId,draftId:completed.data,status:"succeeded"});}catch(error){if(requestId)await admin.rpc("fail_ai_draft_request",{p_request_id:requestId,p_model:model,p_error:error instanceof Error?error.message:"AI drafting failed"});return respond({error:error instanceof Error?error.message:"AI drafting failed"},400)}});
+import { createClient } from "npm:@supabase/supabase-js@2.117.2";
+import { buildAiDraftRequest, parseAiDraftResponse } from "../_shared/ai-draft.mjs";
+
+Deno.serve(async (request) => {
+  const origin = Deno.env.get("PUBLIC_APP_ORIGIN");
+  const headers = {
+    "Access-Control-Allow-Origin": origin ?? "https://invalid.invalid",
+    "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Content-Type": "application/json",
+    "Cache-Control": "no-store",
+    Vary: "Origin",
+  };
+  const respond = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers });
+  if (!origin || request.headers.get("origin") !== origin) return respond({ error: "Origin not allowed" }, 403);
+  if (request.method === "OPTIONS") return new Response(null, { status: 204, headers });
+  if (request.method !== "POST") return respond({ error: "Method not allowed" }, 405);
+
+  const url = Deno.env.get("SUPABASE_URL");
+  const anon = Deno.env.get("SUPABASE_ANON_KEY");
+  const service = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const apiKey = Deno.env.get("OPENAI_API_KEY");
+  const model = Deno.env.get("OPENAI_DRAFT_MODEL");
+  if (!url || !anon || !service || !apiKey || !model) return respond({ error: "AI drafting is not configured" }, 503);
+
+  const caller = createClient(url, anon, {
+    global: { headers: { Authorization: request.headers.get("authorization") ?? "" } },
+    auth: { persistSession: false },
+  });
+  const worker = createClient(url, service, { auth: { persistSession: false } });
+  let requestId: string | undefined;
+  try {
+    const body = await request.json();
+    const created = await caller.rpc("admin_create_ai_draft_request", {
+      p_exam: body.exam,
+      p_topic: body.topic,
+      p_question_type: body.questionType,
+      p_instruction: body.instruction,
+      p_basis_external_keys: body.basisExternalKeys,
+    });
+    if (created.error) return respond({ error: created.error.message }, created.error.code === "42501" ? 403 : 400);
+    requestId = created.data;
+    const basis = await caller.rpc("admin_ai_draft_basis", { p_request_id: requestId });
+    if (basis.error) throw new Error(basis.error.message);
+
+    const generated = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + apiKey, "Content-Type": "application/json" },
+      body: JSON.stringify(buildAiDraftRequest({ ...basis.data, model })),
+      signal: AbortSignal.timeout(60_000),
+    });
+    if (!generated.ok) throw new Error("The draft model could not complete the request.");
+    const response = await generated.json();
+    let payload;
+    try { payload = parseAiDraftResponse(response); }
+    catch { throw new Error("The draft model did not return a valid review draft."); }
+
+    const completed = await worker.rpc("complete_ai_draft_request", {
+      p_request_id: requestId, p_model: model, p_response_id: response.id, p_payload: payload,
+    });
+    if (completed.error) throw new Error(completed.error.message);
+    return respond({ requestId, draftId: completed.data, status: "succeeded" });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "AI drafting failed";
+    if (requestId) await worker.rpc("fail_ai_draft_request", { p_request_id: requestId, p_model: model, p_error: message });
+    return respond({ error: message }, 400);
+  }
+});
