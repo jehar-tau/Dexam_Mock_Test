@@ -101,6 +101,15 @@ test("approved question drafts create a rights-gated Git review artifact", async
   await expect(page.getByText("dmocks-uceed-observation-001", { exact: true })).toBeVisible();
 });
 
+test("released results recommend a preselected focused practice session", async ({ page }) => {
+  await page.goto("/attempt-insights-preview");
+  await expect(page.getByRole("region", { name: "Attempt insights" })).toContainText("MCQ");
+  await expect(page.getByRole("heading", { name: "observation" })).toBeVisible();
+  await page.getByRole("link", { name: "Build this practice session" }).click();
+  await expect(page).toHaveURL(/topic-practice-preview\?topic=observation/);
+  await expect(page.getByLabel("Topic")).toHaveValue("observation");
+});
+
 test("topic practice creates a constrained timed-session preview", async ({
   page,
 }) => {

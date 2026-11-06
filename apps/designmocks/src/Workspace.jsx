@@ -8,6 +8,7 @@ import { QuestionReport } from "./QuestionReport.jsx";
 import { DrawingUploads } from "./DrawingUploads.jsx";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 import { createAnswerSyncQueue } from "./attempt-sync.js";
+import { AttemptInsights } from "./AttemptInsights.jsx";
 
 const rpc = async (name, args) => {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -538,6 +539,7 @@ export function Attempt() {
             <p>This is feedback on this paper, not an admission prediction.</p>
           </article>
         </div>
+        <AttemptInsights questions={attempt.questions} />
         <div className="review-toggle">
           <h2>Explore the explanations.</h2>
           <button
