@@ -9,6 +9,7 @@ import { DrawingUploads } from "./DrawingUploads.jsx";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 import { createAnswerSyncQueue } from "./attempt-sync.js";
 import { AttemptInsights } from "./AttemptInsights.jsx";
+import { ExamPartTransition } from "./ExamPartTransition.jsx";
 
 const rpc = async (name, args) => {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -278,6 +279,7 @@ export function PendingAttemptResult({ title, reviewEndsAt }) {
 export function Attempt() {
   const { session, loading } = useAuthState();
   const { id } = useParams();
+  const navigate = useNavigate();
   const [attempt, setAttempt] = useState(null),
     [index, setIndex] = useState(0),
     [draft, setDraft] = useState(null),
@@ -288,7 +290,8 @@ export function Attempt() {
     [syncState, setSyncState] = useState({ kind: "saved", pending: 0, error: null }),
     [now, setNow] = useState(Date.now()),
     [review, setReview] = useState(false),
-    [media, setMedia] = useState({});
+    [media, setMedia] = useState({}),
+    [examSession, setExamSession] = useState(null);
   const dialog = useRef(),
     offset = useRef(0),
     autoSubmitted = useRef(false),
@@ -303,6 +306,7 @@ export function Attempt() {
     setError("");
     setFlagged([]);
     setMedia({});
+    setExamSession(null);
     autoSubmitted.current = false;
     answerSync.current = createAnswerSyncQueue({
       send: async ({ questionId, answer, revision }) => {
@@ -321,6 +325,7 @@ export function Attempt() {
           if (alive) {
             offset.current = new Date(data.serverNow).getTime() - Date.now();
             setAttempt(data);
+            rpc("my_exam_mock_session",{p_attempt_id:id}).then(value=>alive&&setExamSession(value)).catch(()=>{});
           }
         })
         .catch(() => {
@@ -344,10 +349,23 @@ export function Attempt() {
     return () => window.removeEventListener("online", retry);
   }, [id]);
   useEffect(() => {
-    if (attempt?.status !== "active" && !(attempt?.status === "submitted" && attempt.uploadDeadline)) return;
+    if (
+      attempt?.status !== "active" &&
+      !(attempt?.status === "submitted" && attempt.uploadDeadline) &&
+      examSession?.partBState !== "waiting"
+    ) return;
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
-  }, [attempt?.status, attempt?.uploadDeadline]);
+  }, [attempt?.status, attempt?.uploadDeadline, examSession?.partBState]);
+  useEffect(() => {
+    if (
+      examSession?.partBState !== "waiting" ||
+      now + offset.current < Date.parse(examSession.partBOpensAt)
+    ) return;
+    rpc("my_exam_mock_session", { p_attempt_id: id })
+      .then(setExamSession)
+      .catch(() => {});
+  }, [examSession?.partBState, examSession?.partBOpensAt, id, now]);
   useEffect(() => {
     if (confirm && !dialog.current?.open) dialog.current?.showModal();
   }, [confirm]);
@@ -405,6 +423,7 @@ export function Attempt() {
       } else answerSync.current.discard();
       const result = await rpc("submit_attempt", { p_id: id });
       setAttempt(result);
+      rpc("my_exam_mock_session",{p_attempt_id:id}).then(setExamSession).catch(()=>{});
       setConfirm(false);
       dialog.current?.close();
     } catch (e) {
@@ -540,6 +559,7 @@ export function Attempt() {
           </article>
         </div>
         <AttemptInsights questions={attempt.questions} />
+        <ExamPartTransition session={examSession} busy={busy} onStart={async partA=>{setBusy(true);try{const next=await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA});navigate(`/attempt/${next}`)}catch(e){setError(e.message);setBusy(false)}}}/>
         <div className="review-toggle">
           <h2>Explore the explanations.</h2>
           <button

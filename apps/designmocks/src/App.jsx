@@ -36,6 +36,7 @@ import { OperationalHealthPreview } from "./OperationalHealth.jsx";
 import { QuestionDraftExportPreview } from "./QuestionDraftExport.jsx";
 import { AttemptInsightsPreview } from "./AttemptInsights.jsx";
 import { AccountPrivacy, AccountPrivacyPreview } from "./AccountPrivacy.jsx";
+import { ExamPartTransitionPreview } from "./ExamPartTransition.jsx";
 import { useAuthState } from "./useAuth.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import {
@@ -1728,6 +1729,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/account-privacy-preview" element={<AccountPrivacyPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/exam-part-transition-preview" element={<ExamPartTransitionPreview />} />
         )}
 
         <Route
