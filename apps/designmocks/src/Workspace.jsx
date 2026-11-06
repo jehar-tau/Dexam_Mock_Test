@@ -5,7 +5,7 @@ import { platform, loadDashboard } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
 import { PortalShell } from "./PortalShell.jsx";
 import { QuestionReport } from "./QuestionReport.jsx";
-import { DrawingUploads } from "./DrawingUploads.jsx";
+import { DrawingUploads, DrawingUploadWindow } from "./DrawingUploads.jsx";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 import { createAnswerSyncQueue } from "./attempt-sync.js";
 import { AttemptInsights } from "./AttemptInsights.jsx";
@@ -238,7 +238,7 @@ export function WorkspaceView({
                 </span>
                 <span>
                   {a.resultsPending ? "Awaiting release" : a.status === "submitted"
-                    ? `${a.score} / ${a.total}`
+                    ? `${a.score} / ${a.total}${a.cohortRank ? ` · Rank ${a.cohortRank}` : ""}`
                     : "In progress"}
                 </span>
               </article>
@@ -259,7 +259,7 @@ const hasAnswer = (answer) =>
   Array.isArray(answer)
     ? answer.length > 0
     : answer !== null && answer !== undefined && answer !== "";
-export function PendingAttemptResult({ title, reviewEndsAt }) {
+export function PendingAttemptResult({ title, reviewEndsAt, children }) {
   const releaseDate = reviewEndsAt && !Number.isNaN(Date.parse(reviewEndsAt))
     ? new Date(reviewEndsAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
     : null;
@@ -271,6 +271,7 @@ export function PendingAttemptResult({ title, reviewEndsAt }) {
       <p>Your answers are locked. Marks, topic feedback, answer keys and ranks stay private until the team releases this event’s results.</p>
       {releaseDate && <p>Review closes on {releaseDate}. The team can publish results after that date.</p>}
     </div>
+    {children}
     <p>You can continue with other practice while you wait. Return to All India mocks to check the release status.</p>
     <Link className="button" to="/dashboard">Back to your workspace <Arrow /></Link>
   </section>;
@@ -467,7 +468,8 @@ export function Attempt() {
       </section>
     );
   if (attempt.status === "submitted") {
-    if (attempt.resultsPending) return <PendingAttemptResult title={attempt.title} reviewEndsAt={attempt.reviewEndsAt} />;
+    const uploadWindow = <DrawingUploadWindow attempt={attempt} serverTime={now + offset.current} />;
+    if (attempt.resultsPending) return <PendingAttemptResult title={attempt.title} reviewEndsAt={attempt.reviewEndsAt}>{uploadWindow}</PendingAttemptResult>;
     if (attempt.examResultsPending && examSession?.partAAttemptId === attempt.id) return <section className="wrap section sample-result"><Link className="back-link" to="/dashboard">← Your workspace</Link><h1>Your Part A is <em>locked.</em></h1><ExamPartTransition session={examSession} busy={busy} onStart={async partA=>{setBusy(true);try{navigate(`/attempt/${await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA})}`)}catch(e){setError(e.message);setBusy(false)}}}/></section>;
     const topics = [
       ...new Set(
@@ -476,10 +478,7 @@ export function Attempt() {
           .map((item) => item.topic),
       ),
     ];
-    const uploadSeconds = attempt.uploadDeadline
-      ? Math.max(0, Math.ceil((Date.parse(attempt.uploadDeadline) - now - offset.current) / 1000))
-      : 0;
-    const drawingUploadOpen = uploadSeconds > 0;
+    const cohort = attempt.cohortResult;
     return (
       <section className="wrap section sample-result">
         <Link className="back-link" to="/dashboard">
@@ -492,11 +491,13 @@ export function Attempt() {
               Make this attempt
               <br /> your next <em>step.</em>
             </h1>
-            <p>
+            {cohort ? <p>All India rank {cohort.rank}. Objective marks {cohort.objectiveScore}/{cohort.objectiveTotal}.
+              {cohort.drawingTotal > 0 && ` Drawing marks ${cohort.drawingScore}/${cohort.drawingTotal}.`}
+            </p> : <p>
               Objective answers are marked with the paper’s reviewed key.
               Drawing is excluded from this score and remains a separate
               teacher-reviewed submission.
-            </p>
+            </p>}
           </div>
           <div className="sample-score">
             {attempt.examResultsPending ? <><span>—</span><p>full result pending</p></> : <>
@@ -504,26 +505,11 @@ export function Attempt() {
               {attempt.score}
               <i>/{attempt.total}</i>
             </span>
-            <p>objective marks</p>
+            <p>{cohort ? "All India marks" : "objective marks"}</p>
             </>}
           </div>
         </div>
-        {drawingUploadOpen && (
-          <section className="drawing-upload-window" aria-label="Drawing upload window">
-            <span className="eyebrow">FIXED UPLOAD WINDOW</span>
-            <h2>Upload your drawing pages now.</h2>
-            <p>
-              Upload or replace pages by {new Date(attempt.uploadDeadline).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}. This server deadline keeps running through power or internet loss and cannot be restarted.
-            </p>
-            <p role="timer"><b>{Math.floor(uploadSeconds / 60)}:{String(uploadSeconds % 60).padStart(2, "0")}</b> remaining to upload</p>
-            {attempt.questions.filter((item) => item.kind === "drawing").map((item) => (
-              <article key={item.id}>
-                <h3>{item.prompt}</h3>
-                <DrawingUploads attemptId={attempt.id} questionId={item.id} />
-              </article>
-            ))}
-          </section>
-        )}
+        {uploadWindow}
         <div className="result-grid">
           <article>
             <span className="eyebrow">A GLIMPSE OF EACH TOPIC</span>
@@ -744,7 +730,7 @@ export function Attempt() {
                   disabled={busy || left === 0}
                 />
               </label>
-              <DrawingUploads attemptId={id} questionId={q.id} />
+              <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} />
             </>
           )}
           {["nat", "drawing"].includes(q.kind) && (

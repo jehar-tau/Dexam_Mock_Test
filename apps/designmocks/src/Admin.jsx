@@ -287,7 +287,8 @@ export function Admin() {
   };
   const createAllIndia = async (event) => {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     try {
       await rpc("admin_create_all_india_event", {
         p_exam: form.get("exam"),
@@ -295,8 +296,10 @@ export function Admin() {
         p_starts_at: new Date(form.get("startsAt")).toISOString(),
         p_question_count: Number(form.get("count")),
         p_duration_seconds: Number(form.get("duration")),
+        p_drawing_count: Number(form.get("drawingCount")),
+        p_upload_grace_seconds: Number(form.get("drawingGrace")),
       });
-      event.currentTarget.reset();
+      formElement.reset();
       await load();
     } catch (e) {
       setMessage(e.message);
@@ -347,7 +350,10 @@ export function Admin() {
   const refreshDrawings = async () => setDrawings(await rpc("admin_drawing_queue"));
   const updateDrawingReview = async (procedure, id, input = {}) => {
     await rpc(procedure, { p_review_id: id, ...input });
-    await refreshDrawings();
+    await Promise.all([
+      refreshDrawings(),
+      rpc("admin_all_india_events").then(setAllIndia),
+    ]);
   };
   const resolveCommunityReport = async (id, resolution) => {
     try {
@@ -575,6 +581,10 @@ export function Admin() {
             Each event freezes one paper for every candidate, stays open for ten
             days and keeps results in review for ten more days.
           </p>
+          <button type="button" onClick={async () => {
+            try { setAllIndia(await rpc("admin_all_india_events")); }
+            catch (error) { setMessage(error.message); }
+          }}>Refresh event status</button>
           <form className="admin-form" onSubmit={createAllIndia}>
             <label>
               Exam
@@ -593,15 +603,24 @@ export function Admin() {
               <input name="startsAt" type="datetime-local" required />
             </label>
             <label>
-              Questions
+              Objective questions
               <input
                 name="count"
                 type="number"
-                min="10"
+                min="0"
                 max="100"
                 defaultValue="30"
                 required
               />
+            </label>
+            <label>Drawing tasks
+              <input name="drawingCount" type="number" min="0" max="5" defaultValue="0" required />
+            </label>
+            <label>Drawing upload grace
+              <select name="drawingGrace" defaultValue="900">
+                <option value="600">10 minutes after the exam</option>
+                <option value="900">15 minutes after the exam</option>
+              </select>
             </label>
             <label>
               Exam duration in seconds
@@ -633,9 +652,12 @@ export function Admin() {
                   {new Date(event.endsAt).toLocaleString("en-IN")}
                 </p>
                 {!event.resultsReleasedAt && (
-                  <button onClick={() => releaseAllIndia(event.id)}>
-                    Release reviewed results
-                  </button>
+                  <>
+                    <p>{event.pendingDrawingReviews} drawing reviews remaining. Review closes {new Date(event.reviewEndsAt).toLocaleString("en-IN")}.</p>
+                    <button type="button" disabled={!event.canRelease} onClick={() => releaseAllIndia(event.id)}>
+                      Release reviewed results
+                    </button>
+                  </>
                 )}
               </article>
             ))}

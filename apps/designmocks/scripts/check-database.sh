@@ -20,6 +20,7 @@ for migration in supabase/migrations/*.sql; do
 done
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/invariants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-release.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-drawings.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/portal-grants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bank-import-finalization.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/canonical-media.sql

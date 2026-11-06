@@ -28,6 +28,8 @@ begin
   'public.exam_mock_catalog()',
   'public.admin_exam_mock_blueprints()',
   'public.admin_all_india_events()',
+  'public.admin_create_all_india_event(text,text,timestamptz,integer,integer,integer,integer)',
+  'public.admin_release_all_india_results(uuid)',
   'public.all_india_event_catalog()',
   'public.learning_catalog()',
   'public.learning_progress()',

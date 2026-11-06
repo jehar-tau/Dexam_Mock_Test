@@ -44,6 +44,7 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [ ] Verify image delivery, saved/resumed attempts, deadline enforcement and immutable submitted answers with representative reviewed papers.
 - [x] Finish useful objective question-type/topic reporting, answer explanations and deterministic weakest-topic practice recommendations. Drawing and dropped questions remain excluded from objective insights; unreleased All India feedback remains hidden.
 - [x] Verify owner-bound drawing uploads, final-evidence claims, private image access, criterion totals and audited grade overrides locally. Desktop/mobile coverage includes the grading form and explicit feedback release.
+- [x] Verify All India drawing uploads during the results hold, the final-review gate, and combined marks and ranks using a twelve-candidate synthetic cohort.
 - [ ] Approve and deploy the separately implemented human drawing-review operation before promising that service publicly.
 - [ ] Confirm content-rights/publication authorization before releasing paid official-paper practice. Human review is already confirmed; rights are a separate recorded launch prerequisite.
 - [x] Implement private PDF/photo upload, single-worker extraction lifecycle, strict structured candidates, per-question correction/rejection and mandatory human-review holds. Provider deployment remains closed pending source rights, consent, retention, model and cost approval.

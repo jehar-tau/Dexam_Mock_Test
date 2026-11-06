@@ -45,13 +45,15 @@ Each invocation drains at most ten batches of 500 expired attempts, prunes only 
 ## Support and moderation
 
 - Bug replies, question retirement, community moderation and drawing-score overrides are performed only through their audited admin workflows.
+- Report counts prioritize human review. A human decision governs changes to the bank.
 
 ### Drawing review
 
 Wait for the upload window to close, then claim the anonymous submission. Return the claim to the queue if you cannot complete it. Open the private pages, enter the criterion marks and feedback, then release the saved review. If a reviewed grade needs a correction, enter the reason and explicitly release the revised feedback. If the server reports a change, refresh the queue and check the current review before acting again.
 
-Stage migration `202611060122_drawing_review_claims.sql`, the drawing media functions and the matching UI together. Test with separate synthetic student and reviewer accounts, including a cross-account upload rejection, expiry, signed-page refresh and a grade correction. The upload check verifies a supported raster signature and Storage metadata. Full image decoding, metadata removal and failed Storage deletion recovery still require their own acceptance.
-- Report counts prioritize human review; they never auto-delete a question or change a result.
+Stage migrations `202611060122_drawing_review_claims.sql` and `202611060123_all_india_drawing_results.sql`, the drawing media functions and the matching UI together. Test with separate synthetic student and reviewer accounts, including a cross-account upload rejection, expiry, signed-page refresh and a grade correction. The upload check verifies a supported raster signature and Storage metadata. Full image decoding, metadata removal and failed Storage deletion recovery still require their own acceptance.
+
+For All India events, choose the objective and drawing counts and the drawing upload allowance when scheduling the paper. The last start reserves the whole exam and upload window. Use **Finalize grade for cohort release** on each submitted drawing and publish after the ten-day review period. Missing drawing pages earn zero for that task. Published grades and standings are frozen.
 - Drawing feedback is private until explicit release. Any later score change requires a reason and a new release.
 - Export/deletion, minors, retention, refund and public incident-notice requests require the approved policy before action.
 
