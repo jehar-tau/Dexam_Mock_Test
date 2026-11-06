@@ -26,6 +26,7 @@
     "runtime:manifest": "node scripts/materialize-bank-runtime.mjs --ref origin/main",
     "runtime:apply": "node scripts/materialize-bank-runtime.mjs --ref origin/main --apply",
     "capacity:run": "node scripts/capacity-load.mjs"
+    ,"operations:sweep": "node scripts/operations-sweep.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.117.2",
