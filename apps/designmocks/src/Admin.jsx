@@ -225,7 +225,10 @@ function AdminDesk({ session }) {
   };
   const generateAiDraft = async (input) => {
     const { data, error } = await platform.functions.invoke("ai-question-draft", { body: input });
-    if (error) throw error;
+    if (error) {
+      const detail = error.context instanceof Response ? await error.context.json().catch(() => null) : null;
+      throw new Error(typeof detail?.error === "string" ? detail.error : "Couldn’t generate a review draft.");
+    }
     if (data?.error) throw new Error(data.error);
     await load();
   };

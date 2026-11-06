@@ -13,6 +13,8 @@ begin
   'public.admin_question_drafts()',
   'public.admin_review_question_draft(uuid,text,text)',
   'public.admin_export_question_draft(uuid,text,boolean,text)',
+ 'public.admin_create_ai_draft_request(text,text,text,text,text[])',
+ 'public.admin_ai_draft_basis(uuid)',
   'public.export_my_account_data()',
   'public.request_account_deletion()',
   'public.my_privacy_requests()',
@@ -67,6 +69,11 @@ begin
   if not has_function_privilege('authenticated',signature,'EXECUTE') then raise exception 'Authenticated route grant missing: %',signature; end if;
  end loop;
  if not has_function_privilege('anon','public.public_all_india_top_ten()','EXECUTE') then raise exception 'Intentionally public alias-only ranking endpoint lost its grant'; end if;
+ if has_function_privilege('anon','public.complete_ai_draft_request(uuid,text,text,jsonb)','EXECUTE')
+   or has_function_privilege('authenticated','public.complete_ai_draft_request(uuid,text,text,jsonb)','EXECUTE')
+   or not has_function_privilege('service_role','public.complete_ai_draft_request(uuid,text,text,jsonb)','EXECUTE') then
+  raise exception 'AI draft completion must remain service-only';
+ end if;
  if has_table_privilege('authenticated','dm_private.learning_publication_audit','SELECT,INSERT,UPDATE,DELETE') then
   raise exception 'Learning publication evidence must remain private';
  end if;
