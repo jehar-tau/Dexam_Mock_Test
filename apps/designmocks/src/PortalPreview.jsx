@@ -7,6 +7,19 @@ import { PortalShell } from "./PortalShell.jsx";
 
 const example = {
   access: { active: true, expiresAt: "2027-11-05T00:00:00+05:30" },
+  analytics: {
+    completed: 1,
+    objectiveAnswered: 25,
+    objectiveAccuracy: 80,
+    recommendedTopic: { topic: "Visual hierarchy", answered: 10, accuracy: 70 },
+    drawingReviews: { pending: 1, released: 2 },
+    exams: [{ exam: "uceed", attempts: 1, averagePercent: 80, bestPercent: 80 }],
+    topics: [
+      { topic: "Observation", answered: 10, correct: 9, accuracy: 90 },
+      { topic: "Spatial thinking", answered: 5, correct: 4, accuracy: 80 },
+      { topic: "Visual hierarchy", answered: 10, correct: 7, accuracy: 70 },
+    ],
+  },
   attempts: [
     { id: "example-result", title: "Visual thinking · example result", status: "submitted", score: 80, total: 100 },
     { id: "original-sample", title: "Your five-question experience sample", status: "active" },
