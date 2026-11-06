@@ -181,6 +181,13 @@ test("community opens a thread and supports member actions", async ({ page }) =>
   await expect(page.getByText("Report sent for moderator review.")).toBeVisible();
 });
 
+test("admin can resolve a reported community post", async ({ page }) => {
+  await page.goto("/community-moderation-preview");
+  await expect(page.getByText("Active-paper answer posted in a discussion.")).toBeVisible();
+  await page.getByRole("button", { name: "Hide content" }).click();
+  await expect(page.getByText("No open community reports.")).toBeVisible();
+});
+
 test("drawing submission accepts ordered raster pages", async ({ page }) => {
   await page.goto("/drawing-uploads-preview");
   await page.locator('input[type="file"]').setInputFiles([

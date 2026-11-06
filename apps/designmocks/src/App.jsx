@@ -29,6 +29,7 @@ import { Learn, LearnPreview } from "./Learn.jsx";
 import { Community, CommunityPreview } from "./Community.jsx";
 import { DrawingUploadsPreview } from "./DrawingUploads.jsx";
 import { DrawingReviewMediaPreview } from "./DrawingReviewMedia.jsx";
+import { CommunityModerationPreview } from "./CommunityModeration.jsx";
 import { useAuthState } from "./useAuth.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import {
@@ -1689,6 +1690,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/drawing-review-preview" element={<DrawingReviewMediaPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/community-moderation-preview" element={<CommunityModerationPreview />} />
         )}
 
         <Route
