@@ -30,10 +30,13 @@ begin
   ,'public.admin_drawing_review_media_paths(uuid)'
   ,'public.admin_release_drawing_review(uuid)'
   ,'public.admin_set_paper_upload_grace(uuid,integer)'
+  ,'public.finalize_my_expired_attempts()'
  ] loop
   if has_function_privilege('anon',signature,'EXECUTE') then raise exception 'Anonymous execute unexpectedly granted: %',signature; end if;
   if not has_function_privilege('authenticated',signature,'EXECUTE') then raise exception 'Authenticated route grant missing: %',signature; end if;
  end loop;
  if not has_function_privilege('anon','public.public_all_india_top_ten()','EXECUTE') then raise exception 'Intentionally public alias-only ranking endpoint lost its grant'; end if;
+ if has_function_privilege('authenticated','public.finalize_expired_attempts(integer)','EXECUTE') then raise exception 'Bulk finalizer must remain service-only'; end if;
+ if not has_function_privilege('service_role','public.finalize_expired_attempts(integer)','EXECUTE') then raise exception 'Service bulk finalizer grant missing'; end if;
 end $$;
 \echo 'PASS: portal RPC anonymous/authenticated execution boundaries.'
