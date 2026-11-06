@@ -12,6 +12,8 @@ The hosted database now has all 20 current source migrations: the original four,
 
 AI-assisted question drafting is closed by default. Deploy `ai-question-draft` only after setting `OPENAI_API_KEY` and an explicitly approved `OPENAI_DRAFT_MODEL` in the Edge Function secret store. The browser never receives either value. Every request is audited, may reference only active rights-approved bank keys, and can create only a held `pending` draft; a human administrator must review it before any later export or bank promotion.
 
+Drawing AI inference is not configured or deployed. The database accepts a rubric-linked suggestion only through the service role and exposes it only in the administrator review queue, with provider, model, rubric version, confidence and evidence. It cannot populate, release or change the human score. Do not connect a model until the owner approves image-processing consent, retention, cost, a labelled validation set and criterion-level accuracy/bias thresholds.
+
 ## Controlled Google acceptance
 
 The owner created **DesignMocks Web** in Google Cloud project `designmocks-auth-2026` and entered the credentials directly in Supabase. Real Google sign-in has now passed from both the local app and the owner-private `dmocks.com` publication: account selection, basic identity consent, Supabase callback, PKCE exchange, page-reload persistence, refresh-token rotation through the SDK, sign-out and returning-account sign-in. The returning login retains a single Auth account. Actual cancellation displays a safe retry message. No credential/session token was copied into source or logs by the app.

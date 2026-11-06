@@ -240,6 +240,10 @@ test("teacher can open anonymous private drawing pages", async ({ page }) => {
 
 test("teacher review is released separately to the drawing student", async ({ page }) => {
   await page.goto("/drawing-review-lifecycle-preview");
+  const advisory = page.getByLabel("AI review advisory");
+  await expect(advisory).toContainText("AI ADVISORY — NOT A GRADE");
+  await expect(advisory).toContainText("Proposed 14 marks");
+  await expect(page.getByLabel("Score out of 20")).toHaveValue("");
   await page.getByLabel("Criterion marks JSON").fill('{"composition":8,"clarity":7}');
   await page.getByLabel("Score out of 20").fill("15");
   await page.getByLabel("Feedback").fill("Clear hierarchy; strengthen the directional contrast.");

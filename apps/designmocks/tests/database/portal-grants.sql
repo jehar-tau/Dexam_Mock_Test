@@ -40,5 +40,7 @@ begin
  if not has_function_privilege('anon','public.public_all_india_top_ten()','EXECUTE') then raise exception 'Intentionally public alias-only ranking endpoint lost its grant'; end if;
  if has_function_privilege('authenticated','public.finalize_expired_attempts(integer)','EXECUTE') then raise exception 'Bulk finalizer must remain service-only'; end if;
  if not has_function_privilege('service_role','public.finalize_expired_attempts(integer)','EXECUTE') then raise exception 'Service bulk finalizer grant missing'; end if;
+ if has_function_privilege('authenticated','public.record_drawing_ai_suggestion(uuid,text,text,text,jsonb,text,numeric,numeric,jsonb)','EXECUTE') then raise exception 'Drawing AI writer must remain service-only'; end if;
+ if not has_function_privilege('service_role','public.record_drawing_ai_suggestion(uuid,text,text,text,jsonb,text,numeric,numeric,jsonb)','EXECUTE') then raise exception 'Drawing AI service writer grant missing'; end if;
 end $$;
 \echo 'PASS: portal RPC anonymous/authenticated execution boundaries.'
