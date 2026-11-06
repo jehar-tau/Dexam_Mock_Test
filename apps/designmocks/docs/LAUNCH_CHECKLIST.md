@@ -45,11 +45,13 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [ ] Verify image delivery, saved/resumed attempts, deadline enforcement and immutable submitted answers with representative reviewed papers.
 - [x] Finish useful objective question-type/topic reporting, answer explanations and deterministic weakest-topic practice recommendations. Drawing and dropped questions remain excluded from objective insights; unreleased All India feedback remains hidden.
 - [x] Keep pending sequential exam and All India results out of Overview statistics and Learn recommendations. Show awaiting-release status separately.
+- [x] Verify theory drafts, audited publication and withdrawal, and preserved student progress with local database tests and desktop/mobile browser fixtures.
 - [x] Verify owner-bound drawing uploads, final-evidence claims, private image access, criterion totals and audited grade overrides locally. Desktop/mobile coverage includes the grading form and explicit feedback release.
 - [x] Verify All India drawing uploads during the results hold, the final-review gate, and combined marks and ranks using a twelve-candidate synthetic cohort.
 - [x] Verify the separate teacher queue, assigned-image access, grading, and audited reviewer grants and revocation with local database tests and desktop/mobile browser fixtures.
 - [x] Verify local answer recovery across reload and reconnect, stale-revision reconciliation, and deadline finalization of the last server-accepted answers.
 - [ ] Approve and deploy the separately implemented human drawing-review operation before promising that service publicly.
+- [ ] Import reviewed theory material and verify the Learn lifecycle with synthetic accounts in hosted staging.
 - [ ] Confirm content-rights/publication authorization before releasing paid official-paper practice. Human review is already confirmed; rights are a separate recorded launch prerequisite.
 - [x] Implement private PDF/photo upload, single-worker extraction lifecycle, strict structured candidates, per-question correction/rejection and mandatory human-review holds. Provider deployment remains closed pending source rights, consent, retention, model and cost approval.
 
@@ -94,7 +96,7 @@ Actual owner-browser acceptance rendered a 1496 × 687 image through the existin
 
 The verified 2027 UCEED/CEED compiler converts 1,502 objective questions with private images (830 UCEED, 672 CEED). Hosted materialization and replay verified every one of the 2,582 runtime decisions against the canonical content hash and compiled JSON. Repeating the original canonical import preserves the runtime records. The NIFT B.Des. GAT compiler and blueprint passed locally. NID and the remaining NIFT contexts need verified programme-specific rules. The 48 Dexam-original records have no supplied input-image assets. The bank still needs publication approval.
 
-Current local checks passed 68 JavaScript tests, four Python fixtures, 64 desktop/mobile journeys, build and preview isolation, server-function type checks, and all 50 migrations and suites on disposable PostgreSQL 17. The managed Site was last verified with source through PR #24. Actual deployed-bank/Cloudboard reconciliation, provider-backed full-paper acceptance, staging capacity, extraction/drawing provider acceptance, rights, policies and public-launch approval remain open.
+Current local checks passed 70 JavaScript tests, four Python fixtures, 68 desktop/mobile journeys, build and preview isolation, server-function type checks, and all 51 migrations and suites on disposable PostgreSQL 17. The managed Site was last verified with source through PR #24. Actual deployed-bank/Cloudboard reconciliation, provider-backed full-paper acceptance, staging capacity, extraction/drawing provider acceptance, rights, policies and public-launch approval remain open.
 
 Keep the goal active while meaningful independent work remains. An owner/provider dependency blocks that item only. Never request credentials or personal identity/payment details in chat, change Dexam services, or turn elapsed time into approval.
 

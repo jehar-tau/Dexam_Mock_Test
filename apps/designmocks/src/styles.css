@@ -3853,6 +3853,7 @@ svg {
 .drawing-review-form { margin-bottom: 0; }
 .drawing-reviewer-nav { flex-wrap: wrap; align-items: center; }
 .drawing-reviewer-id { overflow-wrap: anywhere; }
+.lesson-publication-form { margin-bottom: 0; }
 .drawing-review-form fieldset { min-width: 0; display: grid; gap: 1rem; padding: 0; border: 0; }
 .drawing-review-form legend { margin-bottom: .75rem; font-weight: 700; }
 .drawing-review-form fieldset > button { justify-self: start; }

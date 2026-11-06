@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { PortalShell } from "./PortalShell.jsx";
 import { platform } from "./platform.js";
@@ -8,7 +8,7 @@ const rpc = async (n, a) => {
   if (error) throw error;
   return data;
 };
-export function LearnView({ lessons = [], progress, onOpen, message = "" }) {
+export function LearnView({ lessons = [], progress, onOpen, onRefresh, busy = false, message = "" }) {
   return (
     <section className="wrap section learn-page">
       <span className="eyebrow">LEARN, THEN PRACTISE</span>
@@ -36,6 +36,8 @@ export function LearnView({ lessons = [], progress, onOpen, message = "" }) {
         </div>
       )}
       {message && <p role="status">{message}</p>}
+      {onRefresh && <button className="button quiet" disabled={busy} onClick={onRefresh}>Refresh lessons</button>}
+      {lessons.length === 0 && !message && <p>No theory lessons have been published yet.</p>}
       <div className="learn-grid">
         {lessons.map((l) => (
           <article key={l.id}>
@@ -47,7 +49,7 @@ export function LearnView({ lessons = [], progress, onOpen, message = "" }) {
             <h2>{l.title}</h2>
             {progress?.recommendation?.id === l.id && <span className="recommended-label">Recommended next</span>}
             <p>{l.summary}</p>
-            <button className="text-button" onClick={() => onOpen(l)}>
+            <button className="text-button" disabled={busy} onClick={() => onOpen(l)}>
               {l.completed ? "Review lesson" : "Start lesson"} →
             </button>
           </article>
@@ -57,18 +59,9 @@ export function LearnView({ lessons = [], progress, onOpen, message = "" }) {
   );
 }
 export function Learn() {
-  const { session, loading } = useAuthState(),
-    [lessons, setLessons] = useState([]),
-    [progress, setProgress] = useState(),
-    [lesson, setLesson] = useState(),
-    [message, setMessage] = useState("");
-  useEffect(() => {
-    if (session)
-      Promise.all([rpc("learning_catalog"), rpc("learning_progress")])
-        .then(([catalog, summary]) => { setLessons(catalog); setProgress(summary); })
-        .catch((e) => setMessage(e.message));
-  }, [session]);
-  if (!session && !loading)
+  const { session, loading } = useAuthState();
+  if (loading) return <p className="wrap" role="status">Checking your account…</p>;
+  if (!session)
     return (
       <section className="wrap section">
         <h1>
@@ -77,11 +70,44 @@ export function Learn() {
         <Link to="/account">Student sign in</Link>
       </section>
     );
+  return <StudentLearn key={session.user.id} />;
+}
+
+function StudentLearn() {
+  const [catalog, setCatalog] = useState(null);
+  const [lesson, setLesson] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const refresh = useCallback(async () => {
+    const [lessons, progress] = await Promise.all([rpc("learning_catalog"), rpc("learning_progress")]);
+    setCatalog({ lessons, progress });
+  }, []);
+  useEffect(() => { refresh().catch(() => setMessage("Couldn’t load the lesson list.")); }, [refresh]);
+
+  const run = async (action, fallback) => {
+    setBusy(true);
+    setMessage("");
+    try { await action(); }
+    catch (failure) {
+      if (failure.message === "Lesson not found") {
+        setLesson(null);
+        setCatalog(null);
+        setMessage("This lesson is no longer available.");
+        await refresh().catch(() => setMessage("This lesson is no longer available. Refresh the lesson list to try again."));
+      } else setMessage(fallback);
+    } finally { setBusy(false); }
+  };
+  const complete = () => run(async () => {
+    await rpc("complete_learning_lesson", { p_lesson_id: lesson.id });
+    setLesson({ ...lesson, completed: true });
+    await refresh().catch(() => setMessage("Lesson complete. Refresh the lesson list to update your progress."));
+  }, "Couldn’t mark this lesson complete. Try again.");
+
   if (lesson)
     return (
       <PortalShell>
         <section className="wrap section lesson">
-          <button className="text-button" onClick={() => setLesson()}>
+          <button className="text-button" disabled={busy} onClick={() => { setMessage(""); setLesson(null); }}>
             ← All lessons
           </button>
           <span className="eyebrow">
@@ -89,17 +115,9 @@ export function Learn() {
           </span>
           <h1>{lesson.title}</h1>
           <p className="lesson-body">{lesson.body}</p>
-          <button
-            className="button"
-            onClick={async () => {
-              await rpc("complete_learning_lesson", { p_lesson_id: lesson.id });
-              setLesson({ ...lesson, completed: true });
-              const [catalog, summary] = await Promise.all([rpc("learning_catalog"), rpc("learning_progress")]);
-              setLessons(catalog);
-              setProgress(summary);
-            }}
-          >
-            Mark complete
+          {message && <p role="status">{message}</p>}
+          <button className="button" disabled={busy || lesson.completed} onClick={complete}>
+            {lesson.completed ? "Lesson complete" : "Mark complete"}
           </button>{" "}
           <Link to="/dashboard/practice">Practise this topic →</Link>
         </section>
@@ -108,12 +126,14 @@ export function Learn() {
   return (
     <PortalShell>
       <LearnView
-        lessons={lessons}
-        progress={progress}
-        message={message}
-        onOpen={async (l) =>
-          setLesson(await rpc("read_learning_lesson", { p_slug: l.slug }))
-        }
+        lessons={catalog?.lessons}
+        progress={catalog?.progress}
+        message={message || (!catalog ? "Loading theory lessons…" : "")}
+        busy={busy}
+        onRefresh={message ? () => run(refresh, "Couldn’t load the lesson list.") : undefined}
+        onOpen={(item) => run(async () => {
+          setLesson(await rpc("read_learning_lesson", { p_slug: item.slug }));
+        }, "Couldn’t open this lesson. Try again.")}
       />
     </PortalShell>
   );

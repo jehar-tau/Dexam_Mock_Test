@@ -5,6 +5,7 @@ import { useAuthState } from "./useAuth.js";
 import { DrawingReviewQueue } from "./DrawingReviewQueue.jsx";
 import { DrawingReviewerRoster } from "./DrawingReviewerRoster.jsx";
 import { drawingReviewActions } from "./drawing-review.js";
+import { LearningLessonEditor } from "./LearningLessonEditor.jsx";
 import { CommunityModerationQueue } from "./CommunityModeration.jsx";
 import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
 import { OperationalHealth } from "./OperationalHealth.jsx";
@@ -151,7 +152,7 @@ function AdminDesk({ session }) {
     [bank, setBank] = useState([]),
     [blueprints, setBlueprints] = useState([]),
     [allIndia, setAllIndia] = useState([]),
-    [lessons, setLessons] = useState([]),
+    [lessons, setLessons] = useState(null),
     [drawings, setDrawings] = useState([]),
     [communityReports, setCommunityReports] = useState([]),
     [aiDrafts, setAiDrafts] = useState([]),
@@ -335,28 +336,7 @@ function AdminDesk({ session }) {
       setMessage(e.message);
     }
   };
-  const addLesson = async (event) => {
-    event.preventDefault();
-    const f = new FormData(event.currentTarget);
-    try {
-      await rpc("admin_upsert_learning_lesson", {
-        p_id: null,
-        p_slug: f.get("slug"),
-        p_exam: f.get("exam"),
-        p_topic: f.get("topic"),
-        p_title: f.get("title"),
-        p_summary: f.get("summary"),
-        p_body: f.get("body"),
-        p_ordinal: Number(f.get("ordinal")),
-        p_publish: f.get("publish") === "on",
-        p_rights_confirmed: f.get("rights") === "on",
-      });
-      event.currentTarget.reset();
-      await load();
-    } catch (e) {
-      setMessage(e.message);
-    }
-  };
+  const refreshLessons = async () => setLessons(await rpc("admin_learning_lessons"));
   const refreshDrawings = async () => setDrawings(await rpc("admin_drawing_queue"));
   const drawingActions = drawingReviewActions(rpc, async () => {
     await Promise.all([
@@ -448,55 +428,7 @@ function AdminDesk({ session }) {
           <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
           <h2>Community moderation</h2>
           <CommunityModerationQueue reports={communityReports} onResolve={resolveCommunityReport} />
-          <h2>Publish a theory lesson</h2>
-          <form className="admin-form" onSubmit={addLesson}>
-            <label>
-              Slug
-              <input name="slug" pattern="[a-z0-9-]+" required />
-            </label>
-            <label>
-              Exam
-              <select name="exam">
-                {["uceed", "nid", "nift", "ceed"].map((x) => (
-                  <option key={x}>{x}</option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Topic
-              <input name="topic" required />
-            </label>
-            <label>
-              Title
-              <input name="title" minLength="5" required />
-            </label>
-            <label>
-              Summary
-              <textarea name="summary" minLength="10" required />
-            </label>
-            <label>
-              Lesson body
-              <textarea name="body" minLength="20" rows="10" required />
-            </label>
-            <label>
-              Order
-              <input
-                name="ordinal"
-                type="number"
-                min="1"
-                defaultValue="1"
-                required
-              />
-            </label>
-            <label>
-              <input name="rights" type="checkbox" /> Rights confirmed
-            </label>
-            <label>
-              <input name="publish" type="checkbox" /> Publish now
-            </label>
-            <button>Save lesson</button>
-          </form>
-          <p>{lessons.length} lessons in the catalogue.</p>
+          <LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />
           <h2>Reported questions</h2>
           <p>
             Questions enter this queue only after the report threshold. A human

@@ -59,6 +59,12 @@ For All India events, choose the objective and drawing counts and the drawing up
 - Drawing feedback is private until explicit release. Any later score change requires a reason and a new release.
 - Export/deletion, minors, retention, refund and public incident-notice requests require the approved policy before action.
 
+### Theory lessons
+
+In **Admin review → Theory lessons**, save a draft and review its text before publishing. When publishing, record the source and permission to use the lesson. To revise a published lesson, withdraw it with a reason, edit the draft and record the rights again when republishing. Learn hides withdrawn lessons and restores existing student completion when the same lesson is republished.
+
+Stage `202611060127_learning_lesson_editor.sql` with the matching portal. Verify draft visibility, publication, withdrawal and progress with separate synthetic administrator and student accounts before importing the owner's theory material. The new editor records each publication or withdrawal in a private audit. Earlier administrator clients retain their existing rights-confirmation control.
+
 ## Release checklist
 
 Before promotion: green GitHub CI, disposable PostgreSQL 17 suites, staging migrations, synthetic desktop/mobile journey, private-media denial checks, backup evidence and aggregate health with no degraded counters. Keep registration and sales disabled during deployment. Enable them only by separate owner-approved production decisions.
