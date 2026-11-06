@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Link,
   NavLink,
@@ -35,6 +35,7 @@ import { AiQuestionDraftingPreview } from "./AiQuestionDrafting.jsx";
 import { OperationalHealthPreview } from "./OperationalHealth.jsx";
 import { QuestionDraftExportPreview } from "./QuestionDraftExport.jsx";
 import { AttemptInsightsPreview } from "./AttemptInsights.jsx";
+import { AccountPrivacy, AccountPrivacyPreview } from "./AccountPrivacy.jsx";
 import { useAuthState } from "./useAuth.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import {
@@ -986,6 +987,7 @@ function Account() {
   const [accepted, setAccepted] = useState(false);
   const [busy, setBusy] = useState(false);
   const [sessionStatus, setSessionStatus] = useState("");
+  const [privacyRequests, setPrivacyRequests] = useState([]);
   const [error, setError] = useState(() => authCallbackMessage(window.location.search, window.location.hash));
   const login = async () => {
     if (!testLoginMode && !accepted) return;
@@ -1040,6 +1042,8 @@ function Account() {
         });
     }
   }, [session]);
+  const loadPrivacyRequests = useCallback(() => session && platform.rpc("my_privacy_requests").then(({data,error})=>{if(error)throw error;setPrivacyRequests(data)}).catch(()=>setSessionStatus("Could not load account privacy requests.")),[session]);
+  useEffect(()=>{if(session&&!testLoginMode)loadPrivacyRequests()},[session,loadPrivacyRequests]);
   return (
     <section className="wrap account-layout">
       <div>
@@ -1077,6 +1081,7 @@ function Account() {
             {!testLoginMode && <Button to="/plans" quiet>
               View the annual pass
             </Button>}
+            {!testLoginMode && <AccountPrivacy requests={privacyRequests} onExport={async()=>{const{data,error}=await platform.rpc("export_my_account_data");if(error)throw error;return data}} onRequestDeletion={async()=>{const{error}=await platform.rpc("request_account_deletion");if(error)throw error;await loadPrivacyRequests()}} onCancel={async(id)=>{const{error}=await platform.rpc("cancel_my_privacy_request",{p_id:id});if(error)throw error;await loadPrivacyRequests()}}/>}
             <button
               className="text-button"
               disabled={busy}
@@ -1720,6 +1725,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/attempt-insights-preview" element={<AttemptInsightsPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/account-privacy-preview" element={<AccountPrivacyPreview />} />
         )}
 
         <Route
