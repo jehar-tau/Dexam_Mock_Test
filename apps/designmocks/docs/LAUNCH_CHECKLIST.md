@@ -27,6 +27,7 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [x] Local actual Google callback/PKCE, consent, reload persistence, SDK refresh, sign-out, returning-account reuse and cancellation verified.
 - [x] Actual Google callback/PKCE, reload persistence, refresh and sign-out pass on the private `dmocks.com` publication.
 - [x] Google app name/home page/authorized domain saved as DMocks / `dmocks.com`; Testing audience preserved.
+- [x] Desktop and mobile fixture sessions can refresh and sign out from the controlled account screen. Direct student, attempt and administrator routes stay closed in that build.
 - [ ] Complete public Google branding verification and final public privacy/terms links before registration opens.
 
 ## Paper delivery and assessment
@@ -92,7 +93,7 @@ Actual owner-browser acceptance rendered a 1496 × 687 image through the existin
 
 The verified 2027 UCEED/CEED compiler converts 1,502 objective questions with private images (830 UCEED, 672 CEED). Hosted materialization and replay verified every one of the 2,582 runtime decisions against the canonical content hash and compiled JSON. Repeating the original canonical import preserves the runtime records. The NIFT B.Des. GAT compiler and blueprint passed locally. NID and the remaining NIFT contexts need verified programme-specific rules. The 48 Dexam-original records have no supplied input-image assets. The bank still needs publication approval.
 
-Current local checks passed 66 JavaScript tests, four Python fixtures, 56 desktop/mobile journeys, build and preview isolation, server-function type checks, and all 49 migrations and suites on disposable PostgreSQL 17. The managed Site was last verified with source through PR #24. Actual deployed-bank/Cloudboard reconciliation, provider-backed full-paper acceptance, staging capacity, extraction/drawing provider acceptance, rights, policies and public-launch approval remain open.
+Current local checks passed 66 JavaScript tests, four Python fixtures, 58 desktop/mobile journeys, build and preview isolation, server-function type checks, and all 49 migrations and suites on disposable PostgreSQL 17. The managed Site was last verified with source through PR #24. Actual deployed-bank/Cloudboard reconciliation, provider-backed full-paper acceptance, staging capacity, extraction/drawing provider acceptance, rights, policies and public-launch approval remain open.
 
 Keep the goal active while meaningful independent work remains. An owner/provider dependency blocks that item only. Never request credentials or personal identity/payment details in chat, change Dexam services, or turn elapsed time into approval.
 
