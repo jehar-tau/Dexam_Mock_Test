@@ -124,6 +124,14 @@ test("account privacy controls export data and create a reversible deletion requ
   await expect(page.getByRole("button",{name:"Request account deletion"})).toBeVisible();
 });
 
+test("verified exam transition declares the fixed Part B tasks, clock and upload grace",async({page})=>{
+  await page.goto("/exam-part-transition-preview");
+  const region=page.getByLabel("Exam Part B");
+  await expect(region).toContainText("2 drawing tasks · 60 minutes");
+  await expect(region).toContainText("15-minute upload grace");
+  await expect(region.getByRole("button",{name:"Open Part B"})).toBeVisible();
+});
+
 test("topic practice creates a constrained timed-session preview", async ({
   page,
 }) => {

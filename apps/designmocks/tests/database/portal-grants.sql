@@ -19,6 +19,8 @@ begin
   'public.cancel_my_privacy_request(uuid)',
   'public.admin_privacy_requests()',
   'public.admin_resolve_privacy_request(uuid,text,text)',
+  'public.my_exam_mock_session(uuid)',
+  'public.start_exam_mock_part_b(uuid)',
   'public.admin_bank_questions(integer,integer)',
   'public.my_candidate_profile()',
   'public.topic_catalog()',
