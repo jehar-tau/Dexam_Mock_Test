@@ -129,6 +129,7 @@ Every releasable slice must include focused unit coverage, database/authorizatio
 - [x] Prove the new migrations and authorization rules on disposable PostgreSQL 17.
 - [x] Add a service-role-only, idempotent canonical-bank importer that reads `origin/main`, imports only explicit empty-holds records and keeps objective readiness separate from import eligibility.
 - [ ] Export current Exam-app import state and reconcile every external key/content hash.
+- [x] Implement the exact stable-key/SHA-256 reconciliation gate and privacy-safe deployed-snapshot contract; current Exam-app and Cloudboard exports remain required inputs.
 - [ ] Obtain the Cloudboard/Claude source manifest; prove the 290 owner-provided items and any later pushes.
 - [ ] Decide whether DMocks imports the proven Dexam modules or the products converge on one shared package/repository. Recommendation: extract and reuse the assessment domain rather than fork it.
 
