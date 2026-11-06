@@ -9,7 +9,7 @@ import { DrawingUploads } from "./DrawingUploads.jsx";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 import { createAnswerSyncQueue } from "./attempt-sync.js";
 import { AttemptInsights } from "./AttemptInsights.jsx";
-import { ExamPartTransition } from "./ExamPartTransition.jsx";
+import { ExamPartTransition, ExamSessionReport } from "./ExamPartTransition.jsx";
 
 const rpc = async (name, args) => {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -291,7 +291,8 @@ export function Attempt() {
     [now, setNow] = useState(Date.now()),
     [review, setReview] = useState(false),
     [media, setMedia] = useState({}),
-    [examSession, setExamSession] = useState(null);
+    [examSession, setExamSession] = useState(null),
+    [examReport, setExamReport] = useState(null);
   const dialog = useRef(),
     offset = useRef(0),
     autoSubmitted = useRef(false),
@@ -307,6 +308,7 @@ export function Attempt() {
     setFlagged([]);
     setMedia({});
     setExamSession(null);
+    setExamReport(null);
     autoSubmitted.current = false;
     answerSync.current = createAnswerSyncQueue({
       send: async ({ questionId, answer, revision }) => {
@@ -326,6 +328,7 @@ export function Attempt() {
             offset.current = new Date(data.serverNow).getTime() - Date.now();
             setAttempt(data);
             rpc("my_exam_mock_session",{p_attempt_id:id}).then(value=>alive&&setExamSession(value)).catch(()=>{});
+            rpc("my_exam_mock_report",{p_attempt_id:id}).then(value=>alive&&setExamReport(value)).catch(()=>{});
           }
         })
         .catch(() => {
@@ -424,6 +427,7 @@ export function Attempt() {
       const result = await rpc("submit_attempt", { p_id: id });
       setAttempt(result);
       rpc("my_exam_mock_session",{p_attempt_id:id}).then(setExamSession).catch(()=>{});
+      rpc("my_exam_mock_report",{p_attempt_id:id}).then(setExamReport).catch(()=>{});
       setConfirm(false);
       dialog.current?.close();
     } catch (e) {
@@ -464,6 +468,7 @@ export function Attempt() {
     );
   if (attempt.status === "submitted") {
     if (attempt.resultsPending) return <PendingAttemptResult title={attempt.title} reviewEndsAt={attempt.reviewEndsAt} />;
+    if (attempt.examResultsPending && examSession?.partAAttemptId === attempt.id) return <section className="wrap section sample-result"><Link className="back-link" to="/dashboard">← Your workspace</Link><h1>Your Part A is <em>locked.</em></h1><ExamPartTransition session={examSession} busy={busy} onStart={async partA=>{setBusy(true);try{navigate(`/attempt/${await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA})}`)}catch(e){setError(e.message);setBusy(false)}}}/></section>;
     const topics = [
       ...new Set(
         attempt.questions
@@ -494,11 +499,13 @@ export function Attempt() {
             </p>
           </div>
           <div className="sample-score">
+            {attempt.examResultsPending ? <><span>—</span><p>full result pending</p></> : <>
             <span>
               {attempt.score}
               <i>/{attempt.total}</i>
             </span>
             <p>objective marks</p>
+            </>}
           </div>
         </div>
         {drawingUploadOpen && (
@@ -559,6 +566,7 @@ export function Attempt() {
           </article>
         </div>
         <AttemptInsights questions={attempt.questions} />
+        <ExamSessionReport report={examReport} />
         <ExamPartTransition session={examSession} busy={busy} onStart={async partA=>{setBusy(true);try{const next=await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA});navigate(`/attempt/${next}`)}catch(e){setError(e.message);setBusy(false)}}}/>
         <div className="review-toggle">
           <h2>Explore the explanations.</h2>

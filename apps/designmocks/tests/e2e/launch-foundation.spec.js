@@ -130,6 +130,8 @@ test("verified exam transition declares the fixed Part B tasks, clock and upload
   await expect(region).toContainText("2 drawing tasks · 60 minutes");
   await expect(region).toContainText("15-minute upload grace");
   await expect(region.getByRole("button",{name:"Open Part B"})).toBeVisible();
+  await expect(page.getByLabel("Combined exam result")).toContainText("164/300 marks");
+  await expect(page.getByLabel("Combined exam result")).toContainText("Part A 124/200 · Part B 40/100");
 });
 
 test("topic practice creates a constrained timed-session preview", async ({
