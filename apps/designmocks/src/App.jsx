@@ -56,6 +56,7 @@ const PortalPreview = import.meta.env.DEV
   ? React.lazy(() => import("./PortalPreview.jsx"))
   : null;
 const Admin = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.Admin })));
+const DrawingReviewerWorkspace = React.lazy(() => import("./DrawingReviewerWorkspace.jsx").then(module => ({ default: module.DrawingReviewerWorkspace })));
 const IntakeExtractionPreview = import.meta.env.DEV ? React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.IntakeExtractionPreview }))) : null;
 const BugReport = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.BugReport })));
 
@@ -988,10 +989,12 @@ function Plans() {
 }
 function Account() {
   const { session, loading, authError } = useAuthState();
+  const accountId = session?.user.id;
   const [accepted, setAccepted] = useState(false);
   const [busy, setBusy] = useState(false);
   const [sessionStatus, setSessionStatus] = useState("");
   const [privacyRequests, setPrivacyRequests] = useState([]);
+  const [reviewerAccountId, setReviewerAccountId] = useState(null);
   const [error, setError] = useState(() => authCallbackMessage(window.location.search, window.location.hash));
   const login = async () => {
     if (!testLoginMode && !accepted) return;
@@ -1049,6 +1052,15 @@ function Account() {
   }, [session]);
   const loadPrivacyRequests = useCallback(() => session && platform.rpc("my_privacy_requests").then(({data,error})=>{if(error)throw error;setPrivacyRequests(data)}).catch(()=>setSessionStatus("Could not load account privacy requests.")),[session]);
   useEffect(()=>{if(session&&!testLoginMode)loadPrivacyRequests()},[session,loadPrivacyRequests]);
+  useEffect(() => {
+    setReviewerAccountId(null);
+    if (!accountId || !portalReady) return;
+    const controller = new AbortController();
+    platform.rpc("can_review_drawings").abortSignal(controller.signal).then(({ data, error }) => {
+      if (!controller.signal.aborted && !error && data === true) setReviewerAccountId(accountId);
+    });
+    return () => controller.abort();
+  }, [accountId]);
   return (
     <section className="wrap account-layout">
       <div>
@@ -1080,6 +1092,7 @@ function Account() {
             {testLoginMode && <button className="button quiet" disabled={busy} onClick={refreshTestSession}>Refresh test session</button>}
             {sessionStatus && <p role="status">{sessionStatus}</p>}
             {!testLoginMode && <Button to="/dashboard">Open your workspace</Button>}
+            {reviewerAccountId === accountId && <Button to="/review/drawings" quiet>Review drawings</Button>}
             {!testLoginMode && <Button to="/onboarding" quiet>
               Complete your profile
             </Button>}
@@ -1663,6 +1676,7 @@ export default function App() {
           <Route path="/dashboard/community" element={<Community />} />
           <Route path="/report" element={<BugReport />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/review/drawings" element={<DrawingReviewerWorkspace />} />
           <Route path="/attempt/:id" element={<Attempt key={location.pathname} />} />
         </Route>
         {import.meta.env.DEV && (

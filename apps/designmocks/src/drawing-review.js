@@ -1,5 +1,34 @@
 export const MAX_DRAWING_CRITERIA = 12;
 
+export function drawingReviewActions(call, onChanged) {
+  const update = async (procedure, reviewId, input = {}) => {
+    await call(procedure, { p_review_id: reviewId, ...input });
+    await onChanged(procedure);
+  };
+  return {
+    onClaim: (id) => update("admin_claim_drawing_review", id),
+    onReturn: (id, version) => update("admin_return_drawing_review", id, { p_expected_version: version }),
+    onReview: (id, version, review) => update("admin_review_drawing", id, {
+      p_expected_version: version,
+      p_criterion_marks: review.criteria,
+      p_comments: review.comments,
+      p_score: review.score,
+      p_override_reason: review.overrideReason,
+    }),
+    onRelease: (id, version) => update("admin_release_drawing_review", id, { p_expected_version: version }),
+  };
+}
+
+export function drawingReviewerChange(form, enabled) {
+  const userId = String(form.get("userId") ?? "").trim();
+  const reason = String(form.get("reason") ?? "").trim();
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userId)) {
+    throw new Error("Enter the account ID of an existing DMocks user.");
+  }
+  if (reason.length < 5 || reason.length > 400) throw new Error("Give a reason between 5 and 400 characters.");
+  return { p_user_id: userId, p_enabled: enabled, p_reason: reason };
+}
+
 export function totalDrawingMarks(rows) {
   return rows.reduce((total, row) => total + Math.round(Number(row.mark) * 100), 0) / 100;
 }

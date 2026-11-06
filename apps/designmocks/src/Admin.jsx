@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { platform } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
 import { DrawingReviewQueue } from "./DrawingReviewQueue.jsx";
+import { DrawingReviewerRoster } from "./DrawingReviewerRoster.jsx";
+import { drawingReviewActions } from "./drawing-review.js";
 import { CommunityModerationQueue } from "./CommunityModeration.jsx";
 import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
 import { OperationalHealth } from "./OperationalHealth.jsx";
@@ -135,6 +137,14 @@ export function BugReport() {
 
 export function Admin() {
   const { session, loading } = useAuthState();
+  return <section className="wrap section admin-page">
+    <span className="eyebrow">DMOCKS OPERATIONS</span>
+    <h1>Admin <em>review.</em></h1>
+    {session && !loading ? <AdminDesk key={session.user.id} session={session} /> : <Gate session={session} loading={loading} />}
+  </section>;
+}
+
+function AdminDesk({ session }) {
   const [allowed, setAllowed] = useState(null),
     [drafts, setDrafts] = useState([]),
     [bugs, setBugs] = useState([]),
@@ -348,13 +358,12 @@ export function Admin() {
     }
   };
   const refreshDrawings = async () => setDrawings(await rpc("admin_drawing_queue"));
-  const updateDrawingReview = async (procedure, id, input = {}) => {
-    await rpc(procedure, { p_review_id: id, ...input });
+  const drawingActions = drawingReviewActions(rpc, async () => {
     await Promise.all([
       refreshDrawings(),
       rpc("admin_all_india_events").then(setAllIndia),
     ]);
-  };
+  });
   const resolveCommunityReport = async (id, resolution) => {
     try {
       await rpc("admin_resolve_community_report", { p_report_id: id, p_resolution: resolution, p_note: "Resolved in admin moderation queue" });
@@ -404,13 +413,9 @@ export function Admin() {
     catch (e) { setMessage(e.message); }
   };
   return (
-    <section className="wrap section admin-page">
-      <span className="eyebrow">DMOCKS OPERATIONS</span>
-      <h1>
-        Admin <em>review.</em>
-      </h1>
-      <Gate session={session} loading={loading} />
-      {session && allowed === false && (
+    <>
+      {allowed === null && !message && <p role="status">Checking administrator access…</p>}
+      {allowed === false && (
         <p className="error">This account is not an administrator.</p>
       )}
       {message && (
@@ -439,14 +444,8 @@ export function Admin() {
           </form>
           <IntakeExtractionQueue assets={intake} onExtract={extractIntake} onPromote={promoteIntake} onReject={rejectIntake} />
           <h2>Drawing review queue</h2>
-          <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings}
-            onClaim={(id) => updateDrawingReview("admin_claim_drawing_review", id)}
-            onReturn={(id, version) => updateDrawingReview("admin_return_drawing_review", id, { p_expected_version: version })}
-            onReview={(id, version, review) => updateDrawingReview("admin_review_drawing", id, {
-              p_expected_version: version, p_criterion_marks: review.criteria, p_comments: review.comments,
-              p_score: review.score, p_override_reason: review.overrideReason,
-            })}
-            onRelease={(id, version) => updateDrawingReview("admin_release_drawing_review", id, { p_expected_version: version })} />
+          <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings} {...drawingActions} />
+          <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
           <h2>Community moderation</h2>
           <CommunityModerationQueue reports={communityReports} onResolve={resolveCommunityReport} />
           <h2>Publish a theory lesson</h2>
@@ -817,6 +816,6 @@ export function Admin() {
           </div>
         </>
       )}
-    </section>
+    </>
   );
 }

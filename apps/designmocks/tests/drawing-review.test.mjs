@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validateDrawingReviewInput } from "../src/drawing-review.js";
+import { drawingReviewActions, drawingReviewerChange, validateDrawingReviewInput } from "../src/drawing-review.js";
 import { rasterMimeType } from "../supabase/functions/_shared/raster.mjs";
 
 const review = (rows, extra) => validateDrawingReviewInput({ rows, comments: " Clear visual hierarchy. ", maxScore: 20, ...extra });
@@ -40,4 +40,38 @@ test("drawing upload content must identify as a supported raster image", () => {
   assert.equal(rasterMimeType(Buffer.from("<svg></svg>")), null);
   assert.equal(rasterMimeType(Buffer.from("RIFF0000WAVE")), null);
   assert.equal(rasterMimeType(Uint8Array.from([137, 80, 78, 71])), null);
+});
+
+test("reviewer and admin actions send the same versioned drawing commands", async () => {
+  const calls = [];
+  const actions = drawingReviewActions((name, args) => calls.push([name, args]), (name) => calls.push(name));
+  await actions.onClaim("drawing");
+  await actions.onReturn("drawing", 1);
+  await actions.onReview("drawing", 3, { criteria: { Clarity: 6 }, comments: "Clear route.", score: 6, overrideReason: null });
+  await actions.onRelease("drawing", 4);
+  assert.deepEqual(calls, [
+    ["admin_claim_drawing_review", { p_review_id: "drawing" }], "admin_claim_drawing_review",
+    ["admin_return_drawing_review", { p_review_id: "drawing", p_expected_version: 1 }], "admin_return_drawing_review",
+    ["admin_review_drawing", { p_review_id: "drawing", p_expected_version: 3, p_criterion_marks: { Clarity: 6 },
+      p_comments: "Clear route.", p_score: 6, p_override_reason: null }], "admin_review_drawing",
+    ["admin_release_drawing_review", { p_review_id: "drawing", p_expected_version: 4 }], "admin_release_drawing_review",
+  ]);
+  const denied = drawingReviewActions(async () => { throw new Error("Access required"); }, () => assert.fail("Refresh after denied action"));
+  await assert.rejects(denied.onClaim("drawing"), /Access required/);
+});
+
+test("reviewer role changes require an account ID and a bounded audit reason", () => {
+  const userId = "00000000-0000-4000-8000-000000000089";
+  const form = new FormData();
+  form.set("userId", "candidate@example.invalid");
+  assert.throws(() => drawingReviewerChange(form, true), /account ID/);
+  form.set("userId", ` ${userId} `);
+  for (const reason of ["  no  ", "a".repeat(401)]) {
+    form.set("reason", reason);
+    assert.throws(() => drawingReviewerChange(form, true), /between 5 and 400/);
+  }
+  form.set("reason", " End of reviewer assignment. ");
+  assert.deepEqual(drawingReviewerChange(form, false), {
+    p_user_id: userId, p_enabled: false, p_reason: "End of reviewer assignment.",
+  });
 });
