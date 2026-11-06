@@ -258,5 +258,16 @@ select pg_temp.reject('select public.admin_question_intake_assets()','student ca
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select pg_temp.assert_true(jsonb_array_length(public.admin_question_intake_assets())=1,'admin sees private intake metadata');
 select public.admin_promote_intake_asset(current_setting('test.intake_asset')::uuid,'{"prompt":"Extracted fictional question","holds":[]}'::jsonb);
+reset role;insert into dm_private.bank_questions(external_key,content_sha256,exam,question_type,topic,licence,objective_ready,owner_approved,active,payload,source_commit)values('fixture-ai-basis',repeat('b',64),'uceed','MCQ','observation','owned',true,true,true,'{"externalKey":"fixture-ai-basis","prompt":"Rights-approved fictional basis","holds":[]}'::jsonb,repeat('a',40));
+set local role authenticated;select set_config('request.jwt.claim.role','authenticated',true);select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+select set_config('test.ai_request',public.admin_create_ai_draft_request('uceed','observation','MCQ','Create an original fictional observation question',array['fixture-ai-basis'])::text,true);
+select pg_temp.assert_true(jsonb_array_length(public.admin_ai_draft_basis(current_setting('test.ai_request')::uuid)->'basis')=1,'admin AI request resolves only approved basis');
+reset role;set local role service_role;select set_config('request.jwt.claim.role','service_role',true);
+select public.complete_ai_draft_request(current_setting('test.ai_request')::uuid,'fixture-model','resp_fixture','{"externalKey":"ai-fixture","type":"MCQ","prompt":"Original fictional prompt","options":[],"answer":"A","explanation":"Fictional explanation","topic":"observation","difficulty":"medium","estimatedSeconds":60,"visualDependency":false,"licence":"original-ai-draft","sourceKind":"generated","holds":["ai-generated-human-review"],"provenance":{"basisExternalKeys":["fixture-ai-basis"],"generationNote":"fixture"}}'::jsonb);
+reset role;set local role authenticated;select set_config('request.jwt.claim.role','authenticated',true);select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
+select pg_temp.reject('select public.admin_ai_draft_requests()','student cannot inspect AI drafting audit');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+select pg_temp.assert_true((public.admin_ai_draft_requests()->0->>'status')='succeeded','AI result is audited as succeeded');
+select pg_temp.assert_true(exists(select 1 from jsonb_array_elements(public.admin_question_drafts())d where d->>'id'=public.admin_ai_draft_requests()->0->>'draftId'and d->>'status'='pending'),'AI output always enters pending human review');
 rollback;
 \echo 'PASS: commerce, RLS, ownership, deadlines, grading, reports and retry invariants'

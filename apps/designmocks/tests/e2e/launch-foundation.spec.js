@@ -188,6 +188,16 @@ test("admin can resolve a reported community post", async ({ page }) => {
   await expect(page.getByText("No open community reports.")).toBeVisible();
 });
 
+test("admin can request an AI-assisted question for human review", async ({ page }) => {
+  await page.goto("/ai-question-drafting-preview");
+  await page.getByLabel("Topic").fill("observation");
+  await page.getByLabel("Rights-approved basis keys").fill("uceed-2024-q1");
+  await page.getByLabel("Generation brief").fill("Create an original question testing observation without copying the source.");
+  await page.getByRole("button", { name: "Generate review draft" }).click();
+  await expect(page.getByText("AI draft created and sent to human review.")).toBeVisible();
+  await expect(page.getByText("succeeded")).toBeVisible();
+});
+
 test("drawing submission accepts ordered raster pages", async ({ page }) => {
   await page.goto("/drawing-uploads-preview");
   await page.locator('input[type="file"]').setInputFiles([
