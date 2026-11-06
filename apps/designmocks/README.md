@@ -60,3 +60,11 @@ See [launch checklist](docs/LAUNCH_CHECKLIST.md), [provider setup](docs/PROVIDER
 `npm run media:import` additionally needs the standalone `DMOCKS_SUPABASE_URL` and a server-only `DMOCKS_SUPABASE_SERVICE_ROLE_KEY` in the operator process environment. Never put that key in a Vite variable, source, shell argument or chat. The pipeline uses immutable `papers/canonical/<sha256>.png` objects in the existing private bucket, verifies each authenticated download, then registers metadata through a service-only RPC. Retries verify and reuse matching objects; they do not overwrite unknown files. Registration requires a matching active canonical reference and Storage metadata. It does not approve rights, convert a question for delivery, grant a pass or release a paper.
 
 The canonical-domain API origin is `https://dmocks.com`. The hosted smoke checks use that exact origin; purchases remain closed while Razorpay is deferred.
+
+## Verified question materialization
+
+Canonical ingestion now only imports the exact source records. It does **not** overwrite independently compiled runtime questions. `runtimeReadyTotal` in `bank:manifest` is therefore zero; the separate runtime plan measures actual supported delivery.
+
+`runtime:manifest` reads the service-only verified media catalogue and compiles a deterministic private plan; `runtime:apply` explicitly writes it through the service-only RPC. Both need the same standalone operator environment as the image importer. Never set server credentials in a `VITE_` variable or commit a generated plan containing keys/questions. CLI summaries include counts/digests only. An interrupted apply can be replayed; changed runtime content invalidates approval, while an identical replay preserves it.
+
+The first verified target context is UCEED/CEED **2027 Part A**, based on the current official brochures. Source questions can be older; the target mock's marking context is recorded explicitly. MCQ penalties differ by exam; MSQ uses the verified partial-credit ladder. Numeric strings/ranges preserve source precision, with no invented tolerance. Unresolved figures, malformed notation and unsupported disciplines stay unavailable. NID/NIFT scoring and drawing require their own verified contexts. This does not yet replace the flat prototype generator with complete timed parts. See `docs/EXAM_RULES.md`.
