@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { platform } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
-import { DrawingReviewMedia } from "./DrawingReviewMedia.jsx";
+import { DrawingReviewQueue } from "./DrawingReviewQueue.jsx";
 import { CommunityModerationQueue } from "./CommunityModeration.jsx";
 import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
 
@@ -300,21 +300,23 @@ export function Admin() {
       setMessage(e.message);
     }
   };
-  const reviewDrawing = async (event, id) => {
-    event.preventDefault();
-    const f = new FormData(event.currentTarget);
+  const reviewDrawing = async (id, review) => {
     try {
       await rpc("admin_review_drawing", {
         p_review_id: id,
-        p_criterion_marks: JSON.parse(f.get("criteria")),
-        p_comments: f.get("comments"),
-        p_score: Number(f.get("score")),
-        p_override_reason: null,
+        p_criterion_marks: review.criteria,
+        p_comments: review.comments,
+        p_score: review.score,
+        p_override_reason: review.overrideReason,
       });
       await load();
     } catch (e) {
       setMessage(e.message);
     }
+  };
+  const releaseDrawing = async (id) => {
+    try { await rpc("admin_release_drawing_review", { p_review_id: id }); await load(); }
+    catch (e) { setMessage(e.message); }
   };
   const resolveCommunityReport = async (id, resolution) => {
     try {
@@ -409,45 +411,7 @@ export function Admin() {
             ))}
           </div>
           <h2>Drawing review queue</h2>
-          <div className="admin-list">
-            {drawings.map((d) => (
-              <article key={d.reviewId}>
-                <b>Anonymous submission · {d.uploadCount} images</b>
-                <span className="status-pill">{d.status}</span>
-                <DrawingReviewMedia reviewId={d.reviewId} />
-                {d.status !== "reviewed" && (
-                  <form
-                    className="admin-form"
-                    onSubmit={(e) => reviewDrawing(e, d.reviewId)}
-                  >
-                    <label>
-                      Criterion marks JSON
-                      <textarea
-                        name="criteria"
-                        required
-                        defaultValue={'{"composition":0,"clarity":0}'}
-                      />
-                    </label>
-                    <label>
-                      Score
-                      <input
-                        name="score"
-                        type="number"
-                        min="0"
-                        step="0.5"
-                        required
-                      />
-                    </label>
-                    <label>
-                      Feedback
-                      <textarea name="comments" required minLength="5" />
-                    </label>
-                    <button>Save human review</button>
-                  </form>
-                )}
-              </article>
-            ))}
-          </div>
+          <DrawingReviewQueue drawings={drawings} onReview={reviewDrawing} onRelease={releaseDrawing} />
           <h2>Community moderation</h2>
           <CommunityModerationQueue reports={communityReports} onResolve={resolveCommunityReport} />
           <h2>Publish a theory lesson</h2>

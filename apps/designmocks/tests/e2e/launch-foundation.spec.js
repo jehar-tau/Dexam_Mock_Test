@@ -224,3 +224,15 @@ test("teacher can open anonymous private drawing pages", async ({ page }) => {
   await expect(page.getByRole("img", { name: "Anonymous drawing page 1" })).toBeVisible();
   await expect(page.getByText("Page 1")).toBeVisible();
 });
+
+test("teacher review is released separately to the drawing student", async ({ page }) => {
+  await page.goto("/drawing-review-lifecycle-preview");
+  await page.getByLabel("Criterion marks JSON").fill('{"composition":8,"clarity":7}');
+  await page.getByLabel("Score out of 20").fill("15");
+  await page.getByLabel("Feedback").fill("Clear hierarchy; strengthen the directional contrast.");
+  await page.getByRole("button", { name: "Save human review" }).click();
+  await expect(page.getByText("Human review pending.")).toBeVisible();
+  await page.getByRole("button", { name: "Release feedback to student" }).click();
+  await expect(page.getByText("15/20 marks")).toBeVisible();
+  await expect(page.locator(".drawing-feedback").getByText("Clear hierarchy; strengthen the directional contrast.")).toBeVisible();
+});
