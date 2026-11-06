@@ -1,0 +1,38 @@
+import React from "react";
+
+const labels = {
+  staleAttempts: "Stale attempts",
+  expiredAttempts: "Expired awaiting sweep",
+  openBugs: "Open support bugs",
+  pendingQuestionReports: "Question reviews",
+  openCommunityReports: "Community reports",
+  pendingDrawingReviews: "Drawing reviews",
+  failedIntakeAssets: "Failed intake jobs",
+  failedAiDrafts: "Failed AI drafts",
+  stalePendingOrders: "Stale pending orders",
+};
+
+export function OperationalHealth({ health }) {
+  if (!health) return <p role="status">Loading operational health…</p>;
+  return <section className="operations-health" aria-label="Operational health">
+    <div>
+      <span className={`status-pill health-${health.status}`}>{health.status}</span>
+      <small>Checked {new Date(health.checkedAt).toLocaleString("en-IN")}</small>
+    </div>
+    <div className="operations-metrics">
+      {Object.entries(labels).map(([key, label]) => <article key={key}>
+        <span>{label}</span>
+        <b>{health[key] ?? 0}</b>
+      </article>)}
+    </div>
+    <p>Queue counts contain no student identity or answer content. Investigate degraded counters before publication or sales changes.</p>
+  </section>;
+}
+
+export function OperationalHealthPreview() {
+  return <section className="wrap section"><h1>Operational <em>health.</em></h1><OperationalHealth health={{
+    status: "degraded", checkedAt: "2026-11-06T08:30:00+05:30", staleAttempts: 2,
+    expiredAttempts: 3, openBugs: 4, pendingQuestionReports: 1, openCommunityReports: 2,
+    pendingDrawingReviews: 6, failedIntakeAssets: 1, failedAiDrafts: 0, stalePendingOrders: 0,
+  }} /></section>;
+}

@@ -243,3 +243,12 @@ test("teacher review is released separately to the drawing student", async ({ pa
   await expect(page.getByText("15/20 marks")).toBeVisible();
   await expect(page.locator(".drawing-feedback").getByText("Clear hierarchy; strengthen the directional contrast.")).toBeVisible();
 });
+
+test("operations health exposes privacy-safe actionable counters", async ({ page }) => {
+  await page.goto("/operations-health-preview");
+  const health = page.getByLabel("Operational health");
+  await expect(health).toContainText("degraded");
+  await expect(health).toContainText("Stale attempts");
+  await expect(health).toContainText("Failed intake jobs");
+  await expect(health).toContainText("contain no student identity");
+});
