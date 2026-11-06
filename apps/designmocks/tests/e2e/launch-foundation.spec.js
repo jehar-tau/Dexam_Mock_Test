@@ -170,16 +170,22 @@ test("community accepts a structured discussion post", async ({ page }) => {
   await page
     .getByLabel("Your approach or question")
     .fill("I use horizon lines first, but I want a reliable checking method.");
+  await page.getByLabel("Question images (optional, up to 3)").setInputFiles({
+    name: "perspective.png", mimeType: "image/png", buffer: Buffer.from("preview"),
+  });
   await page.getByRole("button", { name: "Post to community" }).click();
   await expect(
     page.getByText("Preview post created: How should I check perspective?"),
   ).toBeVisible();
+  await expect(page.getByText("1 image", { exact: false })).toBeVisible();
 });
 
 test("community opens a thread and supports member actions", async ({ page }) => {
   await page.goto("/community-preview");
   await page.getByRole("button", { name: "Open discussion" }).click();
   await expect(page.getByRole("region", { name: "Discussion thread" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Question attachment 1" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Solution attachment 1" })).toBeVisible();
   await page.getByLabel("Add a reply").fill("Separating facts from inferences helps me check the answer.");
   await page.getByRole("button", { name: "Reply" }).click();
   await expect(page.getByText("Preview reply added.")).toBeVisible();
