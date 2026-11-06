@@ -11,6 +11,22 @@ test("submitted All India attempts show release status without premature feedbac
   await expect(page.getByRole("link", { name: "All India mocks", exact: false }).last()).toBeVisible();
 });
 
+test("submitted All India drawings can be uploaded while the result stays sealed", async ({ page }) => {
+  await page.clock.install({ time: new Date("2026-11-07T13:00:00Z") });
+  await page.goto("/portal-preview/pending-upload");
+  const upload = page.getByRole("region", { name: "Drawing upload window" });
+  await expect(upload.getByRole("heading", { name: "Sketch a portable reading light." })).toBeVisible();
+  await expect(upload.getByRole("button", { name: "Add images" })).toBeEnabled();
+  await upload.locator('input[type="file"]').setInputFiles({ name: "drawing.png", mimeType: "image/png", buffer: Buffer.from("fixture") });
+  await expect(upload.getByText("drawing.png")).toBeVisible();
+  await expect(upload.getByRole("status")).toContainText("Drawing images saved privately.");
+  await expect(page.getByRole("button", { name: /answer review/i })).toHaveCount(0);
+  await expect(page.getByText("All India marks", { exact: true })).toHaveCount(0);
+  await page.clock.fastForward(5 * 60 * 1000 + 1000);
+  await expect(upload).toHaveCount(0);
+  await expect(page.getByText(/Marks, topic feedback, answer keys and ranks stay private/)).toBeVisible();
+});
+
 test("cancelled Google callback explains the failure without reflecting provider details", async ({ page }) => {
   await page.goto("/account/callback?error=access_denied&error_description=private-fixture");
   await expect(page.getByRole("alert")).toContainText("Google sign-in was cancelled");
@@ -176,6 +192,9 @@ test("All India mocks expose one open attempt and privacy-safe released ranks", 
 }) => {
   await page.goto("/all-india-preview");
   await expect(page.getByText("NID All India Mock 01")).toBeVisible();
+  await expect(page.getByText(/Starts closed. The attempt window ends/)).toBeVisible();
+  await expect(page.getByText(/plus 15 minutes for drawing uploads/)).toBeVisible();
+  await expect(page.getByText("Rank 2 of 24 · 27/30 marks")).toBeVisible();
   await page.getByRole("button", { name: "Start once" }).click();
   await expect(
     page.getByText("Preview attempt created once: open"),
@@ -262,6 +281,7 @@ test("admin can request an AI-assisted question for human review", async ({ page
 test("drawing submission accepts ordered raster pages", async ({ page }) => {
   await page.goto("/drawing-uploads-preview");
   await expect(page.getByLabel("Fixed drawing upload window")).toContainText("fixed 15-minute upload window");
+  await expect(page.getByRole("button", { name: "Add images" })).toBeEnabled();
   await page.locator('input[type="file"]').setInputFiles([
     { name: "page-one.png", mimeType: "image/png", buffer: Buffer.from("one") },
     {

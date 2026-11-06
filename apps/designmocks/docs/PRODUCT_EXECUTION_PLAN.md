@@ -64,7 +64,7 @@ Phone verification requires a provider, abuse limits, consent wording, recovery 
 - The server clock continues during power or internet loss. Reconnecting resumes the same immutable attempt with only the real remaining time. The attempt never restarts and lost time is not restored automatically.
 - Every answer change is written locally first and queued to an idempotent server autosave with a monotonic revision. Reconnect flushes pending changes. The server accepts no writes after the deadline.
 - At the deadline, the server finalizes the latest accepted answers. This is fairer and safer than forcing a complete retake after an outage.
-- Objective scoring is deterministic. Drawing results remain pending until review. Rank publishes only after review closes and ties follow a documented rule.
+- Objective scoring is deterministic. Drawing grades remain sealed until the cohort is released. Objective-only cohorts rank by score, then elapsed exam time. Drawing cohorts rank by combined score and share rank on equal marks because every candidate has the full drawing and upload windows.
 - The marketing site may show the top ten only under a disclosed public-ranking policy; the exam overview shows the signed-in candidate's rank and cohort statistics.
 
 ### Topic practice
@@ -159,7 +159,8 @@ Exit: load, authorization, disconnect/reconnect, deadline and scoring tests pass
 ### Phase 3 — All India mocks
 
 - [x] Add the admin event workflow with one fixed paper, a ten-day attempt window, a ten-day review window, paid/verified entry, one attempt per account and explicit result release.
-- [x] Reproduce cohort ranks by score and then elapsed time; keep ranks hidden before release and publish generated aliases rather than student identities.
+- [x] Reproduce cohort ranks from the frozen scores and the applicable tie rule. Keep ranks hidden until release and publish generated aliases.
+- [x] Support fixed drawing sections, a 10–15 minute upload window, and combined cohort scores gated on final human review. Keep the complete exam and upload allowance inside the ten-day attempt window.
 - [x] Add public top-ten results to the main site and each candidate's released rank to the portal.
 
 Exit: a synthetic cohort completes the same paper; ranks remain hidden until controlled release and reproduce from frozen scores.

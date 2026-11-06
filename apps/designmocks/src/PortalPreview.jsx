@@ -1,9 +1,10 @@
 // Development-only visual preview. No provider calls, sessions or entitlements.
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { WorkspaceView, PendingAttemptResult } from "./Workspace.jsx";
 import { Arrow } from "./Art.jsx";
 import { PortalShell } from "./PortalShell.jsx";
+import { DrawingUploadWindow, previewDrawingMedia } from "./DrawingUploads.jsx";
 
 const example = {
   access: { active: true, expiresAt: "2027-11-05T00:00:00+05:30" },
@@ -37,11 +38,27 @@ const topics = [
   { name: "Visual hierarchy", score: 7, total: 10, note: "Busy compositions were harder to prioritise. Pick one poster each day, mark what you see first, then redesign it with three levels of emphasis." },
 ];
 
+function PendingUploadPreview() {
+  const [serverTime, setServerTime] = useState(Date.now);
+  const [uploadDeadline] = useState(() => new Date(serverTime + 5 * 60 * 1000).toISOString());
+  useEffect(() => {
+    const timer = setInterval(() => setServerTime(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+  return <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z">
+    <DrawingUploadWindow serverTime={serverTime} invoke={previewDrawingMedia} attempt={{
+      id: "preview-all-india-drawing", status: "submitted", resultsPending: true, uploadDeadline,
+      questions: [], drawingUploadTasks: [{ id: "drawing", prompt: "Sketch a portable reading light." }],
+    }} />
+  </PendingAttemptResult>;
+}
+
 export default function PortalPreview() {
   const location = useLocation();
   const navigate = useNavigate();
   const report = location.pathname.endsWith("/report");
   const pending = location.pathname.endsWith("/pending");
+  const pendingUpload = location.pathname.endsWith("/pending-upload");
   return <>
     <section className="wrap portal-preview-note" aria-label="Preview information">
       <span className="eyebrow">STUDENT PORTAL PREVIEW</span>
@@ -51,9 +68,10 @@ export default function PortalPreview() {
         <Link to="/sample">Try the original sample</Link>
         <Link to="/portal-preview/report" aria-current={report ? "page" : undefined}>Example report</Link>
         <Link to="/portal-preview/pending" aria-current={pending ? "page" : undefined}>Example pending result</Link>
+        <Link to="/portal-preview/pending-upload" aria-current={pendingUpload ? "page" : undefined}>Example drawing upload</Link>
       </div>
     </section>
-    {pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" /> : report ? <section className="wrap section sample-result">
+    {pendingUpload ? <PendingUploadPreview /> : pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" /> : report ? <section className="wrap section sample-result">
       <Link className="back-link" to="/portal-preview">← Your preview workspace</Link>
       <div className="result-title">
         <div>

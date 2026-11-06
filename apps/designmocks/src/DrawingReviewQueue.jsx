@@ -71,17 +71,21 @@ function DrawingReviewCard({ drawing, onClaim, onReturn, onReview, onRelease, me
   const { reviewId, version, status } = drawing;
   return <article aria-busy={busy}>
     <b>Anonymous submission · {drawing.uploadCount} images</b><span className="status-pill">{status}</span>
+    {drawing.cohortTitle && <p>All India · {drawing.cohortTitle}</p>}
     {drawing.prompt && <p>{drawing.prompt}</p>}
-    {status === "pending" && !drawing.canClaim && <p className="notice">The student upload window is still open. You can claim this review after it closes.</p>}
+    {status === "pending" && !drawing.canClaim && !drawing.cohortFrozen && <p className="notice">The student upload window is still open. You can claim this review after it closes.</p>}
     {drawing.canClaim && <button type="button" disabled={busy} onClick={() => perform(() => onClaim(reviewId))}>Claim anonymous review</button>}
     {status === "assigned" && !drawing.assignedToMe && <p className="notice">Assigned to another teacher.</p>}
+    {drawing.cohortFrozen && <p className="notice">This grade is frozen with the published cohort results.</p>}
     {drawing.canReview && <>
       <DrawingReviewMedia reviewId={reviewId} {...(mediaLoader ? { load: mediaLoader } : {})} />
       <DrawingAiAdvisory suggestion={drawing.aiSuggestion} />
       {status === "assigned" && <button type="button" disabled={busy} onClick={() => perform(() => onReturn(reviewId, version))}>Return to review queue</button>}
-      {status === "reviewed" && <button type="button" disabled={busy} onClick={() => perform(() => onRelease(reviewId, version))}>Release feedback to student</button>}
-      <DrawingReviewForm key={version} drawing={drawing} disabled={busy}
-        onSave={(readForm) => perform(() => onReview(reviewId, version, readForm()))} />
+      {status === "reviewed" && !drawing.cohortFrozen && <button type="button" disabled={busy} onClick={() => perform(() => onRelease(reviewId, version))}>
+        {drawing.cohortTitle ? "Finalize grade for cohort release" : "Release feedback to student"}
+      </button>}
+      {!drawing.cohortFrozen && <DrawingReviewForm key={version} drawing={drawing} disabled={busy}
+        onSave={(readForm) => perform(() => onReview(reviewId, version, readForm()))} />}
     </>}
     {error && <p role="alert">{error}</p>}
   </article>;
