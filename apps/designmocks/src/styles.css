@@ -3851,6 +3851,8 @@ svg {
 .community-image{display:block;max-width:min(100%,720px);max-height:560px;object-fit:contain;margin:1rem 0;border:1px solid var(--line);background:var(--paper)}
 .drawing-review-media{margin:1rem 0}.drawing-review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}.drawing-review-grid figure{margin:0}.drawing-review-grid img{display:block;width:100%;max-height:420px;object-fit:contain;background:var(--warm);border:1px solid var(--line)}.drawing-review-grid figcaption{margin-top:.4rem;font-size:.85rem}
 .drawing-review-form { margin-bottom: 0; }
+.drawing-reviewer-nav { flex-wrap: wrap; align-items: center; }
+.drawing-reviewer-id { overflow-wrap: anywhere; }
 .drawing-review-form fieldset { min-width: 0; display: grid; gap: 1rem; padding: 0; border: 0; }
 .drawing-review-form legend { margin-bottom: .75rem; font-weight: 700; }
 .drawing-review-form fieldset > button { justify-self: start; }

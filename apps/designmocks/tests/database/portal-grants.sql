@@ -46,6 +46,10 @@ begin
   ,'public.admin_return_drawing_review(uuid,integer)'
   ,'public.admin_review_drawing(uuid,integer,jsonb,text,numeric,text)'
   ,'public.admin_release_drawing_review(uuid,integer)'
+  ,'public.can_review_drawings()'
+  ,'public.my_drawing_review_page(text,uuid)'
+  ,'public.admin_drawing_reviewers()'
+  ,'public.admin_set_drawing_reviewer(uuid,boolean,text)'
   ,'public.can_upload_drawing(uuid,uuid,integer)'
   ,'public.admin_set_paper_upload_grace(uuid,integer)'
   ,'public.finalize_my_expired_attempts()'
@@ -58,6 +62,12 @@ begin
   if not has_function_privilege('authenticated',signature,'EXECUTE') then raise exception 'Authenticated route grant missing: %',signature; end if;
  end loop;
  if not has_function_privilege('anon','public.public_all_india_top_ten()','EXECUTE') then raise exception 'Intentionally public alias-only ranking endpoint lost its grant'; end if;
+ if has_table_privilege('authenticated','dm_private.drawing_reviewers','SELECT,INSERT,UPDATE,DELETE')
+   or has_table_privilege('authenticated','dm_private.drawing_reviewer_audit','SELECT,INSERT,UPDATE,DELETE')
+   or has_function_privilege('authenticated','dm_private.drawing_review_cards(text,uuid,integer,boolean)','EXECUTE')
+   or has_function_privilege('authenticated','dm_private.lock_drawing_reviewer()','EXECUTE') then
+  raise exception 'Reviewer roster, audit and queue helpers must remain private';
+ end if;
  if has_function_privilege('authenticated','public.finalize_expired_attempts(integer)','EXECUTE') then raise exception 'Bulk finalizer must remain service-only'; end if;
  if not has_function_privilege('service_role','public.finalize_expired_attempts(integer)','EXECUTE') then raise exception 'Service bulk finalizer grant missing'; end if;
  if has_function_privilege('authenticated','public.record_drawing_ai_suggestion(uuid,text,text,text,jsonb,text,numeric,numeric,jsonb)','EXECUTE') then raise exception 'Drawing AI writer must remain service-only'; end if;

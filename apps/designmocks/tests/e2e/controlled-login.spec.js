@@ -46,7 +46,7 @@ test("a controlled Google session can use the account screen but cannot open por
 
   for (const path of [
     "/dashboard", "/dashboard/mocks", "/dashboard/all-india", "/dashboard/practice",
-    "/dashboard/learn", "/dashboard/community", "/onboarding", "/report", "/admin", "/attempt/synthetic",
+    "/dashboard/learn", "/dashboard/community", "/onboarding", "/report", "/admin", "/review/drawings", "/attempt/synthetic",
   ]) {
     await page.goto(path);
     await expect(page.getByRole("heading", { name: "The workspace is closed." })).toBeVisible();

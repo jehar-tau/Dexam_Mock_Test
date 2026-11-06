@@ -29,6 +29,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-exam-sectio
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-nift.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/launch-readiness.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-review-lifecycle.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-reviewer-access.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/media-invariants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/tests/controlled_signup.sql
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'
