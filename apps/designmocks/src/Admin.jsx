@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { platform } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
 import { DrawingReviewMedia } from "./DrawingReviewMedia.jsx";
+import { CommunityModerationQueue } from "./CommunityModeration.jsx";
 
 async function rpc(name, args) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -118,6 +119,7 @@ export function Admin() {
     [allIndia, setAllIndia] = useState([]),
     [lessons, setLessons] = useState([]),
     [drawings, setDrawings] = useState([]),
+    [communityReports, setCommunityReports] = useState([]),
     [intake, setIntake] = useState([]),
     [questionReports, setQuestionReports] = useState([]),
     [bankRights, setBankRights] = useState({}),
@@ -128,7 +130,7 @@ export function Admin() {
       const ok = await rpc("is_dmocks_admin");
       setAllowed(ok);
       if (ok) {
-        const [d, b, q, m, a, r, l, w, i] = await Promise.all([
+        const [d, b, q, m, a, r, l, w, i, c] = await Promise.all([
           rpc("admin_question_drafts"),
           rpc("admin_bug_reports"),
           rpc("admin_bank_questions", { p_limit: 25, p_offset: 0 }),
@@ -138,6 +140,7 @@ export function Admin() {
           rpc("admin_learning_lessons"),
           rpc("admin_drawing_queue"),
           rpc("admin_question_intake_assets"),
+          rpc("admin_community_report_queue"),
         ]);
         setDrafts(d);
         setBugs(b);
@@ -148,6 +151,7 @@ export function Admin() {
         setLessons(l);
         setDrawings(w);
         setIntake(i);
+        setCommunityReports(c);
       }
     } catch (e) {
       setMessage(e.message);
@@ -302,6 +306,12 @@ export function Admin() {
       setMessage(e.message);
     }
   };
+  const resolveCommunityReport = async (id, resolution) => {
+    try {
+      await rpc("admin_resolve_community_report", { p_report_id: id, p_resolution: resolution, p_note: "Resolved in admin moderation queue" });
+      await load();
+    } catch (e) { setMessage(e.message); }
+  };
   const uploadIntake = async (event) => {
     event.preventDefault();
     const f = new FormData(event.currentTarget),
@@ -428,6 +438,8 @@ export function Admin() {
               </article>
             ))}
           </div>
+          <h2>Community moderation</h2>
+          <CommunityModerationQueue reports={communityReports} onResolve={resolveCommunityReport} />
           <h2>Publish a theory lesson</h2>
           <form className="admin-form" onSubmit={addLesson}>
             <label>
