@@ -1,5 +1,11 @@
 # Verification
 
+## Verified runtime conversion — 6 November 2026
+
+Source `0988192fdaa45e6df86baa8519e87212fa5788de` retains canonical bank SHA `dd7702650b6e8ffeb348d0b558ecdd2bfbc1e565f2a392536518a3cebc8962be`. An actual service-only read of the hosted image catalogue produces 1,502 supported objective conversions: UCEED 830 and CEED 672, all with verified private images. Plan SHA `369f9bc9fa73f10481b29b5d2175cda9483f40f91b622818390966fb175c4dba`. This is a dry-run, not a hosted runtime write or paper release. NID/NIFT stay unavailable until their contexts are verified.
+
+Canonical ingestion no longer implicitly writes runtime payloads. The explicit compiler uses current official 2027 rules and strict key/media validation. New server checks bind runtime figures/options/context to active canonical records, and changed runtime invalidates review while identical replay preserves it. A regression run against the previous RPC fails at unregistered-media acceptance; the full 25-migration disposable database passes, including exhaustive 240-case MSQ scoring, decimal penalties, exact/range NAT and review invalidation. Current JavaScript count is 34; four Python fixtures, production build and preview isolation pass. Full branch CI and actual hosted materialization acceptance remain required.
+
 ## Current private media acceptance — 6 November 2026
 
 All 2,085 canonical PNGs are uploaded to the standalone private `paper-media` bucket and registered through service-only RPCs. Each authenticated download matches SHA-256, dimensions and size; aggregate bytes are 273,263,304, media manifest SHA-256 `487c643aea3ba664d2a1a88ffb4f3515b9a4b1da55fe6a600e38b29e6d013362`. The pinned plan used source `ad062c9ca99279841e4f954d4c526d5cf4a86468`; its bank digest is unchanged from the imported run. Full Pillow verification/decode passes for every source PNG. No real image or question payload is committed to the app.

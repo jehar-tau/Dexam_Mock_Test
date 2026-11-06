@@ -1,8 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildManifest, objectiveReady, runtimeQuestion } from "../scripts/question-bank-import.mjs";
+import { applyManifest, buildManifest, objectiveReady, runtimeQuestion } from "../scripts/question-bank-import.mjs";
 
-const question = (changes = {}) => ({ externalKey: "fixture-q1", type: "MCQ", prompt: "Which fixture is valid?", options: [{ key: "A", text: "One" }, { key: "B", text: "Two" }], answer: { raw: "A", status: "official-key" }, topic: "observation", licence: "owner-authorized", holds: [], provenance: { exam: "uceed" }, ...changes });
+import { RULES_2027 } from "../scripts/question-runtime.mjs";
+
+const question = (changes = {}) => ({ externalKey: "fixture-q1", type: "MCQ", prompt: "Which fixture is valid?", options: [{ key: "A", text: "One" }, { key: "B", text: "Two" }, { key: "C", text: "Three" }, { key: "D", text: "Four" }], answer: { raw: "A", status: "official-key" }, topic: "observation", licence: "owner-authorized", holds: [], provenance: { exam: "uceed" }, ...changes });
 const bank = (questions) => ({ schemaVersion: 1, exportedAt: "2026-11-05T00:00:00Z", questions });
 
 test("imports only records with an explicitly empty holds array", () => {
@@ -34,7 +36,21 @@ test("empty holds never bypass objective scoring requirements", () => {
 });
 
 test("runtime conversion is deterministic and excludes unresolved media", () => {
-  assert.deepEqual(runtimeQuestion(question()).key, { kind: "mcq", correct: ["A"], sourceExternalKey: "fixture-q1" });
-  assert.equal(runtimeQuestion(question({ visualDependency: true, assets: [{ path: "missing.png" }] })), null);
-  assert.equal(runtimeQuestion(question({ answer: { raw: "Z", status: "official-key" } })), null);
+  assert.deepEqual(runtimeQuestion(question(), {rule:RULES_2027.uceed}).key, { kind: "mcq", correct: ["A"], sourceExternalKey: "fixture-q1" });
+  assert.equal(runtimeQuestion(question({ visualDependency: true, assets: [{ path: "missing.png" }] }),{rule:RULES_2027.uceed}), null);
+  assert.equal(runtimeQuestion(question({ answer: { raw: "Z", status: "official-key" } }),{rule:RULES_2027.uceed}), null);
+});
+
+test("canonical import never overwrites a separately materialized runtime", async () => {
+  const previous = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (url) => {
+    const name = String(url).split("/").at(-1);
+    calls.push(name);
+    return {ok:true,text:async()=>JSON.stringify(name === "begin_question_bank_import" ? "fixture-run" : 1)};
+  };
+  try {
+    await applyManifest(buildManifest(bank([question()])),{url:"https://operator-fixture.invalid",serviceRoleKey:"fixture-only"});
+    assert.deepEqual(calls,["begin_question_bank_import","import_question_bank_batch","finish_question_bank_import"]);
+  } finally {globalThis.fetch = previous;}
 });

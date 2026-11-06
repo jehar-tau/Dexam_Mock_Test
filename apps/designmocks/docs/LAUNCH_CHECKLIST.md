@@ -35,7 +35,7 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [x] Implement the canonical-source importer and verify dry-run/eligibility/runtime fixtures; no real question content is in the app source or browser bundle.
 - [x] Import the exact canonical hold-free set privately and verify full replay against the same completed run.
 - [x] Upload and verify all canonical private images; accept actual authenticated browser delivery without public access.
-- [ ] Complete runtime media conversion and exact paper/marking/section manifests before publication.
+- [ ] Complete runtime media conversion and exact paper/marking/section manifests before publication. The verified UCEED/CEED 2027 compiler dry-run now supports 1,502 objective questions; hosted write/replay and complete timed parts remain pending.
 - [ ] Implement and verify paper-specific sections, timing, marking and locking against the reviewed blueprints; do not present the flat prototype as a complete official exam simulation.
 - [ ] Verify image delivery, saved/resumed attempts, deadline enforcement and immutable submitted answers with representative reviewed papers.
 - [ ] Finish useful section/topic reporting, explanations and practice recommendations. Drawing remains clearly separate from objective scores; do not promise human evaluation until that service is implemented and approved.
