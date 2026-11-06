@@ -205,6 +205,7 @@ test("admin can request an AI-assisted question for human review", async ({ page
 
 test("drawing submission accepts ordered raster pages", async ({ page }) => {
   await page.goto("/drawing-uploads-preview");
+  await expect(page.getByLabel("Fixed drawing upload window")).toContainText("fixed 15-minute upload window");
   await page.locator('input[type="file"]').setInputFiles([
     { name: "page-one.png", mimeType: "image/png", buffer: Buffer.from("one") },
     {

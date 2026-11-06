@@ -14,7 +14,12 @@ Deno.serve(async (request) => {
   const admin = createClient(url, service, { auth: { persistSession: false } });
   try {
     if (request.headers.get("content-type")?.includes("application/json")) {
-      const { action, id } = await request.json();
+      const { action, id, attemptId, questionId } = await request.json();
+      if (action === "list" && typeof attemptId === "string" && typeof questionId === "string") {
+        const listed = await student.rpc("my_drawing_uploads", { p_attempt_id: attemptId, p_question_id: questionId });
+        if (listed.error) throw listed.error;
+        return respond({ items: listed.data });
+      }
       if (action !== "remove" || typeof id !== "string") return respond({ error: "Invalid drawing action" }, 400);
       const removed = await student.rpc("remove_drawing_upload", { p_id: id });
       if (removed.error) throw removed.error;
