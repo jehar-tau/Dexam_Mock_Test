@@ -70,6 +70,15 @@ for (const name of [
   });
 }
 if (backendStage === "portal") {
+  response = await request("/rest/v1/rpc/admin_export_question_draft", "POST", {
+    p_draft_id: "00000000-0000-4000-8000-000000000000",
+    p_external_key: "hosted-smoke-fixture",
+    p_rights_confirmed: false,
+    p_rights_note: "Anonymous hosted smoke fixture",
+  });
+  assert.ok([401, 403].includes(response.status), "anonymous draft export must be denied");
+  assert.equal(response.data?.code, "42501");
+  results.push({ check: "anonymous admin_export_question_draft denied", status: response.status, passed: true });
   response = await request("/rest/v1/rpc/public_all_india_top_ten", "POST", {});
   assert.equal(response.status, 200, "Alias-only public ranking remains available");
   assert.ok(Array.isArray(response.data));

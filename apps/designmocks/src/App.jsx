@@ -33,6 +33,7 @@ import { DrawingReviewLifecyclePreview } from "./DrawingReviewQueue.jsx";
 import { CommunityModerationPreview } from "./CommunityModeration.jsx";
 import { AiQuestionDraftingPreview } from "./AiQuestionDrafting.jsx";
 import { OperationalHealthPreview } from "./OperationalHealth.jsx";
+import { QuestionDraftExportPreview } from "./QuestionDraftExport.jsx";
 import { useAuthState } from "./useAuth.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import {
@@ -1712,6 +1713,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/intake-extraction-preview" element={<IntakeExtractionPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/question-draft-export-preview" element={<QuestionDraftExportPreview />} />
         )}
 
         <Route

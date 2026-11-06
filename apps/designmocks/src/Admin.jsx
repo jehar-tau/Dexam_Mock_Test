@@ -6,6 +6,7 @@ import { DrawingReviewQueue } from "./DrawingReviewQueue.jsx";
 import { CommunityModerationQueue } from "./CommunityModeration.jsx";
 import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
 import { OperationalHealth } from "./OperationalHealth.jsx";
+import { QuestionDraftExport } from "./QuestionDraftExport.jsx";
 
 async function rpc(name, args) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -221,6 +222,12 @@ export function Admin() {
     } catch (e) {
       setMessage(e.message);
     }
+  };
+  const exportDraft = async ({ id, externalKey, rightsConfirmed, rightsNote }) => {
+    try {
+      await rpc("admin_export_question_draft", { p_draft_id:id, p_external_key:externalKey, p_rights_confirmed:rightsConfirmed, p_rights_note:rightsNote });
+      await load();
+    } catch (e) { setMessage(e.message); throw e; }
   };
   const reply = async (event, id) => {
     event.preventDefault();
@@ -745,6 +752,7 @@ export function Admin() {
                     </button>
                   </div>
                 )}
+                <QuestionDraftExport draft={d} onExport={exportDraft} />
               </article>
             ))}
           </div>

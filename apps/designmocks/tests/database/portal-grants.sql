@@ -12,6 +12,7 @@ begin
   'public.admin_create_question_draft(text,text,jsonb)',
   'public.admin_question_drafts()',
   'public.admin_review_question_draft(uuid,text,text)',
+  'public.admin_export_question_draft(uuid,text,boolean,text)',
   'public.admin_bank_questions(integer,integer)',
   'public.my_candidate_profile()',
   'public.topic_catalog()',
