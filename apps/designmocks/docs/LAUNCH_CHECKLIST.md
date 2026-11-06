@@ -37,7 +37,8 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [x] Upload and verify all canonical private images; accept actual authenticated browser delivery without public access.
 - [x] Convert and verify UCEED/CEED objective questions with explicit 2027 marking/private images; hosted materialization, replay and exact full-record comparison pass for 1,502 converted questions.
 - [x] Verify canonical import replay preserves independently compiled runtime decisions.
-- [ ] Verify NID/NIFT programme-specific contexts and compile their supported questions.
+- [x] Verify the NIFT 2027 B.Des. GAT context and compile its supported questions locally (155 of the 298 eligible canonical NIFT records compile offline; database acceptance and hosted materialization pending).
+- [ ] Verify the NID programme-specific context, and run the NIFT database suite, hosted runtime materialization and replay before releasing NIFT GAT.
 - [ ] Complete exact paper/marking/section manifests and full timed-part delivery before publication.
 - [ ] Implement and verify paper-specific sections, timing, marking and locking against the reviewed blueprints; do not present the flat prototype as a complete official exam simulation.
 - [ ] Verify image delivery, saved/resumed attempts, deadline enforcement and immutable submitted answers with representative reviewed papers.

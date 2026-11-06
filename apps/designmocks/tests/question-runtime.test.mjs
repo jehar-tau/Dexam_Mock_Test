@@ -10,7 +10,7 @@ const convert=q=>runtimeQuestion(q,{rule:RULES_2027[q.provenance.exam],mediaCata
 test('conversion requires explicit verified rules rather than assigning default marks',()=>{
  assert.equal(runtimeQuestion(fixture()),null);
  assert.equal(runtimeQuestion(fixture(),{rule:{...RULES_2027.uceed,sections:{MCQ:{correct:1,wrong:0}}}}),null);
- assert.equal(convert(fixture({provenance:{exam:'nift'}})),null);
+ assert.deepEqual(convert(fixture({provenance:{exam:'nift'},options:['1','2','3','4'].map(key=>({key,text:key,asset:null})),answer:{raw:'1',status:'verified'}})).marking,{correct:1,wrong:-0.25});
  assert.deepEqual(convert(fixture()).marking,{correct:3,wrong:-0.71});
  assert.deepEqual(convert(fixture({provenance:{exam:'ceed'}})).marking,{correct:3,wrong:-0.5});
  assert.deepEqual(convert(fixture({type:'MSQ',answer:{raw:'AC',status:'verified'}})).marking,{correct:4,wrong:-1,partial:true});
@@ -46,6 +46,7 @@ test('verified Part B tasks compile only as human-reviewed drawing runtime',()=>
  const ceed=convert(fixture({type:'DESCRIPTIVE',options:[],answer:null,assets:[figure],visualDependency:true,provenance:{exam:'ceed'}}));assert.equal(ceed.points,20);assert.equal(ceed.context.durationSeconds,7200);
  assert.equal(convert(fixture({type:'DESCRIPTIVE',options:[],answer:null,assets:[],visualDependency:false})),null);
  assert.equal(drawing.explanation.includes('Answer key'),false);
+ assert.equal(convert(fixture({type:'DESCRIPTIVE',options:[],answer:null,assets:[figure],visualDependency:true,provenance:{exam:'nift'}})),null);
 });
 test('canonical ingestion does not silently compile or downgrade independently reviewed runtime plans',()=>{
  const manifest=buildManifest({schemaVersion:1,questions:[fixture()]});

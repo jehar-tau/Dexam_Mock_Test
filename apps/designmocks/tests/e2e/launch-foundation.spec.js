@@ -157,8 +157,10 @@ test("exam-wise mocks show release and free-attempt states", async ({
   await expect(page.getByText("1 free attempt left")).toBeVisible();
   await expect(page.getByText("NAT 14 · MSQ 15 · MCQ 28")).toBeVisible();
   await expect(page.getByText("UCEED · 2027 Part A")).toBeVisible();
+  await expect(page.getByText("NIFT · 2027 B.Des. GAT")).toBeVisible();
+  await expect(page.getByText("MCQ 100")).toBeVisible();
   await expect(page.getByRole("button", { name: "Not released" })).toHaveCount(
-    2,
+    1,
   );
   await page
     .locator("article")
