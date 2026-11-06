@@ -167,8 +167,9 @@ Exit: a synthetic cohort completes the same paper; ranks remain hidden until con
 
 ### Phase 4 — drawing workflow
 
-- Ordered multi-image uploads, upload window, retry/remove/replace, anonymous teacher queue and audited override.
-- AI-assist experiment only after rubric, dataset, consent, cost and accuracy gates.
+- [x] Implement ordered multi-image uploads, a fixed upload window, a scoped anonymous teacher queue, and audited reviewer access and grade overrides. Verify the workflows locally.
+- [ ] Verify upload, retry, removal, private image signing and staff revocation with separate synthetic accounts in isolated staging.
+- [ ] Run the AI-assist experiment after rubric, dataset, consent, cost and accuracy gates.
 
 Exit: human-reviewed drawing results are reliable without AI; AI cannot publish or silently change a score.
 

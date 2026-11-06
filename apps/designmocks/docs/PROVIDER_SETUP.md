@@ -16,7 +16,7 @@ PDF/photo extraction is also closed by default. The local `question-intake-extra
 
 An administrator may turn an approved draft into an immutable canonical-review artifact only after supplying a stable external key and a written rights confirmation. The server validates the canonical prompt, type and `provenance.exam`, forces `holds` to an explicitly empty array, records a SHA-256 digest and prevents a draft or key from being exported twice. This artifact is deliberately labelled `git-review-required`: it does not write to the runtime bank. A reviewed change to `server/data/exports/dexam-bank-export.json` on `main` remains the only route into the canonical importer.
 
-Drawing AI inference is not configured or deployed. The database accepts a rubric-linked suggestion only through the service role and exposes it only in the administrator review queue, with provider, model, rubric version, confidence and evidence. It cannot populate, release or change the human score. Do not connect a model until the owner approves image-processing consent, retention, cost, a labelled validation set and criterion-level accuracy/bias thresholds.
+Drawing AI inference is not configured or deployed. The database accepts a rubric-linked suggestion only through the service role. Staff authorized to open that review can see the provider, model, rubric version, confidence and evidence. It cannot populate, release or change the human score. Do not connect a model until the owner approves image-processing consent, retention, cost, a labelled validation set and criterion-level accuracy/bias thresholds.
 
 ## Controlled Google acceptance
 
@@ -34,7 +34,7 @@ Google's provider redirect remains `https://tiodqzvvujxvxssvjdis.supabase.co/aut
 
 Frontend switches are separate:
 
-- `VITE_TEST_LOGIN_ENABLED=true` permits the controlled account screen for development/staging/test deployments. Direct portal, profile, report, admin and attempt links show a closed-workspace notice in that build. The Supabase signup hook and server authorization govern actual accounts and RPCs.
+- `VITE_TEST_LOGIN_ENABLED=true` permits the controlled account screen for development/staging/test deployments. Direct portal, profile, report, teacher, admin and attempt links show a closed-workspace notice in that build. The Supabase signup hook and server authorization govern actual accounts and RPCs.
 - `VITE_PORTAL_ENABLED=true` is reserved for a released portal with its published `VITE_TERMS_VERSION`. It cannot be combined with controlled login mode.
 - Both default false. Browser configuration accepts public publishable/anon keys only. Service and merchant secrets remain server-only. A production release rejects controlled login; an explicitly staged build is required for the private hosted acceptance screen.
 
