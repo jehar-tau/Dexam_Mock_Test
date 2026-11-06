@@ -11,8 +11,8 @@ export function compileRuntimeManifest(manifest,mediaCatalog){
  const byExam={};
  const records=manifest.records.map(record=>{
   const runtime=runtimeQuestion(record.payload,{rule:RULES_2027[record.exam],mediaCatalog});
-  const summary=byExam[record.exam]??={ready:0,unavailable:0,withImages:0};
-  if(runtime){summary.ready++;if(runtime.media.length)summary.withImages++;}else summary.unavailable++;
+  const summary=byExam[record.exam]??={ready:0,objective:0,drawing:0,unavailable:0,withImages:0};
+  if(runtime){summary.ready++;summary[runtime.kind==='drawing'?'drawing':'objective']++;if(runtime.media.length)summary.withImages++;}else summary.unavailable++;
   return{externalKey:record.externalKey,contentSha256:record.contentSha256,runtime};
  });
  return{sourceCommit:manifest.sourceCommit,sourceSha256:manifest.sourceSha256,version:'iitb-2027-v1',byExam,total:records.length,ready:records.filter(r=>r.runtime).length,planSha256:sha256(stableJson(records)),records};

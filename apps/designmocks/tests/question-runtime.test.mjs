@@ -40,6 +40,13 @@ test('numeric keys preserve exact decimal text and explicit ranges without inven
  assert.deepEqual(nat('1.95–2.05').key.accepted,[{range:['1.95','2.05']}]);
  for(const raw of ['1.000000000000000002 to 1.000000000000000001','2 to 1','1/2','1,2','2 units','Infinity',''])assert.equal(nat(raw),null);
 });
+test('verified Part B tasks compile only as human-reviewed drawing runtime',()=>{
+ const drawing=convert(fixture({type:'DESCRIPTIVE',options:[],answer:null,assets:[figure],visualDependency:true,topic:'drawing-product'}));
+ assert.equal(drawing.kind,'drawing');assert.deepEqual(drawing.marking,{correct:50,wrong:0,humanReview:true});assert.equal(drawing.context.part,'B');assert.equal(drawing.context.durationSeconds,3600);assert.deepEqual(drawing.key,{kind:'drawing',sourceExternalKey:'original-fixture'});
+ const ceed=convert(fixture({type:'DESCRIPTIVE',options:[],answer:null,assets:[figure],visualDependency:true,provenance:{exam:'ceed'}}));assert.equal(ceed.points,20);assert.equal(ceed.context.durationSeconds,7200);
+ assert.equal(convert(fixture({type:'DESCRIPTIVE',options:[],answer:null,assets:[],visualDependency:false})),null);
+ assert.equal(drawing.explanation.includes('Answer key'),false);
+});
 test('canonical ingestion does not silently compile or downgrade independently reviewed runtime plans',()=>{
  const manifest=buildManifest({schemaVersion:1,questions:[fixture()]});
  assert.equal(manifest.records[0].runtime,null);assert.equal(manifest.runtimeReadyTotal,0);

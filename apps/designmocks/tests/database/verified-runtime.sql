@@ -38,6 +38,16 @@ select public.upsert_question_bank_runtime_batch(current_setting('test.nat_runti
 select pg_temp.runtime_reject('select public.upsert_question_bank_runtime_batch(jsonb_set(current_setting(''test.nat_runtime'')::jsonb,''{0,runtime,key,accepted}'',''[{"range":["2.05","1.95"]}]''))','reversed numeric range rejected');
 select pg_temp.runtime_reject('select public.upsert_question_bank_runtime_batch(jsonb_set(current_setting(''test.nat_runtime'')::jsonb,''{0,runtime,key,accepted}'',''[{"exact":"NaN"}]''))','non-finite numeric key rejected');
 reset role;
+insert into dm_private.bank_questions(external_key,content_sha256,exam,question_type,topic,licence,payload,source_commit)
+values('runtime-drawing',repeat('e',64),'uceed','DESCRIPTIVE','drawing-fixture','dexam-original',jsonb_build_object('externalKey','runtime-drawing','prompt','Create an original composition from the supplied brief.','holds','[]'::jsonb,'assets',jsonb_build_array(jsonb_build_object('sha256',repeat('b',64),'width',1,'height',1,'path','original/drawing.png')),'visualDependency',true),repeat('c',40));
+select set_config('test.drawing_runtime',jsonb_build_array(jsonb_build_object('externalKey','runtime-drawing','contentSha256',repeat('e',64),'runtime',jsonb_build_object('context','{"version":"iitb-2027-v1","cycle":2027,"exam":"uceed","part":"B","durationSeconds":3600}'::jsonb,'prompt','Create an original composition from the supplied brief.','kind','drawing','options','[]'::jsonb,'key','{"kind":"drawing","sourceExternalKey":"runtime-drawing"}'::jsonb,'media',jsonb_build_array(jsonb_build_object('path','papers/canonical/'||repeat('b',64)||'.png','sha256',repeat('b',64),'width',1,'height',1)),'marking','{"correct":50,"wrong":0,"humanReview":true}'::jsonb,'points',50,'negativePoints',0,'topic','drawing-fixture','explanation','Human review against the published task rubric.')))::text,true);
+set local role service_role;
+select public.upsert_question_bank_runtime_batch(current_setting('test.drawing_runtime')::jsonb);
+select pg_temp.runtime_reject('select public.upsert_question_bank_runtime_batch(jsonb_set(current_setting(''test.drawing_runtime'')::jsonb,''{0,runtime,marking,humanReview}'',''false''))','Part B cannot become auto-scored');
+select pg_temp.runtime_reject('select public.upsert_question_bank_runtime_batch(jsonb_set(current_setting(''test.drawing_runtime'')::jsonb,''{0,runtime,points}'',''4''))','Part B task marks are fixed');
+select pg_temp.runtime_reject('select public.upsert_question_bank_runtime_batch(jsonb_set(current_setting(''test.drawing_runtime'')::jsonb,''{0,runtime,context,durationSeconds}'',''7200''))','UCEED Part B clock is fixed');
+reset role;
+select pg_temp.runtime_assert((select runtime_payload->>'kind'='drawing'and not objective_ready from dm_private.bank_questions where external_key='runtime-drawing'),'drawing runtime remains separate from objective readiness');
 -- Exhaust all non-empty correct sets and every response set for the verified MSQ ladder.
 do $$declare correct_mask integer;chosen_mask integer;correct_ids jsonb;chosen_ids jsonb;expected numeric;actual numeric;chosen_count integer;begin
  for correct_mask in 1..15 loop

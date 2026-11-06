@@ -1,8 +1,8 @@
 // Operator-only conversion. Exam facts are versioned; no scoring defaults are inferred.
 function freeze(value){for(const child of Object.values(value))if(child&&typeof child==='object')freeze(child);return Object.freeze(value);}
 export const RULES_2027=freeze({
- uceed:{version:'iitb-2027-v1',exam:'uceed',cycle:2027,source:'https://www.uceed.iitb.ac.in/2027/assets/downloads/docs/UCEED2027_Information_Brochure.pdf',pages:'29–31',durationSeconds:7200,sections:{NAT:{count:14,correct:4,wrong:0},MSQ:{count:15,correct:4,wrong:-1,partial:true},MCQ:{count:28,correct:3,wrong:-0.71}}},
- ceed:{version:'iitb-2027-v1',exam:'ceed',cycle:2027,source:'https://www.ceed.iitb.ac.in/2027/downloads/CEED2027_Brochure.pdf',pages:'2–3',durationSeconds:3600,sections:{NAT:{count:8,correct:4,wrong:0},MSQ:{count:10,correct:4,wrong:-1,partial:true},MCQ:{count:26,correct:3,wrong:-0.5}}},
+ uceed:{version:'iitb-2027-v1',exam:'uceed',cycle:2027,source:'https://www.uceed.iitb.ac.in/2027/assets/downloads/docs/UCEED2027_Information_Brochure.pdf',pages:'29–31',durationSeconds:7200,sections:{NAT:{count:14,correct:4,wrong:0},MSQ:{count:15,correct:4,wrong:-1,partial:true},MCQ:{count:28,correct:3,wrong:-0.71}},partB:{durationSeconds:3600,tasks:2,points:50}},
+ ceed:{version:'iitb-2027-v1',exam:'ceed',cycle:2027,source:'https://www.ceed.iitb.ac.in/2027/downloads/CEED2027_Brochure.pdf',pages:'2–3',durationSeconds:3600,sections:{NAT:{count:8,correct:4,wrong:0},MSQ:{count:10,correct:4,wrong:-1,partial:true},MCQ:{count:26,correct:3,wrong:-0.5}},partB:{durationSeconds:7200,tasks:5,points:20}},
 });
 const number='[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)';
 const numeric=new RegExp(`^${number}$`);
@@ -23,9 +23,7 @@ function numericKey(raw){
 }
 export function runtimeQuestion(question,{rule,mediaCatalog=[]}={}){
  if(!rule||rule!==RULES_2027[String(question.provenance?.exam).toLowerCase()])return null;
- const scheme=rule.sections?.[question.type];
- if(!scheme||!Array.isArray(question.holds)||question.holds.length||typeof question.prompt!=='string'||!question.prompt.trim()||!question.answer||question.answer.status==='pending')return null;
- const raw=String(question.answer.raw??'').trim();if(!raw)return null;
+ if(!Array.isArray(question.holds)||question.holds.length||typeof question.prompt!=='string'||!question.prompt.trim())return null;
  const assets=question.assets??[];
  if(!Array.isArray(assets)||(question.visualDependency&&!assets.length))return null;
  const catalogue=new Map(mediaCatalog.map(a=>[a.sha256,a]));const media=[];
@@ -34,6 +32,13 @@ export function runtimeQuestion(question,{rule,mediaCatalog=[]}={}){
   if(!/^[a-f0-9]{64}$/.test(asset.sha256)||!stored||stored.path!==`papers/canonical/${asset.sha256}.png`||stored.width!==asset.width||stored.height!==asset.height||!Number.isInteger(stored.byteSize)||stored.byteSize<45||stored.byteSize>10485760)return null;
   media.push({path:stored.path,alt:`Question figure ${media.length+1}`,sha256:asset.sha256,width:asset.width,height:asset.height});
  }
+ if(question.type==='DESCRIPTIVE'){
+  if(!rule.partB||!assets.length)return null;
+  return{prompt:question.prompt,options:[],kind:'drawing',marking:{correct:rule.partB.points,wrong:0,humanReview:true},media,points:rule.partB.points,negativePoints:0,topic:question.topic||'drawing',key:{kind:'drawing',sourceExternalKey:question.externalKey},explanation:'Human review against the published task rubric.',context:{version:rule.version,exam:rule.exam,cycle:rule.cycle,source:rule.source,part:'B',durationSeconds:rule.partB.durationSeconds}};
+ }
+ const scheme=rule.sections?.[question.type];
+ if(!scheme||!question.answer||question.answer.status==='pending')return null;
+ const raw=String(question.answer.raw??'').trim();if(!raw)return null;
  let key;let options=[];
  if(question.type==='NAT')key=numericKey(raw);
  else{
