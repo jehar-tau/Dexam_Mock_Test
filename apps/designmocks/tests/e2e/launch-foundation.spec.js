@@ -194,4 +194,7 @@ test("drawing submission accepts ordered raster pages", async ({ page }) => {
   await expect(page.getByText("page-one.png")).toBeVisible();
   await expect(page.getByText("page-two.jpg")).toBeVisible();
   await expect(page.getByText("Drawing images saved privately.")).toBeVisible();
+  await page.getByRole("button", { name: "Remove page-one.png" }).click();
+  await expect(page.getByText("page-one.png")).not.toBeVisible();
+  await expect(page.getByText("Drawing image removed.")).toBeVisible();
 });

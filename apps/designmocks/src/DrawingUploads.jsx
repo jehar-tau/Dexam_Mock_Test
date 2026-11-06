@@ -16,11 +16,11 @@ export function DrawingUploads({
     [message, setMessage] = useState("");
   const upload = async (e) => {
     const files = [...e.target.files].slice(0, 5 - items.length);
-    for (const file of files) {
+    for (const [index, file] of files.entries()) {
       const form = new FormData();
       form.set("attemptId", attemptId);
       form.set("questionId", questionId);
-      form.set("ordinal", String(items.length + 1));
+      form.set("ordinal", String(items.length + index + 1));
       form.set("file", file);
       const result = await invoke(form);
       setItems((x) => [
@@ -51,7 +51,16 @@ export function DrawingUploads({
       </label>
       <ol>
         {items.map((x) => (
-          <li key={x.id}>{x.name || `Image ${x.ordinal}`}</li>
+          <li key={x.id}>
+            <span>{x.name || `Image ${x.ordinal}`}</span>
+            <button className="text-button" type="button" aria-label={`Remove ${x.name || `image ${x.ordinal}`}`} onClick={async () => {
+              try {
+                await invoke({ action: "remove", id: x.id });
+                setItems((current) => current.filter((item) => item.id !== x.id));
+                setMessage("Drawing image removed.");
+              } catch (error) { setMessage(error.message); }
+            }}>Remove</button>
+          </li>
         ))}
       </ol>
       {message && <p role="status">{message}</p>}
@@ -67,10 +76,9 @@ export function DrawingUploadsPreview() {
       <DrawingUploads
         attemptId="preview"
         questionId="preview"
-        invoke={async (f) => ({
-          id: crypto.randomUUID(),
-          ordinal: Number(f.get("ordinal")),
-        })}
+        invoke={async (request) => request instanceof FormData
+          ? { id: crypto.randomUUID(), ordinal: Number(request.get("ordinal")) }
+          : { removed: request.id }}
       />
     </section>
   );
