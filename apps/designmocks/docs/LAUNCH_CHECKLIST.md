@@ -35,7 +35,10 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [x] Implement the canonical-source importer and verify dry-run/eligibility/runtime fixtures; no real question content is in the app source or browser bundle.
 - [x] Import the exact canonical hold-free set privately and verify full replay against the same completed run.
 - [x] Upload and verify all canonical private images; accept actual authenticated browser delivery without public access.
-- [ ] Complete runtime media conversion and exact paper/marking/section manifests before publication. The verified UCEED/CEED 2027 compiler dry-run now supports 1,502 objective questions; hosted write/replay and complete timed parts remain pending.
+- [x] Convert and verify UCEED/CEED objective questions with explicit 2027 marking/private images; hosted materialization, replay and exact full-record comparison pass for 1,502 converted questions.
+- [x] Verify canonical import replay preserves independently compiled runtime decisions.
+- [ ] Verify NID/NIFT programme-specific contexts and compile their supported questions.
+- [ ] Complete exact paper/marking/section manifests and full timed-part delivery before publication.
 - [ ] Implement and verify paper-specific sections, timing, marking and locking against the reviewed blueprints; do not present the flat prototype as a complete official exam simulation.
 - [ ] Verify image delivery, saved/resumed attempts, deadline enforcement and immutable submitted answers with representative reviewed papers.
 - [ ] Finish useful section/topic reporting, explanations and practice recommendations. Drawing remains clearly separate from objective scores; do not promise human evaluation until that service is implemented and approved.
@@ -66,7 +69,7 @@ Owner instruction: keep working until the independent mock-test service is compl
 
 This section supersedes older handoffs. Google is enabled and actual owner login works locally and on the owner-private `dmocks.com` Site. Registration remains tester-only (one approved owner), with sales disabled, zero orders/passes and zero released papers. Razorpay is deferred by the owner; do not request or install merchant keys until resumed.
 
-The standalone hosted project has 23 applied migrations, including current main's intake/review-media schemas and `202611060101` canonical media registration. Schema installation does not establish acceptance of the new drawing/intake Edge Functions or human-review operations.
+The standalone hosted project has 25 applied migrations, including current main's intake/review-media schemas `202611060101` canonical media registration, current community moderation and `202611060102` verified runtime validation. Schema installation does not establish acceptance of the new drawing/intake Edge Functions or human-review operations.
 
 The canonical export has 4,521 records: 2,582 explicit empty-holds rows imported privately, 1,939 excluded. Full server-payload comparison and importer replay pass. All 2,085 referenced PNGs (273,263,304 bytes) are now privately uploaded, downloaded and hash-verified, with matching registered dimensions/size. All original PNGs also pass full Pillow decode. Source files remain outside the app and browser bundle. No rights/publication flags were approved.
 
@@ -74,9 +77,9 @@ The first upload stopped after 1,779 registrations and 1,781 objects. A bounded 
 
 Actual owner-browser acceptance rendered a 1496 × 687 image through the existing authenticated attempt signer in an explicitly temporary, unpublished, unreviewed QA fixture. No answer was selected/submitted. The fixture was removed and hosted counts returned to zero attempts/papers. This proves private image delivery, not acceptance of a complete reviewed exam or commercial release.
 
-There are still only 161 currently supported asset-free runtime conversions, all official/unlicensed. The 48 Dexam-original records have no supplied input-image assets; descriptive drawing questions need their proper response/review workflow rather than invented image requirements. Runtime image mapping, exact exam sections/marking, rights approval and representative reviewed-paper acceptance remain open.
+The verified 2027 UCEED/CEED compiler now converts 1,502 objective questions with private images (830 UCEED, 672 CEED). Real provider materialization and replay pass; every one of the 2,582 runtime decisions matches the canonical content hash and compiled JSON. Repeating the original canonical import preserves the runtime records. This supersedes the earlier 161-question prototype adapter with guessed +1/0 marks. NID/NIFT contexts remain unavailable until their programme-specific rules are verified. The 48 Dexam-original records have no supplied input-image assets; descriptive questions need the proper drawing response/review workflow. No approvals or paper releases were made.
 
-Current checks: 26 JavaScript tests, four Python fixtures, production build/preview isolation, disposable PostgreSQL 17 suites across all 23 migrations, and 29 read-only hosted HTTP checks pass. Full current-branch GitHub browser/CI acceptance is required before merge. The managed Site currently contains source through PR #24; later merged app features require a separate deliberate owner-private publication.
+Current checks: 34 JavaScript tests, four Python fixtures, 34 desktop/mobile browser journeys, production build/preview isolation, dependency audit, server types, PostgreSQL 17 suites across all 25 migrations, and 29 read-only hosted HTTP checks pass. PR #30 is merged, with main CI green. The managed Site currently contains source through PR #24; later UI features require deliberate owner-private publication. Actual full-paper sections/clocks, drawing acceptance, rights, policies and public-launch approval remain open.
 
 Keep the goal active while meaningful independent work remains. An owner/provider dependency blocks that item only. Never request credentials or personal identity/payment details in chat, change Dexam services, or turn elapsed time into approval.
 
