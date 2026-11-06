@@ -131,14 +131,18 @@ export function WorkspaceView({
               )}
             </article>
             <article>
-              <span>ATTEMPTS</span>
-              <h2>{data.attempts.length}</h2>
-              <p>One at a time.</p>
+              <span>COMPLETED ATTEMPTS</span>
+              <h2>{data.analytics?.completed ?? 0}</h2>
+              <p>Submitted and safely stored.</p>
             </article>
             <article>
               <span>YOUR NEXT STEP</span>
-              <h2>Begin.</h2>
-              <a href="#your-papers">Choose a released paper →</a>
+              <h2>{data.analytics?.recommendedTopic?.topic ?? "Begin."}</h2>
+              {data.analytics?.recommendedTopic ? (
+                <Link to="/dashboard/practice">Practise the recommended topic →</Link>
+              ) : (
+                <a href="#your-papers">Choose a released paper →</a>
+              )}
             </article>
           </div>
           {data.analytics?.activeAttempt && (
@@ -149,6 +153,30 @@ export function WorkspaceView({
                 Resume attempt →
               </Link>
             </div>
+          )}
+          {data.analytics?.objectiveAccuracy != null && (
+            <>
+              <h2>Your performance snapshot.</h2>
+              <div className="dashboard-stats analytics-snapshot" aria-label="Performance snapshot">
+                <article>
+                  <span>OBJECTIVE ACCURACY</span>
+                  <h2>{data.analytics.objectiveAccuracy}%</h2>
+                  <p>Across {data.analytics.objectiveAnswered} released answered questions.</p>
+                </article>
+                <article>
+                  <span>DRAWING REVIEWS</span>
+                  <h2>{data.analytics.drawingReviews?.released ?? 0} released</h2>
+                  <p>{data.analytics.drawingReviews?.pending ?? 0} awaiting teacher release.</p>
+                </article>
+                {data.analytics.exams?.slice(0, 2).map((exam) => (
+                  <article key={exam.exam}>
+                    <span>{exam.exam.toUpperCase()} PERFORMANCE</span>
+                    <h2>{exam.averagePercent}% average</h2>
+                    <p>Best {exam.bestPercent}% across {exam.attempts} attempt{exam.attempts === 1 ? "" : "s"}.</p>
+                  </article>
+                ))}
+              </div>
+            </>
           )}
           {data.analytics?.topics?.length > 0 && (
             <>

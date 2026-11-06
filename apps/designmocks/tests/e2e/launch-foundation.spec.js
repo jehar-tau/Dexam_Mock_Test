@@ -69,6 +69,9 @@ test("fictional portal preview exposes every requested navigation area", async (
     await expect(navigation.getByRole("link", { name })).toBeVisible();
   }
   await expect(page.getByText("Sample Student")).toBeVisible();
+  await expect(page.getByLabel("Performance snapshot")).toContainText("80%");
+  await expect(page.getByText("Visual hierarchy", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("2 released", { exact: true })).toBeVisible();
 });
 
 test("candidate profile validates and saves the complete preview flow", async ({
