@@ -85,6 +85,9 @@ select pg_temp.assert_true((public.save_candidate_profile('Asha Rao','+919111111
 select pg_temp.reject('select * from dm_private.bank_questions','student private bank access');
 reset role;
 update dm_private.all_india_events set starts_at=now()-interval '1 day',ends_at=now()+interval '9 days',review_ends_at=now()+interval '19 days' where id=current_setting('test.all_india_event')::uuid;
+insert into dm_private.bank_questions(external_key,content_sha256,exam,question_type,topic,licence,objective_ready,owner_approved,rights_confirmed,active,payload,runtime_payload,source_commit)
+select 'payment-launch-nid-'||n,md5(n::text)||md5(n::text),'nid','MCQ','payment-launch-fixture','owned',true,true,true,true,jsonb_build_object('externalKey','payment-launch-nid-'||n,'holds','[]'::jsonb),jsonb_build_object('kind','mcq'),repeat('d',40)from generate_series(1,30)n;
+update dm_private.exam_mock_blueprints set enabled=true where exam='nid';update dm_private.launch_gate_attestations set approved=true,evidence='Fictional payment invariant evidence';
 update public.launch_settings set sales_enabled=true,policy_version='v1';
 set local role authenticated;
 select pg_temp.reject('select public.prepare_order()','unaccepted terms');

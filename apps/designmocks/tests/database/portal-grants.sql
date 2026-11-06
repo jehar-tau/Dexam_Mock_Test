@@ -44,6 +44,8 @@ begin
   ,'public.admin_set_paper_upload_grace(uuid,integer)'
   ,'public.finalize_my_expired_attempts()'
   ,'public.admin_operational_health()'
+  ,'public.admin_launch_readiness()'
+  ,'public.admin_set_launch_gate(text,boolean,text)'
   ,'public.community_media_paths(text,uuid)'
  ] loop
   if has_function_privilege('anon',signature,'EXECUTE') then raise exception 'Anonymous execute unexpectedly granted: %',signature; end if;
