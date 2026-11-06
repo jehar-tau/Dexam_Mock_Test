@@ -20,6 +20,7 @@ begin
   'public.admin_all_india_events()',
   'public.all_india_event_catalog()',
   'public.learning_catalog()',
+  'public.learning_progress()',
   'public.admin_learning_lessons()',
   'public.community_feed(text,text)',
   'public.admin_drawing_queue()',

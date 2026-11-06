@@ -203,8 +203,12 @@ select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002'
 select set_config('test.lesson_id',public.admin_upsert_learning_lesson(null,'notice-first','uceed','observation','Notice before deciding','Separate observation from assumption.','A fictional rights-cleared lesson body for database verification.',1,true,true)::text,true);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 select pg_temp.assert_true(jsonb_array_length(public.learning_catalog())=1,'student sees published rights-cleared lesson');
+select pg_temp.assert_true((public.learning_progress()->>'total')::integer=1 and (public.learning_progress()->>'completed')::integer=0,'learning progress starts incomplete');
+select pg_temp.assert_true(public.learning_progress()->'recommendation'->>'slug'='notice-first','learning path recommends an incomplete lesson');
+select pg_temp.assert_true((public.learning_progress()->'recommendation'->>'answered')::integer=1 and public.learning_progress()->'recommendation'->>'reason' like 'Recommended from your%','learning recommendation uses released attempt performance');
 select public.complete_learning_lesson(current_setting('test.lesson_id')::uuid);
 select pg_temp.assert_true((public.learning_catalog()->0->>'completed')::boolean,'lesson completion is recorded');
+select pg_temp.assert_true((public.learning_progress()->>'percent')::integer=100 and public.learning_progress()->'recommendation'='null'::jsonb,'learning progress completes without a stale recommendation');
 select set_config('test.community_post',public.create_community_post('uceed','observation','A fictional community question','This is a sufficiently detailed fictional discussion prompt.')::text,true);
 select pg_temp.assert_true(jsonb_array_length(public.community_feed(null,null))=1,'signed-in student sees community post');
 select public.report_community_content(current_setting('test.community_post')::uuid,null,'answer_leak','Fictional report for moderation testing');
