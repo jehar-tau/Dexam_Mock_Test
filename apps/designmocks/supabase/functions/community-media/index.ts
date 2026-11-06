@@ -1,11 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
-
-const imageType = (bytes: Uint8Array) => {
-  if (bytes.length >= 8 && [137,80,78,71,13,10,26,10].every((value,index) => bytes[index] === value)) return "image/png";
-  if (bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255) return "image/jpeg";
-  if (bytes.length >= 12 && new TextDecoder().decode(bytes.slice(0,4)) === "RIFF" && new TextDecoder().decode(bytes.slice(8,12)) === "WEBP") return "image/webp";
-  return null;
-};
+import { rasterMimeType } from "../_shared/raster.mjs";
 
 Deno.serve(async (request) => {
   const origin = Deno.env.get("PUBLIC_APP_ORIGIN");
@@ -32,7 +26,7 @@ Deno.serve(async (request) => {
     }
     const form=await request.formData(),targetType=String(form.get("targetType")??""),targetId=String(form.get("targetId")??""),ordinal=Number(form.get("ordinal")),file=form.get("file");
     if (!(file instanceof File)||!['post','comment'].includes(targetType)||!Number.isInteger(ordinal)||ordinal<1||ordinal>3||file.size<1||file.size>5242880) return respond({error:"Invalid community image"},400);
-    const bytes=new Uint8Array(await file.arrayBuffer()),detected=imageType(bytes);
+    const bytes=new Uint8Array(await file.arrayBuffer()),detected=rasterMimeType(bytes);
     if (!detected||detected!==file.type) return respond({error:"Image content does not match its file type"},400);
     const extension=detected==='image/jpeg'?'jpg':detected.split('/')[1];
     const path=`community/${user.id}/${targetType}/${targetId}/${crypto.randomUUID()}.${extension}`;

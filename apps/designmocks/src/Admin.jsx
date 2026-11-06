@@ -344,23 +344,10 @@ export function Admin() {
       setMessage(e.message);
     }
   };
-  const reviewDrawing = async (id, review) => {
-    try {
-      await rpc("admin_review_drawing", {
-        p_review_id: id,
-        p_criterion_marks: review.criteria,
-        p_comments: review.comments,
-        p_score: review.score,
-        p_override_reason: review.overrideReason,
-      });
-      await load();
-    } catch (e) {
-      setMessage(e.message);
-    }
-  };
-  const releaseDrawing = async (id) => {
-    try { await rpc("admin_release_drawing_review", { p_review_id: id }); await load(); }
-    catch (e) { setMessage(e.message); }
+  const refreshDrawings = async () => setDrawings(await rpc("admin_drawing_queue"));
+  const updateDrawingReview = async (procedure, id, input = {}) => {
+    await rpc(procedure, { p_review_id: id, ...input });
+    await refreshDrawings();
   };
   const resolveCommunityReport = async (id, resolution) => {
     try {
@@ -446,7 +433,14 @@ export function Admin() {
           </form>
           <IntakeExtractionQueue assets={intake} onExtract={extractIntake} onPromote={promoteIntake} onReject={rejectIntake} />
           <h2>Drawing review queue</h2>
-          <DrawingReviewQueue drawings={drawings} onReview={reviewDrawing} onRelease={releaseDrawing} />
+          <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings}
+            onClaim={(id) => updateDrawingReview("admin_claim_drawing_review", id)}
+            onReturn={(id, version) => updateDrawingReview("admin_return_drawing_review", id, { p_expected_version: version })}
+            onReview={(id, version, review) => updateDrawingReview("admin_review_drawing", id, {
+              p_expected_version: version, p_criterion_marks: review.criteria, p_comments: review.comments,
+              p_score: review.score, p_override_reason: review.overrideReason,
+            })}
+            onRelease={(id, version) => updateDrawingReview("admin_release_drawing_review", id, { p_expected_version: version })} />
           <h2>Community moderation</h2>
           <CommunityModerationQueue reports={communityReports} onResolve={resolveCommunityReport} />
           <h2>Publish a theory lesson</h2>

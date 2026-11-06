@@ -80,7 +80,7 @@ Choose verification proportional to the change. The complete `npm run check` inc
 As of 7 November 2026:
 
 - Sequential UCEED/CEED Part A → Part B sessions (PR #53), the combined exam report (#54) and audited launch-readiness gates (#55) are merged to `main`.
-- NIFT 2027 B.Des. GAT (100 MCQ, 120 minutes, +1/−0.25) is implemented on PR #56 and not yet merged. Its blueprint stays unreleased. The NIFT CAT, B.F.Tech. Section B, other NIFT programmes and NID are not modelled.
+- NIFT 2027 B.Des. GAT (100 MCQ, 120 minutes, +1/−0.25) is merged in PR #56. Its blueprint stays unreleased. The NIFT CAT, B.F.Tech. Section B, other NIFT programmes and NID are not modelled.
 - Any runtime write resets a bank question's `owner_approved` and `rights_confirmed` (`dm_private.reset_bank_review_on_change`), so freshly materialized questions need `admin_review_bank_question` again before a blueprint counts them.
 - The app includes the public catalogue/offer experience, timed sample, protected workspace foundations, reporting/moderation/operations work, and server-side payment/provider foundations described in the README.
 - Controlled Google login and the private canonical bank/image import have documented acceptance, but later local provider migrations and capabilities still require deliberate staging promotion and representative hosted acceptance.
@@ -99,10 +99,7 @@ Before switching agents or pausing for quota reset:
 
 ## Latest session checkpoint
 
-- Branch: `feature/dmocks-nift-2027-gat`, pushed, working tree clean. Commits on top of `main` (`15c0722`): `987986d` (NIFT GAT context), `17385a2` (database test reviews the materialized runtime before checking readiness), `92579c1` and this handoff update.
-- PR: https://github.com/jehar-tau/Dexam_Mock_Test/pull/56, open, mergeable, CI `app` passing at `92579c1`, awaiting owner review. Auto-fix was enabled in the Claude Code session that opened it.
-- Outcome delivered: verified NIFT 2027 B.Des. GAT exam mock context, checked on 6 November 2026 against the NIFTEE 2027 Information Bulletin (16 October 2026), printed pages 18–20, sections 3.4 and 3.7.
-- Changed: `scripts/question-runtime.mjs` (`niftee-2027-bdes-v1` rule), `scripts/materialize-bank-runtime.mjs` (routes NIFT records to the new RPC; plan version `verified-2027-v2`), `supabase/migrations/202611060121_verified_nift_bdes_gat.sql` (fixed NIFT blueprint, not enabled; service-only `upsert_nift_question_bank_runtime_batch`), `src/ExamMocks.jsx` (preview fixture), database tests (`verified-nift.sql`, `portal-grants.sql`, `scripts/check-database.sh`), unit and e2e tests, and docs (`README.md`, `docs/EXAM_RULES.md`, `docs/LAUNCH_CHECKLIST.md`). Paths are under `apps/designmocks/`.
-- Checks passed: CI `app` (full `npm run check`, `npm audit --omit=dev`, server-function type check, full database suite); locally `npm test` (55/55), `npm run build`, preview isolation, Playwright `exam-wise mocks`, and the full `npm run test:database` on disposable `postgres:17`. Offline compile of the `origin/main` canonical bank: 155 of 298 eligible NIFT records compile, all four-option, single-key, hold-free and figure-free (enough for 100).
-- Not done: hosted `runtime:manifest`/`runtime:apply` for NIFT, re-review of the materialized NIFT questions, and releasing the NIFT blueprint. All three need explicit owner authorization.
-- Next action: owner reviews and merges PR #56. Then, only if authorized, run hosted NIFT materialization and review, and record the evidence in `docs/VERIFICATION.md`.
+- PR #56 merged the NIFT 2027 B.Des. GAT contract in `74a81fd`. Offline compilation produced 155 of 298 eligible NIFT records. Hosted materialization, replay, rights review and blueprint release are pending.
+- The drawing-review slice binds upload and removal to the authenticated student, closes the evidence before a teacher can claim it, and uses revision checks for grading and release. The administrator form totals criterion marks, and overrides are audited and require explicit re-release.
+- Local evidence includes 59 JavaScript tests, four Python fixtures, 54 browser journeys, scoped desktop/mobile accessibility checks, the server-function type check, and all 46 migrations with transactional suites on disposable PostgreSQL 17.
+- Next assessment dependency: connect the closed drawing upload and grading workflow to All India results. Provider deployment and acceptance still require the matching migration, drawing media functions and UI in an isolated staging environment.
