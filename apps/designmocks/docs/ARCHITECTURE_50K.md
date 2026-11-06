@@ -23,7 +23,7 @@ Static frontend traffic is served at the edge. Authentication, PostgreSQL, row-l
 - Database indexes in migration `202611050005_scale_indexes.sql` cover dashboard history, active attempts, paper reads and checkout idempotency.
 - Private media URLs are signed in one Storage batch per attempt instead of one network round trip per image.
 - CDN caching is allowed only for versioned public assets. Account, payment, attempt and signed-media responses remain `no-store`.
-- Apply per-IP and per-user rate limits at the edge: login 10/minute, checkout 5/10 minutes, attempt start 10/hour, answer autosave 120/minute, submission 10/hour.
+- The database now enforces per-user attempt start 10/hour, accepted answer autosave 120/minute and first submission 10/hour. Stale autosave retries remain idempotent and do not consume the bucket; the unrevisioned answer writer is private. Apply the remaining per-IP edge limits for login 10/minute and checkout 5/10 minutes before those capabilities open.
 - Set statement timeouts for authenticated requests, cap request bodies, and keep Edge Function timeouts below the payment provider retry window.
 - Use connection pooling for application traffic. Reserve direct database connections for migrations and controlled operations.
 

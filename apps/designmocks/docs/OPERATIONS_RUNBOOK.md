@@ -14,6 +14,8 @@ Poll the service-only `admin_operational_health()` RPC every minute and record o
 
 Run `finalize_expired_attempts(500)` with the service identity once per minute until it returns zero. A browser or authenticated student must never receive the service credential. A nonzero stale-attempt count after two sweeps is P2.
 
+Run `prune_attempt_rate_buckets()` with the service identity once daily. It retains the current two days by default and refuses a boundary newer than one hour. Rate-limit rows contain only user IDs, action names, fixed window timestamps and counts—never answers. A sudden rise in rejected autosaves should be investigated as a client retry loop; do not raise the limit without capacity evidence.
+
 ## Incident sequence
 
 1. Record environment, release SHA, UTC start time, aggregate health counters and affected route/provider. Do not record sensitive request bodies.
