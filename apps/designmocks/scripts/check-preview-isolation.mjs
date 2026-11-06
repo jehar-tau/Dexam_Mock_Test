@@ -7,7 +7,7 @@ async function check(directory) {
     if (entry.isDirectory()) await check(path);
     else if (/\.(js|html)$/.test(entry.name)) {
       const source = await readFile(path, "utf8");
-      for (const marker of ["Sample Student", "illustrative-uceed", "portal-preview/report", "portal-preview/pending", "Fictional All India mock", "PortalPreview", "OFFLINE SYNC PREVIEW", "PRIVATE INTAKE PREVIEW", "Run accessibility check"])
+      for (const marker of ["Sample Student", "illustrative-uceed", "portal-preview/report", "portal-preview/pending", "Fictional All India mock", "PortalPreview", "OFFLINE SYNC PREVIEW", "PRIVATE INTAKE PREVIEW", "drawing-review-lifecycle-preview", "Draw a portable reading light.", "Run accessibility check"])
         assert.ok(!source.includes(marker), `Local QA content leaked into ${path}: ${marker}`);
     }
   }

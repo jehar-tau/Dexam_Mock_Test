@@ -40,7 +40,11 @@ begin
   ,'public.admin_promote_intake_candidate(uuid,jsonb)'
   ,'public.admin_reject_intake_candidate(uuid)'
   ,'public.admin_drawing_review_media_paths(uuid)'
-  ,'public.admin_release_drawing_review(uuid)'
+  ,'public.admin_claim_drawing_review(uuid)'
+  ,'public.admin_return_drawing_review(uuid,integer)'
+  ,'public.admin_review_drawing(uuid,integer,jsonb,text,numeric,text)'
+  ,'public.admin_release_drawing_review(uuid,integer)'
+  ,'public.can_upload_drawing(uuid,uuid,integer)'
   ,'public.admin_set_paper_upload_grace(uuid,integer)'
   ,'public.finalize_my_expired_attempts()'
   ,'public.admin_operational_health()'
@@ -56,6 +60,15 @@ begin
  if not has_function_privilege('service_role','public.finalize_expired_attempts(integer)','EXECUTE') then raise exception 'Service bulk finalizer grant missing'; end if;
  if has_function_privilege('authenticated','public.record_drawing_ai_suggestion(uuid,text,text,text,jsonb,text,numeric,numeric,jsonb)','EXECUTE') then raise exception 'Drawing AI writer must remain service-only'; end if;
  if not has_function_privilege('service_role','public.record_drawing_ai_suggestion(uuid,text,text,text,jsonb,text,numeric,numeric,jsonb)','EXECUTE') then raise exception 'Drawing AI service writer grant missing'; end if;
+ foreach signature in array array[
+   'public.register_drawing_upload(uuid,uuid,uuid,text,integer,text,integer)',
+   'public.remove_drawing_upload(uuid,uuid)'
+ ] loop
+  if has_function_privilege('anon',signature,'EXECUTE') or has_function_privilege('authenticated',signature,'EXECUTE')
+    or not has_function_privilege('service_role',signature,'EXECUTE') then
+    raise exception 'Drawing media writer must remain service-only: %',signature;
+  end if;
+ end loop;
  if has_function_privilege('authenticated','public.upsert_nift_question_bank_runtime_batch(jsonb)','EXECUTE') then raise exception 'NIFT runtime writer must remain service-only'; end if;
  if not has_function_privilege('service_role','public.upsert_nift_question_bank_runtime_batch(jsonb)','EXECUTE') then raise exception 'NIFT runtime service writer grant missing'; end if;
  if has_function_privilege('authenticated','public.save_answer(uuid,uuid,jsonb)','EXECUTE') then raise exception 'Legacy unrevisioned answer writer must remain private'; end if;

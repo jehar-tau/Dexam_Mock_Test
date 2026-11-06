@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { fileURLToPath } from "node:url";
 
 test("submitted All India attempts show release status without premature feedback", async ({ page }) => {
   await page.goto("/portal-preview/pending");
@@ -286,18 +287,58 @@ test("teacher can open anonymous private drawing pages", async ({ page }) => {
 
 test("teacher review is released separately to the drawing student", async ({ page }) => {
   await page.goto("/drawing-review-lifecycle-preview");
+  const queue = page.getByRole("region", { name: "Drawing review queue" });
   const advisory = page.getByLabel("AI review advisory");
+  const claim = queue.getByRole("button", { name: "Claim anonymous review" });
+  await expect(queue.getByText(/student upload window is still open/)).toBeVisible();
+  await expect(queue.getByText("Assigned to another teacher.")).toBeVisible();
+  await expect(claim).toHaveCount(1);
+  await expect(advisory).toHaveCount(0);
+  await claim.focus();
+  await page.keyboard.press("Enter");
   await expect(advisory).toContainText("AI ADVISORY — NOT A GRADE");
   await expect(advisory).toContainText("Proposed 14 marks");
-  await expect(page.getByLabel("Score out of 20")).toHaveValue("");
-  await page.getByLabel("Criterion marks JSON").fill('{"composition":8,"clarity":7}');
-  await page.getByLabel("Score out of 20").fill("15");
+  await expect(queue.getByLabel("Mark 1", { exact: true })).toHaveValue("");
+  await queue.getByRole("button", { name: "Return to review queue" }).click();
+  await expect(advisory).toHaveCount(0);
+  await claim.click();
+  await queue.getByRole("button", { name: "Open private images" }).click();
+  await expect(queue.getByRole("img", { name: "Anonymous drawing page 1" })).toBeVisible();
+  await queue.getByRole("button", { name: "Refresh private images" }).click();
+  await expect(queue.getByRole("img", { name: "Anonymous drawing page 1" })).toBeVisible();
+  await queue.getByLabel("Criterion 1", { exact: true }).fill("Composition");
+  await queue.getByLabel("Mark 1", { exact: true }).fill("8");
+  await queue.getByRole("button", { name: "Add criterion" }).click();
+  await queue.getByLabel("Criterion 2", { exact: true }).fill("Clarity");
+  await queue.getByLabel("Mark 2", { exact: true }).fill("17");
   await page.getByLabel("Feedback").fill("Clear hierarchy; strengthen the directional contrast.");
+  await queue.getByRole("button", { name: "Save human review" }).click();
+  await expect(queue.getByRole("alert")).toContainText("cannot exceed 20 marks");
+  await queue.getByLabel("Mark 2", { exact: true }).fill("7");
+  await expect(queue.getByLabel("Total marks")).toHaveText("15 / 20");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize().width);
+  await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
+  const violations = await page.evaluate(async () => {
+    const result = await window.axe.run('[aria-label="Drawing review queue"]', {
+      runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] },
+    });
+    return result.violations.map(({ id, nodes }) => ({ id, targets: nodes.map(({ target }) => target) }));
+  });
+  expect(violations).toEqual([]);
   await page.getByRole("button", { name: "Save human review" }).click();
   await expect(page.getByText("Human review pending.")).toBeVisible();
+  await expect(page.getByText("15/20 marks")).toHaveCount(0);
   await page.getByRole("button", { name: "Release feedback to student" }).click();
   await expect(page.getByText("15/20 marks")).toBeVisible();
   await expect(page.locator(".drawing-feedback").getByText("Clear hierarchy; strengthen the directional contrast.")).toBeVisible();
+  await queue.getByLabel("Mark 2", { exact: true }).fill("8");
+  await expect(queue.getByLabel("Override reason")).toHaveAttribute("required", "");
+  await queue.getByLabel("Override reason").fill("Second reviewer correction");
+  await queue.getByRole("button", { name: "Save reviewed override" }).click();
+  await expect(page.getByText("Human review pending.")).toBeVisible();
+  await expect(page.getByText("16/20 marks")).toHaveCount(0);
+  await queue.getByRole("button", { name: "Release feedback to student" }).click();
+  await expect(page.getByText("16/20 marks")).toBeVisible();
 });
 
 test("operations health exposes privacy-safe actionable counters", async ({ page }) => {
