@@ -1,5 +1,17 @@
 # Verification
 
+## Current private media acceptance — 6 November 2026
+
+All 2,085 canonical PNGs are uploaded to the standalone private `paper-media` bucket and registered through service-only RPCs. Each authenticated download matches SHA-256, dimensions and size; aggregate bytes are 273,263,304, media manifest SHA-256 `487c643aea3ba664d2a1a88ffb4f3515b9a4b1da55fe6a600e38b29e6d013362`. The pinned plan used source `ad062c9ca99279841e4f954d4c526d5cf4a86468`; its bank digest is unchanged from the imported run. Full Pillow verification/decode passes for every source PNG. No real image or question payload is committed to the app.
+
+The first upload stopped at 1,779 registered/1,781 stored. A verified resume completed the remaining 306 registrations using 304 uploads and two existing-object downloads. Three-object replay reuses all three, with no overwrite. Retry handling is bounded for transient network/429/502/503/504 errors; permission errors stop. The original interruption root cause was not established.
+
+Real provider checks confirm matching metadata for every image, private bucket, zero browser Storage policies, public retrieval 400 and anonymous download 404. A temporary owner-only, unpublished/unreviewed/unapproved QA attempt rendered a 1496 × 687 PNG through the deployed attempt-media signer at 770 × 354. No answers were submitted. Exact-ID cleanup is verified: zero attempts/papers, 2,582 bank rows, 2,085 media rows, zero approvals, one owner account and sales false. This is image delivery acceptance, not full exam publication/scoring acceptance. Screenshot: parent `output/visual-audit/dmocks-signed-image-qa.png`. Provider counts/digests only: ignored `test-results/private-media-upload.json`, `private-media-provider-acceptance.json`, `private-media-decode.json`.
+
+All 23 migrations are now installed/tracked, including current-main question-intake and teacher-media schemas plus `202611060101`. Disposable PostgreSQL 17 runs all migrations and access/scoring/payment/grant/release/import/media/signup suites. Current checks pass: 26 JavaScript tests, four Python readiness fixtures, production build and preview/QA bundle isolation. Hosted controlled/portal smoke checks pass 29/29 with the canonical CORS origin `https://dmocks.com`. Current-branch full browser/CI remains required before merge. Existing hosted publication is source through PR #24; later UI/functions are not claimed released. Razorpay stays deferred.
+
+The 48 Dexam-original records have no input-image assets; they require the appropriate drawing response/review workflow. Older statements that all such records need missing input images are superseded. Runtime image mapping, exact blueprint/marking and rights clearance remain open.
+
 ## Current private bank acceptance — 6 November 2026
 
 The exact canonical main export at `5e04ea6b5bcbdf344b601d0092ad316ff0e34555` is privately imported: 2,582 eligible rows, 1,939 excluded, 161 current asset-free runtime conversions, zero publication/rights approvals. Source SHA-256 is `dd7702650b6e8ffeb348d0b558ecdd2bfbc1e565f2a392536518a3cebc8962be`. The provider ledger records completed run `9b12d4cf-b0a0-4fc5-bd64-15068739134b`, with expected/recorded/membership counts all 2,582. A complete importer replay returns the same run. No question payload, key or service credential was printed or added to the app source/browser bundle.

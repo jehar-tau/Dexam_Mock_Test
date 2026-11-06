@@ -13,7 +13,7 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [x] 10 read-only hosted setup checks pass; new registrations and sales remain closed.
 - [x] Original timed experience sample and focused feedback, answer review, mobile/keyboard/theme/reflow checks.
 - [x] Dedicated Google Cloud project `designmocks-auth-2026`; Google app registration saved after the owner's policy confirmation.
-- [x] Closed-by-default Google signup hook installed and configured; hosted transactional decision tests and role-grant assertions pass. Actual OAuth hook execution remains part of the pending sign-in test.
+- [x] Closed-by-default Google signup hook installed and configured; hosted transactional decision tests and role-grant assertions pass. Actual owner OAuth hook execution and callback now pass.
 - [x] Read-only bank readiness scanner and four fixture tests; hashes capture the inspected source versions and concurrent JSON edits invalidate the scan.
 
 - [x] Local, explicitly fictional inside-portal preview: dashboard, original sample links and example feedback report. Preview fixtures/routes are excluded from the production bundle.
@@ -21,7 +21,7 @@ Owner instruction: keep working until the independent mock-test service is compl
 ## Google login — current priority
 
 - [x] Web OAuth client `DesignMocks Web` created in `designmocks-auth-2026`; client inventory and “OAuth client created” confirmation verified on 5 November. Prepared origin/callback are recorded in provider setup; scope verification remains below.
-- [x] Owner saved the Google client ID/secret directly in the separate Supabase provider. Public Auth settings now confirm Google enabled (5 November); credential validity at callback remains untested.
+- [x] Owner saved the Google client ID/secret directly in the separate Supabase provider. Public Auth settings now confirm Google enabled (5 November); credential validity is confirmed by actual callback acceptance below.
 - [x] Verified basic identity scopes and server-controlled owner/tester access; actual Auth hook denial and owner Google callback pass.
 - [x] Enabled labelled owner-only Google testing; the signup hook remains allowlisted and sales remain closed.
 - [x] Local actual Google callback/PKCE, consent, reload persistence, SDK refresh, sign-out, returning-account reuse and cancellation verified.
@@ -34,7 +34,8 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [x] Located and audited the owner-selected canonical `origin/main:server/data/exports/dexam-bank-export.json`; the newer PRODUCT_EXECUTION_PLAN and QUESTION_BANK_AUDIT supersede the old workstation scan for source eligibility.
 - [x] Implement the canonical-source importer and verify dry-run/eligibility/runtime fixtures; no real question content is in the app source or browser bundle.
 - [x] Import the exact canonical hold-free set privately and verify full replay against the same completed run.
-- [ ] Complete private media upload/delivery and exact paper/marking/section manifests before publication.
+- [x] Upload and verify all canonical private images; accept actual authenticated browser delivery without public access.
+- [ ] Complete runtime media conversion and exact paper/marking/section manifests before publication.
 - [ ] Implement and verify paper-specific sections, timing, marking and locking against the reviewed blueprints; do not present the flat prototype as a complete official exam simulation.
 - [ ] Verify image delivery, saved/resumed attempts, deadline enforcement and immutable submitted answers with representative reviewed papers.
 - [ ] Finish useful section/topic reporting, explanations and practice recommendations. Drawing remains clearly separate from objective scores; do not promise human evaluation until that service is implemented and approved.
@@ -61,50 +62,22 @@ Owner instruction: keep working until the independent mock-test service is compl
 - [ ] Present the finished service and real costs for final public/live-payment approval. Preserve the owner-private audience until that approval.
 - [ ] Enable approved production registration/papers/payments, verify the public customer journey, and hand over the live URL, configuration inventory and operating instructions.
 
-## Rules while work continues
+## Current verified state — 6 November 2026
 
-### Latest verified handoff
+This section supersedes older handoffs. Google is enabled and actual owner login works locally and on the owner-private `dmocks.com` Site. Registration remains tester-only (one approved owner), with sales disabled, zero orders/passes and zero released papers. Razorpay is deferred by the owner; do not request or install merchant keys until resumed.
 
-After the owner reported saving Google credentials, both the public Auth settings and refreshed provider dashboard still show Google disabled. The Client IDs field contains `DesignMocks`, rather than an ID ending `.apps.googleusercontent.com`; Save is disabled. A credential-entry handoff is pending. The secret was not revealed or copied. Screenshot: parent `output/visual-audit/designmocks-google-still-disabled.png`.
+The standalone hosted project has 23 applied migrations, including current main's intake/review-media schemas and `202611060101` canonical media registration. Schema installation does not establish acceptance of the new drawing/intake Edge Functions or human-review operations.
 
-The read-only bank scan found 4,796 machine-readable questions across 72 papers, versus 4,742 SQLite questions across 71 papers and 4,521 in the older platform export. There are 221 IDs only in SQLite and 275 only in the machine-readable file. These are separate evolving sources, not interchangeable exports. No real content was imported or published. The scanner's strict candidates require explanations, structural keys/options and recorded unflagged review; it reports zero fully ready candidates under that contract. This is a technical readiness result, not a claim that no human review occurred. Only 59 machine-readable items contain an explanation. Source reconciliation and exact paper manifests remain required.
+The canonical export has 4,521 records: 2,582 explicit empty-holds rows imported privately, 1,939 excluded. Full server-payload comparison and importer replay pass. All 2,085 referenced PNGs (273,263,304 bytes) are now privately uploaded, downloaded and hash-verified, with matching registered dimensions/size. All original PNGs also pass full Pillow decode. Source files remain outside the app and browser bundle. No rights/publication flags were approved.
 
-Keep the goal active while meaningful independent work remains. When an owner credential, legal acceptance, purchase or provider review blocks one item, mark that dependency and continue the other items. Do not turn elapsed time into approval. Never request passwords, PAN/bank details or API secrets in chat. Do not deploy changes to the existing academy/Dexam services as part of this new app.
+The first upload stopped after 1,779 registrations and 1,781 objects. A bounded retry/resume verified previous metadata, registered the remaining 306 assets and reused two already uploaded objects. All 2,085 final objects and registrations match; replaying three verifies reuse without overwrites. No root cause is asserted for the original interrupted request. Public image retrieval returns 400, anonymous download returns 404 and browser Storage policies remain absent.
 
-Evidence: `VERIFICATION.md`, `PROVIDER_SETUP.md`, `PRODUCT_DECISIONS.md`, `supabase/project.json` and the parent workspace's `output/visual-audit/`.
+Actual owner-browser acceptance rendered a 1496 × 687 image through the existing authenticated attempt signer in an explicitly temporary, unpublished, unreviewed QA fixture. No answer was selected/submitted. The fixture was removed and hosted counts returned to zero attempts/papers. This proves private image delivery, not acceptance of a complete reviewed exam or commercial release.
 
-### 5 November: Google client created
+There are still only 161 currently supported asset-free runtime conversions, all official/unlicensed. The 48 Dexam-original records have no supplied input-image assets; descriptive drawing questions need their proper response/review workflow rather than invented image requirements. Runtime image mapping, exact exam sections/marking, rights approval and representative reviewed-paper acceptance remain open.
 
-Verified `DesignMocks Web` in the dedicated Google project and its creation confirmation. Supabase still shows the old app-name Client ID, Google disabled and Save disabled. Owner handoff now specifically requires copying the newly generated client ID and matching secret into the prepared Supabase Google panel, enabling the provider and saving. The secret was neither revealed nor copied.
+Current checks: 26 JavaScript tests, four Python fixtures, production build/preview isolation, disposable PostgreSQL 17 suites across all 23 migrations, and 29 read-only hosted HTTP checks pass. Full current-branch GitHub browser/CI acceptance is required before merge. The managed Site currently contains source through PR #24; later merged app features require a separate deliberate owner-private publication.
 
-### 5 November: Google provider enabled
+Keep the goal active while meaningful independent work remains. An owner/provider dependency blocks that item only. Never request credentials or personal identity/payment details in chat, change Dexam services, or turn elapsed time into approval.
 
-After the owner completed credential entry, the hosted Auth settings report `external.google=true`. All 10 read-only hosted setup checks pass. Global registration remains disabled, the signup hook remains closed and the frontend portal remains disabled. This verifies provider activation, not successful OAuth login or callback secret validity. Controlled owner-only sign-in acceptance is still pending.
-
-### 6 November: current authoritative state
-
-Newer main-branch portal features are preserved; PR #20 question intake is a separate unfinished slice. The hosted backend still has only migrations 001–004, so merged local modules are not claimed as released. A canonical bank dry-run at `48ff649a7240e8b769735132ddb3b4d09e5dbbee` reports 4,521 total, 2,582 explicit empty-holds eligible, 1,939 held, 2,054 objective-ready and 161 currently supported asset-free runtime conversions. No hosted bank import/publication has occurred.
-
-Google local acceptance now passes with exactly one owner Auth account and zero orders/passes. Registration mode is `testers`, with one allowlisted address; the global Auth signup switch is on solely because the restrictive hook must run for Google account creation. Public registration is not open. Cancellation, persistence, token refresh, sign-out and returning login are verified.
-
-Razorpay integration was explicitly deferred by the owner on 6 November. A Test secret appeared in setup tool output and must be regenerated/deactivated before future use. No merchant key was committed or installed, and sales remain false. Do not keep requesting credentials or configuring payments while deferred. Older disabled-Google/PAN/domain-availability notes above are historical; PROVIDER_SETUP.md describes the current verified state.
-
-### 6 November: hosted Google and event-release checks
-
-The controlled-login frontend was published owner-private through the existing Site identity (source `82719b545456c564d9190e957c0027606f3c893a`). Actual `dmocks.com` OAuth/PKCE, reload, refresh and sign-out pass. Hosted SQL still confirms one Google-linked owner account, zero orders/passes, tester policy and sales disabled. Google branding settings now use DMocks and the owned domain; the consent chooser may continue displaying the Supabase callback host, and final public-policy/verification work remains.
-
-A source review found submitted All India attempts exposing keys and derived correctness before explicit result release. A new migration masks attempt/history/analytics responses until release, and the UI shows a pending state. Focused database regression checks fail against the old reader and pass with the fix, including ordinary-practice feedback and fair deadline-capped ranking. This migration is not yet applied to the hosted backend; assessment modules remain unreleased.
-
-### 6 November: portal database installation and API grants
-
-All 19 source migrations are now applied/tracked in the standalone project. The merged 14-migration portal batch was applied atomically from `6be3ac9833518343aae24b7bd27a90c93e7071bb`, guarded by the exact four-migration baseline, closed test-mode sales, one tester and empty assessment/commerce tables. A subsequent narrow hardening migration removes inherited PUBLIC execute from eight portal/admin RPCs while retaining authenticated grants and their internal owner/admin checks.
-
-The new catalogue test detects the original inherited grant and passes after hardening. All existing database suites, the All India embargo suite and grant checks pass in disposable PostgreSQL 17. The grant catalogue checks also pass on hosted Supabase. The expanded read-only portal HTTP smoke suite passes 27/27, including anonymous denials for the new read RPCs and the intentionally public alias-only ranking route. One owner Auth account remains; no orders, passes, attempts, bank questions or public access were created. This supersedes the earlier four-migration status, without claiming paper/provider acceptance or a public launch.
-
-### 6 November: real private bank import completed
-
-Canonical source `5e04ea6b5bcbdf344b601d0092ad316ff0e34555`, source SHA-256 `dd7702650b6e8ffeb348d0b558ecdd2bfbc1e565f2a392536518a3cebc8962be`: 4,521 total, 2,582 hold-free imported and 1,939 excluded. Run `9b12d4cf-b0a0-4fc5-bd64-15068739134b` is completed; repeating the complete importer reuses that run. The service credential was obtained and consumed inside one short-lived process and never printed, written to source or placed in chat. No permissions or bank approval flags were widened.
-
-Actual hosted acceptance found Supabase safe-update protection rejecting the old finalizer's unqualified whole-table update (HTTP 400 / SQLSTATE 21000). Migration `202611060003` updates only changed active states. The regression detects the old behavior; local suites and the real provider completion/replay pass. Hosted migration count is now 20.
-
-There are 161 asset-free runtime candidates, all labelled official/unlicensed. The 48 Dexam-original and 290 owner-provided hold-free records currently require visual/media work. All 2,085 unique referenced PNGs were found read-only under the original bank workstation's `server/data/media` and match the canonical SHA-256 and dimensions; total 273,263,304 bytes. They are ignored local media, absent from the Git source and have not yet been uploaded to DMocks Storage. Every imported record remains unapproved with rights false; no student paper is released.
+Evidence: `VERIFICATION.md`, `PROVIDER_SETUP.md`, `PRODUCT_DECISIONS.md`, `supabase/project.json`, ignored app `test-results/` and parent `output/visual-audit/`.

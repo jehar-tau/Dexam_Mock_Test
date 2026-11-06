@@ -3,7 +3,7 @@
   "project_ref": "tiodqzvvujxvxssvjdis",
   "region": "ap-south-1",
   "organization_plan_verified": "Free",
-  "frontend_origin": "https://designmocks-studio.snehal1155.chatgpt.site",
+  "frontend_origin": "https://dmocks.com",
   "google_callback": "https://tiodqzvvujxvxssvjdis.supabase.co/auth/v1/callback",
   "google_cloud_project": "designmocks-auth-2026",
   "google_cloud_account": "designexam.com@gmail.com"

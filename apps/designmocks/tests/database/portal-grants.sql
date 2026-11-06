@@ -24,6 +24,9 @@ begin
   'public.community_feed(text,text)',
   'public.admin_drawing_queue()',
   'public.my_overview_analytics()'
+  ,'public.admin_question_intake_assets()'
+  ,'public.admin_promote_intake_asset(uuid,jsonb)'
+  ,'public.admin_drawing_review_media_paths(uuid)'
  ] loop
   if has_function_privilege('anon',signature,'EXECUTE') then raise exception 'Anonymous execute unexpectedly granted: %',signature; end if;
   if not has_function_privilege('authenticated',signature,'EXECUTE') then raise exception 'Authenticated route grant missing: %',signature; end if;

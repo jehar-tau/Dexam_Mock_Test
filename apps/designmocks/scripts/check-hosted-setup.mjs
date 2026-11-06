@@ -54,6 +54,7 @@ for (const name of [
     "admin_exam_mock_blueprints", "admin_all_india_events", "all_india_event_catalog",
     "learning_catalog", "admin_learning_lessons", "community_feed", "admin_drawing_queue",
     "my_overview_analytics",
+    "canonical_bank_media_manifest", "admin_question_intake_assets",
   ] : []),
 ]) {
   response = await request("/rest/v1/rpc/" + name, "POST", {});
