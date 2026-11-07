@@ -3830,11 +3830,21 @@ svg {
 .admin-form, .admin-reply { display: grid; gap: 1rem; margin: 1.5rem 0 3rem; }
 .admin-form label { display: grid; gap: .5rem; font-weight: 700; }
 .admin-form input, .admin-form textarea, .admin-form select, .admin-reply input, .admin-reply select { width: 100%; padding: .85rem; color: inherit; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
-.admin-list { display: grid; gap: 1rem; margin-bottom: 4rem; }
+.admin-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin-bottom: 4rem; }
 .admin-list article { padding: 1.25rem; border: 1px solid var(--line); background: var(--paper); }
-.admin-list pre { max-height: 320px; overflow: auto; white-space: pre-wrap; }
+.admin-list pre { max-height: 320px; overflow: auto; overflow-wrap: anywhere; white-space: pre-wrap; }
+.admin-list code { overflow-wrap: anywhere; }
+.intake-editor fieldset { min-width: 0; display: grid; gap: 1rem; padding: 1rem; border: 1px solid var(--line); }
+.intake-editor legend { padding-inline: .35rem; font-weight: 700; }
+.intake-editor .profile-check { display: flex; align-items: flex-start; }
+.intake-editor .profile-check input { width: auto; margin-top: .25rem; flex-shrink: 0; }
+.intake-option { display: grid; gap: .75rem; padding-block: 1rem; border-bottom: 1px solid var(--line); }
+.intake-queue section { margin-block: 1.5rem; }
+.intake-queue summary { margin-top: 1rem; cursor: pointer; }
+.intake-figures > div { display: grid; gap: .5rem; margin-block: 1rem; }
+.intake-figures code { overflow-wrap: anywhere; }
 .status-pill { display: inline-block; margin-left: .75rem; padding: .2rem .5rem; border: 1px solid var(--line); border-radius: 999px; font-size: .8rem; text-transform: uppercase; }
-.admin-actions { display: flex; gap: .75rem; }
+.admin-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
 .admin-reply { grid-template-columns: minmax(120px,.5fr) 2fr auto; margin: 1rem 0 0; }
 @media (max-width: 700px) { .admin-reply { grid-template-columns: 1fr; } }
 .question-report { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }

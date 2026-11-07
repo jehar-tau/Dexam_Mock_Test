@@ -11,11 +11,22 @@ import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
 import { OperationalHealth } from "./OperationalHealth.jsx";
 import { QuestionDraftExport } from "./QuestionDraftExport.jsx";
 import { LaunchReadiness } from "./LaunchReadiness.jsx";
+import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQueue.jsx";
 
 async function rpc(name, args) {
   if (!platform) throw new Error("Student services are not connected yet.");
   const { data, error } = await platform.rpc(name, args);
   if (error) throw error;
+  return data;
+}
+
+async function intakeRequest(name, body) {
+  const { data, error } = await platform.functions.invoke(name, { body });
+  if (error) {
+    const detail = error.context instanceof Response ? await error.context.json().catch(() => null) : null;
+    throw new Error(detail?.error ?? error.message ?? "Private intake request failed.");
+  }
+  if (data?.error) throw new Error(data.error);
   return data;
 }
 
@@ -30,22 +41,8 @@ function Gate({ session, loading }) {
   return null;
 }
 
-export function IntakeExtractionQueue({ assets = [], onExtract, onPromote, onReject }) {
-  return <div className="admin-list">{assets.length === 0 ? <p>No private source files uploaded.</p> : assets.map((asset) => <article key={asset.id}>
-    <b>{asset.name}</b><span className="status-pill">{asset.status}</span>
-    {asset.error && <p className="error">{asset.error}</p>}
-    {["uploaded", "failed"].includes(asset.status) && <button onClick={() => onExtract(asset.id)}>Extract with configured model</button>}
-    {asset.status === "extracting" && <p role="status">Extraction in progress…</p>}
-    {(asset.candidates ?? []).map((candidate) => <form key={candidate.id} className="admin-form" onSubmit={(event) => { event.preventDefault(); onPromote(candidate.id, new FormData(event.currentTarget).get("payload")); }}>
-      <span className="eyebrow">CANDIDATE {candidate.ordinal}{candidate.pageNumber ? ` · PAGE ${candidate.pageNumber}` : ""}{candidate.confidence != null ? ` · ${Math.round(candidate.confidence * 100)}%` : ""}</span>
-      <label>Review and correct question JSON<textarea name="payload" required rows="10" defaultValue={JSON.stringify(candidate.payload, null, 2)} disabled={candidate.status !== "pending"} /></label>
-      {candidate.status === "pending" ? <div className="admin-actions"><button>Send to human review</button><button type="button" onClick={() => onReject(candidate.id)}>Reject extraction</button></div> : <span className="status-pill">{candidate.status}</span>}
-    </form>)}
-  </article>)}</div>;
-}
-
 export function IntakeExtractionPreview() {
-  const [assets, setAssets] = useState([{ id: "asset", name: "fictional-paper.pdf", status: "extracted", candidates: [{ id: "candidate", ordinal: 1, pageNumber: 2, confidence: 0.84, status: "pending", payload: { type: "MCQ", prompt: "Fictional extracted observation question", options: [], answer: null, holds: ["intake-human-review"] } }] }]);
+  const [assets, setAssets] = useState([{ id: "asset", name: "fictional-paper.pdf", status: "extracted", candidates: [{ id: "candidate", ordinal: 1, pageNumber: 2, confidence: 0.84, status: "pending", payload: { type: "MCQ", prompt: "Fictional extracted observation question", options: ["A", "B", "C", "D"].map(id => ({ id, text: `Fictional option ${id}` })), answer: "B", holds: ["intake-human-review"] } }] }]);
   const update = (id, status) => setAssets(current => current.map(asset => ({ ...asset, candidates: asset.candidates?.map(candidate => candidate.id === id ? { ...candidate, status } : candidate) })));
   return <section className="wrap section admin-page"><span className="eyebrow">PRIVATE INTAKE PREVIEW</span><h1>Extract, correct, then <em>review.</em></h1><IntakeExtractionQueue assets={assets} onExtract={() => {}} onPromote={(id) => update(id, "promoted")} onReject={(id) => update(id, "rejected")} /></section>;
 }
@@ -157,6 +154,7 @@ function AdminDesk({ session }) {
     [communityReports, setCommunityReports] = useState([]),
     [aiDrafts, setAiDrafts] = useState([]),
     [intake, setIntake] = useState([]),
+    [intakeUploading, setIntakeUploading] = useState(false),
     [questionReports, setQuestionReports] = useState([]),
     [privacyRequests, setPrivacyRequests] = useState([]),
     [health, setHealth] = useState(),
@@ -209,7 +207,8 @@ function AdminDesk({ session }) {
   }, [load]);
   const addDraft = async (event) => {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const element = event.currentTarget;
+    const form = new FormData(element);
     try {
       const payload = JSON.parse(form.get("payload"));
       await rpc("admin_create_question_draft", {
@@ -217,7 +216,7 @@ function AdminDesk({ session }) {
         p_source_name: form.get("sourceName"),
         p_payload: payload,
       });
-      event.currentTarget.reset();
+      element.reset();
       await load();
     } catch (e) {
       setMessage(e.message);
@@ -355,45 +354,58 @@ function AdminDesk({ session }) {
   };
   const uploadIntake = async (event) => {
     event.preventDefault();
-    const f = new FormData(event.currentTarget),
+    const element = event.currentTarget;
+    const f = new FormData(element),
       body = new FormData();
     body.set("file", f.get("file"));
+    setIntakeUploading(true);
     try {
-      const { data, error } = await platform.functions.invoke(
-        "question-intake",
-        { body },
-      );
-      if (error) throw error;
+      const data = await intakeRequest("question-intake", body);
       setMessage(`${data.name} uploaded privately for extraction.`);
-      event.currentTarget.reset();
+      element.reset();
       await load();
     } catch (e) {
       setMessage(e.message);
-    }
+    } finally { setIntakeUploading(false); }
   };
   const extractIntake = async (id) => {
-    try {
-      const { data, error } = await platform.functions.invoke("question-intake-extract", { body: { assetId: id } });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      setMessage(`${data.questions} question candidate${data.questions === 1 ? "" : "s"} extracted for review.`);
-      await load();
-    } catch (e) { setMessage(e.message); }
+    const data = await intakeRequest("question-intake-extract", { assetId: id });
+    setMessage(`${data.questions} question candidate${data.questions === 1 ? "" : "s"} extracted for review.`);
+    await load();
   };
-  const promoteIntake = async (id, payloadJson) => {
-    try {
-      await rpc("admin_promote_intake_candidate", {
-        p_candidate_id: id,
-        p_payload: JSON.parse(payloadJson),
-      });
-      await load();
-    } catch (e) {
-      setMessage(e.message);
-    }
+  const promoteIntake = async (id, payload) => {
+    await rpc("admin_promote_intake_candidate", { p_candidate_id: id, p_payload: payload });
+    await load();
   };
   const rejectIntake = async (id) => {
-    try { await rpc("admin_reject_intake_candidate", { p_candidate_id: id }); await load(); }
-    catch (e) { setMessage(e.message); }
+    await rpc("admin_reject_intake_candidate", { p_candidate_id: id });
+    await load();
+  };
+  const transcribeIntake = async (id, payload) => {
+    await rpc("admin_promote_intake_asset", { p_asset_id: id, p_payload: payload });
+    await load();
+  };
+  const prepareIntakeFigures = async (id, figures) => {
+    for (const { file, asset } of figures) {
+      const body = new FormData();
+      body.set("file", file);
+      body.set("purpose", "figure");
+      body.set("assetId", id);
+      const saved = await intakeRequest("question-intake", body);
+      if (saved.asset?.sha256 !== asset.sha256 || saved.asset?.width !== asset.width || saved.asset?.height !== asset.height) {
+        throw new Error("Retained figure did not match the selected PNG. Try again.");
+      }
+    }
+  };
+  const downloadIntake = async (asset, figure) => {
+    const blob = await intakeRequest("question-intake", { assetId: asset.id, ...(figure ? { figureSha: figure.sha256 } : {}) });
+    if (!(blob instanceof Blob)) throw new Error("Private source could not be downloaded.");
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = figure ? `${figure.sha256}.png` : asset.name;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
   return (
     <>
@@ -423,9 +435,9 @@ function AdminDesk({ session }) {
                 required
               />
             </label>
-            <button>Upload for extraction</button>
+            <button disabled={intakeUploading}>{intakeUploading ? "Uploading…" : "Upload for extraction"}</button>
           </form>
-          <IntakeExtractionQueue assets={intake} onExtract={extractIntake} onPromote={promoteIntake} onReject={rejectIntake} />
+          <IntakeExtractionQueue assets={intake} onExtract={extractIntake} onPromote={promoteIntake} onReject={rejectIntake} onTranscribe={transcribeIntake} onDownload={downloadIntake} onPrepareFigures={prepareIntakeFigures} />
           <h2>Drawing review queue</h2>
           <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings} {...drawingActions} />
           <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
@@ -707,6 +719,7 @@ function AdminDesk({ session }) {
                 <b>{d.sourceName || d.sourceType}</b>
                 <span className="status-pill">{d.status}</span>
                 <pre>{JSON.stringify(d.payload, null, 2)}</pre>
+                <IntakeDraftFigures draft={d} onDownload={downloadIntake} />
                 {d.status === "pending" && (
                   <div className="admin-actions">
                     <button onClick={() => review(d.id, "approved")}>
