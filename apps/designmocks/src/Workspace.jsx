@@ -289,6 +289,7 @@ export function Attempt() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [attempt, setAttempt] = useState(null),
+    [loadedFor, setLoadedFor] = useState(null),
     [index, setIndex] = useState(0),
     [draft, setDraft] = useState(null),
     [flagged, setFlagged] = useState([]),
@@ -315,6 +316,7 @@ export function Attempt() {
   useEffect(() => {
     let alive = true;
     setAttempt(null);
+    setLoadedFor(null);
     setIndex(0);
     setDraft(null);
     setError("");
@@ -356,6 +358,7 @@ export function Attempt() {
             onStatus: (state) => { if (alive) setSyncState(state); },
           });
           answerSync.current = queue;
+          setLoadedFor(`${userId}:${id}`);
           setAttempt(data);
           if (data.status === "active") {
             queue.restore(data.questions);
@@ -500,7 +503,7 @@ export function Attempt() {
   }, [left, busy, attempt?.status, reconnects]);
   const move = (next) => setIndex(next);
   if (!session && !loading) return <SignInGate />;
-  if (!attempt)
+  if (!attempt || loadedFor !== `${userId}:${id}`)
     return (
       <section className="wrap page-intro">
         <h1>

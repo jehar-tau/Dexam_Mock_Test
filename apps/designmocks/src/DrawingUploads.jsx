@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { platform } from "./platform.js";
 import { drawingUploadWindow } from "./drawing-upload-window.js";
 import { checkDrawingFiles, drawingMediaError, drawingUploadFailure } from "./drawing-upload.js";
+import { DrawingPages } from "./DrawingInspection.jsx";
 
-async function drawingMedia(body) {
-  const { data, error } = await platform.functions.invoke("drawing-media", { body });
+async function drawingMedia(body, signal) {
+  const { data, error } = await platform.functions.invoke("drawing-media", { body, signal });
   if (error) throw await drawingMediaError(error);
   return data;
 }
@@ -19,6 +20,7 @@ export function DrawingUploads({
   const [message, setMessage] = useState("");
   const [loadAttempt, setLoadAttempt] = useState(0);
   const fileInput = useRef(null);
+  const openPages = useCallback(signal => invoke({ action: "open", attemptId, questionId }, signal), [invoke, attemptId, questionId]);
   useEffect(() => {
     let current = true;
     invoke({ action: "list", attemptId, questionId })
@@ -90,6 +92,7 @@ export function DrawingUploads({
           </li>
         ))}
       </ol>
+      {!busy && items?.length > 0 && <DrawingPages scopeKey={`${attemptId}:${questionId}:${items.map(page => page.id).join(",")}`} load={openPages} />}
       {items === null && message && <button type="button" className="text-button" onClick={() => {
         setMessage("");
         setLoadAttempt((attempt) => attempt + 1);
@@ -117,7 +120,8 @@ export function DrawingUploadWindow({ attempt, serverTime, invoke }) {
 
 export const previewDrawingMedia = async (request) => request instanceof FormData
   ? { id: crypto.randomUUID(), ordinal: Number(request.get("ordinal")) }
-  : request.action === "list" ? { items: [] } : { removed: request.id };
+  : request.action === "list" ? { items: [] } : request.action === "open" ? { images: [{ id: "preview", ordinal: 1,
+    url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23f2eadf'/%3E%3Cpath d='M80 240 L250 70 L420 240 Z' fill='none' stroke='%23211d1b' stroke-width='8'/%3E%3C/svg%3E" }] } : { removed: request.id };
 
 export function DrawingUploadsPreview() {
   return (

@@ -306,7 +306,7 @@ test("teacher can open anonymous private drawing pages", async ({ page }) => {
   await page.goto("/drawing-review-preview");
   await page.getByRole("button", { name: "Open private images" }).click();
   await expect(page.getByRole("img", { name: "Anonymous drawing page 1" })).toBeVisible();
-  await expect(page.getByText("Page 1")).toBeVisible();
+  await expect(page.getByText("Page 1", { exact: true })).toBeVisible();
 });
 
 test("teacher review is released separately to the drawing student", async ({ page }) => {

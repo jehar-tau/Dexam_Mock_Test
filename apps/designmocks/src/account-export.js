@@ -1,3 +1,6 @@
+import { drawingRenderMetadata } from "./drawing-inspection.js";
+import { DRAWING_MAX_BYTES } from "../supabase/functions/_shared/drawing-limits.mjs";
+
 const exportError = () => new Error("Your export could not be verified. Refresh your account and try again.");
 const object = value => value !== null && typeof value === "object" && !Array.isArray(value);
 const only = (value, keys) => object(value) && Object.keys(value).every(key => keys.includes(key));
@@ -19,6 +22,14 @@ export function validateAccountExport(data, accountId) {
     [report.id, report.attemptId, report.questionId, report.createdAt].every(value => typeof value === "string" && value) &&
     ["incorrect", "incomplete", "media", "duplicate", "other"].includes(report.reason) && (report.details === null || typeof report.details === "string"))) throw exportError();
   const attempts = new Map(data.attempts.map(attempt => [attempt.id, attempt]));
+  if (!arrayOf(data.drawingUploads, upload => only(upload, ["id", "attemptId", "questionId", "ordinal", "mimeType", "byteSize", "width", "height", "orientation", "createdAt"]) &&
+    [upload.id, upload.attemptId, upload.questionId, upload.createdAt].every(value => typeof value === "string" && value) &&
+    Number.isFinite(Date.parse(upload.createdAt)) &&
+    attempts.get(upload.attemptId)?.responses.some(response => response.questionId === upload.questionId && response.kind === "drawing") &&
+    Number.isInteger(upload.ordinal) && upload.ordinal >= 1 && upload.ordinal <= 5 &&
+    ["image/png", "image/jpeg", "image/webp"].includes(upload.mimeType) && Number.isInteger(upload.byteSize) && upload.byteSize > 0 && upload.byteSize <= DRAWING_MAX_BYTES &&
+    (["width", "height", "orientation"].every(field => !Object.hasOwn(upload, field)) ||
+      [upload.width, upload.height, upload.orientation].every(value => value === null) || drawingRenderMetadata(upload)))) throw exportError();
   const published = attempt => attempt?.status === "submitted" && !attempt.resultsPending;
   const released = value => typeof value === "string" && Number.isFinite(Date.parse(value));
   if (!only(data.results, ["examMocks", "allIndia", "drawingReviews"]) ||

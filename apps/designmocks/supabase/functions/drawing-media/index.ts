@@ -2,6 +2,7 @@ import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { DrawingImageError, DRAWING_MAX_BYTES } from "../_shared/drawing-image.mjs";
 import { DRAWING_FORM_MAX_BYTES, drawingRequestBody } from "../_shared/drawing-request.mjs";
 import { validateDrawing } from "./validate.ts";
+import { DrawingLinksError, sameDrawingPages, signedDrawingPages } from "../_shared/drawing-links.mjs";
 
 const uuid = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 const isId = (value: unknown): value is string => typeof value === "string" && uuid.test(value);
@@ -30,6 +31,18 @@ Deno.serve(async (request) => {
         const listed = await student.rpc("my_drawing_uploads", { p_attempt_id: attemptId, p_question_id: questionId });
         if (listed.error) throw listed.error;
         return respond({ items: listed.data });
+      }
+      if (action === "open" && isId(attemptId) && isId(questionId)) {
+        const pages = await admin.rpc("service_student_drawing_media_paths", {
+          p_student_id: user.id, p_attempt_id: attemptId, p_question_id: questionId,
+        });
+        if (pages.error) return respond({ error: "Drawing pages are unavailable for this account." }, 403);
+        const signed = await signedDrawingPages(bucket, pages.data);
+        const current = await admin.rpc("service_student_drawing_media_paths", {
+          p_student_id: user.id, p_attempt_id: attemptId, p_question_id: questionId,
+        });
+        if (current.error || !sameDrawingPages(pages.data, current.data)) return respond({ error: "Drawing pages changed. Refresh your saved pages." }, 403);
+        return respond(signed);
       }
       if (action !== "remove" || !isId(id)) return respond({ error: "Invalid drawing action" }, 400);
       const removed = await admin.rpc("remove_drawing_upload", { p_student_id: user.id, p_id: id });
@@ -64,11 +77,12 @@ Deno.serve(async (request) => {
     if (!mime) throw new DrawingImageError("Use a still PNG, JPEG or WebP image.");
     const extension = mime === "image/jpeg" ? "jpg" : mime.split("/")[1];
     const path = `drawings/${crypto.randomUUID()}.${extension}`;
-    const uploaded = await bucket.upload(path, checked.bytes, { contentType: mime, upsert: false });
+    const uploaded = await bucket.upload(path, checked.bytes, { contentType: mime, cacheControl: "0", upsert: false });
     if (uploaded.error) throw uploaded.error;
     const registered = await admin.rpc("register_drawing_upload", {
       p_student_id: user.id, p_attempt_id: attemptId, p_question_id: questionId,
       p_storage_path: path, p_ordinal: ordinal, p_mime_type: mime, p_byte_size: checked.bytes.length,
+      p_pixel_width: checked.width, p_pixel_height: checked.height, p_image_orientation: checked.orientation,
     });
     if (registered.error) {
       // An ambiguous network failure can occur after the database committed.
@@ -80,6 +94,7 @@ Deno.serve(async (request) => {
     }
     return respond({ id: registered.data, ordinal });
   } catch (error) {
+    if (error instanceof DrawingLinksError) return respond({ error: error.message }, error.status);
     if (error instanceof DrawingImageError) return respond({ error: error.message, code: error.code }, error.status);
     return respond({ error: error instanceof Error ? error.message : "Drawing request failed" }, 400);
   } finally { if (reserved) uploadBusy = false; }

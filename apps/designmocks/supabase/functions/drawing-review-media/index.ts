@@ -1,6 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
-
-type Page = { id: string; ordinal: number; storagePath: string };
+import { DrawingLinksError, sameDrawingPages, signedDrawingPages } from "../_shared/drawing-links.mjs";
+import { drawingRequestBody } from "../_shared/drawing-request.mjs";
 
 Deno.serve(async (request) => {
   const origin = Deno.env.get("PUBLIC_APP_ORIGIN");
@@ -23,22 +23,18 @@ Deno.serve(async (request) => {
     auth: { persistSession: false },
   });
   try {
-    const { reviewId } = await request.json();
+    const { reviewId } = JSON.parse(new TextDecoder().decode(await drawingRequestBody(request, 4096)));
     if (typeof reviewId !== "string") return respond({ error: "Invalid review" }, 400);
     const result = await reviewer.rpc("admin_drawing_review_media_paths", { p_review_id: reviewId });
     if (result.error) return respond({ error: "Drawing pages are unavailable for this review." }, 403);
-    const pages: Page[] = result.data;
-    if (!pages.length) return respond({ images: [] });
     const admin = createClient(url, service, { auth: { persistSession: false } });
-    const signed = await admin.storage.from("drawing-submissions").createSignedUrls(pages.map((page) => page.storagePath), 300);
-    if (signed.error) return respond({ error: "Drawing pages could not be opened. Try again." }, 502);
-    const links = new Map(signed.data.filter((entry) => !entry.error && entry.signedUrl)
-      .map((entry) => [entry.path, entry.signedUrl]));
-    if (pages.some((page) => !links.has(page.storagePath))) {
-      return respond({ error: "A drawing page could not be opened. Try again." }, 502);
-    }
-    return respond({ images: pages.map(({ id, ordinal, storagePath }) => ({ id, ordinal, url: links.get(storagePath) })) });
-  } catch {
+    const signed = await signedDrawingPages(admin.storage.from("drawing-submissions"), result.data);
+    // Signing is asynchronous. Recheck assignment/revocation before releasing links.
+    const current = await reviewer.rpc("admin_drawing_review_media_paths", { p_review_id: reviewId });
+    if (current.error || !sameDrawingPages(result.data, current.data)) return respond({ error: "Drawing pages are unavailable for this review." }, 403);
+    return respond(signed);
+  } catch (error) {
+    if (error instanceof DrawingLinksError) return respond({ error: error.message }, error.status);
     return respond({ error: "Invalid drawing review request" }, 400);
   }
 });
