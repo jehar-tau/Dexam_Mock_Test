@@ -42,7 +42,7 @@ export function CommunityThread({ thread, busy, pendingPost, pendingReply, pendi
     <button type="button" className="text-button" disabled={busy} onClick={event=>onReport(thread.id,null,event.currentTarget)}>Report discussion</button>
     <span className="eyebrow">{thread.exam} · {thread.topic}</span><h2 ref={heading} tabIndex={-1}>{thread.title}</h2><p>{thread.body}</p>
     {thread.hasEarlier && <div className="notice"><p>Showing this reply and the replies that follow it.</p><button type="button" className="text-button" onClick={()=>onOpen(thread.id)}>Read from beginning</button></div>}
-    <CommunityImages images={thread.media} label="Question attachment" />
+    <CommunityImages images={thread.media} label="Question attachment" expiresAt={thread.mediaExpiresAt} onUnavailableFocus={()=>heading.current?.focus()} />
     {thread.canAttach===true && <button type="button" className="text-button" disabled={busy||Boolean(pendingReply)||Boolean(pendingPost)||Boolean(pendingTextReply)||Boolean(pendingTextPost)} onClick={event=>chooseAttachments(thread,"post",event.currentTarget)}>Add discussion images</button>}
     {thread.status==="locked" && <p role="status">This discussion is locked. Existing images remain viewable.</p>}
     <form className="community-reply" key={replyFormVersion} onSubmit={async event=>{
@@ -64,7 +64,7 @@ export function CommunityThread({ thread, busy, pendingPost, pendingReply, pendi
         const parent=comment.parentAvailable===false ? null : byId.get(comment.parentId) ?? comment.parentPreview;
         return <li key={comment.id} style={{marginInlineStart:`${Math.min(comment.depth,2)*.75}rem`}}><article className="community-comment" id={`community-comment-${comment.id}`} tabIndex={-1} aria-label={`Comment by ${comment.author || "Student"}`}>
           {comment.parentId && <p className="community-parent-context">{parent ? `Reply to ${parent.author || "Student"}: ${parent.body.slice(0,160)}` : "Reply to a removed or unavailable comment."}</p>}
-          <p>{comment.body}</p><CommunityImages images={comment.media} label="Solution attachment" />
+          <p>{comment.body}</p><CommunityImages images={comment.media} label="Solution attachment" expiresAt={thread.mediaExpiresAt} onUnavailableFocus={()=>heading.current?.focus()} />
           <small>By {comment.author} · {comment.helpful} helpful</small>
           <div className="community-actions">
             {thread.status!=="locked" && comment.canReply!==false && <button type="button" className="text-button" disabled={busy || Boolean(pendingReply) || Boolean(pendingTextReply)}

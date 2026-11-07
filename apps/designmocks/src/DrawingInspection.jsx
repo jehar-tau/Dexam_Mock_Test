@@ -63,13 +63,20 @@ function DrawingInspectionDialog({ image, label, onClose }) {
     // effect replay would dispatch a late close event against the reopened dialog.
     if (!dialog.current.open) dialog.current.showModal();
   }, []);
-  return <dialog className="drawing-inspection-dialog" ref={dialog} aria-labelledby={titleId} onClose={onClose}>
+  const containTab=event=>{
+    if(event.key!=="Tab")return;
+    const controls=[...dialog.current.querySelectorAll("button,[tabindex]")].filter(element=>!element.matches(":disabled")&&element.tabIndex>=0&&element.getClientRects().length);
+    const first=controls[0],last=controls.at(-1),active=document.activeElement;
+    if(first&&(!controls.includes(active)||(event.shiftKey?active===first:active===last))){event.preventDefault();(event.shiftKey?last:first).focus();}
+  };
+  return <dialog className="drawing-inspection-dialog" ref={dialog} aria-labelledby={titleId} onClose={onClose} onKeyDown={containTab}>
     <div className="drawing-inspection-header"><h2 id={titleId}>{label}</h2>
       <button type="button" autoFocus onClick={() => dialog.current.close()}>Close image</button></div>
     <p>Adjust the view. The original submission stays unchanged.</p>
     <DrawingImage image={image} label={label} controls />
   </dialog>;
 }
+export { DrawingInspectionDialog as PrivateImageInspectionDialog };
 
 function DrawingPagesSession({ load, anonymous = false, disabled = false }) {
   const [images, setImages] = useState(null), [selected, setSelected] = useState(null), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
