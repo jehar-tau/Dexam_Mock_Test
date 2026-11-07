@@ -3917,3 +3917,10 @@ svg {
   .portal-sidebar { display: none; position: static; min-height: 0; border: 0; border-bottom: 1px solid var(--line); }
   .portal-sidebar.is-open { display: block; }
 }
+
+.community-fields{display:contents;border:0;padding:0;margin:0;min-width:0}
+.community-upload-recovery{margin-block:1rem;display:flex;gap:.65rem;flex-wrap:wrap;align-items:center}
+.community-upload-recovery p{flex-basis:100%;margin:0}
+.community-upload-recovery button{min-height:44px;padding:.5rem .8rem}
+.community-image-frame{width:min(100%,680px);margin-block:1rem;min-width:0}
+.community-image-frame .drawing-image-viewport{height:clamp(180px,45vw,360px)}

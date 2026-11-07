@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { PortalShell } from "./PortalShell.jsx";
-import { platform } from "./platform.js";
-import { useAuthState } from "./useAuth.js";
-const rpc = async (n, a) => {
-  const { data, error } = await platform.rpc(n, a);
-  if (error) throw error;
-  return data;
-};
+import React, { useState } from "react";
+import { CommunityController } from "./CommunityController.jsx";
+import { PrivateRasterImage } from "./DrawingInspection.jsx";
+
+function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
+  if (!job) return null;
+  const kind = job.targetType === "post" ? "post" : "reply";
+  return <section className="notice community-upload-recovery" aria-label={`Saved ${kind} images`}>
+    <p>Your {kind} is saved. {job.next} of {job.files.length} images confirmed.</p>
+    <button type="button" disabled={busy} onClick={onRetry}>Retry {kind} images</button>
+    <button type="button" disabled={busy} onClick={() => onOpen(job.postId)}>Open saved discussion</button>
+    <button type="button" disabled={busy} onClick={onSkip}>Finish {kind} without remaining images</button>
+  </section>;
+}
+
+function CommunityImages({ images = [], label }) {
+  return images.map((image, index) => <div className="community-image-frame" key={`${image.id}:${image.url}`}>
+    <PrivateRasterImage image={image} label={`${label} ${index + 1}`} />
+  </div>);
+}
 export function CommunityView({
   posts = [],
   thread = null,
@@ -17,12 +27,14 @@ export function CommunityView({
   onHelpful = () => {},
   onReport = () => {},
   message = "",
+  busy = false, pendingPost = null, pendingReply = null,
+  onRetryPost, onRetryReply, onSkipPost, onSkipReply,
 }) {
   const submit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     const f = new FormData(form);
-    const saved = await onSubmit(Object.fromEntries(f), f.getAll("images").filter((file) => file.size));
+    const saved = await onSubmit(Object.fromEntries(f), f.getAll("images").filter((file) => file.name));
     if (saved !== false) form.reset();
   };
   return (
@@ -38,6 +50,7 @@ export function CommunityView({
         assessment content.
       </p>
       <form className="admin-form" onSubmit={submit}>
+        <fieldset className="community-fields" aria-label="New discussion" disabled={busy || Boolean(pendingPost)}>
         <label>
           Exam
           <select name="exam">
@@ -60,12 +73,15 @@ export function CommunityView({
         </label>
         <label>
           Question images (optional, up to 3)
-          <input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple />
-          <small>Use only your own or permitted images. Remove names, faces and other personal details.</small>
+          <input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple aria-describedby="community-post-image-help" />
         </label>
+        <small id="community-post-image-help">Still PNG, JPEG or WebP, up to 5 MB and 24 megapixels each. Use your own or permitted images; remove names, faces and personal details.</small>
         <button className="button">Post to community</button>
+        </fieldset>
       </form>
       {message && <p role="status">{message}</p>}
+      <PendingImages job={pendingPost} busy={busy} onRetry={onRetryPost} onSkip={onSkipPost} onOpen={onOpen} />
+      <PendingImages job={pendingReply} busy={busy} onRetry={onRetryReply} onSkip={onSkipReply} onOpen={onOpen} />
       <div className="community-feed">
         {posts.map((p) => (
           <article key={p.id}>
@@ -88,35 +104,40 @@ export function CommunityView({
           <button className="text-button" onClick={() => onOpen(null)}>
             Close discussion
           </button>
+          <button type="button" className="text-button" onClick={() => onOpen(thread.id)}>Refresh discussion</button>
           <span className="eyebrow">{thread.exam} · {thread.topic}</span>
           <h2>{thread.title}</h2>
           <p>{thread.body}</p>
-          {thread.media?.map((image, index) => <img className="community-image" key={image.id} src={image.url} alt={`Question attachment ${index + 1}`} />)}
+          <CommunityImages images={thread.media} label="Question attachment" />
+          {thread.status === "locked" && <p role="status">This discussion is locked. Existing images remain viewable.</p>}
           <form
             className="community-reply"
             onSubmit={async (event) => {
               event.preventDefault();
               const element = event.currentTarget;
               const form = new FormData(element);
-              const saved = await onComment(thread.id, null, form.get("body"), form.getAll("images").filter((file) => file.size));
+              const saved = await onComment(thread.id, null, form.get("body"), form.getAll("images").filter((file) => file.name));
               if (saved !== false) element.reset();
             }}
           >
+            <fieldset className="community-fields" aria-label="New reply" disabled={busy || Boolean(pendingReply) || thread.status === "locked"}>
             <label>
               Add a reply
               <textarea name="body" minLength="2" maxLength="3000" required />
             </label>
             <label>
               Solution images (optional, up to 3)
-              <input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple />
+              <input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple aria-describedby="community-reply-image-help" />
             </label>
+            <small id="community-reply-image-help">Up to 5 MB and 24 megapixels each. Remove visible personal details before sharing.</small>
             <button className="button">Reply</button>
+            </fieldset>
           </form>
           <div className="community-comments">
             {thread.comments.map((comment) => (
               <article key={comment.id}>
                 <p>{comment.body}</p>
-                {comment.media?.map((image, index) => <img className="community-image" key={image.id} src={image.url} alt={`Solution attachment ${index + 1}`} />)}
+                <CommunityImages images={comment.media} label="Solution attachment" />
                 <small>By {comment.author} · {comment.helpful} helpful</small>
                 <div className="community-actions">
                   <button className="text-button" onClick={() => onHelpful(comment.id)}>
@@ -135,105 +156,7 @@ export function CommunityView({
   );
 }
 export function Community() {
-  const { session, loading } = useAuthState(),
-    [posts, setPosts] = useState([]),
-    [message, setMessage] = useState(""),
-    [thread, setThread] = useState(null);
-  const load = () =>
-    rpc("community_feed", { p_exam: null, p_topic: null })
-      .then(setPosts)
-      .catch((e) => setMessage(e.message));
-  const uploadMedia = async (targetType, targetId, files = []) => {
-    if (files.length > 3) throw new Error("Choose no more than three images.");
-    for (const [index, file] of files.entries()) {
-      const body = new FormData();
-      body.set("targetType", targetType);
-      body.set("targetId", targetId);
-      body.set("ordinal", String(index + 1));
-      body.set("file", file);
-      const { error } = await platform.functions.invoke("community-media", { body });
-      if (error) throw error;
-    }
-  };
-  const openThread = async (id) => {
-    const value = await rpc("community_thread", { p_post_id: id });
-    const targets = [{ type: "post", value }, ...value.comments.map((comment) => ({ type: "comment", value: comment }))];
-    await Promise.all(targets.map(async ({ type, value: target }) => {
-      if (!target.assetCount) return;
-      const { data, error } = await platform.functions.invoke("community-media", { body: { targetType: type, targetId: target.id } });
-      if (error) throw error;
-      target.media = data.media;
-    }));
-    return value;
-  };
-  useEffect(() => {
-    if (session) load();
-  }, [session]);
-  if (!session && !loading)
-    return (
-      <section className="wrap section">
-        <h1>
-          Sign in to the <em>community.</em>
-        </h1>
-        <Link to="/account">Student sign in</Link>
-      </section>
-    );
-  return (
-    <PortalShell>
-      <CommunityView
-        posts={posts}
-        thread={thread}
-        message={message}
-        onOpen={async (id) => {
-          if (!id) return setThread(null);
-          try {
-            setThread(await openThread(id));
-          } catch (e) { setMessage(e.message); }
-        }}
-        onComment={async (postId, parentId, body, files) => {
-          try {
-            if (files.length > 3) throw new Error("Choose no more than three images.");
-            const commentId = await rpc("add_community_comment", { p_post_id: postId, p_parent_id: parentId, p_body: body });
-            await uploadMedia("comment", commentId, files);
-            setThread(await openThread(postId));
-            setMessage("Reply added.");
-            await load();
-            return true;
-          } catch (e) { setMessage(e.message); return false; }
-        }}
-        onHelpful={async (commentId) => {
-          try {
-            await rpc("mark_community_helpful", { p_comment_id: commentId });
-            setThread(await rpc("community_thread", { p_post_id: thread.id }));
-          } catch (e) { setMessage(e.message); }
-        }}
-        onReport={async (postId, commentId) => {
-          try {
-            await rpc("report_community_content", { p_post_id: postId, p_comment_id: commentId, p_reason: "other", p_details: "Reported from discussion view" });
-            setMessage("Report sent for moderator review.");
-          } catch (e) { setMessage(e.message); }
-        }}
-        onSubmit={async (f, files) => {
-          try {
-            if (files.length > 3) throw new Error("Choose no more than three images.");
-            const postId = await rpc("create_community_post", {
-              p_exam: f.exam,
-              p_topic: f.topic,
-              p_title: f.title,
-              p_body: f.body,
-            });
-            await uploadMedia("post", postId, files);
-            setMessage("Your post is live.");
-            await load();
-            return true;
-          } catch (e) {
-            setMessage(e.message);
-            return false;
-          }
-        }}
-      />
-    </PortalShell>
-  );
+  return <CommunityController View={CommunityView} />;
 }
 export function CommunityPreview() {
   const [m, setM] = useState(""), [thread, setThread] = useState(null);
