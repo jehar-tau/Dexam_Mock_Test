@@ -8,7 +8,7 @@ function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   if (!job) return null;
   const kind = job.targetType === "post" ? "post" : "reply";
   return <section className="notice community-upload-recovery" aria-label={`Saved ${kind} images`}>
-    <p>Your {kind} is saved. {job.next} of {job.files.length} images confirmed.</p>
+    <p>{job.followUp?`Adding images to your saved ${kind}.`:`Your ${kind} is saved.`} {job.next} of {job.files.length} images confirmed.</p>
     <button type="button" disabled={busy} onClick={onRetry}>Retry {kind} images</button>
     <button type="button" disabled={busy} onClick={() => onOpen(job.postId,job.targetType==="comment"?{anchorId:job.targetId}:{})}>Open saved discussion</button>
     <button type="button" disabled={busy} onClick={onSkip}>Finish {kind} without remaining images</button>
@@ -35,6 +35,7 @@ export function CommunityView({
   onComment = () => {},
   onHelpful = () => {},
   onReport = () => {},
+  onAddImages = () => false,
   message = "",
   busy = false, pendingPost = null, pendingReply = null,
   onRetryPost, onRetryReply, onSkipPost, onSkipReply,
@@ -170,9 +171,9 @@ export function CommunityView({
         if(feedLoading)return;feedFocus.current={ids:new Set(posts.map(post=>post.id)),button:event.currentTarget};setPageNotice("");onMorePosts();
       }}>{feedLoading?"Loading discussions…":"Load more discussions"}</button>}
       </section>
-      {thread && <CommunityThread key={thread.id} thread={thread} busy={busy} pendingReply={pendingReply} pendingTextReply={pendingTextReply}
+      {thread && <CommunityThread key={thread.id} thread={thread} busy={busy} pendingPost={pendingPost} pendingReply={pendingReply} pendingTextPost={pendingTextPost} pendingTextReply={pendingTextReply}
         replyFormVersion={replyFormVersion} loading={threadLoading} onOpen={viewThread} onMore={onMoreComments}
-        onComment={onComment} onHelpful={onHelpful} onReport={reportContent} />}
+        onComment={onComment} onHelpful={onHelpful} onReport={reportContent} onAddImages={onAddImages} />}
       {reportTarget && <CommunityReporting target={reportTarget} onSubmit={onReport} onClose={closeReport} />}
 
     </section>
@@ -185,7 +186,7 @@ export function CommunityPreview() {
   const [m, setM] = useState(""), [thread, setThread] = useState(null);
   const [filters,setFilters]=useState(()=>communityFeedFilters());
   const previewThread = {
-    id: "10000000-0000-4000-8000-000000000001", exam: "uceed", topic: "observation",
+    id: "10000000-0000-4000-8000-000000000001", exam: "uceed", topic: "observation", isMine:true,canAttach:true,assetCount:1,
     title: "How do you separate observation from assumption?",
     body: "I list visible facts first, then write interpretations separately.",
     media: [{ id: "m1", url: "/favicon.svg" }],
@@ -211,6 +212,7 @@ export function CommunityPreview() {
       onComment={() => setM("Preview reply added.")}
       onHelpful={() => setM("Marked helpful.")}
       onReport={() => undefined}
+      onAddImages={(_target,files)=>{setM(`Preview: ${files.length} additional image${files.length===1?"":"s"} selected.`);return true;}}
       onSubmit={(f, files) => setM(`Preview post created: ${f.title} · ${files.length} image${files.length === 1 ? "" : "s"}`)}
     />
   );
