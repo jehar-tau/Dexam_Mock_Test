@@ -12,6 +12,7 @@ create table dm_private.community_report_reviews(
 );
 alter table dm_private.community_report_reviews enable row level security;
 revoke all on dm_private.community_report_reviews from public,anon,authenticated,service_role;
+create index community_moderation_target_idx on dm_private.community_moderation_log(target_type,target_id,id desc);
 
 -- All API mutations use the established post-first order. Readers take a shared
 -- fence; decisions take an exclusive fence before re-reading the report.
@@ -53,7 +54,7 @@ returns jsonb language sql set search_path=pg_catalog,dm_private,storage as $$
    case when o.metadata->>'size' ~ '^[0-9]{1,12}$' then (o.metadata->>'size')::numeric=a.byte_size else false end,false))
   order by a.ordinal,a.id),'[]')
  from dm_private.community_assets a left join storage.objects o on o.bucket_id='community-media' and o.name=a.storage_path
- where case when p_kind='post' then a.post_id=p_target_id else a.comment_id=p_target_id end
+ where (p_kind='post' and a.post_id=p_target_id) or (p_kind='comment' and a.comment_id=p_target_id)
 $$;
 
 create function dm_private.community_review_content(p_kind text,p_row jsonb,p_post jsonb,p_assets jsonb)
