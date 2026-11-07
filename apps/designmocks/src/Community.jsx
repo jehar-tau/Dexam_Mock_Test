@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { CommunityController } from "./CommunityController.jsx";
 import { CommunityThread } from "./CommunityThread.jsx";
+import { CommunityReporting } from "./CommunityReporting.jsx";
 
 function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   if (!job) return null;
@@ -39,7 +40,22 @@ export function CommunityView({
   pendingTextPost = null, pendingTextReply = null, onRetryTextPost, onRetryTextReply, onStopTextPost, onStopTextReply,
   postFormVersion = 0, replyFormVersion = 0, threadLoading = false, onMoreComments, onReloadFeed,
 }) {
-  const openers=useRef(new Map()),pageHeading=useRef(null);
+  const openers=useRef(new Map()),pageHeading=useRef(null),reportOpener=useRef(null),returnReportFocus=useRef(false);
+  const [reportTarget,setReportTarget]=useState(null);
+  useLayoutEffect(()=>{
+    if(reportTarget||busy||!returnReportFocus.current)return;
+    returnReportFocus.current=false;
+    (reportOpener.current?.isConnected?reportOpener.current:pageHeading.current)?.focus();
+  },[reportTarget,busy]);
+  function reportContent(postId,commentId,opener) {
+    reportOpener.current=opener??document.activeElement;
+    const comment=thread?.comments.find(item=>item.id===commentId);
+    setReportTarget({postId,commentId,label:comment?`Reply by ${comment.author || "Student"}: ${comment.body.slice(0,200)}`:thread?.title});
+  }
+  function closeReport() {
+    returnReportFocus.current=true;
+    setReportTarget(null);
+  }
   const viewThread=id=>{
     if(id)return onOpen(id);
     const target=openers.current.get(thread?.id);
@@ -119,7 +135,8 @@ export function CommunityView({
       </div>
       {thread && <CommunityThread key={thread.id} thread={thread} busy={busy} pendingReply={pendingReply} pendingTextReply={pendingTextReply}
         replyFormVersion={replyFormVersion} loading={threadLoading} onOpen={viewThread} onMore={onMoreComments}
-        onComment={onComment} onHelpful={onHelpful} onReport={onReport} />}
+        onComment={onComment} onHelpful={onHelpful} onReport={reportContent} />}
+      {reportTarget && <CommunityReporting target={reportTarget} onSubmit={onReport} onClose={closeReport} />}
 
     </section>
   );
@@ -130,17 +147,17 @@ export function Community() {
 export function CommunityPreview() {
   const [m, setM] = useState(""), [thread, setThread] = useState(null);
   const previewThread = {
-    id: "1", exam: "uceed", topic: "observation",
+    id: "10000000-0000-4000-8000-000000000001", exam: "uceed", topic: "observation",
     title: "How do you separate observation from assumption?",
     body: "I list visible facts first, then write interpretations separately.",
     media: [{ id: "m1", url: "/favicon.svg" }],
-    comments: [{ id: "c1", body: "Try labelling each statement fact or inference.", author: "Ravi", helpful: 2, media: [{ id: "m2", url: "/favicon.svg" }] }],
+    comments: [{ id: "20000000-0000-4000-8000-000000000001", body: "Try labelling each statement fact or inference.", author: "Ravi", helpful: 2, media: [{ id: "m2", url: "/favicon.svg" }] }],
   };
   return (
     <CommunityView
       posts={[
         {
-          id: "1",
+          id: "10000000-0000-4000-8000-000000000001",
           exam: "uceed",
           topic: "observation",
           title: "How do you separate observation from assumption?",
@@ -154,7 +171,7 @@ export function CommunityPreview() {
       onOpen={(id) => setThread(id ? previewThread : null)}
       onComment={() => setM("Preview reply added.")}
       onHelpful={() => setM("Marked helpful.")}
-      onReport={() => setM("Report sent for moderator review.")}
+      onReport={() => undefined}
       onSubmit={(f, files) => setM(`Preview post created: ${f.title} · ${files.length} image${files.length === 1 ? "" : "s"}`)}
     />
   );

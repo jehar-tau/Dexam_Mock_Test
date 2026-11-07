@@ -114,6 +114,18 @@ function CommunitySession({View}) {
     catch{if(current(signal))setMessage("Couldn’t save this change. Check the discussion and try again.");return false;}
     finally{mutationBusy.current=false;if(current(signal))setBusy(false);}
   }
+  async function reportContent(payload,dialogSignal) {
+    const sessionSignal=scope.current?.signal;
+    if(mutationBusy.current||!sessionSignal||!current(sessionSignal)||dialogSignal.aborted)return false;
+    const signal=AbortSignal.any([sessionSignal,dialogSignal]);
+    const location=window.location.href,historyKey=window.history.state?.key;
+    mutationBusy.current=true;setBusy(true);
+    try {
+      await rpc("report_community_content",payload,signal);
+      if(!current(sessionSignal)||signal.aborted||window.location.href!==location||window.history.state?.key!==historyKey)return false;
+      return null;
+    } finally {mutationBusy.current=false;if(current(sessionSignal))setBusy(false);}
+  }
   async function finishImages(job,signal) {
     const setPending=job.targetType==="post"?setPendingPost:setPendingReply;
     try {
@@ -186,7 +198,7 @@ function CommunitySession({View}) {
       const refreshed=await openThread(postId,null,{anchorId:id,row:true,intent});
       if(refreshed&&current(signal)&&intent===viewEpoch.current)setMessage("Marked helpful.");
     })}
-    onReport={(postId,commentId)=>mutate(async signal=>{await rpc("report_community_content",{p_post_id:postId,p_comment_id:commentId,p_reason:"other",p_details:"Reported from discussion view"},signal);if(current(signal))setMessage("Report sent for moderator review.");})}
+    onReport={reportContent}
   /></PortalShell>;
 }
 export function CommunityController({View}) {

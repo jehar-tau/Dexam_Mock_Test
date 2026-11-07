@@ -105,7 +105,11 @@ test("reply context, cancellation, own helpful controls and reports are keyboard
  const opener=article(page,parent().body).getByRole("button",{name:"Reply to comment by Mira",exact:true});await opener.press("Enter");await expect(page.getByLabel("Your reply to comment",{exact:true})).toBeFocused();
  await page.getByRole("button",{name:"Cancel nested reply",exact:true}).press("Enter");await expect(opener).toBeFocused();await expect(article(page,"My original fictional comment.").getByRole("button",{name:"Mark helpful",exact:true})).toHaveCount(0);
  await article(page,parent().body).getByRole("button",{name:"Mark helpful",exact:true}).click();await expect(article(page,parent().body).getByRole("button",{name:"Marked helpful",exact:true})).toBeDisabled();
- await page.getByRole("button",{name:"Report discussion",exact:true}).click();expect(state.calls).toContainEqual(["report_community_content",{p_post_id:postId,p_comment_id:null,p_reason:"other",p_details:"Reported from discussion view"}]);
+ await page.getByRole("button",{name:"Report discussion",exact:true}).click();
+ const report=page.getByRole("dialog",{name:"Report community content",exact:true});await report.getByRole("button",{name:"Send report",exact:true}).click();
+ await expect(report.getByRole("status")).toHaveText("Report sent for moderator review.");
+ expect(state.calls).toContainEqual(["report_community_content",{p_post_id:postId,p_comment_id:null,p_reason:"other",p_details:null}]);
+ await report.getByRole("button",{name:"Close",exact:true}).click();
  await page.addScriptTag({path:fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js",import.meta.url))});
  for(let theme=0;theme<2;theme++){await expect(page.getByRole("button",{name:"Post to community",exact:true})).toHaveCSS("background-color",theme?"rgb(220, 235, 161)":"rgb(36, 71, 53)");expect(await page.evaluate(async()=> (await window.axe.run(".community-page",{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa"]}})).violations.map(item=>item.id))).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize().width);await page.getByRole("switch",{name:"Dark mode",exact:true}).click();}
  await page.setViewportSize({width:320,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
