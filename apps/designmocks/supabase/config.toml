@@ -9,6 +9,9 @@ verify_jwt = false
 [functions.attempt-media]
 verify_jwt = false
 
+[functions.bank-review-media]
+verify_jwt = false
+
 # Exact owned-origin callbacks. The server hook admits allowlisted Google testers only; public registration remains closed.
 [auth]
 site_url = "https://dmocks.com"

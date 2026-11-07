@@ -128,6 +128,7 @@ Every releasable slice must include focused unit coverage, database/authorizatio
 - [x] Add an admin allow-list, human-reviewed question-draft queue, signed-in bug reporting and admin replies/statuses.
 - [x] Complete structured PDF/photo corrections and manual transcription, retained private figure crops, retry-safe review decisions and canonical rights-gated exports. Verify with synthetic local Auth, Storage, concurrent requests, the real importer and verified runtime writer.
 - [x] Add bounded recovery and health visibility for interrupted extraction and AI drafting, with five-minute expiry, private processing tokens and explicit administrator retries. Verify real local HTTP overloads, late workers and legacy callers.
+- [x] Replace the first-25 bank list with searchable pagination and exam/type/topic/review filters. Open complete canonical wording, options, private figures, source/delivery answers and marking before a written, version-checked review. Verify admin-only signing, missing figures, stale decisions and desktop/mobile access.
 - [x] Prove the new migrations and authorization rules on disposable PostgreSQL 17.
 - [x] Add a service-role-only, idempotent canonical-bank importer that reads `origin/main`, imports only explicit empty-holds records and keeps objective readiness separate from import eligibility.
 - [ ] Export current Exam-app import state and reconcile every external key/content hash.
@@ -201,7 +202,7 @@ Exit: production readiness checklist approved, then registration, then payments,
 
 ## Immediate next actions
 
-1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060131`, and choose an independent staging deployment target before promotion.
+1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060132`, and choose an independent staging deployment target before promotion.
 2. Obtain the owner's Cloudboard/Claude question manifest and theory-document export. Reconcile supplied question snapshots with stable keys and content hashes through the documented read-only contract.
 3. Complete the remaining reviewed exam blueprints, including NID and NIFT creative/programme-specific papers, with authoritative question counts, sections, timing and marking where published.
 4. Run hosted acceptance for the admitted Google tester, representative full papers, drawings and teacher review, followed by synthetic staging capacity checks.
