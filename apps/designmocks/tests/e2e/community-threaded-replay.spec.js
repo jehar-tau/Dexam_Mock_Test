@@ -3,6 +3,7 @@ import {readFile} from "node:fs/promises";
 import {fileURLToPath} from "node:url";
 import {portalFixtureURL,seedPortalSession} from "./portal-fixture.js";
 import {orientationPages} from "./drawing-orientation-fixture.js";
+import {communityFeedFixture} from "./community-feed-fixture.js";
 test.use({baseURL:portalFixtureURL});
 const actor={id:"00000000-0000-4000-8000-000000000651",email:"threaded-community@example.invalid"};
 const postId="10000000-0000-4000-8000-000000000651",parentId="20000000-0000-4000-8000-000000000651",ownId="20000000-0000-4000-8000-000000000652",newId="20000000-0000-4000-8000-000000000653";
@@ -21,7 +22,7 @@ async function fixture(page,options={}){
  await page.route(api+"/rest/v1/rpc/**",async route=>{
   const request=route.request();if(request.method()==="OPTIONS")return route.fulfill({headers,status:204});
   const name=new URL(request.url()).pathname.split('/').at(-1),input=request.postDataJSON();state.calls.push([name,input]);let value;
-  if(name==="community_feed")value=state.posts.filter(item=>item.status!=="hidden");
+  if(name==="community_feed")value=communityFeedFixture(state.posts,input);
   else if(name==="public_all_india_top_ten")value=[];
   else if(name==="community_thread"||name==="community_reply_context"){
    if(input.p_cursor&&state.holdMore)await state.holdMore;

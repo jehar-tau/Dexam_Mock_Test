@@ -35,6 +35,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-image-vali
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-threaded-replay.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-report-review.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-reporting.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-feed.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-reviewer-access.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learning-lesson-editor.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/staging-portal.sql

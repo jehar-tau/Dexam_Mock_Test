@@ -1,7 +1,8 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useId, useLayoutEffect, useRef, useState } from "react";
 import { CommunityController } from "./CommunityController.jsx";
 import { CommunityThread } from "./CommunityThread.jsx";
 import { CommunityReporting } from "./CommunityReporting.jsx";
+import { communityFeedFilters } from "./community-feed.js";
 
 function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   if (!job) return null;
@@ -39,9 +40,24 @@ export function CommunityView({
   onRetryPost, onRetryReply, onSkipPost, onSkipReply,
   pendingTextPost = null, pendingTextReply = null, onRetryTextPost, onRetryTextReply, onStopTextPost, onStopTextReply,
   postFormVersion = 0, replyFormVersion = 0, threadLoading = false, onMoreComments, onReloadFeed,
+  feedFilters = {exam:null,topic:null}, feedLoading = false, feedNotice = "", feedReady = true, feedNextCursor = null,
+  onFilter = () => {}, onMorePosts,
 }) {
+  const examFilterId=useId(),topicFilterId=useId();
   const openers=useRef(new Map()),pageHeading=useRef(null),reportOpener=useRef(null),returnReportFocus=useRef(false);
+  const feedHeading=useRef(null),feedFocus=useRef(null),[pageNotice,setPageNotice]=useState("");
   const [reportTarget,setReportTarget]=useState(null);
+  useLayoutEffect(()=>{
+    const pending=feedFocus.current;
+    if(!pending||feedLoading)return;
+    const added=posts.filter(post=>!pending.ids.has(post.id)),active=document.activeElement;
+    if(added.length)setPageNotice(`${added.length} more ${added.length===1?"discussion":"discussions"} loaded.`);
+    if(active===pending.button||(!pending.button.isConnected&&active===document.body)) {
+      if(added.length)document.getElementById(`community-post-${added[0].id}`)?.focus();
+      else if(!pending.button.isConnected)feedHeading.current?.focus();
+    }
+    feedFocus.current=null;
+  },[posts,feedLoading]);
   useLayoutEffect(()=>{
     if(reportTarget||busy||!returnReportFocus.current)return;
     returnReportFocus.current=false;
@@ -116,11 +132,27 @@ export function CommunityView({
       <PendingText job={pendingTextReply} busy={busy} onRetry={onRetryTextReply} onStop={onStopTextReply} onReload={onReloadFeed} />
       <PendingImages job={pendingPost} busy={busy} onRetry={onRetryPost} onSkip={onSkipPost} onOpen={onOpen} />
       <PendingImages job={pendingReply} busy={busy} onRetry={onRetryReply} onSkip={onSkipReply} onOpen={onOpen} />
+      <section aria-label="Community discussions" aria-busy={feedLoading}>
+      <h2 ref={feedHeading} tabIndex={-1}>Discussions</h2>
+      <form className="admin-form community-feed-filters" aria-label="Discussion filters" key={JSON.stringify(feedFilters)} onSubmit={event=>{
+        event.preventDefault();const form=new FormData(event.currentTarget);setPageNotice("");onFilter({exam:form.get("exam"),topic:form.get("topic")});
+      }}>
+        <div><label htmlFor={examFilterId}>Exam filter</label><select id={examFilterId} name="exam" defaultValue={feedFilters.exam??""}>
+          <option value="">All exams</option>{["uceed","ceed","nid","nift"].map(exam=><option value={exam} key={exam}>{exam.toUpperCase()}</option>)}
+        </select></div>
+        <div><label htmlFor={topicFilterId}>Topic filter</label><input id={topicFilterId} name="topic" defaultValue={feedFilters.topic??""} maxLength={100} placeholder="Exact topic (optional)" /></div>
+        <button className="button" type="submit">Apply filters</button>
+        <button className="button quiet" type="button" onClick={()=>{setPageNotice("");onFilter({exam:null,topic:null});}}>Clear filters</button>
+      </form>
+      <p className="muted">Topics match exactly, including case. Each page contains up to 25 discussions.</p>
+      {(feedNotice||feedLoading) && <p role="status">{feedNotice||"Loading discussions…"}</p>}
+      {feedReady&&!feedLoading&&posts.length===0&&<p>No discussions match these filters.</p>}
+      {feedNotice && <button type="button" className="text-button" onClick={onReloadFeed}>Refresh discussions</button>}
       <div className="community-feed">
         {posts.map((p) => (
-          <article key={p.id}>
+          <article key={p.id} id={`community-post-${p.id}`} tabIndex={-1}>
             <span className="eyebrow">
-              {p.exam} · {p.topic}
+              {p.exam} · {p.topic}{p.status==="locked"?" · Locked":""}
             </span>
             <h2>{p.title}</h2>
             <p>{p.body}</p>
@@ -133,6 +165,11 @@ export function CommunityView({
           </article>
         ))}
       </div>
+      {pageNotice && <p role="status">{pageNotice}</p>}
+      {feedNextCursor && <button type="button" className="button quiet" aria-disabled={feedLoading} onClick={event=>{
+        if(feedLoading)return;feedFocus.current={ids:new Set(posts.map(post=>post.id)),button:event.currentTarget};setPageNotice("");onMorePosts();
+      }}>{feedLoading?"Loading discussions…":"Load more discussions"}</button>}
+      </section>
       {thread && <CommunityThread key={thread.id} thread={thread} busy={busy} pendingReply={pendingReply} pendingTextReply={pendingTextReply}
         replyFormVersion={replyFormVersion} loading={threadLoading} onOpen={viewThread} onMore={onMoreComments}
         onComment={onComment} onHelpful={onHelpful} onReport={reportContent} />}
@@ -146,6 +183,7 @@ export function Community() {
 }
 export function CommunityPreview() {
   const [m, setM] = useState(""), [thread, setThread] = useState(null);
+  const [filters,setFilters]=useState(()=>communityFeedFilters());
   const previewThread = {
     id: "10000000-0000-4000-8000-000000000001", exam: "uceed", topic: "observation",
     title: "How do you separate observation from assumption?",
@@ -155,6 +193,7 @@ export function CommunityPreview() {
   };
   return (
     <CommunityView
+      feedFilters={filters} onFilter={value=>setFilters(communityFeedFilters(value.exam,value.topic))}
       posts={[
         {
           id: "10000000-0000-4000-8000-000000000001",
@@ -165,7 +204,7 @@ export function CommunityPreview() {
           author: "Asha",
           comments: 3,
         },
-      ]}
+      ].filter(post=>(!filters.exam||post.exam===filters.exam)&&(!filters.topic||post.topic===filters.topic))}
       thread={thread}
       message={m}
       onOpen={(id) => setThread(id ? previewThread : null)}
