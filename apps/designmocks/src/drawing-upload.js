@@ -1,0 +1,34 @@
+import { DRAWING_MAX_BYTES } from "../supabase/functions/_shared/drawing-limits.mjs";
+
+const messages = {
+  invalid_image: "An image could not be fully read. Export a still PNG, JPEG or WebP and try again.",
+  image_size: "Use images no larger than 10 MB each.",
+  request_size: "Use images no larger than 10 MB each.",
+  image_dimensions: "Use images up to 24 megapixels and 12,000 pixels on either side.",
+  drawing_busy: "Another image is being checked. Try the remaining pages again.",
+  validation_unavailable: "Image checks are temporarily unavailable. Try the remaining pages again.",
+};
+
+export function checkDrawingFiles(files) {
+  for (const file of files) {
+    if (!file.size || file.size > DRAWING_MAX_BYTES) return messages.image_size;
+    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) return messages.invalid_image;
+  }
+  return null;
+}
+
+// Never reflect an arbitrary provider/decoder response into the student UI.
+export async function drawingMediaError(error) {
+  try {
+    const data = await error?.context?.clone().json();
+    if (typeof data?.code === "string" && Object.hasOwn(messages, data.code)) return Object.assign(new Error(messages[data.code]), { drawingCode: data.code });
+  } catch { /* An absent/ambiguous receipt is reconciled from the saved-page list. */ }
+  return error;
+}
+
+export function drawingUploadFailure(error) {
+  const detail = Object.hasOwn(messages, error?.drawingCode) ? messages[error.drawingCode] : null;
+  return detail
+    ? `${detail} Check your saved pages before adding the remaining images.`
+    : "An upload did not confirm. Check your saved pages before adding the remaining images.";
+}

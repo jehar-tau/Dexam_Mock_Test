@@ -25,11 +25,12 @@
     "test:database": "bash scripts/check-database.sh",
     "runtime:manifest": "node scripts/materialize-bank-runtime.mjs --ref origin/main",
     "runtime:apply": "node scripts/materialize-bank-runtime.mjs --ref origin/main --apply",
-    "capacity:run": "node scripts/capacity-load.mjs"
-    ,"operations:sweep": "node scripts/operations-sweep.mjs"
-    ,"bank:reconcile": "node scripts/reconcile-bank-state.mjs"
+    "capacity:run": "node scripts/capacity-load.mjs",
+    "operations:sweep": "node scripts/operations-sweep.mjs",
+    "bank:reconcile": "node scripts/reconcile-bank-state.mjs"
   },
   "dependencies": {
+    "@imagemagick/magick-wasm": "0.0.46",
     "@supabase/supabase-js": "2.117.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",

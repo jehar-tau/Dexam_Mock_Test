@@ -15,6 +15,13 @@ verify_jwt = false
 [functions.reported-question-media]
 verify_jwt = false
 
+# These handlers authenticate with Auth/RPC and enforce owner/assigned-reviewer scope.
+[functions.drawing-media]
+verify_jwt = false
+
+[functions.drawing-review-media]
+verify_jwt = false
+
 # Exact owned-origin callbacks. The server hook admits allowlisted Google testers only; public registration remains closed.
 [auth]
 site_url = "https://dmocks.com"

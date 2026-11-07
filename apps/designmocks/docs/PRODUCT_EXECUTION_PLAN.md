@@ -77,6 +77,7 @@ Phone verification requires a provider, abuse limits, consent wording, recovery 
 
 - Support multiple raster uploads per drawing task, explicit ordering, replacement/removal before final submission, retryable resumable upload and an additional exam-specific 10–15 minute upload phase.
 - Files are private, malware/type/size checked, stripped of unnecessary metadata and accessed through short-lived signed URLs.
+- Local drawing validation now checks complete still PNG/JPEG/WebP content, strips unnecessary metadata and preserves compressed pixels, rendering colour data and orientation. Actual isolated Edge/Storage acceptance covers the 10 MiB/24MP bounds, account/reviewer isolation and the post-decode deadline fence. General malware scanning/quarantine, resumable transfer and hosted resource acceptance remain open.
 - AI produces rubric-linked suggestions and a proposed score with confidence and evidence. It must not be the final authority at launch.
 - A teacher reviews anonymously, sees the AI proposal, enters criterion marks and comments, and may override with a required reason. Every change is audited.
 - Supabase Edge Functions cannot host a useful large vision-language model. Recommended first implementation: a separately hosted managed multimodal API or dedicated inference service, with images disclosed/consented and retention controlled. Local/self-hosted vision evaluation is an R&D track requiring GPU cost, a labelled drawing set, calibration and bias testing.
@@ -211,4 +212,4 @@ Exit: production readiness checklist approved, then registration, then payments,
 3. Complete the remaining reviewed exam blueprints, including NID and NIFT creative/programme-specific papers, with authoritative question counts, sections, timing and marking where published.
 4. Run hosted acceptance for the admitted Google tester, representative full papers, drawings and teacher review, followed by synthetic staging capacity checks.
 5. Obtain the pending source rights, model-processing/cost, phone-provider and public-policy decisions. Keep payments deferred until the owner resumes that work.
-6. Verify and complete server-side drawing-image metadata removal and valid-content checks. Preserve orientation, pixels, private access and upload cutoffs; prove behaviour with fictional fixtures before promotion.
+6. Add explicit private drawing-viewer orientation for browsers that ignore WebP EXIF, preserving the original evidence and grading scope. Complete the remaining scanner/quarantine and resumable-transfer acceptance, then verify the pinned decoder and representative image sizes on the approved staging target before promotion.

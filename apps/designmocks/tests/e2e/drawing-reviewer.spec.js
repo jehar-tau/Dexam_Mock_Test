@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { fileURLToPath } from "node:url";
+import { readFile } from "node:fs/promises";
+import { prepareDrawingImage } from "../../supabase/functions/_shared/drawing-image.mjs";
 import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider as stubProvider } from "./portal-fixture.js";
 
 test.use({ baseURL: portalFixtureURL });
@@ -18,6 +20,43 @@ const availableDrawing = {
 const secondDrawing = {
   ...availableDrawing, reviewId: "40000000-0000-4000-8000-000000000002", prompt: "Sketch a folding lamp.",
 };
+
+test("anonymous teacher images preserve browser orientation and every displayed pixel after metadata removal", async ({ page }) => {
+  const originals = [], images = [];
+  for (const [index, ext, mime] of [[1, "png", "image/png"], [2, "jpg", "image/jpeg"], [3, "webp", "image/webp"]]) {
+    const bytes = await readFile(new URL(`../fixtures/drawing-images/fictional-drawing.${ext}`, import.meta.url));
+    const sanitized = await prepareDrawingImage(bytes, mime);
+    originals.push(`data:${mime};base64,${bytes.toString("base64")}`);
+    images.push({ id: "fictional-raster-" + index, ordinal: index, url: `data:${mime};base64,${Buffer.from(sanitized.bytes).toString("base64")}` });
+  }
+  const { unexpected } = await stubProvider(page, (procedure, input) => {
+    if (procedure === "my_drawing_review_page") return { items: input.p_scope === "mine" ? [{
+      ...availableDrawing, version: 1, status: "assigned", canClaim: false, canReview: true, assignedToMe: true, uploadCount: 3,
+    }] : [], nextCursor: null };
+    if (procedure === "drawing-review-media") return { images };
+  });
+  await page.goto("/account"); await seedSession(page); await page.goto("/review/drawings");
+  await page.getByRole("button", { name: "My reviews", exact: true }).click();
+  await page.getByRole("button", { name: "Open private images" }).press("Enter");
+  await expect(page.getByRole("img", { name: /Anonymous drawing page/ })).toHaveCount(3);
+  const comparisons = await page.evaluate(async originals => {
+    const pixels = image => {
+      const canvas = document.createElement("canvas"); canvas.width = image.naturalWidth; canvas.height = image.naturalHeight;
+      const context = canvas.getContext("2d"); context.drawImage(image, 0, 0); return context.getImageData(0, 0, canvas.width, canvas.height).data;
+    };
+    return Promise.all([...document.querySelectorAll(".drawing-review-media img")].map(async (image, index) => {
+      const original = new Image(); original.src = originals[index]; await original.decode(); await image.decode();
+      const before = pixels(original), after = pixels(image);
+      return { width: image.naturalWidth, height: image.naturalHeight, same: original.naturalWidth === image.naturalWidth &&
+        original.naturalHeight === image.naturalHeight && before.length === after.length && before.every((value, at) => value === after[at]) };
+    }));
+  }, originals);
+  expect(comparisons.every(result => result.same && result.width * result.height === 24)).toBe(true);
+  expect(comparisons.slice(0, 2)).toEqual(Array.from({ length: 2 }, () => ({ width: 4, height: 6, same: true })));
+  // The current browser ignores WebP EXIF in both original and filtered files.
+  // Preserve that native rendering here; Exif-aware orientation is checked independently.
+  expect(unexpected).toEqual([]);
+});
 
 test("an authenticated reviewer can page, claim, grade and finalize anonymous work", async ({ page }) => {
   let drawing = availableDrawing;

@@ -1,8 +1,11 @@
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
-import { rasterMimeType } from "../_shared/raster.mjs";
+import { DrawingImageError, DRAWING_MAX_BYTES } from "../_shared/drawing-image.mjs";
+import { DRAWING_FORM_MAX_BYTES, drawingRequestBody } from "../_shared/drawing-request.mjs";
+import { validateDrawing } from "./validate.ts";
 
 const uuid = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 const isId = (value: unknown): value is string => typeof value === "string" && uuid.test(value);
+let uploadBusy = false;
 
 Deno.serve(async (request) => {
   const origin = Deno.env.get("PUBLIC_APP_ORIGIN");
@@ -18,9 +21,11 @@ Deno.serve(async (request) => {
   if (!user) return respond({ error: "Sign in required" }, 401);
   const admin = createClient(url, service, { auth: { persistSession: false } });
   const bucket = admin.storage.from("drawing-submissions");
+  let reserved = false;
   try {
-    if (request.headers.get("content-type")?.includes("application/json")) {
-      const { action, id, attemptId, questionId } = await request.json();
+    const contentType = request.headers.get("content-type") ?? "";
+    if (/^application\/json(?:;|$)/i.test(contentType)) {
+      const { action, id, attemptId, questionId } = JSON.parse(new TextDecoder().decode(await drawingRequestBody(request, 4096)));
       if (action === "list" && isId(attemptId) && isId(questionId)) {
         const listed = await student.rpc("my_drawing_uploads", { p_attempt_id: attemptId, p_question_id: questionId });
         if (listed.error) throw listed.error;
@@ -33,10 +38,19 @@ Deno.serve(async (request) => {
       if (deletion.error) console.error("Drawing storage deletion failed");
       return respond({ removed: id });
     }
-    const form = await request.formData();
+    if (!/^multipart\/form-data;/i.test(contentType)) return respond({ error: "Use a PNG, JPEG or WebP upload" }, 415);
+    if (uploadBusy) return respond({ error: "Another image is being checked. Try this page again.", code: "drawing_busy" }, 429);
+    // Bound the entire body before the multipart parser allocates files or decoding starts.
+    uploadBusy = true; reserved = true;
+    const body = await drawingRequestBody(request, DRAWING_FORM_MAX_BYTES);
+    const form = await new Response(body, { headers: { "Content-Type": contentType } }).formData();
+    if ([...form.keys()].length !== 4 || !["attemptId", "questionId", "ordinal", "file"].every((key) => form.getAll(key).length === 1)) {
+      return respond({ error: "Invalid drawing form" }, 400);
+    }
     const attemptId = form.get("attemptId"), questionId = form.get("questionId");
     const ordinal = Number(form.get("ordinal")), file = form.get("file");
-    if (!isId(attemptId) || !isId(questionId) || !(file instanceof File) || file.size > 10485760 ||
+    if (file instanceof File && file.size > DRAWING_MAX_BYTES) throw new DrawingImageError("Use an image no larger than 10 MB.", "image_size", 413);
+    if (!isId(attemptId) || !isId(questionId) || !(file instanceof File) ||
       file.size < 1 || !Number.isInteger(ordinal) || ordinal < 1 || ordinal > 5) {
       return respond({ error: "Invalid drawing image or page number" }, 400);
     }
@@ -45,15 +59,16 @@ Deno.serve(async (request) => {
     });
     if (eligible.error) throw eligible.error;
     if (!eligible.data) return respond({ error: "Drawing page unavailable" }, 403);
-    const mime = rasterMimeType(new Uint8Array(await file.slice(0, 12).arrayBuffer()));
-    if (!mime || mime !== file.type) return respond({ error: "Image content does not match its file type" }, 400);
+    const checked = await validateDrawing(new Uint8Array(await file.arrayBuffer()), file.type);
+    const mime = checked.mime;
+    if (!mime) throw new DrawingImageError("Use a still PNG, JPEG or WebP image.");
     const extension = mime === "image/jpeg" ? "jpg" : mime.split("/")[1];
     const path = `drawings/${crypto.randomUUID()}.${extension}`;
-    const uploaded = await bucket.upload(path, file, { contentType: mime, upsert: false });
+    const uploaded = await bucket.upload(path, checked.bytes, { contentType: mime, upsert: false });
     if (uploaded.error) throw uploaded.error;
     const registered = await admin.rpc("register_drawing_upload", {
       p_student_id: user.id, p_attempt_id: attemptId, p_question_id: questionId,
-      p_storage_path: path, p_ordinal: ordinal, p_mime_type: mime, p_byte_size: file.size,
+      p_storage_path: path, p_ordinal: ordinal, p_mime_type: mime, p_byte_size: checked.bytes.length,
     });
     if (registered.error) {
       // An ambiguous network failure can occur after the database committed.
@@ -65,6 +80,7 @@ Deno.serve(async (request) => {
     }
     return respond({ id: registered.data, ordinal });
   } catch (error) {
+    if (error instanceof DrawingImageError) return respond({ error: error.message, code: error.code }, error.status);
     return respond({ error: error instanceof Error ? error.message : "Drawing request failed" }, 400);
-  }
+  } finally { if (reserved) uploadBusy = false; }
 });
