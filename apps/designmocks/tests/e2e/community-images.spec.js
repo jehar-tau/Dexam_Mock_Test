@@ -15,9 +15,9 @@ async function fixture(page,{existing=false}={}){
   if(existing){state.posts.push(post());state.assets.set(postId,[samples[0]]);}
   const provider=await stubPortalProvider(page,(name,input)=>{
     if(name==="community_feed")return state.posts.filter(item=>item.status!=="hidden");
-    if(name==="create_community_post"){state.postWrites++;state.posts=[{...post(),title:input.p_title,body:input.p_body}];return postId;}
-    if(name==="add_community_comment"){state.replyWrites++;state.comments=[{id:commentId,body:input.p_body,author:"Fictional reply",helpful:0}];return commentId;}
-    if(name==="community_thread")return state.posts[0]?.status==="hidden"?{code:"42501",message:"Private moderation diagnostic"}:{...state.posts[0],assetCount:target(postId).length,comments:state.comments.map(item=>({...item,assetCount:target(item.id).length}))};
+    if(name==="create_community_post"){state.postWrites++;state.posts=[{...post(),title:input.p_title,body:input.p_body}];return input.p_request_id?{id:postId,postId,parentId:null,status:"visible",postStatus:"visible",canUpload:true,replayed:false}:postId;}
+    if(name==="add_community_comment"){state.replyWrites++;state.comments=[{id:commentId,body:input.p_body,author:"Fictional reply",helpful:0}];return input.p_request_id?{id:commentId,postId,parentId:input.p_parent_id,status:"visible",postStatus:"visible",canUpload:true,replayed:false}:commentId;}
+    if(name==="community_thread"||name==="community_reply_context")return state.posts[0]?.status==="hidden"?{code:"42501",message:"Private moderation diagnostic"}:{...state.posts[0],version:1,nextCursor:null,...(input.p_anchor_id?{anchorId:input.p_anchor_id,hasEarlier:false}:{}),assetCount:target(postId).length,comments:state.comments.map(item=>({parentId:null,isMine:false,canReply:true,markedHelpful:false,parentAvailable:false,parentPreview:null,...item,assetCount:target(item.id).length}))};
     if(name==="mark_community_helpful"){state.comments[0].helpful++;return null;}
     if(name==="report_community_content")return null;
     if(name==="public_all_india_top_ten")return [];

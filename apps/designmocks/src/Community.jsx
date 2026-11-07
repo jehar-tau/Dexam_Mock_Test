@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { CommunityController } from "./CommunityController.jsx";
-import { PrivateRasterImage } from "./DrawingInspection.jsx";
+import { CommunityThread } from "./CommunityThread.jsx";
 
 function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   if (!job) return null;
@@ -8,16 +8,23 @@ function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   return <section className="notice community-upload-recovery" aria-label={`Saved ${kind} images`}>
     <p>Your {kind} is saved. {job.next} of {job.files.length} images confirmed.</p>
     <button type="button" disabled={busy} onClick={onRetry}>Retry {kind} images</button>
-    <button type="button" disabled={busy} onClick={() => onOpen(job.postId)}>Open saved discussion</button>
+    <button type="button" disabled={busy} onClick={() => onOpen(job.postId,job.targetType==="comment"?{anchorId:job.targetId}:{})}>Open saved discussion</button>
     <button type="button" disabled={busy} onClick={onSkip}>Finish {kind} without remaining images</button>
   </section>;
 }
 
-function CommunityImages({ images = [], label }) {
-  return images.map((image, index) => <div className="community-image-frame" key={`${image.id}:${image.url}`}>
-    <PrivateRasterImage image={image} label={`${label} ${index + 1}`} />
-  </div>);
+function PendingText({ job, busy, onRetry, onStop, onReload }) {
+  if (!job) return null;
+  const kind=job.kind==="post" ? "post" : "reply";
+  return <section className="notice community-upload-recovery" aria-label={`Unconfirmed ${kind} text`}>
+    <p>Your {kind} hasn’t confirmed. Retrying checks the same request.</p>
+    <small>Keep this page open to retry the selected text and files. Check discussions before posting again.</small>
+    <button type="button" disabled={busy} onClick={onRetry}>Retry {kind} text</button>
+    <button type="button" disabled={busy} onClick={onReload}>Check discussions</button>
+    <button type="button" disabled={busy} onClick={onStop}>Stop retrying this {kind}</button>
+  </section>;
 }
+
 export function CommunityView({
   posts = [],
   thread = null,
@@ -29,7 +36,16 @@ export function CommunityView({
   message = "",
   busy = false, pendingPost = null, pendingReply = null,
   onRetryPost, onRetryReply, onSkipPost, onSkipReply,
+  pendingTextPost = null, pendingTextReply = null, onRetryTextPost, onRetryTextReply, onStopTextPost, onStopTextReply,
+  postFormVersion = 0, replyFormVersion = 0, threadLoading = false, onMoreComments, onReloadFeed,
 }) {
+  const openers=useRef(new Map()),pageHeading=useRef(null);
+  const viewThread=id=>{
+    if(id)return onOpen(id);
+    const target=openers.current.get(thread?.id);
+    onOpen(null);
+    (target?.isConnected?target:pageHeading.current)?.focus();
+  };
   const submit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -40,7 +56,7 @@ export function CommunityView({
   return (
     <section className="wrap section community-page">
       <span className="eyebrow">COMMUNITY</span>
-      <h1>
+      <h1 ref={pageHeading} tabIndex={-1}>
         Ask clearly.
         <br />
         <em>Build together.</em>
@@ -49,8 +65,8 @@ export function CommunityView({
         Discuss methods and solutions without exposing private details or active
         assessment content.
       </p>
-      <form className="admin-form" onSubmit={submit}>
-        <fieldset className="community-fields" aria-label="New discussion" disabled={busy || Boolean(pendingPost)}>
+      <form className="admin-form" key={postFormVersion} onSubmit={submit}>
+        <fieldset className="community-fields" aria-label="New discussion" disabled={busy || Boolean(pendingPost) || Boolean(pendingTextPost)}>
         <label>
           Exam
           <select name="exam">
@@ -79,7 +95,9 @@ export function CommunityView({
         <button className="button">Post to community</button>
         </fieldset>
       </form>
-      {message && <p role="status">{message}</p>}
+      {(message || (threadLoading && !thread)) && <p role="status">{message || "Loading discussion…"}</p>}
+      <PendingText job={pendingTextPost} busy={busy} onRetry={onRetryTextPost} onStop={onStopTextPost} onReload={onReloadFeed} />
+      <PendingText job={pendingTextReply} busy={busy} onRetry={onRetryTextReply} onStop={onStopTextReply} onReload={onReloadFeed} />
       <PendingImages job={pendingPost} busy={busy} onRetry={onRetryPost} onSkip={onSkipPost} onOpen={onOpen} />
       <PendingImages job={pendingReply} busy={busy} onRetry={onRetryReply} onSkip={onSkipReply} onOpen={onOpen} />
       <div className="community-feed">
@@ -93,65 +111,16 @@ export function CommunityView({
             <small>
               By {p.author} · {p.comments} replies
             </small>
-            <button className="text-button" onClick={() => onOpen(p.id)}>
+            <button className="text-button" ref={node=>{if(node)openers.current.set(p.id,node);else openers.current.delete(p.id);}} onClick={() => onOpen(p.id)}>
               Open discussion
             </button>
           </article>
         ))}
       </div>
-      {thread && (
-        <section className="community-thread" aria-label="Discussion thread">
-          <button className="text-button" onClick={() => onOpen(null)}>
-            Close discussion
-          </button>
-          <button type="button" className="text-button" onClick={() => onOpen(thread.id)}>Refresh discussion</button>
-          <span className="eyebrow">{thread.exam} · {thread.topic}</span>
-          <h2>{thread.title}</h2>
-          <p>{thread.body}</p>
-          <CommunityImages images={thread.media} label="Question attachment" />
-          {thread.status === "locked" && <p role="status">This discussion is locked. Existing images remain viewable.</p>}
-          <form
-            className="community-reply"
-            onSubmit={async (event) => {
-              event.preventDefault();
-              const element = event.currentTarget;
-              const form = new FormData(element);
-              const saved = await onComment(thread.id, null, form.get("body"), form.getAll("images").filter((file) => file.name));
-              if (saved !== false) element.reset();
-            }}
-          >
-            <fieldset className="community-fields" aria-label="New reply" disabled={busy || Boolean(pendingReply) || thread.status === "locked"}>
-            <label>
-              Add a reply
-              <textarea name="body" minLength="2" maxLength="3000" required />
-            </label>
-            <label>
-              Solution images (optional, up to 3)
-              <input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple aria-describedby="community-reply-image-help" />
-            </label>
-            <small id="community-reply-image-help">Up to 5 MB and 24 megapixels each. Remove visible personal details before sharing.</small>
-            <button className="button">Reply</button>
-            </fieldset>
-          </form>
-          <div className="community-comments">
-            {thread.comments.map((comment) => (
-              <article key={comment.id}>
-                <p>{comment.body}</p>
-                <CommunityImages images={comment.media} label="Solution attachment" />
-                <small>By {comment.author} · {comment.helpful} helpful</small>
-                <div className="community-actions">
-                  <button className="text-button" onClick={() => onHelpful(comment.id)}>
-                    Mark helpful
-                  </button>
-                  <button className="text-button" onClick={() => onReport(null, comment.id)}>
-                    Report
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
+      {thread && <CommunityThread key={thread.id} thread={thread} busy={busy} pendingReply={pendingReply} pendingTextReply={pendingTextReply}
+        replyFormVersion={replyFormVersion} loading={threadLoading} onOpen={viewThread} onMore={onMoreComments}
+        onComment={onComment} onHelpful={onHelpful} onReport={onReport} />}
+
     </section>
   );
 }
