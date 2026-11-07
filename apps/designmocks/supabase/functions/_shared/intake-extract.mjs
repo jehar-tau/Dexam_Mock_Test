@@ -68,10 +68,13 @@ export function parseIntakeExtractionResponse(response) {
   throw new Error("Extraction response did not contain structured output");
 }
 
-export async function extractIntakeAsset({ admin, assetId, model, apiKey, fetcher = fetch }) {
-  const claimed = await admin.rpc("claim_question_intake_asset", { p_asset_id: assetId });
+export async function extractIntakeAsset({ admin, actorId, assetId, model, apiKey, fetcher = fetch }) {
+  if (typeof actorId !== "string") return { status: 403, body: { error: "Admin identity is required for extraction" } };
+  const claimed = await admin.rpc("claim_question_intake_asset", { p_asset_id: assetId, p_actor_id: actorId });
   // A duplicate request cannot fail the job held by the first worker.
   if (claimed.error) return { status: 409, body: { error: "Intake asset is not available for extraction" } };
+  const token = claimed.data?.token;
+  if (typeof token !== "string") return { status: 503, body: { error: "Question processing is temporarily unavailable. Contact the operator before retrying." } };
   try {
     const asset = claimed.data;
     const { data: file, error } = await admin.storage.from("question-intake").download(asset.storagePath);
@@ -88,13 +91,13 @@ export async function extractIntakeAsset({ admin, assetId, model, apiKey, fetche
     if (!provider.ok) throw new Error("Extraction provider request failed");
     const response = await provider.json();
     const completed = await admin.rpc("complete_question_intake_asset", {
-      p_asset_id: assetId, p_model: model, p_response_id: response.id, p_questions: parseIntakeExtractionResponse(response),
+      p_asset_id: assetId, p_model: model, p_response_id: response.id, p_questions: parseIntakeExtractionResponse(response), p_token: token,
     });
     if (completed.error) throw new Error("Extraction candidates could not be saved");
     return { status: 200, body: { assetId, status: "extracted", questions: completed.data } };
   } catch {
     const error = "Extraction failed. Check the private source and configured provider before retrying.";
-    await admin.rpc("fail_question_intake_asset", { p_asset_id: assetId, p_model: model, p_error: error });
+    await admin.rpc("fail_question_intake_asset", { p_asset_id: assetId, p_model: model, p_error: error, p_token: token });
     return { status: 400, body: { error } };
   }
 }

@@ -4,30 +4,36 @@ export function AiQuestionDrafting({ requests = [], onGenerate }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const generate = async input => {
+    setBusy(true);
+    setMessage("");
+    setError("");
+    try {
+      await onGenerate(input);
+      setMessage("AI draft created and sent to human review.");
+      return true;
+    } catch (failure) { setError(failure.message); return false; }
+    finally { setBusy(false); }
+  };
   const submit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     const fields = new FormData(form);
     const basisExternalKeys = String(fields.get("basisExternalKeys")).split(",").map((key) => key.trim()).filter(Boolean);
-    setBusy(true);
-    setMessage("");
-    setError("");
-    try {
-      if (basisExternalKeys.length < 1 || basisExternalKeys.length > 10 ||
-          new Set(basisExternalKeys).size !== basisExternalKeys.length) {
-        throw new Error("Enter 1 to 10 distinct basis keys.");
-      }
-      await onGenerate({
-        exam: fields.get("exam"),
-        topic: String(fields.get("topic")).trim(),
-        questionType: fields.get("questionType"),
-        instruction: String(fields.get("instruction")).trim(),
-        basisExternalKeys,
-      });
-      setMessage("AI draft created and sent to human review.");
-      form.reset();
-    } catch (failure) { setError(failure.message); }
-    finally { setBusy(false); }
+    if (basisExternalKeys.length < 1 || basisExternalKeys.length > 10 ||
+        new Set(basisExternalKeys).size !== basisExternalKeys.length) {
+      setMessage("");
+      setError("Enter 1 to 10 distinct basis keys.");
+      return;
+    }
+    const saved = await generate({
+      exam: fields.get("exam"),
+      topic: String(fields.get("topic")).trim(),
+      questionType: fields.get("questionType"),
+      instruction: String(fields.get("instruction")).trim(),
+      basisExternalKeys,
+    });
+    if (saved) form.reset();
   };
 
   return <section className="ai-drafting" aria-labelledby="ai-draft-heading">
@@ -52,6 +58,8 @@ export function AiQuestionDrafting({ requests = [], onGenerate }) {
         <span className="status-pill">{request.status}</span>
         <p>References {request.basisExternalKeys.join(", ")}</p>
         {request.error && <p className="error">{request.error}</p>}
+        {request.attemptCount > 0 && <p>Processing attempt {request.attemptCount}</p>}
+        {request.retryAvailable && <button type="button" disabled={busy} onClick={() => generate({ requestId: request.id })}>{busy ? "Retrying…" : "Retry draft"}</button>}
       </article>)}
     </div>
   </section>;

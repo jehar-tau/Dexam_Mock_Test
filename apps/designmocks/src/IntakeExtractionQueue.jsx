@@ -118,10 +118,11 @@ function IntakeAsset({ asset, onExtract, onPromote, onReject, onTranscribe, onDo
     {asset.error && <p className="error">{asset.error}</p>}
     <div className="admin-actions">
       {onDownload && <button disabled={busy} onClick={() => act(() => onDownload(asset))}>Download private source</button>}
-      {["uploaded", "failed"].includes(asset.status) && <button disabled={busy || asset.byteSize > 10485760} onClick={() => act(() => onExtract(asset.id))}>Extract with configured model</button>}
+      {(["uploaded", "failed"].includes(asset.status) || asset.retryAvailable) && <button disabled={busy || asset.byteSize > 10485760} onClick={() => act(() => onExtract(asset.id))}>{asset.retryAvailable ? "Retry extraction" : "Extract with configured model"}</button>}
     </div>
     {asset.byteSize > 10485760 && <p>Model extraction accepts files up to 10 MB. Split the source or transcribe its questions below.</p>}
-    {asset.status === "extracting" && <p role="status">Extraction in progress…</p>}
+    {asset.status === "extracting" && <p role="status">{asset.retryAvailable ? "Extraction timed out. Retry when ready." : "Extraction in progress…"}</p>}
+    {asset.attemptCount > 0 && <p>Processing attempt {asset.attemptCount}</p>}
     {message && <p role="alert">{message}</p>}
     {onTranscribe && asset.status !== "extracting" && <details><summary>Transcribe a question from this source</summary><IntakeQuestionEditor manual onSubmit={payload => onTranscribe(asset.id, payload)} onPrepareFigures={onPrepareFigures && (figures => onPrepareFigures(asset.id, figures))} /></details>}
     {(asset.candidates ?? []).map(candidate => <section key={candidate.id} aria-label={`Candidate ${candidate.ordinal}`}>

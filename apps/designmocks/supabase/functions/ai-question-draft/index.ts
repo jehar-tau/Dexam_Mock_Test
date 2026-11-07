@@ -1,5 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
-import { buildAiDraftRequest, parseAiDraftResponse } from "../_shared/ai-draft.mjs";
+import { runAiDraft } from "../_shared/ai-draft-run.mjs";
 
 Deno.serve(async (request) => {
   const origin = Deno.env.get("PUBLIC_APP_ORIGIN");
@@ -28,41 +28,12 @@ Deno.serve(async (request) => {
     auth: { persistSession: false },
   });
   const worker = createClient(url, service, { auth: { persistSession: false } });
-  let requestId: string | undefined;
+  const { data: { user } } = await caller.auth.getUser();
+  if (!user) return respond({ error: "Sign in required" }, 401);
   try {
-    const body = await request.json();
-    const created = await caller.rpc("admin_create_ai_draft_request", {
-      p_exam: body.exam,
-      p_topic: body.topic,
-      p_question_type: body.questionType,
-      p_instruction: body.instruction,
-      p_basis_external_keys: body.basisExternalKeys,
-    });
-    if (created.error) return respond({ error: created.error.message }, created.error.code === "42501" ? 403 : 400);
-    requestId = created.data;
-    const basis = await caller.rpc("admin_ai_draft_basis", { p_request_id: requestId });
-    if (basis.error) throw new Error(basis.error.message);
-
-    const generated = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: { Authorization: "Bearer " + apiKey, "Content-Type": "application/json" },
-      body: JSON.stringify(buildAiDraftRequest({ ...basis.data, model })),
-      signal: AbortSignal.timeout(60_000),
-    });
-    if (!generated.ok) throw new Error("The draft model could not complete the request.");
-    const response = await generated.json();
-    let payload;
-    try { payload = parseAiDraftResponse(response); }
-    catch { throw new Error("The draft model did not return a valid review draft."); }
-
-    const completed = await worker.rpc("complete_ai_draft_request", {
-      p_request_id: requestId, p_model: model, p_response_id: response.id, p_payload: payload,
-    });
-    if (completed.error) throw new Error(completed.error.message);
-    return respond({ requestId, draftId: completed.data, status: "succeeded" });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "AI drafting failed";
-    if (requestId) await worker.rpc("fail_ai_draft_request", { p_request_id: requestId, p_model: model, p_error: message });
-    return respond({ error: message }, 400);
+    const result = await runAiDraft({ caller, worker, actorId: user.id, input: await request.json(), model, apiKey });
+    return respond(result.body, result.status);
+  } catch {
+    return respond({ error: "Draft processing could not be confirmed. Refresh the queue before trying again." }, 400);
   }
 });
