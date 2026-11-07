@@ -95,7 +95,7 @@ function BankQuestionReview({ selected, rpc, onClose, onReviewed, loadMedia }) {
   </section>;
 }
 
-export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia = loadBankFigures }) {
+export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia = loadBankFigures, refreshToken = 0 }) {
   const [filters, setFilters] = useState(initialBankFilters);
   const [query, setQuery] = useState(() => bankSearchInput(initialBankFilters));
   const [refreshKey, setRefreshKey] = useState(0);
@@ -115,7 +115,7 @@ export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia 
       .catch(failure => { if (current) { setResult(null); setError(failure.message); } })
       .finally(() => { if (current) setLoading(false); });
     return () => { current = false; };
-  }, [rpc, query, refreshKey]);
+  }, [rpc, query, refreshKey, refreshToken]);
   const change = event => {
     const { name, value } = event.target;
     setFilters(current => ({ ...current, [name]: value, ...(name === "exam" ? { topic: "" } : {}) }));

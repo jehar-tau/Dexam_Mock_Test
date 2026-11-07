@@ -216,10 +216,10 @@ export function WorkspaceView({
                   <h3>{p.title}</h3>
                   <button
                     className="button"
-                    disabled={!data.access?.active || Boolean(busy)}
+                    disabled={p.qualityHeld || !data.access?.active || Boolean(busy)}
                     onClick={() => onStart(p.id)}
                   >
-                    {busy === p.id ? "Opening…" : startLabel}
+                    {p.qualityHeld ? "Paused for question review" : busy === p.id ? "Opening…" : startLabel}
                     <Arrow />
                   </button>
                 </article>
@@ -797,6 +797,7 @@ export function Attempt() {
           </p>
           {syncState.pending > 0 && left > 0 && <button className="text-button" type="button" disabled={busy} onClick={() => answerSync.current.flush()}>Retry waiting answers</button>}
           <QuestionReport
+            key={q.id}
             disabled={busy}
             onSubmit={({ reason, details }) =>
               rpc("report_attempt_question", {

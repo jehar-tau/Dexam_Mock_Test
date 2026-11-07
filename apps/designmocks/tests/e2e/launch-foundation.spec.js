@@ -216,7 +216,7 @@ test("students can submit a structured question report", async ({ page }) => {
     .fill("The final sentence is missing.");
   await page.getByRole("button", { name: "Send report" }).click();
   await expect(
-    page.getByText("Report received. 2 of 5 reports recorded."),
+    page.getByText("Report received. 2 unique students reported this version; the review threshold is 5."),
   ).toBeVisible();
 });
 
