@@ -42,6 +42,8 @@ Migration `202611060134_private_account_export.sql` returns account export schem
 
 The browser verifies schema, account ownership and the release contract before creating the private download. It rejects older or inconsistent responses and aborts a pending export when the account panel closes or the session changes. Deletion-request handling remains separate. Isolated Supabase acceptance passed real confirmed Auth accounts, both pre/post cohort publication, a 57-question Part A with two Part B tasks, open-upload and partial-review holds, the final 89/300 result and 85/100 drawing part, cross-account denial, enabled drawing-reviewer isolation and validation of the actual server JSON. Hosted promotion and representative Google staging acceptance remain pending.
 
+Migration `202611060135_released_overview_scores.sql` makes Overview percentages match published cohort marks and complete sequential-exam results. A released Part A/Part B session counts once, using its combined total. Pending results remain excluded, ordinary negative/zero scores are retained, and the frontend identifies these as released tests. Disposable PostgreSQL authorization/scoring suites and actual dashboard desktop/mobile journeys pass. Hosted promotion remains pending.
+
 ## Controlled Google acceptance
 
 The owner created **DesignMocks Web** in Google Cloud project `designmocks-auth-2026` and entered the credentials directly in Supabase. Real Google sign-in has now passed from both the local app and the owner-private `dmocks.com` publication: account selection, basic identity consent, Supabase callback, PKCE exchange, page-reload persistence, refresh-token rotation through the SDK, sign-out and returning-account sign-in. The returning login retains a single Auth account. Actual cancellation displays a safe retry message. No credential/session token was copied into source or logs by the app.
@@ -73,7 +75,7 @@ From `apps/designmocks`, the read-only deployment rehearsal is
 npm exec --yes --package=supabase@3.0.0 -- supabase db push --dry-run --skip-vault --include-all --remote=tiodqzvvujxvxssvjdis
 ```
 
-The earlier 7 November CLI run through migration `202611060128` listed 27 pending migrations, starting with the older `202611060006` gap. A later read-only dashboard inventory matched all 25 applied versions; the current 58 local files through `202611060134` leave 33 pending. Supabase labels this target as the project's production branch. It serves the current owner-private site while the app plan assigns it to staging. Review the fresh plan against the current main commit before any hosted change. [Supabase CLI targeting and dry runs](https://supabase.com/docs/guides/local-development/local-and-hosted-projects)
+The earlier 7 November CLI run through migration `202611060128` listed 27 pending migrations, starting with the older `202611060006` gap. A later read-only dashboard inventory matched all 25 applied versions; the current 59 local files through `202611060135` leave 34 pending. Supabase labels this target as the project's production branch. It serves the current owner-private site while the app plan assigns it to staging. Review the fresh plan against the current main commit before any hosted change. [Supabase CLI targeting and dry runs](https://supabase.com/docs/guides/local-development/local-and-hosted-projects)
 
 Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
 
