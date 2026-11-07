@@ -3876,6 +3876,16 @@ svg {
 .operations-health{padding:1.25rem;border:1px solid var(--line);background:var(--paper)}.operations-health>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:1rem}.operations-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin:1rem 0}.operations-metrics article{display:flex;flex-direction:column;padding:.8rem;border:1px solid var(--line)}.operations-metrics b{font-size:1.8rem}.health-degraded{background:#7d2525;color:#fff}.health-attention{background:#8a6116;color:#fff}.health-healthy{background:#285a3b;color:#fff}
 .community-image{display:block;max-width:min(100%,720px);max-height:560px;object-fit:contain;margin:1rem 0;border:1px solid var(--line);background:var(--paper)}
 .drawing-review-media{margin:1rem 0}.drawing-review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}.drawing-review-grid figure{margin:0}.drawing-review-grid img{display:block;width:100%;max-height:420px;object-fit:contain;background:var(--warm);border:1px solid var(--line)}.drawing-review-grid figcaption{margin-top:.4rem;font-size:.85rem}
+.drawing-review-grid figure{min-width:0}.drawing-review-media button,.drawing-inspection-dialog button{min-height:44px;padding:.5rem .75rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+.drawing-review-grid figcaption{margin-bottom:.5rem}.drawing-image-viewport{width:100%;height:260px;overflow:auto;background:var(--soft);border:1px solid var(--line);overscroll-behavior:contain}.drawing-image-viewport.expanded{height:clamp(240px,55vh,700px)}
+.drawing-image-content{width:max-content;min-width:100%;height:max-content;min-height:100%;display:grid;place-items:center}.drawing-image-canvas{position:relative;overflow:hidden;flex-shrink:0}
+.drawing-image-canvas img{position:absolute;display:block;left:50%;top:50%;max-width:none;max-height:none;object-fit:fill;border:0;background:transparent;image-orientation:from-image}
+.drawing-inspection-dialog{width:min(1100px,calc(100% - 1.5rem));height:min(900px,calc(100dvh - 1.5rem));max-height:calc(100dvh - 1.5rem);overflow:auto;border:1px solid var(--line);border-radius:12px;padding:1rem;color:var(--ink);background:var(--paper)}
+.drawing-inspection-dialog[open]{display:flex;flex-direction:column}.drawing-inspection-dialog>.drawing-image-viewport.expanded{flex:1;min-height:140px;height:auto}.drawing-inspection-dialog>p,.drawing-inspection-header,.drawing-inspection-toolbar{flex-shrink:0}
+.drawing-inspection-dialog::backdrop{background:rgb(0 0 0 / .7)}.drawing-inspection-header{display:flex;align-items:start;justify-content:space-between;gap:1rem}.drawing-inspection-header h2{font-size:1.5rem;margin:0}.drawing-inspection-header button{flex-shrink:0}
+.drawing-inspection-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:1rem 0}.drawing-inspection-toolbar [role="status"]{flex-basis:100%;color:var(--muted);font-size:.9rem}
+.drawing-inspection-toolbar button[aria-pressed="true"]{background:var(--action);color:var(--on-action);border-color:var(--action)}
+.drawing-image-viewport:not(.expanded){overflow:hidden}
 .drawing-review-form { margin-bottom: 0; }
 .drawing-reviewer-nav { flex-wrap: wrap; align-items: center; }
 .drawing-reviewer-id { overflow-wrap: anywhere; }

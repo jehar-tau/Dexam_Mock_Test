@@ -4,6 +4,7 @@ import { downloadAccountExport, validateAccountExport } from "../src/account-exp
 
 const owner = "fictional-export-owner";
 const pending = () => ({ schemaVersion: 2, exportedAt: "2026-11-07T07:00:00Z", accountId: owner, profile: { user_id: owner },
+  drawingUploads: [],
   attempts: [{ id: "held-attempt", status: "submitted", resultsPending: true, score: null, total: null,
     responses: [{ questionId: "question", ordinal: 1, topic: "observation", kind: "mcq", answer: "B" }] }],
   questionReports: [{ id: "report", attemptId: "held-attempt", questionId: "question", reason: "incorrect", details: "My own report text.", createdAt: "2026-11-07T06:30:00Z" }],
@@ -20,6 +21,25 @@ test("an owned export retains the student's answers and report text while marks 
   assert.equal(validateAccountExport(data, owner), data);
   data.results.allIndia = [{ attemptId: "held-attempt", score: -0.71, total: 3, releasedAt: "2026-11-07T06:50:00Z" }];
   assert.equal(validateAccountExport(data, owner), data);
+});
+
+test("owned drawing exports retain verified rendering metadata without private links or another attempt", () => {
+  const value = () => {
+    const data = pending(); data.attempts[0].responses[0].kind = "drawing";
+    data.drawingUploads = [{ id: "image", attemptId: "held-attempt", questionId: "question", ordinal: 1,
+      mimeType: "image/webp", byteSize: 104, width: 6, height: 4, orientation: 6, createdAt: "2026-11-07T06:50:00Z" }];
+    return data;
+  };
+  assert.equal(validateAccountExport(value(), owner).drawingUploads[0].orientation, 6);
+  const legacy = value(); for (const field of ["width", "height", "orientation"]) delete legacy.drawingUploads[0][field];
+  assert.equal(validateAccountExport(legacy, owner), legacy);
+  const unknown = value(); Object.assign(unknown.drawingUploads[0], { width: null, height: null, orientation: null });
+  assert.equal(validateAccountExport(unknown, owner), unknown);
+  for (const change of [{ attemptId: "foreign" }, { questionId: "foreign" }, { width: null }, { orientation: 0 }, { width: 12001 },
+    { width: 6001, height: 4000 }, { mimeType: "image/svg+xml" }, { byteSize: 10485761 }, { storagePath: "private/path" }, { url: "https://private.invalid" }]) {
+    const data = value(); Object.assign(data.drawingUploads[0], change);
+    assert.throws(() => validateAccountExport(data, owner), /could not be verified/);
+  }
 });
 
 test("legacy, mis-scoped, held-score and private-review responses cannot create an export file", () => {

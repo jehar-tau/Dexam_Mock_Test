@@ -30,6 +30,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-nift.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/launch-readiness.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-review-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-image-registration.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-inspection.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-reviewer-access.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learning-lesson-editor.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/staging-portal.sql

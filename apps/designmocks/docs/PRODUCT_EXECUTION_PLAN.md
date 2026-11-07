@@ -78,6 +78,7 @@ Phone verification requires a provider, abuse limits, consent wording, recovery 
 - Support multiple raster uploads per drawing task, explicit ordering, replacement/removal before final submission, retryable resumable upload and an additional exam-specific 10–15 minute upload phase.
 - Files are private, malware/type/size checked, stripped of unnecessary metadata and accessed through short-lived signed URLs.
 - Local drawing validation now checks complete still PNG/JPEG/WebP content, strips unnecessary metadata and preserves compressed pixels, rendering colour data and orientation. Actual isolated Edge/Storage acceptance covers the 10 MiB/24MP bounds, account/reviewer isolation and the post-decode deadline fence. General malware scanning/quarantine, resumable transfer and hosted resource acceptance remain open.
+- Private inspection now corrects orientation per browser/format and supports rotation, mirroring, zoom, actual size and contrasting paper. Student ownership, anonymous teacher assignment, expiry and post-sign revocation checks preserve the uploaded evidence and grading scope. Desktop/mobile and real isolated provider acceptance pass.
 - AI produces rubric-linked suggestions and a proposed score with confidence and evidence. It must not be the final authority at launch.
 - A teacher reviews anonymously, sees the AI proposal, enters criterion marks and comments, and may override with a required reason. Every change is audited.
 - Supabase Edge Functions cannot host a useful large vision-language model. Recommended first implementation: a separately hosted managed multimodal API or dedicated inference service, with images disclosed/consented and retention controlled. Local/self-hosted vision evaluation is an R&D track requiring GPU cost, a labelled drawing set, calibration and bias testing.
@@ -176,6 +177,7 @@ Exit: a synthetic cohort completes the same paper; ranks remain hidden until con
 ### Phase 4 — drawing workflow
 
 - [x] Implement ordered multi-image uploads, a fixed upload window, a scoped anonymous teacher queue, and audited reviewer access and grade overrides. Verify the workflows locally.
+- [x] Verify student/teacher image inspection, all eight orientations across PNG/JPEG/WebP, original-size scrolling, keyboard/mobile controls, owned export metadata, account clearing and asynchronous signing revocation in isolated Supabase.
 - [ ] Verify upload, retry, removal, private image signing and staff revocation with separate synthetic accounts in isolated staging.
 - [ ] Run the AI-assist experiment after rubric, dataset, consent, cost and accuracy gates.
 
@@ -207,9 +209,9 @@ Exit: production readiness checklist approved, then registration, then payments,
 
 ## Immediate next actions
 
-1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060137`, and choose an independent staging deployment target before promotion.
+1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060138`, and choose an independent staging deployment target before promotion.
 2. Obtain the owner's Cloudboard/Claude question manifest and theory-document export. Reconcile supplied question snapshots with stable keys and content hashes through the documented read-only contract.
 3. Complete the remaining reviewed exam blueprints, including NID and NIFT creative/programme-specific papers, with authoritative question counts, sections, timing and marking where published.
 4. Run hosted acceptance for the admitted Google tester, representative full papers, drawings and teacher review, followed by synthetic staging capacity checks.
 5. Obtain the pending source rights, model-processing/cost, phone-provider and public-policy decisions. Keep payments deferred until the owner resumes that work.
-6. Add explicit private drawing-viewer orientation for browsers that ignore WebP EXIF, preserving the original evidence and grading scope. Complete the remaining scanner/quarantine and resumable-transfer acceptance, then verify the pinned decoder and representative image sizes on the approved staging target before promotion.
+6. Apply complete raster validation and unnecessary-metadata removal to private Community images, preserving post/comment visibility, moderation and ownership. Its current upload route validates headers and stores the original bytes. Keep this separate from the completed drawing inspector. Complete scanner/quarantine and resumable-transfer acceptance, then verify the pinned decoder and representative image sizes on the approved staging target before promotion.

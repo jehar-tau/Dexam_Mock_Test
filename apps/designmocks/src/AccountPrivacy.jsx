@@ -58,7 +58,7 @@ export function AccountPrivacy({ accountId, requests = [], onExport, onRequestDe
 export function AccountPrivacyPreview() {
   const [requests, setRequests] = useState([]);
   return <section className="wrap section account-card"><h1>Account privacy <em>controls.</em></h1>
-    <AccountPrivacy accountId="private-preview" requests={requests} onExport={async () => ({ schemaVersion: 2,
+    <AccountPrivacy accountId="private-preview" requests={requests} onExport={async () => ({ schemaVersion: 2, drawingUploads: [],
       exportedAt: new Date().toISOString(), accountId: "private-preview", profile: null, attempts: [], questionReports: [],
       results: { examMocks: [], allIndia: [], drawingReviews: [] },
     })} onRequestDeletion={async () => setRequests([{ id: "preview", type: "account_deletion", status: "open" }])} onCancel={async () => setRequests([])} />
