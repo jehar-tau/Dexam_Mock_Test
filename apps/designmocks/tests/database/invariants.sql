@@ -223,6 +223,8 @@ select pg_temp.assert_true((select marks=0 and outcome='unanswered' from dm_priv
 reset role;
 update public.launch_settings set question_report_threshold=3;
 update dm_private.attempt_items set key=key||'{"sourceExternalKey":"fixture-bank-q1"}'::jsonb where attempt_id=current_setting('test.attempt_id')::uuid and question_id='20000000-0000-4000-8000-000000000001';
+update dm_private.bank_questions set runtime_payload=(select dm_private.question_quality_snapshot(to_jsonb(i)) from dm_private.attempt_items i
+  where i.attempt_id=current_setting('test.attempt_id')::uuid and i.question_id='20000000-0000-4000-8000-000000000001') where external_key='fixture-bank-q1';
 insert into dm_private.attempts(id,user_id,paper_id,deadline) values
 ('30000000-0000-4000-8000-000000000002','00000000-0000-4000-8000-000000000002','10000000-0000-4000-8000-000000000001',now()+interval '1 hour'),
 ('30000000-0000-4000-8000-000000000003','00000000-0000-4000-8000-000000000003','10000000-0000-4000-8000-000000000001',now()+interval '1 hour');
@@ -242,7 +244,7 @@ select pg_temp.reject('select public.admin_reported_questions()','non-admin cann
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select pg_temp.assert_true((public.report_attempt_question('30000000-0000-4000-8000-000000000002','20000000-0000-4000-8000-000000000001','media',null)->>'queued')::boolean,'threshold creates review queue');
 select pg_temp.assert_true((public.admin_reported_questions()->0->>'reportCount')::integer=3,'admin sees aggregated report count');
-select public.admin_resolve_reported_question('fixture-bank-q1','retire','Confirmed by human reviewer');
+select public.admin_resolve_reported_question(public.admin_reported_questions()->0->>'targetKey','retire','Confirmed by human reviewer');
 reset role;
 select pg_temp.assert_true((select not active and not owner_approved from dm_private.bank_questions where external_key='fixture-bank-q1'),'retirement disables canonical question');
 update dm_private.bank_questions set active=true,owner_approved=true where external_key='fixture-bank-q1';

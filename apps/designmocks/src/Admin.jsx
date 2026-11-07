@@ -13,6 +13,7 @@ import { QuestionDraftExport } from "./QuestionDraftExport.jsx";
 import { LaunchReadiness } from "./LaunchReadiness.jsx";
 import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQueue.jsx";
 import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
+import { ReportedQuestionQueue } from "./ReportedQuestionQueue.jsx";
 
 async function rpc(name, args) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -156,6 +157,7 @@ function AdminDesk({ session }) {
     [intake, setIntake] = useState([]),
     [intakeUploading, setIntakeUploading] = useState(false),
     [questionReports, setQuestionReports] = useState([]),
+    [bankRefreshToken, setBankRefreshToken] = useState(0),
     [privacyRequests, setPrivacyRequests] = useState([]),
     [health, setHealth] = useState(),
     [readiness, setReadiness] = useState(),
@@ -311,18 +313,7 @@ function AdminDesk({ session }) {
       setMessage(e.message);
     }
   };
-  const resolveQuestionReport = async (key, action) => {
-    try {
-      await rpc("admin_resolve_reported_question", {
-        p_target_key: key,
-        p_action: action,
-        p_note: null,
-      });
-      await load();
-    } catch (e) {
-      setMessage(e.message);
-    }
-  };
+  const refreshQuestionReviews = async () => { setBankRefreshToken(value => value + 1);await load(); };
   const refreshLessons = async () => setLessons(await rpc("admin_learning_lessons"));
   const refreshDrawings = async () => setDrawings(await rpc("admin_drawing_queue"));
   const drawingActions = drawingReviewActions(rpc, async () => {
@@ -430,52 +421,7 @@ function AdminDesk({ session }) {
           <h2>Community moderation</h2>
           <CommunityModerationQueue reports={communityReports} onResolve={resolveCommunityReport} />
           <LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />
-          <h2>Reported questions</h2>
-          <p>
-            Questions enter this queue only after the report threshold. A human
-            administrator decides whether to retire them.
-          </p>
-          <div className="admin-list">
-            {questionReports.map((report) => (
-              <article key={report.targetKey}>
-                <b>{report.sourceExternalKey || report.targetKey}</b>
-                <span className="status-pill">
-                  {report.status} · {report.reportCount} reports
-                </span>
-                <p>{report.prompt}</p>
-                <small>
-                  {Object.entries(report.reasons || {})
-                    .map(([reason, count]) => `${reason}: ${count}`)
-                    .join(" · ")}
-                </small>
-                <div className="admin-actions">
-                  <button
-                    onClick={() =>
-                      resolveQuestionReport(report.targetKey, "retire")
-                    }
-                  >
-                    Retire question
-                  </button>
-                  <button
-                    onClick={() =>
-                      resolveQuestionReport(report.targetKey, "dismiss")
-                    }
-                  >
-                    Dismiss
-                  </button>
-                  {report.status !== "pending" && (
-                    <button
-                      onClick={() =>
-                        resolveQuestionReport(report.targetKey, "reopen")
-                      }
-                    >
-                      Reopen
-                    </button>
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
+          <ReportedQuestionQueue reports={questionReports} rpc={rpc} onChanged={refreshQuestionReviews} />
           <h2>Add a question draft</h2>
           <p>
             Manual, extracted, and AI-generated questions all enter the same
@@ -647,7 +593,7 @@ function AdminDesk({ session }) {
               </article>
             ))}
           </div>
-          <BankReviewBrowser rpc={rpc} onReviewed={load} />
+          <BankReviewBrowser rpc={rpc} onReviewed={load} refreshToken={bankRefreshToken} />
           <h2>Question review queue</h2>
           <div className="admin-list">
             {drafts.map((d) => (

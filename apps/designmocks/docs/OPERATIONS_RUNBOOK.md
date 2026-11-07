@@ -53,6 +53,10 @@ Every new processing attempt receives a private token. Completion and failure ca
 - Bug replies, question retirement, community moderation and drawing-score overrides are performed only through their audited admin workflows.
 - Report counts prioritize human review. A human decision governs changes to the bank.
 
+Under **Reported questions**, five unique students hold a delivered question version from new attempts; ten raise its priority. Several reasons from one student count once toward the threshold, and an account can submit twenty reports per hour. Open the frozen question, answer and private figures before resolving a case. Restore and dismissal require verified figures and an 8–1000-character reason. The current case revision and bank digest protect every decision from concurrent reports or source changes. New reports on a resolved version update its counts without automatically reopening it. Existing attempts continue with their original questions and clocks.
+
+For a correction, review the source change on canonical `main`, import it, then use **Release corrected source for review**. This keeps the old version held, returns the current source to runtime materialization and separate content/rights review, and preserves unrelated retirements. A source omitted from the latest completed import stays inactive. An affected All India paper pauses new admissions as a whole; do not replace its questions or change existing scores as a report-resolution shortcut. Promote migration `202611060133_question_quality_holds.sql`, `reported-question-media` and the matching frontend together, then repeat the synthetic admission/race and reviewer-authorization checks on approved staging.
+
 ### Drawing review
 
 An administrator grants access under **Admin review → Drawing reviewer access** using an existing DMocks Auth account ID and a reason. The reviewer opens **Review drawings** from Account and claims an anonymous submission from **Available drawings** after uploads close. Under **My reviews**, the reviewer can return an ungraded claim or open the private pages, enter criterion marks, save feedback and finalize the review.

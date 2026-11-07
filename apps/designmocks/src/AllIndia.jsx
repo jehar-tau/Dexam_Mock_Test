@@ -8,6 +8,7 @@ async function rpc(name,args){const {data,error}=await platform.rpc(name,args);i
 const when=(value)=>new Date(value).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
 
 function eventDetails(event) {
+  if (event.state === "paused") return "New starts are paused for question review. Existing attempts keep their original paper and clock.";
   if (event.state === "scheduled") return `Opens ${when(event.startsAt)}`;
   if (event.state === "open") return `Start before ${when(event.lastStartAt ?? event.endsAt)}`;
   if (event.state === "closing") return `Starts closed. The attempt window ends ${when(event.endsAt)}.`;
