@@ -1106,7 +1106,7 @@ function Account() {
             {checkoutReady && <Button to="/plans" quiet>
               View the annual pass
             </Button>}
-            {workspaceAvailable && <AccountPrivacy requests={privacyRequests} onExport={async()=>{const{data,error}=await platform.rpc("export_my_account_data");if(error)throw error;return data}} onRequestDeletion={async()=>{const{error}=await platform.rpc("request_account_deletion");if(error)throw error;await loadPrivacyRequests()}} onCancel={async(id)=>{const{error}=await platform.rpc("cancel_my_privacy_request",{p_id:id});if(error)throw error;await loadPrivacyRequests()}}/>}
+            {workspaceAvailable && <AccountPrivacy key={session.user.id} accountId={session.user.id} requests={privacyRequests} onExport={async({signal})=>{const{data,error}=await platform.rpc("export_my_account_data").abortSignal(signal);if(error)throw error;return data}} onRequestDeletion={async()=>{const{error}=await platform.rpc("request_account_deletion");if(error)throw error;await loadPrivacyRequests()}} onCancel={async(id)=>{const{error}=await platform.rpc("cancel_my_privacy_request",{p_id:id});if(error)throw error;await loadPrivacyRequests()}}/>}
             <button
               className="text-button"
               disabled={busy}

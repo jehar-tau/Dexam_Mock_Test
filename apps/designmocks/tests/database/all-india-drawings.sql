@@ -145,6 +145,8 @@ select pg_temp.cohort_assert(public.all_india_event_catalog()->0->'result'='null
   and public.public_all_india_top_ten()='[]'::jsonb,'personal and public rankings wait for cohort release');
 select pg_temp.cohort_assert(public.my_overview_analytics()->'drawingReviews'='{"pending":1,"released":0}'::jsonb,
   'Overview keeps a finalized cohort drawing pending until publication');
+select pg_temp.cohort_assert(public.export_my_account_data()->'results'->'drawingReviews'='[]'::jsonb
+  and public.export_my_account_data()->'results'->'allIndia'='[]'::jsonb,'a finalized teacher grade stays out of export until cohort publication');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000093',true);
 select public.admin_release_all_india_results(current_setting('test.cohort_event')::uuid);
 select pg_temp.cohort_reject(
@@ -161,6 +163,11 @@ select pg_temp.cohort_assert((public.all_india_event_catalog()->0->'result'->>'c
   and (public.my_attempt_history()->0->>'score')::numeric=16,'overview and event catalogue show the same personal standings');
 select pg_temp.cohort_assert(public.my_overview_analytics()->'drawingReviews'='{"pending":0,"released":1}'::jsonb,
   'Overview counts a published drawing result as released');
+select pg_temp.cohort_assert((select (value->>'score')::numeric=16 and(value->>'total')::numeric=24 from jsonb_array_elements(public.export_my_account_data()->'attempts')
+  where value->>'id'=current_setting('test.cohort_attempt'))
+  and(public.export_my_account_data()->'results'->'allIndia'->0->>'score')::numeric=16
+  and(public.export_my_account_data()->'results'->'drawingReviews'->0->>'score')::numeric=17,
+  'exported attempt, cohort standings and released drawing feedback use the published marks');
 reset role;
 select pg_temp.cohort_assert((select bool_and(elapsed_seconds=900 and total=24) and count(*) filter(where rank=2 and score=4)=11
   from dm_private.all_india_results),'drawing ties ignore early submission speed and missing drawing pages score zero');

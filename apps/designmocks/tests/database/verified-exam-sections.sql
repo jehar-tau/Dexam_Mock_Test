@@ -55,10 +55,15 @@ select pg_temp.section_assert((select p.source_kind='exam_part_b'and p.duration_
 set local role authenticated;select set_config('request.jwt.claim.role','authenticated',true);select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000071',true);
 select public.submit_attempt(current_setting('test.part_b_attempt')::uuid);
 select pg_temp.section_assert((public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'resultsPending')::boolean,'combined result waits through the fixed upload window');
+select pg_temp.section_assert((select bool_and(value->'score'='null'::jsonb and value->'total'='null'::jsonb and(value->>'resultsPending')::boolean)
+  from jsonb_array_elements(public.export_my_account_data()->'attempts'))
+  and public.export_my_account_data()->'results'->'examMocks'->0->'combinedScore'='null'::jsonb,'export respects the full combined-exam upload/review hold');
 select pg_temp.section_assert(public.read_attempt(current_setting('test.section_attempt')::uuid)->'score'='null'::jsonb and not((public.read_attempt(current_setting('test.section_attempt')::uuid)->'questions'->0)?'correctKey'),'Part A marks and keys stay private until the full exam is complete');
 reset role;update dm_private.attempts set upload_deadline=now()-interval '1 second'where id=current_setting('test.part_b_attempt')::uuid;
 set local role authenticated;select set_config('request.jwt.claim.role','authenticated',true);select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000071',true);
 select pg_temp.section_assert(not(public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'resultsPending')::boolean and(public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'combinedTotal')::numeric=300,'combined report releases objective and drawing totals after review/upload gates');
+select pg_temp.section_assert(public.export_my_account_data()->'results'->'examMocks'->0=public.my_exam_mock_report(current_setting('test.section_attempt')::uuid),
+  'the exported combined result matches the released student report');
 select pg_temp.section_assert((select (o->>'objectiveAccuracy')::integer=100 and (o->>'objectiveAnswered')::integer=1
   and (o->>'waitingForResults')::integer=0 from public.my_overview_analytics() o),
   'overview incorporates Part A only after full release');
