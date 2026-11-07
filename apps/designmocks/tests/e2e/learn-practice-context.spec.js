@@ -185,7 +185,7 @@ test("learning remains readable while contextual starts retain pass and verified
   expect(state.unexpected).toEqual([]);
 });
 
-for (const destination of ["context", "account", "navigation"]) {
+for (const destination of ["context", "account", "navigation", "history"]) {
   test(`a late practice start respects a later ${destination} change`, async ({ page }) => {
     const state = await fixture(page, "/dashboard/practice?exam=ceed&topic=observation");
     await expect(startButton(page)).toBeEnabled();
@@ -220,6 +220,9 @@ for (const destination of ["context", "account", "navigation"]) {
           channel.close();
         });
         await expect(startButton(page)).toBeEnabled();
+      } else if (destination === "history") {
+        // Simulate a new navigation entry before React commits its cleanup.
+        await page.evaluate(() => history.pushState({ ...history.state, key: "fictional-new-navigation" }, "", location.href));
       } else {
         await page.getByRole("link", { name: "DMocks home", exact: true }).first().click();
         await expect(page).toHaveURL(/\/$/);

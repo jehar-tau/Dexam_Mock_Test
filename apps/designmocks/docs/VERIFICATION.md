@@ -1,5 +1,11 @@
 # Verification
 
+## Practice-start navigation fence — 8 November 2026
+
+The post-merge Learn workflow caught a timing gap that its PR run had not exposed: the browser address can change before React commits unmount cleanup, allowing a held practice-start acknowledgement to navigate away from Home. Start completion now compares the original address and history-entry key as well as its AbortSignal. A new history entry at the same address is also a later navigation choice. The server-created attempt is retained; no request is repeated or rolled back.
+
+A deterministic desktop/mobile fixture keeps the old component mounted while changing its history entry. Both journeys failed before the fix and pass after it. The existing Home, query and account-change tests remain. The complete CI-mode local check passes 146 JavaScript tests, four Python fixtures, 218 desktop/mobile journeys, eleven server types and build/isolation with two workers. No schema, server authorization or provider setting changed. PR and post-merge main checks remain the delivery gate; the earlier main failure is retained as evidence rather than retried away.
+
 ## Learn-to-practice context — 8 November 2026
 
 Lesson practice links now retain the exact scalar exam/topic using encoded query parameters. Blank-topic lessons offer exam-scoped browsing; invalid lesson context falls back to browsing. An explicit exam/topic pair never selects a larger pool from another exam. Missing or undersized pools and topic-only links shared by several exams require an explicit alternative. Changing the requested context or browser history resets the builder, while increasing the requested count cannot silently substitute a different topic.
