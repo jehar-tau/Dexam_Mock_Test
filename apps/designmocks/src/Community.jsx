@@ -45,9 +45,15 @@ export function CommunityView({
   onFilter = () => {}, onMorePosts,
 }) {
   const examFilterId=useId(),topicFilterId=useId();
-  const openers=useRef(new Map()),pageHeading=useRef(null),reportOpener=useRef(null),returnReportFocus=useRef(false);
+  const openers=useRef(new Map()),pageHeading=useRef(null),reportOpener=useRef(null),returnReportFocus=useRef(false),lastThread=useRef(null);
   const feedHeading=useRef(null),feedFocus=useRef(null),[pageNotice,setPageNotice]=useState("");
   const [reportTarget,setReportTarget]=useState(null);
+  useLayoutEffect(()=>{
+    if(thread){lastThread.current=thread.id;return;}
+    if(threadLoading)return;
+    const previous=lastThread.current;lastThread.current=null;
+    if(previous&&document.activeElement===document.body)(openers.current.get(previous)??pageHeading.current)?.focus();
+  },[thread?.id,threadLoading]);
   useLayoutEffect(()=>{
     const pending=feedFocus.current;
     if(!pending||feedLoading)return;
