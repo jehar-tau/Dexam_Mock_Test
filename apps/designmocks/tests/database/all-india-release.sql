@@ -34,6 +34,10 @@ select pg_temp.release_assert(public.read_attempt('40000000-0000-4000-8000-00000
 select pg_temp.release_assert((select value->'score'='null'::jsonb and (value->>'resultsPending')::boolean from jsonb_array_elements(public.my_attempt_history()) where value->>'id'='40000000-0000-4000-8000-000000000041'),'history does not leak pending marks');
 select pg_temp.release_assert(not exists(select 1 from jsonb_array_elements(public.my_overview_analytics()->'topics') where value->>'topic'='sealed-topic'),'overview does not leak pending correctness');
 select pg_temp.release_assert(public.public_all_india_top_ten()='[]'::jsonb,'rank withheld before explicit release despite elapsed review window');
+select pg_temp.release_assert((select value->'score'='null'::jsonb and value->'total'='null'::jsonb and(value->>'resultsPending')::boolean
+  and value->'responses'->0->>'answer'='B' from jsonb_array_elements(public.export_my_account_data()->'attempts')
+  where value->>'id'='40000000-0000-4000-8000-000000000041'),'account export withholds pending marks while retaining the student answer');
+select pg_temp.release_assert(public.export_my_account_data()->'results'->'allIndia'='[]'::jsonb,'account export cannot publish a pending cohort result');
 select pg_temp.release_assert(public.submit_attempt('40000000-0000-4000-8000-000000000043')->'questions'->0 ? 'correctKey','ordinary practice still releases feedback immediately');
 reset role;
 select pg_temp.release_assert((select submitted_at=deadline from dm_private.attempts where id='40000000-0000-4000-8000-000000000041'),'late client submission time capped at server deadline');
@@ -43,6 +47,9 @@ select public.admin_release_all_india_results('30000000-0000-4000-8000-000000000
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000041',true);
 select pg_temp.release_assert(not (public.read_attempt('40000000-0000-4000-8000-000000000041')->>'resultsPending')::boolean,'released result no longer pending');
 select pg_temp.release_assert((public.read_attempt('40000000-0000-4000-8000-000000000041')->>'score')::numeric=4,'released score visible');
+select pg_temp.release_assert((select (value->>'score')::numeric=4 and not(value->>'resultsPending')::boolean
+  from jsonb_array_elements(public.export_my_account_data()->'attempts') where value->>'id'='40000000-0000-4000-8000-000000000041')
+  and jsonb_array_length(public.export_my_account_data()->'results'->'allIndia')=1,'export releases only this student cohort result after publication');
 select pg_temp.release_assert((select (value->>'score')::numeric=4 and not (value->>'resultsPending')::boolean from jsonb_array_elements(public.my_attempt_history()) where value->>'id'='40000000-0000-4000-8000-000000000041'),'history releases marks with the event');
 select pg_temp.release_assert(public.read_attempt('40000000-0000-4000-8000-000000000041')->'questions'->0->>'explanation'='Private fixture explanation','keys and explanation available after explicit release');
 select pg_temp.release_assert(exists(select 1 from jsonb_array_elements(public.my_overview_analytics()->'topics') where value->>'topic'='sealed-topic' and (value->>'correct')::integer=1),'released correctness participates in analytics');

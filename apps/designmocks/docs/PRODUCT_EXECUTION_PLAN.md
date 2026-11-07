@@ -156,6 +156,7 @@ Exit: a free candidate can sign in, complete the non-phone profile, navigate, an
 - [x] Ship paid topic-practice generation for 10/20/30 questions and 15/30/45-minute server timers, gated by canonical import, deterministic runtime conversion, explicit content/rights approval and verified profiles.
 - [x] Ship configurable exam-wise mock generation for UCEED, NID, NIFT and CEED with scrambled/frozen reviewed questions, server timers, verified profiles and an administrator-controlled 0–2 free-attempt allowance before the annual-pass gate.
 - [x] Add versioned in-exam question reports with one report per student/issue/version, a 20-per-hour cap and a five-unique-student review hold. Ten students raise priority. All new attempt paths respect the hold, including identical All India papers; existing clocks, snapshots and results remain unchanged. Human decisions require a reason, the current case/bank versions and verified figures for restoration. Corrected canonical sources return to fresh bank review while old delivered versions stay held. General bug reporting and the admin reply workflow are complete.
+- [x] Apply All India and combined-exam result holds to owned account exports. Retain saved answers and the student's own report text without review fingerprints. Export published cohort marks, combined results and released teacher feedback; verify ownership, schema and cancellation of downloads across account changes.
 
 Exit: load, authorization, disconnect/reconnect, deadline and scoring tests pass with no key leakage.
 
@@ -202,9 +203,9 @@ Exit: production readiness checklist approved, then registration, then payments,
 
 ## Immediate next actions
 
-1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060133`, and choose an independent staging deployment target before promotion.
+1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060134`, and choose an independent staging deployment target before promotion.
 2. Obtain the owner's Cloudboard/Claude question manifest and theory-document export. Reconcile supplied question snapshots with stable keys and content hashes through the documented read-only contract.
 3. Complete the remaining reviewed exam blueprints, including NID and NIFT creative/programme-specific papers, with authoritative question counts, sections, timing and marking where published.
 4. Run hosted acceptance for the admitted Google tester, representative full papers, drawings and teacher review, followed by synthetic staging capacity checks.
 5. Obtain the pending source rights, model-processing/cost, phone-provider and public-policy decisions. Keep payments deferred until the owner resumes that work.
-6. Audit every account-data export against the All India and combined-exam result embargo. Include the owner's question-report data without internal answer-dependent review identifiers.
+6. Audit Overview score summaries against published cohort and teacher marks so aggregate percentages match the released reports.
