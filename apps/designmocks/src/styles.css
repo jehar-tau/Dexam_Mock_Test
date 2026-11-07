@@ -3926,3 +3926,4 @@ svg {
 .community-image-frame .drawing-image-viewport{height:clamp(180px,45vw,360px)}
 .community-comments{padding:0;list-style:none}.community-comments>li{min-width:0;overflow-wrap:anywhere}.community-parent-context{font-size:.9rem;color:var(--muted);border-inline-start:2px solid var(--line);padding-inline-start:.7rem}.community-reply-context p{margin:0 0 .6rem}.community-upload-recovery small{flex-basis:100%}
 .community-page .admin-form,.community-reply{grid-template-columns:minmax(0,1fr)}.community-fields>label{min-width:0}.community-reply input,.community-reply textarea{width:100%;max-width:100%;min-width:0}
+.community-page{min-width:0;overflow-wrap:anywhere}.community-feed{grid-template-columns:minmax(0,1fr)}.community-page .eyebrow{white-space:normal}.community-page [aria-disabled="true"]{cursor:default}

@@ -214,4 +214,28 @@ returns jsonb language sql security definer set search_path=pg_catalog,public as
  select public.community_thread(p_post_id,null,25)
 $$;
 
+-- Reveal a confirmed reply without reading an unbounded thread or accepting a
+-- caller-selected timestamp. The same reader supplies context and continuations.
+create function public.community_reply_context(p_post_id uuid,p_anchor_id uuid,p_limit integer)
+returns jsonb language plpgsql security definer set search_path=pg_catalog,dm_private,public as $$
+declare target dm_private.community_posts; anchor dm_private.community_comments; previous dm_private.community_comments;
+ cursor jsonb; result jsonb; earlier boolean;
+begin
+ if auth.uid() is null then raise exception 'Sign in required' using errcode='42501'; end if;
+ if p_limit is null or p_limit not between 1 and 25 then raise exception 'Invalid community page size' using errcode='22023'; end if;
+ select * into target from dm_private.community_posts where id=p_post_id and status<>'hidden' for share;
+ if not found then raise exception 'Post not found' using errcode='42501',detail='community_target_unavailable'; end if;
+ select * into anchor from dm_private.community_comments where id=p_anchor_id and post_id=p_post_id and status='visible' and created_at<=statement_timestamp();
+ if not found then raise exception 'Reply target not found' using errcode='42501',detail='community_target_unavailable'; end if;
+ select * into previous from dm_private.community_comments where post_id=p_post_id and status='visible' and created_at<=statement_timestamp()
+  and (created_at,id)<(anchor.created_at,anchor.id) order by created_at desc,id desc limit 1;
+ earlier:=found;
+ if earlier then cursor:=jsonb_build_object('createdAt',previous.created_at,'id',previous.id,'snapshotAt',statement_timestamp(),'version',target.thread_revision); end if;
+ result:=public.community_thread(p_post_id,cursor,p_limit);
+ if result->'comments'->0->>'id' is distinct from p_anchor_id::text then raise exception 'Reply target not found' using errcode='42501',detail='community_target_unavailable'; end if;
+ return result||jsonb_build_object('anchorId',p_anchor_id,'hasEarlier',earlier);
+end $$;
+revoke all on function public.community_reply_context(uuid,uuid,integer) from public,anon;
+grant execute on function public.community_reply_context(uuid,uuid,integer) to authenticated;
+
 commit;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { CommunityController } from "./CommunityController.jsx";
 import { CommunityThread } from "./CommunityThread.jsx";
 
@@ -8,7 +8,7 @@ function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   return <section className="notice community-upload-recovery" aria-label={`Saved ${kind} images`}>
     <p>Your {kind} is saved. {job.next} of {job.files.length} images confirmed.</p>
     <button type="button" disabled={busy} onClick={onRetry}>Retry {kind} images</button>
-    <button type="button" disabled={busy} onClick={() => onOpen(job.postId)}>Open saved discussion</button>
+    <button type="button" disabled={busy} onClick={() => onOpen(job.postId,job.targetType==="comment"?{anchorId:job.targetId}:{})}>Open saved discussion</button>
     <button type="button" disabled={busy} onClick={onSkip}>Finish {kind} without remaining images</button>
   </section>;
 }
@@ -39,6 +39,13 @@ export function CommunityView({
   pendingTextPost = null, pendingTextReply = null, onRetryTextPost, onRetryTextReply, onStopTextPost, onStopTextReply,
   postFormVersion = 0, replyFormVersion = 0, threadLoading = false, onMoreComments, onReloadFeed,
 }) {
+  const openers=useRef(new Map()),pageHeading=useRef(null);
+  const viewThread=id=>{
+    if(id)return onOpen(id);
+    const target=openers.current.get(thread?.id);
+    onOpen(null);
+    (target?.isConnected?target:pageHeading.current)?.focus();
+  };
   const submit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -49,7 +56,7 @@ export function CommunityView({
   return (
     <section className="wrap section community-page">
       <span className="eyebrow">COMMUNITY</span>
-      <h1>
+      <h1 ref={pageHeading} tabIndex={-1}>
         Ask clearly.
         <br />
         <em>Build together.</em>
@@ -104,14 +111,14 @@ export function CommunityView({
             <small>
               By {p.author} · {p.comments} replies
             </small>
-            <button className="text-button" onClick={() => onOpen(p.id)}>
+            <button className="text-button" ref={node=>{if(node)openers.current.set(p.id,node);else openers.current.delete(p.id);}} onClick={() => onOpen(p.id)}>
               Open discussion
             </button>
           </article>
         ))}
       </div>
       {thread && <CommunityThread key={thread.id} thread={thread} busy={busy} pendingReply={pendingReply} pendingTextReply={pendingTextReply}
-        replyFormVersion={replyFormVersion} loading={threadLoading} onOpen={onOpen} onMore={onMoreComments}
+        replyFormVersion={replyFormVersion} loading={threadLoading} onOpen={viewThread} onMore={onMoreComments}
         onComment={onComment} onHelpful={onHelpful} onReport={onReport} />}
 
     </section>

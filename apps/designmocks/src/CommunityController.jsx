@@ -22,7 +22,7 @@ function CommunitySession({View}) {
   const [pendingPost,setPendingPost]=useState(null),[pendingReply,setPendingReply]=useState(null);
   const [pendingTextPost,setPendingTextPost]=useState(null),[pendingTextReply,setPendingTextReply]=useState(null);
   const [postFormVersion,setPostFormVersion]=useState(0),[replyFormVersion,setReplyFormVersion]=useState(0);
-  const scope=useRef(null),threadRequest=useRef(null),mutationBusy=useRef(false),threadLive=useRef(null);
+  const scope=useRef(null),threadRequest=useRef(null),mutationBusy=useRef(false),threadLive=useRef(null),viewEpoch=useRef(0);
   threadLive.current=thread;
   const current=signal=>!signal.aborted&&scope.current?.signal===signal;
   async function load(signal) {
@@ -44,19 +44,24 @@ function CommunitySession({View}) {
     return()=>clearTimeout(timer);
   },[thread?.id,thread?.mediaExpiresAt]);
 
-  async function openThread(id,cursor=null) {
+  async function openThread(id,cursor=null,options={}) {
+    const intent=options.intent??viewEpoch.current,anchorId=options.anchorId??null,rowOnly=Boolean(options.row);
     const sessionSignal=scope.current?.signal;
-    if(!sessionSignal||!current(sessionSignal))return;
-    const append=Boolean(cursor);
+    if(!sessionSignal||!current(sessionSignal)||intent!==viewEpoch.current)return;
+    const append=Boolean(cursor)&&!anchorId;
     if(append&&(threadLoading||threadLive.current?.id!==id))return;
     threadRequest.current?.abort();
-    if(!append)setThread(null);
+    if(!append&&!rowOnly)setThread(null);
     if(!id){threadRequest.current=null;setThreadLoading(false);return;}
     const request=new AbortController();threadRequest.current=request;setThreadLoading(true);
     const cancel=()=>request.abort();sessionSignal.addEventListener("abort",cancel,{once:true});
     try {
-      const value=validateCommunityThread(await rpc("community_thread",append?{p_post_id:id,p_cursor:cursor,p_limit:25}:{p_post_id:id},request.signal),id),deadlines=[];
-      const targets=[{type:"post",item:value},...value.comments.map(item=>({type:"comment",item}))];
+      const value=validateCommunityThread(await rpc(anchorId?"community_reply_context":"community_thread",anchorId?{p_post_id:id,p_anchor_id:anchorId,p_limit:rowOnly?1:25}:append?{p_post_id:id,p_cursor:cursor,p_limit:25}:{p_post_id:id},request.signal),id),deadlines=[];
+      if(value.comments.length>(rowOnly?1:25)||(anchorId&&(value.anchorId!==anchorId||value.comments[0]?.id!==anchorId||typeof value.hasEarlier!=="boolean")))throw new Error("Invalid reply context");
+      if(rowOnly&&threadLive.current?.version!==value.version){
+        const restored=await openThread(id,null,{intent});if(restored&&current(sessionSignal)&&intent===viewEpoch.current)setMessage("Discussion changed. The latest replies are now shown.");return restored;
+      }
+      const targets=[...(rowOnly?[]:[{type:"post",item:value}]),...value.comments.map(item=>({type:"comment",item}))];
       // Bound signing fan-out as the discussion grows.
       for(let start=0;start<targets.length;start+=4){
         const results=await Promise.allSettled(targets.slice(start,start+4).map(async({type,item})=>{
@@ -70,29 +75,36 @@ function CommunitySession({View}) {
         }));
         for(const result of results)if(result.status==="rejected")throw result.reason;
       }
-      if(!current(sessionSignal)||request.signal.aborted||threadRequest.current!==request)return;
+      if(!current(sessionSignal)||intent!==viewEpoch.current||request.signal.aborted||threadRequest.current!==request)return;
       const deadline=deadlines.length?Math.min(...deadlines):null;
       setThread(previous=>{
-        if(!append)return {...value,mediaExpiresAt:deadline};
+        if(!append&&!rowOnly)return {...value,mediaExpiresAt:deadline};
         if(!previous||previous.id!==id||previous.version!==value.version)return previous;
         const oldDeadline=previous.mediaExpiresAt;
-        return {...value,comments:mergeCommunityComments(previous.comments,value.comments),mediaExpiresAt:oldDeadline&&deadline?Math.min(oldDeadline,deadline):oldDeadline??deadline};
+        return {...(rowOnly?previous:{...value,anchorId:previous.anchorId,hasEarlier:previous.hasEarlier}),comments:mergeCommunityComments(previous.comments,value.comments),mediaExpiresAt:oldDeadline&&deadline?Math.min(oldDeadline,deadline):oldDeadline??deadline};
       });
       return true;
     }catch(error){
-      if(!current(sessionSignal)||request.signal.aborted||threadRequest.current!==request)return;
+      if(!current(sessionSignal)||intent!==viewEpoch.current||request.signal.aborted||threadRequest.current!==request)return;
       if(append&&error?.details==="community_thread_changed"){
-        const restored=await openThread(id);if(current(sessionSignal)&&restored)setMessage("Discussion changed. The latest replies are now shown.");
+        const restored=await openThread(id,null,{intent});if(current(sessionSignal)&&intent===viewEpoch.current&&restored)setMessage("Discussion changed. The latest replies are now shown.");
       }else{
         const denied=error?.code==="42501"||error?.context?.status===403;
-        if(!append||denied)setThread(null);
-        setMessage(append&&!denied?"Couldn’t load more replies. Try again.":"This discussion or its images are unavailable. Refresh the feed or try again.");
+        if((!append&&!rowOnly)||denied)setThread(null);
+        setMessage(denied?"This discussion or its images are unavailable. Refresh the feed or try again.":rowOnly?"Marked helpful. Couldn’t refresh the count. Refresh this discussion to check it.":append?"Couldn’t load more replies. Try again.":"This discussion or its images are unavailable. Refresh the feed or try again.");
       }
       return false;
     }finally{
       sessionSignal.removeEventListener("abort",cancel);
-      if(current(sessionSignal)&&threadRequest.current===request)setThreadLoading(false);
+      if(current(sessionSignal)&&intent===viewEpoch.current&&threadRequest.current===request)setThreadLoading(false);
     }
+  }
+  function chooseThread(id,options={}) {
+    const intent=++viewEpoch.current;
+    return openThread(id,null,{...options,intent});
+  }
+  async function revealWrite(job,signal) {
+    if(current(signal)&&job.viewEpoch===viewEpoch.current)await openThread(job.postId,null,{intent:job.viewEpoch,anchorId:job.targetType==="comment"?job.targetId:null});
   }
   async function mutate(action) {
     const signal=scope.current?.signal;
@@ -109,7 +121,7 @@ function CommunitySession({View}) {
         ()=>{if(current(signal))setPending({...job});});
       if(!current(signal))return false;
       setPending(null);setMessage(job.targetType==="post"?"Your post is live. All images confirmed.":"Reply added. All images confirmed.");
-      await load(signal);if(current(signal))await openThread(job.postId);
+      await load(signal);await revealWrite(job,signal);
       return true;
     }catch(error){if(current(signal)){setPending({...job});setMessage(error.message);await load(signal);}return false;}
   }
@@ -125,16 +137,16 @@ function CommunitySession({View}) {
     setPending(null);(job.kind==="post"?setPostFormVersion:setReplyFormVersion)(version=>version+1);
     if(!receipt.canUpload){
       setMessage("Your text is saved, but this discussion or reply is locked or unavailable. Attachments were not uploaded.");
-      await load(signal);if(current(signal)&&receipt.postStatus!=="hidden")await openThread(receipt.postId);
+      await load(signal);if(current(signal)&&job.viewEpoch===viewEpoch.current&&receipt.postStatus!=="hidden")await openThread(receipt.postId,null,{intent:job.viewEpoch,anchorId:job.kind==="comment"&&receipt.status!=="hidden"?receipt.id:null});
       return true;
     }
     if(job.files.length){
-      const imageJob={targetType:job.kind,targetId:receipt.id,postId:receipt.postId,files:job.files,next:0};
+      const imageJob={targetType:job.kind,targetId:receipt.id,postId:receipt.postId,files:job.files,next:0,viewEpoch:job.viewEpoch};
       (job.kind==="post"?setPendingPost:setPendingReply)(imageJob);
       await finishImages(imageJob,signal);
     }else{
       setMessage(receipt.replayed?"Your saved text is confirmed.":job.kind==="post"?"Your post is live.":"Reply added.");
-      await load(signal);if(current(signal))await openThread(receipt.postId);
+      await load(signal);await revealWrite({targetType:job.kind,targetId:receipt.id,postId:receipt.postId,viewEpoch:job.viewEpoch},signal);
     }
     return true;
   }
@@ -150,23 +162,30 @@ function CommunitySession({View}) {
   }
   return <PortalShell><View posts={posts} thread={thread} message={message} busy={busy} threadLoading={threadLoading}
     pendingPost={pendingPost} pendingReply={pendingReply} pendingTextPost={pendingTextPost} pendingTextReply={pendingTextReply}
-    postFormVersion={postFormVersion} replyFormVersion={replyFormVersion} onOpen={openThread}
+    postFormVersion={postFormVersion} replyFormVersion={replyFormVersion} onOpen={chooseThread}
     onMoreComments={()=>thread?.nextCursor&&openThread(thread.id,thread.nextCursor)} onReloadFeed={()=>scope.current&&load(scope.current.signal)}
-    onRetryTextPost={()=>mutate(signal=>finishWrite(pendingTextPost,signal))} onStopTextPost={()=>stopWrite(pendingTextPost)}
-    onRetryTextReply={()=>mutate(signal=>finishWrite(pendingTextReply,signal))} onStopTextReply={()=>stopWrite(pendingTextReply)}
-    onRetryPost={()=>mutate(signal=>finishImages(pendingPost,signal))} onSkipPost={()=>skipImages(pendingPost)}
-    onRetryReply={()=>mutate(signal=>finishImages(pendingReply,signal))} onSkipReply={()=>skipImages(pendingReply)}
+    onRetryTextPost={()=>mutate(signal=>finishWrite({...pendingTextPost,viewEpoch:viewEpoch.current},signal))} onStopTextPost={()=>stopWrite(pendingTextPost)}
+    onRetryTextReply={()=>mutate(signal=>finishWrite({...pendingTextReply,viewEpoch:viewEpoch.current},signal))} onStopTextReply={()=>stopWrite(pendingTextReply)}
+    onRetryPost={()=>mutate(signal=>finishImages({...pendingPost,viewEpoch:viewEpoch.current},signal))} onSkipPost={()=>skipImages(pendingPost)}
+    onRetryReply={()=>mutate(signal=>finishImages({...pendingReply,viewEpoch:viewEpoch.current},signal))} onSkipReply={()=>skipImages(pendingReply)}
     onSubmit={(fields,files)=>mutate(async signal=>{
       if(pendingPost||pendingTextPost)return false;
       const invalid=checkCommunityFiles(files);if(invalid){setMessage(invalid);return false;}
-      return finishWrite(newCommunityWrite("post",{p_exam:fields.exam,p_topic:fields.topic,p_title:fields.title,p_body:fields.body},files),signal);
+      return finishWrite({...newCommunityWrite("post",{p_exam:fields.exam,p_topic:fields.topic,p_title:fields.title,p_body:fields.body},files),viewEpoch:viewEpoch.current},signal);
     })}
     onComment={(postId,parentId,body,files)=>mutate(async signal=>{
       if(pendingReply||pendingTextReply)return false;
       const invalid=checkCommunityFiles(files);if(invalid){setMessage(invalid);return false;}
-      return finishWrite(newCommunityWrite("comment",{p_post_id:postId,p_parent_id:parentId,p_body:body},files),signal);
+      return finishWrite({...newCommunityWrite("comment",{p_post_id:postId,p_parent_id:parentId,p_body:body},files),viewEpoch:viewEpoch.current},signal);
     })}
-    onHelpful={id=>mutate(async signal=>{await rpc("mark_community_helpful",{p_comment_id:id},signal);if(current(signal)&&thread){await openThread(thread.id);if(current(signal))setMessage("Marked helpful.");}})}
+    onHelpful={id=>mutate(async signal=>{
+      const intent=viewEpoch.current,postId=threadLive.current?.id;
+      await rpc("mark_community_helpful",{p_comment_id:id},signal);
+      if(!current(signal)||intent!==viewEpoch.current||!postId)return;
+      setThread(value=>value?.id===postId?{...value,comments:value.comments.map(comment=>comment.id===id?{...comment,markedHelpful:true}:comment)}:value);
+      const refreshed=await openThread(postId,null,{anchorId:id,row:true,intent});
+      if(refreshed&&current(signal)&&intent===viewEpoch.current)setMessage("Marked helpful.");
+    })}
     onReport={(postId,commentId)=>mutate(async signal=>{await rpc("report_community_content",{p_post_id:postId,p_comment_id:commentId,p_reason:"other",p_details:"Reported from discussion view"},signal);if(current(signal))setMessage("Report sent for moderator review.");})}
   /></PortalShell>;
 }
