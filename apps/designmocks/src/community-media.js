@@ -26,15 +26,19 @@ export async function communityUploadError(error) {
   return new Error("An image did not confirm. Retry the remaining images; your saved text will not be posted again.");
 }
 export async function resumeCommunityImages(job, invoke, signal, onProgress = () => {}) {
+  const ordinals=job.ordinals??job.files.map((_,index)=>index+1);
+  if(!Array.isArray(ordinals)||ordinals.length!==job.files.length||new Set(ordinals).size!==ordinals.length||
+    ordinals.some(ordinal=>!Number.isInteger(ordinal)||ordinal<1||ordinal>3)||!Number.isInteger(job.next)||job.next<0||job.next>job.files.length)
+    throw new Error("Refresh the discussion before adding images.");
   for (let index = job.next; index < job.files.length; index++) {
     signal?.throwIfAborted();
     const body = new FormData();
     body.set("targetType", job.targetType); body.set("targetId", job.targetId);
-    body.set("ordinal", String(index + 1)); body.set("file", job.files[index]);
+    body.set("ordinal", String(ordinals[index])); body.set("file", job.files[index]);
     const { data, error } = await invoke(body, signal);
     signal?.throwIfAborted();
     if (error) throw await communityUploadError(error);
-    if (typeof data?.id !== "string" || data.ordinal !== index + 1) throw await communityUploadError();
+    if (typeof data?.id !== "string" || data.ordinal !== ordinals[index]) throw await communityUploadError();
     job.next = index + 1; onProgress(job.next);
   }
 }

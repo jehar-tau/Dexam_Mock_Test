@@ -193,7 +193,8 @@ Exit: human-reviewed drawing results are reliable without AI; AI cannot publish 
 - [x] Verify account-bound text request replay, nested reply controls, bounded snapshot/anchor reads, moderation invalidation and preserved view/focus during late writes.
 - [x] Collect an explicit report reason and optional details for the exact discussion or reply. Preserve an uncertain request for identical retries, acknowledge existing reports without replacing their original notes, and keep the ten-per-hour server cap and moderation visibility fences.
 - [x] Add exact exam/topic filters and bounded 25-row feed pages. Preserve timestamp/UUID snapshots through new insertions, invalidate pages after displayed-content changes, and fence late filter/write/image responses without losing drafts or thread state.
-- [ ] Complete author follow-up attachment management and broader moderation actions. Pending image selections survive only within the open page/session.
+- [x] Add images to owned saved posts/replies using fresh free positions, immutable selected-file/position retries, existing author/moderation checks and preserved text/original images. Verify real Auth/Edge/Storage and desktop/mobile lost-acknowledgement recovery.
+- [ ] Complete broader moderation actions and attachment removal/replacement under an approved evidence-retention plan. Pending image selections survive only within the open page/session.
 
 Exit: content rights, moderation coverage, reporting, retention and child-safety checks pass.
 
@@ -215,9 +216,9 @@ Exit: production readiness checklist approved, then registration, then payments,
 
 ## Immediate next actions
 
-1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060143`, and choose an independent staging deployment target before promotion.
+1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060144`, and choose an independent staging deployment target before promotion.
 2. Obtain the owner's Cloudboard/Claude question manifest and theory-document export. Reconcile supplied question snapshots with stable keys and content hashes through the documented read-only contract.
 3. Complete the remaining reviewed exam blueprints, including NID and NIFT creative/programme-specific papers, with authoritative question counts, sections, timing and marking where published.
 4. Run hosted acceptance for the admitted Google tester, representative full papers, drawings and teacher review, followed by synthetic staging capacity checks.
 5. Obtain the pending source rights, model-processing/cost, phone-provider and public-policy decisions. Keep payments deferred until the owner resumes that work.
-6. Add author follow-up attachment management and broader moderation actions. Preserve the bounded/filterable feed and its insertion/redaction fences, member report reasons/details and duplicate receipts, administrator image review and inspected-version decisions, text replay, threaded snapshot/anchor reads and image receipts. Complete scanner/quarantine and resumable-transfer acceptance, then verify representative image sizes on the approved staging target before promotion.
+6. Add member full-image inspection and broader moderation actions; define safe attachment removal/replacement with the retention policy. Preserve follow-up image additions, the bounded/filterable feed and its insertion/redaction fences, report reasons/details and duplicate receipts, administrator inspected-version decisions, text replay, threaded snapshot/anchor reads and image receipts. Complete scanner/quarantine and resumable-transfer acceptance, then verify representative image sizes on the approved staging target before promotion.

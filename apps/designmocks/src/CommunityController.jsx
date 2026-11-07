@@ -6,6 +6,7 @@ import { useAuthState } from "./useAuth.js";
 import { checkCommunityFiles, communityLinkLifetime, resumeCommunityImages } from "./community-media.js";
 import { newCommunityWrite, submitCommunityWrite, mergeCommunityComments, validateCommunityThread } from "./community-write.js";
 import { communityFeedFilters, communityFeedInput, validateCommunityFeed, mergeCommunityFeed } from "./community-feed.js";
+import { communityAttachmentFiles, communityAttachmentPlan } from "./community-attachments.js";
 
 async function rpc(name,input,signal) {
   signal.throwIfAborted();
@@ -92,23 +93,24 @@ function CommunitySession({View}) {
   },[thread?.id,thread?.mediaExpiresAt]);
 
   async function openThread(id,cursor=null,options={}) {
-    const intent=options.intent??viewEpoch.current,anchorId=options.anchorId??null,rowOnly=Boolean(options.row);
+    const intent=options.intent??viewEpoch.current,anchorId=options.anchorId??null,rowOnly=Boolean(options.row),headerOnly=Boolean(options.header);
+    const localRefresh=rowOnly||headerOnly;
     const sessionSignal=scope.current?.signal;
     if(!sessionSignal||!current(sessionSignal)||intent!==viewEpoch.current)return;
     const append=Boolean(cursor)&&!anchorId;
     if(append&&(threadLoading||threadLive.current?.id!==id))return;
     threadRequest.current?.abort();
-    if(!append&&!rowOnly)setThread(null);
+    if(!append&&!localRefresh)setThread(null);
     if(!id){threadRequest.current=null;setThreadLoading(false);return;}
     const request=new AbortController();threadRequest.current=request;setThreadLoading(true);
     const cancel=()=>request.abort();sessionSignal.addEventListener("abort",cancel,{once:true});
     try {
-      const value=validateCommunityThread(await rpc(anchorId?"community_reply_context":"community_thread",anchorId?{p_post_id:id,p_anchor_id:anchorId,p_limit:rowOnly?1:25}:append?{p_post_id:id,p_cursor:cursor,p_limit:25}:{p_post_id:id},request.signal),id),deadlines=[];
-      if(value.comments.length>(rowOnly?1:25)||(anchorId&&(value.anchorId!==anchorId||value.comments[0]?.id!==anchorId||typeof value.hasEarlier!=="boolean")))throw new Error("Invalid reply context");
-      if(rowOnly&&threadLive.current?.version!==value.version){
+      const value=validateCommunityThread(await rpc(anchorId?"community_reply_context":"community_thread",anchorId?{p_post_id:id,p_anchor_id:anchorId,p_limit:rowOnly?1:25}:append?{p_post_id:id,p_cursor:cursor,p_limit:25}:headerOnly?{p_post_id:id,p_cursor:null,p_limit:1}:{p_post_id:id},request.signal),id),deadlines=[];
+      if(value.comments.length>(localRefresh?1:25)||(anchorId&&(value.anchorId!==anchorId||value.comments[0]?.id!==anchorId||typeof value.hasEarlier!=="boolean")))throw new Error("Invalid reply context");
+      if(localRefresh&&threadLive.current?.version!==value.version){
         const restored=await openThread(id,null,{intent});if(restored&&current(sessionSignal)&&intent===viewEpoch.current)setMessage("Discussion changed. The latest replies are now shown.");return restored;
       }
-      const targets=[...(rowOnly?[]:[{type:"post",item:value}]),...value.comments.map(item=>({type:"comment",item}))];
+      const targets=[...(rowOnly?[]:[{type:"post",item:value}]),...(headerOnly?[]:value.comments.map(item=>({type:"comment",item})))];
       // Bound signing fan-out as the discussion grows.
       for(let start=0;start<targets.length;start+=4){
         const results=await Promise.allSettled(targets.slice(start,start+4).map(async({type,item})=>{
@@ -125,10 +127,10 @@ function CommunitySession({View}) {
       if(!current(sessionSignal)||intent!==viewEpoch.current||request.signal.aborted||threadRequest.current!==request)return;
       const deadline=deadlines.length?Math.min(...deadlines):null;
       setThread(previous=>{
-        if(!append&&!rowOnly)return {...value,mediaExpiresAt:deadline};
+        if(!append&&!localRefresh)return {...value,mediaExpiresAt:deadline};
         if(!previous||previous.id!==id||previous.version!==value.version)return previous;
         const oldDeadline=previous.mediaExpiresAt;
-        return {...(rowOnly?previous:{...value,anchorId:previous.anchorId,hasEarlier:previous.hasEarlier}),comments:mergeCommunityComments(previous.comments,value.comments),mediaExpiresAt:oldDeadline&&deadline?Math.min(oldDeadline,deadline):oldDeadline??deadline};
+        return {...(rowOnly?previous:{...value,anchorId:previous.anchorId,hasEarlier:previous.hasEarlier,...(headerOnly?{nextCursor:previous.nextCursor}:{})}),comments:headerOnly?previous.comments:mergeCommunityComments(previous.comments,value.comments),mediaExpiresAt:oldDeadline&&deadline?Math.min(oldDeadline,deadline):oldDeadline??deadline};
       });
       return true;
     }catch(error){
@@ -136,9 +138,9 @@ function CommunitySession({View}) {
       if(append&&error?.details==="community_thread_changed"){
         const restored=await openThread(id,null,{intent});if(current(sessionSignal)&&intent===viewEpoch.current&&restored)setMessage("Discussion changed. The latest replies are now shown.");
       }else{
-        const denied=error?.code==="42501"||error?.context?.status===403;
-        if((!append&&!rowOnly)||denied)setThread(null);
-        setMessage(denied?"This discussion or its images are unavailable. Refresh the feed or try again.":rowOnly?"Marked helpful. Couldn’t refresh the count. Refresh this discussion to check it.":append?"Couldn’t load more replies. Try again.":"This discussion or its images are unavailable. Refresh the feed or try again.");
+        const denied=error?.code==="42501"||[401,403].includes(error?.context?.status);
+        if((!append&&!localRefresh)||denied)setThread(null);
+        setMessage(denied?"This discussion or its images are unavailable. Refresh the feed or try again.":options.afterUpload?"Images are saved. Couldn’t refresh the gallery. Refresh this discussion to check it.":rowOnly?"Marked helpful. Couldn’t refresh the count. Refresh this discussion to check it.":append?"Couldn’t load more replies. Try again.":"This discussion or its images are unavailable. Refresh the feed or try again.");
       }
       return false;
     }finally{
@@ -151,7 +153,10 @@ function CommunitySession({View}) {
     return openThread(id,null,{...options,intent});
   }
   async function revealWrite(job,signal) {
-    if(current(signal)&&job.viewEpoch===viewEpoch.current&&job.feedEpoch===feedEpoch.current)await openThread(job.postId,null,{intent:job.viewEpoch,anchorId:job.targetType==="comment"?job.targetId:null});
+    if(!current(signal)||job.viewEpoch!==viewEpoch.current||job.feedEpoch!==feedEpoch.current)return;
+    if(job.followUp&&threadLive.current?.id===job.postId) {
+      await openThread(job.postId,null,{intent:job.viewEpoch,anchorId:job.targetType==="comment"?job.targetId:null,row:job.targetType==="comment",header:job.targetType==="post",afterUpload:true});
+    }else await openThread(job.postId,null,{intent:job.viewEpoch,anchorId:job.targetType==="comment"?job.targetId:null});
   }
   async function mutate(action) {
     const signal=scope.current?.signal;
@@ -179,7 +184,7 @@ function CommunitySession({View}) {
       await resumeCommunityImages(job,(body,requestSignal)=>platform.functions.invoke("community-media",{body,signal:requestSignal}),signal,
         ()=>{if(current(signal))setPending({...job});});
       if(!current(signal))return false;
-      setPending(null);setMessage(job.targetType==="post"?"Your post is live. All images confirmed.":"Reply added. All images confirmed.");
+      setPending(null);setMessage(job.followUp?"Additional images confirmed.":job.targetType==="post"?"Your post is live. All images confirmed.":"Reply added. All images confirmed.");
       await refreshFeed(job,signal);await revealWrite(job,signal);
       return true;
     }catch(error){if(current(signal)){setPending({...job});setMessage(error.message);await refreshFeed(job,signal);}return false;}
@@ -248,6 +253,20 @@ function CommunitySession({View}) {
       if(refreshed&&current(signal)&&intent===viewEpoch.current)setMessage("Marked helpful.");
     })}
     onReport={reportContent}
+    onAddImages={(target,files)=>mutate(async signal=>{
+      if(pendingPost||pendingReply||pendingTextPost||pendingTextReply)return false;
+      const invalid=communityAttachmentFiles(files);if(invalid){setMessage(invalid);return false;}
+      const intent=viewEpoch.current,feedIntent=feedEpoch.current;
+      let slots,job;
+      try{slots=await rpc("community_attachment_slots",{p_target_type:target.targetType,p_target_id:target.targetId},signal);}
+      catch{if(current(signal))setMessage("This saved discussion or reply could not be checked for uploads. Refresh it and try again.");return false;}
+      if(!current(signal))return false;
+      try{job={...communityAttachmentPlan(slots,target,files),viewEpoch:intent,feedEpoch:feedIntent};}
+      catch(error){setMessage(error.message);return false;}
+      (job.targetType==="post"?setPendingPost:setPendingReply)(job);
+      await finishImages(job,signal);
+      return current(signal);
+    })}
   /></PortalShell>;
 }
 export function CommunityController({View}) {
