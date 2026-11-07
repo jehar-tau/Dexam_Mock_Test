@@ -15,9 +15,12 @@ import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQue
 import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
 import { ReportedQuestionQueue } from "./ReportedQuestionQueue.jsx";
 
-async function rpc(name, args) {
+async function rpc(name, args, signal) {
   if (!platform) throw new Error("Student services are not connected yet.");
-  const { data, error } = await platform.rpc(name, args);
+  signal?.throwIfAborted();
+  const query = platform.rpc(name, args);
+  const { data, error } = await (signal ? query.abortSignal(signal) : query);
+  signal?.throwIfAborted();
   if (error) throw error;
   return data;
 }
@@ -322,12 +325,6 @@ function AdminDesk({ session }) {
       rpc("admin_all_india_events").then(setAllIndia),
     ]);
   });
-  const resolveCommunityReport = async (id, resolution) => {
-    try {
-      await rpc("admin_resolve_community_report", { p_report_id: id, p_resolution: resolution, p_note: "Resolved in admin moderation queue" });
-      await load();
-    } catch (e) { setMessage(e.message); }
-  };
   const uploadIntake = async (event) => {
     event.preventDefault();
     const element = event.currentTarget;
@@ -419,7 +416,7 @@ function AdminDesk({ session }) {
           <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings} {...drawingActions} />
           <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
           <h2>Community moderation</h2>
-          <CommunityModerationQueue reports={communityReports} onResolve={resolveCommunityReport} />
+          <CommunityModerationQueue reports={communityReports} rpc={rpc} onRefresh={load} scopeKey={session.user.id} />
           <LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />
           <ReportedQuestionQueue reports={questionReports} rpc={rpc} onChanged={refreshQuestionReviews} />
           <h2>Add a question draft</h2>
