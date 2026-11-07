@@ -9,15 +9,18 @@ const labels = {
   pendingDrawingReviews: "Drawing reviews",
   failedIntakeAssets: "Failed intake jobs",
   failedAiDrafts: "Failed AI drafts",
+  expiredIntakeJobs: "Expired extractions",
+  expiredAiDraftJobs: "Expired draft requests",
   stalePendingOrders: "Stale pending orders",
 };
 
-export function OperationalHealth({ health }) {
+export function OperationalHealth({ health, onRefresh }) {
   if (!health) return <p role="status">Loading operational health…</p>;
   return <section className="operations-health" aria-label="Operational health">
     <div>
       <span className={`status-pill health-${health.status}`}>{health.status}</span>
       <small>Checked {new Date(health.checkedAt).toLocaleString("en-IN")}</small>
+      {onRefresh && <button type="button" onClick={onRefresh}>Refresh queues</button>}
     </div>
     <div className="operations-metrics">
       {Object.entries(labels).map(([key, label]) => <article key={key}>

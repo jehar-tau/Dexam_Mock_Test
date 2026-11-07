@@ -27,7 +27,7 @@ Deno.serve(async request => {
   try {
     const { assetId } = await request.json();
     if (typeof assetId !== "string") return respond({ error: "Asset id required" }, 400);
-    const result = await extractIntakeAsset({ admin, assetId, model, apiKey });
+    const result = await extractIntakeAsset({ admin, actorId: user.id, assetId, model, apiKey });
     return respond(result.body, result.status);
   } catch {
     return respond({ error: "Private extraction request failed. Refresh the intake list before retrying." }, 400);

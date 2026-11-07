@@ -25,10 +25,13 @@ export async function runOperationsSweep(config,{fetchImpl=fetch,maxBatches=10,b
   if(!Number.isInteger(maxBatches)||maxBatches<1||maxBatches>20||!Number.isInteger(batchSize)||batchSize<1||batchSize>500)throw new Error("Invalid bounded sweep limits");
   let finalized=0,batches=0;
   while(batches<maxBatches){const count=Number(await rpc(validated.origin,config.key,"finalize_expired_attempts",{p_limit:batchSize},fetchImpl));if(!Number.isInteger(count)||count<0||count>batchSize)throw new Error("Invalid finalization count");finalized+=count;batches+=1;if(count<batchSize)break}
+  const recovery=await rpc(validated.origin,config.key,"recover_expired_question_jobs",{p_limit:batchSize},fetchImpl);
+  const recoveredQuestionJobs={intake:recovery?.intake,aiDrafts:recovery?.aiDrafts};
+  if(Object.values(recoveredQuestionJobs).some(count=>!Number.isInteger(count)||count<0||count>batchSize))throw new Error("Invalid question recovery count");
   const pruned=Number(await rpc(validated.origin,config.key,"prune_attempt_rate_buckets",{p_before:new Date(now.getTime()-2*86400000).toISOString()},fetchImpl));
   if(!Number.isInteger(pruned)||pruned<0)throw new Error("Invalid prune count");
   const health=await rpc(validated.origin,config.key,"admin_operational_health",{},fetchImpl);
-  return{environment:validated.environment,checkedAt:health.checkedAt,status:health.status,finalizedAttempts:finalized,finalizationBatches:batches,prunedRateBuckets:pruned,queues:Object.fromEntries(Object.entries(health).filter(([key,value])=>key!=="checkedAt"&&key!=="status"&&typeof value==="number"))};
+  return{environment:validated.environment,checkedAt:health.checkedAt,status:health.status,finalizedAttempts:finalized,finalizationBatches:batches,recoveredQuestionJobs,prunedRateBuckets:pruned,queues:Object.fromEntries(Object.entries(health).filter(([key,value])=>key!=="checkedAt"&&key!=="status"&&typeof value==="number"))};
 }
 
 async function main(){const config={url:process.env.DMOCKS_SUPABASE_URL,key:process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,allowOrigin:process.env.DMOCKS_OPERATIONS_ALLOW_ORIGIN,environment:process.env.DMOCKS_OPERATIONS_ENVIRONMENT,productionAck:process.env.DMOCKS_OPERATIONS_PRODUCTION_ACK};const result=await runOperationsSweep(config);process.stdout.write(`${JSON.stringify(result)}\n`);if(result.status==="degraded")process.exitCode=2}

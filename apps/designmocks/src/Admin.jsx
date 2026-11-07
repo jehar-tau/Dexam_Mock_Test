@@ -223,13 +223,14 @@ function AdminDesk({ session }) {
     }
   };
   const generateAiDraft = async (input) => {
-    const { data, error } = await platform.functions.invoke("ai-question-draft", { body: input });
-    if (error) {
-      const detail = error.context instanceof Response ? await error.context.json().catch(() => null) : null;
-      throw new Error(typeof detail?.error === "string" ? detail.error : "Couldn’t generate a review draft.");
-    }
-    if (data?.error) throw new Error(data.error);
-    await load();
+    try {
+      const { data, error } = await platform.functions.invoke("ai-question-draft", { body: input });
+      if (error) {
+        const detail = error.context instanceof Response ? await error.context.json().catch(() => null) : null;
+        throw new Error(typeof detail?.error === "string" ? detail.error : "Couldn’t generate a review draft.");
+      }
+      if (data?.error) throw new Error(data.error);
+    } finally { await load(); }
   };
   const review = async (id, decision) => {
     try {
@@ -369,9 +370,10 @@ function AdminDesk({ session }) {
     } finally { setIntakeUploading(false); }
   };
   const extractIntake = async (id) => {
-    const data = await intakeRequest("question-intake-extract", { assetId: id });
-    setMessage(`${data.questions} question candidate${data.questions === 1 ? "" : "s"} extracted for review.`);
-    await load();
+    try {
+      const data = await intakeRequest("question-intake-extract", { assetId: id });
+      setMessage(`${data.questions} question candidate${data.questions === 1 ? "" : "s"} extracted for review.`);
+    } finally { await load(); }
   };
   const promoteIntake = async (id, payload) => {
     await rpc("admin_promote_intake_candidate", { p_candidate_id: id, p_payload: payload });
@@ -421,7 +423,7 @@ function AdminDesk({ session }) {
       {allowed && (
         <>
           <h2>Operational health</h2>
-          <OperationalHealth health={health} />
+          <OperationalHealth health={health} onRefresh={load} />
           <h2>Launch readiness</h2>
           <LaunchReadiness readiness={readiness} onSetGate={async(gate,approved,evidence)=>{try{await rpc("admin_set_launch_gate",{p_gate:gate,p_approved:approved,p_evidence:evidence});await load()}catch(e){setMessage(e.message)}}}/>
           <h2>PDF and photo question intake</h2>

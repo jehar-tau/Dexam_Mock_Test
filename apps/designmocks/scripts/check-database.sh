@@ -34,6 +34,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learning-lesson-edit
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/staging-portal.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/ai-draft-canonical.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/intake-canonical.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/question-job-recovery.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/media-invariants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/tests/controlled_signup.sql
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'

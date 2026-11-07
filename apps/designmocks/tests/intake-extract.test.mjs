@@ -43,14 +43,14 @@ test("a duplicate extraction cannot fail the active worker or send the source tw
       if (name === "claim_question_intake_asset") {
         if (claimed) return { error: { message: "Busy" } };
         claimed = true;
-        return { data: { name: "fixture.pdf", storagePath: "private/fixture.pdf", mimeType: "application/pdf", byteSize: pdf.size } };
+        return { data: { token: "run-1", name: "fixture.pdf", storagePath: "private/fixture.pdf", mimeType: "application/pdf", byteSize: pdf.size } };
       }
       return { data: name === "complete_question_intake_asset" ? 1 : null };
     },
     storage: { from: () => ({ download: async () => ({ data: pdf }) }) },
   };
   let providerCalls = 0;
-  const run = () => extractIntakeAsset({ admin, assetId: "fixture", model: "fictional-model", apiKey: "fictional-key",
+  const run = () => extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture", model: "fictional-model", apiKey: "fictional-key",
     fetcher: async (url, request) => {
       providerCalls++;
       assert.equal(url, "https://api.openai.com/v1/responses");
@@ -68,6 +68,7 @@ test("a duplicate extraction cannot fail the active worker or send the source tw
   assert.equal((await first).status, 200);
   assert.equal(providerCalls, 1);
   assert.equal(calls.filter(([name]) => name === "complete_question_intake_asset").length, 1);
+  assert.equal(calls.find(([name]) => name === "complete_question_intake_asset")[1].p_token, "run-1");
 });
 
 test("failed extraction does not send mismatched source bytes or expose provider messages", async () => {
@@ -78,11 +79,11 @@ test("failed extraction does not send mismatched source bytes or expose provider
       rpc: async (name, input) => {
         calls.push([name, input]);
         return { data: name === "claim_question_intake_asset"
-          ? { storagePath: "private/fixture.pdf", mimeType: "application/pdf", byteSize: pdf.size + Number(mismatch) } : null };
+          ? { token: "run-1", storagePath: "private/fixture.pdf", mimeType: "application/pdf", byteSize: pdf.size + Number(mismatch) } : null };
       },
       storage: { from: () => ({ download: async () => ({ data: pdf }) }) },
     };
-    const result = await extractIntakeAsset({ admin, assetId: "fixture", model: "fictional-model", apiKey: "fictional-key",
+    const result = await extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture", model: "fictional-model", apiKey: "fictional-key",
       fetcher: async () => { sent = true; throw new Error("Sensitive provider diagnostic"); },
     });
     assert.equal(result.status, 400);
@@ -91,4 +92,14 @@ test("failed extraction does not send mismatched source bytes or expose provider
     assert.equal(calls.filter(([name]) => name === "fail_question_intake_asset").length, 1);
     assert.equal(calls.some(([name]) => name === "complete_question_intake_asset"), false);
   }
+});
+
+test("extraction requires the caller identity and a token-aware backend before sending source content", async () => {
+  let claimed = false, sent = false;
+  const admin = { rpc: async () => { claimed = true; return { data: {} }; } };
+  const config = { admin, assetId: "fixture", model: "fixture-model", apiKey: "fictional", fetcher: async () => { sent = true; } };
+  assert.equal((await extractIntakeAsset(config)).status, 403);
+  assert.equal(claimed, false);
+  assert.equal((await extractIntakeAsset({ ...config, actorId: "fixture-editor" })).status, 503);
+  assert.equal(sent, false);
 });

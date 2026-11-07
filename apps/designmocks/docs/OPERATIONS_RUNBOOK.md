@@ -36,11 +36,17 @@ Run `prune_attempt_rate_buckets()` with the service identity once daily. It reta
 
 Payments stay closed until the owner resumes Razorpay work. When enabled, reconcile captured provider payments to exactly one paid order and one entitlement. A browser callback is never evidence of payment. Investigate stale pending orders without granting access; refund/revocation actions require the approved commercial policy and an auditable operator action.
 
-## Scheduled attempt and retention sweep
+## Scheduled recovery and retention
 
 Run `npm run operations:sweep` from a private scheduler every minute with `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_OPERATIONS_ALLOW_ORIGIN` (the exact Supabase origin) and `DMOCKS_OPERATIONS_ENVIRONMENT=staging|production`. The service credential must remain in the scheduler secret store. Production additionally requires `DMOCKS_OPERATIONS_PRODUCTION_ACK=FINALIZE_EXPIRED_ATTEMPTS_ON_<exact origin>`; the runner refuses a production host in staging mode.
 
-Each invocation drains at most ten batches of 500 expired attempts, prunes only rate buckets older than two days, then prints one privacy-safe JSON health record. Exit `0` means healthy/attention, `2` means degraded and must alert the operator, and `1` means configuration or RPC failure. Never retry an exit-1 loop without inspecting the named failed RPC; the underlying database operations are bounded and idempotent, but a bad credential or target should not be hammered. Deployment of this schedule is a production-state decision and remains separate from source readiness.
+Each invocation drains at most ten batches of 500 expired attempts, recovers up to 500 expired intake jobs and 500 expired AI draft requests, prunes rate buckets older than two days, then prints one aggregate JSON health record. `recoveredQuestionJobs` reports the two recovery counts. Exit `0` means healthy/attention, `2` means degraded and must alert the operator, and `1` means configuration or RPC failure. Never retry an exit-1 loop without inspecting the named failed RPC; the underlying database operations are bounded and idempotent, but a bad credential or target should not be hammered. Deployment of this schedule is a production-state decision and remains separate from source readiness.
+
+Question processing has a five-minute server expiry. `recover_expired_question_jobs(100)` is service-only and marks expired work failed with a retry message. It handles older interrupted rows using their original start/update time, skips locked rows and leaves current workers running. Failed and expired counters stay visible to the operator until the work is resolved.
+
+In the admin portal, select **Refresh queues** to reload processing status. **Retry extraction** can reclaim a failed or expired source. The creator of an AI request can select **Retry draft** after failure or expiry. Each retry rechecks administrator access, and AI drafting rechecks reference rights before inference. A retry starts only after the administrator selects it. Source candidates and generated drafts retain their review holds.
+
+Every new processing attempt receives a private token. Completion and failure calls carry that same token, so a late worker cannot replace or fail a newer attempt. Completion acknowledgements can be retried without duplicating candidates or drafts. Deploy migration `202611060131_question_job_recovery.sql`, both model workers and the updated operations runner together during the approved staging rollout. The original service argument sets remain supported for unleased legacy jobs. New jobs require the token-aware workers.
 
 ## Support and moderation
 
