@@ -200,7 +200,9 @@ Exit: production readiness checklist approved, then registration, then payments,
 
 ## Immediate next actions
 
-1. Capture the current Exam-app import-run export and execute the stable-key reconciliation.
-2. Obtain the owner's Cloudboard/Claude manifest and theory-document export.
-3. Approve the shared-engine recommendation or explicitly accept a fork.
-4. Build Phase 1 navigation and Overview against fictional data while reconciliation proceeds.
+1. Add bounded recovery and health visibility for interrupted extraction and question-drafting jobs.
+2. Review the standalone provider migration plan, including the earlier AI-schema gap and migration `202611060130`, and choose an independent staging deployment target before promotion.
+3. Obtain the owner's Cloudboard/Claude question manifest and theory-document export. Reconcile supplied question snapshots with stable keys and content hashes through the documented read-only contract.
+4. Complete the remaining reviewed exam blueprints, including NID and NIFT creative/programme-specific papers, with authoritative question counts, sections, timing and marking where published.
+5. Run hosted acceptance for the admitted Google tester, representative full papers, drawings and teacher review, followed by synthetic staging capacity checks.
+6. Obtain the pending source rights, model-processing/cost, phone-provider and public-policy decisions. Keep payments deferred until the owner resumes that work.
