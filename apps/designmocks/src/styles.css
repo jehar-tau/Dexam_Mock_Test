@@ -3834,6 +3834,22 @@ svg {
 .admin-list article { padding: 1.25rem; border: 1px solid var(--line); background: var(--paper); }
 .admin-list pre { max-height: 320px; overflow: auto; overflow-wrap: anywhere; white-space: pre-wrap; }
 .admin-list code { overflow-wrap: anywhere; }
+.bank-review-browser { margin-block: 3rem; }
+.bank-review-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bank-review-filters .admin-actions { grid-column: 1 / -1; }
+.bank-review-key, .bank-question-review code { overflow-wrap: anywhere; }
+.bank-review-browser .admin-list button { display: block; margin-top: 1rem; }
+.bank-question-review { min-width: 0; padding: 1.25rem; margin-block: 2rem; border: 1px solid var(--line); background: var(--paper); }
+.bank-question-review .admin-actions { align-items: start; }
+.bank-question-prompt { white-space: pre-wrap; overflow-wrap: anywhere; }
+.bank-question-options { padding-left: 1.5rem; }
+.bank-question-options li { margin-block: .65rem; overflow-wrap: anywhere; }
+.bank-answer-review { display: grid; grid-template-columns: minmax(120px, .4fr) minmax(0, 1fr); gap: .75rem; margin-block: 1.5rem; }
+.bank-answer-review dt { font-weight: 700; }
+.bank-answer-review dd { margin: 0; overflow-wrap: anywhere; }
+.bank-question-review .profile-check { display: flex; align-items: start; }
+.bank-question-review .profile-check input { width: auto; flex-shrink: 0; }
+@media (max-width: 700px) { .bank-review-filters, .bank-answer-review { grid-template-columns: minmax(0, 1fr); } }
 .intake-editor fieldset { min-width: 0; display: grid; gap: 1rem; padding: 1rem; border: 1px solid var(--line); }
 .intake-editor legend { padding-inline: .35rem; font-weight: 700; }
 .intake-editor .profile-check { display: flex; align-items: flex-start; }

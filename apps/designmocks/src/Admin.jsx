@@ -12,6 +12,7 @@ import { OperationalHealth } from "./OperationalHealth.jsx";
 import { QuestionDraftExport } from "./QuestionDraftExport.jsx";
 import { LaunchReadiness } from "./LaunchReadiness.jsx";
 import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQueue.jsx";
+import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
 
 async function rpc(name, args) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -146,7 +147,6 @@ function AdminDesk({ session }) {
   const [allowed, setAllowed] = useState(null),
     [drafts, setDrafts] = useState([]),
     [bugs, setBugs] = useState([]),
-    [bank, setBank] = useState([]),
     [blueprints, setBlueprints] = useState([]),
     [allIndia, setAllIndia] = useState([]),
     [lessons, setLessons] = useState(null),
@@ -159,7 +159,6 @@ function AdminDesk({ session }) {
     [privacyRequests, setPrivacyRequests] = useState([]),
     [health, setHealth] = useState(),
     [readiness, setReadiness] = useState(),
-    [bankRights, setBankRights] = useState({}),
     [message, setMessage] = useState("");
   const load = useCallback(async () => {
     if (!session) return;
@@ -167,10 +166,9 @@ function AdminDesk({ session }) {
       const ok = await rpc("is_dmocks_admin");
       setAllowed(ok);
       if (ok) {
-        const [d, b, q, m, a, r, l, w, i, c, ai, h, privacy, launch] = await Promise.all([
+        const [d, b, m, a, r, l, w, i, c, ai, h, privacy, launch] = await Promise.all([
           rpc("admin_question_drafts"),
           rpc("admin_bug_reports"),
-          rpc("admin_bank_questions", { p_limit: 25, p_offset: 0 }),
           rpc("admin_exam_mock_blueprints"),
           rpc("admin_all_india_events"),
           rpc("admin_reported_questions"),
@@ -185,7 +183,6 @@ function AdminDesk({ session }) {
         ]);
         setDrafts(d);
         setBugs(b);
-        setBank(q);
         setBlueprints(m);
         setAllIndia(a);
         setQuestionReports(r);
@@ -269,19 +266,6 @@ function AdminDesk({ session }) {
     const form = new FormData(event.currentTarget);
     try { await rpc("admin_resolve_privacy_request", { p_id:id, p_status:form.get("status"), p_note:form.get("note") }); await load(); }
     catch (e) { setMessage(e.message); }
-  };
-  const reviewBank = async (key, approved) => {
-    try {
-      await rpc("admin_review_bank_question", {
-        p_external_key: key,
-        p_approved: approved,
-        p_rights_confirmed: approved && Boolean(bankRights[key]),
-        p_note: null,
-      });
-      await load();
-    } catch (e) {
-      setMessage(e.message);
-    }
   };
   const configureMock = async (event, exam) => {
     event.preventDefault();
@@ -663,57 +647,7 @@ function AdminDesk({ session }) {
               </article>
             ))}
           </div>
-          <h2>Imported bank review</h2>
-          <p>
-            Approval requires a runtime-safe conversion and your explicit
-            confirmation that DMocks may use the content.
-          </p>
-          <div className="admin-list">
-            {bank.map((q) => (
-              <article key={q.externalKey}>
-                <b>{q.externalKey}</b>
-                <span className="status-pill">
-                  {q.approved
-                    ? "approved"
-                    : q.runtimeReady
-                      ? "ready for review"
-                      : "not runtime ready"}
-                </span>
-                <p>{q.prompt}</p>
-                <small>
-                  {q.exam.toUpperCase()} · {q.type} · {q.topic} · {q.licence}
-                </small>
-                {q.runtimeReady && !q.approved && (
-                  <>
-                    <label className="profile-check">
-                      <input
-                        type="checkbox"
-                        checked={Boolean(bankRights[q.externalKey])}
-                        onChange={(e) =>
-                          setBankRights((current) => ({
-                            ...current,
-                            [q.externalKey]: e.target.checked,
-                          }))
-                        }
-                      />
-                      I confirm DMocks has the right to use this question.
-                    </label>
-                    <div className="admin-actions">
-                      <button
-                        disabled={!bankRights[q.externalKey]}
-                        onClick={() => reviewBank(q.externalKey, true)}
-                      >
-                        Approve for practice
-                      </button>
-                      <button onClick={() => reviewBank(q.externalKey, false)}>
-                        Reject
-                      </button>
-                    </div>
-                  </>
-                )}
-              </article>
-            ))}
-          </div>
+          <BankReviewBrowser rpc={rpc} onReviewed={load} />
           <h2>Question review queue</h2>
           <div className="admin-list">
             {drafts.map((d) => (

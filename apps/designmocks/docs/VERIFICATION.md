@@ -1,5 +1,13 @@
 # Verification
 
+## Complete administrator bank review — 7 November 2026
+
+The actual `/admin` bank browser now reaches every imported record with stable pagination, literal substring search and exam/type/topic/review filters. Full details expose the canonical wording and options, source answer, compiled key, marking and private figure metadata. Review decisions require an explicit current version, a written note and content rights for approval. The UI also requires every figure to finish displaying before approval. The server rejects missing or mismatched private canonical objects, inactive records and local report holds.
+
+All 56 migrations and transactional suites passed on disposable PostgreSQL 17, including anonymous/student/drawing-teacher denial, pagination beyond 25, page clamping, full wording, literal wildcard search, source/runtime/review/hold version changes, timezone-independent digests, private Storage binding and the existing audit trail. The complete local check passed 88 JavaScript tests, four Python fixtures, all ten Edge Function type checks, production build/preview isolation and 96 desktop/mobile journeys. Keyboard activation, WCAG checks and mobile reflow cover the actual bank browser. The production dependency audit reported zero vulnerabilities.
+
+A separate disposable Supabase project accepted fictional Auth accounts, the actual canonical importer, a verified private 1×1 PNG, the UCEED compiler and runtime writer. Real PostgREST calls resolved both review overloads. The new Edge Function denied anonymous users, students, drawing-only teachers, stale versions, arbitrary paths and unapproved origins. Its signed download matched the original PNG bytes; deleting the private object blocked signing and approval. Reusing an approval version failed, and removing administrator access denied the existing session. The disposable stack and fixture directory were removed after acceptance. No hosted schema, source bank, account, publication or content rights changed.
+
 ## Hosted runtime acceptance — 6 November 2026
 
 PR #30 (`e8b606bf1fdfdcfb0fb0a3bbaae26c9ce0339c13`) and its main-branch check pass: 34 JavaScript tests, four Python fixtures, 34 desktop/mobile browser journeys, build/isolation, dependency audit (zero vulnerabilities), server types and all 25 database migrations/suites.

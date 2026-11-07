@@ -59,7 +59,7 @@ for (const name of [
     "my_overview_analytics",
     "canonical_bank_media_manifest", "admin_question_intake_assets",
   ] : []),
-  ...(staging ? ["can_enter_staging_portal", "can_review_drawings", "my_drawing_review_page", "admin_drawing_reviewers"] : []),
+  ...(staging ? ["can_enter_staging_portal", "can_review_drawings", "my_drawing_review_page", "admin_drawing_reviewers", "admin_search_bank_questions"] : []),
 ]) {
   response = await request("/rest/v1/rpc/" + name, "POST", {});
   assert.ok(
@@ -126,7 +126,18 @@ results.push({
   passed: true,
 });
 if (staging) {
-  for (const name of ["attempt-media", "drawing-media", "drawing-review-media", "community-media", "question-intake"]) {
+  for (const [name, body] of [
+    ["admin_bank_question", { p_external_key: "hosted-smoke-fixture", p_expected_version: "unavailable" }],
+    ["admin_bank_review_media_paths", { p_external_key: "hosted-smoke-fixture", p_expected_version: "unavailable" }],
+    ["admin_review_bank_question", { p_external_key: "hosted-smoke-fixture", p_expected_version: "unavailable", p_approved: false,
+      p_rights_confirmed: false, p_note: "Anonymous hosted smoke fixture" }],
+  ]) {
+    response = await request("/rest/v1/rpc/" + name, "POST", body);
+    assert.ok([401, 403].includes(response.status), name + " must reject anonymous execution");
+    assert.equal(response.data?.code, "42501");
+    results.push({ check: "anonymous " + name + " denied", status: response.status, passed: true });
+  }
+  for (const name of ["attempt-media", "drawing-media", "drawing-review-media", "community-media", "question-intake", "bank-review-media"]) {
     response = await request("/functions/v1/" + name, "OPTIONS", undefined, {
       Origin: origin,
       "Access-Control-Request-Method": "POST",
