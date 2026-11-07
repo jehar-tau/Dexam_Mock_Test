@@ -135,6 +135,9 @@ if (staging) {
     ["admin_reported_question_media_paths", { p_target_key: "hosted-smoke-fixture", p_expected_revision: 1 }],
     ["admin_resolve_reported_question", { p_target_key: "hosted-smoke-fixture", p_expected_revision: 1, p_expected_bank_version: null,
       p_action: "retire", p_note: "Anonymous hosted smoke fixture" }],
+    ["admin_community_report", { p_report_id: "00000000-0000-4000-8000-000000000000" }],
+    ["admin_community_report_media_paths", { p_report_id: "00000000-0000-4000-8000-000000000000", p_expected_version: "0".repeat(64), p_context: "target" }],
+    ["admin_resolve_community_report", { p_report_id: "00000000-0000-4000-8000-000000000000", p_expected_version: "0".repeat(64), p_resolution: "dismiss", p_note: "Anonymous hosted smoke fixture" }],
   ]) {
     response = await request("/rest/v1/rpc/" + name, "POST", body);
     assert.ok([401, 403].includes(response.status), name + " must reject anonymous execution");

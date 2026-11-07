@@ -289,7 +289,9 @@ select pg_temp.reject('select public.admin_community_report_queue()','student ca
 select pg_temp.reject('select public.admin_moderate_community(''post'',current_setting(''test.community_post'')::uuid,''hide'',null)','student cannot moderate community');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select pg_temp.assert_true(jsonb_array_length(public.admin_community_report_queue())=1,'admin sees open community report');
-select public.admin_resolve_community_report((public.admin_community_report_queue()->0->>'id')::uuid,'dismiss','Fictional dismissal');
+select set_config('test.community_report',(public.admin_community_report_queue()->0->>'id'),true);
+select pg_temp.reject('select public.admin_resolve_community_report(current_setting(''test.community_report'')::uuid,''dismiss'',''Fictional dismissal'')','legacy resolution requires inspected version');
+select public.admin_resolve_community_report(current_setting('test.community_report')::uuid,public.admin_community_report(current_setting('test.community_report')::uuid)->>'reviewVersion','hide','Fictional containment of unavailable evidence');
 select pg_temp.assert_true(jsonb_array_length(public.admin_community_report_queue())=0,'resolved community report leaves open queue');
 select public.admin_moderate_community('post',current_setting('test.community_post')::uuid,'lock','Fictional moderation check');
 select pg_temp.assert_true((public.community_feed(null,null)->0->>'status')='locked','moderator can lock with audit trail');

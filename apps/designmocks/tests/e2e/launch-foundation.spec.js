@@ -268,6 +268,10 @@ test("community opens a thread and supports member actions", async ({ page }) =>
 test("admin can resolve a reported community post", async ({ page }) => {
   await page.goto("/community-moderation-preview");
   await expect(page.getByText("Active-paper answer posted in a discussion.")).toBeVisible();
+  await page.getByRole("button", { name: "Review report", exact: true }).press("Enter");
+  const review = page.getByRole("region", { name: "Community report review", exact: true });
+  await expect(review.getByText("Current content.", { exact: false })).toBeVisible();
+  await review.getByLabel("Review reason", { exact: true }).fill("Fictional active answer confirmed for this preview.");
   await page.getByRole("button", { name: "Hide content" }).click();
   await expect(page.getByText("No open community reports.")).toBeVisible();
 });

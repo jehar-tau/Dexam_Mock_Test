@@ -189,9 +189,9 @@ Exit: human-reviewed drawing results are reliable without AI; AI cannot publish 
 - [x] Preserve the lesson exam and exact topic when opening practice. Require a selection for shared/unready pools, preserve URL/history context and ignore late start responses after a context/account/navigation change; keep server access gates unchanged.
 - [x] Verify complete Community raster validation, metadata removal, author-bound registration, identical retries, saved-text recovery and visibility checks after asynchronous signing. Accept actual local Auth/Storage/Edge and desktop/mobile post/reply images, expiry, moderation races, orientation and accessibility.
 - [ ] Import and review the owner's theory documents, link the lessons to reviewed topic pools and verify the Learn workflow in staging.
-- Build moderated posts/comments/helpful-answer workflow and operational moderation tools.
+- [x] Build moderated posts/comments/helpful-answer foundations and a report queue. Review full current target/parent/discussion content and private images before a reasoned, version-checked hide or dismissal.
 - [x] Verify account-bound text request replay, nested reply controls, bounded snapshot/anchor reads, moderation invalidation and preserved view/focus during late writes.
-- [ ] Complete image-aware Community reporting/moderation, author follow-up attachment management and a bounded/filterable feed. Pending image selections survive only within the open page/session.
+- [ ] Complete member report reason/details controls, broader moderation actions, author follow-up attachment management and a bounded/filterable feed. Pending image selections survive only within the open page/session.
 
 Exit: content rights, moderation coverage, reporting, retention and child-safety checks pass.
 
@@ -213,9 +213,9 @@ Exit: production readiness checklist approved, then registration, then payments,
 
 ## Immediate next actions
 
-1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060140`, and choose an independent staging deployment target before promotion.
+1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060141`, and choose an independent staging deployment target before promotion.
 2. Obtain the owner's Cloudboard/Claude question manifest and theory-document export. Reconcile supplied question snapshots with stable keys and content hashes through the documented read-only contract.
 3. Complete the remaining reviewed exam blueprints, including NID and NIFT creative/programme-specific papers, with authoritative question counts, sections, timing and marking where published.
 4. Run hosted acceptance for the admitted Google tester, representative full papers, drawings and teacher review, followed by synthetic staging capacity checks.
 5. Obtain the pending source rights, model-processing/cost, phone-provider and public-policy decisions. Keep payments deferred until the owner resumes that work.
-6. Build image-aware Community reporting/moderation, then author follow-up attachment management and a bounded/filterable feed. Preserve the completed text replay, threaded snapshot/anchor reads, image receipts and moderation fences. Complete scanner/quarantine and resumable-transfer acceptance, then verify representative image sizes on the approved staging target before promotion.
+6. Add member report reason/details controls and a bounded/filterable Community feed, then author follow-up attachment management and broader moderation actions. Preserve the completed administrator image review and inspected-version decisions. Preserve the completed text replay, threaded snapshot/anchor reads, image receipts and moderation fences. Complete scanner/quarantine and resumable-transfer acceptance, then verify representative image sizes on the approved staging target before promotion.

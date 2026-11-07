@@ -63,7 +63,7 @@ An administrator grants access under **Admin review → Drawing reviewer access*
 
 An administrator records a reason when revoking access. Revocation returns ungraded claims to the queue and preserves saved grades for administrators to finish. New queue reads, image-signing requests and grading actions are denied after revocation. Previously signed image links expire after five minutes. Administrators handle corrections to released individual feedback through the audited override and explicit release controls.
 
-Stage migrations `202611060122_drawing_review_claims.sql`, `202611060123_all_india_drawing_results.sql` and `202611060126_drawing_reviewer_access.sql` with the drawing media functions and matching UI. Test with separate synthetic student, reviewer and administrator accounts. Verify upload ownership, signed-page expiry and refresh, reviewer isolation, revocation with an existing session and a grade correction. The upload check verifies a supported raster signature and Storage metadata. Full image decoding, metadata removal and failed Storage deletion recovery still require their own acceptance.
+Stage migrations `202611060122_drawing_review_claims.sql`, `202611060123_all_india_drawing_results.sql` and `202611060126_drawing_reviewer_access.sql` with the drawing media functions and matching UI. Test with separate synthetic student, reviewer and administrator accounts. Verify upload ownership, signed-page expiry and refresh, reviewer isolation, revocation with an existing session and a grade correction. Uploads verify complete PNG/JPEG/WebP decoding, unnecessary-metadata removal and Storage binding. Failed physical deletion recovery, general scanning/quarantine, resumable transfer and representative hosted resource acceptance remain open.
 
 For All India events, choose the objective and drawing counts and the drawing upload allowance when scheduling the paper. The last start reserves the whole exam and upload window. Use **Finalize grade for cohort release** on each submitted drawing and publish after the ten-day review period. Missing drawing pages earn zero for that task. Published grades and standings are frozen.
 - Drawing feedback is private until explicit release. Any later score change requires a reason and a new release.
@@ -74,6 +74,14 @@ For All India events, choose the objective and drawing counts and the drawing up
 In **Admin review → Theory lessons**, save a draft and review its text before publishing. When publishing, record the source and permission to use the lesson. To revise a published lesson, withdraw it with a reason, edit the draft and record the rights again when republishing. Learn hides withdrawn lessons and restores existing student completion when the same lesson is republished.
 
 Stage `202611060127_learning_lesson_editor.sql` with the matching portal. Verify draft visibility, publication, withdrawal and progress with separate synthetic administrator and student accounts before importing the owner's theory material. The new editor records each publication or withdrawal in a private audit. Earlier administrator clients retain their existing rights-confirmation control.
+
+### Community report review
+
+In **Admin review → Community moderation**, choose **Review report**. Inspect the current reported item, immediate parent and discussion; content may have changed since the report was sent. Open and view every available private attachment. The inspector supports rotation, mirroring, zoom and original size. Hidden context remains available only to administrators within this report review.
+
+Record a written reason before choosing **Hide content** or **Dismiss report**. A stale review clears its evidence and requires reopening with a fresh reason; it is never automatically resubmitted. Missing or unreadable images prevent dismissal, while hiding is available for containment. Only the selected report is resolved; other reporters stay in the queue. Closing, account changes, denied access and expiry clear private galleries. Decisions retain an administrator-only inspected snapshot and reason. The legacy immediate-resolution API is closed.
+
+Stage migration `202611060141`, the matching `community-media` bundle and frontend together. Confirm image registration, actual object availability, hidden-context permissions, queued access revocation and competing decisions with fictional accounts. Existing signed links remain capabilities until their five-minute expiry. This local workflow does not approve content publication, retention policy or public registration.
 
 ## Release checklist
 
