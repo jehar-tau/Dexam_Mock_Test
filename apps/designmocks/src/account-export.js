@@ -11,6 +11,8 @@ export function validateAccountExport(data, accountId) {
   if (data.profile !== null && (!object(data.profile) || data.profile.user_id !== accountId)) throw exportError();
   if (!arrayOf(data.attempts, attempt => only(attempt, ["id", "paper", "exam", "status", "startedAt", "deadline", "submittedAt", "score", "total", "resultsPending", "responses"]) &&
     typeof attempt.resultsPending === "boolean" && score(attempt.score) && score(attempt.total) &&
+    (attempt.total === null || attempt.total >= 0) &&
+    (attempt.score === null || attempt.total === null || attempt.score <= attempt.total) &&
     (!(attempt.status !== "submitted" || attempt.resultsPending) || attempt.score === null && attempt.total === null) &&
     arrayOf(attempt.responses, response => only(response, ["questionId", "ordinal", "topic", "kind", "answer"])))) throw exportError();
   if (!arrayOf(data.questionReports, report => only(report, ["id", "attemptId", "questionId", "reason", "details", "createdAt"]) &&
@@ -22,7 +24,9 @@ export function validateAccountExport(data, accountId) {
   if (!only(data.results, ["examMocks", "allIndia", "drawingReviews"]) ||
     !arrayOf(data.results.examMocks, report => only(report, ["sessionId", "exam", "partAAttemptId", "partBAttemptId", "state", "resultsPending", "objectiveScore", "objectiveTotal", "drawingScore", "drawingTotal", "combinedScore", "combinedTotal"]) &&
       typeof report.resultsPending === "boolean" && attempts.has(report.partAAttemptId) && (report.partBAttemptId === null || attempts.has(report.partBAttemptId)) &&
-      (report.resultsPending || published(attempts.get(report.partAAttemptId)) && published(attempts.get(report.partBAttemptId))) &&
+      (report.resultsPending || published(attempts.get(report.partAAttemptId)) && published(attempts.get(report.partBAttemptId)) &&
+        report.objectiveScore === attempts.get(report.partAAttemptId).score && report.objectiveTotal === attempts.get(report.partAAttemptId).total &&
+        report.drawingScore === attempts.get(report.partBAttemptId).score && report.drawingTotal === attempts.get(report.partBAttemptId).total) &&
       ["objectiveScore", "objectiveTotal", "drawingScore", "drawingTotal", "combinedScore", "combinedTotal"].every(field => score(report[field]) && (!report.resultsPending || report[field] === null))) ||
     !arrayOf(data.results.allIndia, result => only(result, ["eventId", "attemptId", "exam", "title", "releasedAt", "score", "total", "rank", "alias", "cohortSize"]) &&
       released(result.releasedAt) && published(attempts.get(result.attemptId)) && score(result.score) && score(result.total) &&

@@ -538,19 +538,22 @@ export function Attempt() {
             </h1>
             {cohort ? <p>All India rank {cohort.rank}. Objective marks {cohort.objectiveScore}/{cohort.objectiveTotal}.
               {cohort.drawingTotal > 0 && ` Drawing marks ${cohort.drawingScore}/${cohort.drawingTotal}.`}
+            </p> : attempt.scoreKind === "drawing" ? <p>
+              {attempt.examResultsPending ? "Drawing marks appear after the fixed upload window and teacher review." :
+                "Your drawing marks include released teacher reviews. Missing submissions receive zero marks."}
             </p> : <p>
               Objective answers are marked with the paper’s reviewed key.
               Drawing is excluded from this score and remains a separate
               teacher-reviewed submission.
             </p>}
           </div>
-          <div className="sample-score">
+          <div className="sample-score" role="group" aria-label={cohort ? "All India result" : attempt.scoreKind === "drawing" ? "Drawing result" : "Objective result"}>
             {attempt.examResultsPending ? <><span>—</span><p>full result pending</p></> : <>
             <span>
               {attempt.score}
               <i>/{attempt.total}</i>
             </span>
-            <p>{cohort ? "All India marks" : "objective marks"}</p>
+            <p>{cohort ? "All India marks" : attempt.scoreKind === "drawing" ? "drawing marks" : "objective marks"}</p>
             </>}
           </div>
         </div>

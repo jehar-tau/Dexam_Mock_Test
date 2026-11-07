@@ -48,6 +48,26 @@ test("legacy, mis-scoped, held-score and private-review responses cannot create 
   assert.throws(() => validateAccountExport(active, owner), /could not be verified/);
 });
 
+test("released Part B export marks agree with the combined report and frozen total", () => {
+  const data = pending();
+  data.attempts[0] = { ...data.attempts[0], resultsPending: false, score: 4, total: 200 };
+  data.attempts.push({ id: "drawing-part", status: "submitted", resultsPending: false, score: 85, total: 100,
+    responses: [{ questionId: "drawing-one", ordinal: 1, kind: "drawing", answer: null }] });
+  data.results.examMocks[0] = { ...data.results.examMocks[0], partBAttemptId: "drawing-part", resultsPending: false,
+    objectiveScore: 4, objectiveTotal: 200, drawingScore: 85, drawingTotal: 100, combinedScore: 89, combinedTotal: 300 };
+  assert.equal(validateAccountExport(data, owner), data);
+  for (const mutate of [
+    value => { value.attempts[1].total = 0; }, value => { value.attempts[1].total = -1; },
+    value => { value.attempts[1].score = 0; }, value => { value.results.examMocks[0].drawingTotal = 0; },
+    value => { value.results.examMocks[0].objectiveScore = 5; }, value => { value.attempts[1].resultsPending = true; },
+  ]) {
+    const invalid = structuredClone(data);mutate(invalid);
+    let created = false;
+    assert.throws(() => downloadAccountExport(invalid, owner, {}, { createObjectURL() { created = true; } }), /could not be verified/);
+    assert.equal(created, false);
+  }
+});
+
 test("downloads preserve the verified JSON, use a private blob URL and revoke it after success or failure", async () => {
   for (const fail of [false, true]) {
     const data = pending();let blob, clicked = false;const revoked = [];

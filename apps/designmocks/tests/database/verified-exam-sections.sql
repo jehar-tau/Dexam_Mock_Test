@@ -64,15 +64,63 @@ set local role authenticated;select set_config('request.jwt.claim.role','authent
 select pg_temp.section_assert(not(public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'resultsPending')::boolean and(public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'combinedTotal')::numeric=300,'combined report releases objective and drawing totals after review/upload gates');
 select pg_temp.section_assert(public.export_my_account_data()->'results'->'examMocks'->0=public.my_exam_mock_report(current_setting('test.section_attempt')::uuid),
   'the exported combined result matches the released student report');
+select pg_temp.section_assert((public.read_attempt(current_setting('test.part_b_attempt')::uuid)->>'score')::numeric=0
+  and(public.read_attempt(current_setting('test.part_b_attempt')::uuid)->>'total')::numeric=100
+  and public.read_attempt(current_setting('test.part_b_attempt')::uuid)->>'scoreKind'='drawing',
+  'missing drawings receive zero marks against the frozen Part B maximum after the upload window');
 reset role;
-insert into dm_private.drawing_reviews(attempt_id,question_id,reviewer_id,status,criterion_marks,comments,score,reviewed_at,released_at)
-select i.attempt_id,i.question_id,'00000000-0000-4000-8000-000000000072','released',
-  jsonb_build_object('composition',case when i.ordinal=1 then 45 else 40 end),'Fictional released grade.',
-  case when i.ordinal=1 then 45 else 40 end,now(),now()
+insert into dm_private.drawing_uploads(attempt_id,question_id,student_id,storage_path,ordinal,mime_type,byte_size)
+select i.attempt_id,i.question_id,'00000000-0000-4000-8000-000000000071','drawings/part-b-private-'||i.ordinal||'.png',1,'image/png',99
 from dm_private.attempt_items i where i.attempt_id=current_setting('test.part_b_attempt')::uuid;
+insert into dm_private.drawing_reviews(attempt_id,question_id)
+select i.attempt_id,i.question_id from dm_private.attempt_items i where i.attempt_id=current_setting('test.part_b_attempt')::uuid;
+select r.id as first_review from dm_private.drawing_reviews r join dm_private.attempt_items i
+  on i.attempt_id=r.attempt_id and i.question_id=r.question_id where i.attempt_id=current_setting('test.part_b_attempt')::uuid and i.ordinal=1 \gset
+select r.id as second_review from dm_private.drawing_reviews r join dm_private.attempt_items i
+  on i.attempt_id=r.attempt_id and i.question_id=r.question_id where i.attempt_id=current_setting('test.part_b_attempt')::uuid and i.ordinal=2 \gset
+insert into dm_private.drawing_ai_suggestions(review_id,provider,model,rubric_version,criterion_marks,comments,proposed_score,confidence)
+values(:'first_review','fictional-provider','fictional-model','fixture-rubric','{"composition":49}','Private Part B AI advisory',49,0.9);
 set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000072',true);
+select public.admin_claim_drawing_review(:'first_review'::uuid);
+select public.admin_review_drawing(:'first_review'::uuid,1,'{"composition":45}','Fictional first released feedback.',45);
+select public.admin_release_drawing_review(:'first_review'::uuid,2);
+select public.admin_claim_drawing_review(:'second_review'::uuid);
+select public.admin_review_drawing(:'second_review'::uuid,1,'{"composition":40}','Fictional second released feedback.',40);
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000071',true);
+select pg_temp.section_assert((public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'resultsPending')::boolean,
+  'a partial teacher release keeps the full combined exam pending');
+select pg_temp.section_assert((public.read_attempt(current_setting('test.part_b_attempt')::uuid)->>'examResultsPending')::boolean
+  and public.read_attempt(current_setting('test.part_b_attempt')::uuid)->'score'='null'::jsonb
+  and public.read_attempt(current_setting('test.part_b_attempt')::uuid)->'total'='null'::jsonb
+  and not exists(select 1 from jsonb_array_elements(public.read_attempt(current_setting('test.part_b_attempt')::uuid)->'questions')value
+    where value?'correctKey' or value->'drawingReview'->>'status'='released'
+      or value->'drawingReview'?|array['score','criteria','comments','releasedAt']),
+  'Part B feedback and scalar marks stay sealed until every submitted review is released');
+select pg_temp.section_assert((select bool_and(value->'score'='null'::jsonb and value->'total'='null'::jsonb)
+    from jsonb_array_elements(public.my_attempt_history())value)
+  and (select bool_and(value->'score'='null'::jsonb and value->'total'='null'::jsonb)
+    from jsonb_array_elements(public.export_my_account_data()->'attempts')value)
+  and public.export_my_account_data()->'results'->'drawingReviews'='[]'::jsonb,
+  'history and account exports keep the partial combined result private');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000072',true);
+select public.admin_release_drawing_review(:'second_review'::uuid,2);
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000071',true);
 select pg_temp.section_assert((public.my_exam_mock_report(current_setting('test.section_attempt')::uuid)->>'combinedScore')::numeric=89,
   'released combined fixture is 89/300');
+select pg_temp.section_assert((public.read_attempt(current_setting('test.part_b_attempt')::uuid)->>'score')::numeric=85
+  and(public.read_attempt(current_setting('test.part_b_attempt')::uuid)->>'total')::numeric=100
+  and(public.read_attempt(current_setting('test.part_b_attempt')::uuid)->'questions'->0->'drawingReview'->>'score')::numeric=45,
+  'the released Part B paper uses human marks and the frozen full maximum');
+select pg_temp.section_assert((select(value->>'score')::numeric=85 and(value->>'total')::numeric=100
+    from jsonb_array_elements(public.my_attempt_history())value where value->>'id'=current_setting('test.part_b_attempt'))
+  and(select(value->>'score')::numeric=85 and(value->>'total')::numeric=100
+    from jsonb_array_elements(public.export_my_account_data()->'attempts')value where value->>'id'=current_setting('test.part_b_attempt')),
+  'Part B history and account export agree with the released human grade');
+select pg_temp.section_assert(position('Private Part B AI advisory' in public.read_attempt(current_setting('test.part_b_attempt')::uuid)::text)=0
+  and position('Private Part B AI advisory' in public.export_my_account_data()::text)=0
+  and position('drawings/part-b-private-' in public.export_my_account_data()::text)=0,
+  'released student results exclude model advice and private Storage paths');
 select pg_temp.section_assert((select(value->>'averagePercent')::integer=30 and(value->>'bestPercent')::integer=30
   and(value->>'attempts')::integer=1 from jsonb_array_elements(public.my_overview_analytics()->'exams')value where value->>'exam'='uceed'),
   'combined Overview counts one complete 89/300 assessment');
@@ -83,5 +131,13 @@ select pg_temp.section_assert((public.learning_progress()->'recommendation'->>'a
   and (public.learning_progress()->'recommendation'->>'accuracy')::integer=100,'Learn incorporates released topic performance');
 select pg_temp.section_reject('select public.save_answer_revision(current_setting(''test.section_attempt'')::uuid,current_setting(''test.section_question'')::uuid,''"1"'',1)','submitted snapshot rejects later answers');
 select pg_temp.section_reject('select public.start_exam_mock(''uceed'')','free allowance is enforced after one attempt');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000072',true);
+select pg_temp.section_reject('select public.read_attempt(current_setting(''test.part_b_attempt'')::uuid)','another account cannot read Part B results');
+select pg_temp.section_assert(public.my_attempt_history()='[]'::jsonb and public.export_my_account_data()->'attempts'='[]'::jsonb,
+  'administrator identity does not expose student results through personal history or export');
+select pg_temp.section_reject('select dm_private.student_attempt_visibility(auth.uid())','student visibility helper remains private');
+reset role;
+select pg_temp.section_assert((select score=0 and total=0 from dm_private.attempts where id=current_setting('test.part_b_attempt')::uuid),
+  'human grading does not overwrite stored objective marks or frozen attempt data');
 rollback;
 \echo 'PASS: verified UCEED Part A and fixed sequential Part B counts, clocks, authorization and idempotency.'
