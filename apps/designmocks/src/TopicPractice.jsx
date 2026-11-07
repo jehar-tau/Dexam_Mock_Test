@@ -81,8 +81,10 @@ function TopicPracticeSession({ initialExam, initialTopic }) {
   }, []);
   const start = async ({ exam, topic, count, duration }) => {
     const signal = scope.current.signal;
+    const viewAddress = window.location.href, navigationKey = window.history.state?.key;
     const id = await rpc("start_topic_practice", { p_exam: exam, p_topic: topic, p_count: count, p_duration_seconds: duration }, signal);
-    if (!signal.aborted) navigate(`/attempt/${id}`);
+    // The address/history can change before React commits unmount cleanup.
+    if (!signal.aborted && window.location.href === viewAddress && window.history.state?.key === navigationKey) navigate(`/attempt/${id}`);
   };
   return <PortalShell>{error ? <section className="section portal-module"><p className="error">{error}</p></section> : catalog &&
     <TopicPracticeView catalog={catalog} initialExam={initialExam} initialTopic={initialTopic} onStart={start} />}</PortalShell>;
