@@ -77,11 +77,15 @@ Stage `202611060127_learning_lesson_editor.sql` with the matching portal. Verify
 
 ### Community report review
 
+Members open **Report discussion** or **Report**, select one of the five reasons and optionally describe the issue. Nothing is submitted until **Send report**. An uncertain acknowledgement freezes that exact reason/details for **Retry report**; closing cannot undo an already saved report. An existing-report acknowledgement confirms the earlier account/target record without replacing its notes. New reports are capped at ten per hour; readable locked content remains reportable and hidden content rejects new reports. Account changes, navigation and explicit Close/Escape abort or ignore pending browser outcomes.
+
 In **Admin review → Community moderation**, choose **Review report**. Inspect the current reported item, immediate parent and discussion; content may have changed since the report was sent. Open and view every available private attachment. The inspector supports rotation, mirroring, zoom and original size. Hidden context remains available only to administrators within this report review.
 
 Record a written reason before choosing **Hide content** or **Dismiss report**. A stale review clears its evidence and requires reopening with a fresh reason; it is never automatically resubmitted. Missing or unreadable images prevent dismissal, while hiding is available for containment. Only the selected report is resolved; other reporters stay in the queue. Closing, account changes, denied access and expiry clear private galleries. Decisions retain an administrator-only inspected snapshot and reason. The legacy immediate-resolution API is closed.
 
 Stage migration `202611060141`, the matching `community-media` bundle and frontend together. Confirm image registration, actual object availability, hidden-context permissions, queued access revocation and competing decisions with fictional accounts. Existing signed links remain capabilities until their five-minute expiry. This local workflow does not approve content publication, retention policy or public registration.
+
+Stage migration `202611060142` with the member reporting controls. Verify exact reason/details, unchanged duplicate receipts before quota/visibility checks, concurrent single insertion and queued moderation denial. Reports continue to require a human decision; this member workflow does not automatically hide Community content.
 
 ## Release checklist
 

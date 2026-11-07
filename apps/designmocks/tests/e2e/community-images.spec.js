@@ -83,7 +83,9 @@ test("a lost reply receipt retries the same reply and helpful/report refresh kee
   expect(state.replyWrites).toBe(1);expect(state.assets.get(commentId)).toHaveLength(2);
   expect(state.uploads.map(item=>[item.id,item.ordinal])).toEqual([[commentId,1],[commentId,1],[commentId,2]]);
   await page.getByRole("button",{name:"Mark helpful",exact:true}).click();await expect(page.getByRole("img",{name:"Solution attachment 2",exact:true})).toBeVisible();
-  await page.getByRole("button",{name:"Report",exact:true}).click();await expect(page.getByRole("status")).toHaveText("Report sent for moderator review.");expect(state.unexpected).toEqual([]);
+  await page.getByRole("button",{name:"Report",exact:true}).click();
+  const report=page.getByRole("dialog",{name:"Report community content",exact:true});
+  await report.getByRole("button",{name:"Send report",exact:true}).click();await expect(report.getByRole("status")).toHaveText("Report sent for moderator review.");expect(state.unexpected).toEqual([]);
 });
 
 test("members can finish saved text without the unconfirmed attachments",async({page})=>{

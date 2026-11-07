@@ -262,6 +262,7 @@ test("community opens a thread and supports member actions", async ({ page }) =>
   await page.getByRole("button", { name: "Mark helpful" }).click();
   await expect(page.getByText("Marked helpful.")).toBeVisible();
   await page.getByRole("button", { name: "Report", exact: true }).click();
+  await page.getByRole("dialog", { name: "Report community content", exact: true }).getByRole("button", { name: "Send report", exact: true }).click();
   await expect(page.getByText("Report sent for moderator review.")).toBeVisible();
 });
 

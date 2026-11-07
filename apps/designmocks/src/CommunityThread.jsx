@@ -24,7 +24,7 @@ export function CommunityThread({ thread, busy, pendingReply, pendingTextReply, 
   return <section className="community-thread" aria-label="Discussion thread">
     <button type="button" className="text-button" onClick={()=>onOpen(null)}>Close discussion</button>
     <button type="button" className="text-button" onClick={()=>onOpen(thread.id)}>Refresh discussion</button>
-    <button type="button" className="text-button" disabled={busy} onClick={()=>onReport(thread.id,null)}>Report discussion</button>
+    <button type="button" className="text-button" disabled={busy} onClick={event=>onReport(thread.id,null,event.currentTarget)}>Report discussion</button>
     <span className="eyebrow">{thread.exam} · {thread.topic}</span><h2 ref={heading} tabIndex={-1}>{thread.title}</h2><p>{thread.body}</p>
     {thread.hasEarlier && <div className="notice"><p>Showing this reply and the replies that follow it.</p><button type="button" className="text-button" onClick={()=>onOpen(thread.id)}>Read from beginning</button></div>}
     <CommunityImages images={thread.media} label="Question attachment" />
@@ -54,7 +54,7 @@ export function CommunityThread({ thread, busy, pendingReply, pendingTextReply, 
             {thread.status!=="locked" && comment.canReply!==false && <button type="button" className="text-button" disabled={busy || Boolean(pendingReply) || Boolean(pendingTextReply)}
               aria-label={`Reply to comment by ${comment.author || "Student"}`} onClick={event=>{replyButton.current=event.currentTarget;setReplyTo(comment);}}>Reply to comment</button>}
             {!comment.isMine && <button type="button" className="text-button" aria-disabled={busy || Boolean(comment.markedHelpful)} aria-pressed={Boolean(comment.markedHelpful)} onClick={()=>{if(!busy&&!comment.markedHelpful)onHelpful(comment.id);}}>{comment.markedHelpful ? "Marked helpful" : "Mark helpful"}</button>}
-            <button type="button" className="text-button" disabled={busy} onClick={()=>onReport(null,comment.id)}>Report</button>
+            <button type="button" className="text-button" disabled={busy} onClick={event=>onReport(null,comment.id,event.currentTarget)}>Report</button>
           </div>
         </article></li>;
       })}
