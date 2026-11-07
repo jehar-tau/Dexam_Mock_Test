@@ -87,6 +87,10 @@ Stage migration `202611060141`, the matching `community-media` bundle and fronte
 
 Stage migration `202611060142` with the member reporting controls. Verify exact reason/details, unchanged duplicate receipts before quota/visibility checks, concurrent single insertion and queued moderation denial. Reports continue to require a human decision; this member workflow does not automatically hide Community content.
 
+Community discussions use exact exam/topic filters and 25-row snapshot pages. **Load more discussions** preserves the current draft and returns focus to the first new discussion. A content/status/order revision clears accumulated pages before reloading; a temporary continuation failure keeps its cursor for retry. New posts appear on a fresh filter application/refresh and do not enter an older reading snapshot. Filter changes cancel prior reads and prevent late text/image completions from restoring an earlier selection.
+
+Stage migration `202611060143` with the member frontend. Keep the reader free of post/comment row locks. New post creation must take its author/Auth fences and the exclusive feed-admission row before assigning its clock. Do not add bulk post changes or physical Auth-user deletion without the lock-order work documented in provider setup; current account deletion remains a request. These source changes leave hosted registration and sales closed.
+
 ## Release checklist
 
 Before promotion: green GitHub CI, disposable PostgreSQL 17 suites, staging migrations, synthetic desktop/mobile journey, private-media denial checks, backup evidence and aggregate health with no degraded counters. Keep registration and sales disabled during deployment. Enable them only by separate owner-approved production decisions.

@@ -233,7 +233,7 @@ test("learning path opens a theory lesson", async ({ page }) => {
 
 test("community accepts a structured discussion post", async ({ page }) => {
   await page.goto("/community-preview");
-  await page.getByLabel("Topic").fill("perspective");
+  await page.getByLabel("Topic", { exact: true }).fill("perspective");
   await page
     .getByLabel("Question title")
     .fill("How should I check perspective?");

@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { fileURLToPath } from "node:url";
 import { portalFixtureURL, seedPortalSession } from "./portal-fixture.js";
+import { communityFeedFixture } from "./community-feed-fixture.js";
 
 test.use({ baseURL: portalFixtureURL });
 const actor = { id: "00000000-0000-4000-8000-000000000701", email: "community-reporting@example.invalid" };
@@ -13,7 +14,7 @@ const deferred = () => { let resolve; const promise = new Promise(done => { reso
 const recordKey = (id, user = actor.id) => `${user}:${id}`;
 
 async function fixture(page, { long = false } = {}) {
-  const post = { id: postId, exam: "uceed", topic: "observation", title: long ? "FictionalTitle".repeat(12) : "A fictional discussion for reporting",
+  const post = { id: postId, exam: "uceed", topic: "observation", title: long ? "FictionalTitle".repeat(12).slice(0,160) : "A fictional discussion for reporting",
     body: "We compare original fictional methods without disclosing active assessment answers.", status: "visible", assetCount: 0,
     author: "Fictional member", comments: 4 };
   const comments = commentIds.map((id, index) => ({ id, parentId: index === 1 ? commentIds[0] : null,
@@ -50,7 +51,7 @@ async function fixture(page, { long = false } = {}) {
       return;
     }
     let value;
-    if (name === "community_feed") value = [post];
+    if (name === "community_feed") value = communityFeedFixture([post],input);
     else if (name === "community_thread" || name === "community_reply_context") value = { ...post, comments, version: 1, nextCursor: null,
       ...(input.p_anchor_id ? { anchorId: input.p_anchor_id, hasEarlier: false } : {}) };
     else if (name === "public_all_india_top_ten") value = [];

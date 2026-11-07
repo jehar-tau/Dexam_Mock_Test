@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { orientationPages } from "./drawing-orientation-fixture.js";
 import { portalFixtureURL,seedPortalSession,stubPortalProvider } from "./portal-fixture.js";
+import { communityFeedFixture } from "./community-feed-fixture.js";
 test.use({baseURL:portalFixtureURL});
 const student={id:"00000000-0000-4000-8000-000000000591",email:"community-images@example.invalid"};
 const postId="10000000-0000-4000-8000-000000000591",commentId="20000000-0000-4000-8000-000000000591";
@@ -14,7 +15,7 @@ async function fixture(page,{existing=false}={}){
   const post=()=>({id:postId,exam:"uceed",topic:"observation",title:"An original fictional image discussion",body:"We compare the same original fictional sketches to explain our method.",status:"visible",comments:state.comments.length,author:"Fictional student"});
   if(existing){state.posts.push(post());state.assets.set(postId,[samples[0]]);}
   const provider=await stubPortalProvider(page,(name,input)=>{
-    if(name==="community_feed")return state.posts.filter(item=>item.status!=="hidden");
+    if(name==="community_feed")return communityFeedFixture(state.posts,input);
     if(name==="create_community_post"){state.postWrites++;state.posts=[{...post(),title:input.p_title,body:input.p_body}];return input.p_request_id?{id:postId,postId,parentId:null,status:"visible",postStatus:"visible",canUpload:true,replayed:false}:postId;}
     if(name==="add_community_comment"){state.replyWrites++;state.comments=[{id:commentId,body:input.p_body,author:"Fictional reply",helpful:0}];return input.p_request_id?{id:commentId,postId,parentId:input.p_parent_id,status:"visible",postStatus:"visible",canUpload:true,replayed:false}:commentId;}
     if(name==="community_thread"||name==="community_reply_context")return state.posts[0]?.status==="hidden"?{code:"42501",message:"Private moderation diagnostic"}:{...state.posts[0],version:1,nextCursor:null,...(input.p_anchor_id?{anchorId:input.p_anchor_id,hasEarlier:false}:{}),assetCount:target(postId).length,comments:state.comments.map(item=>({parentId:null,isMine:false,canReply:true,markedHelpful:false,parentAvailable:false,parentPreview:null,...item,assetCount:target(item.id).length}))};
