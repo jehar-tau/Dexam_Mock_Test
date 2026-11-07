@@ -46,6 +46,8 @@ begin
   'public.my_overview_analytics()'
   ,'public.admin_question_intake_assets()'
   ,'public.admin_promote_intake_asset(uuid,jsonb)'
+  ,'public.admin_question_intake_source(uuid)'
+  ,'public.admin_question_intake_figure_source(uuid,text)'
   ,'public.admin_promote_intake_candidate(uuid,jsonb)'
   ,'public.admin_reject_intake_candidate(uuid)'
   ,'public.admin_drawing_review_media_paths(uuid)'

@@ -126,6 +126,7 @@ Every releasable slice must include focused unit coverage, database/authorizatio
 - [x] Inspect the latest remote `main` export: 4,521 total, 2,582 eligible by the owner-approved empty-holds rule and 1,939 excluded.
 - [x] Add separated development/staging/production configuration, scale indexes and batched private-media signing.
 - [x] Add an admin allow-list, human-reviewed question-draft queue, signed-in bug reporting and admin replies/statuses.
+- [x] Complete structured PDF/photo corrections and manual transcription, retained private figure crops, retry-safe review decisions and canonical rights-gated exports. Verify with synthetic local Auth, Storage, concurrent requests, the real importer and verified runtime writer.
 - [x] Prove the new migrations and authorization rules on disposable PostgreSQL 17.
 - [x] Add a service-role-only, idempotent canonical-bank importer that reads `origin/main`, imports only explicit empty-holds records and keeps objective readiness separate from import eligibility.
 - [ ] Export current Exam-app import state and reconcile every external key/content hash.

@@ -402,10 +402,13 @@ test("offline answer survives a reload and reconnects without changing revision"
 test("admin corrects an extracted question before human review", async ({ page }) => {
   await page.goto("/intake-extraction-preview");
   await expect(page.getByText("CANDIDATE 1 · PAGE 2 · 84%" )).toBeVisible();
-  const payload = page.getByLabel("Review and correct question JSON");
-  await expect(payload).toContainText("intake-human-review");
-  await payload.fill('{"type":"MCQ","prompt":"Human-corrected fictional question","holds":["intake-human-review"]}');
+  await expect(page.getByText(/This candidate carries an intake-human-review hold/)).toBeVisible();
+  const candidate = page.getByRole("region", { name: "Candidate 1" });
+  await candidate.getByRole("combobox", { name: "Exam", exact: true }).selectOption("uceed");
+  await candidate.getByLabel("Question wording").fill("Human-corrected fictional question");
+  await candidate.getByLabel("Does the question require figures?").selectOption("false");
+  await candidate.getByRole("checkbox").check();
   await page.getByRole("button", { name: "Send to human review" }).click();
   await expect(page.getByText("promoted")).toBeVisible();
-  await expect(payload).toBeDisabled();
+  await expect(candidate.getByLabel("Question wording")).toHaveCount(0);
 });
