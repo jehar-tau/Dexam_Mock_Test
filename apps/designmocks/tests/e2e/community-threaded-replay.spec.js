@@ -13,7 +13,7 @@ const parent=()=>row(parentId,"A reader’s original method explains the perspec
 const post=()=>({id:postId,exam:"uceed",topic:"fictional",title:"An original fictional threaded discussion",body:"We compare original fictional methods for solving this drawing problem.",author:"Student",comments:1,status:"visible",assetCount:0});
 const imageFile=async()=>({name:"fictional.png",mimeType:"image/png",buffer:await readFile(new URL("../fixtures/drawing-images/fictional-drawing.png",import.meta.url))});
 async function fixture(page,options={}){
- const state={posts:options.empty?[]:[post()],comments:options.empty?[]:[parent()],second:[],version:1,next:false,postWrites:0,replyWrites:0,calls:[],uploads:[],assets:new Map(),receipts:new Map(),lostPost:false,lostReply:false,errorWrite:null,errorMore:null,holdMore:null,holdWrite:null,holdHelpful:null,holdUpload:null,errorAnchor:null,errorUpload:false};
+ const state={posts:options.empty?[]:[post()],comments:options.empty?[]:[parent()],second:[],version:1,next:false,postWrites:0,replyWrites:0,calls:[],uploads:[],assets:new Map(),receipts:new Map(),lostPost:false,lostReply:false,errorWrite:null,errorMore:null,holdMore:null,holdWrite:null,holdHelpful:null,holdUpload:null,holdFeed:null,errorAnchor:null,errorUpload:false};
  if(options.long)state.posts[0]={...post(),title:"Title".repeat(32),topic:"Topic".repeat(20),body:"OriginalFictionalBody".repeat(200)};
  if(options.other)state.posts.push({...post(),id:"10000000-0000-4000-8000-000000000652",title:"Another original fictional discussion"});
  const samples=await orientationPages(6);
@@ -22,7 +22,7 @@ async function fixture(page,options={}){
  await page.route(api+"/rest/v1/rpc/**",async route=>{
   const request=route.request();if(request.method()==="OPTIONS")return route.fulfill({headers,status:204});
   const name=new URL(request.url()).pathname.split('/').at(-1),input=request.postDataJSON();state.calls.push([name,input]);let value;
-  if(name==="community_feed")value=communityFeedFixture(state.posts,input);
+  if(name==="community_feed"){if(state.holdFeed)await state.holdFeed;value=communityFeedFixture(state.posts,input);}
   else if(name==="public_all_india_top_ten")value=[];
   else if(name==="community_thread"||name==="community_reply_context"){
    if(input.p_cursor&&state.holdMore)await state.holdMore;
@@ -96,9 +96,15 @@ test("known quota errors release the form while stopping an unknown request neve
 });
 
 test("a replay confirms hidden saved text without uploading files or presenting it as live",async({page})=>{
- const state=await fixture(page,{empty:true});state.lostPost=true;await compose(page,[await imageFile()]);await page.getByRole("button",{name:"Post to community",exact:true}).click();
+ const state=await fixture(page,{empty:true}),feed=page.getByRole("region",{name:"Community discussions",exact:true});await expect(feed).toHaveAttribute("aria-busy","false");state.lostPost=true;await compose(page,[await imageFile()]);await page.getByRole("button",{name:"Post to community",exact:true}).click();
  await expect(page.getByRole("region",{name:"Unconfirmed post text",exact:true})).toBeVisible();state.posts[0].status="hidden";
- await page.getByRole("button",{name:"Retry post text",exact:true}).click();await expect(page.getByRole("status")).toContainText("Attachments were not uploaded");expect(state.uploads).toEqual([]);expect(state.postWrites).toBe(1);await expect(page.getByRole("region",{name:"Unconfirmed post text",exact:true})).toHaveCount(0);
+ let releaseFeed;state.holdFeed=new Promise(resolve=>{releaseFeed=resolve;});
+ const refreshed=page.waitForResponse(response=>response.url().endsWith("/rpc/community_feed")&&response.request().method()==="POST"),acknowledgement=page.getByRole("status").filter({hasText:"Attachments were not uploaded"});
+ try{
+  await page.getByRole("button",{name:"Retry post text",exact:true}).click();await expect(feed).toHaveAttribute("aria-busy","true");await expect(feed.getByRole("status")).toHaveText("Loading discussions…");
+  await expect(acknowledgement).toHaveText("Your text is saved, but this discussion or reply is locked or unavailable. Attachments were not uploaded.");expect(state.uploads).toEqual([]);expect(state.postWrites).toBe(1);await expect(page.getByRole("region",{name:"Unconfirmed post text",exact:true})).toHaveCount(0);
+ }finally{state.holdFeed=null;releaseFeed();}
+ await refreshed;await expect(feed).toHaveAttribute("aria-busy","false");await expect(acknowledgement).toBeVisible();await expect(page.getByRole("button",{name:"Open discussion",exact:true})).toHaveCount(0);await expect(page.getByRole("img",{name:"Question attachment 1",exact:true})).toHaveCount(0);expect(state.uploads).toEqual([]);expect(state.postWrites).toBe(1);
 });
 
 test("reply context, cancellation, own helpful controls and reports are keyboard accessible in both themes",async({page})=>{
