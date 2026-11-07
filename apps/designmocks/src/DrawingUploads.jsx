@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { platform } from "./platform.js";
 import { drawingUploadWindow } from "./drawing-upload-window.js";
+import { checkDrawingFiles, drawingMediaError, drawingUploadFailure } from "./drawing-upload.js";
 
 async function drawingMedia(body) {
   const { data, error } = await platform.functions.invoke("drawing-media", { body });
-  if (error) throw error;
+  if (error) throw await drawingMediaError(error);
   return data;
 }
 
@@ -30,6 +31,8 @@ export function DrawingUploads({
     const input = event.currentTarget;
     const files = [...input.files].slice(0, 5 - items.length);
     if (!files.length) return;
+    const invalid = checkDrawingFiles(files);
+    if (invalid) { setMessage(invalid); input.value = ""; return; }
     setBusy(true);
     setMessage("Saving drawing images…");
     const used = new Set(items.map((item) => item.ordinal));
@@ -49,7 +52,7 @@ export function DrawingUploads({
       }
       setMessage("Drawing images saved privately.");
     } catch (error) {
-      setMessage("An upload did not confirm. Check your saved pages before adding the remaining images.");
+      setMessage(drawingUploadFailure(error));
       setItems(null);
       setLoadAttempt((attempt) => attempt + 1);
     } finally {
@@ -62,7 +65,8 @@ export function DrawingUploads({
       <h3>Your drawing images</h3>
       <p>
         Upload up to five clear PNG, JPEG or WebP images in the order they
-        should be reviewed.
+        should be reviewed. Each image can be up to 10 MB, 24 megapixels and
+        12,000 pixels on either side. Use still images.
       </p>
       <button className="button quiet" type="button" disabled={!items || busy || items.length >= 5}
         onClick={() => fileInput.current?.click()}>Add images</button>
