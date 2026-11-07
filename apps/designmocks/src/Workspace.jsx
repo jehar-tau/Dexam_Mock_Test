@@ -162,10 +162,11 @@ export function WorkspaceView({
             {data.analytics.waitingForResults === 1 ? "1 submitted attempt is awaiting results." :
               `${data.analytics.waitingForResults} submitted attempts are awaiting results.`}
           </p>}
-          {(data.analytics?.objectiveAccuracy != null || data.analytics?.drawingReviews?.pending > 0 ||
+          {(data.analytics?.exams?.length > 0 || data.analytics?.objectiveAccuracy != null || data.analytics?.drawingReviews?.pending > 0 ||
             data.analytics?.drawingReviews?.released > 0) && (
             <>
               <h2>Your performance snapshot.</h2>
+              <p>Exam averages use released whole tests, including drawing marks.</p>
               <div className="dashboard-stats analytics-snapshot" aria-label="Performance snapshot">
                 {data.analytics.objectiveAccuracy != null && <article>
                   <span>OBJECTIVE ACCURACY</span>
@@ -181,7 +182,7 @@ export function WorkspaceView({
                   <article key={exam.exam}>
                     <span>{exam.exam.toUpperCase()} PERFORMANCE</span>
                     <h2>{exam.averagePercent}% average</h2>
-                    <p>Best {exam.bestPercent}% across {exam.attempts} attempt{exam.attempts === 1 ? "" : "s"}.</p>
+                    <p>Best {exam.bestPercent}% across {exam.attempts} released test{exam.attempts === 1 ? "" : "s"}.</p>
                   </article>
                 ))}
               </div>

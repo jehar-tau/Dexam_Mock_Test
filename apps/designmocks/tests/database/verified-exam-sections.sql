@@ -64,6 +64,18 @@ set local role authenticated;select set_config('request.jwt.claim.role','authent
 select pg_temp.section_assert(not(public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'resultsPending')::boolean and(public.my_exam_mock_report(current_setting('test.part_b_attempt')::uuid)->>'combinedTotal')::numeric=300,'combined report releases objective and drawing totals after review/upload gates');
 select pg_temp.section_assert(public.export_my_account_data()->'results'->'examMocks'->0=public.my_exam_mock_report(current_setting('test.section_attempt')::uuid),
   'the exported combined result matches the released student report');
+reset role;
+insert into dm_private.drawing_reviews(attempt_id,question_id,reviewer_id,status,criterion_marks,comments,score,reviewed_at,released_at)
+select i.attempt_id,i.question_id,'00000000-0000-4000-8000-000000000072','released',
+  jsonb_build_object('composition',case when i.ordinal=1 then 45 else 40 end),'Fictional released grade.',
+  case when i.ordinal=1 then 45 else 40 end,now(),now()
+from dm_private.attempt_items i where i.attempt_id=current_setting('test.part_b_attempt')::uuid;
+set local role authenticated;
+select pg_temp.section_assert((public.my_exam_mock_report(current_setting('test.section_attempt')::uuid)->>'combinedScore')::numeric=89,
+  'released combined fixture is 89/300');
+select pg_temp.section_assert((select(value->>'averagePercent')::integer=30 and(value->>'bestPercent')::integer=30
+  and(value->>'attempts')::integer=1 from jsonb_array_elements(public.my_overview_analytics()->'exams')value where value->>'exam'='uceed'),
+  'combined Overview counts one complete 89/300 assessment');
 select pg_temp.section_assert((select (o->>'objectiveAccuracy')::integer=100 and (o->>'objectiveAnswered')::integer=1
   and (o->>'waitingForResults')::integer=0 from public.my_overview_analytics() o),
   'overview incorporates Part A only after full release');
