@@ -1,5 +1,13 @@
 # Verification
 
+## Learn-to-practice context — 8 November 2026
+
+Lesson practice links now retain the exact scalar exam/topic using encoded query parameters. Blank-topic lessons offer exam-scoped browsing; invalid lesson context falls back to browsing. An explicit exam/topic pair never selects a larger pool from another exam. Missing or undersized pools and topic-only links shared by several exams require an explicit alternative. Changing the requested context or browser history resets the builder, while increasing the requested count cannot silently substitute a different topic.
+
+The authenticated practice view is scoped to its account and requested context. Selectors stay fixed while a start is unconfirmed. Leaving it aborts catalogue/start reads and prevents a late committed start acknowledgement from navigating a later context, another account or another page. This does not roll back a server-created attempt or repeat its creation. Following the lesson link does not create an attempt, mark the lesson complete, grant access or invoke checkout. The existing server `start_topic_practice` pass, verified-profile, count/time and quality checks are unchanged.
+
+Seven helper tests and eighteen new desktop/mobile journeys cover exact CEED selection despite a larger UCEED pool, encoded topic identity, blank topics, ambiguous/unready/invalid pools, count changes, query history, existing pass/profile errors and held start responses across all three scope changes. Keyboard, both themes, WCAG and 320px reflow pass. The integrated complete check passes 146 JavaScript tests, four Python fixtures, 216 browser journeys, eleven server types and build/isolation. All 64 migrations/authorization suites pass again on disposable PostgreSQL 17; no migration or provider change is required. This is local browser-fixture/database evidence; owner theory import and hosted staging acceptance remain open.
+
 ## Community text replay and threaded reading — 8 November 2026
 
 Post/reply creation now snapshots one account-bound request key and input/file selection. A lost text acknowledgement retries that exact request; normalization, operation, post and parent are part of its fingerprint. Conflicting requests fail without another insert. Replays return current owned visibility before quota checks, so they do not reopen hidden/locked content or charge the hourly limit twice. Legacy signatures retain their quotas. Nested replies and moderation use the same parent-post-first lock order.

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { PortalShell } from "./PortalShell.jsx";
 import { platform } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
+import { learningPracticeLink } from "./practice-context.js";
 const rpc = async (n, a) => {
   const { data, error } = await platform.rpc(n, a);
   if (error) throw error;
@@ -102,6 +103,7 @@ function StudentLearn() {
     setLesson({ ...lesson, completed: true });
     await refresh().catch(() => setMessage("Lesson complete. Refresh the lesson list to update your progress."));
   }, "Couldn’t mark this lesson complete. Try again.");
+  const practice = learningPracticeLink(lesson);
 
   if (lesson)
     return (
@@ -119,7 +121,7 @@ function StudentLearn() {
           <button className="button" disabled={busy || lesson.completed} onClick={complete}>
             {lesson.completed ? "Lesson complete" : "Mark complete"}
           </button>{" "}
-          <Link to="/dashboard/practice">Practise this topic →</Link>
+          <Link to={practice.to}>{practice.label} →</Link>
         </section>
       </PortalShell>
     );
