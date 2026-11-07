@@ -54,6 +54,8 @@ function DrawingImage({ image, label, controls = false }) {
   </>;
 }
 
+export { DrawingImage as PrivateRasterImage };
+
 function DrawingInspectionDialog({ image, label, onClose }) {
   const dialog = useRef(null), titleId = useId();
   useLayoutEffect(() => {
