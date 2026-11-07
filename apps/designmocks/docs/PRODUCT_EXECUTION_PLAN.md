@@ -186,6 +186,7 @@ Exit: human-reviewed drawing results are reliable without AI; AI cannot publish 
 ### Phase 5 — Learn and Community
 
 - [x] Verify the Learn editor for drafts, rights-confirmed publication, withdrawal and revisions. Keep student progress when a lesson is republished.
+- [x] Preserve the lesson exam and exact topic when opening practice. Require a selection for shared/unready pools, preserve URL/history context and ignore late start responses after a context/account/navigation change; keep server access gates unchanged.
 - [x] Verify complete Community raster validation, metadata removal, author-bound registration, identical retries, saved-text recovery and visibility checks after asynchronous signing. Accept actual local Auth/Storage/Edge and desktop/mobile post/reply images, expiry, moderation races, orientation and accessibility.
 - [ ] Import and review the owner's theory documents, link the lessons to reviewed topic pools and verify the Learn workflow in staging.
 - Build moderated posts/comments/helpful-answer workflow and operational moderation tools.
