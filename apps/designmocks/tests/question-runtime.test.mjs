@@ -40,6 +40,17 @@ test('numeric keys preserve exact decimal text and explicit ranges without inven
  assert.deepEqual(nat('1.95–2.05').key.accepted,[{range:['1.95','2.05']}]);
  for(const raw of ['1.000000000000000002 to 1.000000000000000001','2 to 1','1/2','1,2','2 units','Infinity',''])assert.equal(nat(raw),null);
 });
+test('numeric keys preserve each exact source literal in explicit or alternatives',()=>{
+ const nat=raw=>convert(fixture({type:'NAT',options:[],answer:{raw,status:'verified'}}));
+ assert.deepEqual(nat('1.000000000000000001 or 1.000000000000000002').key.accepted,[{exact:'1.000000000000000001'},{exact:'1.000000000000000002'}]);
+ assert.deepEqual(nat('-2 OR +3 or .5').key.accepted,[{exact:'-2'},{exact:'+3'},{exact:'.5'}]);
+ assert.deepEqual(nat('  2\n or\t3  ').marking,{correct:4,wrong:0});
+});
+test('numeric alternatives never reinterpret commas, fractions, ranges, annotations or incomplete alternatives',()=>{
+ const nat=raw=>convert(fixture({type:'NAT',options:[],answer:{raw,status:'verified'}}));
+ for(const raw of['1,2','1,000','1/2','1 to 2 or 3','1 or 2 units','either 1 or 2','1or2','1 or','or 1','1 or 1','1 or 2 or unknown','1 or Infinity'])assert.equal(nat(raw),null,raw);
+ assert.equal(nat('1 or '+('2'.repeat(201))),null);
+});
 test('verified Part B tasks compile only as human-reviewed drawing runtime',()=>{
  const drawing=convert(fixture({type:'DESCRIPTIVE',options:[],answer:null,assets:[figure],visualDependency:true,topic:'drawing-product'}));
  assert.equal(drawing.kind,'drawing');assert.deepEqual(drawing.marking,{correct:50,wrong:0,humanReview:true});assert.equal(drawing.context.part,'B');assert.equal(drawing.context.durationSeconds,3600);assert.deepEqual(drawing.key,{kind:'drawing',sourceExternalKey:'original-fixture'});
