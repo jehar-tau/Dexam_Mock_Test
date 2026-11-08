@@ -31,6 +31,7 @@
   --muted: #53634f;
   --line: #dde0d4;
   --orange: #c24728;
+  --error: #b23c2d;
   --art-orange: #ef633d;
   --yellow: #edc668;
   --lime: #dceba1;
@@ -53,6 +54,7 @@
   --muted: #bdc9b7;
   --line: #415649;
   --orange: #ffad8e;
+  --error: #ffad8e;
   --action: #dceba1;
   --on-action: #162824;
   color-scheme: dark;
@@ -1304,7 +1306,7 @@ svg {
   margin-block: 18px;
 }
 .error {
-  color: #b23c2d;
+  color: var(--error);
   font-size: 0.875rem;
   line-height: 1.6;
   margin-top: 16px;

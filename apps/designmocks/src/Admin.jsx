@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { platform } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
 import { DrawingReviewQueue } from "./DrawingReviewQueue.jsx";
@@ -15,6 +15,8 @@ import { LaunchReadiness } from "./LaunchReadiness.jsx";
 import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQueue.jsx";
 import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
 import { ReportedQuestionQueue } from "./ReportedQuestionQueue.jsx";
+import { AdminAccessBoundary, useAdminServices } from "./AdminAccess.jsx";
+import { adminRequestMessage } from "./admin-access.js";
 
 async function rpc(name, args, signal) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -26,8 +28,8 @@ async function rpc(name, args, signal) {
   return data;
 }
 
-async function intakeRequest(name, body) {
-  const { data, error } = await platform.functions.invoke(name, { body });
+async function intakeRequest(functions, name, body) {
+  const { data, error } = await functions.invoke(name, { body });
   if (error) {
     const detail = error.context instanceof Response ? await error.context.json().catch(() => null) : null;
     throw new Error(detail?.error ?? error.message ?? "Private intake request failed.");
@@ -141,16 +143,19 @@ export function BugReport() {
 
 export function Admin() {
   const { session, loading } = useAuthState();
+  const location = useLocation(), heading = useRef(null);
   return <section className="wrap section admin-page">
     <span className="eyebrow">DMOCKS OPERATIONS</span>
-    <h1>Admin <em>review.</em></h1>
-    {session && !loading ? <AdminDesk key={session.user.id} session={session} /> : <Gate session={session} loading={loading} />}
+    <h1 ref={heading} tabIndex={-1}>Admin <em>review.</em></h1>
+    {session && !loading ? <AdminAccessBoundary key={`${session.user.id}:${location.key}`} actorId={session.user.id} headingRef={heading}><AdminDesk session={session} /></AdminAccessBoundary> : <Gate session={session} loading={loading} />}
   </section>;
 }
 
 function AdminDesk({ session }) {
-  const [allowed, setAllowed] = useState(null),
-    [drafts, setDrafts] = useState([]),
+  const { rpc, functions, assertCurrent, isCurrent } = useAdminServices();
+  const batch = useRef(null), sequence = useRef(0);
+  const reportError = error => { if (isCurrent()) setMessage(adminRequestMessage(error)); };
+  const [drafts, setDrafts] = useState([]),
     [bugs, setBugs] = useState([]),
     [blueprints, setBlueprints] = useState([]),
     [allIndia, setAllIndia] = useState([]),
@@ -167,26 +172,18 @@ function AdminDesk({ session }) {
     [readiness, setReadiness] = useState(),
     [message, setMessage] = useState("");
   const load = useCallback(async () => {
-    if (!session) return;
+    batch.current?.abort();
+    const request = new AbortController(), token = ++sequence.current; batch.current = request;
+    const current = () => isCurrent() && !request.signal.aborted && token === sequence.current;
     try {
-      const ok = await rpc("is_dmocks_admin");
-      setAllowed(ok);
-      if (ok) {
-        const [d, b, m, a, r, l, w, i, c, ai, h, privacy, launch] = await Promise.all([
-          rpc("admin_question_drafts"),
-          rpc("admin_bug_reports"),
-          rpc("admin_exam_mock_blueprints"),
-          rpc("admin_all_india_events"),
-          rpc("admin_reported_questions"),
-          rpc("admin_learning_lessons"),
-          rpc("admin_drawing_queue"),
-          rpc("admin_question_intake_assets"),
-          rpc("admin_community_report_queue"),
-          rpc("admin_ai_draft_requests"),
-          rpc("admin_operational_health"),
-          rpc("admin_privacy_requests"),
-          rpc("admin_launch_readiness"),
-        ]);
+      assertCurrent();
+      const [d, b, m, a, r, l, w, i, c, ai, h, privacy, launch] = await Promise.all(
+          ["admin_question_drafts", "admin_bug_reports", "admin_exam_mock_blueprints", "admin_all_india_events",
+            "admin_reported_questions", "admin_learning_lessons", "admin_drawing_queue", "admin_question_intake_assets",
+            "admin_community_report_queue", "admin_ai_draft_requests", "admin_operational_health", "admin_privacy_requests",
+            "admin_launch_readiness"].map(name => rpc(name, undefined, request.signal)),
+      );
+        if (!current()) return false;
         setDrafts(d);
         setBugs(b);
         setBlueprints(m);
@@ -200,13 +197,15 @@ function AdminDesk({ session }) {
         setHealth(h);
         setPrivacyRequests(privacy);
         setReadiness(launch);
-      }
+        return true;
     } catch (e) {
-      setMessage(e.message);
+      if (current()) { request.abort(); setMessage(adminRequestMessage(e)); }
+      return false;
     }
-  }, [session]);
+  }, [rpc, assertCurrent, isCurrent]);
   useEffect(() => {
-    load();
+    void load();
+    return () => { sequence.current++; batch.current?.abort(); };
   }, [load]);
   const addDraft = async (event) => {
     event.preventDefault();
@@ -222,12 +221,12 @@ function AdminDesk({ session }) {
       element.reset();
       await load();
     } catch (e) {
-      setMessage(e.message);
+      reportError(e);
     }
   };
   const generateAiDraft = async (input) => {
     try {
-      const { data, error } = await platform.functions.invoke("ai-question-draft", { body: input });
+      const { data, error } = await functions.invoke("ai-question-draft", { body: input });
       if (error) {
         const detail = error.context instanceof Response ? await error.context.json().catch(() => null) : null;
         throw new Error(typeof detail?.error === "string" ? detail.error : "Couldn’t generate a review draft.");
@@ -244,14 +243,14 @@ function AdminDesk({ session }) {
       });
       await load();
     } catch (e) {
-      setMessage(e.message);
+      reportError(e);
     }
   };
   const exportDraft = async ({ id, externalKey, rightsConfirmed, rightsNote }) => {
     try {
       await rpc("admin_export_question_draft", { p_draft_id:id, p_external_key:externalKey, p_rights_confirmed:rightsConfirmed, p_rights_note:rightsNote });
       await load();
-    } catch (e) { setMessage(e.message); throw e; }
+    } catch (e) { reportError(e); throw e; }
   };
   const reply = async (event, id) => {
     event.preventDefault();
@@ -264,14 +263,14 @@ function AdminDesk({ session }) {
       });
       await load();
     } catch (e) {
-      setMessage(e.message);
+      reportError(e);
     }
   };
   const resolvePrivacy = async (event, id) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     try { await rpc("admin_resolve_privacy_request", { p_id:id, p_status:form.get("status"), p_note:form.get("note") }); await load(); }
-    catch (e) { setMessage(e.message); }
+    catch (e) { reportError(e); }
   };
   const configureMock = async (event, exam) => {
     event.preventDefault();
@@ -286,7 +285,7 @@ function AdminDesk({ session }) {
       });
       await load();
     } catch (e) {
-      setMessage(e.message);
+      reportError(e);
     }
   };
   const createAllIndia = async (event) => {
@@ -306,7 +305,7 @@ function AdminDesk({ session }) {
       formElement.reset();
       await load();
     } catch (e) {
-      setMessage(e.message);
+      reportError(e);
     }
   };
   const releaseAllIndia = async (id) => {
@@ -314,18 +313,13 @@ function AdminDesk({ session }) {
       await rpc("admin_release_all_india_results", { p_event_id: id });
       await load();
     } catch (e) {
-      setMessage(e.message);
+      reportError(e);
     }
   };
-  const refreshQuestionReviews = async () => { setBankRefreshToken(value => value + 1);await load(); };
-  const refreshLessons = async () => setLessons(await rpc("admin_learning_lessons"));
-  const refreshDrawings = async () => setDrawings(await rpc("admin_drawing_queue"));
-  const drawingActions = drawingReviewActions(rpc, async () => {
-    await Promise.all([
-      refreshDrawings(),
-      rpc("admin_all_india_events").then(setAllIndia),
-    ]);
-  });
+  const refresh = async () => { if (!await load()) throw new Error("The administrator workspace could not be refreshed. Try again."); };
+  const refreshQuestionReviews = async () => { await refresh(); assertCurrent(); setBankRefreshToken(value => value + 1); };
+  const refreshLessons = refresh, refreshDrawings = refresh;
+  const drawingActions = drawingReviewActions(rpc, refresh);
   const uploadIntake = async (event) => {
     event.preventDefault();
     const element = event.currentTarget;
@@ -334,17 +328,19 @@ function AdminDesk({ session }) {
     body.set("file", f.get("file"));
     setIntakeUploading(true);
     try {
-      const data = await intakeRequest("question-intake", body);
+      const data = await intakeRequest(functions, "question-intake", body);
+      assertCurrent();
       setMessage(`${data.name} uploaded privately for extraction.`);
       element.reset();
       await load();
     } catch (e) {
-      setMessage(e.message);
+      reportError(e);
     } finally { setIntakeUploading(false); }
   };
   const extractIntake = async (id) => {
     try {
-      const data = await intakeRequest("question-intake-extract", { assetId: id });
+      const data = await intakeRequest(functions, "question-intake-extract", { assetId: id });
+      assertCurrent();
       setMessage(`${data.questions} question candidate${data.questions === 1 ? "" : "s"} extracted for review.`);
     } finally { await load(); }
   };
@@ -366,14 +362,16 @@ function AdminDesk({ session }) {
       body.set("file", file);
       body.set("purpose", "figure");
       body.set("assetId", id);
-      const saved = await intakeRequest("question-intake", body);
+      const saved = await intakeRequest(functions, "question-intake", body);
+      assertCurrent();
       if (saved.asset?.sha256 !== asset.sha256 || saved.asset?.width !== asset.width || saved.asset?.height !== asset.height) {
         throw new Error("Retained figure did not match the selected PNG. Try again.");
       }
     }
   };
   const downloadIntake = async (asset, figure) => {
-    const blob = await intakeRequest("question-intake", { assetId: asset.id, ...(figure ? { figureSha: figure.sha256 } : {}) });
+    const blob = await intakeRequest(functions, "question-intake", { assetId: asset.id, ...(figure ? { figureSha: figure.sha256 } : {}) });
+    assertCurrent();
     if (!(blob instanceof Blob)) throw new Error("Private source could not be downloaded.");
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -384,21 +382,15 @@ function AdminDesk({ session }) {
   };
   return (
     <>
-      {allowed === null && !message && <p role="status">Checking administrator access…</p>}
-      {allowed === false && (
-        <p className="error">This account is not an administrator.</p>
-      )}
       {message && (
         <p className="error" role="alert">
           {message}
         </p>
       )}
-      {allowed && (
-        <>
           <h2>Operational health</h2>
           <OperationalHealth health={health} onRefresh={load} />
           <h2>Launch readiness</h2>
-          <LaunchReadiness readiness={readiness} onSetGate={async(gate,approved,evidence)=>{try{await rpc("admin_set_launch_gate",{p_gate:gate,p_approved:approved,p_evidence:evidence});await load()}catch(e){setMessage(e.message)}}}/>
+          <LaunchReadiness readiness={readiness} onSetGate={async(gate,approved,evidence)=>{try{await rpc("admin_set_launch_gate",{p_gate:gate,p_approved:approved,p_evidence:evidence});await load()}catch(e){reportError(e)}}}/>
           <h2>PDF and photo question intake</h2>
           <form className="admin-form" onSubmit={uploadIntake}>
             <label>
@@ -458,10 +450,7 @@ function AdminDesk({ session }) {
             Each event freezes one paper for every candidate, stays open for ten
             days and keeps results in review for ten more days.
           </p>
-          <button type="button" onClick={async () => {
-            try { setAllIndia(await rpc("admin_all_india_events")); }
-            catch (error) { setMessage(error.message); }
-          }}>Refresh event status</button>
+          <button type="button" onClick={load}>Refresh event status</button>
           <form className="admin-form" onSubmit={createAllIndia}>
             <label>
               Exam
@@ -643,8 +632,6 @@ function AdminDesk({ session }) {
           <div className="admin-list">
             {privacyRequests.length===0?<p>No account privacy requests.</p>:privacyRequests.map(request=><article key={request.id}><b>{request.type.replaceAll("_"," ")}</b><span className="status-pill">{request.status.replaceAll("_"," ")}</span><small>Private account reference: {request.userId}</small>{["open","in_progress"].includes(request.status)&&<form className="admin-reply" onSubmit={event=>resolvePrivacy(event,request.id)}><select name="status" defaultValue={request.status==="open"?"in_progress":request.status}><option value="in_progress">in progress</option><option value="closed">closed after verified handling</option><option value="declined">declined</option></select><input name="note" minLength="10" maxLength="2000" required placeholder="Operator action and retention note"/><button>Save privacy status</button></form>}{request.adminNote&&<p>{request.adminNote}</p>}</article>)}
           </div>
-        </>
-      )}
     </>
   );
 }

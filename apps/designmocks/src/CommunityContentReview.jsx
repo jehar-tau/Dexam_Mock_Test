@@ -1,11 +1,12 @@
 import React,{useEffect,useId,useLayoutEffect,useRef,useState} from "react";
-import {platform} from "./platform.js";
+import {useAdminFunctions} from "./AdminAccess.jsx";
 import {CommunityImages} from "./CommunityImages.jsx";
 import {communityModerationActions,communityModerationFailure,communityModerationGroups,communityModerationMedia,
  createCommunityModerationJob,readCommunityModerationReceipt,readCommunityModerationView} from "./community-content-moderation.js";
 
 const names={hide:"Hide",restore:"Restore",lock:"Lock",unlock:"Unlock"};
 export function CommunityContentReview({target,actorId,rpc,isActive,onClose,onChanged,onUnavailable,onChoose}){
+ const functions=useAdminFunctions();
  const [view,setView]=useState(null),[loading,setLoading]=useState(true),[error,setError]=useState(""),[notice,setNotice]=useState("");
  const [note,setNote]=useState(""),[busy,setBusy]=useState(false),[pending,setPending]=useState(null),[mediaBusy,setMediaBusy]=useState(false);
  const [images,setImages]=useState({}),[displayed,setDisplayed]=useState({}),[imageDeadline,setImageDeadline]=useState(null);
@@ -83,7 +84,7 @@ export function CommunityContentReview({target,actorId,rpc,isActive,onClose,onCh
     if(group.content.assets.some(item=>!item.available))continue;
     request.signal.throwIfAborted();
     const started=performance.now();
-    const {data,error:failure}=await platform.functions.invoke("community-media",{body:{action:"moderate",targetType:view.targetType,targetId:view.targetId,reviewVersion:inspectedVersion,context:group.context},signal:request.signal});
+    const {data,error:failure}=await functions.invoke("community-media",{body:{action:"moderate",targetType:view.targetType,targetId:view.targetId,reviewVersion:inspectedVersion,context:group.context},signal:request.signal});
     request.signal.throwIfAborted();
     if(failure)throw failure;if(data?.error)throw data;
     const result=communityModerationMedia(data,group,performance.now()-started);

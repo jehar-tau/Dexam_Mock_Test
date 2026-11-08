@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { platform } from "./platform.js";
+import React, { useCallback, useEffect, useState } from "react";
+import { useAdminFunctions } from "./AdminAccess.jsx";
 import { bankReviewImages, deliveryAnswerLabel } from "./bank-review.js";
 import { questionReviewInput } from "./question-quality.js";
 
-async function loadReportedFigures(report) {
-  const { data, error } = await platform.functions.invoke("reported-question-media", { body: { targetKey: report.targetKey, revision: report.revision } });
+async function loadReportedFigures(functions, report) {
+  const { data, error } = await functions.invoke("reported-question-media", { body: { targetKey: report.targetKey, revision: report.revision } });
   if (error || data?.error) throw new Error("Private question figures could not be opened. Refresh the case and try again.");
   return data.images;
 }
@@ -75,7 +75,9 @@ function ReportedQuestionReview({ selected, rpc, onClose, onChanged, loadMedia }
   </section>;
 }
 
-export function ReportedQuestionQueue({ reports, rpc, onChanged, loadMedia = loadReportedFigures }) {
+export function ReportedQuestionQueue({ reports, rpc, onChanged, loadMedia }) {
+  const functions = useAdminFunctions();
+  const defaultMedia = useCallback(report => loadReportedFigures(functions, report), [functions]);
   const [selected, setSelected] = useState(null), [message, setMessage] = useState(""), [error, setError] = useState("");
   useEffect(() => { setSelected(null); }, [reports]);
   const refresh = async () => { setError("");try { await onChanged(); } catch (failure) { setError(failure.message); } };
@@ -85,7 +87,7 @@ export function ReportedQuestionQueue({ reports, rpc, onChanged, loadMedia = loa
     <p>Unique student reports hold a delivered version from new attempts at the configured threshold. Ten reports raise its priority. A human reviews every restore, retirement or corrected-source release.</p>
     <button type="button" onClick={refresh}>Refresh question reports</button>
     {message && <p role="status">{message}</p>}{error && <p role="alert" className="error">{error}</p>}
-    {selected && <ReportedQuestionReview key={`${selected.targetKey}:${selected.revision}`} selected={selected} rpc={rpc} onClose={() => setSelected(null)} onChanged={resolved} loadMedia={loadMedia} />}
+    {selected && <ReportedQuestionReview key={`${selected.targetKey}:${selected.revision}`} selected={selected} rpc={rpc} onClose={() => setSelected(null)} onChanged={resolved} loadMedia={loadMedia??defaultMedia} />}
     <div className="admin-list">{reports.length ? reports.map(report => <article key={report.targetKey}>
       <b className="bank-review-key">{report.sourceExternalKey || report.targetKey}</b><span className="status-pill">{report.status} · {report.reportCount} unique students{report.priority === "high" ? " · High priority" : ""}</span>
       <p>{report.prompt}</p><small>{Object.entries(report.reasons || {}).map(([reason, count]) => `${reason}: ${count}`).join(" · ")}</small>
