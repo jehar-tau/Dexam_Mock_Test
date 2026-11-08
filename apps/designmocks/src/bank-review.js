@@ -1,4 +1,21 @@
+import { isHumanTask, nidPracticeSchema, validateNidPracticeBlueprint } from './nid-practice-blueprint.js';
 export const initialBankFilters = { exam: "", type: "", status: "pending", topic: "", search: "", limit: 25 };
+
+export function nidQuestionPractice(question) {
+  const binding = question?.nidPractice?.binding, blueprint = binding?.blueprint;
+  if (String(question?.exam ?? '').toLowerCase() !== 'nid' || binding?.current !== true || binding.externalKey !== question.externalKey || binding.contentSha256 !== question.contentSha256 ||
+      blueprint?.status !== 'reviewed' || blueprint.revision !== blueprint.currentRevision || !Number.isInteger(blueprint.revision) || blueprint.revision < 1 || !/^[a-f0-9]{64}$/.test(blueprint.sha256 ?? '')) return null;
+  try { validateNidPracticeBlueprint(blueprint.payload); } catch { return null; }
+  const section = blueprint.payload.sections[binding.sectionOrdinal - 1];
+  if (!section || (isHumanTask(section.kind) ? question.type !== 'DESCRIPTIVE' : question.type?.toLowerCase() !== section.kind)) return null;
+  return { binding, blueprint, section };
+}
+export function practiceApprovalReady(question) {
+  if (String(question?.exam ?? '').toLowerCase() !== 'nid') return true;
+  const practice = nidQuestionPractice(question), context = question.context;
+  return Boolean(practice && question.nidPractice.materialized === true && question.runtimeReady === true && context?.version === nidPracticeSchema &&
+    context.bindingId === practice.binding.id && context.blueprintId === practice.blueprint.id && context.blueprintRevision === practice.blueprint.revision && context.blueprintSha256 === practice.blueprint.sha256);
+}
 
 export function bankSearchInput(filters, offset = 0) {
   return {
@@ -28,6 +45,13 @@ export function deliveryAnswerLabel(key) {
 export function questionUsage(question) {
   const exam = String(question?.exam ?? "").toLowerCase();
   const type = String(question?.type ?? "").toUpperCase();
+  const practice = nidQuestionPractice(question);
+  if (practice) {
+    const { section, blueprint } = practice, human = isHumanTask(section.kind);
+    return { section: `Authored practice · ${section.label}`, mode: human ? 'Uploaded response with human rubric evaluation' : 'Authored objective practice',
+      scoring: human ? `${section.points} maximum marks · reviewed practice rubric` : `+${section.points} correct · −${section.penalty} wrong${section.kind === 'msq' ? ' · complete correct set only' : ''}`,
+      duration: `${blueprint.payload.durationMinutes} practice minutes${blueprint.payload.uploadGraceMinutes ? ` · ${blueprint.payload.uploadGraceMinutes} minutes to upload completed pages` : ''}` };
+  }
   if (exam === "nift") {
     if (type === "MCQ") return { section: "B.Des. GAT", mode: "Timed objective question", scoring: "+1 correct · −0.25 wrong", duration: "Within the 120-minute GAT paper" };
     return { section: "CAT / creative practice", mode: "Uploaded response with human evaluation", scoring: "Rubric and maximum marks must be assigned", duration: "Practice-only until the CAT blueprint is verified" };
@@ -52,7 +76,10 @@ export function conversionChecklist(question) {
     availability.push({state:'blocked',label:'Resolve the current inactive status or question hold before approval.'});
   if (question?.media?.some(figure => !figure.available))
     availability.push({state:'fix',label:'Import and verify every required private question figure.'});
-  if (question?.runtimeReady) return [
+  if (question?.exam === 'nid' && nidQuestionPractice(question)) return [
+    { state: practiceApprovalReady(question) ? 'ready' : 'queue', label: practiceApprovalReady(question) ? 'Converted with a reviewed DMocks-authored practice context; separate exact-question approval is required.' : 'Practice binding reviewed; run the guarded conversion, then review this exact question.' }, ...availability,
+  ];
+  if (question?.runtimeReady && question?.exam !== 'nid') return [
     { state: "ready", label: question.type==='DESCRIPTIVE' ? 'Converted with a verified exam context and human-review marking.' : "Converted with a verified exam context and answer key." },
     ...availability,
   ];

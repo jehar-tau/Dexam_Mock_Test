@@ -63,4 +63,5 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-test-checkout.sq
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/order-recovery.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-service-operations.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-practice-blueprints.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-question-bindings.sql
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'

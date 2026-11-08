@@ -12,6 +12,10 @@
     "category": "staff"
   },
   {
+    "signature": "public.admin_bind_nid_question(text,text,uuid,integer,text,integer,text,uuid)",
+    "category": "staff"
+  },
+  {
     "signature": "public.admin_bug_reports()",
     "category": "staff"
   },
@@ -29,6 +33,10 @@
   },
   {
     "signature": "public.admin_nid_practice_blueprints(integer,integer)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_nid_question_binding(text,text,uuid)",
     "category": "staff"
   },
   {

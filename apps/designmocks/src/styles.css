@@ -3966,3 +3966,12 @@ svg {
 .nid-blueprint-editor button{white-space:normal;min-height:44px;margin-block:.25rem}
 .nid-blueprint-digest code{overflow-wrap:anywhere;word-break:break-all}
 .nid-blueprint-history{margin-block:1rem;align-items:end}
+.nid-question-binding{margin-block:1.5rem;padding:clamp(.7rem,2vw,1.25rem);min-width:0;border:1px solid var(--line);background:var(--warm);overflow-wrap:anywhere}
+.nid-question-binding fieldset{grid-column:1/-1;min-width:0;max-width:100%;padding:clamp(.6rem,2vw,1rem);border:1px solid var(--line)}
+.nid-question-binding legend{max-width:100%;font-weight:700;white-space:normal}
+.nid-question-binding label{display:grid;gap:.4rem;margin-block:.75rem;min-width:0}
+.nid-question-binding input,.nid-question-binding select,.nid-question-binding textarea{width:100%;max-width:100%;min-width:0}
+.nid-question-binding .profile-check{display:flex;align-items:flex-start;gap:.6rem}
+.nid-question-binding .profile-check input{width:auto;flex:none;margin-block-start:.25rem}
+.nid-question-binding button{min-height:44px;white-space:normal}
+.nid-binding-scheme{padding:.75rem;border-inline-start:3px solid var(--orange);background:var(--paper)}
