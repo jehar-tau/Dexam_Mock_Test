@@ -1,0 +1,166 @@
+[
+  {
+    "signature": "public.accept_current_terms(text)",
+    "category": "student"
+  },
+  {
+    "signature": "public.admin_bank_question(text,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_bank_review_media_paths(text,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_bug_reports()",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_launch_readiness()",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_mvp_paper_manifest(uuid)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_operational_health()",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_privacy_requests()",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_release_mvp_paper(uuid,text,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_reply_bug_report(uuid,text,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_reported_question(text,bigint)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_reported_question_media_paths(text,bigint)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_reported_questions()",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_resolve_privacy_request(uuid,text,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_resolve_reported_question(text,text,text,bigint,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_review_bank_question(text,boolean,boolean,text,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_search_bank_questions(text,text,text,text,text,integer,integer)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_set_launch_gate(text,boolean,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_set_mvp_test_checkout(boolean,timestamp with time zone,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_withdraw_mvp_paper(uuid,text,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.available_papers()",
+    "category": "student"
+  },
+  {
+    "signature": "public.can_enter_staging_portal()",
+    "category": "student"
+  },
+  {
+    "signature": "public.cancel_my_privacy_request(uuid)",
+    "category": "student"
+  },
+  {
+    "signature": "public.export_my_account_data()",
+    "category": "student"
+  },
+  {
+    "signature": "public.finalize_my_expired_attempts()",
+    "category": "student"
+  },
+  {
+    "signature": "public.is_dmocks_admin()",
+    "category": "staff"
+  },
+  {
+    "signature": "public.my_attempt_history()",
+    "category": "student"
+  },
+  {
+    "signature": "public.my_bug_report_page(jsonb,integer)",
+    "category": "student"
+  },
+  {
+    "signature": "public.my_candidate_profile()",
+    "category": "student"
+  },
+  {
+    "signature": "public.my_overview_analytics()",
+    "category": "student"
+  },
+  {
+    "signature": "public.my_pass()",
+    "category": "student"
+  },
+  {
+    "signature": "public.my_privacy_requests()",
+    "category": "student"
+  },
+  {
+    "signature": "public.prepare_order()",
+    "category": "student"
+  },
+  {
+    "signature": "public.read_attempt(uuid)",
+    "category": "student"
+  },
+  {
+    "signature": "public.report_attempt_question(uuid,uuid,text,text)",
+    "category": "student"
+  },
+  {
+    "signature": "public.request_account_deletion()",
+    "category": "student"
+  },
+  {
+    "signature": "public.save_answer_revision(uuid,uuid,jsonb,bigint)",
+    "category": "student"
+  },
+  {
+    "signature": "public.save_candidate_profile(text,text,integer,text,text[])",
+    "category": "student"
+  },
+  {
+    "signature": "public.start_attempt(uuid)",
+    "category": "student"
+  },
+  {
+    "signature": "public.submit_attempt(uuid)",
+    "category": "student"
+  },
+  {
+    "signature": "public.submit_bug_report(text,text,text,uuid)",
+    "category": "student"
+  }
+]

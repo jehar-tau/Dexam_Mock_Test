@@ -17,6 +17,8 @@ import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
 import { ReportedQuestionQueue } from "./ReportedQuestionQueue.jsx";
 import { AdminAccessBoundary, useAdminServices } from "./AdminAccess.jsx";
 import { adminRequestMessage } from "./admin-access.js";
+import {postLaunchPreview}from'./launch-scope.js';
+const mvpDeskReads=new Set(['admin_bug_reports','admin_reported_questions','admin_operational_health','admin_privacy_requests','admin_launch_readiness']);
 
 async function rpc(name, args, signal) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -96,7 +98,7 @@ function AdminDesk({ session }) {
           ["admin_question_drafts", "admin_bug_reports", "admin_exam_mock_blueprints", "admin_all_india_events",
             "admin_reported_questions", "admin_learning_lessons", "admin_drawing_queue", "admin_question_intake_assets",
             "admin_community_report_queue", "admin_ai_draft_requests", "admin_operational_health", "admin_privacy_requests",
-            "admin_launch_readiness"].map(name => rpc(name, undefined, request.signal)),
+            "admin_launch_readiness"].map(name => postLaunchPreview||mvpDeskReads.has(name)?rpc(name, undefined, request.signal):[]),
       );
         if (!current()) return false;
         setDrafts(d);
@@ -310,7 +312,7 @@ function AdminDesk({ session }) {
           <OperationalHealth health={health} onRefresh={load} />
           <h2>Launch readiness</h2>
           <LaunchReadiness readiness={readiness} onSetGate={async(gate,approved,evidence)=>{try{await rpc("admin_set_launch_gate",{p_gate:gate,p_approved:approved,p_evidence:evidence});await load()}catch(e){reportError(e)}}}/>
-          <h2>PDF and photo question intake</h2>
+          {postLaunchPreview&&<><h2>PDF and photo question intake</h2>
           <form className="admin-form" onSubmit={uploadIntake}>
             <label>
               Private source file
@@ -331,7 +333,9 @@ function AdminDesk({ session }) {
           <CommunityModerationQueue reports={communityReports} rpc={rpc} onRefresh={load} scopeKey={session.user.id} />
           <CommunityContentModeration rpc={rpc} scopeKey={session.user.id} />
           <LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />
+          </>}
           <ReportedQuestionQueue reports={questionReports} rpc={rpc} onChanged={refreshQuestionReviews} />
+          {postLaunchPreview&&<>
           <h2>Add a question draft</h2>
           <p>
             Manual, extracted, and AI-generated questions all enter the same
@@ -500,7 +504,9 @@ function AdminDesk({ session }) {
               </article>
             ))}
           </div>
+          </>}
           <BankReviewBrowser rpc={rpc} onReviewed={load} refreshToken={bankRefreshToken} />
+          {postLaunchPreview&&<>
           <h2>Question review queue</h2>
           <div className="admin-list">
             {drafts.map((d) => (
@@ -523,6 +529,7 @@ function AdminDesk({ session }) {
               </article>
             ))}
           </div>
+          </>}
           <h2>Bug reports</h2>
           <div className="admin-list">
             {bugs.map((b) => (

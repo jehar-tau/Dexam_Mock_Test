@@ -577,8 +577,7 @@ if(postLaunchPreview){
                 "Your drawing marks include released teacher reviews. Missing submissions receive zero marks."}
             </p> : <p>
               Objective answers are marked with the paper’s reviewed key.
-              Drawing is excluded from this score and remains a separate
-              teacher-reviewed submission.
+              {postLaunchPreview?" Drawing is excluded from this score and remains a separate teacher-reviewed submission.":" This report covers the objective paper you submitted."}
             </p>}
           </div>
           <div className="sample-score" role="group" aria-label={cohort ? "All India result" : attempt.scoreKind === "drawing" ? "Drawing result" : "Objective result"}>

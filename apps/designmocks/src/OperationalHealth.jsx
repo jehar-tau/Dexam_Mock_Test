@@ -1,4 +1,5 @@
 import React from "react";
+import{postLaunchPreview}from'./launch-scope.js';
 
 const labels = {
   staleAttempts: "Stale attempts",
@@ -12,6 +13,7 @@ const labels = {
   expiredIntakeJobs: "Expired extractions",
   expiredAiDraftJobs: "Expired draft requests",
   stalePendingOrders: "Stale pending orders",
+  paymentReviews: "Payments needing review",
 };
 
 export function OperationalHealth({ health, onRefresh }) {
@@ -23,7 +25,7 @@ export function OperationalHealth({ health, onRefresh }) {
       {onRefresh && <button type="button" onClick={onRefresh}>Refresh queues</button>}
     </div>
     <div className="operations-metrics">
-      {Object.entries(labels).map(([key, label]) => <article key={key}>
+      {Object.entries(labels).filter(([key])=>postLaunchPreview&&health.scope!=='paid-mvp-v1'||['staleAttempts','expiredAttempts','openBugs','pendingQuestionReports','stalePendingOrders','paymentReviews'].includes(key)).map(([key, label]) => <article key={key}>
         <span>{label}</span>
         <b>{health[key] ?? 0}</b>
       </article>)}

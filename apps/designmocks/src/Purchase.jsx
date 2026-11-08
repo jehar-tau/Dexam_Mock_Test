@@ -5,12 +5,14 @@ import{createPurchaseFlow}from'./purchase.js';
 import{termsVersion}from'./platform.js';
 import{money,brand}from'./config.js';
 import{Arrow}from'./Art.jsx';
+import{environment}from'./environment.js';
 
 function PurchaseSession(){
  const services=useAccountServices(),flow=useRef(null),[state,setState]=useState({status:'checking',error:''}),[accepted,setAccepted]=useState(false);
- useEffect(()=>{const value=createPurchaseFlow({services,termsVersion,onChange:setState});flow.current=value;void value.refresh();return()=>{value.dispose();if(flow.current===value)flow.current=null;};},[services]);
+ useEffect(()=>{const value=createPurchaseFlow({services,termsVersion,onChange:setState,expectedMode:environment.production?'live':'test'});flow.current=value;void value.refresh();return()=>{value.dispose();if(flow.current===value)flow.current=null;};},[services]);
  const busy=['checking','opening','checkout','verifying'].includes(state.status),canPay=state.status==='idle';
  return<>
+  {!environment.production&&<p className="notice" role="status">Razorpay Test mode for approved acceptance testers. No live payment is taken.</p>}
   {state.status==='paid'?<div className="success" role="status">Your pass is active. <Link to="/dashboard">Open your workspace →</Link></div>:<>
    <label className="terms-checkbox"><input type="checkbox" checked={accepted} disabled={!canPay} onChange={event=>setAccepted(event.target.checked)}/><span>I accept the <Link to="/terms">purchase terms</Link> and <Link to="/privacy">privacy notice</Link>.</span></label>
    <button type="button" className="button full" disabled={!canPay||!accepted} onClick={()=>void flow.current?.start(accepted)}>
