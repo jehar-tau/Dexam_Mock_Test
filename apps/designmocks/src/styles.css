@@ -1340,6 +1340,10 @@ svg {
   background: var(--surface);
   border-radius: 10px;
 }
+.account-privacy-panel {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .account-card > svg {
   color: var(--orange);
   margin-bottom: 25px;
