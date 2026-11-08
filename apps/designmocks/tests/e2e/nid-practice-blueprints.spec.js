@@ -197,6 +197,9 @@ test("paginated practice designs remain separate from the public catalogue and r
 
 test("a delayed queue response cannot overwrite a refreshed practice list", async ({ page }) => {
   const state = await fixture(page), held = deferred(), began = deferred(); let reads = 0;
+  // The desk can render its controls before its first scoped list read settles.
+  // Fence that baseline so the fault route holds only the explicit refresh.
+  await expect(region(page).getByText("1–1 of 1 practice blueprints", { exact: true })).toBeVisible();
   await page.route(endpoint("admin_nid_practice_blueprints"), async route => {
     if (route.request().method() === "OPTIONS") return route.fulfill({ status: 204, headers: cors });
     const result = state.respond("admin_nid_practice_blueprints", route.request().postDataJSON());
