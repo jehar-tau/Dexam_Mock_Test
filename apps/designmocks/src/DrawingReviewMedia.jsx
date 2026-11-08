@@ -1,15 +1,16 @@
 import React, { useCallback } from "react";
-import { platform } from "./platform.js";
+import { useAdminFunctions } from "./AdminAccess.jsx";
 import { DrawingPages } from "./DrawingInspection.jsx";
 
-async function loadDrawingPages(reviewId, signal) {
-  const { data, error } = await platform.functions.invoke("drawing-review-media", { body: { reviewId }, signal });
+async function loadDrawingPages(functions, reviewId, signal) {
+  const { data, error } = await functions.invoke("drawing-review-media", { body: { reviewId }, signal });
   if (error) throw new Error("Couldn’t open drawing pages. Refresh the queue and try again.");
   return data;
 }
 
-export function DrawingReviewMedia({ reviewId, load = loadDrawingPages }) {
-  const open = useCallback(signal => load(reviewId, signal), [reviewId, load]);
+export function DrawingReviewMedia({ reviewId, load }) {
+  const functions = useAdminFunctions();
+  const open = useCallback(signal => load ? load(reviewId, signal) : loadDrawingPages(functions, reviewId, signal), [reviewId, load, functions]);
   return <DrawingPages scopeKey={reviewId} load={open} anonymous />;
 }
 

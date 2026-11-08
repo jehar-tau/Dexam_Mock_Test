@@ -1,5 +1,5 @@
 import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { platform } from "./platform.js";
+import { useAdminFunctions } from "./AdminAccess.jsx";
 import { PrivateRasterImage } from "./DrawingInspection.jsx";
 import { communityReviewFailure, communityReviewGroups, communityReviewInput, communityReviewMedia, validateCommunityReport } from "./community-moderation.js";
 
@@ -15,6 +15,7 @@ function ImageInspector({ selection, onClose }) {
 }
 
 export function CommunityReportReview({ reportId, rpc, onClose, onReopen, onResolved }) {
+  const functions = useAdminFunctions();
   const noteId = useId();
   const [report, setReport] = useState(null), [error, setError] = useState(""), [notice, setNotice] = useState("");
   const [loading, setLoading] = useState(true), [busy, setBusy] = useState(false), [mediaBusy, setMediaBusy] = useState(false);
@@ -80,7 +81,7 @@ export function CommunityReportReview({ reportId, rpc, onClose, onReopen, onReso
         if (group.content.assets.some(item => !item.available)) continue;
         request.signal.throwIfAborted();
         const start = performance.now();
-        const { data, error: failure } = await platform.functions.invoke("community-media", {
+        const { data, error: failure } = await functions.invoke("community-media", {
           body: { action: "review", reportId: report.id, reviewVersion: report.reviewVersion, context: group.context }, signal: request.signal,
         });
         request.signal.throwIfAborted();

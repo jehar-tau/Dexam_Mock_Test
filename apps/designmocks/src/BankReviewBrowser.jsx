@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { platform } from "./platform.js";
+import React, { useCallback, useEffect, useState } from "react";
+import { useAdminFunctions } from "./AdminAccess.jsx";
 import { bankReviewImages, bankSearchInput, deliveryAnswerLabel, initialBankFilters, sourceAnswerLabel } from "./bank-review.js";
 
-async function loadBankFigures(question) {
-  const { data, error } = await platform.functions.invoke("bank-review-media", {
+async function loadBankFigures(functions, question) {
+  const { data, error } = await functions.invoke("bank-review-media", {
     body: { externalKey: question.externalKey, reviewVersion: question.reviewVersion },
   });
   if (error) throw new Error("Question figures could not be opened. Refresh the bank and try again.");
@@ -95,7 +95,9 @@ function BankQuestionReview({ selected, rpc, onClose, onReviewed, loadMedia }) {
   </section>;
 }
 
-export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia = loadBankFigures, refreshToken = 0 }) {
+export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia, refreshToken = 0 }) {
+  const functions = useAdminFunctions();
+  const defaultMedia = useCallback(question => loadBankFigures(functions, question), [functions]);
   const [filters, setFilters] = useState(initialBankFilters);
   const [query, setQuery] = useState(() => bankSearchInput(initialBankFilters));
   const [refreshKey, setRefreshKey] = useState(0);
@@ -142,7 +144,7 @@ export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia 
     {message && <p role="status">{message}</p>}
     {error && <p role="alert" className="error">{error}</p>}
     {loading && <p role="status">Loading question bank…</p>}
-    {selected && <BankQuestionReview key={`${selected.externalKey}-${selected.reviewVersion}`} selected={selected} rpc={rpc} onClose={() => setSelected(null)} onReviewed={reviewed} loadMedia={loadMedia} />}
+    {selected && <BankQuestionReview key={`${selected.externalKey}-${selected.reviewVersion}`} selected={selected} rpc={rpc} onClose={() => setSelected(null)} onReviewed={reviewed} loadMedia={loadMedia??defaultMedia} />}
     {result && !loading && <>
       <p>{result.total ? `${result.offset + 1}–${Math.min(result.offset + result.limit, result.total)} of ${result.total} matching questions` : "No questions match these filters."}</p>
       <div className="admin-list">{result.items.map(question => <article key={question.externalKey}>

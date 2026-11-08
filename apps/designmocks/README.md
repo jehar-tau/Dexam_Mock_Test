@@ -21,6 +21,8 @@ Discovery landing/catalogue/exam/annual-pass pages; light/dark mode; an original
 
 Real provider acceptance and reviewed-bank publication are incomplete. Actual Google OAuth/PKCE, cancellation, persistence, SDK refresh, sign-out and returning login pass locally and on the private `dmocks.com` publication against the standalone Supabase project. Registration is restricted by the server signup hook to one approved owner tester; public registration, the released portal and sales remain closed. The question-bank work in the repository root is not automatically loaded into or exposed by this website. The owner deferred Razorpay integration on 6 November; checkout must remain disabled until they resume it.
 
+Administrator operations now use fresh role checks and a shared account/history-bound request scope. Confirmed role loss or failed verification clears private panels, drafts, files and dialogs; an unavailable target with a verified role preserves other permitted work. Bulk refreshes discard older responses, and explicit recovery never resends an earlier action. See the current evidence and remaining hosted gates in [verification](docs/VERIFICATION.md).
+
 ## Configuration and existing preview
 
 Copy `.env.example` to `.env.local` and enter only the standalone project's **public** URL/anon key. Keep `VITE_PORTAL_ENABLED=false` and the terms version blank until launch acceptance. Never put Google client secrets, Supabase service-role keys or Razorpay secrets into Vite variables, source or chat.

@@ -185,9 +185,10 @@ test("read and signing denials discard content and show no provider diagnostics"
   const state = await fixture(page); state.allowed = false;
   await row(page, 1).getByRole("button", { name: "Review report", exact: true }).click();
   const review = reviewRegion(page);
-  await expect(review.getByRole("alert")).toContainText("review access has ended");
+  await expect(page.getByRole("alert")).toContainText("Administrator access has ended");
+  await expect(queueRegion(page)).toHaveCount(0);
   await expect(review.getByText("Current content.", { exact: false })).toHaveCount(0);
-  state.allowed = true; await review.getByRole("button", { name: "Reopen report", exact: true }).click();
+  state.allowed = true; await page.getByRole("button", { name: "Check administrator access", exact: true }).click(); await open(page);
   await expect(review.getByText("Current content.", { exact: false })).toBeVisible();
   state.failMedia = "community_review_unavailable";
   await review.getByRole("button", { name: "Open private images", exact: true }).click();
