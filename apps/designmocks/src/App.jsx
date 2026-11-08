@@ -61,7 +61,7 @@ const PortalPreview = import.meta.env.DEV
 const Admin = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.Admin })));
 const DrawingReviewerWorkspace = React.lazy(() => import("./DrawingReviewerWorkspace.jsx").then(module => ({ default: module.DrawingReviewerWorkspace })));
 const IntakeExtractionPreview = import.meta.env.DEV ? React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.IntakeExtractionPreview }))) : null;
-const BugReport = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.BugReport })));
+const BugReport = React.lazy(() => import("./BugReport.jsx").then(module => ({ default: module.BugReport })));
 
 function Logo() {
   return (

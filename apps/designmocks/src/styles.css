@@ -3836,6 +3836,10 @@ svg {
 .admin-list article { padding: 1.25rem; border: 1px solid var(--line); background: var(--paper); }
 .admin-list pre { max-height: 320px; overflow: auto; overflow-wrap: anywhere; white-space: pre-wrap; }
 .admin-list code { overflow-wrap: anywhere; }
+.bug-report-page,.bug-report-card { min-width: 0; overflow-wrap: anywhere; }
+.bug-report-page .admin-form,.bug-report-card .admin-reply { grid-template-columns: minmax(0,1fr); }
+.bug-report-page .admin-form label { min-width: 0; }
+.bug-report-page textarea { min-width: 0; max-width: 100%; }
 .bank-review-browser { margin-block: 3rem; }
 .bank-review-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .bank-review-filters .admin-actions { grid-column: 1 / -1; }

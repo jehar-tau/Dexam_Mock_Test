@@ -66,6 +66,19 @@ async function fixture(page){
  return Object.assign(state,provider);
 }
 
+test("one pending staff reply disables its fields and suppresses duplicate form submissions",async({page})=>{
+ const state=await fixture(page),held=deferred();
+ await page.route(api+"/rest/v1/rpc/admin_reply_bug_report",async route=>{
+  if(route.request().method()==="OPTIONS")return route.fulfill({headers,status:204});
+  state.replyCalls.push(route.request().postDataJSON());await held.promise;try{await route.fulfill({headers,json:null});}catch{}
+ });
+ const form=page.getByRole("form",{name:"Reply to report Current fictional private bug",exact:true});
+ await form.getByLabel("Report status",{exact:true}).selectOption("fixed");await form.getByLabel("Reply to reporter",{exact:true}).fill("An original fictional fixed-issue reply.");
+ await form.evaluate(element=>{element.requestSubmit();element.requestSubmit();});await expect.poll(()=>state.replyCalls.length).toBe(1);
+ await expect(form.getByLabel("Report status",{exact:true})).toBeDisabled();await expect(form.getByLabel("Reply to reporter",{exact:true})).toBeDisabled();await expect(form.getByRole("button",{name:"Saving…",exact:true})).toBeDisabled();
+ held.resolve();await expect(form.getByRole("button",{name:"Save",exact:true})).toBeEnabled();expect(state.replyCalls).toEqual([{p_id:"55000000-0000-4000-8000-000000000991",p_status:"fixed",p_reply:"An original fictional fixed-issue reply."}]);expect(state.unexpected).toEqual([]);
+});
+
 test("a confirmed role loss clears every private panel, selected file and unsent draft",async({page})=>{
  const state=await fixture(page),roleChecks=state.roleChecks;
  await page.getByText("Add a theory lesson",{exact:true}).click();await page.getByLabel("Lesson URL slug",{exact:true}).fill("unsent-private-lesson");
