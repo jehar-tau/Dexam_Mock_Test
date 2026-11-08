@@ -133,15 +133,16 @@ test("students cannot open reported snapshots, staff decisions or private review
 
 test("a paused All India event preserves the existing runner, reporting and answer saving", async ({ page }) => {
   const deadline = new Date(Date.now() + 3600000).toISOString();
+  const attemptId="20000000-0000-4000-8000-000000000211",now=Date.now(),timing={startsAt:new Date(now-86400000).toISOString(),endsAt:new Date(now+86400000).toISOString(),lastStartAt:new Date(now+82800000).toISOString(),reviewEndsAt:new Date(now+172800000).toISOString(),durationSeconds:3600,uploadGraceSeconds:0,result:null};
   const questions = [1, 2].map(n => ({ id: `quality-question-${n}`, ordinal: n, prompt: `Fictional runner question ${n}`, kind: "mcq", topic: "observation",
     options: snapshot.options, marking: snapshot.marking, points: 3, negativePoints: 0.71, media: [], answer: null, answerRevision: 0 }));
   const { calls, unexpected } = await stubPortalProvider(page, (procedure, input) => {
     switch (procedure) {
       case "all_india_event_catalog": return [
-        { id: "paused-new", exam: "uceed", title: "Fictional paused event", state: "paused", qualityHeld: true },
-        { id: "paused-existing", exam: "ceed", title: "Fictional existing event", state: "paused", qualityHeld: true, attemptId: "quality-existing" },
+        { ...timing, id: "10000000-0000-4000-8000-000000000211", exam: "uceed", title: "Fictional paused event", state: "paused", qualityHeld: true,attemptId:null },
+        { ...timing, id: "10000000-0000-4000-8000-000000000212", exam: "ceed", title: "Fictional existing event", state: "paused", qualityHeld: true,attemptId },
       ];
-      case "read_attempt": return { id: "quality-existing", title: "Fictional fixed paper", status: "active", deadline, serverNow: new Date().toISOString(), questions };
+      case "read_attempt": return { id: attemptId, title: "Fictional fixed paper", status: "active", deadline, serverNow: new Date().toISOString(), questions };
       case "my_exam_mock_session": case "my_exam_mock_report": return null;
       case "report_attempt_question": return { reportCount: 5, threshold: 5, held: true };
       case "save_answer_revision": return { accepted: true, answer: input.p_answer, revision: input.p_revision };
