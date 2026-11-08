@@ -1,6 +1,9 @@
 -- Fictional accounts and bank only. Every change rolls back.
 \set ON_ERROR_STOP on
 begin;
+create function pg_temp.current_moderate(kind text,id uuid,action text,note text) returns jsonb language sql as $$
+ select public.admin_moderate_community(kind,id,action,note,public.admin_review_community_content(kind,id)->>'reviewVersion',gen_random_uuid())
+$$;
 create function pg_temp.assert_true(ok boolean, label text) returns void language plpgsql as $$
 begin if ok is distinct from true then raise exception 'FAIL: %',label; end if; end $$;
 create function pg_temp.reject(statement text, label text) returns void language plpgsql as $$
@@ -293,13 +296,18 @@ select set_config('test.community_report',(public.admin_community_report_queue()
 select pg_temp.reject('select public.admin_resolve_community_report(current_setting(''test.community_report'')::uuid,''dismiss'',''Fictional dismissal'')','legacy resolution requires inspected version');
 select public.admin_resolve_community_report(current_setting('test.community_report')::uuid,public.admin_community_report(current_setting('test.community_report')::uuid)->>'reviewVersion','hide','Fictional containment of unavailable evidence');
 select pg_temp.assert_true(jsonb_array_length(public.admin_community_report_queue())=0,'resolved community report leaves open queue');
-select public.admin_moderate_community('post',current_setting('test.community_post')::uuid,'lock','Fictional moderation check');
+select pg_temp.reject('select pg_temp.current_moderate(''post'',current_setting(''test.community_post'')::uuid,''restore'',''Missing evidence stays contained'')','restoration requires the registered private image');
+reset role;
+insert into storage.objects(bucket_id,name,metadata) values('community-media','community/fixture.png','{"mimetype":"image/png","size":1024}');
+set local role authenticated;
+select pg_temp.current_moderate('post',current_setting('test.community_post')::uuid,'restore','Restore after catalog verification');
+select pg_temp.current_moderate('post',current_setting('test.community_post')::uuid,'lock','Fictional moderation check');
 select pg_temp.assert_true((public.community_feed(null,null)->0->>'status')='locked','moderator can lock with audit trail');
-select public.admin_moderate_community('post',current_setting('test.community_post')::uuid,'hide','Fictional private-media check');
+select pg_temp.current_moderate('post',current_setting('test.community_post')::uuid,'hide','Fictional private-media check');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 select pg_temp.reject('select public.community_media_paths(''post'',current_setting(''test.community_post'')::uuid)','hidden community media is no longer resolvable');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
-select public.admin_moderate_community('post',current_setting('test.community_post')::uuid,'restore','Restore after media check');
+select pg_temp.current_moderate('post',current_setting('test.community_post')::uuid,'restore','Restore after media check');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000003',true);
 select public.create_community_post('uceed','rate-test','Rate limit post '||g,'A sufficiently detailed fictional rate-limit body.')from generate_series(1,5)g;
 select pg_temp.reject('select public.create_community_post(''uceed'',''rate-test'',''Sixth rate post'',''A sufficiently detailed fictional rate-limit body.'')','community post hourly limit');

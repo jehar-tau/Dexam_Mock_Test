@@ -1,5 +1,8 @@
 \set ON_ERROR_STOP on
 begin;
+create function pg_temp.current_moderate(kind text,id uuid,action text,note text) returns jsonb language sql as $$
+ select public.admin_moderate_community(kind,id,action,note,public.admin_review_community_content(kind,id)->>'reviewVersion',gen_random_uuid())
+$$;
 create function pg_temp.reporting_assert(ok boolean,label text) returns void language plpgsql as $$
 begin if ok is distinct from true then raise exception 'FAIL: %',label;end if;end $$;
 create function pg_temp.reporting_reject(statement text,expected_state text,expected_detail text default null) returns void language plpgsql as $$
@@ -44,9 +47,9 @@ select pg_temp.reporting_assert((select details is null from dm_private.communit
 select pg_temp.reporting_assert((select comment_id='20000000-0000-4000-8000-000000000781' and post_id is null from dm_private.community_reports where comment_id='20000000-0000-4000-8000-000000000781'),'reply reporting does not silently flag its parent discussion');
 set local role authenticated;
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000783',true);
-select public.admin_moderate_community('post',md5('reporting-post-1')::uuid,'hide','Fictional post hidden after report.');
-select public.admin_moderate_community('comment','20000000-0000-4000-8000-000000000781','hide','Fictional reply hidden after report.');
-select public.admin_moderate_community('post',md5('reporting-post-11')::uuid,'lock','Fictional readable locked discussion.');
+select pg_temp.current_moderate('post',md5('reporting-post-1')::uuid,'hide','Fictional post hidden after report.');
+select pg_temp.current_moderate('comment','20000000-0000-4000-8000-000000000781','hide','Fictional reply hidden after report.');
+select pg_temp.current_moderate('post',md5('reporting-post-11')::uuid,'lock','Fictional readable locked discussion.');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000782',true);
 select pg_temp.reporting_reject('select public.report_community_content(md5(''reporting-post-1'')::uuid,null,''spam'',null)','23505','community_report_exists');
 select pg_temp.reporting_reject('select public.report_community_content(null,''20000000-0000-4000-8000-000000000781'',''other'',null)','23505','community_report_exists');

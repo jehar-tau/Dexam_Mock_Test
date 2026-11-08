@@ -10,6 +10,15 @@ export function communityReviewInput(value) {
   return { p_report_id: value.reportId, p_expected_version: value.reviewVersion, p_context: value.context };
 }
 
+export function communityModerationMediaInput(value) {
+  if (!value || value.action !== "moderate" || Object.keys(value).length !== 5 ||
+    !communityTarget(value.targetType, value.targetId) || typeof value.reviewVersion !== "string" || !/^[0-9a-f]{64}$/.test(value.reviewVersion) ||
+    !["target", "post", "parent"].includes(value.context)) {
+    throw new CommunityMediaError("Choose current content and an image context.", "community_moderation_invalid", 400);
+  }
+  return { p_target_type: value.targetType, p_target_id: value.targetId, p_expected_version: value.reviewVersion, p_context: value.context };
+}
+
 function unavailable(error) {
   const choices = {
     community_review_changed: ["This report changed. Reopen it before reviewing the images.", 409],
@@ -22,7 +31,19 @@ function unavailable(error) {
   return new CommunityMediaError(message, code, status);
 }
 
-function pages(value) {
+function moderationUnavailable(error) {
+  const choices = {
+    community_moderation_changed: ["This content changed. Reopen it before inspecting images.", 409],
+    community_moderation_unavailable: ["This content or your moderation access is unavailable.", 403],
+    community_moderation_incomplete: ["A registered image is unavailable. Reopen the content to check its status.", 409],
+    community_moderation_invalid: ["Choose current content and an image context.", 400],
+  };
+  const code = Object.hasOwn(choices, error?.details) ? error.details : error?.code === "42501" ? "community_moderation_unavailable" : "media_unavailable";
+  const [message, status] = choices[code] ?? ["Private images could not be opened. Try again.", 502];
+  return new CommunityMediaError(message, code, status);
+}
+
+function pages(value, failure = unavailable) {
   if (!Array.isArray(value) || value.length > 3 || new Set(value.map(item => item?.id)).size !== value.length ||
     new Set(value.map(item => item?.ordinal)).size !== value.length || new Set(value.map(item => item?.path)).size !== value.length ||
     value.some(item => !item || !communityTarget("post", item.id) || !Number.isInteger(item.ordinal) || item.ordinal < 1 || item.ordinal > 3 ||
@@ -30,7 +51,7 @@ function pages(value) {
       !((item.width === null && item.height === null && item.orientation === null) ||
         (Number.isInteger(item.width) && item.width >= 1 && item.width <= 12000 && Number.isInteger(item.height) && item.height >= 1 &&
           item.height <= 12000 && item.width * item.height <= 24000000 && Number.isInteger(item.orientation) && item.orientation >= 1 && item.orientation <= 8)))) {
-    throw unavailable();
+    throw failure();
   }
   return value.map(({ path, ...item }) => ({ ...item, storagePath: path }));
 }
@@ -39,14 +60,23 @@ function pages(value) {
 // object state. A second read after signing discards every URL if that scope changes.
 export async function signedCommunityReview(input, read, bucket) {
   const args = communityReviewInput(input);
+  return signedContext(args, read, bucket, unavailable, "community_review_changed", "This report changed. Reopen it before reviewing the images.");
+}
+
+export async function signedCommunityModeration(input, read, bucket) {
+  const args = communityModerationMediaInput(input);
+  return signedContext(args, read, bucket, moderationUnavailable, "community_moderation_changed", "This content changed. Reopen it before inspecting images.");
+}
+
+async function signedContext(args, read, bucket, failure, changedCode, changedMessage) {
   const initial = await read(args);
-  if (initial.error) throw unavailable(initial.error);
-  const first = pages(initial.data);
+  if (initial.error) throw failure(initial.error);
+  const first = pages(initial.data, failure);
   let signed;
   try { signed = await signedDrawingPages(bucket, first); }
-  catch { throw unavailable(); }
+  catch { throw failure(); }
   const current = await read(args);
-  if (current.error) throw unavailable(current.error);
-  if (!sameDrawingPages(first, pages(current.data))) throw new CommunityMediaError("This report changed. Reopen it before reviewing the images.", "community_review_changed", 409);
+  if (current.error) throw failure(current.error);
+  if (!sameDrawingPages(first, pages(current.data, failure))) throw new CommunityMediaError(changedMessage, changedCode, 409);
   return { media: signed.images, serverNow: signed.serverNow, expiresAt: signed.expiresAt };
 }

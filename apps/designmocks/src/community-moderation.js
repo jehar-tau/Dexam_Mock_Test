@@ -17,7 +17,7 @@ function asset(value) {
   return { id: value.id, ordinal: value.ordinal, mimeType: value.mimeType, width: value.width, height: value.height,
     orientation: value.orientation, available: value.available };
 }
-function content(value) {
+export function validateCommunityReviewContent(value) {
   if (!value || !uuid.test(value.id) || !["post", "comment"].includes(value.kind) ||
     !(value.title === null || isText(value.title, 160)) || !isText(value.body, 5000) ||
     !(value.kind === "post" ? ["visible", "hidden", "locked"] : ["visible", "hidden"]).includes(value.status) ||
@@ -29,22 +29,27 @@ function content(value) {
     exam: value.exam, topic: value.topic, assets };
 }
 
+export function validateCommunityReviewHistory(value) {
+  if (!Array.isArray(value) || value.length > 25) invalid();
+  return value.map(event => {
+    if (!event || !(isText(event.id, 128) && event.id || Number.isSafeInteger(event.id) && event.id > 0) ||
+      !actions.has(event.action) || !(event.note === null || isText(event.note, 1000)) || !isDate(event.createdAt)) invalid();
+    return { id: event.id, action: event.action, note: event.note ?? "", createdAt: event.createdAt };
+  });
+}
+
 export function validateCommunityReport(value, expectedId) {
   if (!value || value.id !== expectedId || !uuid.test(value.id) || !uuid.test(value.targetId) ||
     !["post", "comment"].includes(value.targetType) || !reasons.has(value.reason) ||
     !(value.details === null || isText(value.details, 1000)) || !isDate(value.createdAt) ||
     !["open", "resolved"].includes(value.status) || !version.test(value.reviewVersion) || typeof value.canDismiss !== "boolean" ||
     !(value.status === "open" ? value.resolution === null : ["hide", "dismiss"].includes(value.resolution)) || !Array.isArray(value.history)) invalid();
-  const target = content(value.target), post = content(value.post), parent = value.parent === null ? null : content(value.parent);
+  const target = validateCommunityReviewContent(value.target), post = validateCommunityReviewContent(value.post), parent = value.parent === null ? null : validateCommunityReviewContent(value.parent);
   if (target.id !== value.targetId || target.kind !== value.targetType || post.kind !== "post" ||
     target.exam !== post.exam || target.topic !== post.topic ||
     (value.targetType === "post" ? JSON.stringify(target) !== JSON.stringify(post) || parent !== null : target.id === post.id) ||
     (parent && (parent.kind !== "comment" || parent.id === target.id || parent.id === post.id || parent.exam !== post.exam || parent.topic !== post.topic))) invalid();
-  const history = value.history.map(event => {
-    if (!event || !(isText(event.id, 128) && event.id || Number.isSafeInteger(event.id) && event.id > 0) ||
-      !actions.has(event.action) || !(event.note === null || isText(event.note, 1000)) || !isDate(event.createdAt)) invalid();
-    return { id: event.id, action: event.action, note: event.note ?? "", createdAt: event.createdAt };
-  });
+  const history = validateCommunityReviewHistory(value.history);
   const report = { id: value.id, targetType: value.targetType, targetId: value.targetId, reason: value.reason,
     details: value.details, createdAt: value.createdAt, status: value.status, resolution: value.resolution,
     reviewVersion: value.reviewVersion, canDismiss: value.canDismiss, target, post, parent, history };

@@ -1,6 +1,6 @@
 # DMocks provider setup
 
-Current evidence: 7 November 2026. The GitHub app is `jehar-tau/Dexam_Mock_Test/apps/designmocks`; its separate Supabase project is **DesignMocks**, `tiodqzvvujxvxssvjdis`, Mumbai. The existing academy/Dexam projects and merchant credentials are not used.
+Hosted evidence: 7 November 2026; later local verification is dated below. The GitHub app is `jehar-tau/Dexam_Mock_Test/apps/designmocks`; its separate Supabase project is **DesignMocks**, `tiodqzvvujxvxssvjdis`, Mumbai. The existing academy/Dexam projects and merchant credentials are not used.
 
 ## Hosting and environment
 
@@ -76,6 +76,10 @@ Promote `202611060144_community_followup_images.sql` with the member frontend af
 
 Member image inspection needs no further migration, function or signing grant. It reuses currently authorized member media, binds a selection to the exact image/URL and applies the existing monotonic expiry. Refresh, account/navigation changes and known denial clear private views; an older close cannot dismiss a newer selection. A member who can read a visible discussion can inspect its question/solution images without acquiring upload or administrator access. Recheck three raster formats, legacy metadata, URL refresh, expiry, account changes and signing denial after a queued moderation change on approved staging. Existing signed URLs remain capabilities until their server expiry; the viewer does not extend or revoke them.
 
+Promote `202611060145_community_moderation_workspace.sql`, the matching `community-media` helper and administrator frontend together after their predecessors. The new content browser includes hidden discussions and replies in bounded, exact-filter pages. Current review and media authorization bind complete target/parent/discussion content, registered objects and the moderation digest. The six-argument action RPC requires that inspected version, a written reason and an account-bound request ID; the former four-argument direct moderator is closed. Preserve immutable inspected evidence and receipt replay without repeating an earlier state change. General actions leave report decisions independent.
+
+Acquire the actor Auth FK before post/comment, existing Storage object and feed-revision fences. Recheck the role and digest after waits. Post-page readers drain the global feed fence without taking post row locks; reply pages drain creators through the parent post before establishing a snapshot. Restore requires complete registered objects; the frontend additionally requires the images to display. Repeat queued role/object/feed races, concurrent receipt replay, lost acknowledgements, private image inspection and desktop/mobile navigation acceptance on the approved target. The staging smoke script adds anonymous denial for the new page, review, media and action RPCs. A network-isolated local model upgrades the last known 25-version inventory through all 69 migrations, preserving synthetic protected rows and passing 33 suites; it does not establish a fresh hosted ledger or hosted backup/Storage recovery. Whole-desk administrator role-loss handling and evidence-retention/removal decisions remain separate launch gates. Registration and sales remain closed.
+
 ## Controlled Google acceptance
 
 The owner created **DesignMocks Web** in Google Cloud project `designmocks-auth-2026` and entered the credentials directly in Supabase. Real Google sign-in has now passed from both the local app and the owner-private `dmocks.com` publication: account selection, basic identity consent, Supabase callback, PKCE exchange, page-reload persistence, refresh-token rotation through the SDK, sign-out and returning-account sign-in. The returning login retains a single Auth account. Actual cancellation displays a safe retry message. No credential/session token was copied into source or logs by the app.
@@ -107,7 +111,7 @@ From `apps/designmocks`, the read-only deployment rehearsal is
 npm exec --yes --package=supabase@3.0.0 -- supabase db push --dry-run --skip-vault --include-all --remote=tiodqzvvujxvxssvjdis
 ```
 
-The earlier 7 November CLI run through migration `202611060128` listed 27 pending migrations, starting with the older `202611060006` gap. A later read-only dashboard inventory matched all 25 applied versions; the current 68 local files through `202611060144` leave 43 pending by comparison, not a fresh dry run. Supabase labels this target as the project's production branch. It serves the current owner-private site while the app plan assigns it to staging. Review the fresh plan against the current main commit before any hosted change. [Supabase CLI targeting and dry runs](https://supabase.com/docs/guides/local-development/local-and-hosted-projects)
+The earlier 7 November CLI run through migration `202611060128` listed 27 pending migrations, starting with the older `202611060006` gap. A later read-only dashboard inventory matched all 25 applied versions; the current 69 local files through `202611060145` leave 44 pending by comparison, not a fresh dry run. Supabase labels this target as the project's production branch. It serves the current owner-private site while the app plan assigns it to staging. Review the fresh plan against the current main commit before any hosted change. [Supabase CLI targeting and dry runs](https://supabase.com/docs/guides/local-development/local-and-hosted-projects)
 
 Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
 

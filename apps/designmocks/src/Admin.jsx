@@ -7,6 +7,7 @@ import { DrawingReviewerRoster } from "./DrawingReviewerRoster.jsx";
 import { drawingReviewActions } from "./drawing-review.js";
 import { LearningLessonEditor } from "./LearningLessonEditor.jsx";
 import { CommunityModerationQueue } from "./CommunityModeration.jsx";
+import { CommunityContentModeration } from "./CommunityContentModeration.jsx";
 import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
 import { OperationalHealth } from "./OperationalHealth.jsx";
 import { QuestionDraftExport } from "./QuestionDraftExport.jsx";
@@ -417,6 +418,7 @@ function AdminDesk({ session }) {
           <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
           <h2>Community moderation</h2>
           <CommunityModerationQueue reports={communityReports} rpc={rpc} onRefresh={load} scopeKey={session.user.id} />
+          <CommunityContentModeration rpc={rpc} scopeKey={session.user.id} />
           <LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />
           <ReportedQuestionQueue reports={questionReports} rpc={rpc} onChanged={refreshQuestionReviews} />
           <h2>Add a question draft</h2>
