@@ -9,18 +9,14 @@ import { useAuthState } from "./useAuth.js";
 import { PortalShell } from "./PortalShell.jsx";
 import { QuestionReport } from "./QuestionReport.jsx";
 import { DrawingUploads, DrawingUploadWindow } from "./DrawingUploads.jsx";
+import { AttemptAccessBoundary } from "./AttemptAccess.jsx";
+import { drawingMediaError } from "./drawing-upload.js";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 import { createAnswerSyncQueue, validAttemptAnswer } from "./attempt-sync.js";
 import { createAttemptAnswerJournal, pruneDeviceAnswers } from "./attempt-answer-journal.js";
 import { AttemptInsights } from "./AttemptInsights.jsx";
 import { ExamPartTransition, ExamSessionReport } from "./ExamPartTransition.jsx";
 
-const rpc = async (name, args) => {
-  if (!platform) throw new Error("Student services are not connected yet.");
-  const { data, error } = await platform.rpc(name, args);
-  if (error) throw error;
-  return data;
-};
 function SignInGate() {
   return (
     <section className="wrap page-intro">
@@ -281,8 +277,20 @@ export function PendingAttemptResult({ title, reviewEndsAt, children }) {
 }
 
 export function Attempt() {
-  const { session, loading } = useAuthState();
+  const {session,loading}=useAuthState(),{id}=useParams(),location=useLocation();
+  if(!session&&!loading)return <SignInGate/>;
+  if(loading)return <section className="wrap page-intro"><p role="status">Checking your account…</p></section>;
+  return <AttemptAccessBoundary key={`${session.user.id}:${id}:${location.key}:${location.search}`} actorId={session.user.id}>
+    {services=><AttemptSession actorId={session.user.id} services={services}/>}
+  </AttemptAccessBoundary>;
+}
+function AttemptSession({actorId,services}) {
   const { id } = useParams();
+  const rpc=services.rpc,current=services.isCurrent;
+  const drawingInvoke=React.useCallback(async(body,signal)=>{
+    const{data,error}=await services.functions.invoke("drawing-media",{body,signal});
+    if(error)throw await drawingMediaError(error);return data;
+  },[services]);
   const navigate = useNavigate();
   const [attempt, setAttempt] = useState(null),
     [loadedFor, setLoadedFor] = useState(null),
@@ -304,13 +312,14 @@ export function Attempt() {
     autoSubmitted = useRef(false),
     answerSync = useRef(null),
     saveTimer = useRef(null),
-    shownQuestion = useRef(null);
+    shownQuestion = useRef(null),
+    mutationBusy = useRef(false);
   const q = attempt?.questions[index];
   shownQuestion.current = q?.id;
-  const userId = session?.user.id;
+  const userId = actorId;
   const answerFor = (item) => answerSync.current?.hasPending(item.id) ? answerSync.current.pendingAnswer(item.id) : item.answer;
   useEffect(() => {
-    let alive = true;
+    let alive = true;const request=new AbortController();
     setAttempt(null);
     setLoadedFor(null);
     setIndex(0);
@@ -326,9 +335,12 @@ export function Attempt() {
     autoSubmitted.current = false;
     answerSync.current = null;
     if (userId)
-      rpc("read_attempt", { p_id: id })
-        .then((data) => {
-          if (!alive) return;
+      rpc("read_attempt", { p_id: id },request.signal)
+        .then(async(data) => {
+          if(!alive||!current())return;
+          await services.checkIdentity(request.signal);
+          if (!alive || !current()) return;
+          if(!data||data.id!==id||!["active","submitted"].includes(data.status)||!Array.isArray(data.questions)||!Number.isFinite(Date.parse(data.serverNow))||!Number.isFinite(Date.parse(data.deadline)))throw new Error("Unconfirmed paper response.");
           const serverTime = Date.parse(data.serverNow);
           const deadline = Date.parse(data.deadline);
           const clientTime = Date.now();
@@ -341,17 +353,18 @@ export function Attempt() {
             revisionSeed: () => Date.now() + offset.current,
             send: async ({ questionId, answer, revision }) => {
               if (!alive || !navigator.onLine) throw new Error("Connection unavailable.");
-              return rpc("save_answer_revision", { p_attempt_id: id, p_question_id: questionId, p_answer: answer, p_revision: revision });
+              const result=await rpc("save_answer_revision", { p_attempt_id: id, p_question_id: questionId, p_answer: answer, p_revision: revision },request.signal);
+              await services.checkIdentity(request.signal);return result;
             },
             onSaved: ({ questionId, answer, revision, accepted }) => {
-              if (!alive) return;
+              if (!alive || !current()) return;
               setAttempt((current) => current?.status === "active" ? {
                 ...current,
                 questions: current.questions.map((item) => item.id === questionId ? { ...item, answer, answerRevision: revision } : item),
               } : current);
               if (!accepted && shownQuestion.current === questionId && !queue.hasPending(questionId)) setDraft(answer);
             },
-            onStatus: (state) => { if (alive) setSyncState(state); },
+            onStatus: (state) => { if (alive && current()) setSyncState(state); },
           });
           answerSync.current = queue;
           setLoadedFor(`${userId}:${id}`);
@@ -362,17 +375,17 @@ export function Attempt() {
           } else {
             queue.discard();
           }
-          rpc("my_exam_mock_session", { p_attempt_id: id }).then((value) => alive && setExamSession(value)).catch(() => {});
-          rpc("my_exam_mock_report", { p_attempt_id: id }).then((value) => alive && setExamReport(value)).catch(() => {});
+          rpc("my_exam_mock_session", { p_attempt_id: id }).then((value) => alive && current() && setExamSession(value)).catch(() => {});
+          rpc("my_exam_mock_report", { p_attempt_id: id }).then((value) => alive && current() && setExamReport(value)).catch(() => {});
         })
         .catch(() => {
-          if (alive)
+          if (alive && current())
             setError(
               "This attempt is unavailable. Return to your workspace or try signing in again.",
             );
         });
     return () => {
-      alive = false;
+      alive = false;request.abort();
       clearTimeout(saveTimer.current);
     };
   }, [userId, id]);
@@ -386,8 +399,14 @@ export function Attempt() {
     const retry = () => {
       const clientTime = Date.now();
       setNow(clientTime);
-      if (clientTime + offset.current < Date.parse(attempt.deadline)) answerSync.current?.flush();
-      else {
+      if (clientTime + offset.current < Date.parse(attempt.deadline)) {
+        const queue=answerSync.current;
+        // An online event can arrive while the old offline request is still
+        // settling. Recheck once after that flight; never start a retry loop.
+        void queue?.flush().then(result=>{
+          if(!result.saved&&current()&&answerSync.current===queue&&navigator.onLine&&Date.now()+offset.current<Date.parse(attempt.deadline))void queue.flush();
+        });
+      } else {
         autoSubmitted.current = false;
         setReconnects((count) => count + 1);
       }
@@ -410,7 +429,7 @@ export function Attempt() {
       now + offset.current < Date.parse(examSession.partBOpensAt)
     ) return;
     rpc("my_exam_mock_session", { p_attempt_id: id })
-      .then(setExamSession)
+      .then(value=>{if(current())setExamSession(value);})
       .catch(() => {});
   }, [examSession?.partBState, examSession?.partBOpensAt, id, now]);
   useEffect(() => {
@@ -418,11 +437,11 @@ export function Attempt() {
   }, [confirm]);
   useEffect(() => {
     let alive = true;
-    if (attempt?.questions.some((item) => item.media?.length) && platform) {
-      platform.functions
+    if (attempt?.questions.some((item) => item.media?.length)) {
+      services.functions
         .invoke("attempt-media", { body: { attemptId: id } })
         .then(({ data, error }) => {
-          if (alive) {
+          if (alive && current()) {
             if (error)
               setError(
                 "Couldn’t load the question images. Refresh before continuing.",
@@ -444,7 +463,7 @@ export function Attempt() {
       )
     : 0;
   const record = (value, defer = false) => {
-    if (!q || busy || left === 0 || !validAttemptAnswer(q, value)) return;
+    if (!current() || !q || busy || left === 0 || !validAttemptAnswer(q, value)) return;
     clearTimeout(saveTimer.current);
     answerSync.current?.enqueue(q.id, value, { defer });
     if (defer) {
@@ -462,7 +481,8 @@ export function Attempt() {
     record(value === "" ? null : value, true);
   };
   const submit = async () => {
-    if (busy) return;
+    if (!current() || mutationBusy.current) return;
+    mutationBusy.current=true;
     const queue = answerSync.current;
     clearTimeout(saveTimer.current);
     setBusy(true);
@@ -473,17 +493,20 @@ export function Attempt() {
         if (!sync.saved) throw new Error("Reconnect and save the waiting answers before submitting.");
       }
       const result = await rpc("submit_attempt", { p_id: id });
-      if (result.status === "submitted") queue.discard();
-      if (answerSync.current !== queue) return;
+      await services.checkIdentity();
+      if(!result||result.id!==id||result.status!=="submitted"||!Array.isArray(result.questions)||!Number.isFinite(Date.parse(result.deadline)))throw new Error("Unconfirmed submission response.");
+      if (!current() || answerSync.current !== queue) return;
+      queue.discard();
       setAttempt(result);
-      rpc("my_exam_mock_session",{p_attempt_id:id}).then(setExamSession).catch(()=>{});
-      rpc("my_exam_mock_report",{p_attempt_id:id}).then(setExamReport).catch(()=>{});
+      rpc("my_exam_mock_session",{p_attempt_id:id}).then(value=>{if(current())setExamSession(value);}).catch(()=>{});
+      rpc("my_exam_mock_report",{p_attempt_id:id}).then(value=>{if(current())setExamReport(value);}).catch(()=>{});
       setConfirm(false);
       dialog.current?.close();
     } catch (e) {
-      if (answerSync.current === queue) setError("Couldn’t submit. " + e.message);
+      if (current() && answerSync.current === queue) setError("Couldn’t confirm submission. Reconnect and reopen this attempt to check its saved state before trying again.");
     } finally {
-      if (answerSync.current === queue) setBusy(false);
+      mutationBusy.current=false;
+      if (current() && answerSync.current === queue) setBusy(false);
     }
   };
   useEffect(() => {
@@ -497,8 +520,15 @@ export function Attempt() {
       submit();
     }
   }, [left, busy, attempt?.status, reconnects]);
-  const move = (next) => setIndex(next);
-  if (!session && !loading) return <SignInGate />;
+  const startPartB=async partA=>{
+    if(!current()||mutationBusy.current)return;mutationBusy.current=true;setBusy(true);setError("");
+    try{const next=await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA});await services.checkIdentity();
+      if(typeof next!=="string"||!/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(next))throw new Error("Unconfirmed Part B response.");
+      if(current())navigate(`/attempt/${next}`);
+    }catch{if(current())setError("Couldn’t confirm Part B. Reopen this attempt to check the fixed session before trying again.");}
+    finally{mutationBusy.current=false;if(current())setBusy(false);}
+  };
+  const move = (next) => {if(current())setIndex(next);};
   if (!attempt || loadedFor !== `${userId}:${id}`)
     return (
       <section className="wrap page-intro">
@@ -512,9 +542,9 @@ export function Attempt() {
       </section>
     );
   if (attempt.status === "submitted") {
-    const uploadWindow = <DrawingUploadWindow attempt={attempt} serverTime={now + offset.current} />;
+    const uploadWindow = <DrawingUploadWindow attempt={attempt} serverTime={now + offset.current} invoke={drawingInvoke} />;
     if (attempt.resultsPending) return <PendingAttemptResult title={attempt.title} reviewEndsAt={attempt.reviewEndsAt}>{uploadWindow}</PendingAttemptResult>;
-    if (attempt.examResultsPending && examSession?.partAAttemptId === attempt.id) return <section className="wrap section sample-result"><Link className="back-link" to="/dashboard">← Your workspace</Link><h1>Your Part A is <em>locked.</em></h1><ExamPartTransition session={examSession} busy={busy} onStart={async partA=>{setBusy(true);try{navigate(`/attempt/${await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA})}`)}catch(e){setError(e.message);setBusy(false)}}}/></section>;
+    if (attempt.examResultsPending && examSession?.partAAttemptId === attempt.id) return <section className="wrap section sample-result"><Link className="back-link" to="/dashboard">← Your workspace</Link><h1>Your Part A is <em>locked.</em></h1>{error&&<p className="error" role="alert">{error}</p>}<ExamPartTransition session={examSession} busy={busy} onStart={startPartB}/></section>;
     const topics = [
       ...new Set(
         attempt.questions
@@ -556,6 +586,7 @@ export function Attempt() {
             </>}
           </div>
         </div>
+        {error&&<p className="error" role="alert">{error}</p>}
         {uploadWindow}
         {!attempt.examResultsPending && <>
         <div className="result-grid">
@@ -602,7 +633,7 @@ export function Attempt() {
         <AttemptInsights questions={attempt.questions} />
         </>}
         <ExamSessionReport report={examReport} />
-        <ExamPartTransition session={examSession} busy={busy} onStart={async partA=>{setBusy(true);try{const next=await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA});navigate(`/attempt/${next}`)}catch(e){setError(e.message);setBusy(false)}}}/>
+        <ExamPartTransition session={examSession} busy={busy} onStart={startPartB}/>
         {!attempt.examResultsPending && <div className="review-toggle">
           <h2>Explore the explanations.</h2>
           <button
@@ -779,7 +810,7 @@ export function Attempt() {
                   disabled={busy || left === 0}
                 />
               </label>
-              <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} />
+              <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} invoke={drawingInvoke} />
             </>
           )}
           {["nat", "drawing"].includes(q.kind) && (
@@ -802,14 +833,10 @@ export function Attempt() {
           <QuestionReport
             key={q.id}
             disabled={busy}
-            onSubmit={({ reason, details }) =>
-              rpc("report_attempt_question", {
-                p_attempt_id: id,
-                p_question_id: q.id,
-                p_reason: reason,
-                p_details: details,
-              })
-            }
+            onSubmit={async({ reason, details }) => {
+              try{return await rpc("report_attempt_question",{p_attempt_id:id,p_question_id:q.id,p_reason:reason,p_details:details});}
+              catch{throw new Error("Couldn’t confirm this report. Reconnect and try again.");}
+            }}
           />
           <div className="runner-actions">
             <button

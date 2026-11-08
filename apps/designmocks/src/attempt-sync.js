@@ -25,15 +25,17 @@ export function createAnswerSyncQueue({
         status("saving");
         try {
           const result = await send({ questionId, answer: entry.answer, revision: entry.revision });
-          if (result?.accepted === false && !Object.hasOwn(result, "answer")) {
+          if (!result || typeof result.accepted !== "boolean" || !Number.isSafeInteger(result.revision) ||
+              result.revision < entry.revision || !Object.hasOwn(result, "answer") ||
+              result.accepted && (result.revision !== entry.revision || JSON.stringify(result.answer) !== JSON.stringify(entry.answer))) {
             throw new Error("Couldn’t confirm the current saved answer.");
           }
-          const revision = Math.max(entry.revision, result?.revision ?? 0);
-          const answer = result && Object.hasOwn(result, "answer") ? result.answer : entry.answer;
+          const revision = result.revision;
+          const answer = result.answer;
           revisions.set(questionId, Math.max(revisions.get(questionId) ?? 0, revision));
           if (pending.get(questionId)?.revision <= revision) pending.delete(questionId);
           journal?.acknowledge(questionId, revision);
-          onSaved({ questionId, answer, revision, accepted: result?.accepted !== false });
+          onSaved({ questionId, answer, revision, accepted: result.accepted });
         } catch (error) {
           status("waiting", error);
           return { saved: false, pending: pending.size, error };
