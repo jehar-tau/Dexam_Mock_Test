@@ -20,6 +20,8 @@ function numericKey(raw){
  if(numeric.test(raw)&&Number.isFinite(Number(raw)))return{kind:'nat',accepted:[{exact:raw}]};
  const match=raw.match(range);
  if(match&&Number.isFinite(Number(match[1]))&&Number.isFinite(Number(match[2]))&&decimalAtMost(match[1],match[2]))return{kind:'nat',accepted:[{range:[match[1],match[2]]}]};
+ const alternatives=raw.split(/\s+or\s+/i);
+ if(alternatives.length>1&&new Set(alternatives).size===alternatives.length&&alternatives.every(value=>numeric.test(value)&&Number.isFinite(Number(value))))return{kind:'nat',accepted:alternatives.map(exact=>({exact}))};
  return null;
 }
 // Structured issues contain locations and stable codes, never source text/keys.

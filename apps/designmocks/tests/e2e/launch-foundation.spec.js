@@ -335,13 +335,18 @@ test("teacher review is released separately to the drawing student", async ({ pa
   await expect(queue.getByRole("img", { name: "Anonymous drawing page 1" })).toBeVisible();
   await queue.getByRole("button", { name: "Refresh private images" }).click();
   await expect(queue.getByRole("img", { name: "Anonymous drawing page 1" })).toBeVisible();
+  await expect.poll(() => queue.getByRole("img", { name: "Anonymous drawing page 1" })
+    .evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
   await queue.getByLabel("Criterion 1", { exact: true }).fill("Composition");
   await queue.getByLabel("Mark 1", { exact: true }).fill("8");
   await queue.getByRole("button", { name: "Add criterion" }).click();
   await queue.getByLabel("Criterion 2", { exact: true }).fill("Clarity");
   await queue.getByLabel("Mark 2", { exact: true }).fill("17");
   await page.getByLabel("Feedback").fill("Clear hierarchy; strengthen the directional contrast.");
-  await queue.getByRole("button", { name: "Save human review" }).click();
+  await expect(queue.getByLabel("Total marks")).toHaveText("25 / 20");
+  const invalidTotalSubmit = queue.getByRole("button", { name: "Save human review" });
+  await expect.poll(() => invalidTotalSubmit.evaluate(button => button.form.checkValidity())).toBe(true);
+  await invalidTotalSubmit.press("Enter");
   await expect(queue.getByRole("alert")).toContainText("cannot exceed 20 marks");
   await queue.getByLabel("Mark 2", { exact: true }).fill("7");
   await expect(queue.getByLabel("Total marks")).toHaveText("15 / 20");

@@ -14,7 +14,7 @@ Scope frozen by the owner on **8 November 2026**. [PRODUCT_EXECUTION_PLAN.md](PR
 - [ ] Finish and verify refund/revocation basics, duplicate-purchase prevention and cross-account/order/amount/currency failures on the final MVP schema.
   PR #99 source/strict PR/main acceptance passes 300 units, 296 browser journeys, 72 migrations/40 database suites, signed fictional Edge events and actual desktop/mobile SDK checks. Full refunds revoke only their order's pass; partial/duplicate purchases require review. Real provider acceptance/final policy remains required before checking the launch gate. See REFUND_RECONCILIATION.md.
 - [x] Deliver current-account checkout: PR #100 exact-head PR/main acceptance passes 313 units, 342 zero-retry browser journeys and actual SDK terms/pass checks. Order/window simulation is not real merchant acceptance. See CHECKOUT_ACCEPTANCE.md.
-- [ ] Deliver the reviewed companion MVP deployment profile after exact-head PR/main acceptance; apply it last on the approved target. Candidate passes 322 units/354 zero-retry journeys/42 database suites. See MVP_DEPLOYMENT.md.
+- [ ] Apply the reviewed companion MVP deployment profile last on the approved target. Its source is accepted through PR #104 (351 units/370 strict journeys/44 database suites); hosted promotion remains unaccepted. See MVP_DEPLOYMENT.md.
 - [ ] Configure an expiring controlled Test window only after final content/policy decisions and verified Google tester allowlisting. Keep provider acceptance false until the real journey succeeds, public registration/sales closed and mode Test. Close the window explicitly before Live promotion.
 - [ ] Replace/deactivate the previously exposed Razorpay Test pair, enter fresh server secrets privately and configure the correct signed webhook. Never place secrets in Vite, Git, logs or chat.
 - [ ] Approve/publish final operator, support/contact, privacy, purchase terms, refund/cancellation and tax/invoice details; resolve younger-student policy and retention/deletion handling.
@@ -24,7 +24,8 @@ Scope frozen by the owner on **8 November 2026**. [PRODUCT_EXECUTION_PLAN.md](PR
 - [ ] Record the explicit final go-live decision; enable public registration, the verified catalogue and sales through their separate switches. A client callback never grants access.
 
 - [x] Extract supplied operator/proprietor/address and support email for source notices; exclude the private certificate, PAN, banking and personal contacts. Final policy gates remain separate.
-- [ ] Accept receipt recovery, corrected service health and profile-first minimal operations after exact-head PR/main checks (candidate: 342 units/358 strict journeys/44 database suites). See CHECKOUT_RECOVERY.md.
+- [x] Accept receipt-recovery/service-health/minimal-operations source through PR #102 and subsequent strict PR/main checks. Real hosted/provider acceptance remains separate. See CHECKOUT_RECOVERY.md.
+- [x] Accept private bank placement/checklists and correction diagnostics through PRs #103/#104; local NIFT materialization is verified, with no real approvals/publication. The exact-numeric-alternatives follow-up still requires feature/main acceptance.
 
 ## Post-launch — no launch blocker
 
