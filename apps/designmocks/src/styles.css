@@ -1344,6 +1344,10 @@ svg {
   min-width: 0;
   overflow-wrap: anywhere;
 }
+.learn-page, .lesson-body {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .account-card > svg {
   color: var(--orange);
   margin-bottom: 25px;
