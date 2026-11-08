@@ -37,7 +37,7 @@ import { OperationalHealthPreview } from "./OperationalHealth.jsx";
 import { LaunchReadinessPreview } from "./LaunchReadiness.jsx";
 import { QuestionDraftExportPreview } from "./QuestionDraftExport.jsx";
 import { AttemptInsightsPreview } from "./AttemptInsights.jsx";
-import { AccountPrivacy, AccountPrivacyPreview } from "./AccountPrivacy.jsx";
+import { AccountPrivacyPanel, AccountPrivacyPreview } from "./AccountPrivacy.jsx";
 import { ExamPartTransitionPreview } from "./ExamPartTransition.jsx";
 import { useAuthState } from "./useAuth.js";
 import { clearDeviceAnswers } from "./attempt-answer-journal.js";
@@ -998,7 +998,6 @@ function Account() {
   const [accepted, setAccepted] = useState(false);
   const [busy, setBusy] = useState(false);
   const [sessionStatus, setSessionStatus] = useState("");
-  const [privacyRequests, setPrivacyRequests] = useState([]);
   const [reviewerAccountId, setReviewerAccountId] = useState(null);
   const [error, setError] = useState(() => authCallbackMessage(window.location.search, window.location.hash));
   const login = async () => {
@@ -1055,8 +1054,6 @@ function Account() {
         });
     }
   }, [session]);
-  const loadPrivacyRequests = useCallback(() => session && platform.rpc("my_privacy_requests").then(({data,error})=>{if(error)throw error;setPrivacyRequests(data)}).catch(()=>setSessionStatus("Could not load account privacy requests.")),[session]);
-  useEffect(()=>{if(session&&workspaceAvailable)loadPrivacyRequests()},[session,workspaceAvailable,loadPrivacyRequests]);
   useEffect(() => {
     setReviewerAccountId(null);
     if (!accountId || !workspaceAvailable) return;
@@ -1106,7 +1103,7 @@ function Account() {
             {checkoutReady && <Button to="/plans" quiet>
               View the annual pass
             </Button>}
-            {workspaceAvailable && <AccountPrivacy key={session.user.id} accountId={session.user.id} requests={privacyRequests} onExport={async({signal})=>{const{data,error}=await platform.rpc("export_my_account_data").abortSignal(signal);if(error)throw error;return data}} onRequestDeletion={async()=>{const{error}=await platform.rpc("request_account_deletion");if(error)throw error;await loadPrivacyRequests()}} onCancel={async(id)=>{const{error}=await platform.rpc("cancel_my_privacy_request",{p_id:id});if(error)throw error;await loadPrivacyRequests()}}/>}
+            {workspaceAvailable && <AccountPrivacyPanel key={session.user.id} accountId={session.user.id}/>}
             <button
               className="text-button"
               disabled={busy}

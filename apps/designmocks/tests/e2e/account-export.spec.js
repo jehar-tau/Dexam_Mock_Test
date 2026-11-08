@@ -95,7 +95,7 @@ test("legacy, mis-scoped, held-score and failed export responses save no file an
   }
   state.response = () => ({ code: "P0001", message: "Fictional export temporarily unavailable" });
   await region.getByRole("button", { name: "Download my data", exact: true }).click();
-  await expect(region.getByRole("status")).toHaveText("Fictional export temporarily unavailable");
+  await expect(region.getByRole("status")).toHaveText("Couldn’t prepare your export. Try downloading your data again.");
   expect(downloads).toHaveLength(0);
   state.response = () => payload(first);
   expect((await downloadJSON(page)).accountId).toBe(first.id);
