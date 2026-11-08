@@ -31,10 +31,9 @@ Run `prune_attempt_rate_buckets()` with the service identity once daily. It reta
 
 ## Backup and restore
 
-- Confirm an approved database and private-media backup plus a proven restore before every production migration. Initial encrypted logical backups/private-object snapshots may support the small launch if the owner accepts the recovery target and operating process. Paid daily-backup/PITR services require a separate budget decision; do not provision them automatically. Neither a local empty-schema test nor a database-only dump proves private-media recovery.
-- Quarterly, restore into a new isolated project with no OAuth, email, payment or public DNS connections. Verify migration ledger, row counts, RLS, private buckets, attempt reads, scoring and aggregate health.
-- Destroy the isolated restore after evidence is retained. Never restore production data into development or staging.
-- Frontend rollback uses the previous immutable deployment artifact. Database migrations remain forward-compatible; do not roll back by dropping columns or deleting student data.
+Use the operator-only capture/verify commands and isolated restoration procedure in [RECOVERY.md](RECOVERY.md). It includes encrypted database and actual private-object bytes, with a consistency check before a bundle is ready. Never treat a database-only dump or an empty-schema test as private-media recovery.
+
+Before a production migration, accept backup/key custody, an offsite copy, the approved recovery target and a real restore. Paid backup/PITR services need a budget decision. Retest quarterly and after significant schema/storage changes in a new isolated target without OAuth, email, merchant or public DNS connections. Verify original clocks, answers, payment receipts, RLS and private files; remove the target afterward. Frontend rollback uses the prior immutable artifact; do not drop columns or customer data as a rollback shortcut.
 
 ## Payment reconciliation
 

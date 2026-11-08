@@ -30,7 +30,9 @@
     "capacity:run": "node scripts/capacity-load.mjs",
     "operations:sweep": "node scripts/operations-sweep.mjs",
     "bank:reconcile": "node scripts/reconcile-bank-state.mjs",
-    "bank:diagnostics": "node scripts/bank-conversion-report.mjs"
+    "bank:diagnostics": "node scripts/bank-conversion-report.mjs",
+    "recovery:capture": "node scripts/private-recovery.mjs capture",
+    "recovery:verify": "node scripts/private-recovery.mjs verify"
   },
   "dependencies": {
     "@imagemagick/magick-wasm": "0.0.46",
