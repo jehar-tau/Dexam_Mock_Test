@@ -81,6 +81,10 @@ test('support context excludes URL query strings and fragments',async({page})=>{
  await expect.poll(()=>state.submissions.length).toBe(1);expect(state.submissions[0].p_page_url).toBe(portalFixtureURL+'/report');
 });
 
+test('an SDK token change before notification cannot send another account private support draft',async({page})=>{
+ const state=await fixture(page);await fillReport(page,'A private original fictional first-account draft');await seedPortalSession(page,second);await page.getByRole('button',{name:'Send report',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Report access could not be verified');await expect(page.getByLabel('Short title',{exact:true})).toHaveCount(0);expect(state.submissions).toEqual([]);
+});
+
 test('a lost committed acknowledgement retries the same report and keeps an intervening team reply',async({page})=>{
  await page.clock.install();const state=await fixture(page);state.dropAcknowledgements=1;await fillReport(page);await page.getByRole('button',{name:'Send report',exact:true}).click();
  await expect(page.getByText('Couldn’t confirm your report. Retry the same report to check it.',{exact:true})).toBeVisible();await expect(page.getByLabel('Short title',{exact:true})).toBeDisabled();

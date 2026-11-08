@@ -2418,6 +2418,10 @@ svg {
 .candidate-profile-form > label { display: grid; gap: .45rem; font-weight: 700; }
 .candidate-profile-form input, .candidate-profile-form select { width: 100%; padding: .85rem; color: inherit; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
 .candidate-profile-form label > span, .candidate-profile-form fieldset > span { color: var(--error,#9b2c2c); font-size: .9rem; }
+.candidate-profile-form .profile-error { color: var(--error); font-size: .9rem; }
+.candidate-profile-form .profile-field { display: grid; gap: .45rem; min-width: 0; }
+.candidate-profile-form .profile-field > label { font-weight: 700; }
+.candidate-profile-form .profile-field input { min-width: 0; }
 .candidate-profile-form small { color: var(--muted); font-weight: 400; }
 .candidate-profile-form fieldset { display: grid; gap: .65rem; padding: 1rem; border: 1px solid var(--line); }
 .candidate-profile-form legend { padding-inline: .35rem; font-weight: 700; }
