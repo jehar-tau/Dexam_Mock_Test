@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuthState } from "./useAuth.js";
 import { portalItems, portalModules } from "./portalModel.mjs";
+import {postLaunchPreview}from'./launch-scope.js';
+import {launchNavigation,deferredModules}from'./launch-scope.mjs';
 
 export function PortalShell({ children }) {
   const [open, setOpen] = useState(false);
@@ -10,12 +12,19 @@ export function PortalShell({ children }) {
     <aside className={open ? "portal-sidebar is-open" : "portal-sidebar"} id="student-navigation">
       <span className="eyebrow">YOUR DMOCKS SPACE</span>
       <nav aria-label="Student workspace">
-        {portalItems.map(({to, label, mark, end}) => <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}><i aria-hidden="true">{mark}</i><span>{label}</span></NavLink>)}
+        {(postLaunchPreview?portalItems:launchNavigation).map(({to, label, mark, end}) => <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}><i aria-hidden="true">{mark}</i><span>{label}</span></NavLink>)}
       </nav>
       <NavLink className="portal-account-link" to="/account">Account & sign out</NavLink>
     </aside>
     <div className="portal-content">{children}</div>
   </div>;
+}
+
+export function DeferredModule({module}){
+ return<PortalShell><section className="wrap section"><span className="eyebrow">COMING LATER</span><h1>{deferredModules[module]??'This area'}<em>.</em></h1>
+  <p>This area is outside the first paid release. Your annual pass covers only the explicitly released papers in the catalogue.</p>
+  <Link className="button" to="/dashboard/mocks">View released papers</Link>
+ </section></PortalShell>;
 }
 
 export function PortalModule({ module }) {

@@ -1,152 +1,30 @@
-# DesignMocks completion checklist
+# DMocks frozen paid MVP launch checklist
 
-Owner instruction: keep working until the independent mock-test service is complete. Last reconciled: 8 November 2026. A checked item means verified completion, not merely code present. Never mark a provider integration complete on the basis of a login, quota error or unconfigured endpoint.
+Scope frozen by the owner on **8 November 2026**. [PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. Payment work is resumed for this MVP; purchases and public registration stay closed until acceptance. Historical full-portal completion does not substitute for the gates below.
 
-Delivery checkpoint: accepted local source is PR #92 (`2b8e716f9f29f02a6580ff2041276e8b81382f03`), with 516 zero-retry journeys on both accepted PR/main workflows. Learn PR #93 is merged but unaccepted because its PR CI retried a mobile report toggle; its later 548-case main pass does not erase that record. The corrective slice enforces JSON-based no-failure/no-skip/no-retry acceptance and passes 260 JavaScript tests, 548 local journeys and all 71 migrations/37 suites. Require its own complete PR/main acceptance and matching trees before advancing the preview. See [verification](VERIFICATION.md).
+## Launch Now
 
-## Completed foundation
+- [x] Independent DMocks identity/store/brand and active HTTPS domain; private Google callback/PKCE, reload/refresh, sign-out, returning account and cancellation acceptance exist.
+- [x] Public-site/free-sample source and broad local/CI verification exist. PR #97 is accepted on main with 648 zero-retry desktop/mobile journeys.
+- [ ] Hide/mark deferred modules and remove unverified public catalogue/service promises; verify desktop/mobile and production build behavior.
+- [ ] Select one exact first paid offering/part and approve its source rights, stable manifest, question count/types, marking, clock and every image. Use only the canonical export's empty-holds records.
+- [ ] Accept that offering's own-account attempt/read/write isolation, fixed timer, answer/reconnect recovery, immutable submission and useful released result. Label a Part A offering accurately.
+- [x] Server-created order, fixed INR amount, signed captured-payment webhook, duplicate-safe fulfilment and server-only entitlement foundations are implemented/tested locally.
+- [ ] Finish and verify refund/revocation basics, duplicate-purchase prevention and cross-account/order/amount/currency failures on the final MVP schema.
+- [ ] Replace/deactivate the previously exposed Razorpay Test pair, enter fresh server secrets privately and configure the correct signed webhook. Never place secrets in Vite, Git, logs or chat.
+- [ ] Approve/publish final operator, support/contact, privacy, purchase terms, refund/cancellation and tax/invoice details; resolve younger-student policy and retention/deletion handling.
+- [ ] Choose the approved provider/deployment target. Inspect the current hosted ledger; validate database plus private-media backup/restore and promote only matching tested source/functions.
+- [ ] Connect minimal error, order/webhook and entitlement alerts; verify support and incident actions. Keep initial capacity checks proportional to fewer than 100 concurrent users.
+- [ ] Complete one real Razorpay test-mode customer journey on dmocks.com, including Google sign-in, purchase/webhook, one annual pass, the exact paper, reconnect, submission/result, receipt/support and refund/revocation acceptance.
+- [ ] Record the explicit final go-live decision; enable public registration, the verified catalogue and sales through their separate switches. A client callback never grants access.
 
-- [x] Separate DesignMocks source/application; approved Discovery styling and academy attribution/referral links.
-- [x] Owner-private website preview deployed at https://designmocks-studio.snehal1155.chatgpt.site.
-- [x] ₹1,193 annual pass, 12 calendar months, one payment, no automatic renewal.
-- [x] Independent Free Supabase project in Mumbai (`tiodqzvvujxvxssvjdis`); Dexam accounts, databases and merchant credentials remain separate.
-- [x] Database migrations 001–003 applied and tracked, private media bucket created, three backend functions deployed.
-- [x] Server scoring/access/payment invariants pass on hosted Supabase; fictional test records roll back.
-- [x] 10 read-only hosted setup checks pass; new registrations and sales remain closed.
-- [x] Original timed experience sample and focused feedback, answer review, mobile/keyboard/theme/reflow checks.
-- [x] Dedicated Google Cloud project `designmocks-auth-2026`; Google app registration saved after the owner's policy confirmation.
-- [x] Closed-by-default Google signup hook installed and configured; hosted transactional decision tests and role-grant assertions pass. Actual owner OAuth hook execution and callback now pass.
-- [x] Read-only bank readiness scanner and four fixture tests; hashes capture the inspected source versions and concurrent JSON edits invalidate the scan.
+## Post-launch — no launch blocker
 
-- [x] Local, explicitly fictional inside-portal preview: dashboard, original sample links and example feedback report. Preview fixtures/routes are excluded from the production bundle.
+NID/unsupported programmes; All India events/rankings/top-ten; Community; Learn/theory; extra topic-practice products; AI drafting/intake/inference; AI drawing advice; advanced drawing/teacher operations; scanner/resumable transfers; 150-session capacity work; further portal/analytics expansion. Keep these disabled unless the chosen first paper strictly requires one. Do not count this backlog in the remaining MVP percentage.
 
-## Google login — current priority
+## Current boundaries
 
-- [x] Web OAuth client `DesignMocks Web` created in `designmocks-auth-2026`; client inventory and “OAuth client created” confirmation verified on 5 November. Prepared origin/callback are recorded in provider setup; scope verification remains below.
-- [x] Owner saved the Google client ID/secret directly in the separate Supabase provider. Public Auth settings now confirm Google enabled (5 November); credential validity is confirmed by actual callback acceptance below.
-- [x] Verified basic identity scopes and server-controlled owner/tester access; actual Auth hook denial and owner Google callback pass.
-- [x] Enabled labelled owner-only Google testing; the signup hook remains allowlisted and sales remain closed.
-- [x] Local actual Google callback/PKCE, consent, reload persistence, SDK refresh, sign-out, returning-account reuse and cancellation verified.
-- [x] Actual Google callback/PKCE, reload persistence, refresh and sign-out pass on the private `dmocks.com` publication.
-- [x] Google app name/home page/authorized domain saved as DMocks / `dmocks.com`; Testing audience preserved.
-- [x] Desktop and mobile fixture sessions can refresh and sign out from the controlled account screen. Direct student, attempt and administrator routes stay closed in that build.
-- [x] Verify a separate staging portal build with exact-origin and project guards, server-checked tester access, and closed checkout. Desktop and mobile tests exercise the built artifact.
-- [ ] Promote the staging database and functions, then verify tester admission and a representative exam journey on the private deployment.
-- [ ] Complete public Google branding verification and final public privacy/terms links before registration opens.
-
-## Paper delivery and assessment
-
-- [x] Located and audited the owner-selected canonical `origin/main:server/data/exports/dexam-bank-export.json`; the newer PRODUCT_EXECUTION_PLAN and QUESTION_BANK_AUDIT supersede the old workstation scan for source eligibility.
-- [x] Implement the canonical-source importer and verify dry-run/eligibility/runtime fixtures; no real question content is in the app source or browser bundle.
-- [x] Import the exact canonical hold-free set privately and verify full replay against the same completed run.
-- [x] Upload and verify all canonical private images; accept actual authenticated browser delivery without public access.
-- [x] Convert and verify UCEED/CEED objective questions with explicit 2027 marking/private images; hosted materialization, replay and exact full-record comparison pass for 1,502 converted questions.
-- [x] Verify canonical import replay preserves independently compiled runtime decisions.
-- [x] Verify the NIFT 2027 B.Des. GAT context, compile supported questions locally and verify the fixed count, clock and marking in PostgreSQL. The offline run compiled 155 of 298 eligible canonical NIFT records.
-- [ ] Verify the NID programme-specific context. Complete hosted NIFT runtime materialization, replay and human review before releasing NIFT GAT.
-- [ ] Complete exact paper/marking/section manifests and full timed-part delivery before publication.
-- [ ] Implement and verify paper-specific sections, timing, marking and locking against the reviewed blueprints; do not present the flat prototype as a complete official exam simulation.
-- [ ] Verify image delivery, saved/resumed attempts, deadline enforcement and immutable submitted answers with representative reviewed papers.
-- [x] Finish useful objective question-type/topic reporting, answer explanations and deterministic weakest-topic practice recommendations. Drawing and dropped questions remain excluded from objective insights; unreleased All India feedback remains hidden.
-- [x] Keep pending sequential exam and All India results out of Overview statistics and Learn recommendations. Show awaiting-release status separately.
-- [x] Use published cohort scores and one combined result per complete exam for Overview percentages. Preserve ordinary negative/zero scores and show released exam cards when objective accuracy is unavailable.
-- [x] Verify Overview identity before finalization/private reads and pin starts to captured actors. Clear old account/history snapshots, bound/validate reads, suppress overlapping starts, recheck identity before navigation and require explicit current-state inspection after unknown acknowledgement. Unit/database, actual isolated provider/SDK desktop/mobile and all 600 local journeys pass without retries; exact-head delivery CI remains required. Fixed clocks, scoring and offline journals are unchanged.
-- [x] Verify account/history scope for exam, All India and topic choices/starts; pin actors, validate DTOs/receipts, bound pending work and inspect owned saved attempts after unknown commits without replay. Preserve free/paid/profile/quality gates, once-only fixed events and exact practice parameters. Seven new units, 48 new browser cases, all 648 local journeys and actual isolated provider/SDK desktop/mobile acceptance pass without retries; exact-head delivery CI remains required. Active-exam/offline journal hardening remains separate.
-- [x] Prefer unseen ready questions in topic practice with randomized fallback. Verify own-history isolation, simultaneous starts, legacy identities, exact counts/timers, access/quality gates and frozen snapshots.
-- [x] Align released Part B paper/history/export grades and frozen totals with the combined report; keep partial feedback sealed. Verify real isolated Auth, private uploads, reviewer timing, role isolation and desktop/mobile student journeys.
-- [x] Verify theory drafts, audited publication and withdrawal, and preserved student progress with local database tests and desktop/mobile browser fixtures.
-- [x] Link Learn to the exact exam/topic practice pool, distinguish ambiguous/unavailable contexts, preserve encoded URLs/history, and cancel late start navigation across context/account/page changes. Verify desktop/mobile keyboard, both themes, 320px reflow and unchanged pass/profile denials.
-- [x] Verify owner-bound drawing uploads, final-evidence claims, private image access, criterion totals and audited grade overrides locally. Desktop/mobile coverage includes the grading form and explicit feedback release.
-- [x] Validate complete drawing rasters and remove unnecessary metadata before private Storage while preserving compressed pixels, colour profiles and all EXIF orientations. Verify bounded decoding/requests, sanitized-size receipts, rejected-image retry, concurrent pages and post-decode cutoff cleanup through actual isolated Auth/Edge/Storage and desktop/mobile journeys.
-- [x] Inspect private student and anonymous teacher pages with correct orientation, rotation/mirror, zoom/actual size, transparent-ink backgrounds, keyboard and mobile controls. Verify owned metadata/export, fixed clocks, account/expiry clearing and a real queued-signing/reviewer-revocation race in isolated Supabase.
-- [x] Validate full Community post/reply rasters, remove unnecessary metadata, bind sanitized object receipts, recover partial/lost image acknowledgements without reposting text, and recheck moderation after signing/decoding. Real isolated Auth/Storage/Edge and desktop/mobile acceptance cover permissions, both queued races, original pixels, legacy compatibility, expiry, account changes and accessibility.
-- [x] Verify account-bound text request replay, nested reply controls, bounded snapshot/anchor reading, redaction refresh and view/focus preservation through late text/image/helpful acknowledgements. Real isolated Auth/PostgREST and desktop/mobile SDK acceptance pass; explicit retry and anchored continuation regressions are covered.
-- [x] Inspect current reported content, hidden parent/discussion context and private images before version-checked hide/dismiss with a written reason and private audit. Verify stale/object/role fences, competing decisions, missing-image containment, queued late registration and actual desktop/mobile inspection.
-- [x] Collect report reasons/details for the exact discussion or reply, confirm uncertain retries without duplicate reports or overwritten notes, retain rate/visibility fences and verify actual Auth/PostgREST plus desktop/mobile keyboard, themes and accessibility.
-- [x] Read at most 25 discussions per page with exact exam/topic filters, insertion clocks after the shared admission fence, stable microsecond cursors, redaction invalidation, isolated filter intents, draft/focus preservation and real Auth/PostgREST concurrency plus desktop/mobile acceptance.
-- [x] Add images to owned saved discussions/replies without reposting text or replacing originals. Recheck current free positions, retain exact files/positions on retries, preserve account/view/filter scope, and verify real provider plus desktop/mobile recovery.
-- [x] Inspect member question/solution images using only current signed scope; support full raster controls, exact opener/keyboard recovery, expiry/URL/account/navigation clearing and guarded delayed closes. Verify current/legacy formats and real provider moderation denial.
-- [x] Verify current Community identity before private access and pin every RPC, signing and upload to its captured actor. Bound reads/uploads, discard late account/history work, close private inspectors on verification loss, preserve other drafts after target-specific denial and require explicit same-position recovery without reposting saved text. Unit/database, actual isolated provider/SDK desktop/mobile and all 576 local browser journeys pass without retries; exact-head delivery CI remains required.
-- [x] Browse and inspect current visible/hidden/locked Community discussions and replies, then record version-bound written hide/restore/lock/unlock with immutable evidence and duplicate-request receipts. Verify exact private image scope, missing-image restoration denial, actual concurrent role/object/feed fences and desktop/mobile SDK operation.
-- [ ] Complete attachment removal/replacement under an approved evidence-retention plan.
-- [x] Verify All India drawing uploads during the results hold, the final-review gate, and combined marks and ranks using a twelve-candidate synthetic cohort.
-- [x] Verify the separate teacher queue, assigned-image access, grading, and audited reviewer grants and revocation with local database tests and desktop/mobile browser fixtures.
-- [x] Verify teacher-role lifecycle and assignment-specific clearing with actual isolated provider desktop/mobile journeys, preserving other permitted drafts, frozen evidence and late-action fences. Corrective PR #88 has matching green PR/main trees and zero retries.
-- [x] Verify private support reporting with current-account checks, immutable replay receipts, shared serialized quota, redacted new context, bounded raw-microsecond history, late account/history response rejection and audited current-role staff replies. Unit/database and actual isolated desktop/mobile SDK proof pass locally; exact-head delivery CI remains required.
-- [x] Audit profile/onboarding and initial Auth session reads for account/history changes, late completion, uncertain saves and explicit recovery. Verify strict null input, serialized service phone proof, role/ownership boundaries, actual queued stale-proof races and desktop/mobile SDK behavior locally. Real OTP and exact-head delivery CI remain separate gates.
-- [x] Harden account privacy reads/mutations and late reply/download handling with verified actors, strict DTOs, deadlines, overlap guards and explicit current-state recovery without replay. Unit/database and actual Auth/PostgREST desktop/mobile proof pass locally; exact-head delivery CI remains required.
-- [x] Bind Learn requests/completion to verified actors, cancel account/history/late work, validate catalogue/progress/reader DTOs, bound deadlines and require saved-progress reads after unknown commits. Preserve free theory and exact practice links; unit/database and actual SDK desktop/mobile proof pass locally, with exact-head delivery CI required.
-- [ ] Bind remaining Community/assessment/account requests to verified actors, bound/version general support administration and review privacy-operator status/version/audit handling.
-- [x] Verify staff/reviewer role checks, RPC and Edge actions against token changes before notification and after verification. Actual replies, grades, private downloads/signing, audit actors, scopes and frozen evidence pass in isolated Auth/PostgREST/Edge/Storage and desktop/mobile; exact-head delivery CI remains required.
-- [ ] Verify exact token-to-actor binding on remaining Community, Learn and assessment/account requests, including token changes before SDK notification. Profile/support and staff/reviewer clients are covered locally.
-- [x] Verify local answer recovery across reload and reconnect, stale-revision reconciliation, and deadline finalization of the last server-accepted answers.
-- [ ] Approve and deploy the separately implemented human drawing-review operation before promising that service publicly.
-- [x] Correct private drawing orientation per browser and format, including Chromium WebP, and verify all eight orientations across desktop/mobile against independently decoded pixels.
-- [ ] Accept drawing malware scanning/quarantine, resumable transfers and representative hosted image resource limits. Raster decoding and metadata removal do not replace a general malware scanner.
-- [ ] Import reviewed theory material and verify the Learn lifecycle with synthetic accounts in hosted staging.
-- [ ] Confirm content-rights/publication authorization before releasing paid official-paper practice. Human review is already confirmed; rights are a separate recorded launch prerequisite.
-- [x] Implement private PDF/photo upload, single-worker extraction lifecycle, strict structured candidates, per-question correction/rejection and mandatory human-review holds. Provider deployment remains closed pending source rights, consent, retention, model and cost approval.
-- [x] Verify structured corrections, manual transcription of multiple questions per file, retained private PNG figures, authenticated source/figure downloads and canonical intake exports. Synthetic local Supabase acceptance covers concurrent retries, the actual importer, private-media registration and verified runtime materialization.
-- [x] Recover interrupted extraction and AI draft jobs with five-minute expiry, bounded service sweeps, explicit admin retries and private processing tokens. Verify late-worker rejection, creator/reference checks, legacy HTTP compatibility and preserved review holds using isolated Supabase and desktop/mobile journeys.
-- [x] Verify rights-cleared AI references and human-reviewed canonical draft exports in PostgreSQL and desktop/mobile. A fictional model response passed the real importer and UCEED runtime compiler in isolated Supabase.
-- [x] Review the complete imported bank through searchable, filtered pagination, full canonical questions/answers/marking and signed private figures. Require a written review and exact current version; deny incomplete media, stale decisions, students and drawing-only teachers. Isolated Supabase acceptance covers actual Auth, compiler/importer/runtime writes, HTTP overloads and private PNG delivery.
-- [x] Hold a reported question version from new attempts at five unique students, raise priority at ten, rate-limit accepted reports and audit human resolution. Verify the threshold/admission race, fixed All India paper suspension, unchanged existing attempts, private snapshot figures and corrected-source import/review using disposable Supabase.
-- [ ] Approve AI processing and verify real model output in staging before enabling the generation service.
-
-## Payments and access
-
-- [ ] **Deferred by owner, 6 November:** resume Razorpay only when requested. Merchant onboarding is at website details; the exposed old Test pair must be replaced/deactivated before use.
-- [ ] Configure separate Razorpay Test keys and a signed webhook in server secret storage.
-- [ ] Test actual provider orders, cancellation, failed payment, captured payment, signatures, duplicate/retried/out-of-order events and exact annual access.
-- [ ] Implement/test refund and access-revocation/reconciliation behaviour consistent with the approved purchase policy.
-- [ ] Verify a customer cannot buy a second active pass, choose their own price, forge entitlement or access another account's attempts.
-
-## Production readiness
-
-- [ ] Draft concrete operator, privacy, purchase/refund, support and invoice information from verified academy details; obtain owner decisions where they define commercial policy.
-- [ ] Implement agreed retention, deletion/support and younger-student handling before public registration.
-- [x] Implement authenticated self-service JSON data export plus idempotent, reversible account-deletion requests and an audited administrator handling queue. Actual deletion remains a separately verified operator action pending the retention policy.
-- [x] Verify account-export ownership and result holds across All India, combined exams, upload windows and partial teacher review. Retain own answers/reports, exclude private review hashes and advisory data, use published cohort/teacher scores, and cancel pending downloads on sign-out or navigation. Desktop/mobile and real isolated Auth/PostgREST acceptance pass.
-- [x] Implement server-owned UCEED/CEED Part A → Part B sessions with fixed official clocks/task counts, single-start idempotency, cross-student denial and the existing 15-minute drawing-upload grace. Provider-backed human review remains a release gate.
-- [x] Gate Part A marks/keys through the complete Part B upload/review lifecycle and release one combined server-calculated report with objective and drawing subtotals.
-- [ ] Complete unit/database/browser/provider acceptance checks, accessibility/mobile reflow and the real exam bank checks; resolve blocking findings.
-- [x] Clear every administrator panel after confirmed role loss/failed verification; fence bulk refreshes, function requests/downloads and account/history changes. Preserve other permitted work after a verified-role target denial and require explicit recovery without resending an action. Local unit/database and actual provider/desktop/mobile checks pass; CI still gates feature delivery.
-- [x] Independently audit teacher-workspace account/history, pending page/media requests and denied-submission lifecycles. Reproduce stale queue/history failures; verify whole-role clearing, target-only removal, preserved unrelated drafts, late committed-grade fencing and explicit recovery with unit/database and actual provider desktop/mobile acceptance. Exact-head CI remains the delivery gate.
-- [ ] Prepare monitoring, recovery/backup and support/reconciliation runbooks appropriate to the selected hosting tier.
-- [x] Add a guarded, server-only operations sweep for bounded expired-attempt finalization, rate-bucket retention and privacy-safe health output. Scheduler installation, alert destination and backup policy remain hosting/owner decisions.
-- [x] Add audited launch-gate attestations and a database sales-activation guard. Rights, policies, child safety, drawing operations, provider acceptance, backup/restore and capacity evidence must all be approved; the interface never enables sales by itself.
-- [ ] Execute the guarded 150-session staging capacity plan with 75 synthetic active attempts; retain p95/error evidence and provider CPU/connection metrics. The harness and safety tests are implemented, but no external load run has been authorized or claimed.
-- [x] GitHub app source merged in the selected private repository; existing owner-private Sites target and custom-domain hosting path verified.
-- [x] Owner-connected `dmocks.com` is active with HTTPS; verified through Sites domain state. No purchase was made by this continuation.
-- [x] Custom-domain DNS/TLS and exact Google/Supabase callback allowlist configured.
-- [ ] Align and accept the actual checkout/webhook origins after Test merchant setup.
-- [ ] Present the finished service and real costs for final public/live-payment approval. Preserve the owner-private audience until that approval.
-- [ ] Enable approved production registration/papers/payments, verify the public customer journey, and hand over the live URL, configuration inventory and operating instructions.
-
-## Current verified state — 7 November 2026
-
-This section supersedes older handoffs. Google is enabled and actual owner login works locally and on the owner-private `dmocks.com` Site. Registration remains tester-only (one approved owner), with sales disabled, zero orders/passes and zero released papers. Razorpay is deferred by the owner; do not request or install merchant keys until resumed.
-
-The standalone project has 25 applied migrations and three active functions as of the 7 November read-only check. Comparing that ledger with the 71 local migrations through `202611060147` leaves 46 pending. The earlier AI drafting migration `202611060006` is absent from the ledger, before already applied `202611060101` and `202611060102`. This comparison is not a fresh hosted dry run. A local model of that 25-version baseline preserves synthetic Auth/profile/allowlist/canonical-runtime/media rows through all 46 pending migrations, backup/restore and 35 transactional suites. This proves the modelled local upgrade, not hosted backup or Storage recovery. The matching staging migrations and functions still need promotion and acceptance. See the provider setup and operations runbook for the rollout.
-
-The canonical export has 4,521 records: 2,582 explicit empty-holds rows imported privately, 1,939 excluded. Full server-payload comparison and importer replay pass. All 2,085 referenced PNGs (273,263,304 bytes) are now privately uploaded, downloaded and hash-verified, with matching registered dimensions/size. All original PNGs also pass full Pillow decode. Source files remain outside the app and browser bundle. No rights/publication flags were approved.
-
-The first upload stopped after 1,779 registrations and 1,781 objects. A bounded retry/resume verified previous metadata, registered the remaining 306 assets and reused two already uploaded objects. All 2,085 final objects and registrations match; replaying three verifies reuse without overwrites. No root cause is asserted for the original interrupted request. Public image retrieval returns 400, anonymous download returns 404 and browser Storage policies remain absent.
-
-Actual owner-browser acceptance rendered a 1496 × 687 image through the existing authenticated attempt signer in an explicitly temporary, unpublished, unreviewed QA fixture. No answer was selected/submitted. The fixture was removed and hosted counts returned to zero attempts/papers. This proves private image delivery, not acceptance of a complete reviewed exam or commercial release.
-
-The verified 2027 UCEED/CEED compiler converts 1,502 objective questions with private images (830 UCEED, 672 CEED). Hosted materialization and replay verified every one of the 2,582 runtime decisions against the canonical content hash and compiled JSON. Repeating the original canonical import preserves the runtime records. The NIFT B.Des. GAT compiler and blueprint passed locally. NID and the remaining NIFT contexts need verified programme-specific rules. The 48 Dexam-original records have no supplied input-image assets. The bank still needs publication approval.
-
-The accepted teacher baseline, PR #88, passed 214 JavaScript tests, four Python fixtures, 404 desktop/mobile journeys without retries, build/isolation, eleven server types and 69 migrations/33 suites. Its exact-head PR/main workflows `42440584972` / `42441868951` pass with identical tested/merged trees and cover #87's historical timeout/retry without relabelling it. The support slice's complete local check passes 222 JavaScript tests, four Python fixtures, all 440 desktop/mobile journeys without retries, build/isolation and eleven server types. All 70 migrations/34 suites and actual isolated provider/SDK checks pass locally. Retain its first complete local browser run's existing Community expiry retry; fifty focused repetitions and the complete repeat passed without retries. Require exact-head PR/main CI for delivery. Production dependencies have zero vulnerabilities. Owned fixtures/keys/logs are removed.
-
-The profile slice's final complete local check passes 238 JavaScript tests, four Python fixtures, all 478 desktop/mobile journeys without retries, eleven server types, build/isolation, 71 migrations/35 suites and a zero-finding production dependency audit. Actual isolated provider and desktop/mobile SDK checks reproduce and fix null validation and queued stale phone verification, preserve terms, deny browser verification/direct writes and fence initial-session/account/history/late-save results. Profile/support requests also bind the verified token through dispatch; actual token switches before notification and after verification cannot redirect a save into the other account. Both owned fixtures and keys are removed. Real OTP is not claimed; exact-head PR/main CI remains required.
-
-A separate six-CPU localhost API burst passed 3,000 complete-response requests over 150 sessions/75 active 100-question attempts, with zero errors/deadlocks, public p95 259ms and authenticated p95 400ms, preserved revisions/clocks/snapshots and denied foreign/anonymous answers. It does not accept hosted/CDN, signup/attempt-start/media, sustained traffic or 50,000 accounts. The managed Site remains owner-private and was last verified with source through PR #24. Deployed-bank/Cloudboard reconciliation, representative hosted papers, staging capacity, model acceptance, rights, policies and public-launch approval remain open. Next source work covers Community and remaining assessment/account actor binding, bounded/versioned support administration and privacy-operator handling; hosted promotion still requires the pending owner staging-target decision.
-
-The privacy lifecycle source passes 248 JavaScript tests, four Python fixtures, all 516 desktop/mobile journeys without retries, eleven server types, build/isolation, all 71 migrations/36 authorization suites and zero production audit findings. Actual isolated provider/SDK checks cover concurrent creation, role/ownership/state denial, lost committed responses, account/history changes, pinned real token/export actors, unchanged accounts/profile/terms and desktop/mobile sign-out/WCAG/320px. Its owned fixture and keys are removed. This adds no migration and performs no deletion, hosted promotion or policy decision; exact-head PR/main acceptance is required.
-
-The Learn lifecycle source passes 254 JavaScript tests, four Python fixtures, all 548 desktop/mobile journeys without retries, eleven server types, build/isolation, all 71 migrations/37 authorization suites and zero production audit findings. Actual provider/SDK checks cover free published theory, private/idempotent progress, real token changes and dispatch actors, committed-response loss without replay, cancelled identity reads, withdrawal, unchanged profiles/content/paid access, focus/practice links and desktop/mobile WCAG/320px. Its exact owned fixture and credentials are removed. Backend contracts/migrations remain unchanged; exact-head PR/main and hosted acceptance remain required. Continue Community and remaining assessment/account identity handling plus bounded/versioned operator workflows.
-
-Keep the goal active while meaningful independent work remains. An owner/provider dependency blocks that item only. Never request credentials or personal identity/payment details in chat, change Dexam services, or turn elapsed time into approval.
-
-Evidence: `VERIFICATION.md`, `PROVIDER_SETUP.md`, `PRODUCT_DECISIONS.md`, `supabase/project.json`, ignored app `test-results/` and parent `output/visual-audit/`.
+- dmocks.com remains owner-private on an older controlled-login publication. No hosted write or promotion is implied by source merges.
+- Public signup, real content publication and checkout are closed. Model calls remain disabled.
+- The staging-target question is already pending; avoid duplicate requests.
+- Never treat human question review as content-rights approval, draft policies as final policies, local fixture payments as a real provider journey, or source migrations as applied hosted migrations.

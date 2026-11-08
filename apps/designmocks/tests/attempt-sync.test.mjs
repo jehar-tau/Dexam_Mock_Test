@@ -9,6 +9,7 @@ test("failed answer remains queued and reconnect flushes the same revision", asy
   const queue = createAnswerSyncQueue({ revisionSeed: () => 100, onStatus: state => states.push(state), send: async value => {
     sent.push(value);
     if (!online) throw new Error("offline");
+    return {accepted:true,answer:value.answer,revision:value.revision};
   } });
   const failed = await queue.enqueue("q1", "A");
   assert.equal(failed.saved, false);
@@ -28,6 +29,7 @@ test("newer answer supersedes an older queued answer without losing order", asyn
   const queue = createAnswerSyncQueue({ revisionSeed: () => 200, onSaved: value => saved.push(value), send: async value => {
     sent.push(value);
     if (sent.length === 1) await first;
+    return {accepted:true,answer:value.answer,revision:value.revision};
   } });
   const initial = queue.enqueue("q1", "A");
   const newer = queue.enqueue("q1", "B");
@@ -40,7 +42,7 @@ test("newer answer supersedes an older queued answer without losing order", asyn
 
 test("questions flush sequentially and never expose answer data in status", async () => {
   const sent = [], states = [];
-  const queue = createAnswerSyncQueue({ revisionSeed: () => 300, send: async value => sent.push(value), onStatus: value => states.push(value) });
+  const queue = createAnswerSyncQueue({ revisionSeed: () => 300, send: async value => {sent.push(value);return {accepted:true,answer:value.answer,revision:value.revision};}, onStatus: value => states.push(value) });
   await Promise.all([queue.enqueue("q1", "private-A"), queue.enqueue("q2", "private-B")]);
   assert.deepEqual(sent.map(x => x.questionId), ["q1", "q2"]);
   assert.doesNotMatch(JSON.stringify(states), /private-A|private-B/);
@@ -82,7 +84,7 @@ test("device persistence precedes network writes and replays the same revision a
   assert.equal((await first.enqueue("q1", "B")).saved, false);
   const after = createAttemptAnswerJournal(settings);
   const writes = [];
-  const restored = createAnswerSyncQueue({ journal: after, send: async (value) => writes.push(value) });
+  const restored = createAnswerSyncQueue({ journal: after, send: async (value) => {writes.push(value);return {accepted:true,answer:value.answer,revision:value.revision};} });
   restored.restore([question()]);
   assert.equal(restored.pendingAnswer("q1"), "B");
   assert.equal((await restored.flush()).saved, true);
@@ -138,7 +140,7 @@ test("complete numerical answers and notes can be journaled before a debounced s
   assert.equal(validAttemptAnswer({ kind: "drawing" }, "x".repeat(4001)), false);
   const journal = createAttemptAnswerJournal({ userId: "student", attemptId: "attempt", deadline: 900, storage: memoryStorage() });
   const writes = [];
-  const queue = createAnswerSyncQueue({ journal, revisionSeed: () => 1, send: async (value) => writes.push(value) });
+  const queue = createAnswerSyncQueue({ journal, revisionSeed: () => 1, send: async (value) => {writes.push(value);return {accepted:true,answer:value.answer,revision:value.revision};} });
   queue.enqueue("q1", "1", { defer: true });
   queue.enqueue("q1", "12.5", { defer: true });
   assert.equal(writes.length, 0);

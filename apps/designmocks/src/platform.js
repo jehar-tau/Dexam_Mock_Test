@@ -13,6 +13,7 @@ export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkou
   origin: window.location.origin,
   stagingTarget: { url: `https://${project_ref}.supabase.co`, origin: staging_frontend_origin },
   portalEnabled: import.meta.env.VITE_PORTAL_ENABLED === "true",
+  checkoutEnabled: import.meta.env.VITE_CHECKOUT_ENABLED === "true",
   testLoginEnabled: import.meta.env.VITE_TEST_LOGIN_ENABLED === "true",
   stagingPortalEnabled: import.meta.env.VITE_STAGING_PORTAL_ENABLED === "true",
   url,

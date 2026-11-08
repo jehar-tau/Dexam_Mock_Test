@@ -1,5 +1,7 @@
 # DMocks provider setup
 
+> **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
+
 Hosted evidence: 7 November 2026; later local verification is dated below. The GitHub app is `jehar-tau/Dexam_Mock_Test/apps/designmocks`; its separate Supabase project is **DesignMocks**, `tiodqzvvujxvxssvjdis`, Mumbai. The existing academy/Dexam projects and merchant credentials are not used.
 
 ## Hosting and environment

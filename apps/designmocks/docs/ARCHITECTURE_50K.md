@@ -1,5 +1,7 @@
 # DMocks 50k-user architecture
 
+> **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
+
 ## Capacity target
 
 The confirmed design target is 50,000 lifetime registered accounts, fewer than 100 concurrent signed-in users, and at most 50 concurrent active attempts during the initial launch. Capacity tests use 150 concurrent sessions to preserve headroom. Revisit the design if measured concurrency approaches 100 or monthly active users approach 40,000; 50,000 simultaneous attempts are explicitly out of scope.
