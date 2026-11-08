@@ -14,7 +14,7 @@ function decimalAtMost(left,right){
  const integer=p=>BigInt(p.whole+p.fraction.padEnd(places,'0'))*(p.negative?-1n:1n);
  return integer(a)<=integer(b);
 }
-function numericKey(raw){
+export function numericKey(raw){
  if(raw.length>200)return null;
  // Preserve decimal precision for PostgreSQL numeric. Never invent a tolerance.
  if(numeric.test(raw)&&Number.isFinite(Number(raw)))return{kind:'nat',accepted:[{exact:raw}]};

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useAdminFunctions } from "./AdminAccess.jsx";
-import { bankReviewImages, bankSearchInput, conversionChecklist, deliveryAnswerLabel, initialBankFilters, questionUsage, sourceAnswerLabel } from "./bank-review.js";
+import { bankReviewImages, bankSearchInput, conversionChecklist, deliveryAnswerLabel, initialBankFilters, practiceApprovalReady, questionUsage, sourceAnswerLabel } from "./bank-review.js";
+import { NidQuestionBinding } from './NidQuestionBinding.jsx';
 
 async function loadBankFigures(functions, question) {
   const { data, error } = await functions.invoke("bank-review-media", {
@@ -11,7 +12,7 @@ async function loadBankFigures(functions, question) {
   return data.images;
 }
 
-function BankQuestionReview({ selected, rpc, onClose, onReviewed, loadMedia }) {
+function BankQuestionReview({ selected, rpc, onClose, onReviewed, onBound, bindingLocked, onBindingLockChange, loadMedia }) {
   const [question, setQuestion] = useState(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -36,6 +37,7 @@ function BankQuestionReview({ selected, rpc, onClose, onReviewed, loadMedia }) {
   };
   const review = async event => {
     event.preventDefault();
+    if (bindingLocked) return;
     const decision = event.nativeEvent.submitter?.value;
     if (!["approve", "reject"].includes(decision)) { setError("Choose a review decision."); return; }
     const note = String(new FormData(event.currentTarget).get("note")).trim();
@@ -55,7 +57,7 @@ function BankQuestionReview({ selected, rpc, onClose, onReviewed, loadMedia }) {
   const usage = question && questionUsage(question);
   const checklist = question && conversionChecklist(question);
   return <section className="bank-question-review" aria-label="Question review">
-    <div className="admin-actions"><h3 className="bank-review-key">{selected.externalKey}</h3><button type="button" onClick={onClose}>Close question</button></div>
+    <div className="admin-actions"><h3 className="bank-review-key">{selected.externalKey}</h3><button type="button" disabled={bindingLocked} onClick={onClose}>Close question</button></div>
     {error && <p role="alert" className="error">{error}</p>}
     {!question && !error && <p role="status">Opening the complete question…</p>}
     {question && <>
@@ -98,14 +100,15 @@ function BankQuestionReview({ selected, rpc, onClose, onReviewed, loadMedia }) {
         <h4>{question.runtimeReady&&!checklist.some(item=>['fix','blocked'].includes(item.state)) ? "Ready for exact-version review" : "What is required before use"}</h4>
         <ul>{checklist.map((item, index) => <li key={index} data-state={item.state}>{item.label}</li>)}</ul>
       </section>
+      {question.exam === 'nid' && <NidQuestionBinding question={question} rpc={rpc} figuresReady={figuresReady} onBound={onBound} onLockChange={onBindingLockChange} />}
       {!question.runtimeReady && <p>This question needs a verified conversion before practice approval.</p>}
       {!canReview && <p>{question.holdReason || "This record is inactive in the current bank."}</p>}
       {canReview && <form className="admin-form" onSubmit={review}>
         <label>Review note<textarea name="note" required minLength="8" maxLength="1000" rows="3" defaultValue={question.reviewNote ?? ""} /></label>
         <label className="profile-check"><input type="checkbox" checked={rights} onChange={event => setRights(event.target.checked)} /> I checked the question and confirm DMocks has the right to use it.</label>
         <div className="admin-actions">
-          <button name="decision" value="approve" disabled={busy || !rights || !question.runtimeReady || !figuresReady}>Approve for practice</button>
-          <button name="decision" value="reject" disabled={busy}>Request correction</button>
+          <button name="decision" value="approve" disabled={busy || bindingLocked || !rights || !question.runtimeReady || !practiceApprovalReady(question) || !figuresReady}>Approve for practice</button>
+          <button name="decision" value="reject" disabled={busy || bindingLocked}>Request correction</button>
         </div>
       </form>}
       <details><summary>Source record</summary><p>Canonical key {question.externalKey}</p><p>Source commit <code>{question.sourceCommit}</code></p><p>Content digest <code>{question.contentSha256}</code></p></details>
@@ -124,6 +127,7 @@ export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia,
   const [error, setError] = useState("");
   const [selected, setSelected] = useState(null);
   const [message, setMessage] = useState("");
+  const [bindingLocked, setBindingLocked] = useState(false);
   const topics = result?.topics ?? [];
   useEffect(() => {
     let current = true;
@@ -146,33 +150,38 @@ export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia,
     setMessage("Review saved. The question bank has been refreshed.");
     await onReviewed();
   };
+  const bound = async () => {
+    setSelected(null); setRefreshKey(current => current + 1);
+    setMessage('Practice binding saved. Run the guarded conversion, then review the exact question version.');
+    await onReviewed();
+  };
   return <section className="bank-review-browser" aria-label="Imported bank review">
     <h2>Imported bank review</h2>
     <p>Open the complete question, figures and answer before recording a decision and its content rights.</p>
     {result?.summary && <p>{result.summary.active} active records · {result.summary.available} converted · {result.summary.approved} approved · {result.summary.inactive} inactive.</p>}
-    <form className="admin-form bank-review-filters" onSubmit={event => { event.preventDefault(); setMessage(""); setQuery(bankSearchInput(filters)); }}>
+    <form className="admin-form bank-review-filters" onSubmit={event => { event.preventDefault(); if (bindingLocked) return; setMessage(""); setQuery(bankSearchInput(filters)); }}>
       <label>Bank exam<select name="exam" value={filters.exam} onChange={change}><option value="">All exams</option>{["uceed", "nid", "nift", "ceed"].map(exam => <option key={exam} value={exam}>{exam.toUpperCase()}</option>)}</select></label>
       <label>Bank question type<select name="type" value={filters.type} onChange={change}><option value="">All types</option>{["MCQ", "MSQ", "NAT", "DESCRIPTIVE"].map(type => <option key={type}>{type}</option>)}</select></label>
       <label>Review status<select name="status" value={filters.status} onChange={change}><option value="pending">Ready for review</option><option value="approved">Approved</option><option value="unavailable">Awaiting conversion</option><option value="inactive">Inactive</option><option value="all">All records</option></select></label>
       <label>Bank topic<select name="topic" value={filters.topic} onChange={change}><option value="">All topics</option>{topics.map(topic => <option key={topic}>{topic}</option>)}{filters.topic && !topics.includes(filters.topic) && <option>{filters.topic}</option>}</select></label>
       <label>Find a question<input name="search" value={filters.search} onChange={change} maxLength="200" placeholder="Canonical key, wording or topic" /></label>
       <label>Questions per page<select name="limit" value={filters.limit} onChange={change}>{[25, 50, 100].map(limit => <option key={limit}>{limit}</option>)}</select></label>
-      <div className="admin-actions"><button>Search bank</button><button type="button" onClick={() => setRefreshKey(current => current + 1)}>Refresh bank</button></div>
+      <div className="admin-actions"><button disabled={bindingLocked}>Search bank</button><button type="button" disabled={bindingLocked} onClick={() => setRefreshKey(current => current + 1)}>Refresh bank</button></div>
     </form>
     {message && <p role="status">{message}</p>}
     {error && <p role="alert" className="error">{error}</p>}
     {loading && <p role="status">Loading question bank…</p>}
-    {selected && <BankQuestionReview key={`${selected.externalKey}-${selected.reviewVersion}`} selected={selected} rpc={rpc} onClose={() => setSelected(null)} onReviewed={reviewed} loadMedia={loadMedia??defaultMedia} />}
+    {selected && <BankQuestionReview key={`${selected.externalKey}-${selected.reviewVersion}`} selected={selected} rpc={rpc} onClose={() => setSelected(null)} onReviewed={reviewed} onBound={bound} bindingLocked={bindingLocked} onBindingLockChange={setBindingLocked} loadMedia={loadMedia??defaultMedia} />}
     {result && !loading && <>
       <p>{result.total ? `${result.offset + 1}–${Math.min(result.offset + result.limit, result.total)} of ${result.total} matching questions` : "No questions match these filters."}</p>
       <div className="admin-list">{result.items.map(question => <article key={question.externalKey}>
         <b className="bank-review-key">{question.externalKey}</b><span className="status-pill">{!question.active ? "inactive" : question.approved && question.rightsConfirmed ? "approved" : question.runtimeReady ? "ready for review" : "awaiting conversion"}</span>
         <p>{question.prompt}</p><small>{question.exam.toUpperCase()} · {question.type} · {question.topic} · {question.licence}</small>
-        <button type="button" onClick={() => { setMessage(""); setSelected(question); }}>Open question {question.externalKey}</button>
+        <button type="button" disabled={bindingLocked} onClick={() => { setMessage(""); setSelected(question); }}>Open question {question.externalKey}</button>
       </article>)}</div>
       <nav aria-label="Question bank pages" className="admin-actions">
-        <button disabled={result.offset === 0} onClick={() => setQuery(current => ({ ...current, p_offset: Math.max(0, result.offset - result.limit) }))}>Previous questions</button>
-        <button disabled={result.offset + result.limit >= result.total} onClick={() => setQuery(current => ({ ...current, p_offset: result.offset + result.limit }))}>Next questions</button>
+        <button disabled={bindingLocked || result.offset === 0} onClick={() => setQuery(current => ({ ...current, p_offset: Math.max(0, result.offset - result.limit) }))}>Previous questions</button>
+        <button disabled={bindingLocked || result.offset + result.limit >= result.total} onClick={() => setQuery(current => ({ ...current, p_offset: result.offset + result.limit }))}>Next questions</button>
       </nav>
     </>}
   </section>;
