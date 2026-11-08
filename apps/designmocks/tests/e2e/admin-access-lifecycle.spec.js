@@ -66,6 +66,18 @@ async function fixture(page){
  return Object.assign(state,provider);
 }
 
+async function holdIdentity(page){
+ const held=deferred();let reads=0;
+ await page.route(api+'/auth/v1/user',async route=>{
+  const cors={...headers,'Access-Control-Allow-Methods':'GET, POST, OPTIONS','Access-Control-Allow-Headers':headers['Access-Control-Allow-Headers']+', x-supabase-api-version'};
+  if(route.request().method()==='OPTIONS')return route.fulfill({headers:cors,status:204});
+  const token=route.request().headers().authorization.split(' ')[1],id=JSON.parse(Buffer.from(token.split('.')[1],'base64url')).sub;reads++;await held.promise;
+  try{await route.fulfill({headers:cors,json:{id,aud:'authenticated',app_metadata:{provider:'google'},user_metadata:{}}});}catch{}
+ });
+ return{release:held.resolve,reads:()=>reads};
+}
+const requestActor=request=>JSON.parse(Buffer.from(request.headers().authorization.split(' ')[1].split('.')[1],'base64url')).sub;
+
 test("one pending staff reply disables its fields and suppresses duplicate form submissions",async({page})=>{
  const state=await fixture(page),held=deferred();
  await page.route(api+"/rest/v1/rpc/admin_reply_bug_report",async route=>{
@@ -77,6 +89,27 @@ test("one pending staff reply disables its fields and suppresses duplicate form 
  await form.evaluate(element=>{element.requestSubmit();element.requestSubmit();});await expect.poll(()=>state.replyCalls.length).toBe(1);
  await expect(form.getByLabel("Report status",{exact:true})).toBeDisabled();await expect(form.getByLabel("Reply to reporter",{exact:true})).toBeDisabled();await expect(form.getByRole("button",{name:"Saving…",exact:true})).toBeDisabled();
  held.resolve();await expect(form.getByRole("button",{name:"Save",exact:true})).toBeEnabled();expect(state.replyCalls).toEqual([{p_id:"55000000-0000-4000-8000-000000000991",p_status:"fixed",p_reply:"An original fictional fixed-issue reply."}]);expect(state.unexpected).toEqual([]);
+});
+
+test("an unannounced SDK token change cannot send a private administrator reply as another actor",async({page})=>{
+ const state=await fixture(page),form=page.getByRole('form',{name:'Reply to report Current fictional private bug',exact:true});await form.getByLabel('Reply to reporter',{exact:true}).fill('An original fictional reply from the first administrator');await seedPortalSession(page,other);await form.getByRole('button',{name:'Save',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Administrator access could not be verified');await expect(page.getByText('Current fictional private bug',{exact:true})).toHaveCount(0);expect(state.replyCalls).toEqual([]);
+});
+
+test("an unannounced SDK token change cannot fetch a private source through the administrator Edge client",async({page})=>{
+ const state=await fixture(page);let downloads=0;page.on('download',download=>{downloads++;void download.cancel();});await seedPortalSession(page,other);await page.getByRole('button',{name:'Download private source',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Administrator access could not be verified');expect(state.intakeCalls).toBe(0);expect(downloads).toBe(0);await expect(page.getByText('Original fictional source.pdf',{exact:true})).toHaveCount(0);
+});
+
+test('administrator RPC dispatch stays pinned when the SDK token changes after verification',async({page})=>{
+ const state=await fixture(page),actors=[],form=page.getByRole('form',{name:'Reply to report Current fictional private bug',exact:true});await form.getByLabel('Reply to reporter',{exact:true}).fill('An original fictional actor-pinned administrator reply');await page.waitForLoadState('networkidle');
+ const identity=await holdIdentity(page);await page.route(api+'/rest/v1/rpc/admin_reply_bug_report',async route=>{if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});actors.push(requestActor(route.request()));state.replyCalls.push(route.request().postDataJSON());return route.fulfill({headers,json:null});});
+ await form.evaluate(element=>element.requestSubmit());await expect.poll(identity.reads).toBe(1);expect(actors).toEqual([]);await seedPortalSession(page,other);identity.release();await expect.poll(()=>actors).toEqual([admin.id]);expect(state.replyCalls).toHaveLength(1);await expect(page.getByRole('alert')).toContainText('Administrator access could not be verified');expect(state.unexpected).toEqual([]);
+});
+
+test('administrator Edge dispatch stays pinned when the SDK token changes after verification',async({page})=>{
+ const state=await fixture(page),actors=[];let downloads=0;page.on('download',download=>{downloads++;void download.cancel();});await page.waitForLoadState('networkidle');const identity=await holdIdentity(page);
+ await page.route(api+'/functions/v1/question-intake',async route=>{if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});actors.push(requestActor(route.request()));state.intakeCalls++;return route.fulfill({headers,contentType:'application/octet-stream',body:Buffer.from('%PDF-1.4 original fictional private source')});});
+ await page.getByRole('button',{name:'Download private source',exact:true}).evaluate(button=>button.click());await expect.poll(identity.reads).toBe(1);expect(actors).toEqual([]);await seedPortalSession(page,other);identity.release();await expect.poll(()=>actors).toEqual([admin.id]);await expect.poll(()=>downloads).toBe(1);expect(state.intakeCalls).toBe(1);
+ await page.getByRole('button',{name:'Download private source',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Administrator access could not be verified');expect(actors).toEqual([admin.id]);expect(state.intakeCalls).toBe(1);expect(downloads).toBe(1);
 });
 
 test("a confirmed role loss clears every private panel, selected file and unsent draft",async({page})=>{

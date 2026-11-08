@@ -18,16 +18,23 @@ export function emptyAdminRead(procedure) {
 export async function stubPortalProvider(page, respond, projectRef = fixtureProject) {
   const calls = [];
   const unexpected = [];
+  const authCalls = [];
   const headers = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-supabase-api-version",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
   };
   await page.route(`https://${projectRef}.supabase.co/**`, async (route) => {
     const request = route.request();
     if (request.method() === "OPTIONS") return route.fulfill({ status: 204, headers });
     const path = new URL(request.url()).pathname;
     const procedure = path.split("/").at(-1);
+    if(path==='/auth/v1/user'){
+      const token=request.headers().authorization?.split(' ')[1];let actor;
+      try{actor=JSON.parse(Buffer.from(token.split('.')[1],'base64url')).sub;}catch{}
+      authCalls.push({actor:actor??null});
+      return route.fulfill({headers,status:actor?200:401,json:actor?{id:actor,aud:'authenticated',app_metadata:{provider:'google'},user_metadata:{}}:{message:'Fictional session missing'}});
+    }
     const input = request.postDataJSON() ?? {};
     calls.push([procedure, input]);
     const result = respond(procedure, input);
@@ -38,7 +45,7 @@ export async function stubPortalProvider(page, respond, projectRef = fixtureProj
     const status = result?.code === "42501" ? 403 : result?.code ? 400 : 200;
     return route.fulfill({ json: result, headers, status });
   });
-  return { calls, unexpected };
+  return { calls, unexpected, authCalls };
 }
 
 export async function seedPortalSession(page, { id, email }, projectRef = fixtureProject) {

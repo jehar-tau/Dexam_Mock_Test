@@ -1,6 +1,7 @@
 import React, {createContext,useContext,useLayoutEffect,useMemo,useRef,useState} from "react";
 import {platform} from "./platform.js";
 import {createAdminAccessScope} from "./admin-access.js";
+import {authorizationHeaders,runForVerifiedAccount,verifiedAccountToken}from'./account-identity.js';
 
 const AdminServices=createContext(null);
 export const useAdminServices=()=>useContext(AdminServices);
@@ -13,9 +14,9 @@ const adminAccess=Object.freeze({region:"Administrator access",procedure:"is_dmo
 const reviewerAccess=Object.freeze({region:"Drawing reviewer access",procedure:"can_review_drawings",checking:"Checking drawing reviewer access…",required:"Drawing reviewer access required.",
   ended:"Drawing reviewer access has ended. Private reviews were cleared.",unavailable:"Drawing reviewer access could not be verified. Private reviews were cleared. Try again.",check:"Check drawing reviewer access",recheck:"Recheck drawing reviewer access"});
 
-async function checkedRpc(name,args,signal){
+async function checkedRpc(name,args,signal,token){
   signal.throwIfAborted();
-  const {data,error,status}=await platform.rpc(name,args).abortSignal(signal);
+  const {data,error,status}=await platform.rpc(name,args).setHeader('Authorization','Bearer '+token).abortSignal(signal);
   signal.throwIfAborted();
   if(error)throw Object.assign(new Error(error.message),error,{status});
   return data;
@@ -27,7 +28,10 @@ function AccessSession({actorId,headingRef,children,onRetry,config}){
   useLayoutEffect(()=>{
     const href=window.location.href,historyKey=window.history.state?.key;
     const current=()=>window.location.href===href&&window.history.state?.key===historyKey;
-    const value=createAdminAccessScope({check:signal=>checkedRpc(config.procedure,undefined,signal),isCurrent:current,onChange:next=>{
+    const value=createAdminAccessScope({check:async signal=>{
+      const token=await verifiedAccountToken(platform.auth,actorId,signal);if(!token)return false;
+      return checkedRpc(config.procedure,undefined,signal,token);
+    },isCurrent:current,onChange:next=>{
       if(next.status!=="allowed")recoverFocus.current=document.activeElement===document.body||Boolean(privateRoot.current?.contains(document.activeElement));
       setAccess(next);
     }});
@@ -46,16 +50,16 @@ function AccessSession({actorId,headingRef,children,onRetry,config}){
     recoverFocus.current=false;headingRef.current?.focus();
   },[access.status,headingRef]);
   const services=useMemo(()=>scope?{
-    rpc:(name,args,signal)=>scope.run(activeSignal=>checkedRpc(name,args,activeSignal),signal),
+    rpc:(name,args,signal)=>runForVerifiedAccount(scope,platform.auth,actorId,(token,active)=>checkedRpc(name,args,active,token),signal),
     functions:{async invoke(name,options={}){
-      try{return await scope.run(async signal=>{
-        const result=await platform.functions.invoke(name,{...options,signal});
+      try{return await runForVerifiedAccount(scope,platform.auth,actorId,async(token,signal)=>{
+        const result=await platform.functions.invoke(name,{...options,signal,headers:authorizationHeaders(options.headers,token)});
         if(result.error)throw result.error;
         return result;
       },options.signal);}catch(error){return{data:null,error};}
     }},
     assertCurrent:scope.assertCurrent,isCurrent:scope.isCurrent,
-  }:null,[scope]);
+  }:null,[scope,actorId]);
   return <section aria-label={config.region} style={{minWidth:0}}>
     {access.status==="checking"&&<p role="status">{config.checking}</p>}
     {access.status==="denied"&&<p role="alert" className="error">{access.hadAccess?config.ended:config.required}</p>}

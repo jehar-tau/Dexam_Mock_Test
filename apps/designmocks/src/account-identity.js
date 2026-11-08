@@ -7,3 +7,15 @@ export async function verifiedAccountToken(auth,actorId,signal){
  const token=session.access_token,{data:current,error:failure}=await auth.getUser(token);signal.throwIfAborted();if(failure)throw failure;
  return current.user?.id===actorId?token:null;
 }
+
+export function runForVerifiedAccount(scope,auth,actorId,operation,requestSignal){
+ return scope.run(async signal=>{
+  let token;try{token=await verifiedAccountToken(auth,actorId,signal);}catch(error){if(!signal.aborted&&scope.isCurrent())scope.invalidate();throw error;}
+  if(!token){scope.invalidate();throw new Error('Account identity changed.');}
+  signal.throwIfAborted();return operation(token,signal);
+ },requestSignal);
+}
+export function authorizationHeaders(headers,token){
+ const result=Object.fromEntries(Object.entries(headers??{}).filter(([key])=>key.toLowerCase()!=='authorization'));
+ return{...result,Authorization:'Bearer '+token};
+}

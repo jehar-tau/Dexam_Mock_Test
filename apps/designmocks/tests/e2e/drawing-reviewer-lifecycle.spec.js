@@ -10,6 +10,7 @@ const deferred=()=>{let resolve;const promise=new Promise(done=>{resolve=done;})
 const prompt="Original fictional private drawing review context.";
 const card=(page,text=prompt)=>page.getByRole("region",{name:"Drawing review queue",exact:true}).getByRole("article").filter({has:page.getByText(text,{exact:true})});
 const secondPrompt="Another original fictional private drawing review.";
+const anotherActor={id:'00000000-0000-4000-8000-000000001003',email:'fictional-another-reviewer@example.invalid'};
 
 async function fixture(page,{two=false}={}){
  const bytes=await readFile(new URL("../fixtures/drawing-images/fictional-drawing.png",import.meta.url));
@@ -46,6 +47,10 @@ test("an older authorized refresh cannot revive private drawing context after a 
  state.allowed=false;await page.getByLabel("Mark 1",{exact:true}).fill("17");await page.getByLabel("Feedback").fill("An unsent fictional review must stay private after access ends.");await page.getByRole("button",{name:"Save human review",exact:true}).click();
  await expect(page.getByText(prompt,{exact:true})).toHaveCount(0);held.resolve();await expect.poll(()=>state.completedReads).toBe(reads+1);
  await expect(page.getByText(prompt,{exact:true})).toHaveCount(0);await expect(page.getByLabel("Feedback")).toHaveCount(0);expect(state.actions).toHaveLength(1);
+});
+
+test("an unannounced SDK token change cannot send the previous teacher grading draft",async({page})=>{
+ const state=await fixture(page);await page.getByLabel('Mark 1',{exact:true}).fill('17');await page.getByLabel('Feedback').fill('Original fictional feedback from the first reviewer');await seedPortalSession(page,anotherActor);await page.getByRole('button',{name:'Save human review',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Drawing reviewer access could not be verified');await expect(page.getByLabel('Feedback')).toHaveCount(0);expect(state.actions).toEqual([]);
 });
 
 test("same-route history navigation clears private teacher images and grading drafts",async({page})=>{
