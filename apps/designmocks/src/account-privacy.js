@@ -11,9 +11,4 @@ export function privacyRequestsResponse(value){
 }
 export function privacyRequestReceipt(value){if(!uuid(value))throw new Error(privacyWriteMessage);return value;}
 export function privacyCancelReceipt(value){if(value!==null)throw new Error(privacyWriteMessage);}
-export async function privacyOperation(operation,signal){
- signal.throwIfAborted();let abort;
- const interrupted=new Promise((_,reject)=>{abort=()=>reject(signal.reason);signal.addEventListener('abort',abort,{once:true});});
- try{return await Promise.race([Promise.resolve().then(()=>{signal.throwIfAborted();return operation();}),interrupted]);}
- finally{signal.removeEventListener('abort',abort);}
-}
+export{awaitAccountRequest as privacyOperation}from'./account-request.js';

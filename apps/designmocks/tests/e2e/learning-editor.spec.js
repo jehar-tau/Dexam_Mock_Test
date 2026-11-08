@@ -9,7 +9,7 @@ const student = { id: "00000000-0000-4000-8000-000000000095", email: "lesson-stu
 const fixture = {
   id: "50000000-0000-4000-8000-000000000094", slug: "directional-contrast", exam: "nid", topic: "visual-hierarchy",
   title: "Directional contrast", summary: "Use contrast to establish a clear reading order.",
-  body: "A synthetic lesson for browser verification.", ordinal: 1,
+  body: "A synthetic lesson for browser verification.", ordinal: 1, completed: false,
 };
 const revisedBody = "An edited synthetic lesson for browser verification.";
 
