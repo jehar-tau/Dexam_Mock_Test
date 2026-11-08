@@ -138,6 +138,10 @@ if (staging) {
     ["admin_community_report", { p_report_id: "00000000-0000-4000-8000-000000000000" }],
     ["admin_community_report_media_paths", { p_report_id: "00000000-0000-4000-8000-000000000000", p_expected_version: "0".repeat(64), p_context: "target" }],
     ["admin_resolve_community_report", { p_report_id: "00000000-0000-4000-8000-000000000000", p_expected_version: "0".repeat(64), p_resolution: "dismiss", p_note: "Anonymous hosted smoke fixture" }],
+    ["admin_community_content_page", { p_target_type: "post", p_post_id: null, p_exam: null, p_topic: null, p_status: null, p_cursor: null, p_limit: 25 }],
+    ["admin_review_community_content", { p_target_type: "post", p_target_id: "00000000-0000-4000-8000-000000000000" }],
+    ["admin_community_moderation_media_paths", { p_target_type: "post", p_target_id: "00000000-0000-4000-8000-000000000000", p_expected_version: "0".repeat(64), p_context: "target" }],
+    ["admin_moderate_community", { p_target_type: "post", p_target_id: "00000000-0000-4000-8000-000000000000", p_action: "hide", p_note: "Anonymous hosted smoke fixture", p_expected_version: "0".repeat(64), p_request_id: "00000000-0000-4000-8000-000000000000" }],
   ]) {
     response = await request("/rest/v1/rpc/" + name, "POST", body);
     assert.ok([401, 403].includes(response.status), name + " must reject anonymous execution");

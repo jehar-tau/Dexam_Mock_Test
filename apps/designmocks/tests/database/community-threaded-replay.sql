@@ -1,5 +1,8 @@
 \set ON_ERROR_STOP on
 begin;
+create function pg_temp.current_moderate(kind text,id uuid,action text,note text) returns jsonb language sql as $$
+ select public.admin_moderate_community(kind,id,action,note,public.admin_review_community_content(kind,id)->>'reviewVersion',gen_random_uuid())
+$$;
 create function pg_temp.thread_assert(ok boolean,label text) returns void language plpgsql as $$
 begin if ok is distinct from true then raise exception 'FAIL: %',label;end if;end $$;
 create function pg_temp.thread_reject(statement text,expected text) returns void language plpgsql as $$
@@ -83,19 +86,19 @@ select pg_temp.thread_assert(pg_temp.thread_reply('30000000-0000-4000-8000-00000
 select pg_temp.thread_reject('select pg_temp.thread_reply(''30000000-0000-4000-8000-000000000614'',''An over-limit fictional reply.'')','Too many replies');
 
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000603',true);
-select public.admin_moderate_community('comment',current_setting('test.thread_root')::uuid,'hide','Fictional parent redaction.');
+select pg_temp.current_moderate('comment',current_setting('test.thread_root')::uuid,'hide','Fictional parent redaction.');
 select pg_temp.thread_reject('select public.community_thread(current_setting(''test.thread_post'')::uuid,current_setting(''test.thread_cursor'')::jsonb,25)','Discussion changed');
 select pg_temp.thread_reject('select public.community_reply_context(current_setting(''test.thread_post'')::uuid,current_setting(''test.thread_root'')::uuid,1)','Reply target not found');
 select pg_temp.thread_assert((select item->'parentPreview'='null' and not(item->>'parentAvailable')::boolean from jsonb_array_elements(public.community_thread(current_setting('test.thread_post')::uuid,null,50)->'comments') item where item->>'id'=current_setting('test.thread_child')),'visible children retain a tombstone without the hidden parent content');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000601',true);
 select pg_temp.thread_reject('select pg_temp.thread_reply(''30000000-0000-4000-8000-000000000615'',''A reply to a hidden parent.'',current_setting(''test.thread_root'')::uuid)','Reply target not found');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000603',true);
-select public.admin_moderate_community('post',current_setting('test.thread_post')::uuid,'lock','Fictional locked discussion.');
+select pg_temp.current_moderate('post',current_setting('test.thread_post')::uuid,'lock','Fictional locked discussion.');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000601',true);
 select pg_temp.thread_assert(not(pg_temp.thread_post('30000000-0000-4000-8000-000000000601')->>'canUpload')::boolean,'a replay does not reopen a locked post');
 select pg_temp.thread_reject('select pg_temp.thread_reply(''30000000-0000-4000-8000-000000000616'',''A reply to a locked post.'')','unavailable or locked');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000603',true);
-select public.admin_moderate_community('post',current_setting('test.thread_post')::uuid,'hide','Fictional hidden discussion.');
+select pg_temp.current_moderate('post',current_setting('test.thread_post')::uuid,'hide','Fictional hidden discussion.');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000601',true);
 select pg_temp.thread_assert(pg_temp.thread_post('30000000-0000-4000-8000-000000000601')->>'status'='hidden','owner receipt preserves hidden status without publishing content');
 select pg_temp.thread_reject('select public.community_thread(current_setting(''test.thread_post'')::uuid)','Post not found');

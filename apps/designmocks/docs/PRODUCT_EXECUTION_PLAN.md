@@ -195,7 +195,9 @@ Exit: human-reviewed drawing results are reliable without AI; AI cannot publish 
 - [x] Add exact exam/topic filters and bounded 25-row feed pages. Preserve timestamp/UUID snapshots through new insertions, invalidate pages after displayed-content changes, and fence late filter/write/image responses without losing drafts or thread state.
 - [x] Add images to owned saved posts/replies using fresh free positions, immutable selected-file/position retries, existing author/moderation checks and preserved text/original images. Verify real Auth/Edge/Storage and desktop/mobile lost-acknowledgement recovery.
 - [x] Inspect current member question/solution rasters with the shared orientation, rotate/mirror, zoom and original-size controls. Bind the dialog to its exact image/URL, close on expiry or scope changes, and prevent delayed close events from affecting a newer selection.
-- [ ] Complete broader moderation actions and attachment removal/replacement under an approved evidence-retention plan. Pending image selections survive only within the open page/session.
+- [x] Browse visible/hidden/locked discussions and their visible/hidden replies in bounded administrator pages. Inspect current context and private images, then record version-checked hide/restore/lock/unlock with written reasons, immutable evidence and account-bound replay. Keep report decisions independent and verify actual Auth/PostgREST/Edge/Storage plus desktop/mobile operation.
+- [ ] Harden the rest of the administrator desk's cached views and pending loads after a confirmed role revocation. The new moderation workspace clears itself; actual provider/browser verification exposed remaining cached panels elsewhere in the desk.
+- [ ] Complete attachment removal/replacement under an approved evidence-retention plan. Pending image selections survive only within the open page/session.
 
 Exit: content rights, moderation coverage, reporting, retention and child-safety checks pass.
 
@@ -217,9 +219,9 @@ Exit: production readiness checklist approved, then registration, then payments,
 
 ## Immediate next actions
 
-1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060144`, and choose an independent staging deployment target before promotion.
+1. Review the standalone provider migration plan, including the earlier AI-schema gap and migrations through `202611060145`, and choose an independent staging deployment target before promotion.
 2. Obtain the owner's Cloudboard/Claude question manifest and theory-document export. Reconcile supplied question snapshots with stable keys and content hashes through the documented read-only contract.
 3. Complete the remaining reviewed exam blueprints, including NID and NIFT creative/programme-specific papers, with authoritative question counts, sections, timing and marking where published.
 4. Run hosted acceptance for the admitted Google tester, representative full papers, drawings and teacher review, followed by synthetic staging capacity checks.
 5. Obtain the pending source rights, model-processing/cost, phone-provider and public-policy decisions. Keep payments deferred until the owner resumes that work.
-6. Add broader moderation actions; define safe attachment removal/replacement with the retention policy. Preserve current-scope member inspection, follow-up image additions, the bounded/filterable feed and its insertion/redaction fences, report reasons/details and duplicate receipts, administrator inspected-version decisions, text replay, threaded snapshot/anchor reads and image receipts. Complete scanner/quarantine and resumable-transfer acceptance, then verify representative image sizes on the approved staging target before promotion.
+6. Harden whole-desk administrator role-loss and pending-load handling, using the concrete cached-panel finding from real moderation acceptance. Define attachment removal/replacement with the retention policy. Preserve versioned general moderation and its independent report decisions, current-scope member inspection, follow-up images, bounded feed/snapshot admission, report receipts, text replay and private image fences. Complete scanner/quarantine and resumable-transfer acceptance, then verify representative image sizes on the approved staging target before promotion.

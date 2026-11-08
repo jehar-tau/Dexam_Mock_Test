@@ -3,7 +3,7 @@ import { validateRaster } from "../_shared/validate-raster.ts";
 import { drawingRequestBody } from "../_shared/drawing-request.mjs";
 import { sameDrawingPages, signedDrawingPages } from "../_shared/drawing-links.mjs";
 import { COMMUNITY_FORM_MAX_BYTES, COMMUNITY_MAX_BYTES, CommunityMediaError, communityMediaFailure, communityTarget, validateCommunityImage } from "../_shared/community-image.mjs";
-import { signedCommunityReview } from "../_shared/community-review.mjs";
+import { signedCommunityModeration, signedCommunityReview } from "../_shared/community-review.mjs";
 
 let uploadBusy = false;
 Deno.serve(async request => {
@@ -26,6 +26,8 @@ Deno.serve(async request => {
       const input = JSON.parse(new TextDecoder().decode(await drawingRequestBody(request, 4096)));
       if (input.action === "review") return respond(await signedCommunityReview(input,
         (args: { p_report_id: string; p_expected_version: string; p_context: string }) => student.rpc("admin_community_report_media_paths", args), bucket));
+      if (input.action === "moderate") return respond(await signedCommunityModeration(input,
+        (args: { p_target_type: string; p_target_id: string; p_expected_version: string; p_context: string }) => student.rpc("admin_community_moderation_media_paths", args), bucket));
       const { targetType, targetId } = input;
       if (!communityTarget(targetType, targetId)) throw new CommunityMediaError("Invalid community target", "invalid_target");
       const read = () => student.rpc("community_media_paths", { p_target_type: targetType, p_target_id: targetId });

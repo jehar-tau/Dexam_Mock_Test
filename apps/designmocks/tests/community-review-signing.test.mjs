@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { communityReviewInput, signedCommunityReview } from "../supabase/functions/_shared/community-review.mjs";
+import { communityModerationMediaInput, communityReviewInput, signedCommunityModeration, signedCommunityReview } from "../supabase/functions/_shared/community-review.mjs";
 
 const reportId="00000000-0000-4000-8000-000000000741",assetId="00000000-0000-4000-8000-000000000742";
 const input={action:"review",reportId,reviewVersion:"a".repeat(64),context:"target"};
@@ -53,4 +53,34 @@ test("Storage failures and unknown RPC errors become safe retry messages",async(
  for(const details of ["unrecognized","constructor","__proto__"]){
   const rejected=fixture({error:{details,message:"Private SQL diagnostic"}});await assert.rejects(signedCommunityReview(input,rejected.read,rejected.bucket),error=>error.code==="media_unavailable"&&error.status===502&&!error.message.includes("Private"));
  }
+});
+
+const moderationInput={action:"moderate",targetType:"comment",targetId:reportId,reviewVersion:"b".repeat(64),context:"parent"};
+test("moderation signing binds exact target kind/id/version/context without accepting private paths",()=>{
+ assert.deepEqual(communityModerationMediaInput(moderationInput),{p_target_type:"comment",p_target_id:reportId,p_expected_version:"b".repeat(64),p_context:"parent"});
+ for(const value of [null,{}, {...moderationInput,action:"review"},{...moderationInput,targetType:"all"},{...moderationInput,targetId:"unknown"},
+  {...moderationInput,reviewVersion:"B".repeat(64)},{...moderationInput,context:"all"},{...moderationInput,path:"private/operator-choice"},{...moderationInput,reportId}]){
+  assert.throws(()=>communityModerationMediaInput(value),error=>error.code==="community_moderation_invalid"&&error.status===400);
+ }
+});
+test("moderation signing uses current and legacy registered pages with a second exact-scope read",async()=>{
+ const f=fixture([page({width:null,height:null,orientation:null})]);
+ const result=await signedCommunityModeration(moderationInput,f.read,f.bucket);
+ assert.deepEqual(f.reads,[communityModerationMediaInput(moderationInput),communityModerationMediaInput(moderationInput)]);
+ assert.equal(f.signs.length,1);assert.equal(result.media[0].orientation,null);assert.equal(Object.hasOwn(result.media[0],"storagePath"),false);
+ const empty=fixture([]);assert.deepEqual((await signedCommunityModeration(moderationInput,empty.read,empty.bucket)).media,[]);assert.equal(empty.signs.length,0);assert.equal(empty.reads.length,2);
+});
+test("moderation role, version and object failures before or after signing discard every link",async()=>{
+ for(const details of ["community_moderation_unavailable","community_moderation_changed","community_moderation_incomplete"]){
+  for(const after of [false,true]){
+   const denied={error:{details,message:"Private operator diagnostic"}},f=after?fixture([page()],denied):fixture(denied);
+   await assert.rejects(signedCommunityModeration(moderationInput,f.read,f.bucket),error=>error.code===details&&!error.message.includes("Private"));
+   assert.equal(f.signs.length,after?1:0);
+  }
+ }
+ for(const value of [null,[null],[page(),page()],[page({orientation:9})]]){
+  const f=fixture(value);await assert.rejects(signedCommunityModeration(moderationInput,f.read,f.bucket),error=>error.code==="media_unavailable"&&error.status===502);assert.equal(f.signs.length,0);
+ }
+ const swapped=fixture([page()],[page({path:"community/changed-private-object.png"})]);
+ await assert.rejects(signedCommunityModeration(moderationInput,swapped.read,swapped.bucket),error=>error.code==="community_moderation_changed"&&error.status===409);
 });

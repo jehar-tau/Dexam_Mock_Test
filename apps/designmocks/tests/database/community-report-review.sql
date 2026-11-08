@@ -1,5 +1,8 @@
 \set ON_ERROR_STOP on
 begin;
+create function pg_temp.current_moderate(kind text,id uuid,action text,note text) returns jsonb language sql as $$
+ select public.admin_moderate_community(kind,id,action,note,public.admin_review_community_content(kind,id)->>'reviewVersion',gen_random_uuid())
+$$;
 create function pg_temp.review_assert(ok boolean,label text) returns void language plpgsql as $$
 begin if ok is distinct from true then raise exception 'FAIL: %',label;end if;end $$;
 create function pg_temp.review_reject(statement text,expected_state text,expected_detail text default null) returns void language plpgsql as $$
@@ -70,7 +73,7 @@ update dm_private.community_comments set helpful_count=helpful_count+1 where id=
 insert into dm_private.community_comments(post_id,author_id,body) values('10000000-0000-4000-8000-000000000711','00000000-0000-4000-8000-000000000714','An unrelated new fictional reply.');
 set local role authenticated;
 select pg_temp.review_assert(public.admin_community_report('30000000-0000-4000-8000-000000000711')->>'reviewVersion'=current_setting('test.review')::jsonb->>'reviewVersion','unrelated activity preserves the inspected version');
-select public.admin_moderate_community('comment','20000000-0000-4000-8000-000000000711','hide','Fictional parent containment');
+select pg_temp.current_moderate('comment','20000000-0000-4000-8000-000000000711','hide','Fictional parent containment');
 select pg_temp.review_reject('select public.admin_community_report_media_paths(''30000000-0000-4000-8000-000000000711'',current_setting(''test.review'')::jsonb->>''reviewVersion'',''target'')','40001','community_review_changed');
 select set_config('test.review',public.admin_community_report('30000000-0000-4000-8000-000000000711')::text,true);
 select pg_temp.review_assert(current_setting('test.review')::jsonb->'parent'->>'status'='hidden' and current_setting('test.review')::jsonb->'parent'->>'body'='An original fictional parent method.','administrator sees hidden immediate context');
