@@ -17,7 +17,8 @@ import {
   SAMPLE_STORAGE,
 } from "./sample.mjs";
 import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
-import { PortalModule } from "./PortalShell.jsx";
+import { PortalModule, DeferredModule } from "./PortalShell.jsx";
+import {postLaunchPreview}from "./launch-scope.js";
 import {
   CandidateProfile,
   CandidateProfilePreview,
@@ -371,6 +372,7 @@ function ExamCard({ exam, index = 0 }) {
           <span>{exam.level}</span>
         </div>
         <p>{exam.description}</p>
+        <span className="eyebrow">{["nid","nift"].includes(exam.id)?"Coming later":"Paid release under review"}</span>
         <Link className="text-link" to={"/tests/" + exam.id}>
           Explore {exam.name} <Arrow />
         </Link>
@@ -546,10 +548,8 @@ function PassPanel() {
             programme.
           </p>
           <div className="pass-chips">
-            <span>UCEED</span>
-            <span>NID DAT</span>
-            <span>NIFT</span>
-            <span>CEED</span>
+            <span>Released papers only</span>
+            <span>Timed objective practice</span>
           </div>
         </div>
         <div className="pass-price">
@@ -576,7 +576,7 @@ const faqs = [
   ],
   [
     "What does the ₹1,193 pass cover?",
-    "One year of access to the DMocks mock-test catalogue, starting from a successfully verified payment. It is a single payment, with no automatic renewal.",
+    "Twelve months of access to the explicitly released paid papers shown before purchase, starting from a verified payment. One payment, no automatic renewal. Upcoming modules and unlisted exams are not included.",
   ],
   [
     "Can I try the experience first?",
@@ -584,15 +584,15 @@ const faqs = [
   ],
   [
     "Are the papers human-reviewed?",
-    "Yes—the question bank has been human-reviewed by the team. The sample questions on this preview are separate original examples, not a public copy of the reviewed bank.",
+    "Every sold paper must pass question, marking, timing, image and content-rights checks before release. The free sample uses separate original examples. No paid paper is released in this preview.",
   ],
   [
-    "How does drawing feedback work?",
-    "Drawing needs a rubric and human judgement. It is kept separate from answers that can be marked automatically. Any evaluation service and its turnaround will be stated before it is offered.",
+    "Are drawing reviews, lessons or rankings included?",
+    "These are planned for a later release. The initial offer covers only the explicitly released assessment papers. No drawing, AI, Community, Learn or All India ranking service is promised with this launch.",
   ],
   [
     "Can I sign in and pay today?",
-    "This first-look version lets you explore the sample. Google sign-in and Razorpay are implemented as separate integrations and will open once the new provider accounts and live payment setup are connected.",
+    "This first-look version lets you explore the sample. Controlled Google sign-in is being accepted. Paid checkout stays closed until the first offering, final customer policies and a real test-mode purchase journey are approved.",
   ],
 ];
 function FAQs() {
@@ -646,7 +646,7 @@ function Home() {
           <div className="hero-proof">
             <span>
               <i />
-              Human-reviewed papers
+              Original free sample
             </span>
             <span>Made for design aspirants</span>
           </div>
@@ -663,7 +663,7 @@ function Home() {
         ))}
       </div>
       <Catalogue />
-      <AllIndiaHighlights />
+      {postLaunchPreview&&<AllIndiaHighlights />}
       <section className="wrap section" id="how">
         <div className="section-heading">
           <div>
@@ -767,6 +767,7 @@ function ExamDetail() {
             ))}
           </h1>
           <p>{exam.description}</p>
+          <p className="notice">{["nid","nift"].includes(exam.id)?"This exam is coming later and is outside the initial annual-pass offer.":"The first paid offering is under review. Only its exact released paper and part will be included; a full two-part exam is not promised."}</p>
           <Button to="/sample">Try the experience sample</Button>
           <a
             className="source-link"
@@ -783,7 +784,7 @@ function ExamDetail() {
         </div>
       </section>
       <section className="wrap section">
-        <span className="eyebrow">WHAT YOU’LL PRACTISE</span>
+        <span className="eyebrow">ABOUT THE EXAM</span>
         <div className="skills-grid">
           {exam.skills.map((s, i) => (
             <article key={s}>
@@ -884,8 +885,8 @@ function Plans() {
           </p>
           <ul>
             {[
-              "Mock-test catalogue for UCEED, NID DAT, NIFT and CEED",
-              "Human-reviewed question bank",
+              "Only the explicitly released papers listed in the catalogue",
+              "Reviewed questions with approved content rights",
               "Timed attempts and saved progress",
               "Answer review after submission",
               "Your own student account",
@@ -1056,7 +1057,7 @@ function Account() {
   }, [session]);
   useEffect(() => {
     setReviewerAccountId(null);
-    if (!accountId || !workspaceAvailable) return;
+    if (!postLaunchPreview || !accountId || !workspaceAvailable) return;
     const controller = new AbortController();
     platform.rpc("can_review_drawings").abortSignal(controller.signal).then(({ data, error }) => {
       if (!controller.signal.aborted && !error && data === true) setReviewerAccountId(accountId);
@@ -1096,7 +1097,7 @@ function Account() {
             {(testLoginMode || stagingPortalMode) && <button className="button quiet" disabled={busy} onClick={refreshTestSession}>Refresh test session</button>}
             {sessionStatus && <p role="status">{sessionStatus}</p>}
             {workspaceAvailable && <Button to="/dashboard">{stagingPortalMode ? "Open staging workspace" : "Open your workspace"}</Button>}
-            {workspaceAvailable && reviewerAccountId === accountId && <Button to="/review/drawings" quiet>Review drawings</Button>}
+            {postLaunchPreview && workspaceAvailable && reviewerAccountId === accountId && <Button to="/review/drawings" quiet>Review drawings</Button>}
             {workspaceAvailable && <Button to="/onboarding" quiet>
               Complete your profile
             </Button>}
@@ -1674,14 +1675,14 @@ export default function App() {
         <Route element={stagingPortalMode ? <StagingPortalGate /> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
           <Route path="/dashboard" element={<Workspace />} />
           <Route path="/onboarding" element={<CandidateProfile />} />
-          <Route path="/dashboard/mocks" element={<ExamMocks />} />
-          <Route path="/dashboard/all-india" element={<AllIndia />} />
-          <Route path="/dashboard/practice" element={<TopicPractice />} />
-          <Route path="/dashboard/learn" element={<Learn />} />
-          <Route path="/dashboard/community" element={<Community />} />
+          <Route path="/dashboard/mocks" element={postLaunchPreview?<ExamMocks />:<Workspace catalogueOnly/>} />
+          <Route path="/dashboard/all-india" element={postLaunchPreview?<AllIndia />:<DeferredModule module="all-india"/>} />
+          <Route path="/dashboard/practice" element={postLaunchPreview?<TopicPractice />:<DeferredModule module="practice"/>} />
+          <Route path="/dashboard/learn" element={postLaunchPreview?<Learn />:<DeferredModule module="learn"/>} />
+          <Route path="/dashboard/community" element={postLaunchPreview?<Community />:<DeferredModule module="community"/>} />
           <Route path="/report" element={<BugReport />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/review/drawings" element={<DrawingReviewerWorkspace />} />
+          <Route path="/review/drawings" element={postLaunchPreview?<DrawingReviewerWorkspace />:<DeferredModule module="drawings"/>} />
           <Route path="/attempt/:id" element={<Attempt key={location.pathname} />} />
         </Route>
         {import.meta.env.DEV && (

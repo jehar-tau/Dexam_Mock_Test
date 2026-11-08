@@ -16,8 +16,15 @@ test("test login cannot become a production release or coincide with paid portal
   assert.throws(() => resolveAuthConfiguration({ ...base, portalEnabled: true, testLoginEnabled: true, termsVersion: "fixture" }));
   assert.throws(() => resolveAuthConfiguration({ ...base, deployment: "production", portalEnabled: true }));
   assert.deepEqual(resolveAuthConfiguration({ ...base, deployment: "production", portalEnabled: true, termsVersion: "fixture" }), {
-    ...closed, authReady: true, portalReady: true, checkoutReady: true,
+    ...closed, authReady: true, portalReady: true, checkoutReady: false,
   });
+});
+test("opening the portal never opens checkout without its separate explicit switch",()=>{
+ const input={...base,deployment:'production',portalEnabled:true,termsVersion:'fictional-approved-terms'};
+ for(const checkoutEnabled of[undefined,false,'true',1])assert.equal(resolveAuthConfiguration({...input,checkoutEnabled}).checkoutReady,false);
+ assert.equal(resolveAuthConfiguration({...input,checkoutEnabled:true}).checkoutReady,true);
+ assert.equal(resolveAuthConfiguration({...base,testLoginEnabled:true,checkoutEnabled:true}).checkoutReady,false);
+ assert.equal(resolveAuthConfiguration({deployment:'production',checkoutEnabled:true}).checkoutReady,false);
 });
 test("the private staging portal pins the build, browser origin and backend with checkout closed", () => {
   const stagingTarget = { url: base.url, origin: "https://approved-staging.example" };

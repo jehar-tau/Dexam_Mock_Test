@@ -12,6 +12,7 @@
     "preview": "vite preview --host 127.0.0.1 --port 4191 --strictPort",
     "test": "node --test tests/*.test.mjs",
     "test:e2e": "playwright install chromium && playwright test && node scripts/check-browser-results.mjs",
+    "test:e2e:full": "DMOCKS_E2E_SCOPE=full npm run test:e2e",
     "test:e2e:system-deps": "playwright install-deps chromium",
     "test:e2e:install": "playwright install chromium",
     "test:hosted-setup": "node scripts/check-hosted-setup.mjs",

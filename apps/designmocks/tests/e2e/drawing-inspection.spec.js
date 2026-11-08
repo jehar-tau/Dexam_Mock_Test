@@ -156,6 +156,7 @@ test("students can inspect only saved pages, then remove a page and clear its pr
   await expect(page.getByRole("dialog",{name:"Your drawing page 1",exact:true})).toBeVisible();
   await page.getByRole("button",{name:"Close image",exact:true}).click();
   await page.getByRole("button",{name:"Remove image 1",exact:true}).click();
+  await expect(page.getByText("Drawing image removed.",{exact:true})).toBeVisible();
   await expect(page.getByRole("img",{name:"Your drawing page 1",exact:true})).toHaveCount(0);await expect(page.getByRole("button",{name:"View saved images",exact:true})).toHaveCount(0);
   expect(state.opens).toEqual([{action:"open",attemptId,questionId}]);expect(state.removed).toEqual([{action:"remove",id:images[0].id}]);expect(provider.unexpected).toEqual([]);
 });

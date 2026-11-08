@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { WorkspaceView, PendingAttemptResult } from "./Workspace.jsx";
 import { Arrow } from "./Art.jsx";
-import { PortalShell } from "./PortalShell.jsx";
+import { PortalShell, DeferredModule } from "./PortalShell.jsx";
+import {postLaunchPreview}from "./launch-scope.js";
 import { DrawingUploadWindow, previewDrawingMedia } from "./DrawingUploads.jsx";
 
 const example = {
@@ -69,11 +70,11 @@ export default function PortalPreview() {
         <Link to="/portal-preview" aria-current={!report ? "page" : undefined}>Your workspace</Link>
         <Link to="/sample">Try the original sample</Link>
         <Link to="/portal-preview/report" aria-current={report ? "page" : undefined}>Example report</Link>
-        <Link to="/portal-preview/pending" aria-current={pending ? "page" : undefined}>Example pending result</Link>
-        <Link to="/portal-preview/pending-upload" aria-current={pendingUpload ? "page" : undefined}>Example drawing upload</Link>
+        {postLaunchPreview&&<><Link to="/portal-preview/pending" aria-current={pending ? "page" : undefined}>Example pending result</Link>
+        <Link to="/portal-preview/pending-upload" aria-current={pendingUpload ? "page" : undefined}>Example drawing upload</Link></>}
       </div>
     </section>
-    {pendingUpload ? <PendingUploadPreview /> : pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" /> : report ? <section className="wrap section sample-result">
+    {!postLaunchPreview&&(pending||pendingUpload)?<DeferredModule module="drawings"/>:pendingUpload ? <PendingUploadPreview /> : pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" /> : report ? <section className="wrap section sample-result">
       <Link className="back-link" to="/portal-preview">← Your preview workspace</Link>
       <div className="result-title">
         <div>
@@ -93,6 +94,6 @@ export default function PortalPreview() {
       <h2>Small observations. Useful habits.</h2>
       <div className="paper-list">{topics.map(t => <article key={t.name}><span className="eyebrow">{t.name}</span><h3>Try this tomorrow.</h3><p>{t.note}</p></article>)}</div>
       <Link className="button" to="/sample">Try it with your own answers <Arrow /></Link>
-    </section> : <PortalShell><WorkspaceView data={example} papers={papers} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/sample"} /></PortalShell>}
+    </section> : <PortalShell><WorkspaceView data={postLaunchPreview?example:{...example,attempts:example.attempts.filter(item=>!item.resultsPending),analytics:{...example.analytics,waitingForResults:0,drawingReviews:{pending:0,released:0}}}} papers={postLaunchPreview?papers:papers.slice(0,1)} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/sample"} /></PortalShell>}
   </>;
 }

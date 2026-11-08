@@ -1,6 +1,10 @@
 # DMocks — owner decisions
 
-## Current updates — 6 November 2026
+## Current owner decision — 8 November 2026
+
+Freeze scope to the fastest safe paid MVP in PRODUCT_EXECUTION_PLAN.md. Payment implementation is resumed for the ₹1,193/12-month/no-auto-renewal offer; the older payment deferral is superseded. Public registration, catalogue publication and checkout still require final acceptance and a production-impact decision. Select the smallest explicitly rights-cleared, verified initial assessment catalogue and complete the real test-mode purchase-to-result journey on dmocks.com. Community, Learn, All India/rankings, unsupported exams/programmes, AI/intake and advanced drawing/teacher/capacity work are post-launch. Do not advertise them as included. Preserve only approved launch claims, payment security, account isolation, final policies and minimal operational recovery.
+
+## Historical updates — 6 November 2026
 
 - Owner-connected `dmocks.com` is active with HTTPS and remains owner-private.
 - Controlled Google sign-in works against the standalone Supabase project; the signup hook admits only the owner tester. Public registration and paid access remain closed.

@@ -12,7 +12,7 @@ const api="https://dmocks-portal-fixture.supabase.co",headers={"Access-Control-A
 const deferred=()=>{let resolve;const promise=new Promise(done=>resolve=done);return{promise,resolve};};
 const files=async()=>Promise.all([["png","image/png"],["jpg","image/jpeg"]].map(async([ext,mimeType])=>({name:"fictional-followup."+ext,mimeType,buffer:await readFile(new URL(`../fixtures/drawing-images/fictional-drawing.${ext}`,import.meta.url))})));
 async function fixture(page,{foreign=false,full=false,locked=false,otherThread=false}={}){
- const samples=await orientationPages(6),state={assets:new Map(),calls:[],uploads:[],writes:0,scopeReads:0,scopeError:false,signingStatus:null,failOrdinal:null,lostOrdinal:null,holdScope:null,holdUpload:null,scopeCompleted:0,uploadCompleted:0};
+ const samples=await orientationPages(6),state={assets:new Map(),calls:[],uploads:[],writes:0,scopeReads:0,scopeError:false,signingStatus:null,failOrdinal:null,lostOrdinal:null,holdScope:null,holdUpload:null,holdFailure:null,scopeCompleted:0,uploadCompleted:0};
  const initial={...samples[0],id:"30000000-0000-4000-8000-000000000811",ordinal:1,hash:"original"};
  state.assets.set(postId,full?[initial,{...samples[1],ordinal:2,id:"full-2"},{...samples[2],ordinal:3,id:"full-3"}]:[initial]);
  state.assets.set(replyId,[{...samples[1],id:"30000000-0000-4000-8000-000000000812",ordinal:2,hash:"original-reply"}]);
@@ -48,7 +48,7 @@ async function fixture(page,{foreign=false,full=false,locked=false,otherThread=f
   }
   const form=await new Request(request.url(),{method:"POST",headers:{"Content-Type":request.headers()["content-type"]},body:request.postDataBuffer()}).formData(),id=form.get("targetId"),ordinal=Number(form.get("ordinal")),file=form.get("file"),hash=createHash("sha256").update(Buffer.from(await file.arrayBuffer())).digest("hex");
   state.uploads.push({targetType:form.get("targetType"),id,ordinal,name:file.name,hash});
-  if(state.failOrdinal===ordinal)return route.fulfill({headers,status:429,json:{code:"image_busy",error:"private-followup-diagnostic"}});
+  if(state.failOrdinal===ordinal){if(state.holdFailure)await state.holdFailure.promise;return route.fulfill({headers,status:429,json:{code:"image_busy",error:"private-followup-diagnostic"}});}
   const current=state.assets.get(id)??[],saved=current.find(image=>image.ordinal===ordinal);
   if(saved&&saved.hash!==hash)return route.fulfill({headers,status:409,json:{code:"slot_conflict",error:"private-followup-diagnostic"}});
   const image=saved??{...samples[ordinal-1],id:`${id}-additional-${ordinal}`,ordinal,hash};if(!saved)state.assets.set(id,[...current,image]);
@@ -87,9 +87,11 @@ test("a lost additional-image acknowledgement retries the same file and position
 });
 
 test("partial follow-up failures resume only the remaining explicit image position",async({page})=>{
- const state=await fixture(page);state.failOrdinal=3;await select(page,await files());await send(page).click();
- const recovery=page.getByRole("region",{name:"Saved post images",exact:true});await expect(recovery).toContainText("1 of 2 images confirmed");state.failOrdinal=null;
- await recovery.getByRole("button",{name:"Retry post images",exact:true}).click();await expect(page.getByRole("img",{name:"Question attachment 3",exact:true})).toBeVisible();expect(state.uploads.map(item=>item.ordinal)).toEqual([2,3,3]);expect(state.writes).toBe(0);
+ const state=await fixture(page);state.failOrdinal=3;state.holdFailure=deferred();await select(page,await files());await send(page).click();
+ const recovery=page.getByRole("region",{name:"Saved post images",exact:true}),retry=recovery.getByRole("button",{name:"Retry post images",exact:true});
+ await expect(recovery).toContainText("1 of 2 images confirmed");await expect.poll(()=>state.uploads.map(item=>item.ordinal)).toEqual([2,3]);await expect(retry).toBeDisabled();
+ state.holdFailure.resolve();await expect(retry).toBeEnabled();state.failOrdinal=null;
+ await retry.click();await expect(page.getByRole("img",{name:"Question attachment 3",exact:true})).toBeVisible();expect(state.uploads.map(item=>item.ordinal)).toEqual([2,3,3]);expect(state.writes).toBe(0);
 });
 
 test("fresh inventory detects another tab filling a target without uploading or overwriting it",async({page})=>{

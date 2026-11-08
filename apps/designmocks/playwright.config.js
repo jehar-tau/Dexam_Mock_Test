@@ -1,7 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 import project from "./supabase/project.json" with { type: "json" };
 
+const scope=process.env.DMOCKS_E2E_SCOPE??'mvp';
+if(!['mvp','full'].includes(scope))throw new Error('Choose the mvp or full browser scope.');
+const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','admin-access-lifecycle.spec.js'];
 export default defineConfig({
+  testMatch:scope==='full'?'**/*.spec.js':mvpFiles.map(file=>'**/'+file),
   testDir: "./tests/e2e",
   fullyParallel: true,
   workers: process.env.CI ? 3 : undefined,
@@ -14,9 +18,21 @@ export default defineConfig({
   ],
   webServer: [
     {
+      command:"npm exec -- vite build --mode production --outDir test-results/mvp-production && npm exec -- vite preview --outDir test-results/mvp-production --host 127.0.0.1 --port 4899 --strictPort",
+      url:"http://127.0.0.1:4899",
+      env:{VITE_DEPLOYMENT_ENV:"production",VITE_POST_LAUNCH_PREVIEW:"true",VITE_PORTAL_ENABLED:"false",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"true"},
+      reuseExistingServer:false,timeout:60000,
+    },
+    {
+      command:"npm exec -- vite --host 127.0.0.1 --port 4799 --strictPort",
+      url:"http://127.0.0.1:4799",
+      env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:"fictional-mvp-fixture"},
+      reuseExistingServer:false,timeout:60000,
+    },
+    {
       command: "npm run dev:e2e",
       url: "http://127.0.0.1:4399",
-      env: { VITE_DEPLOYMENT_ENV: "test", VITE_PORTAL_ENABLED: "false", VITE_TEST_LOGIN_ENABLED: "false", VITE_STAGING_PORTAL_ENABLED: "false" },
+      env: { VITE_POST_LAUNCH_PREVIEW:"true", VITE_DEPLOYMENT_ENV: "test", VITE_PORTAL_ENABLED: "false", VITE_TEST_LOGIN_ENABLED: "false", VITE_STAGING_PORTAL_ENABLED: "false" },
       reuseExistingServer: false,
       timeout: 60_000,
     },
@@ -24,6 +40,7 @@ export default defineConfig({
       command: "npm exec -- vite --host 127.0.0.1 --port 4499 --strictPort",
       url: "http://127.0.0.1:4499",
       env: {
+        VITE_POST_LAUNCH_PREVIEW:"true",
         VITE_DEPLOYMENT_ENV: "test",
         VITE_TEST_LOGIN_ENABLED: "true",
         VITE_PORTAL_ENABLED: "false",
@@ -39,6 +56,7 @@ export default defineConfig({
       command: "npm exec -- vite --host 127.0.0.1 --port 4599 --strictPort",
       url: "http://127.0.0.1:4599",
       env: {
+        VITE_POST_LAUNCH_PREVIEW:"true",
         VITE_DEPLOYMENT_ENV: "test",
         VITE_TEST_LOGIN_ENABLED: "false",
         VITE_PORTAL_ENABLED: "true",
@@ -54,6 +72,7 @@ export default defineConfig({
       command: "npm exec -- vite build --mode staging --outDir test-results/staging-build && npm exec -- vite preview --mode staging --outDir test-results/staging-build --host 127.0.0.1 --port 4699 --strictPort",
       url: "http://127.0.0.1:4699",
       env: {
+        VITE_POST_LAUNCH_PREVIEW:"true",
         VITE_DEPLOYMENT_ENV: "staging",
         VITE_TEST_LOGIN_ENABLED: "false",
         VITE_PORTAL_ENABLED: "false",
