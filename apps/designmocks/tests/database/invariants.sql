@@ -111,7 +111,7 @@ select public.fulfil_verified_payment('evt_2','order_fictional123','pay_fictiona
 select public.verify_candidate_phone('00000000-0000-4000-8000-000000000001','+919111111111');
 select public.verify_candidate_phone('00000000-0000-4000-8000-000000000002','+919222222222');
 reset role;
-select pg_temp.assert_true((select count(*)=1 and min(expires_at)=now()+interval '12 months' from dm_private.passes),'one calendar-year pass after retries');
+select pg_temp.assert_true((select count(*)=1 and bool_and(expires_at=starts_at+interval '12 months') from dm_private.passes),'one calendar-year pass after retries');
 set local role authenticated;
 select set_config('request.jwt.claim.role','authenticated',true);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);

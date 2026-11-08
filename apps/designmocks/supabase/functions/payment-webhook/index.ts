@@ -1,5 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
-import { validSignature, capturedPayment } from "../_shared/commerce.mjs";
+import { validSignature, capturedPayment, processedRefund } from "../_shared/commerce.mjs";
 Deno.serve(async (request) => {
   const reply = (status: number) =>
     new Response(null, { status, headers: { "Cache-Control": "no-store" } });
@@ -48,13 +48,15 @@ Deno.serve(async (request) => {
     ))
   )
     return reply(401);
-  let payment;
+  let payment, refund;
   try {
-    payment = capturedPayment(JSON.parse(body));
+    const payload = JSON.parse(body);
+    payment = capturedPayment(payload);
+    refund = processedRefund(payload);
   } catch {
     return reply(400);
   }
-  if (!payment) return reply(200);
+  if (!payment && !refund) return reply(200);
   const supplied = request.headers.get("x-razorpay-event-id");
   const eventId =
     supplied ??
@@ -64,14 +66,23 @@ Deno.serve(async (request) => {
       ),
       (n) => n.toString(16).padStart(2, "0"),
     ).join("");
-  if (eventId.length > 200) return reply(400);
+  if (!eventId || eventId.length > 200) return reply(400);
   const admin = createClient(url, service, { auth: { persistSession: false } });
-  const { error } = await admin.rpc("fulfil_verified_payment", {
+  const { error } = payment ? await admin.rpc("fulfil_verified_payment", {
     p_event_id: eventId,
     p_provider_order: payment.orderId,
     p_payment_id: payment.paymentId,
     p_amount: payment.amount,
     p_currency: payment.currency,
+  }) : await admin.rpc("record_verified_refund", {
+    p_event_id: eventId,
+    p_provider_order: refund!.orderId,
+    p_payment_id: refund!.paymentId,
+    p_refund_id: refund!.refundId,
+    p_payment_amount: refund!.paymentAmount,
+    p_refund_amount: refund!.refundAmount,
+    p_total_refunded: refund!.totalRefunded,
+    p_currency: refund!.currency,
   });
   return reply(error ? 503 : 200);
 });

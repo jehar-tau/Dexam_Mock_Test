@@ -2,6 +2,8 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+The MVP refund candidate adds migration `202611080148_mvp_payment_refunds.sql` and an updated `payment-webhook` for signed processed-refund events. The source now has 72 migrations; the historical hosted count below is not refreshed by local checks. Read REFUND_RECONCILIATION.md before merchant setup. Full refunds revoke only their matching purchase; partial/duplicate purchase cases require operator review. Actual local HMAC/SDK acceptance is fictional and does not replace fresh private Test credentials, final refund policy, approved promotion or a real Test-mode journey on dmocks.com. Checkout has an independent frontend switch that remains false.
+
 Hosted evidence: 7 November 2026; later local verification is dated below. The GitHub app is `jehar-tau/Dexam_Mock_Test/apps/designmocks`; its separate Supabase project is **DesignMocks**, `tiodqzvvujxvxssvjdis`, Mumbai. The existing academy/Dexam projects and merchant credentials are not used.
 
 ## Hosting and environment

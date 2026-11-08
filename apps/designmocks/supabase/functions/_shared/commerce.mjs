@@ -47,3 +47,22 @@ export function keyMatchesMode(key, mode) {
         : false,
   );
 }
+
+// Refund creation/failure is not proof that money was returned. An uncaptured
+// auto-refund cannot revoke an entitlement purchased with another payment.
+export function processedRefund(payload) {
+  if (payload?.event !== "refund.processed") return null;
+  const refund = payload?.payload?.refund?.entity;
+  const payment = payload?.payload?.payment?.entity;
+  if (payment?.captured === false) return null;
+  if (!refund || !payment || refund.status !== "processed" || payment.captured !== true ||
+      !["captured", "refunded"].includes(payment.status) || refund.currency !== "INR" || payment.currency !== "INR" ||
+      !/^rfnd_[A-Za-z0-9]+$/.test(refund.id ?? "") || !/^pay_[A-Za-z0-9]+$/.test(payment.id ?? "") ||
+      !/^order_[A-Za-z0-9]+$/.test(payment.order_id ?? "") || refund.payment_id !== payment.id ||
+      !Number.isSafeInteger(payment.amount) || payment.amount <= 0 ||
+      !Number.isSafeInteger(refund.amount) || refund.amount <= 0 || refund.amount > payment.amount ||
+      !Number.isSafeInteger(payment.amount_refunded) || payment.amount_refunded < refund.amount || payment.amount_refunded > payment.amount)
+    throw new Error("Invalid processed refund");
+  return {refundId: refund.id, paymentId: payment.id, orderId: payment.order_id,
+    paymentAmount: payment.amount, refundAmount: refund.amount, totalRefunded: payment.amount_refunded, currency: payment.currency};
+}
