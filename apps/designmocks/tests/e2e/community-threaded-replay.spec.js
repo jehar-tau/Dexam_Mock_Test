@@ -1,7 +1,7 @@
 import {expect,test} from "@playwright/test";
 import {readFile} from "node:fs/promises";
 import {fileURLToPath} from "node:url";
-import {portalFixtureURL,seedPortalSession} from "./portal-fixture.js";
+import {portalFixtureURL,seedPortalSession,stubPortalIdentity} from "./portal-fixture.js";
 import {orientationPages} from "./drawing-orientation-fixture.js";
 import {communityFeedFixture} from "./community-feed-fixture.js";
 test.use({baseURL:portalFixtureURL});
@@ -56,7 +56,7 @@ async function fixture(page,options={}){
  await page.route(api+"/functions/v1/community-media",async route=>{
   const request=route.request();if(request.method()==="OPTIONS")return route.fulfill({headers,status:204});
   if(request.headers()["content-type"].startsWith("application/json")){
-   const input=request.postDataJSON();return route.fulfill({headers,json:{media:target(input.targetId),serverNow:"2026-01-01T00:00:00Z",expiresAt:"2026-01-01T00:05:00Z"}});
+   const input=request.postDataJSON();return route.fulfill({headers,json:{media:target(input.targetId),serverNow:"2026-01-01T00:00:00Z",expiresAt:new Date(Date.parse("2026-01-01T00:00:00Z")+(options.linkLifetime??300000)).toISOString()}});
   }
   const form=await new Request(request.url(),{method:"POST",headers:{"Content-Type":request.headers()["content-type"]},body:request.postDataBuffer()}).formData(),id=form.get("targetId"),ordinal=Number(form.get("ordinal"));
   state.uploads.push({id,ordinal});if(state.holdUpload)await state.holdUpload;
@@ -64,7 +64,7 @@ async function fixture(page,options={}){
   state.assets.set(id,[{...samples[0],id:"30000000-0000-4000-8000-000000000651",ordinal}]);
   return route.fulfill({headers,json:{id:"30000000-0000-4000-8000-000000000651",ordinal}});
  });
- await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");await expect(page.getByRole("heading",{name:/Ask clearly/})).toBeVisible();
+ await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");await expect(page.getByRole("heading",{name:/Ask clearly/})).toBeVisible();
  state.addImage=id=>state.assets.set(id,[{...samples[0],id:"30000000-0000-4000-8000-000000000651",ordinal:1}]);return state;
 }
 async function compose(page,images=[]){await page.getByLabel("Topic",{exact:true}).fill("fictional");await page.getByLabel("Question title",{exact:true}).fill(post().title);await page.getByLabel("Your approach or question",{exact:true}).fill(post().body);await page.getByLabel("Question images (optional, up to 3)",{exact:true}).setInputFiles(images);}
@@ -131,10 +131,10 @@ test("more replies append a bounded page without duplicates or losing a composed
 });
 
 test("expired old image links do not return when a held next page finishes",async({page})=>{
- await page.clock.install({time:new Date("2026-11-07T12:00:00Z")});const state=await fixture(page);state.addImage(parentId);state.second=[row(newId,"A new fictional image reply.")];state.addImage(newId);state.next=true;let release;state.holdMore=new Promise(resolve=>{release=resolve;});
+ await page.clock.install({time:new Date("2026-11-07T12:00:00Z")});const state=await fixture(page,{linkLifetime:10000});state.addImage(parentId);state.second=[row(newId,"A new fictional image reply.")];state.addImage(newId);state.next=true;let release;state.holdMore=new Promise(resolve=>{release=resolve;});
  await page.getByRole("button",{name:"Open discussion",exact:true}).click();await expect(article(page,parent().body).getByRole("img")).toBeVisible();
  const requested=page.waitForRequest(request=>request.url().endsWith("/rpc/community_thread")&&request.method()==="POST"&&request.postDataJSON()?.p_cursor);await page.getByRole("button",{name:"Load more replies",exact:true}).click();await requested;
- await page.clock.fastForward(300_001);await expect(article(page,parent().body).getByRole("img")).toHaveCount(0);release();
+ await page.clock.fastForward(10_001);await expect(article(page,parent().body).getByRole("img")).toHaveCount(0);release();
  await expect(article(page,"A new fictional image reply.").getByRole("img")).toBeVisible();await expect(article(page,parent().body).getByRole("img")).toHaveCount(0);
 });
 

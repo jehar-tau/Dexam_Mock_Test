@@ -1,6 +1,6 @@
 import {expect,test} from "@playwright/test";
 import {fileURLToPath} from "node:url";
-import {portalFixtureURL,seedPortalSession} from "./portal-fixture.js";
+import {portalFixtureURL,seedPortalSession,stubPortalIdentity} from "./portal-fixture.js";
 import {orientationPages} from "./drawing-orientation-fixture.js";
 import {communityFeedFixture} from "./community-feed-fixture.js";
 test.use({baseURL:portalFixtureURL});
@@ -10,7 +10,7 @@ const api="https://dmocks-portal-fixture.supabase.co",headers={"Access-Control-A
 const deferred=()=>{let resolve;const promise=new Promise(done=>resolve=done);return{promise,resolve};};
 const viewer=(page,label="Question attachment 1")=>page.getByRole("dialog",{name:label,exact:true});
 const inspect=(page,label="question attachment 1")=>page.getByRole("button",{name:"Inspect "+label,exact:true});
-async function fixture(page,{clock=false}={}){
+async function fixture(page,{clock=false,linkLifetime=300000}={}){
  if(clock)await page.clock.install({time:new Date()});
  const samples=await orientationPages(6),state={links:1,hasMore:true,holdMore:null,signingStatus:null,calls:[],signs:0,completed:0};
  const post={id:postId,exam:"uceed",topic:"observation",title:"Original fictional private image discussion",body:"An original fictional discussion with private raster question and solution images.",status:"visible",author:"Fictional author",comments:2,assetCount:3};
@@ -35,9 +35,9 @@ async function fixture(page,{clock=false}={}){
  await page.route(api+"/functions/v1/community-media",async route=>{
   const request=route.request();if(request.method()==="OPTIONS")return route.fulfill({headers,status:204});state.signs++;
   const input=request.postDataJSON();return route.fulfill({headers,status:state.signingStatus??200,json:state.signingStatus?{error:"private-inspection-diagnostic"}:
-   {media:input.targetType==="post"?[media(0),media(1),media(2)]:input.targetId===commentId?[media(1,true)]:[],serverNow:"2026-01-01T00:00:00Z",expiresAt:"2026-01-01T00:05:00Z"}});
+   {media:input.targetType==="post"?[media(0),media(1),media(2)]:input.targetId===commentId?[media(1,true)]:[],serverNow:"2026-01-01T00:00:00Z",expiresAt:new Date(Date.parse("2026-01-01T00:00:00Z")+linkLifetime).toISOString()}});
  });
- await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");await page.getByRole("button",{name:"Open discussion",exact:true}).click();await expect(inspect(page)).toBeVisible();return state;
+ await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");await page.getByRole("button",{name:"Open discussion",exact:true}).click();await expect(inspect(page)).toBeVisible();return state;
 }
 
 test("members inspect current PNG, JPEG, WebP and legacy solution images without another signing request",async({page})=>{
@@ -74,8 +74,8 @@ test("a refreshed URL clears an older inspector while preserving the draft and l
 });
 
 test("expiry closes an active inspector and a late fresh page cannot resurrect that selection",async({page})=>{
- const state=await fixture(page,{clock:true}),held=deferred();state.holdMore=held;await page.getByRole("button",{name:"Load more replies",exact:true}).click();await inspect(page).click();await expect(viewer(page)).toBeVisible();
- await page.clock.runFor(300_050);await expect(viewer(page)).toHaveCount(0);await expect(page.getByRole("img",{name:/Question attachment/})).toHaveCount(0);await expect(page.getByRole("region",{name:"Discussion thread",exact:true}).getByRole("heading",{name:"Original fictional private image discussion",exact:true})).toBeFocused();
+ const state=await fixture(page,{clock:true,linkLifetime:10000}),held=deferred();state.holdMore=held;await page.getByRole("button",{name:"Load more replies",exact:true}).click();await inspect(page).click();await expect(viewer(page)).toBeVisible();
+ await page.clock.runFor(10_050);await expect(viewer(page)).toHaveCount(0);await expect(page.getByRole("img",{name:/Question attachment/})).toHaveCount(0);await expect(page.getByRole("region",{name:"Discussion thread",exact:true}).getByRole("heading",{name:"Original fictional private image discussion",exact:true})).toBeFocused();
  held.resolve();await expect(page.getByText("An original fictional later method.",{exact:true})).toBeVisible();await expect(inspect(page)).toBeVisible();await expect(viewer(page)).toHaveCount(0);await inspect(page).click();await expect(viewer(page)).toBeVisible();
 });
 

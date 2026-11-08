@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { fileURLToPath } from "node:url";
-import { portalFixtureURL, seedPortalSession } from "./portal-fixture.js";
+import { portalFixtureURL, seedPortalSession, stubPortalIdentity } from "./portal-fixture.js";
 import { communityFeedFixture } from "./community-feed-fixture.js";
 
 test.use({ baseURL: portalFixtureURL });
@@ -58,7 +58,7 @@ async function fixture(page, { long = false } = {}) {
     else throw new Error("Unexpected fictional procedure: " + name);
     return route.fulfill({ headers, json: value });
   });
-  await page.goto("/account"); await seedPortalSession(page, actor); await page.goto("/dashboard/community");
+  await stubPortalIdentity(page); await page.goto("/account"); await seedPortalSession(page, actor); await page.goto("/dashboard/community");
   await page.getByRole("button", { name: "Open discussion", exact: true }).click();
   await expect(page.getByRole("region", { name: "Discussion thread", exact: true })).toBeVisible();
   return state;

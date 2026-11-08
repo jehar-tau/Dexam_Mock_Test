@@ -15,6 +15,18 @@ export function emptyAdminRead(procedure) {
   if (procedure === "admin_launch_readiness") return { gates: [], readyForSales: false, salesEnabled: false };
 }
 
+export async function stubPortalIdentity(page,projectRef=fixtureProject){
+  const calls=[];
+  await page.route(`https://${projectRef}.supabase.co/auth/v1/user`,async route=>{
+    const headers={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"authorization, apikey, content-type, x-client-info, x-supabase-api-version","Access-Control-Allow-Methods":"GET, OPTIONS"};
+    if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});
+    const token=route.request().headers().authorization?.split(' ')[1];let actor;
+    try{actor=JSON.parse(Buffer.from(token.split('.')[1],'base64url')).sub;}catch{}
+    calls.push({actor:actor??null});return route.fulfill({headers,status:actor?200:401,json:actor?{id:actor,aud:'authenticated',app_metadata:{provider:'google'},user_metadata:{}}:{message:'Fictional session missing'}});
+  });
+  return calls;
+}
+
 export async function stubPortalProvider(page, respond, projectRef = fixtureProject) {
   const calls = [];
   const unexpected = [];

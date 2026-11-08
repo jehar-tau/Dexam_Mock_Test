@@ -27,6 +27,7 @@ function PendingText({ job, busy, onRetry, onStop, onReload }) {
   </section>;
 }
 
+export function CommunityHeading({headingRef}){return<><span className="eyebrow">COMMUNITY</span><h1 ref={headingRef} tabIndex={-1}>Ask clearly.<br/><em>Build together.</em></h1><p>Discuss methods and solutions without exposing private details or active assessment content.</p></>;}
 export function CommunityView({
   posts = [],
   thread = null,
@@ -42,10 +43,10 @@ export function CommunityView({
   pendingTextPost = null, pendingTextReply = null, onRetryTextPost, onRetryTextReply, onStopTextPost, onStopTextReply,
   postFormVersion = 0, replyFormVersion = 0, threadLoading = false, onMoreComments, onReloadFeed,
   feedFilters = {exam:null,topic:null}, feedLoading = false, feedNotice = "", feedReady = true, feedNextCursor = null,
-  onFilter = () => {}, onMorePosts,
+  onFilter = () => {}, onMorePosts, heading = true, headingRef,
 }) {
   const examFilterId=useId(),topicFilterId=useId();
-  const openers=useRef(new Map()),pageHeading=useRef(null),reportOpener=useRef(null),returnReportFocus=useRef(false),lastThread=useRef(null);
+  const openers=useRef(new Map()),localHeading=useRef(null),pageHeading=headingRef??localHeading,reportOpener=useRef(null),returnReportFocus=useRef(false),lastThread=useRef(null);
   const feedHeading=useRef(null),feedFocus=useRef(null),[pageNotice,setPageNotice]=useState("");
   const [reportTarget,setReportTarget]=useState(null);
   useLayoutEffect(()=>{
@@ -93,17 +94,8 @@ export function CommunityView({
     if (saved !== false) form.reset();
   };
   return (
-    <section className="wrap section community-page">
-      <span className="eyebrow">COMMUNITY</span>
-      <h1 ref={pageHeading} tabIndex={-1}>
-        Ask clearly.
-        <br />
-        <em>Build together.</em>
-      </h1>
-      <p>
-        Discuss methods and solutions without exposing private details or active
-        assessment content.
-      </p>
+    <section className={heading?"wrap section community-page":"community-content"}>
+      {heading&&<CommunityHeading headingRef={pageHeading}/>}
       <form className="admin-form" key={postFormVersion} onSubmit={submit}>
         <fieldset className="community-fields" aria-label="New discussion" disabled={busy || Boolean(pendingPost) || Boolean(pendingTextPost)}>
         <label>
@@ -186,7 +178,7 @@ export function CommunityView({
   );
 }
 export function Community() {
-  return <CommunityController View={CommunityView} />;
+  return <CommunityController View={CommunityView} Heading={CommunityHeading} />;
 }
 export function CommunityPreview() {
   const [m, setM] = useState(""), [thread, setThread] = useState(null);
