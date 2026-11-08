@@ -40,9 +40,10 @@ test("approved staging sessions can enter the workspace with checkout and draft 
       case "my_privacy_requests":
       case "available_papers":
       case "my_attempt_history": return [];
-      case "my_pass": return { active: false };
+      case "my_pass": return { active: false, expiresAt: null };
       case "finalize_my_expired_attempts": return 0;
-      case "my_overview_analytics": return { completed: 0 };
+      case "my_overview_analytics": return { completed: 0, waitingForResults: 0, objectiveAccuracy: null, objectiveAnswered: 0,
+        topics: [], exams: [], drawingReviews: { pending: 0, released: 0 } };
       default: return undefined;
     }
   }, project.project_ref);

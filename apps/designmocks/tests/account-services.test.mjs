@@ -24,6 +24,9 @@ test('a protected non-target read keeps its existing whole-scope denial policy',
 test('changed token identity blocks RPC and Edge dispatch without sending earlier account work',async()=>{
  for(const edge of[false,true]){const{state,scope,services}=await fixture(true);state.token='second-token';if(edge)assert.ok((await services.functions.invoke('community-media')).error);else await assert.rejects(services.rpc('fictional_rpc',{}));assert.deepEqual(state.rpc,[]);assert.deepEqual(state.edge,[]);assert.equal(scope.isCurrent(),false);scope.dispose();}
 });
+test('identity can be rechecked before navigation without dispatching another RPC or Edge request',async()=>{
+ const{state,scope,services}=await fixture(true);assert.equal(await services.checkIdentity(new AbortController().signal),true);assert.deepEqual(state.rpc,[]);assert.deepEqual(state.edge,[]);state.token='second-token';await assert.rejects(services.checkIdentity(new AbortController().signal));assert.equal(scope.isCurrent(),false);scope.dispose();
+});
 test('a bounded account request ends a stalled operation and ignores its later result',async()=>{
  let finish;const late=new Promise(resolve=>{finish=resolve;}),controller=new AbortController();await assert.rejects(withAccountDeadline(()=>late,controller.signal,1),error=>error.name==='AbortError');finish('late private result');await Promise.resolve();
 });
