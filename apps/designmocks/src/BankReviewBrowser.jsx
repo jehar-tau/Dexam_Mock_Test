@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useAdminFunctions } from "./AdminAccess.jsx";
-import { bankReviewImages, bankSearchInput, deliveryAnswerLabel, initialBankFilters, sourceAnswerLabel } from "./bank-review.js";
+import { bankReviewImages, bankSearchInput, conversionChecklist, deliveryAnswerLabel, initialBankFilters, questionUsage, sourceAnswerLabel } from "./bank-review.js";
 
 async function loadBankFigures(functions, question) {
   const { data, error } = await functions.invoke("bank-review-media", {
@@ -52,6 +52,8 @@ function BankQuestionReview({ selected, rpc, onClose, onReviewed, loadMedia }) {
   };
   const figuresReady = question?.media.every(figure => images?.some(image => image.ordinal === figure.ordinal) && loadedImages[figure.ordinal]);
   const canReview = question?.active && !question?.holdReason;
+  const usage = question && questionUsage(question);
+  const checklist = question && conversionChecklist(question);
   return <section className="bank-question-review" aria-label="Question review">
     <div className="admin-actions"><h3 className="bank-review-key">{selected.externalKey}</h3><button type="button" onClick={onClose}>Close question</button></div>
     {error && <p role="alert" className="error">{error}</p>}
@@ -80,6 +82,22 @@ function BankQuestionReview({ selected, rpc, onClose, onReviewed, loadMedia }) {
       </dl>
       {question.explanation && <><h4>Explanation or rubric</h4><p className="bank-question-prompt">{question.explanation}</p></>}
       {question.context && <p>Delivery context {question.context.exam?.toUpperCase()} {question.context.cycle} {question.context.part ?? ""} · {question.context.version}</p>}
+      <section className="bank-exam-preview" aria-label="Student exam preview">
+        <span className="eyebrow">STUDENT EXAM PREVIEW</span>
+        <p>{question.runtimeReady ? 'Converted practice placement.' : 'Proposed practice placement; conversion is still required.'} This preview does not publish the question or start an exam.</p>
+        <p className="bank-preview-section">{question.exam.toUpperCase()} · {usage.section}</p>
+        <div className="bank-preview-card">
+          <small>{usage.mode} · {usage.duration}</small>
+          <h4>Question</h4><p className="bank-question-prompt">{question.prompt}</p>
+          {Array.isArray(question.options) && question.options.length > 0 && <ol className="bank-preview-options">{question.options.map((option, index) => <li key={index}>{option?.text || `Option ${option?.key ?? option?.id ?? index + 1} — shown in the question figure`}</li>)}</ol>}
+          <p><b>Scoring:</b> {usage.scoring}</p>
+          {question.type === "DESCRIPTIVE" ? <p className="bank-preview-response">Student response area: drawing/written pages are uploaded for teacher evaluation.</p> : <p className="bank-preview-response">Student answer control appears here during the timed attempt.</p>}
+        </div>
+      </section>
+      <section className="bank-conversion-checklist" aria-label="Conversion checklist">
+        <h4>{question.runtimeReady&&!checklist.some(item=>['fix','blocked'].includes(item.state)) ? "Ready for exact-version review" : "What is required before use"}</h4>
+        <ul>{checklist.map((item, index) => <li key={index} data-state={item.state}>{item.label}</li>)}</ul>
+      </section>
       {!question.runtimeReady && <p>This question needs a verified conversion before practice approval.</p>}
       {!canReview && <p>{question.holdReason || "This record is inactive in the current bank."}</p>}
       {canReview && <form className="admin-form" onSubmit={review}>

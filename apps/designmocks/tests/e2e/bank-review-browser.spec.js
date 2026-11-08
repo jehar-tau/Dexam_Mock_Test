@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 import { fileURLToPath } from "node:url";
-import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
+import { emptyAdminRead, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
-test.use({ baseURL: portalFixtureURL });
+test.use({ baseURL: 'http://127.0.0.1:4799' });
 const editor = { id: "00000000-0000-4000-8000-000000000121", email: "bank-review@example.invalid" };
 const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4+vEFAAWtAs+P9YeZAAAAAElFTkSuQmCC", "base64");
 const figureURL = "https://bank-figure-fixture.invalid/figure.png";
@@ -60,6 +60,16 @@ async function fixture(page, { admin = true } = {}) {
   return { ...state, ...provider };
 }
 
+test('NID and NIFT conversion previews explain proposed use without releasing or starting a paper',async({page})=>{
+ const state=await fixture(page),bank=page.getByRole('region',{name:'Imported bank review',exact:true}),q=state.questions[50];
+ Object.assign(q,{exam:'nid',type:'DESCRIPTIVE',answer:null,runtimeKey:null,marking:null,context:null,options:[],reviewVersion:'nid-drawing-proposal',media:[]});
+ await bank.getByLabel('Review status').selectOption('unavailable');await bank.getByRole('button',{name:'Search bank',exact:true}).click();await bank.getByRole('button',{name:'Open question bank-review-051',exact:true}).click();
+ let review=bank.getByRole('region',{name:'Question review',exact:true}),preview=review.getByRole('region',{name:'Student exam preview',exact:true});await expect(preview).toContainText('NID · DAT Prelims creative practice');await expect(preview).toContainText('Proposed practice placement; conversion is still required.');await expect(preview).toContainText('does not publish the question or start an exam');await expect(preview).toContainText('drawing/written pages');await expect(review.getByRole('region',{name:'Conversion checklist',exact:true})).toContainText('Verify the NID delivery blueprint');await expect(review.locator('input[type=file]')).toHaveCount(0);await review.getByRole('button',{name:'Close question',exact:true}).click();
+ Object.assign(q,{exam:'nift',type:'MCQ',answer:{raw:'A',status:'human-reviewed'},options:['A','A','C','D'].map(key=>({key,text:'Original option '+key})),reviewVersion:'nift-objective-proposal'});
+ await bank.getByRole('button',{name:'Search bank',exact:true}).click();await bank.getByRole('button',{name:'Open question bank-review-051',exact:true}).click();review=bank.getByRole('region',{name:'Question review',exact:true});await expect(review.getByRole('region',{name:'Student exam preview',exact:true})).toContainText('NIFT · B.Des. GAT');await expect(review.getByRole('region',{name:'Conversion checklist',exact:true})).toContainText('Provide exactly four uniquely labelled options.');await review.getByRole('checkbox').check();await expect(review.getByRole('button',{name:'Approve for practice',exact:true})).toBeDisabled();
+ expect(state.calls.some(([name])=>['start_attempt','start_exam_mock','admin_review_bank_question','upsert_nift_question_bank_runtime_batch'].includes(name))).toBe(false);expect(state.unexpected).toEqual([]);
+});
+
 test("the complete bank is paginated, filtered and reviewed with private figures on the actual admin route", async ({ page }) => {
   const state = await fixture(page);
   const bank = page.getByRole("region", { name: "Imported bank review", exact: true });
@@ -69,8 +79,8 @@ test("the complete bank is paginated, filtered and reviewed with private figures
   await expect(bank.getByText("26–50 of 50 matching questions")).toBeVisible();
   await bank.getByRole("button", { name: "Open question bank-review-026", exact: true }).click();
   const review = bank.getByRole("region", { name: "Question review", exact: true });
-  await expect(review.getByText(state.questions[25].prompt, { exact: true })).toBeVisible();
-  await expect(review.getByRole("listitem").filter({ hasText: "Fictional second option" })).toBeVisible();
+  await expect(review.getByText(state.questions[25].prompt, { exact: true }).first()).toBeVisible();
+  await expect(review.getByRole("listitem").filter({ hasText: "Fictional second option" }).first()).toBeVisible();
   await expect(review.getByText("Correct 3 · Wrong -0.71")).toBeVisible();
   await expect(review.locator("dd")).toHaveText(["B", "B", "Correct 3 · Wrong -0.71"]);
   await review.getByLabel("Review note").fill("Original fictional content and answer reviewed.");
@@ -84,14 +94,15 @@ test("the complete bank is paginated, filtered and reviewed with private figures
     runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] },
   })).violations)).toEqual([]);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize().width);
-  const dashboardReads = state.calls.filter(([name]) => name === "admin_exam_mock_blueprints").length;
+  const dashboardReads = state.calls.filter(([name]) => name === "admin_launch_readiness").length;
   await review.getByRole("button", { name: "Approve for practice", exact: true }).press("Enter");
   await expect(bank.getByText("Review saved. The question bank has been refreshed.")).toBeVisible();
   await expect(review).toHaveCount(0);
   await expect(bank.getByText("26–49 of 49 matching questions")).toBeVisible();
   expect(state.calls).toContainEqual(["admin_review_bank_question", { p_external_key: "bank-review-026", p_approved: true,
     p_rights_confirmed: true, p_note: "Original fictional content and answer reviewed.", p_expected_version: "version-26-1" }]);
-  expect(state.calls.filter(([name]) => name === "admin_exam_mock_blueprints")).toHaveLength(dashboardReads + 1);
+  expect(state.calls.filter(([name]) => name === "admin_launch_readiness")).toHaveLength(dashboardReads + 1);
+  expect(state.calls.filter(([name]) => name === "admin_exam_mock_blueprints")).toHaveLength(0);
   await bank.getByRole("combobox", { name: "Review status", exact: true }).selectOption("approved");
   await bank.getByRole("combobox", { name: "Bank exam", exact: true }).selectOption("ceed");
   await bank.getByRole("combobox", { name: "Bank topic", exact: true }).selectOption("spatial");
@@ -118,7 +129,7 @@ test("a changed question cannot be approved from an open review and refreshed de
   await bank.getByRole("button", { name: "Refresh bank" }).click();
   await expect(review).toHaveCount(0);
   await bank.getByRole("button", { name: "Open question bank-review-001", exact: true }).click();
-  await expect(review.getByText("Changed fictional source wording.")).toBeVisible();
+  await expect(review.getByText("Changed fictional source wording.").first()).toBeVisible();
   await expect(review.getByRole("checkbox")).not.toBeChecked();
   await expect(review.getByRole("button", { name: "Approve for practice", exact: true })).toBeDisabled();
   expect(state.unexpected).toEqual([]);
@@ -153,6 +164,8 @@ test("incomplete private figures block approval while corrections, inactive reco
   await bank.getByRole("button", { name: "Search bank", exact: true }).click();
   await bank.getByRole("button", { name: "Open question bank-review-051", exact: true }).click();
   await expect(review.getByText("This question needs a verified conversion before practice approval.")).toBeVisible();
+  await expect(review.getByRole("region", { name: "Student exam preview", exact: true })).toContainText("CEED · Part A");
+  await expect(review.getByRole("region", { name: "Conversion checklist", exact: true })).toContainText("Provide exactly four uniquely labelled options");
   await review.getByRole("checkbox").check();
   await expect(review.getByRole("button", { name: "Approve for practice", exact: true })).toBeDisabled();
   expect(state.unexpected).toEqual([]);

@@ -3867,6 +3867,14 @@ svg {
 .bank-answer-review dd { margin: 0; overflow-wrap: anywhere; }
 .bank-question-review .profile-check { display: flex; align-items: start; }
 .bank-question-review .profile-check input { width: auto; flex-shrink: 0; }
+.bank-exam-preview, .bank-conversion-checklist { margin-block: 1.5rem; }
+.bank-preview-section { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; }
+.bank-preview-card { padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); }
+.bank-preview-card h4 { margin-block: 1.25rem .5rem; }
+.bank-preview-options { display: grid; gap: .65rem; padding-left: 1.5rem; }
+.bank-preview-response { min-height: 4rem; padding: 1rem; border: 1px dashed var(--line); border-radius: .75rem; color: var(--muted); }
+.bank-conversion-checklist li { margin-block: .55rem; }
+.bank-conversion-checklist li[data-state="ready"]::marker { color: var(--forest); }
 @media (max-width: 700px) { .bank-review-filters, .bank-answer-review { grid-template-columns: minmax(0, 1fr); } }
 .intake-editor fieldset { min-width: 0; display: grid; gap: 1rem; padding: 1rem; border: 1px solid var(--line); }
 .intake-editor legend { padding-inline: .35rem; font-weight: 700; }
