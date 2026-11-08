@@ -6,3 +6,7 @@ export async function awaitAccountRequest(operation,signal){
  try{return await Promise.race([Promise.resolve().then(()=>{signal.throwIfAborted();return operation();}),interrupted]);}
  finally{signal.removeEventListener('abort',abort);}
 }
+export async function withAccountDeadline(operation,parentSignal,milliseconds=20000){
+ const deadline=new AbortController(),signal=parentSignal?AbortSignal.any([parentSignal,deadline.signal]):deadline.signal,timer=setTimeout(()=>deadline.abort(),milliseconds);
+ try{return await awaitAccountRequest(()=>operation(signal),signal);}finally{clearTimeout(timer);}
+}

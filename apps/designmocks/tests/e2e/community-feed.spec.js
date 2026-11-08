@@ -1,7 +1,7 @@
 import {expect,test} from "@playwright/test";
 import {readFile} from "node:fs/promises";
 import {fileURLToPath} from "node:url";
-import {portalFixtureURL,seedPortalSession} from "./portal-fixture.js";
+import {portalFixtureURL,seedPortalSession,stubPortalIdentity} from "./portal-fixture.js";
 test.use({baseURL:portalFixtureURL});
 const actor={id:"00000000-0000-4000-8000-000000000801",email:"community-feed@example.invalid"};
 const api="https://dmocks-portal-fixture.supabase.co",headers={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"authorization, apikey, content-type, x-client-info","Access-Control-Allow-Methods":"POST, OPTIONS"};
@@ -52,7 +52,7 @@ async function fixture(page,{long=false}={}){
   state.uploads++;if(state.holdUpload)await state.holdUpload.promise;
   try{await route.fulfill({headers,json:{id:"30000000-0000-4000-8000-000000000801",ordinal:1,reused:false}});}catch{}
  });
- await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");await expect(cards(page)).toHaveCount(25);
+ await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");await expect(cards(page)).toHaveCount(25);
  return state;
 }
 const more=page=>feed(page).getByRole("button",{name:"Load more discussions",exact:true});
