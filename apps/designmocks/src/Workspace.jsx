@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Art, Arrow } from "./Art.jsx";
-import { platform, loadDashboard } from "./platform.js";
+import { platform } from "./platform.js";
+import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
+import { withAccountDeadline } from "./account-request.js";
+import { loadOverview, overviewStartId } from "./overview-data.js";
 import { useAuthState } from "./useAuth.js";
 import { PortalShell } from "./PortalShell.jsx";
 import { QuestionReport } from "./QuestionReport.jsx";
@@ -33,58 +36,53 @@ function SignInGate() {
     </section>
   );
 }
-export function Workspace() {
-  const { session, loading } = useAuthState();
+function WorkspaceSession({headingRef}) {
+  const services=useAccountServices(),scope=useRef(null),read=useRef(null),mutationBusy=useRef(false);
   const navigate = useNavigate();
   const [data, setData] = useState(null),
     [papers, setPapers] = useState([]),
     [error, setError] = useState(""),
-    [busy, setBusy] = useState("");
+    [busy, setBusy] = useState(""),[loading,setLoading]=useState(true),[unconfirmed,setUnconfirmed]=useState(false);
+  const current=()=>Boolean(scope.current&&!scope.current.signal.aborted&&services.isCurrent());
+  async function load(){
+    if(!current()||mutationBusy.current)return;
+    read.current?.abort();const request=new AbortController();read.current=request;const signal=AbortSignal.any([scope.current.signal,request.signal]);
+    const active=()=>current()&&!request.signal.aborted&&read.current===request;
+    setData(null);setPapers([]);setError("");setLoading(true);
+    try{const value=await withAccountDeadline(active=>loadOverview(services,active),signal);if(active()){setData(value.data);setPapers(value.papers);setUnconfirmed(false);}}
+    catch{if(active())setError("Couldn’t load your workspace. Refresh it to try again.");}
+    finally{if(active())setLoading(false);}
+  }
   useEffect(() => {
-    let alive = true;
-    if (session) {
-      Promise.all([loadDashboard(), rpc("available_papers")])
-        .then(([d, p]) => {
-          if (alive) {
-            setData(d);
-            setPapers(p);
-          }
-        })
-        .catch(() => {
-          if (alive)
-            setError(
-              "Couldn’t load your workspace. Please refresh to try again.",
-            );
-        });
-    }
-    return () => {
-      alive = false;
-    };
-  }, [session]);
+    const controller=new AbortController();scope.current=controller;void load();
+    return()=>{controller.abort();read.current?.abort();};
+  }, []);
   const start = async (id) => {
+    const paper=papers.find(item=>item.id===id);
+    if(!current()||mutationBusy.current||loading||unconfirmed||!data?.access.active||!paper||paper.qualityHeld)return;
+    mutationBusy.current=true;const signal=scope.current.signal,address=window.location.href,historyKey=window.history.state?.key;
     setBusy(id);
     setError("");
     try {
-      const attempt = await rpc("start_attempt", { p_paper_id: id });
-      navigate("/attempt/" + attempt);
-    } catch (e) {
-      setError(e.message);
+      const attempt=await withAccountDeadline(async active=>{const value=overviewStartId(await services.rpc("start_attempt",{p_paper_id:id},active));await services.checkIdentity(active);return value;},signal);
+      if(current()&&window.location.href===address&&window.history.state?.key===historyKey)navigate("/attempt/"+attempt);
+    } catch {
+      if(current()){setUnconfirmed(true);setError("Couldn’t confirm this start. Refresh your workspace to check for a saved attempt before starting again.");}
     } finally {
-      setBusy("");
+      mutationBusy.current=false;if(current())setBusy("");
     }
   };
+  return <WorkspaceView heading={false} embedded data={data} papers={papers} error={error} busy={busy} loading={loading} unconfirmed={unconfirmed} onStart={start}
+    onRefresh={()=>{headingRef.current?.focus();void load();}}/>;
+}
+export function WorkspaceHeading({headingRef}){return<><span className="eyebrow">YOUR PRACTICE SPACE</span><h1 ref={headingRef} tabIndex={-1}>Welcome to your<br/> next <em>attempt.</em></h1></>;}
+export function Workspace(){
+  const{session,loading}=useAuthState(),location=useLocation(),heading=useRef(null),scopeKey=(session?.user.id??'signed-out')+':'+location.key,previous=useRef(scopeKey);
+  useLayoutEffect(()=>{if(previous.current!==scopeKey&&(document.activeElement===document.body||heading.current?.parentElement.contains(document.activeElement)))heading.current?.focus();previous.current=scopeKey;},[scopeKey]);
   if (!session && !loading) return <SignInGate />;
+  if(loading)return<section className="wrap section"><p role="status">Checking your account…</p></section>;
   return (
-    <PortalShell>
-      <WorkspaceView
-        data={data}
-        papers={papers}
-        error={error}
-        busy={busy}
-        loading={loading}
-        onStart={start}
-      />
-    </PortalShell>
+    <PortalShell><section className="wrap section workspace"><WorkspaceHeading headingRef={heading}/><AccountAccessBoundary key={scopeKey} kind="overview" actorId={session.user.id} headingRef={heading}><WorkspaceSession headingRef={heading}/></AccountAccessBoundary></section></PortalShell>
   );
 }
 
@@ -99,14 +97,11 @@ export function WorkspaceView({
   attemptHref = (id) => "/attempt/" + id,
   startLabel = "Start or resume",
   passLabel = "YOUR PASS",
+  heading = true,embedded = false,onRefresh,unconfirmed = false,
 }) {
   return (
-    <section className="wrap section workspace">
-      <span className="eyebrow">YOUR PRACTICE SPACE</span>
-      <h1>
-        Welcome to your
-        <br /> next <em>attempt.</em>
-      </h1>
+    <section className={embedded?"workspace-content":"wrap section workspace"}>
+      {heading&&<WorkspaceHeading/>}
       {(loading || (!data && !error)) && (
         <p role="status">Loading your workspace…</p>
       )}
@@ -115,6 +110,7 @@ export function WorkspaceView({
           {error}
         </p>
       )}
+      {onRefresh&&<button type="button" className="button quiet" disabled={Boolean(busy)||loading} onClick={onRefresh}>Refresh workspace</button>}
       {data && (
         <>
           <div className="dashboard-stats">
@@ -217,7 +213,7 @@ export function WorkspaceView({
                   <h3>{p.title}</h3>
                   <button
                     className="button"
-                    disabled={p.qualityHeld || !data.access?.active || Boolean(busy)}
+                    disabled={p.qualityHeld || !data.access?.active || Boolean(busy) || unconfirmed}
                     onClick={() => onStart(p.id)}
                   >
                     {p.qualityHeld ? "Paused for question review" : busy === p.id ? "Opening…" : startLabel}

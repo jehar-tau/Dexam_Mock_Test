@@ -37,7 +37,7 @@ test("Overview displays released whole-test percentages after cohort and combine
     state.analytics = { ...empty(), completed: 2, waitingForResults: 0, objectiveAccuracy: 0, objectiveAnswered: 1,
       exams: [{ exam: "uceed", attempts: 1, averagePercent: result.percent, bestPercent: result.percent }],
       drawingReviews: { pending: 0, released: 2 } };
-    state.attempts = result.total === 24 ? [{ id: "owned-published-attempt", title: result.title, status: "submitted",
+    state.attempts = result.total === 24 ? [{ id: "20000000-0000-4000-8000-000000000291", title: result.title, status: "submitted",
       resultsPending: false, score: result.score, total: result.total }] : [];
     await page.reload();
     await expect(snapshot.getByRole("heading", { name: result.percent + "% average", exact: true })).toBeVisible();

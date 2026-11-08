@@ -4,7 +4,7 @@ import { portalFixtureURL, seedPortalSession, stubPortalProvider } from "./porta
 
 test.use({ baseURL: portalFixtureURL });
 const student = { id: "00000000-0000-4000-8000-000000000301", email: "drawing-results@example.invalid" };
-const partA = "fictional-part-a", partB = "fictional-part-b";
+const partA = "20000000-0000-4000-8000-000000000301", partB = "20000000-0000-4000-8000-000000000302";
 const releasedAt = "2026-11-07T07:00:00Z";
 const drawingQuestions = released => [45, 40].map((score, index) => ({
   id: "drawing-" + index, ordinal: index + 1, kind: "drawing", topic: "drawing", answer: null, media: [],

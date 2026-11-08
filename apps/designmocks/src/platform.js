@@ -43,24 +43,6 @@ export async function googleLogin() {
   });
   if (error) throw error;
 }
-export async function loadDashboard() {
-  if (!platform) return { attempts: [], access: null };
-  const finalized = await platform.rpc("finalize_my_expired_attempts");
-  if (finalized.error) throw finalized.error;
-  const [attempts, access, analytics] = await Promise.all([
-    platform.rpc("my_attempt_history"),
-    platform.rpc("my_pass"),
-    platform.rpc("my_overview_analytics"),
-  ]);
-  if (attempts.error) throw attempts.error;
-  if (access.error) throw access.error;
-  if (analytics.error) throw analytics.error;
-  return {
-    attempts: attempts.data ?? [],
-    access: access.data,
-    analytics: analytics.data,
-  };
-}
 let checkoutScript;
 async function razorpay() {
   if (window.Razorpay) return window.Razorpay;
