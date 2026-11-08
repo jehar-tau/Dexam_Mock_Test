@@ -5,12 +5,13 @@ Scope frozen by the owner on **8 November 2026**. [PRODUCT_EXECUTION_PLAN.md](PR
 ## Launch Now
 
 - [x] Independent DMocks identity/store/brand and active HTTPS domain; private Google callback/PKCE, reload/refresh, sign-out, returning account and cancellation acceptance exist.
-- [x] Public-site/free-sample source and broad local/CI verification exist. PR #97 is accepted on main with 648 zero-retry desktop/mobile journeys.
-- [ ] Hide/mark deferred modules and remove unverified public catalogue/service promises; verify desktop/mobile and production build behavior.
+- [x] Public-site/free-sample source and local/CI verification exist. PR #98 is accepted on main with 294 selected zero-retry MVP desktop/mobile journeys.
+- [x] Hide/mark deferred modules and remove unverified public catalogue/service promises; desktop/mobile and production override checks pass. Checkout has a separate, closed switch.
 - [ ] Select one exact first paid offering/part and approve its source rights, stable manifest, question count/types, marking, clock and every image. Use only the canonical export's empty-holds records.
 - [ ] Accept that offering's own-account attempt/read/write isolation, fixed timer, answer/reconnect recovery, immutable submission and useful released result. Label a Part A offering accurately.
 - [x] Server-created order, fixed INR amount, signed captured-payment webhook, duplicate-safe fulfilment and server-only entitlement foundations are implemented/tested locally.
 - [ ] Finish and verify refund/revocation basics, duplicate-purchase prevention and cross-account/order/amount/currency failures on the final MVP schema.
+  Local candidate evidence: 300 units, 296 browser journeys, 72 migrations/40 database suites, signed fictional Edge events and actual desktop/mobile SDK acceptance pass. Full refunds revoke only their order's pass; partial/duplicate purchases require review. Complete exact-head PR/main delivery and real provider acceptance before checking this gate. See REFUND_RECONCILIATION.md.
 - [ ] Replace/deactivate the previously exposed Razorpay Test pair, enter fresh server secrets privately and configure the correct signed webhook. Never place secrets in Vite, Git, logs or chat.
 - [ ] Approve/publish final operator, support/contact, privacy, purchase terms, refund/cancellation and tax/invoice details; resolve younger-student policy and retention/deletion handling.
 - [ ] Choose the approved provider/deployment target. Inspect the current hosted ledger; validate database plus private-media backup/restore and promote only matching tested source/functions.
