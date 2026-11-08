@@ -4,8 +4,14 @@ import {createAdminAccessScope} from "./admin-access.js";
 
 const AdminServices=createContext(null);
 export const useAdminServices=()=>useContext(AdminServices);
+export const useStaffServices=useAdminServices;
 // Shared drawing and fictional previews also run outside the administrator desk.
 export const useAdminFunctions=()=>useContext(AdminServices)?.functions??platform?.functions;
+
+const adminAccess=Object.freeze({region:"Administrator access",procedure:"is_dmocks_admin",checking:"Checking administrator access…",required:"This account is not an administrator.",
+  ended:"Administrator access has ended. Private views were cleared.",unavailable:"Administrator access could not be verified. Private views were cleared. Try again.",check:"Check administrator access",recheck:"Recheck administrator access"});
+const reviewerAccess=Object.freeze({region:"Drawing reviewer access",procedure:"can_review_drawings",checking:"Checking drawing reviewer access…",required:"Drawing reviewer access required.",
+  ended:"Drawing reviewer access has ended. Private reviews were cleared.",unavailable:"Drawing reviewer access could not be verified. Private reviews were cleared. Try again.",check:"Check drawing reviewer access",recheck:"Recheck drawing reviewer access"});
 
 async function checkedRpc(name,args,signal){
   signal.throwIfAborted();
@@ -15,13 +21,13 @@ async function checkedRpc(name,args,signal){
   return data;
 }
 
-function AccessSession({actorId,headingRef,children,onRetry}){
+function AccessSession({actorId,headingRef,children,onRetry,config}){
   const [access,setAccess]=useState({status:"checking",hadAccess:false}),[scope,setScope]=useState(null);
   const privateRoot=useRef(null),recoverFocus=useRef(false),lifetime=useRef(null);
   useLayoutEffect(()=>{
     const href=window.location.href,historyKey=window.history.state?.key;
     const current=()=>window.location.href===href&&window.history.state?.key===historyKey;
-    const value=createAdminAccessScope({check:signal=>checkedRpc("is_dmocks_admin",undefined,signal),isCurrent:current,onChange:next=>{
+    const value=createAdminAccessScope({check:signal=>checkedRpc(config.procedure,undefined,signal),isCurrent:current,onChange:next=>{
       if(next.status!=="allowed")recoverFocus.current=document.activeElement===document.body||Boolean(privateRoot.current?.contains(document.activeElement));
       setAccess(next);
     }});
@@ -34,7 +40,7 @@ function AccessSession({actorId,headingRef,children,onRetry}){
     window.addEventListener("focus",visible);window.addEventListener("pageshow",restored);document.addEventListener("visibilitychange",visible);
     const timer=setInterval(visible,60000);
     return()=>{value.dispose();data.subscription.unsubscribe();clearInterval(timer);window.removeEventListener("focus",visible);window.removeEventListener("pageshow",restored);document.removeEventListener("visibilitychange",visible);};
-  },[actorId]);
+  },[actorId,config]);
   useLayoutEffect(()=>{
     if(access.status==="checking"||access.status==="allowed"||!recoverFocus.current)return;
     recoverFocus.current=false;headingRef.current?.focus();
@@ -50,18 +56,20 @@ function AccessSession({actorId,headingRef,children,onRetry}){
     }},
     assertCurrent:scope.assertCurrent,isCurrent:scope.isCurrent,
   }:null,[scope]);
-  return <section aria-label="Administrator access" style={{minWidth:0}}>
-    {access.status==="checking"&&<p role="status">Checking administrator access…</p>}
-    {access.status==="denied"&&<p role="alert" className="error">{access.hadAccess?"Administrator access has ended. Private views were cleared.":"This account is not an administrator."}</p>}
-    {access.status==="unavailable"&&<p role="alert" className="error">Administrator access could not be verified. Private views were cleared. Try again.</p>}
-    {["denied","unavailable"].includes(access.status)&&<button type="button" className="button quiet" onClick={onRetry}>Check administrator access</button>}
+  return <section aria-label={config.region} style={{minWidth:0}}>
+    {access.status==="checking"&&<p role="status">{config.checking}</p>}
+    {access.status==="denied"&&<p role="alert" className="error">{access.hadAccess?config.ended:config.required}</p>}
+    {access.status==="unavailable"&&<p role="alert" className="error">{config.unavailable}</p>}
+    {["denied","unavailable"].includes(access.status)&&<button type="button" className="button quiet" onClick={onRetry}>{config.check}</button>}
     {access.status==="allowed"&&services&&<AdminServices.Provider value={services}>
-      <div ref={privateRoot} style={{minWidth:0}}><button type="button" className="text-button" onClick={()=>void lifetime.current?.verify()}>Recheck administrator access</button>{children}</div>
+      <div ref={privateRoot} style={{minWidth:0}}><button type="button" className="text-button" onClick={()=>void lifetime.current?.verify()}>{config.recheck}</button>{children}</div>
     </AdminServices.Provider>}
   </section>;
 }
 
-export function AdminAccessBoundary({actorId,headingRef,children}){
+function StaffAccessBoundary({actorId,headingRef,children,config}){
   const [attempt,setAttempt]=useState(0);
-  return <AccessSession key={attempt} actorId={actorId} headingRef={headingRef} onRetry={()=>setAttempt(value=>value+1)}>{children}</AccessSession>;
+  return <AccessSession key={attempt} actorId={actorId} headingRef={headingRef} config={config} onRetry={()=>{headingRef.current?.focus();setAttempt(value=>value+1);}}>{children}</AccessSession>;
 }
+export const AdminAccessBoundary=props=><StaffAccessBoundary {...props} config={adminAccess}/>;
+export const DrawingReviewerAccessBoundary=props=><StaffAccessBoundary {...props} config={reviewerAccess}/>;

@@ -12,6 +12,7 @@ const attemptId="30000000-0000-4000-8000-000000000481",questionId="20000000-0000
 async function reviewer(page) {
   const state={images:await orientationPages(6),denied:false,expiresAt:null,serverNow:null};
   const provider=await stubPortalProvider(page,(procedure,input)=>{
+    if(procedure==="can_review_drawings")return true;
     if(procedure==="my_drawing_review_page")return{items:input.p_scope==="mine"?[{reviewId,version:1,prompt:"Inspect an original fictional drawing.",
       uploadCount:3,status:"assigned",canClaim:false,canReview:true,assignedToMe:true,maxScore:20}]:[],nextCursor:null};
     if(procedure==="drawing-review-media")return state.denied?{code:"42501",message:"Private diagnostic must not be reflected"}:{images:state.images,...(state.expiresAt?{expiresAt:state.expiresAt,serverNow:state.serverNow}:{})};
@@ -79,7 +80,7 @@ test("teacher inspection supports keyboard rotation, mirror, zoom, fit and Escap
   await expect(page.getByRole("dialog",{name:"Anonymous drawing page 3",exact:true})).toBeVisible();
   expect(await page.evaluate(async()=> (await window.axe.run(".drawing-inspection-dialog",{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa"]}})).violations.map(item=>item.id))).toEqual([]);
   await page.keyboard.press("Escape");await expect(opener).toBeFocused();
-  expect(state.calls.filter(([name])=>name.includes("review_drawing"))).toEqual([]);expect(state.unexpected).toEqual([]);
+  expect(state.calls.filter(([name])=>["admin_claim_drawing_review","admin_return_drawing_review","admin_review_drawing","admin_release_drawing_review"].includes(name))).toEqual([]);expect(state.unexpected).toEqual([]);
 });
 
 test("expired or revoked private links clear the image and any open inspection",async({page})=>{
@@ -93,21 +94,26 @@ test("expired or revoked private links clear the image and any open inspection",
   state.denied=true;await page.getByRole("button",{name:"Refresh private images",exact:true}).click();
   await expect(page.getByRole("img",{name:/Anonymous drawing page/})).toHaveCount(0);
   await expect(page.getByText("Private diagnostic must not be reflected")).toHaveCount(0);
-  await expect(page.getByText("Couldn’t open drawing pages. Refresh the queue or saved pages and try again.")).toBeVisible();
+  await expect(page.getByText("That review changed or is no longer available. Refresh your reviews to load current work.")).toBeVisible();
+  await expect(page.getByLabel("Feedback")).toHaveCount(0);await expect(page.getByRole("heading",{name:"My drawing reviews",exact:true})).toBeFocused();
   expect(state.unexpected).toEqual([]);
 });
 
-test("an original-size drawing remains scrollable inside the inspector on a small screen",async({page})=>{
+test("an original-size drawing retains native pixels and keyboard scrolling after viewport changes",async({page})=>{
   const state=await reviewer(page);state.images=[largeDrawingPage()];
   await page.getByRole("button",{name:"Refresh private images",exact:true}).click();
   await page.getByRole("button",{name:"Inspect page 1, anonymous drawing",exact:true}).click();
   const dialog=page.getByRole("dialog",{name:"Anonymous drawing page 1",exact:true});
   await dialog.getByRole("button",{name:"Actual size",exact:true}).click();
   await expect(dialog.getByRole("button",{name:"Actual size",exact:true})).toBeDisabled();
+  await page.setViewportSize({width:320,height:740});
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  await expect.poll(async()=>Math.round((await dialog.getByRole("img",{name:"Anonymous drawing page 1",exact:true}).boundingBox())?.width??0)).toBe(2400);
   const bounds=await dialog.getByRole("img",{name:"Anonymous drawing page 1",exact:true}).boundingBox();
   expect(Math.round(bounds.width)).toBe(2400);expect(Math.round(bounds.height)).toBe(1600);
   const viewport=dialog.getByRole("region",{name:"Anonymous drawing page 1 scrollable image",exact:true});
-  const before=await viewport.evaluate(element=>element.scrollTop);await viewport.focus();await page.keyboard.press("ArrowDown");
+  await viewport.focus();await expect(viewport).toBeFocused();await page.keyboard.press("Home");await expect.poll(()=>viewport.evaluate(element=>element.scrollTop)).toBe(0);
+  const before=await viewport.evaluate(element=>element.scrollTop);await page.keyboard.press("ArrowDown");
   await expect.poll(()=>viewport.evaluate(element=>element.scrollTop)).toBeGreaterThan(before);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize().width);
   await dialog.getByRole("button",{name:"Fit page",exact:true}).click();await expect(dialog.getByRole("status")).toContainText("100% of fit");

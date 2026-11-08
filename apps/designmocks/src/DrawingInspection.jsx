@@ -5,6 +5,7 @@ function DrawingImage({ image, label, controls = false }) {
   const viewport = useRef(null), [size, setSize] = useState({ width: 0, height: 0 });
   const [pixels, setPixels] = useState(null), [native, setNative] = useState(undefined), [failed, setFailed] = useState(false);
   const [turns, setTurns] = useState(0), [mirrored, setMirrored] = useState(false), [zoom, setZoom] = useState(1);
+  const [actualSize, setActualSize] = useState(false);
   const [darkPaper, setDarkPaper] = useState(false);
   useEffect(() => {
     let current = true;
@@ -21,7 +22,7 @@ function DrawingImage({ image, label, controls = false }) {
   }, []);
   const layout = pixels && native !== undefined && drawingInspectionLayout({ width: pixels.width, height: pixels.height,
     orientation: drawingRenderMetadata(image) ? image.orientation : 1, nativeOriented: native,
-    turns, mirrored, zoom, viewportWidth: size.width, viewportHeight: size.height });
+    turns, mirrored, zoom, actualSize, viewportWidth: size.width, viewportHeight: size.height });
   const viewZoom = layout?.zoom ?? zoom;
   useLayoutEffect(() => {
     const element = viewport.current;
@@ -31,15 +32,15 @@ function DrawingImage({ image, label, controls = false }) {
   }, [layout?.frameWidth, layout?.frameHeight]);
   return <>
     {controls && <div className="drawing-inspection-toolbar" role="group" aria-label="Image view controls">
-      <button type="button" onClick={() => { setTurns(value => (value + 3) % 4); setZoom(1); }}>Rotate left</button>
-      <button type="button" onClick={() => { setTurns(value => (value + 1) % 4); setZoom(1); }}>Rotate right</button>
+      <button type="button" onClick={() => { setTurns(value => (value + 3) % 4); setZoom(1); setActualSize(false); }}>Rotate left</button>
+      <button type="button" onClick={() => { setTurns(value => (value + 1) % 4); setZoom(1); setActualSize(false); }}>Rotate right</button>
       <button type="button" aria-pressed={mirrored} onClick={() => setMirrored(value => !value)}>Mirror view</button>
       <button type="button" aria-pressed={darkPaper} onClick={() => setDarkPaper(value => !value)}>Dark background</button>
-      <button type="button" disabled={!layout || viewZoom <= layout.minZoom} onClick={() => setZoom(Math.max(layout.minZoom, viewZoom - 0.5))}>Zoom out</button>
-      <button type="button" disabled={!layout || viewZoom >= layout.maxZoom} onClick={() => setZoom(Math.min(layout.maxZoom, viewZoom + 0.5))}>Zoom in</button>
-      <button type="button" disabled={!layout || Math.abs(layout.scale - 1) < 0.001} onClick={() => setZoom(layout.nativeZoom)}>Actual size</button>
-      <button type="button" onClick={() => setZoom(1)}>Fit page</button>
-      <button type="button" onClick={() => { setTurns(0); setMirrored(false); setZoom(1); setDarkPaper(false); }}>Reset view</button>
+      <button type="button" disabled={!layout || viewZoom <= layout.minZoom} onClick={() => { setZoom(Math.max(layout.minZoom, viewZoom - 0.5)); setActualSize(false); }}>Zoom out</button>
+      <button type="button" disabled={!layout || viewZoom >= layout.maxZoom} onClick={() => { setZoom(Math.min(layout.maxZoom, viewZoom + 0.5)); setActualSize(false); }}>Zoom in</button>
+      <button type="button" disabled={!layout || actualSize} onClick={() => setActualSize(true)}>Actual size</button>
+      <button type="button" onClick={() => { setZoom(1); setActualSize(false); }}>Fit page</button>
+      <button type="button" onClick={() => { setTurns(0); setMirrored(false); setZoom(1); setActualSize(false); setDarkPaper(false); }}>Reset view</button>
       <span role="status">{Math.round(viewZoom * 100)}% of fit · rotated {turns * 90}°{mirrored ? " · mirrored" : ""}{darkPaper ? " · dark background" : ""}</span>
     </div>}
     <div className={`drawing-image-viewport${controls ? " expanded" : ""}`} ref={viewport} tabIndex={controls ? 0 : undefined}

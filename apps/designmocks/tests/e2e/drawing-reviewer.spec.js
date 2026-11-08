@@ -30,6 +30,7 @@ test("anonymous teacher images preserve browser orientation and every displayed 
     images.push({ id: "fictional-raster-" + index, ordinal: index, url: `data:${mime};base64,${Buffer.from(sanitized.bytes).toString("base64")}` });
   }
   const { unexpected } = await stubProvider(page, (procedure, input) => {
+    if (procedure === "can_review_drawings") return true;
     if (procedure === "my_drawing_review_page") return { items: input.p_scope === "mine" ? [{
       ...availableDrawing, version: 1, status: "assigned", canClaim: false, canReview: true, assignedToMe: true, uploadCount: 3,
     }] : [], nextCursor: null };
@@ -135,7 +136,7 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
   await expect(page.getByRole("button", { name: "Refresh drawing reviews" })).toBeVisible();
   enabled = false;
   await page.getByRole("button", { name: "Refresh drawing reviews" }).click();
-  await expect(page.getByText("Drawing reviewer access required.")).toBeVisible();
+  await expect(page.getByText("Drawing reviewer access has ended. Private reviews were cleared.")).toBeVisible();
   await expect(page.getByRole("region", { name: "Drawing review queue" })).toHaveCount(0);
   expect(unexpected).toEqual([]);
 });

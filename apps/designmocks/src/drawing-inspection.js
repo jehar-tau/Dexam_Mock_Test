@@ -13,7 +13,7 @@ export function drawingRenderMetadata(value) {
     value.orientation >= 1 && value.orientation <= 8;
 }
 
-export function drawingInspectionLayout({ width, height, orientation = 1, nativeOriented = null, turns = 0, mirrored = false, zoom = 1, viewportWidth, viewportHeight }) {
+export function drawingInspectionLayout({ width, height, orientation = 1, nativeOriented = null, turns = 0, mirrored = false, zoom = 1, actualSize = false, viewportWidth, viewportHeight }) {
   if (![width, height, viewportWidth, viewportHeight].every(value => Number.isFinite(value) && value > 0)) return null;
   const base = nativeOriented === false && Number.isInteger(orientation) && orientation >= 1 && orientation <= 8 ? matrices[orientation] : matrices[1];
   const rotations = [matrices[1], matrices[6], matrices[3], matrices[8]];
@@ -24,7 +24,9 @@ export function drawingInspectionLayout({ width, height, orientation = 1, native
   const outputHeight = Math.abs(matrix[1]) * width + Math.abs(matrix[3]) * height;
   const fitScale = Math.min(viewportWidth / outputWidth, viewportHeight / outputHeight);
   const nativeZoom = 1 / fitScale, minZoom = Math.min(1, nativeZoom), maxZoom = Math.max(4, nativeZoom);
-  const boundedZoom = Math.max(minZoom, Math.min(maxZoom, Number.isFinite(zoom) && zoom > 0 ? zoom : 1)), scale = fitScale * boundedZoom;
+  const boundedZoom = actualSize ? nativeZoom : Math.max(minZoom, Math.min(maxZoom, Number.isFinite(zoom) && zoom > 0 ? zoom : 1));
+  // Native pixels stay stable when viewport or scrollbar dimensions change.
+  const scale = actualSize ? 1 : fitScale * boundedZoom;
   return { matrix, imageWidth: width * scale, imageHeight: height * scale, frameWidth: outputWidth * scale, frameHeight: outputHeight * scale,
     fitScale, nativeZoom, minZoom, maxZoom, zoom: boundedZoom, scale };
 }

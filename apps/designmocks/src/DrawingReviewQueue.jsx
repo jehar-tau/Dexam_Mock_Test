@@ -58,15 +58,18 @@ function DrawingReviewForm({ drawing, onSave, disabled }) {
   </form>;
 }
 
-function DrawingReviewCard({ drawing, onClaim, onReturn, onReview, onRelease, mediaLoader }) {
+function DrawingReviewCard({ drawing, onClaim, onReturn, onReview, onRelease, mediaLoader, onMediaUnavailable }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const mutation=useRef(false);
   const perform = async (action) => {
+    if(mutation.current)return;
+    mutation.current=true;
     setBusy(true);
     setError("");
     try { await action(); }
     catch (failure) { setError(failure?.message || "Couldn’t update this review."); }
-    finally { setBusy(false); }
+    finally { mutation.current=false;setBusy(false); }
   };
   const { reviewId, version, status } = drawing;
   return <article aria-busy={busy}>
@@ -78,7 +81,7 @@ function DrawingReviewCard({ drawing, onClaim, onReturn, onReview, onRelease, me
     {status === "assigned" && !drawing.assignedToMe && <p className="notice">Assigned to another teacher.</p>}
     {drawing.cohortFrozen && <p className="notice">This grade is frozen with the published cohort results.</p>}
     {drawing.canReview && <>
-      <DrawingReviewMedia reviewId={reviewId} {...(mediaLoader ? { load: mediaLoader } : {})} />
+      <DrawingReviewMedia reviewId={reviewId} onUnavailable={onMediaUnavailable} {...(mediaLoader ? { load: mediaLoader } : {})} />
       <DrawingAiAdvisory suggestion={drawing.aiSuggestion} />
       {status === "assigned" && <button type="button" disabled={busy} onClick={() => perform(() => onReturn(reviewId, version))}>Return to review queue</button>}
       {status === "reviewed" && !drawing.cohortFrozen && <button type="button" disabled={busy} onClick={() => perform(() => onRelease(reviewId, version))}>
@@ -91,7 +94,7 @@ function DrawingReviewCard({ drawing, onClaim, onReturn, onReview, onRelease, me
   </article>;
 }
 
-export function DrawingReviewQueue({ drawings = [], onRefresh, onClaim, onReturn, onReview, onRelease, mediaLoader }) {
+export function DrawingReviewQueue({ drawings = [], onRefresh, onClaim, onReturn, onReview, onRelease, mediaLoader, onMediaUnavailable }) {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
   return <section className="admin-list" aria-label="Drawing review queue">
@@ -107,7 +110,7 @@ export function DrawingReviewQueue({ drawings = [], onRefresh, onClaim, onReturn
     </div>}
     {drawings.length === 0 && <p>No drawing submissions await review.</p>}
     {drawings.map((drawing) => <DrawingReviewCard key={drawing.reviewId} drawing={drawing}
-      onClaim={onClaim} onReturn={onReturn} onReview={onReview} onRelease={onRelease} mediaLoader={mediaLoader} />)}
+      onClaim={onClaim} onReturn={onReturn} onReview={onReview} onRelease={onRelease} mediaLoader={mediaLoader} onMediaUnavailable={onMediaUnavailable} />)}
   </section>;
 }
 

@@ -51,6 +51,13 @@ test("only complete bounded raster metadata enables automatic orientation", () =
   assert.equal(drawingRenderMetadata({ width: null, height: null, orientation: null }), false);
 });
 
+test("actual-size mode keeps exact image pixels across viewport, orientation and mirror changes",()=>{
+ for(const [width,height]of[[6,4],[6000,4000]])for(const [viewportWidth,viewportHeight]of[[1000,800],[320,460],[2000,1200]])for(const orientation of[1,6,8])for(const nativeOriented of[false,true,null]){
+  const result=drawingInspectionLayout({width,height,viewportWidth,viewportHeight,orientation,nativeOriented,mirrored:true,actualSize:true,zoom:999});
+  assert.equal(result.scale,1);assert.equal(result.imageWidth,width);assert.equal(result.imageHeight,height);assert.equal(result.zoom,result.nativeZoom);
+ }
+});
+
 test("tiny capability probes contain only an original raster and its orientation", async () => {
   for (const [mime, url] of Object.entries(drawingOrientationProbes)) {
     assert.ok(url.startsWith("/assets/drawing-orientation/"));
