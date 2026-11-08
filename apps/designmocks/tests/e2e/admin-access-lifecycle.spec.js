@@ -168,5 +168,5 @@ test("failed role verification shows a safe keyboard recovery in both themes at 
   expect(await page.evaluate(async()=>(await window.axe.run('[aria-label="Administrator access"]',{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa"]}})).violations.map(item=>item.id))).toEqual([]);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=320)).toBe(true);
  }
- state.roleFailure=false;await page.getByRole("button",{name:"Check administrator access",exact:true}).press("Enter");await expect(page.getByText("Current fictional private bug",{exact:true})).toBeVisible();await expect(page.locator("#root")).not.toContainText(diagnostic);expect(state.unexpected).toEqual([]);
+ state.roleFailure=false;await page.getByRole("button",{name:"Check administrator access",exact:true}).press("Enter");await expect(page.getByText("Current fictional private bug",{exact:true})).toBeVisible();await expect(heading(page)).toBeFocused();await expect(page.locator("#root")).not.toContainText(diagnostic);expect(state.unexpected).toEqual([]);
 });

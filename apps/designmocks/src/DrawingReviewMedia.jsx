@@ -1,16 +1,20 @@
 import React, { useCallback } from "react";
 import { useAdminFunctions } from "./AdminAccess.jsx";
 import { DrawingPages } from "./DrawingInspection.jsx";
+import { isAdminAccessFailure } from "./admin-access.js";
 
-async function loadDrawingPages(functions, reviewId, signal) {
+async function loadDrawingPages(functions, reviewId, signal, onUnavailable) {
   const { data, error } = await functions.invoke("drawing-review-media", { body: { reviewId }, signal });
-  if (error) throw new Error("Couldn’t open drawing pages. Refresh the queue and try again.");
+  if (error) {
+    if(isAdminAccessFailure(error))onUnavailable?.(reviewId,error);
+    throw new Error("Couldn’t open drawing pages. Refresh the queue and try again.");
+  }
   return data;
 }
 
-export function DrawingReviewMedia({ reviewId, load }) {
+export function DrawingReviewMedia({ reviewId, load, onUnavailable }) {
   const functions = useAdminFunctions();
-  const open = useCallback(signal => load ? load(reviewId, signal) : loadDrawingPages(functions, reviewId, signal), [reviewId, load, functions]);
+  const open = useCallback(signal => load ? load(reviewId, signal) : loadDrawingPages(functions, reviewId, signal, onUnavailable), [reviewId, load, functions, onUnavailable]);
   return <DrawingPages scopeKey={reviewId} load={open} anonymous />;
 }
 
