@@ -6,8 +6,12 @@ import {createReadStream} from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {createRecoveryBundle,verifyRecoveryBundle,RECOVERY_PROJECT} from './recovery-bundle.mjs';
-import {openRecoveryPostgres,captureRecoverySnapshot,recoveryBucketsQuery,recoveryObjectsQuery,recoveryPostgresEnvironment} from './recovery-postgres.mjs';
+import {
+  openRecoveryPostgres, captureRecoverySnapshot, checkRecoveryDatabaseSource,
+  recoveryBucketsQuery, recoveryObjectsQuery, recoveryPostgresEnvironment,
+} from './recovery-postgres.mjs';
 import {stableJson} from './question-bank-import.mjs';
+export const PRE_UPGRADE_LEDGER_VERSION = 'dmocks-pre-upgrade-ledger-v1';
 const hash=value=>createHash('sha256').update(stableJson(value)).digest('hex');
 function claims(value){try{return JSON.parse(Buffer.from(value.split('.')[1],'base64url').toString());}catch{return null;}}
 export function validateRecoveryCaptureConfiguration({url,key,databaseUrl,recoveryKey,releaseSha}){
@@ -20,20 +24,84 @@ async function downloadObject(origin,key,object,fetchImpl){
  const response=await fetchImpl(objectUrl(origin,object),{headers:{apikey:key,authorization:'Bearer '+key,'accept-encoding':'identity'},redirect:'error',signal:AbortSignal.timeout(60000)});
  assert.ok(response.status===200&&response.body,'Private recovery object download failed');return response.body;
 }
-export async function capturePrivateRecovery(config,{connectionFactory=openRecoveryPostgres,fetchImpl=fetch,expectedVersions,profileSha256}={}){
- validateRecoveryCaptureConfiguration(config);assert.ok(config.output,'Choose a new private recovery directory');
- const versions=expectedVersions??(await readdir(new URL('../supabase/migrations',import.meta.url))).filter(file=>file.endsWith('.sql')).map(file=>file.split('_')[0]).sort();
- const profile=profileSha256??createHash('sha256').update(await readFile(new URL('../supabase/launch/paid-mvp.sql',import.meta.url))).digest('hex');assert.match(profile,/^[a-f0-9]{64}$/);
- const connection=await connectionFactory(config.databaseUrl);
- try{
-  const snapshot=await captureRecoverySnapshot(connection);assert.deepEqual(snapshot.migrationVersions,versions,'Installed migration history does not match this recovery release');
-  const exported=await connection.exportSnapshot(),objects=snapshot.objects.map(object=>({...object,...(object.bucket==='paper-media'&&/^papers\/canonical\/[a-f0-9]{64}\.png$/.test(object.name)?{sha256:object.name.split('/').at(-1).slice(0,-4)}:{})}));
-  return await createRecoveryBundle({output:config.output,key:config.recoveryKey,source:{projectRef:RECOVERY_PROJECT,releaseSha:config.releaseSha,profileSha256:profile,migrationVersions:versions},snapshot,database:connection.dump(exported),objects,readObject:object=>downloadObject(config.url,config.key,object,fetchImpl),assertUnchanged:async()=>{
-   const current=await connectionFactory(config.databaseUrl);try{const buckets=JSON.parse(await current.query(recoveryBucketsQuery)),latest=JSON.parse(await current.query(recoveryObjectsQuery));return hash({buckets,objects:latest})===snapshot.storageInventorySha256;}finally{await current.close();}
-  }});
- }finally{await connection.close();}
+async function readPreUpgradeLedger(file, releaseSha, sourceVersions) {
+  const info = await lstat(file);
+  assert.ok(info.isFile() && info.size <= 16_384, 'Use a reviewed pre-upgrade ledger JSON file');
+  const ledger = JSON.parse(await readFile(file, 'utf8'));
+  assert.ok(ledger && Object.keys(ledger).sort().join(',') === 'migrationVersions,projectRef,releaseSha,version'
+    && ledger.version === PRE_UPGRADE_LEDGER_VERSION && ledger.projectRef === RECOVERY_PROJECT
+    && ledger.releaseSha === releaseSha, 'Pre-upgrade ledger must name the approved DMocks project and release');
+  const knownVersions = new Set(sourceVersions);
+  assert.ok(Array.isArray(ledger.migrationVersions) && ledger.migrationVersions.length > 0
+    && ledger.migrationVersions.every((version, index, versions) => typeof version === 'string'
+      && knownVersions.has(version) && (index === 0 || versions[index - 1] < version)),
+  'Pre-upgrade ledger must list known migration versions in order without duplicates');
+  return ledger;
 }
-export async function verifyPrivateRecovery(options){const verified=await verifyRecoveryBundle(options);return{version:verified.version,bundleId:verified.bundleId,databaseArchives:1,privateObjects:verified.privateObjects,plaintextBytes:verified.plaintextBytes,manifestSha256:verified.manifestSha256,extracted:Boolean(verified.extractedDirectory),databaseRestoreAccepted:false,hostedWritesPerformed:false};}
+
+export async function capturePrivateRecovery(config, {
+  connectionFactory = openRecoveryPostgres, fetchImpl = fetch, expectedVersions, profileSha256,
+} = {}) {
+  validateRecoveryCaptureConfiguration(config);
+  assert.ok(config.output, 'Choose a new private recovery directory');
+  const sourceVersions = expectedVersions ?? (await readdir(new URL('../supabase/migrations', import.meta.url)))
+    .filter(file => file.endsWith('.sql')).map(file => file.split('_')[0]).sort();
+  const ledger = config.preUpgradeLedger === undefined
+    ? null
+    : await readPreUpgradeLedger(config.preUpgradeLedger, config.releaseSha, sourceVersions);
+  const versions = ledger?.migrationVersions ?? sourceVersions;
+  const sourceStage = ledger ? 'pre-upgrade' : 'mvp';
+  const profile = ledger ? null : profileSha256 ?? createHash('sha256')
+    .update(await readFile(new URL('../supabase/launch/paid-mvp.sql', import.meta.url))).digest('hex');
+  if (!ledger) assert.match(profile, /^[a-f0-9]{64}$/);
+
+  const sourceCheck = {sourceStage, expectedVersions: versions};
+  const connection = await connectionFactory(config.databaseUrl);
+  try {
+    const snapshot = await captureRecoverySnapshot(connection, sourceCheck);
+    const exported = await connection.exportSnapshot();
+    const objects = snapshot.objects.map(object => ({
+      ...object,
+      ...(object.bucket === 'paper-media' && /^papers\/canonical\/[a-f0-9]{64}\.png$/.test(object.name)
+        ? {sha256: object.name.split('/').at(-1).slice(0, -4)} : {}),
+    }));
+    const summary = await createRecoveryBundle({
+      output: config.output,
+      key: config.recoveryKey,
+      source: {
+        projectRef: RECOVERY_PROJECT, releaseSha: config.releaseSha, profileSha256: profile,
+        migrationVersions: versions, ...(ledger ? {approvedLedgerSha256: hash(ledger)} : {}),
+      },
+      snapshot,
+      database: connection.dump(exported),
+      objects,
+      readObject: object => downloadObject(config.url, config.key, object, fetchImpl),
+      assertUnchanged: async () => {
+        const current = await connectionFactory(config.databaseUrl);
+        try {
+          await checkRecoveryDatabaseSource(current, sourceCheck);
+          const buckets = JSON.parse(await current.query(recoveryBucketsQuery));
+          const latest = JSON.parse(await current.query(recoveryObjectsQuery));
+          return hash({buckets, objects: latest}) === snapshot.storageInventorySha256;
+        } finally {
+          await current.close();
+        }
+      },
+    });
+    return {...summary, sourceStage};
+  } finally {
+    await connection.close();
+  }
+}
+export async function verifyPrivateRecovery(options) {
+  const verified = await verifyRecoveryBundle(options);
+  return {
+    version: verified.version, bundleId: verified.bundleId, databaseArchives: 1,
+    privateObjects: verified.privateObjects, plaintextBytes: verified.plaintextBytes,
+    manifestSha256: verified.manifestSha256, sourceStage: verified.snapshot.sourceStage ?? 'mvp',
+    extracted: Boolean(verified.extractedDirectory), databaseRestoreAccepted: false, hostedWritesPerformed: false,
+  };
+}
 function localOrigin(value){let url;try{url=new URL(value);}catch{throw new Error('Invalid local recovery origin');}assert.ok(url.protocol==='http:'&&['127.0.0.1','localhost','[::1]'].includes(url.hostname)&&!url.username&&!url.password&&!url.search&&!url.hash&&url.pathname==='/','Private object restore permits only an isolated loopback target');return url.origin;}
 export async function restoreLocalRecoveryObjects({verified,url,key,ownerKey,assertDatabaseRestored,assertStorageRestored},{fetchImpl=fetch}={}){
  const origin=localOrigin(url);assert.ok(verified?.extractedDirectory&&typeof assertDatabaseRestored==='function'&&typeof assertStorageRestored==='function','Fully verified extraction and restored-database checks are required');
@@ -51,9 +119,39 @@ export async function restoreLocalRecoveryObjects({verified,url,key,ownerKey,ass
  assert.equal(await assertStorageRestored(objects.map(row=>row.object)),true,'Recovered private object ownership or metadata differs');
  return{restoredObjects:objects.length,allBytesVerified:true,ownerAndMetadataVerified:true,target:'isolated-local-recovery',hostedWritesPerformed:false};
 }
-function parseArgs(args){const operation=args.shift(),options={};assert.ok(['capture','verify'].includes(operation),'Choose capture or verify');for(let n=0;n<args.length;n+=2){assert.ok(['--output','--release','--bundle','--extract-to'].includes(args[n])&&args[n+1]&&!Object.hasOwn(options,args[n]),'Use each recovery option once with its value');options[args[n]]=args[n+1];}return{operation,options};}
-async function main(){const{operation,options}=parseArgs(process.argv.slice(2));const recoveryKey=process.env.DMOCKS_RECOVERY_KEY;
- if(operation==='capture'){assert.ok(options['--output']&&options['--release']&&!options['--bundle']&&!options['--extract-to']);console.log(JSON.stringify(await capturePrivateRecovery({url:process.env.DMOCKS_SUPABASE_URL,key:process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,databaseUrl:process.env.DMOCKS_RECOVERY_DATABASE_URL,recoveryKey,releaseSha:options['--release'],output:options['--output']})));}
- else{assert.ok(options['--bundle']&&!options['--output']&&!options['--release']);console.log(JSON.stringify(await verifyPrivateRecovery({directory:options['--bundle'],key:recoveryKey,extractTo:options['--extract-to']})));}
+function parseArgs([operation, ...args]) {
+  assert.ok(['capture', 'verify'].includes(operation), 'Choose capture or verify');
+  const allowed = operation === 'capture'
+    ? ['--output', '--release', '--pre-upgrade-ledger']
+    : ['--bundle', '--extract-to'];
+  const options = {};
+  for (let n = 0; n < args.length; n += 2) {
+    const [flag, value] = args.slice(n, n + 2);
+    assert.ok(allowed.includes(flag) && value && !Object.hasOwn(options, flag), 'Use each recovery option once with its value');
+    options[flag] = value;
+  }
+  return {operation, options};
+}
+
+async function main() {
+  const {operation, options} = parseArgs(process.argv.slice(2));
+  const recoveryKey = process.env.DMOCKS_RECOVERY_KEY;
+  if (operation === 'capture') {
+    assert.ok(options['--output'] && options['--release']);
+    const result = await capturePrivateRecovery({
+      url: process.env.DMOCKS_SUPABASE_URL,
+      key: process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,
+      databaseUrl: process.env.DMOCKS_RECOVERY_DATABASE_URL,
+      recoveryKey, releaseSha: options['--release'], output: options['--output'],
+      preUpgradeLedger: options['--pre-upgrade-ledger'],
+    });
+    console.log(JSON.stringify(result));
+  } else {
+    assert.ok(options['--bundle']);
+    const result = await verifyPrivateRecovery({
+      directory: options['--bundle'], key: recoveryKey, extractTo: options['--extract-to'],
+    });
+    console.log(JSON.stringify(result));
+  }
 }
 if(import.meta.url===pathToFileURL(process.argv[1]??'').href)main().catch(()=>{console.error('PRIVATE_RECOVERY_FAILED');process.exitCode=1;});
