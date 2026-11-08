@@ -14,6 +14,7 @@ import { QuestionDraftExport } from "./QuestionDraftExport.jsx";
 import { LaunchReadiness } from "./LaunchReadiness.jsx";
 import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQueue.jsx";
 import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
+import { NidPracticeBlueprints } from "./NidPracticeBlueprints.jsx";
 import { ReportedQuestionQueue } from "./ReportedQuestionQueue.jsx";
 import { AdminAccessBoundary, useAdminServices } from "./AdminAccess.jsx";
 import { adminRequestMessage } from "./admin-access.js";
@@ -506,6 +507,7 @@ function AdminDesk({ session }) {
           </div>
           </>}
           <BankReviewBrowser rpc={rpc} onReviewed={load} refreshToken={bankRefreshToken} />
+          <NidPracticeBlueprints />
           {postLaunchPreview&&<>
           <h2>Question review queue</h2>
           <div className="admin-list">

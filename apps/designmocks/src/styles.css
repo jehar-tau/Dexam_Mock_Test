@@ -3954,3 +3954,15 @@ svg {
 .community-page .admin-form,.community-reply{grid-template-columns:minmax(0,1fr)}.community-fields>label{min-width:0}.community-reply input,.community-reply textarea{width:100%;max-width:100%;min-width:0}
 .community-page{min-width:0;overflow-wrap:anywhere}.community-feed{grid-template-columns:minmax(0,1fr)}.community-page .eyebrow{white-space:normal}.community-page [aria-disabled="true"]{cursor:default}
 .community-moderation [aria-disabled="true"]{opacity:.55;cursor:default}
+.nid-practice-blueprints{margin-block:3rem;min-width:0;overflow-wrap:anywhere}
+.nid-blueprint-editor{margin-block:1.5rem;padding:clamp(.75rem,2vw,1.5rem);border:1px solid var(--line);background:var(--warm);min-width:0}
+.nid-blueprint-editor fieldset{min-width:0;max-width:100%;border:1px solid var(--line);padding:clamp(.6rem,2vw,1rem);margin-block:.8rem}
+.nid-blueprint-editor legend{font-weight:700;padding-inline:.3rem;max-width:100%;white-space:normal}
+.nid-blueprint-editor .admin-form,.nid-blueprint-section{grid-column:1/-1}
+.nid-blueprint-editor label{min-width:0;display:grid;gap:.45rem}
+.nid-blueprint-editor input,.nid-blueprint-editor select,.nid-blueprint-editor textarea{min-width:0;max-width:100%;width:100%}
+.nid-blueprint-editor .profile-check{display:flex;align-items:flex-start;gap:.6rem}
+.nid-blueprint-editor .profile-check input{width:auto;flex:none;margin-block-start:.25rem}
+.nid-blueprint-editor button{white-space:normal;min-height:44px;margin-block:.25rem}
+.nid-blueprint-digest code{overflow-wrap:anywhere;word-break:break-all}
+.nid-blueprint-history{margin-block:1rem;align-items:end}
