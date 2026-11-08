@@ -27,6 +27,11 @@ test('changed token identity blocks RPC and Edge dispatch without sending earlie
 test('identity can be rechecked before navigation without dispatching another RPC or Edge request',async()=>{
  const{state,scope,services}=await fixture(true);assert.equal(await services.checkIdentity(new AbortController().signal),true);assert.deepEqual(state.rpc,[]);assert.deepEqual(state.edge,[]);state.token='second-token';await assert.rejects(services.checkIdentity(new AbortController().signal));assert.equal(scope.isCurrent(),false);scope.dispose();
 });
+test('account presentation rechecks the cached token after verification before opening private UI',async()=>{
+ const state={token:'first',calls:0,opened:0},scope=createAdminAccessScope({check:async()=>true});await scope.verify();
+ const client={auth:{async getSession(){state.calls++;return{data:{session:{user:{id:'first'},access_token:state.token}}};},async getUser(){state.token='second';return{data:{user:{id:'first'}}};}}};
+ const services=createAccountServices(scope,client,'first');await assert.rejects(services.presentForCurrentAccount(()=>{state.opened++;},new AbortController().signal));assert.equal(state.calls,2);assert.equal(state.opened,0);assert.equal(scope.isCurrent(),false);scope.dispose();
+});
 test('a bounded account request ends a stalled operation and ignores its later result',async()=>{
  let finish;const late=new Promise(resolve=>{finish=resolve;}),controller=new AbortController();await assert.rejects(withAccountDeadline(()=>late,controller.signal,1),error=>error.name==='AbortError');finish('late private result');await Promise.resolve();
 });
