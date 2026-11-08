@@ -44,6 +44,8 @@ test("blocked questions explain their conversion work and proposed exam use", ()
   assert.equal(questionUsage(nid).section,"DAT Prelims creative practice");
   assert.match(conversionChecklist(nid).map(item=>item.label).join(" "),/NID delivery blueprint/);
   assert.match(conversionChecklist(nid).map(item=>item.label).join(" "),/private question figure/);
+  const nidChoices={...nid,type:'MCQ',answer:{raw:'A',status:'human-reviewed'},options:['A','B','C'].map(key=>({key,text:key})),media:[]};
+  assert.deepEqual(conversionChecklist(nidChoices),[{state:'blocked',label:'Verify the NID delivery blueprint, timing and marking/rubric before conversion.'}]);
   const nift = { exam:"nift", type:"MCQ", runtimeReady:false, answer:{raw:"1",status:"verified"}, options:[1,2,3,4].map(key=>({key:String(key),text:String(key)})), media:[] };
   assert.equal(questionUsage(nift).section,"B.Des. GAT");
   assert.deepEqual(conversionChecklist(nift),[{state:"queue",label:"Run the verified runtime materializer, then review the exact converted version."}]);

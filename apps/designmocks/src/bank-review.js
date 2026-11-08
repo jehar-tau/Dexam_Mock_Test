@@ -66,8 +66,9 @@ export function conversionChecklist(question) {
     issues.push({ state: "fix", label: "Verify and save a complete answer key." });
   if (["MCQ", "MSQ"].includes(type)) {
     const keys=Array.isArray(question?.options)?question.options.map(option=>option?.key??option?.id):[];
-    if (!Array.isArray(question?.options) || question.options.length !== 4 || keys.some(key=>typeof key!=='string'||!key.trim()) || new Set(keys).size!==4)
-      issues.push({ state: "fix", label: "Provide exactly four uniquely labelled options." });
+    const fourChoices=['uceed','ceed'].includes(exam)||(exam==='nift'&&type==='MCQ');
+    if ((fourChoices ? keys.length!==4 : keys.length<2) || keys.some(key=>typeof key!=='string'||!key.trim()) || new Set(keys).size!==keys.length)
+      issues.push({ state: "fix", label: fourChoices ? "Provide exactly four uniquely labelled options." : "Provide at least two uniquely labelled options before verifying the exam blueprint." });
     else if (question.options.some(option => !String(option?.text ?? "").trim()) && !(question?.media?.length > 0))
       issues.push({ state: "fix", label: "Restore missing option text or attach the complete labelled question figure." });
   }
