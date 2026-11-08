@@ -1,0 +1,59 @@
+// Private operator CLI. Capture is read-only; no command restores a hosted DB.
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {readFile,readdir,lstat} from 'node:fs/promises';
+import {createReadStream} from 'node:fs';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {createRecoveryBundle,verifyRecoveryBundle,RECOVERY_PROJECT} from './recovery-bundle.mjs';
+import {openRecoveryPostgres,captureRecoverySnapshot,recoveryBucketsQuery,recoveryObjectsQuery,recoveryPostgresEnvironment} from './recovery-postgres.mjs';
+import {stableJson} from './question-bank-import.mjs';
+const hash=value=>createHash('sha256').update(stableJson(value)).digest('hex');
+function claims(value){try{return JSON.parse(Buffer.from(value.split('.')[1],'base64url').toString());}catch{return null;}}
+export function validateRecoveryCaptureConfiguration({url,key,databaseUrl,recoveryKey,releaseSha}){
+ assert.ok(url===`https://${RECOVERY_PROJECT}.supabase.co`,'Only the standalone DMocks Storage origin is permitted');
+ const jwt=claims(key??'');assert.ok(key?.startsWith('sb_secret_')||jwt?.role==='service_role'&&jwt.ref===RECOVERY_PROJECT,'A standalone server-only Storage credential is required');
+ recoveryPostgresEnvironment(databaseUrl);assert.match(recoveryKey??'',/^[a-f0-9]{64}$/,'A private random 32-byte recovery key is required');assert.match(releaseSha??'',/^[a-f0-9]{40}$/,'Specify the exact approved database release SHA');return true;
+}
+const objectUrl=(origin,object)=>origin+'/storage/v1/object/'+[object.bucket,...object.name.split('/')].map(encodeURIComponent).join('/');
+async function downloadObject(origin,key,object,fetchImpl){
+ const response=await fetchImpl(objectUrl(origin,object),{headers:{apikey:key,authorization:'Bearer '+key,'accept-encoding':'identity'},redirect:'error',signal:AbortSignal.timeout(60000)});
+ assert.ok(response.status===200&&response.body,'Private recovery object download failed');return response.body;
+}
+export async function capturePrivateRecovery(config,{connectionFactory=openRecoveryPostgres,fetchImpl=fetch,expectedVersions,profileSha256}={}){
+ validateRecoveryCaptureConfiguration(config);assert.ok(config.output,'Choose a new private recovery directory');
+ const versions=expectedVersions??(await readdir(new URL('../supabase/migrations',import.meta.url))).filter(file=>file.endsWith('.sql')).map(file=>file.split('_')[0]).sort();
+ const profile=profileSha256??createHash('sha256').update(await readFile(new URL('../supabase/launch/paid-mvp.sql',import.meta.url))).digest('hex');assert.match(profile,/^[a-f0-9]{64}$/);
+ const connection=await connectionFactory(config.databaseUrl);
+ try{
+  const snapshot=await captureRecoverySnapshot(connection);assert.deepEqual(snapshot.migrationVersions,versions,'Installed migration history does not match this recovery release');
+  const exported=await connection.exportSnapshot(),objects=snapshot.objects.map(object=>({...object,...(object.bucket==='paper-media'&&/^papers\/canonical\/[a-f0-9]{64}\.png$/.test(object.name)?{sha256:object.name.split('/').at(-1).slice(0,-4)}:{})}));
+  return await createRecoveryBundle({output:config.output,key:config.recoveryKey,source:{projectRef:RECOVERY_PROJECT,releaseSha:config.releaseSha,profileSha256:profile,migrationVersions:versions},snapshot,database:connection.dump(exported),objects,readObject:object=>downloadObject(config.url,config.key,object,fetchImpl),assertUnchanged:async()=>{
+   const current=await connectionFactory(config.databaseUrl);try{const buckets=JSON.parse(await current.query(recoveryBucketsQuery)),latest=JSON.parse(await current.query(recoveryObjectsQuery));return hash({buckets,objects:latest})===snapshot.storageInventorySha256;}finally{await current.close();}
+  }});
+ }finally{await connection.close();}
+}
+export async function verifyPrivateRecovery(options){const verified=await verifyRecoveryBundle(options);return{version:verified.version,bundleId:verified.bundleId,databaseArchives:1,privateObjects:verified.privateObjects,plaintextBytes:verified.plaintextBytes,manifestSha256:verified.manifestSha256,extracted:Boolean(verified.extractedDirectory),databaseRestoreAccepted:false,hostedWritesPerformed:false};}
+function localOrigin(value){let url;try{url=new URL(value);}catch{throw new Error('Invalid local recovery origin');}assert.ok(url.protocol==='http:'&&['127.0.0.1','localhost','[::1]'].includes(url.hostname)&&!url.username&&!url.password&&!url.search&&!url.hash&&url.pathname==='/','Private object restore permits only an isolated loopback target');return url.origin;}
+export async function restoreLocalRecoveryObjects({verified,url,key,ownerKey,assertDatabaseRestored,assertStorageRestored},{fetchImpl=fetch}={}){
+ const origin=localOrigin(url);assert.ok(verified?.extractedDirectory&&typeof assertDatabaseRestored==='function'&&typeof assertStorageRestored==='function','Fully verified extraction and restored-database checks are required');
+ const objects=verified.entries.filter(row=>row.kind==='object');assert.ok(!objects.some(row=>row.object.owner!=null)||typeof ownerKey==='function','A local owner-preserving signing adapter is required');
+ assert.equal(await assertDatabaseRestored(),true,'Restore the matching database snapshot before private object bytes');
+ // Prepare and validate every request before writing the first object.
+ const requests=[];for(const entry of objects){const object=entry.object,token=object.owner==null?key:await ownerKey(object.owner),jwt=claims(token??'');assert.ok(token&&(object.owner==null||jwt?.role==='service_role'&&jwt.sub===object.owner),'Local restoration must preserve the original Storage owner');
+  assert.ok(object.cacheControl==null||typeof object.cacheControl==='string'&&!/[\u0000-\u001f]/.test(object.cacheControl),'Invalid original cache metadata');
+  const headers={apikey:key,authorization:'Bearer '+token,'content-type':object.contentType,'content-length':String(entry.byteSize),'x-upsert':'true',...(object.cacheControl?{'cache-control':object.cacheControl}:{}),...(object.userMetadata?{'x-metadata':Buffer.from(JSON.stringify(object.userMetadata)).toString('base64')}:{})};
+  assert.match(entry.slot,/^payload-\d{6}\.enc$/);const file=path.join(verified.extractedDirectory,entry.slot.replace('.enc','.bin'));const info=await lstat(file);assert.ok(info.isFile()&&!info.isSymbolicLink()&&info.size===entry.byteSize,'Recovered payload file changed');const checksum=createHash('sha256');for await(const chunk of createReadStream(file))checksum.update(chunk);assert.equal(checksum.digest('hex'),entry.sha256,'Recovered payload changed before restoration');requests.push({entry,object,token,headers,file});
+ }
+ for(const request of requests){const response=await fetchImpl(objectUrl(origin,request.object),{method:'POST',headers:request.headers,body:createReadStream(request.file),duplex:'half',redirect:'error',signal:AbortSignal.timeout(60000)});if(!response.ok){const error=new Error('Local private object restore failed');error.httpStatus=response.status;throw error;}await response.body?.cancel();
+  const digest=createHash('sha256');let bytes=0;for await(const chunk of await downloadObject(origin,key,request.object,fetchImpl)){digest.update(chunk);bytes+=chunk.length;}assert.equal(bytes,request.entry.byteSize,'Recovered private object size changed');assert.equal(digest.digest('hex'),request.entry.sha256,'Recovered private object bytes changed');
+ }
+ assert.equal(await assertStorageRestored(objects.map(row=>row.object)),true,'Recovered private object ownership or metadata differs');
+ return{restoredObjects:objects.length,allBytesVerified:true,ownerAndMetadataVerified:true,target:'isolated-local-recovery',hostedWritesPerformed:false};
+}
+function parseArgs(args){const operation=args.shift(),options={};assert.ok(['capture','verify'].includes(operation),'Choose capture or verify');for(let n=0;n<args.length;n+=2){assert.ok(['--output','--release','--bundle','--extract-to'].includes(args[n])&&args[n+1]&&!Object.hasOwn(options,args[n]),'Use each recovery option once with its value');options[args[n]]=args[n+1];}return{operation,options};}
+async function main(){const{operation,options}=parseArgs(process.argv.slice(2));const recoveryKey=process.env.DMOCKS_RECOVERY_KEY;
+ if(operation==='capture'){assert.ok(options['--output']&&options['--release']&&!options['--bundle']&&!options['--extract-to']);console.log(JSON.stringify(await capturePrivateRecovery({url:process.env.DMOCKS_SUPABASE_URL,key:process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,databaseUrl:process.env.DMOCKS_RECOVERY_DATABASE_URL,recoveryKey,releaseSha:options['--release'],output:options['--output']})));}
+ else{assert.ok(options['--bundle']&&!options['--output']&&!options['--release']);console.log(JSON.stringify(await verifyPrivateRecovery({directory:options['--bundle'],key:recoveryKey,extractTo:options['--extract-to']})));}
+}
+if(import.meta.url===pathToFileURL(process.argv[1]??'').href)main().catch(()=>{console.error('PRIVATE_RECOVERY_FAILED');process.exitCode=1;});
