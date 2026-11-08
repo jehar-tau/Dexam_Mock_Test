@@ -2,6 +2,10 @@
 
 This runbook applies separately to staging and production. Never paste service keys, student answers, drawing images, phone numbers or payment payloads into tickets or chat. Public registration and sales remain closed until the launch checklist and owner approvals are complete.
 
+## Frozen objective MVP profile
+
+Apply the reviewed companion profile last, as described in MVP_DEPLOYMENT.md. Its health view reports stale/expired attempts, stale pending orders, payment reviews, open bugs and question reports. Deferred AI/intake/drawing counters and the large 150-session exercise are not initial launch gates. A nonzero payment-review count requires operator reconciliation under REFUND_RECONCILIATION.md; never automatically repeat the charge or invent a partial-refund proration. An incident closes the audited merchant Test window explicitly in addition to closing sales/admission as applicable.
+
 ## Health and alerting
 
 Poll the service-only `admin_operational_health()` RPC every minute and record only its aggregate response. The same aggregate appears in the authenticated admin portal. Alert thresholds:
@@ -27,7 +31,7 @@ Run `prune_attempt_rate_buckets()` with the service identity once daily. It reta
 
 ## Backup and restore
 
-- Production requires Supabase Pro daily backups and point-in-time recovery. Confirm the latest backup before every production migration.
+- Confirm an approved database and private-media backup plus a proven restore before every production migration. Initial encrypted logical backups/private-object snapshots may support the small launch if the owner accepts the recovery target and operating process. Paid daily-backup/PITR services require a separate budget decision; do not provision them automatically. Neither a local empty-schema test nor a database-only dump proves private-media recovery.
 - Quarterly, restore into a new isolated project with no OAuth, email, payment or public DNS connections. Verify migration ledger, row counts, RLS, private buckets, attempt reads, scoring and aggregate health.
 - Destroy the isolated restore after evidence is retained. Never restore production data into development or staging.
 - Frontend rollback uses the previous immutable deployment artifact. Database migrations remain forward-compatible; do not roll back by dropping columns or deleting student data.

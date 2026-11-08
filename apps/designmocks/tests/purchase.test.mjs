@@ -4,8 +4,8 @@ import{createPurchaseFlow,purchaseOrder,purchasePass}from'../src/purchase.js';
 const order=()=>({orderId:'order_fictional123',keyId:'rzp_test_fictional123',amount:119300,currency:'INR'});
 const waitFor=async predicate=>{for(let n=0;n<100&&!predicate();n++)await new Promise(resolve=>setTimeout(resolve,1));assert.ok(predicate());};
 function fixture(options={}){
- const state={current:true,active:false,status:[],calls:[],opened:0,closed:0,widgets:[],present:0,order:order(),failure:null};
- const access=()=>({active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null});
+ const state={current:true,active:false,mode:options.expectedMode??'test',status:[],calls:[],opened:0,closed:0,widgets:[],present:0,order:order(),failure:null};
+ const access=()=>({active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null,mode:state.mode});
  class Checkout{constructor(options){this.options=options;this.events={};state.widgets.push(this);}on(name,action){this.events[name]=action;}open(){state.opened++;}close(){state.closed++;this.options.modal.ondismiss();}}
  const services={isCurrent:()=>state.current,async checkIdentity(signal){signal.throwIfAborted();if(!state.current)throw new Error('Changed account.');return true;},async presentForCurrentAccount(operation,signal){signal.throwIfAborted();state.present++;await services.checkIdentity(signal);return operation();},async rpc(name,input,signal){signal.throwIfAborted();state.calls.push(name);if(state.failure===name)throw new Error('Private provider diagnostic');if(name==='my_pass')return state.read?state.read():access();return null;},functions:{async invoke(name,{signal}){signal.throwIfAborted();state.calls.push(name);if(state.failure===name)throw new Error('Private merchant diagnostic');if(state.create)return state.create();return{data:state.order,error:null};}}};
  const flow=createPurchaseFlow({services,termsVersion:'fictional-reviewed-terms',loadCheckout:async()=>{if(state.load)await state.load();return Checkout;},onChange:value=>state.status.push(value),pollMilliseconds:1,maximumPolls:2,requestMilliseconds:1000,confirmationMilliseconds:1000,...options});
@@ -19,6 +19,15 @@ test('checkout receipts enforce exact plan price, currency and bounded provider 
 test('only a valid current server pass can display active access',()=>{
  assert.deepEqual(purchasePass({active:true,expiresAt:'2027-11-08T12:00:00Z'}),{active:true,expiresAt:'2027-11-08T12:00:00Z'});
  for(const value of[null,{}, {active:'true',expiresAt:null},{active:true,expiresAt:null},{active:true,expiresAt:'not-a-date'},{active:true,expiresAt:'2027-11-08T12:00:00Z',revoked:true}])assert.throws(()=>purchasePass(value));
+});
+test('Test and Live order/pass receipts cannot be used interchangeably',()=>{
+ assert.doesNotThrow(()=>purchaseOrder(order(),'test'));assert.throws(()=>purchaseOrder(order(),'live'));
+ assert.doesNotThrow(()=>purchaseOrder({...order(),keyId:'rzp_live_fictional123'},'live'));assert.throws(()=>purchaseOrder({...order(),keyId:'rzp_live_fictional123'},'test'));
+ assert.throws(()=>purchasePass({active:true,expiresAt:'2027-11-08T12:00:00Z',mode:'test'},'live'));
+ assert.throws(()=>purchasePass({active:false,expiresAt:null},'test'));
+});
+test('a nonproduction purchase cannot load a Live widget or display a Live pass',async()=>{
+ const{state,flow,latest}=fixture();state.mode='live';await flow.refresh();assert.equal(latest().status,'unconfirmed');assert.equal(await flow.start(true),false);state.mode='test';await flow.refresh();state.order.keyId='rzp_live_fictional123';let loaded=false;state.load=()=>{loaded=true;};assert.equal(await flow.start(true),false);assert.equal(loaded,false);assert.equal(state.opened,0);flow.dispose();
 });
 test('an existing server pass closes purchase before consent or another order',async()=>{
  const{state,flow,latest}=fixture();state.active=true;assert.equal(await flow.refresh(),true);assert.equal(latest().status,'paid');assert.equal(await flow.start(true),false);assert.deepEqual(state.calls,['my_pass']);flow.dispose();
@@ -52,5 +61,5 @@ test('failure and dismissal require a server check rather than a second automati
  for(const failed of[false,true]){const{state,flow,latest}=fixture();await flow.refresh();await flow.start(true);if(failed)state.widgets[0].events['payment.failed']({error:{description:'private failure'}});else state.widgets[0].options.modal.ondismiss();assert.equal(latest().status,'pending');assert.equal(await flow.start(true),false);assert.equal(state.calls.filter(name=>name==='create-order').length,1);flow.dispose();}
 });
 test('stalled confirmation ends without fabricating paid access or repeating an order',async()=>{
- const{state,flow,latest}=fixture({confirmationMilliseconds:10,requestMilliseconds:1000});await flow.refresh();await flow.start(true);let release;state.read=()=>new Promise(resolve=>{release=resolve;});state.widgets[0].options.handler({});await waitFor(()=>latest().status==='pending');release({active:true,expiresAt:'2027-11-08T12:00:00Z'});await new Promise(resolve=>setTimeout(resolve,1));assert.equal(state.status.some(row=>row.status==='paid'),false);assert.equal(state.calls.filter(name=>name==='create-order').length,1);flow.dispose();
+ const{state,flow,latest}=fixture({confirmationMilliseconds:10,requestMilliseconds:1000});await flow.refresh();await flow.start(true);let release;state.read=()=>new Promise(resolve=>{release=resolve;});state.widgets[0].options.handler({});await waitFor(()=>latest().status==='pending');release({active:true,expiresAt:'2027-11-08T12:00:00Z',mode:'test'});await new Promise(resolve=>setTimeout(resolve,1));assert.equal(state.status.some(row=>row.status==='paid'),false);assert.equal(state.calls.filter(name=>name==='create-order').length,1);flow.dispose();
 });

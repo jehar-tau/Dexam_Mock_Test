@@ -850,7 +850,7 @@ function Plans() {
           <ul>
             {[
               "Only the explicitly released papers listed in the catalogue",
-              "Reviewed questions with approved content rights",
+              "Adapted practice questions based on student recollections",
               "Timed attempts and saved progress",
               "Answer review after submission",
               "Your own student account",

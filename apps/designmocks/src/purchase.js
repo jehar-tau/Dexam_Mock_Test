@@ -1,18 +1,22 @@
 import { withAccountDeadline } from './account-request.js';
 
-export function purchaseOrder(value) {
+export function purchaseOrder(value, expectedMode) {
   if (!value || Array.isArray(value) || value.amount !== 119300 || value.currency !== 'INR' ||
       typeof value.orderId !== 'string' || !/^order_[A-Za-z0-9]{1,194}$/.test(value.orderId) ||
       typeof value.keyId !== 'string' || !/^rzp_(test|live)_[A-Za-z0-9]{1,180}$/.test(value.keyId))
     throw new Error('The checkout response could not be verified.');
+  if(expectedMode!==undefined&&(!['test','live'].includes(expectedMode)||!value.keyId.startsWith('rzp_'+expectedMode+'_')))
+    throw new Error('The checkout mode could not be verified.');
   return { orderId: value.orderId, keyId: value.keyId, amount: value.amount, currency: value.currency };
 }
 
-export function purchasePass(value) {
+export function purchasePass(value, expectedMode) {
   const instant = v => typeof v === 'string' && /^\d{4}-\d\d-\d\dT/.test(v) && Number.isFinite(Date.parse(v));
   if (!value || typeof value.active !== 'boolean' ||
       (value.active ? !instant(value.expiresAt) || value.revoked === true : value.expiresAt !== null && !instant(value.expiresAt)))
     throw new Error('The pass response could not be verified.');
+  if(expectedMode!==undefined&&(!['test','live'].includes(expectedMode)||value.mode!==expectedMode))
+    throw new Error('The pass mode could not be verified.');
   return { active: value.active, expiresAt: value.expiresAt };
 }
 
@@ -41,7 +45,7 @@ function pause(milliseconds, signal) {
 
 // This coordinator owns no entitlement. Only a verified current-account server
 // read may display an active pass; widget callbacks merely request that read.
-export function createPurchaseFlow({ services, termsVersion, loadCheckout = loadRazorpay, onChange,
+export function createPurchaseFlow({ services, termsVersion, loadCheckout = loadRazorpay, onChange, expectedMode = 'test',
   requestMilliseconds = 20000, confirmationMilliseconds = 65000, pollMilliseconds = 3000, maximumPolls = 20 }) {
   const controller = new AbortController();
   let status = 'checking', busy = false, widget = null, confirming = false;
@@ -50,7 +54,7 @@ export function createPurchaseFlow({ services, termsVersion, loadCheckout = load
   const closeWidget = () => { const owned = widget; widget = null; try { owned?.close(); } catch {} };
   const request = operation => withAccountDeadline(operation, controller.signal, requestMilliseconds);
   const readPass = async signal => {
-    const access = purchasePass(await services.rpc('my_pass', undefined, signal));
+    const access = purchasePass(await services.rpc('my_pass', undefined, signal), expectedMode);
     await services.checkIdentity(signal);
     return access;
   };
@@ -94,7 +98,7 @@ export function createPurchaseFlow({ services, termsVersion, loadCheckout = load
         await services.rpc('accept_current_terms', { p_version: termsVersion }, signal);
         const { data, error } = await services.functions.invoke('create-order', { body: { plan: 'annual' }, signal });
         signal.throwIfAborted(); if (error) throw error;
-        const order = purchaseOrder(data), Razorpay = await loadCheckout();
+        const order = purchaseOrder(data, expectedMode), Razorpay = await loadCheckout();
         signal.throwIfAborted(); if (typeof Razorpay !== 'function') throw new Error('Checkout unavailable.');
         // Recheck the SDK's current cached session after server verification, then
         // construct/open synchronously in that same current-account operation.

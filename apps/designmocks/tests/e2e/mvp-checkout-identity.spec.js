@@ -6,7 +6,7 @@ const first={id:'00000000-0000-4000-8000-000000001901',email:'fictional-checkout
 const order=()=>({orderId:'order_fictionalCheckout123',keyId:'rzp_test_fictionalCheckout123',amount:119300,currency:'INR'});
 const script=`window.checkoutFixture={opened:0,closed:0,options:[],widgets:[]};window.Razorpay=class{constructor(options){this.options=options;this.events={};window.checkoutFixture.options.push(options);window.checkoutFixture.widgets.push(this);}on(name,callback){this.events[name]=callback;return this;}open(){window.checkoutFixture.opened++;}close(){window.checkoutFixture.closed++;this.options.modal.ondismiss();}};`;
 async function setup(page,configure=()=>{}){
- const state={calls:[],auth:[],active:false,order:order(),holds:{},waits:{},fail:null,holdAuthAt:0,holdPresentation:false,afterOrder:false};configure(state);
+ const state={calls:[],auth:[],active:false,mode:'test',order:order(),holds:{},waits:{},fail:null,holdAuthAt:0,holdPresentation:false,afterOrder:false};configure(state);
  await page.route('https://checkout.razorpay.com/v1/checkout.js',route=>route.fulfill({contentType:'text/javascript',body:script}));
  await page.route('https://dmocks-portal-fixture.supabase.co/**',async route=>{
   const request=route.request(),headers={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'authorization, apikey, content-type, x-client-info, x-supabase-api-version','Access-Control-Allow-Methods':'POST, GET, OPTIONS'};
@@ -19,7 +19,7 @@ async function setup(page,configure=()=>{}){
   if(state.fail===name)return route.fulfill({status:503,headers,json:{message:'private fictional provider diagnostic'}});
   if(name==='accept_current_terms')return route.fulfill({headers,json:null});
   if(name==='create-order'){state.afterOrder=true;return route.fulfill({headers,json:state.order});}
-  if(name==='my_pass')return route.fulfill({headers,json:{active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null,revoked:false}});
+  if(name==='my_pass')return route.fulfill({headers,json:{active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null,revoked:false,mode:state.mode}});
   throw new Error('Unexpected checkout fixture request: '+name);
  });
  await page.goto('/');await seedPortalSession(page,first);await page.goto('/plans');
@@ -77,6 +77,12 @@ test('a timed-out order stays closed after its late receipt and requires a pass 
 });
 test('an already active server pass prevents checkout before another consent or charge',async({page})=>{
  const state=await setup(page,s=>{s.active=true;});await expect(page.getByText('Your pass is active.',{exact:false})).toBeVisible();await expect(consent(page)).toHaveCount(0);await expect(pay(page)).toHaveCount(0);expect(state.calls.filter(row=>['accept_current_terms','create-order'].includes(row.name))).toEqual([]);
+});
+test('the explicit acceptance surface labels Test mode and never opens a Live-key window',async({page})=>{
+ const state=await setup(page);await expect(page.getByText('Razorpay Test mode for approved acceptance testers. No live payment is taken.',{exact:true})).toBeVisible();state.order.keyId='rzp_live_fictionalCheckout123';await consent(page).check();await pay(page).click();await expect(page.getByRole('alert')).toContainText('Couldn’t confirm checkout');expect(await page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(0);expect(state.calls.filter(row=>row.name==='create-order')).toHaveLength(1);
+});
+test('a pass from the wrong provider mode cannot confirm access or start checkout',async({page})=>{
+ const state=await setup(page,s=>{s.mode='live';s.active=true;});await expect(page.getByRole('alert')).toContainText('Couldn’t confirm your pass');await expect(page.getByText('Your pass is active.',{exact:false})).toHaveCount(0);await expect(pay(page)).toBeDisabled();expect(state.calls.filter(row=>row.name==='create-order')).toEqual([]);
 });
 for(const failed of[false,true])test((failed?'failed payment':'dismissed checkout')+' requires a pass check before any next payment',async({page})=>{
  const state=await setup(page);await consent(page).check();await pay(page).click();await expect.poll(()=>page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(1);await page.evaluate(failed=>{const widget=window.checkoutFixture.widgets[0];if(failed)widget.events['payment.failed']({error:{description:'private fictional provider diagnostic'}});else widget.options.modal.ondismiss();},failed);await expect(page.getByText('Your payment is not confirmed here yet.',{exact:false})).toBeVisible();await expect(page.locator('.annual-card')).not.toContainText('private fictional provider diagnostic');await expect(pay(page)).toBeDisabled();expect(state.calls.filter(row=>row.name==='create-order')).toHaveLength(1);await page.getByRole('button',{name:'Check my pass',exact:true}).click();await expect(pay(page)).toBeEnabled();
