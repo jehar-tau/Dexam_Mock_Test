@@ -1,3 +1,4 @@
+import { operator } from './operator.js';
 export const brand = {
   name: "DMocks",
   domain: "dmocks.com",
@@ -5,7 +6,7 @@ export const brand = {
   price: 1193,
   currency: "INR",
   months: 12,
-  supportUrl: "https://designexam.com/contact/",
+  supportUrl: 'mailto:' + operator.supportEmail,
 };
 export const exams = [
   {

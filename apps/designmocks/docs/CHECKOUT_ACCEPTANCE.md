@@ -1,5 +1,7 @@
 # MVP checkout acceptance
 
+Current recovery/operator-readiness candidate: CHECKOUT_RECOVERY.md adds exact receipt/note/state verification, lost-reply recovery and bounded server work without changing webhook-only entitlement. It passes 342 units/358 strict desktop/mobile cases/44 database suites plus actual local source-handler/SDK proof with a fictional merchant transport. Contact facts are supplied; final policy and approved real-provider gates stay closed.
+
 Accepted checkout PR #100 has strict exact-head PR/main and matching-tree acceptance (313 units/342 zero-retry desktop/mobile journeys). The companion release profile adds expected Test/Live key and pass-mode validation and the separate controlled merchant Test procedure in [MVP_DEPLOYMENT.md](MVP_DEPLOYMENT.md).
 
 The paid MVP is ₹1,193 INR for exactly 12 calendar months, one payment with no automatic renewal, covering only the explicitly released catalogue. This runbook does not approve the first paper, policies, merchant configuration or a production switch. Public registration, publication and sales remain separate closed gates.

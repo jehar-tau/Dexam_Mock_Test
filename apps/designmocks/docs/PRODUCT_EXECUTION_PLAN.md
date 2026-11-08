@@ -1,5 +1,7 @@
 # DMocks paid MVP execution plan
 
+Owner rights clarification (8 November): Design Exam Academy confirms ownership or permission for all 2,582 hold-free canonical questions as original/adapted practice material, not verbatim protected official papers. Legacy labels remain as source history and no longer establish the collection-level rights conclusion. Only the documented 1,502 runtime-ready objective questions (830 UCEED/672 CEED), if active/hold-free with verified required media, may enter exact-version audited approval. The other 1,080 remain technically unavailable for this MVP. Never mass-update flags directly.
+
 Owner scope freeze: **8 November 2026**. This plan replaces the full-portal launch scope and the earlier deferral of payment work. Continue only work needed for the first safe paid customer journey. Do not add another portal slice to improve the completion percentage.
 
 ## Launch Now
@@ -12,6 +14,10 @@ Owner scope freeze: **8 November 2026**. This plan replaces the full-portal laun
 6. Owner-approved operator, privacy, terms, refund/cancellation, support/contact, tax/invoice and younger-student information. Draft notices are not final policies. Publish clear coverage and support expectations before purchase.
 7. Minimal production error/payment alerting, actionable support, database/private-media backup and a restore check. Provision only the resources required for the initial 100–200 users and fewer than 100 concurrent sessions.
 8. Promote the approved provider/source target, verify the real test-mode journey on **dmocks.com**, then obtain the explicit production switch decision. Keep registration, catalogue publication and payments as separate gates.
+
+## Additional bank-usability instruction
+
+The owner now explicitly resumes work on the remaining 1,080 technically unavailable records: preserve the admin student-view preview/checklist, verify NIFT materialization, provide per-record conversion diagnostics/correction queues and add verified NID blueprint/rubric support. This is an exception to the earlier conversion/NID/NIFT engineering deferral. Student publication remains independently gated by exact-version approval, correct answers/context and verified media. Other deferred products remain disabled. Do not claim all 1,080 are ready or broaden the first paid catalogue automatically.
 
 ## Post-launch / disabled
 
@@ -26,9 +32,11 @@ Already implemented code can remain in the repository behind disabled routes. Ex
 
 ## Current evidence and remaining estimate
 
-Accepted source is PR **#100**, merge `f6826a1cbb3c76c086b257213a7ecd8cf72fe9f4`. Exact-head PR/main checks pass **313 JavaScript tests, four Python fixtures, 342 selected desktop/mobile journeys with no skips/retries, eleven server-function types, build/isolation, zero production audit findings and 72 migrations/40 database suites**. PR #98 accepts the frozen entry points/objective client, #99 the bound refund/revocation mechanism and #100 current-account checkout. Actual local SDK/provider fixtures are explicitly fictional and do not prove the real merchant journey or hosted promotion.
+Accepted source is PR **#101**, merge `b005f088b0407093ce9695d3845e890f12eb3ad9`. Exact-head PR/main checks pass **322 JavaScript tests, four Python fixtures, 354 selected desktop/mobile journeys with no skips/retries, eleven server-function types, build/isolation, zero production audit findings and 72 migrations/42 database suites**. PR #98 accepts the frozen entry points/objective client, #99 the bound refund/revocation mechanism and #100 current-account checkout. Actual local SDK/provider fixtures are explicitly fictional and do not prove the real merchant journey or hosted promotion.
 
-The current release-profile candidate passes **322 JavaScript tests, 354 zero-retry desktop/mobile journeys and 72 migrations plus the companion profile/42 database suites**, with the same Python/type/build/audit gates. Actual isolated Auth/PostgREST/Edge/Storage and SDK desktop/mobile checks pass current-hash releases, exact Part A delivery, concurrent starts, post-lock source withdrawal, private figures, results, operator API closure and the expiring controlled Test path. Exact-head PR/main acceptance remains required before this candidate counts as delivered. Read [MVP_DEPLOYMENT.md](MVP_DEPLOYMENT.md), [CHECKOUT_ACCEPTANCE.md](CHECKOUT_ACCEPTANCE.md) and [REFUND_RECONCILIATION.md](REFUND_RECONCILIATION.md).
+The current checkout-recovery/operator-readiness candidate passes **342 JavaScript tests, 358 zero-retry desktop/mobile journeys and 72 migrations plus the companion profile/44 database suites**, with the same Python/type/build/audit gates. Actual Auth/PostgREST and exact-handler/SDK proof covers lost provider/database replies, twelve concurrent orders, immutable receipt binding, service health/sweeps, desktop/mobile explicit recovery, signed fictional local Edge capture and the real admin pending-question counter. The merchant transport/widget and Google metadata are fictional. Exact-head PR/main acceptance remains required. Read CHECKOUT_RECOVERY.md and MVP_DEPLOYMENT.md.
+
+The operator/address/support/GST inputs are supplied in the owner's certificate and inquiry@designexam.com. Source contact/privacy/terms now identify DEXAM and the proprietor/business address; personal contacts, PAN and banking data remain private. Do not repeat the facts question. Existing final refund/younger-student/purchase-policy gates remain unapproved until application review. The private first-paper rendering is complete; no hosted paper is published by preparing it.
 
 The owner has resolved bank use: use all and only records whose `holds` is an explicitly empty list. The owner describes them as adapted student recollections. Preserve raw provenance/licence labels and record the owner's use/provenance statement; do not rewrite the source or claim independent verification. This resolves the earlier question about the 2,244 official-unlicensed / 48 dexam-original / 290 owner-provided labels. Do not repeat it. It does not itself publish a paper or enable payments.
 
@@ -63,7 +71,7 @@ The separate optional drawing/inspector checkpoint at `d582a80` remains unmerged
 ## Owner reviews/actions still required
 
 - Review the concrete first UCEED Part A rendering/manifest before real release. The owner bank-use/provenance decision is already recorded; do not request it again.
-- Approve operator/contact/support details, refund and cancellation handling, tax/invoice treatment, privacy/retention and younger-student policy.
+- Review the complete final customer notices, refund/cancellation, tax/invoice treatment, privacy/retention and younger-student policy. Operator/address/support/GST facts are already supplied and must not be requested again.
 - Enter replacement Razorpay Test credentials and webhook secret privately; complete OTP/KYC/provider actions if the merchant requires them.
 - Resolve the already pending deployment-target decision and approve the final production-impact switch after the concrete acceptance packet is ready.
 
