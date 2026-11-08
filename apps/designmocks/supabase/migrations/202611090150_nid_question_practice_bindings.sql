@@ -174,6 +174,72 @@ revoke all on function dm_private.nid_source_version(dm_private.bank_questions),
  dm_private.nid_answer_key(text,text,jsonb),dm_private.nid_practice_runtime(dm_private.bank_questions,jsonb),
  dm_private.invalidate_nid_blueprint_bindings(),dm_private.guard_nid_bank_source()from public,anon,authenticated,service_role;
 
+-- Authorize after the operation's blocking fences. The membership row lock
+-- then serializes a final decision against revocation until this transaction ends.
+create function dm_private.require_nid_admin()returns void
+language plpgsql set search_path=pg_catalog,dm_private as $$
+begin
+ perform 1 from dm_private.admins where user_id=auth.uid()for key share;
+ if not found then raise exception'Admin access required'using errcode='42501';end if;
+end$$;
+revoke all on function dm_private.require_nid_admin()from public,anon,authenticated,service_role;
+
+create or replace function public.admin_save_nid_practice_blueprint(p_id uuid,p_expected_revision integer,p_payload jsonb,p_request_id uuid)returns jsonb
+language plpgsql security definer set search_path=pg_catalog,public,dm_private as $$
+declare b dm_private.nid_practice_blueprints;r dm_private.nid_practice_blueprint_requests;sha text;request_sha text;next_revision integer;result jsonb;
+begin
+ if not public.is_dmocks_admin()then raise exception'Admin access required'using errcode='42501';end if;
+ if p_id is null or p_request_id is null or p_expected_revision is null or p_expected_revision not between 0 and 1000000 or not dm_private.nid_practice_payload_valid(p_payload)
+  then raise exception'Invalid authored practice blueprint'using errcode='22023';end if;
+ sha:=encode(sha256(convert_to(p_payload::text,'UTF8')),'hex');
+ request_sha:=encode(sha256(convert_to(jsonb_build_object('operation','save','id',p_id,'expectedRevision',p_expected_revision,'payload',p_payload)::text,'UTF8')),'hex');
+ perform pg_advisory_xact_lock(hashtextextended(p_request_id::text,149));
+ select *into r from dm_private.nid_practice_blueprint_requests where request_id=p_request_id;
+ if r.request_id is not null then
+  perform dm_private.require_nid_admin();
+  if r.actor_id<>auth.uid()or r.request_sha256<>request_sha then raise exception'Blueprint request conflicts with an earlier request'using errcode='40001';end if;
+  return r.result;
+ end if;
+ perform pg_advisory_xact_lock(hashtextextended(p_id::text,150));
+ select *into b from dm_private.nid_practice_blueprints where id=p_id for update;
+ if coalesce(b.current_revision,0)<>p_expected_revision then raise exception'Blueprint changed. Open the current revision before saving.'using errcode='40001';end if;
+ next_revision:=p_expected_revision+1;
+ if b.id is null then insert into dm_private.nid_practice_blueprints(id,current_revision,created_by)values(p_id,next_revision,auth.uid());
+ else update dm_private.nid_practice_blueprints set current_revision=next_revision where id=p_id;end if;
+ perform dm_private.require_nid_admin();
+ insert into dm_private.nid_practice_blueprint_versions(blueprint_id,revision,payload,content_sha256,created_by)values(p_id,next_revision,p_payload,sha,auth.uid());
+ result:=jsonb_build_object('id',p_id,'revision',next_revision,'sha256',sha,'status','draft');
+ insert into dm_private.nid_practice_blueprint_requests(request_id,actor_id,blueprint_id,operation,request_sha256,result)values(p_request_id,auth.uid(),p_id,'save',request_sha,result);
+ return result;
+end$$;
+
+create or replace function public.admin_review_nid_practice_blueprint(p_id uuid,p_expected_revision integer,p_expected_sha256 text,p_decision text,p_note text,p_request_id uuid)returns jsonb
+language plpgsql security definer set search_path=pg_catalog,public,dm_private as $$
+declare b dm_private.nid_practice_blueprints;v dm_private.nid_practice_blueprint_versions;r dm_private.nid_practice_blueprint_requests;request_sha text;result jsonb;
+begin
+ if not public.is_dmocks_admin()then raise exception'Admin access required'using errcode='42501';end if;
+ if p_id is null or p_request_id is null or p_expected_revision is null or p_expected_sha256 is null or p_expected_sha256!~'^[a-f0-9]{64}$'
+  or p_decision is null or p_decision not in('reviewed','rejected')or char_length(btrim(coalesce(p_note,'')))not between 20 and 2000 then raise exception'Exact revision and a review note are required'using errcode='22023';end if;
+ request_sha:=encode(sha256(convert_to(jsonb_build_object('operation','review','id',p_id,'revision',p_expected_revision,'sha256',p_expected_sha256,'decision',p_decision,'note',btrim(p_note))::text,'UTF8')),'hex');
+ perform pg_advisory_xact_lock(hashtextextended(p_request_id::text,149));
+ select *into r from dm_private.nid_practice_blueprint_requests where request_id=p_request_id;
+ if r.request_id is not null then
+  perform dm_private.require_nid_admin();
+  if r.actor_id<>auth.uid()or r.request_sha256<>request_sha then raise exception'Blueprint request conflicts with an earlier request'using errcode='40001';end if;
+  return r.result;
+ end if;
+ perform pg_advisory_xact_lock(hashtextextended(p_id::text,150));
+ select *into b from dm_private.nid_practice_blueprints where id=p_id for update;
+ select *into v from dm_private.nid_practice_blueprint_versions where blueprint_id=p_id and revision=p_expected_revision for update;
+ perform dm_private.require_nid_admin();
+ if b.id is null or b.current_revision<>p_expected_revision or v.content_sha256 is distinct from p_expected_sha256 or v.status<>'draft'
+  then raise exception'Blueprint changed. Open the current revision before reviewing.'using errcode='40001';end if;
+ if not dm_private.nid_practice_payload_valid(v.payload)then raise exception'Invalid authored practice blueprint'using errcode='22023';end if;
+ update dm_private.nid_practice_blueprint_versions set status=p_decision,review_note=btrim(p_note),reviewed_by=auth.uid(),reviewed_at=clock_timestamp()where blueprint_id=p_id and revision=p_expected_revision;
+ result:=jsonb_build_object('id',p_id,'revision',p_expected_revision,'sha256',p_expected_sha256,'status',p_decision);
+ insert into dm_private.nid_practice_blueprint_requests(request_id,actor_id,blueprint_id,operation,request_sha256,result)values(p_request_id,auth.uid(),p_id,'review',request_sha,result);
+ return result;
+end$$;
 create function public.admin_bind_nid_question(p_external_key text,p_expected_version text,p_blueprint_id uuid,p_revision integer,p_blueprint_sha256 text,p_section_ordinal integer,p_note text,p_request_id uuid)returns jsonb
 language plpgsql security definer set search_path=pg_catalog,public,dm_private as $$
 declare q dm_private.bank_questions;b dm_private.nid_practice_blueprints;v dm_private.nid_practice_blueprint_versions;
@@ -188,6 +254,7 @@ begin
  perform pg_advisory_xact_lock(hashtextextended(p_request_id::text,152));
  select *into old_request from dm_private.nid_question_binding_requests where request_id=p_request_id;
  if old_request.request_id is not null then
+  perform dm_private.require_nid_admin();
   if old_request.actor_id<>auth.uid()or old_request.request_sha256<>request_sha then raise exception'Practice binding request conflicts with an earlier request'using errcode='40001';end if;
   return old_request.result;
  end if;
@@ -198,6 +265,7 @@ begin
   then raise exception'Practice blueprint changed or is not reviewed'using errcode='40001';end if;
  perform pg_advisory_xact_lock(hashtextextended(p_external_key,151));
  select *into q from dm_private.bank_questions where external_key=p_external_key for update;
+ perform dm_private.require_nid_admin();
  if q.external_key is null or dm_private.bank_review_version(q)is distinct from p_expected_version then raise exception'Question changed. Refresh the bank and review it again.'using errcode='40001';end if;
  binding:=jsonb_build_object('id',binding_id,'externalKey',q.external_key,'current',true,'sectionOrdinal',p_section_ordinal,
   'blueprint',jsonb_build_object('id',b.id,'revision',v.revision,'currentRevision',b.current_revision,'sha256',v.content_sha256,'status',v.status,'payload',v.payload));
@@ -316,7 +384,7 @@ create or replace function public.admin_review_bank_question(p_external_key text
 language plpgsql security definer set search_path=pg_catalog,dm_private as $$
 declare q dm_private.bank_questions;expected jsonb;
 begin
- if not public.is_dmocks_admin()then raise exception'Admin access required';end if;
+ if not public.is_dmocks_admin()then raise exception'Admin access required'using errcode='42501';end if;
  if p_approved and not p_rights_confirmed then raise exception'Rights confirmation is required';end if;
  if p_approved then
   select *into q from dm_private.bank_questions where external_key=p_external_key for update;
@@ -326,8 +394,9 @@ begin
   end if;
  end if;
  update dm_private.bank_questions set owner_approved=p_approved,rights_confirmed=(p_approved and p_rights_confirmed),review_note=nullif(trim(p_note),''),reviewed_by=auth.uid(),reviewed_at=now()
- where external_key=p_external_key and active and(not p_approved or runtime_payload is not null);
+ where external_key=p_external_key and active and(not p_approved or runtime_payload is not null)returning *into q;
  if not found then raise exception'Runtime-ready bank question not found';end if;
+ if q.exam='nid'then perform dm_private.require_nid_admin();end if;
  insert into dm_private.bank_question_reviews(external_key,reviewer_id,approved,rights_confirmed,note)values(p_external_key,auth.uid(),p_approved,(p_approved and p_rights_confirmed),nullif(trim(p_note),''));
 end$$;
 

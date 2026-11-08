@@ -19,6 +19,7 @@ select 'nid-binding-'||kind,repeat('a',64),'nid',case when kind in('drawing','wr
 from unnest(array['mcq','msq','nat','drawing','written'])kind;
 
 set local role anon;
+select pg_temp.bind_reject('select dm_private.require_nid_admin()','42501');
 select pg_temp.bind_reject('select public.admin_nid_question_binding(''nid-binding-mcq'')','42501');
 select pg_temp.bind_reject('select public.nid_practice_runtime_plan()','42501');
 reset role;
@@ -29,6 +30,7 @@ select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000002254'
 select pg_temp.bind_reject('select public.admin_nid_question_binding(''nid-binding-mcq'')','42501');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000002251',true);
 select pg_temp.bind_reject('select *from dm_private.nid_question_binding_heads','42501');
+select pg_temp.bind_reject('select dm_private.require_nid_admin()','42501');
 select pg_temp.bind_reject('select public.nid_practice_runtime_plan()','42501');
 select pg_temp.bind_reject('select public.upsert_nid_practice_runtime_batch(''[]'')','42501');
 select set_config('test.bind.saved',public.admin_save_nid_practice_blueprint('10000000-0000-4000-8000-000000002251',0,current_setting('test.bind.payload')::jsonb,'20000000-0000-4000-8000-000000002251')::text,true);
