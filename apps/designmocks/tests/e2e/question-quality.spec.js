@@ -155,7 +155,10 @@ test("a paused All India event preserves the existing runner, reporting and answ
   await expect(held.getByText("New starts are paused for question review. Existing attempts keep their original paper and clock.")).toBeVisible();
   await page.getByRole("link", { name: "Open attempt", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Fictional runner question 1", exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Report question", exact: true }).click();
+  const reportToggle = page.getByRole("button", { name: "Report question", exact: true });
+  await reportToggle.focus();
+  await reportToggle.press("Enter");
+  await expect(reportToggle).toHaveAttribute("aria-expanded", "true");
   await page.getByLabel("What is wrong?").selectOption("duplicate");
   await page.getByRole("button", { name: "Send report", exact: true }).click();
   await expect(page.getByRole("status").filter({ hasText: "New attempts are held for human review" })).toBeVisible();

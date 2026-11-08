@@ -2,6 +2,8 @@
 
 Owner instruction: keep working until the independent mock-test service is complete. Last reconciled: 8 November 2026. A checked item means verified completion, not merely code present. Never mark a provider integration complete on the basis of a login, quota error or unconfigured endpoint.
 
+Delivery checkpoint: accepted local source is PR #92 (`2b8e716f9f29f02a6580ff2041276e8b81382f03`), with 516 zero-retry journeys on both accepted PR/main workflows. Learn PR #93 is merged but unaccepted because its PR CI retried a mobile report toggle; its later 548-case main pass does not erase that record. The corrective slice enforces JSON-based no-failure/no-skip/no-retry acceptance and passes 260 JavaScript tests, 548 local journeys and all 71 migrations/37 suites. Require its own complete PR/main acceptance and matching trees before advancing the preview. See [verification](VERIFICATION.md).
+
 ## Completed foundation
 
 - [x] Separate DesignMocks source/application; approved Discovery styling and academy attribution/referral links.
