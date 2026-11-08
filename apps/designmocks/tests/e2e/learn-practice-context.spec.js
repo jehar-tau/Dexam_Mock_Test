@@ -231,6 +231,12 @@ for (const destination of ["context", "account", "navigation", "history"]) {
     await finished;
     await page.waitForLoadState("networkidle");
     await expect(page).toHaveURL(destination === "navigation" ? /\/$/ : destination === "context" ? /exam=uceed&topic=observation$/ : /exam=ceed&topic=observation$/);
+    if(destination === "history"){
+      // The old private scope stays closed between native history mutation and
+      // the router observing that navigation; complete that second phase now.
+      await expect(startButton(page)).toBeDisabled();
+      await page.evaluate(()=>dispatchEvent(new PopStateEvent("popstate",{state:history.state})));
+    }
     if (destination !== "navigation") await expect(startButton(page)).toBeEnabled();
     expect(starts(state)).toEqual([["start_topic_practice", { p_exam: "ceed", p_topic: "observation", p_count: 10, p_duration_seconds: 900 }]]);
     expect(state.calls.some(([name]) => ["read_attempt", "prepare_order", "save_answer_revision", "submit_attempt"].includes(name))).toBe(false);

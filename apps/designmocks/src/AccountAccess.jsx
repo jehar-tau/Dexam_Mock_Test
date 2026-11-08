@@ -8,10 +8,11 @@ import {createAccountServices}from'./account-services.js';
 const AccountServices=createContext(null);
 export const useAccountServices=()=>useContext(AccountServices);
 const overviewCopy={label:'Overview access',checking:'Checking Overview access…',unavailable:'Overview access could not be verified. Private history and paper starts were cleared.',denied:'Overview access ended. Private history and paper starts were cleared.',retry:'Check Overview access'};
+const catalogueCopy={label:'Mock access',checking:'Checking mock access…',unavailable:'Mock access could not be verified. Private choices and pending starts were cleared.',denied:'Mock access ended. Private choices and pending starts were cleared.',retry:'Check mock access'};
 const descriptions={reports:{label:'Report access',checking:'Checking report access…',unavailable:'Report access could not be verified. Private reports were cleared.',denied:'Your sign-in changed or ended. Private reports were cleared.',retry:'Check report access'},profile:{label:'Profile access',checking:'Checking profile access…',unavailable:'Profile access could not be verified. Private profile details were cleared.',denied:'Your sign-in changed or ended. Private profile details were cleared.',retry:'Check profile access'},privacy:{label:'Privacy access',checking:'Checking privacy access…',unavailable:'Privacy access could not be verified. Private requests were cleared.',denied:'Privacy access ended. Private requests were cleared.',retry:'Check privacy access'},learn:{label:'Learn access',checking:'Checking Learn access…',unavailable:'Learn access could not be verified. Private progress and open lessons were cleared.',denied:'Learn access ended. Private progress and open lessons were cleared.',retry:'Check Learn access'},community:{label:'Community access',checking:'Checking Community access…',unavailable:'Community access could not be verified. Private discussions, drafts and images were cleared.',denied:'Community access ended. Private discussions, drafts and images were cleared.',retry:'Check Community access'}};
 
 function AccessSession({actorId,headingRef,children,onRetry,kind}){
- const copy=kind==='overview'?overviewCopy:descriptions[kind];
+ const copy=kind==='overview'?overviewCopy:kind==='catalogue'?catalogueCopy:descriptions[kind];
  const [access,setAccess]=useState({status:'checking',hadAccess:false}),[scope,setScope]=useState(null);
  const privateRoot=useRef(null),recoverFocus=useRef(false);
  useLayoutEffect(()=>{

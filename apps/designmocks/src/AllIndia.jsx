@@ -1,8 +1,8 @@
 import React,{useEffect,useState} from "react";
-import {Link,useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {platform} from "./platform.js";
-import {useAuthState} from "./useAuth.js";
 import {PortalShell} from "./PortalShell.jsx";
+import {AssessmentCatalogue} from "./AssessmentCatalogue.jsx";
 
 async function rpc(name,args){const {data,error}=await platform.rpc(name,args);if(error)throw error;return data;}
 const when=(value)=>new Date(value).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
@@ -18,20 +18,20 @@ function eventDetails(event) {
   return `Rank ${rank}${cohortSize ? ` of ${cohortSize}` : ""} · ${score}/${total} marks`;
 }
 
-export function AllIndiaView({ events, onStart }) {
+function AllIndiaHeading({headingRef}){return<><span className="eyebrow">ALL INDIA MOCKS</span><h1 ref={headingRef} tabIndex={-1}>One paper. One <em>attempt.</em></h1><p>Every candidate receives the same frozen paper. The exam timer continues through disconnects, and ranks stay hidden until results are released.</p></>;}
+export function AllIndiaView({ events, onStart, heading=true, embedded=false, blocked=false }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
   const start = async (id) => {
+    if(busy||blocked)return;
     setBusy(id);
     setMessage("");
     try { await onStart(id); }
     catch (error) { setMessage(error.message); }
     finally { setBusy(""); }
   };
-  return <section className="section portal-module all-india">
-    <span className="eyebrow">ALL INDIA MOCKS</span>
-    <h1>One paper. One <em>attempt.</em></h1>
-    <p>Every candidate receives the same frozen paper. The exam timer continues through disconnects, and ranks stay hidden until results are released.</p>
+  return <section className={embedded?"catalogue-content":"section portal-module all-india"}>
+    {heading&&<AllIndiaHeading/>}
     <div className="all-india-list">
       {events.length ? events.map((event) => <article key={event.id}>
         <div>
@@ -44,7 +44,7 @@ export function AllIndiaView({ events, onStart }) {
         </div>
         {event.attemptId ? <Link className="button quiet" to={`/attempt/${event.attemptId}`}>
           {event.state === "released" ? "View attempt" : "Open attempt"}
-        </Link> : <button type="button" className="button" disabled={event.state !== "open" || Boolean(busy)}
+        </Link> : <button type="button" className="button" disabled={event.state !== "open" || Boolean(busy) || blocked}
           onClick={() => start(event.id)}>
           {busy === event.id ? "Opening…" : event.state === "open" ? "Start once" : "Unavailable"}
         </button>}
@@ -54,7 +54,7 @@ export function AllIndiaView({ events, onStart }) {
   </section>;
 }
 
-export function AllIndia(){const {session,loading}=useAuthState();const navigate=useNavigate();const [events,setEvents]=useState(null),[error,setError]=useState("");useEffect(()=>{if(session)rpc("all_india_event_catalog").then(setEvents).catch((e)=>setError(e.message));},[session]);if(loading)return <section className="wrap section"><p role="status">Checking your account…</p></section>;if(!session)return <section className="wrap section"><h1>Sign in for All India mocks<em>.</em></h1><Link className="button" to="/account">Student sign in</Link></section>;const start=async(id)=>navigate(`/attempt/${await rpc("start_all_india_attempt",{p_event_id:id})}`);return <PortalShell>{error?<section className="section portal-module"><p className="error">{error}</p></section>:events&&<AllIndiaView events={events} onStart={start}/>}</PortalShell>;}
+export function AllIndia(){return<AssessmentCatalogue kind="allIndia" Heading={AllIndiaHeading} View={AllIndiaView}/>;}
 
 export function AllIndiaHighlights({example=null}){const [events,setEvents]=useState(example);useEffect(()=>{if(example||!platform)return;rpc("public_all_india_top_ten").then(setEvents).catch(()=>setEvents([]));},[example]);if(!events?.length)return null;return <section className="wrap section all-india-highlights"><span className="eyebrow">ALL INDIA RESULTS</span><h2>See where practice <em>leads.</em></h2>{events.map((event)=><article key={event.eventId}><h3>{event.exam.toUpperCase()} · {event.title}</h3><ol>{event.topTen.map((result)=><li key={`${result.rank}-${result.alias}`}><b>#{result.rank}</b><span>{result.alias}</span><span>{result.score}/{result.total}</span></li>)}</ol></article>)}</section>;}
 
