@@ -55,18 +55,28 @@ test("invalid attachment counts, size and types create no Community text or uplo
     [[{name:"oversized.png",mimeType:"image/png",buffer:Buffer.alloc(5*1024*1024+1)}],"Use images no larger than 5 MB each."],
     [[{name:"unsupported.svg",mimeType:"image/svg+xml",buffer:Buffer.from("<svg/>")}],"An image could not be fully read."]]){
     await compose(page,attachments);await page.getByRole("button",{name:"Post to community",exact:true}).click();
-    await expect(page.getByRole("status")).toContainText(message);
+    await expect(page.getByRole("status").filter({hasText:message})).toContainText(message);
   }
   expect(state.postWrites).toBe(0);expect(state.uploads).toEqual([]);expect(state.unexpected).toEqual([]);
 });
 
 test("partial post images resume one saved discussion and preserve order and WebP orientation",async({page})=>{
-  const state=await fixture(page);state.failOrdinal=2;await compose(page,await files());
+  const state=await fixture(page);await expect(page.getByText("No discussions match these filters.",{exact:true})).toBeVisible();
+  let releaseFeed,heldFeed=0;const held=new Promise(resolve=>{releaseFeed=resolve;});
+  await page.route("https://dmocks-portal-fixture.supabase.co/rest/v1/rpc/community_feed",async route=>{
+    if(route.request().method()==="OPTIONS")return route.fulfill({headers,status:204});
+    const input=route.request().postDataJSON();state.calls.push(["community_feed",input]);
+    if(!heldFeed){heldFeed++;await held;}
+    await route.fulfill({headers,json:communityFeedFixture(state.posts,input)}).catch(()=>{});
+  });
+  state.failOrdinal=2;await compose(page,await files());
   await page.getByRole("button",{name:"Post to community",exact:true}).click();
   const pending=page.getByRole("region",{name:"Saved post images",exact:true});
   await expect(pending).toContainText("1 of 3 images confirmed");await expect(page.getByRole("button",{name:"Post to community",exact:true})).toBeDisabled();
-  await expect(page.getByRole("status")).toContainText("Another image is being checked");
-  state.failOrdinal=null;await pending.getByRole("button",{name:"Retry post images",exact:true}).click();
+  await expect.poll(()=>heldFeed).toBe(1);await expect(page.getByRole("status").filter({hasText:"Loading discussions…"})).toBeVisible();
+  await expect(page.getByRole("status").filter({hasText:"Another image is being checked"})).toContainText("Retry the remaining images shortly.");
+  releaseFeed();const retry=pending.getByRole("button",{name:"Retry post images",exact:true});await expect(retry).toBeEnabled();
+  state.failOrdinal=null;await retry.click();
   await expect(pending).toHaveCount(0);await expect(page.getByRole("img",{name:"Question attachment 3",exact:true})).toBeVisible();
   const image=await page.getByRole("img",{name:"Question attachment 3",exact:true}).boundingBox();expect(image.width/image.height).toBeCloseTo(4/6,2);
   expect(state.postWrites).toBe(1);expect(state.uploads.map(item=>item.ordinal)).toEqual([1,2,2,3]);expect(state.uploads.every(item=>item.id===postId)).toBe(true);
@@ -94,7 +104,7 @@ test("members can finish saved text without the unconfirmed attachments",async({
   await page.getByRole("button",{name:"Post to community",exact:true}).click();
   await page.getByRole("button",{name:"Finish post without remaining images",exact:true}).click();
   await expect(page.getByRole("region",{name:"Saved post images",exact:true})).toHaveCount(0);
-  await expect(page.getByRole("status")).toContainText("Remaining images were not uploaded.");expect(state.postWrites).toBe(1);
+  await expect(page.getByRole("status").filter({hasText:"Remaining images were not uploaded."})).toBeVisible();expect(state.postWrites).toBe(1);
   await expect(page.getByRole("button",{name:"Post to community",exact:true})).toBeEnabled();expect(state.unexpected).toEqual([]);
 });
 
