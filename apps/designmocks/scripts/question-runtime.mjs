@@ -44,7 +44,7 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  }
  if(question.type==='DESCRIPTIVE'){
   if(verified&&!rule.partB)issue('section-unmodelled','type');
-  if(!assets.length)issue('drawing-figure-missing','assets');
+  if(verified&&rule.partB&&!assets.length)issue('drawing-figure-missing','assets');
   if(issues.length)return blocked();
   return{issues,runtime:{prompt:question.prompt,options:[],kind:'drawing',marking:{correct:rule.partB.points,wrong:0,humanReview:true},media,points:rule.partB.points,negativePoints:0,topic:question.topic||'drawing',key:{kind:'drawing',sourceExternalKey:question.externalKey},explanation:'Human review against the published task rubric.',context:{version:rule.version,exam:rule.exam,cycle:rule.cycle,source:rule.source,part:'B',durationSeconds:rule.partB.durationSeconds}}};
  }
@@ -59,9 +59,10 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
   if(raw&&!key)issue('answer-notation','answer.raw');
  }else if(['MCQ','MSQ'].includes(question.type)){
   const source=Array.isArray(question.options)?question.options:[];
-  if(source.length!==4)issue('option-count','options');
-  const labelsValid=source.length===4&&source.every(o=>o&&typeof o.key==='string'&&o.key.trim())&&new Set(source.map(o=>o.key)).size===4;
-  if(source.length===4&&!labelsValid)issue('option-labels','options');
+  if(verified&&scheme&&source.length!==4)issue('option-count','options');
+  else if(source.length<2)issue('choice-options-missing','options');
+  const labelsValid=source.length>=2&&source.every(o=>o&&typeof o.key==='string'&&o.key.trim())&&new Set(source.map(o=>o.key)).size===source.length;
+  if(source.length>=2&&(source.some(o=>!o||typeof o.key!=='string'||!o.key.trim())||new Set(source.map(o=>o?.key)).size!==source.length))issue('option-labels','options');
   if(source.some(o=>o?.asset))issue('option-asset-unmapped','options');
   if(source.some(o=>o?.text!=null&&typeof o.text!=='string'))issue('option-text-invalid','options');
   else if(!assets.length&&source.some(o=>!o?.text?.trim()))issue('option-text-missing','options');

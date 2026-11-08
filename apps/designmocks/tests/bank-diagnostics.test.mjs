@@ -14,7 +14,7 @@ const inspect=q=>inspectRuntimeQuestion(q,{rule:RULES_2027[q.provenance.exam]});
 
 test('conversion diagnostics distinguish unverified context from incomplete source without guessing a key',()=>{
  const q=fixture({provenance:{exam:'nid'},options:[{key:'A',text:'One option'}],answer:{raw:'',status:'pending'}}),before=structuredClone(q);
- const result=inspect(q);assert.equal(result.runtime,null);assert.deepEqual(new Set(result.issues.map(i=>i.code)),new Set(['context-unverified','answer-pending','answer-missing','option-count']));assert.deepEqual(q,before);
+ const result=inspect(q);assert.equal(result.runtime,null);assert.deepEqual(new Set(result.issues.map(i=>i.code)),new Set(['context-unverified','answer-pending','answer-missing','choice-options-missing']));assert.deepEqual(q,before);
 });
 test('source, media and answer notation issues are independently actionable',()=>{
  const sha='a'.repeat(64),q=fixture({type:'MSQ',assets:[{sha256:sha,width:4,height:4}],options:['A','A','C','D'].map(key=>({key,text:key})),answer:{raw:'A or C',status:'verified'}});
@@ -26,7 +26,15 @@ test('exact decimals, verified NIFT contexts and human-reviewed drawings retain 
  const nat=fixture({type:'NAT',options:[],answer:{raw:'1.234567890123456789',status:'verified'}}),nift=fixture({provenance:{exam:'nift'}});
  for(const q of[nat,nift]){const result=inspect(q);assert.deepEqual(result.issues,[]);assert.deepEqual(result.runtime,runtimeQuestion(q,{rule:RULES_2027[q.provenance.exam]}));}
  assert.deepEqual(inspect(nat).runtime.key.accepted,[{exact:'1.234567890123456789'}]);assert.deepEqual(inspect(nift).runtime.marking,{correct:1,wrong:-0.25});
- const drawing=fixture({type:'DESCRIPTIVE',options:[],answer:null,provenance:{exam:'nift'}});assert.deepEqual(new Set(inspect(drawing).issues.map(i=>i.code)),new Set(['section-unmodelled','drawing-figure-missing']));
+ const drawing=fixture({type:'DESCRIPTIVE',options:[],answer:null,provenance:{exam:'nift'}});assert.deepEqual(inspect(drawing).issues.map(i=>i.code),['section-unmodelled']);
+});
+test('unverified NID contexts never inherit another exam four-choice or drawing-figure requirement',()=>{
+ const objective=fixture({provenance:{exam:'nid'},options:fixture().options.slice(0,3)}),drawing=fixture({provenance:{exam:'nid'},type:'DESCRIPTIVE',options:[],answer:null});
+ for(const q of[objective,drawing])assert.deepEqual(inspect(q).issues.map(i=>i.code),['context-unverified']);
+ assert.deepEqual(new Set(inspect({...objective,answer:{raw:'Z',status:'verified'}}).issues.map(i=>i.code)),new Set(['context-unverified','answer-notation']));
+ assert.deepEqual(new Set(inspect({...drawing,visualDependency:true}).issues.map(i=>i.code)),new Set(['context-unverified','visual-assets-missing']));
+ assert.ok(inspect(fixture({options:fixture().options.slice(0,3)})).issues.some(i=>i.code==='option-count'));
+ assert.ok(inspect(fixture({type:'DESCRIPTIVE',answer:null,options:[]})).issues.some(i=>i.code==='drawing-figure-missing'));
 });
 test('conversion reports separate MVP scope, other supported material and correction work without private content',()=>{
  const manifest=buildManifest({schemaVersion:1,questions:[fixture(),fixture({externalKey:'nift-fixture',provenance:{exam:'nift'}}),fixture({externalKey:'nid-fixture',provenance:{exam:'nid'},answer:null})]},'a'.repeat(40));

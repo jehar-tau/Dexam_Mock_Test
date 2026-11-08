@@ -24,6 +24,7 @@ export const CORRECTION_ACTIONS=Object.freeze({
  'answer-missing':'Save a reviewed answer key in the canonical source.',
  'answer-notation':'Review and encode the full answer in supported exact notation without inventing a tolerance.',
  'option-count':'Restore exactly four options in the canonical source.',
+ 'choice-options-missing':'Restore at least two complete labelled choices before reviewing the exam-specific option structure.',
  'option-labels':'Correct missing or duplicate option labels without guessing their answer mapping.',
  'option-asset-unmapped':'Resolve individual option images into verified delivery media.',
  'option-text-invalid':'Correct the option text schema.',
