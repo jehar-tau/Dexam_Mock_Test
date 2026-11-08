@@ -2,7 +2,7 @@ import React,{createContext,useContext,useLayoutEffect,useMemo,useRef,useState}f
 import {Link}from'react-router-dom';
 import {platform}from'./platform.js';
 import {createAdminAccessScope,isAdminAccessFailure}from'./admin-access.js';
-import {verifiedAccountToken}from'./account-identity.js';
+import {runForVerifiedAccount,verifiedAccountToken}from'./account-identity.js';
 
 const AccountServices=createContext(null);
 export const useAccountServices=()=>useContext(AccountServices);
@@ -26,9 +26,7 @@ function AccessSession({actorId,headingRef,children,onRetry,kind}){
   return()=>{value.dispose();data.subscription.unsubscribe();clearInterval(timer);window.removeEventListener('focus',visible);window.removeEventListener('pageshow',restored);document.removeEventListener('visibilitychange',visible);};
  },[actorId]);
  useLayoutEffect(()=>{if(['denied','unavailable'].includes(access.status)&&recoverFocus.current){recoverFocus.current=false;headingRef.current?.focus();}},[access.status,headingRef]);
- const services=useMemo(()=>scope?{isCurrent:scope.isCurrent,assertCurrent:scope.assertCurrent,rpc:(name,args,signal)=>scope.run(async active=>{
-  let token;try{token=await verifiedAccountToken(platform.auth,actorId,active);}catch(error){if(!active.aborted&&scope.isCurrent())scope.invalidate();throw error;}
-  if(!token){scope.invalidate();throw new Error('Account identity changed.');}
+ const services=useMemo(()=>scope?{isCurrent:scope.isCurrent,assertCurrent:scope.assertCurrent,rpc:(name,args,signal)=>runForVerifiedAccount(scope,platform.auth,actorId,async(token,active)=>{
   active.throwIfAborted();const{data,error,status}=await platform.rpc(name,args).setHeader('Authorization','Bearer '+token).abortSignal(active);active.throwIfAborted();
   if(error){const failure=Object.assign(new Error(error.message),error,{status});if(isAdminAccessFailure(failure))scope.invalidate();throw failure;}return data;
  },signal)}:null,[scope,actorId]);
