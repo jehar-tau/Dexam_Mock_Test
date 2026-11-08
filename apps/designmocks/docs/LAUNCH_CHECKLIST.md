@@ -23,6 +23,9 @@ Scope frozen by the owner on **8 November 2026**. [PRODUCT_EXECUTION_PLAN.md](PR
 - [ ] Complete one real Razorpay test-mode customer journey on dmocks.com, including Google sign-in, purchase/webhook, one annual pass, the exact paper, reconnect, submission/result, receipt/support and refund/revocation acceptance.
 - [ ] Record the explicit final go-live decision; enable public registration, the verified catalogue and sales through their separate switches. A client callback never grants access.
 
+- [x] Extract supplied operator/proprietor/address and support email for source notices; exclude the private certificate, PAN, banking and personal contacts. Final policy gates remain separate.
+- [ ] Accept receipt recovery, corrected service health and profile-first minimal operations after exact-head PR/main checks (candidate: 342 units/358 strict journeys/44 database suites). See CHECKOUT_RECOVERY.md.
+
 ## Post-launch — no launch blocker
 
 NID/unsupported programmes; All India events/rankings/top-ten; Community; Learn/theory; extra topic-practice products; AI drafting/intake/inference; AI drawing advice; advanced drawing/teacher operations; scanner/resumable transfers; 150-session capacity work; further portal/analytics expansion. Keep these disabled unless the chosen first paper strictly requires one. Do not count this backlog in the remaining MVP percentage.

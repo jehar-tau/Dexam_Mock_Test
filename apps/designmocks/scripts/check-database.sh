@@ -60,4 +60,6 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/media-invariants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/tests/controlled_signup.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-release-profile.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-test-checkout.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/order-recovery.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-service-operations.sql
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'

@@ -20,18 +20,25 @@ export function validateOperationsConfiguration({url,key,allowOrigin,environment
 
 async function rpc(origin,key,name,body,fetchImpl){const response=await fetchImpl(`${origin}/rest/v1/rpc/${name}`,{method:"POST",headers:{apikey:key,authorization:`Bearer ${key}`,"content-type":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout(15000)}),text=await response.text();if(!response.ok)throw new Error(`${name} failed (${response.status})`);return text?JSON.parse(text):null}
 
+const queueKeys=Object.freeze(['staleAttempts','expiredAttempts','stalePendingOrders','paymentReviews','openBugs','pendingQuestionReports']);
+function mvpHealth(value){
+  if(!value||value.scope!=="paid-mvp-v1"||!["healthy","attention","degraded"].includes(value.status)||
+    typeof value.checkedAt!=="string"||!/^\d{4}-\d\d-\d\dT/.test(value.checkedAt)||!Number.isFinite(Date.parse(value.checkedAt))||
+    queueKeys.some(key=>!Number.isSafeInteger(value[key])||value[key]<0))throw new Error("MVP operations profile or aggregate response is not verified");
+  return{scope:value.scope,checkedAt:value.checkedAt,status:value.status,queues:Object.fromEntries(queueKeys.map(key=>[key,value[key]]))};
+}
 export async function runOperationsSweep(config,{fetchImpl=fetch,maxBatches=10,batchSize=500,now=new Date()}={}){
   const validated=validateOperationsConfiguration(config);
   if(!Number.isInteger(maxBatches)||maxBatches<1||maxBatches>20||!Number.isInteger(batchSize)||batchSize<1||batchSize>500)throw new Error("Invalid bounded sweep limits");
-  let finalized=0,batches=0;
-  while(batches<maxBatches){const count=Number(await rpc(validated.origin,config.key,"finalize_expired_attempts",{p_limit:batchSize},fetchImpl));if(!Number.isInteger(count)||count<0||count>batchSize)throw new Error("Invalid finalization count");finalized+=count;batches+=1;if(count<batchSize)break}
-  const recovery=await rpc(validated.origin,config.key,"recover_expired_question_jobs",{p_limit:batchSize},fetchImpl);
-  const recoveredQuestionJobs={intake:recovery?.intake,aiDrafts:recovery?.aiDrafts};
-  if(Object.values(recoveredQuestionJobs).some(count=>!Number.isInteger(count)||count<0||count>batchSize))throw new Error("Invalid question recovery count");
-  const pruned=Number(await rpc(validated.origin,config.key,"prune_attempt_rate_buckets",{p_before:new Date(now.getTime()-2*86400000).toISOString()},fetchImpl));
-  if(!Number.isInteger(pruned)||pruned<0)throw new Error("Invalid prune count");
-  const health=await rpc(validated.origin,config.key,"admin_operational_health",{},fetchImpl);
-  return{environment:validated.environment,checkedAt:health.checkedAt,status:health.status,finalizedAttempts:finalized,finalizationBatches:batches,recoveredQuestionJobs,prunedRateBuckets:pruned,queues:Object.fromEntries(Object.entries(health).filter(([key,value])=>key!=="checkedAt"&&key!=="status"&&typeof value==="number"))};
+  if(!(now instanceof Date)||!Number.isFinite(now.getTime()))throw new Error("Invalid operations clock");
+  // Verify the deployed MVP profile and service authorization before any write.
+  mvpHealth(await rpc(validated.origin,config.key,"admin_operational_health",{},fetchImpl));
+  let finalized=0,batches=0,count=0;
+  while(batches<maxBatches){count=await rpc(validated.origin,config.key,"finalize_expired_attempts",{p_limit:batchSize},fetchImpl);if(!Number.isInteger(count)||count<0||count>batchSize)throw new Error("Invalid finalization count");finalized+=count;batches+=1;if(count<batchSize)break}
+  const pruned=await rpc(validated.origin,config.key,"prune_attempt_rate_buckets",{p_before:new Date(now.getTime()-2*86400000).toISOString()},fetchImpl);
+  if(!Number.isSafeInteger(pruned)||pruned<0)throw new Error("Invalid prune count");
+  const health=mvpHealth(await rpc(validated.origin,config.key,"admin_operational_health",{},fetchImpl));
+  return{environment:validated.environment,...health,finalizedAttempts:finalized,finalizationBatches:batches,finalizationLimitReached:batches===maxBatches&&count===batchSize,prunedRateBuckets:pruned};
 }
 
 async function main(){const config={url:process.env.DMOCKS_SUPABASE_URL,key:process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,allowOrigin:process.env.DMOCKS_OPERATIONS_ALLOW_ORIGIN,environment:process.env.DMOCKS_OPERATIONS_ENVIRONMENT,productionAck:process.env.DMOCKS_OPERATIONS_PRODUCTION_ACK};const result=await runOperationsSweep(config);process.stdout.write(`${JSON.stringify(result)}\n`);if(result.status==="degraded")process.exitCode=2}

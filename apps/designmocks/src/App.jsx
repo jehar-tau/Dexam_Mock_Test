@@ -1,3 +1,4 @@
+import { Contact, OperatorDetails } from './Contact.jsx';
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Link,
@@ -286,6 +287,7 @@ function Layout({ children }) {
           <div>
             <Link to="/privacy">Privacy</Link>
             <Link to="/terms">Terms & access</Link>
+            <Link to="/contact">Contact</Link>
           </div>
         </div>
       </footer>
@@ -1491,9 +1493,10 @@ function Policies({ type }) {
       </h1>
       <div className="notice">
         Launch notice: the production student service and live payments are not
-        active in this preview. Final operating/contact details and the
-        purchase/refund policy must be published before paid sales open.
+        active in this preview. The final purchase/refund policy and younger-student requirements must
+        be published before registration and paid sales open.
       </div>
+      <OperatorDetails />
       {privacy ? (
         <>
           <h2>The sample</h2>
@@ -1528,7 +1531,7 @@ function Policies({ type }) {
         <>
           <h2>The annual pass</h2>
           <p>
-            The approved price is ₹1,193 for one year of catalogue access. It is
+            The approved price is ₹1,193 for 12 calendar months of access to the explicitly released catalogue. It is
             one payment with no automatic renewal. The access period begins
             after the server verifies a successful payment. A checkout success
             screen alone does not grant access.
@@ -1541,8 +1544,7 @@ function Policies({ type }) {
           </p>
           <h2>Before paid launch</h2>
           <p>
-            The final scope of published papers, content permissions, operator
-            details, refund handling and applicable purchase terms will be
+            The final scope of published papers, refund handling and applicable purchase terms will be
             confirmed before checkout opens. No refund promise or subscription
             policy should be inferred from this preview.
           </p>
@@ -1695,6 +1697,7 @@ export default function App() {
         <Route path="/sample" element={<Sample />} />
         <Route path="/sample/result" element={<SampleResult />} />
         <Route path="/privacy" element={<Policies type="privacy" />} />
+          <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Policies type="terms" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

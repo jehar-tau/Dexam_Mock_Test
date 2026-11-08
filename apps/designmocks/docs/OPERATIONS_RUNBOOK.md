@@ -8,12 +8,12 @@ Apply the reviewed companion profile last, as described in MVP_DEPLOYMENT.md. It
 
 ## Health and alerting
 
-Poll the service-only `admin_operational_health()` RPC every minute and record only its aggregate response. The same aggregate appears in the authenticated admin portal. Alert thresholds:
+Read `admin_operational_health()` with a service identity or verified administrator. The corrected MVP profile preserves service access and counts the actual `pending` question-review status. The operations runner verifies this exact `paid-mvp-v1` aggregate before any write and records only its six allowlisted counters. The same aggregate appears in the authenticated admin portal. Alert thresholds:
 
 | Severity | Trigger | First response |
 | --- | --- | --- |
 | P1 | unverified entitlement, cross-account access, public private-media URL, database unavailable | close registration and sales; preserve logs; page owner and operator |
-| P2 | stale attempts > 0 for two checks, failed intake/AI jobs > 0, webhook verification failures, API p95 > 500 ms for 15 minutes | stop the affected worker/release; run the bounded recovery step; investigate |
+| P2 | stale attempts > 0 for two checks, payment reviews/stale orders, webhook verification failures, API p95 > 500 ms for 15 minutes | stop the affected worker/release; run the bounded recovery step; investigate |
 | P3 | support/moderation/review queues above the staffing threshold | assign the queue; do not change student results automatically |
 
 Run `finalize_expired_attempts(500)` with the service identity once per minute until it returns zero. A browser or authenticated student must never receive the service credential. A nonzero stale-attempt count after two sweeps is P2.
@@ -38,9 +38,11 @@ Run `prune_attempt_rate_buckets()` with the service identity once daily. It reta
 
 ## Payment reconciliation
 
-Payments stay closed until the owner resumes Razorpay work. When enabled, reconcile captured provider payments to exactly one paid order and one entitlement. A browser callback is never evidence of payment. Investigate stale pending orders without granting access; refund/revocation actions require the approved commercial policy and an auditable operator action.
+Payment engineering is resumed. Sales stay closed until the approved real Test journey and final release decision. When enabled, reconcile captured provider payments to exactly one paid order and one entitlement. A browser callback is never evidence of payment. Investigate stale pending orders without granting access; refund/revocation actions require the approved commercial policy and an auditable operator action.
 
 ## Scheduled recovery and retention
+
+The default MVP runner verifies service health first, drains bounded expired attempts, prunes old rate buckets and rereads health. It reports whether its batch budget was reached. It performs no AI/intake recovery or deferred product mutation; old full-portal scheduling advice below is historical. An old/unverified profile or malformed count exits before further work. See CHECKOUT_RECOVERY.md.
 
 Run `npm run operations:sweep` from a private scheduler every minute with `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_OPERATIONS_ALLOW_ORIGIN` (the exact Supabase origin) and `DMOCKS_OPERATIONS_ENVIRONMENT=staging|production`. The service credential must remain in the scheduler secret store. Production additionally requires `DMOCKS_OPERATIONS_PRODUCTION_ACK=FINALIZE_EXPIRED_ATTEMPTS_ON_<exact origin>`; the runner refuses a production host in staging mode.
 
@@ -61,7 +63,7 @@ Under **Reported questions**, five unique students hold a delivered question ver
 
 For a correction, review the source change on canonical `main`, import it, then use **Release corrected source for review**. This keeps the old version held, returns the current source to runtime materialization and separate content/rights review, and preserves unrelated retirements. A source omitted from the latest completed import stays inactive. An affected All India paper pauses new admissions as a whole; do not replace its questions or change existing scores as a report-resolution shortcut. Promote migration `202611060133_question_quality_holds.sql`, `reported-question-media` and the matching frontend together, then repeat the synthetic admission/race and reviewer-authorization checks on approved staging.
 
-### Drawing review
+### Deferred drawing review (post-launch reference)
 
 An administrator grants access under **Admin review → Drawing reviewer access** using an existing DMocks Auth account ID and a reason. The reviewer opens **Review drawings** from Account and claims an anonymous submission from **Available drawings** after uploads close. Under **My reviews**, the reviewer can return an ungraded claim or open the private pages, enter criterion marks, save feedback and finalize the review.
 

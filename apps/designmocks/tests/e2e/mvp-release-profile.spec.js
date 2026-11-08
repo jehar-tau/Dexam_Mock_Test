@@ -1,4 +1,5 @@
 import{test,expect}from'@playwright/test';
+import{fileURLToPath}from'node:url';
 import{stubPortalProvider,seedPortalSession,emptyAdminRead}from'./portal-fixture.js';
 test.use({baseURL:'http://127.0.0.1:4799'});
 const actor={id:'00000000-0000-4000-8000-000000001971',email:'fictional-mvp-operator@example.invalid'},core=['admin_bug_reports','admin_reported_questions','admin_operational_health','admin_privacy_requests','admin_launch_readiness','admin_search_bank_questions'];
@@ -23,4 +24,16 @@ test('a recorded owner evidence decision does not publish a paper or enable sale
 });
 test('the paid offer identifies adapted student-recalled practice without claiming official papers',async({page})=>{
  await page.goto('/plans');await expect(page.locator('.annual-card').getByRole('listitem').filter({hasText:'Adapted practice questions based on student recollections'})).toBeVisible();await expect(page.locator('.annual-card').getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();await expect(page.getByText('Paid access is not open in this preview.',{exact:false})).toBeVisible();await expect(page.getByRole('checkbox')).toHaveCount(0);
+});
+test('the public contact page identifies the supplied operator and support email without publishing the private certificate',async({page})=>{
+ const provider=await stubPortalProvider(page,()=>undefined);await page.goto('/');await page.getByRole('contentinfo').getByRole('link',{name:'Contact',exact:true}).press('Enter');await expect(page.getByRole('heading',{name:'Contact DMocks.',exact:true})).toBeVisible();
+ const details=page.getByRole('region',{name:'Operator and contact',exact:true});for(const text of['DEXAM','Manisha Balasaheb Shinde','Office No. 101, Pallazo Condominium','Hadapsar Road, Hadapsar, Haveli','Pune, Maharashtra 411028, India','UDYAM-MH-26-1153416'])await expect(details).toContainText(text);await expect(details.getByRole('link',{name:'inquiry@designexam.com',exact:true})).toHaveAttribute('href','mailto:inquiry@designexam.com');await expect(details).toContainText('GSTIN: Not recorded in the supplied registration.');await expect(page.getByText(/\bPAN\b|IFSC|Bank Account Number|Gender|Social Category/)).toHaveCount(0);await expect(page.getByRole('link',{name:/certificate/i})).toHaveCount(0);expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
+});
+test('operator details remain consistent across policy pages and accessible in both themes at 320px',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});const provider=await stubPortalProvider(page,()=>undefined);await page.setViewportSize({width:320,height:900});
+ for(const path of['/contact','/privacy','/terms']){
+  await page.goto(path);const details=page.getByRole('region',{name:'Operator and contact',exact:true});await expect(details).toContainText('DEXAM');const email=details.getByRole('link',{name:'inquiry@designexam.com',exact:true});await email.focus();await expect(email).toBeFocused();await expect(email).toHaveAttribute('href','mailto:inquiry@designexam.com');if(path==='/terms')await expect(page.locator('.policy')).toContainText('12 calendar months');
+  await page.addScriptTag({path:fileURLToPath(new URL('../../node_modules/axe-core/axe.min.js',import.meta.url))});for(const dark of[false,true]){const toggle=page.getByRole('switch',{name:'Dark mode',exact:true});if(await toggle.getAttribute('aria-checked')!==String(dark))await toggle.click();await expect(page.locator('html')).toHaveAttribute('data-theme',dark?'dark':'light');expect(await page.evaluate(async()=>(await window.axe.run('.policy',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}})).violations.map(v=>v.id))).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=320)).toBe(true);}
+ }
+ expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
 });
