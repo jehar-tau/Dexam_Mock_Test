@@ -108,7 +108,11 @@ test("missing private figures block restoration but permit an audited retirement
   await queue.getByRole("button", { name: "Review reported version quality-fixture", exact: true }).click();
   const review = queue.getByRole("region", { name: "Reported version review", exact: true });
   await review.getByLabel("Question review reason").fill("The required private figure is incomplete.");
-  await review.getByRole("checkbox").check();
+  const acknowledgement = review.getByRole("checkbox");
+  await acknowledgement.focus();
+  await expect(acknowledgement).toBeFocused();
+  await acknowledgement.press("Space");
+  await expect(acknowledgement).toBeChecked();
   await review.getByRole("button", { name: "Open reported figures" }).click();
   await expect(review.getByRole("alert")).toHaveText("The question figures are incomplete. Refresh the figures before approving.");
   await expect(review.getByRole("button", { name: "Restore this version", exact: true })).toBeDisabled();
