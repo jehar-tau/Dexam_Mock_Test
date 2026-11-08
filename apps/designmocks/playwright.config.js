@@ -6,7 +6,7 @@ export default defineConfig({
   fullyParallel: true,
   workers: process.env.CI ? 3 : undefined,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? "github" : "list",
+  reporter: [[process.env.CI ? "github" : "list"], ["json", {outputFile: "test-results/browser-results.json"}]],
   use: { baseURL: "http://127.0.0.1:4399", trace: "retain-on-failure" },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },

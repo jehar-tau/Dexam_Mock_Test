@@ -1,0 +1,11 @@
+import assert from'node:assert/strict';
+import test from'node:test';
+import{requireCompleteBrowserPass}from'../scripts/check-browser-results.mjs';
+const outcome=()=>({expectedStatus:'passed',status:'expected',results:[{status:'passed',retry:0}]});
+const report=()=>({stats:{expected:2,unexpected:0,flaky:0,skipped:0},errors:[],suites:[{specs:[{tests:[outcome()]}],suites:[{specs:[{tests:[outcome()]}]}]}]});
+test('the browser acceptance gate reads completed desktop/mobile outcomes in nested suites',()=>{assert.equal(requireCompleteBrowserPass(report()),2);});
+test('a successful retry cannot pass the browser acceptance gate',()=>{const value=report();value.stats.expected=1;value.stats.flaky=1;value.suites[0].specs[0].tests[0]={...outcome(),status:'flaky',results:[{status:'failed',retry:0},{status:'passed',retry:1}]};assert.throws(()=>requireCompleteBrowserPass(value),/no failures, skipped cases or retries/);});
+test('the browser acceptance gate rejects skips, permanent failures and zero executed cases',()=>{for(const key of['skipped','unexpected']){const value=report();value.stats[key]=1;assert.throws(()=>requireCompleteBrowserPass(value));}const empty=report();empty.stats.expected=0;empty.suites=[];assert.throws(()=>requireCompleteBrowserPass(empty));});
+test('the browser acceptance gate rejects absent, malformed and inconsistent totals',()=>{for(const value of[null,{}, {...report(),suites:null},{...report(),stats:{...report().stats,expected:3}},{...report(),suites:[{}]}])assert.throws(()=>requireCompleteBrowserPass(value));});
+test('hidden retries and non-passing outcomes cannot be mislabelled as expected passes',()=>{for(const change of[item=>{item.results.push({status:'passed',retry:1});},item=>{item.results[0].retry=1;},item=>{item.results[0].status='interrupted';},item=>{item.expectedStatus='failed';},item=>{item.status='unexpected';}]){const value=report();change(value.suites[0].specs[0].tests[0]);assert.throws(()=>requireCompleteBrowserPass(value));}});
+test('worker or global errors cannot be hidden by passing per-test counts',()=>{const value=report();value.errors=[{message:'A fictional worker failed.'}];assert.throws(()=>requireCompleteBrowserPass(value));});

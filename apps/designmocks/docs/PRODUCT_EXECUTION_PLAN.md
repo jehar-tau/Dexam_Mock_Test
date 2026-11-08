@@ -211,6 +211,7 @@ Exit: content rights, moderation coverage, reporting, retention and child-safety
 
 ### Phase 6 — commerce and production
 
+- Require complete exact-head PR/main browser outcomes with no failures, skips or retries. The JSON result gate now enforces that rule even when Playwright itself reports success after a diagnostic retry. Retain historical failed/retried runs; accept the prematurely merged Learn PR #93 only through complete corrective delivery and matching-tree main acceptance.
 - Razorpay live configuration, production Supabase project, backups, monitoring, rate limits, support runbooks and 150-concurrent-session load test.
 - Keep registration and sales as separate switches; launch cohorts gradually.
 
