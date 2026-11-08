@@ -2,17 +2,20 @@ import React,{createContext,useContext,useLayoutEffect,useMemo,useRef,useState}f
 import {Link}from'react-router-dom';
 import {platform}from'./platform.js';
 import {createAdminAccessScope,isAdminAccessFailure}from'./admin-access.js';
+import {verifiedAccountToken}from'./account-identity.js';
 
 const AccountServices=createContext(null);
 export const useAccountServices=()=>useContext(AccountServices);
+const descriptions={reports:{label:'Report access',checking:'Checking report access…',unavailable:'Report access could not be verified. Private reports were cleared.',denied:'Your sign-in changed or ended. Private reports were cleared.',retry:'Check report access'},profile:{label:'Profile access',checking:'Checking profile access…',unavailable:'Profile access could not be verified. Private profile details were cleared.',denied:'Your sign-in changed or ended. Private profile details were cleared.',retry:'Check profile access'}};
 
-function AccessSession({actorId,headingRef,children,onRetry}){
+function AccessSession({actorId,headingRef,children,onRetry,kind}){
+ const copy=descriptions[kind];
  const [access,setAccess]=useState({status:'checking',hadAccess:false}),[scope,setScope]=useState(null);
  const privateRoot=useRef(null),recoverFocus=useRef(false);
  useLayoutEffect(()=>{
   const href=window.location.href,historyKey=window.history.state?.key;
   const value=createAdminAccessScope({check:async signal=>{
-   signal.throwIfAborted();const{data,error}=await platform.auth.getUser();signal.throwIfAborted();if(error)throw error;return data.user?.id===actorId;
+   return Boolean(await verifiedAccountToken(platform.auth,actorId,signal));
   },isCurrent:()=>window.location.href===href&&window.history.state?.key===historyKey,onChange:next=>{
    if(next.status!=='allowed')recoverFocus.current=document.activeElement===document.body||Boolean(privateRoot.current?.contains(document.activeElement));setAccess(next);
   }});
@@ -24,18 +27,20 @@ function AccessSession({actorId,headingRef,children,onRetry}){
  },[actorId]);
  useLayoutEffect(()=>{if(['denied','unavailable'].includes(access.status)&&recoverFocus.current){recoverFocus.current=false;headingRef.current?.focus();}},[access.status,headingRef]);
  const services=useMemo(()=>scope?{isCurrent:scope.isCurrent,assertCurrent:scope.assertCurrent,rpc:(name,args,signal)=>scope.run(async active=>{
-  active.throwIfAborted();const{data,error,status}=await platform.rpc(name,args).abortSignal(active);active.throwIfAborted();
+  let token;try{token=await verifiedAccountToken(platform.auth,actorId,active);}catch(error){if(!active.aborted&&scope.isCurrent())scope.invalidate();throw error;}
+  if(!token){scope.invalidate();throw new Error('Account identity changed.');}
+  active.throwIfAborted();const{data,error,status}=await platform.rpc(name,args).setHeader('Authorization','Bearer '+token).abortSignal(active);active.throwIfAborted();
   if(error){const failure=Object.assign(new Error(error.message),error,{status});if(isAdminAccessFailure(failure))scope.invalidate();throw failure;}return data;
- },signal)}:null,[scope]);
- return<section aria-label="Report access">
-  {access.status==='checking'&&<p role="status">Checking report access…</p>}
-  {access.status==='denied'&&<p role="alert" className="error">Your sign-in changed or ended. Private reports were cleared.</p>}
-  {access.status==='unavailable'&&<p role="alert" className="error">Report access could not be verified. Private reports were cleared.</p>}
-  {['denied','unavailable'].includes(access.status)&&<><button type="button" className="button quiet" onClick={onRetry}>Check report access</button><p><Link to="/account">Go to your account</Link></p></>}
+ },signal)}:null,[scope,actorId]);
+ return<section aria-label={copy.label}>
+  {access.status==='checking'&&<p role="status">{copy.checking}</p>}
+  {access.status==='denied'&&<p role="alert" className="error">{copy.denied}</p>}
+  {access.status==='unavailable'&&<p role="alert" className="error">{copy.unavailable}</p>}
+  {['denied','unavailable'].includes(access.status)&&<><button type="button" className="button quiet" onClick={onRetry}>{copy.retry}</button><p><Link to="/account">Go to your account</Link></p></>}
   {access.status==='allowed'&&services&&<AccountServices.Provider value={services}><div ref={privateRoot}>{children}</div></AccountServices.Provider>}
  </section>;
 }
-export function AccountAccessBoundary({actorId,headingRef,children}){
+export function AccountAccessBoundary({actorId,headingRef,children,kind='reports'}){
  const[attempt,setAttempt]=useState(0);
- return<AccessSession key={attempt} actorId={actorId} headingRef={headingRef} onRetry={()=>{headingRef.current?.focus();setAttempt(value=>value+1);}}>{children}</AccessSession>;
+ return<AccessSession key={`${kind}:${attempt}`} kind={kind} actorId={actorId} headingRef={headingRef} onRetry={()=>{headingRef.current?.focus();setAttempt(value=>value+1);}}>{children}</AccessSession>;
 }

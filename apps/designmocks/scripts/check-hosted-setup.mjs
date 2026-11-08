@@ -127,6 +127,8 @@ results.push({
 });
 if (staging) {
   for (const [name, body] of [
+    ["my_candidate_profile", {}],
+    ["save_candidate_profile", { p_display_name: "Anonymous original fictional profile", p_phone: "+919000000000", p_appearing_year: 2027, p_city: "Original Fictional City", p_exams: ["uceed"] }],
     ["my_bug_report_page", { p_cursor: null, p_limit: 25 }],
     ["submit_bug_report", { p_title: "Anonymous hosted support fixture", p_description: "An anonymous hosted smoke check must never create a support record.", p_page_url: null, p_request_id: "00000000-0000-4000-8000-000000000000" }],
     ["admin_bank_question", { p_external_key: "hosted-smoke-fixture", p_expected_version: "unavailable" }],
