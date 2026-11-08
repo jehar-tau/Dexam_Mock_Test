@@ -17,6 +17,7 @@ import {
   SAMPLE_STORAGE,
 } from "./sample.mjs";
 import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
+import {Purchase} from "./Purchase.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
 import {postLaunchPreview}from "./launch-scope.js";
 import {
@@ -53,7 +54,6 @@ import {
   checkoutReady,
   termsVersion,
   googleLogin,
-  beginCheckout,
 } from "./platform.js";
 
 const PortalPreview = import.meta.env.DEV
@@ -814,48 +814,12 @@ function ExamDetail() {
 }
 function Plans() {
   const { session } = useAuthState();
-  const [accepted, setAccepted] = useState(false);
-  const [status, setStatus] = useState("");
-  const [error, setError] = useState("");
-  useEffect(() => {
-    if (status !== "verifying" || !platform) return;
-    let attempts = 0;
-    const id = setInterval(async () => {
-      const { data } = await platform.rpc("my_pass");
-      if (data?.active) {
-        setStatus("paid");
-        clearInterval(id);
-      } else if (++attempts >= 20) {
-        setStatus("pending");
-        clearInterval(id);
-      }
-    }, 3000);
-    return () => clearInterval(id);
-  }, [status]);
-  const pay = async () => {
-    if (!checkoutReady || !accepted) return;
-    setError("");
-    setStatus("opening");
-    try {
-      const { error } = await platform.rpc("accept_current_terms", {
-        p_version: termsVersion,
-      });
-      if (error)
-        throw new Error(
-          "The published purchase terms need to be updated. Please contact the team.",
-        );
-      await beginCheckout(setStatus);
-      setStatus((s) => (s === "opening" ? "checkout" : s));
-    } catch (e) {
-      setStatus("");
-      setError(e.message);
-    }
-  };
+  const heading=useRef(null);
   return (
     <>
       <section className="wrap page-intro centered">
         <span className="eyebrow">ONE SIMPLE PASS</span>
-        <h1>
+        <h1 ref={heading} tabIndex={-1}>
           Your next year.
           <br /> More <em>possibilities.</em>
         </h1>
@@ -902,56 +866,10 @@ function Plans() {
               {stagingPortalMode ? "Checkout is closed in staging." : "Paid access is not open in this preview. Explore the free sample while the separate sign-in and checkout are connected."}
             </div>
           )}
-          {session && checkoutReady && status !== "paid" && (
-            <label className="terms-checkbox">
-              <input
-                type="checkbox"
-                checked={accepted}
-                onChange={(e) => setAccepted(e.target.checked)}
-              />
-              <span>
-                I accept the <Link to="/terms">purchase terms</Link> and{" "}
-                <Link to="/privacy">privacy notice</Link>.
-              </span>
-            </label>
-          )}
-          {status === "paid" ? (
-            <div className="success" role="status">
-              Your pass is active.{" "}
-              <Link to="/dashboard">Open your workspace →</Link>
-            </div>
-          ) : session ? (
-            <button
-              className="button full"
-              disabled={
-                !checkoutReady ||
-                !accepted ||
-                ["opening", "verifying", "checkout"].includes(status)
-              }
-              onClick={pay}
-            >
-              {status === "verifying"
-                ? "Confirming your payment…"
-                : status === "opening"
-                  ? "Opening Razorpay…"
-                  : "Pay " + money(brand.price) + " with Razorpay"}
-              <Arrow />
-            </button>
+          {session && checkoutReady ? <Purchase actorId={session.user.id} headingRef={heading}/> : session ? (
+            <button type="button" className="button full" disabled>Pay {money(brand.price)} with Razorpay <Arrow/></button>
           ) : (
-            <Button to="/account?next=plans">
-              Continue with Google <GoogleIcon />
-            </Button>
-          )}
-          {error && (
-            <p className="error" role="alert">
-              {error}
-            </p>
-          )}
-          {status === "pending" && (
-            <p role="status">
-              Your payment is still being confirmed. Please check your workspace
-              before trying another payment.
-            </p>
+            <Button to="/account?next=plans">Continue with Google <GoogleIcon/></Button>
           )}
           <Link className="sample-link" to="/sample">
             Try the sample first <Arrow size={17} />

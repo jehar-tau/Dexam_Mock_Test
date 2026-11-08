@@ -4,6 +4,11 @@ import{authorizationHeaders,runForVerifiedAccount}from'./account-identity.js';
 export function createAccountServices(scope,client,actorId,{targetDenials=false}={}){
  return Object.freeze({isCurrent:scope.isCurrent,assertCurrent:scope.assertCurrent,
   checkIdentity:signal=>runForVerifiedAccount(scope,client.auth,actorId,()=>true,signal),
+  presentForCurrentAccount:(operation,signal)=>runForVerifiedAccount(scope,client.auth,actorId,async(token,active)=>{
+   const{data,error}=await client.auth.getSession();active.throwIfAborted();scope.assertCurrent();
+   if(error||data?.session?.user?.id!==actorId||data?.session?.access_token!==token){scope.invalidate();throw new Error('Account identity changed.');}
+   return operation();
+  },signal),
   rpc:(name,args,signal)=>runForVerifiedAccount(scope,client.auth,actorId,async(token,active)=>{
    active.throwIfAborted();const{data,error,status}=await client.rpc(name,args).setHeader('Authorization','Bearer '+token).abortSignal(active);active.throwIfAborted();
    if(error){const failure=Object.assign(new Error(error.message),error,{status});if(!targetDenials&&isAdminAccessFailure(failure))scope.invalidate();throw failure;}return data;
