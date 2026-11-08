@@ -55,92 +55,6 @@ export function IntakeExtractionPreview() {
   return <section className="wrap section admin-page"><span className="eyebrow">PRIVATE INTAKE PREVIEW</span><h1>Extract, correct, then <em>review.</em></h1><IntakeExtractionQueue assets={assets} onExtract={() => {}} onPromote={(id) => update(id, "promoted")} onReject={(id) => update(id, "rejected")} /></section>;
 }
 
-export function BugReport() {
-  const { session, loading } = useAuthState();
-  const [reports, setReports] = useState([]),
-    [message, setMessage] = useState(""),
-    [busy, setBusy] = useState(false);
-  const load = useCallback(
-    () =>
-      session &&
-      rpc("my_bug_reports")
-        .then(setReports)
-        .catch((e) => setMessage(e.message)),
-    [session],
-  );
-  useEffect(() => {
-    load();
-  }, [load]);
-  const submit = async (event) => {
-    event.preventDefault();
-    setBusy(true);
-    setMessage("");
-    const form = new FormData(event.currentTarget);
-    try {
-      await rpc("submit_bug_report", {
-        p_title: form.get("title"),
-        p_description: form.get("description"),
-        p_page_url: window.location.href,
-      });
-      event.currentTarget.reset();
-      setMessage("Thanks — your report is now in the review queue.");
-      await load();
-    } catch (e) {
-      setMessage(e.message);
-    } finally {
-      setBusy(false);
-    }
-  };
-  return (
-    <section className="wrap section admin-page">
-      <span className="eyebrow">HELP US IMPROVE</span>
-      <h1>
-        Report a <em>problem.</em>
-      </h1>
-      <Gate session={session} loading={loading} />
-      {session && (
-        <>
-          <form className="admin-form" onSubmit={submit}>
-            <label>
-              Short title
-              <input name="title" minLength="5" maxLength="140" required />
-            </label>
-            <label>
-              What happened?
-              <textarea
-                name="description"
-                minLength="10"
-                maxLength="5000"
-                rows="6"
-                required
-              />
-            </label>
-            <button className="button" disabled={busy}>
-              {busy ? "Sending…" : "Send report"}
-            </button>
-          </form>
-          {message && <p role="status">{message}</p>}
-          <h2>Your reports</h2>
-          <div className="admin-list">
-            {reports.map((r) => (
-              <article key={r.id}>
-                <b>{r.title}</b>
-                <span className="status-pill">{r.status}</span>
-                <p>{r.description}</p>
-                {r.adminReply && (
-                  <p>
-                    <strong>Team reply:</strong> {r.adminReply}
-                  </p>
-                )}
-              </article>
-            ))}
-          </div>
-        </>
-      )}
-    </section>
-  );
-}
-
 export function Admin() {
   const { session, loading } = useAuthState();
   const location = useLocation(), heading = useRef(null);
@@ -154,6 +68,7 @@ export function Admin() {
 function AdminDesk({ session }) {
   const { rpc, functions, assertCurrent, isCurrent } = useAdminServices();
   const batch = useRef(null), sequence = useRef(0);
+  const bugReplies=useRef(new Set()),[replyingBugs,setReplyingBugs]=useState([]);
   const reportError = error => { if (isCurrent()) setMessage(adminRequestMessage(error)); };
   const [drafts, setDrafts] = useState([]),
     [bugs, setBugs] = useState([]),
@@ -254,8 +169,10 @@ function AdminDesk({ session }) {
   };
   const reply = async (event, id) => {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    if(bugReplies.current.has(id))return;
+    bugReplies.current.add(id);setReplyingBugs([...bugReplies.current]);
     try {
+      const form = new FormData(event.currentTarget);
       await rpc("admin_reply_bug_report", {
         p_id: id,
         p_status: form.get("status"),
@@ -264,6 +181,8 @@ function AdminDesk({ session }) {
       await load();
     } catch (e) {
       reportError(e);
+    } finally {
+      bugReplies.current.delete(id);if(isCurrent())setReplyingBugs([...bugReplies.current]);
     }
   };
   const resolvePrivacy = async (event, id) => {
@@ -607,11 +526,11 @@ function AdminDesk({ session }) {
           <h2>Bug reports</h2>
           <div className="admin-list">
             {bugs.map((b) => (
-              <article key={b.id}>
+              <article className="bug-report-card" key={b.id}>
                 <b>{b.title}</b>
                 <p>{b.description}</p>
-                <form className="admin-reply" onSubmit={(e) => reply(e, b.id)}>
-                  <select name="status" defaultValue={b.status}>
+                <form className="admin-reply" aria-label={`Reply to report ${b.title}`} onSubmit={(e) => reply(e, b.id)}>
+                  <select name="status" aria-label="Report status" defaultValue={b.status} disabled={replyingBugs.includes(b.id)}>
                     <option>open</option>
                     <option>investigating</option>
                     <option>fixed</option>
@@ -619,10 +538,12 @@ function AdminDesk({ session }) {
                   </select>
                   <input
                     name="reply"
+                    aria-label="Reply to reporter"
+                    disabled={replyingBugs.includes(b.id)}
                     defaultValue={b.adminReply || ""}
                     placeholder="Reply to reporter"
                   />
-                  <button>Save</button>
+                  <button disabled={replyingBugs.includes(b.id)}>{replyingBugs.includes(b.id)?"Saving…":"Save"}</button>
                 </form>
               </article>
             ))}
