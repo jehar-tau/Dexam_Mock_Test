@@ -18,6 +18,8 @@ A separate network-isolated model applies the last known 25-version hosted basel
 
 The actual browser run also confirms a pre-existing desk-wide lifecycle gap: other administrator panels remain mounted under the desk's cached initial role after the new moderation workspace clears itself. Server calls deny the revoked role. Whole-desk cached-view and pending-load hardening is the next safe slice before launch. Hosted promotion, public registration, payments, content/model approval and retention decisions remain closed or pending.
 
+PR #86's first CI run passed all 364 browser journeys with two workers in 14.3 minutes, then reached the unchanged 15-minute job timeout before audit/database checks. The cancelled run is retained as failed delivery evidence. Three CI browser workers now retain the full suite and retry policy without changing workflow permissions or the job budget; the replacement head still requires complete local and GitHub verification.
+
 ## Member Community image inspection — 8 November 2026
 
 Members can open question/solution attachments in the shared private raster inspector, with orientation correction, rotate/mirror, zoom, fit and original-size controls. Inspection uses the currently authorized image and requests no additional signing or content mutation. The selection binds both image ID and exact URL and reads current metadata. A refreshed/removed identity, expiry or account/navigation change drops the dialog synchronously; cleared selections cannot resurrect when a later page returns. Open-time deadline checks prevent a queued click from reopening expired scope. Delayed closes cannot dismiss a newer image or move focus into an older gallery.
