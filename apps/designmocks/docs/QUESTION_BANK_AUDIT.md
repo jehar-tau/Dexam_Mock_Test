@@ -2,6 +2,8 @@
 
 Audit date: 5 November 2026
 
+Current conversion addendum (8 November): the read-only canonical/media/compiler audit distinguishes 1,502 objective MVP records, 361 additional code-convertible records outside that offering and 719 conversion/context blockers. The older 161 asset-free count below is historical. See [the current bank baseline and admin preview](BANK_CONVERSION.md); none of these counts independently approves hosted publication.
+
 ## What is proven
 
 The `main` branch contains three independently consumable representations. Only the platform export is authoritative for DMocks:
