@@ -24,6 +24,14 @@
     "category": "staff"
   },
   {
+    "signature": "public.admin_nid_practice_blueprint(uuid,integer,uuid)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_nid_practice_blueprints(integer,integer)",
+    "category": "staff"
+  },
+  {
     "signature": "public.admin_operational_health()",
     "category": "staff"
   },
@@ -61,6 +69,14 @@
   },
   {
     "signature": "public.admin_review_bank_question(text,boolean,boolean,text,text)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_review_nid_practice_blueprint(uuid,integer,text,text,text,uuid)",
+    "category": "staff"
+  },
+  {
+    "signature": "public.admin_save_nid_practice_blueprint(uuid,integer,jsonb,uuid)",
     "category": "staff"
   },
   {
