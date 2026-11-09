@@ -57,6 +57,7 @@ const restore = `insert into dm_private.admins(user_id) values (${quote(second)}
 const remove = `begin;
   delete from dm_private.bug_report_updates where actor_id in (${quote(first)}, ${quote(second)});
   delete from dm_private.bug_reports where reporter_id = ${quote(reporter)};
+  delete from dm_private.account_privacy_requests where user_id = ${quote(reporter)};
   delete from auth.users where id in (${[first, second, reporter].map(quote).join(",")});
   commit;`;
 
@@ -131,8 +132,28 @@ try {
   const revokedRead = await contend(revoke, second, "select public.admin_bug_report_page();", { commit: true });
   denied(revokedRead.worker, "42501");
   assert.equal(revokedRead.worker.stdout, "");
+
+  const privacy = randomUUID();
+  await sql(restore);
+  await sql(`insert into dm_private.account_privacy_requests(id,user_id,request_type)
+    values (${quote(privacy)},${quote(reporter)},'account_deletion');`);
+  const review = status => `select public.admin_resolve_privacy_request(${quote(privacy)},0,${quote(status)},
+    'Original fictional account review note.');`;
+  const privacyState = () => sql(`select review_revision || ':' || status || ':' || (handled_by is null)::text
+    from dm_private.account_privacy_requests where id = ${quote(privacy)};`);
+  const privacyLock = `select 1 from dm_private.account_privacy_requests where id = ${quote(privacy)} for update;`;
+  const revokedReview = await contend(privacyLock, second, review("closed"), { revokeWhileWaiting: true });
+  denied(revokedReview.worker, "42501");
+  assert.equal(await privacyState(), "0:open:true");
+  await sql(restore);
+  const competingReview = await contend(actor(first) + review("in_progress"), second, review("closed"), { commit: true });
+  denied(competingReview.worker, "40001");
+  assert.equal(await privacyState(), "1:in_progress:false");
+  assert.equal(await sql(`select exists(select 1 from auth.users where id = ${quote(reporter)});`), "t");
 } finally {
   await sql(remove);
 }
 console.log(JSON.stringify({ passed: true, actualSupportDatabaseLocks: true, competingWriteRejected: true,
   exactConcurrentReplay: true, revokedWriteReplayAndReadDenied: true }));
+console.log(JSON.stringify({ passed: true, actualPrivacyDatabaseLocks: true, revokedReviewDenied: true,
+  staleCompetingReviewDenied: true, accountPreserved: true }));

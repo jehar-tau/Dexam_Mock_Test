@@ -11,6 +11,7 @@ export function AccountPrivacy({accountId,requests=[],reading=false,readError=''
  useLayoutEffect(()=>{const controller=new AbortController();lifetime.current=controller;return()=>{controller.abort();action.current?.abort();};},[accountId]);
  useLayoutEffect(()=>{if(focusNotice.current&&!busy){focusNotice.current=false;notice.current?.focus();}},[busy,message]);
  const active=requests?.find(row=>row.type==='account_deletion'&&['open','in_progress'].includes(row.status));
+ const latest=requests?.[0],showDecision=!active&&['closed','declined'].includes(latest?.status);
  const run=async kind=>{
   if(action.current||lifetime.current.signal.aborted||kind!=='export'&&(uncertain||reading||requests===null))return;
   const controller=new AbortController();action.current=controller;setBusy(kind);setMessage('');
@@ -39,6 +40,7 @@ export function AccountPrivacy({accountId,requests=[],reading=false,readError=''
   <p>Account deletion is a reviewed request, not an instant browser action. This prevents accidental loss and allows legally required purchase records to be handled correctly.</p>
   {onRefresh&&<button className="button quiet" type="button" disabled={Boolean(busy)} onClick={()=>void refresh()}>Refresh privacy requests</button>}
   {reading&&<p role="status">Loading privacy requests…</p>}{readError&&<p role="alert" className="error">{readError}</p>}
+  {showDecision&&<div className="notice"><b>Latest deletion request: {latest.status}</b>{latest.adminNote&&<p>{latest.adminNote}</p>}</div>}
   {active?<div className="notice"><b>Deletion request: {active.status.replaceAll('_',' ')}</b>{active.adminNote&&<p>{active.adminNote}</p>}{active.status==='open'&&<button type="button" className="text-button" disabled={locked} onClick={()=>void run('cancel')}>{busy==='cancel'?'Cancelling request…':'Cancel deletion request'}</button>}</div>:
    <button type="button" className="text-button" disabled={locked} onClick={()=>void run('delete')}>{busy==='delete'?'Sending deletion request…':'Request account deletion'}</button>}
   {message&&<p ref={notice} tabIndex={-1} role="status">{message}</p>}

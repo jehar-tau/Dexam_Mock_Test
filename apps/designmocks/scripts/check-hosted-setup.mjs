@@ -52,7 +52,7 @@ for (const name of [
   "available_papers",
   "my_attempt_history",
   ...(backendStage !== "foundation" ? [
-    "is_dmocks_admin", "my_bug_reports", "admin_bug_report_page", "admin_question_drafts", "export_my_account_data", "request_account_deletion", "my_privacy_requests", "admin_privacy_requests",
+    "is_dmocks_admin", "my_bug_reports", "admin_bug_report_page", "admin_question_drafts", "export_my_account_data", "request_account_deletion", "my_privacy_requests", "admin_privacy_request_page",
     "admin_bank_questions", "my_candidate_profile", "topic_catalog", "exam_mock_catalog",
     "admin_exam_mock_blueprints", "admin_all_india_events", "all_india_event_catalog",
     "learning_catalog", "admin_learning_lessons", "community_feed", "admin_drawing_queue",
@@ -132,6 +132,7 @@ if (staging) {
     ["my_bug_report_page", { p_cursor: null, p_limit: 25 }],
     ["submit_bug_report", { p_title: "Anonymous hosted support fixture", p_description: "An anonymous hosted smoke check must never create a support record.", p_page_url: null, p_request_id: "00000000-0000-4000-8000-000000000000" }],
     ["admin_reply_bug_report", { p_id: "00000000-0000-4000-8000-000000000000", p_expected_revision: 0, p_status: "fixed", p_reply: "Anonymous hosted support fixture", p_request_id: "00000000-0000-4000-8000-000000000000" }],
+    ["admin_resolve_privacy_request", { p_id: "00000000-0000-4000-8000-000000000000", p_expected_revision: 0, p_status: "closed", p_note: "Anonymous hosted privacy fixture" }],
     ["admin_bank_question", { p_external_key: "hosted-smoke-fixture", p_expected_version: "unavailable" }],
     ["admin_bank_review_media_paths", { p_external_key: "hosted-smoke-fixture", p_expected_version: "unavailable" }],
     ["admin_review_bank_question", { p_external_key: "hosted-smoke-fixture", p_expected_version: "unavailable", p_approved: false,

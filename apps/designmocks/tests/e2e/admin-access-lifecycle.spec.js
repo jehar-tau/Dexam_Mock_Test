@@ -86,6 +86,97 @@ async function holdIdentity(page){
 }
 const requestActor=request=>JSON.parse(Buffer.from(request.headers().authorization.split(' ')[1].split('.')[1],'base64url')).sub;
 
+async function privacyFixture(page, count = 1) {
+ const provider = await fixture(page);
+ const requests = Array.from({length:count}, (_, index) => ({
+  id: "30000000-0000-4000-8000-" + String(count - index).padStart(12, "0"),
+  userId: "00000000-0000-4000-8000-000000003201", type: "account_deletion",
+  status: index ? "cancelled" : "open", adminNote: null, reviewRevision: 0,
+  createdAt: "2026-11-06T12:00:00.123456Z",
+ }));
+ const pageCalls = [];
+ await page.route(api + "/rest/v1/rpc/admin_privacy_request_page", async route => {
+  if (route.request().method() === "OPTIONS") return route.fulfill({headers,status:204});
+  const input = route.request().postDataJSON();
+  pageCalls.push(input);
+  const items = input.p_cursor ? requests.slice(25) : requests.slice(0,25);
+  const last = items.at(-1);
+  const nextCursor = !input.p_cursor && count > 25
+   ? {queue:"privacy",staffId:admin.id,id:last.id,createdAt:last.createdAt} : null;
+  return route.fulfill({headers,json:{items,nextCursor}});
+ });
+ const queue = page.getByRole("region", {name:"Account privacy requests",exact:true});
+ await health(page).click();
+ await expect(queue.getByRole("article")).toHaveCount(Math.min(count,25));
+ return {provider, queue, requests, pageCalls};
+}
+
+test("staff privacy requests page independently with keyboard focus at the queue", async ({page}) => {
+ const {provider, queue, requests, pageCalls} = await privacyFixture(page, 26);
+ await queue.getByRole("button", {name:"Next requests",exact:true}).press("Enter");
+ await expect(queue.getByRole("article")).toHaveCount(1);
+ await expect(queue.getByRole("heading")).toBeFocused();
+ await expect(page.getByRole("region", {name:"Bug reports",exact:true}).getByRole("article")).toHaveCount(1);
+ await queue.getByRole("button", {name:"Previous requests",exact:true}).press("Enter");
+ await expect(queue.getByRole("article")).toHaveCount(25);
+ expect(pageCalls).toEqual([null,{queue:"privacy",staffId:admin.id,id:requests[24].id,createdAt:requests[24].createdAt},null]
+  .map(p_cursor => ({p_cursor,p_limit:25})));
+ expect(provider.unexpected).toEqual([]);
+});
+
+test("a stale privacy decision requires a fresh read before another save", async ({page}) => {
+ const {queue, requests} = await privacyFixture(page), calls = [];
+ const form = queue.getByRole("form", {name:"Review privacy request",exact:true});
+ const note = form.getByLabel("Operator action and retention note");
+ const save = form.getByRole("button", {name:"Save privacy status",exact:true});
+ await note.fill("Original fictional draft from an old view.");
+ requests[0] = {...requests[0], status:"in_progress", adminNote:"Newer fictional note by a second operator.", reviewRevision:1};
+ await page.route(api + "/rest/v1/rpc/admin_resolve_privacy_request", async route => {
+  if (route.request().method() === "OPTIONS") return route.fulfill({headers,status:204});
+  const command = route.request().postDataJSON();
+  calls.push(command);
+  if (command.p_expected_revision !== requests[0].reviewRevision) return route.fulfill({headers,status:409,json:{code:"40001",message:diagnostic}});
+  requests[0] = {...requests[0],status:command.p_status,adminNote:command.p_note,reviewRevision:command.p_expected_revision+1};
+  return route.fulfill({headers,json:{requestId:command.p_id,reviewRevision:requests[0].reviewRevision,status:command.p_status,adminNote:command.p_note}});
+ });
+ await save.click();
+ await expect(queue.getByRole("alert")).toContainText("This request changed");
+ await expect(note).toHaveValue("Original fictional draft from an old view.");
+ await expect(save).toBeDisabled();
+ await queue.getByRole("button", {name:"Refresh request",exact:true}).click();
+ await expect(queue.getByText("Newer fictional note by a second operator.",{exact:true})).toBeVisible();
+ await expect(note).toHaveValue("");
+ await note.fill("Original fictional decision after verification.");
+ await form.getByLabel("Privacy request status").selectOption("closed");
+ await save.click();
+ await expect(queue.getByRole("status")).toHaveText("Privacy decision saved.");
+ await expect(form).toHaveCount(0);
+ expect(calls.map(command => command.p_expected_revision)).toEqual([0,1]);
+});
+
+test("a lost privacy acknowledgement freezes edits until a read confirms the saved status", async ({page}) => {
+ const {queue, requests} = await privacyFixture(page), calls = [];
+ await page.route(api + "/rest/v1/rpc/admin_resolve_privacy_request", async route => {
+  if (route.request().method() === "OPTIONS") return route.fulfill({headers,status:204});
+  const command = route.request().postDataJSON();
+  calls.push(command);
+  requests[0] = {...requests[0],status:command.p_status,adminNote:command.p_note,reviewRevision:command.p_expected_revision+1};
+  return route.abort();
+ });
+ const form = queue.getByRole("form", {name:"Review privacy request",exact:true});
+ const note = form.getByLabel("Operator action and retention note");
+ const saved = "Original fictional decision persisted before the reply was lost.";
+ await note.fill(saved);
+ await form.evaluate(element => { element.requestSubmit(); element.requestSubmit(); });
+ await expect(queue.getByRole("alert")).toContainText("decision could not be confirmed");
+ await expect(note).toBeDisabled();
+ await queue.getByRole("button", {name:"Refresh request",exact:true}).click();
+ await expect(queue.getByText(saved,{exact:true})).toBeVisible();
+ await expect(note).toHaveValue("");
+ await expect(note).toBeEnabled();
+ expect(calls).toEqual([{p_id:requests[0].id,p_expected_revision:0,p_status:"in_progress",p_note:saved}]);
+});
+
 test("staff can page through a bounded report queue and return to the first page", async ({page}) => {
  const state = await fixture(page), calls = [];
  const reports = Array.from({length: 26}, (_, index) => ({

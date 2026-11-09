@@ -4,12 +4,12 @@ const fixtureProject = "dmocks-portal-fixture";
 const adminLists = new Set([
   "admin_question_drafts", "admin_bank_questions", "admin_exam_mock_blueprints",
   "admin_all_india_events", "admin_reported_questions", "admin_learning_lessons", "admin_question_intake_assets",
-  "admin_community_report_queue", "admin_ai_draft_requests", "admin_privacy_requests",
+  "admin_community_report_queue", "admin_ai_draft_requests",
   "admin_drawing_reviewers", "admin_drawing_queue",
 ]);
 
 export function emptyAdminRead(procedure) {
-  if (procedure === "admin_bug_report_page") return { items: [], nextCursor: null };
+  if (["admin_bug_report_page", "admin_privacy_request_page"].includes(procedure)) return { items: [], nextCursor: null };
   if (procedure === 'admin_nid_question_binding') return { binding: null, canConvert: false, materialized: false, requestResult: null, history: [] };
   if (procedure === "admin_nid_practice_blueprints") return { items: [], total: 0, offset: 0, limit: 10 };
   if (procedure === "admin_search_bank_questions") return { items: [], total: 0, offset: 0, limit: 25, topics: [], summary: { active: 0, available: 0, approved: 0, inactive: 0 } };

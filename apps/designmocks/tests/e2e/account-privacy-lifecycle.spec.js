@@ -55,6 +55,23 @@ test('failed and malformed privacy reads keep changes closed until a valid expli
  const state=await fixture(page);await expect(page.getByText('Deletion request: open',{exact:true})).toBeVisible();state.readFailure={code:'P0001',message:'Private fictional request diagnostic'};await page.getByRole('button',{name:'Refresh privacy requests',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Couldn’t load your privacy requests');await expect(page.getByRole('button',{name:'Request account deletion',exact:true})).toBeDisabled();await expect(page.locator('#root')).not.toContainText('Private fictional request diagnostic');state.readFailure=null;state.rows[first.id]=[{...request(first.id),status:'untrusted'}];await page.getByRole('button',{name:'Refresh privacy requests',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Couldn’t load your privacy requests');state.rows[first.id]=[request(first.id,'in_progress')];await page.getByRole('button',{name:'Refresh privacy requests',exact:true}).click();await expect(page.getByText('Deletion request: in progress',{exact:true})).toBeVisible();await expect(page.getByRole('button',{name:'Cancel deletion request',exact:true})).toHaveCount(0);await expect(page.getByRole('button',{name:'Request account deletion',exact:true})).toHaveCount(0);expect(state.mutations).toEqual([]);
 });
 
+test('the owner can read the latest closed or declined privacy decision after a refresh', async ({page}) => {
+ const state = await fixture(page), privacy = page.getByRole('region',{name:'Your data and account',exact:true});
+ await expect(privacy.getByText('Deletion request: open',{exact:true})).toBeVisible();
+ for (const status of ['closed','declined']) {
+  const note = 'Original fictional decision marked ' + status + '.';
+  state.rows[first.id] = [{...request(first.id,status),adminNote:note}];
+  await privacy.getByRole('button',{name:'Refresh privacy requests',exact:true}).press('Enter');
+  await expect(privacy.getByText('Latest deletion request: '+status,{exact:true})).toBeVisible();
+  await expect(privacy.getByText(note,{exact:true})).toBeVisible();
+  await expect(privacy.getByRole('button',{name:'Request account deletion',exact:true})).toBeEnabled();
+ }
+ await changeAccount(page,state,second);
+ await expect(privacy.getByText('Fictional second private team note',{exact:true})).toBeVisible();
+ await expect(privacy.getByText('Original fictional decision marked declined.',{exact:true})).toHaveCount(0);
+ expect(state.mutations).toEqual([]);
+});
+
 test('a late read after its deadline does not reopen private request controls',async({page})=>{
  const state=await fixture(page);await expect(page.getByText('Deletion request: open',{exact:true})).toBeVisible();await page.clock.install();const held=deferred();state.holds[first.id]=held;const before=state.reads[first.id];await page.getByRole('button',{name:'Refresh privacy requests',exact:true}).click();await expect.poll(()=>state.reads[first.id]).toBe(before+1);await page.clock.fastForward(20001);await expect(page.getByRole('alert')).toContainText('Couldn’t load your privacy requests');held.resolve();state.holds[first.id]=null;await expect.poll(()=>state.completedReads).toBe(before+1);await expect(page.getByText('Fictional first private team note',{exact:true})).toHaveCount(0);await page.getByRole('button',{name:'Refresh privacy requests',exact:true}).click();await expect(page.getByText('Fictional first private team note',{exact:true})).toBeVisible();expect(state.mutations).toEqual([]);
 });

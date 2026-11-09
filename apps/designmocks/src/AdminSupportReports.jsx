@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAdminServices } from "./AdminAccess.jsx";
+import { AdminQueueNavigation } from "./AdminQueueNavigation.jsx";
 import { adminRequestMessage, isAdminAccessFailure } from "./admin-access.js";
 import { matchesSupportReplyReceipt, supportReplyRequest, supportStatuses } from "./admin-support.js";
 
@@ -129,7 +130,6 @@ export function AdminSupportReports({ page, navigate, refresh }) {
     }
     finally { paging.current = false; if (isCurrent()) setPageBusy(false); }
   }
-  const { cursor, previous } = page?.position ?? { cursor: null, previous: [] };
   return <section aria-label="Bug reports">
     <h2 ref={heading} tabIndex={-1}>Bug reports</h2>
     <div className="admin-list">
@@ -137,12 +137,6 @@ export function AdminSupportReports({ page, navigate, refresh }) {
         refresh={refresh} blocked={pageBusy || pendingId !== null && pendingId !== report.id} />)}
       {page && page.items.length === 0 && <p>No bug reports on this page.</p>}
     </div>
-    {(previous.length > 0 || page?.nextCursor) && <nav className="admin-actions" aria-label="Bug report pages">
-      {previous.length > 0 && <button type="button" className="button quiet" disabled={pageBusy || pendingId !== null}
-        onClick={() => void move({ cursor: previous.at(-1), previous: previous.slice(0, -1) })}>Previous reports</button>}
-      <span>Page {previous.length + 1}</span>
-      {page?.nextCursor && <button type="button" className="button quiet" disabled={pageBusy || pendingId !== null}
-        onClick={() => void move({ cursor: page.nextCursor, previous: [...previous, cursor] })}>Next reports</button>}
-    </nav>}
+    <AdminQueueNavigation page={page} label="Bug report pages" subject="reports" disabled={pageBusy || pendingId !== null} navigate={move} />
   </section>;
 }
