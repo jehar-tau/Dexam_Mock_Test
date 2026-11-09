@@ -110,26 +110,47 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
     await assert.rejects(readAttempt(state.other, state.completed, target));
 
     const profile = await readFile(new URL('../../supabase/launch/paid-mvp.sql', import.meta.url), 'utf8');
-    const installPaidProfile = () => sql(`begin;\n${profile}\ncommit;`, target);
+    const purchaseHistorySignature = 'public.my_purchase_page(timestamp with time zone,uuid)';
+    const purchaseHistoryEntry = ` ('${purchaseHistorySignature}','student'),\n`;
+    const oldProfileParts = profile.split(purchaseHistoryEntry);
+    assert.equal(oldProfileParts.length, 2, 'Expected exactly one purchase history entry in the current paid profile');
+    const oldProfile = oldProfileParts.join('');
+    const installPaidProfile = profileSql => sql(`begin;\n${profileSql}\ncommit;`, target);
     for (const file of pending) {
-      if (versionOf(file) !== '202611090158') {
-        await apply(file, target);
-        continue;
+      const version = versionOf(file);
+      if (version === '202611090158') {
+        // Model the installed companion from before the purchase history RPC existed.
+        await installPaidProfile(oldProfile);
       }
-      // A deployed paid profile must remain effective while a newer migration runs.
-      await installPaidProfile();
       await apply(file, target);
-      assert.equal(await sql(`select dm_private.mvp_profile_permissions_valid() and not exists (
-        select 1 from unnest(array['anon','authenticated','service_role']) roles(role)
-        cross join unnest(array['public.public_all_india_top_ten()','public.all_india_event_catalog()',
-          'public.admin_open_all_india_ranking_publication(uuid,text,text)',
-          'public.admin_close_all_india_ranking_publication(uuid,uuid,text)',
-          'public.set_all_india_result_sharing(uuid,uuid,integer,boolean)']) signatures(signature)
-        where has_function_privilege(role,signature,'EXECUTE')
-          and (role<>'service_role' or signature not in ('public.public_all_india_top_ten()','public.all_india_event_catalog()'))
-      );`, target), 't', 'ranking migration leaves the already installed paid profile closed and valid');
+      if (version === '202611090158') {
+        assert.equal(await sql(`select dm_private.mvp_profile_permissions_valid()
+          and (select count(*) from dm_private.mvp_rpc_allowlist)=47 and not exists (
+          select 1 from unnest(array['anon','authenticated','service_role']) roles(role)
+          cross join unnest(array['public.public_all_india_top_ten()','public.all_india_event_catalog()',
+            'public.admin_open_all_india_ranking_publication(uuid,text,text)',
+            'public.admin_close_all_india_ranking_publication(uuid,uuid,text)',
+            'public.set_all_india_result_sharing(uuid,uuid,integer,boolean)']) signatures(signature)
+          where has_function_privilege(role,signature,'EXECUTE')
+            and (role<>'service_role' or signature not in ('public.public_all_india_top_ten()','public.all_india_event_catalog()'))
+        );`, target), 't', 'ranking migration leaves the already installed paid profile closed and valid');
+      }
+      if (version === '202611090160') {
+        assert.equal(await sql(`select dm_private.mvp_profile_permissions_valid()
+          and (select count(*) from dm_private.mvp_rpc_allowlist)=47 and not exists (
+            select 1 from unnest(array['anon','authenticated','service_role']) roles(role)
+            where has_function_privilege(role,${quote(purchaseHistorySignature)},'EXECUTE')
+          );`, target), 't', 'purchase history migration preserves the installed paid profile until companion reapplication');
+      }
     }
-    await installPaidProfile();
+    await installPaidProfile(profile);
+    assert.equal(await sql(`select dm_private.mvp_profile_permissions_valid()
+      and (select count(*) from dm_private.mvp_rpc_allowlist)=48
+      and has_function_privilege('authenticated',${quote(purchaseHistorySignature)},'EXECUTE')
+      and not exists (
+        select 1 from unnest(array['anon','service_role']) roles(role)
+        where has_function_privilege(role,${quote(purchaseHistorySignature)},'EXECUTE')
+      );`, target), 't', 'the reviewed 48-RPC companion grants purchase history only to authenticated callers');
     const upgraded = await connect(target);
     try {
       const allVersions = files.map(versionOf);
@@ -149,7 +170,8 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
       passed: true, preUpgradeArchiveRestored: true, historicalMigrations: installed.length,
       pendingMigrationsAppliedAfterRestore: pending.length, exactSchemaRlsGrantsRowsAndSequences: true,
       historicalGapPreserved: true, bankMediaAccountAttemptPaymentAndSupportPreserved: true,
-      foreignAndAnonymousDenied: true, storage: 'mock-catalogue-only',
+      foreignAndAnonymousDenied: true, paidProfilePreservedThroughRankingAndPurchaseMigrations: true,
+      purchaseHistoryEnabledByCompanionOnly: true, storage: 'mock-catalogue-only',
       registrationAndSalesClosed: true, hostedWritesPerformed: false,
     }));
   } finally {
