@@ -368,6 +368,10 @@ test("teacher review is released separately to the drawing student", async ({ pa
   await page.keyboard.press("Enter");
   await expect(advisory).toContainText("AI ADVISORY — NOT A GRADE");
   await expect(advisory).toContainText("Proposed 14 marks");
+  const criteria = advisory.getByLabel("Suggested criterion marks");
+  await expect(criteria.locator("dt")).toHaveText(["Composition", "Clarity"]);
+  await expect(criteria.locator("dd")).toHaveText(["8.25", "5.75"]);
+  await expect(queue.getByLabel("Criterion 1", { exact: true })).toHaveValue("");
   await expect(queue.getByLabel("Mark 1", { exact: true })).toHaveValue("");
   await queue.getByRole("button", { name: "Return to review queue" }).click();
   await expect(advisory).toHaveCount(0);

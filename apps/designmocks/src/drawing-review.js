@@ -1,5 +1,12 @@
 export const MAX_DRAWING_CRITERIA = 12;
 
+export function drawingAdvisoryMarks(criteria) {
+  if (!criteria || typeof criteria !== "object" || Array.isArray(criteria)) return [];
+  const entries = Object.entries(criteria);
+  return entries.length <= MAX_DRAWING_CRITERIA
+    && entries.every(([name, mark]) => name.trim() && Number.isFinite(mark) && mark >= 0) ? entries : [];
+}
+
 export function drawingReviewActions(call, onChanged) {
   const update = async (procedure, reviewId, input = {}) => {
     await call(procedure, { p_review_id: reviewId, ...input });

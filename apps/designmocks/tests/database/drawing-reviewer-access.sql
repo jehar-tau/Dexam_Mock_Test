@@ -55,6 +55,12 @@ insert into dm_private.drawing_reviews(id,attempt_id,question_id)
   union all select :'own_review'::uuid,i.attempt_id,i.question_id from dm_private.attempt_items i where i.attempt_id=:'teacher_attempt'
   union all select :'upload_open_review'::uuid,i.attempt_id,i.question_id from dm_private.attempt_items i where i.attempt_id=:'upload_open_attempt';
 
+set local role service_role;
+select set_config('request.jwt.claim.role','service_role',true);
+select pg_temp.reviewer_assert(public.record_drawing_ai_suggestion(:'released_review','Fixture provider','Fixture model','fixture-v1',
+  '{"Composition":8.25,"Contrast":5.75}','Synthetic advisory for assigned reviewer.',14,0.8,'["Check contrast"]') is not null,
+  'service can record criterion advice for closed evidence');
+
 set local role authenticated;
 select set_config('request.jwt.claim.role','authenticated',true);
 select set_config('request.jwt.claim.sub',:'student',true);
@@ -89,7 +95,8 @@ select pg_temp.reviewer_assert(jsonb_array_length(first.result->'items')=20 and 
   and first.result->>'nextCursor'<second.result->'items'->0->>'reviewId',
   'keyset pages exclude self and open upload windows') from first,second;
 select pg_temp.reviewer_assert(not((public.my_drawing_review_page()->'items'->0)?|array['attemptId','studentId','questionId','storagePath'])
-  and public.my_drawing_review_page()->'items'->0->>'score' is null,'claimable queue omits private fields');
+  and public.my_drawing_review_page()->'items'->0->>'score' is null
+  and public.my_drawing_review_page()->'items'->0->>'aiSuggestion' is null,'claimable queue omits private fields and advisory');
 select pg_temp.reviewer_reject(format('select public.admin_claim_drawing_review(%L)',:'own_review'),'Review unavailable');
 select pg_temp.reviewer_reject(format('select public.admin_claim_drawing_review(%L)',:'upload_open_review'),'Student upload window is still open');
 select pg_temp.reviewer_reject(format('select public.admin_drawing_review_media_paths(%L)',:'released_review'),'Claim the review');
@@ -97,6 +104,10 @@ select public.admin_claim_drawing_review(:'released_review');
 select public.admin_claim_drawing_review(:'ungraded_review');
 select public.admin_claim_drawing_review(:'saved_review');
 select pg_temp.reviewer_assert(jsonb_array_length(public.my_drawing_review_page('mine')->'items')=3,'claims appear only in my reviews');
+select pg_temp.reviewer_assert((select card->'aiSuggestion'->'criteria'='{"Composition":8.25,"Contrast":5.75}'::jsonb
+  and card->'aiSuggestion'->>'proposedScore'='14' and card->>'score' is null
+  from jsonb_array_elements(public.my_drawing_review_page('mine')->'items') card where card->>'reviewId'=:'released_review'),
+  'assigned reviewer sees exact criterion advice and an unset human grade');
 select pg_temp.reviewer_assert(jsonb_array_length(public.admin_drawing_review_media_paths(:'released_review'))=1,'assigned reviewer can access private page');
 select public.admin_review_drawing(:'released_review',1,'{"Clarity":15}','The visual hierarchy is clear.',15);
 select public.admin_review_drawing(:'saved_review',1,'{"Clarity":14}','Feedback saved before revocation.',14);
@@ -137,6 +148,9 @@ select public.admin_claim_drawing_review(:'ungraded_review');
 select set_config('request.jwt.claim.sub',:'student',true);
 select pg_temp.reviewer_assert(public.read_attempt(:'student_attempt')->'questions'->0->'drawingReview'->>'score'='16'
   and public.read_attempt(:'student_attempt')->'questions'->2->'drawingReview'->>'score'='14','student receives finalized and corrected grades');
+select pg_temp.reviewer_assert(not (public.read_attempt(:'student_attempt')->'questions'->0 ? 'aiSuggestion')
+  and public.read_attempt(:'student_attempt')->'questions'->0->'drawingReview'->'criteria'='{"Clarity":16}'::jsonb,
+  'student results expose the human criteria only');
 
 reset role;
 select pg_temp.reviewer_assert((select count(*)=3 from dm_private.drawing_reviewer_audit),'only actual role changes are audited');
