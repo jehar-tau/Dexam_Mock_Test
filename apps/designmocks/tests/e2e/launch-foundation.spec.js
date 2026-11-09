@@ -114,6 +114,28 @@ test("fictional portal preview navigation opens dev-only module screens", async 
   expect(providerRequests).toEqual([]);
 });
 
+test("the reduced dev preview links only to its local overview and exam example", async ({ page }) => {
+  const providerRequests = [];
+  await page.route(/\.supabase\.co\//, route => {
+    providerRequests.push(route.request().url());
+    return route.abort();
+  });
+  const reducedPreviewOrigin = "http://127.0.0.1:4999";
+  await page.goto(reducedPreviewOrigin + "/portal-preview");
+  if ((page.viewportSize()?.width ?? 1000) < 900)
+    await page.getByRole("button", { name: "Student menu" }).click();
+  const navigation = page.getByRole("navigation", { name: "Student workspace" });
+  await expect(navigation.getByRole("link")).toHaveCount(2);
+  await expect(navigation.getByRole("link", { name: "Overview" })).toHaveAttribute("href", "/portal-preview");
+  const papers = navigation.getByRole("link", { name: "Released papers" });
+  await expect(papers).toHaveAttribute("href", "/exam-mocks-preview");
+  await papers.click();
+  await expect(page).toHaveURL(reducedPreviewOrigin + "/exam-mocks-preview");
+  await expect(page.getByRole("heading", { name: /Pick your paper/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Sign in to continue/ })).toHaveCount(0);
+  expect(providerRequests).toEqual([]);
+});
+
 test("candidate profile validates and saves the complete preview flow", async ({
   page,
 }) => {
