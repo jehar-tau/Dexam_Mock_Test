@@ -25,14 +25,14 @@ select pg_temp.privacy_assert(public.request_account_deletion()=:'first_request'
 select pg_temp.privacy_assert(public.my_privacy_requests()->0->>'id'=:'first_request' and public.my_privacy_requests()->0->>'status'='open','the current actor sees its own open request');
 select pg_temp.privacy_reject('select * from dm_private.account_privacy_requests','permission denied');
 select pg_temp.privacy_reject('update dm_private.account_privacy_requests set status=''cancelled''','permission denied');
-select pg_temp.privacy_reject('select public.admin_privacy_requests()','Admin access required');
+select pg_temp.privacy_reject('select public.admin_privacy_request_page()','Admin access required');
 select set_config('request.jwt.claim.sub',:'second',true);
 select pg_temp.privacy_assert(public.my_privacy_requests()='[]'::jsonb,'another actor cannot read the first request');
 select pg_temp.privacy_reject('select public.cancel_my_privacy_request('''||:'first_request'||''')','Open request not found');
 select public.request_account_deletion()as second_request\gset
 select pg_temp.privacy_assert(:'second_request'<>:'first_request','different actors have independent request identities');
 select set_config('request.jwt.claim.sub',:'admin',true);
-select public.admin_resolve_privacy_request(:'first_request','in_progress','Fictional private first-account review note.');
+select public.admin_resolve_privacy_request(:'first_request',0,'in_progress','Fictional private first-account review note.');
 select set_config('request.jwt.claim.sub',:'first',true);
 select pg_temp.privacy_assert(public.request_account_deletion()=:'first_request'::uuid and public.my_privacy_requests()->0->>'status'='in_progress' and public.my_privacy_requests()->0->>'adminNote'='Fictional private first-account review note.','an in-progress request and its own review note are preserved');
 select pg_temp.privacy_reject('select public.cancel_my_privacy_request('''||:'first_request'||''')','Open request not found');
@@ -44,7 +44,7 @@ select pg_temp.privacy_reject('select public.cancel_my_privacy_request('''||:'se
 select public.request_account_deletion()as replacement\gset
 select pg_temp.privacy_assert(:'replacement'<>:'second_request' and jsonb_array_length(public.my_privacy_requests())=2,'a new reviewed request does not erase cancelled history');
 select set_config('request.jwt.claim.sub',:'admin',true);
-select public.admin_resolve_privacy_request(:'first_request','closed','Fictional request review closed without deleting any account.');
+select public.admin_resolve_privacy_request(:'first_request',1,'closed','Fictional request review closed without deleting any account.');
 select set_config('request.jwt.claim.sub',:'first',true);
 select pg_temp.privacy_assert(public.my_privacy_requests()->0->>'status'='closed','the user can read its reviewed closed state');
 reset role;

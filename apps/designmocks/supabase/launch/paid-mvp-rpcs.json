@@ -44,7 +44,7 @@
     "category": "staff"
   },
   {
-    "signature": "public.admin_privacy_requests()",
+    "signature": "public.admin_privacy_request_page(jsonb,integer)",
     "category": "staff"
   },
   {
@@ -68,7 +68,7 @@
     "category": "staff"
   },
   {
-    "signature": "public.admin_resolve_privacy_request(uuid,text,text)",
+    "signature": "public.admin_resolve_privacy_request(uuid,integer,text,text)",
     "category": "staff"
   },
   {

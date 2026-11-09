@@ -17,11 +17,13 @@ import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
 import { NidPracticeBlueprints } from "./NidPracticeBlueprints.jsx";
 import { ReportedQuestionQueue } from "./ReportedQuestionQueue.jsx";
 import { AdminSupportReports } from "./AdminSupportReports.jsx";
+import { AdminPrivacyRequests } from "./AdminPrivacyRequests.jsx";
 import { readSupportPage, supportPageLimit } from "./admin-support.js";
+import { readPrivacyQueue, privacyQueueLimit } from "./admin-privacy.js";
 import { AdminAccessBoundary, useAdminServices } from "./AdminAccess.jsx";
 import { adminRequestMessage } from "./admin-access.js";
 import {postLaunchPreview}from'./launch-scope.js';
-const mvpDeskReads=new Set(['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_requests','admin_launch_readiness']);
+const mvpDeskReads=new Set(['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_request_page','admin_launch_readiness']);
 
 async function rpc(name, args, signal) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -73,7 +75,9 @@ export function Admin() {
 function AdminDesk({ session }) {
   const { rpc, functions, assertCurrent, isCurrent } = useAdminServices();
   const batch = useRef(null), sequence = useRef(0);
-  const supportPosition = useRef({ cursor: null, previous: [] });
+  const positions = useRef({
+    support: { cursor: null, previous: [] }, privacy: { cursor: null, previous: [] },
+  });
   const reportError = error => { if (isCurrent()) setMessage(adminRequestMessage(error)); };
   const [drafts, setDrafts] = useState([]),
     [bugPage, setBugPage] = useState(null),
@@ -87,31 +91,35 @@ function AdminDesk({ session }) {
     [intakeUploading, setIntakeUploading] = useState(false),
     [questionReports, setQuestionReports] = useState([]),
     [bankRefreshToken, setBankRefreshToken] = useState(0),
-    [privacyRequests, setPrivacyRequests] = useState([]),
+    [privacyPage, setPrivacyPage] = useState(null),
     [health, setHealth] = useState(),
     [readiness, setReadiness] = useState(),
     [message, setMessage] = useState("");
-  const loadDesk = useCallback(async (position) => {
+  const loadDesk = useCallback(async (target) => {
     batch.current?.abort();
     const request = new AbortController(), token = ++sequence.current; batch.current = request;
     const current = () => isCurrent() && !request.signal.aborted && token === sequence.current;
     try {
       assertCurrent();
+      const pageArgs = {
+        admin_bug_report_page: { p_cursor: target.support.cursor, p_limit: supportPageLimit },
+        admin_privacy_request_page: { p_cursor: target.privacy.cursor, p_limit: privacyQueueLimit },
+      };
       const [d, b, m, a, r, l, w, i, c, ai, h, privacy, launch] = await Promise.all(
           ["admin_question_drafts", "admin_bug_report_page", "admin_exam_mock_blueprints", "admin_all_india_events",
             "admin_reported_questions", "admin_learning_lessons", "admin_drawing_queue", "admin_question_intake_assets",
-            "admin_community_report_queue", "admin_ai_draft_requests", "admin_operational_health", "admin_privacy_requests",
+            "admin_community_report_queue", "admin_ai_draft_requests", "admin_operational_health", "admin_privacy_request_page",
             "admin_launch_readiness"].map(name => {
               if (!postLaunchPreview && !mvpDeskReads.has(name)) return [];
-              const args = name === "admin_bug_report_page" ? { p_cursor: position.cursor, p_limit: supportPageLimit } : undefined;
-              return rpc(name, args, request.signal);
+              return rpc(name, pageArgs[name], request.signal);
             }),
       );
         if (!current()) return false;
         const supportPage = readSupportPage(b, session.user.id);
-        supportPosition.current = position;
+        const reviewPage = readPrivacyQueue(privacy, session.user.id);
+        positions.current = target;
         setDrafts(d);
-        setBugPage({ ...supportPage, position });
+        setBugPage({ ...supportPage, position: target.support });
         setBlueprints(m);
         setAllIndia(a);
         setQuestionReports(r);
@@ -121,7 +129,7 @@ function AdminDesk({ session }) {
         setCommunityReports(c);
         setAiDrafts(ai);
         setHealth(h);
-        setPrivacyRequests(privacy);
+        setPrivacyPage({ ...reviewPage, position: target.privacy });
         setReadiness(launch);
         return true;
     } catch (e) {
@@ -129,7 +137,9 @@ function AdminDesk({ session }) {
       return false;
     }
   }, [rpc, assertCurrent, isCurrent, session.user.id]);
-  const load = useCallback(() => loadDesk(supportPosition.current), [loadDesk]);
+  const load = useCallback(() => loadDesk(positions.current), [loadDesk]);
+  const loadSupportPage = useCallback(support => loadDesk({ ...positions.current, support }), [loadDesk]);
+  const loadPrivacyPage = useCallback(privacy => loadDesk({ ...positions.current, privacy }), [loadDesk]);
   useEffect(() => {
     void load();
     return () => { sequence.current++; batch.current?.abort(); };
@@ -178,12 +188,6 @@ function AdminDesk({ session }) {
       await rpc("admin_export_question_draft", { p_draft_id:id, p_external_key:externalKey, p_rights_confirmed:rightsConfirmed, p_rights_note:rightsNote });
       await load();
     } catch (e) { reportError(e); throw e; }
-  };
-  const resolvePrivacy = async (event, id) => {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    try { await rpc("admin_resolve_privacy_request", { p_id:id, p_status:form.get("status"), p_note:form.get("note") }); await load(); }
-    catch (e) { reportError(e); }
   };
   const configureMock = async (event, exam) => {
     event.preventDefault();
@@ -523,12 +527,8 @@ function AdminDesk({ session }) {
             ))}
           </div>
           </>}
-          <AdminSupportReports page={bugPage} navigate={loadDesk} refresh={load} />
-          <h2>Account privacy requests</h2>
-          <p>Closing a deletion request records completion of the separately verified operator process; this control never deletes an account by itself.</p>
-          <div className="admin-list">
-            {privacyRequests.length===0?<p>No account privacy requests.</p>:privacyRequests.map(request=><article key={request.id}><b>{request.type.replaceAll("_"," ")}</b><span className="status-pill">{request.status.replaceAll("_"," ")}</span><small>Private account reference: {request.userId}</small>{["open","in_progress"].includes(request.status)&&<form className="admin-reply" onSubmit={event=>resolvePrivacy(event,request.id)}><select name="status" defaultValue={request.status==="open"?"in_progress":request.status}><option value="in_progress">in progress</option><option value="closed">closed after verified handling</option><option value="declined">declined</option></select><input name="note" minLength="10" maxLength="2000" required placeholder="Operator action and retention note"/><button>Save privacy status</button></form>}{request.adminNote&&<p>{request.adminNote}</p>}</article>)}
-          </div>
+          <AdminSupportReports page={bugPage} navigate={loadSupportPage} refresh={load} />
+          <AdminPrivacyRequests page={privacyPage} navigate={loadPrivacyPage} refresh={load} />
     </>
   );
 }
