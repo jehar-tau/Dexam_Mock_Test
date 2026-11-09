@@ -14,7 +14,7 @@ function PurchaseSession(){
  return<>
   {!environment.production&&<p className="notice" role="status">Razorpay Test mode for approved acceptance testers. No live payment is taken.</p>}
   {state.status==='paid'?<div className="success" role="status">Your pass is active. <Link to="/dashboard">Open your workspace →</Link></div>:<>
-   <label className="terms-checkbox"><input type="checkbox" checked={accepted} disabled={!canPay} onChange={event=>setAccepted(event.target.checked)}/><span>I accept the <Link to="/terms">purchase terms</Link> and <Link to="/privacy">privacy notice</Link>.</span></label>
+   <label className="terms-checkbox"><input type="checkbox" checked={accepted&&state.status!=='notices-changed'} disabled={!canPay} onChange={event=>setAccepted(event.target.checked)}/><span>I accept the <Link to="/terms">purchase terms</Link> and <Link to="/privacy">privacy notice</Link>.</span></label>
    <button type="button" className="button full" disabled={!canPay||!accepted} onClick={()=>void flow.current?.start(accepted)}>
     {state.status==='verifying'?'Confirming your payment…':state.status==='opening'?'Opening Razorpay…':'Pay '+money(brand.price)+' with Razorpay'}<Arrow/>
    </button>
@@ -24,7 +24,7 @@ function PurchaseSession(){
   {state.status==='verifying'&&<p role="status">Waiting for the server to confirm your pass. A checkout message does not activate access.</p>}
   {state.status==='pending'&&<p role="status">Your payment is not confirmed here yet. Check your pass before trying another payment. If you paid and access remains inactive, contact support.</p>}
   {state.error&&<p className="error" role="alert">{state.error}</p>}
-  {!busy&&<button type="button" className="button quiet" onClick={()=>void flow.current?.refresh()}>Check my pass</button>}
+  {!busy&&state.status!=='notices-changed'&&<button type="button" className="button quiet" onClick={()=>void flow.current?.refresh()}>Check my pass</button>}
  </>;
 }
 export function Purchase({actorId,headingRef}){

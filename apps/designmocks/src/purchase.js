@@ -1,5 +1,7 @@
 import { withAccountDeadline } from './account-request.js';
 
+const noticeRevisionChanged = Symbol('notice revision changed');
+
 export function purchaseOrder(value, expectedMode) {
   if (!value || Array.isArray(value) || value.amount !== 119300 || value.currency !== 'INR' ||
       typeof value.orderId !== 'string' || !/^order_[A-Za-z0-9]{1,194}$/.test(value.orderId) ||
@@ -59,7 +61,7 @@ export function createPurchaseFlow({ services, termsVersion, loadCheckout = load
     return access;
   };
   async function refresh() {
-    if (!current() || busy || confirming || status === 'checkout') return false;
+    if (!current() || busy || confirming || status === 'checkout' || status === 'notices-changed') return false;
     busy = true; publish('checking');
     try {
       const access = await request(readPass);
@@ -95,7 +97,12 @@ export function createPurchaseFlow({ services, termsVersion, loadCheckout = load
     try {
       if (typeof termsVersion !== 'string' || !termsVersion.trim()) throw new Error('Terms unavailable.');
       await request(async signal => {
-        await services.rpc('accept_current_terms', { p_version: termsVersion }, signal);
+        try {
+          await services.rpc('accept_current_terms', { p_version: termsVersion }, signal);
+        } catch (error) {
+          if (error?.code === '22023') throw noticeRevisionChanged;
+          throw error;
+        }
         const { data, error } = await services.functions.invoke('create-order', { body: { plan: 'annual' }, signal });
         signal.throwIfAborted(); if (error) throw error;
         const order = purchaseOrder(data, expectedMode), Razorpay = await loadCheckout();
@@ -125,8 +132,12 @@ export function createPurchaseFlow({ services, termsVersion, loadCheckout = load
         }, signal);
       });
       return true;
-    } catch {
-      publish('unconfirmed', 'Couldn’t confirm checkout. Check your pass before trying again.');
+    } catch (error) {
+      if (error === noticeRevisionChanged) {
+        publish('notices-changed', 'The purchase notices have changed. Reload this page and review the current Terms and Privacy notice.');
+      } else {
+        publish('unconfirmed', 'Couldn’t confirm checkout. Check your pass before trying again.');
+      }
       closeWidget(); return false;
     } finally { busy = false; }
   }
