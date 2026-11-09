@@ -31,24 +31,24 @@ async function notify(page, user) {
 }
 
 async function fixture(page, { released = true, sharing = { publicationId, revision: 0, shared: false, alias }, identity = actor.id } = {}) {
-  const state = { writes: [], currentActor: identity, responseHold: null, publicRows: [] };
-  await stubPortalProvider(page, (name, input) => {
+  const state = { writes: [], currentActor: identity, responseHold: null, responseMode: 'success', serverShared: false, catalogReads: 0 };
+  await stubPortalProvider(page, (name) => {
     if (name === 'public_all_india_top_ten') return state.publicRows;
     if (name === 'all_india_event_catalog') {
+      state.catalogReads++;
+      const accountHasScope = state.currentActor === actor.id;
+      const currentSharing = accountHasScope && state.serverShared
+        ? { publicationId, revision: 1, shared: true, alias }
+        : accountHasScope ? sharing : null;
       return [{
-        id: eventId, exam: 'uceed', title: 'Fictional released UCEED event', state: released ? 'released' : 'review',
+        id: eventId, exam: 'uceed', title: accountHasScope ? 'Fictional released UCEED event' : 'Other account private result', state: released ? 'released' : 'review',
         startsAt: '2026-10-01T00:00:00Z', endsAt: '2026-10-01T01:00:00Z', lastStartAt: '2026-10-01T00:45:00Z',
         reviewEndsAt: '2026-10-02T00:00:00Z', durationSeconds: 3600, uploadGraceSeconds: 0,
         qualityHeld: false, attemptId: '20000000-0000-4000-8000-000000001901',
-        result: released ? { rank: 4, cohortSize: 48, score: 27, total: 30, ...(sharing == null ? {} : { sharing }) } : null,
+        result: released ? { rank: 4, cohortSize: 48, score: 27, total: 30, ...(currentSharing == null ? {} : { sharing: currentSharing }) } : null,
       }];
     }
     if (name === 'my_attempt_history') return [];
-    if (name === 'set_all_india_result_sharing') {
-      state.writes.push({ actor: state.currentActor, input });
-      return undefined;
-    }
-    if (name === 'start_all_india_attempt') return undefined;
     return undefined;
   });
   await page.route(`${api}/rest/v1/rpc/set_all_india_result_sharing`, async (route) => {
@@ -57,8 +57,10 @@ async function fixture(page, { released = true, sharing = { publicationId, revis
     const token = route.request().headers().authorization.split(' ')[1];
     const requestActor = JSON.parse(Buffer.from(token.split('.')[1], 'base64url')).sub;
     state.writes.push({ actor: requestActor, input });
+    state.serverShared = input.p_shared;
     if (state.responseHold) await state.responseHold.promise;
-    const responseActor = state.currentActor;
+    if (state.responseMode === 'error') return route.fulfill({ headers, status: 500, body: 'fixture transport failure' }).catch(() => {});
+    if (state.responseMode === 'malformed') return route.fulfill({ headers, json: { publicationId: 'invalid', revision: -1, shared: !input.p_shared, alias: 'not-an-alias' }, status: 200 }).catch(() => {});
     return route.fulfill({ headers, json: { publicationId, revision: input.p_expected_revision + 1, shared: input.p_shared, alias }, status: 200 })
       .catch(() => {});
   });
@@ -102,17 +104,36 @@ test('an in-flight sharing reply after account switch is discarded', async ({ pa
   await expect.poll(() => state.writes.length).toBe(1);
   state.currentActor = other.id;
   await notify(page, other);
+  await expect.poll(() => state.catalogReads).toBeGreaterThan(1);
+  await expect(page.getByRole('heading', { name: 'Other account private result', exact: true })).toBeVisible();
   held.resolve();
-  await expect(page.getByRole('alert')).toContainText('Mock access');
+  await expect(page.getByText('Public sharing is on.', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Public sharing is off.', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /public results/i })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Stop public sharing', exact: true })).toHaveCount(0);
   expect(state.writes).toHaveLength(1);
   expect(state.writes[0].actor).toBe(actor.id);
 });
 
+for (const responseMode of ['error', 'malformed']) {
+  test(`an unconfirmed sharing write stays blocked until refresh discovers server state (${responseMode})`, async ({ page }) => {
+    const state = await fixture(page);
+    state.responseMode = responseMode;
+    const share = page.getByRole('button', { name: 'Share on public results', exact: true });
+    await share.click();
+    await expect(page.getByRole('alert')).toHaveText('Couldn’t confirm public sharing. Refresh All India mocks to check your current choice.');
+    await expect(share).toBeDisabled();
+    expect(state.writes).toHaveLength(1);
+    await page.getByRole('button', { name: 'Refresh All India mocks', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Stop public sharing', exact: true })).toBeVisible();
+    await expect(page.getByRole('alert')).toHaveCount(0);
+    expect(state.writes).toHaveLength(1);
+  });
+}
+
 test('homepage publishes only current-version redacted ranking rows and reflows at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 760 });
   const state = {
-    writes: [], currentActor: actor.id, responseHold: null,
     publicRows: [
       {
         eventId: '40000000-0000-4000-8000-000000001901', exam: 'uceed', title: 'Legacy fictional event',
@@ -122,7 +143,7 @@ test('homepage publishes only current-version redacted ranking rows and reflows 
         eventId: '40000000-0000-4000-8000-000000001902', exam: 'nid', title: 'Published fictional event',
         releasedAt: '2026-10-06T12:00:00Z', sharingVersion: 1,
         topTen: [
-          { rank: 2, alias: 'Candidate-6', score: 28, total: 30 },
+          { rank: 2, alias: 'Candidate-000006', score: 28, total: 30 },
           { rank: 7, alias: 'Candidate-ABCDEF1234', score: 25, total: 30 },
         ],
       },
@@ -132,11 +153,10 @@ test('homepage publishes only current-version redacted ranking rows and reflows 
   await page.goto('/');
   const feed = page.locator('.all-india-highlights');
   await expect(feed.getByRole('heading', { name: /NID · Published fictional event/i })).toBeVisible();
-  await expect(feed.getByText('Candidate-6', { exact: true })).toBeVisible();
+  await expect(feed.getByText('Candidate-000006', { exact: true })).toBeVisible();
   await expect(feed.getByText('Candidate-ABCDEF1234', { exact: true })).toBeVisible();
   await expect(feed.getByText(/Candidate-AAAAAA|Legacy fictional event/)).toHaveCount(0);
-  await expect(feed.getByText('2')).toBeVisible();
+  await expect(feed.getByText('#2', { exact: true })).toBeVisible();
   await expect(feed.getByText('28/30')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
-  expect(state.writes).toEqual([]);
 });
