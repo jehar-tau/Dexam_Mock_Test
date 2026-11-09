@@ -3,6 +3,7 @@ import { CommunityController } from "./CommunityController.jsx";
 import { CommunityThread } from "./CommunityThread.jsx";
 import { CommunityReporting } from "./CommunityReporting.jsx";
 import { communityFeedFilters } from "./community-feed.js";
+import { PortalShell } from "./PortalShell.jsx";
 
 function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   if (!job) return null;
@@ -191,7 +192,7 @@ export function CommunityPreview() {
     comments: [{ id: "20000000-0000-4000-8000-000000000001", body: "Try labelling each statement fact or inference.", author: "Ravi", helpful: 2, media: [{ id: "m2", url: "/favicon.svg" }] }],
   };
   return (
-    <CommunityView
+    <PortalShell><CommunityView
       feedFilters={filters} onFilter={value=>setFilters(communityFeedFilters(value.exam,value.topic))}
       posts={[
         {
@@ -212,6 +213,6 @@ export function CommunityPreview() {
       onReport={() => undefined}
       onAddImages={(_target,files)=>{setM(`Preview: ${files.length} additional image${files.length===1?"":"s"} selected.`);return true;}}
       onSubmit={(f, files) => setM(`Preview post created: ${f.title} · ${files.length} image${files.length === 1 ? "" : "s"}`)}
-    />
+    /></PortalShell>
   );
 }

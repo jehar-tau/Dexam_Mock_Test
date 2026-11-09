@@ -66,24 +66,34 @@ test("student modules require authentication", async ({ page }) => {
   ).toBeVisible();
 });
 
-test("fictional portal preview exposes every requested navigation area", async ({
+test("fictional portal preview navigation opens dev-only module screens", async ({
   page,
 }) => {
+  const providerRequests = [];
+  page.on("request", request => {
+    if (/\.supabase\.co\//.test(request.url())) providerRequests.push(request.url());
+  });
   await page.goto("/portal-preview");
-  if ((page.viewportSize()?.width ?? 1000) < 900)
-    await page.getByRole("button", { name: "Student menu" }).click();
   const navigation = page.getByRole("navigation", {
     name: "Student workspace",
   });
-  for (const name of [
-    "Overview",
-    "Exam-wise mocks",
-    "All India mocks",
-    "Topic practice",
-    "Learn",
-    "Community",
-  ]) {
+  const destinations = [
+    ["Overview", "/portal-preview"],
+    ["Exam-wise mocks", "/exam-mocks-preview", /Pick your paper/],
+    ["All India mocks", "/all-india-preview", /One paper\. One attempt/],
+    ["Topic practice", "/topic-practice-preview", /Build a topic session/],
+    ["Learn", "/learn-preview", /Notice before you decide/],
+    ["Community", "/community-preview", /How do you separate observation from assumption/],
+  ];
+  const mobile = (page.viewportSize()?.width ?? 1000) < 900;
+  const openMenu = async () => {
+    const menu = page.locator(".portal-menu-button");
+    if (mobile && await menu.getAttribute("aria-expanded") !== "true") await menu.click();
+  };
+  await openMenu();
+  for (const [name, destination] of destinations) {
     await expect(navigation.getByRole("link", { name })).toBeVisible();
+    await expect(navigation.getByRole("link", { name })).toHaveAttribute("href", destination);
   }
   await expect(page.getByText("Sample Student")).toBeVisible();
   await expect(page.getByText("1 submitted attempt is awaiting results.")).toBeVisible();
@@ -93,6 +103,15 @@ test("fictional portal preview exposes every requested navigation area", async (
   await expect(page.getByLabel("Performance snapshot")).toContainText("80%");
   await expect(page.getByText("Visual hierarchy", { exact: true }).first()).toBeVisible();
   await expect(page.getByText("2 released", { exact: true })).toBeVisible();
+
+  for (const [name, destination, content] of destinations.slice(1)) {
+    await openMenu();
+    await navigation.getByRole("link", { name, exact: true }).click();
+    await expect(page).toHaveURL(destination);
+    await expect(page.getByText(content).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Sign in to continue|Sign in for/ })).toHaveCount(0);
+  }
+  expect(providerRequests).toEqual([]);
 });
 
 test("candidate profile validates and saves the complete preview flow", async ({
