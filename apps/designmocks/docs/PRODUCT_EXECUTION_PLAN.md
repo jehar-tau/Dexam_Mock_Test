@@ -4,7 +4,7 @@
 
 On 9 November the owner approved public access to **Site version 6**, and the native Sites deployment succeeded. The public informational site and original five-question sample now serve at **dmocks.com**. The version 6 archive matched the build from accepted source `e457196519a5d87cf1bc63b5e72e1793db6dde68`. The [release checklist](LAUNCH_CHECKLIST.md#public-non-payment-release) records the eight signed-out desktop and mobile routes.
 
-The public checks passed sample submission, result reload and all five explanations with zero provider requests. The policy notices visibly carry draft labels. Sign-in, account creation and checkout are disabled. The Site release involved only Site deployment and audience changes. The hosted backend, merchant configuration, first-paper approval and final policy approval remain separate gates.
+The public checks passed sample submission, result reload and all five explanations with zero provider requests. The policy notices visibly carry draft labels. Sign-in, account creation and checkout are disabled. The owner approved the exact first paper for the paid offering after hosted Test acceptance. Hosted backend promotion, merchant setup, hosted Test acceptance and final policy approval are separate release gates.
 
 The owner resumed Razorpay integration. Razorpay Onboarding confirmed approved KYC and account activation. The Test-mode dashboard showed automatic capture with a 12-minute window. Controlled checkout still requires fresh Test credentials, a signed webhook on the approved backend and a real provider journey. Live sales remain closed. Student and administrator portal work continues through controlled staging.
 
