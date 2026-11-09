@@ -47,6 +47,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learn-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/attempt-identity-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/payment-event-bindings.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/payment-refunds.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/purchase-history.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-reviewer-access.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learning-lesson-editor.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/staging-portal.sql

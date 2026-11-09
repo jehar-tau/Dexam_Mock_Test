@@ -152,6 +152,10 @@
     "category": "student"
   },
   {
+    "signature": "public.my_purchase_page(timestamp with time zone,uuid)",
+    "category": "student"
+  },
+  {
     "signature": "public.prepare_order()",
     "category": "student"
   },
