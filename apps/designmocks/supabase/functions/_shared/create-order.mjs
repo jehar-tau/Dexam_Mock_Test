@@ -1,9 +1,10 @@
 import { resolveProviderOrder } from './provider-order.mjs';
+import { reportCommerceFailure } from './commerce-operations.mjs';
 
 // The Edge entry point and isolated integration harness use this same handler.
 // Provider transport injection is a code dependency, never a configurable URL.
 export function createOrderHandler({ createClient, readEnvironment, providerFetch = globalThis.fetch,
-  sdkFetch = globalThis.fetch, timeoutMilliseconds = 18000 }) {
+  sdkFetch = globalThis.fetch, timeoutMilliseconds = 18000, reportFailure = reportCommerceFailure }) {
   return async request => {
     const origin = readEnvironment('PUBLIC_APP_ORIGIN');
     const cors = {
@@ -13,7 +14,10 @@ export function createOrderHandler({ createClient, readEnvironment, providerFetc
     };
     const json = (value, status = 200) => new Response(JSON.stringify(value), { status,
       headers: { ...cors, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
-    const unavailable = () => json({ error: 'Could not confirm checkout. Check your pass before trying again.' }, 503);
+    const unavailable = () => {
+      reportFailure('checkout_unconfirmed');
+      return json({ error: 'Could not confirm checkout. Check your pass before trying again.' }, 503);
+    };
     if (!origin || request.headers.get('origin') !== origin) return json({ error: 'Origin not allowed' }, 403);
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     if (request.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
@@ -33,7 +37,7 @@ export function createOrderHandler({ createClient, readEnvironment, providerFetc
     const boundedFetch = async (input, init = {}) => {
       deadline.signal.throwIfAborted();
       const signal = init.signal ? AbortSignal.any([init.signal, deadline.signal]) : deadline.signal;
-      const response = await sdkFetch(input, { ...init, signal });
+      const response = await sdkFetch(input, { ...init, signal, redirect: 'error' });
       deadline.signal.throwIfAborted();
       return response;
     };

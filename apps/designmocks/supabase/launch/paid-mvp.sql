@@ -325,15 +325,47 @@ end$$;
 
 create or replace function public.admin_operational_health()returns jsonb
 language plpgsql volatile security definer set search_path=pg_catalog,public,dm_private as $$
-declare stale integer;expired integer;pending integer;reviews integer;bugs integer;questions integer;
+declare
+ stamp timestamptz := clock_timestamp();
+ profile_ready boolean;
+ stale integer;
+ expired integer;
+ pending integer;
+ reviews integer;
+ bugs integer;
+ questions integer;
+ unverified integer;
 begin
- if auth.role()is distinct from'service_role'and not public.is_dmocks_admin()then raise exception 'Admin access required';end if;
- select count(*)filter(where deadline<clock_timestamp()-interval'5 minutes'),count(*)filter(where deadline<clock_timestamp())into stale,expired from dm_private.attempts where status='active';
- select count(*)filter(where status='pending'and created_at<clock_timestamp()-interval'30 minutes'),count(*)filter(where payment_review_required)into pending,reviews from dm_private.orders;
- select count(*)into bugs from dm_private.bug_reports where status in('open','investigating');
- select count(*)into questions from dm_private.reported_question_queue where status='pending';
- return jsonb_build_object('scope','paid-mvp-v1','status',case when stale>0 or pending>0 or reviews>0 then'degraded'when bugs>0 or questions>0 then'attention'else'healthy'end,'checkedAt',clock_timestamp(),
- 'staleAttempts',stale,'expiredAttempts',expired,'stalePendingOrders',pending,'paymentReviews',reviews,'openBugs',bugs,'pendingQuestionReports',questions);
+ if auth.role() is distinct from 'service_role' and not public.is_dmocks_admin() then
+  raise exception 'Admin access required';
+ end if;
+ profile_ready := dm_private.mvp_profile_permissions_valid();
+ select count(*) filter (where deadline < stamp - interval '5 minutes'), count(*) filter (where deadline < stamp)
+   into stale, expired from dm_private.attempts where status = 'active';
+ select count(*) filter (where status = 'pending' and created_at < stamp - interval '30 minutes'),
+   count(*) filter (where payment_review_required)
+   into pending, reviews from dm_private.orders;
+ select count(*) into bugs from dm_private.bug_reports where status in ('open','investigating');
+ select count(*) into questions from dm_private.reported_question_queue where status = 'pending';
+ -- Historic capture receipts predate request hashes and the granted outcome.
+ -- Their migrated order and payment binding remains sufficient for this check.
+ select count(*) into unverified from dm_private.passes p
+ where p.revoked_at is null and p.expires_at > stamp
+   and not exists (
+     select 1 from dm_private.orders o join dm_private.payment_events e on e.order_id = o.id
+     where o.id = p.order_id and o.user_id = p.user_id and o.mode = p.mode and o.status = 'paid'
+       and o.provider_order_id is not null and o.paid_at is not null and o.refunded_amount < o.amount
+       and e.payment_id = o.payment_id and e.event_type = 'payment.captured'
+       and ((e.outcome = 'granted' and e.request_hash is not null)
+         or (e.outcome = 'received' and e.request_hash is null))
+   );
+ return jsonb_build_object(
+   'scope','paid-mvp-v1', 'monitorVersion',1, 'apiProfileReady',profile_ready, 'checkedAt',stamp,
+   'status',case when not profile_ready or unverified > 0 or stale > 0 or pending > 0 or reviews > 0 then 'degraded'
+     when bugs > 0 or questions > 0 then 'attention' else 'healthy' end,
+   'staleAttempts',stale, 'expiredAttempts',expired, 'stalePendingOrders',pending, 'paymentReviews',reviews,
+   'openBugs',bugs, 'pendingQuestionReports',questions, 'unverifiedPasses',unverified
+ );
 end$$;
 
 -- Deny every application RPC by default. Auth hooks retain their explicit
