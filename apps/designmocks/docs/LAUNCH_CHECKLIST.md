@@ -1,6 +1,6 @@
 # DMocks release checklist
 
-[PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. The owner moved payments to a later phase. The informational site and free sample have their own release path while work on the student and administrator portal continues.
+[PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. The informational site and free sample have their own release path. Controlled Razorpay Test integration and student and administrator staging continue in parallel.
 
 ## Public non-payment release
 
@@ -19,11 +19,12 @@
 - [ ] Resolve the hosted target role and capture and restore the approved target's backup. The project dashboard returned Healthy and the CA and native clients passed local verification. The observed ledger has 25 of 76 migrations, including a pending staging admission migration `202611060128_private_staging_portal.sql`.
 - [ ] After approved target recovery and matching migration/function promotion, rerun the exact-origin staging admission, protected-route, account isolation and server authorization checks. Keep the public informational Site independent of this work.
 
-## Later owner-led paid MVP
+## Controlled Razorpay Test and paid MVP
 
-Payment and sales remain closed until that later phase's acceptance. Public account admission is a separate gate; the controlled tester policy for private non-payment portal verification remains as described above. Historical full-portal completion does not substitute for those gates.
+Run checkout inside the approved, expiring Test window after the requirements below pass. Public account admission and Live sales stay closed until their own acceptance.
 
 - [x] Independent DMocks identity/store/brand and active HTTPS domain; private Google callback/PKCE, reload/refresh, sign-out, returning account and cancellation acceptance exist.
+- [x] Record the owner's completed video KYC report and verify dashboard Test access. Razorpay shows the account as activated with Limited access and website setup pending. The previously generated Test pair needs replacement and the Test webhook list is empty.
 - [x] Public-site/free-sample source and local/CI verification exist. PR #98 is accepted on main with 294 selected zero-retry MVP desktop/mobile journeys.
 - [x] Hide/mark deferred modules and remove unverified public catalogue/service promises; desktop/mobile and production override checks pass. Checkout has a separate, closed switch.
 - [x] Record owner approval of empty-holds canonical material as adapted student recollections, preserving source labels. Verify all 2,085 referenced canonical figures against the local read-only source.
@@ -38,6 +39,7 @@ Payment and sales remain closed until that later phase's acceptance. Public acco
 - [ ] Validate recovery for the approved target with a fresh ledger, separate key custody, an offsite copy, recovery objectives and operator scheduling.
 - [ ] Configure an expiring controlled Test window only after final content/policy decisions and verified Google tester allowlisting. Keep provider acceptance false until the real journey succeeds, public registration/sales closed and mode Test. Close the window explicitly before Live promotion.
 - [ ] Replace/deactivate the previously exposed Razorpay Test pair, enter fresh server secrets privately and configure the correct signed webhook. Never place secrets in Vite, Git, logs or chat.
+- [ ] Verify configured checkout CORS, anonymous rejection and unsigned webhook rejection on the approved target using the read-only commerce probe. Then verify actual Test capture, delivery and refund separately.
 - [ ] Approve/publish final operator, support/contact, privacy, purchase terms, refund/cancellation and tax/invoice details; resolve younger-student policy and retention/deletion handling.
 - [ ] Choose the approved provider/deployment target. Inspect the current hosted ledger; validate database plus private-media backup/restore and promote only matching tested source/functions.
 - [ ] Connect the operations monitor and payment Edge error signals to the approved alert receiver. Verify delivery, support and incident actions. Keep initial capacity checks proportional to fewer than 100 concurrent users. [Operations runbook](OPERATIONS_RUNBOOK.md)
