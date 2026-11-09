@@ -32,7 +32,7 @@ const responseEnvelope = {
   payloadText,
   rightsNote: "Fictional rights record for browser regression coverage.",
   createdAt: "2026-11-10T00:00:00.000Z",
-  sourceType: "original",
+  sourceType: "manual",
   publicationState: "git-review-required",
 };
 
@@ -68,6 +68,7 @@ async function openQueue(page, { adminAccess = true, exportSummary = true } = {}
 }
 
 test("an approved exported question downloads its verified immutable review packet", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 760 });
   const state = await openQueue(page);
   const pendingCard = page.getByRole("article").filter({ hasText: "Fictional pending question" });
   await expect(pendingCard).toBeVisible();
@@ -150,7 +151,7 @@ test("role revoked while an export reply is held prevents the packet download", 
   state.setAdminRole(false);
   releaseReply();
 
-  await expect(page.getByText("This account is not an administrator.", { exact: true })).toBeVisible();
+  await expect(page.getByText("Administrator access has ended. Private views were cleared.", { exact: true })).toBeVisible();
   expect(downloads).toHaveLength(0);
   expect(state.calls).toContainEqual(["admin_read_question_export", { p_export_id: exportId }]);
   expect(state.calls.filter(([name]) => name === "is_dmocks_admin").length).toBeGreaterThan(1);
