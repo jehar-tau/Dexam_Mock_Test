@@ -114,7 +114,7 @@ function StudentLearn({headingRef}) {
 export function LearnPreview() {
   const [m, setM] = useState("");
   return (
-    <LearnView
+    <PortalShell><LearnView
       lessons={[
         {
           id: "1",
@@ -145,6 +145,6 @@ export function LearnPreview() {
       }}
       message={m}
       onOpen={(l) => setM(`Preview lesson opened: ${l.title}`)}
-    />
+    /></PortalShell>
   );
 }
