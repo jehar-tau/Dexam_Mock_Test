@@ -50,7 +50,7 @@ function providerFailure(operation, httpStatus) {
   return error;
 }
 
-export async function openPrivateBankProvider(config, { fetchImpl = fetch, acknowledgement = "USE_PRIVATE_BANK_ON" } = {}) {
+export function openPrivateDMocksTransport(config, { fetchImpl = fetch, acknowledgement = "USE_PRIVATE_BANK_ON" } = {}) {
   const { origin, secret, key } = targetConfiguration(config, acknowledgement);
   function fetchFromTarget(input, init = {}) {
     const request = input instanceof Request ? input : null;
@@ -86,10 +86,15 @@ export async function openPrivateBankProvider(config, { fetchImpl = fetch, ackno
     catch { throw providerFailure(operation); }
   }
 
+  return { origin, fetch: fetchFromTarget, rpc };
+}
+
+export async function openPrivateBankProvider(config, options) {
+  const provider = openPrivateDMocksTransport(config, options);
   // Check the installed application before sending source rows, runtime plans or files.
-  const health = await rpc("admin_operational_health");
+  const health = await provider.rpc("admin_operational_health");
   if (health?.scope !== "paid-mvp-v1" || health.monitorVersion !== 1 || health.apiProfileReady !== true) {
     throw new Error("The approved target must have the current DMocks paid MVP profile");
   }
-  return { origin, fetch: fetchFromTarget, rpc };
+  return provider;
 }
