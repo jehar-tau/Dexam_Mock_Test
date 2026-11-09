@@ -1,10 +1,24 @@
-# DMocks paid MVP execution plan
+# DMocks release execution plan
+
+## Current nonpayment work (9 November 2026)
+
+The owner will handle payment setup later. Work on the full student and administrator plan continues through controlled staging. The first public release consists of the informational site and the original five-question sample, with account sign-in and checkout closed.
+
+The public candidate comes from accepted source `e457196519a5d87cf1bc63b5e72e1793db6dde68`. The build passed signed-out desktop and mobile checks through sample submission, result reload and all five explanations. The 16 site files and hosting manifest matched the archive uploaded as **Site version 6**. The receipt is `.dmocks-local-evidence/site-public-release-2026-11-09/native-site-save-progress.json`. Changes through `086ab363602219e44ba592c007909ac1fd8046e5` affected recovery scripts, documentation and tests. At this checkpoint version 5 served the owner-only site and version 6 was saved for review.
+
+For the static release, obtain the public-audience decision, check the saved version against the receipt, deploy it, and verify signed-out direct routes on dmocks.com. Return access to owner-only if verification fails. This release is independent of backend promotion, purchase policies and merchant setup.
+
+The current source passed a real controlled Google callback, reload, refresh, local sign-out and returning-account sign-in. The private UCEED Part A review also shows the exact 57 questions and figures. Keep paper review separate from release. Full nonpayment staging uses the explicit staging build with the preview modules enabled and checkout closed. Use the full migration set on the approved private staging backend. The paid MVP companion restricts APIs used by Learn, Community, advanced practice and drawing review.
+
+Before hosted staging, resolve the target role, capture and restore the approved target's backup, and promote the matching migrations and functions. The existing dashboard returned Healthy and the CA and PostgreSQL 17.11 clients passed local recovery verification. The last observed ledger has 25 of 76 migrations. Hosted staging requires migration `202611060128`, exact approved frontend and backend origins, and the server admission check for a confirmed allowlisted Google tester. Keep registration policy at `testers`, environment mode at `test`, and sales closed during that verification.
+
+Public account admission has its own privacy, terms, younger-student and provider gates. The signup hook starts closed and admits Google accounts according to the server-owned policy. Checkout has separate build flags, purchase notices and sales decisions for the later owner-led phase.
 
 Owner rights clarification (8 November): Design Exam Academy confirms ownership or permission for all 2,582 hold-free canonical questions as original/adapted practice material, not verbatim protected official papers. Legacy labels remain as source history and no longer establish the collection-level rights conclusion. The PR #104 baseline supports 1,502 objective records; strict exact-literal NAT alternatives add seven (five UCEED/two CEED), making current compiler capability 1,509 objective records, 361 other supported conversions and 712 conversion/context blockers. The initial fixed offering remains unchanged. None is automatically hosted-ready or published. Exact-version approval still requires active, hold-free records and verified required media. Never mass-update flags directly.
 
-Owner scope freeze: **8 November 2026**. This plan replaces the full-portal launch scope and the earlier deferral of payment work. Continue only work needed for the first safe paid customer journey. Do not add another portal slice to improve the completion percentage.
+The **8 November 2026** scope defines the first paid offering. The wider product plan remains in the execution backlog and follows the nonpayment staging and release checks above. The owner will resume the commerce steps below when ready.
 
-## Launch Now
+## Later paid-MVP requirements
 
 1. The public DMocks site and original free five-question sample. Describe only released offerings; mark unsupported exam/programme routes coming later.
 2. Controlled Google authentication, an independent DMocks account, minimal necessary account details, sign-out and account isolation. Public admission stays closed until the final notices and provider checks are accepted.
@@ -44,7 +58,7 @@ The owner has resolved bank use: use all and only records whose `holds` is an ex
 
 The read-only media source is `~/Documents/Default Project/Dexam_Mock_Test/server/data/media/`. All **2,085 canonical assets referenced by eligible records** pass hashes, dimensions and bytes. A deterministic private **UCEED Part A - Practice Mock 01** candidate contains **57 questions, 57 verified figures, 120 minutes and 200 points**. The private manifest/rendering packet remains outside tracked/public source and every one of its runtime payloads is unchanged by numeric alternatives. Current compiler/local-media support is 835 objective UCEED records; unsupported answers/types stay unavailable. The exact first offering still needs final presentation and explicit release acceptance.
 
-**Planning estimate: approximately half of frozen-MVP launch readiness remains.** Count accepted launch evidence, not optional modules or test volume.
+**Historical planning estimate for the paid MVP: approximately half of its launch readiness remained at the 8 November checkpoint.** This estimate does not describe the current non-payment preview. Count accepted launch evidence, not optional modules or test volume.
 
 | Frozen workstream | Weight | Accepted estimate | Remaining evidence |
 | --- | ---: | ---: | --- |

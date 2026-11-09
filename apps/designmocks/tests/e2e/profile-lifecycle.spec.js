@@ -29,9 +29,13 @@ async function fixture(page,{identity=null,readFailure=null,holdRead=null,identi
 }
 
 test('switching accounts clears the previous private profile before the next read completes',async({page})=>{
- const state=await fixture(page),held=deferred();state.holds[second.id]=held;await page.getByRole('textbox',{name:'City',exact:true}).fill('An unsent original fictional first-account city');
+ const state=await fixture(page),held=deferred();state.holds[second.id]=held;
+ state.profiles[first.id]={...firstProfile,phoneVerified:true,completed:true};
+ await page.getByRole('button',{name:'Reload profile',exact:true}).click();
+ await expect(page.getByRole('textbox',{name:'Phone number',exact:true})).toHaveAccessibleDescription('Your saved phone number is verified.');
+ await page.getByRole('textbox',{name:'City',exact:true}).fill('An unsent original fictional first-account city');
  await changeAccount(page,state,second);await expect.poll(()=>state.reads[second.id]??0).toBeGreaterThan(0);
- await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toHaveCount(0);held.resolve();await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toHaveValue(secondProfile.displayName);await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue(secondProfile.city);expect(state.saves).toEqual([]);
+ await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toHaveCount(0);held.resolve();await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toHaveValue(secondProfile.displayName);await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue(secondProfile.city);await expect(page.getByRole('textbox',{name:'Phone number',exact:true})).toHaveAccessibleDescription(/Phone verification is currently unavailable/);expect(state.saves).toEqual([]);
 });
 
 test('same-route history changes clear private profile drafts and reload current details',async({page})=>{
@@ -59,15 +63,15 @@ test('an old profile read cannot replace a newer account or its new draft',async
 });
 
 test('a committed old-account save cannot acknowledge or clear a new-account draft',async({page})=>{
- const state=await fixture(page),held=deferred();state.saveHold=held;await page.getByRole('textbox',{name:'City',exact:true}).fill('Original fictional first-account submitted city');await page.getByRole('button',{name:'Save profile',exact:true}).click();await expect.poll(()=>state.saves.length).toBe(1);await changeAccount(page,state,second);await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toHaveValue(secondProfile.displayName);await page.getByRole('textbox',{name:'City',exact:true}).fill('A new original fictional second-account city');held.resolve();await expect.poll(()=>state.completedSaves).toBe(1);await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue('A new original fictional second-account city');await expect(page.getByText('Profile saved. Phone verification is still required.',{exact:true})).toHaveCount(0);expect(state.saves).toHaveLength(1);
+ const state=await fixture(page),held=deferred();state.saveHold=held;await page.getByRole('textbox',{name:'City',exact:true}).fill('Original fictional first-account submitted city');await page.getByRole('button',{name:'Save profile',exact:true}).click();await expect.poll(()=>state.saves.length).toBe(1);await changeAccount(page,state,second);await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toHaveValue(secondProfile.displayName);await page.getByRole('textbox',{name:'City',exact:true}).fill('A new original fictional second-account city');held.resolve();await expect.poll(()=>state.completedSaves).toBe(1);await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue('A new original fictional second-account city');await expect(page.getByText('Profile saved.',{exact:true})).toHaveCount(0);expect(state.saves).toHaveLength(1);
 });
 
 test('a save completion cannot clear the newer draft after same-route history changes',async({page})=>{
- const state=await fixture(page),held=deferred();state.saveHold=held;await page.getByRole('button',{name:'Save profile',exact:true}).click();await expect.poll(()=>state.saves.length).toBe(1);await page.evaluate(()=>{history.pushState({...history.state,key:'new-pending-profile-entry'},'',location.href);dispatchEvent(new PopStateEvent('popstate',{state:history.state}));});await expect(page.getByRole('button',{name:'Save profile',exact:true})).toBeEnabled();await page.getByRole('textbox',{name:'City',exact:true}).fill('A newer original fictional history draft');held.resolve();await expect.poll(()=>state.completedSaves).toBe(1);await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue('A newer original fictional history draft');await expect(page.getByText('Profile saved. Phone verification is still required.',{exact:true})).toHaveCount(0);
+ const state=await fixture(page),held=deferred();state.saveHold=held;await page.getByRole('button',{name:'Save profile',exact:true}).click();await expect.poll(()=>state.saves.length).toBe(1);await page.evaluate(()=>{history.pushState({...history.state,key:'new-pending-profile-entry'},'',location.href);dispatchEvent(new PopStateEvent('popstate',{state:history.state}));});await expect(page.getByRole('button',{name:'Save profile',exact:true})).toBeEnabled();await page.getByRole('textbox',{name:'City',exact:true}).fill('A newer original fictional history draft');held.resolve();await expect.poll(()=>state.completedSaves).toBe(1);await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue('A newer original fictional history draft');await expect(page.getByText('Profile saved.',{exact:true})).toHaveCount(0);
 });
 
 test('an uncertain timed-out save freezes input until an explicit read without resending',async({page})=>{
- await page.clock.install();const state=await fixture(page),held=deferred();state.saveHold=held;await page.getByRole('textbox',{name:'City',exact:true}).fill('Original fictional uncertain saved city');await page.getByRole('button',{name:'Save profile',exact:true}).click();await expect.poll(()=>state.saves.length).toBe(1);await page.clock.fastForward(20001);await expect(page.getByRole('status')).toContainText('Couldn’t confirm your saved profile');await expect(page.getByRole('textbox',{name:'City',exact:true})).toBeDisabled();await page.locator('.candidate-profile-form').evaluate(form=>form.requestSubmit());expect(state.saves).toHaveLength(1);await page.getByRole('button',{name:'Reload profile',exact:true}).click();await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue('Original fictional uncertain saved city');await expect(page.getByRole('button',{name:'Save profile',exact:true})).toBeEnabled();await page.getByRole('textbox',{name:'City',exact:true}).fill('A newer draft after checking the actual saved values');held.resolve();await expect.poll(()=>state.completedSaves).toBe(1);await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue('A newer draft after checking the actual saved values');expect(state.saves).toHaveLength(1);
+ await page.clock.install();const state=await fixture(page),held=deferred();state.saveHold=held;await page.getByRole('textbox',{name:'City',exact:true}).fill('Original fictional uncertain saved city');await page.getByRole('button',{name:'Save profile',exact:true}).click();await expect.poll(()=>state.saves.length).toBe(1);await page.clock.fastForward(20001);await expect(page.getByRole('status')).toContainText('Couldn’t confirm your saved profile');await expect(page.getByRole('textbox',{name:'Phone number',exact:true})).toHaveAccessibleDescription('Reload your profile to confirm the saved phone status.');await expect(page.getByRole('textbox',{name:'City',exact:true})).toBeDisabled();await page.locator('.candidate-profile-form').evaluate(form=>form.requestSubmit());expect(state.saves).toHaveLength(1);await page.getByRole('button',{name:'Reload profile',exact:true}).click();await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue('Original fictional uncertain saved city');await expect(page.getByRole('button',{name:'Save profile',exact:true})).toBeEnabled();await page.getByRole('textbox',{name:'City',exact:true}).fill('A newer draft after checking the actual saved values');held.resolve();await expect.poll(()=>state.completedSaves).toBe(1);await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue('A newer draft after checking the actual saved values');expect(state.saves).toHaveLength(1);
 });
 
 test('read failure and invalid profile data require explicit recovery without private diagnostics',async({page})=>{
@@ -86,13 +90,34 @@ test('an unconfirmed server snapshot cannot acknowledge a profile save',async({p
  const state=await fixture(page);state.saveResponse={...firstProfile,city:'A different unconfirmed original fictional city'};await page.getByRole('button',{name:'Save profile',exact:true}).click();await expect(page.getByRole('status')).toContainText('Couldn’t confirm your saved profile');await expect(page.getByRole('textbox',{name:'City',exact:true})).toBeDisabled();await page.getByRole('button',{name:'Reload profile',exact:true}).click();await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue(firstProfile.city);await expect(page.getByRole('button',{name:'Save profile',exact:true})).toBeEnabled();expect(state.saves).toHaveLength(1);
 });
 
-test('stored server verification is preserved in the acknowledgement and cannot be supplied in the write',async({page})=>{
- const state=await fixture(page);state.profiles[first.id]={...firstProfile,phoneVerified:true,completed:true};await page.getByRole('button',{name:'Reload profile',exact:true}).click();await expect(page.getByRole('textbox',{name:'City',exact:true})).toHaveValue(firstProfile.city);await page.getByRole('button',{name:'Save profile',exact:true}).click();await expect(page.getByText('Profile saved. Your phone is verified.',{exact:true})).toBeVisible();expect(state.saves).toEqual([{p_display_name:firstProfile.displayName,p_phone:firstProfile.phone,p_appearing_year:firstProfile.appearingYear,p_city:firstProfile.city,p_exams:firstProfile.exams}]);
+test('stored phone verification is visible on reload and stays bound to the saved number',async({page})=>{
+ const state=await fixture(page);
+ const phone=page.getByRole('textbox',{name:'Phone number',exact:true});
+ const save=page.getByRole('button',{name:'Save profile',exact:true});
+ await expect(phone).toHaveAccessibleDescription(/Phone verification is currently unavailable/);
+ state.profiles[first.id]={...firstProfile,phoneVerified:true,completed:true};
+ await page.getByRole('button',{name:'Reload profile',exact:true}).click();
+ await expect(phone).toHaveAccessibleDescription('Your saved phone number is verified.');
+ await save.click();
+ await expect(page.getByText('Profile saved.',{exact:true})).toBeVisible();
+ await expect(phone).toHaveAccessibleDescription('Your saved phone number is verified.');
+ expect(state.saves).toEqual([{p_display_name:firstProfile.displayName,p_phone:firstProfile.phone,p_appearing_year:firstProfile.appearingYear,p_city:firstProfile.city,p_exams:firstProfile.exams}]);
+ await phone.fill('+919000001203');
+ await expect(phone).toHaveAccessibleDescription(/Saving a different number clears the previous phone verification/);
+ const held=deferred();
+ state.saveHold=held;
+ await save.click();
+ await expect(phone).toBeDisabled();
+ await expect(phone).toHaveAccessibleDescription(/Saving a different number clears the previous phone verification/);
+ held.resolve();
+ await expect(page.getByText('Profile saved.',{exact:true})).toBeVisible();
+ await expect(phone).toHaveAccessibleDescription(/Phone verification is currently unavailable/);
+ expect(state.saves[1]).toEqual({...state.saves[0],p_phone:'+919000001203'});
 });
 
 test('empty profiles, validation and long values support keyboard, WCAG and 320px in both themes',async({page})=>{
  const state=await fixture(page);state.profiles[first.id]={};await page.getByRole('button',{name:'Reload profile',exact:true}).click();await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toHaveValue('');await page.getByRole('button',{name:'Save profile',exact:true}).press('Enter');await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toHaveAttribute('aria-invalid','true');await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toBeFocused();expect(state.saves).toEqual([]);
- await page.getByRole('textbox',{name:'Student name',exact:true}).fill('N'.repeat(100));await page.getByRole('textbox',{name:'Phone number',exact:true}).fill('+919000001211');await page.getByRole('textbox',{name:'City',exact:true}).fill('C'.repeat(120));await page.getByLabel('UCEED',{exact:true}).check();await page.getByRole('button',{name:'Save profile',exact:true}).press('Enter');await expect(page.getByText('Profile saved. Phone verification is still required.',{exact:true})).toBeVisible();
+ await page.getByRole('textbox',{name:'Student name',exact:true}).fill('N'.repeat(100));await page.getByRole('textbox',{name:'Phone number',exact:true}).fill('+919000001211');await page.getByRole('textbox',{name:'City',exact:true}).fill('C'.repeat(120));await page.getByLabel('UCEED',{exact:true}).check();await page.getByRole('button',{name:'Save profile',exact:true}).press('Enter');await expect(page.getByText('Profile saved.',{exact:true})).toBeVisible();
  await page.setViewportSize({width:320,height:740});await page.addScriptTag({path:'node_modules/axe-core/axe.min.js'});for(const dark of[false,true]){if(dark)await page.getByRole('switch',{name:'Dark mode',exact:true}).click();await expect.poll(()=>page.getByRole('button',{name:'Save profile',exact:true}).evaluate(node=>getComputedStyle(node).backgroundColor)).toBe(dark?'rgb(220, 235, 161)':'rgb(36, 71, 53)');expect(await page.evaluate(async()=>(await window.axe.run('[aria-label="Profile access"]',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}})).violations.map(item=>({id:item.id,nodes:item.nodes.map(node=>node.target)})))).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=320)).toBe(true);}
 });
 

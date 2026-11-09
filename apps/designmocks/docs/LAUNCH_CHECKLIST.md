@@ -1,8 +1,27 @@
-# DMocks frozen paid MVP launch checklist
+# DMocks release checklist
 
-Scope frozen by the owner on **8 November 2026**. [PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. Payment work is resumed for this MVP; purchases and public registration stay closed until acceptance. Historical full-portal completion does not substitute for the gates below.
+[PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. The owner moved payments to a later phase. The informational site and free sample have their own release path while work on the student and administrator portal continues.
 
-## Launch Now
+## Public non-payment release
+
+- [x] Verify the signed-out landing page and free sample on desktop and mobile. Sample completion, result reload and all five explanations passed with zero provider requests.
+- [x] Save the candidate as Site version 6. The upload matched all 17 files in the verified archive. The private save receipt is `.dmocks-local-evidence/site-public-release-2026-11-09/native-site-save-progress.json`.
+- [ ] Recheck the live Site source and version 5 owner-only audience. Verify version 6 against the save receipt before deployment.
+- [ ] Obtain the explicit public-audience decision, then deploy version 6 and verify signed-out direct routes on dmocks.com. Restore owner-only access if checks fail.
+- [x] Use the static build with account creation, bank publication and checkout closed.
+
+## Non-payment portal verification (separate from Site publication)
+
+- [x] Verify real controlled Google sign-in, reload, refresh, sign-out and returning-account sign-in on the current local build.
+- [x] Prepare the exact 57-question UCEED paper for private review on desktop and mobile.
+- [ ] Verify the full student and staff workspace using the staging build, the complete migration set and approved exact origins. Enable the staging preview modules and keep checkout closed.
+- [ ] Verify confirmed Google identity against the server tester allowlist while registration policy is `testers`, environment mode is `test`, sales are closed, and `can_enter_staging_portal()` allows access. Public registration has its own approval.
+- [ ] Resolve the hosted target role and capture and restore the approved target's backup. The project dashboard returned Healthy and the CA and native clients passed local verification. The observed ledger has 25 of 76 migrations, including a pending staging admission migration `202611060128_private_staging_portal.sql`.
+- [ ] After approved target recovery and matching migration/function promotion, rerun the exact-origin staging admission, protected-route, account isolation and server authorization checks. Keep the public informational Site independent of this work.
+
+## Later owner-led paid MVP
+
+Payment and sales remain closed until that later phase's acceptance. Public account admission is a separate gate; the controlled tester policy for private non-payment portal verification remains as described above. Historical full-portal completion does not substitute for those gates.
 
 - [x] Independent DMocks identity/store/brand and active HTTPS domain; private Google callback/PKCE, reload/refresh, sign-out, returning account and cancellation acceptance exist.
 - [x] Public-site/free-sample source and local/CI verification exist. PR #98 is accepted on main with 294 selected zero-retry MVP desktop/mobile journeys.
@@ -35,7 +54,7 @@ NID/unsupported programmes; All India events/rankings/top-ten; Community; Learn/
 
 ## Current boundaries
 
-- dmocks.com remains owner-private on an older controlled-login publication. No hosted write or promotion is implied by source merges.
+- dmocks.com remains owner-private on an older controlled-login publication until the public-audience step above is separately approved and verified. No hosted write or promotion is implied by source merges.
 - Public signup, real content publication and checkout are closed. Model calls remain disabled.
 - The staging-target question is already pending; avoid duplicate requests.
 - Never treat human question review as content-rights approval, draft policies as final policies, local fixture payments as a real provider journey, or source migrations as applied hosted migrations.

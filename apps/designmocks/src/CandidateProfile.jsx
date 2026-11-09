@@ -2,10 +2,11 @@ import React,{useEffect,useId,useLayoutEffect,useRef,useState}from'react';
 import {Link,useLocation}from'react-router-dom';
 import {useAuthState}from'./useAuth.js';
 import {AccountAccessBoundary,useAccountServices}from'./AccountAccess.jsx';
-import {candidateExams,candidateProfileDefaults,candidateProfileResponse,candidateSaveFailure,validateCandidateProfile}from'./profileModel.mjs';
+import {candidateExams,candidateProfileDefaults,candidateProfileResponse,candidateSaveFailure,normalizeCandidateProfile,validateCandidateProfile}from'./profileModel.mjs';
 
-export function CandidateProfileForm({initial={},onSave,preview=false}){
+export function CandidateProfileForm({initial={},initialPhoneVerified=false,onSave,preview=false}){
  const[value,setValue]=useState(()=>({...candidateProfileDefaults(),...initial,exams:[...(initial.exams??[])]}));
+ const[savedPhone,setSavedPhone]=useState(()=>({number:initial.phone,verified:initialPhoneVerified}));
  const[errors,setErrors]=useState({}),[message,setMessage]=useState(''),[busy,setBusy]=useState(false),[uncertain,setUncertain]=useState(false);
  const prefix=useId(),lifetime=useRef(null),action=useRef(null),fields=useRef({}),invalidFocus=useRef(false);
  useLayoutEffect(()=>{const controller=new AbortController();lifetime.current=controller;return()=>{controller.abort();action.current?.abort();};},[]);
@@ -19,16 +20,25 @@ export function CandidateProfileForm({initial={},onSave,preview=false}){
   const current=()=>!controller.signal.aborted&&!lifetime.current.signal.aborted&&action.current===controller;
   try{
    const saved=await onSave(snapshot,{signal});signal.throwIfAborted();if(!current())return;
-   setValue({...snapshot,exams:[...snapshot.exams]});setMessage(preview?'Preview profile saved for this session.':saved.phoneVerified?'Profile saved. Your phone is verified.':'Profile saved. Phone verification is still required.');
+   setValue({...snapshot,exams:[...snapshot.exams]});
+   if(!preview)setSavedPhone({number:saved.values.phone,verified:saved.phoneVerified});
+   setMessage(preview?'Preview profile saved for this session.':'Profile saved.');
   }catch(error){if(current()){const failure=candidateSaveFailure(error);setUncertain(failure.uncertain);setMessage(failure.message);}}
   finally{clearTimeout(timer);if(action.current===controller){action.current=null;if(!lifetime.current.signal.aborted)setBusy(false);}}
  };
  const locked=busy||uncertain;
+ let phoneNote='Include +91 for an Indian number.';
+ if(!preview){
+  if(uncertain)phoneNote='Reload your profile to confirm the saved phone status.';
+  else if(!savedPhone.verified)phoneNote='Include +91 for an Indian number. Phone verification is currently unavailable in this workspace.';
+  else if(normalizeCandidateProfile(value).phone===savedPhone.number)phoneNote='Your saved phone number is verified.';
+  else phoneNote='Saving a different number clears the previous phone verification.';
+ }
  const attributes=field=>({ref:node=>{fields.current[field]=node;},'aria-invalid':Boolean(errors[field]),'aria-describedby':errors[field]?prefix+'-'+field+'-error':undefined});
  const error=field=>errors[field]&&<span className="profile-error" id={prefix+'-'+field+'-error'}>{errors[field]}</span>;
  return<form className="candidate-profile-form" onSubmit={submit} noValidate>
   <div className="profile-field"><label htmlFor={prefix+'-name'}>Student name</label><input id={prefix+'-name'} {...attributes('displayName')} value={value.displayName} onChange={event=>change('displayName',event.target.value)} autoComplete="name" disabled={locked}/>{error('displayName')}</div>
-  <div className="profile-field"><label htmlFor={prefix+'-phone'}>Phone number</label><input id={prefix+'-phone'} {...attributes('phone')} aria-describedby={[errors.phone?prefix+'-phone-error':null,prefix+'-phone-note'].filter(Boolean).join(' ')} value={value.phone} onChange={event=>change('phone',event.target.value)} inputMode="tel" autoComplete="tel" disabled={locked}/>{error('phone')}<small id={prefix+'-phone-note'}>Include +91 for an Indian number. Saving does not verify it.</small></div>
+  <div className="profile-field"><label htmlFor={prefix+'-phone'}>Phone number</label><input id={prefix+'-phone'} {...attributes('phone')} aria-describedby={[errors.phone?prefix+'-phone-error':null,prefix+'-phone-note'].filter(Boolean).join(' ')} value={value.phone} onChange={event=>change('phone',event.target.value)} inputMode="tel" autoComplete="tel" disabled={locked}/>{error('phone')}<small id={prefix+'-phone-note'}>{phoneNote}</small></div>
   <div className="profile-field"><label htmlFor={prefix+'-year'}>Appearing year</label><select id={prefix+'-year'} {...attributes('appearingYear')} value={value.appearingYear} onChange={event=>change('appearingYear',event.target.value)} disabled={locked}>{Array.from({length:15},(_,n)=>2026+n).map(year=><option key={year}>{year}</option>)}</select>{error('appearingYear')}</div>
   <div className="profile-field"><label htmlFor={prefix+'-city'}>City</label><input id={prefix+'-city'} {...attributes('city')} value={value.city} onChange={event=>change('city',event.target.value)} autoComplete="address-level2" disabled={locked}/>{error('city')}</div>
   <fieldset aria-describedby={errors.exams?prefix+'-exams-error':undefined} disabled={locked}><legend>Exams you are preparing for</legend>{candidateExams.map(([id,label],index)=><label className="profile-check" key={id}><input ref={index===0?node=>{fields.current.exams=node;}:undefined} type="checkbox" checked={value.exams.includes(id)} onChange={event=>change('exams',event.target.checked?[...value.exams,id]:value.exams.filter(exam=>exam!==id))}/>{label}</label>)}{error('exams')}</fieldset>
@@ -48,10 +58,10 @@ function ProfileSession(){
  };
  useEffect(()=>{void load();},[rpc]);
  const save=async(value,{signal})=>candidateProfileResponse(await rpc('save_candidate_profile',{p_display_name:value.displayName,p_phone:value.phone,p_appearing_year:value.appearingYear,p_city:value.city,p_exams:value.exams},signal),value);
- return<><p>These details personalise papers and cohort results. Your phone remains unverified until the OTP service confirms it.</p>
+ return<><p>These details personalise papers and cohort results.</p>
   <button type="button" className="button quiet" onClick={()=>void load()}>Reload profile</button><p>Reloading replaces the current draft with saved details.</p>
   {reading&&<p role="status">Loading your profile…</p>}{error&&<p role="alert" className="error">{error}</p>}
-  {profile&&<CandidateProfileForm key={generation} initial={profile.values} onSave={save}/>}</>;
+  {profile&&<CandidateProfileForm key={generation} initial={profile.values} initialPhoneVerified={profile.phoneVerified} onSave={save}/>}</>;
 }
 export function CandidateProfile(){
  const{session,loading}=useAuthState(),location=useLocation(),heading=useRef(null),scopeKey=(session?.user.id??'signed-out')+':'+location.key,previous=useRef(scopeKey);
