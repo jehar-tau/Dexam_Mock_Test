@@ -69,3 +69,25 @@ test('rejects unsafe media paths and symlink escapes', async t => {
  const unsafe = await f.packet(question('unsafe', { assets: [{ path: '../scan.png', sha256: 'a'.repeat(64), width: 1, height: 1 }] }));
  await assert.rejects(prepareAddition({ ...unsafe, mediaRoot }));
 });
+test('protects existing figure paths in eligible and held rows while allowing identical references', async t => {
+ const png = Buffer.from('89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000d49444154789c6360000000020001e221bc330000000049454e44ae426082','hex');
+ const asset = { path: 'figures/shared.png', sha256: hash(png), width: 1, height: 1 };
+ for (const holds of [[], ['review']]) {
+  const f = await fixture(t, [question('prior', { holds, assets: [asset] })]);
+  const downloadsDir = path.join(f.root, 'downloads'); await mkdir(downloadsDir); await writeFile(path.join(downloadsDir, `${asset.sha256}.png`), png);
+  const conflict = await f.packet(question('new', { assets: [{ ...asset, width: 2 }] }));
+  await assert.rejects(prepareAddition({ ...conflict, downloadsDir }), /conflicts with the source bank/);
+  const safe = await f.packet(question('new', { assets: [asset] }));
+  assert.equal((await prepareAddition({ ...safe, downloadsDir })).figures, 1);
+ }
+});
+test('limits figures and recognizes complete visual choice reviews', async t => {
+ const f = await fixture(t), downloadsDir = path.join(f.root, 'downloads'); await mkdir(downloadsDir);
+ const png = Buffer.from('89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000d49444154789c6360000000020001e221bc330000000049454e44ae426082','hex');
+ const asset = { path: 'figures/choices.png', sha256: hash(png), width: 1, height: 1 };
+ await writeFile(path.join(downloadsDir, `${asset.sha256}.png`), png);
+ const visual = await f.packet(question('visual', { type: 'MCQ', visualDependency: true, assets: [asset], answer: { raw: 'A', status: 'verified' }, options: ['A','B','C','D'].map(key => ({ key, text: '' })) }));
+ assert.equal((await prepareAddition({ ...visual, downloadsDir })).review, 'objective-complete');
+ const tooMany = await f.packet(question('many', { assets: Array(9).fill(asset) }));
+ await assert.rejects(prepareAddition({ ...tooMany, downloadsDir }), /Too many figures/);
+});

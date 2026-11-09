@@ -30,12 +30,20 @@ export async function prepareAddition({ packetPath, expected, expectedSource, ou
   if (one.eligibleTotal !== 1) fail('Question is not eligible');
   // Validate every path independently, including distinct paths sharing the same digest.
   if (!Array.isArray(payload.assets ?? []) || (payload.visualDependency && !payload.assets?.length)) fail('Required figure is missing');
+  if ((payload.assets || []).length > 8) fail('Too many figures');
   const assets = (payload.assets || []).flatMap(asset => collectCanonicalMedia({ records: [{ payload: { holds: [], assets: [asset] } }] }));
   const byPath = new Map();
   for (const asset of assets) {
     const previous = byPath.get(asset.relativePath);
     if (previous && (previous.sha256 !== asset.sha256 || previous.width !== asset.width || previous.height !== asset.height)) fail('Conflicting asset paths');
     byPath.set(asset.relativePath, asset);
+  }
+  for (const question of bank.questions) {
+    if (!Array.isArray(question.assets)) continue;
+    for (const existingAsset of question.assets) {
+      const incoming = byPath.get(existingAsset?.path);
+      if (incoming && (incoming.sha256 !== existingAsset.sha256 || incoming.width !== existingAsset.width || incoming.height !== existingAsset.height)) fail('Figure path conflicts with the source bank');
+    }
   }
   const media = [];
   for (const asset of byPath.values()) {
@@ -54,7 +62,8 @@ export async function prepareAddition({ packetPath, expected, expectedSource, ou
   const parsed = JSON.parse(proposed);
   if (stableJson(parsed.questions.slice(0, -1)) !== stableJson(bank.questions) || stableJson({ ...parsed, questions: [] }) !== stableJson({ ...bank, questions: [] }) || stableJson(parsed.questions.at(-1)) !== stableJson(payload)) fail('Source preservation check failed');
   buildManifest(parsed, source);
-  const answerIssues = inspectRuntimeQuestion(payload, { rule: RULES_2027[payload.provenance.exam] }).issues.some(issue => /^(answer-|option-|choice-options)/.test(issue.code));
+  const mediaCatalog = media.map(({ asset, bytes }) => ({ sha256: asset.sha256, path: asset.storagePath, width: asset.width, height: asset.height, byteSize: bytes.length }));
+  const answerIssues = inspectRuntimeQuestion(payload, { rule: RULES_2027[payload.provenance.exam], mediaCatalog }).issues.some(issue => /^(answer-|option-|choice-options)/.test(issue.code));
   const review = ['MCQ', 'MSQ', 'NAT'].includes(payload.type) ? (objectiveReady(payload) && !answerIssues ? 'objective-complete' : 'objective-incomplete') : 'descriptive';
   const summary = { mode: output ? 'staged' : 'dry-run', sourceCommit: source, contentSha256: packet.contentSha256, proposedSha256: sha256(proposed), review, figures: media.length };
   if (!output) return summary;
