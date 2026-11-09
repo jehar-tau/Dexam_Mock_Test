@@ -25,6 +25,16 @@ alter table dm_private.mvp_paid_releases enable row level security;
 alter table dm_private.mvp_release_audit enable row level security;
 revoke all on dm_private.mvp_paid_releases,dm_private.mvp_release_audit from public,anon,authenticated,service_role;
 
+create table if not exists dm_private.mvp_prepared_papers(
+ packet_sha256 text primary key check(packet_sha256~'^[a-f0-9]{64}$'),
+ request_sha256 text not null check(request_sha256~'^[a-f0-9]{64}$'),
+ paper_id uuid not null unique references dm_private.papers(id),
+ manifest_sha256 text not null check(manifest_sha256~'^[a-f0-9]{64}$'),
+ prepared_at timestamptz not null default clock_timestamp()
+);
+alter table dm_private.mvp_prepared_papers enable row level security;
+revoke all on dm_private.mvp_prepared_papers from public,anon,authenticated,service_role;
+
 create table if not exists dm_private.mvp_test_checkout_control(
  singleton boolean primary key default true check(singleton),enabled boolean not null default false,expires_at timestamptz,
  evidence text,actor_id uuid references auth.users(id),updated_at timestamptz not null default clock_timestamp(),
@@ -80,6 +90,7 @@ begin
    or q.key is distinct from b.runtime_payload->'key'or q.explanation is distinct from b.runtime_payload->>'explanation'then return null;end if;
   if jsonb_typeof(q.media)is distinct from 'array'or jsonb_typeof(b.payload->'assets')is distinct from 'array'
    or jsonb_array_length(q.media)<>jsonb_array_length(b.payload->'assets')or(coalesce((b.payload->>'visualDependency')::boolean,false)and jsonb_array_length(q.media)=0)
+   or (jsonb_array_length(q.media)>0 and not exists(select 1 from storage.buckets where id='paper-media' and not public))
    or exists(select 1 from jsonb_array_elements(b.payload->'assets')a where not exists(select 1 from jsonb_array_elements(q.media)m where m->>'sha256'=a->>'sha256'and m->>'width'=a->>'width'and m->>'height'=a->>'height'))
    or exists(select 1 from jsonb_array_elements(q.media)m
    where not exists(select 1 from dm_private.bank_media_assets a join storage.objects o on o.bucket_id='paper-media'and o.name=a.storage_path
@@ -92,6 +103,7 @@ begin
  end loop;
  if n<>(case when p.exam='uceed'then 57 else 44 end)or kind_counts<>(case when p.exam='uceed'then'{"nat":14,"msq":15,"mcq":28}'::jsonb else'{"nat":8,"msq":10,"mcq":26}'::jsonb end)then return null;end if;
  v_sha:=encode(sha256(convert_to(jsonb_build_object('paperId',p.id,'title',p.title,'exam',p.exam,'durationSeconds',p.duration_seconds,'questions',body)::text,'UTF8')),'hex');
+ if exists(select 1 from dm_private.mvp_prepared_papers where paper_id=p_id and manifest_sha256<>v_sha)then return null;end if;
  return jsonb_build_object('paperId',p.id,'title',p.title,'exam',p.exam,'part','A','contextVersion','iitb-2027-v1','durationSeconds',p.duration_seconds,'questionCount',n,'kinds',kind_counts,'totalPoints',total,'items',items,'sha256',v_sha,'scope','paid-mvp-v1');
 exception when invalid_text_representation or numeric_value_out_of_range then return null;
 end$$;
@@ -113,6 +125,114 @@ begin
  manifest:=dm_private.mvp_paper_manifest(p_id);
  return jsonb_build_object('eligible',manifest is not null,'manifest',manifest,'released',dm_private.mvp_release_is_current(p_id));
 end$$;
+
+-- Operator service only. Copy current reviewed bank rows in one transaction.
+-- Publication is still a separate administrator decision against the frozen hash.
+create or replace function public.prepare_mvp_paper(p_plan jsonb) returns jsonb
+language plpgsql security definer set search_path=pg_catalog,dm_private as $$
+declare
+ packet text:=p_plan->>'packetSha256';source_sha text:=p_plan->>'sourceSha256';
+ exam_name text:=p_plan->>'exam';paper_title text:=p_plan->>'title';
+ selection jsonb:=p_plan->'questions';figures jsonb:=p_plan->'media';
+ duration integer;expected_count integer;request_sha text;prepared dm_private.mvp_prepared_papers;
+ paper_id uuid;question_id uuid;manifest jsonb;item record;created boolean;
+begin
+ if auth.role() is distinct from 'service_role' then
+  raise exception 'Paper preparation requires a server credential' using errcode='42501';
+ end if;
+ if jsonb_typeof(p_plan) is distinct from 'object' or octet_length(p_plan::text)>4194304
+  or packet is null or packet!~'^[a-f0-9]{64}$' or source_sha is null or source_sha!~'^[a-f0-9]{64}$'
+  or exam_name is null or exam_name not in('uceed','ceed')
+  or paper_title is null or char_length(btrim(paper_title)) not between 2 and 180
+  or paper_title!~*'part[[:space:]]+a'
+  or jsonb_typeof(selection) is distinct from 'array' or jsonb_typeof(figures) is distinct from 'array' then
+  raise exception 'A complete reviewed Part A packet is required' using errcode='22023';
+ end if;
+ duration:=case when exam_name='uceed' then 7200 else 3600 end;
+ expected_count:=case when exam_name='uceed' then 57 else 44 end;
+ if p_plan->'durationSeconds' is distinct from to_jsonb(duration) or jsonb_array_length(selection)<>expected_count
+  or (select count(distinct q->>'externalKey') from jsonb_array_elements(selection) q)<>expected_count then
+  raise exception 'The reviewed Part A counts, order and clock are required' using errcode='22023';
+ end if;
+
+ perform 1 from public.launch_settings where singleton and not sales_enabled for share;
+ if not found then raise exception 'Close sales before preparing a paper';end if;
+ perform 1 from dm_private.registration_policy where id and mode<>'open' for share;
+ if not found then raise exception 'Close public registration before preparing a paper';end if;
+ perform 1 from dm_private.mvp_test_checkout_control where singleton and not enabled for share;
+ if not found or not dm_private.mvp_profile_permissions_valid() then
+  raise exception 'The closed paid MVP profile is required';
+ end if;
+
+ request_sha:=encode(sha256(convert_to(p_plan::text,'UTF8')),'hex');
+ perform pg_advisory_xact_lock(hashtextextended('mvp-prepared-paper:'||packet,0));
+ select * into prepared from dm_private.mvp_prepared_papers where packet_sha256=packet;
+ created:=not found;
+ if not created then
+  if prepared.request_sha256<>request_sha then raise exception 'The reviewed packet identity has changed';end if;
+  paper_id:=prepared.paper_id;
+  perform dm_private.mvp_lock_paper(paper_id);
+  if exists(select 1 from dm_private.papers p where p.id=paper_id and p.published) then
+   raise exception 'The prepared paper already has a release decision';
+  end if;
+ end if;
+
+ perform 1 from dm_private.bank_questions b where b.external_key in (
+  select q->>'externalKey' from jsonb_array_elements(selection) q
+ ) order by b.external_key for share;
+ if exists(
+  select 1 from jsonb_array_elements(selection) q where not exists(
+   select 1 from dm_private.bank_questions b join dm_private.bank_import_run_items i
+     on i.external_key=b.external_key and i.content_sha256=b.content_sha256
+   join dm_private.bank_import_runs r on r.id=i.run_id and r.source_commit=b.source_commit
+   where b.external_key=q->>'externalKey' and b.content_sha256=q->>'contentSha256'
+    and b.licence=q->>'licence' and b.exam=exam_name and b.payload=q->'payload'
+    and b.runtime_payload=q->'runtime' and b.runtime_payload->'key'->>'sourceExternalKey'=b.external_key
+    and b.active and b.owner_approved and b.rights_confirmed and b.objective_ready and b.payload->'holds'='[]'::jsonb
+    and r.status='completed' and r.imported_count=r.eligible_total and r.source_sha256=source_sha
+    and r.schema_version=1 and r.source_path='server/data/exports/dexam-bank-export.json'
+  )
+ ) then raise exception 'Current reviewed canonical bank versions are required';end if;
+ if not exists(select 1 from storage.buckets where id='paper-media' and not public)
+  or (select count(distinct m->>'sha256') from jsonb_array_elements(figures) m)<>jsonb_array_length(figures)
+  or exists(
+   select 1 from jsonb_array_elements(figures) m where not exists(
+    select 1 from dm_private.bank_media_assets a join storage.objects o on o.bucket_id='paper-media' and o.name=a.storage_path
+    where a.storage_path=m->>'path' and a.sha256=m->>'sha256' and a.width::text=m->>'width' and a.height::text=m->>'height'
+     and a.byte_size::text=m->>'byteSize' and o.metadata->>'size'=m->>'byteSize' and o.metadata->>'mimetype'='image/png'
+   )
+  ) or exists(
+   select 1 from jsonb_array_elements(selection) q cross join lateral jsonb_array_elements(q->'runtime'->'media') m
+   where not exists(select 1 from jsonb_array_elements(figures) f where f->>'sha256'=m->>'sha256' and f->>'path'=m->>'path')
+  ) then raise exception 'Verified private paper figures are required';end if;
+
+ if created then
+  insert into dm_private.papers(title,exam,duration_seconds) values(paper_title,exam_name,duration) returning id into paper_id;
+  for item in
+   select q.ordinal,b.runtime_payload as runtime from jsonb_array_elements(selection) with ordinality q(value,ordinal)
+   join dm_private.bank_questions b on b.external_key=q.value->>'externalKey' order by q.ordinal
+  loop
+   insert into dm_private.questions(paper_id,ordinal,prompt,options,kind,marking,media,points,negative_points,topic,reviewed)
+   values(paper_id,item.ordinal,item.runtime->>'prompt',item.runtime->'options',item.runtime->>'kind',item.runtime->'marking',
+    item.runtime->'media',(item.runtime->>'points')::numeric,(item.runtime->>'negativePoints')::numeric,item.runtime->>'topic',true)
+   returning id into question_id;
+   insert into dm_private.answer_keys(question_id,key,explanation)
+   values(question_id,item.runtime->'key',item.runtime->>'explanation');
+  end loop;
+ end if;
+ manifest:=dm_private.mvp_paper_manifest(paper_id);
+ if manifest is null or dm_private.paper_quality_held(paper_id) then
+  raise exception 'The paper no longer matches the reviewed Part A manifest';
+ end if;
+ if created then
+  insert into dm_private.mvp_prepared_papers(packet_sha256,request_sha256,paper_id,manifest_sha256)
+  values(packet,request_sha,paper_id,manifest->>'sha256');
+ end if;
+ return jsonb_build_object('paperId',paper_id,'packetSha256',packet,'manifestSha256',manifest->>'sha256',
+  'created',created,'questionCount',manifest->'questionCount','durationSeconds',duration,'totalPoints',manifest->'totalPoints');
+end$$;
+revoke all on function public.prepare_mvp_paper(jsonb) from public,anon,authenticated;
+grant execute on function public.prepare_mvp_paper(jsonb) to service_role;
 
 -- Lock the actor before target rows. Verify current membership after any
 -- target waits so a role revocation can finish before a queued decision.

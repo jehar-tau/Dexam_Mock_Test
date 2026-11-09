@@ -34,6 +34,14 @@ The private first candidate is **UCEED Part A - Practice Mock 01**, 14 NAT + 15 
 
 For a real release, import only eligible canonical records, verify/register every private figure, compile with the pinned exam context, and retain explicit bank review plus the owner provenance/use reference. `admin_mvp_paper_manifest(p_id)` returns eligibility and metadata/hashes to admins only. It checks exact current canonical prompt/options/key/explanation/marking/media, empty holds, approval, unique keys, fixed section order/counts/clock and present registered private storage objects. No draft, placeholder image or changed answer can inherit an older approval.
 
+Use the frozen private packet and its separately reviewed SHA-256 to prepare the catalogue paper. Set `DMOCKS_MEDIA_ROOT` to the read-only canonical media root. The default command verifies current `origin/main`, recompiles every selected question, checks the actual figure bytes and returns only counts and hashes.
+
+```sh
+npm run paper:prepare -- --packet "$DMOCKS_REVIEWED_PAPER_PACKET" --expect "$DMOCKS_REVIEWED_PAPER_SHA256"
+```
+
+After target approval, the completed canonical import, media registration and audited per-question approval, repeat with `--apply`. Configure `DMOCKS_SUPABASE_URL`, the private `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, an exact `DMOCKS_PAPER_ALLOW_ORIGIN`, and `DMOCKS_PAPER_ENVIRONMENT` (`staging` or `production`). Production also requires `DMOCKS_PAPER_PRODUCTION_ACK=PREPARE_UNPUBLISHED_MVP_PAPER_ON_<exact origin>`. The target requires the paid MVP profile, closed registration and sales, and a closed merchant Test window. One server transaction copies the current reviewed bank snapshots into an unpublished paper and returns its ID and manifest SHA-256. An exact retry reuses the receipt while the paper is unpublished. A changed packet, canonical record, runtime or missing figure rejects the preparation. Use the returned paper ID for the independent admin manifest review.
+
 After presentation/manifest review, call `admin_release_mvp_paper(p_id, p_expected_sha256, p_rights_reference)` with the exact current hash and durable owner reference. The function rechecks locked current records and records the actor/evidence. A later content/review/holds/media/permission change removes new-start eligibility. `admin_withdraw_mvp_paper(p_id, p_expected_sha256, p_note)` removes the current release without deleting frozen owned attempts, clocks or results. These calls are operator procedures; no automatic source import publishes papers.
 
 Paper release, withdrawal, launch attestations and Test window changes check staff access again after waiting for their database locks. A rejected decision leaves the previous status and audit history intact. Test window opening checks the current prerequisite decisions and expiry after the wait.
