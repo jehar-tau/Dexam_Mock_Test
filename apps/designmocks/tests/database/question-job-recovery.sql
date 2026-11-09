@@ -139,5 +139,118 @@ set local role service_role;
 select pg_temp.job_assert(public.claim_question_intake_asset(:'active_asset_id',:'editor')->>'token'<>:'active_intake_token',
   'explicit recovery does not depend on the next scheduler invocation');
 reset role;
+
+-- Provider calls are service-only and never expose private helpers.
+do $$
+declare signature text;
+begin
+  foreach signature in array array[
+    'public.authorize_question_intake_provider(uuid,uuid,uuid)',
+    'public.read_ai_draft_provider_basis(uuid,uuid,uuid)'
+  ] loop
+    if has_function_privilege('anon',signature,'EXECUTE')
+      or has_function_privilege('authenticated',signature,'EXECUTE')
+      or not has_function_privilege('service_role',signature,'EXECUTE') then
+      raise exception 'Provider grant violation: %',signature;
+    end if;
+  end loop;
+  if has_function_privilege('service_role','dm_private.lock_question_processing_admin(uuid)','EXECUTE')
+    or has_function_privilege('service_role','dm_private.ai_draft_basis_dto(dm_private.ai_draft_requests)','EXECUTE') then
+    raise exception 'Private provider bypass exposed';
+  end if;
+end $$;
+create function pg_temp.job_reject_code(statement text, expected_code text) returns void language plpgsql as $$
+begin
+  begin execute statement;
+  exception when others then
+    if sqlstate = expected_code then return; end if;
+    raise;
+  end;
+  raise exception 'FAIL, expected SQLSTATE: %',expected_code;
+end $$;
+
+select extraction_token as provider_intake_token from dm_private.question_intake_assets where id=:'active_asset_id' \gset
+select pg_temp.job_assert((select extraction_actor_id=:'editor'::uuid from dm_private.question_intake_assets where id=:'active_asset_id'),
+  'the intake token is bound to its claimant');
+
+set local role authenticated;
+select set_config('request.jwt.claim.role','authenticated',true);
+select set_config('request.jwt.claim.sub',:'editor',true);
+select public.admin_ai_draft_basis(:'active_ai_id')::text as browser_basis \gset
+select pg_temp.job_reject_code(format('select public.read_ai_draft_provider_basis(%L,%L,%L)',
+  :'active_ai_id',:'editor',:'active_ai_token'),'42501');
+reset role;
+set local role service_role;
+select pg_temp.job_reject_code(format('select public.authorize_question_intake_provider(%L,%L,%L)',
+  :'active_asset_id',:'editor',:'provider_intake_token'),'42501');
+select set_config('request.jwt.claim.role','service_role',true);
+select pg_temp.job_assert(public.authorize_question_intake_provider(:'active_asset_id',:'editor',:'provider_intake_token'),
+  'current intake claimant and token can use the provider');
+select pg_temp.job_assert(public.read_ai_draft_provider_basis(:'active_ai_id',:'editor',:'active_ai_token')=:'browser_basis'::jsonb,
+  'the service receives exactly the existing sanitized basis DTO');
+select pg_temp.job_assert((public.read_ai_draft_provider_basis(:'active_ai_id',:'editor',:'active_ai_token')->'basis'->0)
+  = '{"externalKey":"job-fixture-basis","type":"MCQ","topic":"observation","difficulty":"unassessed","prompt":"Fictional approved reference"}'::jsonb,
+  'the basis projection excludes full source, answers and rights metadata');
+select pg_temp.job_reject_code(format('select public.authorize_question_intake_provider(%L,%L,%L)',
+  :'active_asset_id',:'other_editor',:'provider_intake_token'),'42501');
+select pg_temp.job_reject_code(format('select public.read_ai_draft_provider_basis(%L,%L,%L)',
+  :'active_ai_id',:'other_editor',:'active_ai_token'),'42501');
+select pg_temp.job_reject_code(format('select public.authorize_question_intake_provider(%L,%L,%L)',
+  :'active_asset_id',:'editor',:'active_intake_token'),'40001');
+select pg_temp.job_reject_code(format('select public.read_ai_draft_provider_basis(%L,%L,null)',
+  :'active_ai_id',:'editor'),'40001');
+reset role;
+
+update dm_private.bank_questions set rights_confirmed=false where external_key='job-fixture-basis';
+set local role service_role;
+select pg_temp.job_reject_code(format('select public.read_ai_draft_provider_basis(%L,%L,%L)',
+  :'active_ai_id',:'editor',:'active_ai_token'),'40001');
+reset role;
+update dm_private.bank_questions set rights_confirmed=true where external_key='job-fixture-basis';
+
+delete from dm_private.admins where user_id=:'editor';
+set local role service_role;
+select pg_temp.job_reject_code(format('select public.authorize_question_intake_provider(%L,%L,%L)',
+  :'active_asset_id',:'editor',:'provider_intake_token'),'42501');
+select pg_temp.job_reject_code(format('select public.read_ai_draft_provider_basis(%L,%L,%L)',
+  :'active_ai_id',:'editor',:'active_ai_token'),'42501');
+select pg_temp.job_reject_code(format('select public.complete_question_intake_asset(%L,%L,%L,pg_temp.job_questions(),%L)',
+  :'active_asset_id','fictional-model','revoked-active',:'provider_intake_token'),'42501');
+select pg_temp.job_reject_code(format('select public.complete_question_intake_asset(%L,%L,%L,pg_temp.job_questions(),%L)',
+  :'asset_id','fictional-model','new-intake-response',:'new_intake_token'),'42501');
+select pg_temp.job_reject_code(format('select public.complete_ai_draft_request(%L,%L,%L,pg_temp.job_draft(),%L)',
+  :'active_ai_id','fictional-model','revoked-active',:'active_ai_token'),'42501');
+select pg_temp.job_reject_code(format('select public.complete_ai_draft_request(%L,%L,%L,pg_temp.job_draft(),%L)',
+  :'request_id','fictional-model','new-ai-response',:'new_ai_token'),'42501');
+select public.fail_question_intake_asset(:'active_asset_id','fictional-model','Revoked during processing',:'provider_intake_token');
+select public.fail_ai_draft_request(:'active_ai_id','fictional-model','Revoked during processing',:'active_ai_token');
+reset role;
+select pg_temp.job_assert((select status='failed' from dm_private.question_intake_assets where id=:'active_asset_id')
+  and (select status='failed' from dm_private.ai_draft_requests where id=:'active_ai_id')
+  and (select status='extracted' from dm_private.question_intake_assets where id=:'asset_id')
+  and (select status='succeeded' from dm_private.ai_draft_requests where id=:'request_id'),
+  'matching-token cleanup remains available and completed results are preserved');
+insert into dm_private.admins(user_id) values(:'editor');
+
+-- Pre-upgrade tokened intake rows have no trustworthy actor. Both active
+-- claims and completed results fail closed for provider/completion access.
+insert into dm_private.question_intake_assets(storage_path,original_name,mime_type,byte_size,status,uploaded_by,
+  extraction_token,extraction_deadline)
+values('intake/recovery/unbound.pdf','unbound.pdf','application/pdf',1234,'extracting',:'editor',
+  gen_random_uuid(),clock_timestamp()+interval '5 minutes') returning id as unbound_id,extraction_token as unbound_token \gset
+set local role service_role;
+select pg_temp.job_reject_code(format('select public.authorize_question_intake_provider(%L,%L,%L)',
+  :'unbound_id',:'editor',:'unbound_token'),'40001');
+select pg_temp.job_reject_code(format('select public.complete_question_intake_asset(%L,%L,%L,pg_temp.job_questions(),%L)',
+  :'unbound_id','fictional-model','unbound-result',:'unbound_token'),'40001');
+select public.fail_question_intake_asset(:'unbound_id','fictional-model','Unbound legacy token',:'unbound_token');
+select public.claim_question_intake_asset(:'unbound_id',:'editor')->>'token' as bound_retry_token \gset
+select pg_temp.job_assert(:'bound_retry_token'<>:'unbound_token' and public.authorize_question_intake_provider(:'unbound_id',:'editor',:'bound_retry_token'),
+  'cleanup followed by a current-admin retry binds a fresh token');
+select public.register_question_intake_asset('intake/recovery/tokenless.pdf','tokenless.pdf','application/pdf',1234,:'editor') as tokenless_id \gset
+select pg_temp.job_assert(public.claim_question_intake_asset(:'tokenless_id')->'token'='null'::jsonb,'old service claim overload remains tokenless');
+select pg_temp.job_assert(public.complete_question_intake_asset(:'tokenless_id','fictional-model','legacy-tokenless',pg_temp.job_questions())=1,
+  'old service intake completion remains compatible');
+reset role;
 rollback;
 \echo 'PASS: expired question jobs, bounded recovery, legacy compatibility, token fencing, creator authorization and mandatory review.'
