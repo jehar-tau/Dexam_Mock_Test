@@ -67,6 +67,17 @@ test('fails for tracked changes and untracked files anywhere in checkout', async
   assert.match(f.invoke().stderr, /tracked or untracked changes/);
 });
 
+test('fails when assume-unchanged or skip-worktree hides a tracked backend edit', async t => {
+  const f = await fixture(t);
+  const file = 'apps/designmocks/supabase/migrations/001.sql';
+  f.runGit('update-index', '--skip-worktree', file);
+  await writeFile(path.join(f.root, file), 'select 9;\n');
+  const result = f.invoke();
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /content differs from HEAD/);
+  f.runGit('update-index', '--no-skip-worktree', file);
+});
+
 test('fails for ignored backend overrides, including local environment files', async t => {
   const f = await fixture(t);
   await writeFile(path.join(f.root, '.gitignore'), 'apps/designmocks/supabase/.env.local\n');
