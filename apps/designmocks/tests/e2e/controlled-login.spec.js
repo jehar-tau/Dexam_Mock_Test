@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({ baseURL: "http://127.0.0.1:4499" });
 
-test("a controlled Google session can use the account screen but cannot open portal routes", async ({ page }) => {
+async function openControlledAccount(page) {
   const providerRequests = [];
   const expiresAt = Math.floor(Date.now() / 1000) + 3600;
   const user = {
@@ -40,20 +40,38 @@ test("a controlled Google session can use the account screen but cannot open por
   }, session);
   await page.reload();
   await expect(page.getByText("Signed in as controlled-fixture@example.invalid")).toBeVisible();
+  return providerRequests;
+}
+
+function expectNoWorkspaceRequests(providerRequests) {
+  expect(providerRequests.filter(path => path.startsWith("/rest/") || path.startsWith("/functions/"))).toEqual([]);
+}
+
+async function expectClosedWorkspace(page, path) {
+  await page.goto(path);
+  await expect(page.getByRole("heading", { name: "The workspace is closed." })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Go to account" })).toHaveAttribute("href", "/account");
+}
+
+test("a controlled Google session can refresh and sign out after a closed workspace visit", async ({ page }) => {
+  const providerRequests = await openControlledAccount(page);
   await page.getByRole("button", { name: "Refresh test session" }).click();
   await expect(page.getByRole("status")).toContainText("Test session refreshed successfully.");
   await expect(page.getByRole("link", { name: "Open your workspace" })).toHaveCount(0);
-
-  for (const path of [
-    "/dashboard", "/dashboard/mocks", "/dashboard/all-india", "/dashboard/practice",
-    "/dashboard/learn", "/dashboard/community", "/onboarding", "/report", "/admin", "/review/drawings", "/attempt/synthetic",
-  ]) {
-    await page.goto(path);
-    await expect(page.getByRole("heading", { name: "The workspace is closed." })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Go to account" })).toHaveAttribute("href", "/account");
-  }
+  await expectClosedWorkspace(page, "/dashboard");
   await page.getByRole("link", { name: "Go to account" }).click();
   await page.getByRole("button", { name: "Sign out", exact: true }).click();
   await expect(page.getByRole("button", { name: "Test Google sign-in" })).toBeEnabled();
-  expect(providerRequests.filter((path) => path.startsWith("/rest/") || path.startsWith("/functions/"))).toEqual([]);
+  expectNoWorkspaceRequests(providerRequests);
 });
+
+for (const [area, paths] of [
+  ["student modules", ["/dashboard/mocks", "/dashboard/all-india", "/dashboard/practice", "/dashboard/learn", "/dashboard/community"]],
+  ["profile, support, staff and attempt routes", ["/onboarding", "/report", "/admin", "/review/drawings", "/attempt/synthetic"]],
+]) {
+  test(`a controlled Google session keeps ${area} closed on direct navigation`, async ({ page }) => {
+    const providerRequests = await openControlledAccount(page);
+    for (const path of paths) await expectClosedWorkspace(page, path);
+    expectNoWorkspaceRequests(providerRequests);
+  });
+}
