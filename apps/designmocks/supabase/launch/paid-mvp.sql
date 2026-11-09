@@ -114,32 +114,48 @@ begin
  return jsonb_build_object('eligible',manifest is not null,'manifest',manifest,'released',dm_private.mvp_release_is_current(p_id));
 end$$;
 
+-- Lock the actor before target rows. Verify current membership after any
+-- target waits so a role revocation can finish before a queued decision.
+create or replace function dm_private.require_mvp_operator_identity()returns uuid
+language plpgsql security definer set search_path=pg_catalog,dm_private as $$
+declare actor uuid := auth.uid();
+begin
+ if not public.is_dmocks_admin() then raise exception 'Admin access required' using errcode='42501';end if;
+ perform 1 from auth.users where id=actor for key share;
+ if not found then raise exception 'Admin access required' using errcode='42501';end if;
+ return actor;
+end$$;
+
 create or replace function public.admin_release_mvp_paper(p_id uuid,p_expected_sha256 text,p_rights_reference text)returns jsonb
 language plpgsql security definer set search_path=pg_catalog,public,dm_private as $$
-declare manifest jsonb;
+declare manifest jsonb;actor uuid := dm_private.require_mvp_operator_identity();
 begin
- if not public.is_dmocks_admin()then raise exception 'Admin access required';end if;
  if p_expected_sha256 is null or p_expected_sha256!~'^[a-f0-9]{64}$'or char_length(btrim(coalesce(p_rights_reference,'')))not between 8 and 2000 then raise exception 'Exact manifest and rights reference required';end if;
  perform 1 from dm_private.papers where id=p_id for update;perform dm_private.mvp_lock_paper(p_id);
+ perform dm_private.lock_support_staff();
  manifest:=dm_private.mvp_paper_manifest(p_id);
  if manifest is null or manifest->>'sha256'<>p_expected_sha256 or dm_private.paper_quality_held(p_id)then raise exception 'Paper review is incomplete or has changed';end if;
  insert into dm_private.mvp_paid_releases(paper_id,manifest_sha256,manifest,rights_reference,actor_id)
- values(p_id,p_expected_sha256,manifest,btrim(p_rights_reference),auth.uid())on conflict(paper_id)do update
+ values(p_id,p_expected_sha256,manifest,btrim(p_rights_reference),actor)on conflict(paper_id)do update
  set manifest_sha256=excluded.manifest_sha256,manifest=excluded.manifest,rights_reference=excluded.rights_reference,actor_id=excluded.actor_id,approved_at=clock_timestamp(),withdrawn_at=null;
  update dm_private.papers set published=true,reviewed=true,rights_confirmed=true where id=p_id;
- insert into dm_private.mvp_release_audit(paper_id,manifest_sha256,action,evidence,actor_id)values(p_id,p_expected_sha256,'release',btrim(p_rights_reference),auth.uid());
+ insert into dm_private.mvp_release_audit(paper_id,manifest_sha256,action,evidence,actor_id)values(p_id,p_expected_sha256,'release',btrim(p_rights_reference),actor);
+ perform dm_private.lock_support_staff();
  return manifest;
 end$$;
 
 create or replace function public.admin_withdraw_mvp_paper(p_id uuid,p_expected_sha256 text,p_note text)returns void
 language plpgsql security definer set search_path=pg_catalog,public,dm_private as $$
+declare actor uuid := dm_private.require_mvp_operator_identity();
 begin
- if not public.is_dmocks_admin()then raise exception 'Admin access required';end if;
  if char_length(btrim(coalesce(p_note,'')))not between 8 and 2000 then raise exception 'Withdrawal evidence required';end if;
  perform 1 from dm_private.papers where id=p_id for update;
+ perform 1 from dm_private.mvp_paid_releases where paper_id=p_id for update;
+ perform dm_private.lock_support_staff();
  update dm_private.mvp_paid_releases set withdrawn_at=coalesce(withdrawn_at,clock_timestamp())where paper_id=p_id and manifest_sha256=p_expected_sha256;
  if not found then raise exception 'The release decision has changed';end if;
- insert into dm_private.mvp_release_audit(paper_id,manifest_sha256,action,evidence,actor_id)values(p_id,p_expected_sha256,'withdraw',btrim(p_note),auth.uid());
+ insert into dm_private.mvp_release_audit(paper_id,manifest_sha256,action,evidence,actor_id)values(p_id,p_expected_sha256,'withdraw',btrim(p_note),actor);
+ perform dm_private.lock_support_staff();
 end$$;
 
 create or replace function dm_private.mvp_profile_permissions_valid()returns boolean
@@ -150,11 +166,45 @@ language sql volatile security definer set search_path=pg_catalog,dm_private as 
  and not exists(select 1 from dm_private.mvp_rpc_allowlist where to_regprocedure(signature)is null)
 $$;
 
+-- Checkout takes settings, Test control (when applicable), then current gate
+-- rows in a fixed order. Gate review writes take only their own gate row.
+create or replace function dm_private.mvp_lock_checkout_gates(p_test boolean)returns void
+language plpgsql security definer set search_path=pg_catalog,dm_private as $$
+begin
+ if p_test then perform 1 from dm_private.registration_policy where id for share;end if;
+ perform 1 from dm_private.launch_gate_attestations
+  where gate<>'drawing_operations' and (not p_test or gate in('content_rights','privacy_terms','refund_policy','child_safety'))
+  order by gate for share;
+end$$;
+
+create or replace function dm_private.mvp_live_gates_approved()returns boolean
+language sql volatile security definer set search_path=pg_catalog,dm_private as $$
+ select count(*)=7 from dm_private.launch_gate_attestations
+ where gate<>'drawing_operations' and approved and char_length(btrim(evidence))>=8
+$$;
+
+create or replace function public.admin_set_launch_gate(p_gate text,p_approved boolean,p_evidence text)returns void
+language plpgsql security definer set search_path=pg_catalog,dm_private as $$
+declare actor uuid := dm_private.require_mvp_operator_identity();note text := nullif(btrim(p_evidence),'');
+begin
+ if p_approved is null or (p_approved and coalesce(char_length(note),0)<8) then
+  raise exception 'Evidence note is required' using errcode='22023';
+ end if;
+ perform 1 from dm_private.launch_gate_attestations where gate=p_gate for update;
+ perform dm_private.lock_support_staff();
+ update dm_private.launch_gate_attestations set approved=p_approved,evidence=note,actor_id=actor,
+  updated_at=clock_timestamp() where gate=p_gate;
+ if not found then raise exception 'Unknown launch gate' using errcode='22023';end if;
+ insert into dm_private.launch_gate_audit(gate,approved,evidence,actor_id)values(p_gate,p_approved,note,actor);
+ perform dm_private.lock_support_staff();
+end$$;
+
 create or replace function dm_private.mvp_test_checkout_setup_ready()returns boolean
 language sql volatile security definer set search_path=pg_catalog,public,dm_private as $$
  select exists(select 1 from public.launch_settings where singleton and environment_mode='test'and not sales_enabled and policy_version is not null)
  and exists(select 1 from dm_private.registration_policy where id and mode='testers')
- and(select count(*)from dm_private.launch_gate_attestations where gate in('content_rights','privacy_terms','refund_policy','child_safety')and approved)=4
+ and(select count(*)from dm_private.launch_gate_attestations where gate in('content_rights','privacy_terms','refund_policy','child_safety')
+   and approved and char_length(btrim(evidence))>=8)=4
  and dm_private.mvp_profile_permissions_valid()
  and exists(select 1 from dm_private.mvp_paid_releases r where dm_private.mvp_release_is_current(r.paper_id)and not dm_private.paper_quality_held(r.paper_id))
 $$;
@@ -167,17 +217,22 @@ $$;
 
 create or replace function public.admin_set_mvp_test_checkout(p_enabled boolean,p_expires_at timestamptz,p_evidence text)returns jsonb
 language plpgsql security definer set search_path=pg_catalog,public,dm_private as $$
-declare stamp timestamptz:=clock_timestamp();
+declare stamp timestamptz;actor uuid := dm_private.require_mvp_operator_identity();
 begin
- if not public.is_dmocks_admin()then raise exception 'Admin access required';end if;
  if p_enabled is null or char_length(btrim(coalesce(p_evidence,'')))not between 8 and 2000 then raise exception 'Reviewed Test acceptance evidence required';end if;
+ perform 1 from public.launch_settings where singleton for share;
+ perform 1 from dm_private.mvp_test_checkout_control where singleton for update;
+ if p_enabled then perform dm_private.mvp_lock_checkout_gates(true);end if;
+ perform dm_private.lock_support_staff();
+ stamp:=clock_timestamp();
  if p_enabled then
   if p_expires_at is null or p_expires_at<=stamp or p_expires_at>stamp+interval'8 hours'then raise exception 'Test acceptance must expire within eight hours';end if;
   if not dm_private.mvp_test_checkout_setup_ready()then raise exception 'Complete controlled Test setup and policy/content reviews first';end if;
  end if;
  update dm_private.mvp_test_checkout_control set enabled=p_enabled,expires_at=case when p_enabled then p_expires_at else null end,
-  evidence=btrim(p_evidence),actor_id=auth.uid(),updated_at=stamp where singleton;
- insert into dm_private.mvp_test_checkout_audit(enabled,expires_at,evidence,actor_id)values(p_enabled,case when p_enabled then p_expires_at else null end,btrim(p_evidence),auth.uid());
+ evidence=btrim(p_evidence),actor_id=actor,updated_at=stamp where singleton;
+ insert into dm_private.mvp_test_checkout_audit(enabled,expires_at,evidence,actor_id)values(p_enabled,case when p_enabled then p_expires_at else null end,btrim(p_evidence),actor);
+ perform dm_private.lock_support_staff();
  return jsonb_build_object('enabled',p_enabled,'expiresAt',case when p_enabled then p_expires_at else null end);
 end$$;
 
@@ -242,11 +297,17 @@ declare settings public.launch_settings;plan public.plans;existing dm_private.or
 begin
  if auth.uid()is null then raise exception 'Sign in required';end if;
  perform pg_advisory_xact_lock(hashtextextended(auth.uid()::text,0));
- select *into settings from public.launch_settings where singleton;
+ select *into settings from public.launch_settings where singleton for share;
  if settings.policy_version is null then raise exception 'Paid access is not open';end if;
  if settings.sales_enabled then
-  if settings.environment_mode<>'live'or exists(select 1 from dm_private.mvp_test_checkout_control where enabled)then raise exception 'Paid access is not open';end if;
- elsif not dm_private.mvp_test_checkout_allowed()then raise exception 'Paid access is not open';end if;
+  perform dm_private.mvp_lock_checkout_gates(false);
+  if settings.environment_mode<>'live' or exists(select 1 from dm_private.mvp_test_checkout_control where enabled)
+   or not dm_private.mvp_live_gates_approved() then raise exception 'Paid access is not open';end if;
+ else
+  perform 1 from dm_private.mvp_test_checkout_control where singleton for share;
+  perform dm_private.mvp_lock_checkout_gates(true);
+  if not dm_private.mvp_test_checkout_allowed() then raise exception 'Paid access is not open';end if;
+ end if;
  if not dm_private.mvp_profile_permissions_valid()or not exists(select 1 from dm_private.mvp_paid_releases r where dm_private.mvp_release_is_current(r.paper_id)and not dm_private.paper_quality_held(r.paper_id))then raise exception 'The paid catalogue is not ready';end if;
  if not exists(select 1 from public.profiles where user_id=auth.uid()and terms_version=settings.policy_version and accepted_at is not null)then raise exception 'Accept current terms first';end if;
  if exists(select 1 from dm_private.passes where user_id=auth.uid()and mode=settings.environment_mode and revoked_at is null and expires_at>clock_timestamp())then raise exception 'Your annual pass is already active';end if;
@@ -301,7 +362,8 @@ begin
  if not public.is_dmocks_admin()then raise exception 'Admin access required';end if;
  select sales_enabled,policy_version,environment_mode into v_sales,v_policy,v_mode from public.launch_settings where singleton;
  select *into v_test from dm_private.mvp_test_checkout_control where singleton;
- select coalesce(bool_and(approved),false)and count(*)=7,jsonb_agg(jsonb_build_object('gate',gate,'approved',approved,'evidence',evidence,'updatedAt',updated_at)order by gate)
+ select coalesce(bool_and(approved and coalesce(char_length(btrim(evidence)),0)>=8),false)and count(*)=7,
+ jsonb_agg(jsonb_build_object('gate',gate,'approved',approved,'evidence',evidence,'updatedAt',updated_at)order by gate)
  into v_all,v_gates from dm_private.launch_gate_attestations where gate<>'drawing_operations';
  select exists(select 1 from dm_private.mvp_paid_releases r where dm_private.mvp_release_is_current(r.paper_id)and not dm_private.paper_quality_held(r.paper_id))into v_offering;
  v_permissions:=dm_private.mvp_profile_permissions_valid();
@@ -318,7 +380,8 @@ begin
   if exists(select 1 from dm_private.mvp_test_checkout_control where enabled)then raise exception 'Close merchant Test acceptance before enabling live sales';end if;
   if new.policy_version is null then raise exception 'Cannot enable sales without a published policy version';end if;
   if not dm_private.mvp_profile_permissions_valid()then raise exception 'MVP API release controls require review';end if;
-  if(select count(*)from dm_private.launch_gate_attestations where gate<>'drawing_operations'and approved)<>7 then raise exception 'Cannot enable sales while MVP launch gates are open';end if;
+  perform dm_private.mvp_lock_checkout_gates(false);
+  if not dm_private.mvp_live_gates_approved() then raise exception 'Cannot enable sales while MVP launch gates are open';end if;
   if not exists(select 1 from dm_private.mvp_paid_releases r where dm_private.mvp_release_is_current(r.paper_id)and not dm_private.paper_quality_held(r.paper_id))then raise exception 'Cannot enable sales without an approved paid offering';end if;
  end if;return new;
 end$$;
@@ -382,6 +445,8 @@ do $$declare f record;a record;begin
  end loop;
 end$$;
 revoke all on function dm_private.mvp_lock_paper(uuid),dm_private.mvp_paper_manifest(uuid),dm_private.mvp_release_is_current(uuid),dm_private.mvp_profile_permissions_valid(),dm_private.mvp_test_checkout_setup_ready(),dm_private.mvp_test_checkout_allowed()from public,anon,authenticated,service_role;
+revoke all on function dm_private.require_mvp_operator_identity(),dm_private.mvp_lock_checkout_gates(boolean),dm_private.mvp_live_gates_approved()
+ from public,anon,authenticated,service_role;
 do $$begin
  if not dm_private.mvp_profile_permissions_valid()then raise exception 'MVP RPC permissions failed verification';end if;
 end$$;

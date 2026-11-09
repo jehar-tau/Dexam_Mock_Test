@@ -38,6 +38,39 @@ test('staff health shows payment and active-pass counts as aggregates at mobile 
 test('a recorded owner evidence decision does not publish a paper or enable sales',async({page})=>{
  const provider=await admin(page),readiness=page.getByRole('region',{name:'Launch readiness',exact:true});await readiness.getByLabel('Content publication rights evidence',{exact:true}).fill('Fictional owner approval of adapted practice material');await readiness.locator('article').filter({has:page.getByText('Content publication rights',{exact:true})}).getByRole('button',{name:'Approve',exact:true}).click();await expect(readiness.locator('article').filter({has:page.getByText('Content publication rights',{exact:true})}).getByRole('button',{name:'Revoke',exact:true})).toBeVisible();await expect(readiness.getByText('closed',{exact:true})).toBeVisible();await expect(readiness.getByText('Sales disabled',{exact:true})).toBeVisible();expect(provider.calls.filter(([name])=>name==='admin_set_launch_gate')).toHaveLength(1);expect(provider.calls.some(([name])=>['admin_release_mvp_paper','prepare_order','start_attempt'].includes(name))).toBe(false);expect(provider.unexpected).toEqual([]);
 });
+test('a queued approval rejected after role loss clears the staff desk without repeating the decision', async ({page}) => {
+ await admin(page);
+ const readiness = page.getByRole('region',{name:'Launch readiness',exact:true});
+ await expect(readiness.getByText('MVP server API controls verified.',{exact:true})).toBeVisible();
+ const api = 'https://dmocks-portal-fixture.supabase.co/rest/v1/rpc/';
+ const headers = {
+  'Access-Control-Allow-Origin':'*',
+  'Access-Control-Allow-Headers':'authorization, apikey, content-type, x-client-info',
+  'Access-Control-Allow-Methods':'POST, OPTIONS',
+ };
+ let denied = false, release;
+ const waiting = new Promise(resolve => { release = resolve; });
+ const writes = [];
+ await page.route(api+'is_dmocks_admin', route => route.request().method()==='OPTIONS'
+  ? route.fulfill({headers,status:204}) : route.fulfill({headers,json:!denied}));
+ await page.route(api+'admin_set_launch_gate', async route => {
+  if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});
+  writes.push(route.request().postDataJSON());
+  await waiting;
+  return route.fulfill({headers,status:403,json:{code:'42501',message:'Original fictional private decision diagnostic'}});
+ });
+ const evidence = 'Original fictional owner decision entered before revocation';
+ await readiness.getByLabel('Content publication rights evidence',{exact:true}).fill(evidence);
+ await readiness.locator('article').filter({has:page.getByText('Content publication rights',{exact:true})})
+  .getByRole('button',{name:'Approve',exact:true}).click();
+ await expect.poll(() => writes.length).toBe(1);
+ denied = true;
+ release();
+ await expect(page.getByRole('alert')).toContainText('Administrator access has ended');
+ await expect(readiness).toHaveCount(0);
+ await expect(page.locator('#root')).not.toContainText('Original fictional private decision diagnostic');
+ expect(writes).toEqual([{p_gate:'content_rights',p_approved:true,p_evidence:evidence}]);
+});
 test('the paid offer identifies adapted student-recalled practice without claiming official papers',async({page})=>{
  await page.goto('/plans');await expect(page.locator('.annual-card').getByRole('listitem').filter({hasText:'Adapted practice questions based on student recollections'})).toBeVisible();await expect(page.locator('.annual-card').getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();await expect(page.getByText('Paid access is not open in this preview.',{exact:false})).toBeVisible();await expect(page.getByRole('checkbox')).toHaveCount(0);
 });

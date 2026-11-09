@@ -36,6 +36,8 @@ For a real release, import only eligible canonical records, verify/register ever
 
 After presentation/manifest review, call `admin_release_mvp_paper(p_id, p_expected_sha256, p_rights_reference)` with the exact current hash and durable owner reference. The function rechecks locked current records and records the actor/evidence. A later content/review/holds/media/permission change removes new-start eligibility. `admin_withdraw_mvp_paper(p_id, p_expected_sha256, p_note)` removes the current release without deleting frozen owned attempts, clocks or results. These calls are operator procedures; no automatic source import publishes papers.
 
+Paper release, withdrawal, launch attestations and Test window changes check staff access again after waiting for their database locks. A rejected decision leaves the previous status and audit history intact. Test window opening checks the current prerequisite decisions and expiry after the wait.
+
 ## Controlled merchant Test journey without opening Live sales
 
 The real merchant Test journey must precede the provider-acceptance gate. Use a separate, audited and expiring Test window; never falsely approve that gate to make checkout reachable.
@@ -59,6 +61,8 @@ Close explicitly with `admin_set_mvp_test_checkout(false, null, p_evidence)` aft
 All seven relevant gates remain required: content rights, privacy/terms, refund policy, child safety, provider acceptance, backups/restore and capacity/operations. `drawing_operations` is excluded for this objective MVP. Readiness also requires the current exact offering, valid API profile, published policy, server Live mode and an explicitly closed Test window. A historic green blueprint or owner bank-use assertion alone never makes it ready.
 
 Only after the final owner production-impact decision configure the separate Live merchant setup, production frontend expected mode, public admission and sales in the reviewed sequence. The activation trigger rejects Test mode/open Test windows/missing gates. The client rejects a Test key/pass on the production checkout path. There is no auto-renewal.
+
+The server checks current launch approvals when preparing a new Live order. Revoking a required approval blocks queued and subsequent order preparation. Reconcile orders already prepared under the prior approval through the existing payment procedure.
 
 Use the health view and read-only monitor for stale attempts, order and payment reviews, unverified passes, support and question reports. Configure the approved alert receiver and payment Edge log filters as part of hosted acceptance. A duplicate or partial payment review requires operator reconciliation. See [Refund reconciliation](REFUND_RECONCILIATION.md) and [Operations runbook](OPERATIONS_RUNBOOK.md). Preserve service-only attempt recovery, private-media backups and a tested restore. Paid infrastructure and point-in-time recovery require a separate budget decision.
 
