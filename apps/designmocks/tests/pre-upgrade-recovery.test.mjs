@@ -62,7 +62,16 @@ function source({versions = historicalVersions, freshVersions = versions, withPr
 
 test('pre-upgrade capture authenticates the exact reviewed ledger including its historical gap', () => fixture(async config => {
   const {calls, options} = source();
-  const captured = await capturePrivateRecovery(config, options);
+  const databaseCaFile = path.join(path.dirname(config.output), 'project-root.crt');
+  await writeFile(databaseCaFile, 'Certificate fixture for path validation.');
+  const captured = await capturePrivateRecovery({...config, databaseCaFile}, {
+    ...options,
+    async connectionFactory(url, databaseOptions) {
+      assert.equal(url, config.databaseUrl);
+      assert.equal(databaseOptions.databaseCaFile, databaseCaFile);
+      return options.connectionFactory();
+    },
+  });
   const verified = await verifyRecoveryBundle({directory: config.output, key: config.recoveryKey});
   const summary = await verifyPrivateRecovery({directory: config.output, key: config.recoveryKey});
   assert.equal(captured.sourceStage, 'pre-upgrade');

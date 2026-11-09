@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {randomBytes} from 'node:crypto';
-import {mkdtemp,rm,writeFile} from 'node:fs/promises';
+import {mkdtemp,rm,symlink,writeFile} from 'node:fs/promises';
 import {Readable} from 'node:stream';
 import os from 'node:os';
 import path from 'node:path';
@@ -20,6 +20,33 @@ test('PostgreSQL uses decoded private environment fields and refuses transaction
  const env=recoveryPostgresEnvironment(config().databaseUrl);assert.equal(env.PGPASSWORD,'fictional@password');assert.equal(env.PGHOST,`db.${RECOVERY_PROJECT}.supabase.co`);assert.equal(env.PGSSLMODE,'verify-full');assert.equal(env.PGSSLROOTCERT,'system');
  for(const value of[`postgresql://postgres.${RECOVERY_PROJECT}:fictional@aws-1-ap-south-1.pooler.supabase.com:6543/postgres`,config().databaseUrl+'?options=malformed',config().databaseUrl.replace('/postgres','/another'),config().databaseUrl.replace('postgres:','other:')])assert.throws(()=>recoveryPostgresEnvironment(value));
  assert.equal(recoveryPostgresEnvironment('postgresql://postgres:fictional@127.0.0.1:64322/recovery',{localOnly:true}).PGDATABASE,'recovery');assert.throws(()=>recoveryPostgresEnvironment(config().databaseUrl,{localOnly:true}));
+});
+test('hosted recovery uses a project CA file with hostname verification', async () => {
+ const directory = await mkdtemp(path.join(os.tmpdir(), 'dmocks-recovery-ca-'));
+ try {
+   const databaseCaFile = path.join(directory, 'project-root.crt');
+   await writeFile(databaseCaFile, 'Certificate fixture for path validation.');
+   const directUrl = config().databaseUrl;
+   const poolerUrl = `postgresql://postgres.${RECOVERY_PROJECT}:fictional@aws-0-ap-south-1.pooler.supabase.com:5432/postgres`;
+   for (const databaseUrl of [directUrl, poolerUrl]) {
+     const env = recoveryPostgresEnvironment(databaseUrl, {databaseCaFile});
+     assert.equal(env.PGSSLMODE, 'verify-full');
+     assert.equal(env.PGSSLROOTCERT, databaseCaFile);
+   }
+   const emptyFile = path.join(directory, 'empty.crt');
+   const linkedFile = path.join(directory, 'linked.crt');
+   await writeFile(emptyFile, '');
+   await symlink(databaseCaFile, linkedFile);
+   for (const invalidPath of ['', 'project-root.crt', directory, emptyFile, linkedFile, path.join(directory, 'missing.crt')]) {
+     assert.throws(() => recoveryPostgresEnvironment(directUrl, {databaseCaFile: invalidPath}), /database CA certificate/);
+   }
+   const local = recoveryPostgresEnvironment('postgresql://postgres:fictional@127.0.0.1:64322/recovery',
+     {localOnly: true, databaseCaFile});
+   assert.equal(local.PGSSLMODE, 'disable');
+   assert.equal(local.PGSSLROOTCERT, undefined);
+ } finally {
+   await rm(directory, {recursive: true, force: true});
+ }
 });
 test('integrity verification explicitly cannot approve database restoration or a hosted release',()=>fixture(async({folder,key})=>{const result=await verifyPrivateRecovery({directory:path.join(folder,'backup'),key});assert.equal(result.databaseRestoreAccepted,false);assert.equal(result.hostedWritesPerformed,false);assert.equal(result.privateObjects,2);assert.equal(result.source,undefined);assert.equal(result.snapshot,undefined);}));
 test('media restoration refuses a hosted target or unmatched database before sending any bytes',()=>fixture(async({verified})=>{let calls=0;const fetchImpl=async()=>{calls++;throw new Error('Unexpected mutation');};await assert.rejects(restoreLocalRecoveryObjects({...restoration(verified),url:'https://tiodqzvvujxvxssvjdis.supabase.co'},{fetchImpl}),/isolated loopback/);await assert.rejects(restoreLocalRecoveryObjects({...restoration(verified),assertDatabaseRestored:async()=>false},{fetchImpl}),/matching database snapshot/);assert.equal(calls,0);}));

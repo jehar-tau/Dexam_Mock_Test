@@ -14,10 +14,11 @@ import {stableJson} from './question-bank-import.mjs';
 export const PRE_UPGRADE_LEDGER_VERSION = 'dmocks-pre-upgrade-ledger-v1';
 const hash=value=>createHash('sha256').update(stableJson(value)).digest('hex');
 function claims(value){try{return JSON.parse(Buffer.from(value.split('.')[1],'base64url').toString());}catch{return null;}}
-export function validateRecoveryCaptureConfiguration({url,key,databaseUrl,recoveryKey,releaseSha}){
+export function validateRecoveryCaptureConfiguration({url,key,databaseUrl,databaseCaFile,recoveryKey,releaseSha}){
  assert.ok(url===`https://${RECOVERY_PROJECT}.supabase.co`,'Only the standalone DMocks Storage origin is permitted');
  const jwt=claims(key??'');assert.ok(key?.startsWith('sb_secret_')||jwt?.role==='service_role'&&jwt.ref===RECOVERY_PROJECT,'A standalone server-only Storage credential is required');
- recoveryPostgresEnvironment(databaseUrl);assert.match(recoveryKey??'',/^[a-f0-9]{64}$/,'A private random 32-byte recovery key is required');assert.match(releaseSha??'',/^[a-f0-9]{40}$/,'Specify the exact approved database release SHA');return true;
+ recoveryPostgresEnvironment(databaseUrl, {databaseCaFile});
+ assert.match(recoveryKey??'',/^[a-f0-9]{64}$/,'A private random 32-byte recovery key is required');assert.match(releaseSha??'',/^[a-f0-9]{40}$/,'Specify the exact approved database release SHA');return true;
 }
 const objectUrl=(origin,object)=>origin+'/storage/v1/object/'+[object.bucket,...object.name.split('/')].map(encodeURIComponent).join('/');
 async function downloadObject(origin,key,object,fetchImpl){
@@ -56,7 +57,8 @@ export async function capturePrivateRecovery(config, {
   if (!ledger) assert.match(profile, /^[a-f0-9]{64}$/);
 
   const sourceCheck = {sourceStage, expectedVersions: versions};
-  const connection = await connectionFactory(config.databaseUrl);
+  const databaseOptions = {databaseCaFile: config.databaseCaFile};
+  const connection = await connectionFactory(config.databaseUrl, databaseOptions);
   try {
     const snapshot = await captureRecoverySnapshot(connection, sourceCheck);
     const exported = await connection.exportSnapshot();
@@ -77,7 +79,7 @@ export async function capturePrivateRecovery(config, {
       objects,
       readObject: object => downloadObject(config.url, config.key, object, fetchImpl),
       assertUnchanged: async () => {
-        const current = await connectionFactory(config.databaseUrl);
+        const current = await connectionFactory(config.databaseUrl, databaseOptions);
         try {
           await checkRecoveryDatabaseSource(current, sourceCheck);
           const buckets = JSON.parse(await current.query(recoveryBucketsQuery));
@@ -142,6 +144,7 @@ async function main() {
       url: process.env.DMOCKS_SUPABASE_URL,
       key: process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,
       databaseUrl: process.env.DMOCKS_RECOVERY_DATABASE_URL,
+      databaseCaFile: process.env.DMOCKS_RECOVERY_DATABASE_CA_FILE,
       recoveryKey, releaseSha: options['--release'], output: options['--output'],
       preUpgradeLedger: options['--pre-upgrade-ledger'],
     });

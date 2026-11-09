@@ -2,23 +2,36 @@
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
 import {randomUUID,createHash} from 'node:crypto';
+import {lstatSync} from 'node:fs';
+import {isAbsolute} from 'node:path';
 import {RECOVERY_PROJECT} from './recovery-bundle.mjs';
 import {stableJson} from './question-bank-import.mjs';
 const quote=value=>"'"+String(value).replaceAll("'","''")+"'",identifier=value=>'"'+String(value).replaceAll('"','""')+'"';
 const sha=value=>createHash('sha256').update(stableJson(value)).digest('hex');
-export function recoveryPostgresEnvironment(value,{localOnly=false}={}){
+export function recoveryPostgresEnvironment(value,{localOnly=false,databaseCaFile}={}){
  let target;try{target=new URL(value);}catch{throw new Error('Invalid recovery database configuration');}
  assert.ok(['postgres:','postgresql:'].includes(target.protocol)&&!target.hash&&!target.search&&target.pathname.length>1,'A direct or session-pooler PostgreSQL connection is required');
  const user=decodeURIComponent(target.username),hostname=target.hostname;
  if(localOnly)assert.ok(['localhost','127.0.0.1','[::1]'].includes(hostname),'Recovery verification permits only an isolated localhost database');
  else assert.ok(target.pathname==='/postgres'&&(target.port===''||target.port==='5432')&&((hostname===`db.${RECOVERY_PROJECT}.supabase.co`&&user==='postgres')||(/^aws-\d+-[a-z0-9-]+\.pooler\.supabase\.com$/.test(hostname)&&user===`postgres.${RECOVERY_PROJECT}`)),'Only the standalone DMocks database and session pooler are permitted');
  assert.ok(user&&target.password,'Private database credentials are required');
+ if (!localOnly && databaseCaFile !== undefined) {
+   assert.ok(typeof databaseCaFile === 'string' && isAbsolute(databaseCaFile),
+     'Use an absolute path to the Supabase database CA certificate');
+   const certificate = lstatSync(databaseCaFile, {throwIfNoEntry: false});
+   assert.ok(certificate?.isFile() && certificate.size > 0, 'Use a nonempty Supabase database CA certificate file');
+ }
  const environment={...process.env};for(const key of Object.keys(environment))if(key.startsWith('PG'))delete environment[key];
- Object.assign(environment,{PGHOST:hostname.replace(/^\[|\]$/g,''),PGPORT:target.port||'5432',PGUSER:user,PGPASSWORD:decodeURIComponent(target.password),PGDATABASE:decodeURIComponent(target.pathname.slice(1)),PGCONNECT_TIMEOUT:'10',PGAPPNAME:'dmocks-recovery',PGSSLMODE:localOnly?'disable':'verify-full',...(!localOnly?{PGSSLROOTCERT:'system'}:{})});
+ Object.assign(environment,{
+   PGHOST:hostname.replace(/^\[|\]$/g,''),PGPORT:target.port||'5432',PGUSER:user,
+   PGPASSWORD:decodeURIComponent(target.password),PGDATABASE:decodeURIComponent(target.pathname.slice(1)),
+   PGCONNECT_TIMEOUT:'10',PGAPPNAME:'dmocks-recovery',PGSSLMODE:localOnly?'disable':'verify-full',
+   ...(!localOnly?{PGSSLROOTCERT:databaseCaFile ?? 'system'}:{}),
+ });
  return environment;
 }
-export async function openRecoveryPostgres(url,{localOnly=false,spawnClient=(command,args,options)=>spawn(command,args,options)}={}){
- const env=recoveryPostgresEnvironment(url,{localOnly}),child=spawnClient('psql',['-X','-qAt','-v','ON_ERROR_STOP=1','-v','VERBOSITY=sqlstate','-P','pager=off'],{env,stdio:['pipe','pipe','pipe']});
+export async function openRecoveryPostgres(url,{localOnly=false,databaseCaFile,spawnClient=(command,args,options)=>spawn(command,args,options)}={}){
+ const env=recoveryPostgresEnvironment(url,{localOnly,databaseCaFile}),child=spawnClient('psql',['-X','-qAt','-v','ON_ERROR_STOP=1','-v','VERBOSITY=sqlstate','-P','pager=off'],{env,stdio:['pipe','pipe','pipe']});
  let buffer='',pending=null,closed=false,code=null;
  const finished=new Promise((resolve,reject)=>{child.on('error',()=>{code=-1;pending?.reject(new Error('Recovery database client failed'));pending=null;reject(new Error('Recovery database client failed'));});child.on('close',value=>{code=value;pending?.reject(new Error('Recovery database command failed'));pending=null;resolve(value);});});finished.catch(()=>{});
  child.stdin.on('error',()=>{pending?.reject(new Error('Recovery database command failed'));pending=null;});
