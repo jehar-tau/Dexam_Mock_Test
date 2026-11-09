@@ -18,7 +18,7 @@ function CatalogueSession({kind,View,viewProps,headingRef}){
   setCatalog(null);setSaved([]);setError('');setSharingMessage('');setLoading(true);
   try{const value=await withAccountDeadline(async active=>{const rows=validateCatalogue(kind,await services.rpc(spec.read,undefined,active));const attempts=inspectSaved.current?savedCatalogueAttempts(await services.rpc('my_attempt_history',undefined,active)):[];return{rows,attempts};},signal);if(active()){setCatalog(value.rows);setSaved(value.attempts);setUnknown(false);setSharingUncertain(false);}}
   catch{if(active())setError('Couldn’t load these mock choices. Refresh them to try again.');}
-  finally{if(active())setLoading(false);}
+  finally{if(active()){read.current=null;setLoading(false);}}
  }
  useEffect(()=>{const controller=new AbortController();scope.current=controller;void load();return()=>{controller.abort();read.current?.abort();};},[]);
  async function start(selection){
@@ -29,7 +29,7 @@ function CatalogueSession({kind,View,viewProps,headingRef}){
   finally{inFlight.current=false;if(current())setBusy(false);}
  }
  async function shareRank(eventId) {
-  if (!current() || inFlight.current || loading || sharingUncertain) return;
+  if (!current() || inFlight.current || read.current || loading || sharingUncertain) return;
   const previous = catalog?.find(event => event.id === eventId)?.result?.sharing;
   if (!previous) return;
   const shared = !previous.shared;

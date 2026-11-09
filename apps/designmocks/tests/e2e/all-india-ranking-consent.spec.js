@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { fileURLToPath } from 'node:url';
 import { portalFixtureURL, seedPortalSession, stubPortalProvider } from './portal-fixture.js';
 
 test.use({ baseURL: portalFixtureURL });
@@ -20,6 +21,17 @@ const deferred = () => {
   return { promise, resolve };
 };
 
+async function expectAccessible(page, selector) {
+  await page.addScriptTag({ path: fileURLToPath(new URL('../../node_modules/axe-core/axe.min.js', import.meta.url)) });
+  const violations = await page.evaluate(async scope => {
+    const result = await window.axe.run(scope, {
+      runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] },
+    });
+    return result.violations.map(({ id, nodes }) => ({ id, targets: nodes.map(({ target }) => target) }));
+  }, selector);
+  expect(violations).toEqual([]);
+}
+
 async function notify(page, user) {
   await seedPortalSession(page, user);
   await page.evaluate(() => {
@@ -31,7 +43,7 @@ async function notify(page, user) {
 }
 
 async function fixture(page, { released = true, sharing = { publicationId, revision: 0, shared: false, alias }, identity = actor.id } = {}) {
-  const state = { writes: [], currentActor: identity, responseHold: null, responseMode: 'success', serverShared: false, catalogReads: 0 };
+  const state = { writes: [], currentActor: identity, responseHold: null, responseMode: 'success', serverShared: false, catalogReads: 0, finishedWrites: 0 };
   await stubPortalProvider(page, (name) => {
     if (name === 'public_all_india_top_ten') return state.publicRows;
     if (name === 'all_india_event_catalog') {
@@ -59,10 +71,15 @@ async function fixture(page, { released = true, sharing = { publicationId, revis
     state.writes.push({ actor: requestActor, input });
     state.serverShared = input.p_shared;
     if (state.responseHold) await state.responseHold.promise;
-    if (state.responseMode === 'error') return route.fulfill({ headers, status: 500, body: 'fixture transport failure' }).catch(() => {});
-    if (state.responseMode === 'malformed') return route.fulfill({ headers, json: { publicationId: 'invalid', revision: -1, shared: !input.p_shared, alias: 'not-an-alias' }, status: 200 }).catch(() => {});
-    return route.fulfill({ headers, json: { publicationId, revision: input.p_expected_revision + 1, shared: input.p_shared, alias }, status: 200 })
-      .catch(() => {});
+    try {
+      if (state.responseMode === 'error') await route.fulfill({ headers, status: 500, body: 'fixture transport failure' });
+      else if (state.responseMode === 'malformed') await route.fulfill({ headers, json: { publicationId: 'invalid', revision: -1, shared: !input.p_shared, alias: 'not-an-alias' }, status: 200 });
+      else await route.fulfill({ headers, json: { publicationId, revision: input.p_expected_revision + 1, shared: input.p_shared, alias }, status: 200 });
+    } catch (error) {
+      if (!state.responseHold) throw error;
+    } finally {
+      state.finishedWrites++;
+    }
   });
   await page.goto('/account');
   await seedPortalSession(page, actor);
@@ -71,10 +88,13 @@ async function fixture(page, { released = true, sharing = { publicationId, revis
 }
 
 test('released personal top ten requires an explicit opt-in and can be withdrawn', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 760 });
   const state = await fixture(page);
   const on = page.getByRole('button', { name: 'Share on public results', exact: true });
   await expect(on).toBeVisible();
-  await expect(page.getByText(/generated alias, rank and marks may appear on the public site/i)).toBeVisible();
+  await expect(on).toHaveAccessibleDescription(/generated alias, rank and marks may appear on the public site/i);
+  await expectAccessible(page, '.all-india-list');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   expect(state.writes).toEqual([]);
   await on.press('Enter');
   await expect(page.getByRole('status')).toContainText('Public sharing is on.');
@@ -88,11 +108,13 @@ test('released personal top ten requires an explicit opt-in and can be withdrawn
 
 test('missing consent metadata exposes no publication control', async ({ page }) => {
   await fixture(page, { sharing: null });
+  await expect(page.getByText(/Rank 4 of 48 · 27\/30 marks/)).toBeVisible();
   await expect(page.getByRole('button', { name: /public results/i })).toHaveCount(0);
 });
 
 test('unreleased results expose no publication control', async ({ page }) => {
   await fixture(page, { released: false });
+  await expect(page.getByText(/Results under review until/)).toBeVisible();
   await expect(page.getByRole('button', { name: /public results/i })).toHaveCount(0);
 });
 
@@ -107,6 +129,7 @@ test('an in-flight sharing reply after account switch is discarded', async ({ pa
   await expect.poll(() => state.catalogReads).toBeGreaterThan(1);
   await expect(page.getByRole('heading', { name: 'Other account private result', exact: true })).toBeVisible();
   held.resolve();
+  await expect.poll(() => state.finishedWrites).toBe(1);
   await expect(page.getByText('Public sharing is on.', { exact: true })).toHaveCount(0);
   await expect(page.getByText('Public sharing is off.', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: /public results/i })).toHaveCount(0);
@@ -159,4 +182,5 @@ test('homepage publishes only current-version redacted ranking rows and reflows 
   await expect(feed.getByText('#2', { exact: true })).toBeVisible();
   await expect(feed.getByText('28/30')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await expectAccessible(page, '.all-india-highlights');
 });
