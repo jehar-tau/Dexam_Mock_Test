@@ -29,6 +29,7 @@
     "runtime:nid": "node scripts/materialize-nid-practice.mjs --ref origin/main",
     "capacity:run": "node scripts/capacity-load.mjs",
     "operations:sweep": "node scripts/operations-sweep.mjs",
+    "operations:monitor": "node scripts/operations-monitor.mjs",
     "bank:reconcile": "node scripts/reconcile-bank-state.mjs",
     "bank:diagnostics": "node scripts/bank-conversion-report.mjs",
     "recovery:capture": "node scripts/private-recovery.mjs capture",

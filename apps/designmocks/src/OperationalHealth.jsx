@@ -14,10 +14,16 @@ const labels = {
   expiredAiDraftJobs: "Expired draft requests",
   stalePendingOrders: "Stale pending orders",
   paymentReviews: "Payments needing review",
+  unverifiedPasses: "Unverified active passes",
 };
+const mvpMetrics = new Set(["staleAttempts", "expiredAttempts", "openBugs", "pendingQuestionReports", "stalePendingOrders", "paymentReviews"]);
 
 export function OperationalHealth({ health, onRefresh }) {
   if (!health) return <p role="status">Loading operational health…</p>;
+  const showExtendedMetrics = postLaunchPreview && health.scope !== "paid-mvp-v1";
+  const metrics = Object.entries(labels).filter(([key]) => key === "unverifiedPasses"
+    ? Number.isSafeInteger(health[key]) && health[key] >= 0
+    : showExtendedMetrics || mvpMetrics.has(key));
   return <section className="operations-health" aria-label="Operational health">
     <div>
       <span className={`status-pill health-${health.status}`}>{health.status}</span>
@@ -25,7 +31,7 @@ export function OperationalHealth({ health, onRefresh }) {
       {onRefresh && <button type="button" onClick={onRefresh}>Refresh queues</button>}
     </div>
     <div className="operations-metrics">
-      {Object.entries(labels).filter(([key])=>postLaunchPreview&&health.scope!=='paid-mvp-v1'||['staleAttempts','expiredAttempts','openBugs','pendingQuestionReports','stalePendingOrders','paymentReviews'].includes(key)).map(([key, label]) => <article key={key}>
+      {metrics.map(([key, label]) => <article key={key}>
         <span>{label}</span>
         <b>{health[key] ?? 0}</b>
       </article>)}

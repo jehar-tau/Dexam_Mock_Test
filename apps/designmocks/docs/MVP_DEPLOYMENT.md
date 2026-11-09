@@ -6,7 +6,7 @@ This is a reviewable rollout procedure, not a deployment approval. The hosted ta
 
 ## Exact source and server profile
 
-The accepted parent is corrective PR #107, including receipt recovery, service health, private bank diagnostics/NIFT proof and exact numeric alternatives; read CHECKOUT_RECOVERY.md and BANK_CONVERSION.md. The NID binding/conversion candidate has **74 migrations plus one explicit companion profile** at `supabase/launch/paid-mvp.sql`; the profile is not migration 75. Its SHA-256 is `1f1759cbd13a330ece5ee3997ba3c1bedbad23b5c06ee27dd351ad9c265a15ef`. `npm run check` verifies the SQL permission block against `supabase/launch/paid-mvp-rpcs.json`. The database check applies the profile after historical suites and separately exercises its release, Test and private practice-design boundaries.
+Use the migration ledger and the companion profile at `supabase/launch/paid-mvp.sql` from the same reviewed commit. Run `node scripts/check-mvp-profile.mjs` from the application directory to verify the 47-signature permission block against `supabase/launch/paid-mvp-rpcs.json` and record the profile SHA-256. Apply the companion profile after the reviewed migrations. The database checks exercise its release, Test, practice-design and operational boundaries.
 
 Before rollout, check CI for the reviewed feature commit and the merged tree, including a browser run without skips or retries. Inspect the installed ledger on the approved standalone DMocks target. Use the pre-upgrade capture procedure for a database that predates the companion profile. Restore the database and private media on an isolated target, verify the captured baseline and rehearse the pending migrations there. [Private database and file recovery](RECOVERY.md)
 
@@ -60,7 +60,7 @@ All seven relevant gates remain required: content rights, privacy/terms, refund 
 
 Only after the final owner production-impact decision configure the separate Live merchant setup, production frontend expected mode, public admission and sales in the reviewed sequence. The activation trigger rejects Test mode/open Test windows/missing gates. The client rejects a Test key/pass on the production checkout path. There is no auto-renewal.
 
-Use the minimal health view for stale/expired attempts, pending payment orders, payment reviews, open bugs and question reports. A duplicate/partial payment review requires operator handling, not an automated second charge or invented refund policy. See REFUND_RECONCILIATION.md and OPERATIONS_RUNBOOK.md. Preserve service-only expired-attempt recovery, private-media backups and a tested restore. Paid infrastructure/PITR is a separate owner budget decision; do not provision it automatically or demand the deferred 150-session exercise.
+Use the health view and read-only monitor for stale attempts, order and payment reviews, unverified passes, support and question reports. Configure the approved alert receiver and payment Edge log filters as part of hosted acceptance. A duplicate or partial payment review requires operator reconciliation. See [Refund reconciliation](REFUND_RECONCILIATION.md) and [Operations runbook](OPERATIONS_RUNBOOK.md). Preserve service-only attempt recovery, private-media backups and a tested restore. Paid infrastructure and point-in-time recovery require a separate budget decision.
 
 ## Candidate evidence
 

@@ -121,9 +121,9 @@ test('a cancelled provider operation never dispatches or attaches a late order',
 
 const origin='http://127.0.0.1:7698';
 function handlerFixture({attach='order_fictional',keys=true,prepareError=false,identity=true,timeoutMilliseconds=18000}={}){
-  const w=world({lostCreate:true}),calls=[],settings={PUBLIC_APP_ORIGIN:origin,SUPABASE_URL:'http://127.0.0.1:63321',
+  const w=world({lostCreate:true}),calls=[],failures=[],settings={PUBLIC_APP_ORIGIN:origin,SUPABASE_URL:'http://127.0.0.1:63321',
     SUPABASE_ANON_KEY:'fictional-anon',SUPABASE_SERVICE_ROLE_KEY:'fictional-service',...(keys?{RAZORPAY_KEY_ID:keyId,RAZORPAY_KEY_SECRET:keySecret}:{})};
-  const handler=createOrderHandler({readEnvironment:key=>settings[key],providerFetch:w.fetcher,timeoutMilliseconds,
+  const handler=createOrderHandler({readEnvironment:key=>settings[key],providerFetch:w.fetcher,timeoutMilliseconds,reportFailure:code=>failures.push(code),
     createClient:(url,key,options)=>{
       assert.equal(url,settings.SUPABASE_URL);
       if(key===settings.SUPABASE_ANON_KEY)assert.equal(options.global.headers.Authorization,'Bearer fictional-actor');
@@ -133,7 +133,7 @@ function handlerFixture({attach='order_fictional',keys=true,prepareError=false,i
           assert.equal(name,'attach_provider_order');assert.deepEqual(input,{p_id:internal,p_provider_id:'order_fictional'});return{data:attach,error:null};}};
     }});
   const request=(body={plan:'annual'},headers={})=>new Request(origin+'/functions/v1/create-order',{method:'POST',headers:{Origin:origin,Authorization:'Bearer fictional-actor','Content-Type':'application/json',...headers},body:JSON.stringify(body)});
-  return{handler,request,calls,w};
+  return{handler,request,calls,w,failures};
 }
 test('the actual order handler recovers and binds the order without granting a pass or returning diagnostics',async()=>{
   const f=handlerFixture(),response=await f.handler(f.request());assert.equal(response.status,200);
@@ -144,6 +144,7 @@ test('the actual order handler recovers and binds the order without granting a p
 test('an unexpected saved provider ID cannot open a window for a different attached order',async()=>{
   const f=handlerFixture({attach:'order_unrelated'}),response=await f.handler(f.request());assert.equal(response.status,503);
   assert.deepEqual(await response.json(),{error:'Could not confirm checkout. Check your pass before trying again.'});
+  assert.deepEqual(f.failures,['checkout_unconfirmed']);
 });
 test('missing merchant configuration, origin and identity failures cannot reach the provider',async()=>{
   for(const scenario of[{keys:false,status:503},{identity:false,status:401},{prepareError:true,status:409}]){

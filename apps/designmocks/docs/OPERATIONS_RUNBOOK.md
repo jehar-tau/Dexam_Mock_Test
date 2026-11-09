@@ -8,13 +8,19 @@ Apply the reviewed companion profile last, as described in MVP_DEPLOYMENT.md. It
 
 ## Health and alerting
 
-Read `admin_operational_health()` with a service identity or verified administrator. The corrected MVP profile preserves service access and counts the actual `pending` question-review status. The operations runner verifies this exact `paid-mvp-v1` aggregate before any write and records only its six allowlisted counters. The same aggregate appears in the authenticated admin portal. Alert thresholds:
+Read `admin_operational_health()` with a service identity or verified administrator. The MVP health view reports the current queues, permission profile and active passes without a matching captured-payment receipt. It accepts older capture receipts with a matching order and payment. The authenticated admin portal shows aggregate counts.
 
 | Severity | Trigger | First response |
 | --- | --- | --- |
 | P1 | unverified entitlement, cross-account access, public private-media URL, database unavailable | close registration and sales; preserve logs; page owner and operator |
 | P2 | stale attempts > 0 for two checks, payment reviews/stale orders, webhook verification failures, API p95 > 500 ms for 15 minutes | stop the affected worker/release; run the bounded recovery step; investigate |
 | P3 | support/moderation/review queues above the staffing threshold | assign the queue; do not change student results automatically |
+
+Run `npm run operations:monitor` from the private scheduler using the Supabase variables below and `DMOCKS_OPERATIONS_RELEASE_SHA` set to the full verified Git commit. For production, set `DMOCKS_OPERATIONS_PRODUCTION_ACK=CHECK_PAID_MVP_HEALTH_ON_<exact origin>` in the monitor process. The monitor reads health without applying repairs. Unavailable health, permission drift and unverified passes are P1. Stale orders, payments needing review and attempts past the stale threshold are P2.
+
+An approved alert receiver can use `DMOCKS_OPERATIONS_ALERT_URL`, `DMOCKS_OPERATIONS_ALERT_ALLOW_ORIGIN` and a separate `DMOCKS_OPERATIONS_ALERT_TOKEN`. The receiver accepts a bearer-authenticated JSON POST and acknowledges with a 2xx status. Deduplicate the supplied `Idempotency-Key` for the same target, release and set of findings within each 15-minute window. The payload carries the release, environment, UTC time, finding codes and aggregate counts. The monitor sends the Supabase credential only to the configured database origin and refuses redirects. Exit `0` means no urgent finding, `2` means a finding was reported, and `1` means configuration or delivery failed. Use the scheduler exit status to detect receiver failures.
+
+Route payment Edge logs by the structured `dmocks_commerce_failure` event. The codes are `checkout_unconfirmed`, `webhook_unconfigured`, `webhook_signature_rejected`, `webhook_capture_unconfirmed` and `webhook_refund_unconfirmed`. These events carry the code alone. Verify that the approved environment delivers both an aggregate alert and the expected webhook error signal before accepting monitoring for launch.
 
 Run `finalize_expired_attempts(500)` with the service identity once per minute until it returns zero. A browser or authenticated student must never receive the service credential. A nonzero stale-attempt count after two sweeps is P2.
 
@@ -45,7 +51,7 @@ The default MVP runner verifies service health first, drains bounded expired att
 
 Run `npm run operations:sweep` from a private scheduler every minute with `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_OPERATIONS_ALLOW_ORIGIN` (the exact Supabase origin) and `DMOCKS_OPERATIONS_ENVIRONMENT=staging|production`. The service credential must remain in the scheduler secret store. Production additionally requires `DMOCKS_OPERATIONS_PRODUCTION_ACK=FINALIZE_EXPIRED_ATTEMPTS_ON_<exact origin>`; the runner refuses a production host in staging mode.
 
-Each invocation drains at most ten batches of 500 expired attempts, recovers up to 500 expired intake jobs and 500 expired AI draft requests, prunes rate buckets older than two days, then prints one aggregate JSON health record. `recoveredQuestionJobs` reports the two recovery counts. Exit `0` means healthy/attention, `2` means degraded and must alert the operator, and `1` means configuration or RPC failure. Never retry an exit-1 loop without inspecting the named failed RPC; the underlying database operations are bounded and idempotent, but a bad credential or target should not be hammered. Deployment of this schedule is a production-state decision and remains separate from source readiness.
+Each invocation drains at most ten batches of 500 expired attempts, prunes rate buckets older than two days and prints one aggregate JSON health record. Exit `0` means healthy or attention, `2` means degraded and `1` means configuration or RPC failure. Inspect the named RPC before resuming a failing schedule. The approved environment and scheduler configuration are part of hosted acceptance.
 
 Question processing has a five-minute server expiry. `recover_expired_question_jobs(100)` is service-only and marks expired work failed with a retry message. It handles older interrupted rows using their original start/update time, skips locked rows and leaves current workers running. Failed and expired counters stay visible to the operator until the work is resolved.
 
