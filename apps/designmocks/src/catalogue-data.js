@@ -5,7 +5,39 @@ const text=value=>typeof value==='string'&&value.trim().length>0&&Array.from(val
 const uuid=value=>typeof value==='string'&&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(value);
 const date=value=>typeof value==='string'&&/^\d{4}-\d\d-\d\dT/.test(value)&&Number.isFinite(Date.parse(value));
 const exam=value=>['uceed','ceed','nid','nift'].includes(value);
+const candidateAlias = value => typeof value === 'string' && /^Candidate-[A-F0-9]{6}(?:[A-F0-9]{4})?$/.test(value);
 const invalid=()=>{throw new Error('The current mock choices could not be verified.');};
+
+function resultSharing(value) {
+ if (!record(value) || !uuid(value.publicationId) || !integer(value.revision) ||
+     typeof value.shared !== 'boolean' || (value.shared && value.revision === 0) || !candidateAlias(value.alias)) invalid();
+ const { publicationId, revision, shared, alias } = value;
+ return { publicationId, revision, shared, alias };
+}
+
+export function rankingShareReceipt(input, previous, shared) {
+ const receipt = resultSharing(input);
+ if (receipt.publicationId !== previous.publicationId || receipt.alias !== previous.alias ||
+     receipt.revision !== previous.revision + 1 || receipt.shared !== shared) invalid();
+ return receipt;
+}
+
+export function validatePublicAllIndiaResults(input) {
+ if (!Array.isArray(input) || input.length > 8) invalid();
+ const events = input.filter(event => event?.sharingVersion === 1).map(event => {
+  const { eventId, exam: eventExam, title, releasedAt, topTen } = event;
+  if (!uuid(eventId) || !exam(eventExam) || !text(title) || !date(releasedAt) || !Array.isArray(topTen) || topTen.length > 10) invalid();
+  const results = topTen.map(result => {
+   if (!record(result) || !candidateAlias(result.alias) || !integer(result.rank) || result.rank < 1 || result.rank > 10 ||
+       !finite(result.score) || !finite(result.total) || result.total < 0) invalid();
+   const { rank, alias, score, total } = result;
+   return { rank, alias, score, total };
+  });
+  return { eventId, exam: eventExam, title, topTen: results };
+ });
+ if (new Set(events.map(event => event.eventId)).size !== events.length) invalid();
+ return events.filter(event => event.topTen.length > 0);
+}
 export const catalogueKinds=Object.freeze({exam:{read:'exam_mock_catalog',start:'start_exam_mock',refresh:'Refresh exam mocks',className:'exam-mocks',signIn:'Sign in to take a mock'},allIndia:{read:'all_india_event_catalog',start:'start_all_india_attempt',refresh:'Refresh All India mocks',className:'all-india',signIn:'Sign in for All India mocks'},topic:{read:'topic_catalog',start:'start_topic_practice',refresh:'Refresh practice topics',className:'topic-practice',signIn:'Sign in to practise'}});
 export function catalogueSpec(kind){if(!Object.hasOwn(catalogueKinds,kind))invalid();return catalogueKinds[kind];}
 export function validateCatalogue(kind,input){
@@ -20,6 +52,10 @@ export function validateCatalogue(kind,input){
   }
   if(!uuid(item.id)||!text(item.title)||!['scheduled','open','closing','review','released','paused'].includes(item.state)||!['startsAt','endsAt','lastStartAt','reviewEndsAt'].every(key=>date(item[key]))||!integer(item.durationSeconds)||item.durationSeconds===0||!integer(item.uploadGraceSeconds)||typeof item.qualityHeld!=='boolean'||item.state==='open'&&item.qualityHeld||item.attemptId!=null&&!uuid(item.attemptId))invalid();
   let result=null;if(item.result!=null){const value=item.result;if(item.state!=='released'||!item.attemptId||!record(value)||!finite(value.score)||!finite(value.total)||value.total<0||!integer(value.rank)||value.rank<1||!integer(value.cohortSize)||value.cohortSize<value.rank)invalid();result={score:value.score,total:value.total,rank:value.rank,cohortSize:value.cohortSize};}
+  if (item.result?.sharing != null) {
+   if (result.rank > 10) invalid();
+   result.sharing = resultSharing(item.result.sharing);
+  }
   return{id:item.id,exam:item.exam,title:item.title,state:item.state,startsAt:item.startsAt,endsAt:item.endsAt,lastStartAt:item.lastStartAt,reviewEndsAt:item.reviewEndsAt,durationSeconds:item.durationSeconds,uploadGraceSeconds:item.uploadGraceSeconds,qualityHeld:item.qualityHeld,attemptId:item.attemptId??null,result};
  });
  const keys=rows.map(item=>kind==='topic'?JSON.stringify([item.exam,item.topic]):kind==='exam'?item.exam:item.id);if(new Set(keys).size!==keys.length)invalid();return rows;

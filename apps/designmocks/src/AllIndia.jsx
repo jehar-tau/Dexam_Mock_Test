@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {platform} from "./platform.js";
 import {PortalShell} from "./PortalShell.jsx";
 import {AssessmentCatalogue} from "./AssessmentCatalogue.jsx";
+import {validatePublicAllIndiaResults} from "./catalogue-data.js";
 
 async function rpc(name,args){const {data,error}=await platform.rpc(name,args);if(error)throw error;return data;}
 const when=(value)=>new Date(value).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
@@ -19,7 +20,7 @@ function eventDetails(event) {
 }
 
 function AllIndiaHeading({headingRef}){return<><span className="eyebrow">ALL INDIA MOCKS</span><h1 ref={headingRef} tabIndex={-1}>One paper. One <em>attempt.</em></h1><p>Every candidate receives the same frozen paper. The exam timer continues through disconnects, and ranks stay hidden until results are released.</p></>;}
-export function AllIndiaView({ events, onStart, heading=true, embedded=false, blocked=false }) {
+export function AllIndiaView({ events, onStart, onShare, heading=true, embedded=false, blocked=false, sharingBlocked=false }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
   const start = async (id) => {
@@ -41,6 +42,18 @@ export function AllIndiaView({ events, onStart, heading=true, embedded=false, bl
           {event.state !== "released" && event.uploadGraceSeconds > 0 && (
             <p>{event.durationSeconds / 60} minutes for the exam, plus {event.uploadGraceSeconds / 60} minutes for drawing uploads.</p>
           )}
+          {event.result?.sharing && onShare && (
+            <div className="all-india-sharing">
+              <p id={`ranking-sharing-${event.id}`}>
+                When you share, your generated alias, rank and marks may appear on the public site.
+                Your alias for this event is <b>{event.result.sharing.alias}</b>.
+              </p>
+              <button type="button" className="button quiet" disabled={sharingBlocked}
+                aria-describedby={`ranking-sharing-${event.id}`} onClick={() => onShare(event.id)}>
+                {event.result.sharing.shared ? "Stop public sharing" : "Share on public results"}
+              </button>
+            </div>
+          )}
         </div>
         {event.attemptId ? <Link className="button quiet" to={`/attempt/${event.attemptId}`}>
           {event.state === "released" ? "View attempt" : "Open attempt"}
@@ -56,7 +69,31 @@ export function AllIndiaView({ events, onStart, heading=true, embedded=false, bl
 
 export function AllIndia(){return<AssessmentCatalogue kind="allIndia" Heading={AllIndiaHeading} View={AllIndiaView}/>;}
 
-export function AllIndiaHighlights({example=null}){const [events,setEvents]=useState(example);useEffect(()=>{if(example||!platform)return;rpc("public_all_india_top_ten").then(setEvents).catch(()=>setEvents([]));},[example]);if(!events?.length)return null;return <section className="wrap section all-india-highlights"><span className="eyebrow">ALL INDIA RESULTS</span><h2>See where practice <em>leads.</em></h2>{events.map((event)=><article key={event.eventId}><h3>{event.exam.toUpperCase()} · {event.title}</h3><ol>{event.topTen.map((result)=><li key={`${result.rank}-${result.alias}`}><b>#{result.rank}</b><span>{result.alias}</span><span>{result.score}/{result.total}</span></li>)}</ol></article>)}</section>;}
+export function AllIndiaHighlights({ example = null }) {
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    if (example || !platform) return;
+    let current = true;
+    rpc("public_all_india_top_ten").then(validatePublicAllIndiaResults).then(results => {
+      if (current) setEvents(results);
+    }).catch(() => {
+      if (current) setEvents([]);
+    });
+    return () => { current = false; };
+  }, [example]);
+  const rankings = example ?? events;
+  if (!rankings.length) return null;
+  return <section className="wrap section all-india-highlights">
+    <span className="eyebrow">ALL INDIA RESULTS</span>
+    <h2>See where practice <em>leads.</em></h2>
+    {rankings.map(event => <article key={event.eventId}>
+      <h3>{event.exam.toUpperCase()} · {event.title}</h3>
+      <ol>{event.topTen.map((result, index) => <li key={index}>
+        <b>#{result.rank}</b><span>{result.alias}</span><span>{result.score}/{result.total}</span>
+      </li>)}</ol>
+    </article>)}
+  </section>;
+}
 
 export function AllIndiaPreview() {
   const [message, setMessage] = useState("");
