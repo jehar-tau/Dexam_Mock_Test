@@ -74,7 +74,10 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
           ? { items: [secondDrawing], nextCursor: null }
           : { items: drawing.canClaim ? [drawing] : [], nextCursor: drawingId };
       case "admin_claim_drawing_review":
-        drawing = { ...drawing, status: "assigned", version: 1, canClaim: false, canReview: true, assignedToMe: true };
+        drawing = { ...drawing, status: "assigned", version: 1, canClaim: false, canReview: true, assignedToMe: true,
+          aiSuggestion: { provider: "Fictional provider", model: "Synthetic model", rubricVersion: "fixture-v1",
+            proposedScore: 11.5, confidence: 0.8, criteria: { Clarity: 11.5, Contrast: 0 },
+            comments: "Synthetic advisory for review.", evidence: ["Contrast could be stronger"] } };
         return null;
       case "drawing-review-media":
         return { images: [{ id: "fixture-page", ordinal: 1,
@@ -97,14 +100,15 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
   await expect(page.getByRole("heading", { name: "Drawing reviews." })).toBeVisible();
   await expect(page.getByText(availableDrawing.prompt)).toBeVisible();
   await expect(page.getByRole("button", { name: "Open private images" })).toHaveCount(0);
+  await expect(page.getByLabel("AI review advisory")).toHaveCount(0);
   await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
-  const violations = await page.evaluate(async () => {
+  const accessibilityViolations = () => page.evaluate(async () => {
     const result = await window.axe.run(".admin-page", {
       runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] },
     });
     return result.violations.map(({ id, nodes }) => ({ id, targets: nodes.map(({ target }) => target) }));
   });
-  expect(violations).toEqual([]);
+  expect(await accessibilityViolations()).toEqual([]);
   await page.getByRole("button", { name: "Next page" }).press("Enter");
   await expect(page.getByText(secondDrawing.prompt)).toBeVisible();
   await expect(page.getByText(availableDrawing.prompt)).toHaveCount(0);
@@ -112,6 +116,16 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
   await page.getByRole("button", { name: "Previous page" }).press("Enter");
   await page.getByRole("button", { name: "Claim anonymous review" }).press("Enter");
   await expect(page.getByRole("button", { name: "My reviews" })).toHaveAttribute("aria-pressed", "true");
+  const advisory = page.getByLabel("AI review advisory");
+  const marks = advisory.getByLabel("Suggested criterion marks");
+  await expect(marks.locator("dt")).toHaveText(["Clarity", "Contrast"]);
+  await expect(marks.locator("dd")).toHaveText(["11.5", "0"]);
+  await expect(page.getByLabel("Mark 1", { exact: true })).toHaveValue("");
+  await page.setViewportSize({ width: 320, height: page.viewportSize().height });
+  expect(await accessibilityViolations()).toEqual([]);
+  await page.getByRole("switch", { name: "Dark mode" }).click();
+  await expect(page.getByRole("button", { name: "My reviews", exact: true })).toHaveCSS("background-color", "rgb(220, 235, 161)");
+  expect(await accessibilityViolations()).toEqual([]);
   await page.getByRole("button", { name: "Open private images" }).click();
   await expect(page.getByRole("img", { name: "Anonymous drawing page 1" })).toBeVisible();
   await page.getByLabel("Criterion 1", { exact: true }).fill("Clarity");
@@ -122,6 +136,7 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
   await page.getByRole("button", { name: "Release feedback to student" }).click();
   await expect(page.getByText("Grade finalized.")).toBeVisible();
   await expect(page.getByText("No drawing submissions await review.")).toBeVisible();
+  await expect(advisory).toHaveCount(0);
   expect(calls).toContainEqual(["my_drawing_review_page", { p_scope: "available", p_after: drawingId }]);
   expect(calls).toContainEqual(["admin_claim_drawing_review", { p_review_id: drawingId }]);
   expect(calls).toContainEqual(["drawing-review-media", { reviewId: drawingId }]);

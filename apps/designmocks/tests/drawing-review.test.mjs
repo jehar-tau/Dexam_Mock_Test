@@ -1,10 +1,18 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { drawingReviewActions, drawingReviewerChange, validateDrawingReviewInput } from "../src/drawing-review.js";
+import { drawingAdvisoryMarks, drawingReviewActions, drawingReviewerChange, validateDrawingReviewInput } from "../src/drawing-review.js";
 import { rasterMimeType } from "../supabase/functions/_shared/raster.mjs";
 
 const review = (rows, extra) => validateDrawingReviewInput({ rows, comments: " Clear visual hierarchy. ", maxScore: 20, ...extra });
 const criterion = (name, mark) => ({ name, mark });
+
+test("drawing advice preserves zero and fractional marks and omits an unavailable breakdown", () => {
+  assert.deepEqual(drawingAdvisoryMarks({ Clarity: 8.25, Contrast: 0 }), [["Clarity", 8.25], ["Contrast", 0]]);
+  for (const criteria of [undefined, {}, [7], { " ": 4 }, { Clarity: -1 }, { Clarity: "5" },
+    { Clarity: Number.POSITIVE_INFINITY }, Object.fromEntries(Array.from({ length: 13 }, (_, index) => [`Criterion ${index}`, 1]))]) {
+    assert.deepEqual(drawingAdvisoryMarks(criteria), []);
+  }
+});
 
 test("drawing review derives an exact two-decimal total from the criteria", () => {
   assert.deepEqual(review([criterion("Composition", " 8.10 "), criterion(" Clarity ", "7.2")]), {

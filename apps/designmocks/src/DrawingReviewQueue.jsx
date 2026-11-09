@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { DrawingReviewMedia } from "./DrawingReviewMedia.jsx";
-import { MAX_DRAWING_CRITERIA, totalDrawingMarks, validateDrawingReviewInput } from "./drawing-review.js";
+import { drawingAdvisoryMarks, MAX_DRAWING_CRITERIA, totalDrawingMarks, validateDrawingReviewInput } from "./drawing-review.js";
 
 export function DrawingReviewStatus({ review }) {
   if (!review || review.status === "not_submitted") return <div className="notice"><b>No drawing submitted for review.</b></div>;
@@ -10,9 +10,16 @@ export function DrawingReviewStatus({ review }) {
 
 export function DrawingAiAdvisory({ suggestion }) {
   if (!suggestion) return null;
+  const marks = drawingAdvisoryMarks(suggestion.criteria);
   return <aside className="notice drawing-ai-advisory" aria-label="AI review advisory">
     <span className="eyebrow">AI ADVISORY — NOT A GRADE</span>
     <p><b>Proposed {suggestion.proposedScore} marks</b> · {Math.round(Number(suggestion.confidence) * 100)}% model confidence</p>
+    {marks.length > 0 && <>
+      <p><b>Suggested criterion marks</b></p>
+      <dl aria-label="Suggested criterion marks">
+        {marks.map(([name, mark]) => <React.Fragment key={name}><dt>{name}</dt><dd>{mark}</dd></React.Fragment>)}
+      </dl>
+    </>}
     <p>{suggestion.comments}</p>
     <details><summary>Model provenance and evidence</summary><p>{suggestion.provider} · {suggestion.model} · rubric {suggestion.rubricVersion}</p><ul>{(suggestion.evidence ?? []).map((item, index) => <li key={index}>{typeof item === "string" ? item : JSON.stringify(item)}</li>)}</ul></details>
     <small>Review the original pages and rubric independently. This suggestion cannot release or change a student score.</small>
@@ -121,6 +128,7 @@ export function DrawingReviewLifecyclePreview() {
     aiSuggestion: {
       provider: "validation fixture", model: "advisory-only", rubricVersion: "wayfinding-v1",
       proposedScore: 14, confidence: 0.72,
+      criteria: { Composition: 8.25, Clarity: 5.75 },
       comments: "The hierarchy is legible; verify directional contrast against the rubric.",
       evidence: ["Primary route is visually dominant", "Secondary labels need contrast review"],
     },
