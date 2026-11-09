@@ -261,6 +261,8 @@ test("a stale staff reply keeps its draft until the current report is reviewed",
 test("an unknown staff reply result retries only the exact saved command", async ({page}) => {
  const state = await fixture(page), report = page.getByRole("region", {name:"Bug reports",exact:true});
  const form = report.getByRole("form", {name:"Reply to report Current fictional private bug",exact:true});
+ const reference = report.getByRole("article").getByText("Report reference 55000000-0000-4000-8000-000000000991", {exact:true});
+ await expect(reference).toBeVisible();
  let receipt;
  await page.route(api + "/rest/v1/rpc/admin_reply_bug_report", async route => {
   if (route.request().method() === "OPTIONS") return route.fulfill({headers,status:204});
@@ -280,6 +282,8 @@ test("an unknown staff reply result retries only the exact saved command", async
  await expect(report.getByRole("status")).toHaveText("Reply saved.");
  expect(state.replyCalls).toHaveLength(2);
  expect(state.replyCalls[0]).toEqual(state.replyCalls[1]);
+ await expect(reference).toBeVisible();
+ expect(state.unexpected).toEqual([]);
 });
 
 test("an unannounced SDK token change cannot send a private administrator reply as another actor",async({page})=>{

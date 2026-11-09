@@ -50,23 +50,29 @@ async function fixture(page,{holdInitial=null,waitForReports=true,path='/report'
  if(waitForReports)await expect(page.getByText(firstTitle,{exact:true})).toBeVisible();
  return Object.assign(state,provider);
 }
+const queuedReport = page => page.getByRole('status').filter({hasText:'Your report is in the review queue.'});
+const reportReference = (scope, id) => scope.getByText('Report reference ' + id, {exact:true});
+
 async function fillReport(page,title='Original fictional report after submission'){
  await page.getByLabel('Short title',{exact:true}).fill(title);await page.getByRole('textbox',{name:'What happened?',exact:true}).fill('An original fictional reproduction description with enough detail.');
 }
 
 test('a saved bug report acknowledges success, clears the form and reloads the team history',async({page})=>{
  const state=await fixture(page);await fillReport(page);await page.getByRole('button',{name:'Send report',exact:true}).click();
- await expect(page.getByText('Thanks — your report is now in the review queue.',{exact:true})).toBeVisible();
+ await expect(queuedReport(page)).toBeVisible();
+ const saved = state.rows[first.id][0];
+ await expect(queuedReport(page)).toHaveText('Your report is in the review queue. Report reference ' + saved.id);
  await expect(page.getByLabel('Short title',{exact:true})).toHaveValue('');await expect(page.getByRole('textbox',{name:'What happened?',exact:true})).toHaveValue('');
  await expect(page.getByLabel('Short title',{exact:true})).toBeFocused();
- await expect(page.getByText('Original fictional report after submission',{exact:true})).toBeVisible();expect(state.submissions).toHaveLength(1);expect(state.unexpected).toEqual([]);
+ await expect(reportReference(page.getByRole('article',{name:saved.title,exact:true}), saved.id)).toBeVisible();expect(state.submissions).toHaveLength(1);expect(state.unexpected).toEqual([]);
 });
 
 test('changing account clears private report history and unsent details before the new read completes',async({page})=>{
  const state=await fixture(page),held=deferred();await fillReport(page,'A private unsent first-account support draft');state.holds[second.id]=held;
  await changeAccount(page,state,second);await expect.poll(()=>state.reads[second.id]??0).toBeGreaterThan(0);
  await expect(page.getByText(firstTitle,{exact:true})).toHaveCount(0);await expect(page.getByLabel('Short title',{exact:true})).not.toHaveValue('A private unsent first-account support draft');
- held.resolve();await expect(page.getByText(secondTitle,{exact:true})).toBeVisible();expect(state.submissions).toEqual([]);expect(state.unexpected).toEqual([]);
+ await expect(reportReference(page, state.rows[first.id][0].id)).toHaveCount(0);
+ held.resolve();await expect(reportReference(page.getByRole('article',{name:secondTitle,exact:true}), state.rows[second.id][0].id)).toBeVisible();expect(state.submissions).toEqual([]);expect(state.unexpected).toEqual([]);
 });
 
 test('an old account history response cannot replace the new account reports',async({page})=>{
@@ -90,7 +96,10 @@ test('a lost committed acknowledgement retries the same report and keeps an inte
  await expect(page.getByText('Couldn’t confirm your report. Retry the same report to check it.',{exact:true})).toBeVisible();await expect(page.getByLabel('Short title',{exact:true})).toBeDisabled();
  await page.clock.fastForward(60000);await expect(page.getByRole('button',{name:'Retry report',exact:true})).toBeEnabled();expect(state.submissions).toHaveLength(1);
  const saved=state.rows[first.id][0];saved.status='fixed';saved.adminReply='An intervening original fictional support reply.';
- await page.getByRole('button',{name:'Retry report',exact:true}).click();await expect(page.getByText('Thanks — your report is now in the review queue.',{exact:true})).toBeVisible();
+ await expect(queuedReport(page)).toHaveCount(0);
+ await page.getByRole('button',{name:'Retry report',exact:true}).click();
+ await expect(queuedReport(page)).toHaveText('Your report is in the review queue. Report reference ' + saved.id);
+ await expect(reportReference(page.getByRole('article',{name:saved.title,exact:true}), saved.id)).toBeVisible();
  expect(state.submissions).toHaveLength(2);expect(state.submissions[1]).toEqual(state.submissions[0]);expect(state.rows[first.id].filter(row=>row.title==='Original fictional report after submission')).toHaveLength(1);
  await expect(page.getByText('An intervening original fictional support reply.',{exact:false})).toBeVisible();expect(saved.status).toBe('fixed');expect(state.unexpected).toEqual([]);
 });
@@ -99,14 +108,14 @@ test('an uncertain submission times out, can be stopped, and cannot clear a newe
  await page.clock.install();const state=await fixture(page),held=deferred();state.submitHold=held;await fillReport(page);await page.getByRole('button',{name:'Send report',exact:true}).click();await expect.poll(()=>state.submissions.length).toBe(1);
  await page.clock.fastForward(20001);await expect(page.getByRole('button',{name:'Retry report',exact:true})).toBeEnabled();await page.getByRole('button',{name:'Stop retrying and refresh',exact:true}).click();
  await expect(page.getByLabel('Short title',{exact:true})).toBeFocused();await fillReport(page,'A different new explicit report draft');held.resolve();await expect.poll(()=>state.completedSubmissions).toBe(1);
- await expect(page.getByLabel('Short title',{exact:true})).toHaveValue('A different new explicit report draft');expect(state.submissions).toHaveLength(1);await expect(page.getByText('Thanks — your report is now in the review queue.',{exact:true})).toHaveCount(0);
+ await expect(page.getByLabel('Short title',{exact:true})).toHaveValue('A different new explicit report draft');expect(state.submissions).toHaveLength(1);await expect(queuedReport(page)).toHaveCount(0);
 });
 
 test('same-route history disposes a pending acknowledgement without changing the newer report form',async({page})=>{
  const state=await fixture(page),held=deferred();state.submitHold=held;await fillReport(page);await page.getByRole('button',{name:'Send report',exact:true}).click();await expect.poll(()=>state.submissions.length).toBe(1);
  await page.evaluate(()=>{history.pushState({...history.state,key:'new-fictional-support-entry'},'',location.href);dispatchEvent(new PopStateEvent('popstate',{state:history.state}));});
  await expect(page.getByLabel('Short title',{exact:true})).toHaveValue('');await expect(page.getByRole('heading',{level:1,name:'Report a problem.',exact:true})).toBeFocused();await fillReport(page,'New history support draft');
- held.resolve();await expect.poll(()=>state.completedSubmissions).toBe(1);await expect(page.getByLabel('Short title',{exact:true})).toHaveValue('New history support draft');await expect(page.getByText('Thanks — your report is now in the review queue.',{exact:true})).toHaveCount(0);
+ held.resolve();await expect.poll(()=>state.completedSubmissions).toBe(1);await expect(page.getByLabel('Short title',{exact:true})).toHaveValue('New history support draft');await expect(queuedReport(page)).toHaveCount(0);
 });
 
 test('known quota and validation rejection preserve editable details and hide provider diagnostics',async({page})=>{
@@ -164,7 +173,7 @@ test('leaving the report page aborts its pending request and a late acknowledgem
  const state=await fixture(page),held=deferred();state.submitHold=held;let aborted=0;page.on('requestfailed',request=>{if(request.url().endsWith('/rpc/submit_bug_report'))aborted++;});
  await fillReport(page);await page.getByRole('button',{name:'Send report',exact:true}).click();await expect.poll(()=>state.submissions.length).toBe(1);
  await page.getByRole('banner').getByRole('link',{name:'DMocks home',exact:true}).click();await expect(page.getByRole('heading',{level:1,name:'Report a problem.',exact:true})).toHaveCount(0);await expect.poll(()=>aborted).toBe(1);
- held.resolve();await expect.poll(()=>state.completedSubmissions).toBe(1);await expect(page.getByText('Thanks — your report is now in the review queue.',{exact:true})).toHaveCount(0);await page.getByRole('link',{name:'Report a problem',exact:true}).click();
+ held.resolve();await expect.poll(()=>state.completedSubmissions).toBe(1);await expect(queuedReport(page)).toHaveCount(0);await page.getByRole('link',{name:'Report a problem',exact:true}).click();
  await expect(page.getByLabel('Short title',{exact:true})).toHaveValue('');await expect(page.getByText('Original fictional report after submission',{exact:true})).toBeVisible();expect(state.submissions).toHaveLength(1);
 });
 
