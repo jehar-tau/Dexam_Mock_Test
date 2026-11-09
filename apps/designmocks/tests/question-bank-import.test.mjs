@@ -42,15 +42,21 @@ test("runtime conversion is deterministic and excludes unresolved media", () => 
 });
 
 test("canonical import never overwrites a separately materialized runtime", async () => {
-  const previous = globalThis.fetch;
   const calls = [];
-  globalThis.fetch = async (url) => {
-    const name = String(url).split("/").at(-1);
-    calls.push(name);
-    return {ok:true,text:async()=>JSON.stringify(name === "begin_question_bank_import" ? "fixture-run" : 1)};
+  const origin = "http://127.0.0.1:54321";
+  const receipt = "10000000-0000-4000-8000-000000000001";
+  const fetchImpl = async (url, request) => {
+    const name = new URL(url).pathname.split("/").at(-1);
+    calls.push([name, JSON.parse(request.body)]);
+    if (name === "admin_operational_health") return Response.json({ scope: "paid-mvp-v1", monitorVersion: 1, apiProfileReady: true });
+    if (name === "begin_question_bank_import") return Response.json(receipt);
+    if (name === "finish_question_bank_import") return new Response(null, { status: 204 });
+    return Response.json(1);
   };
-  try {
-    await applyManifest(buildManifest(bank([question()])),{url:"https://operator-fixture.invalid",serviceRoleKey:"fixture-only"});
-    assert.deepEqual(calls,["begin_question_bank_import","import_question_bank_batch","finish_question_bank_import"]);
-  } finally {globalThis.fetch = previous;}
+  const config = { url: origin, allowOrigin: origin, environment: "development", serviceRoleKey: "sb_secret_fictional_only" };
+  const result = await applyManifest(buildManifest(bank([question()])), config, fetchImpl);
+  assert.equal(result, receipt);
+  assert.deepEqual(calls.map(([name]) => name), ["admin_operational_health", "begin_question_bank_import", "import_question_bank_batch", "finish_question_bank_import"]);
+  assert.deepEqual(calls[0][1], {});
+  assert.equal(calls[2][1].p_records[0].runtime, null);
 });

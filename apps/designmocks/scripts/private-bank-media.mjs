@@ -5,6 +5,7 @@ import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {createClient} from '@supabase/supabase-js';
 import {loadFromGit,sha256,stableJson} from './question-bank-import.mjs';
+import {bankProviderConfiguration,openPrivateBankProvider} from './private-bank-provider.mjs';
 
 export const MEDIA_BUCKET='paper-media';
 export const MAX_ASSET_BYTES=10*1024*1024;
@@ -68,15 +69,10 @@ export async function planCanonicalMedia(manifest,root){
  for(const asset of assets){const data=await readCanonicalAsset(root,asset);asset.byteSize=data.length;bytes+=data.length;}
  return {sourceCommit:manifest.sourceCommit,sourceSha256:manifest.sourceSha256,mediaSha256:sha256(stableJson(assets)),totalBytes:bytes,assets};
 }
-export async function uploadCanonicalMedia(plan,{root,url,serviceRoleKey,concurrency=3,onProgress=()=>{}}){
- const project=JSON.parse(await readFile(new URL('../supabase/project.json',import.meta.url),'utf8'));
- assert.equal(project.project_ref,'tiodqzvvujxvxssvjdis','Unexpected standalone project manifest');
- assert.equal(url,`https://${project.project_ref}.supabase.co`,'Only the standalone project is permitted');
- const claims=JSON.parse(Buffer.from(serviceRoleKey?.split('.')[1]||'','base64url'));
- assert.equal(claims.role,'service_role','An operator server key is required');
- assert.equal(claims.ref,project.project_ref,'Server key belongs to another project');
+export async function uploadCanonicalMedia(plan,{root,concurrency=3,onProgress=()=>{},...config}){
  assert.ok(Number.isInteger(concurrency)&&concurrency>=1&&concurrency<=4,'Unsupported upload concurrency');
- const client=createClient(url,serviceRoleKey,{auth:{persistSession:false,autoRefreshToken:false},global:{fetch:(input,init={})=>fetch(input,{...init,signal:init.signal??AbortSignal.timeout(45000)})}});
+ const provider=await openPrivateBankProvider(config);
+ const client=createClient(provider.origin,config.serviceRoleKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false},global:{fetch:provider.fetch}});
  const lookup=await retryMediaOperation(()=>client.storage.getBucket(MEDIA_BUCKET));
  if(lookup.error||!lookup.data)throw providerFailure('PRIVATE_MEDIA_BUCKET_LOOKUP_FAILED',lookup);
  const bucket=lookup.data;
@@ -109,7 +105,7 @@ async function main(){
  const plan=await planCanonicalMedia(manifest,root);
  const summary={sourceCommit:plan.sourceCommit,sourceSha256:plan.sourceSha256,mediaSha256:plan.mediaSha256,assets:plan.assets.length,totalBytes:plan.totalBytes};
  if(!process.argv.includes('--apply')){console.log(JSON.stringify({mode:'dry-run',...summary},null,2));return;}
- const result=await uploadCanonicalMedia(plan,{root,url:process.env.DMOCKS_SUPABASE_URL,serviceRoleKey:process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,onProgress:p=>{if(p.registered%150===0||p.registered===p.total)console.log(JSON.stringify(p));}});
+ const result=await uploadCanonicalMedia(plan,{...bankProviderConfiguration(process.env),root,onProgress:p=>{if(p.registered%150===0||p.registered===p.total)console.log(JSON.stringify(p));}});
  console.log(JSON.stringify({mode:'private-media-upload',...summary,...result},null,2));
 }
 if(import.meta.url===pathToFileURL(process.argv[1]||'').href)main().catch(error=>{

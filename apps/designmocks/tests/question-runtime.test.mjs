@@ -68,6 +68,7 @@ test('canonical ingestion does not silently compile or downgrade independently r
 });
 test('runtime operator refuses foreign projects and browser credentials before network access',async()=>{
  const key=claims=>'a.'+Buffer.from(JSON.stringify(claims)).toString('base64url')+'.c';
- await assert.rejects(()=>runtimeOperator({url:'https://other.supabase.co',serviceRoleKey:key({role:'service_role',ref:'other'})}));
- await assert.rejects(()=>runtimeOperator({url:'https://tiodqzvvujxvxssvjdis.supabase.co',serviceRoleKey:key({role:'anon',ref:'tiodqzvvujxvxssvjdis'})}));
+ const ref='a'.repeat(20),url='https://'+ref+'.supabase.co',config={url,allowOrigin:url,environment:'staging'};
+ await assert.rejects(()=>runtimeOperator({...config,serviceRoleKey:key({role:'service_role',ref:'b'.repeat(20)})}),/different provider project/);
+ await assert.rejects(()=>runtimeOperator({...config,serviceRoleKey:key({role:'anon',ref})}),/server-only/);
 });

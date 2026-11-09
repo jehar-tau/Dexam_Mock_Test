@@ -78,17 +78,27 @@ test('the operator compares its complete runtime to the server and the exact can
   const stale = { ...binding, current: false }; plan = compileNidPracticePlan(manifest, [{ ...row, binding: stale, runtime: null }], []); assert.equal(plan.ready, 0); assert.equal(plan.unavailable.length, 1);
 });
 test('the operator permits only the independent service target, bounded pages and exact plan replay', async () => {
-  const url = 'https://tiodqzvvujxvxssvjdis.supabase.co', key = 'x.' + Buffer.from(JSON.stringify({ role: 'service_role', ref: 'tiodqzvvujxvxssvjdis' })).toString('base64url') + '.x';
-  await assert.rejects(nidPracticeOperator({ url: 'http://127.0.0.1:63321', serviceRoleKey: key }));
-  await assert.rejects(nidPracticeOperator({ url, serviceRoleKey: 'x.' + Buffer.from(JSON.stringify({ role: 'authenticated', ref: 'tiodqzvvujxvxssvjdis' })).toString('base64url') + '.x' }));
+  const ref = 'a'.repeat(20), url = 'https://' + ref + '.supabase.co';
+  const key = role => 'x.' + Buffer.from(JSON.stringify({ role, ref })).toString('base64url') + '.x';
+  const config = { url, allowOrigin: url, environment: 'staging', serviceRoleKey: key('service_role') };
+  const local = 'http://127.0.0.1:63321';
+  await assert.rejects(nidPracticeOperator({ ...config, url: local, allowOrigin: local }), /different provider project/);
+  await assert.rejects(nidPracticeOperator({ ...config, serviceRoleKey: key('authenticated') }), /server-only/);
   const native = globalThis.fetch, calls = [];
+  let repeatPage = false;
   try {
-    globalThis.fetch = async (address, options) => { calls.push([address, JSON.parse(options.body)]); return Response.json(address.endsWith('nid_practice_runtime_plan') ? { items: [], nextKey: null } : JSON.parse(options.body).p_records.length); };
-    const operator = await nidPracticeOperator({ url, serviceRoleKey: key }); assert.deepEqual(await operator.bindings(), []);
-    assert.deepEqual(calls[0][1], { p_after_key: null, p_limit: 100 });
+    globalThis.fetch = async (address, options) => {
+      const body = JSON.parse(options.body);
+      calls.push([address, body]);
+      if (address.endsWith('admin_operational_health')) return Response.json({ scope: 'paid-mvp-v1', monitorVersion: 1, apiProfileReady: true });
+      if (address.endsWith('nid_practice_runtime_plan')) return Response.json(repeatPage ? { items: [{ externalKey: 'repeated' }], nextKey: 'repeated' } : { items: [], nextKey: null });
+      return Response.json(body.p_records.length);
+    };
+    const operator = await nidPracticeOperator(config); assert.deepEqual(await operator.bindings(), []);
+    assert.deepEqual(calls[1][1], { p_after_key: null, p_limit: 100 });
     assert.equal(await operator.apply({ records: [], planSha256: sha256('[]') }), 0);
     await assert.rejects(operator.apply({ records: [], planSha256: '0'.repeat(64) }), /plan changed/);
-    globalThis.fetch = async () => Response.json({ items: [{ externalKey: 'repeated' }], nextKey: 'repeated' });
+    repeatPage = true;
     await assert.rejects(operator.bindings(), /Duplicate practice page/);
   } finally { globalThis.fetch = native; }
 });

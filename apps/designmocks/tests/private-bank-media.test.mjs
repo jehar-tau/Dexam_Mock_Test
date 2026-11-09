@@ -31,8 +31,14 @@ test('local verification rejects escaping symlinks and files changed after plann
 });
 test('upload rejects other projects and non-server credentials before contacting Storage',async()=>{
  const key=claims=>'a.'+Buffer.from(JSON.stringify(claims)).toString('base64url')+'.c';
- const base={root:'/unused-fixture',url:'https://tiodqzvvujxvxssvjdis.supabase.co',serviceRoleKey:key({role:'service_role',ref:'tiodqzvvujxvxssvjdis'})};
- for(const changes of [{url:'https://another-project.supabase.co'},{serviceRoleKey:key({role:'anon',ref:'tiodqzvvujxvxssvjdis'})},{serviceRoleKey:key({role:'service_role',ref:'another-project'})},{concurrency:8}])await assert.rejects(()=>uploadCanonicalMedia({assets:[]},{...base,...changes}));
+ const ref='a'.repeat(20),url='https://'+ref+'.supabase.co';
+ const base={root:'/unused-fixture',url,allowOrigin:url,environment:'staging',serviceRoleKey:key({role:'service_role',ref})};
+ for(const [changes,reason] of [
+  [{url:'https://'+ 'b'.repeat(20)+'.supabase.co'},/exactly match/],
+  [{serviceRoleKey:key({role:'anon',ref})},/server-only/],
+  [{serviceRoleKey:key({role:'service_role',ref:'b'.repeat(20)})},/different provider project/],
+  [{concurrency:8},/Unsupported upload concurrency/],
+ ])await assert.rejects(()=>uploadCanonicalMedia({assets:[]},{...base,...changes}),reason);
 });
 test('temporary provider failures retry within a bound while permission failures stop immediately',async()=>{
  let calls=0;const pauses=[];

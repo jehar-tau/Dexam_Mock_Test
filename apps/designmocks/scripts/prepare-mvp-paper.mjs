@@ -4,7 +4,7 @@ import { parseArgs } from "node:util";
 import { collectCanonicalMedia, readCanonicalAsset } from "./private-bank-media.mjs";
 import { loadFromGit, sha256, stableJson } from "./question-bank-import.mjs";
 import { RULES_2027, runtimeQuestion } from "./question-runtime.mjs";
-import { validateOperationsConfiguration } from "./operations-sweep.mjs";
+import { openPrivateBankProvider } from "./private-bank-provider.mjs";
 
 const digest = /^[a-f0-9]{64}$/;
 const commit = /^[a-f0-9]{40}$/;
@@ -77,26 +77,16 @@ export async function compileMvpPaper(packet, expectedSha, canonical, mediaRoot)
 }
 
 export async function stageMvpPaper({ plan, summary }, config, fetchImpl = fetch) {
-  const { origin } = validateOperationsConfiguration(config, "PREPARE_UNPUBLISHED_MVP_PAPER_ON");
-  const host = new URL(origin).hostname;
-  if (!["localhost", "127.0.0.1", "[::1]"].includes(host) && !/^[a-z0-9]{20}\.supabase\.co$/.test(host)) {
-    throw new Error("Paper preparation requires an approved Supabase project or loopback fixture");
-  }
-  let response;
+  const provider = await openPrivateBankProvider({ ...config, serviceRoleKey: config.key }, {
+    fetchImpl, acknowledgement: "PREPARE_UNPUBLISHED_MVP_PAPER_ON",
+  });
+  let receipt;
   try {
-    response = await fetchImpl(`${origin}/rest/v1/rpc/prepare_mvp_paper`, {
-      method: "POST", redirect: "error", signal: AbortSignal.timeout(30000),
-      headers: { apikey: config.key, authorization: `Bearer ${config.key}`, "content-type": "application/json" },
-      body: JSON.stringify({ p_plan: plan }),
-    });
-  } catch {
+    receipt = await provider.rpc("prepare_mvp_paper", { p_plan: plan });
+  } catch (error) {
+    if (error.httpStatus) throw new Error(`The private target rejected paper preparation (HTTP ${error.httpStatus})`);
     throw new Error("The private paper preparation endpoint could not be reached");
   }
-  if (!response.ok) {
-    await response.body?.cancel().catch(() => {});
-    throw new Error(`The private target rejected paper preparation (HTTP ${response.status})`);
-  }
-  const receipt = await response.json().catch(() => null);
   if (!uuid.test(receipt?.paperId ?? "") || !digest.test(receipt.manifestSha256 ?? "")
     || receipt.packetSha256 !== summary.packetSha256 || receipt.questionCount !== summary.questionCount
     || receipt.durationSeconds !== summary.durationSeconds || receipt.totalPoints !== summary.totalPoints

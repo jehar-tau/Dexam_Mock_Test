@@ -79,18 +79,26 @@ test("rejects changed packet, source, order, question, key and inventory even wi
   await assert.rejects(compileMvpPaper(packet, packet.manifestSha256, canonical, root), /figure failed its byte or dimension check/);
 });
 
-test("preparation uses one guarded service request and only returns the verified receipt fields", async t => {
+test("preparation checks the target before sending the packet and only returns the verified receipt fields", async t => {
   const { packet, canonical, root } = await fixture(t);
   const compiled = await compileMvpPaper(packet, packet.manifestSha256, canonical, root);
   const target = "http://127.0.0.1:55421";
   const config = { url: target, allowOrigin: target, environment: "staging", key: "sb_secret_fictional_fixture" };
   const receipt = { paperId: "10000000-0000-4000-8000-000000000001", manifestSha256: "e".repeat(64), created: true };
-  let sent = 0;
+  const health = { scope: "paid-mvp-v1", monitorVersion: 1, apiProfileReady: true };
+  const sent = [];
   const fetchImpl = async (url, request) => {
-    sent++;
-    assert.equal(url, target + "/rest/v1/rpc/prepare_mvp_paper");
+    const path = new URL(url).pathname;
+    sent.push(path);
+    assert.equal(new URL(url).origin, target);
     assert.equal(request.redirect, "error");
-    assert.equal(request.headers.authorization, "Bearer " + config.key);
+    assert.equal(request.headers.get("apikey"), config.key);
+    assert.equal(request.headers.has("authorization"), false);
+    if (path.endsWith("/admin_operational_health")) {
+      assert.deepEqual(JSON.parse(request.body), {});
+      return Response.json(health);
+    }
+    assert.equal(path, "/rest/v1/rpc/prepare_mvp_paper");
     assert.deepEqual(JSON.parse(request.body), { p_plan: compiled.plan });
     return Response.json({ ...compiled.summary, ...receipt, privateField: "Fictional private payload" });
   };
@@ -98,11 +106,12 @@ test("preparation uses one guarded service request and only returns the verified
   await assert.rejects(stageMvpPaper(compiled, { ...config, key: "sb_publishable_fake" }, fetchImpl), /server-only/);
   await assert.rejects(stageMvpPaper(compiled, { ...config, environment: "production" }, fetchImpl), /acknowledgement/);
   await assert.rejects(stageMvpPaper(compiled, { ...config, url: "https://wrong.invalid", allowOrigin: "https://wrong.invalid" }, fetchImpl), /approved Supabase/);
-  assert.equal(sent, 0);
+  assert.deepEqual(sent, []);
   assert.deepEqual(await stageMvpPaper(compiled, config, fetchImpl), receipt);
-  assert.equal(sent, 1);
-  await assert.rejects(stageMvpPaper(compiled, config, async () => new Response("Private provider diagnostic", { status: 400 })),
+  assert.deepEqual(sent, ["/rest/v1/rpc/admin_operational_health", "/rest/v1/rpc/prepare_mvp_paper"]);
+  const then = reply => async url => url.endsWith("/admin_operational_health") ? Response.json(health) : reply();
+  await assert.rejects(stageMvpPaper(compiled, config, then(() => new Response("Private provider diagnostic", { status: 400 }))),
     { message: "The private target rejected paper preparation (HTTP 400)" });
-  await assert.rejects(stageMvpPaper(compiled, config, async () => Response.json({ ...receipt, ...compiled.summary, questionCount: 1 })),
+  await assert.rejects(stageMvpPaper(compiled, config, then(() => Response.json({ ...receipt, ...compiled.summary, questionCount: 1 }))),
     /invalid paper receipt/);
 });
