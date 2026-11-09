@@ -3,12 +3,23 @@ import{seedPortalSession,stubPortalProvider}from'./portal-fixture.js';
 import{runtimeQuestion,RULES_2027}from'../../scripts/question-runtime.mjs';
 test.use({baseURL:'http://127.0.0.1:4799'});
 const actor={id:'00000000-0000-4000-8000-000000001701',email:'fictional-mvp@example.invalid'},paper='10000000-0000-4000-8000-000000001701',attempt='20000000-0000-4000-8000-000000001701';
-async function fixture(page,{drawing=false,numericAlternatives=false,released=true}={}){
+async function fixture(page,{drawing=false,numericAlternatives=false,gradedQuestion=null,released=true}={}){
  const state={answer:null,revision:0,submitted:false,released};
  const numeric=numericAlternatives?runtimeQuestion({externalKey:'original-numeric-alternatives',provenance:{exam:'uceed'},type:'NAT',prompt:'Original fictional exact-decimal practice question.',holds:[],assets:[],options:[],answer:{raw:'1.000000000000000001 or 1.000000000000000002',status:'reviewed'}},{rule:RULES_2027.uceed}):null;
- const score=()=>numericAlternatives?(numeric.key.accepted.some(value=>value.exact===state.answer)?4:0):-1;
- const question=()=>({id:'30000000-0000-4000-8000-000000001701',ordinal:1,kind:numeric?.kind??(drawing?'drawing':'mcq'),topic:'observation',prompt:numeric?.prompt??'Original fictional MVP objective question',options:numeric?.options??[{id:'A',label:'Original first choice'},{id:'B',label:'Original second choice'}],marking:numeric?.marking??{correct:4,wrong:-1},points:4,negativePoints:numericAlternatives?0:1,answer:state.answer,answerRevision:state.revision,media:[],...(state.submitted?{outcome:score()>0?'full_marks':'incorrect',explanation:numeric?.explanation??'Original fictional MVP answer explanation.'}:{})});
- const snapshot=()=>({id:attempt,title:'Original fictional released objective paper',status:state.submitted?'submitted':'active',deadline:new Date(Date.now()+900000).toISOString(),serverNow:new Date().toISOString(),questions:[question()],score:state.submitted?score():null,total:4});
+ const runtime=gradedQuestion??numeric;
+ const score=()=>gradedQuestion?.points??(numeric?(numeric.key.accepted.some(value=>value.exact===state.answer)?4:0):-1);
+ const question=()=>({
+  id:'30000000-0000-4000-8000-000000001701',ordinal:1,kind:runtime?.kind??(drawing?'drawing':'mcq'),
+  topic:'observation',prompt:runtime?.prompt??'Original fictional MVP objective question',
+  options:runtime?.options??[{id:'A',label:'Original first choice'},{id:'B',label:'Original second choice'}],
+  marking:runtime?.marking??{correct:4,wrong:-1},points:runtime?.points??4,negativePoints:runtime?.negativePoints??1,
+  answer:state.answer,answerRevision:state.revision,media:[],
+  ...(state.submitted?{
+   outcome:score()>0?'correct':'incorrect',explanation:runtime?.explanation??'Original fictional MVP answer explanation.',
+   ...(runtime&&{correctKey:runtime.key}),
+  }:{}),
+ });
+ const snapshot=()=>({id:attempt,title:'Original fictional released objective paper',status:state.submitted?'submitted':'active',deadline:new Date(Date.now()+900000).toISOString(),serverNow:new Date().toISOString(),questions:[question()],score:state.submitted?score():null,total:runtime?.points??4});
  const provider=await stubPortalProvider(page,(name,input)=>{
   if(name==='finalize_my_expired_attempts')return 0;
   if(name==='my_attempt_history')return[];
@@ -65,6 +76,42 @@ for(const[value,marks]of[['1.000000000000000001',4],['1.000000000000000002',4],[
  const provider=await fixture(page,{numericAlternatives:true});await page.goto('/attempt/'+attempt);await page.getByLabel('Your numerical answer',{exact:true}).fill(value);await page.getByRole('button',{name:'Save answer',exact:true}).press('Enter');await expect.poll(()=>provider.state.answer).toBe(value);
  expect(provider.calls.filter(([name])=>name==='save_answer_revision').at(-1)[1].p_answer).toBe(value);await page.getByRole('button',{name:'Submit attempt',exact:true}).press('Enter');await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).click();await expect(page.getByRole('group',{name:'Objective result',exact:true})).toContainText(`${marks}/4`);await page.getByRole('button',{name:'Open answer review',exact:true}).press('Enter');await expect(page.locator('.answer-review article')).toContainText('Your answer: '+value);expect(provider.unexpected).toEqual([]);
 });
+
+const alternativeCases = [
+ {type:'MCQ', raw:'C or A', selected:['A'], saved:'A', label:'C or A'},
+ {type:'MSQ', raw:'AD or BC', selected:['B','C'], saved:['B','C'], label:'A, D or B, C'},
+ {type:'NAT', raw:'1.25 or 2.50 to 2.75', selected:[], saved:'2.55', label:'1.25 or 2.50 to 2.75'},
+];
+for (const {type, raw, selected, saved, label} of alternativeCases) {
+ test(`${type} keeps its response type and shows accepted alternatives after submission`, async ({page}) => {
+  const runtime = runtimeQuestion({
+   externalKey:`original-${type.toLowerCase()}-alternative-fixture`, provenance:{exam:'uceed'}, type,
+   prompt:'Original fictional alternative answer question.', holds:[], assets:[],
+   options:type==='NAT'?[]:['A','B','C','D'].map(key=>({key,text:`Fictional choice ${key}`})),
+   answer:{raw,status:'human-reviewed'}, explanation:'Original fictional worked explanation.',
+  }, {rule:RULES_2027.uceed});
+  expect(runtime).not.toBeNull();
+  const provider = await fixture(page, {gradedQuestion:runtime});
+  await page.goto('/attempt/'+attempt);
+  await expect(page.getByText('Original fictional alternative answer question.',{exact:true})).toBeVisible();
+  await expect(page.getByText('Accepted answers',{exact:true})).toHaveCount(0);
+  if (type==='NAT') {
+   await page.getByLabel('Your numerical answer',{exact:true}).fill(saved);
+   await page.getByRole('button',{name:'Save answer',exact:true}).press('Enter');
+  } else {
+   for (const id of selected) await page.getByRole('button',{name:`${id} Fictional choice ${id}`,exact:true}).click();
+  }
+  await expect.poll(()=>provider.state.answer).toEqual(saved);
+  await page.getByRole('button',{name:'Submit attempt',exact:true}).press('Enter');
+  await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).click();
+  await expect(page.getByRole('group',{name:'Objective result',exact:true})).toContainText(`${runtime.points}/${runtime.points}`);
+  await page.getByRole('button',{name:'Open answer review',exact:true}).press('Enter');
+  await expect(page.locator('.answer-review article')).toContainText(`Accepted answers ${label}`);
+  await expect(page.getByText('Original fictional worked explanation.',{exact:true})).toBeVisible();
+  expect(provider.unexpected).toEqual([]);
+ });
+}
+
 test('an unsupported drawing paper fails closed in the MVP runner',async({page})=>{
  const provider=await fixture(page,{drawing:true});await page.goto('/attempt/'+attempt);await expect(page.getByRole('alert')).toContainText('This attempt is unavailable');await expect(page.getByRole('heading',{name:'Original fictional MVP objective question',exact:true})).toHaveCount(0);await expect(page.locator('input[type=file]')).toHaveCount(0);expect(provider.calls.map(([name])=>name)).toEqual(['read_attempt']);expect(provider.unexpected).toEqual([]);
 });
