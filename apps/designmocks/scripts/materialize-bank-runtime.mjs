@@ -1,9 +1,9 @@
-// Server/operator entry point. Only this standalone project may receive the plan.
+// Server/operator entry point. Send the plan to the approved DMocks project.
 import assert from 'node:assert/strict';
-import{readFile}from'node:fs/promises';
 import{pathToFileURL}from'node:url';
 import{loadFromGit,sha256,stableJson}from'./question-bank-import.mjs';
 import{runtimeQuestion,RULES_2027}from'./question-runtime.mjs';
+import{bankProviderConfiguration,openPrivateBankProvider}from'./private-bank-provider.mjs';
 
 export function compileRuntimeManifest(manifest,mediaCatalog){
  assert.ok(Array.isArray(mediaCatalog),'Verified media catalogue required');
@@ -17,17 +17,8 @@ export function compileRuntimeManifest(manifest,mediaCatalog){
  });
  return{sourceCommit:manifest.sourceCommit,sourceSha256:manifest.sourceSha256,version:'verified-2027-v2',byExam,total:records.length,ready:records.filter(r=>r.runtime).length,planSha256:sha256(stableJson(records)),records};
 }
-export async function runtimeOperator({url,serviceRoleKey}){
- const project=JSON.parse(await readFile(new URL('../supabase/project.json',import.meta.url),'utf8'));
- assert.equal(project.project_ref,'tiodqzvvujxvxssvjdis');
- assert.equal(url,`https://${project.project_ref}.supabase.co`,'Only the standalone project is permitted');
- const claims=JSON.parse(Buffer.from(serviceRoleKey?.split('.')[1]||'','base64url'));
- assert.equal(claims.role,'service_role','An operator server key is required');assert.equal(claims.ref,project.project_ref,'Wrong provider project');
- async function rpc(name,body={}){
-  const response=await fetch(`${url}/rest/v1/rpc/${name}`,{method:'POST',headers:{apikey:serviceRoleKey,authorization:`Bearer ${serviceRoleKey}`,'content-type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(45000)});
-  if(!response.ok){const error=new Error('Runtime provider request rejected');error.code='RUNTIME_PROVIDER_REJECTED';error.operation=name;error.httpStatus=response.status;throw error;}
-  return response.json();
- }
+export async function runtimeOperator(config){
+ const {rpc}=await openPrivateBankProvider(config);
  return{media:()=>rpc('canonical_bank_media_manifest'),apply:async plan=>{
   let recorded=0;
   for(const [exam,records]of Object.entries(Object.groupBy(plan.records,record=>record.exam==='nift'?'nift':'other'))){for(let offset=0;offset<records.length;offset+=100){const batch=records.slice(offset,offset+100);const count=await rpc(exam==='nift'?'upsert_nift_question_bank_runtime_batch':'upsert_question_bank_runtime_batch',{p_records:batch});assert.equal(count,batch.length,'Runtime registration count mismatch');recorded+=count;}}
@@ -36,11 +27,11 @@ export async function runtimeOperator({url,serviceRoleKey}){
 }
 async function main(){
  const index=process.argv.indexOf('--ref');const manifest=loadFromGit(index>=0?process.argv[index+1]:'origin/main');
- const operator=await runtimeOperator({url:process.env.DMOCKS_SUPABASE_URL,serviceRoleKey:process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY});
+ const operator=await runtimeOperator(bankProviderConfiguration(process.env));
  const plan=compileRuntimeManifest(manifest,await operator.media());const {records,...summary}=plan;
  if(process.argv.includes('--apply'))summary.recorded=await operator.apply(plan);
  console.log(JSON.stringify({mode:process.argv.includes('--apply')?'private-runtime-materialization':'dry-run',...summary},null,2));
 }
 if(import.meta.url===pathToFileURL(process.argv[1]||'').href)main().catch(error=>{
- console.error(JSON.stringify({code:error.code==='RUNTIME_PROVIDER_REJECTED'?error.code:'RUNTIME_MATERIALIZATION_FAILED',...(error.code==='RUNTIME_PROVIDER_REJECTED'?{operation:error.operation,httpStatus:error.httpStatus}:{})}));process.exitCode=1;
+ console.error(JSON.stringify({code:error.code==='PRIVATE_BANK_PROVIDER_FAILED'?error.code:'RUNTIME_MATERIALIZATION_FAILED',...(error.code==='PRIVATE_BANK_PROVIDER_FAILED'?{operation:error.operation,httpStatus:error.httpStatus}:{})}));process.exitCode=1;
 });

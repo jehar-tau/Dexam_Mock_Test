@@ -68,5 +68,19 @@ select pg_temp.ops_assert(public.admin_operational_health()->>'apiProfileReady'=
 reset role;
 revoke execute on function public.admin_privacy_requests() from authenticated;
 select pg_temp.ops_assert(dm_private.mvp_profile_permissions_valid(),'service access does not broaden client RPC grants');
+select pg_temp.ops_assert(bool_and(
+  has_function_privilege('service_role',signature,'EXECUTE')
+  and not has_function_privilege('anon',signature,'EXECUTE')
+  and not has_function_privilege('authenticated',signature,'EXECUTE')
+ ),'bank transfer, materialization and unpublished preparation are server-only')
+from unnest(array[
+  'public.begin_question_bank_import(text,text,text,integer,integer,integer,integer)',
+  'public.import_question_bank_batch(uuid,jsonb)','public.finish_question_bank_import(uuid)',
+  'public.canonical_bank_media_manifest()','public.register_bank_media_assets(jsonb)',
+  'public.upsert_question_bank_runtime_batch(jsonb)','public.upsert_nift_question_bank_runtime_batch(jsonb)',
+  'public.nid_practice_runtime_plan(text,integer)','public.upsert_nid_practice_runtime_batch(jsonb)',
+  'public.prepare_mvp_paper(jsonb)'
+]) as bank(signature);
 rollback;
 \echo 'PASS: service/admin-only MVP health, aggregate entitlement anomalies, and browser API permission drift.'
+\echo 'PASS: canonical bank transfer, materialization and unpublished preparation stay server-only.'

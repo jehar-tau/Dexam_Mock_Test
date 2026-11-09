@@ -36,7 +36,7 @@ Run the reproducible audit with:
 npm run audit:bank
 ```
 
-Build the exact import manifest without changing hosted state with `npm run bank:manifest --prefix apps/designmocks`. A hosted import requires the explicit `bank:import` command plus the DMocks-only service-role environment variables. The database accepts only the configured canonical path, rejects any record whose payload does not contain an explicitly empty `holds` array, records the Git commit and source hash, and makes retries idempotent. Import eligibility does not publish a question: objective readiness and owner approval remain separate private-bank fields.
+Build the exact import manifest without changing hosted state with `npm run bank:manifest --prefix apps/designmocks`. A hosted import requires the explicit `bank:import` command and the approved private bank target configuration. The database requires the canonical path and an explicitly empty `holds` array for each record. It records the Git commit and source hash and makes retries idempotent. Objective readiness, owner approval and paper publication are separate decisions. [Private bank target setup](MVP_DEPLOYMENT.md#select-the-private-bank-target)
 
 The deterministic runtime adapter currently converts 161 asset-free objective records into the assessment-engine contract. Records with unresolved visual media, unsupported answer notation or missing keys remain private and unavailable for mocks. Every runtime-ready record still requires a DMocks administrator to review the content and explicitly confirm usage rights; that decision is audited and automatically cleared if the canonical content hash changes.
 

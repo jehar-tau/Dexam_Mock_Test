@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { loadFromGit, sha256, stableJson } from './question-bank-import.mjs';
 import { nidPracticeRuntime } from './nid-practice-runtime.mjs';
+import { bankProviderConfiguration, openPrivateBankProvider } from './private-bank-provider.mjs';
 
 export function compileNidPracticePlan(manifest, bindings, mediaCatalog) {
   assert.ok(Array.isArray(bindings) && Array.isArray(mediaCatalog), 'Private binding and verified media catalogues required');
@@ -26,17 +26,8 @@ export function compileNidPracticePlan(manifest, bindings, mediaCatalog) {
     planSha256: sha256(stableJson(records)), records };
 }
 
-export async function nidPracticeOperator({ url, serviceRoleKey }) {
-  const project = JSON.parse(await readFile(new URL('../supabase/project.json', import.meta.url), 'utf8'));
-  assert.equal(project.project_ref, 'tiodqzvvujxvxssvjdis');
-  assert.equal(url, `https://${project.project_ref}.supabase.co`, 'Only the standalone DMocks target is permitted');
-  const claims = JSON.parse(Buffer.from(serviceRoleKey?.split('.')[1] || '', 'base64url'));
-  assert.equal(claims.role, 'service_role'); assert.equal(claims.ref, project.project_ref);
-  async function rpc(name, body = {}) {
-    const response = await fetch(url + '/rest/v1/rpc/' + name, { method: 'POST', headers: { apikey: serviceRoleKey, authorization: 'Bearer ' + serviceRoleKey, 'content-type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(45000) });
-    if (!response.ok) { const error = new Error('Private practice provider request rejected'); error.operation = name; error.httpStatus = response.status; throw error; }
-    return response.json();
-  }
+export async function nidPracticeOperator(config) {
+  const { rpc } = await openPrivateBankProvider(config);
   return {
     media: () => rpc('canonical_bank_media_manifest'),
     async bindings() {
@@ -63,7 +54,7 @@ export async function nidPracticeOperator({ url, serviceRoleKey }) {
 }
 async function main() {
   const index = process.argv.indexOf('--ref'), manifest = loadFromGit(index < 0 ? 'origin/main' : process.argv[index + 1]);
-  const operator = await nidPracticeOperator({ url: process.env.DMOCKS_SUPABASE_URL, serviceRoleKey: process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY });
+  const operator = await nidPracticeOperator(bankProviderConfiguration(process.env));
   const [bindings, media] = await Promise.all([operator.bindings(), operator.media()]);
   const plan = compileNidPracticePlan(manifest, bindings, media), { records, unavailable, ...summary } = plan;
   if (process.argv.includes('--apply')) summary.recorded = await operator.apply(plan);

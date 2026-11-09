@@ -34,6 +34,20 @@ The private first candidate is **UCEED Part A - Practice Mock 01**, 14 NAT + 15 
 
 For a real release, import only eligible canonical records, verify/register every private figure, compile with the pinned exam context, and retain explicit bank review plus the owner provenance/use reference. `admin_mvp_paper_manifest(p_id)` returns eligibility and metadata/hashes to admins only. It checks exact current canonical prompt/options/key/explanation/marking/media, empty holds, approval, unique keys, fixed section order/counts/clock and present registered private storage objects. No draft, placeholder image or changed answer can inherit an older approval.
 
+### Select the private bank target
+
+Set `DMOCKS_SUPABASE_URL` and the private `DMOCKS_SUPABASE_SERVICE_ROLE_KEY` for the approved project. Set `DMOCKS_BANK_ALLOW_ORIGIN` to the exact independently approved API origin and `DMOCKS_BANK_ENVIRONMENT` to `development`, `staging` or `production`. Development requires loopback. Production requires a managed Supabase origin and `DMOCKS_BANK_PRODUCTION_ACK=USE_PRIVATE_BANK_ON_<exact origin>`. The commands check the current DMocks paid MVP profile before sending questions, files or runtime plans. Authenticated requests stay on the approved origin and refuse redirects. A legacy service-role JWT must match the managed project reference. An opaque secret key uses the API key header. [Supabase API keys](https://supabase.com/docs/guides/getting-started/api-keys)
+
+Run the canonical import, media registration and runtime materialization in that order after the approved target has the matching migrations and profile. Set `DMOCKS_MEDIA_ROOT` to the read-only media directory. The bank and media manifest commands remain available for offline inspection.
+
+```sh
+npm run bank:import
+npm run media:import
+npm run runtime:apply
+```
+
+### Prepare the reviewed paper
+
 Use the frozen private packet and its separately reviewed SHA-256 to prepare the catalogue paper. Set `DMOCKS_MEDIA_ROOT` to the read-only canonical media root. The default command verifies current `origin/main`, recompiles every selected question, checks the actual figure bytes and returns only counts and hashes.
 
 ```sh

@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { bankProviderConfiguration, openPrivateBankProvider } from "./private-bank-provider.mjs";
 
 export const SOURCE_PATH = "server/data/exports/dexam-bank-export.json";
 
@@ -69,21 +70,16 @@ export function loadFromGit(ref = "origin/main", cwd = new URL("../../..", impor
   return buildManifest(JSON.parse(raw), sourceCommit);
 }
 
-async function rpc(url, key, name, body) {
-  const response = await fetch(`${url.replace(/\/$/, "")}/rest/v1/rpc/${name}`, { method: "POST", headers: { apikey: key, authorization: `Bearer ${key}`, "content-type": "application/json" }, body: JSON.stringify(body) });
-  const text = await response.text();
-  if (!response.ok) throw new Error(`${name} failed (${response.status}): ${text}`);
-  return text ? JSON.parse(text) : null;
-}
-
-export async function applyManifest(manifest, { url, serviceRoleKey, batchSize = 100 }) {
-  if (!url || !serviceRoleKey) throw new Error("DMOCKS_SUPABASE_URL and DMOCKS_SUPABASE_SERVICE_ROLE_KEY are required");
-  const runId = await rpc(url, serviceRoleKey, "begin_question_bank_import", { p_source_commit: manifest.sourceCommit, p_source_path: manifest.sourcePath, p_source_sha256: manifest.sourceSha256, p_schema_version: manifest.schemaVersion, p_source_total: manifest.sourceTotal, p_eligible_total: manifest.eligibleTotal, p_held_total: manifest.heldTotal });
+export async function applyManifest(manifest, { batchSize = 100, ...config }, fetchImpl = fetch) {
+  if (!Number.isInteger(batchSize) || batchSize < 1 || batchSize > 200) throw new Error("Invalid bank import batch size");
+  const { rpc } = await openPrivateBankProvider(config, { fetchImpl });
+  const runId = await rpc("begin_question_bank_import", { p_source_commit: manifest.sourceCommit, p_source_path: manifest.sourcePath, p_source_sha256: manifest.sourceSha256, p_schema_version: manifest.schemaVersion, p_source_total: manifest.sourceTotal, p_eligible_total: manifest.eligibleTotal, p_held_total: manifest.heldTotal });
+  if (typeof runId !== "string" || !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(runId)) throw new Error("Invalid bank import receipt");
   for (let index = 0; index < manifest.records.length; index += batchSize) {
     const records = manifest.records.slice(index, index + batchSize);
-    await rpc(url, serviceRoleKey, "import_question_bank_batch", { p_run_id: runId, p_records: records });
+    await rpc("import_question_bank_batch", { p_run_id: runId, p_records: records });
   }
-  await rpc(url, serviceRoleKey, "finish_question_bank_import", { p_run_id: runId });
+  await rpc("finish_question_bank_import", { p_run_id: runId });
   return runId;
 }
 
@@ -93,7 +89,7 @@ async function main() {
   const manifest = loadFromGit(ref);
   const summary = Object.fromEntries(Object.entries(manifest).filter(([key]) => key !== "records"));
   if (!process.argv.includes("--apply")) { console.log(JSON.stringify({ mode: "dry-run", ...summary }, null, 2)); return; }
-  const runId = await applyManifest(manifest, { url: process.env.DMOCKS_SUPABASE_URL, serviceRoleKey: process.env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY });
+  const runId = await applyManifest(manifest, bankProviderConfiguration(process.env));
   console.log(JSON.stringify({ mode: "applied", runId, ...summary }, null, 2));
 }
 
