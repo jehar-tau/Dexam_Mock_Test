@@ -177,9 +177,7 @@ reset role;
 select pg_temp.cohort_assert((select bool_and(elapsed_seconds=900 and total=24) and count(*) filter(where rank=2 and score=4)=11
   from dm_private.all_india_results),'drawing ties ignore early submission speed and missing drawing pages score zero');
 set local role anon;
-select pg_temp.cohort_assert(jsonb_array_length(public.public_all_india_top_ten()->0->'topTen')=10
-  and (public.public_all_india_top_ten()->0->'topTen'->0->>'score')::numeric=16
-  and not((public.public_all_india_top_ten()->0->'topTen'->0)?|array['userId','attemptId']),
-  'public top ten is bounded even with ties and omits private IDs');
+select pg_temp.cohort_assert(public.public_all_india_top_ten()='[]'::jsonb,
+  'released mixed cohort standings stay private without publication approval and consent');
 rollback;
 \echo 'PASS: mixed All India snapshots, fixed upload grace, sealed drawing review and reproducible combined ranks.'
