@@ -2,17 +2,13 @@ begin;
 
 -- Rotating a mode or policy, or changing an attestation even back to the same
 -- value, must not silently reactivate a past publication and its consents.
-create sequence dm_private.all_india_ranking_scope_revision_seq;
-revoke all on sequence dm_private.all_india_ranking_scope_revision_seq from public,anon,authenticated,service_role;
-alter table public.launch_settings add column ranking_revision bigint not null
-  default nextval('dm_private.all_india_ranking_scope_revision_seq');
-alter table dm_private.launch_gate_attestations add column ranking_revision bigint not null
-  default nextval('dm_private.all_india_ranking_scope_revision_seq');
+alter table public.launch_settings add column ranking_revision uuid not null default gen_random_uuid();
+alter table dm_private.launch_gate_attestations add column ranking_revision uuid not null default gen_random_uuid();
 
 create function dm_private.rotate_all_india_ranking_scope()
 returns trigger language plpgsql security definer set search_path=pg_catalog,dm_private as $$
 begin
-  new.ranking_revision:=nextval('dm_private.all_india_ranking_scope_revision_seq');
+  new.ranking_revision:=gen_random_uuid();
   return new;
 end $$;
 create trigger rotate_all_india_ranking_settings
@@ -31,9 +27,9 @@ create table dm_private.all_india_ranking_publications(
   released_at timestamptz not null,
   environment_mode text not null check(environment_mode in ('test','live')),
   policy_version text not null check(char_length(btrim(policy_version))>0),
-  settings_revision bigint not null,
-  privacy_revision bigint not null,
-  child_safety_revision bigint not null,
+  settings_revision uuid not null,
+  privacy_revision uuid not null,
+  child_safety_revision uuid not null,
   opened_by uuid not null references auth.users(id),
   opened_at timestamptz not null default clock_timestamp(),
   open_evidence text not null check(char_length(open_evidence) between 8 and 2000),
@@ -98,8 +94,8 @@ declare
   e dm_private.all_india_events;
   settings public.launch_settings;
   pub dm_private.all_india_ranking_publications;
-  privacy_revision bigint;
-  safety_revision bigint;
+  privacy_revision uuid;
+  safety_revision uuid;
   evidence_note text:=btrim(p_evidence);
 begin
   if not public.is_dmocks_admin() then raise exception 'Admin access required' using errcode='42501'; end if;
