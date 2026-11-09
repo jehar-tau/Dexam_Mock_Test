@@ -16,10 +16,12 @@ import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQue
 import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
 import { NidPracticeBlueprints } from "./NidPracticeBlueprints.jsx";
 import { ReportedQuestionQueue } from "./ReportedQuestionQueue.jsx";
+import { AdminSupportReports } from "./AdminSupportReports.jsx";
+import { readSupportPage, supportPageLimit } from "./admin-support.js";
 import { AdminAccessBoundary, useAdminServices } from "./AdminAccess.jsx";
 import { adminRequestMessage } from "./admin-access.js";
 import {postLaunchPreview}from'./launch-scope.js';
-const mvpDeskReads=new Set(['admin_bug_reports','admin_reported_questions','admin_operational_health','admin_privacy_requests','admin_launch_readiness']);
+const mvpDeskReads=new Set(['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_requests','admin_launch_readiness']);
 
 async function rpc(name, args, signal) {
   if (!platform) throw new Error("Student services are not connected yet.");
@@ -71,10 +73,10 @@ export function Admin() {
 function AdminDesk({ session }) {
   const { rpc, functions, assertCurrent, isCurrent } = useAdminServices();
   const batch = useRef(null), sequence = useRef(0);
-  const bugReplies=useRef(new Set()),[replyingBugs,setReplyingBugs]=useState([]);
+  const supportPosition = useRef({ cursor: null, previous: [] });
   const reportError = error => { if (isCurrent()) setMessage(adminRequestMessage(error)); };
   const [drafts, setDrafts] = useState([]),
-    [bugs, setBugs] = useState([]),
+    [bugPage, setBugPage] = useState(null),
     [blueprints, setBlueprints] = useState([]),
     [allIndia, setAllIndia] = useState([]),
     [lessons, setLessons] = useState(null),
@@ -89,21 +91,27 @@ function AdminDesk({ session }) {
     [health, setHealth] = useState(),
     [readiness, setReadiness] = useState(),
     [message, setMessage] = useState("");
-  const load = useCallback(async () => {
+  const loadDesk = useCallback(async (position) => {
     batch.current?.abort();
     const request = new AbortController(), token = ++sequence.current; batch.current = request;
     const current = () => isCurrent() && !request.signal.aborted && token === sequence.current;
     try {
       assertCurrent();
       const [d, b, m, a, r, l, w, i, c, ai, h, privacy, launch] = await Promise.all(
-          ["admin_question_drafts", "admin_bug_reports", "admin_exam_mock_blueprints", "admin_all_india_events",
+          ["admin_question_drafts", "admin_bug_report_page", "admin_exam_mock_blueprints", "admin_all_india_events",
             "admin_reported_questions", "admin_learning_lessons", "admin_drawing_queue", "admin_question_intake_assets",
             "admin_community_report_queue", "admin_ai_draft_requests", "admin_operational_health", "admin_privacy_requests",
-            "admin_launch_readiness"].map(name => postLaunchPreview||mvpDeskReads.has(name)?rpc(name, undefined, request.signal):[]),
+            "admin_launch_readiness"].map(name => {
+              if (!postLaunchPreview && !mvpDeskReads.has(name)) return [];
+              const args = name === "admin_bug_report_page" ? { p_cursor: position.cursor, p_limit: supportPageLimit } : undefined;
+              return rpc(name, args, request.signal);
+            }),
       );
         if (!current()) return false;
+        const supportPage = readSupportPage(b, session.user.id);
+        supportPosition.current = position;
         setDrafts(d);
-        setBugs(b);
+        setBugPage({ ...supportPage, position });
         setBlueprints(m);
         setAllIndia(a);
         setQuestionReports(r);
@@ -120,7 +128,8 @@ function AdminDesk({ session }) {
       if (current()) { request.abort(); setMessage(adminRequestMessage(e)); }
       return false;
     }
-  }, [rpc, assertCurrent, isCurrent]);
+  }, [rpc, assertCurrent, isCurrent, session.user.id]);
+  const load = useCallback(() => loadDesk(supportPosition.current), [loadDesk]);
   useEffect(() => {
     void load();
     return () => { sequence.current++; batch.current?.abort(); };
@@ -169,24 +178,6 @@ function AdminDesk({ session }) {
       await rpc("admin_export_question_draft", { p_draft_id:id, p_external_key:externalKey, p_rights_confirmed:rightsConfirmed, p_rights_note:rightsNote });
       await load();
     } catch (e) { reportError(e); throw e; }
-  };
-  const reply = async (event, id) => {
-    event.preventDefault();
-    if(bugReplies.current.has(id))return;
-    bugReplies.current.add(id);setReplyingBugs([...bugReplies.current]);
-    try {
-      const form = new FormData(event.currentTarget);
-      await rpc("admin_reply_bug_report", {
-        p_id: id,
-        p_status: form.get("status"),
-        p_reply: form.get("reply"),
-      });
-      await load();
-    } catch (e) {
-      reportError(e);
-    } finally {
-      bugReplies.current.delete(id);if(isCurrent())setReplyingBugs([...bugReplies.current]);
-    }
   };
   const resolvePrivacy = async (event, id) => {
     event.preventDefault();
@@ -532,31 +523,7 @@ function AdminDesk({ session }) {
             ))}
           </div>
           </>}
-          <h2>Bug reports</h2>
-          <div className="admin-list">
-            {bugs.map((b) => (
-              <article className="bug-report-card" key={b.id}>
-                <b>{b.title}</b>
-                <p>{b.description}</p>
-                <form className="admin-reply" aria-label={`Reply to report ${b.title}`} onSubmit={(e) => reply(e, b.id)}>
-                  <select name="status" aria-label="Report status" defaultValue={b.status} disabled={replyingBugs.includes(b.id)}>
-                    <option>open</option>
-                    <option>investigating</option>
-                    <option>fixed</option>
-                    <option>closed</option>
-                  </select>
-                  <input
-                    name="reply"
-                    aria-label="Reply to reporter"
-                    disabled={replyingBugs.includes(b.id)}
-                    defaultValue={b.adminReply || ""}
-                    placeholder="Reply to reporter"
-                  />
-                  <button disabled={replyingBugs.includes(b.id)}>{replyingBugs.includes(b.id)?"Saving…":"Save"}</button>
-                </form>
-              </article>
-            ))}
-          </div>
+          <AdminSupportReports page={bugPage} navigate={loadDesk} refresh={load} />
           <h2>Account privacy requests</h2>
           <p>Closing a deletion request records completion of the separately verified operator process; this control never deletes an account by itself.</p>
           <div className="admin-list">

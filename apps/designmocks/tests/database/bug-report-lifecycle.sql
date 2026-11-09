@@ -40,9 +40,9 @@ set local role authenticated;
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001102',true);
 select public.submit_bug_report('Original fictional support title','An original fictional support description.','https://dmocks.com/report','10000000-0000-4000-8000-000000001101')as other_report\gset
 select pg_temp.bug_assert(:'first_report'::uuid<>:'other_report'::uuid,'another account cannot borrow a receipt');
-select pg_temp.bug_reject(format('select public.admin_reply_bug_report(%L,''fixed'',''A fictional team reply.'')',:'first_report'),'42501');
+select pg_temp.bug_reject(format('select public.admin_reply_bug_report(%L,0,''fixed'',''A fictional team reply.'',gen_random_uuid())',:'first_report'),'42501');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001103',true);
-select public.admin_reply_bug_report(:'first_report','fixed','A complete original fictional team reply.');
+select public.admin_reply_bug_report(:'first_report',0,'fixed','A complete original fictional team reply.',gen_random_uuid());
 reset role;
 select pg_temp.bug_assert((select count(*)=1 from dm_private.bug_report_updates where report_id=:'first_report'and actor_id='00000000-0000-4000-8000-000000001103'and previous_status='open'and status='fixed'),'staff reply retains its actor and prior status');
 select updated_at::text as updated from dm_private.bug_reports where id=:'first_report'\gset
@@ -82,7 +82,7 @@ create function pg_temp.revoke_bug_admin()returns trigger language plpgsql as $$
 create trigger test_bug_admin_revoke before insert on dm_private.bug_report_updates for each row execute function pg_temp.revoke_bug_admin();
 set local role authenticated;
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001103',true);
-select pg_temp.bug_reject(format('select public.admin_reply_bug_report(%L,''closed'',''A late reply must roll back.'')',:'first_report'),'42501');
+select pg_temp.bug_reject(format('select public.admin_reply_bug_report(%L,1,''closed'',''A late reply must roll back.'',gen_random_uuid())',:'first_report'),'42501');
 reset role;
 select pg_temp.bug_assert((select status='fixed'and admin_reply='A complete original fictional team reply.'from dm_private.bug_reports where id=:'first_report')and(select count(*)=1 from dm_private.bug_report_updates where report_id=:'first_report'),'final role check rolls back both reply and staff history');
 select 'PASS: account-bound support receipts, shared quota, bounded microsecond history, private roles, redacted contexts and audited staff reply.';

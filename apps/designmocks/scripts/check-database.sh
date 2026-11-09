@@ -39,6 +39,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-feed.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-followup-images.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-moderation-workspace.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bug-report-lifecycle.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/support-queue-replies.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/profile-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/account-privacy-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learn-lifecycle.sql
@@ -66,6 +67,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-practice-bluepri
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-question-bindings.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/launch/paid-mvp.sql
 node tests/database/nid-write-revocation.mjs
+node tests/database/support-reply-concurrency.mjs
 node tests/database/recovery-roundtrip.mjs
 node tests/database/recovery-roundtrip.mjs --pre-upgrade
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'

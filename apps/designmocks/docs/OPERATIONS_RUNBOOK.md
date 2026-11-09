@@ -118,7 +118,9 @@ Promote migration `202611060146` and the matching report frontend together after
 
 Current account verification precedes private history. Account/history/sign-out changes, known authorization denial and failed/timed-out verification clear the complete support scope and pending drafts. **Check report access** opens a fresh check without replaying any action. Unknown creation results retain an immutable receipt for explicit retry; known quota/validation rejection retains editable details. Each read/action has a twenty-second limit, and no provider diagnostics are shown.
 
-Staff status/reply saves disable that report's controls until completion and record a private audit atomically. The server checks administrator status after target-lock and audit-write waits, independently of whether Auth remains valid. Repeat the actual queued-revocation, account-change, committed-acknowledgement-loss and desktop/mobile checks on approved staging. The current administrator support list is still unbounded and its compatible reply API does not require an inspected version; bounded/versioned support administration remains a separate hardening slice.
+In **Admin review → Bug reports**, find the report, set its status and save a team reply. The queue shows 25 reports per page. The reporter sees the current status and reply in **Your reports**. If another staff member has saved a change, **Refresh report** loads their response for review before another save. If a save could not be confirmed, **Retry same reply** resends the original request and returns its existing receipt when it already committed.
+
+The database saves the new revision and its private audit row together. Staff access is checked after lock waits, including when returning an existing receipt. Install the support migration and matching companion profile with the frontend release. Earlier admin clients must reload to use the new support endpoints. Repeat the competing reply, queued revocation, lost acknowledgement and desktop/mobile checks on the approved staging target.
 
 ## Candidate profile and session recovery
 

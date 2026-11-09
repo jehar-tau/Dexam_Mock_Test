@@ -30,7 +30,7 @@ select pg_temp.assert_true((public.save_candidate_profile('Asha Rao','+919876543
 select pg_temp.reject('select public.verify_candidate_phone(''00000000-0000-4000-8000-000000000001'',''+919876543210'')','student cannot verify phone');
 select set_config('test.bug_id',public.submit_bug_report('Fictional bug','A fictional problem for the database test.','https://dmocks.com/tests')::text,true);
 select pg_temp.assert_true(jsonb_array_length(public.my_bug_reports())=1,'reporter sees own bug');
-select pg_temp.reject('select public.admin_bug_reports()','student admin report access');
+select pg_temp.reject('select public.admin_bug_report_page()','student admin report access');
 select pg_temp.reject('select public.admin_operational_health()','student operational health access');
 select pg_temp.reject('select public.admin_privacy_requests()','student privacy queue access');
 select pg_temp.assert_true(public.export_my_account_data()->>'accountId'='00000000-0000-4000-8000-000000000001','student exports only own account identity');
@@ -41,12 +41,12 @@ select pg_temp.reject('select public.admin_create_question_draft(''manual'',''te
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select pg_temp.assert_true(public.is_dmocks_admin(),'admin identity');
 select pg_temp.assert_true(public.admin_operational_health()->>'status' in('healthy','attention','degraded'),'admin sees privacy-safe operational health');
-select pg_temp.assert_true(jsonb_array_length(public.admin_bug_reports())=1,'admin sees bug queue');
+select pg_temp.assert_true(jsonb_array_length(public.admin_bug_report_page()->'items')=1,'admin sees bug queue');
 select pg_temp.assert_true(jsonb_array_length(public.admin_privacy_requests())=1,'admin sees privacy request queue');
 select public.admin_resolve_privacy_request(current_setting('test.privacy_id')::uuid,'in_progress','Identity verification pending in fixture.');
 select pg_temp.assert_true(public.admin_privacy_requests()->0->>'status'='in_progress','admin records privacy handling state');
 select pg_temp.reject('select public.admin_resolve_privacy_request(current_setting(''test.privacy_id'')::uuid,''closed'',''short'')','privacy resolution requires operator note');
-select public.admin_reply_bug_report(current_setting('test.bug_id')::uuid,'fixed','Fixed in a fictional build.');
+select public.admin_reply_bug_report(current_setting('test.bug_id')::uuid,0,'fixed','Fixed in a fictional build.',gen_random_uuid());
 select set_config('test.draft_id',public.admin_create_question_draft('manual','Fictional source','{"prompt":"Fictional question","holds":[]}'::jsonb)::text,true);
 select public.admin_review_question_draft(current_setting('test.draft_id')::uuid,'approved','Reviewed in test');
 select pg_temp.assert_true((public.admin_question_drafts()->0->>'status')='approved','admin draft approval');

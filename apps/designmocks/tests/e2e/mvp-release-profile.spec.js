@@ -2,7 +2,7 @@ import{test,expect}from'@playwright/test';
 import{fileURLToPath}from'node:url';
 import{stubPortalProvider,seedPortalSession,emptyAdminRead}from'./portal-fixture.js';
 test.use({baseURL:'http://127.0.0.1:4799'});
-const actor={id:'00000000-0000-4000-8000-000000001971',email:'fictional-mvp-operator@example.invalid'},core=['admin_bug_reports','admin_reported_questions','admin_operational_health','admin_privacy_requests','admin_launch_readiness','admin_search_bank_questions','admin_nid_practice_blueprints'];
+const actor={id:'00000000-0000-4000-8000-000000001971',email:'fictional-mvp-operator@example.invalid'},core=['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_requests','admin_launch_readiness','admin_search_bank_questions','admin_nid_practice_blueprints'];
 const gates=['content_rights','privacy_terms','refund_policy','child_safety','provider_acceptance','backup_restore','capacity_acceptance'];
 async function admin(page,{legacy=false}={}){
  const state={approved:false},provider=await stubPortalProvider(page,(name,input)=>{

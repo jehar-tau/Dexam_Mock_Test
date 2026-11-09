@@ -25,7 +25,7 @@ export function recoverySeed({owner=randomUUID(),other=randomUUID(),admin=random
  select public.save_answer_revision(current_setting('test.recovery.active')::uuid,md5('mvp-original-2')::uuid,'"1"',9);
  select set_config('test.recovery.report',public.submit_bug_report('Original fictional recovery report','An original fictional recovery report with complete reproduction details.','/account',${quote(request)})::text,true);
  select set_config('request.jwt.claim.sub',${quote(admin)},true);
- select public.admin_reply_bug_report(current_setting('test.recovery.report')::uuid,'fixed','Original fictional restored support reply.');reset role;
+ select public.admin_reply_bug_report(current_setting('test.recovery.report')::uuid,0,'fixed','Original fictional restored support reply.',gen_random_uuid());reset role;
  select jsonb_build_object('owner',${quote(owner)},'other',${quote(other)},'admin',${quote(admin)},'paper',${quote(paper)},'order',${quote(order)},'event',${quote(event)},'payment',${quote(payment)},'completed',current_setting('test.recovery.completed'),'active',current_setting('test.recovery.active'),'report',current_setting('test.recovery.report'),'deadline',(select deadline from dm_private.attempts where id=current_setting('test.recovery.active')::uuid),'auditMax',(select max(id)from dm_private.launch_gate_audit));commit;`;
  return{source,owner,other,admin};
 }
