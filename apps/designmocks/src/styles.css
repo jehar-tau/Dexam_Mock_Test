@@ -3658,6 +3658,10 @@ svg {
   gap: 14px;
   margin: 28px 0;
 }
+.live-choices > p {
+  margin: 0;
+  font-weight: 600;
+}
 .live-choices button {
   min-height: 60px;
   padding: 16px 20px;

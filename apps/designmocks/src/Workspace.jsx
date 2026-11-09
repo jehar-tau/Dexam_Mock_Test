@@ -286,6 +286,7 @@ export function Attempt() {
 }
 function AttemptSession({actorId,services}) {
   const { id } = useParams();
+  const choiceInstructionId = React.useId();
   const rpc=services.rpc,current=services.isCurrent;
   const drawingInvoke=React.useCallback(async(body,signal)=>{
     const{data,error}=await services.functions.invoke("drawing-media",{body,signal});
@@ -751,10 +752,11 @@ if(postLaunchPreview){
             <div
               className="live-choices"
               role="group"
-              aria-label={
-                q.kind === "msq" ? "Choose all that apply" : "Choose one answer"
-              }
+              aria-labelledby={choiceInstructionId}
             >
+              <p id={choiceInstructionId}>
+                {q.kind === "msq" ? "Choose all that apply" : "Choose one answer"}
+              </p>
               {q.options.map((option) => (
                 <button
                   disabled={busy || left === 0}
