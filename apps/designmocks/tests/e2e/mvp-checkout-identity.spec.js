@@ -26,6 +26,12 @@ async function setup(page,configure=()=>{}){
   }
   if(name==='create-order'){state.afterOrder=true;return route.fulfill({headers,json:state.order});}
   if(name==='my_pass')return route.fulfill({headers,json:{active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null,revoked:false,mode:state.mode}});
+  if(state.releasedCatalogue){
+   if(name==='available_papers')return route.fulfill({headers,json:state.releasedCatalogue});
+   if(name==='finalize_my_expired_attempts')return route.fulfill({headers,json:0});
+   if(name==='my_attempt_history')return route.fulfill({headers,json:[]});
+   if(name==='my_overview_analytics')return route.fulfill({headers,json:{completed:0,waitingForResults:0,objectiveAccuracy:null,objectiveAnswered:0,topics:[],exams:[],drawingReviews:{pending:0,released:0}}});
+  }
   throw new Error('Unexpected checkout fixture request: '+name);
  });
  await page.goto('/');await seedPortalSession(page,first);await page.goto('/plans');
@@ -56,6 +62,13 @@ test('checkout links display the exact notice revision recorded with consent',as
  await expect(page.locator('[data-notice-version]')).toHaveAttribute('data-notice-version',noticeVersion);
  await expect(page.locator('.policy')).toContainText('₹1,193 for 12 calendar months');
  await expect(page.locator('.policy')).toContainText('This fictional refund notice');
+ const refundText = await page.getByText('This fictional refund notice', { exact: false }).textContent();
+ await page.goBack();
+ await page.locator('.annual-card').getByRole('link',{name:'Cancellation and refunds',exact:true}).click();
+ await expect(page).toHaveURL('/refunds');
+ await expect(page.getByRole('heading',{name:'Cancellation and refunds.',exact:true})).toBeVisible();
+ await expect(page.locator('[data-notice-version]')).toHaveAttribute('data-notice-version',noticeVersion);
+ await expect(page.getByText(refundText,{exact:true})).toBeVisible();
  await page.goBack();
  await page.getByRole('link',{name:'privacy notice',exact:true}).click();
  await expect(page.getByRole('heading',{name:'Privacy notice.',exact:true})).toBeVisible();
@@ -63,6 +76,20 @@ test('checkout links display the exact notice revision recorded with consent',as
  await expect(page.locator('[data-notice-version]')).toHaveAttribute('data-notice-version',noticeVersion);
  await expect(page.locator('.policy')).toContainText('This fictional younger-student notice');
  expect(state.calls.some(({name})=>['accept_current_terms','create-order'].includes(name))).toBe(false);
+});
+test('buyers can open the exact released catalogue before consenting or paying', async ({ page }) => {
+ const title = 'Original fictional released Part A practice mock';
+ const state = await setup(page, value => {
+  value.releasedCatalogue = [{ id: '10000000-0000-4000-8000-000000001901', title, exam: 'uceed',
+    durationSeconds: 7200, qualityHeld: false }];
+ });
+ await expect(consent(page)).toBeEnabled();
+ await page.getByRole('link', { name: 'View released papers', exact: true }).click();
+ await expect(page).toHaveURL('/dashboard/mocks');
+ await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
+ await expect(page.getByRole('button', { name: 'Start or resume', exact: true })).toBeDisabled();
+ expect(state.calls.filter(({ name }) => name === 'available_papers').map(({ actor }) => actor)).toEqual([first.id]);
+ expect(state.calls.some(({ name }) => ['accept_current_terms', 'create-order'].includes(name))).toBe(false);
 });
 test('a silent cached account change cannot accept the previous account purchase terms or create an order',async({page})=>{
  const state=await setup(page);await consent(page).check();await expect(pay(page)).toBeEnabled();await seedPortalSession(page,second);await pay(page).click();await expect(page.getByRole('alert')).toContainText('Purchase access');expect(state.calls.filter(row=>['accept_current_terms','create-order'].includes(row.name))).toEqual([]);expect(await page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(0);
@@ -98,7 +125,7 @@ test('unresponsive initial identity expires without private reads and a late rep
  await page.clock.install();const state=await setup(page,s=>{s.holdAuthAt=1;});await expect.poll(()=>Boolean(state.waits.user)).toBe(true);await page.clock.fastForward(10001);await expect(page.getByRole('alert')).toContainText('Purchase access');expect(state.calls).toEqual([]);state.waits.user();await expect(pay(page)).toHaveCount(0);await page.getByRole('button',{name:'Check purchase access',exact:true}).press('Enter');await expect(consent(page)).toBeEnabled();await expect(consent(page)).not.toBeChecked();expect(state.calls.filter(row=>row.name==='create-order')).toEqual([]);
 });
 test('a forged success callback cannot grant access and uncertain confirmation requires an explicit pass check',async({page})=>{
- const state=await setup(page);await consent(page).check();await page.clock.install();await pay(page).press('Enter');await expect.poll(()=>page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(1);await page.evaluate(()=>window.checkoutFixture.options[0].handler({razorpay_payment_id:'pay_fictionalNeverGrants'}));await expect(page.getByText('Waiting for the server to confirm your pass.',{exact:false})).toBeVisible();await expect.poll(()=>state.calls.filter(row=>row.name==='my_pass').length).toBeGreaterThan(1);await page.clock.fastForward(65001);await expect(page.getByText('Your payment is not confirmed here yet.',{exact:false})).toBeVisible();await expect(page.getByText('Your pass is active.',{exact:false})).toHaveCount(0);await expect(pay(page)).toBeDisabled();state.active=true;await page.getByRole('button',{name:'Check my pass',exact:true}).press('Enter');await expect(page.getByText('Your pass is active.',{exact:false})).toBeVisible();expect(state.calls.filter(row=>row.name==='create-order')).toHaveLength(1);expect(state.calls.some(row=>['fulfil_verified_payment','record_verified_refund','prepare_order'].includes(row.name))).toBe(false);
+ const state=await setup(page);await consent(page).check();await page.clock.install();await pay(page).press('Enter');await expect.poll(()=>page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(1);await page.evaluate(()=>window.checkoutFixture.options[0].handler({razorpay_payment_id:'pay_fictionalNeverGrants'}));await expect(page.getByText('Waiting for the server to confirm your pass.',{exact:false})).toBeVisible();await expect.poll(()=>state.calls.filter(row=>row.name==='my_pass').length).toBeGreaterThan(1);await page.clock.fastForward(65001);await expect(page.getByText('Your payment is not confirmed here yet.',{exact:false})).toBeVisible();await expect(page.getByRole('link',{name:'Contact support',exact:true})).toHaveAttribute('href','/contact');await expect(page.getByText('Your pass is active.',{exact:false})).toHaveCount(0);await expect(pay(page)).toBeDisabled();state.active=true;await page.getByRole('button',{name:'Check my pass',exact:true}).press('Enter');await expect(page.getByText('Your pass is active.',{exact:false})).toBeVisible();await expect(page.getByRole('link',{name:'Contact support',exact:true})).toHaveAttribute('href','/contact');expect(state.calls.filter(row=>row.name==='create-order')).toHaveLength(1);expect(state.calls.some(row=>['fulfil_verified_payment','record_verified_refund','prepare_order'].includes(row.name))).toBe(false);
 });
 test('repeated callbacks never overlap a held pass check or create another checkout',async({page})=>{
  const state=await setup(page);await consent(page).check();await pay(page).click();await expect.poll(()=>page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(1);state.holds.my_pass=true;const reads=state.calls.filter(row=>row.name==='my_pass').length;await page.evaluate(()=>{window.checkoutFixture.options[0].handler({});window.checkoutFixture.options[0].handler({});});await expect.poll(()=>Boolean(state.waits.my_pass)).toBe(true);expect(state.calls.filter(row=>row.name==='my_pass')).toHaveLength(reads+1);state.active=true;state.waits.my_pass();await expect(page.getByText('Your pass is active.',{exact:false})).toBeVisible();expect(state.calls.filter(row=>row.name==='create-order')).toHaveLength(1);

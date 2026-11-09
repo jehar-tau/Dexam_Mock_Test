@@ -288,6 +288,7 @@ function Layout({ children }) {
           <div>
             <Link to="/privacy">Privacy</Link>
             <Link to="/terms">Terms & access</Link>
+            <Link to="/refunds">Refunds</Link>
             <Link to="/contact">Contact</Link>
           </div>
         </div>
@@ -587,7 +588,7 @@ const faqs = [
   ],
   [
     "Are the papers human-reviewed?",
-    "Every sold paper must pass question, marking, timing, image and content-rights checks before release. The free sample uses separate original examples. No paid paper is released in this preview.",
+    "Every sold paper must pass question, marking, timing, image and content-rights checks before release. The free sample uses separate original examples.",
   ],
   [
     "Are drawing reviews, lessons or rankings included?",
@@ -595,7 +596,7 @@ const faqs = [
   ],
   [
     "Can I sign in and pay today?",
-    "This first-look version lets you explore the sample. Controlled Google sign-in is being accepted. Paid checkout stays closed until the first offering, final customer policies and a real test-mode purchase journey are approved.",
+    "The annual-pass page shows which sign-in and payment options are available. You can explore the free sample at any time.",
   ],
 ];
 function FAQs() {
@@ -1484,16 +1485,18 @@ function SampleResult() {
 }
 function Policies({ type }) {
   const privacy = type === "privacy";
+  const refunds = type === "refunds";
+  const refundTitle = "Cancellation and refunds.";
   if (publishedNotices) {
     return (
       <section className="wrap policy section">
         <span className="eyebrow">DMOCKS / CUSTOMER NOTICE</span>
-        <h1>{privacy ? "Privacy notice." : "Terms and purchase."}</h1>
+        <h1>{refunds ? refundTitle : privacy ? "Privacy notice." : "Terms and purchase."}</h1>
         <p data-notice-version={publishedNotices.version}>Notice revision {publishedNotices.version.slice(-12)}.</p>
         <OperatorDetails />
-        {publishedNotices.pages[privacy ? "privacy" : "terms"].map(({ heading, paragraph }) => (
+        {publishedNotices.pages[type].map(({ heading, paragraph }) => (
           <section key={heading}>
-            <h2>{heading}</h2>
+            {!refunds && <h2>{heading}</h2>}
             <p>{paragraph}</p>
           </section>
         ))}
@@ -1504,7 +1507,7 @@ function Policies({ type }) {
     <section className="wrap policy section">
       <span className="eyebrow">DMOCKS / FIRST-LOOK PREVIEW</span>
       <h1>
-        {privacy
+        {refunds ? refundTitle : privacy
           ? "Your space. Your information."
           : "Clear access. A little clarity."}
       </h1>
@@ -1514,7 +1517,12 @@ function Policies({ type }) {
         be published before registration and paid sales open.
       </div>
       <OperatorDetails />
-      {privacy ? (
+      {refunds ? (
+        <p>
+          The final cancellation and refund policy will be available before paid checkout opens.
+          For help with the preview, <Link to="/contact">contact the team</Link>.
+        </p>
+      ) : privacy ? (
         <>
           <h2>The sample</h2>
           <p>
@@ -1716,6 +1724,7 @@ export default function App() {
         <Route path="/privacy" element={<Policies type="privacy" />} />
           <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Policies type="terms" />} />
+        <Route path="/refunds" element={<Policies type="refunds" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </React.Suspense>
