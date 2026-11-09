@@ -78,7 +78,7 @@ test("bank review shows separate accepted choices and complete multiple-select s
   await expect(review.locator("dd")).toHaveText(["D OR B", "D or B", "Correct 3 · Wrong -0.71"]);
   await review.getByRole("button", { name: "Close question", exact: true }).press("Enter");
   await bank.getByRole("button", { name: "Open question bank-review-002", exact: true }).press("Enter");
-  await expect(review.locator("dd")).toHaveText(["AD or BC", "A, D or B, C", "Correct 4 · Wrong -1"]);
+  await expect(review.locator("dd")).toHaveText(["AD or BC", "A, D or B, C", "Correct 4 · Wrong -1 · Partial credit applies"]);
   expect(state.calls.some(([name]) => name === "admin_review_bank_question")).toBe(false);
   expect(state.unexpected).toEqual([]);
 });
