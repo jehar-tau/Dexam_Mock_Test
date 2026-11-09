@@ -27,6 +27,17 @@ test('the public offer limits the pass to released papers and keeps checkout ind
  await page.goto('/tests/nid');await expect(page.getByText('This exam is coming later and is outside the initial annual-pass offer.',{exact:true})).toBeVisible();await seedPortalSession(page,actor);await page.goto('/plans');
  await expect(page.getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();await expect(page.getByText('Mock-test catalogue for UCEED, NID DAT, NIFT and CEED',{exact:true})).toHaveCount(0);await expect(page.getByRole('button',{name:/Pay .* with Razorpay/})).toBeDisabled();await expect(page.getByRole('checkbox')).toHaveCount(0);expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
 });
+test('a mismatched customer notice revision keeps the checkout switch closed', async ({ page }) => {
+ const provider = await fixture(page);
+ await page.goto('/plans');
+ await expect(page.getByText('Paid access is not open in this preview.', { exact: false })).toBeVisible();
+ await expect(page.getByRole('checkbox')).toHaveCount(0);
+ await page.goto('/terms');
+ await expect(page.locator('.policy')).toContainText('The final scope of published papers');
+ await expect(page.locator('[data-notice-version]')).toHaveCount(0);
+ await expect(page.getByText('This fictional refund notice', { exact: false })).toHaveCount(0);
+ expect(provider.calls).toEqual([]);
+});
 for(const[path,title]of[['/dashboard/all-india','All India mocks'],['/dashboard/practice','Topic practice'],['/dashboard/learn','Learn'],['/dashboard/community','Community'],['/review/drawings','Drawing review']])test(`the MVP disables ${title} before any private module request`,async({page})=>{
  const provider=await stubPortalProvider(page,()=>undefined);await page.goto('/');await seedPortalSession(page,actor);await page.goto(path);await expect(page.getByText('COMING LATER',{exact:true})).toBeVisible();await expect(page.getByRole('heading',{name:title+'.',exact:true})).toBeVisible();
  const menu=page.getByRole('button',{name:'Student menu',exact:true});if(await menu.isVisible())await menu.click();const nav=page.getByRole('navigation',{name:'Student workspace',exact:true});await expect(nav.getByRole('link')).toHaveCount(2);await expect(nav.getByRole('link',{name:'Released papers',exact:true})).toHaveAttribute('href','/dashboard/mocks');expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);

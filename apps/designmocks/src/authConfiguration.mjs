@@ -2,7 +2,7 @@ const closed = Object.freeze({ authReady: false, portalReady: false, testLoginMo
 
 export function resolveAuthConfiguration({
   mode, deployment, origin, stagingTarget,
-  portalEnabled = false, testLoginEnabled = false, stagingPortalEnabled = false, checkoutEnabled = false, url, key, termsVersion,
+  portalEnabled = false, testLoginEnabled = false, stagingPortalEnabled = false, checkoutEnabled = false, url, key, termsVersion, noticeVersion,
 }) {
   if ([portalEnabled, testLoginEnabled, stagingPortalEnabled].filter(Boolean).length > 1)
     throw new Error("Choose one mode for sign-in or portal access.");
@@ -41,7 +41,7 @@ export function resolveAuthConfiguration({
     portalReady: portalEnabled || stagingPortalEnabled,
     testLoginMode: testLoginEnabled,
     stagingPortalMode: stagingPortalEnabled,
-    checkoutReady: portalEnabled && checkoutEnabled === true,
+    checkoutReady: portalEnabled && checkoutEnabled === true && typeof noticeVersion === "string" && noticeVersion === termsVersion,
   };
 }
 

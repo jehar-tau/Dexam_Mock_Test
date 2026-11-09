@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "scope": "fixture",
+  "terms": {
+    "coverage": "This fictional catalogue text is used only in automated Test checkout.",
+    "refunds": "This fictional refund notice is used only to verify the displayed Test revision.",
+    "invoices": "This fictional invoice notice is used only to verify the displayed Test revision."
+  },
+  "privacy": {
+    "information": "This fictional information notice is used only to verify the displayed Test revision.",
+    "processors": "This fictional provider notice is used only to verify the displayed Test revision.",
+    "retention": "This fictional retention notice is used only to verify the displayed Test revision.",
+    "youngerStudents": "This fictional younger-student notice is used only to verify the displayed Test revision."
+  }
+}

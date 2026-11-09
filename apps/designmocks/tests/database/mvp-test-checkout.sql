@@ -23,7 +23,8 @@ select pg_temp.test_reject('select public.admin_set_mvp_test_checkout(true,clock
 select set_config('test.acceptance.sha',public.admin_mvp_paper_manifest('10000000-0000-4000-8000-000000001981')->'manifest'->>'sha256',true);
 select public.admin_release_mvp_paper('10000000-0000-4000-8000-000000001981',current_setting('test.acceptance.sha'),'Fictional owner approval of original practice material');
 reset role;
-update public.launch_settings set policy_version='fictional-test-policies';
+select set_config('test.acceptance.notices','dmocks-notices-v1-'||repeat('a',64),true);
+update public.launch_settings set policy_version=current_setting('test.acceptance.notices');
 update dm_private.registration_policy set mode='testers'where id;
 update dm_private.launch_gate_attestations set approved=true,evidence='Fictional reviewed final policies/content'where gate in('content_rights','privacy_terms','refund_policy','child_safety');
 set local role authenticated;
@@ -33,14 +34,20 @@ select pg_temp.test_reject('select public.admin_set_mvp_test_checkout(true,clock
 select public.admin_set_mvp_test_checkout(true,clock_timestamp()+interval'1 hour','Fictional approved private merchant Test journey');
 select pg_temp.test_assert(public.admin_launch_readiness()->>'testCheckoutEnabled'='true'and public.admin_launch_readiness()->>'readyForSales'='false','Test acceptance remains distinct from Live readiness');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001982',true);
-select public.accept_current_terms('fictional-test-policies');
+select pg_temp.test_reject(
+ format('select public.accept_current_terms(%L)','dmocks-notices-v1-'||repeat('b',64)),
+ 'a different notice revision cannot be accepted');
+select pg_temp.test_reject('select public.prepare_order()','no order before accepting the published notice revision');
+select public.accept_current_terms(current_setting('test.acceptance.notices'));
+select pg_temp.test_assert((select terms_version=current_setting('test.acceptance.notices') and accepted_at is not null
+ from public.profiles where user_id=auth.uid()),'the recorded consent identifies the exact published notice revision');
 select pg_temp.test_assert(public.can_enter_staging_portal(),'verified Google allowlisted tester is eligible');
 select set_config('test.acceptance.order',public.prepare_order()->>'id',true);
 select pg_temp.test_assert(public.prepare_order()->>'id'=current_setting('test.acceptance.order')and public.prepare_order()->>'mode'='test'and public.prepare_order()->>'amount'='119300','idempotent fixed-price Test order uses its own server mode');
 select pg_temp.test_assert(public.my_pass()->>'mode'='test'and public.my_pass()->>'active'='false','opening Test checkout grants no pass');
-select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001983',true);select public.accept_current_terms('fictional-test-policies');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001983',true);select public.accept_current_terms(current_setting('test.acceptance.notices'));
 select pg_temp.test_reject('select public.prepare_order()','unallowlisted Google account denied');
-select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001984',true);select public.accept_current_terms('fictional-test-policies');
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001984',true);select public.accept_current_terms(current_setting('test.acceptance.notices'));
 select pg_temp.test_reject('select public.prepare_order()','allowlisted password account is not a verified Google tester');
 reset role;
 select pg_temp.test_assert((select not sales_enabled from public.launch_settings)and(select mode='testers'from dm_private.registration_policy)and(select not approved from dm_private.launch_gate_attestations where gate='provider_acceptance'),'provider, public admission and Live sales were never falsely approved');

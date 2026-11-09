@@ -50,6 +50,17 @@ Paper release, withdrawal, launch attestations and Test window changes check sta
 
 The real merchant Test journey must precede the provider-acceptance gate. Use a separate, audited and expiring Test window; never falsely approve that gate to make checkout reachable.
 
+### Match the approved customer notices
+
+The operator details in Contact, Terms and Privacy come from the supplied business record and support address. Provide the separately approved public notice text as a JSON file with `schemaVersion: 1` and `scope: "release"`. Include the following paragraph fields.
+
+| Page | Required fields |
+| --- | --- |
+| `terms` | `coverage`, `refunds`, `invoices` |
+| `privacy` | `information`, `processors`, `retention`, `youngerStudents` |
+
+Set `DMOCKS_PUBLISHED_NOTICES_FILE` in the approved frontend build environment. Run `node scripts/published-notices.mjs "$DMOCKS_PUBLISHED_NOTICES_FILE"` to calculate the version from the reviewed paragraphs, the fixed annual offer and the operator details. Use that exact version for `VITE_TERMS_VERSION` and the approved server `launch_settings.policy_version`. The browser displays the same revision on both notices and sends it with consent. A missing bundle or a version mismatch keeps checkout closed. Synthetic notices are restricted to the explicit local test server.
+
 Required before opening the window:
 
 - Matching reviewed source/profile/current offering, final published policy version, and approved `content_rights`, `privacy_terms`, `refund_policy` and `child_safety` decisions with evidence.

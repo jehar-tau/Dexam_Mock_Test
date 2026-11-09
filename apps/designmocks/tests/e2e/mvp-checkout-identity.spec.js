@@ -1,7 +1,9 @@
 import{test,expect}from'@playwright/test';
 import{fileURLToPath}from'node:url';
 import{seedPortalSession}from'./portal-fixture.js';
+import{readPublishedNotices}from'../../scripts/published-notices.mjs';
 test.use({baseURL:'http://127.0.0.1:4999'});
+const noticeVersion=readPublishedNotices(fileURLToPath(new URL('../fixtures/fictional-published-notices.json',import.meta.url)),{allowFixture:true}).version;
 const first={id:'00000000-0000-4000-8000-000000001901',email:'fictional-checkout-first@example.invalid'},second={id:'00000000-0000-4000-8000-000000001902',email:'fictional-checkout-second@example.invalid'};
 const order=()=>({orderId:'order_fictionalCheckout123',keyId:'rzp_test_fictionalCheckout123',amount:119300,currency:'INR'});
 const script=`window.checkoutFixture={opened:0,closed:0,options:[],widgets:[]};window.Razorpay=class{constructor(options){this.options=options;this.events={};window.checkoutFixture.options.push(options);window.checkoutFixture.widgets.push(this);}on(name,callback){this.events[name]=callback;return this;}open(){window.checkoutFixture.opened++;}close(){window.checkoutFixture.closed++;this.options.modal.ondismiss();}};`;
@@ -17,7 +19,7 @@ async function setup(page,configure=()=>{}){
   state.calls.push({name,actor});
   if(state.holds[name])await new Promise(resolve=>{state.waits[name]=resolve;});
   if(state.fail===name)return route.fulfill({status:503,headers,json:{message:'private fictional provider diagnostic'}});
-  if(name==='accept_current_terms')return route.fulfill({headers,json:null});
+  if(name==='accept_current_terms'){expect(request.postDataJSON()).toEqual({p_version:noticeVersion});return route.fulfill({headers,json:null});}
   if(name==='create-order'){state.afterOrder=true;return route.fulfill({headers,json:state.order});}
   if(name==='my_pass')return route.fulfill({headers,json:{active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null,revoked:false,mode:state.mode}});
   throw new Error('Unexpected checkout fixture request: '+name);
@@ -27,6 +29,22 @@ async function setup(page,configure=()=>{}){
 }
 const pay=page=>page.getByRole('button',{name:'Pay ₹1,193 with Razorpay',exact:true});
 const consent=page=>page.getByRole('checkbox');
+test('checkout links display the exact notice revision recorded with consent',async({page})=>{
+ const state=await setup(page);
+ await page.getByRole('link',{name:'purchase terms',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Terms and purchase.',exact:true})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Cancellation and refunds',exact:true})).toBeVisible();
+ await expect(page.locator('[data-notice-version]')).toHaveAttribute('data-notice-version',noticeVersion);
+ await expect(page.locator('.policy')).toContainText('₹1,193 for 12 calendar months');
+ await expect(page.locator('.policy')).toContainText('This fictional refund notice');
+ await page.goBack();
+ await page.getByRole('link',{name:'privacy notice',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Privacy notice.',exact:true})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Younger students',exact:true})).toBeVisible();
+ await expect(page.locator('[data-notice-version]')).toHaveAttribute('data-notice-version',noticeVersion);
+ await expect(page.locator('.policy')).toContainText('This fictional younger-student notice');
+ expect(state.calls.some(({name})=>['accept_current_terms','create-order'].includes(name))).toBe(false);
+});
 test('a silent cached account change cannot accept the previous account purchase terms or create an order',async({page})=>{
  const state=await setup(page);await consent(page).check();await expect(pay(page)).toBeEnabled();await seedPortalSession(page,second);await pay(page).click();await expect(page.getByRole('alert')).toContainText('Purchase access');expect(state.calls.filter(row=>['accept_current_terms','create-order'].includes(row.name))).toEqual([]);expect(await page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(0);
 });
