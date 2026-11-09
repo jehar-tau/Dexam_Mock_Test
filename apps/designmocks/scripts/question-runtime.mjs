@@ -8,21 +8,60 @@ export const RULES_2027=freeze({
 const number='[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)';
 const numeric=new RegExp(`^${number}$`);
 const range=new RegExp(`^(${number})\\s*(?:to|–|-)\\s*(${number})$`,'i');
+const maxAlternativeNotationLength=200;
+const alternativeSeparator=/\s+or\s+/i;
 function decimalAtMost(left,right){
  const parts=value=>{const negative=value[0]==='-';const [whole,fraction='']=value.replace(/^[+-]/,'').split('.');return{negative,whole:whole||'0',fraction};};
  const a=parts(left),b=parts(right),places=Math.max(a.fraction.length,b.fraction.length);
  const integer=p=>BigInt(p.whole+p.fraction.padEnd(places,'0'))*(p.negative?-1n:1n);
  return integer(a)<=integer(b);
 }
-export function numericKey(raw){
- if(raw.length>200)return null;
- // Preserve decimal precision for PostgreSQL numeric. Never invent a tolerance.
- if(numeric.test(raw)&&Number.isFinite(Number(raw)))return{kind:'nat',accepted:[{exact:raw}]};
+function singleNumericAnswer(raw){
+ if(numeric.test(raw)&&Number.isFinite(Number(raw)))return{exact:raw};
  const match=raw.match(range);
- if(match&&Number.isFinite(Number(match[1]))&&Number.isFinite(Number(match[2]))&&decimalAtMost(match[1],match[2]))return{kind:'nat',accepted:[{range:[match[1],match[2]]}]};
- const alternatives=raw.split(/\s+or\s+/i);
- if(alternatives.length>1&&new Set(alternatives).size===alternatives.length&&alternatives.every(value=>numeric.test(value)&&Number.isFinite(Number(value))))return{kind:'nat',accepted:alternatives.map(exact=>({exact}))};
+ if(match&&Number.isFinite(Number(match[1]))&&Number.isFinite(Number(match[2]))&&decimalAtMost(match[1],match[2]))return{range:[match[1],match[2]]};
  return null;
+}
+function decimalIdentity(value){
+ const [integer,fraction='']=value.replace(/^[+-]/,'').split('.');
+ const whole=integer.replace(/^0+/,'')||'0',decimal=fraction.replace(/0+$/,'');
+ const sign=value.startsWith('-')&&(whole!=='0'||decimal)?'-':'';
+ return `${sign}${whole}.${decimal}`;
+}
+export function numericKey(raw,{allowRangeAlternatives=false}={}){
+ if(raw.length>maxAlternativeNotationLength)return null;
+ // Preserve decimal precision for PostgreSQL numeric. Never invent a tolerance.
+ const single=singleNumericAnswer(raw);
+ if(single)return{kind:'nat',accepted:[single]};
+ const branches=raw.split(alternativeSeparator);
+ if(branches.length<2||new Set(branches).size!==branches.length)return null;
+ const accepted=branches.map(singleNumericAnswer);
+ if(accepted.some(answer=>!answer))return null;
+ // Exact-only alternatives retain their existing representation and acceptance.
+ if(accepted.some(answer=>answer.range)){
+  if(!allowRangeAlternatives)return null;
+  const identities=accepted.map(answer=>(answer.range??[answer.exact,answer.exact]).map(decimalIdentity).join(':'));
+  if(new Set(identities).size!==identities.length)return null;
+ }
+ return{kind:'nat',accepted};
+}
+function selectedOptionIds(type,raw,ids){
+ if(ids.includes(raw))return[raw];
+ if(type==='MCQ')return null;
+ const selected=/^[A-Za-z]+$/.test(raw)&&ids.every(id=>/^[A-Za-z]$/.test(id))?raw.split(''):raw.split(/[\s,;&/]+/);
+ if(!selected.every(id=>ids.includes(id))||new Set(selected).size!==selected.length)return null;
+ return selected.sort();
+}
+function choiceKey(type,raw,ids,allowAlternatives){
+ const kind=type.toLowerCase();
+ const selected=selectedOptionIds(type,raw,ids);
+ if(selected)return{kind,correct:selected};
+ if(!allowAlternatives||raw.length>maxAlternativeNotationLength)return null;
+ const branches=raw.split(alternativeSeparator);
+ if(branches.length<2)return null;
+ const alternatives=branches.map(branch=>selectedOptionIds(type,branch,ids));
+ if(alternatives.some(answer=>!answer)||new Set(alternatives.map(answer=>JSON.stringify(answer))).size!==alternatives.length)return null;
+ return type==='MCQ'?{kind,correct:alternatives.flat()}:{kind,alternatives};
 }
 // Structured issues contain locations and stable codes, never source text/keys.
 // The legacy materializer and the correction queue use this same evaluation.
@@ -32,6 +71,7 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  const blocked=()=>({runtime:null,issues});
  if(!question||typeof question!=='object'||Array.isArray(question)){issue('invalid-record','question');return blocked();}
  const verified=Boolean(rule&&rule===RULES_2027[String(question.provenance?.exam).toLowerCase()]);
+ const allowAlternatives=verified&&(rule===RULES_2027.uceed||rule===RULES_2027.ceed)&&typeof question.answer?.raw==='string';
  if(!verified)issue('context-unverified','provenance.exam');
  if(!Array.isArray(question.holds)||question.holds.length)issue('holds-unresolved','holds');
  if(typeof question.prompt!=='string'||!question.prompt.trim())issue('prompt-missing','prompt');
@@ -57,7 +97,7 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  if(!raw)issue('answer-missing','answer.raw');
  let key,options=[];
  if(question.type==='NAT'){
-  key=numericKey(raw);
+  key=numericKey(raw,{allowRangeAlternatives:allowAlternatives});
   if(raw&&!key)issue('answer-notation','answer.raw');
  }else if(['MCQ','MSQ'].includes(question.type)){
   const source=Array.isArray(question.options)?question.options:[];
@@ -70,13 +110,7 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
   else if(!assets.length&&source.some(o=>!o?.text?.trim()))issue('option-text-missing','options');
   if(labelsValid){
    options=source.map(o=>({id:o.key,label:typeof o.text==='string'&&o.text.trim()||o.key}));
-   const ids=options.map(o=>o.id);
-   if(question.type==='MCQ'){if(ids.includes(raw))key={kind:'mcq',correct:[raw]};}
-   else{
-    // Tokenize only complete supported notation, preserving the previous rules.
-    const selected=ids.includes(raw)?[raw]:/^[A-Za-z]+$/.test(raw)&&ids.every(id=>/^[A-Za-z]$/.test(id))?raw.split(''):raw.split(/[\s,;&/]+/);
-    if(selected.length&&selected.every(id=>ids.includes(id))&&new Set(selected).size===selected.length)key={kind:'msq',correct:[...selected].sort()};
-   }
+   key=choiceKey(question.type,raw,options.map(o=>o.id),allowAlternatives);
    if(raw&&!key)issue('answer-notation','answer.raw');
   }
  }
