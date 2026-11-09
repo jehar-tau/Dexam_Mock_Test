@@ -37,6 +37,7 @@ const responseEnvelope = {
 };
 
 async function openQueue(page, { adminAccess = true, exportSummary = true } = {}) {
+  let adminRole = adminAccess;
   const pending = {
     id: "60000000-0000-4000-8000-000000000143",
     sourceName: "Fictional pending question",
@@ -52,7 +53,7 @@ async function openQueue(page, { adminAccess = true, exportSummary = true } = {}
   };
   const provider = await stubPortalProvider(page, (procedure, input) => {
     switch (procedure) {
-      case "is_dmocks_admin": return adminAccess;
+      case "is_dmocks_admin": return adminRole;
       case "admin_question_drafts": return [pending, approved];
       case "admin_read_question_export":
         if (input.p_export_id !== exportId) return { code: "42501", message: "Export is unavailable" };
@@ -63,12 +64,13 @@ async function openQueue(page, { adminAccess = true, exportSummary = true } = {}
   await page.goto("/admin");
   await seedPortalSession(page, admin);
   await page.reload();
-  return provider;
+  return { ...provider, setAdminRole: value => { adminRole = value; } };
 }
 
 test("an approved exported question downloads its verified immutable review packet", async ({ page }) => {
   const state = await openQueue(page);
   const pendingCard = page.getByRole("article").filter({ hasText: "Fictional pending question" });
+  await expect(pendingCard).toBeVisible();
   await expect(pendingCard.getByRole("button", { name: "Download bank review packet" })).toHaveCount(0);
 
   const approvedCard = page.getByRole("article").filter({ hasText: "Fictional approved question" });
@@ -118,5 +120,39 @@ test("a non-admin cannot access question export packets", async ({ page }) => {
   await expect(page.getByText("This account is not an administrator.", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Download bank review packet" })).toHaveCount(0);
   expect(state.calls.some(([name]) => name === "admin_read_question_export")).toBe(false);
+  expect(state.unexpected).toEqual([]);
+});
+
+test("role revoked while an export reply is held prevents the packet download", async ({ page }) => {
+  const state = await openQueue(page);
+  let releaseReply;
+  let requestReceived;
+  const heldReply = new Promise(resolve => { releaseReply = resolve; });
+  const received = new Promise(resolve => { requestReceived = resolve; });
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-supabase-api-version",
+    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+  };
+  await page.route("https://dmocks-portal-fixture.supabase.co/rest/v1/rpc/admin_read_question_export", async route => {
+    if (route.request().method() === "OPTIONS") return route.fulfill({ status: 204, headers });
+    state.calls.push(["admin_read_question_export", route.request().postDataJSON()]);
+    requestReceived();
+    await heldReply;
+    return route.fulfill({ status: 200, headers, json: responseEnvelope });
+  });
+
+  const approvedCard = page.getByRole("article").filter({ hasText: "Fictional approved question" });
+  const downloads = [];
+  page.on("download", download => downloads.push(download));
+  await approvedCard.getByRole("button", { name: "Download bank review packet" }).click();
+  await received;
+  state.setAdminRole(false);
+  releaseReply();
+
+  await expect(page.getByText("This account is not an administrator.", { exact: true })).toBeVisible();
+  expect(downloads).toHaveLength(0);
+  expect(state.calls).toContainEqual(["admin_read_question_export", { p_export_id: exportId }]);
+  expect(state.calls.filter(([name]) => name === "is_dmocks_admin").length).toBeGreaterThan(1);
   expect(state.unexpected).toEqual([]);
 });
