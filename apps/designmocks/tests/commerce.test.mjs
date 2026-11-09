@@ -22,16 +22,17 @@ const body = JSON.stringify({
 });
 const secret = "fictional-test-secret-only";
 test("authenticates the exact webhook body and rejects tampering, truncation and another secret", async () => {
-  const signature = createHmac("sha256", secret).update(body).digest("hex");
-  assert.equal(await validSignature(body, signature, secret), true);
-  assert.equal(await validSignature(body + " ", signature, secret), false);
+  const bytes = Buffer.from(body);
+  const signature = createHmac("sha256", secret).update(bytes).digest("hex");
+  assert.equal(await validSignature(bytes, signature, secret), true);
+  assert.equal(await validSignature(Buffer.from(body + " "), signature, secret), false);
   assert.equal(
-    await validSignature(body, signature, "another-fictional-secret"),
+    await validSignature(bytes, signature, "another-fictional-secret"),
     false,
   );
-  assert.equal(await validSignature(body, signature.slice(1), secret), false);
-  assert.equal(await validSignature(body, "z".repeat(64), secret), false);
-  assert.equal(await validSignature(body, null, secret), false);
+  assert.equal(await validSignature(bytes, signature.slice(1), secret), false);
+  assert.equal(await validSignature(bytes, "z".repeat(64), secret), false);
+  assert.equal(await validSignature(bytes, null, secret), false);
 });
 test("only a captured INR payment is a fulfilment candidate", () => {
   assert.deepEqual(capturedPayment(JSON.parse(body)), {

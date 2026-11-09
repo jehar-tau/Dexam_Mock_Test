@@ -1,4 +1,4 @@
-export async function validSignature(body, signature, secret) {
+export async function validSignature(bodyBytes, signature, secret) {
   if (!secret || !/^([a-f0-9]{64})$/i.test(signature ?? "")) return false;
   const encoder = new TextEncoder();
   const key = await crypto.subtle.importKey(
@@ -9,7 +9,7 @@ export async function validSignature(body, signature, secret) {
     ["sign"],
   );
   const expected = new Uint8Array(
-    await crypto.subtle.sign("HMAC", key, encoder.encode(body)),
+    await crypto.subtle.sign("HMAC", key, bodyBytes),
   );
   const actual = Uint8Array.from(signature.match(/../g), (pair) =>
     parseInt(pair, 16),

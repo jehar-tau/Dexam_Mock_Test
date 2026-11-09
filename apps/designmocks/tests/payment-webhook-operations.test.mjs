@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { createHmac } from "node:crypto";
+import { createHash, createHmac } from "node:crypto";
 import test from "node:test";
 import { createPaymentWebhookHandler } from "../supabase/functions/_shared/payment-webhook.mjs";
 
@@ -14,14 +14,21 @@ const refund = { event: "refund.processed", payload: {
     currency: "INR", status: "processed" } },
 } };
 
+function sign(body) {
+  return createHmac("sha256", secret).update(body).digest("hex");
+}
+
+function rawRequest(body, signature, eventId = "fictional-original-event") {
+  const headers = { "x-razorpay-signature": signature };
+  if (eventId !== null) headers["x-razorpay-event-id"] = eventId;
+  return new Request(origin + "/functions/v1/payment-webhook", {
+    method: "POST", body, headers,
+  });
+}
+
 function request(event, { signed = true } = {}) {
   const body = JSON.stringify(event);
-  return new Request(origin + "/functions/v1/payment-webhook", {
-    method: "POST", body, headers: {
-      "x-razorpay-event-id": "fictional-original-event",
-      "x-razorpay-signature": signed ? createHmac("sha256", secret).update(body).digest("hex") : "0".repeat(64),
-    },
-  });
+  return rawRequest(body, signed ? sign(body) : "0".repeat(64));
 }
 
 function fixture({ configured = true, rpc = async () => ({ error: null }), sdkFetch } = {}) {
@@ -56,6 +63,25 @@ test("missing configuration and unsigned captures produce fixed codes before dat
   assert.equal(await denied.text(), "");
   assert.deepEqual(signedOnly.failures, ["webhook_signature_rejected"]);
   assert.deepEqual(signedOnly.calls, []);
+});
+
+test("a capture signature cannot authenticate a delivery with an added UTF-8 byte-order mark", async () => {
+  const f = fixture();
+  const json = JSON.stringify(capture);
+  const body = Buffer.from("\uFEFF" + json);
+  assert.equal((await f.handler(rawRequest(body, sign(json)))).status, 401);
+  assert.deepEqual(f.failures, ["webhook_signature_rejected"]);
+  assert.deepEqual(f.calls, []);
+});
+
+test("a signed refund and its fallback event ID use the exact delivered bytes", async () => {
+  const f = fixture();
+  const body = Buffer.from("\uFEFF" + JSON.stringify({ ...refund, description: "Refund ₹1,193" }, null, 2) + "\n");
+  assert.equal((await f.handler(rawRequest(body, sign(body), null))).status, 200);
+  assert.equal(f.calls.length, 1);
+  assert.equal(f.calls[0].name, "record_verified_refund");
+  assert.equal(f.calls[0].input.p_event_id, createHash("sha256").update(body).digest("hex"));
+  assert.deepEqual(f.failures, []);
 });
 
 test("a signed capture with an unconfirmed database response leaves a safe 503 and an exact retry", async () => {

@@ -41,20 +41,14 @@ export function createPaymentWebhookHandler({
       bytes.set(chunk, position);
       position += chunk.length;
     }
-    let body;
-    try {
-      body = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
-    } catch {
-      return reply(400);
-    }
-    if (!(await validSignature(body, request.headers.get("x-razorpay-signature"), secret))) {
+    if (!(await validSignature(bytes, request.headers.get("x-razorpay-signature"), secret))) {
       reportFailure("webhook_signature_rejected");
       return reply(401);
     }
 
     let payment, refund;
     try {
-      const payload = JSON.parse(body);
+      const payload = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
       payment = capturedPayment(payload);
       refund = processedRefund(payload);
     } catch {
@@ -63,7 +57,7 @@ export function createPaymentWebhookHandler({
     if (!payment && !refund) return reply(200);
     const supplied = request.headers.get("x-razorpay-event-id");
     const eventId = supplied ?? Array.from(
-      new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(body))),
+      new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
       byte => byte.toString(16).padStart(2, "0"),
     ).join("");
     if (!eventId || eventId.length > 200) return reply(400);

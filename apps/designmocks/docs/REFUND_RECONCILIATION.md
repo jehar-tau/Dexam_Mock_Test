@@ -4,7 +4,7 @@ This is the MVP technical runbook, **not a final customer refund/cancellation po
 
 ## Verified event handling
 
-The Edge webhook validates its bounded raw body with the server-only HMAC secret. Only `payment.captured` or a valid captured-payment `refund.processed` event reaches service-only database functions. Refund creation/failure is not completion; uncaptured auto-refunds do not revoke another purchase. Event IDs bind to the exact order, payment, event kind, refund identity and money context. A separate refund-ID receipt prevents double-counting when the provider uses a new event ID.
+The Edge webhook verifies the exact received bytes with the server-only HMAC secret before decoding the payload. If the provider event ID is absent, the webhook uses a SHA-256 digest of those same bytes. Only `payment.captured` or a valid captured-payment `refund.processed` event reaches service-only database functions. Refund creation/failure is not completion; uncaptured auto-refunds do not revoke another purchase. Event IDs bind to the exact order, payment, event kind, refund identity and money context. A separate refund-ID receipt prevents double-counting when the provider uses a new event ID.
 
 Orders stay fixed at ₹1,193 / 119,300 INR minor units. Actual paid grants start after the per-account lock wait and end exactly 12 calendar months later. Duplicate events never extend a grant. Order mode must match the server environment; amount, currency and payment/order identity must match the recorded purchase.
 

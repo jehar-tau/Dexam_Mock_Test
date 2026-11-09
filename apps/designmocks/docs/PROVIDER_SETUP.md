@@ -135,6 +135,8 @@ Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and 
 
 On 9 November the owner resumed payment integration and reported completing video KYC. The dashboard showed the merchant as activated with Limited access and website setup pending. Test mode was available, an existing Test key was listed, and the Test webhook list was empty. [Razorpay activation details](https://razorpay.com/docs/payments/dashboard/account-settings/activation-details/)
 
+Prepare the private Test checkout while website approval is pending. Once the approved public site and final policy pages are reachable without signing in, submit `dmocks.com` for Razorpay website review before requesting Live API keys. [Razorpay business website requirements](https://razorpay.com/docs/payments/dashboard/account-settings/business-website-details/)
+
 The setup modal displayed a Test secret in tool output on 6 November. The owner must regenerate the Test pair and deactivate the exposed pair before use. Enter the replacement directly in Edge Function Secrets as `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` on the approved backend. Keep these values out of the browser build, Git, chat and logs.
 
 After the approved target backup and matching function deployment, configure a Test webhook for `payment.captured` and `refund.processed` at the target's `payment-webhook` function. Store the matching signing secret as `RAZORPAY_WEBHOOK_SECRET` on the server. Use a different secret for Live and reconcile outstanding Test deliveries before switching. [Razorpay webhook setup and validation](https://razorpay.com/docs/webhooks/validate-test/)
