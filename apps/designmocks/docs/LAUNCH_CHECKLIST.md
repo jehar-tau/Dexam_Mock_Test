@@ -1,20 +1,22 @@
 # DMocks release checklist
 
-[PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. The owner moved payments to a later phase; the immediate tranche is the public informational Site and original free sample, with account/auth, paper publication, checkout and hosted backend changes closed.
+[PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. The owner moved payments to a later phase. The informational site and free sample have their own release path while work on the student and administrator portal continues.
 
 ## Public non-payment release
 
-- [x] Prepare and independently verify the signed-out informational/free-sample static candidate for desktop and mobile; sample completion, reload and all five explanations pass with zero provider requests. Archive bytes match the Site checkout build; see `.dmocks-local-evidence/site-public-release-2026-11-09/publication-candidate.json`.
-- [x] Save the archive-backed candidate as Site version 6, matching all 17 uploaded files to the tested archive; version 6 is not deployed and the live audience remains owner-only. Receipt: `.dmocks-local-evidence/site-public-release-2026-11-09/native-site-save-progress.json`.
-- [ ] Recheck live Site source and version 5 owner-only audience; verify version 6 against the native archive receipt before deployment.
-- [ ] Obtain a separate public-audience decision before deploying the saved Site version. If authorized, verify signed-out direct routes on dmocks.com. Restore owner-only access if checks fail. No public-audience authorization has been given.
-- [x] Keep account creation, paid-paper publication and checkout closed in the saved static build. The informational site and free sample do not require payment acceptance or a backend migration.
+- [x] Verify the signed-out landing page and free sample on desktop and mobile. Sample completion, result reload and all five explanations passed with zero provider requests.
+- [x] Save the candidate as Site version 6. The upload matched all 17 files in the verified archive. The private save receipt is `.dmocks-local-evidence/site-public-release-2026-11-09/native-site-save-progress.json`.
+- [ ] Recheck the live Site source and version 5 owner-only audience. Verify version 6 against the save receipt before deployment.
+- [ ] Obtain the explicit public-audience decision, then deploy version 6 and verify signed-out direct routes on dmocks.com. Restore owner-only access if checks fail.
+- [x] Use the static build with account creation, bank publication and checkout closed.
 
 ## Non-payment portal verification (separate from Site publication)
 
-- [ ] To exercise the full student workspace, use an explicit staging build and approved exact frontend/backend origin. `VITE_TEST_LOGIN_ENABLED` alone provides a controlled sign-in screen but leaves workspace routes closed.
-- [ ] Verify confirmed Google identity against the server tester allowlist while registration policy is `testers`, environment mode is `test`, sales are disabled, and `can_enter_staging_portal()` allows access. Keep public registration closed; the signup hook defaults to closed and public admission requires its own approval.
-- [ ] Resolve the hosted target-role mismatch and approve the exact target. The project dashboard returned Healthy, and CA/native backup tooling passed local verification, but no real hosted backup has been captured. The observed ledger has 25/76 migrations; 51 remain, including required staging admission migration `202611060128_private_staging_portal.sql`.
+- [x] Verify real controlled Google sign-in, reload, refresh, sign-out and returning-account sign-in on the current local build.
+- [x] Prepare the exact 57-question UCEED paper for private review on desktop and mobile.
+- [ ] Verify the full student and staff workspace using the staging build, the complete migration set and approved exact origins. Enable the staging preview modules and keep checkout closed.
+- [ ] Verify confirmed Google identity against the server tester allowlist while registration policy is `testers`, environment mode is `test`, sales are closed, and `can_enter_staging_portal()` allows access. Public registration has its own approval.
+- [ ] Resolve the hosted target role and capture and restore the approved target's backup. The project dashboard returned Healthy and the CA and native clients passed local verification. The observed ledger has 25 of 76 migrations, including a pending staging admission migration `202611060128_private_staging_portal.sql`.
 - [ ] After approved target recovery and matching migration/function promotion, rerun the exact-origin staging admission, protected-route, account isolation and server authorization checks. Keep the public informational Site independent of this work.
 
 ## Later owner-led paid MVP
