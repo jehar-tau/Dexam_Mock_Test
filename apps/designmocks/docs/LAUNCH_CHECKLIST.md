@@ -1,8 +1,25 @@
-# DMocks frozen paid MVP launch checklist
+# DMocks release checklist
 
-Scope frozen by the owner on **8 November 2026**. [PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. Payment work is resumed for this MVP; purchases and public registration stay closed until acceptance. Historical full-portal completion does not substitute for the gates below.
+[PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. The owner moved payments to a later phase; the immediate tranche is the public informational Site and original free sample, with account/auth, paper publication, checkout and hosted backend changes closed.
 
-## Launch Now
+## Public non-payment release
+
+- [x] Prepare and independently verify the signed-out informational/free-sample static candidate for desktop and mobile; sample completion, reload and all five explanations pass with zero provider requests. Archive bytes match the Site checkout build; see `.dmocks-local-evidence/site-public-release-2026-11-09/publication-candidate.json`.
+- [x] Save the archive-backed candidate as Site version 6, matching all 17 uploaded files to the tested archive; version 6 is not deployed and the live audience remains owner-only. Receipt: `.dmocks-local-evidence/site-public-release-2026-11-09/native-site-save-progress.json`.
+- [ ] Recheck live Site source and version 5 owner-only audience; verify version 6 against the native archive receipt before deployment.
+- [ ] Obtain a separate public-audience decision before deploying the saved Site version. If authorized, verify signed-out direct routes on dmocks.com. Restore owner-only access if checks fail. No public-audience authorization has been given.
+- [x] Keep account creation, paid-paper publication and checkout closed in the saved static build. The informational site and free sample do not require payment acceptance or a backend migration.
+
+## Non-payment portal verification (separate from Site publication)
+
+- [ ] To exercise the full student workspace, use an explicit staging build and approved exact frontend/backend origin. `VITE_TEST_LOGIN_ENABLED` alone provides a controlled sign-in screen but leaves workspace routes closed.
+- [ ] Verify confirmed Google identity against the server tester allowlist while registration policy is `testers`, environment mode is `test`, sales are disabled, and `can_enter_staging_portal()` allows access. Keep public registration closed; the signup hook defaults to closed and public admission requires its own approval.
+- [ ] Resolve the hosted target-role mismatch and approve the exact target. The project dashboard returned Healthy, and CA/native backup tooling passed local verification, but no real hosted backup has been captured. The observed ledger has 25/76 migrations; 51 remain, including required staging admission migration `202611060128_private_staging_portal.sql`.
+- [ ] After approved target recovery and matching migration/function promotion, rerun the exact-origin staging admission, protected-route, account isolation and server authorization checks. Keep the public informational Site independent of this work.
+
+## Later owner-led paid MVP
+
+Payment and sales remain closed until that later phase's acceptance. Public account admission is a separate gate; the controlled tester policy for private non-payment portal verification remains as described above. Historical full-portal completion does not substitute for those gates.
 
 - [x] Independent DMocks identity/store/brand and active HTTPS domain; private Google callback/PKCE, reload/refresh, sign-out, returning account and cancellation acceptance exist.
 - [x] Public-site/free-sample source and local/CI verification exist. PR #98 is accepted on main with 294 selected zero-retry MVP desktop/mobile journeys.
@@ -35,7 +52,7 @@ NID/unsupported programmes; All India events/rankings/top-ten; Community; Learn/
 
 ## Current boundaries
 
-- dmocks.com remains owner-private on an older controlled-login publication. No hosted write or promotion is implied by source merges.
+- dmocks.com remains owner-private on an older controlled-login publication until the public-audience step above is separately approved and verified. No hosted write or promotion is implied by source merges.
 - Public signup, real content publication and checkout are closed. Model calls remain disabled.
 - The staging-target question is already pending; avoid duplicate requests.
 - Never treat human question review as content-rights approval, draft policies as final policies, local fixture payments as a real provider journey, or source migrations as applied hosted migrations.
