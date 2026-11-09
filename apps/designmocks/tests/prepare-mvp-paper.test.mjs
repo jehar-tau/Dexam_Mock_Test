@@ -3,7 +3,7 @@ import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
-import { compileMvpPaper, stageMvpPaper } from "../scripts/prepare-mvp-paper.mjs";
+import { compileMvpPaper, stageMvpPaper, syncMvpPaperInputs } from "../scripts/prepare-mvp-paper.mjs";
 import { collectCanonicalMedia } from "../scripts/private-bank-media.mjs";
 import { buildManifest, sha256, stableJson } from "../scripts/question-bank-import.mjs";
 import { RULES_2027, runtimeQuestion } from "../scripts/question-runtime.mjs";
@@ -13,22 +13,25 @@ function sign(packet) {
   const { manifestSha256, ...body } = packet;
   return { ...body, manifestSha256: sha256(stableJson(body)) };
 }
-async function fixture(t, exam = "uceed") {
+async function fixture(t, exam = "uceed", includeUnselected = false) {
   const root = await mkdtemp(join(tmpdir(), "dmocks-paper-test-"));
   t.after(() => rm(root, { recursive: true, force: true }));
   await writeFile(join(root, "figure.png"), image);
   const rule = RULES_2027[exam];
-  const canonical = buildManifest({ schemaVersion: 1, questions: Object.entries(rule.sections).flatMap(([type, section]) =>
+  const bankQuestions = Object.entries(rule.sections).flatMap(([type, section]) =>
     Array.from({ length: section.count }, (_, index) => ({
       externalKey: `fictional-${type}-${index}`, type, topic: "test", licence: "owner-provided",
       prompt: `Original fictional ${type} prompt ${index}`, provenance: { exam }, holds: [],
       options: type === "NAT" ? [] : ["A", "B", "C", "D"].map(key => ({ key, text: `Option ${key}` })),
       answer: { raw: type === "NAT" ? "0.25" : "A", status: "reviewed" },
       assets: type === "NAT" && index === 0 ? [{ path: "figure.png", sha256: sha256(image), width: 1, height: 1 }] : [],
-    }))),
-  }, "a".repeat(40));
-  const media = collectCanonicalMedia(canonical).map(asset => ({ ...asset, path: asset.storagePath, byteSize: image.length }));
-  const questions = canonical.records.map(({ externalKey, contentSha256, licence, payload }, index) => ({
+    })));
+  const unselected = { ...bankQuestions[0], externalKey: "fictional-unselected",
+    assets: [{ path: "unselected.png", sha256: "f".repeat(64), width: 1, height: 1 }] };
+  const canonical = buildManifest({ schemaVersion: 1, questions: includeUnselected ? [...bankQuestions, unselected] : bankQuestions }, "a".repeat(40));
+  const selected = canonical.records.slice(0, bankQuestions.length);
+  const media = collectCanonicalMedia({ records: selected }).map(asset => ({ ...asset, path: asset.storagePath, byteSize: image.length }));
+  const questions = selected.map(({ externalKey, contentSha256, licence, payload }, index) => ({
     externalKey, contentSha256, ordinal: index + 1, originalLicenceLabel: licence, payload: structuredClone(payload),
     runtime: runtimeQuestion(payload, { rule, mediaCatalog: media }),
   }));
@@ -114,4 +117,93 @@ test("preparation checks the target before sending the packet and only returns t
     { message: "The private target rejected paper preparation (HTTP 400)" });
   await assert.rejects(stageMvpPaper(compiled, config, then(() => Response.json({ ...receipt, ...compiled.summary, questionCount: 1 }))),
     /invalid paper receipt/);
+});
+
+const syncOrigin = "http://127.0.0.1:55421";
+const syncTarget = { url: syncOrigin, allowOrigin: syncOrigin, environment: "staging", key: "sb_secret_fictional_fixture" };
+const settingsPath = "/rest/v1/launch_settings";
+const runtimePath = "/rest/v1/rpc/upsert_question_bank_runtime_batch";
+
+function syncTransport(compiled, { mode = "test", changesAfterUpload = false, existing = false, corrupt = false,
+  runtimeCount = compiled.plan.questions.length } = {}) {
+  const calls = [];
+  let settingsReads = 0;
+  const asset = compiled.mediaPlan.assets[0];
+  const fetchImpl = async (address, request) => {
+    const url = new URL(address);
+    assert.equal(url.origin, syncOrigin);
+    assert.equal(request.redirect, "error");
+    assert.equal(request.headers.get("apikey"), syncTarget.key);
+    assert.equal(request.headers.has("authorization"), false);
+    const method = request.method ?? "GET";
+    calls.push(`${method} ${url.pathname}`);
+    switch (url.pathname) {
+      case "/rest/v1/rpc/admin_operational_health":
+        return Response.json({ scope: "paid-mvp-v1", monitorVersion: 1, apiProfileReady: true });
+      case settingsPath:
+        assert.equal(method, "GET");
+        assert.equal(url.searchParams.get("singleton"), "eq.true");
+        settingsReads++;
+        return Response.json([{ sales_enabled: changesAfterUpload && settingsReads === 2, environment_mode: mode }]);
+      case "/storage/v1/bucket/paper-media":
+        return Response.json({ public: false, allowed_mime_types: ["image/png"], file_size_limit: 10 * 1024 * 1024 });
+      case `/storage/v1/object/paper-media/${asset.storagePath}`:
+        return method === "POST"
+          ? Response.json(existing ? { message: "already exists", statusCode: 409 } : { Key: asset.storagePath }, { status: existing ? 409 : 200 })
+          : new Response(corrupt ? Buffer.concat([image, Buffer.of(0)]) : image);
+      case "/rest/v1/rpc/register_bank_media_assets":
+        assert.deepEqual(JSON.parse(request.body), { p_records: [{ sha256: asset.sha256, storagePath: asset.storagePath,
+          width: asset.width, height: asset.height, byteSize: image.length }] });
+        return Response.json(1);
+      case runtimePath:
+        assert.deepEqual(JSON.parse(request.body), { p_records: compiled.plan.questions.map(({ externalKey, contentSha256, runtime }) =>
+          ({ externalKey, contentSha256, runtime })) });
+        return Response.json(runtimeCount);
+      default:
+        assert.fail("Unexpected paper sync request");
+    }
+  };
+  return { calls, fetchImpl };
+}
+
+test("sync uploads only the exact packet figures and records only its runtime with verified existing bytes on replay", async t => {
+  const { packet, canonical, root } = await fixture(t, "uceed", true);
+  const compiled = await compileMvpPaper(packet, packet.manifestSha256, canonical, root);
+  assert.equal(canonical.records.length, 58);
+  assert.equal(compiled.mediaPlan.assets.length, 1);
+  assert.equal(compiled.mediaPlan.totalBytes, image.length);
+  for (const existing of [false, true]) {
+    const transport = syncTransport(compiled, { existing });
+    assert.deepEqual(await syncMvpPaperInputs(compiled, syncTarget, root, transport.fetchImpl), {
+      figuresRegistered: 1, figuresUploaded: existing ? 0 : 1, figuresReused: existing ? 1 : 0, runtimeRecorded: 57,
+    });
+    const asset = `/storage/v1/object/paper-media/${compiled.mediaPlan.assets[0].storagePath}`;
+    assert.deepEqual(transport.calls.filter(call => call.includes("/object/")), [`POST ${asset}`, `GET ${asset}`]);
+    assert.deepEqual(transport.calls.slice(-3), ["POST /rest/v1/rpc/register_bank_media_assets", `GET ${settingsPath}`, `POST ${runtimePath}`]);
+  }
+});
+
+test("sync rejects a foreign target, a Live target and a sales change before runtime registration", async t => {
+  const { packet, canonical, root } = await fixture(t);
+  const compiled = await compileMvpPaper(packet, packet.manifestSha256, canonical, root);
+  const live = syncTransport(compiled, { mode: "live" });
+  await assert.rejects(syncMvpPaperInputs(compiled, { ...syncTarget, allowOrigin: "https://wrong.invalid" }, root, live.fetchImpl), /exactly match/);
+  await assert.rejects(syncMvpPaperInputs(compiled, { ...syncTarget, environment: "production" }, root, live.fetchImpl), /acknowledgement/);
+  assert.deepEqual(live.calls, []);
+  await assert.rejects(syncMvpPaperInputs(compiled, syncTarget, root, live.fetchImpl), /Test target with sales closed/);
+  assert.deepEqual(live.calls, ["POST /rest/v1/rpc/admin_operational_health", `GET ${settingsPath}`]);
+  const switched = syncTransport(compiled, { changesAfterUpload: true });
+  await assert.rejects(syncMvpPaperInputs(compiled, syncTarget, root, switched.fetchImpl), /Test target with sales closed/);
+  assert.equal(switched.calls.at(-1), `GET ${settingsPath}`);
+  assert.ok(!switched.calls.some(call => call.endsWith(runtimePath)));
+});
+
+test("sync stops on an incorrect figure download and rejects an incomplete runtime acknowledgement", async t => {
+  const { packet, canonical, root } = await fixture(t);
+  const compiled = await compileMvpPaper(packet, packet.manifestSha256, canonical, root);
+  const corrupt = syncTransport(compiled, { corrupt: true });
+  await assert.rejects(syncMvpPaperInputs(compiled, syncTarget, root, corrupt.fetchImpl), /could not verify or register/);
+  assert.ok(!corrupt.calls.some(call => call.endsWith(runtimePath) || call.includes("register_bank_media_assets")));
+  const incomplete = syncTransport(compiled, { runtimeCount: 56 });
+  await assert.rejects(syncMvpPaperInputs(compiled, syncTarget, root, incomplete.fetchImpl), /incomplete paper runtime receipt/);
 });
