@@ -35,7 +35,8 @@
     "bank:reconcile": "node scripts/reconcile-bank-state.mjs",
     "bank:diagnostics": "node scripts/bank-conversion-report.mjs",
     "recovery:capture": "node scripts/private-recovery.mjs capture",
-    "recovery:verify": "node scripts/private-recovery.mjs verify"
+    "recovery:verify": "node scripts/private-recovery.mjs verify",
+    "bank:prepare-addition": "node scripts/prepare-question-bank-addition.mjs"
   },
   "dependencies": {
     "@imagemagick/magick-wasm": "0.0.46",

@@ -159,7 +159,7 @@ test("approved question drafts create a rights-gated Git review artifact", async
   await page.getByLabel("Rights record").fill("Original DMocks question authored for this bank.");
   await page.getByLabel(/I confirm DMocks/).check();
   await page.getByRole("button", { name: "Create canonical review artifact" }).click();
-  await expect(page.getByText("Not published — Git review required.")).toBeVisible();
+  await expect(page.getByText("Git review required before import.")).toBeVisible();
   await expect(page.getByText("dmocks-uceed-observation-001", { exact: true })).toBeVisible();
 });
 
