@@ -60,6 +60,29 @@ async function fixture(page, { admin = true } = {}) {
   return { ...state, ...provider };
 }
 
+test("bank review shows separate accepted choices and complete multiple-select sets", async ({ page }) => {
+  const state = await fixture(page);
+  const options = ["A", "B", "C", "D"].map(key => ({ key, text: `Fictional option ${key}` }));
+  Object.assign(state.questions[0], {
+    options, answer: { raw: "D OR B", status: "human-reviewed" },
+    runtimeKey: { kind: "mcq", correct: ["D", "B"] },
+  });
+  Object.assign(state.questions[1], {
+    type: "MSQ", options, answer: { raw: "AD or BC", status: "human-reviewed" },
+    runtimeKey: { kind: "msq", alternatives: [["A", "D"], ["B", "C"]] },
+    marking: { correct: 4, wrong: -1, partial: true },
+  });
+  const bank = page.getByRole("region", { name: "Imported bank review", exact: true });
+  const review = bank.getByRole("region", { name: "Question review", exact: true });
+  await bank.getByRole("button", { name: "Open question bank-review-001", exact: true }).press("Enter");
+  await expect(review.locator("dd")).toHaveText(["D OR B", "D or B", "Correct 3 · Wrong -0.71"]);
+  await review.getByRole("button", { name: "Close question", exact: true }).press("Enter");
+  await bank.getByRole("button", { name: "Open question bank-review-002", exact: true }).press("Enter");
+  await expect(review.locator("dd")).toHaveText(["AD or BC", "A, D or B, C", "Correct 4 · Wrong -1 · Partial credit applies"]);
+  expect(state.calls.some(([name]) => name === "admin_review_bank_question")).toBe(false);
+  expect(state.unexpected).toEqual([]);
+});
+
 test('NID and NIFT conversion previews explain proposed use without releasing or starting a paper',async({page})=>{
  const state=await fixture(page),bank=page.getByRole('region',{name:'Imported bank review',exact:true}),q=state.questions[50];
  Object.assign(q,{exam:'nid',type:'DESCRIPTIVE',answer:null,runtimeKey:null,marking:null,context:null,options:[],reviewVersion:'nid-drawing-proposal',media:[]});
