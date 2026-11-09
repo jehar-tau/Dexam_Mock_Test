@@ -2,6 +2,14 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+## Exact first UCEED Part A rehearsal — 9 November 2026
+
+Source `e0752350b7d436055c201dd70c9b0ab518eecfbe` compiled the reviewed private packet against the current canonical bank. The disposable backend imported all 2,582 explicitly empty-holds records. Private Storage verified all 57 selected PNGs after upload, totaling 6,087,377 bytes. Preparation rejected unreviewed questions, returned the same paper on exact replay, and withheld the paper from students until a fixture staff actor made the local release decision.
+
+Desktop and mobile used actual local Auth, PostgREST, Storage, the attempt-media handler, and the application runner. Both rendered all 57 questions and signed figures in order, resumed the same 7,200-second attempt, recovered a device-journal answer on reconnect and retained the deadline after reload. The server denied anonymous and foreign requests to read or change the attempt or obtain signed figures. The answer keys appeared after submission, and the three correct NAT, MSQ and MCQ responses scored 11 out of 200 in each browser. A separate expired attempt retained its saved answer and denied late changes. Exact nested keys and explanations matched the packet across all three results. Repeated submission and local withdrawal preserved the frozen results.
+
+The isolated rehearsal used fictional accounts and local entitlement fixtures. The expiry check shifted a fixture attempt's timestamps. The local release was withdrawn and its containers, private volumes and credentials were removed. Review of the first paper and acceptance on the approved hosted Test target are pending. Credential-free receipts are in the ignored `.dmocks-local-evidence/first-offering-rehearsal-2026-11-09/` directory.
+
 ## Checkout recovery, operator facts and corrected MVP operations - 8 November 2026
 
 Current candidate checks pass **342 JavaScript tests, four Python fixtures, eleven server types, build/isolation, zero production audit findings, 358 selected desktop/mobile journeys without failures/skips/retries and 72 migrations plus companion profile/44 database suites**. CHECKOUT_RECOVERY.md separates source-handler, merchant-stub and actual backend proof. Two legacy probes reproduce stuck retry after provider commit and missing echoed receipt/note validation. A database before probe reproduces the wrong pending-question counter. The corrected profile restores service/admin health authorization, counts real pending rows and the runner verifies its scope before any write, with no deferred job recovery.
