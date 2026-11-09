@@ -1,7 +1,7 @@
 import { readFile, stat } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
-import { collectCanonicalMedia, readCanonicalAsset } from "./private-bank-media.mjs";
+import { collectCanonicalMedia, readCanonicalAsset, uploadCanonicalMedia } from "./private-bank-media.mjs";
 import { loadFromGit, sha256, stableJson } from "./question-bank-import.mjs";
 import { RULES_2027, runtimeQuestion } from "./question-runtime.mjs";
 import { openPrivateBankProvider } from "./private-bank-provider.mjs";
@@ -68,12 +68,40 @@ export async function compileMvpPaper(packet, expectedSha, canonical, mediaRoot)
   });
   const totalPoints = records.reduce((total, record) => total + record.runtime.points, 0);
   if (body.totalPoints !== totalPoints) throw new Error("The total points differ from the reviewed packet");
+  const mediaAssets = catalogue.map(({ path, ...asset }) => asset);
   return {
     summary: { packetSha256: expectedSha, sourceSha256: canonical.sourceSha256, exam,
       durationSeconds, questionCount: records.length, totalPoints, figureCount: catalogue.length },
     plan: { packetSha256: expectedSha, sourceSha256: canonical.sourceSha256, title, exam, durationSeconds,
       questions: records, media: catalogue.map(({ sha256, path, width, height, byteSize }) => ({ sha256, path, width, height, byteSize })) },
+    mediaPlan: { assets: mediaAssets, totalBytes: mediaAssets.reduce((total, asset) => total + asset.byteSize, 0),
+      mediaSha256: sha256(stableJson(mediaAssets)) },
   };
+}
+
+async function requireClosedTestSales(provider) {
+  const settings = await provider.fetch(`${provider.origin}/rest/v1/launch_settings?select=sales_enabled,environment_mode&singleton=eq.true`)
+    .then(response => response.ok ? response.json() : null)
+    .catch(() => null);
+  if (!Array.isArray(settings) || settings.length !== 1 || settings[0]?.sales_enabled !== false
+    || settings[0].environment_mode !== "test") throw new Error("Paper input sync requires a Test target with sales closed");
+}
+
+export async function syncMvpPaperInputs({ plan, mediaPlan }, config, mediaRoot, fetchImpl = fetch) {
+  const target = { ...config, serviceRoleKey: config.key };
+  const provider = await openPrivateBankProvider(target, { fetchImpl });
+  await requireClosedTestSales(provider);
+  let figures;
+  try {
+    figures = await uploadCanonicalMedia(mediaPlan, { ...target, root: mediaRoot }, fetchImpl);
+  } catch {
+    throw new Error("The private target could not verify or register the paper figures");
+  }
+  await requireClosedTestSales(provider);
+  const records = plan.questions.map(({ externalKey, contentSha256, runtime }) => ({ externalKey, contentSha256, runtime }));
+  const runtimeRecorded = await provider.rpc("upsert_question_bank_runtime_batch", { p_records: records });
+  if (runtimeRecorded !== records.length) throw new Error("The private target returned an incomplete paper runtime receipt");
+  return { figuresRegistered: figures.registered, figuresUploaded: figures.uploaded, figuresReused: figures.reused, runtimeRecorded };
 }
 
 export async function stageMvpPaper({ plan, summary }, config, fetchImpl = fetch) {
@@ -95,8 +123,10 @@ export async function stageMvpPaper({ plan, summary }, config, fetchImpl = fetch
 }
 
 async function main() {
-  const { values } = parseArgs({ options: { packet: { type: "string" }, expect: { type: "string" }, apply: { type: "boolean" } } });
+  const { values } = parseArgs({ options: { packet: { type: "string" }, expect: { type: "string" },
+    apply: { type: "boolean" }, "sync-inputs": { type: "boolean" } } });
   if (!values.packet || !digest.test(values.expect ?? "")) throw new Error("Provide --packet and the reviewed --expect SHA-256");
+  if (values.apply && values["sync-inputs"]) throw new Error("Choose either --sync-inputs or --apply");
   let packet;
   try {
     const info = await stat(values.packet);
@@ -110,11 +140,17 @@ async function main() {
   catch { throw new Error("The canonical bank cannot be read from origin/main"); }
   const env = process.env;
   const compiled = await compileMvpPaper(packet, values.expect, canonical, env.DMOCKS_MEDIA_ROOT);
-  const receipt = values.apply ? await stageMvpPaper(compiled, {
+  const target = {
     url: env.DMOCKS_SUPABASE_URL, key: env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,
     allowOrigin: env.DMOCKS_PAPER_ALLOW_ORIGIN, environment: env.DMOCKS_PAPER_ENVIRONMENT,
     productionAck: env.DMOCKS_PAPER_PRODUCTION_ACK,
-  }) : {};
+  };
+  if (values["sync-inputs"]) {
+    const receipt = await syncMvpPaperInputs(compiled, target, env.DMOCKS_MEDIA_ROOT);
+    console.log(JSON.stringify({ mode: "synced-private-inputs", ...compiled.summary, ...receipt }));
+    return;
+  }
+  const receipt = values.apply ? await stageMvpPaper(compiled, target) : {};
   console.log(JSON.stringify({ mode: values.apply ? "prepared-unpublished" : "dry-run", ...compiled.summary, ...receipt }));
 }
 

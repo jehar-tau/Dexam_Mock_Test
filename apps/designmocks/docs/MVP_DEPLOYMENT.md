@@ -38,7 +38,7 @@ For a real release, import only eligible canonical records, verify/register ever
 
 Set `DMOCKS_SUPABASE_URL` and the private `DMOCKS_SUPABASE_SERVICE_ROLE_KEY` for the approved project. Set `DMOCKS_BANK_ALLOW_ORIGIN` to the exact independently approved API origin and `DMOCKS_BANK_ENVIRONMENT` to `development`, `staging` or `production`. Development requires loopback. Production requires a managed Supabase origin and `DMOCKS_BANK_PRODUCTION_ACK=USE_PRIVATE_BANK_ON_<exact origin>`. The commands check the current DMocks paid MVP profile before sending questions, files or runtime plans. Authenticated requests stay on the approved origin and refuse redirects. A legacy service-role JWT must match the managed project reference. An opaque secret key uses the API key header. [Supabase API keys](https://supabase.com/docs/guides/getting-started/api-keys)
 
-Run the canonical import, media registration and runtime materialization in that order after the approved target has the matching migrations and profile. Set `DMOCKS_MEDIA_ROOT` to the read-only media directory. The bank and media manifest commands remain available for offline inspection.
+Run the canonical text import after the approved target has the matching migrations and profile. For bank-wide staging, follow the text import with media registration and runtime materialization. Set `DMOCKS_MEDIA_ROOT` to the read-only media directory. The bank and media manifest commands remain available for offline inspection.
 
 ```sh
 npm run bank:import
@@ -53,6 +53,10 @@ Use the frozen private packet and its separately reviewed SHA-256 to prepare the
 ```sh
 npm run paper:prepare -- --packet "$DMOCKS_REVIEWED_PAPER_PACKET" --expect "$DMOCKS_REVIEWED_PAPER_SHA256"
 ```
+
+To stage the exact first paper's inputs on the approved Test target after canonical text import, add `--sync-inputs` to that command. Set `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_PAPER_ALLOW_ORIGIN` and `DMOCKS_PAPER_ENVIRONMENT` for that target. A managed production target also requires `DMOCKS_PAPER_PRODUCTION_ACK=USE_PRIVATE_BANK_ON_<exact-origin>` for this bank operation.
+
+The command checks Test mode and closed sales before transferring the packet's figures and again before recording its runtime. It verifies the bytes in private Storage and reports counts for uploaded figures, reused figures and recorded questions. A retry verifies existing bytes before reuse. Staff review and paper preparation follow as separate steps.
 
 After target approval, the completed canonical import, media registration and audited per-question approval, repeat with `--apply`. Configure `DMOCKS_SUPABASE_URL`, the private `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, an exact `DMOCKS_PAPER_ALLOW_ORIGIN`, and `DMOCKS_PAPER_ENVIRONMENT` (`staging` or `production`). Production also requires `DMOCKS_PAPER_PRODUCTION_ACK=PREPARE_UNPUBLISHED_MVP_PAPER_ON_<exact origin>`. The target requires the paid MVP profile, closed registration and sales, and a closed merchant Test window. One server transaction copies the current reviewed bank snapshots into an unpublished paper and returns its ID and manifest SHA-256. An exact retry reuses the receipt while the paper is unpublished. A changed packet, canonical record, runtime or missing figure rejects the preparation. Use the returned paper ID for the independent admin manifest review.
 

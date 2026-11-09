@@ -69,9 +69,9 @@ export async function planCanonicalMedia(manifest,root){
  for(const asset of assets){const data=await readCanonicalAsset(root,asset);asset.byteSize=data.length;bytes+=data.length;}
  return {sourceCommit:manifest.sourceCommit,sourceSha256:manifest.sourceSha256,mediaSha256:sha256(stableJson(assets)),totalBytes:bytes,assets};
 }
-export async function uploadCanonicalMedia(plan,{root,concurrency=3,onProgress=()=>{},...config}){
+export async function uploadCanonicalMedia(plan,{root,concurrency=3,onProgress=()=>{},...config},fetchImpl=fetch){
  assert.ok(Number.isInteger(concurrency)&&concurrency>=1&&concurrency<=4,'Unsupported upload concurrency');
- const provider=await openPrivateBankProvider(config);
+ const provider=await openPrivateBankProvider(config,{fetchImpl});
  const client=createClient(provider.origin,config.serviceRoleKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false},global:{fetch:provider.fetch}});
  const lookup=await retryMediaOperation(()=>client.storage.getBucket(MEDIA_BUCKET));
  if(lookup.error||!lookup.data)throw providerFailure('PRIVATE_MEDIA_BUCKET_LOOKUP_FAILED',lookup);
