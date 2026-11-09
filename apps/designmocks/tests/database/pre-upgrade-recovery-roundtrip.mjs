@@ -109,9 +109,26 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
     assert.equal((await readAttempt(state.owner, state.completed, target)).score, 4);
     await assert.rejects(readAttempt(state.other, state.completed, target));
 
-    for (const file of pending) await apply(file, target);
     const profile = await readFile(new URL('../../supabase/launch/paid-mvp.sql', import.meta.url), 'utf8');
-    await sql(`begin;\n${profile}\ncommit;`, target);
+    const installPaidProfile = () => sql(`begin;\n${profile}\ncommit;`, target);
+    for (const file of pending) {
+      if (versionOf(file) !== '202611090158') {
+        await apply(file, target);
+        continue;
+      }
+      // A deployed paid profile must remain effective while a newer migration runs.
+      await installPaidProfile();
+      await apply(file, target);
+      assert.equal(await sql(`select dm_private.mvp_profile_permissions_valid() and not exists (
+        select 1 from unnest(array['anon','authenticated','service_role']) roles(role)
+        cross join unnest(array['public.public_all_india_top_ten()','public.all_india_event_catalog()',
+          'public.admin_open_all_india_ranking_publication(uuid,text,text)',
+          'public.admin_close_all_india_ranking_publication(uuid,uuid,text)',
+          'public.set_all_india_result_sharing(uuid,uuid,integer,boolean)']) signatures(signature)
+        where has_function_privilege(role,signature,'EXECUTE')
+      );`, target), 't', 'ranking migration leaves the already installed paid profile closed and valid');
+    }
+    await installPaidProfile();
     const upgraded = await connect(target);
     try {
       const allVersions = files.map(versionOf);
