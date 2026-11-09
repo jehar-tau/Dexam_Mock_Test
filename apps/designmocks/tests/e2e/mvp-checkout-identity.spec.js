@@ -26,13 +26,66 @@ async function setup(page,configure=()=>{}){
   }
   if(name==='create-order'){state.afterOrder=true;return route.fulfill({headers,json:state.order});}
   if(name==='my_pass')return route.fulfill({headers,json:{active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null,revoked:false,mode:state.mode}});
+  if(state.accountFlow&&name==='my_privacy_requests')return route.fulfill({headers,json:[]});
   throw new Error('Unexpected checkout fixture request: '+name);
  });
- await page.goto('/');await seedPortalSession(page,first);await page.goto('/plans');
+ await page.goto('/');
+ if(!state.accountFlow)await seedPortalSession(page,first);
+ await page.goto(state.accountFlow?'/account':'/plans');
  return state;
 }
 const pay=page=>page.getByRole('button',{name:'Pay ₹1,193 with Razorpay',exact:true});
 const consent=page=>page.getByRole('checkbox');
+const purchaseWrites=state=>state.calls.filter(({name})=>['accept_current_terms','create-order'].includes(name));
+
+test('cancelling Google sign-in never carries purchase consent into another account', async ({ page, baseURL }) => {
+ const state = await setup(page, value => { value.accountFlow = true; });
+ let oauth;
+ await page.route('https://dmocks-portal-fixture.supabase.co/auth/v1/authorize?*', async route => {
+  oauth = Object.fromEntries(new URL(route.request().url()).searchParams);
+  await route.fulfill({ contentType: 'text/html', body: '<p>Fictional Google authorization endpoint.</p>' });
+ });
+ const google = page.getByRole('button', { name: 'Continue with Google', exact: true });
+ await expect(google).toBeDisabled();
+ await consent(page).check();
+ await google.click();
+ await expect(page.getByText('Fictional Google authorization endpoint.', { exact: true })).toBeVisible();
+ expect(oauth).toMatchObject({ provider: 'google', redirect_to: baseURL + '/account/callback', scopes: 'openid email profile' });
+ expect(oauth.code_challenge).toMatch(/^[a-z0-9_-]{43}$/i);
+ await page.goto('/account/callback?error=access_denied');
+ await expect(page.getByRole('alert')).toContainText('Google sign-in was cancelled');
+ await expect(consent(page)).not.toBeChecked();
+ await expect(google).toBeDisabled();
+
+ await seedPortalSession(page, second);
+ await page.goto('/account');
+ await expect(page.getByText('Signed in as ' + second.email, { exact: true })).toBeVisible();
+ await expect(page.getByRole('button', { name: 'Request account deletion', exact: true })).toBeEnabled();
+ expect(purchaseWrites(state)).toEqual([]);
+ await page.getByRole('link', { name: 'View the annual pass', exact: true }).click();
+ await expect(consent(page)).toBeEnabled();
+ await expect(consent(page)).not.toBeChecked();
+ await expect(pay(page)).toBeDisabled();
+ await consent(page).check();
+ expect(purchaseWrites(state)).toEqual([]);
+ await pay(page).click();
+ await expect.poll(() => page.evaluate(() => window.checkoutFixture?.opened ?? 0)).toBe(1);
+ expect(purchaseWrites(state)).toEqual([
+  { name: 'accept_current_terms', actor: second.id },
+  { name: 'create-order', actor: second.id },
+ ]);
+});
+
+test('a legacy pending terms revision does not write purchase consent at the Google callback', async ({ page }) => {
+ const state = await setup(page, value => { value.accountFlow = true; });
+ await page.evaluate(version => sessionStorage.setItem('designmocks-pending-terms', version), noticeVersion);
+ await seedPortalSession(page, first);
+ await page.goto('/account/callback');
+ await expect(page.getByText('Signed in as ' + first.email, { exact: true })).toBeVisible();
+ await expect(page.getByRole('button', { name: 'Request account deletion', exact: true })).toBeEnabled();
+ expect(purchaseWrites(state)).toEqual([]);
+});
+
 test('a superseded notice revision requires a fresh review before checkout',async({page})=>{
  const state=await setup(page,s=>{s.staleNotices=true;});
  await consent(page).check();
