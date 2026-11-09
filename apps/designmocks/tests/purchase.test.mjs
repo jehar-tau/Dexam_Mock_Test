@@ -45,6 +45,24 @@ test('an uncertain order freezes further creation until an explicit current pass
  const{state,flow,latest}=fixture();await flow.refresh();state.failure='create-order';assert.equal(await flow.start(true),false);assert.equal(latest().status,'unconfirmed');assert.doesNotMatch(latest().error,/Private|merchant|diagnostic/);assert.equal(await flow.start(true),false);assert.equal(state.opened,0);
  state.failure=null;await flow.refresh();assert.equal(await flow.start(true),true);assert.equal(state.calls.filter(name=>name==='create-order').length,2);flow.dispose();
 });
+test('a rejected notice revision closes checkout until the page is reloaded',async()=>{
+ const{state,flow,latest,services}=fixture(),rpc=services.rpc;
+ services.rpc=async(name,args,signal)=>{
+  const value=await rpc(name,args,signal);
+  if(name==='accept_current_terms')throw Object.assign(new Error('Private notice diagnostic'),{code:'22023'});
+  return value;
+ };
+ assert.equal(await flow.refresh(),true);
+ assert.equal(await flow.start(true),false);
+ assert.equal(latest().status,'notices-changed');
+ assert.match(latest().error,/review the current Terms and Privacy notice/);
+ assert.doesNotMatch(latest().error,/Private notice diagnostic/);
+ assert.equal(await flow.refresh(),false);
+ assert.equal(await flow.start(true),false);
+ assert.deepEqual(state.calls,['my_pass','accept_current_terms']);
+ assert.equal(state.opened,0);
+ flow.dispose();
+});
 test('malformed order acknowledgement cannot load or open the payment window',async()=>{
  const{state,flow,latest}=fixture();await flow.refresh();state.order.currency='USD';let loaded=false;state.load=async()=>{loaded=true;};assert.equal(await flow.start(true),false);assert.equal(loaded,false);assert.equal(state.opened,0);assert.equal(latest().status,'unconfirmed');flow.dispose();
 });

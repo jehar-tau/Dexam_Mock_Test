@@ -75,6 +75,8 @@ The operator details in Contact, Terms and Privacy come from the supplied busine
 
 Set `DMOCKS_PUBLISHED_NOTICES_FILE` in the approved frontend build environment. Run `node scripts/published-notices.mjs "$DMOCKS_PUBLISHED_NOTICES_FILE"` to calculate the version from the reviewed paragraphs, the fixed annual offer and the operator details. Use that exact version for `VITE_TERMS_VERSION` and the approved server `launch_settings.policy_version`. The browser displays the same revision on both notices and sends it with consent. A missing bundle or a version mismatch keeps checkout closed. Synthetic notices are restricted to the explicit local test server.
 
+The server checks the published revision after waiting for any profile write and holds that revision while recording consent. A superseded form stays closed until the customer reloads and reviews the current notices. Existing accepted versions remain on the profile until the customer accepts a current revision.
+
 Required before opening the window:
 
 - Matching reviewed source/profile/current offering, final published policy version, and approved `content_rights`, `privacy_terms`, `refund_policy` and `child_safety` decisions with evidence.

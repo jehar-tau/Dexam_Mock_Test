@@ -412,6 +412,24 @@ insert into dm_private.mvp_rpc_allowlist(signature,category)values
  ('public.submit_bug_report(text,text,text,uuid)','student');
 -- END RPC MANIFEST
 
+create or replace function public.accept_current_terms(p_version text)returns void
+language plpgsql security definer set search_path=pg_catalog,public as $$
+declare actor uuid:=auth.uid();active_version text;
+begin
+ if actor is null then raise exception 'Sign in required' using errcode='42501';end if;
+ perform 1 from auth.users where id=actor for key share;
+ if not found then raise exception 'Sign in required' using errcode='42501';end if;
+ perform pg_advisory_xact_lock(hashtextextended(actor::text,0));
+ -- Read the policy after waiting on the profile, then hold it through the write.
+ perform 1 from public.profiles where user_id=actor for no key update;
+ select policy_version into active_version from public.launch_settings where singleton for share;
+ if active_version is null or p_version is distinct from active_version then
+  raise exception 'Published terms are not ready' using errcode='22023';
+ end if;
+ insert into public.profiles(user_id,terms_version,accepted_at)values(actor,active_version,clock_timestamp())
+ on conflict(user_id)do update set terms_version=excluded.terms_version,accepted_at=excluded.accepted_at;
+end$$;
+
 create or replace function public.prepare_order()returns jsonb language plpgsql security definer set search_path=pg_catalog,public,dm_private as $$
 declare settings public.launch_settings;plan public.plans;existing dm_private.orders;
 begin

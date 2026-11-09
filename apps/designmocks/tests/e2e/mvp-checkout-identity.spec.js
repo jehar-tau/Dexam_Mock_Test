@@ -19,7 +19,11 @@ async function setup(page,configure=()=>{}){
   state.calls.push({name,actor});
   if(state.holds[name])await new Promise(resolve=>{state.waits[name]=resolve;});
   if(state.fail===name)return route.fulfill({status:503,headers,json:{message:'private fictional provider diagnostic'}});
-  if(name==='accept_current_terms'){expect(request.postDataJSON()).toEqual({p_version:noticeVersion});return route.fulfill({headers,json:null});}
+  if(name==='accept_current_terms'){
+   expect(request.postDataJSON()).toEqual({p_version:noticeVersion});
+   if(state.staleNotices)return route.fulfill({headers,status:400,json:{code:'22023',message:'Private fictional notice diagnostic'}});
+   return route.fulfill({headers,json:null});
+  }
   if(name==='create-order'){state.afterOrder=true;return route.fulfill({headers,json:state.order});}
   if(name==='my_pass')return route.fulfill({headers,json:{active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null,revoked:false,mode:state.mode}});
   throw new Error('Unexpected checkout fixture request: '+name);
@@ -29,6 +33,21 @@ async function setup(page,configure=()=>{}){
 }
 const pay=page=>page.getByRole('button',{name:'Pay ₹1,193 with Razorpay',exact:true});
 const consent=page=>page.getByRole('checkbox');
+test('a superseded notice revision requires a fresh review before checkout',async({page})=>{
+ const state=await setup(page,s=>{s.staleNotices=true;});
+ await consent(page).check();
+ await pay(page).click();
+ const alert=page.getByRole('alert');
+ await expect(alert).toContainText('Reload this page and review the current Terms and Privacy notice.');
+ await expect(alert).not.toContainText('Private fictional');
+ await expect(consent(page)).toBeDisabled();
+ await expect(consent(page)).not.toBeChecked();
+ await expect(pay(page)).toBeDisabled();
+ await expect(page.getByRole('button',{name:'Check my pass',exact:true})).toHaveCount(0);
+ expect(state.calls.filter(({name})=>name==='accept_current_terms')).toHaveLength(1);
+ expect(state.calls.some(({name})=>name==='create-order')).toBe(false);
+ expect(await page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(0);
+});
 test('checkout links display the exact notice revision recorded with consent',async({page})=>{
  const state=await setup(page);
  await page.getByRole('link',{name:'purchase terms',exact:true}).click();

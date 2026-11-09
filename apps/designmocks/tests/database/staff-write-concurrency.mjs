@@ -216,8 +216,31 @@ try {
   })).worker, "P0001");
   assert.equal(await checkoutState(), "false:0");
 
+  const oldNotices = "dmocks-notices-v1-" + "a".repeat(64);
+  const currentNotices = "dmocks-notices-v1-" + "b".repeat(64);
+  const noticeConsent = version => `select public.accept_current_terms(${quote(version)});`;
+  const publishNotices = version => `update public.launch_settings set policy_version=${quote(version)} where singleton;`;
+  const consentState = () => sql(`select terms_version || ':' || accepted_at::text from public.profiles where user_id=${quote(reporter)};`);
+  await sql(publishNotices(oldNotices));
+  await sql("begin;" + actor(reporter) + noticeConsent(oldNotices) + "commit;");
+  const previousConsent = await consentState();
+  const profileLock = `select 1 from public.profiles where user_id=${quote(reporter)} for update;`;
+  denied((await contend(profileLock, reporter, noticeConsent(oldNotices), {
+    whileWaiting: publishNotices(currentNotices),
+  })).worker, "22023");
+  assert.equal(await consentState(), previousConsent);
+  assert.equal(await sql(`select count(*) from dm_private.orders where user_id=${quote(reporter)};`), "0");
+  await sql("begin;" + actor(reporter) + noticeConsent(currentNotices) + "commit;");
+  const currentConsent = await consentState();
+  assert.ok(currentConsent.startsWith(currentNotices + ":"));
+  const nextNotices = "dmocks-notices-v1-" + "c".repeat(64);
+  denied((await contend(publishNotices(nextNotices), reporter, noticeConsent(currentNotices), {
+    commit: true,
+  })).worker, "22023");
+  assert.equal(await consentState(), currentConsent);
+
   await sql(`update dm_private.launch_gate_attestations set approved=true,evidence='Original fictional reviewed gate.' where gate<>'drawing_operations';
-    update public.launch_settings set environment_mode='live';
+    update public.launch_settings set environment_mode='live',policy_version='fictional-operator-launch';
     update public.launch_settings set sales_enabled=true;`);
   await sql("begin;" + actor(reporter) + "select public.accept_current_terms('fictional-operator-launch');commit;");
   const revokeGate = "select public.admin_set_launch_gate('privacy_terms',false,'Original fictional approval withdrawn.');";
@@ -239,3 +262,6 @@ console.log(JSON.stringify({ passed: true, actualPrivacyDatabaseLocks: true, rev
   staleCompetingReviewDenied: true, accountPreserved: true }));
 console.log(JSON.stringify({ passed: true, actualMvpDecisionLocks: true, revokedReleaseWithdrawalGateAndWindowDenied: true,
   staleTestPrerequisiteDenied: true, revokedLiveGateDeniedQueuedAndNewOrders: true, currentApprovedOrderStillPrepares: true }));
+console.log(JSON.stringify({ passed: true, actualNoticeAcceptanceLocks: true, publicationCommittedDuringProfileWait: true,
+  supersededConsentRejected: true, previousAcceptancePreserved: true, currentAcceptanceStored: true,
+  concurrentPolicyUpdateRechecked: true }));
