@@ -23,7 +23,10 @@ async function fixture(page,options={}){
   else if(name==='save_answer_revision'){const held=state.saveHold;if(held)await held.promise;data=state.saveReceipt===undefined?{accepted:true,answer:input.p_answer,revision:input.p_revision}:state.saveReceipt;}
   else if(name==='submit_attempt'){status=state.submitStatus;data=status===200?{id:attemptId,title:'Original fictional timed paper',status:'submitted',serverNow:state.serverNow??new Date().toISOString(),deadline:state.deadline,questions:[{...question,outcome:'incorrect',explanation:'Original fictional explanation'}],score:0,total:3}:{code:'P0001',message:'SECRET_FICTIONAL_PROVIDER_DETAIL'};}
   else if(name==='report_attempt_question')data={reportCount:1,threshold:5,held:false};
-  else if(name==='attempt-media')data={media:{[questionId]:[{url:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/%3E'}]}};
+  else if(name==='attempt-media'){
+   if(state.figureReply)await state.figureReply.promise;
+   data={media:{[questionId]:[{url:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/%3E'}]}};
+  }
   else if(name==='drawing-media')data=multipart?{id:'30000000-0000-4000-8000-000000000961',ordinal:1}:input.action==='list'?{items:[]}:{images:[]};
   else if(name==='start_exam_mock_part_b'){if(state.startHold)await state.startHold.promise;data=partB;}
   else throw new Error('Unexpected fictional attempt request: '+name);
@@ -53,6 +56,38 @@ test('drawing multipart uploads verify the actor before sending a selected page'
 test('a changed actor cannot sign private question figures after a held paper read',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();state.readHold=deferred();state.readMedia=true;await page.reload();await expect.poll(()=>state.heldReads).toBeGreaterThan(0);await seedPortalSession(page,second);state.readHold.resolve();await expect(page.getByRole('alert')).toContainText('Attempt access');expect(calls(state,'attempt-media')).toEqual([]);await expect(page.getByRole('img',{name:'Fictional figure',exact:true})).toHaveCount(0);
 });
+
+test('a delayed question figure reply clears the old paper after a silent account change', async ({ page }) => {
+ const figureReply = deferred();
+ const state = await fixture(page, { readMedia: true, figureReply });
+ await expect.poll(() => calls(state, 'attempt-media').length).toBe(1);
+ await expect(page.getByText('Loading question figure…', { exact: true })).toBeVisible();
+ await seedPortalSession(page, second);
+ figureReply.resolve();
+ await expect(page.getByRole('alert')).toContainText('Attempt access ended', { timeout: 3000 });
+ await expect(privateQuestion(page)).toHaveCount(0);
+ await expect(page.getByRole('img', { name: 'Fictional figure', exact: true })).toHaveCount(0);
+ expect(calls(state, 'attempt-media').map(item => item.actor)).toEqual([first.id]);
+});
+
+test('a signed figure stays hidden until the current exam account is confirmed again', async ({ page }) => {
+ const figureReply = deferred();
+ const state = await fixture(page, { readMedia: true, figureReply });
+ await expect.poll(() => calls(state, 'attempt-media').length).toBe(1);
+ const verification = deferred();
+ state.authHold = verification;
+ figureReply.resolve();
+ await expect.poll(() => state.heldAuth, { timeout: 3000 }).toBe(1);
+ const figure = page.getByRole('img', { name: 'Fictional figure', exact: true });
+ await expect(figure).toHaveCount(0);
+ await expect(page.getByRole('timer', { name: 'Time remaining' })).toBeVisible();
+ state.authHold = null;
+ verification.resolve();
+ await expect(figure).toBeVisible();
+ await expect(answer(page)).toBeEnabled();
+ expect(calls(state, 'attempt-media')).toHaveLength(1);
+});
+
 test('temporary identity network failure retains the trusted paper, clock and journal until verified recovery',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();state.authStatus=503;await page.evaluate(()=>dispatchEvent(new Event('focus')));await expect(page.getByRole('status').filter({hasText:'Waiting to verify your exam account'})).toBeVisible();await expect(privateQuestion(page)).toBeVisible();await expect(page.getByRole('timer',{name:'Time remaining'})).toBeVisible();await answer(page).click();await expect.poll(async()=>(await journal(page)).length).toBe(1);expect(calls(state,'save_answer_revision')).toEqual([]);state.authStatus=200;await page.evaluate(()=>dispatchEvent(new Event('online')));await expect(page.getByText('Answers are saved to your account.',{exact:true})).toBeVisible();expect(calls(state,'save_answer_revision').map(item=>item.actor)).toEqual([first.id]);expect(await journal(page)).toEqual([]);
 });

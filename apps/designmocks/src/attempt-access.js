@@ -26,11 +26,13 @@ export function createAttemptAccessScope({auth,actorId,isCurrent=()=>true,onChan
   if(!token){invalidate();throw ended();}
   if(sequence===verification){hadAccess=true;publish('allowed');}return token;
  }
- async function run(operation,requestSignal,milliseconds=20000){
+ async function run(operation, requestSignal, { milliseconds = 20000, recheckIdentity = false } = {}) {
   assertCurrent();const sequence=++verification,signal=requestSignal?AbortSignal.any([controller.signal,requestSignal]):controller.signal;
   try{return await withAccountDeadline(async active=>{
    const token=await identity(active,sequence);active.throwIfAborted();assertCurrent();
-   const value=await operation(token,active);active.throwIfAborted();assertCurrent();return value;
+   const value = await operation(token, active);
+   if (recheckIdentity) await identity(active, sequence);
+   active.throwIfAborted();assertCurrent();return value;
   },signal,milliseconds);}
   catch(error){
    if(!current())throw ended();
@@ -38,7 +40,7 @@ export function createAttemptAccessScope({auth,actorId,isCurrent=()=>true,onChan
    throw error;
   }
  }
- async function verify(){try{await run(()=>true,undefined,verificationTimeoutMs);return true;}catch{return false;}}
+ async function verify(){try{await run(()=>true,undefined,{milliseconds:verificationTimeoutMs});return true;}catch{return false;}}
  return Object.freeze({run,verify,invalidate,assertCurrent,isCurrent:current,snapshot,signal:controller.signal,dispose(){disposed=true;controller.abort();}});
 }
 
@@ -52,7 +54,11 @@ export function createAttemptServices(scope,client){
   functions:Object.freeze({async invoke(name,options={}){
    try{return await scope.run(async(token,signal)=>{
     const result=await client.functions.invoke(name,{...options,signal,headers:authorizationHeaders(options.headers,token)});if(result.error)throw result.error;return result;
-   },options.signal,options.body instanceof FormData?60000:20000);}catch(error){return{data:null,error};}
+   }, options.signal, {
+    milliseconds: options.body instanceof FormData ? 60000 : 20000,
+    // Successful replies can contain private signed links or drawing page state.
+    recheckIdentity: true,
+   });}catch(error){return{data:null,error};}
   }}),
  });
 }

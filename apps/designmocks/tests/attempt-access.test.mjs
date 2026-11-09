@@ -9,7 +9,7 @@ function fixture(options={}){
   return{data:{user:{id:token==='first-token'?'first':'second'}},error:state.error};
  }};
  const scope=createAttemptAccessScope({auth,actorId:'first',isCurrent:()=>state.history==='first',onChange:value=>state.notices.push(value),verificationTimeoutMs:15});
- const client={rpc(name,args){const call={name,args};return{setHeader(key,value){call[key]=value;return this;},abortSignal(signal){state.calls.push(call);return state.response??Promise.resolve({data:{accepted:true},error:null,status:200});}};},functions:{async invoke(name,options){state.calls.push({name,...options});return{data:{saved:true},error:null};}}};
+ const client={rpc(name,args){const call={name,args};return{setHeader(key,value){call[key]=value;return this;},abortSignal(signal){state.calls.push(call);return state.response??Promise.resolve({data:{accepted:true},error:null,status:200});}};},functions:{async invoke(name,options){state.calls.push({name,...options});return state.functionResponse??{data:{saved:true},error:null};}}};
  return{state,scope,services:createAttemptServices(scope,client)};
 }
 test('initial identity outage dispatches nothing and can recover only after fresh verification',async()=>{
@@ -53,6 +53,44 @@ test('attempt multipart transport preserves the FormData body and replaces every
  const result=await services.functions.invoke('drawing-media',{body,headers:{authorization:'Bearer unverified','X-Correlation':'fictional'}});
  assert.equal(result.error,null);assert.equal(state.calls[0].body,body);assert.equal(state.calls[0].headers.Authorization,'Bearer first-token');assert.equal(state.calls[0].headers.authorization,undefined);assert.equal(state.calls[0].headers['X-Correlation'],'fictional');scope.dispose();
 });
+
+test('a successful private figure reply is discarded after an unannounced account change', async () => {
+ const reply = deferred();
+ const { state, scope, services } = fixture({ functionResponse: reply.promise });
+ assert.equal(await scope.verify(), true);
+ const request = services.functions.invoke('attempt-media', { body: { attemptId: 'fictional-paper' } });
+ await new Promise(resolve => setImmediate(resolve));
+ assert.equal(state.calls.length, 1);
+ assert.equal(state.calls[0].headers.Authorization, 'Bearer first-token');
+ state.actor = 'second';
+ state.token = 'second-token';
+ reply.resolve({ data: { media: { figure: [{ url: 'https://example.invalid/old-account-figure' }] } }, error: null });
+ const result = await request;
+ assert.equal(result.data, null);
+ assert.equal(result.error?.code, 'attempt_access_ended');
+ assert.deepEqual(scope.snapshot(), { status: 'denied', hadAccess: true });
+});
+
+test('unavailable identity after a drawing response preserves the active attempt and withholds the reply', async () => {
+ const reply = deferred();
+ const { state, scope, services } = fixture({ functionResponse: reply.promise });
+ assert.equal(await scope.verify(), true);
+ const request = services.functions.invoke('drawing-media', { body: { action: 'open' } });
+ await new Promise(resolve => setImmediate(resolve));
+ state.error = Object.assign(new Error('fictional offline provider'), { status: 503 });
+ const pages = { images: [{ url: 'https://example.invalid/drawing-page' }] };
+ reply.resolve({ data: pages, error: null });
+ const result = await request;
+ assert.equal(result.data, null);
+ assert.equal(result.error?.code, 'attempt_identity_unavailable');
+ assert.deepEqual(scope.snapshot(), { status: 'waiting', hadAccess: true });
+ assert.equal(scope.isCurrent(), true);
+ state.error = null;
+ assert.deepEqual(await services.functions.invoke('drawing-media', { body: { action: 'open' } }), { data: pages, error: null });
+ assert.equal(scope.snapshot().status, 'allowed');
+ scope.dispose();
+});
+
 test('an earlier successful identity check cannot hide a newer verified-network outage',async()=>{
  const held=deferred();let count=0;
  const auth={getSession:async()=>({data:{session:{user:{id:'first'},access_token:'first-token'}}}),getUser:async()=>{
