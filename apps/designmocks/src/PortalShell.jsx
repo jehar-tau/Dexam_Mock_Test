@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAuthState } from "./useAuth.js";
 import { portalItems, portalModules } from "./portalModel.mjs";
 import {postLaunchPreview}from'./launch-scope.js';
@@ -7,12 +7,25 @@ import {launchNavigation,deferredModules}from'./launch-scope.mjs';
 
 export function PortalShell({ children }) {
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const inDevelopmentPreview = import.meta.env.DEV && (
+    pathname === "/portal-preview" || pathname.startsWith("/portal-preview/") ||
+    ["/exam-mocks-preview", "/all-india-preview", "/topic-practice-preview", "/learn-preview", "/community-preview"].includes(pathname)
+  );
+  const navigation = inDevelopmentPreview ? [
+    { to: "/portal-preview", label: "Overview", mark: "O", end: true },
+    { to: "/exam-mocks-preview", label: "Exam-wise mocks", mark: "M" },
+    { to: "/all-india-preview", label: "All India mocks", mark: "A" },
+    { to: "/topic-practice-preview", label: "Topic practice", mark: "P" },
+    { to: "/learn-preview", label: "Learn", mark: "L" },
+    { to: "/community-preview", label: "Community", mark: "C" },
+  ] : postLaunchPreview ? portalItems : launchNavigation;
   return <div className="portal-shell">
     <button className="portal-menu-button" aria-expanded={open} aria-controls="student-navigation" onClick={() => setOpen(!open)}>{open ? "Close" : "Student menu"}</button>
     <aside className={open ? "portal-sidebar is-open" : "portal-sidebar"} id="student-navigation">
       <span className="eyebrow">YOUR DMOCKS SPACE</span>
       <nav aria-label="Student workspace">
-        {(postLaunchPreview?portalItems:launchNavigation).map(({to, label, mark, end}) => <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}><i aria-hidden="true">{mark}</i><span>{label}</span></NavLink>)}
+        {navigation.map(({to, label, mark, end}) => <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}><i aria-hidden="true">{mark}</i><span>{label}</span></NavLink>)}
       </nav>
       <NavLink className="portal-account-link" to="/account">Account & sign out</NavLink>
     </aside>
