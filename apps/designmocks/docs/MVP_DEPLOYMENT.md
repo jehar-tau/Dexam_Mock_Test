@@ -81,6 +81,8 @@ Set `DMOCKS_PUBLISHED_NOTICES_FILE` in the approved frontend build environment. 
 
 The server checks the published revision after waiting for any profile write and holds that revision while recording consent. A superseded form stays closed until the customer reloads and reviews the current notices. Existing accepted versions remain on the profile until the customer accepts a current revision.
 
+The direct `/refunds` page displays the same cancellation text and revision as `/terms`. Checkout links to this page and the released-paper catalogue before consent. Use the reviewed policy links and approved sample invoice for the merchant website review. [Razorpay website review requirements](https://razorpay.com/docs/payments/dashboard/account-settings/business-website-details)
+
 Required before opening the window:
 
 - Matching reviewed source/profile/current offering, final published policy version, and approved `content_rights`, `privacy_terms`, `refund_policy` and `child_safety` decisions with evidence.

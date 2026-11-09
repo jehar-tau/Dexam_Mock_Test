@@ -5,6 +5,13 @@ import { compilePublishedNotices, readPublishedNotices } from "../scripts/publis
 
 const released = { ...fixture, scope: "release" };
 
+test("the dedicated refunds page uses the cancellation text from the approved terms", () => {
+  const { pages } = compilePublishedNotices(released);
+  const refundNotice = pages.terms.find(({ heading }) => heading === "Cancellation and refunds");
+  assert.equal(refundNotice.paragraph, released.terms.refunds.trim());
+  assert.deepEqual(pages.refunds, [refundNotice]);
+});
+
 test("the notice version identifies the exact approved text, offer and operator details", () => {
   const first = compilePublishedNotices(released);
   assert.match(first.version, /^dmocks-notices-v1-[a-f0-9]{64}$/);

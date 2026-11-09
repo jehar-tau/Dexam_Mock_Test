@@ -35,7 +35,8 @@ export function compilePublishedNotices(input, { allowFixture = false } = {}) {
     paragraph: `The annual pass costs ${money(brand.price)} for ${brand.months} calendar months from verified payment. It covers the explicitly released papers. You make one payment, with no automatic renewal.`,
   });
   const version = "dmocks-notices-v1-" + sha256(stableJson({ scope: input.scope, brand: brand.name, operator, pages }));
-  return { version, pages };
+  const refunds = pages.terms.filter(({ heading }) => heading === fields.terms.refunds);
+  return { version, pages: { ...pages, refunds } };
 }
 
 export function readPublishedNotices(file, options) {
