@@ -46,6 +46,44 @@ async function walkFiles(root, rel, output = []) {
   return output;
 }
 
+function parseTree(root) {
+  const result = spawnSync('git', ['-C', root, 'ls-tree', '-rz', '--full-tree', 'HEAD', '--', 'apps/designmocks/supabase'], { encoding: 'buffer' });
+  if (result.error || result.status !== 0) throw new Error(`git ls-tree failed: ${result.stderr?.toString().trim() || result.error?.message || ''}`);
+  const tracked = new Map();
+  for (const record of result.stdout.toString('utf8').split('\0').filter(Boolean)) {
+    const match = /^(\d{6}) (\w+) ([0-9a-f]{40})\t(.+)$/.exec(record);
+    if (!match) throw new Error(`Unable to parse backend tree entry: ${record}`);
+    const [, mode, type, oid, file] = match;
+    if (type !== 'blob' || !['100644', '100755'].includes(mode)) throw new Error(`Backend input must be an ordinary file blob: ${file} (${mode} ${type})`);
+    tracked.set(file, { oid, mode });
+  }
+  return tracked;
+}
+
+async function verifyBackendTree(root) {
+  const supabase = 'apps/designmocks/supabase';
+  let parent = root;
+  for (const part of ['apps', 'designmocks', 'supabase']) {
+    parent = path.join(parent, part);
+    const info = await lstat(parent);
+    if (!info.isDirectory() || info.isSymbolicLink()) throw new Error(`Backend path must be a normal directory: ${path.relative(root, parent)}`);
+  }
+  const actualFiles = (await walkFiles(root, supabase)).sort();
+  const tracked = parseTree(root);
+  const actualSet = new Set(actualFiles);
+  for (const file of tracked.keys()) {
+    if (!actualSet.has(file)) throw new Error(`Tracked backend file is missing: ${file}`);
+  }
+  for (const file of actualFiles) {
+    const expected = tracked.get(file);
+    if (!expected) continue; // Untracked files are rejected by status/ignored-file checks.
+    const bytes = await readFile(path.join(root, file));
+    const oid = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+    if (oid !== expected.oid) throw new Error(`Backend file content differs from HEAD despite index/status flags: ${file}`);
+  }
+  return { trackedFiles: tracked.size };
+}
+
 async function inventory(root) {
   const base = path.join(root, 'apps/designmocks/supabase');
   const groups = [
@@ -94,6 +132,7 @@ export async function runPreflight({ cwd = process.cwd(), commit, tree }) {
   const ignored = git(root, ['ls-files', '--others', '--ignored', '--exclude-standard', '-z', '--', 'apps/designmocks/supabase']);
   if (ignored) throw new Error(`Ignored/untracked backend override under apps/designmocks/supabase: ${ignored.split('\0').filter(Boolean).join(', ')}`);
 
+  const backendTree = await verifyBackendTree(root);
   const source = await inventory(root);
   return {
     passed: true,
@@ -102,6 +141,7 @@ export async function runPreflight({ cwd = process.cwd(), commit, tree }) {
     expectedTree: tree.toLowerCase(),
     head: actualCommit,
     tree: actualTree,
+    backendTree,
     inventory: source,
   };
 }
