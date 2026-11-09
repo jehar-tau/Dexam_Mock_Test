@@ -179,11 +179,19 @@ test("pending saves dispatch once while duplicate submissions and account replac
 });
 
 test("role loss clears the blueprint and no student can read the practice queue", async ({ page }) => {
-  const state = await fixture(page); await open(page); state.admin = false;
+  const state = await fixture(page);
+  await open(page);
+  const privateReads = () => state.calls.filter(([name]) =>
+    name === "admin_nid_practice_blueprints" || name === "admin_nid_practice_blueprint");
+  const allowedReads = privateReads().length;
+  expect(allowedReads).toBeGreaterThan(0);
+  state.admin = false;
   await page.getByRole("button", { name: "Recheck administrator access", exact: true }).press("Enter");
   await expect(page.getByText("Administrator access has ended. Private views were cleared.", { exact: true })).toBeVisible(); await expect(region(page)).toHaveCount(0);
   await seedPortalSession(page, other); await page.reload(); await expect(page.getByText("This account is not an administrator.", { exact: true })).toBeVisible();
-  expect(state.calls.filter(([name]) => name === "admin_nid_practice_blueprints")).toHaveLength(1); expect(state.writes).toHaveLength(0); expect(state.unexpected).toEqual([]);
+  expect(privateReads()).toHaveLength(allowedReads);
+  expect(state.writes).toHaveLength(0);
+  expect(state.unexpected).toEqual([]);
 });
 
 test("paginated practice designs remain separate from the public catalogue and rejection needs a fresh revision", async ({ page }) => {

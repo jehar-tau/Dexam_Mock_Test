@@ -11,6 +11,7 @@ import {pipeline} from 'node:stream/promises';
 import {openRecoveryPostgres,captureRecoverySnapshot,compareRecoverySnapshots,recoveryPostgresEnvironment} from '../../scripts/recovery-postgres.mjs';
 import {createRecoveryBundle,verifyRecoveryBundle,RECOVERY_PROJECT} from '../../scripts/recovery-bundle.mjs';
 import {recoverySeed,recoveryActor,quote} from './fixtures/recovery-state.mjs';
+import {verifyPreUpgradeRecovery} from './pre-upgrade-recovery-roundtrip.mjs';
 
 async function main(){
  const url=process.env.DESIGNMOCKS_TEST_DATABASE_URL,environment=recoveryPostgresEnvironment(url,{localOnly:true});
@@ -34,6 +35,18 @@ async function main(){
   const child=client('psql',['-X','-qAt','-v','ON_ERROR_STOP=1','-v','VERBOSITY=sqlstate'],{env:{...environment,PGDATABASE:database}});let output='';
   child.stdout.on('data',chunk=>{output+=chunk;});child.stderr.resume();const done=new Promise((resolve,reject)=>{child.on('error',reject);child.on('close',resolve);});child.stdin.end(statement+'\n');assert.equal(await done,0,'Original recovery fixture database command failed');return output.trim();
  }
+ async function restoreArchive(file, database) {
+  const child = client('pg_restore', ['--exit-on-error', '--single-transaction', '--dbname=' + database]);
+  child.stdout.resume();
+  child.stderr.resume();
+  const done = new Promise((resolve, reject) => { child.on('error', reject); child.on('close', resolve); });
+  await pipeline(createReadStream(file), child.stdin);
+  assert.equal(await done, 0, 'The private PostgreSQL archive must restore without ignored errors');
+ }
+ if (process.argv[2] === '--pre-upgrade') {
+  await verifyPreUpgradeRecovery({client, sql, restoreArchive, url});
+  return;
+ }
  const workspace=await mkdtemp(path.join(tmpdir(),'dmocks-recovery-')),target='dmocks_recovery_restore_'+randomUUID().replaceAll('-','');let created=false,connection;
  try{
   assert.equal(await sql('select(select count(*)from auth.users)+(select count(*)from dm_private.papers)+(select count(*)from dm_private.attempts)+(select count(*)from storage.objects);'),'0','Recovery CI starts only after rolled-back original fictional suites');
@@ -50,8 +63,7 @@ async function main(){
   const verified=await verifyRecoveryBundle({directory,key,extractTo:path.join(workspace,'verified')});
   assert.equal(verified.privateObjects,1);assert.deepEqual(await readFile(path.join(verified.extractedDirectory,'payload-000001.bin')),bytes);
   await sql('create database '+target+';','postgres');created=true;
-  const restore=client('pg_restore',['--exit-on-error','--single-transaction','--dbname='+target]);restore.stdout.resume();restore.stderr.resume();const restored=new Promise((resolve,reject)=>{restore.on('error',reject);restore.on('close',resolve);});
-  await pipeline(createReadStream(path.join(verified.extractedDirectory,'payload-000000.bin')),restore.stdin);assert.equal(await restored,0,'The actual private PostgreSQL archive must restore without ignored errors');
+  await restoreArchive(path.join(verified.extractedDirectory,'payload-000000.bin'),target);
   const restoredUrl=new URL(url);restoredUrl.pathname='/'+target;
   connection=await openRecoveryPostgres(restoredUrl.href,{localOnly:true,spawnClient:client});
   compareRecoverySnapshots(snapshot,await captureRecoverySnapshot(connection));await connection.close();connection=null;

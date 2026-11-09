@@ -67,4 +67,5 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-question-binding
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/launch/paid-mvp.sql
 node tests/database/nid-write-revocation.mjs
 node tests/database/recovery-roundtrip.mjs
+node tests/database/recovery-roundtrip.mjs --pre-upgrade
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'
