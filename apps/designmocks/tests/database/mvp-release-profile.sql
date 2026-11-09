@@ -6,7 +6,7 @@ begin;
 create function pg_temp.mvp_assert(ok boolean,label text)returns void language plpgsql as $$begin if ok is distinct from true then raise exception 'FAIL: %',label;end if;end$$;
 create function pg_temp.mvp_reject(statement text,label text)returns void language plpgsql as $$begin begin execute statement;exception when others then return;end;raise exception 'FAIL, unexpectedly allowed: %',label;end$$;
 select pg_temp.mvp_assert(dm_private.mvp_profile_permissions_valid(),'exact default-deny application RPC profile');
-select pg_temp.mvp_assert((select count(*)=47 from dm_private.mvp_rpc_allowlist),'explicit student/staff permission manifest');
+select pg_temp.mvp_assert((select count(*)=48 from dm_private.mvp_rpc_allowlist),'explicit student/staff permission manifest');
 select pg_temp.mvp_assert(not exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public'and not exists(select 1 from pg_depend d where d.classid='pg_proc'::regclass and d.objid=p.oid and d.deptype='e')and has_function_privilege('anon',p.oid,'EXECUTE')),'no anonymous application RPCs');
 select pg_temp.mvp_assert(has_function_privilege('service_role','public.fulfil_verified_payment(text,text,text,integer,text)','EXECUTE')and has_function_privilege('supabase_auth_admin','public.before_designmocks_user_created(jsonb)','EXECUTE'),'service capture and controlled Auth hook remain explicitly authorized');
 insert into auth.users(id)values('00000000-0000-4000-8000-000000001951'),('00000000-0000-4000-8000-000000001952'),('00000000-0000-4000-8000-000000001953');
@@ -75,11 +75,13 @@ select pg_temp.mvp_assert(not dm_private.mvp_profile_permissions_valid(),'future
 set local role authenticated;select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001951',true);
 select pg_temp.mvp_assert(not(public.admin_launch_readiness()->>'readyForSales')::boolean,'a stale API profile cannot show green readiness');
 reset role;drop function public.future_unreviewed_mvp_rpc();
-update public.launch_settings set sales_enabled=false;
+update public.launch_settings set sales_enabled=false,environment_mode='test';
 set local role authenticated;
 select public.admin_withdraw_mvp_paper('10000000-0000-4000-8000-000000001951',current_setting('test.mvp.sha'),'Fictional withdrawal for owner review');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001952',true);
 select pg_temp.mvp_assert(public.available_papers()='[]'::jsonb,'withdrawal prevents new selection');
+select pg_temp.mvp_assert(public.my_purchase_page()#>'{items,0}' @> '{"reference":"20000000-0000-4000-8000-000000001952","status":"paid"}',
+  'paid MVP allows the owner to see purchase history after paper withdrawal');
 select pg_temp.mvp_reject('select public.start_attempt(''10000000-0000-4000-8000-000000001951'')','withdrawal prevents new starts');
 select pg_temp.mvp_assert(public.read_attempt(current_setting('test.mvp.attempt')::uuid)->>'score'='4','withdrawal preserves the owned customer result');
 reset role;
