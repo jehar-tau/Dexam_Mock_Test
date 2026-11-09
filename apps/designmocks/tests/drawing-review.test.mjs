@@ -41,6 +41,27 @@ test("drawing review requires feedback and a reason for changing a prior decisio
     "Second reviewer correction");
 });
 
+test("authored drawing marks use every frozen criterion and its own maximum", () => {
+  const longName = "Explain the relationship between the principal design decision and the needs of the intended users";
+  const rubric = [
+    { label: "Clarity", points: 8.25, guidance: "Credit clear visual communication." },
+    { label: longName, points: 11.75, guidance: "Credit an observable relationship to the task brief." },
+  ];
+  assert.deepEqual(review([criterion("Clarity", "8.25"), criterion(longName, "0")], { rubric }).criteria,
+    { Clarity: 8.25, [longName]: 0 });
+  assert.throws(() => review([criterion("Clarity", "8.26"), criterion(longName, "0")], { rubric }), /criterion maximum/i);
+  assert.throws(() => review([criterion("Clarity", "6")], { rubric }), /every frozen criterion/i);
+  assert.throws(() => review([criterion("Clarity", "5"), criterion("Unlisted criterion", "1")], { rubric }), /every frozen criterion/i);
+  assert.throws(() => review([criterion(longName, "1")]), /2 and 80 characters/);
+});
+
+test("an empty or inconsistent frozen rubric cannot be treated as a free-form review", () => {
+  const rubric = [{ label: "Clarity", points: 12, guidance: "Credit clear visual communication." }];
+  for (const value of [[], {}, rubric, [...rubric, { ...rubric[0], label: "clarity", points: 8 }]]) {
+    assert.throws(() => review([criterion("Clarity", "6")], { rubric: value }), /frozen practice rubric is unavailable/i);
+  }
+});
+
 test("drawing upload content must identify as a supported raster image", () => {
   assert.equal(rasterMimeType(Uint8Array.from([137, 80, 78, 71, 13, 10, 26, 10])), "image/png");
   assert.equal(rasterMimeType(Uint8Array.from([255, 216, 255])), "image/jpeg");

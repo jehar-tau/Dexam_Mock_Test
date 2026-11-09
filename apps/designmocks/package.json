@@ -28,6 +28,7 @@
     "runtime:apply": "node scripts/materialize-bank-runtime.mjs --ref origin/main --apply",
     "runtime:nid": "node scripts/materialize-nid-practice.mjs --ref origin/main",
     "paper:prepare": "node scripts/prepare-mvp-paper.mjs",
+    "drawing:advise": "node scripts/drawing-ai-advice.mjs",
     "capacity:run": "node scripts/capacity-load.mjs",
     "operations:sweep": "node scripts/operations-sweep.mjs",
     "operations:monitor": "node scripts/operations-monitor.mjs",

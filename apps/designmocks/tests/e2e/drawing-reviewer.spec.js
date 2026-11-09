@@ -156,6 +156,88 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
   expect(unexpected).toEqual([]);
 });
 
+test("an assigned teacher grades the fixed practice criteria and individual limits", async ({ page }) => {
+  const modelIdentity = `fixture-vision:3b@${"a".repeat(64)}`;
+  const modelEvidence = "Drawing page 2. The arrows point toward the exit.";
+  const rubric = [
+    { label: "Visual communication", points: 8.25, guidance: "Credit the legibility of the intended direction and sign hierarchy." },
+    { label: "Task fit and evidence", points: 11.75, guidance: "Credit the observable links between the design and the original task brief." },
+  ];
+  let drawing = availableDrawing;
+  const { calls, unexpected } = await stubProvider(page, (procedure, input) => {
+    switch (procedure) {
+      case "can_review_drawings": return true;
+      case "my_drawing_review_page":
+        return { items: (input.p_scope === "available" && drawing.canClaim || input.p_scope === "mine" && drawing.canReview) ? [drawing] : [], nextCursor: null };
+      case "admin_claim_drawing_review":
+        drawing = { ...drawing, rubric, version: 1, status: "assigned", canClaim: false, canReview: true, assignedToMe: true,
+          aiSuggestion: { provider: "ollama-local", model: modelIdentity, rubricVersion: "fixture-v1",
+            proposedScore: 10, confidence: 0.7, criteria: { "Visual communication": 7, "Task fit and evidence": 3 },
+            comments: "Original fictional suggestion.", evidence: [modelEvidence] } };
+        return null;
+      case "admin_review_drawing":
+        drawing = { ...drawing, version: 2, status: "reviewed", criteria: input.p_criterion_marks, score: input.p_score, comments: input.p_comments };
+        return null;
+      case "admin_release_drawing_review":
+        drawing = { ...drawing, version: 3, status: "released", canReview: false };
+        return null;
+      default: return undefined;
+    }
+  });
+  await page.goto("/account");
+  await seedSession(page);
+  await page.goto("/review/drawings");
+  await expect(page.getByText(availableDrawing.prompt)).toBeVisible();
+  await expect(page.getByRole("group", { name: "Frozen practice rubric" })).toHaveCount(0);
+  await page.getByRole("button", { name: "Claim anonymous review" }).press("Enter");
+  const rubricGroup = page.getByRole("group", { name: "Frozen practice rubric" });
+  await expect(rubricGroup).toBeVisible();
+  await expect(rubricGroup.getByText(rubric[0].guidance, { exact: true })).toBeVisible();
+  const first = rubricGroup.getByRole("spinbutton", { name: "Mark for Visual communication" });
+  const second = rubricGroup.getByRole("spinbutton", { name: "Mark for Task fit and evidence" });
+  await expect(first).toHaveValue("");
+  await expect(second).toHaveValue("");
+  await expect(first).toHaveAttribute("max", "8.25");
+  await expect(second).toHaveAttribute("max", "11.75");
+  await expect(rubricGroup.getByRole("button", { name: "Add criterion" })).toHaveCount(0);
+  await page.setViewportSize({ width: 320, height: 760 });
+  const advisory = page.getByLabel("AI review advisory");
+  await advisory.getByText("Model provenance and evidence", { exact: true }).press("Enter");
+  await expect(advisory.getByText(`ollama-local · ${modelIdentity} · rubric fixture-v1`)).toBeVisible();
+  await expect(advisory.getByText(modelEvidence, { exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
+  const accessibilityViolations = () => page.evaluate(async () => {
+    const result = await window.axe.run(".drawing-review-form", {
+      runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] },
+    });
+    return result.violations.map(({ id, nodes }) => ({ id, targets: nodes.map(({ target }) => target) }));
+  });
+  expect(await accessibilityViolations()).toEqual([]);
+  await page.getByRole("switch", { name: "Dark mode" }).click();
+  await expect(page.getByRole("button", { name: "My reviews", exact: true })).toHaveCSS("background-color", "rgb(220, 235, 161)");
+  expect(await accessibilityViolations()).toEqual([]);
+  await first.fill("8.26");
+  await second.fill("0");
+  await rubricGroup.getByLabel("Feedback").fill("The primary hierarchy reads clearly.");
+  await rubricGroup.getByRole("button", { name: "Save human review" }).click();
+  expect(await first.evaluate(input => input.validity.rangeOverflow)).toBe(true);
+  expect(calls.filter(([name]) => name === "admin_review_drawing")).toHaveLength(0);
+  await first.fill("7.25");
+  await expect(rubricGroup.getByLabel("Total marks")).toHaveText("7.25 / 20");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await rubricGroup.getByRole("button", { name: "Save human review" }).press("Enter");
+  const release = page.getByRole("button", { name: "Release feedback to student" });
+  await expect(release).toBeVisible();
+  expect(calls).toContainEqual(["admin_review_drawing", {
+    p_review_id: drawingId, p_expected_version: 1, p_score: 7.25, p_comments: "The primary hierarchy reads clearly.",
+    p_criterion_marks: { "Visual communication": 7.25, "Task fit and evidence": 0 }, p_override_reason: null,
+  }]);
+  await release.press("Enter");
+  await expect(page.getByText("Grade finalized.")).toBeVisible();
+  expect(unexpected).toEqual([]);
+});
+
 test("signed-out visitors and students cannot open the teacher queue", async ({ page }) => {
   const { calls, unexpected } = await stubProvider(page, (procedure) => {
     if (procedure === "can_review_drawings") return false;

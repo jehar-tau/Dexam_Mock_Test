@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { DrawingReviewMedia } from "./DrawingReviewMedia.jsx";
-import { drawingAdvisoryMarks, MAX_DRAWING_CRITERIA, totalDrawingMarks, validateDrawingReviewInput } from "./drawing-review.js";
+import { drawingAdvisoryMarks, MAX_DRAWING_CRITERIA, readFrozenDrawingRubric, totalDrawingMarks, validateDrawingReviewInput } from "./drawing-review.js";
 
 export function DrawingReviewStatus({ review }) {
   if (!review || review.status === "not_submitted") return <div className="notice"><b>No drawing submitted for review.</b></div>;
@@ -26,9 +26,13 @@ export function DrawingAiAdvisory({ suggestion }) {
   </aside>;
 }
 
-function DrawingReviewForm({ drawing, onSave, disabled }) {
-  const [rows, setRows] = useState(() => Object.entries(drawing.criteria ?? { "": "" })
-    .map(([name, mark], id) => ({ id, name, mark: String(mark) })));
+function DrawingReviewForm({ drawing, rubric, onSave, disabled }) {
+  const savedMarks = drawing.criteria ?? {};
+  const [rows, setRows] = useState(() => rubric
+    ? rubric.map(({ label, points, guidance }, id) => ({
+      id, name: label, points, guidance, mark: Object.hasOwn(savedMarks, label) ? String(savedMarks[label]) : "",
+    }))
+    : Object.entries(drawing.criteria ?? { "": "" }).map(([name, mark], id) => ({ id, name, mark: String(mark) })));
   const nextId = useRef(rows.length);
   const requiresOverride = ["reviewed", "released"].includes(drawing.status);
   const setValue = (id, field, value) => setRows((current) => current.map((row) =>
@@ -40,23 +44,27 @@ function DrawingReviewForm({ drawing, onSave, disabled }) {
     const form = new FormData(event.currentTarget);
     onSave(() => validateDrawingReviewInput({
       rows, comments: form.get("comments"), overrideReason: form.get("overrideReason"),
-      maxScore: drawing.maxScore, requiresOverride,
+      maxScore: drawing.maxScore, rubric, requiresOverride,
     }));
   }}>
     <fieldset disabled={disabled}>
-      <legend>Criterion marks</legend>
+      <legend>{rubric ? "Frozen practice rubric" : "Criterion marks"}</legend>
       {rows.map((row, index) => <div className="drawing-criterion" key={row.id}>
-        <label>Criterion {index + 1}<input required maxLength={80} value={row.name}
-          onChange={(event) => setValue(row.id, "name", event.target.value)} /></label>
-        <label>Mark {index + 1}<input type="number" required min="0" max={drawing.maxScore}
-          step="0.01" value={row.mark} onChange={(event) => setValue(row.id, "mark", event.target.value)} /></label>
-        {rows.length > 1 && <button className="text-button" type="button" aria-label={`Remove criterion ${index + 1}`}
+        {rubric ? <div className="drawing-rubric-criterion"><b>{row.name}</b><p>{row.guidance}</p></div>
+          : <label>Criterion {index + 1}<input required maxLength={80} value={row.name}
+            onChange={(event) => setValue(row.id, "name", event.target.value)} /></label>}
+        <label>{rubric ? "Mark" : `Mark ${index + 1}`}
+          <input aria-label={rubric ? `Mark for ${row.name}` : undefined} type="number" required min="0" max={row.points ?? drawing.maxScore}
+            step="0.01" value={row.mark} onChange={(event) => setValue(row.id, "mark", event.target.value)} />
+          {rubric && <small>Maximum {row.points}</small>}
+        </label>
+        {!rubric && rows.length > 1 && <button className="text-button" type="button" aria-label={`Remove criterion ${index + 1}`}
           onClick={() => setRows((current) => current.filter((item) => item.id !== row.id))}>Remove</button>}
       </div>)}
-      <button type="button" className="text-button" disabled={rows.length >= MAX_DRAWING_CRITERIA} onClick={() => {
+      {!rubric && <button type="button" className="text-button" disabled={rows.length >= MAX_DRAWING_CRITERIA} onClick={() => {
         const id = nextId.current++;
         setRows((current) => [...current, { id, name: "", mark: "" }]);
-      }}>Add criterion</button>
+      }}>Add criterion</button>}
       <p>Total <output aria-label="Total marks">{Number.isFinite(total) ? total : "—"} / {drawing.maxScore}</output></p>
       <label>Feedback<textarea name="comments" required minLength={5} maxLength={4000} defaultValue={drawing.comments ?? ""} /></label>
       {requiresOverride && <label>Override reason<input name="overrideReason" required minLength={5} maxLength={1000} /></label>}
@@ -79,6 +87,11 @@ function DrawingReviewCard({ drawing, onClaim, onReturn, onReview, onRelease, me
     finally { mutation.current=false;setBusy(false); }
   };
   const { reviewId, version, status } = drawing;
+  let rubric, rubricError;
+  if (drawing.canReview) {
+    try { rubric = readFrozenDrawingRubric(drawing.rubric, drawing.maxScore); }
+    catch (failure) { rubricError = failure.message; }
+  }
   return <article aria-busy={busy}>
     <b>Anonymous submission · {drawing.uploadCount} images</b><span className="status-pill">{status}</span>
     {drawing.cohortTitle && <p>All India · {drawing.cohortTitle}</p>}
@@ -91,10 +104,11 @@ function DrawingReviewCard({ drawing, onClaim, onReturn, onReview, onRelease, me
       <DrawingReviewMedia reviewId={reviewId} onUnavailable={onMediaUnavailable} {...(mediaLoader ? { load: mediaLoader } : {})} />
       <DrawingAiAdvisory suggestion={drawing.aiSuggestion} />
       {status === "assigned" && <button type="button" disabled={busy} onClick={() => perform(() => onReturn(reviewId, version))}>Return to review queue</button>}
-      {status === "reviewed" && !drawing.cohortFrozen && <button type="button" disabled={busy} onClick={() => perform(() => onRelease(reviewId, version))}>
+      {rubricError && <p role="alert">{rubricError}</p>}
+      {status === "reviewed" && !drawing.cohortFrozen && !rubricError && <button type="button" disabled={busy} onClick={() => perform(() => onRelease(reviewId, version))}>
         {drawing.cohortTitle ? "Finalize grade for cohort release" : "Release feedback to student"}
       </button>}
-      {!drawing.cohortFrozen && <DrawingReviewForm key={version} drawing={drawing} disabled={busy}
+      {!drawing.cohortFrozen && !rubricError && <DrawingReviewForm key={version} drawing={drawing} rubric={rubric} disabled={busy}
         onSave={(readForm) => perform(() => onReview(reviewId, version, readForm()))} />}
     </>}
     {error && <p role="alert">{error}</p>}
