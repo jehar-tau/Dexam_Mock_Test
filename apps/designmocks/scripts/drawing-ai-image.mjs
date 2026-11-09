@@ -21,7 +21,9 @@ export async function prepareAdvisoryImage(bytes, file) {
     throw new Error("A private image differs from its registered bytes");
   }
   const input = await prepareDrawingImage(bytes, file.mimeType);
-  if (input.width !== file.width || input.height !== file.height || input.orientation !== file.orientation) {
+  const orientationFromCanonicalBytes = file.role === "figure" && file.sha256 && file.orientation === undefined;
+  if (input.width !== file.width || input.height !== file.height ||
+      (!orientationFromCanonicalBytes && input.orientation !== file.orientation)) {
     throw new Error("A private image differs from its registered rendering metadata");
   }
   await loadCodec();

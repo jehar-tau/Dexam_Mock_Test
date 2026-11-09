@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { drawingAdviceTarget, processDrawingAdvice } from "../scripts/drawing-ai-advice.mjs";
@@ -127,4 +128,13 @@ test("rotated photos are decoded upright and canonical figure bytes are hash-che
   assert.deepEqual([normalized.width, normalized.height, normalized.orientation], [2, 1, 1]);
   await assert.rejects(prepareAdvisoryImage(bytes, { ...original, sha256: figureSha256 }), /registered bytes/);
   await assert.rejects(prepareAdvisoryImage(bytes, { ...original, orientation: 1 }), /rendering metadata/);
+});
+
+test("verified canonical PNG figures use the orientation in their exact bytes", async () => {
+  const bytes = await readFile(new URL("./fixtures/drawing-images/fictional-drawing.png", import.meta.url));
+  const metadata = { role: "figure", byteSize: bytes.length, mimeType: "image/png", width: 6, height: 4,
+    sha256: createHash("sha256").update(bytes).digest("hex") };
+  const normalized = await prepareDrawingImage(await prepareAdvisoryImage(bytes, metadata), "image/png");
+  assert.deepEqual([normalized.width, normalized.height, normalized.orientation], [4, 6, 1]);
+  await assert.rejects(prepareAdvisoryImage(bytes, { ...metadata, role: "drawing" }), /rendering metadata/);
 });

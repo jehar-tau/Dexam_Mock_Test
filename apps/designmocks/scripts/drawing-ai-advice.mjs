@@ -62,7 +62,7 @@ function imageList(items, role, limit) {
       throw new Error("A drawing page lacks registered rendering metadata");
     }
     previous = file.ordinal;
-    return { ...file, role, orientation: role === "figure" ? 1 : file.orientation };
+    return { ...file, role, orientation: role === "figure" ? undefined : file.orientation };
   });
 }
 
