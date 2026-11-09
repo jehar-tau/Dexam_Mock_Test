@@ -1,8 +1,8 @@
 # DMocks release execution plan
 
-## Current nonpayment work (9 November 2026)
+## Current release work (9 November 2026)
 
-The owner will handle payment setup later. Work on the full student and administrator plan continues through controlled staging. The first public release consists of the informational site and the original five-question sample, with account sign-in and checkout closed.
+The owner resumed Razorpay integration and reported completing video KYC. Start with a private Test checkout while work on the student and administrator portal continues through controlled staging. The first public release consists of the informational site and the original five-question sample, with account sign-in and checkout closed.
 
 The public candidate comes from accepted source `e457196519a5d87cf1bc63b5e72e1793db6dde68`. The build passed signed-out desktop and mobile checks through sample submission, result reload and all five explanations. The 16 site files and hosting manifest matched the archive uploaded as **Site version 6**. The receipt is `.dmocks-local-evidence/site-public-release-2026-11-09/native-site-save-progress.json`. Changes through `086ab363602219e44ba592c007909ac1fd8046e5` affected recovery scripts, documentation and tests. At this checkpoint version 5 served the owner-only site and version 6 was saved for review.
 
@@ -12,13 +12,13 @@ The current source passed a real controlled Google callback, reload, refresh, lo
 
 Before hosted staging, resolve the target role, capture and restore the approved target's backup, and promote the matching migrations and functions. The existing dashboard returned Healthy and the CA and PostgreSQL 17.11 clients passed local recovery verification. The last observed ledger has 25 of 76 migrations. Hosted staging requires migration `202611060128`, exact approved frontend and backend origins, and the server admission check for a confirmed allowlisted Google tester. Keep registration policy at `testers`, environment mode at `test`, and sales closed during that verification.
 
-Public account admission has its own privacy, terms, younger-student and provider gates. The signup hook starts closed and admits Google accounts according to the server-owned policy. Checkout has separate build flags, purchase notices and sales decisions for the later owner-led phase.
+Public account admission has its own privacy, terms, younger-student and provider gates. The signup hook starts closed and admits Google accounts according to the server-owned policy. Keep the private Test checkout, public admission and Live sales on separate controls.
 
 Owner rights clarification (8 November): Design Exam Academy confirms ownership or permission for all 2,582 hold-free canonical questions as original/adapted practice material, not verbatim protected official papers. Legacy labels remain as source history and no longer establish the collection-level rights conclusion. The PR #104 baseline supports 1,502 objective records; strict exact-literal NAT alternatives add seven (five UCEED/two CEED), making current compiler capability 1,509 objective records, 361 other supported conversions and 712 conversion/context blockers. The initial fixed offering remains unchanged. None is automatically hosted-ready or published. Exact-version approval still requires active, hold-free records and verified required media. Never mass-update flags directly.
 
-The **8 November 2026** scope defines the first paid offering. The wider product plan remains in the execution backlog and follows the nonpayment staging and release checks above. The owner will resume the commerce steps below when ready.
+The **8 November 2026** scope defines the first paid offering. The wider product plan remains in the execution backlog. Follow the [controlled Test deployment sequence](MVP_DEPLOYMENT.md) alongside the nonpayment staging and release checks above.
 
-## Later paid-MVP requirements
+## Paid MVP requirements
 
 1. The public DMocks site and original free five-question sample. Describe only released offerings; mark unsupported exam/programme routes coming later.
 2. Controlled Google authentication, an independent DMocks account, minimal necessary account details, sign-out and account isolation. Public admission stays closed until the final notices and provider checks are accepted.
@@ -88,7 +88,7 @@ The separate optional drawing/inspector checkpoint at `d582a80` remains unmerged
 
 - Review the concrete first UCEED Part A rendering/manifest before real release. The owner bank-use/provenance decision is already recorded; do not request it again.
 - Review the complete final customer notices, refund/cancellation, tax/invoice treatment, privacy/retention and younger-student policy. Operator/address/support/GST facts are already supplied and must not be requested again.
-- Enter replacement Razorpay Test credentials and webhook secret privately; complete OTP/KYC/provider actions if the merchant requires them.
+- Replace the exposed Razorpay Test pair and enter the new pair and Test webhook secret privately on the approved backend. The owner reports video KYC complete. Handle further provider verification or OTP if the dashboard requests it.
 - Resolve the already pending deployment-target decision and approve the final production-impact switch after the concrete acceptance packet is ready.
 
 Continue engineering that does not depend on these decisions. Do not invent a refund policy, sell unapproved content, purchase hosting or broaden the MVP to bypass a missing approval.

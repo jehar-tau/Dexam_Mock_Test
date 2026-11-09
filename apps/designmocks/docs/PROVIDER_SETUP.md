@@ -131,19 +131,19 @@ The earlier 7 November CLI run through migration `202611060128` listed 27 pendin
 
 Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
 
-## Razorpay — deferred by owner on 6 November
+## Razorpay Test integration
 
-The owner explicitly asked to do Razorpay integration later. Do not continue merchant configuration, request replacement credentials or enable checkout until they resume this work. The incident-remediation requirement below remains outstanding for that future setup.
+On 9 November the owner resumed payment integration and reported completing video KYC. The dashboard showed the merchant as activated with Limited access and website setup pending. Test mode was available, an existing Test key was listed, and the Test webhook list was empty. [Razorpay activation details](https://razorpay.com/docs/payments/dashboard/account-settings/activation-details/)
 
-The separate merchant onboarding has reached website details and offers Test API keys. The setup modal displayed a Test secret in tool output on 6 November. Treat that old Test pair as compromised: the owner must regenerate it and deactivate the old pair before any use. It was not installed in the app or Supabase. Do not repeat it in chat, documentation or logs.
+The setup modal displayed a Test secret in tool output on 6 November. The owner must regenerate the Test pair and deactivate the exposed pair before use. Enter the replacement directly in Edge Function Secrets as `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` on the approved backend. Keep these values out of the browser build, Git, chat and logs.
 
-A Supabase **Edge Function Secrets** form was prepared for `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`, with no values entered by the agent. When integration resumes, the owner must paste and save replacements directly; browser credential-handling rules require owner entry. `RAZORPAY_WEBHOOK_SECRET` and actual Test webhook configuration remain additional setup steps; no webhook secret is configured yet.
+After the approved target backup and matching function deployment, configure a Test webhook for `payment.captured` and `refund.processed` at the target's `payment-webhook` function. Store the matching signing secret as `RAZORPAY_WEBHOOK_SECRET` on the server. Use a different secret for Live and reconcile outstanding Test deliveries before switching. [Razorpay webhook setup and validation](https://razorpay.com/docs/webhooks/validate-test/)
 
-The current server functions intentionally reject unconfigured checkout/webhook requests. `launch_settings.sales_enabled=false`, `environment_mode=test` and null purchase-policy version remain in force. `PUBLIC_APP_ORIGIN` is currently the old preview origin and must be deliberately aligned to the final checkout test origin when configuring payment acceptance. Do not enable live orders or change existing academy merchant settings.
+The 9 November anonymous baseline returned `503` from checkout with the `https://dmocks.com` origin and from the unsigned webhook. Checkout rejected the separate staging preview origin with `403`. Verify `PUBLIC_APP_ORIGIN` against the exact approved checkout artifact during promotion. Keep `launch_settings.sales_enabled=false` and `environment_mode=test` through the controlled Test run.
 
 Before live sales, test server-created ₹1,193 orders, matching Test keys, successful/failed/cancelled simulated payments, exact-body signed webhook delivery, amount/currency/order binding, retries and out-of-order events, annual expiry, duplicate-purchase prevention and approved refund/revocation/reconciliation handling. Browser success callbacks never grant access.
 
-References: https://razorpay.com/docs/payments/dashboard/account-settings/api-keys and https://razorpay.com/docs/webhooks/validate-test
+Follow [MVP deployment and Test acceptance](MVP_DEPLOYMENT.md) for the published notices, tester window, provider delivery, refund and closeout checks. [Razorpay API key setup](https://razorpay.com/docs/payments/dashboard/account-settings/api-keys/)
 
 ## Remaining release gates
 

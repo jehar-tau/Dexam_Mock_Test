@@ -25,6 +25,9 @@ const authStage = process.env.DMOCKS_AUTH_STAGE || "closed";
 assert.ok(["closed", "controlled"].includes(authStage), "Explicit closed or controlled Auth test stage required");
 const backendStage = process.env.DMOCKS_BACKEND_STAGE || "foundation";
 assert.ok(["foundation", "portal", "staging"].includes(backendStage), "Choose foundation, portal or staging backend checks");
+const commerceStage = process.env.DMOCKS_COMMERCE_STAGE || "unconfigured";
+assert.ok(["unconfigured", "configured"].includes(commerceStage), "Choose unconfigured or configured commerce handler checks");
+const configuredCommerce = commerceStage === "configured";
 const staging = backendStage === "staging";
 if (staging) assert.equal(authStage, "controlled", "Staging requires the controlled Auth stage");
 const origin = staging ? project.staging_frontend_origin : project.frontend_origin;
@@ -34,9 +37,15 @@ async function request(path, method = "GET", body, headers = {}) {
     headers: { apikey: key, "Content-Type": "application/json", ...headers },
     body: body === undefined ? undefined : JSON.stringify(body),
     signal: AbortSignal.timeout(30000),
+    redirect: "error",
   });
   const text = await response.text();
-  return { status: response.status, data: text ? JSON.parse(text) : null, allowOrigin: response.headers.get("access-control-allow-origin") };
+  return {
+    status: response.status,
+    data: text ? JSON.parse(text) : null,
+    allowOrigin: response.headers.get("access-control-allow-origin"),
+    cacheControl: response.headers.get("cache-control"),
+  };
 }
 let response = await request(
   "/rest/v1/plans?select=id,amount,currency,duration_months",
@@ -103,9 +112,9 @@ results.push({
   googleEnabled: Boolean(response.data.external?.google),
 });
 for (const [name, body, status] of [
-  ["create-order", { plan: "annual" }, 503],
+  ...(!configuredCommerce ? [["create-order", { plan: "annual" }, 503]] : []),
   ["attempt-media", { attemptId: "00000000-0000-4000-8000-000000000001" }, 401],
-  ["payment-webhook", {}, 503],
+  ...(!configuredCommerce ? [["payment-webhook", {}, 503]] : []),
 ]) {
   response = await request("/functions/v1/" + name, "POST", body, {
     Origin: origin,
@@ -113,18 +122,39 @@ for (const [name, body, status] of [
   assert.equal(response.status, status, name + " setup gate");
   results.push({ check: name + " setup/identity gate", status, passed: true });
 }
-response = await request(
-  "/functions/v1/create-order",
-  "POST",
-  { plan: "annual" },
-  { Origin: "https://invalid.example" },
-);
+const checkoutPath = "/functions/v1/create-order";
+const foreignOrigin = "https://invalid.example";
+if (configuredCommerce) {
+  // This checks only deployment rejection paths. No account or provider credentials are sent.
+  const approvedOrigin = project.frontend_origin;
+  response = await request(checkoutPath, "OPTIONS", undefined, {
+    Origin: approvedOrigin,
+    "Access-Control-Request-Method": "POST",
+    "Access-Control-Request-Headers": "authorization,apikey,content-type,x-client-info",
+  });
+  assert.equal(response.status, 204, "approved checkout preflight");
+  assert.equal(response.allowOrigin, approvedOrigin, "approved checkout origin");
+  results.push({ check: "approved checkout preflight", status: 204, passed: true });
+
+  response = await request(checkoutPath, "POST", { plan: "annual" }, { Origin: approvedOrigin });
+  assert.equal(response.status, 401, "configured checkout must reject anonymous requests");
+  assert.equal(response.allowOrigin, approvedOrigin, "anonymous checkout response origin");
+  assert.equal(response.data?.error, "Sign in required", "checkout handler must reject the request");
+  results.push({ check: "configured checkout handler rejects anonymous requests", status: 401, passed: true });
+
+  response = await request("/functions/v1/payment-webhook", "POST", { event: "smoke.invalid" });
+  assert.equal(response.status, 401, "configured webhook must reject a nonempty unsigned body");
+  assert.equal(response.data, null, "webhook handler must return an empty rejection");
+  assert.equal(response.cacheControl, "no-store", "webhook handler must return an uncached rejection");
+  results.push({ check: "configured webhook handler rejects unsigned requests", status: 401, passed: true });
+}
+response = await request(checkoutPath, "POST", { plan: "annual" }, { Origin: foreignOrigin });
 assert.equal(response.status, 403);
-results.push({
-  check: "unapproved checkout origin denied",
-  status: 403,
-  passed: true,
-});
+if (configuredCommerce) {
+  assert.equal(response.allowOrigin, project.frontend_origin, "foreign checkout response origin");
+  assert.equal(response.data?.error, "Origin not allowed", "checkout handler must reject the foreign origin");
+}
+results.push({ check: "unapproved checkout origin denied", status: 403, passed: true });
 if (staging) {
   for (const [name, body] of [
     ["my_candidate_profile", {}],
@@ -167,7 +197,8 @@ if (staging) {
 }
 await mkdir("test-results", { recursive: true });
 await writeFile(
-  staging ? "test-results/hosted-staging-smoke.json" : "test-results/hosted-smoke.json",
+  configuredCommerce ? "test-results/hosted-configured-commerce-smoke.json"
+    : staging ? "test-results/hosted-staging-smoke.json" : "test-results/hosted-smoke.json",
   JSON.stringify(results, null, 2) + "\n",
 );
 console.log(
@@ -175,6 +206,7 @@ console.log(
     {
       project: project.name,
       backendStage,
+      ...(configuredCommerce ? { commerceStage, commerceScope: "Handler rejection only. Merchant mode, secrets and provider acceptance are unverified." } : {}),
       checks: results.length,
       passed: results.every((result) => result.passed),
     },
