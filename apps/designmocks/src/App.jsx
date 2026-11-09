@@ -54,6 +54,7 @@ import {
   stagingPortalMode,
   checkoutReady,
   termsVersion,
+  publishedNotices,
   googleLogin,
 } from "./platform.js";
 
@@ -1483,6 +1484,22 @@ function SampleResult() {
 }
 function Policies({ type }) {
   const privacy = type === "privacy";
+  if (publishedNotices) {
+    return (
+      <section className="wrap policy section">
+        <span className="eyebrow">DMOCKS / CUSTOMER NOTICE</span>
+        <h1>{privacy ? "Privacy notice." : "Terms and purchase."}</h1>
+        <p data-notice-version={publishedNotices.version}>Notice revision {publishedNotices.version.slice(-12)}.</p>
+        <OperatorDetails />
+        {publishedNotices.pages[privacy ? "privacy" : "terms"].map(({ heading, paragraph }) => (
+          <section key={heading}>
+            <h2>{heading}</h2>
+            <p>{paragraph}</p>
+          </section>
+        ))}
+      </section>
+    );
+  }
   return (
     <section className="wrap policy section">
       <span className="eyebrow">DMOCKS / FIRST-LOOK PREVIEW</span>

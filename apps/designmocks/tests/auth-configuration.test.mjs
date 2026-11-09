@@ -19,10 +19,16 @@ test("test login cannot become a production release or coincide with paid portal
     ...closed, authReady: true, portalReady: true, checkoutReady: false,
   });
 });
-test("opening the portal never opens checkout without its separate explicit switch",()=>{
- const input={...base,deployment:'production',portalEnabled:true,termsVersion:'fictional-approved-terms'};
+test("opening checkout requires its separate explicit switch and a matching customer notice revision",()=>{
+ const version='fictional-approved-terms';
+ const input={...base,deployment:'production',portalEnabled:true,termsVersion:version,noticeVersion:version};
  for(const checkoutEnabled of[undefined,false,'true',1])assert.equal(resolveAuthConfiguration({...input,checkoutEnabled}).checkoutReady,false);
  assert.equal(resolveAuthConfiguration({...input,checkoutEnabled:true}).checkoutReady,true);
+ for (const noticeVersion of [undefined, null, "earlier-version"]) {
+  const configuration=resolveAuthConfiguration({...input,checkoutEnabled:true,noticeVersion});
+  assert.equal(configuration.checkoutReady,false);
+  assert.equal(configuration.portalReady,true);
+ }
  assert.equal(resolveAuthConfiguration({...base,testLoginEnabled:true,checkoutEnabled:true}).checkoutReady,false);
  assert.equal(resolveAuthConfiguration({deployment:'production',checkoutEnabled:true}).checkoutReady,false);
 });

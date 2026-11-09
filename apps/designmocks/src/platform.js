@@ -7,6 +7,7 @@ const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
 // This app must have its own provider project; no Dexam values are imported.
 export const termsVersion = import.meta.env.VITE_TERMS_VERSION;
+export const publishedNotices = __DMOCKS_PUBLISHED_NOTICES__;
 export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkoutReady } = resolveAuthConfiguration({
   mode: environment.mode,
   deployment: environment.deployment,
@@ -19,6 +20,7 @@ export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkou
   url,
   key,
   termsVersion,
+  noticeVersion: publishedNotices?.version,
 });
 export const platform = authReady
   ? createClient(url, key, {
