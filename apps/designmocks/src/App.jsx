@@ -53,7 +53,6 @@ import {
   testLoginMode,
   stagingPortalMode,
   checkoutReady,
-  termsVersion,
   publishedNotices,
   googleLogin,
 } from "./platform.js";
@@ -918,17 +917,17 @@ function Account() {
   const stagingAccess = useStagingPortalAccess(session);
   const workspaceAvailable = portalReady && stagingAccess === "allowed";
   const accountId = session?.user.id;
-  const [accepted, setAccepted] = useState(false);
+  const [noticeReviewed, setNoticeReviewed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [sessionStatus, setSessionStatus] = useState("");
   const [reviewerAccountId, setReviewerAccountId] = useState(null);
   const [error, setError] = useState(() => authCallbackMessage(window.location.search, window.location.hash));
   const login = async () => {
-    if (checkoutReady && !accepted) return;
+    if (checkoutReady && !noticeReviewed) return;
     setBusy(true);
+    setNoticeReviewed(false);
     setError("");
     try {
-      if (checkoutReady) sessionStorage.setItem("designmocks-pending-terms", termsVersion);
       await googleLogin();
     } catch (e) {
       setError(e.message);
@@ -962,21 +961,6 @@ function Account() {
       setBusy(false);
     }
   };
-  useEffect(() => {
-    if (!session || !checkoutReady) return;
-    const version = sessionStorage.getItem("designmocks-pending-terms");
-    if (version && version === termsVersion) {
-      platform
-        .rpc("accept_current_terms", { p_version: version })
-        .then(({ error }) => {
-          if (error)
-            setError(
-              "Please review the current published terms before purchasing.",
-            );
-          else sessionStorage.removeItem("designmocks-pending-terms");
-        });
-    }
-  }, [session]);
   useEffect(() => {
     setReviewerAccountId(null);
     if (!postLaunchPreview || !accountId || !workspaceAvailable) return;
@@ -1042,18 +1026,18 @@ function Account() {
                 <label className="terms-checkbox">
                   <input
                     type="checkbox"
-                    checked={accepted}
-                    onChange={(e) => setAccepted(e.target.checked)}
+                    checked={noticeReviewed}
+                    onChange={(e) => setNoticeReviewed(e.target.checked)}
                   />
                   <span>
-                    I accept the <Link to="/terms">terms</Link> and{" "}
+                    I have read the <Link to="/terms">terms</Link> and{" "}
                     <Link to="/privacy">privacy notice</Link>.
                   </span>
                 </label>
               )}
               <button
                 className="google-button"
-                disabled={!authReady || busy || (checkoutReady && !accepted)}
+                disabled={!authReady || busy || (checkoutReady && !noticeReviewed)}
                 onClick={login}
               >
                 <GoogleIcon />
@@ -1068,9 +1052,9 @@ function Account() {
             )}
             {stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
               testLoginMode ? <p className="account-terms">Only server-approved test accounts can complete this check. It does not accept draft purchase terms, create an order or unlock a paid pass.</p> : <p className="account-terms">
-              Creating a new account requires accepting the published terms and
-              privacy notice in the Google sign-in launch flow. That flow will
-              open once the new account setup is active.
+              {checkoutReady
+                ? "Review the terms and privacy notice before continuing with Google. You can confirm a purchase separately in checkout."
+                : "You can try the free sample without an account."}
             </p>}
             <div className="inline-links">
               <Link to="/terms">Terms & access</Link>
