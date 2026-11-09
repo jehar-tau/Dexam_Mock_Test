@@ -6,7 +6,9 @@ Supabase database backups contain Storage metadata, not the object bytes. Both m
 
 ## Capture
 
-Use Node 24 and PostgreSQL 17 clients (`psql`, `pg_dump`). Use a direct database connection or the session pooler on 5432, never the transaction pooler. Hosted connections require certificate verification against the system trust store. The source is fixed to the standalone DMocks project; unrelated Dexam data is refused.
+Use Node 24 and PostgreSQL 17 clients (`psql`, `pg_dump`). Use a direct database connection or the session pooler on 5432, never the transaction pooler. Hosted connections require `verify-full` for the snapshot, dump and final inventory check. The source is fixed to the standalone DMocks project.
+
+For the existing DMocks project, download the official CA certificate from **Database Settings** and set `DMOCKS_RECOVERY_DATABASE_CA_FILE` to its absolute path. The direct endpoint and session pooler use this CA. When the variable is unset, the clients use the system trust store with hostname verification. [Supabase SSL enforcement](https://supabase.com/docs/guides/platform/ssl-enforcement)
 
 Load these values privately from the operator secret store:
 
