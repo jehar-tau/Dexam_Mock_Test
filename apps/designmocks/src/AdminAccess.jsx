@@ -51,6 +51,17 @@ function AccessSession({actorId,headingRef,children,onRetry,config}){
   },[access.status,headingRef]);
   const services=useMemo(()=>scope?{
     rpc:(name,args,signal)=>runForVerifiedAccount(scope,platform.auth,actorId,(token,active)=>checkedRpc(name,args,active,token),signal),
+    presentForCurrentStaff:(operation,requestSignal)=>runForVerifiedAccount(scope,platform.auth,actorId,async(token,signal)=>{
+      if(await checkedRpc(config.procedure,undefined,signal,token)!==true){
+        throw Object.assign(new Error('Staff access required'),{code:'42501'});
+      }
+      const{data,error}=await platform.auth.getSession();
+      signal.throwIfAborted();scope.assertCurrent();
+      if(error||data?.session?.user?.id!==actorId||data?.session?.access_token!==token){
+        scope.invalidate();throw new Error('Account identity changed.');
+      }
+      return operation();
+    },requestSignal),
     functions:{async invoke(name,options={}){
       try{return await runForVerifiedAccount(scope,platform.auth,actorId,async(token,signal)=>{
         const result=await platform.functions.invoke(name,{...options,signal,headers:authorizationHeaders(options.headers,token)});
@@ -59,7 +70,7 @@ function AccessSession({actorId,headingRef,children,onRetry,config}){
       },options.signal);}catch(error){return{data:null,error};}
     }},
     assertCurrent:scope.assertCurrent,isCurrent:scope.isCurrent,
-  }:null,[scope,actorId]);
+  }:null,[scope,actorId,config]);
   return <section aria-label={config.region} style={{minWidth:0}}>
     {access.status==="checking"&&<p role="status">{config.checking}</p>}
     {access.status==="denied"&&<p role="alert" className="error">{access.hadAccess?config.ended:config.required}</p>}

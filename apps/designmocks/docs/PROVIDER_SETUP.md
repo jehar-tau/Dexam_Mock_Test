@@ -36,7 +36,26 @@ Migration `202611060130_canonical_question_intake.sql` and the matching `questio
 
 Question figures are separately reviewed PNG crops. Selecting them in the editor validates the digest and dimensions and retains the exact bytes privately, bound to the original intake source. Promotion and export check that the registered files still exist. Drafts and artifacts expose authenticated retained-figure downloads after refresh. Source scans and model attachments never become student figures automatically. A duplicate extraction request cannot mark another worker's active job failed, and promotion, rejection and manual-transcription retries serialize per source.
 
-For a reviewed visual artifact, download every retained PNG and place it at `DMOCKS_MEDIA_ROOT/<payload.assets[n].path>`, such as `intake/<sha256>.png`. Review the canonical JSON change on `main`, run the bank importer, then the existing private-media manifest/import and verified runtime materialization. Runtime compilation continues to require matching registered private media and an established exam ruleset. Record the separate bank-content approval after materialization. The local acceptance used synthetic Auth, private Storage, both Edge upload/download routes, concurrent writes, the actual importer and the UCEED runtime writer. The extraction response was fictional. Live model and hosted deployment acceptance remain pending.
+Runtime compilation requires matching registered private media and an established exam ruleset. The local intake acceptance used synthetic Auth, private Storage, both Edge upload/download routes, concurrent writes, the actual importer and the UCEED runtime writer. The extraction response was fictional. Live model and hosted deployment acceptance remain pending.
+
+### Prepare a question addition for Git review
+
+After approving a draft and creating its canonical review artifact, select **Download bank review packet**. Use the SHA-256 shown in the administrator desk. Retained PNG downloads use their digest as the filename. Keep the packet and figures in a private directory.
+
+Run the following from `apps/designmocks` with the independently checked `origin/main` commit and review digest. The command reads the exact saved payload and verifies every required figure using the private media root or retained downloads. The default invocation reports counts and digests for review.
+
+```sh
+npm run bank:prepare-addition -- \
+  --packet "$DMOCKS_QUESTION_PACKET" \
+  --expect "$DMOCKS_REVIEWED_QUESTION_SHA256" \
+  --expect-source "$DMOCKS_REVIEWED_BANK_COMMIT" \
+  --media-root "$DMOCKS_MEDIA_ROOT" \
+  --downloads-dir "$DMOCKS_RETAINED_FIGURES"
+```
+
+Add `--output "$DMOCKS_PRIVATE_REVIEW_DIRECTORY"` to prepare a new directory outside Git worktrees. Omit the media options for a text-only packet. The prepared export preserves existing rows and adds the exact reviewed payload. A conflicting key or figure path needs correction before review. The `receipt.json` file confirms that preparation completed. Review the proposed change at `server/data/exports/dexam-bank-export.json` and place verified figures at their recorded paths in the private media root. After the canonical change lands on `main`, follow the existing import, materialization and version approval steps.
+
+Promote migration `202611090159` with the matching administrator frontend in an approved full staging environment. The endpoint is available to current administrators in that environment. The paid MVP permission profile excludes this endpoint.
 
 Drawing AI inference is not configured or deployed. The database accepts a rubric-linked suggestion only through the service role. Staff authorized to open that review can see the provider, model, rubric version, confidence and evidence. It cannot populate, release or change the human score. Do not connect a model until the owner approves image-processing consent, retention, cost, a labelled validation set and criterion-level accuracy/bias thresholds.
 
