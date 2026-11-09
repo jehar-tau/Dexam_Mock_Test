@@ -1,3 +1,5 @@
+import { markHundredths } from "./nid-practice-blueprint.js";
+
 export const MAX_DRAWING_CRITERIA = 12;
 
 export function drawingAdvisoryMarks(criteria) {
@@ -40,10 +42,31 @@ export function totalDrawingMarks(rows) {
   return rows.reduce((total, row) => total + Math.round(Number(row.mark) * 100), 0) / 100;
 }
 
-export function validateDrawingReviewInput({ rows, comments, overrideReason, maxScore, requiresOverride = false }) {
+export function readFrozenDrawingRubric(value, maxScore) {
+  if (value == null) return null;
+  const invalid = () => new Error("The frozen practice rubric is unavailable. Refresh this review before grading.");
+  if (!Array.isArray(value) || !value.length || value.length > MAX_DRAWING_CRITERIA) throw invalid();
+  const labels = new Set();
+  let total = 0;
+  for (const criterion of value) {
+    const { label, points, guidance } = criterion ?? {};
+    const nameLength = typeof label === "string" ? [...label].length : 0;
+    const guidanceLength = typeof guidance === "string" ? [...guidance.trim()].length : 0;
+    if (nameLength < 3 || nameLength > 120 || label !== label.trim() || labels.has(label.toLowerCase())
+        || guidanceLength < 10 || guidanceLength > 1000
+        || typeof points !== "number" || points < 0.01 || points > 100) throw invalid();
+    try { total += markHundredths(points); } catch { throw invalid(); }
+    labels.add(label.toLowerCase());
+  }
+  if (total / 100 !== Number(maxScore)) throw invalid();
+  return value;
+}
+
+export function validateDrawingReviewInput({ rows, comments, overrideReason, maxScore, rubric: value, requiresOverride = false }) {
+  const rubric = readFrozenDrawingRubric(value, maxScore);
   if (rows.length < 1 || rows.length > MAX_DRAWING_CRITERIA) throw new Error("Use between 1 and 12 scoring criteria.");
   const entries = rows.map(({ name, mark }) => [name.trim(), String(mark).trim()]);
-  if (entries.some(([name]) => name.length < 2 || name.length > 80)) {
+  if (!rubric && entries.some(([name]) => name.length < 2 || name.length > 80)) {
     throw new Error("Enter a name between 2 and 80 characters for each criterion.");
   }
   if (new Set(entries.map(([name]) => name.toLowerCase())).size !== entries.length) {
@@ -51,6 +74,15 @@ export function validateDrawingReviewInput({ rows, comments, overrideReason, max
   }
   if (entries.some(([, mark]) => !/^(?:\d+(?:\.\d{1,2})?|\.\d{1,2})$/.test(mark) || !Number.isFinite(Number(mark)))) {
     throw new Error("Enter a non-negative mark with up to two decimal places for each criterion.");
+  }
+  if (rubric) {
+    const limits = new Map(rubric.map(({ label, points }) => [label, points]));
+    if (entries.length !== limits.size || entries.some(([name]) => !limits.has(name))) {
+      throw new Error("Enter marks for every frozen criterion.");
+    }
+    if (entries.some(([name, mark]) => Number(mark) > limits.get(name))) {
+      throw new Error("A mark exceeds its frozen criterion maximum.");
+    }
   }
   const score = totalDrawingMarks(rows);
   if (!Number.isFinite(score) || !Number.isFinite(Number(maxScore)) || score > Number(maxScore)) {

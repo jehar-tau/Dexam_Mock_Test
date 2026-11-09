@@ -3920,6 +3920,8 @@ svg {
 .drawing-review-form legend { margin-bottom: .75rem; font-weight: 700; }
 .drawing-review-form fieldset > button { justify-self: start; }
 .drawing-criterion { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 8rem) auto; gap: .75rem; align-items: end; }
+.drawing-rubric-criterion { min-width: 0; overflow-wrap: anywhere; }
+.drawing-rubric-criterion p { margin: .25rem 0; }
 @media (max-width: 480px) {
   .drawing-criterion { grid-template-columns: minmax(0, 1fr) minmax(0, 6rem); }
 }
