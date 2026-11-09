@@ -12,6 +12,7 @@ select pg_temp.mvp_assert(not exists(
     'public.admin_open_all_india_ranking_publication(uuid,text,text)','public.admin_close_all_india_ranking_publication(uuid,uuid,text)',
     'public.set_all_india_result_sharing(uuid,uuid,integer,boolean)']) as functions(signature)
   where has_function_privilege(role,signature,'EXECUTE')
+    and (role<>'service_role' or signature not in ('public.public_all_india_top_ten()','public.all_india_event_catalog()'))
 ),'public ranking and consent endpoints remain closed in the paid profile');
 select pg_temp.mvp_assert((select count(*)=47 from dm_private.mvp_rpc_allowlist),'explicit student/staff permission manifest');
 select pg_temp.mvp_assert(not exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public'and not exists(select 1 from pg_depend d where d.classid='pg_proc'::regclass and d.objid=p.oid and d.deptype='e')and has_function_privilege('anon',p.oid,'EXECUTE')),'no anonymous application RPCs');

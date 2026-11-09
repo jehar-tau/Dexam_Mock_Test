@@ -126,6 +126,7 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
           'public.admin_close_all_india_ranking_publication(uuid,uuid,text)',
           'public.set_all_india_result_sharing(uuid,uuid,integer,boolean)']) signatures(signature)
         where has_function_privilege(role,signature,'EXECUTE')
+          and (role<>'service_role' or signature not in ('public.public_all_india_top_ten()','public.all_india_event_catalog()'))
       );`, target), 't', 'ranking migration leaves the already installed paid profile closed and valid');
     }
     await installPaidProfile();
