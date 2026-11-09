@@ -16,7 +16,7 @@
     "category": "staff"
   },
   {
-    "signature": "public.admin_bug_reports()",
+    "signature": "public.admin_bug_report_page(jsonb,integer)",
     "category": "staff"
   },
   {
@@ -52,7 +52,7 @@
     "category": "staff"
   },
   {
-    "signature": "public.admin_reply_bug_report(uuid,text,text)",
+    "signature": "public.admin_reply_bug_report(uuid,integer,text,text,uuid)",
     "category": "staff"
   },
   {

@@ -17,10 +17,16 @@ async function fixture(page){
  const state={allowed:true,roleFailure:false,roleHold:null,roleChecks:0,roleCompleted:0,bugVersion:0,bugHolds:[],bugReads:0,bugCompleted:0,replyCalls:[],denyReply:false,denyLessons:false,bareLessonsStatus:null,
   mediaHold:null,mediaStatus:200,mediaCalls:0,mediaCompleted:0,intakeHold:null,intakeCalls:0,intakeCompleted:0};
  const target={id:postId,kind:"post",title:"Original fictional private discussion",body:"Complete original fictional private content for administrator access acceptance.",exam:"uceed",topic:"Observation",status:"visible",assets:[{id:imageId,ordinal:1,mimeType:sample.mimeType,width:sample.width,height:sample.height,orientation:sample.orientation,available:true}]};
- const bug=title=>({id:"55000000-0000-4000-8000-000000000991",title,description:"An original fictional private bug statement.",status:"open",adminReply:"Saved fictional reply."});
+ state.report = {status: "open", adminReply: "Saved fictional reply.", replyRevision: 0};
+ state.saveReply = command => {
+  state.report = {status: command.p_status, adminReply: command.p_reply || null, replyRevision: command.p_expected_revision + 1};
+  return {reportId: command.p_id, requestId: command.p_request_id, ...state.report};
+ };
+ const bug = title => ({id: "55000000-0000-4000-8000-000000000991", title, description: "An original fictional private bug statement.",
+  createdAt: "2026-11-06T12:00:00.123456Z", ...state.report});
  const provider=await stubPortalProvider(page,name=>{
   if(name==="is_dmocks_admin")return state.allowed;
-  if(name==="admin_bug_reports")return[bug("Current fictional private bug")];
+  if(name==="admin_bug_report_page")return{items:[bug("Current fictional private bug")],nextCursor:null};
   if(name==="admin_question_intake_assets")return[{id:"88000000-0000-4000-8000-000000000991",name:"Original fictional source.pdf",status:"uploaded",byteSize:120,candidates:[]}];
   return emptyAdminRead(name);
  });
@@ -29,15 +35,17 @@ async function fixture(page){
   state.roleChecks++;const result=state.allowed,hold=state.roleHold;if(hold)await hold.promise;
   try{await route.fulfill({headers,status:state.roleFailure?503:200,json:state.roleFailure?{message:diagnostic}:result});}catch{}state.roleCompleted++;
  });
- await page.route(api+"/rest/v1/rpc/admin_bug_reports",async route=>{
+ await page.route(api+"/rest/v1/rpc/admin_bug_report_page",async route=>{
   if(route.request().method()==="OPTIONS")return route.fulfill({headers,status:204});
   state.bugReads++;const version=state.bugVersion,hold=state.bugHolds[version],result=[bug(version===0?"Current fictional private bug":`Refreshed fictional private bug ${version}`)];
   if(hold)await hold.promise;
-  try{await route.fulfill({headers,json:result});}catch{}state.bugCompleted++;
+  try{await route.fulfill({headers,json:{items:result,nextCursor:null}});}catch{}state.bugCompleted++;
  });
  await page.route(api+"/rest/v1/rpc/admin_reply_bug_report",async route=>{
   if(route.request().method()==="OPTIONS")return route.fulfill({headers,status:204});
-  state.replyCalls.push(route.request().postDataJSON());await route.fulfill({headers,status:state.denyReply?400:200,json:state.denyReply?{code:"P0001",message:"Admin access required"}:null});
+  const command = route.request().postDataJSON();
+  state.replyCalls.push(command);
+  await route.fulfill({headers,status:state.denyReply?400:200,json:state.denyReply?{code:"P0001",message:"Admin access required"}:state.saveReply(command)});
  });
  await page.route(api+"/rest/v1/rpc/admin_learning_lessons",route=>{
   if(route.request().method()==="OPTIONS")return route.fulfill({headers,status:204});
@@ -78,17 +86,109 @@ async function holdIdentity(page){
 }
 const requestActor=request=>JSON.parse(Buffer.from(request.headers().authorization.split(' ')[1].split('.')[1],'base64url')).sub;
 
+test("staff can page through a bounded report queue and return to the first page", async ({page}) => {
+ const state = await fixture(page), calls = [];
+ const reports = Array.from({length: 26}, (_, index) => ({
+  id: "55000000-0000-4000-8000-" + String(26 - index).padStart(12, "0"),
+  title: "Original fictional support report " + (26 - index),
+  description: "A fictional report for bounded support review.",
+  createdAt: "2026-11-06T12:00:00.123456Z",
+  status: "open", adminReply: null, replyRevision: 0,
+ }));
+ const last = reports[24];
+ const cursor = {staffId: admin.id, id: last.id, createdAt: last.createdAt};
+ await page.route(api + "/rest/v1/rpc/admin_bug_report_page", async route => {
+  if (route.request().method() === "OPTIONS") return route.fulfill({headers,status:204});
+  const input = route.request().postDataJSON();
+  calls.push(input);
+  return route.fulfill({headers,json:input.p_cursor
+   ? {items:reports.slice(25),nextCursor:null} : {items:reports.slice(0,25),nextCursor:cursor}});
+ });
+ const queue = page.getByRole("region", {name:"Bug reports",exact:true});
+ await health(page).click();
+ await expect(queue.getByRole("article")).toHaveCount(25);
+ await expect(queue.getByText(last.title,{exact:true})).toBeVisible();
+ await queue.getByRole("button", {name:"Next reports",exact:true}).press("Enter");
+ await expect(queue.getByRole("article")).toHaveCount(1);
+ await expect(queue.getByText(reports[25].title,{exact:true})).toBeVisible();
+ await expect(queue.getByRole("button", {name:"Next reports",exact:true})).toHaveCount(0);
+ await expect(queue.getByRole("heading", {name:"Bug reports",exact:true})).toBeFocused();
+ await queue.getByRole("button", {name:"Previous reports",exact:true}).press("Enter");
+ await expect(queue.getByRole("article")).toHaveCount(25);
+ await expect(queue.getByText(reports[0].title,{exact:true})).toBeVisible();
+ expect(calls).toEqual([null,cursor,null].map(p_cursor => ({p_cursor,p_limit:25})));
+ expect(state.unexpected).toEqual([]);
+});
+
 test("one pending staff reply disables its fields and suppresses duplicate form submissions",async({page})=>{
  const state=await fixture(page),held=deferred();
  await page.route(api+"/rest/v1/rpc/admin_reply_bug_report",async route=>{
   if(route.request().method()==="OPTIONS")return route.fulfill({headers,status:204});
-  state.replyCalls.push(route.request().postDataJSON());await held.promise;try{await route.fulfill({headers,json:null});}catch{}
+  const command = route.request().postDataJSON();
+  state.replyCalls.push(command);
+  await held.promise;
+  try{await route.fulfill({headers,json:state.saveReply(command)});}catch{}
  });
  const form=page.getByRole("form",{name:"Reply to report Current fictional private bug",exact:true});
  await form.getByLabel("Report status",{exact:true}).selectOption("fixed");await form.getByLabel("Reply to reporter",{exact:true}).fill("An original fictional fixed-issue reply.");
  await form.evaluate(element=>{element.requestSubmit();element.requestSubmit();});await expect.poll(()=>state.replyCalls.length).toBe(1);
  await expect(form.getByLabel("Report status",{exact:true})).toBeDisabled();await expect(form.getByLabel("Reply to reporter",{exact:true})).toBeDisabled();await expect(form.getByRole("button",{name:"Saving…",exact:true})).toBeDisabled();
- held.resolve();await expect(form.getByRole("button",{name:"Save",exact:true})).toBeEnabled();expect(state.replyCalls).toEqual([{p_id:"55000000-0000-4000-8000-000000000991",p_status:"fixed",p_reply:"An original fictional fixed-issue reply."}]);expect(state.unexpected).toEqual([]);
+ held.resolve();
+ await expect(form.getByRole("button",{name:"Save",exact:true})).toBeEnabled();
+ expect(state.replyCalls).toEqual([{p_id:"55000000-0000-4000-8000-000000000991",p_expected_revision:0,p_status:"fixed",
+  p_reply:"An original fictional fixed-issue reply.",p_request_id:expect.stringMatching(/^[0-9a-f-]{36}$/)}]);
+ expect(state.unexpected).toEqual([]);
+});
+
+test("a stale staff reply keeps its draft until the current report is reviewed", async ({page}) => {
+ const state = await fixture(page), report = page.getByRole("region", {name: "Bug reports", exact: true});
+ const form = report.getByRole("form", {name: "Reply to report Current fictional private bug", exact: true});
+ await form.getByLabel("Reply to reporter").fill("Original draft from an earlier view");
+ state.report = {status: "fixed", adminReply: "Newer response already saved", replyRevision: 1};
+ await page.route(api + "/rest/v1/rpc/admin_reply_bug_report", async route => {
+  if (route.request().method() === "OPTIONS") return route.fulfill({headers,status:204});
+  const command = route.request().postDataJSON();
+  state.replyCalls.push(command);
+  if (command.p_expected_revision !== state.report.replyRevision) {
+   return route.fulfill({headers,status:409,json:{code:"40001",message:diagnostic}});
+  }
+  return route.fulfill({headers,json:state.saveReply(command)});
+ });
+ await form.getByRole("button", {name:"Save",exact:true}).click();
+ await expect(report.getByRole("alert")).toContainText("This report changed");
+ await expect(form.getByLabel("Reply to reporter")).toHaveValue("Original draft from an earlier view");
+ await expect(form.getByRole("button", {name:"Save",exact:true})).toBeDisabled();
+ await report.getByRole("button", {name:"Refresh report",exact:true}).click();
+ await expect(form.getByLabel("Reply to reporter")).toHaveValue("Newer response already saved");
+ await form.getByLabel("Reply to reporter").fill("Reviewed follow-up");
+ await form.getByRole("button", {name:"Save",exact:true}).click();
+ await expect(report.getByRole("status")).toHaveText("Reply saved.");
+ expect(state.replyCalls.map(command => command.p_expected_revision)).toEqual([0,1]);
+ expect(state.replyCalls[0].p_request_id).not.toBe(state.replyCalls[1].p_request_id);
+});
+
+test("an unknown staff reply result retries only the exact saved command", async ({page}) => {
+ const state = await fixture(page), report = page.getByRole("region", {name:"Bug reports",exact:true});
+ const form = report.getByRole("form", {name:"Reply to report Current fictional private bug",exact:true});
+ let receipt;
+ await page.route(api + "/rest/v1/rpc/admin_reply_bug_report", async route => {
+  if (route.request().method() === "OPTIONS") return route.fulfill({headers,status:204});
+  const command = route.request().postDataJSON();
+  state.replyCalls.push(command);
+  if (!receipt) {
+   receipt = state.saveReply(command);
+   return route.abort();
+  }
+  return route.fulfill({headers,json:receipt});
+ });
+ await form.getByLabel("Reply to reporter").fill("Fictional reply saved before the response was lost");
+ await form.getByRole("button", {name:"Save",exact:true}).click();
+ await expect(report.getByRole("alert")).toContainText("reply could not be confirmed");
+ await expect(form.getByLabel("Reply to reporter")).toBeDisabled();
+ await report.getByRole("button", {name:"Retry same reply",exact:true}).click();
+ await expect(report.getByRole("status")).toHaveText("Reply saved.");
+ expect(state.replyCalls).toHaveLength(2);
+ expect(state.replyCalls[0]).toEqual(state.replyCalls[1]);
 });
 
 test("an unannounced SDK token change cannot send a private administrator reply as another actor",async({page})=>{
@@ -101,7 +201,7 @@ test("an unannounced SDK token change cannot fetch a private source through the 
 
 test('administrator RPC dispatch stays pinned when the SDK token changes after verification',async({page})=>{
  const state=await fixture(page),actors=[],form=page.getByRole('form',{name:'Reply to report Current fictional private bug',exact:true});await form.getByLabel('Reply to reporter',{exact:true}).fill('An original fictional actor-pinned administrator reply');await page.waitForLoadState('networkidle');
- const identity=await holdIdentity(page);await page.route(api+'/rest/v1/rpc/admin_reply_bug_report',async route=>{if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});actors.push(requestActor(route.request()));state.replyCalls.push(route.request().postDataJSON());return route.fulfill({headers,json:null});});
+ const identity=await holdIdentity(page);await page.route(api+'/rest/v1/rpc/admin_reply_bug_report',async route=>{if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});actors.push(requestActor(route.request()));const command=route.request().postDataJSON();state.replyCalls.push(command);return route.fulfill({headers,json:state.saveReply(command)});});
  await form.evaluate(element=>element.requestSubmit());await expect.poll(identity.reads).toBe(1);expect(actors).toEqual([]);await seedPortalSession(page,other);identity.release();await expect.poll(()=>actors).toEqual([admin.id]);expect(state.replyCalls).toHaveLength(1);await expect(page.getByRole('alert')).toContainText('Administrator access could not be verified');expect(state.unexpected).toEqual([]);
 });
 
