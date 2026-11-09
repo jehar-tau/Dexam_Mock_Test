@@ -2,6 +2,12 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+## Attempt media identity — 9 November 2026
+
+The attempt client pins the verified student's token when requesting private figures or drawing pages and confirms the same account before returning a successful reply to the view. Both checks share the request deadline. A confirmed account change clears the old paper and pending image reply. An identity service outage keeps the previously opened paper, fixed clock and device answer journal available while withholding the new reply.
+
+The permanent desktop and mobile checks hold a signed figure reply across a silent account change and across a second identity check for the same student. The unit checks also cover unavailable identity after a drawing-page response and explicit recovery.
+
 ## Exact first UCEED Part A rehearsal — 9 November 2026
 
 Source `e0752350b7d436055c201dd70c9b0ab518eecfbe` compiled the reviewed private packet against the current canonical bank. The disposable backend imported all 2,582 explicitly empty-holds records. Private Storage verified all 57 selected PNGs after upload, totaling 6,087,377 bytes. Preparation rejected unreviewed questions, returned the same paper on exact replay, and withheld the paper from students until a fixture staff actor made the local release decision.
