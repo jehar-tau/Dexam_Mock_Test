@@ -3,8 +3,8 @@ import{seedPortalSession,stubPortalProvider}from'./portal-fixture.js';
 import{runtimeQuestion,RULES_2027}from'../../scripts/question-runtime.mjs';
 test.use({baseURL:'http://127.0.0.1:4799'});
 const actor={id:'00000000-0000-4000-8000-000000001701',email:'fictional-mvp@example.invalid'},paper='10000000-0000-4000-8000-000000001701',attempt='20000000-0000-4000-8000-000000001701';
-async function fixture(page,{drawing=false,numericAlternatives=false}={}){
- const state={answer:null,revision:0,submitted:false};
+async function fixture(page,{drawing=false,numericAlternatives=false,released=true}={}){
+ const state={answer:null,revision:0,submitted:false,released};
  const numeric=numericAlternatives?runtimeQuestion({externalKey:'original-numeric-alternatives',provenance:{exam:'uceed'},type:'NAT',prompt:'Original fictional exact-decimal practice question.',holds:[],assets:[],options:[],answer:{raw:'1.000000000000000001 or 1.000000000000000002',status:'reviewed'}},{rule:RULES_2027.uceed}):null;
  const score=()=>numericAlternatives?(numeric.key.accepted.some(value=>value.exact===state.answer)?4:0):-1;
  const question=()=>({id:'30000000-0000-4000-8000-000000001701',ordinal:1,kind:numeric?.kind??(drawing?'drawing':'mcq'),topic:'observation',prompt:numeric?.prompt??'Original fictional MVP objective question',options:numeric?.options??[{id:'A',label:'Original first choice'},{id:'B',label:'Original second choice'}],marking:numeric?.marking??{correct:4,wrong:-1},points:4,negativePoints:numericAlternatives?0:1,answer:state.answer,answerRevision:state.revision,media:[],...(state.submitted?{outcome:score()>0?'full_marks':'incorrect',explanation:numeric?.explanation??'Original fictional MVP answer explanation.'}:{})});
@@ -14,7 +14,7 @@ async function fixture(page,{drawing=false,numericAlternatives=false}={}){
   if(name==='my_attempt_history')return[];
   if(name==='my_pass')return{active:true,expiresAt:new Date(Date.now()+86400000).toISOString()};
   if(name==='my_overview_analytics')return{completed:0,waitingForResults:0,objectiveAccuracy:null,objectiveAnswered:0,topics:[],exams:[],drawingReviews:{pending:0,released:0}};
-  if(name==='available_papers')return[{id:paper,title:'Original fictional released objective paper',exam:'uceed',durationSeconds:900,qualityHeld:false}];
+  if(name==='available_papers')return state.released?[{id:paper,title:'Original fictional released objective paper',exam:'uceed',durationSeconds:900,qualityHeld:false}]:[];
   if(name==='start_attempt')return attempt;
   if(name==='read_attempt')return snapshot();
   if(name==='save_answer_revision'){state.answer=input.p_answer;state.revision=input.p_revision;return{accepted:true,revision:state.revision,answer:state.answer};}
@@ -36,6 +36,19 @@ test('the released-paper MVP starts, saves, submits and reviews its objective of
  await page.getByRole('button',{name:'B Original second choice',exact:true}).click();await expect(page.getByText('Answers are saved to your account.',{exact:true})).toBeVisible();await page.getByRole('button',{name:'Submit attempt',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).click();
  await expect(page.getByRole('heading',{name:/Make this attempt/})).toBeVisible();await expect(page.getByText('This report covers the objective paper you submitted.',{exact:false})).toBeVisible();await expect(page.getByText('teacher-reviewed submission.',{exact:false})).toHaveCount(0);await page.getByRole('button',{name:'Open answer review',exact:true}).click();await expect(page.getByText('Original fictional MVP answer explanation.',{exact:true})).toBeVisible();expect(provider.state.answer).toBe('B');expect(provider.calls.filter(([name])=>name==='submit_attempt')).toHaveLength(1);
  expect(provider.calls.some(([name])=>['start_exam_mock','my_exam_mock_session','my_exam_mock_report','drawing-media','community_feed','learning_catalog','prepare_order'].includes(name))).toBe(false);expect(provider.unexpected).toEqual([]);
+});
+test('a prepared paper stays out of the active-pass catalogue until an explicit release', async ({ page }) => {
+ const provider = await fixture(page, { released: false });
+ await page.goto('/dashboard/mocks');
+ await expect(page.getByText('No papers have been released yet.', { exact: false })).toBeVisible();
+ await expect(page.getByText('Original fictional released objective paper', { exact: true })).toHaveCount(0);
+ await expect(page.getByRole('button', { name: 'Start or resume', exact: true })).toHaveCount(0);
+ expect(provider.calls.some(([name]) => ['prepare_mvp_paper', 'start_attempt'].includes(name))).toBe(false);
+ provider.state.released = true;
+ await page.reload();
+ await expect(page.getByText('Original fictional released objective paper', { exact: true })).toBeVisible();
+ await expect(page.getByRole('button', { name: 'Start or resume', exact: true })).toBeEnabled();
+ expect(provider.unexpected).toEqual([]);
 });
 for(const[value,marks]of[['1.000000000000000001',4],['1.000000000000000002',4],['1.000000000000000003',0]])test(`numeric alternative ${value} preserves its exact input and canonical ${marks}-mark report`,async({page})=>{
  const provider=await fixture(page,{numericAlternatives:true});await page.goto('/attempt/'+attempt);await page.getByLabel('Your numerical answer',{exact:true}).fill(value);await page.getByRole('button',{name:'Save answer',exact:true}).press('Enter');await expect.poll(()=>provider.state.answer).toBe(value);
