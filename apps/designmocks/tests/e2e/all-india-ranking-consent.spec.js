@@ -108,3 +108,35 @@ test('an in-flight sharing reply after account switch is discarded', async ({ pa
   expect(state.writes).toHaveLength(1);
   expect(state.writes[0].actor).toBe(actor.id);
 });
+
+test('homepage publishes only current-version redacted ranking rows and reflows at 320px', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 760 });
+  const state = {
+    writes: [], currentActor: actor.id, responseHold: null,
+    publicRows: [
+      {
+        eventId: '40000000-0000-4000-8000-000000001901', exam: 'uceed', title: 'Legacy fictional event',
+        releasedAt: '2026-10-05T12:00:00Z', topTen: [{ rank: 1, alias: 'Candidate-AAAAAA', score: 30, total: 30 }],
+      },
+      {
+        eventId: '40000000-0000-4000-8000-000000001902', exam: 'nid', title: 'Published fictional event',
+        releasedAt: '2026-10-06T12:00:00Z', sharingVersion: 1,
+        topTen: [
+          { rank: 2, alias: 'Candidate-6', score: 28, total: 30 },
+          { rank: 7, alias: 'Candidate-ABCDEF1234', score: 25, total: 30 },
+        ],
+      },
+    ],
+  };
+  await stubPortalProvider(page, (name) => name === 'public_all_india_top_ten' ? state.publicRows : undefined);
+  await page.goto('/');
+  const feed = page.locator('.all-india-highlights');
+  await expect(feed.getByRole('heading', { name: /NID · Published fictional event/i })).toBeVisible();
+  await expect(feed.getByText('Candidate-6', { exact: true })).toBeVisible();
+  await expect(feed.getByText('Candidate-ABCDEF1234', { exact: true })).toBeVisible();
+  await expect(feed.getByText(/Candidate-AAAAAA|Legacy fictional event/)).toHaveCount(0);
+  await expect(feed.getByText('2')).toBeVisible();
+  await expect(feed.getByText('28/30')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  expect(state.writes).toEqual([]);
+});
