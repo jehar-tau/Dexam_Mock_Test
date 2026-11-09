@@ -50,6 +50,7 @@ test('passes exact clean source and emits stable inventory counts and hashes', a
   assert.deepEqual(proof.inventory.counts, { migrations: 1, functions: 1, config: 1, project: 1, paid_mvp_profile: 1, paid_mvp_grant_inventory: 1 });
   assert.match(proof.inventory.sha256, /^[0-9a-f]{64}$/);
   assert.equal(proof.inventory.files.length, 6);
+  assert.deepEqual(JSON.parse(f.invoke().stdout), proof);
 });
 
 test('fails when expected commit or tree differs', async t => {
@@ -63,11 +64,12 @@ test('fails for tracked changes and untracked files anywhere in checkout', async
   const f = await fixture(t);
   await writeFile(path.join(f.app, 'supabase/migrations/001.sql'), 'select 2;\n');
   assert.match(f.invoke().stderr, /tracked or untracked changes/);
+  f.runGit('restore', 'apps/designmocks/supabase/migrations/001.sql');
   await writeFile(path.join(f.app, 'extra.txt'), 'untracked\n');
   assert.match(f.invoke().stderr, /tracked or untracked changes/);
 });
 
-test('fails when assume-unchanged or skip-worktree hides a tracked backend edit', async t => {
+test('fails when skip-worktree hides a tracked backend edit', async t => {
   const f = await fixture(t);
   const file = 'apps/designmocks/supabase/migrations/001.sql';
   f.runGit('update-index', '--skip-worktree', file);
@@ -76,6 +78,15 @@ test('fails when assume-unchanged or skip-worktree hides a tracked backend edit'
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /content differs from HEAD/);
   f.runGit('update-index', '--no-skip-worktree', file);
+});
+
+test('fails when the reviewed tree lacks a required deployment input', async t => {
+  const f = await fixture(t);
+  f.runGit('rm', 'apps/designmocks/supabase/launch/paid-mvp-rpcs.json');
+  f.runGit('commit', '-qm', 'remove a deployment input');
+  const result = f.invoke(f.runGit('rev-parse', 'HEAD'), f.runGit('rev-parse', 'HEAD^{tree}'));
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /Required backend input is missing/);
 });
 
 test('fails for ignored backend overrides, including local environment files', async t => {

@@ -8,6 +8,15 @@ import { fileURLToPath } from 'node:url';
 
 const scriptPath = fileURLToPath(import.meta.url);
 const HEX40 = /^[0-9a-f]{40}$/i;
+const backendPath = 'apps/designmocks/supabase';
+const sourceGroups = [
+  ['migrations', 'migrations/'],
+  ['functions', 'functions/'],
+  ['config', 'config.toml'],
+  ['project', 'project.json'],
+  ['paid_mvp_profile', 'launch/paid-mvp.sql'],
+  ['paid_mvp_grant_inventory', 'launch/paid-mvp-rpcs.json'],
+];
 
 function git(root, args) {
   const result = spawnSync('git', ['-C', root, ...args], { encoding: 'utf8' });
@@ -46,8 +55,8 @@ async function walkFiles(root, rel, output = []) {
   return output;
 }
 
-function parseTree(root) {
-  const result = spawnSync('git', ['-C', root, 'ls-tree', '-rz', '--full-tree', 'HEAD', '--', 'apps/designmocks/supabase'], { encoding: 'buffer' });
+function parseTree(root, commit) {
+  const result = spawnSync('git', ['-C', root, 'ls-tree', '-rz', '--full-tree', commit, '--', backendPath], { encoding: 'buffer' });
   if (result.error || result.status !== 0) throw new Error(`git ls-tree failed: ${result.stderr?.toString().trim() || result.error?.message || ''}`);
   const tracked = new Map();
   for (const record of result.stdout.toString('utf8').split('\0').filter(Boolean)) {
@@ -55,60 +64,44 @@ function parseTree(root) {
     if (!match) throw new Error(`Unable to parse backend tree entry: ${record}`);
     const [, mode, type, oid, file] = match;
     if (type !== 'blob' || !['100644', '100755'].includes(mode)) throw new Error(`Backend input must be an ordinary file blob: ${file} (${mode} ${type})`);
-    tracked.set(file, { oid, mode });
+    tracked.set(file, oid);
   }
   return tracked;
 }
 
-async function verifyBackendTree(root) {
-  const supabase = 'apps/designmocks/supabase';
+async function verifiedInventory(root, commit) {
   let parent = root;
-  for (const part of ['apps', 'designmocks', 'supabase']) {
+  for (const part of backendPath.split('/')) {
     parent = path.join(parent, part);
     const info = await lstat(parent);
     if (!info.isDirectory() || info.isSymbolicLink()) throw new Error(`Backend path must be a normal directory: ${path.relative(root, parent)}`);
   }
-  const actualFiles = (await walkFiles(root, supabase)).sort();
-  const tracked = parseTree(root);
+  const actualFiles = (await walkFiles(root, backendPath)).sort();
+  const tracked = parseTree(root, commit);
   const actualSet = new Set(actualFiles);
   for (const file of tracked.keys()) {
     if (!actualSet.has(file)) throw new Error(`Tracked backend file is missing: ${file}`);
   }
+  const counts = Object.fromEntries(sourceGroups.map(([name]) => [name, 0]));
+  const entries = [];
   for (const file of actualFiles) {
     const expected = tracked.get(file);
-    if (!expected) continue; // Untracked files are rejected by status/ignored-file checks.
+    if (!expected) throw new Error(`Backend file is outside the reviewed tree: ${file}`);
     const bytes = await readFile(path.join(root, file));
     const oid = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
-    if (oid !== expected.oid) throw new Error(`Backend file content differs from HEAD despite index/status flags: ${file}`);
-  }
-  return { trackedFiles: tracked.size };
-}
-
-async function inventory(root) {
-  const base = path.join(root, 'apps/designmocks/supabase');
-  const groups = [
-    ['migrations', 'migrations'],
-    ['functions', 'functions'],
-    ['config', 'config.toml'],
-    ['project', 'project.json'],
-    ['paid_mvp_profile', 'launch/paid-mvp.sql'],
-    ['paid_mvp_grant_inventory', 'launch/paid-mvp-rpcs.json'],
-  ];
-  const files = [];
-  const counts = {};
-  for (const [name, rel] of groups) {
-    const found = await walkFiles(base, rel);
-    counts[name] = found.length;
-    files.push(...found.map(file => `apps/designmocks/supabase/${file}`));
-  }
-  files.sort();
-  const entries = [];
-  for (const file of files) {
-    const bytes = await readFile(path.join(root, file));
+    if (oid !== expected) throw new Error(`Backend file content differs from HEAD despite index/status flags: ${file}`);
+    const relative = file.slice(backendPath.length + 1);
+    const group = sourceGroups.find(([, prefix]) => prefix.endsWith('/') ? relative.startsWith(prefix) : relative === prefix);
+    if (!group) continue;
+    counts[group[0]]++;
     entries.push({ path: file, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') });
+  }
+  for (const [name, prefix] of sourceGroups) {
+    if (!counts[name]) throw new Error(`Required backend input is missing: ${prefix}`);
   }
   const canonical = entries.map(item => `${item.path}\0${item.bytes}\0${item.sha256}\n`).join('');
   return {
+    trackedFiles: tracked.size,
     counts,
     totalFiles: entries.length,
     totalBytes: entries.reduce((sum, item) => sum + item.bytes, 0),
@@ -129,20 +122,18 @@ export async function runPreflight({ cwd = process.cwd(), commit, tree }) {
   if (status.error || status.status !== 0) throw new Error(`git status failed: ${status.stderr?.toString().trim() || status.error?.message || ''}`);
   if (status.stdout.length) throw new Error(`Checkout has tracked or untracked changes (${status.stdout.toString('utf8').split('\0').filter(Boolean).length} path entries)`);
 
-  const ignored = git(root, ['ls-files', '--others', '--ignored', '--exclude-standard', '-z', '--', 'apps/designmocks/supabase']);
+  const ignored = git(root, ['ls-files', '--others', '--ignored', '--exclude-standard', '-z', '--', backendPath]);
   if (ignored) throw new Error(`Ignored/untracked backend override under apps/designmocks/supabase: ${ignored.split('\0').filter(Boolean).join(', ')}`);
 
-  const backendTree = await verifyBackendTree(root);
-  const source = await inventory(root);
+  const inventory = await verifiedInventory(root, actualCommit);
   return {
     passed: true,
-    scope: 'source-only backend inputs; no hosted calls or deployment authorization',
+    scope: 'backend-source-inventory',
     expectedCommit: commit.toLowerCase(),
     expectedTree: tree.toLowerCase(),
     head: actualCommit,
     tree: actualTree,
-    backendTree,
-    inventory: source,
+    inventory,
   };
 }
 
