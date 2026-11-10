@@ -1,9 +1,13 @@
 import { createHash } from "node:crypto";
-import { pathToFileURL } from "node:url";
-import { operationsConfiguration, readOperationsHealth, validateOperationsConfiguration } from "./operations-sweep.mjs";
+import { existsSync, realpathSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { parseArgs } from "node:util";
+import { openOperationsProvider, operationsConfiguration, readOperationsHealth } from "./operations-sweep.mjs";
 
 const alertWindowMs = 15 * 60 * 1000;
 const loopback = new Set(["localhost", "127.0.0.1", "[::1]"]);
+const verificationSchema = "dmocks-operations-alert-verification-v1";
+const verificationIdPattern = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
 
 function alertDestination({ alertUrl, alertAllowOrigin, alertToken, key }, databaseOrigin) {
   if (!alertUrl && !alertAllowOrigin && !alertToken) return null;
@@ -33,11 +37,8 @@ function alertFindings(health) {
   return findings;
 }
 
-async function deliverAlert(destination, report, origin, now, fetchImpl) {
-  const key = createHash("sha256").update(JSON.stringify([
-    origin, report.environment, report.releaseSha, report.findings.map(finding => finding.code),
-    Math.floor(now.getTime() / alertWindowMs),
-  ])).digest("hex");
+async function deliverAlert(destination, report, identity, fetchImpl) {
+  const key = createHash("sha256").update(JSON.stringify(identity)).digest("hex");
   try {
     const response = await fetchImpl(destination.href, {
       method: "POST", redirect: "error", signal: AbortSignal.timeout(10000),
@@ -54,46 +55,67 @@ async function deliverAlert(destination, report, origin, now, fetchImpl) {
   }
 }
 
-export async function runOperationsMonitor(config, { fetchImpl = fetch, now = new Date() } = {}) {
-  const { origin, environment } = validateOperationsConfiguration(config, "CHECK_PAID_MVP_HEALTH_ON");
+export async function runOperationsMonitor(config, { fetchImpl = fetch, now = new Date(), verificationId } = {}) {
+  const { origin, rpc, environment, expectedPaymentMode } = openOperationsProvider(config, {
+    fetchImpl, acknowledgement: "CHECK_PAID_MVP_HEALTH_ON",
+  });
   if (typeof config.releaseSha !== "string" || !/^[0-9a-f]{40}$/.test(config.releaseSha)) {
     throw new Error("A full verified release SHA is required");
   }
   if (!(now instanceof Date) || !Number.isFinite(now.getTime())) throw new Error("Invalid operations clock");
   const destination = alertDestination(config, origin);
+  if (verificationId !== undefined) {
+    if (typeof verificationId !== "string" || !verificationIdPattern.test(verificationId)) {
+      throw new Error("Use a UUID for the alert delivery check");
+    }
+    if (!destination) throw new Error("An approved alert receiver is required for the delivery check");
+  }
   let health;
   try {
-    health = await readOperationsHealth({ origin, key: config.key, fetchImpl, requireMonitor: true });
+    health = await readOperationsHealth(rpc, { requireMonitor: true });
   } catch {
     // Provider diagnostics can contain credentials or data. Only the fixed finding leaves this process.
   }
-  const findings = alertFindings(health);
-  const status = health?.status ?? "unavailable";
+  const paymentMode = health?.paymentMode ?? null;
+  const mismatch = health && paymentMode !== expectedPaymentMode;
+  const findings = mismatch ? [{ code: "payment_mode_mismatch", severity: "P1" }] : alertFindings(health);
+  const status = !health || mismatch ? "unavailable" : findings.length ? "degraded" : health.status;
+  const { releaseSha } = config;
+  const checkedAt = now.toISOString();
   const report = {
-    schema: "dmocks-operations-alert-v1", environment, releaseSha: config.releaseSha,
-    checkedAt: now.toISOString(), status: health && findings.length ? "degraded" : status,
-    queues: health?.queues ?? null, findings,
+    schema: "dmocks-operations-alert-v1", environment, paymentMode, expectedPaymentMode, releaseSha, checkedAt,
+    status, queues: mismatch ? null : health?.queues ?? null, findings,
   };
-  let delivery = "not_needed";
-  if (findings.length) {
-    delivery = "unconfigured";
-    if (destination) delivery = await deliverAlert(destination, report, origin, now, fetchImpl) ? "accepted" : "failed";
+  if (verificationId !== undefined) {
+    if (findings.length) return { ...report, verificationId, delivery: "blocked" };
+    const verification = { schema: verificationSchema, environment, paymentMode, releaseSha, checkedAt, verificationId };
+    const accepted = await deliverAlert(destination, verification,
+      [verificationSchema, origin, environment, paymentMode, releaseSha, verificationId], fetchImpl);
+    return { ...report, verificationId, delivery: accepted ? "accepted" : "failed" };
   }
-  return { ...report, delivery };
+  if (!findings.length) return { ...report, delivery: "not_needed" };
+  if (!destination) return { ...report, delivery: "unconfigured" };
+  const accepted = await deliverAlert(destination, report, [
+    origin, environment, paymentMode, releaseSha, findings.map(finding => finding.code),
+    Math.floor(now.getTime() / alertWindowMs),
+  ], fetchImpl);
+  return { ...report, delivery: accepted ? "accepted" : "failed" };
 }
 
 async function main() {
   const env = process.env;
+  const { values } = parseArgs({ options: { "verify-delivery": { type: "string" } } });
   const result = await runOperationsMonitor({
     ...operationsConfiguration(env), releaseSha: env.DMOCKS_OPERATIONS_RELEASE_SHA,
     alertUrl: env.DMOCKS_OPERATIONS_ALERT_URL, alertAllowOrigin: env.DMOCKS_OPERATIONS_ALERT_ALLOW_ORIGIN,
     alertToken: env.DMOCKS_OPERATIONS_ALERT_TOKEN,
-  });
+  }, { verificationId: values["verify-delivery"] });
   process.stdout.write(`${JSON.stringify(result)}\n`);
-  if (result.delivery === "failed") process.exitCode = 1;
+  if (result.delivery === "failed" || result.delivery === "blocked") process.exitCode = 1;
   else if (result.findings.length) process.exitCode = 2;
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (import.meta.main ?? (process.argv[1] && existsSync(process.argv[1]) &&
+    realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)))) {
   main().catch(error => {
     process.stderr.write(`${error.message}\n`);
     process.exitCode = 1;
