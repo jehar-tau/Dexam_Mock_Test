@@ -89,5 +89,9 @@ select pg_temp.mvp_assert((select count(*)=2 from dm_private.mvp_release_audit),
 select pg_temp.mvp_assert((select md5(jsonb_agg(to_jsonb(i)order by ordinal)::text)from dm_private.attempt_items i where attempt_id=current_setting('test.mvp.attempt')::uuid)=current_setting('test.mvp.frozen'),'release changes never rewrite frozen attempt contents');
 \ir ../../supabase/launch/paid-mvp.sql
 select pg_temp.mvp_assert(dm_private.mvp_profile_permissions_valid()and(select count(*)=2 from dm_private.mvp_release_audit),'profile reapplication is idempotent and preserves approvals/audit');
+select pg_temp.mvp_assert(not exists(
+  select 1 from unnest(array['anon','authenticated','service_role']) as roles(role)
+  where has_function_privilege(role,'public.admin_read_question_export(uuid)','EXECUTE')
+),'private question export packet is excluded from the paid MVP profile');
 rollback;
 \echo 'PASS: paid MVP default-deny APIs, canonical exact-paper approval, holds/snapshots, guarded sales and preserved owned results.'

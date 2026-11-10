@@ -11,6 +11,8 @@ import { CommunityContentModeration } from "./CommunityContentModeration.jsx";
 import { AiQuestionDrafting } from "./AiQuestionDrafting.jsx";
 import { OperationalHealth } from "./OperationalHealth.jsx";
 import { QuestionDraftExport } from "./QuestionDraftExport.jsx";
+import { verifyQuestionExportPacket } from "./question-export-packet.mjs";
+import { withAccountDeadline } from "./account-request.js";
 import { LaunchReadiness } from "./LaunchReadiness.jsx";
 import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQueue.jsx";
 import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
@@ -45,6 +47,15 @@ async function intakeRequest(functions, name, body) {
   return data;
 }
 
+function downloadPrivateBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
 function Gate({ session, loading }) {
   if (loading) return <p role="status">Checking your account…</p>;
   if (!session)
@@ -73,7 +84,7 @@ export function Admin() {
 }
 
 function AdminDesk({ session }) {
-  const { rpc, functions, assertCurrent, isCurrent } = useAdminServices();
+  const { rpc, functions, assertCurrent, isCurrent, presentForCurrentStaff } = useAdminServices();
   const batch = useRef(null), sequence = useRef(0);
   const positions = useRef({
     support: { cursor: null, previous: [] }, privacy: { cursor: null, previous: [] },
@@ -189,6 +200,16 @@ function AdminDesk({ session }) {
       await load();
     } catch (e) { reportError(e); throw e; }
   };
+  const downloadQuestionPacket = (artifact, signal) => withAccountDeadline(async active => {
+    const response = await rpc("admin_read_question_export", { p_export_id: artifact.id }, active);
+    const { packet } = await verifyQuestionExportPacket(response, {
+      artifactId: artifact.id, externalKey: artifact.externalKey, contentSha256: artifact.contentSha256,
+    });
+    await presentForCurrentStaff(() => {
+      const json = new Blob([JSON.stringify(packet, null, 2) + "\n"], { type: "application/json" });
+      downloadPrivateBlob(json, `dmocks-question-${packet.artifactId}.json`);
+    }, active);
+  }, signal);
   const configureMock = async (event, exam) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
@@ -290,12 +311,7 @@ function AdminDesk({ session }) {
     const blob = await intakeRequest(functions, "question-intake", { assetId: asset.id, ...(figure ? { figureSha: figure.sha256 } : {}) });
     assertCurrent();
     if (!(blob instanceof Blob)) throw new Error("Private source could not be downloaded.");
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = figure ? `${figure.sha256}.png` : asset.name;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    downloadPrivateBlob(blob, figure ? `${figure.sha256}.png` : asset.name);
   };
   return (
     <>
@@ -522,7 +538,7 @@ function AdminDesk({ session }) {
                     </button>
                   </div>
                 )}
-                <QuestionDraftExport draft={d} onExport={exportDraft} />
+                <QuestionDraftExport draft={d} onExport={exportDraft} onDownload={downloadQuestionPacket} />
               </article>
             ))}
           </div>
