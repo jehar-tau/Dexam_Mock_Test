@@ -99,7 +99,21 @@ Required before opening the window:
 
 Once the functions and secrets are in place, run `DMOCKS_AUTH_STAGE=controlled DMOCKS_COMMERCE_STAGE=configured npm run test:hosted-setup` with the approved project's public configuration and the default `foundation` backend checks. Verify that the checkout handler allows the exact approved origin's preflight, rejects anonymous and foreign-origin requests, and that the webhook rejects an unsigned body. This probe uses no merchant credentials and performs no checkout or refund. Verify the key mode, real event delivery and account entitlement in the Test journey below.
 
-Build the private checkout artifact in Vite `test` mode with `VITE_DEPLOYMENT_ENV=test`, `VITE_PORTAL_ENABLED=true` and `VITE_CHECKOUT_ENABLED=true`. Set `VITE_TEST_LOGIN_ENABLED`, `VITE_STAGING_PORTAL_ENABLED` and `VITE_POST_LAUNCH_PREVIEW` to `false`. Supply the approved public Supabase configuration and exact compiled notice version. The dedicated staging portal artifact serves a separate nonpayment workspace.
+### Package the Test checkout frontend
+
+Run the packager from `apps/designmocks` in a clean reviewed worktree. Supply the designated project's public browser key through `DMOCKS_CHECKOUT_PUBLISHABLE_KEY`, the reviewed customer notice file as an absolute path, and its independently reviewed compiled version. The build uses the verified Git archive and the locked offline npm cache.
+
+```sh
+npm run checkout:package -- --commit "$DMOCKS_REVIEWED_COMMIT" --tree "$DMOCKS_REVIEWED_TREE" \
+  --frontend-origin "$DMOCKS_REVIEWED_CHECKOUT_ORIGIN" --provider-origin "$DMOCKS_REVIEWED_PROVIDER_ORIGIN" \
+  --notices "$DMOCKS_PUBLISHED_NOTICES_FILE" --expect-notice-version "$DMOCKS_REVIEWED_NOTICE_VERSION" \
+  --output "$DMOCKS_PRIVATE_CHECKOUT_ARTIFACT"
+npm run checkout:verify -- --artifact "$DMOCKS_PRIVATE_CHECKOUT_ARTIFACT" --expect "$DMOCKS_REVIEWED_ARTIFACT_SHA256"
+```
+
+The manifest binds the Test portal, paid MVP backend profile, exact origins, notice version, source and site files. The browser opens sign-in and checkout only on the reviewed checkout origin. The packager disables the expanded preview modules, controlled-login preview, private staging portal and phone verification. The staging workspace has its own nonpayment artifact and verifier.
+
+After the hosting and rollout decision, deploy only the verified `site/` directory to the restricted acceptance audience at the reviewed origin. The server must still be in Test mode with public registration and Live sales closed, a matching policy version and an expiring Test window for the allowlisted payer.
 
 An authenticated admin calls `admin_set_mvp_test_checkout(true, p_expires_at, p_evidence)`. Expiry must be future and at most eight hours away; evidence is required. The admin need not be the payer. The payer still accepts the published terms under its verified current account. Enable the separate frontend checkout only on the explicitly approved private acceptance surface; normal/controlled/staging previews remain false by default. Nonproduction checkout displays the Test notice and accepts only `rzp_test_` orders and Test-mode server passes.
 
