@@ -18,7 +18,7 @@ The first MVP profile accidentally omitted the existing service-role branch in `
 
 The default operations runner now verifies the `paid-mvp-v1` aggregate and service access before any mutation, finalizes only bounded expired-attempt batches, prunes old rate buckets and rereads aggregate health. It does not call deferred AI/intake recovery. Invalid/null/coerced counts or an old/malformed profile stop the runner. Output contains only six approved counters, scope/status/time and bounded sweep totals. It never prints user details or raw provider responses. The approved target and exact production acknowledgement remain required before a hosted run.
 
-The companion profile remains outside the migration ledger: 88 migrations, then `supabase/launch/paid-mvp.sql` last in one transaction. Current profile SHA-256: `d86662261768dfe92c3687f31ab76c36096c0f6c1983a3a741b48402a3156482`. Apply only with public admission/sales/Test acceptance closed on the approved target. No hosted write is performed by this delivery.
+The companion profile remains outside the migration ledger: 89 migrations, then `supabase/launch/paid-mvp.sql` last in one transaction. Current profile SHA-256: `d86662261768dfe92c3687f31ab76c36096c0f6c1983a3a741b48402a3156482`. Apply only with public admission/sales/Test acceptance closed on the approved target. No hosted write is performed by this delivery.
 
 ## Operator facts and remaining policies
 

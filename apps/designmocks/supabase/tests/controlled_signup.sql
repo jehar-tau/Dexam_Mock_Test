@@ -23,46 +23,31 @@ do $$begin
   if exists (
     select 1 from unnest(array['anon','authenticated','service_role']) roles(role)
     where has_function_privilege(role,'public.before_designmocks_user_created(jsonb)','execute')
-      or has_table_privilege(role,'dm_private.registration_pre_admissions','select,insert,update,delete')
   ) then
-    raise exception 'Application roles must not invoke the Auth hook or access pre-admission records';
+    raise exception 'Application roles must not invoke the Auth hook';
   end if;
   if not has_function_privilege('supabase_auth_admin','public.before_designmocks_user_created(jsonb)','execute')
     or not has_schema_privilege('supabase_auth_admin','dm_private','usage')
     or not has_table_privilege('supabase_auth_admin','dm_private.registration_policy','select')
-    or not has_table_privilege('supabase_auth_admin','dm_private.registration_testers','select')
-    or not has_table_privilege('supabase_auth_admin','dm_private.registration_pre_admissions','select')
-    or has_table_privilege('supabase_auth_admin','dm_private.registration_pre_admissions','insert,update,delete') then
-    raise exception 'Auth hook must read policy and decisions without writing decisions';
+    or not has_table_privilege('supabase_auth_admin','dm_private.registration_testers','select') then
+    raise exception 'Auth hook must read the registration policy and tester allowlist';
   end if;
-  if exists (select 1 from dm_private.registration_pre_admissions) then
-    raise exception 'Migration must leave pre-admission records empty';
+  if to_regclass('dm_private.registration_pre_admissions') is not null then
+    raise exception 'Adults-only registration keeps no per-account pre-admission records';
   end if;
 end $$;
 
 update dm_private.registration_policy set mode='closed';
 insert into dm_private.registration_testers(email) values ('tester@example.invalid');
-insert into dm_private.registration_pre_admissions(google_sub,decision,proof_ref,consent_version,issued_at,expires_at,revoked_at)
-select subject,decision,gen_random_uuid(),'fictional-consent-v1',issued,expires,revoked
-from (values
-  ('fictional-adult','adult',now()-interval '1 hour',now()+interval '1 hour',null::timestamptz),
-  ('fictional-guardian','guardian',now()-interval '1 hour',now()+interval '1 hour',null),
-  ('fictional-expired','adult',now()-interval '2 hours',now()-interval '1 hour',null),
-  ('fictional-future','guardian',now()+interval '1 hour',now()+interval '2 hours',null),
-  ('fictional-revoked','guardian',now()-interval '2 hours',now()+interval '1 hour',now()-interval '1 hour')
-) fixture(subject,decision,issued,expires,revoked);
 
 set local role supabase_auth_admin;
-select pg_temp.signup_expect(pg_temp.signup_event('fictional-adult','tester@example.invalid'),false,'closed mode denies a verified tester with a valid record');
+select pg_temp.signup_expect(pg_temp.signup_event('fictional-adult','tester@example.invalid'),false,'closed mode denies a verified tester');
 reset role;
 update dm_private.registration_policy set mode='testers';
 set local role supabase_auth_admin;
 select pg_temp.signup_expect(pg_temp.signup_event('fictional-adult',' Tester@Example.Invalid ','{"email":"tester@example.invalid"}'),
-  true,'adult verification and normalized matching email are accepted');
-select pg_temp.signup_expect(pg_temp.signup_event('fictional-guardian','tester@example.invalid'),true,'valid guardian verification is accepted');
-select pg_temp.signup_expect(pg_temp.signup_event('fictional-guardian','other@example.invalid'),false,'valid record cannot bypass tester allowlist');
-select pg_temp.signup_expect(pg_temp.signup_event(subject,'tester@example.invalid'),false,'invalid admission record: ' || subject)
-from unnest(array['fictional-unlisted','fictional-expired','fictional-future','fictional-revoked','FICTIONAL-ADULT']) subjects(subject);
+  true,'a verified allowlisted tester with a normalized matching email is accepted');
+select pg_temp.signup_expect(pg_temp.signup_event('fictional-adult','other@example.invalid'),false,'tester mode denies an unlisted account');
 select pg_temp.signup_expect(pg_temp.signup_event('fictional-adult','tester@example.invalid',claims),false,'malformed provider claims')
 from (values
   ('{"email_verified":"true"}'::jsonb), ('{"email_verified":false}'), ('{"email_verified":null}'),
@@ -81,9 +66,10 @@ reset role;
 
 update dm_private.registration_policy set mode='open';
 set local role supabase_auth_admin;
-select pg_temp.signup_expect(pg_temp.signup_event('fictional-guardian','other@example.invalid'),true,'open mode still accepts a valid pre-admission');
-select pg_temp.signup_expect(pg_temp.signup_event('fictional-unlisted','other@example.invalid'),false,'open mode still requires a pre-admission');
+select pg_temp.signup_expect(pg_temp.signup_event('fictional-adult','other@example.invalid'),true,'open mode accepts a verified Google account');
+select pg_temp.signup_expect(pg_temp.signup_event('fictional-adult','other@example.invalid') #- '{user,user_metadata,email_verified}',
+  false,'open mode still requires Google email verification');
 reset role;
 
 rollback;
-\echo 'PASS: Auth-only Google signup requires a current adult or guardian pre-admission decision.'
+\echo 'PASS: Auth-only Google signup admits only verified Google accounts allowed by the registration policy.'
