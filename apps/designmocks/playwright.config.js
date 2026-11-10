@@ -78,7 +78,7 @@ export default defineConfig({
       reuseExistingServer: false,
       timeout: 60_000,
     },
-    {
+    ...(!process.env.DMOCKS_STAGING_ARTIFACT_SITE ? [{
       command: "npm exec -- vite build --mode staging --outDir test-results/staging-build && npm exec -- vite preview --mode staging --outDir test-results/staging-build --host 127.0.0.1 --port 4699 --strictPort",
       url: "http://127.0.0.1:4699",
       env: {
@@ -93,6 +93,6 @@ export default defineConfig({
       },
       reuseExistingServer: false,
       timeout: 60_000,
-    },
+    }] : []),
   ],
 });

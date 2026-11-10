@@ -42,66 +42,102 @@ function parseArgs(args) {
   return { commit: values['--commit'].toLowerCase(), tree: values['--tree'].toLowerCase() };
 }
 
-async function walkFiles(root, rel, output = []) {
+async function walkFiles(root, rel, kind, files, directories) {
   const abs = path.join(root, rel);
   const info = await lstat(abs);
-  if (info.isSymbolicLink()) throw new Error(`Symlink in backend input path: ${rel}`);
+  if (info.isSymbolicLink()) throw new Error(`Symlink in ${kind} input path: ${rel}`);
   if (info.isFile()) {
-    output.push(rel.split(path.sep).join('/'));
-    return output;
+    files.push(rel);
+    return;
   }
-  if (!info.isDirectory()) throw new Error(`Non-regular backend input: ${rel}`);
-  for (const entry of (await readdir(abs)).sort()) await walkFiles(root, path.join(rel, entry), output);
-  return output;
+  if (!info.isDirectory()) throw new Error(`Non-regular ${kind} input: ${rel}`);
+  directories.push(rel);
+  for (const entry of (await readdir(abs)).sort()) {
+    await walkFiles(root, path.posix.join(rel, entry), kind, files, directories);
+  }
 }
 
-function parseTree(root, commit) {
-  const result = spawnSync('git', ['-C', root, 'ls-tree', '-rz', '--full-tree', commit, '--', backendPath], { encoding: 'buffer' });
+function parseTree(root, commit, subtree, label) {
+  const result = spawnSync('git', ['-C', root, '--literal-pathspecs', 'ls-tree', '-rz', '--full-tree', commit, '--', subtree], { encoding: 'buffer' });
   if (result.error || result.status !== 0) throw new Error(`git ls-tree failed: ${result.stderr?.toString().trim() || result.error?.message || ''}`);
   const tracked = new Map();
   for (const record of result.stdout.toString('utf8').split('\0').filter(Boolean)) {
-    const match = /^(\d{6}) (\w+) ([0-9a-f]{40})\t(.+)$/.exec(record);
-    if (!match) throw new Error(`Unable to parse backend tree entry: ${record}`);
+    const match = /^(\d{6}) (\w+) ([0-9a-f]{40})\t([\s\S]+)$/.exec(record);
+    if (!match) throw new Error(`Unable to parse ${label.toLowerCase()} tree entry: ${record}`);
     const [, mode, type, oid, file] = match;
-    if (type !== 'blob' || !['100644', '100755'].includes(mode)) throw new Error(`Backend input must be an ordinary file blob: ${file} (${mode} ${type})`);
+    if (type !== 'blob' || !['100644', '100755'].includes(mode)) throw new Error(`${label} input must be an ordinary file blob: ${file} (${mode} ${type})`);
     tracked.set(file, oid);
   }
   return tracked;
 }
 
-async function verifiedInventory(root, commit) {
-  let parent = root;
-  for (const part of backendPath.split('/')) {
+export async function verifyTrackedFiles({ repositoryRoot, sourceRoot = repositoryRoot, commit, subtree }) {
+  if (!HEX40.test(commit || '')) throw new Error('Expected a full 40-character commit ID');
+  if (typeof subtree !== 'string' || subtree.includes('\\') || subtree.includes('\0')
+    || subtree.split('/').some(part => !part || part === '.' || part === '..')) {
+    throw new Error('Expected a repository-relative subtree path');
+  }
+  if (git(repositoryRoot, ['rev-parse', '--verify', `${commit}^{commit}`]) !== commit.toLowerCase()) {
+    throw new Error('Expected an exact commit object ID');
+  }
+
+  const label = subtree === backendPath ? 'Backend' : 'Source';
+  const kind = label.toLowerCase();
+  let parent = sourceRoot;
+  if (!(await lstat(parent)).isDirectory()) throw new Error(`${label} root must be a normal directory`);
+  for (const part of subtree.split('/')) {
     parent = path.join(parent, part);
     const info = await lstat(parent);
-    if (!info.isDirectory() || info.isSymbolicLink()) throw new Error(`Backend path must be a normal directory: ${path.relative(root, parent)}`);
+    if (!info.isDirectory()) throw new Error(`${label} path must be a normal directory: ${path.relative(sourceRoot, parent)}`);
   }
-  const actualFiles = (await walkFiles(root, backendPath)).sort();
-  const tracked = parseTree(root, commit);
+
+  const actualFiles = [];
+  const actualDirectories = [];
+  await walkFiles(sourceRoot, subtree, kind, actualFiles, actualDirectories);
+  const tracked = parseTree(repositoryRoot, commit, subtree, label);
   const actualSet = new Set(actualFiles);
+  const trackedDirectories = new Set(tracked.size ? [subtree] : []);
   for (const file of tracked.keys()) {
-    if (!actualSet.has(file)) throw new Error(`Tracked backend file is missing: ${file}`);
+    if (!actualSet.has(file)) throw new Error(`Tracked ${kind} file is missing: ${file}`);
+    for (let dir = path.posix.dirname(file); !trackedDirectories.has(dir); dir = path.posix.dirname(dir)) {
+      trackedDirectories.add(dir);
+    }
   }
-  const counts = Object.fromEntries(sourceGroups.map(([name]) => [name, 0]));
+
   const entries = [];
-  for (const file of actualFiles) {
+  for (const file of actualFiles.sort()) {
     const expected = tracked.get(file);
-    if (!expected) throw new Error(`Backend file is outside the reviewed tree: ${file}`);
-    const bytes = await readFile(path.join(root, file));
+    if (!expected) throw new Error(`${label} file is outside the reviewed tree: ${file}`);
+    const bytes = await readFile(path.join(sourceRoot, file));
     const oid = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
-    if (oid !== expected) throw new Error(`Backend file content differs from HEAD despite index/status flags: ${file}`);
-    const relative = file.slice(backendPath.length + 1);
-    const group = sourceGroups.find(([, prefix]) => prefix.endsWith('/') ? relative.startsWith(prefix) : relative === prefix);
-    if (!group) continue;
-    counts[group[0]]++;
+    if (oid !== expected) {
+      const reference = subtree === backendPath ? 'HEAD despite index/status flags' : 'the reviewed commit';
+      throw new Error(`${label} file content differs from ${reference}: ${file}`);
+    }
     entries.push({ path: file, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') });
   }
+  for (const directory of actualDirectories) {
+    if (!trackedDirectories.has(directory)) throw new Error(`${label} directory is outside the reviewed tree: ${directory}`);
+  }
+  return entries;
+}
+
+async function verifiedInventory(root, commit) {
+  const tracked = await verifyTrackedFiles({ repositoryRoot: root, commit, subtree: backendPath });
+  const counts = Object.fromEntries(sourceGroups.map(([name]) => [name, 0]));
+  const entries = tracked.filter(file => {
+    const relative = file.path.slice(backendPath.length + 1);
+    const group = sourceGroups.find(([, prefix]) => prefix.endsWith('/') ? relative.startsWith(prefix) : relative === prefix);
+    if (!group) return false;
+    counts[group[0]]++;
+    return true;
+  });
   for (const [name, prefix] of sourceGroups) {
     if (!counts[name]) throw new Error(`Required backend input is missing: ${prefix}`);
   }
   const canonical = entries.map(item => `${item.path}\0${item.bytes}\0${item.sha256}\n`).join('');
   return {
-    trackedFiles: tracked.size,
+    trackedFiles: tracked.length,
     counts,
     totalFiles: entries.length,
     totalBytes: entries.reduce((sum, item) => sum + item.bytes, 0),

@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, copyFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, copyFile, rm, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { verifyTrackedFiles } from '../scripts/release-source-preflight.mjs';
 
 const sourceScript = fileURLToPath(new URL('../scripts/release-source-preflight.mjs', import.meta.url));
 
@@ -100,4 +101,58 @@ test('fails for ignored backend overrides, including local environment files', a
   const result = f.invoke(commit, tree);
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /Ignored\/untracked backend override/);
+});
+
+async function extractedArchive(t, fixture, subtree) {
+  const archiveRoot = await mkdtemp(path.join(tmpdir(), 'dmocks-preflight-archive-'));
+  t.after(() => rm(archiveRoot, { recursive: true, force: true }));
+  const sourceRoot = path.join(archiveRoot, 'source');
+  await mkdir(sourceRoot);
+  const archive = path.join(archiveRoot, 'source.tar');
+  fixture.runGit('archive', '--format=tar', `--output=${archive}`, fixture.commit, '--', subtree);
+  const result = spawnSync('tar', ['-xf', archive, '-C', sourceRoot], { encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  return sourceRoot;
+}
+
+test('verifies extracted Git archive bytes outside the checkout', async t => {
+  const f = await fixture(t);
+  const subtree = 'apps/designmocks';
+  const sourceRoot = await extractedArchive(t, f, subtree);
+  const options = { repositoryRoot: f.root, commit: f.commit, subtree };
+  const files = await verifyTrackedFiles({ ...options, sourceRoot });
+  assert.deepEqual(files, await verifyTrackedFiles(options));
+  assert.deepEqual(files.map(file => file.path), [
+    'apps/designmocks/scripts/release-source-preflight.mjs',
+    'apps/designmocks/supabase/config.toml',
+    'apps/designmocks/supabase/functions/_shared/shared.ts',
+    'apps/designmocks/supabase/launch/paid-mvp-rpcs.json',
+    'apps/designmocks/supabase/launch/paid-mvp.sql',
+    'apps/designmocks/supabase/migrations/001.sql',
+    'apps/designmocks/supabase/project.json',
+  ]);
+  assert.deepEqual(files.slice(1), JSON.parse(f.invoke().stdout).inventory.files);
+
+  const file = path.join(sourceRoot, subtree, 'supabase/migrations/001.sql');
+  await t.test('rejects changed bytes', async () => {
+    await writeFile(file, 'select 2;\n');
+    await assert.rejects(verifyTrackedFiles({ ...options, sourceRoot }), /content differs from the reviewed commit.*001\.sql/);
+    await writeFile(file, 'select 1;\n');
+  });
+  await t.test('rejects extra paths', async () => {
+    const extra = path.join(sourceRoot, subtree, 'extra.txt');
+    await writeFile(extra, 'extra\n');
+    await assert.rejects(verifyTrackedFiles({ ...options, sourceRoot }), /file is outside the reviewed tree.*extra\.txt/);
+    await rm(extra);
+    const empty = path.join(sourceRoot, subtree, 'extra-directory');
+    await mkdir(empty);
+    await assert.rejects(verifyTrackedFiles({ ...options, sourceRoot }), /directory is outside the reviewed tree.*extra-directory/);
+    await rm(empty, { recursive: true });
+  });
+  await t.test('rejects missing files and symlink replacements', async () => {
+    await rm(file);
+    await assert.rejects(verifyTrackedFiles({ ...options, sourceRoot }), /Tracked source file is missing.*001\.sql/);
+    await symlink(path.join(f.root, subtree, 'supabase/migrations/001.sql'), file);
+    await assert.rejects(verifyTrackedFiles({ ...options, sourceRoot }), /Symlink in source input path.*001\.sql/);
+  });
 });
