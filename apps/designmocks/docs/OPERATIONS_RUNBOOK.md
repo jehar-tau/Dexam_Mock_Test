@@ -84,7 +84,18 @@ An administrator grants access under **Admin review → Drawing reviewer access*
 
 An administrator records a reason when revoking access. Revocation returns ungraded claims to the queue and preserves saved grades for administrators to finish. New queue reads, image-signing requests and grading actions are denied after revocation. Previously signed image links expire after five minutes. Administrators handle corrections to released individual feedback through the audited override and explicit release controls.
 
-Stage migrations `202611060122_drawing_review_claims.sql`, `202611060123_all_india_drawing_results.sql` and `202611060126_drawing_reviewer_access.sql` with the drawing media functions and matching UI. Test with separate synthetic student, reviewer and administrator accounts. Verify upload ownership, signed-page expiry and refresh, reviewer isolation, revocation with an existing session and a grade correction. Uploads verify complete PNG/JPEG/WebP decoding, unnecessary-metadata removal and Storage binding. Failed physical deletion recovery, general scanning/quarantine, resumable transfer and representative hosted resource acceptance remain open.
+Stage migrations `202611060122_drawing_review_claims.sql`, `202611060123_all_india_drawing_results.sql`, `202611060126_drawing_reviewer_access.sql` and `202611100163_drawing_removal_receipts.sql` with the drawing media functions and matching UI. Test with separate synthetic student, reviewer and administrator accounts. Verify upload ownership, signed-page expiry and refresh, reviewer isolation, revocation with an existing session and a grade correction. Uploads verify complete PNG/JPEG/WebP decoding, unnecessary-metadata removal and Storage binding. General scanning/quarantine, resumable transfer and representative hosted resource acceptance remain open.
+
+An accepted removal frees the page slot and records the private file in the same transaction. When Storage has not confirmed deletion, the student sees that file cleanup is pending. The same removal receipt can finish cleanup after the cutoff. New removals and replacement pages still use the original deadline.
+
+On the approved Test target with sales closed, set `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_DRAWING_CLEANUP_ALLOW_ORIGIN` to the exact provider origin and `DMOCKS_DRAWING_CLEANUP_ENVIRONMENT` to `development` for loopback or `staging` for the approved private target. An apply on staging also requires `DMOCKS_DRAWING_CLEANUP_STAGING_ACK=PURGE_REMOVED_DRAWINGS_ON_<exact origin>`.
+
+```sh
+npm run drawing:cleanup -- --limit 25
+npm run drawing:cleanup -- --limit 25 --apply
+```
+
+The first command reports a bounded count of recorded removals. The second attempts the private deletions and confirms each against the exact receipt and Storage catalogue. Exit `2` means the selected batch still has pending work. Retry the bounded batch after Storage recovers. The command prints aggregate counts and leaves the existing paid MVP scheduler separate.
 
 For All India events, choose the objective and drawing counts and the drawing upload allowance when scheduling the paper. The last start reserves the whole exam and upload window. Use **Finalize grade for cohort release** on each submitted drawing and publish after the ten-day review period. Missing drawing pages earn zero for that task. Published grades and standings are frozen.
 - Drawing feedback is private until explicit release. Any later score change requires a reason and a new release.
