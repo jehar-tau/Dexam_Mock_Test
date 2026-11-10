@@ -125,6 +125,7 @@ function AdminDesk({ session }) {
               return rpc(name, pageArgs[name], request.signal);
             }),
       );
+      return await withAccountDeadline(active => presentForCurrentStaff(() => {
         if (!current()) return false;
         const supportPage = readSupportPage(b, session.user.id);
         const reviewPage = readPrivacyQueue(privacy, session.user.id);
@@ -143,11 +144,12 @@ function AdminDesk({ session }) {
         setPrivacyPage({ ...reviewPage, position: target.privacy });
         setReadiness(launch);
         return true;
+      }, active), request.signal);
     } catch (e) {
       if (current()) { request.abort(); setMessage(adminRequestMessage(e)); }
       return false;
     }
-  }, [rpc, assertCurrent, isCurrent, session.user.id]);
+  }, [rpc, assertCurrent, isCurrent, presentForCurrentStaff, session.user.id]);
   const load = useCallback(() => loadDesk(positions.current), [loadDesk]);
   const loadSupportPage = useCallback(support => loadDesk({ ...positions.current, support }), [loadDesk]);
   const loadPrivacyPage = useCallback(privacy => loadDesk({ ...positions.current, privacy }), [loadDesk]);

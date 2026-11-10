@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import AxeBuilder from "@axe-core/playwright";
+import { fileURLToPath } from "node:url";
 import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 test.use({ baseURL: portalFixtureURL });
@@ -182,9 +182,11 @@ test("admin support shows the recorded payment beside the existing reply form", 
   await expect(linked).not.toContainText(providerOrder);
   await page.setViewportSize({ width: 320, height: 750 });
   expect(await linked.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
-  const accessibility = await new AxeBuilder({ page }).include('[aria-label="Linked purchase"]')
-    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
-  expect(accessibility.violations).toEqual([]);
+  await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
+  const violations = await page.evaluate(async () => (await window.axe.run('[aria-label="Linked purchase"]', {
+    runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] },
+  })).violations.map(({ id }) => id));
+  expect(violations).toEqual([]);
   const reply = "The recorded payment is confirmed.";
   await form.getByRole("textbox", { name: "Reply to reporter" }).fill(reply);
   await form.getByRole("button", { name: "Save", exact: true }).click();
@@ -193,4 +195,27 @@ test("admin support shows the recorded payment beside the existing reply form", 
     ["admin_reply_bug_report", { p_id: reportId, p_status: "open", p_reply: reply, p_expected_revision: 0, p_request_id: expect.stringMatching(/^[0-9a-f-]{36}$/) }],
   ]);
   expect(provider.unexpected).toEqual([]);
+});
+
+test("a delayed support page is cleared if administrator access was revoked while reading", async ({ page }) => {
+  const started = Promise.withResolvers(), release = Promise.withResolvers();
+  let allowed = true;
+  await stubPortalProvider(page, name => name === "is_dmocks_admin" ? allowed : emptyAdminRead(name));
+  await page.route("https://dmocks-portal-fixture.supabase.co/rest/v1/rpc/admin_bug_report_page", async route => {
+    if (route.request().method() === "OPTIONS") return route.fulfill({ headers, status: 204 });
+    started.resolve();
+    await release.promise;
+    return route.fulfill({ headers, json: reportPage([
+      { ...report({ p_title: title, p_description: description }), purchase, replyRevision: 0 },
+    ]) });
+  });
+  await page.goto("/");
+  await seedPortalSession(page, student);
+  await page.goto("/admin");
+  await started.promise;
+  allowed = false;
+  release.resolve();
+  await expect(page.getByRole("alert")).toContainText("Administrator access has ended");
+  await expect(page.getByRole("region", { name: "Linked purchase" })).toHaveCount(0);
+  await expect(page.locator("#root")).not.toContainText(reference);
 });
