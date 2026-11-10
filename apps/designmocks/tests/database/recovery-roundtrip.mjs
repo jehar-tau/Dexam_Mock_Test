@@ -70,13 +70,16 @@ async function main(){
   const owned=JSON.parse((await sql(recoveryActor(state.owner,`select public.read_attempt(${quote(state.completed)})`),target)).split('\n').findLast(line=>line.startsWith('{')&&line.includes('"questions"')));
   assert.equal(owned.score,4);assert.equal(owned.total,200);assert.equal(owned.questions.length,57);assert.equal(owned.questions[0].answer,'1');
   assert.equal(await sql(`select (select count(*)=114 from dm_private.attempt_items)and(select answer_revision=9 and answer='"1"'::jsonb from dm_private.attempt_items where attempt_id=${quote(state.active)}and ordinal=2)and(select deadline=${quote(state.deadline)}::timestamptz and deadline=started_at+interval'7200 seconds'from dm_private.attempts where id=${quote(state.active)})and(select status='paid'and payment_id=${quote(state.payment)}from dm_private.orders where id=${quote(state.order)})and(select outcome='granted'from dm_private.payment_events where event_id=${quote(state.event)})and(select status='fixed'and admin_reply='Original fictional restored support reply.'from dm_private.bug_reports where id=${quote(state.report)});`,target),'t');
+  const support = await sql(recoveryActor(state.owner, "select public.my_bug_report_page()#>'{items,0,purchase}'"), target);
+  const purchase = JSON.parse(support.split('\n').findLast(line => line.startsWith('{')));
+  assert.deepEqual(purchase, {reference: state.order, mode: 'test'});
   const pass=(await sql(recoveryActor(state.owner,'select public.my_pass()'),target)).split('\n').findLast(line=>line.startsWith('{'));assert.equal(JSON.parse(pass).active,true);
   await assert.rejects(sql(recoveryActor(state.other,`select public.read_attempt(${quote(state.completed)})`),target));
   await assert.rejects(sql(recoveryActor(state.owner,'select *from dm_private.payment_events'),target));
   await assert.rejects(sql('set role anon;select public.my_pass();',target));
   assert.equal(await sql(`insert into dm_private.launch_gate_audit(gate,approved,evidence,actor_id)values('backup_restore',false,'Original fictional recovery after restore.',${quote(state.admin)})returning id>${Number(state.auditMax)};`,target),'t');
   assert.equal(await sql("select not sales_enabled and dm_private.mvp_profile_permissions_valid()and(select mode='closed'from dm_private.registration_policy)from public.launch_settings;",target),'t');
-  console.log(JSON.stringify({passed:true,actualPostgres17ArchiveRestored:true,exactSchemaRlsGrantsRowsAndSequences:true,originalQuestions:57,frozenItems:114,paidPassAndEventPreserved:true,answerRevisionAndOriginalDeadlinePreserved:true,foreignAndAnonymousDenied:true,privateBytesVerified:true,storage:'mock-catalogue-only',registrationAndSalesClosed:true,hostedWritesPerformed:false}));
+  console.log(JSON.stringify({passed:true,actualPostgres17ArchiveRestored:true,exactSchemaRlsGrantsRowsAndSequences:true,originalQuestions:57,frozenItems:114,paidPassAndEventPreserved:true,purchaseSupportLinkPreserved:true,answerRevisionAndOriginalDeadlinePreserved:true,foreignAndAnonymousDenied:true,privateBytesVerified:true,storage:'mock-catalogue-only',registrationAndSalesClosed:true,hostedWritesPerformed:false}));
  }finally{
   await connection?.close();if(created)await sql('drop database '+target+' with(force);','postgres');await rm(workspace,{recursive:true,force:true});
  }

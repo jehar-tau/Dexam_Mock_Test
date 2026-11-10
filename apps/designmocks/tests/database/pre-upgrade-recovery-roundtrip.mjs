@@ -111,16 +111,36 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
 
     const profile = await readFile(new URL('../../supabase/launch/paid-mvp.sql', import.meta.url), 'utf8');
     const purchaseHistorySignature = 'public.my_purchase_page(timestamp with time zone,uuid)';
+    const purchaseSupportSignature = 'public.submit_bug_report(text,text,text,uuid,uuid)';
     const purchaseHistoryEntry = ` ('${purchaseHistorySignature}','student'),\n`;
-    const oldProfileParts = profile.split(purchaseHistoryEntry);
-    assert.equal(oldProfileParts.length, 2, 'Expected exactly one purchase history entry in the current paid profile');
-    const oldProfile = oldProfileParts.join('');
+    const purchaseSupportEntry = `,\n ('${purchaseSupportSignature}','student');`;
+    const withoutSupport = profile.split(purchaseSupportEntry);
+    assert.equal(withoutSupport.length, 2, 'Expected exactly one purchase support entry in the current paid profile');
+    const historyProfile = withoutSupport.join(';');
+    const withoutHistory = historyProfile.split(purchaseHistoryEntry);
+    assert.equal(withoutHistory.length, 2, 'Expected exactly one purchase history entry in the previous paid profile');
+    const originalProfile = withoutHistory.join('');
     const installPaidProfile = profileSql => sql(`begin;\n${profileSql}\ncommit;`, target);
+    const checkPurchaseProfile = (signature, count, authenticated) => sql(`select dm_private.mvp_profile_permissions_valid()
+      and (select count(*) from dm_private.mvp_rpc_allowlist)=${count}
+      and has_function_privilege('authenticated',${quote(signature)},'EXECUTE') = ${authenticated}
+      and not exists (
+        select 1 from unnest(array['anon','service_role']) roles(role)
+        where has_function_privilege(role,${quote(signature)},'EXECUTE')
+      );`, target);
+    const existingReportRequest = randomUUID();
+    const reportArguments = `'Original historical receipt', 'Fictional report before purchase support.', null, ${quote(existingReportRequest)}`;
+    let existingReport;
     for (const file of pending) {
       const version = versionOf(file);
       if (version === '202611090158') {
-        // Model the installed companion from before the purchase history RPC existed.
-        await installPaidProfile(oldProfile);
+        // Model the installed companion from before purchase history existed.
+        await installPaidProfile(originalProfile);
+      }
+      if (version === '202611090161') {
+        const result = await sql(recoveryActor(state.owner, `select public.submit_bug_report(${reportArguments})`), target);
+        existingReport = result.split('\n').find(line => /^[a-f0-9-]{36}$/.test(line) && line !== state.owner);
+        assert.ok(existingReport, 'The preceding paid profile accepted a four-argument support submission');
       }
       await apply(file, target);
       if (version === '202611090158') {
@@ -136,21 +156,23 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
         );`, target), 't', 'ranking migration leaves the already installed paid profile closed and valid');
       }
       if (version === '202611090160') {
-        assert.equal(await sql(`select dm_private.mvp_profile_permissions_valid()
-          and (select count(*) from dm_private.mvp_rpc_allowlist)=47 and not exists (
-            select 1 from unnest(array['anon','authenticated','service_role']) roles(role)
-            where has_function_privilege(role,${quote(purchaseHistorySignature)},'EXECUTE')
-          );`, target), 't', 'purchase history migration preserves the installed paid profile until companion reapplication');
+        assert.equal(await checkPurchaseProfile(purchaseHistorySignature, 47, false), 't',
+          'purchase history migration preserves the installed paid profile until companion reapplication');
+        await installPaidProfile(historyProfile);
+        assert.equal(await checkPurchaseProfile(purchaseHistorySignature, 48, true), 't',
+          'the preceding 48-RPC companion grants purchase history to authenticated callers');
+      }
+      if (version === '202611090161') {
+        assert.equal(await checkPurchaseProfile(purchaseSupportSignature, 48, false), 't',
+          'purchase support migration preserves the preceding 48-RPC companion');
       }
     }
     await installPaidProfile(profile);
-    assert.equal(await sql(`select dm_private.mvp_profile_permissions_valid()
-      and (select count(*) from dm_private.mvp_rpc_allowlist)=48
-      and has_function_privilege('authenticated',${quote(purchaseHistorySignature)},'EXECUTE')
-      and not exists (
-        select 1 from unnest(array['anon','service_role']) roles(role)
-        where has_function_privilege(role,${quote(purchaseHistorySignature)},'EXECUTE')
-      );`, target), 't', 'the reviewed 48-RPC companion grants purchase history only to authenticated callers');
+    assert.equal(await checkPurchaseProfile(purchaseHistorySignature, 49, true), 't', 'purchase history remains enabled');
+    assert.equal(await checkPurchaseProfile(purchaseSupportSignature, 49, true), 't',
+      'the reviewed 49-RPC companion grants purchase support only to authenticated callers');
+    const replay = await sql(recoveryActor(state.owner, `select public.submit_bug_report(${reportArguments}, null)`), target);
+    assert.ok(replay.split('\n').includes(existingReport), 'new overload replays a pre-migration four-argument receipt');
     const upgraded = await connect(target);
     try {
       const allVersions = files.map(versionOf);
@@ -171,7 +193,7 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
       pendingMigrationsAppliedAfterRestore: pending.length, exactSchemaRlsGrantsRowsAndSequences: true,
       historicalGapPreserved: true, bankMediaAccountAttemptPaymentAndSupportPreserved: true,
       foreignAndAnonymousDenied: true, paidProfilePreservedThroughRankingAndPurchaseMigrations: true,
-      purchaseHistoryEnabledByCompanionOnly: true, storage: 'mock-catalogue-only',
+      purchaseHistoryEnabledByCompanionOnly: true, purchaseSupportEnabledByCompanionOnly: true, storage: 'mock-catalogue-only',
       registrationAndSalesClosed: true, hostedWritesPerformed: false,
     }));
   } finally {

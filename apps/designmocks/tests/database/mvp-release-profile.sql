@@ -14,7 +14,13 @@ select pg_temp.mvp_assert(not exists(
   where has_function_privilege(role,signature,'EXECUTE')
     and (role<>'service_role' or signature not in ('public.public_all_india_top_ten()','public.all_india_event_catalog()'))
 ),'public ranking and consent endpoints remain closed in the paid profile');
-select pg_temp.mvp_assert((select count(*)=48 from dm_private.mvp_rpc_allowlist),'explicit student/staff permission manifest');
+select pg_temp.mvp_assert((select count(*)=49 and count(*) filter(where category='student')=23
+  and count(*) filter(where category='staff')=26 from dm_private.mvp_rpc_allowlist),'explicit student/staff permission manifest');
+select pg_temp.mvp_assert(
+  has_function_privilege('authenticated','public.submit_bug_report(text,text,text,uuid,uuid)','EXECUTE')
+  and not has_function_privilege('anon','public.submit_bug_report(text,text,text,uuid,uuid)','EXECUTE')
+  and not has_function_privilege('service_role','public.submit_bug_report(text,text,text,uuid,uuid)','EXECUTE'),
+  'only authenticated callers receive the purchase support RPC');
 select pg_temp.mvp_assert(not exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public'and not exists(select 1 from pg_depend d where d.classid='pg_proc'::regclass and d.objid=p.oid and d.deptype='e')and has_function_privilege('anon',p.oid,'EXECUTE')),'no anonymous application RPCs');
 select pg_temp.mvp_assert(has_function_privilege('service_role','public.fulfil_verified_payment(text,text,text,integer,text)','EXECUTE')and has_function_privilege('supabase_auth_admin','public.before_designmocks_user_created(jsonb)','EXECUTE'),'service capture and controlled Auth hook remain explicitly authorized');
 insert into auth.users(id)values('00000000-0000-4000-8000-000000001951'),('00000000-0000-4000-8000-000000001952'),('00000000-0000-4000-8000-000000001953');
@@ -90,6 +96,11 @@ select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001952'
 select pg_temp.mvp_assert(public.available_papers()='[]'::jsonb,'withdrawal prevents new selection');
 select pg_temp.mvp_assert(public.my_purchase_page()#>'{items,0}' @> '{"reference":"20000000-0000-4000-8000-000000001952","status":"paid"}',
   'paid MVP allows the owner to see purchase history after paper withdrawal');
+select public.submit_bug_report('Original purchase support', 'Fictional report under the paid profile.', null,
+  gen_random_uuid(), '20000000-0000-4000-8000-000000001952');
+select pg_temp.mvp_assert(public.my_bug_report_page()#>'{items,0,purchase}' =
+  '{"reference":"20000000-0000-4000-8000-000000001952","mode":"test"}'::jsonb,
+  'paid MVP enables an owner to link a purchase and read the bounded association');
 select pg_temp.mvp_reject('select public.start_attempt(''10000000-0000-4000-8000-000000001951'')','withdrawal prevents new starts');
 select pg_temp.mvp_assert(public.read_attempt(current_setting('test.mvp.attempt')::uuid)->>'score'='4','withdrawal preserves the owned customer result');
 reset role;
