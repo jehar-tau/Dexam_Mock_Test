@@ -2,6 +2,16 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+## Exact migration rollout verification — 10 November 2026
+
+The rollout verifier compares Supabase CLI JSON with the ordered pending filenames and hashes from the reviewed Git source, the exact installed ledger and the reported target. Against the historical 25-version fixture, this 77-migration source has 52 pending files. The first is `202611060006_ai_question_drafting.sql`, an older gap that a latest-version cutoff would omit. The fixture supplies version IDs only. Obtain a fresh approved-target ledger and recovery proof before hosted promotion. [Operator procedure](PROVIDER_SETUP.md#verify-the-migration-dry-run)
+
+## Attempt reply identity and countdown — 10 November 2026
+
+The runner pins the verified student token for attempt RPCs and private media requests. Before returning a successful reply, it verifies the current token and rereads the session within the same request deadline. A confirmed account change clears the private view. A temporary identity outage or a token refresh during the final check withholds the reply while keeping the trusted paper and device answer journal available for recovery.
+
+The countdown measures from the receipt of the server's clock reading. Time spent verifying the account after that receipt counts against the fixed deadline. The browser regressions hold a question-report receipt across an account switch, switch accounts while the figure reply's identity check is pending, and delay a paper's final identity check by three seconds.
+
 ## Attempt media identity — 9 November 2026
 
 The attempt client pins the verified student's token when requesting private figures or drawing pages and confirms the same account before returning a successful reply to the view. Both checks share the request deadline. A confirmed account change clears the old paper and pending image reply. An identity service outage keeps the previously opened paper, fixed clock and device answer journal available while withholding the new reply.
