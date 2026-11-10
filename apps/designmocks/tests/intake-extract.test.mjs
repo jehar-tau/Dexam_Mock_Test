@@ -45,6 +45,7 @@ test("a duplicate extraction cannot fail the active worker or send the source tw
         claimed = true;
         return { data: { token: "run-1", name: "fixture.pdf", storagePath: "private/fixture.pdf", mimeType: "application/pdf", byteSize: pdf.size } };
       }
+      if (name === "authorize_question_intake_provider") return { data: true };
       return { data: name === "complete_question_intake_asset" ? 1 : null };
     },
     storage: { from: () => ({ download: async () => ({ data: pdf }) }) },
@@ -56,6 +57,7 @@ test("a duplicate extraction cannot fail the active worker or send the source tw
       assert.equal(url, "https://api.openai.com/v1/responses");
       assert.equal(JSON.parse(request.body).input[0].content[1].filename, "fixture.pdf");
       assert.ok(request.signal instanceof AbortSignal);
+      assert.equal(request.redirect, "error");
       await pending;
       return Response.json(response([question]));
     },
@@ -67,6 +69,7 @@ test("a duplicate extraction cannot fail the active worker or send the source tw
   release();
   assert.equal((await first).status, 200);
   assert.equal(providerCalls, 1);
+  assert.equal(calls.filter(([name]) => name === "authorize_question_intake_provider").length, 1);
   assert.equal(calls.filter(([name]) => name === "complete_question_intake_asset").length, 1);
   assert.equal(calls.find(([name]) => name === "complete_question_intake_asset")[1].p_token, "run-1");
 });
@@ -78,6 +81,7 @@ test("failed extraction does not send mismatched source bytes or expose provider
     const admin = {
       rpc: async (name, input) => {
         calls.push([name, input]);
+        if (name === "authorize_question_intake_provider") return { data: true };
         return { data: name === "claim_question_intake_asset"
           ? { token: "run-1", storagePath: "private/fixture.pdf", mimeType: "application/pdf", byteSize: pdf.size + Number(mismatch) } : null };
       },
@@ -123,4 +127,58 @@ test("extraction refuses a same-length private source whose registered digest di
   assert.equal(result.status, 400);
   assert.equal(sent, false);
   assert.deepEqual(calls, ["claim_question_intake_asset", "fail_question_intake_asset"]);
+});
+
+test("intake rechecks a claimed job after the file read before sending private source bytes", async () => {
+  for (const [permission, expected] of [
+    [{ error: { code: "42501", message: "Private role diagnostic" } }, 403],
+    [{ error: { code: "40001", message: "Private stale claim diagnostic" } }, 409],
+    [{ data: false }, 400],
+  ]) {
+    const calls = [];
+    let fileRead = false, sent = false;
+    const admin = {
+      async rpc(name, input) {
+        calls.push([name, input]);
+        if (name === "claim_question_intake_asset") {
+          return { data: { token: "original-token", name: "fixture.pdf", storagePath: "private/fixture.pdf", mimeType: "application/pdf", byteSize: pdf.size } };
+        }
+        if (name === "authorize_question_intake_provider") {
+          assert.equal(fileRead, true);
+          return permission;
+        }
+        return { data: null };
+      },
+      storage: { from: () => ({ async download() { fileRead = true; return { data: pdf }; } }) },
+    };
+    const result = await extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture",
+      model: "fictional-model", apiKey: "fictional-key", fetcher: async () => { sent = true; return Response.json(response([question])); } });
+    assert.equal(result.status, expected);
+    assert.equal(sent, false);
+    assert.doesNotMatch(JSON.stringify(result), /Private/);
+    assert.deepEqual(calls.map(([name]) => name), ["claim_question_intake_asset", "authorize_question_intake_provider", "fail_question_intake_asset"]);
+    assert.deepEqual(calls[1][1], { p_asset_id: "fixture", p_actor_id: "fixture-admin", p_token: "original-token" });
+    assert.equal(calls[2][1].p_token, "original-token");
+  }
+});
+
+test("intake returns safe role denial when revoked after dispatch, even if cleanup is uncertain", async () => {
+  const calls = [];
+  const admin = {
+    async rpc(name, input) {
+      calls.push([name, input]);
+      if (name === "claim_question_intake_asset") {
+        return { data: { token: "fixture-token", name: "fixture.pdf", storagePath: "private/fixture.pdf", mimeType: "application/pdf", byteSize: pdf.size } };
+      }
+      if (name === "authorize_question_intake_provider") return { data: true };
+      if (name === "complete_question_intake_asset") return { error: { code: "42501", message: "Private role diagnostic" } };
+      throw new Error("Private cleanup diagnostic");
+    },
+    storage: { from: () => ({ download: async () => ({ data: pdf }) }) },
+  };
+  const result = await extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture", model: "fictional-model",
+    apiKey: "fictional-key", fetcher: async () => Response.json(response([question])) });
+  assert.deepEqual(result, { status: 403, body: { error: "Admin access required" } });
+  assert.equal(calls.at(-1)[0], "fail_question_intake_asset");
+  assert.equal(calls.at(-1)[1].p_token, "fixture-token");
 });

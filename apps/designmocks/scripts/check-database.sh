@@ -26,6 +26,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/portal-grants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bank-import-finalization.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/canonical-media.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-runtime.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-answer-alternatives.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-exam-sections.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-nift.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/launch-readiness.sql
@@ -77,6 +78,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-paper-preparatio
 node tests/database/nid-write-revocation.mjs
 node tests/database/staff-write-concurrency.mjs
 node tests/database/bank-target-reconciliation.mjs
+node tests/database/question-model-authorization-concurrency.mjs
 node tests/database/recovery-roundtrip.mjs
 node tests/database/recovery-roundtrip.mjs --pre-upgrade
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'

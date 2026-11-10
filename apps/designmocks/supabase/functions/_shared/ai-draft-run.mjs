@@ -10,19 +10,26 @@ export async function runAiDraft({ caller, worker, actorId, input, model, apiKey
       p_exam: input?.exam, p_topic: input?.topic, p_question_type: input?.questionType,
       p_instruction: input?.instruction, p_basis_external_keys: input?.basisExternalKeys,
     });
-    if (created.error) return { status: created.error.code === "42501" ? 403 : 400, body: { error: created.error.message } };
+    if (created.error?.code === "42501") return { status: 403, body: { error: "Admin access required" } };
+    if (created.error) return { status: 400, body: { error: created.error.message } };
     requestId = created.data;
   }
   const claimed = await worker.rpc("claim_ai_draft_request", { p_request_id: requestId, p_actor_id: actorId, p_retry: retry });
-  if (claimed.error) return { status: claimed.error.code === "42501" ? 403 : 409, body: { error: claimed.error.message } };
+  if (claimed.error?.code === "42501") return { status: 403, body: { error: "Admin access required" } };
+  if (claimed.error) return { status: 409, body: { error: claimed.error.message } };
   const token = claimed.data?.token;
   if (typeof token !== "string") return { status: 503, body: { error: "Question processing is temporarily unavailable. Contact the operator before retrying." } };
   try {
-    const basis = await caller.rpc("admin_ai_draft_basis", { p_request_id: requestId });
-    if (basis.error) throw new Error("Draft references are unavailable");
+    const basis = await worker.rpc("read_ai_draft_provider_basis", {
+      p_request_id: requestId, p_actor_id: actorId, p_token: token,
+    });
+    if (basis.error) throw basis.error;
+    if (basis.data?.requestId !== requestId || !Array.isArray(basis.data.basis) || !basis.data.basis.length) {
+      throw new Error("Current draft references are unavailable");
+    }
     const generated = await fetcher("https://api.openai.com/v1/responses", {
       method: "POST", headers: { Authorization: "Bearer " + apiKey, "Content-Type": "application/json" },
-      body: JSON.stringify(buildAiDraftRequest({ ...basis.data, model })), signal: AbortSignal.timeout(60000),
+      body: JSON.stringify(buildAiDraftRequest({ ...basis.data, model })), signal: AbortSignal.timeout(60000), redirect: "error",
     });
     if (!generated.ok) throw new Error("Draft provider request failed");
     const response = await generated.json();
@@ -30,11 +37,19 @@ export async function runAiDraft({ caller, worker, actorId, input, model, apiKey
     const completed = await worker.rpc("complete_ai_draft_request", {
       p_request_id: requestId, p_model: model, p_response_id: response.id, p_payload: parseAiDraftResponse(response), p_token: token,
     });
-    if (completed.error) throw new Error("Draft failed review validation");
+    if (completed.error) throw completed.error;
+    if (typeof completed.data !== "string" || !completed.data) throw new Error("Draft receipt is incomplete");
     return { status: 200, body: { requestId, draftId: completed.data, status: "succeeded" } };
-  } catch {
-    const error = "Draft processing failed. Check the reference approvals and configured provider before retrying.";
-    await worker.rpc("fail_ai_draft_request", { p_request_id: requestId, p_model: model, p_error: error, p_token: token });
-    return { status: 400, body: { requestId, error } };
+  } catch (failure) {
+    const status = failure?.code === "42501" ? 403 : failure?.code === "40001" ? 409 : 400;
+    const error = status === 403 ? "Admin access required" : status === 409
+      ? "The draft job or its references changed. Refresh the queue before retrying."
+      : "Draft processing failed. Check the reference approvals and configured provider before retrying.";
+    try {
+      await worker.rpc("fail_ai_draft_request", { p_request_id: requestId, p_model: model, p_error: error, p_token: token });
+    } catch {
+      // An unconfirmed cleanup can expire without hiding the original denial.
+    }
+    return { status, body: { requestId, error } };
   }
 }

@@ -1,5 +1,5 @@
 import test from'node:test';import assert from'node:assert/strict';
-import{runtimeQuestion,RULES_2027}from'../scripts/question-runtime.mjs';
+import{numericKey,runtimeQuestion,RULES_2027}from'../scripts/question-runtime.mjs';
 import{buildManifest}from'../scripts/question-bank-import.mjs';
 import{compileRuntimeManifest,runtimeOperator}from'../scripts/materialize-bank-runtime.mjs';
 const sha='a'.repeat(64);
@@ -29,9 +29,24 @@ test('full question crops may supply option labels; unresolved text-only options
  assert.equal(convert({...q,assets:[figure],options:q.options.map(o=>({...o,asset:'unmapped.png'}))}),null);
 });
 test('choice parsing rejects extra text, duplicates and unknown options instead of silently discarding them',()=>{
- for(const raw of ['A,Z','A,A','A or B','Answer A','A!'])assert.equal(convert(fixture({type:'MSQ',answer:{raw,status:'verified'}})),null);
+ for(const raw of ['A,Z','A,A','Answer A','A!'])assert.equal(convert(fixture({type:'MSQ',answer:{raw,status:'verified'}})),null);
  for(const raw of ['AC','A,C','A C','A;C'])assert.deepEqual(convert(fixture({type:'MSQ',answer:{raw,status:'verified'}})).key.correct,['A','C']);
  assert.equal(convert(fixture({options:[{key:'A',text:'A'},{key:'B',text:'B'}]})),null);
+});
+test('verified IIT choice keys preserve explicit single-option alternatives and complete MSQ sets',()=>{
+ const choice=(type,raw,exam='uceed')=>convert(fixture({type,provenance:{exam},answer:{raw,status:'verified'}}));
+ assert.deepEqual(choice('MCQ','D OR A or C').key,{kind:'mcq',correct:['D','A','C'],sourceExternalKey:'original-fixture'});
+ assert.deepEqual(choice('MSQ','DC or B / A\n OR C','ceed').key,{kind:'msq',alternatives:[['C','D'],['A','B'],['C']],sourceExternalKey:'original-fixture'});
+ assert.equal(choice('MCQ','D or A','nift'),null);
+ assert.equal(choice('MSQ','C or B','nid'),null);
+});
+test('choice alternatives reject incomplete, ambiguous, oversized or duplicate branches',()=>{
+ const choice=(type,raw)=>convert(fixture({type,answer:{raw,status:'verified'}}));
+ for(const raw of ['D or D','D or d','D or A,C','D or unknown','either D or A','D or','or D','D or or A',`D${' '.repeat(200)}or A`])assert.equal(choice('MCQ',raw),null);
+ for(const raw of ['CD or D,C','D or D,D','D or A,Z','D or A. B','D or','D or or A'])assert.equal(choice('MSQ',raw),null);
+ const pending=fixture({answer:{raw:'D or A',status:'pending'}});
+ assert.equal(convert(pending),null);
+ assert.equal(choice('MCQ',['D or A']),null);
 });
 test('numeric keys preserve exact decimal text and explicit ranges without invented tolerances',()=>{
  const nat=raw=>convert(fixture({type:'NAT',options:[],answer:{raw,status:'verified'}}));
@@ -46,10 +61,16 @@ test('numeric keys preserve each exact source literal in explicit or alternative
  assert.deepEqual(nat('-2 OR +3 or .5').key.accepted,[{exact:'-2'},{exact:'+3'},{exact:'.5'}]);
  assert.deepEqual(nat('  2\n or\t3  ').marking,{correct:4,wrong:0});
 });
-test('numeric alternatives never reinterpret commas, fractions, ranges, annotations or incomplete alternatives',()=>{
+test('numeric alternatives never reinterpret commas, fractions, annotations or incomplete alternatives',()=>{
  const nat=raw=>convert(fixture({type:'NAT',options:[],answer:{raw,status:'verified'}}));
- for(const raw of['1,2','1,000','1/2','1 to 2 or 3','1 or 2 units','either 1 or 2','1or2','1 or','or 1','1 or 1','1 or 2 or unknown','1 or Infinity'])assert.equal(nat(raw),null,raw);
+ for(const raw of['1,2','1,000','1/2','1 or 2 units','either 1 or 2','1or2','1 or','or 1','1 or 1','1 or 2 or unknown','1 or Infinity'])assert.equal(nat(raw),null,raw);
  assert.equal(nat('1 or '+('2'.repeat(201))),null);
+});
+test('verified IIT numeric keys preserve explicit range alternatives without expanding authored NID parsing',()=>{
+ const nat=raw=>convert(fixture({type:'NAT',options:[],answer:{raw,status:'verified'}}));
+ assert.deepEqual(nat('-8.25 or 1.000000000000000001 TO 1.000000000000000003 or 5–6').key.accepted,[{exact:'-8.25'},{range:['1.000000000000000001','1.000000000000000003']},{range:['5','6']}]);
+ assert.equal(numericKey('-8.25 or 1 to 2'),null);
+ for(const raw of ['4 or 3 to 2','4 (3 to 5) or 9','1 to 2 or 1–2','1 or +01.0 or 3–4','1 or 1–1'])assert.equal(nat(raw),null,raw);
 });
 test('verified Part B tasks compile only as human-reviewed drawing runtime',()=>{
  const drawing=convert(fixture({type:'DESCRIPTIVE',options:[],answer:null,assets:[figure],visualDependency:true,topic:'drawing-product'}));

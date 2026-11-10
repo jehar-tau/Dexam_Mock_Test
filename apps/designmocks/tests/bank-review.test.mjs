@@ -21,7 +21,11 @@ test("source answers retain pending verification and decimal precision", () => {
 
 test("delivery keys distinguish exact numeric answers, ranges, choices and human marking", () => {
   assert.equal(deliveryAnswerLabel({ kind: "nat", accepted: [{ exact: "2.000000000000000001" }, { range: ["3.01", "3.09"] }] }), "2.000000000000000001 or 3.01 to 3.09");
+  assert.equal(deliveryAnswerLabel({ kind: "mcq", correct: ["C", "A"] }), "C or A");
+  assert.equal(deliveryAnswerLabel({ kind: "mcq", correct: ["B"] }), "B");
   assert.equal(deliveryAnswerLabel({ kind: "msq", correct: ["A", "D"] }), "A, D");
+  assert.equal(deliveryAnswerLabel({ kind: "msq", alternatives: [["A", "D"], ["B", "C"]] }), "A, D or B, C");
+  assert.equal(deliveryAnswerLabel({ kind: "msq", alternatives: [["A", "D"], null] }), "Awaiting verification");
   assert.equal(deliveryAnswerLabel({ kind: "drawing" }), "Human review against the task rubric");
   assert.equal(deliveryAnswerLabel({ kind: "nat", accepted: [null] }), "Awaiting verification");
   assert.equal(deliveryAnswerLabel(null), "Awaiting conversion");
