@@ -8,6 +8,8 @@
     "dev:e2e": "vite --host 127.0.0.1 --port 4399 --strictPort",
     "build": "vite build",
     "build:staging": "vite build --mode staging",
+    "staging:package": "node scripts/staging-artifact.mjs build",
+    "staging:verify": "node scripts/staging-artifact.mjs verify",
     "build:production": "vite build --mode production",
     "preview": "vite preview --host 127.0.0.1 --port 4191 --strictPort",
     "test": "node --test tests/*.test.mjs",

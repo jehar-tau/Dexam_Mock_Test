@@ -155,6 +155,19 @@ Frontend switches are separate:
 
 Use `DMOCKS_AUTH_STAGE=controlled DMOCKS_BACKEND_STAGE=staging npm run test:hosted-setup` after promotion to check anonymous RPC denial, closed checkout and exact-origin media preflights. Use the default `foundation` backend stage to check the original endpoints. Verify the private allowlist and the real Google callback separately.
 
+### Package the private staging frontend
+
+Run the packager from `apps/designmocks` in a clean release worktree. Use the independently reviewed full commit, tree and staging origins. Provide the designated project's public browser key through `DMOCKS_STAGING_PUBLISHABLE_KEY`. Populate the local npm cache for the reviewed lockfile before packaging.
+
+```sh
+npm run staging:package -- --commit "$DMOCKS_REVIEWED_COMMIT" --tree "$DMOCKS_REVIEWED_TREE" \
+  --frontend-origin "$DMOCKS_STAGING_FRONTEND_ORIGIN" --provider-origin "$DMOCKS_STAGING_PROVIDER_ORIGIN" \
+  --output "$DMOCKS_PRIVATE_ARTIFACT_DIRECTORY"
+npm run staging:verify -- --artifact "$DMOCKS_PRIVATE_ARTIFACT_DIRECTORY" --expect "$DMOCKS_REVIEWED_ARTIFACT_SHA256"
+```
+
+The packager verifies the archived app files against Git and installs locked dependencies from the local cache. It builds with the private staging workspace and preview modules enabled and with checkout, released-portal login, controlled-login preview and phone verification disabled. The private manifest records the source, origins, toolchain and exact site hashes. After target approval, upload only the verified `site/` directory to the private staging host. The matching backend uses the full staging migrations and tester admission.
+
 Review the pending migration ledger before applying changes. The earlier AI schema gap requires explicit inclusion in the reviewed plan, and model-backed functions require separate rights, consent and cost approval. Deploy the matching media and intake-upload functions for the staging origin before the browser acceptance run. Keep the `dmocks.com` deployment on its own approved artifact. The current private Site serves both names, so replacing its artifact requires a hosting decision even though staging sign-in is pinned to the preview hostname.
 
 From `apps/designmocks`, the read-only deployment rehearsal is
