@@ -2447,9 +2447,11 @@ svg {
 @media(max-width:700px){.exam-mock-grid{grid-template-columns:1fr}}
 .all-india-list { display: grid; gap: 1rem; margin-top: 2rem; }
 .all-india-list article { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; padding: 1.5rem; border: 1px solid var(--line); background: var(--paper); }
-.all-india-highlights > article { max-width: 720px; padding: 1.5rem; border: 1px solid var(--line); }
+.all-india-list article > div { min-width: 0; overflow-wrap: anywhere; }
+.all-india-sharing { margin-block-start: 1rem; }
+.all-india-highlights > article { max-width: 720px; padding: 1.5rem; border: 1px solid var(--line); overflow-wrap: anywhere; }
 .all-india-highlights ol { list-style: none; padding: 0; }
-.all-india-highlights li { display: grid; grid-template-columns: 60px 1fr auto; gap: 1rem; padding: .75rem 0; border-bottom: 1px solid var(--line); }
+.all-india-highlights li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: clamp(.45rem, 2vw, 1rem); padding: .75rem 0; border-bottom: 1px solid var(--line); }
 @media(max-width:700px){.all-india-list article{align-items:flex-start;flex-direction:column}}
 @media (max-width: 700px) {
   html {
