@@ -7,7 +7,7 @@ const noticeFile = fileURLToPath(new URL("./tests/fixtures/fictional-published-n
 const fixtureNotices = readPublishedNotices(noticeFile, { allowFixture: true });
 const scope=process.env.DMOCKS_E2E_SCOPE??'mvp';
 if(!['mvp','full'].includes(scope))throw new Error('Choose the mvp or full browser scope.');
-const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','admin-access-lifecycle.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','drawing-reviewer.spec.js'];
+const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','admin-access-lifecycle.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','drawing-reviewer.spec.js','drawing-inspection.spec.js'];
 export default defineConfig({
   testMatch: scope === 'full' ? '**/*.spec.js' : [
     ...mvpFiles.map(file => '**/' + file),
@@ -27,7 +27,7 @@ export default defineConfig({
     {
       command:"npm exec -- vite --host 127.0.0.1 --port 4999 --strictPort",
       url:"http://127.0.0.1:4999",
-      env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"true",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:fixtureNotices.version,DMOCKS_PUBLISHED_NOTICES_FILE:noticeFile},
+      env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"true",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:fixtureNotices.version,VITE_CANDIDATE_PHONE_VERIFICATION_ENABLED:"true",DMOCKS_PUBLISHED_NOTICES_FILE:noticeFile},
       reuseExistingServer:false,timeout:60000,
     },
     {

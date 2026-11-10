@@ -159,6 +159,8 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
 });
 
 test("an assigned teacher grades the fixed practice criteria and individual limits", async ({ page }) => {
+  const modelIdentity = `fixture-vision:3b@${"a".repeat(64)}`;
+  const modelEvidence = "Drawing page 2. The arrows point toward the exit.";
   const rubric = [
     { label: "Visual communication", points: 8.25, guidance: "Credit the legibility of the intended direction and sign hierarchy." },
     { label: "Task fit and evidence", points: 11.75, guidance: "Credit the observable links between the design and the original task brief." },
@@ -171,9 +173,9 @@ test("an assigned teacher grades the fixed practice criteria and individual limi
         return { items: (input.p_scope === "available" && drawing.canClaim || input.p_scope === "mine" && drawing.canReview) ? [drawing] : [], nextCursor: null };
       case "admin_claim_drawing_review":
         drawing = { ...drawing, rubric, version: 1, status: "assigned", canClaim: false, canReview: true, assignedToMe: true,
-          aiSuggestion: { provider: "Fictional model provider", model: "Fixture model", rubricVersion: "fixture-v1",
+          aiSuggestion: { provider: "ollama-local", model: modelIdentity, rubricVersion: "fixture-v1",
             proposedScore: 10, confidence: 0.7, criteria: { "Visual communication": 7, "Task fit and evidence": 3 },
-            comments: "Original fictional suggestion.", evidence: [] } };
+            comments: "Original fictional suggestion.", evidence: [modelEvidence] } };
         return null;
       case "admin_review_drawing":
         drawing = { ...drawing, version: 2, status: "reviewed", criteria: input.p_criterion_marks, score: input.p_score, comments: input.p_comments };
@@ -201,6 +203,11 @@ test("an assigned teacher grades the fixed practice criteria and individual limi
   await expect(second).toHaveAttribute("max", "11.75");
   await expect(rubricGroup.getByRole("button", { name: "Add criterion" })).toHaveCount(0);
   await page.setViewportSize({ width: 320, height: 760 });
+  const advisory = page.getByLabel("AI review advisory");
+  await advisory.getByText("Model provenance and evidence", { exact: true }).press("Enter");
+  await expect(advisory.getByText(`ollama-local · ${modelIdentity} · rubric fixture-v1`)).toBeVisible();
+  await expect(advisory.getByText(modelEvidence, { exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
   const accessibilityViolations = () => page.evaluate(async () => {
     // Measure settled colours: a toggle's 150ms background transition can otherwise be sampled mid-fade.
