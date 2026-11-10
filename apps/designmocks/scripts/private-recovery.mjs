@@ -25,10 +25,15 @@ async function downloadObject(origin,key,object,fetchImpl){
  const response=await fetchImpl(objectUrl(origin,object),{headers:{apikey:key,authorization:'Bearer '+key,'accept-encoding':'identity'},redirect:'error',signal:AbortSignal.timeout(60000)});
  assert.ok(response.status===200&&response.body,'Private recovery object download failed');return response.body;
 }
-async function readPreUpgradeLedger(file, releaseSha, sourceVersions) {
+export async function readPreUpgradeLedger(file, releaseSha, sourceVersions) {
   const info = await lstat(file);
   assert.ok(info.isFile() && info.size <= 16_384, 'Use a reviewed pre-upgrade ledger JSON file');
-  const ledger = JSON.parse(await readFile(file, 'utf8'));
+  let ledger;
+  try {
+    ledger = JSON.parse(await readFile(file, 'utf8'));
+  } catch {
+    throw new Error('Use a readable, reviewed pre-upgrade ledger JSON file');
+  }
   assert.ok(ledger && Object.keys(ledger).sort().join(',') === 'migrationVersions,projectRef,releaseSha,version'
     && ledger.version === PRE_UPGRADE_LEDGER_VERSION && ledger.projectRef === RECOVERY_PROJECT
     && ledger.releaseSha === releaseSha, 'Pre-upgrade ledger must name the approved DMocks project and release');
