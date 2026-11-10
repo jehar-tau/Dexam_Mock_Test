@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 test.use({ baseURL: portalFixtureURL });
@@ -120,6 +121,7 @@ test("an unavailable linked order preserves the editable draft and can be remove
   await expect(descriptionInput(page)).toHaveValue(description);
   await removeLink(page).click();
   await expect(removeLink(page)).toHaveCount(0);
+  await expect(titleInput(page)).toBeFocused();
   await expect(page.getByText(reference, { exact: false })).toHaveCount(0);
   await sendReport(page).click();
 
@@ -140,8 +142,22 @@ test("a live purchase page cannot expose an order or report link in the test por
   expect(state.submissions).toEqual([]);
 });
 
+test("a different signed-in account cannot recover the order link from browser history", async ({ page }) => {
+  const state = await studentFixture(page);
+  await openLinkedReport(page);
+  expect(await page.evaluate(() => history.state.usr.purchaseSupport.reference)).toBe(reference);
+  await seedPortalSession(page, { id: "00000000-0000-4000-8000-000000001872", email: "another-student@example.invalid" });
+  await page.reload();
+  await expect(titleInput(page)).toBeVisible();
+  await expect(removeLink(page)).toHaveCount(0);
+  await expect(page.getByText(reference, { exact: false })).toHaveCount(0);
+  expect(state.submissions).toEqual([]);
+});
+
 test("admin support shows the recorded payment beside the existing reply form", async ({ page }) => {
-  let row = { ...report({ p_title: title, p_description: description }), purchase, replyRevision: 0 };
+  let row = { ...report({ p_title: title, p_description: description }), replyRevision: 0,
+    purchase: { ...purchase, refundedMinor: 2550, reviewRequired: true, providerOrderId: providerOrder },
+  };
   const provider = await stubPortalProvider(page, (name, input) => {
     if (name === "is_dmocks_admin") return true;
     if (name === "admin_bug_report_page") return reportPage([row]);
@@ -156,10 +172,19 @@ test("admin support shows the recorded payment beside the existing reply form", 
   await seedPortalSession(page, student);
   await page.goto("/admin");
   const form = page.getByRole("form", { name: "Reply to report " + title, exact: true });
+  const linked = page.getByRole("region", { name: "Linked purchase", exact: true });
   await expect(form).toBeVisible();
-  await expect(page.getByText(reference, { exact: false })).toBeVisible();
-  await expect(page.getByText(/₹\s*1,193\.00/)).toBeVisible();
-  await expect(page.getByText(/\bpaid\b/i)).toBeVisible();
+  await expect(linked.getByText(reference, { exact: true })).toBeVisible();
+  await expect(linked.getByText("₹1,193.00", { exact: true })).toBeVisible();
+  await expect(linked.getByText("₹25.50", { exact: true })).toBeVisible();
+  await expect(linked.getByText("Paid", { exact: true })).toBeVisible();
+  await expect(linked.getByText("Payment under review", { exact: true })).toBeVisible();
+  await expect(linked).not.toContainText(providerOrder);
+  await page.setViewportSize({ width: 320, height: 750 });
+  expect(await linked.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+  const accessibility = await new AxeBuilder({ page }).include('[aria-label="Linked purchase"]')
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+  expect(accessibility.violations).toEqual([]);
   const reply = "The recorded payment is confirmed.";
   await form.getByRole("textbox", { name: "Reply to reporter" }).fill(reply);
   await form.getByRole("button", { name: "Save", exact: true }).click();
