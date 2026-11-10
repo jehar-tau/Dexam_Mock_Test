@@ -2,6 +2,12 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+## Combined paid paper rehearsal — 10 November 2026
+
+Desktop Chromium and Pixel 7 completed the paid journey against exact source `0a978f196162137f8bf73bfd316c493642a9e54b` and all 85 migrations with the 49-signature paid profile. Two fictional buyers accepted the fixture notice version and each opened one ₹1,193 INR order through the application order handler. The widget callback left both passes inactive. The signed capture activated access and a replay preserved the expiry. The browsers compared all 57 questions and signed figures with the owner-approved packet, recovered an answer after an outage and reload, kept the original 120-minute deadline and each scored 11 out of 200.
+
+Both buyers opened purchase history and sent an order-linked support report. Replayed signed full refunds left one refund record per order, revoked the matching passes and blocked new starts while keeping both submitted results available. Actual local staff replies and exact retries were visible only to the respective buyer. Staff closed the expiring Test window and a previously admitted buyer could no longer create an order. The fixture used local Auth, PostgREST, Storage and the application handlers, with fictional merchant transport, widget and notices. The approved paper remains pending hosted Test acceptance.
+
 ## Exact migration rollout rehearsal — 10 November 2026
 
 The disposable Supabase stack reconstructed the recorded 25-version ledger from the reviewed backend in `859a2d146422e072e3181aedd91b751f08a0d796`. The dry run identified all 60 pending migrations in order, including `202611060006_ai_question_drafting.sql` before the latest installed version. The apply reached 85 installed versions. It preserved fictional account, saved answer and deadline, payment, support, bank and private Storage bytes. Actual local Auth and PostgREST verified tester-only admission and account separation. The sales guard rejected activation without a published policy. Applying the 49-signature paid profile after those checks restricted the catalogue while preserving the owned historical attempt.

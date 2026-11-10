@@ -1,5 +1,7 @@
 # MVP checkout acceptance
 
+The combined desktop and mobile rehearsal starts with empty purchase histories and exercises the order handler, signed capture, exact approved UCEED paper, reconnect, result, linked support and full refund on the current local schema. Both runs pass with fictional merchant transport and local provider services. Use the real hosted Test procedure below for merchant acceptance. [Combined rehearsal](VERIFICATION.md#combined-paid-paper-rehearsal--10-november-2026)
+
 Current recovery/operator-readiness candidate: CHECKOUT_RECOVERY.md adds exact receipt/note/state verification, lost-reply recovery and bounded server work without changing webhook-only entitlement. It passes 342 units/358 strict desktop/mobile cases/44 database suites plus actual local source-handler/SDK proof with a fictional merchant transport. Contact facts are supplied; final policy and approved real-provider gates stay closed.
 
 Accepted checkout PR #100 has strict exact-head PR/main and matching-tree acceptance (313 units/342 zero-retry desktop/mobile journeys). The companion release profile adds expected Test/Live key and pass-mode validation and the separate controlled merchant Test procedure in [MVP_DEPLOYMENT.md](MVP_DEPLOYMENT.md).
