@@ -1,7 +1,8 @@
 const closed = Object.freeze({ authReady: false, portalReady: false, testLoginMode: false, stagingPortalMode: false, checkoutReady: false });
+export const publishedNoticeVersionPattern = /^dmocks-notices-v1-[a-f0-9]{64}$/;
 
 export function resolveAuthConfiguration({
-  mode, deployment, origin, stagingTarget,
+  mode, deployment, origin, stagingTarget, checkoutTarget,
   portalEnabled = false, testLoginEnabled = false, stagingPortalEnabled = false, checkoutEnabled = false, url, key, termsVersion, noticeVersion,
 }) {
   if ([portalEnabled, testLoginEnabled, stagingPortalEnabled].filter(Boolean).length > 1)
@@ -15,6 +16,15 @@ export function resolveAuthConfiguration({
     throw new Error("Use private staging portal mode for staging acceptance.");
   if (portalEnabled && deployment === "production" && stagingTarget?.url && url?.toLowerCase() === stagingTarget.url)
     throw new Error("The production portal requires a separate Supabase project.");
+  if (portalEnabled && checkoutEnabled === true && (mode === "test" || (deployment === "test" && mode !== "development"))) {
+    if (mode !== "test" || deployment !== "test")
+      throw new Error("The private checkout requires an explicit Test build.");
+    if (!checkoutTarget?.url || !checkoutTarget.origin || url !== checkoutTarget.url)
+      throw new Error("The private checkout requires the designated DMocks Test project.");
+    if (origin !== checkoutTarget.origin) return closed;
+    if (typeof termsVersion !== "string" || !publishedNoticeVersionPattern.test(termsVersion) || noticeVersion !== termsVersion)
+      throw new Error("The private checkout requires matching reviewed customer notices.");
+  }
   if (stagingPortalEnabled) {
     if (deployment !== "staging" || mode !== "staging")
       throw new Error("The private portal requires an explicit staging build.");
