@@ -8,7 +8,7 @@ Apply the reviewed companion profile last, as described in MVP_DEPLOYMENT.md. It
 
 ## Health and alerting
 
-Read `admin_operational_health()` with a service identity or verified administrator. The MVP health view reports the current queues, permission profile and active passes without a matching captured-payment receipt. It accepts older capture receipts with a matching order and payment. The authenticated admin portal shows aggregate counts.
+Read `admin_operational_health()` with a service identity or verified administrator. The MVP health view reports the current queues, permission profile and active passes without a matching captured-payment receipt. Payment order and pass counts use the server's current Test or Live mode. The authenticated admin portal shows the mode beside its aggregate counts.
 
 | Severity | Trigger | First response |
 | --- | --- | --- |
@@ -16,9 +16,19 @@ Read `admin_operational_health()` with a service identity or verified administra
 | P2 | stale attempts > 0 for two checks, payment reviews/stale orders, webhook verification failures, API p95 > 500 ms for 15 minutes | stop the affected worker/release; run the bounded recovery step; investigate |
 | P3 | support/moderation/review queues above the staffing threshold | assign the queue; do not change student results automatically |
 
-Run `npm run operations:monitor` from the private scheduler using the Supabase variables below and `DMOCKS_OPERATIONS_RELEASE_SHA` set to the full verified Git commit. For production, set `DMOCKS_OPERATIONS_PRODUCTION_ACK=CHECK_PAID_MVP_HEALTH_ON_<exact origin>` in the monitor process. The monitor reads health without applying repairs. Unavailable health, permission drift and unverified passes are P1. Stale orders, payments needing review and attempts past the stale threshold are P2.
+Apply the matching paid companion profile before running `npm run operations:monitor` from the private scheduler. Use the Supabase variables below and set `DMOCKS_OPERATIONS_RELEASE_SHA` to the full verified Git commit. The monitor reads health. Unavailable health, payment-mode mismatch, permission drift and unverified passes are P1. Stale orders, payments needing review and attempts past the stale threshold are P2.
 
-An approved alert receiver can use `DMOCKS_OPERATIONS_ALERT_URL`, `DMOCKS_OPERATIONS_ALERT_ALLOW_ORIGIN` and a separate `DMOCKS_OPERATIONS_ALERT_TOKEN`. The receiver accepts a bearer-authenticated JSON POST and acknowledges with a 2xx status. Deduplicate the supplied `Idempotency-Key` for the same target, release and set of findings within each 15-minute window. The payload carries the release, environment, UTC time, finding codes and aggregate counts. The monitor sends the Supabase credential only to the configured database origin and refuses redirects. Exit `0` means no urgent finding, `2` means a finding was reported, and `1` means configuration or delivery failed. Use the scheduler exit status to detect receiver failures.
+Staging expects Test mode and production expects Live. Set `DMOCKS_OPERATIONS_EXPECT_PAYMENT_MODE=test` explicitly for an approved controlled Test window on the production target. Production monitoring also requires `DMOCKS_OPERATIONS_PRODUCTION_ACK=CHECK_PAID_MVP_HEALTH_ON_<exact origin>`. A mode mismatch reports a P1 finding with the expected and observed modes and omits the target's queues.
+
+An approved alert receiver can use `DMOCKS_OPERATIONS_ALERT_URL`, `DMOCKS_OPERATIONS_ALERT_ALLOW_ORIGIN` and a separate `DMOCKS_OPERATIONS_ALERT_TOKEN`. It accepts a bearer-authenticated JSON POST and acknowledges with a 2xx status. Deduplicate the supplied `Idempotency-Key` for the same target, payment mode, release and set of findings within each 15-minute window. The monitor sends the Supabase credential only to the approved Supabase project origin and refuses redirects. Exit `0` means no urgent finding, `2` means a finding was reported, and `1` means configuration or delivery failed.
+
+Use a new UUID for an explicit delivery check on the approved receiver.
+
+```sh
+npm run operations:monitor -- --verify-delivery "$DMOCKS_OPERATIONS_CHECK_ID"
+```
+
+The receiver records the `dmocks-operations-alert-verification-v1` message as a test and acknowledges it with a 2xx status. The message carries the verification ID, environment, payment mode, release and UTC time. A retry with the same ID and target uses the same idempotency key. The command requires verified health with no P1 or P2 findings and exits 1 if the check is blocked or delivery fails. Confirm the verification ID in the receiver before recording hosted acceptance.
 
 Route payment Edge logs by the structured `dmocks_commerce_failure` event. The codes are `checkout_unconfirmed`, `webhook_unconfigured`, `webhook_signature_rejected`, `webhook_capture_unconfirmed` and `webhook_refund_unconfirmed`. These events carry the code alone. Verify that the approved environment delivers both an aggregate alert and the expected webhook error signal before accepting monitoring for launch.
 
@@ -49,7 +59,7 @@ Payment engineering is resumed. Sales stay closed until the approved real Test j
 
 The default MVP runner verifies service health first, drains bounded expired attempts, prunes old rate buckets and rereads health. It reports whether its batch budget was reached. It performs no AI/intake recovery or deferred product mutation; old full-portal scheduling advice below is historical. An old/unverified profile or malformed count exits before further work. See CHECKOUT_RECOVERY.md.
 
-Run `npm run operations:sweep` from a private scheduler every minute with `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_OPERATIONS_ALLOW_ORIGIN` (the exact Supabase origin) and `DMOCKS_OPERATIONS_ENVIRONMENT=staging|production`. The service credential must remain in the scheduler secret store. Production additionally requires `DMOCKS_OPERATIONS_PRODUCTION_ACK=FINALIZE_EXPIRED_ATTEMPTS_ON_<exact origin>`; the runner refuses a production host in staging mode.
+Run `npm run operations:sweep` from a private scheduler every minute with `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_OPERATIONS_ALLOW_ORIGIN` (the exact Supabase origin) and `DMOCKS_OPERATIONS_ENVIRONMENT=staging|production`. Keep the service credential in the scheduler secret store. The runner verifies the current profile and payment mode before writing. Production also requires `DMOCKS_OPERATIONS_PRODUCTION_ACK=FINALIZE_EXPIRED_ATTEMPTS_ON_<exact origin>`. Pause the schedule during a planned Test-to-Live switch and restart with the expected Live mode.
 
 Each invocation drains at most ten batches of 500 expired attempts, prunes rate buckets older than two days and prints one aggregate JSON health record. Exit `0` means healthy or attention, `2` means degraded and `1` means configuration or RPC failure. Inspect the named RPC before resuming a failing schedule. The approved environment and scheduler configuration are part of hosted acceptance.
 

@@ -1,22 +1,27 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {runOperationsSweep,validateOperationsConfiguration}from '../scripts/operations-sweep.mjs';
-const serviceJwt=`x.${Buffer.from(JSON.stringify({role:'service_role'})).toString('base64url')}.x`;
-const base={url:'https://fixture.supabase.co',key:serviceJwt,allowOrigin:'https://fixture.supabase.co',environment:'staging'};
-const health=(patch={})=>({scope:'paid-mvp-v1',checkedAt:'2026-11-08T10:00:00Z',status:'attention',staleAttempts:0,expiredAttempts:0,stalePendingOrders:0,paymentReviews:0,openBugs:2,pendingQuestionReports:1,...patch});
-function fixture(responses){const calls=[];return{calls,fetchImpl:async(url,options)=>{calls.push({name:url.split('/').at(-1),body:JSON.parse(options.body),authorization:options.headers.authorization});assert.ok(options.signal instanceof AbortSignal);return Response.json(responses.shift());}};}
+import {openOperationsProvider,runOperationsSweep}from '../scripts/operations-sweep.mjs';
+const project='a'.repeat(20);
+const serviceJwtFor=ref=>`x.${Buffer.from(JSON.stringify({role:'service_role',ref})).toString('base64url')}.x`;
+const serviceJwt=serviceJwtFor(project), origin=`https://${project}.supabase.co`;
+const base={url:origin,key:serviceJwt,allowOrigin:origin,environment:'staging'};
+const health=(patch={})=>({scope:'paid-mvp-v1',apiProfileReady:true,paymentMode:'test',checkedAt:'2026-11-08T10:00:00Z',status:'attention',staleAttempts:0,expiredAttempts:0,stalePendingOrders:0,paymentReviews:0,openBugs:2,pendingQuestionReports:1,...patch});
+function fixture(responses){const calls=[];return{calls,fetchImpl:async(url,options)=>{calls.push({name:url.split('/').at(-1),body:JSON.parse(options.body),authorization:options.headers.get('authorization')});assert.ok(options.signal instanceof AbortSignal);return Response.json(responses.shift());}};}
 test('operations configuration rejects browser keys, origin drift and unacknowledged production',()=>{
- assert.throws(()=>validateOperationsConfiguration({...base,key:'sb_publishable_fixture'}),/service-role/);
- assert.throws(()=>validateOperationsConfiguration({...base,allowOrigin:'https://other.supabase.co'}),/exactly match/);
- assert.throws(()=>validateOperationsConfiguration({...base,url:'https://dmocks.com',allowOrigin:'https://dmocks.com',environment:'production'}),/acknowledgement/);
+ assert.throws(()=>openOperationsProvider({...base,key:'sb_publishable_fixture'}),/service-role/);
+ assert.throws(()=>openOperationsProvider({...base,allowOrigin:'https://other.supabase.co'}),/exactly match/);
+ assert.throws(()=>openOperationsProvider({...base,environment:'production'}),/acknowledgement/);
+ assert.throws(()=>openOperationsProvider({...base,url:'https://dmocks.com',allowOrigin:'https://dmocks.com'}),/approved Supabase origin/);
+ assert.throws(()=>openOperationsProvider({...base,key:serviceJwtFor('b'.repeat(20))}),/different provider project/);
+ assert.throws(()=>openOperationsProvider({...base,expectedPaymentMode:'live'}),/valid payment mode/);
 });
 test('MVP operations verifies service health first, drains bounded batches and never invokes deferred jobs',async()=>{
  const f=fixture([health(),500,12,7,health()]);const result=await runOperationsSweep(base,{...f,now:new Date('2026-11-08T10:00:00Z')});
- assert.deepEqual(result,{environment:'staging',scope:'paid-mvp-v1',checkedAt:'2026-11-08T10:00:00Z',status:'attention',queues:{staleAttempts:0,expiredAttempts:0,stalePendingOrders:0,paymentReviews:0,openBugs:2,pendingQuestionReports:1},finalizedAttempts:512,finalizationBatches:2,finalizationLimitReached:false,prunedRateBuckets:7});
+ assert.deepEqual(result,{environment:'staging',scope:'paid-mvp-v1',paymentMode:'test',checkedAt:'2026-11-08T10:00:00Z',status:'attention',queues:{staleAttempts:0,expiredAttempts:0,stalePendingOrders:0,paymentReviews:0,openBugs:2,pendingQuestionReports:1},finalizedAttempts:512,finalizationBatches:2,finalizationLimitReached:false,prunedRateBuckets:7});
  assert.deepEqual(f.calls.map(c=>c.name),['admin_operational_health','finalize_expired_attempts','finalize_expired_attempts','prune_attempt_rate_buckets','admin_operational_health']);assert.equal(f.calls[1].body.p_limit,500);assert.equal(f.calls[3].body.p_before,'2026-11-06T10:00:00.000Z');assert.ok(f.calls.every(c=>c.authorization===`Bearer ${serviceJwt}`));
 });
 test('unrecognized or malformed initial health refuses every mutation',async()=>{
- for(const bad of[null,{},health({scope:undefined}),health({paymentReviews:null}),health({pendingQuestionReports:'1'}),health({openBugs:-1}),health({checkedAt:'unknown'}),health({status:'unknown'})]){
+ for(const bad of[null,{},health({scope:undefined}),health({paymentMode:null}),health({apiProfileReady:false}),health({apiProfileReady:undefined}),health({paymentReviews:null}),health({pendingQuestionReports:'1'}),health({openBugs:-1}),health({checkedAt:'unknown'}),health({status:'unknown'})]){
   const f=fixture([bad]);await assert.rejects(runOperationsSweep(base,f),/not verified/);assert.deepEqual(f.calls.map(c=>c.name),['admin_operational_health']);
  }
 });
@@ -31,6 +36,11 @@ test('the finalization budget remains bounded and preserves degraded final healt
  const f=fixture([health(),500,500,0,health({status:'degraded',expiredAttempts:2})]);const result=await runOperationsSweep(base,{...f,maxBatches:2});assert.equal(result.finalizationLimitReached,true);assert.equal(result.finalizationBatches,2);assert.equal(result.finalizedAttempts,1000);assert.equal(result.status,'degraded');assert.equal(result.queues.expiredAttempts,2);
 });
 test('unavailable profile, invalid limits or invalid clock cannot dispatch a recovery write',async()=>{
- let calls=0;await assert.rejects(runOperationsSweep(base,{fetchImpl:async()=>{calls++;return Response.json({error:'Private provider detail'},{status:403});}}),/admin_operational_health failed \(403\)/);assert.equal(calls,1);
+ let calls=0;await assert.rejects(runOperationsSweep(base,{fetchImpl:async()=>{calls++;return Response.json({error:'Private provider detail'},{status:403});}}),/admin_operational_health failed \(HTTP 403\)/);assert.equal(calls,1);
  for(const patch of[{maxBatches:0},{batchSize:501},{now:new Date(NaN)}]){const f=fixture([]);await assert.rejects(runOperationsSweep(base,{...f,...patch}));assert.equal(f.calls.length,0);}
+});
+test('a staging sweep refuses Live health before any recovery write',async()=>{
+ const f=fixture([health({paymentMode:'live'})]);
+ await assert.rejects(runOperationsSweep(base,f),/payment mode does not match/);
+ assert.deepEqual(f.calls.map(call=>call.name),['admin_operational_health']);
 });
