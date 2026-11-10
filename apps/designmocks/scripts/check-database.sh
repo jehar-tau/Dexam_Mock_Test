@@ -43,6 +43,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-moderation
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bug-report-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/support-queue-replies.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/profile-lifecycle.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/candidate-phone-challenges.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/account-privacy-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/privacy-request-review.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learn-lifecycle.sql

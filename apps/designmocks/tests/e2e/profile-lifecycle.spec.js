@@ -5,11 +5,12 @@ test.use({baseURL:portalFixtureURL});
 const first={id:'00000000-0000-4000-8000-000000001201',email:'fictional-profile-first@example.invalid'},second={id:'00000000-0000-4000-8000-000000001202',email:'fictional-profile-second@example.invalid'};
 const api='https://dmocks-portal-fixture.supabase.co',headers={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'authorization, apikey, content-type, x-client-info, x-supabase-api-version','Access-Control-Allow-Methods':'POST, GET, OPTIONS'};
 const deferred=()=>{let resolve;const promise=new Promise(done=>{resolve=done;});return{promise,resolve};};
+const verificationURL='http://127.0.0.1:4999';
 const firstProfile={displayName:'Original Fictional First Student',phone:'+919000001201',appearingYear:2027,city:'Fictional Pune',exams:['uceed'],phoneVerified:false,completed:false};
 const secondProfile={displayName:'Original Fictional Second Student',phone:'+919000001202',appearingYear:2028,city:'Fictional Mumbai',exams:['nift'],phoneVerified:false,completed:false};
 async function changeAccount(page,state,actor){state.actor=actor;await seedPortalSession(page,actor);await page.evaluate(()=>{const key='sb-dmocks-portal-fixture-auth-token',channel=new BroadcastChannel(key);channel.postMessage({event:'SIGNED_IN',session:JSON.parse(localStorage.getItem(key))});channel.close();});}
-async function fixture(page,{identity=null,readFailure=null,holdRead=null,identityHold=null,waitForProfile=true}={}){
- const state={actor:first,identity,identityHold,identityFailure:false,profiles:{[first.id]:{...firstProfile},[second.id]:{...secondProfile}},holds:{[first.id]:holdRead},reads:{},completedReads:{},saveHold:null,saves:[],completedSaves:0,readFailure,saveFailure:null,saveResponse:null};
+async function fixture(page,{identity=null,readFailure=null,holdRead=null,identityHold=null,waitForProfile=true,phoneVerification=false}={}){
+ const state={actor:first,identity,identityHold,identityFailure:false,profiles:{[first.id]:{...firstProfile},[second.id]:{...secondProfile}},holds:{[first.id]:holdRead},reads:{},completedReads:{},saveHold:null,saves:[],completedSaves:0,readFailure,saveFailure:null,saveResponse:null,phoneCalls:[],completedPhoneCalls:0,phoneReply:null};
  const provider=await stubPortalProvider(page,name=>{if(name==='user')return{...(state.identity??state.actor),aud:'authenticated',app_metadata:{provider:'google'},user_metadata:{}};if(name==='is_dmocks_admin'||name==='can_review_drawings')return false;if(name==='my_privacy_requests')return[];});
  await page.route(api+'/auth/v1/user',async route=>{if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});const held=state.identityHold,failure=state.identityFailure,actor=state.identity??state.actor;if(held)await held.promise;try{await route.fulfill({headers,status:failure?503:200,json:failure?{message:'Private fictional identity diagnostic'}:{...actor,aud:'authenticated',app_metadata:{provider:'google'},user_metadata:{}}});}catch{}});
  await page.route(api+'/rest/v1/rpc/my_candidate_profile',async route=>{
@@ -23,7 +24,18 @@ async function fixture(page,{identity=null,readFailure=null,holdRead=null,identi
   const result={displayName:input.p_display_name,phone:input.p_phone,appearingYear:input.p_appearing_year,city:input.p_city,exams:input.p_exams,phoneVerified:verified,completed:verified};if(!failure)state.profiles[owner]=result;if(held)await held.promise;
   try{await route.fulfill({headers,status:failure?400:200,json:failure??override??result});}catch{}state.completedSaves++;
  });
- await page.goto('/account');await seedPortalSession(page,first);await page.goto('/onboarding');
+ await page.route(api+'/functions/v1/candidate-phone',async route=>{
+  if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});
+  const body=route.request().postDataJSON(),token=route.request().headers().authorization.split(' ')[1],owner=JSON.parse(Buffer.from(token.split('.')[1],'base64url')).sub;
+  state.phoneCalls.push({owner,...body});
+  const reply=await state.phoneReply?.(body,owner);
+  try{
+   if(reply)await route.fulfill({headers,status:reply.httpStatus??200,json:reply.data??reply});
+   else await route.abort('failed');
+  }catch{}state.completedPhoneCalls++;
+ });
+ const origin=phoneVerification?verificationURL:portalFixtureURL;
+ await page.goto(origin+'/account');await seedPortalSession(page,first);await page.goto(origin+'/onboarding');
  if(waitForProfile&&!readFailure&&!identity&&!holdRead&&!identityHold)await expect(page.getByRole('textbox',{name:'Student name',exact:true})).toHaveValue(firstProfile.displayName);
  return Object.assign(state,provider);
 }
@@ -113,6 +125,7 @@ test('stored phone verification is visible on reload and stays bound to the save
  await expect(page.getByText('Profile saved.',{exact:true})).toBeVisible();
  await expect(phone).toHaveAccessibleDescription(/Phone verification is currently unavailable/);
  expect(state.saves[1]).toEqual({...state.saves[0],p_phone:'+919000001203'});
+ await expect(page.getByRole('button',{name:'Send verification code',exact:true})).toHaveCount(0);expect(state.phoneCalls).toEqual([]);
 });
 
 test('empty profiles, validation and long values support keyboard, WCAG and 320px in both themes',async({page})=>{
@@ -133,4 +146,165 @@ test('visible verification clears private profile data and requires explicit rec
 
 test('an SDK token change before its notification cannot write one account profile into another',async({page})=>{
  const state=await fixture(page);await page.getByRole('textbox',{name:'City',exact:true}).fill('An original fictional first-account draft before token change');await seedPortalSession(page,second);await page.getByRole('button',{name:'Save profile',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Profile access could not be verified');await expect(page.getByRole('textbox',{name:'Phone number',exact:true})).toHaveCount(0);expect(state.saves).toEqual([]);expect(state.profiles[second.id]).toEqual(secondProfile);
+});
+
+const sendButton=page=>page.getByRole('button',{name:'Send verification code',exact:true});
+const codeInput=page=>page.getByRole('textbox',{name:'Six-digit SMS code',exact:true});
+const verifyButton=page=>page.getByRole('button',{name:'Verify phone number',exact:true});
+const sent=now=>({status:'sent',retryAt:new Date(now+60_000).toISOString(),expiresAt:new Date(now+300_000).toISOString()});
+
+test('saved phone verification supports keyboard, six-digit SMS entry, WCAG and 320px',async({page})=>{
+ const state=await fixture(page,{phoneVerification:true}),phone=page.getByRole('textbox',{name:'Phone number',exact:true});
+ state.phoneReply=({action,code},owner)=>{
+  if(action==='send')return sent(Date.now());
+  if(code==='012345'){state.profiles[owner]={...state.profiles[owner],phoneVerified:true,completed:true};return{status:'verified'};}
+  return{status:'invalid'};
+ };
+ await phone.fill('+919000001203');
+ await expect(phone).toHaveAccessibleDescription(/Save your phone number before verifying it/);
+ await expect(sendButton(page)).toHaveCount(0);
+ expect(state.phoneCalls).toEqual([]);
+ await phone.fill(firstProfile.phone);
+ await sendButton(page).focus();
+ await expect(sendButton(page)).toBeFocused();
+ await page.keyboard.press('Enter');
+ await expect(codeInput(page)).toBeFocused();
+ await expect(codeInput(page)).toHaveAttribute('autocomplete','one-time-code');
+ await expect(codeInput(page)).toHaveAttribute('inputmode','numeric');
+ await expect(page.getByRole('button',{name:'Send another code'})).toBeDisabled();
+ await codeInput(page).fill('12345');
+ await codeInput(page).press('Enter');
+ await expect(codeInput(page)).toHaveAccessibleDescription('Enter the six-digit code.');
+ expect(state.phoneCalls).toHaveLength(1);
+ expect(state.saves).toEqual([]);
+ await codeInput(page).fill('012344');
+ await verifyButton(page).press('Enter');
+ await expect(codeInput(page)).toHaveAccessibleDescription('The code didn’t match. Check the text and try again.');
+ await page.setViewportSize({width:320,height:740});
+ await page.addScriptTag({path:'node_modules/axe-core/axe.min.js'});
+ for(const dark of[false,true]){
+  if(dark)await page.getByRole('switch',{name:'Dark mode',exact:true}).click();
+  await expect.poll(()=>page.getByRole('button',{name:'Save profile',exact:true}).evaluate(node=>getComputedStyle(node).backgroundColor)).toBe(dark?'rgb(220, 235, 161)':'rgb(36, 71, 53)');
+  expect(await page.evaluate(async()=>(await window.axe.run('[aria-label="Profile access"]',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}})).violations.map(item=>({id:item.id,nodes:item.nodes.map(node=>node.target)})))).toEqual([]);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=320)).toBe(true);
+ }
+ await codeInput(page).fill('012345');
+ await codeInput(page).press('Enter');
+ await expect(phone).toHaveAccessibleDescription('Your saved phone number is verified.');
+ await expect(phone).toBeFocused();
+ await expect(codeInput(page)).toHaveCount(0);
+ expect(state.reads[first.id]).toBe(2);
+ const {challengeId}=state.phoneCalls[0];
+ expect(challengeId).toMatch(/^[a-f0-9-]{36}$/);
+ expect(state.phoneCalls).toEqual([
+  {owner:first.id,action:'send',phone:firstProfile.phone,challengeId},
+  {owner:first.id,action:'verify',phone:firstProfile.phone,challengeId,code:'012344'},
+  {owner:first.id,action:'verify',phone:firstProfile.phone,challengeId,code:'012345'},
+ ]);
+ expect(await page.evaluate(()=>JSON.stringify([localStorage,sessionStorage]))).not.toContain(challengeId);
+ expect(await page.evaluate(()=>JSON.stringify([localStorage,sessionStorage]))).not.toContain('012345');
+ expect(state.saves).toEqual([]);
+});
+
+test('a lost send response allows verification of the same challenge and never retries automatically',async({page})=>{
+ await page.clock.install();
+ const state=await fixture(page,{phoneVerification:true});
+ state.phoneReply=({action},owner)=>{
+  if(action==='verify'){state.profiles[owner]={...state.profiles[owner],phoneVerified:true,completed:true};return{status:'verified'};}
+ };
+ await sendButton(page).click();
+ await expect(codeInput(page)).toHaveAccessibleDescription(/couldn’t confirm that the text was sent/);
+ await expect(page.getByRole('button',{name:'Send another code'})).toBeDisabled();
+ await page.clock.fastForward(60_001);
+ await expect(page.getByRole('button',{name:'Send another code'})).toBeEnabled();
+ expect(state.phoneCalls).toHaveLength(1);
+ await codeInput(page).fill('001234');
+ await verifyButton(page).click();
+ await expect(page.getByRole('textbox',{name:'Phone number',exact:true})).toHaveAccessibleDescription('Your saved phone number is verified.');
+ expect(state.phoneCalls[1]).toEqual({...state.phoneCalls[0],action:'verify',code:'001234'});
+});
+
+test('a late send reply is discarded after a phone edit even if the draft returns to its saved number',async({page})=>{
+ const state=await fixture(page,{phoneVerification:true}),held=deferred();
+ state.phoneReply=async()=>{await held.promise;return sent(Date.now());};
+ await sendButton(page).click();
+ await expect.poll(()=>state.phoneCalls.length).toBe(1);
+ const phone=page.getByRole('textbox',{name:'Phone number',exact:true});
+ await phone.fill('+919000001203');
+ await expect(sendButton(page)).toHaveCount(0);
+ await phone.fill(firstProfile.phone);
+ await expect(sendButton(page)).toBeEnabled();
+ held.resolve();
+ await expect.poll(()=>state.completedPhoneCalls).toBe(1);
+ await expect(codeInput(page)).toHaveCount(0);
+ expect(state.phoneCalls).toHaveLength(1);
+ expect(state.saves).toEqual([]);
+});
+
+test('a late confirmation read cannot mark the next account phone verified',async({page})=>{
+ const state=await fixture(page,{phoneVerification:true}),held=deferred();
+ state.phoneReply=({action},owner)=>{
+  if(action==='send')return sent(Date.now());
+  state.profiles[owner]={...state.profiles[owner],phoneVerified:true,completed:true};
+  state.holds[owner]=held;
+  return{status:'verified'};
+ };
+ await sendButton(page).click();
+ await codeInput(page).fill('012345');
+ await verifyButton(page).click();
+ await expect.poll(()=>state.reads[first.id]).toBe(2);
+ await changeAccount(page,state,second);
+ const phone=page.getByRole('textbox',{name:'Phone number',exact:true});
+ await expect(phone).toHaveValue(secondProfile.phone);
+ await expect(sendButton(page)).toBeEnabled();
+ held.resolve();
+ await expect.poll(()=>state.completedReads[first.id]).toBe(2);
+ await expect(phone).toHaveAccessibleDescription('Verify your saved phone number by text message.');
+ await expect(codeInput(page)).toHaveCount(0);
+ expect(state.phoneCalls).toHaveLength(2);
+ expect(state.phoneCalls.every(call=>call.owner===first.id)).toBe(true);
+});
+
+test('an unavailable phone service and unconfirmed profile stay generic',async({page})=>{
+ const state=await fixture(page,{phoneVerification:true});
+ state.phoneReply=()=>({httpStatus:503,data:{message:'Private fictional provider diagnostic'}});
+ await sendButton(page).click();
+ await expect(page.getByText('Phone verification is temporarily unavailable. Please try again later.',{exact:true})).toBeVisible();
+ await expect(codeInput(page)).toHaveCount(0);
+ await expect(page.locator('#root')).not.toContainText('Private fictional provider diagnostic');
+ state.phoneReply=({action})=>action==='send'?sent(Date.now()):{status:'verified'};
+ await sendButton(page).click();
+ await codeInput(page).fill('012345');
+ await verifyButton(page).click();
+ await expect(page.getByText(/couldn’t confirm verification/)).toBeVisible();
+ await expect(page.getByRole('textbox',{name:'Phone number',exact:true})).toHaveAccessibleDescription('Verify your saved phone number by text message.');
+ await expect(codeInput(page)).toHaveCount(0);
+ expect(state.reads[first.id]).toBe(2);
+});
+
+test('a newly saved phone can request another challenge after server cooldown',async({page})=>{
+ await page.clock.install();
+ const state=await fixture(page,{phoneVerification:true});
+ const phone=page.getByRole('textbox',{name:'Phone number',exact:true}),nextPhone='+919000001203';
+ state.phoneReply=({action})=>action==='send'?sent(Date.now()):{status:'expired'};
+ await phone.fill(nextPhone);
+ await expect(sendButton(page)).toHaveCount(0);
+ expect(state.phoneCalls).toEqual([]);
+ await page.getByRole('button',{name:'Save profile',exact:true}).click();
+ await expect(page.getByText('Profile saved.',{exact:true})).toBeVisible();
+ await sendButton(page).click();
+ await codeInput(page).fill('012345');
+ await verifyButton(page).click();
+ await expect(page.getByText(/This code is no longer valid/)).toBeVisible();
+ await expect(codeInput(page)).toHaveCount(0);
+ await expect(sendButton(page)).toBeDisabled();
+ await page.clock.fastForward(60_001);
+ await expect(sendButton(page)).toBeEnabled();
+ expect(state.phoneCalls).toHaveLength(2);
+ await sendButton(page).click();
+ await expect(codeInput(page)).toHaveValue('');
+ expect(state.phoneCalls[0].phone).toBe(nextPhone);
+ expect(state.phoneCalls[2].phone).toBe(nextPhone);
+ expect(state.phoneCalls[2].challengeId).not.toBe(state.phoneCalls[0].challengeId);
+ expect(state.saves).toHaveLength(1);
 });
