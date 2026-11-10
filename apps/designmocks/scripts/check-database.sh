@@ -76,6 +76,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-paper-preparatio
 node tests/database/nid-write-revocation.mjs
 node tests/database/staff-write-concurrency.mjs
 node tests/database/bank-target-reconciliation.mjs
+node tests/database/question-model-authorization-concurrency.mjs
 node tests/database/recovery-roundtrip.mjs
 node tests/database/recovery-roundtrip.mjs --pre-upgrade
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'

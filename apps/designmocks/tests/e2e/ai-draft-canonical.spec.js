@@ -17,11 +17,11 @@ const payload = {
 };
 
 test("AI drafts surface reference denials and need human approval and rights evidence before canonical export", async ({ page }) => {
-  let request;
+  let request, isAdmin = true;
   let draft;
   const { calls, unexpected } = await stubPortalProvider(page, (procedure, input) => {
     switch (procedure) {
-      case "is_dmocks_admin": return true;
+      case "is_dmocks_admin": return isAdmin;
       case "admin_question_drafts": return draft ? [draft] : [];
       case "admin_ai_draft_requests": return request ? [request] : [];
       case "ai-question-draft":
@@ -69,5 +69,43 @@ test("AI drafts surface reference denials and need human approval and rights evi
   expect(calls).toContainEqual(["admin_review_question_draft", { p_id: draftId, p_decision: "approved", p_note: null }]);
   expect(calls).toContainEqual(["admin_export_question_draft", { p_draft_id: draftId, p_external_key: "ai-fixture-original",
     p_rights_confirmed: true, p_rights_note: "Fictional author approved this original question." }]);
+  expect(unexpected).toEqual([]);
+});
+
+test("a late model-worker role denial closes the desk and clears AI reference and draft inputs", async ({ page }) => {
+  let isAdmin = true;
+  const { calls, unexpected } = await stubPortalProvider(page, procedure => {
+    if (procedure === "is_dmocks_admin") return isAdmin;
+    return emptyAdminRead(procedure);
+  });
+  await page.goto("/admin");
+  await seedPortalSession(page, author);
+  await page.reload();
+  const editor = page.getByRole("region", { name: "Generate an AI-assisted question draft" });
+  await editor.getByLabel("Topic", { exact: true }).fill("observation");
+  await editor.getByLabel("Rights-approved basis keys").fill("ai-fixture-basis");
+  await editor.getByLabel("Generation brief").fill("Create a fictional original question for review.");
+
+  let workerCalls = 0;
+  await page.route("https://dmocks-portal-fixture.supabase.co/functions/v1/ai-question-draft", async route => {
+    workerCalls++;
+    expect(route.request().postDataJSON()).toMatchObject({
+      topic: "observation", basisExternalKeys: ["ai-fixture-basis"],
+      instruction: "Create a fictional original question for review.",
+    });
+    isAdmin = false;
+    await route.fulfill({ status: 403, json: { error: "Admin access required" } });
+  });
+  await editor.getByRole("button", { name: "Generate review draft" }).click();
+
+  const access = page.getByRole("region", { name: "Administrator access", exact: true });
+  await expect(access.getByRole("alert")).toHaveText("Administrator access has ended. Private views were cleared.");
+  await expect(page.getByRole("region", { name: "Generate an AI-assisted question draft" })).toHaveCount(0);
+  await expect(page.getByLabel("Rights-approved basis keys")).toHaveCount(0);
+  await expect(page.getByLabel("Generation brief")).toHaveCount(0);
+  await expect(page.getByRole("article").filter({ hasText: "AI request" })).toHaveCount(0);
+  await expect(page.getByText("Admin access required", { exact: true })).toHaveCount(0);
+  expect(workerCalls).toBe(1);
+  expect(calls.filter(([name]) => name === "ai-question-draft")).toHaveLength(0);
   expect(unexpected).toEqual([]);
 });
