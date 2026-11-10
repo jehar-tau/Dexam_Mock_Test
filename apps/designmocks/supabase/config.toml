@@ -6,6 +6,9 @@ verify_jwt = false
 [functions.payment-webhook]
 verify_jwt = false
 
+[functions.candidate-phone]
+verify_jwt = false
+
 [functions.attempt-media]
 verify_jwt = false
 

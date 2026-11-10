@@ -193,6 +193,10 @@ The earlier 7 November CLI run through migration `202611060128` listed 27 pendin
 
 Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
 
+## Candidate phone verification
+
+The profile verification candidate uses an app-owned SMS challenge after Google sign-in. It needs a separate provider decision and controlled acceptance. Follow [Candidate phone verification](CANDIDATE_PHONE_VERIFICATION.md) for the server secrets, browser flag and staging checks.
+
 ## Razorpay Test integration
 
 On 9 November the owner resumed payment integration and reported completing video KYC. The dashboard showed the merchant as activated with Limited access and website setup pending. Test mode was available, an existing Test key was listed, and the Test webhook list was empty. [Razorpay activation details](https://razorpay.com/docs/payments/dashboard/account-settings/activation-details/)
