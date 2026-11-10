@@ -3,10 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
 import { withAccountDeadline } from "./account-request.js";
 import { environment } from "./environment.js";
-import { appendPurchasePage, purchaseAmount, validatePurchasePage } from "./purchase-history.js";
+import { appendPurchasePage, purchaseAmount, purchaseStatusLabels, validatePurchasePage } from "./purchase-history.js";
 import { useAuthState } from "./useAuth.js";
 
-const statusLabels = { pending: "Pending payment", paid: "Paid", refunded: "Refunded" };
 const orderDate = new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Kolkata" });
 const expectedMode = environment.production ? "live" : "test";
 
@@ -14,11 +13,11 @@ function OrderTime({ value }) {
   return <time dateTime={value}>{orderDate.format(new Date(value))}</time>;
 }
 
-function PurchaseOrder({ order }) {
+function PurchaseOrder({ order, actorId, mode }) {
   const heading = `purchase-heading-${order.reference}`;
   return <li><article id={`purchase-${order.reference}`} tabIndex={-1} aria-labelledby={heading}>
     <h2 id={heading}>Annual pass</h2>
-    <span className="status-pill">{statusLabels[order.status]}</span>
+    <span className="status-pill">{purchaseStatusLabels[order.status]}</span>
     <dl className="purchase-order-details">
       <div><dt>Order reference</dt><dd><code>{order.reference}</code></dd></div>
       <div><dt>Order amount</dt><dd>{purchaseAmount(order.amountMinor)}</dd></div>
@@ -27,11 +26,12 @@ function PurchaseOrder({ order }) {
       {order.refundedMinor > 0 && <div><dt>Refunded amount</dt><dd>{purchaseAmount(order.refundedMinor)}</dd></div>}
       {order.refundedAt && <div><dt>Refund recorded</dt><dd><OrderTime value={order.refundedAt} /></dd></div>}
     </dl>
-    {order.reviewRequired && <p className="notice"><strong>Payment under review</strong><br />Contact support with the order reference.</p>}
+    {order.reviewRequired && <p className="notice"><strong>Payment under review</strong></p>}
+    <p><Link to="/report" state={{ purchaseSupport: { actorId, mode, reference: order.reference } }}>Get help with this order</Link></p>
   </article></li>;
 }
 
-function PurchaseHistorySession() {
+function PurchaseHistorySession({ actorId }) {
   const services = useAccountServices();
   const [page, setPage] = useState(null);
   const [reading, setReading] = useState(true);
@@ -101,7 +101,7 @@ function PurchaseHistorySession() {
     {page?.mode === "test" && <p className="notice">Test purchases</p>}
     {page?.items.length === 0 && <p>No purchases yet.</p>}
     {page?.items.length > 0 && <ol className="purchase-history-list" aria-label="Your orders">
-      {page.items.map(order => <PurchaseOrder key={order.reference} order={order} />)}
+      {page.items.map(order => <PurchaseOrder key={order.reference} order={order} actorId={actorId} mode={page.mode} />)}
     </ol>}
     {page?.nextCursor && <button type="button" className="button quiet" disabled={reading}
       onClick={() => void load(page.nextCursor)}>Load older purchases</button>}
@@ -127,7 +127,7 @@ export default function PurchaseHistory() {
     {loading && <p role="status">Checking your account…</p>}
     {!loading && !session && <><p>Sign in to view your purchases.</p><Link to="/account">Student sign in</Link></>}
     {!loading && session && <AccountAccessBoundary key={scopeKey} kind="purchaseHistory" actorId={session.user.id} headingRef={heading}>
-      <PurchaseHistorySession />
+      <PurchaseHistorySession actorId={session.user.id} />
     </AccountAccessBoundary>}
   </section>;
 }

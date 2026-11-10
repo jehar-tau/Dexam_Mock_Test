@@ -1,3 +1,5 @@
+import { linkedPurchaseDetails } from "./purchase-history.js";
+
 export const supportStatuses = ["open", "investigating", "fixed", "closed"];
 export const supportPageLimit = 25;
 const uuid = /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
@@ -24,7 +26,11 @@ export function readSupportPage(value, actorId) {
     || cursor.createdAt !== last.createdAt || Object.keys(cursor).length !== 3)) {
     throw new Error("Invalid support cursor");
   }
-  return { items: value.items, nextCursor: cursor };
+  const items = value.items.map(({ id, title, description, status, adminReply, replyRevision, createdAt, purchase }) => {
+    const order = linkedPurchaseDetails(purchase);
+    return { id, title, description, status, adminReply, replyRevision, createdAt, ...(order ? { purchase: order } : {}) };
+  });
+  return { items, nextCursor: cursor };
 }
 
 export function supportReplyRequest(reportId, draft, requestId) {

@@ -6,23 +6,51 @@ const pageLimit = 10;
 const paiseMoney = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR",
   minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const unavailable = () => new Error("Couldn’t load your purchases. Refresh and try again.");
+export const purchaseStatusLabels = Object.freeze({ pending: "Pending payment", paid: "Paid", refunded: "Refunded" });
+export const isOrderReference = value => typeof value === "string" && referencePattern.test(value);
+const isPurchaseMode = value => value === "test" || value === "live";
+const validPayment = ({ amountMinor, currency, status, refundedMinor, reviewRequired }) =>
+  currency === "INR" && typeof status === "string" && Object.hasOwn(purchaseStatusLabels, status) &&
+  typeof reviewRequired === "boolean" &&
+  Number.isSafeInteger(amountMinor) && amountMinor > 0 && Number.isSafeInteger(refundedMinor) &&
+  refundedMinor >= 0 && refundedMinor <= amountMinor;
 
 export function purchaseAmount(minor) {
   return paiseMoney.format(minor / 100);
 }
 
+export function linkedPurchaseReference(value) {
+  if (value == null) return null;
+  if (!isRecord(value) || !isOrderReference(value.reference) || !isPurchaseMode(value.mode)) {
+    throw new Error("Invalid linked purchase");
+  }
+  return { reference: value.reference, mode: value.mode };
+}
+
+export function linkedPurchaseDetails(value) {
+  const identity = linkedPurchaseReference(value);
+  if (!identity) return null;
+  if (!validPayment(value)) throw new Error("Invalid linked purchase");
+  const { amountMinor, currency, status, refundedMinor, reviewRequired } = value;
+  return { ...identity, amountMinor, currency, status, refundedMinor, reviewRequired };
+}
+
+export function purchaseSupportContext(state, actorId, mode) {
+  const link = state?.purchaseSupport;
+  if (!actorId || link?.actorId !== actorId || !isPurchaseMode(mode) ||
+      link.mode !== mode || !isOrderReference(link.reference)) return null;
+  return linkedPurchaseReference(link);
+}
+
 export function validatePurchasePage(value, expectedMode) {
-  if (!isRecord(value) || !["test", "live"].includes(value.mode) || !Array.isArray(value.items) ||
+  if (!isRecord(value) || !isPurchaseMode(value.mode) || !Array.isArray(value.items) ||
       value.items.length > pageLimit || !Object.hasOwn(value, "nextCursor")) throw unavailable();
   if (value.mode !== expectedMode) throw Object.assign(unavailable(), { code: "purchase_mode_changed" });
 
   const items = value.items.map(item => {
     if (!isRecord(item)) throw unavailable();
     const { reference, amountMinor, currency, status, refundedMinor, reviewRequired, createdAt, paidAt, refundedAt } = item;
-    if (typeof reference !== "string" || !referencePattern.test(reference) || currency !== "INR" ||
-        !["pending", "paid", "refunded"].includes(status) || typeof reviewRequired !== "boolean" ||
-        !Number.isSafeInteger(amountMinor) || amountMinor <= 0 || !Number.isSafeInteger(refundedMinor) ||
-        refundedMinor < 0 || refundedMinor > amountMinor || !validTime(createdAt) ||
+    if (!isOrderReference(reference) || !validPayment(item) || !validTime(createdAt) ||
         (paidAt !== null && !validTime(paidAt)) || (refundedAt !== null && !validTime(refundedAt))) throw unavailable();
     return { reference, amountMinor, currency, status, refundedMinor, reviewRequired, createdAt, paidAt, refundedAt };
   });
