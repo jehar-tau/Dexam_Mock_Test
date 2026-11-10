@@ -80,6 +80,16 @@ For All India events, choose the objective and drawing counts and the drawing up
 - Drawing feedback is private until explicit release. Any later score change requires a reason and a new release.
 - Export/deletion, minors, retention, refund and public incident-notice requests require the approved policy before action.
 
+### All India result sharing
+
+Students see their released rank and marks in the portal. Sharing on the public site requires a separate event approval and the eligible student's explicit choice. The public list uses the existing first ten positions and tie order. It shows the generated event alias, rank and marks for students who choose to share. A withdrawn or unshared position stays vacant.
+
+On approved staging, use fictional participants and reviewed fixture notices. After cohort release, a verified administrator calls `admin_open_all_india_ranking_publication(p_event_id, p_policy_version, p_evidence)` with the current policy revision and the event's approval reference. Record the returned publication ID. The database requires current privacy and child-safety attestations. Applying the migration leaves existing cohorts private. The paid MVP companion profile excludes the public feed and the sharing controls.
+
+Eligible students use **Share on public results** or **Stop public sharing** on the released event card. If a save cannot be confirmed, use **Refresh All India mocks** to inspect the saved choice. Confirm the public feed and the student's private rank after withdrawal.
+
+To close publication, call `admin_close_all_india_ranking_publication(p_event_id, p_publication_id, p_evidence)` with the exact publication ID and closure reference. A changed mode, policy revision or relevant attestation makes the old publication inactive. Close it before opening a fresh approval, which starts with fresh student choices. Promote migration `202611090158` with the matching frontend. Production publication requires the owner's separate decision on public ranking identity and consent.
+
 ### Theory lessons
 
 In **Admin review → Theory lessons**, save a draft and review its text before publishing. When publishing, record the source and permission to use the lesson. To revise a published lesson, withdraw it with a reason, edit the draft and record the rights again when republishing. Learn hides withdrawn lessons and restores existing student completion when the same lesson is republished.
