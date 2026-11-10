@@ -108,6 +108,27 @@ test("extraction requires the caller identity and a token-aware backend before s
   assert.equal(sent, false);
 });
 
+test("extraction refuses a same-length private source whose registered digest differs", async () => {
+  const calls = [];
+  const admin = {
+    async rpc(method) {
+      calls.push(method);
+      if (method === "claim_question_intake_asset") return { data: {
+        token: "fixture-token", name: "fixture.pdf", storagePath: "private/fixture.pdf", mimeType: "application/pdf",
+        byteSize: pdf.size, sourceSha256: "a".repeat(64),
+      } };
+      return { data: null };
+    },
+    storage: { from: () => ({ download: async () => ({ data: pdf }) }) },
+  };
+  let sent = false;
+  const result = await extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture", model: "fixture-model",
+    apiKey: "fictional-key", fetcher: async () => { sent = true; } });
+  assert.equal(result.status, 400);
+  assert.equal(sent, false);
+  assert.deepEqual(calls, ["claim_question_intake_asset", "fail_question_intake_asset"]);
+});
+
 test("intake rechecks a claimed job after the file read before sending private source bytes", async () => {
   for (const [permission, expected] of [
     [{ error: { code: "42501", message: "Private role diagnostic" } }, 403],

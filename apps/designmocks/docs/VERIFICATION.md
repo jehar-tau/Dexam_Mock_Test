@@ -2,6 +2,10 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+## Private intake source retries — 10 November 2026
+
+An isolated test dropped the registration reply after the database committed it. The earlier intake handler deleted the private file and left its database record. With the receipt change, the handler retains the bytes and an exact retry confirms the same record. Concurrent uploads converge, a same-name file with changed bytes creates a new source, and legacy files remain readable. The test used original fictional PDF and photo files, native Deno handlers and local Auth, PostgREST and Storage. [Operator procedure](PROVIDER_SETUP.md#prepare-a-question-addition-for-git-review)
+
 ## Combined paid paper rehearsal — 10 November 2026
 
 Desktop Chromium and Pixel 7 completed the paid journey against exact source `0a978f196162137f8bf73bfd316c493642a9e54b` and all 85 migrations with the 49-signature paid profile. Two fictional buyers accepted the fixture notice version and each opened one ₹1,193 INR order through the application order handler. The widget callback left both passes inactive. The signed capture activated access and a replay preserved the expiry. The browsers compared all 57 questions and signed figures with the owner-approved packet, recovered an answer after an outage and reload, kept the original 120-minute deadline and each scored 11 out of 200.
