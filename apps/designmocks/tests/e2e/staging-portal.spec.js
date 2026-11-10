@@ -1,33 +1,67 @@
+import { realpath, stat } from "node:fs/promises";
+import { extname, isAbsolute, join, relative, sep } from "node:path";
 import { expect, test } from "@playwright/test";
 import project from "../../supabase/project.json" with { type: "json" };
 import { seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 const stage = project.staging_frontend_origin;
 const stagedArtifact = "http://127.0.0.1:4699";
+const artifactSite = process.env.DMOCKS_STAGING_ARTIFACT_SITE;
 const provider = `https://${project.project_ref}.supabase.co`;
 const tester = { id: "00000000-0000-4000-8000-000000000098", email: "staging-fixture@example.invalid" };
-test.use({ baseURL: stage });
+test.use({ baseURL: stage, serviceWorkers: "block" });
+
+async function serveArtifact(route, site, url) {
+  let pathname;
+  try {
+    pathname = decodeURIComponent(url.pathname);
+  } catch {
+    return route.fulfill({ status: 400 });
+  }
+  const segments = pathname.slice(1).split("/");
+  if (segments.some(segment => segment === "." || segment === ".." || /[\\\0]/.test(segment))) {
+    return route.fulfill({ status: 404 });
+  }
+  const entry = route.request().isNavigationRequest() && !extname(pathname)
+    ? "index.html"
+    : segments.join("/");
+  if (entry !== "index.html" && entry !== "favicon.svg" && !entry.startsWith("assets/")) {
+    return route.fulfill({ status: 404 });
+  }
+  const file = await realpath(join(site, entry)).catch(error => {
+    if (!["ENOENT", "ENOTDIR"].includes(error.code)) throw error;
+    return null;
+  });
+  if (!file) return route.fulfill({ status: 404 });
+  const fromSite = relative(site, file);
+  if (fromSite === ".." || fromSite.startsWith(".." + sep) || isAbsolute(fromSite) || !(await stat(file)).isFile()) {
+    return route.fulfill({ status: 404 });
+  }
+  return route.fulfill({ path: file });
+}
 
 test.beforeEach(async ({ page }) => {
+  const site = artifactSite ? await realpath(artifactSite) : null;
   await page.route("**/*", (route) => route.abort());
   // Deliver the local artifact on both hostnames without visiting either hosted site.
-  for (const origin of [stage, project.frontend_origin]) {
-    await page.route(`${origin}/**`, async (route) => {
-      const url = new URL(route.request().url());
-      const response = await route.fetch({ url: stagedArtifact + url.pathname + url.search, maxRedirects: 0 });
-      await route.fulfill({ response });
-    });
-  }
+  await page.route(url => [stage, project.frontend_origin].includes(url.origin), async route => {
+    const url = new URL(route.request().url());
+    if (site) return serveArtifact(route, site, url);
+    const response = await route.fetch({ url: stagedArtifact + url.pathname + url.search, maxRedirects: 0 });
+    return route.fulfill({ response });
+  });
 });
 
 test("the staging artifact rejects a different host before contacting the provider", async ({ page }) => {
-  const { calls, unexpected } = await stubPortalProvider(page, () => undefined, project.project_ref);
+  const { calls, unexpected, authCalls } = await stubPortalProvider(page, () => undefined, project.project_ref);
   await page.goto(project.frontend_origin + "/account");
   await expect(page.getByRole("button", { name: "Continue with Google" })).toBeDisabled();
   await expect(page.getByText("PRIVATE STAGING", { exact: false })).toHaveCount(0);
+  await seedPortalSession(page, tester, project.project_ref);
   await page.goto(project.frontend_origin + "/dashboard");
   await expect(page.getByRole("heading", { name: "One account. Your own progress." })).toBeVisible();
   expect(calls).toEqual([]);
+  expect(authCalls).toEqual([]);
   expect(unexpected).toEqual([]);
 });
 
@@ -38,8 +72,10 @@ test("approved staging sessions can enter the workspace with checkout and draft 
       case "can_enter_staging_portal": return admitted;
       case "can_review_drawings": return false;
       case "my_privacy_requests":
+      case "learning_catalog":
       case "available_papers":
       case "my_attempt_history": return [];
+      case "learning_progress": return [];
       case "my_pass": return { active: false, expiresAt: null };
       case "finalize_my_expired_attempts": return 0;
       case "my_overview_analytics": return { completed: 0, waitingForResults: 0, objectiveAccuracy: null, objectiveAnswered: 0,
@@ -72,10 +108,12 @@ test("approved staging sessions can enter the workspace with checkout and draft 
   await expect(page.getByRole("heading", { name: "Not active" })).toBeVisible();
   expect(calls.filter(([name]) => name === "can_enter_staging_portal").length).toBeGreaterThanOrEqual(2);
 
-  admitted = false;
   const menu = page.getByRole("button", { name: "Student menu" });
   if (await menu.isVisible()) await menu.click();
   await page.getByRole("navigation", { name: "Student workspace" }).getByRole("link", { name: "Learn" }).click();
+  await expect(page.getByRole("heading", { name: /Build the idea/ })).toBeVisible();
+  admitted = false;
+  await page.reload();
   await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
   await expect(page.getByRole("heading", { name: /Build the idea/ })).toHaveCount(0);
   await page.goto("/plans");
