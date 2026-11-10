@@ -2,6 +2,10 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+## Private drawing removal recovery — 10 November 2026
+
+The isolated provider test interrupted Storage before deletion. The earlier handler removed the page record, reported success and lost the retry path. With migration `202611100163` and the matching handler, the page slot is freed while the private deletion receipt stays pending. An exact owner retry after the cutoff removes the old bytes, and the replacement at the same ordinal stays intact. The bounded operator preview and apply recovered a separate pending deletion against real local Storage. [Operator procedure](OPERATIONS_RUNBOOK.md#deferred-drawing-review-post-launch-reference)
+
 ## Private intake source retries — 10 November 2026
 
 An isolated test dropped the registration reply after the database committed it. The earlier intake handler deleted the private file and left its database record. With the receipt change, the handler retains the bytes and an exact retry confirms the same record. Concurrent uploads converge, a same-name file with changed bytes creates a new source, and legacy files remain readable. The test used original fictional PDF and photo files, native Deno handlers and local Auth, PostgREST and Storage. [Operator procedure](PROVIDER_SETUP.md#prepare-a-question-addition-for-git-review)

@@ -8,9 +8,9 @@ const student = { id: "00000000-0000-4000-8000-000000000401", email: "drawing-up
 const attemptId = "30000000-0000-4000-8000-000000000401", questionId = "20000000-0000-4000-8000-000000000401";
 const png = () => readFile(new URL("../fixtures/drawing-images/fictional-drawing.png", import.meta.url));
 
-async function fixture(page) {
+async function fixture(page, { cleanupPending = false } = {}) {
   const now = new Date(); await page.clock.install({ time: now });
-  const state = { pages: [], uploads: [], nextError: null, loseReceipt: false };
+  const state = { pages: [], uploads: [], nextError: null, loseReceipt: false, removals: [] };
   const provider = await stubPortalProvider(page, procedure => {
     switch (procedure) {
       case "read_attempt": return { id: attemptId, title: "Fictional drawing upload", status: "submitted", resultsPending: true,
@@ -28,8 +28,9 @@ async function fixture(page) {
     if (contentType.includes("application/json")) {
       const body = request.postDataJSON();
       if (body.action === "list") return route.fulfill({ headers, json: { items: state.pages } });
+      state.removals.push(body);
       state.pages = state.pages.filter(item => item.id !== body.id);
-      return route.fulfill({ headers, json: { removed: body.id } });
+      return route.fulfill({ headers, json: cleanupPending ? { removed: body.id, cleanupPending: true } : { removed: body.id } });
     }
     const form = await new Response(request.postDataBuffer(), { headers: { "Content-Type": contentType } }).formData();
     state.uploads.push({ ordinal: Number(form.get("ordinal")), attemptId: form.get("attemptId"), questionId: form.get("questionId"), file: form.get("file").name });
@@ -93,5 +94,35 @@ test("an ambiguous upload receipt is reconciled from saved pages before another 
   await input.setInputFiles({ ...file, name: "second.png" });
   await expect(page.locator(".drawing-uploads").getByRole("status")).toContainText("Drawing images saved privately");
   expect(state.uploads.map(item => item.ordinal)).toEqual([1, 2]); expect(state.pages).toHaveLength(2);
+  expect(state.unexpected).toEqual([]);
+});
+
+test("a logically removed drawing page can be replaced before the original cutoff while cleanup is pending", async ({ page }) => {
+  const state = await fixture(page, { cleanupPending: true });
+  const window = page.getByRole("region", { name: "Drawing upload window", exact: true });
+  const input = window.locator('input[type="file"]');
+  const notice = window.getByRole("status");
+  const file = { name: "old-drawing.png", mimeType: "image/png", buffer: await png() };
+  await input.setInputFiles(file);
+  await expect(window.getByText(file.name, { exact: true })).toBeVisible();
+
+  await page.clock.fastForward(60_000);
+  const originalId = state.pages[0].id;
+  await window.getByRole("button", { name: "Remove " + file.name, exact: true }).press("Enter");
+  await expect(window.getByText(file.name, { exact: true })).toHaveCount(0);
+  await expect(notice).toHaveText("Drawing image removed from your submission. Private file cleanup is still pending.");
+  expect(state.removals).toHaveLength(1);
+  expect(state.removals[0]).toMatchObject({ action: "remove", id: originalId });
+  expect(state.pages).toEqual([]);
+
+  await input.setInputFiles({ ...file, name: "replacement.png" });
+  await expect(window.getByText("replacement.png", { exact: true })).toBeVisible();
+  expect(state.uploads.map(({ ordinal }) => ordinal)).toEqual([1, 1]);
+  expect(state.pages).toHaveLength(1);
+  expect(state.pages[0].id).not.toBe(originalId);
+
+  await page.clock.fastForward(61_000);
+  await expect(window).toHaveCount(0);
+  expect(state.pages).toHaveLength(1);
   expect(state.unexpected).toEqual([]);
 });

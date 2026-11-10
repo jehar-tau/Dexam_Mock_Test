@@ -3,6 +3,7 @@ import { DrawingImageError, DRAWING_MAX_BYTES } from "../_shared/drawing-image.m
 import { DRAWING_FORM_MAX_BYTES, drawingRequestBody } from "../_shared/drawing-request.mjs";
 import { validateDrawing } from "./validate.ts";
 import { DrawingLinksError, sameDrawingPages, signedDrawingPages } from "../_shared/drawing-links.mjs";
+import { finishDrawingRemoval } from "../_shared/drawing-removal.mjs";
 
 const uuid = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 const isId = (value: unknown): value is string => typeof value === "string" && uuid.test(value);
@@ -47,9 +48,14 @@ Deno.serve(async (request) => {
       if (action !== "remove" || !isId(id)) return respond({ error: "Invalid drawing action" }, 400);
       const removed = await admin.rpc("remove_drawing_upload", { p_student_id: user.id, p_id: id });
       if (removed.error) throw removed.error;
-      const deletion = await bucket.remove([removed.data]);
-      if (deletion.error) console.error("Drawing storage deletion failed");
-      return respond({ removed: id });
+      const deleted = await finishDrawingRemoval({
+        id, storagePath: removed.data, remove: (path: string) => bucket.remove([path]),
+        confirm: async (uploadId: string, path: string) => {
+          const result = await admin.rpc("service_confirm_drawing_removal", { p_id: uploadId, p_storage_path: path });
+          return !result.error && result.data === true;
+        },
+      });
+      return respond({ removed: id, cleanupPending: !deleted });
     }
     if (!/^multipart\/form-data;/i.test(contentType)) return respond({ error: "Use a PNG, JPEG or WebP upload" }, 415);
     if (uploadBusy) return respond({ error: "Another image is being checked. Try this page again.", code: "drawing_busy" }, 429);
