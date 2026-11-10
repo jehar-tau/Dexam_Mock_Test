@@ -2,6 +2,10 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+## Exact migration rollout verification — 10 November 2026
+
+The rollout verifier compares Supabase CLI JSON with the ordered pending filenames and hashes from the reviewed Git source, the exact installed ledger and the reported target. Against the historical 25-version fixture, this 77-migration source has 52 pending files. The first is `202611060006_ai_question_drafting.sql`, an older gap that a latest-version cutoff would omit. The fixture supplies version IDs only. Obtain a fresh approved-target ledger and recovery proof before hosted promotion. [Operator procedure](PROVIDER_SETUP.md#verify-the-migration-dry-run)
+
 ## Attempt reply identity and countdown — 10 November 2026
 
 The runner pins the verified student token for attempt RPCs and private media requests. Before returning a successful reply, it verifies the current token and rereads the session within the same request deadline. A confirmed account change clears the private view. A temporary identity outage or a token refresh during the final check withholds the reply while keeping the trusted paper and device answer journal available for recovery.
