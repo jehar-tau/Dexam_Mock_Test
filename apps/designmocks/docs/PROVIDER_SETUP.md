@@ -36,6 +36,8 @@ Migration `202611060130_canonical_question_intake.sql` and the matching `questio
 
 Question figures are separately reviewed PNG crops. Selecting them in the editor validates the digest and dimensions and retains the exact bytes privately, bound to the original intake source. Promotion and export check that the registered files still exist. Drafts and artifacts expose authenticated retained-figure downloads after refresh. Source scans and model attachments never become student figures automatically. A duplicate extraction request cannot mark another worker's active job failed, and promotion, rejection and manual-transcription retries serialize per source.
 
+Migration `202611090162_intake_source_receipts.sql` binds new uploads to the administrator, original filename, MIME type and byte digest. Selecting the same source again, including after a lost reply or reload, confirms the existing private file and preserves its review state. Changed bytes create a separate source even with the same filename. The handler retains private bytes when registration is unconfirmed so an exact retry can recover the receipt. Source downloads and extraction verify the digest on new rows, while existing rows remain readable. Promote the migration and matching intake functions before the administrator frontend on the approved full staging target.
+
 Runtime compilation requires matching registered private media and an established exam ruleset. The local intake acceptance used synthetic Auth, private Storage, both Edge upload/download routes, concurrent writes, the actual importer and the UCEED runtime writer. The extraction response was fictional. Live model and hosted deployment acceptance remain pending.
 
 ### Prepare a question addition for Git review
