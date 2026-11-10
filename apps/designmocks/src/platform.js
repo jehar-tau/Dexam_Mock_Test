@@ -1,10 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 import { environment } from "./environment.js";
 import { resolveAuthConfiguration } from "./authConfiguration.mjs";
-import { project_ref, staging_frontend_origin } from "../supabase/project.json";
+import { project_ref, frontend_origin, staging_frontend_origin } from "../supabase/project.json";
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const designatedProvider = `https://${project_ref}.supabase.co`;
 // This app must have its own provider project; no Dexam values are imported.
 export const termsVersion = import.meta.env.VITE_TERMS_VERSION;
 export const publishedNotices = __DMOCKS_PUBLISHED_NOTICES__;
@@ -12,7 +13,8 @@ export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkou
   mode: environment.mode,
   deployment: environment.deployment,
   origin: window.location.origin,
-  stagingTarget: { url: `https://${project_ref}.supabase.co`, origin: staging_frontend_origin },
+  stagingTarget: { url: designatedProvider, origin: staging_frontend_origin },
+  checkoutTarget: { url: designatedProvider, origin: frontend_origin },
   portalEnabled: import.meta.env.VITE_PORTAL_ENABLED === "true",
   checkoutEnabled: import.meta.env.VITE_CHECKOUT_ENABLED === "true",
   testLoginEnabled: import.meta.env.VITE_TEST_LOGIN_ENABLED === "true",

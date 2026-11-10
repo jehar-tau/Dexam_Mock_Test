@@ -47,6 +47,41 @@ test("the private staging portal pins the build, browser origin and backend with
   assert.throws(() => resolveAuthConfiguration({ ...base, url: base.url.toUpperCase(), deployment: "production", portalEnabled: true,
     termsVersion: "fixture", stagingTarget }), /separate Supabase/);
 });
+const checkoutOrigin = "https://merchant-test.example";
+const checkoutNoticeVersion = "dmocks-notices-v1-" + "a".repeat(64);
+const packagedCheckout = {
+  ...base, mode: "test", deployment: "test", checkoutTarget: { url: base.url, origin: checkoutOrigin },
+  origin: checkoutOrigin, portalEnabled: true, checkoutEnabled: true,
+  termsVersion: checkoutNoticeVersion, noticeVersion: checkoutNoticeVersion,
+};
+const checkoutReady = { ...closed, authReady: true, portalReady: true, checkoutReady: true };
+
+test("the private checkout build opens only on the exact approved origin", () => {
+  assert.deepEqual(resolveAuthConfiguration(packagedCheckout), checkoutReady);
+  for (const origin of [undefined, "http://127.0.0.1:4190", "https://merchant-test.example.invalid"]) {
+    assert.deepEqual(resolveAuthConfiguration({ ...packagedCheckout, origin, key: "sb_secret_fictional" }), closed);
+  }
+});
+
+test("packaged checkout rejects a mismatched build, backend or published notice", () => {
+  for (const patch of [
+    { mode: "production" },
+    { deployment: "production" },
+    { url: "https://other-project.supabase.co" },
+    { checkoutTarget: undefined },
+    { noticeVersion: undefined },
+    { noticeVersion: "dmocks-notices-v1-" + "b".repeat(64) },
+    { noticeVersion: "unversioned", termsVersion: "unversioned" },
+  ]) assert.throws(() => resolveAuthConfiguration({ ...packagedCheckout, ...patch }), JSON.stringify(patch));
+});
+
+test("the Vite development Test checkout fixture remains available", () => {
+  assert.deepEqual(resolveAuthConfiguration({
+    ...packagedCheckout, mode: "development", checkoutTarget: undefined, origin: "http://127.0.0.1:4190",
+    termsVersion: "fictional-dev-notice", noticeVersion: "fictional-dev-notice",
+  }), checkoutReady);
+});
+
 test("browser authentication rejects server keys, invalid projects and missing configuration", () => {
   for (const replacement of [{key: "sb_secret_fictional"}, {key: ""}, {url: "https://invalid.example"}, {key: "invalid-client-key"}, {key: "a."+Buffer.from(JSON.stringify({role:"service_role"})).toString("base64url")+".c"}]) {
     assert.throws(() => resolveAuthConfiguration({ ...base, ...replacement, testLoginEnabled: true }));
