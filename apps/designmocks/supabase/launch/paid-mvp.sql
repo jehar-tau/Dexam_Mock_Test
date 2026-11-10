@@ -410,7 +410,8 @@ insert into dm_private.mvp_rpc_allowlist(signature,category)values
  ('public.save_candidate_profile(text,text,integer,text,text[])','student'),
  ('public.start_attempt(uuid)','student'),
  ('public.submit_attempt(uuid)','student'),
- ('public.submit_bug_report(text,text,text,uuid)','student');
+ ('public.submit_bug_report(text,text,text,uuid)','student'),
+ ('public.submit_bug_report(text,text,text,uuid,uuid)','student');
 -- END RPC MANIFEST
 
 create or replace function public.accept_current_terms(p_version text)returns void
