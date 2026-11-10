@@ -42,6 +42,7 @@ async function adminFixture(page, { admin = true } = {}) {
 }
 
 test("administrators review the frozen question and private figures before a reasoned restoration", async ({ page }) => {
+  test.slow(); // Multiple sequential staff checks and desk refreshes share the test budget.
   const state = await adminFixture(page);
   const queue = page.getByRole("region", { name: "Reported questions", exact: true });
   await expect(queue.getByText("pending · 10 unique students · High priority")).toBeVisible();
@@ -72,6 +73,7 @@ test("administrators review the frozen question and private figures before a rea
 });
 
 test("new reports or changed bank content reject an old decision and a corrected source needs its own explicit release", async ({ page }) => {
+  test.slow(); // Multiple sequential staff checks and desk refreshes share the test budget.
   const state = await adminFixture(page);
   const queue = page.getByRole("region", { name: "Reported questions", exact: true });
   const open = () => queue.getByRole("button", { name: "Review reported version quality-fixture", exact: true }).click();
