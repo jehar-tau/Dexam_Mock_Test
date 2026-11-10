@@ -1,7 +1,7 @@
 // Exercise the provider and completion fences on separate disposable PostgreSQL sessions.
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { setTimeout as sleep } from "node:timers/promises";
 import { recoveryPostgresEnvironment } from "../../scripts/recovery-postgres.mjs";
 
@@ -11,6 +11,11 @@ const quote = value => "'" + value.replaceAll("'", "''") + "'";
 const [actor, intake, extracted, ai, queued, succeeded, savedDraft, intakeToken, aiToken] =
   Array.from({ length: 9 }, () => quote(randomUUID()));
 const reference = quote("model-authorization-fixture-" + randomUUID());
+const sha256 = value => createHash("sha256").update(value).digest("hex");
+const sourceName = "Fictional source fence.pdf";
+const sourceDigest = sha256("fictional intake source fixture");
+const sourcePath = quote(`intake/${actor.slice(1, -1)}/sources/${sha256(sourceName)}-${sourceDigest}.pdf`);
+const sourceRegistration = `select public.register_question_intake_source(${actor},${quote(sourceName)},'application/pdf',1200,${quote(sourceDigest)});`;
 
 function session() {
   const name = quote("question-model-fence-" + randomUUID());
@@ -88,6 +93,8 @@ try {
   await sql(`begin;
     insert into auth.users(id) values (${actor});
     ${restore}
+    insert into storage.objects(bucket_id,name,metadata)
+      values ('question-intake',${sourcePath},'{"mimetype":"application/pdf","size":1200}');
     insert into dm_private.question_drafts(id,created_by,source_type,source_name,payload)
       values (${savedDraft},${actor},'ai','Fictional fixture','{}');
     insert into dm_private.bank_questions(external_key,content_sha256,exam,question_type,topic,licence,owner_approved,rights_confirmed,active,payload,source_commit)
@@ -121,6 +128,19 @@ try {
     await sql(restore);
   }
 
+  await deniedWhileWaiting(`select pg_advisory_xact_lock(hashtextextended('dmocks-intake-source:'||${sourcePath},0));`,
+    sourceRegistration, "42501", { whileWaiting: () => sql(revoke) });
+  assert.equal(await sql(`select not exists (select 1 from dm_private.question_intake_assets where storage_path=${sourcePath});`), "t");
+  await sql(restore);
+  await sql(`begin;${service}${sourceRegistration}commit;`);
+  const sourceBeforeReplay = await sql(`select to_jsonb(a) from dm_private.question_intake_assets a where storage_path=${sourcePath};`);
+  assert.ok(sourceBeforeReplay);
+  await deniedWhileWaiting(`select 1 from storage.objects where bucket_id='question-intake' and name=${sourcePath} for update;`,
+    sourceRegistration, "42501", { whileWaiting: () => sql(revoke) });
+  assert.equal(await sql(`select to_jsonb(a) from dm_private.question_intake_assets a where storage_path=${sourcePath};`),
+    sourceBeforeReplay);
+  await sql(restore);
+
   await deniedWhileWaiting(revoke, intakeFence, "42501", { commit: true });
   await sql(restore);
 
@@ -147,10 +167,12 @@ try {
     and (select status='running' and draft_id is null from dm_private.ai_draft_requests where id=${ai})
     and (select status='succeeded' and draft_id=${savedDraft} from dm_private.ai_draft_requests where id=${succeeded});`), "t");
   console.log(JSON.stringify({ passed: true, providerAndCompletionRecheckedRevocationAfterJobLocks: true,
-    revokedCompletionReplayDenied: true, currentReferenceRightsRechecked: true, deadlinesUseClockAfterWaiting: true }));
+    revokedCompletionReplayDenied: true, currentReferenceRightsRechecked: true, deadlinesUseClockAfterWaiting: true,
+    intakeRegistrationAndReplayRecheckStaffAfterSourceLocks: true }));
 } finally {
   await sql(`begin;
-    delete from dm_private.question_intake_assets where id in (${intake},${extracted});
+    delete from dm_private.question_intake_assets where id in (${intake},${extracted}) or storage_path=${sourcePath};
+    delete from storage.objects where bucket_id='question-intake' and name=${sourcePath};
     delete from dm_private.ai_draft_requests where id in (${ai},${queued},${succeeded});
     delete from dm_private.question_drafts where id=${savedDraft};
     delete from dm_private.bank_questions where external_key=${reference};

@@ -1,5 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { intakeFigureDescriptor, intakeFileMatches } from "../_shared/intake-file.mjs";
+import { intakeSourceDigest, saveIntakeSource } from "../_shared/intake-source.mjs";
 
 Deno.serve(async request => {
   const origin = Deno.env.get("PUBLIC_APP_ORIGIN");
@@ -37,6 +38,9 @@ Deno.serve(async request => {
       if (file.size !== source.data.byteSize || !intakeFileMatches(new Uint8Array(await file.slice(0, 12).arrayBuffer()), source.data.mimeType)) {
         return respond({ error: "Private source does not match its registered file" }, 409);
       }
+      if (source.data.sourceSha256 != null && await intakeSourceDigest(await file.arrayBuffer()) !== source.data.sourceSha256) {
+        return respond({ error: "Private source does not match its registered file" }, 409);
+      }
       if (figureSha) {
         const figure = await intakeFigureDescriptor(new Uint8Array(await file.arrayBuffer()), crypto.subtle.digest.bind(crypto.subtle));
         if (figure.sha256 !== figureSha) return respond({ error: "Retained figure does not match its digest" }, 409);
@@ -69,18 +73,8 @@ Deno.serve(async request => {
       if (saved.error) throw saved.error;
       return respond({ asset: figure });
     }
-    const extension = file.type === "application/pdf" ? "pdf" : file.type.split("/")[1].replace("jpeg", "jpg");
-    const path = `intake/${user.id}/${crypto.randomUUID()}.${extension}`;
-    const uploaded = await admin.storage.from("question-intake").upload(path, bytes, { contentType: file.type, upsert: false });
-    if (uploaded.error) throw uploaded.error;
-    const saved = await admin.rpc("register_question_intake_asset", {
-      p_storage_path: path, p_original_name: file.name, p_mime_type: file.type, p_byte_size: file.size, p_uploaded_by: user.id,
-    });
-    if (saved.error) {
-      await admin.storage.from("question-intake").remove([path]);
-      throw saved.error;
-    }
-    return respond({ id: saved.data, name: file.name, status: "uploaded" });
+    const saved = await saveIntakeSource({ admin, actorId: user.id, name: file.name, mimeType: file.type, bytes });
+    return respond(saved.body, saved.status);
   } catch {
     return respond({ error: "Private intake request failed. Refresh the intake list before trying again." }, 400);
   }

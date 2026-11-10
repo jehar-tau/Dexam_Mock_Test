@@ -2,6 +2,10 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+## Private intake source retries — 10 November 2026
+
+An isolated test dropped the registration reply after the database committed it. The earlier intake handler deleted the private file and left its database record. With the receipt change, the handler retains the bytes and an exact retry confirms the same record. Concurrent uploads converge, a same-name file with changed bytes creates a new source, and legacy files remain readable. The test used original fictional PDF and photo files, native Deno handlers and local Auth, PostgREST and Storage. [Operator procedure](PROVIDER_SETUP.md#prepare-a-question-addition-for-git-review)
+
 ## Exact migration rollout verification — 10 November 2026
 
 The rollout verifier compares Supabase CLI JSON with the ordered pending filenames and hashes from the reviewed Git source, the exact installed ledger and the reported target. Against the historical 25-version fixture, this 77-migration source has 52 pending files. The first is `202611060006_ai_question_drafting.sql`, an older gap that a latest-version cutoff would omit. The fixture supplies version IDs only. Obtain a fresh approved-target ledger and recovery proof before hosted promotion. [Operator procedure](PROVIDER_SETUP.md#verify-the-migration-dry-run)
