@@ -190,5 +190,9 @@
   {
     "signature": "public.submit_bug_report(text,text,text,uuid)",
     "category": "student"
+  },
+  {
+    "signature": "public.submit_bug_report(text,text,text,uuid,uuid)",
+    "category": "student"
   }
 ]
