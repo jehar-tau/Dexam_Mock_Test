@@ -24,6 +24,7 @@ function PurchaseSession(){
   {state.status==='verifying'&&<p role="status">Waiting for the server to confirm your pass. A checkout message does not activate access.</p>}
   {state.status==='pending'&&<p role="status">Your payment is not confirmed here yet. Check your pass before trying another payment. If you paid and access remains inactive, contact support.</p>}
   {state.error&&<p className="error" role="alert">{state.error}</p>}
+  {['paid','pending'].includes(state.status)&&<p><Link to="/account/purchases">Purchase history</Link></p>}
   {!busy&&state.status!=='notices-changed'&&<button type="button" className="button quiet" onClick={()=>void flow.current?.refresh()}>Check my pass</button>}
  </>;
 }

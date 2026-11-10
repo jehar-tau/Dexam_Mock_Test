@@ -3849,6 +3849,16 @@ svg {
 .admin-list pre { max-height: 320px; overflow: auto; overflow-wrap: anywhere; white-space: pre-wrap; }
 .admin-list code { overflow-wrap: anywhere; }
 .bug-report-page,.bug-report-card { min-width: 0; overflow-wrap: anywhere; }
+.purchase-history-page { max-width: 760px; min-width: 0; overflow-wrap: anywhere; }
+.purchase-history-list { display: grid; gap: 1rem; list-style: none; margin: 1rem 0; padding: 0; }
+.purchase-history-list article { border: 1px solid var(--line); background: var(--paper); padding: 1.25rem; }
+.purchase-history-list h2 { margin: 0 0 .5rem; font-size: 1.6rem; }
+.purchase-order-details > div { display: grid; grid-template-columns: minmax(0, 10rem) minmax(0, 1fr); gap: .25rem 1rem; margin: .65rem 0; }
+.purchase-order-details dt { font-weight: 700; }
+.purchase-order-details dd { margin: 0; }
+@media (max-width: 480px) {
+  .purchase-order-details > div { grid-template-columns: 1fr; }
+}
 .bug-report-page .admin-form,.bug-report-card .admin-reply { grid-template-columns: minmax(0,1fr); }
 .bug-report-page .admin-form label { min-width: 0; }
 .bug-report-page textarea { min-width: 0; max-width: 100%; }

@@ -65,6 +65,7 @@ const Admin = React.lazy(() => import("./Admin.jsx").then(module => ({ default: 
 const DrawingReviewerWorkspace = React.lazy(() => import("./DrawingReviewerWorkspace.jsx").then(module => ({ default: module.DrawingReviewerWorkspace })));
 const IntakeExtractionPreview = import.meta.env.DEV ? React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.IntakeExtractionPreview }))) : null;
 const BugReport = React.lazy(() => import("./BugReport.jsx").then(module => ({ default: module.BugReport })));
+const PurchaseHistory = React.lazy(() => import("./PurchaseHistory.jsx"));
 
 function Logo() {
   return (
@@ -1022,6 +1023,7 @@ function Account() {
             {workspaceAvailable && <Button to="/onboarding" quiet>
               Complete your profile
             </Button>}
+            {workspaceAvailable && <Button to="/account/purchases" quiet>Purchase history</Button>}
             {checkoutReady && <Button to="/plans" quiet>
               View the annual pass
             </Button>}
@@ -1612,6 +1614,7 @@ export default function App() {
         <Route element={stagingPortalMode ? <StagingPortalGate /> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
           <Route path="/dashboard" element={<Workspace />} />
           <Route path="/onboarding" element={<CandidateProfile />} />
+          <Route path="/account/purchases" element={<PurchaseHistory />} />
           <Route path="/dashboard/mocks" element={postLaunchPreview?<ExamMocks />:<Workspace catalogueOnly/>} />
           <Route path="/dashboard/all-india" element={postLaunchPreview?<AllIndia />:<DeferredModule module="all-india"/>} />
           <Route path="/dashboard/practice" element={postLaunchPreview?<TopicPractice />:<DeferredModule module="practice"/>} />
