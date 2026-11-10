@@ -4,7 +4,7 @@ import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
-import { stagingArtifactProfile, verifyStagingArtifact } from "../scripts/staging-artifact.mjs";
+import { checkoutArtifactProfile, stagingArtifactProfile, verifyCheckoutArtifact, verifyStagingArtifact } from "../scripts/staging-artifact.mjs";
 
 const sha256 = value => createHash("sha256").update(value).digest("hex");
 const project = {
@@ -41,7 +41,41 @@ test("the staging profile accepts only reviewed origins and public browser crede
   assert.throws(() => stagingArtifactProfile({ ...project, frontend_origin: values.frontendOrigin }, values), /exact private staging/);
 });
 
-async function bundle(t) {
+const checkoutValues = {
+  ...values, frontendOrigin: project.frontend_origin, noticeVersion: "dmocks-notices-v1-" + "a".repeat(64),
+};
+
+test("the checkout profile opens only the paid MVP portal and Test checkout", () => {
+  const profile = checkoutArtifactProfile(project, checkoutValues);
+  assert.deepEqual(profile, {
+    deployment: "test", backendProfile: "paid-mvp", frontendOrigin: checkoutValues.frontendOrigin,
+    providerOrigin: checkoutValues.providerOrigin, publicKeySha256: sha256(checkoutValues.publicKey),
+    stagingPortalEnabled: false, postLaunchPreview: false, checkoutEnabled: true,
+    releasedPortalEnabled: true, controlledLoginEnabled: false, phoneVerificationEnabled: false,
+    noticeVersion: checkoutValues.noticeVersion,
+  });
+  assert.doesNotMatch(JSON.stringify(profile), /sb_publishable/);
+});
+
+test("the checkout profile rejects an unapproved origin, backend, key or notice revision", () => {
+  for (const patch of [
+    { frontendOrigin: project.staging_frontend_origin },
+    { frontendOrigin: checkoutValues.frontendOrigin + "/" },
+    { providerOrigin: "https://other.supabase.co" },
+    { providerOrigin: checkoutValues.providerOrigin + "?unexpected" },
+    { publicKey: "sb_secret_fictional_key" },
+    { publicKey: jwt(project.project_ref, "service_role") },
+    { publicKey: jwt("b".repeat(20)) },
+    { noticeVersion: undefined },
+    { noticeVersion: "dmocks-notices-v1-" + "a".repeat(63) },
+    { noticeVersion: "dmocks-notices-v1-" + "g".repeat(64) },
+  ]) assert.throws(() => checkoutArtifactProfile(project, { ...checkoutValues, ...patch }), JSON.stringify(patch));
+});
+
+async function bundle(t, {
+  schema = "dmocks-private-staging-artifact-v1",
+  profile = stagingArtifactProfile(project, values),
+} = {}) {
   const directory = await mkdtemp(path.join(tmpdir(), "dmocks-staging-bundle-fixture-"));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const site = path.join(directory, "site");
@@ -50,8 +84,7 @@ async function bundle(t) {
   for (const [file, content] of Object.entries(original)) await writeFile(path.join(site, file), content);
   const source = { commit: "a".repeat(40), tree: "b".repeat(40), backendInventorySha256: "c".repeat(64) };
   const manifest = {
-    schema: "dmocks-private-staging-artifact-v1", source,
-    profile: stagingArtifactProfile(project, values),
+    schema, source, profile,
     files: Object.entries(original).map(([path, content]) => ({ path, bytes: Buffer.byteLength(content), sha256: sha256(content) })),
   };
   const expected = sha256(JSON.stringify(manifest));
@@ -85,4 +118,17 @@ test("artifact verification rejects altered, extra, missing and symlink assets",
   await assert.rejects(verifyStagingArtifact(artifact), /site files differ/);
   await symlink(path.join(artifact.site, "index.html"), script);
   await assert.rejects(verifyStagingArtifact(artifact), /non-regular file/);
+});
+
+test("checkout and staging verification accept only their own artifact schema", async t => {
+  const staging = await bundle(t);
+  const checkout = await bundle(t, {
+    schema: "dmocks-private-checkout-artifact-v1",
+    profile: checkoutArtifactProfile(project, checkoutValues),
+  });
+  assert.deepEqual(await verifyCheckoutArtifact(checkout), {
+    verified: true, commit: checkout.source.commit, tree: checkout.source.tree, bundleSha256: checkout.expected, fileCount: 2,
+  });
+  await assert.rejects(verifyCheckoutArtifact(staging));
+  await assert.rejects(verifyStagingArtifact(checkout));
 });
