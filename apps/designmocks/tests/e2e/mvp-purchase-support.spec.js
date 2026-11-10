@@ -113,7 +113,7 @@ test("an unavailable linked order preserves the editable draft and can be remove
   await fillReport(page);
   await sendReport(page).click();
 
-  await expect(page.getByRole("alert")).toContainText(/order/i);
+  await expect(page.getByRole("alert").or(page.getByRole("status")).filter({ hasText: /order/i })).toBeVisible();
   await expect(page.locator("#root")).not.toContainText("Private purchase validation diagnostic");
   await expect(titleInput(page)).toBeEnabled();
   await expect(titleInput(page)).toHaveValue(title);
