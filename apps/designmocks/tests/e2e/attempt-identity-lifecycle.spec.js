@@ -30,6 +30,7 @@ async function fixture(page,options={}){
   else if(name==='drawing-media')data=multipart?{id:'30000000-0000-4000-8000-000000000961',ordinal:1}:input.action==='list'?{items:[]}:{images:[]};
   else if(name==='start_exam_mock_part_b'){if(state.startHold)await state.startHold.promise;data=partB;}
   else throw new Error('Unexpected fictional attempt request: '+name);
+  if (state.examReplies && ['my_exam_mock_session', 'my_exam_mock_report'].includes(name)) await state.examReplies.promise;
   await route.fulfill({headers,status,json:data}).catch(()=>{});if(name==='read_attempt')state.finishedReads++;if(name==='save_answer_revision')state.finishedSaves++;if(name==='start_exam_mock_part_b')state.finishedStarts++;
  });
  await page.goto('/account');await seedPortalSession(page,first);await page.goto('/attempt/'+attemptId);return state;
@@ -37,6 +38,11 @@ async function fixture(page,options={}){
 const answer=page=>page.getByRole('button',{name:'B Fictional second choice',exact:true});
 const privateQuestion=page=>page.getByRole('heading',{name:'Original fictional first account question',exact:true});
 const calls=(state,name)=>state.calls.filter(item=>item.name===name);
+async function waitForExamReads(state) {
+ // Their request-time checks must finish before the targeted Auth hold starts.
+ // Keep the replies queued so neither can trigger its response-time check yet.
+ await expect.poll(() => ['my_exam_mock_session', 'my_exam_mock_report'].map(name => calls(state, name).length)).toEqual([1, 1]);
+}
 const journal=page=>page.evaluate(()=>Object.entries(localStorage).filter(([key])=>key.startsWith('dmocks:pending-answer:')).map(([key,value])=>({key,...JSON.parse(value)})));
 test('the active exam verifies identity before reading its frozen private paper',async({page})=>{
  const state=await fixture(page,{identity:second.id});await expect(page.getByRole('alert')).toContainText('Attempt access');expect(calls(state,'read_attempt')).toEqual([]);await expect(privateQuestion(page)).toHaveCount(0);
@@ -93,41 +99,57 @@ test('a delayed question figure reply clears the old paper after a silent accoun
 
 test('a signed figure stays hidden until the current exam account is confirmed again', async ({ page }) => {
  const figureReply = deferred();
- const state = await fixture(page, { readMedia: true, figureReply });
- await expect.poll(() => calls(state, 'attempt-media').length).toBe(1);
+ const examReplies = deferred();
  const verification = deferred();
- state.authHold = verification;
- figureReply.resolve();
- await expect.poll(() => state.heldAuth, { timeout: 3000 }).toBe(1);
- const figure = page.getByRole('img', { name: 'Fictional figure', exact: true });
- await expect(figure).toHaveCount(0);
- await expect(page.getByRole('timer', { name: 'Time remaining' })).toBeVisible();
- state.authHold = null;
- verification.resolve();
- await expect(figure).toBeVisible();
- await expect(answer(page)).toBeEnabled();
- expect(calls(state, 'attempt-media')).toHaveLength(1);
+ try {
+  const state = await fixture(page, { readMedia: true, figureReply, examReplies });
+  await waitForExamReads(state);
+  await expect.poll(() => calls(state, 'attempt-media').length).toBe(1);
+  state.authHold = verification;
+  figureReply.resolve();
+  await expect.poll(() => state.heldAuth, { timeout: 3000 }).toBe(1);
+  const figure = page.getByRole('img', { name: 'Fictional figure', exact: true });
+  await expect(figure).toHaveCount(0);
+  await expect(page.getByRole('timer', { name: 'Time remaining' })).toBeVisible();
+  state.authHold = null;
+  verification.resolve();
+  await expect(figure).toBeVisible();
+  await expect(answer(page)).toBeEnabled();
+  expect(calls(state, 'attempt-media')).toHaveLength(1);
+ } finally {
+  figureReply.resolve();
+  verification.resolve();
+  examReplies.resolve();
+ }
 });
 
 test('a silent swap during successful figure receipt verification clears the old paper', async ({ page }) => {
  const figureReply = deferred();
- const state = await fixture(page, { readMedia: true, figureReply });
- await expect.poll(() => calls(state, 'attempt-media').length).toBe(1);
+ const examReplies = deferred();
  const verification = deferred();
- state.authHold = verification;
- figureReply.resolve();
- await expect.poll(() => state.heldAuth, { timeout: 3000 }).toBe(1);
+ try {
+  const state = await fixture(page, { readMedia: true, figureReply, examReplies });
+  await waitForExamReads(state);
+  await expect.poll(() => calls(state, 'attempt-media').length).toBe(1);
+  state.authHold = verification;
+  figureReply.resolve();
+  await expect.poll(() => state.heldAuth, { timeout: 3000 }).toBe(1);
 
- const figure = page.getByRole('img', { name: 'Fictional figure', exact: true });
- await expect(figure).toHaveCount(0);
- await seedPortalSession(page, second);
- state.authHold = null;
- verification.resolve();
+  const figure = page.getByRole('img', { name: 'Fictional figure', exact: true });
+  await expect(figure).toHaveCount(0);
+  await seedPortalSession(page, second);
+  state.authHold = null;
+  verification.resolve();
 
- await expect(page.getByRole('alert')).toContainText('Attempt access ended', { timeout: 3000 });
- await expect(privateQuestion(page)).toHaveCount(0);
- await expect(figure).toHaveCount(0);
- expect(calls(state, 'attempt-media').map(item => item.actor)).toEqual([first.id]);
+  await expect(page.getByRole('alert')).toContainText('Attempt access ended', { timeout: 3000 });
+  await expect(privateQuestion(page)).toHaveCount(0);
+  await expect(figure).toHaveCount(0);
+  expect(calls(state, 'attempt-media').map(item => item.actor)).toEqual([first.id]);
+ } finally {
+  figureReply.resolve();
+  verification.resolve();
+  examReplies.resolve();
+ }
 });
 
 test('time spent verifying a paper receipt still counts against its fixed deadline', async ({ page }) => {
@@ -158,8 +180,28 @@ test('temporary identity network failure retains the trusted paper, clock and jo
 test('an ambiguous answer acknowledgement keeps the device answer for idempotent reconciliation',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();state.saveReceipt=null;await answer(page).click();await expect(page.getByText('Answers saved on this device. Waiting to sync.',{exact:true})).toBeVisible();const pending=await journal(page);expect(pending).toHaveLength(1);state.saveReceipt=undefined;await page.getByRole('button',{name:'Retry waiting answers',exact:true}).click();await expect(page.getByText('Answers are saved to your account.',{exact:true})).toBeVisible();expect(calls(state,'save_answer_revision').map(item=>item.input.p_revision)).toEqual([pending[0].revision,pending[0].revision]);expect(await journal(page)).toEqual([]);
 });
-test('an answer request pins the verified actor even when SDK storage changes during verification',async({page})=>{
- const state=await fixture(page);await expect(answer(page)).toBeEnabled();const held=deferred();state.authHold=held;await answer(page).click();await expect.poll(()=>state.heldAuth).toBe(1);await seedPortalSession(page,second);state.authHold=null;held.resolve();await expect.poll(()=>calls(state,'save_answer_revision').length).toBe(1);expect(calls(state,'save_answer_revision').map(item=>item.actor)).toEqual([first.id]);await page.evaluate(()=>dispatchEvent(new Event('focus')));await expect(page.getByRole('alert')).toContainText('Attempt access');await expect(privateQuestion(page)).toHaveCount(0);
+test('an answer request pins the verified actor even when SDK storage changes during verification', async ({ page }) => {
+ const examReplies = deferred();
+ const verification = deferred();
+ try {
+  const state = await fixture(page, { examReplies });
+  await expect(answer(page)).toBeEnabled();
+  await waitForExamReads(state);
+  state.authHold = verification;
+  await answer(page).click();
+  await expect.poll(() => state.heldAuth).toBe(1);
+  await seedPortalSession(page, second);
+  state.authHold = null;
+  verification.resolve();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(1);
+  expect(calls(state, 'save_answer_revision').map(item => item.actor)).toEqual([first.id]);
+  await page.evaluate(() => dispatchEvent(new Event('focus')));
+  await expect(page.getByRole('alert')).toContainText('Attempt access');
+  await expect(privateQuestion(page)).toHaveCount(0);
+ } finally {
+  verification.resolve();
+  examReplies.resolve();
+ }
 });
 test('a late answer cannot acknowledge a journal after its same-route history scope ended',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();const held=deferred();state.saveHold=held;await answer(page).click();await expect.poll(()=>calls(state,'save_answer_revision').length).toBe(1);await page.evaluate(()=>history.pushState({...history.state,key:crypto.randomUUID()},'',location.href));held.resolve();await expect.poll(()=>state.finishedSaves).toBe(1);expect(await journal(page)).toHaveLength(1);await page.evaluate(()=>dispatchEvent(new PopStateEvent('popstate',{state:history.state})));await expect(answer(page)).toBeEnabled();await expect(page.getByText('Answers are saved to your account.',{exact:true})).toBeVisible();expect(calls(state,'save_answer_revision')).toHaveLength(2);
