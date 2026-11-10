@@ -62,6 +62,54 @@ select public.record_verified_refund('fictional-monitor-full','order_monitorVeri
 select pg_temp.ops_assert(public.admin_operational_health()->>'unverifiedPasses'='3'
   and public.admin_operational_health()->>'paymentReviews'='1','a fully revoked pass is excluded');
 reset role;
+-- Leave the Test anomalies in place while switching the server environment.
+update dm_private.reported_question_queue set status = 'dismissed' where target_key = 'original-operations-report';
+insert into dm_private.orders(user_id,plan_id,amount,currency,mode,created_at)
+values ('00000000-0000-4000-8000-000000002012','annual',119300,'INR','test',now()-interval '31 minutes');
+update public.launch_settings set environment_mode = 'live' where singleton;
+set local role service_role;
+select public.admin_operational_health() as observed \gset
+select pg_temp.ops_assert(:'observed'::jsonb @> '{
+  "paymentMode":"live","status":"healthy","stalePendingOrders":0,"paymentReviews":0,"unverifiedPasses":0
+}', 'Test anomalies cannot degrade an otherwise healthy Live environment');
+reset role;
+
+insert into auth.users(id) values ('00000000-0000-4000-8000-000000002019');
+insert into dm_private.orders(user_id,plan_id,amount,currency,mode,created_at,payment_review_required)
+select '00000000-0000-4000-8000-000000002019','annual',119300,'INR','live',now()-age,true
+from unnest(array[interval '31 minutes', interval '1 hour', interval '10 minutes']) age;
+insert into dm_private.orders(user_id,plan_id,amount,currency,mode,status,payment_id,paid_at,provider_order_id)
+values ('00000000-0000-4000-8000-000000002019','annual',119300,'INR','live','paid',
+  'pay_monitorLiveMissing',now(),'order_monitorLiveMissing');
+insert into dm_private.passes(user_id,order_id,mode,starts_at,expires_at)
+select user_id,id,mode,now()-interval '1 minute',now()+interval '1 day'
+from dm_private.orders where provider_order_id = 'order_monitorLiveMissing';
+set local role service_role;
+select public.admin_operational_health() as observed \gset
+select pg_temp.ops_assert(:'observed'::jsonb @> '{
+  "paymentMode":"live","status":"degraded","stalePendingOrders":2,"paymentReviews":3,"unverifiedPasses":1
+}', 'Live observes only its two stale orders, three reviews and one unverified pass');
+reset role;
+
+update public.launch_settings set environment_mode = 'test' where singleton;
+set local role service_role;
+select public.admin_operational_health() as observed \gset
+select pg_temp.ops_assert(:'observed'::jsonb @> '{
+  "paymentMode":"test","status":"degraded","stalePendingOrders":1,"paymentReviews":1,"unverifiedPasses":3
+}', 'Test observes only its own stale order, review and unverified passes');
+reset role;
+
+savepoint launch_settings_present;
+delete from public.launch_settings where singleton;
+set local role service_role;
+do $$begin
+  perform public.admin_operational_health();
+  raise exception 'FAIL: missing launch settings unexpectedly returned health';
+exception when object_not_in_prerequisite_state then
+  if sqlerrm <> 'Payment mode unavailable' then raise; end if;
+end$$;
+rollback to savepoint launch_settings_present;
+
 grant execute on function public.admin_privacy_requests() to authenticated;
 set local role service_role;
 select pg_temp.ops_assert(public.admin_operational_health()->>'apiProfileReady'='false','permission drift is visible to the monitor');
@@ -82,5 +130,5 @@ from unnest(array[
   'public.prepare_mvp_paper(jsonb)'
 ]) as bank(signature);
 rollback;
-\echo 'PASS: service/admin-only MVP health, aggregate entitlement anomalies, and browser API permission drift.'
+\echo 'PASS: service/admin-only MVP health, mode-scoped payment anomalies, and browser API permission drift.'
 \echo 'PASS: canonical bank transfer, materialization and unpublished preparation stay server-only.'
