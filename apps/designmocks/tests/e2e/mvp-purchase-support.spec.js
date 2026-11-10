@@ -37,6 +37,7 @@ async function studentFixture(page, { dropReceipt = false, rejectLink = false, m
   const submissions = [];
   const receipts = new Map();
   const provider = await stubPortalProvider(page, name => {
+    if (name === "public_all_india_top_ten") return [];
     if (name === "my_purchase_page") {
       return {
         mode, nextCursor: null,
@@ -159,6 +160,7 @@ test("admin support shows the recorded payment beside the existing reply form", 
     purchase: { ...purchase, refundedMinor: 2550, reviewRequired: true, providerOrderId: providerOrder },
   };
   const provider = await stubPortalProvider(page, (name, input) => {
+    if (name === "public_all_india_top_ten") return [];
     if (name === "is_dmocks_admin") return true;
     if (name === "admin_bug_report_page") return reportPage([row]);
     if (name === "admin_reply_bug_report") {
@@ -200,7 +202,10 @@ test("admin support shows the recorded payment beside the existing reply form", 
 test("a delayed support page is cleared if administrator access was revoked while reading", async ({ page }) => {
   const started = Promise.withResolvers(), release = Promise.withResolvers();
   let allowed = true;
-  await stubPortalProvider(page, name => name === "is_dmocks_admin" ? allowed : emptyAdminRead(name));
+  await stubPortalProvider(page, name => {
+    if (name === "public_all_india_top_ten") return [];
+    return name === "is_dmocks_admin" ? allowed : emptyAdminRead(name);
+  });
   await page.route("https://dmocks-portal-fixture.supabase.co/rest/v1/rpc/admin_bug_report_page", async route => {
     if (route.request().method() === "OPTIONS") return route.fulfill({ headers, status: 204 });
     started.resolve();

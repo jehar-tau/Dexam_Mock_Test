@@ -356,7 +356,8 @@ test("a role-check timeout closes cached access and an explicit retry ignores th
  await page.getByRole("button",{name:"Recheck administrator access",exact:true}).click();await expect.poll(()=>state.roleChecks).toBe(checks+1);await page.clock.runFor(10020);
  await expect(page.getByRole("alert").filter({hasText:"could not be verified"})).toBeVisible();await expect(page.getByText("Current fictional private bug",{exact:true})).toHaveCount(0);await expect(heading(page)).toBeFocused();
  state.roleHold=null;state.bugVersion=2;await page.getByRole("button",{name:"Check administrator access",exact:true}).click();await expect(page.getByText("Refreshed fictional private bug 2",{exact:true})).toBeVisible();
- held.resolve();await expect.poll(()=>state.roleCompleted).toBe(checks+2);await expect(page.getByText("Refreshed fictional private bug 2",{exact:true})).toBeVisible();await expect(page.getByRole("alert")).toHaveCount(0);expect(state.roleChecks).toBe(checks+2);
+ // Recovery checks the new scope both before loading the desk and before showing its data.
+ held.resolve();await expect.poll(()=>state.roleCompleted).toBe(checks+3);await expect(page.getByText("Refreshed fictional private bug 2",{exact:true})).toBeVisible();await expect(page.getByRole("alert")).toHaveCount(0);expect(state.roleChecks).toBe(checks+3);
 });
 
 test("visible polling and focus restoration share a check and close a revoked idle desk",async({page})=>{
