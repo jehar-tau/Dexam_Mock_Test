@@ -120,7 +120,8 @@ function DrawingPagesSession({ load, anonymous = false, disabled = false }) {
       <figcaption>Page {image.ordinal}</figcaption>
       <button type="button" aria-label={`Inspect page ${image.ordinal}, ${anonymous ? "anonymous drawing" : "your drawing"}`} onClick={() => setSelected(image)}>Inspect page {image.ordinal}</button>
     </figure>)}</div>}
-    {selected && <DrawingInspectionDialog image={selected} label={label(selected)} onClose={() => setSelected(null)} />}
+    {selected && <DrawingInspectionDialog key={`${selected.id}:${selected.url}`} image={selected} label={label(selected)}
+      onClose={() => setSelected(current => current === selected ? null : current)} />}
   </div>;
 }
 

@@ -171,6 +171,28 @@ test("private link lifetime uses the server clock when the device clock differs"
   expect(state.unexpected).toEqual([]);
 });
 
+test("rapidly opening another saved student page ignores the previous dialog close",async({page})=>{
+  const images=(await orientationPages(6)).slice(0,3);
+  const provider=await stubPortalProvider(page,(procedure,input)=>{
+    if(procedure==="read_attempt")return{id:attemptId,title:"Fictional rapid saved drawing inspection",status:"submitted",resultsPending:true,
+      serverNow:new Date().toISOString(),deadline:new Date(Date.now()-1000).toISOString(),uploadDeadline:new Date(Date.now()+600_000).toISOString(),
+      questions:[],drawingUploadTasks:[{id:questionId,prompt:"An original fictional sketch."}]};
+    if(procedure==="my_exam_mock_session"||procedure==="my_exam_mock_report")return null;
+    if(procedure==="drawing-media")return input.action==="list"?{items:images}:{images};
+  });
+  await page.goto("/account");await seedPortalSession(page,account);await page.goto("/attempt/"+attemptId);
+  await page.getByRole("button",{name:"View saved images",exact:true}).press("Enter");
+  await page.getByRole("button",{name:"Inspect page 1, your drawing",exact:true}).press("Enter");
+  const first=page.getByRole("dialog",{name:"Your drawing page 1",exact:true});await expect(first.getByRole("img")).toBeVisible();
+  // Native close restores focus before its queued close event. Select the next
+  // page in that same task to exercise that real ordering deterministically.
+  await first.evaluate(dialog=>{window.previousDrawingDialog=dialog;dialog.close();const opener=document.querySelector('[aria-label="Inspect page 2, your drawing"]');opener.focus();opener.click();});
+  const next=page.getByRole("dialog",{name:"Your drawing page 2",exact:true});await expect(next).toBeVisible();await expect(next.getByRole("img")).toBeVisible();
+  await page.evaluate(()=>window.previousDrawingDialog.dispatchEvent(new Event("close")));
+  await expect(next).toBeVisible();await page.keyboard.press("Escape");await expect(page.getByRole("button",{name:"Inspect page 2, your drawing",exact:true})).toBeFocused();
+  expect(provider.unexpected).toEqual([]);
+});
+
 test("switching accounts clears a student's inspection before the next attempt read completes",async({page})=>{
   const images=(await orientationPages(6)).slice(0,1);let switched=false,release,completed;
   const held=new Promise(resolve=>{release=resolve;}),finished=new Promise(resolve=>{completed=resolve;});
