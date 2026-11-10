@@ -18,10 +18,15 @@ const migrations = [
 const installed = [migrations[0].version, migrations[2].version];
 const pending = [migrations[1], migrations[3]];
 const [gap, latest] = pending.map(migration => migration.filename);
-const banner = 'DRY RUN: migrations will *not* be pushed to the database.';
-const heading = 'Would push these migrations:';
-const footer = 'Finished supabase db push.';
-const dryRun = files => [banner, heading, ...files.map(file => ` • ${file}`), footer, ''].join('\n');
+const dryRun = (files, overrides = {}) => JSON.stringify({
+  upToDate: files.length === 0,
+  dryRun: true,
+  migrations: files,
+  seeds: [],
+  roles: [],
+  message: files.length ? 'Finished supabase db push.' : 'Remote database is up to date.',
+  ...overrides,
+}) + '\n';
 
 async function fixture(t, { sourceProject = RECOVERY_PROJECT } = {}) {
   const directory = await mkdtemp(path.join(tmpdir(), 'dmocks-migration-plan-'));
@@ -107,10 +112,17 @@ test('rejects mismatched, malformed, truncated and non-dry-run transcripts', asy
     'unexpected additional migration': dryRun([gap, migrations[2].filename, latest]),
     'duplicate migration': dryRun([gap, gap, latest]),
     'wrong order': dryRun([latest, gap]),
-    'malformed list entry': dryRun([gap, latest]).replace(` • ${gap}`, ` - ${gap}`),
-    'missing completion': dryRun([gap, latest]).replace(footer, ''),
-    'non-dry-run transcript': dryRun([gap, latest]).replace(banner, ''),
-    'false up-to-date claim': `${banner}\nRemote database is up to date.\n`,
+    'malformed list entry': dryRun([{ filename: gap }, latest]),
+    'missing completion': dryRun([gap, latest], { message: undefined }),
+    'truncated JSON': dryRun([gap, latest]).trimEnd().slice(0, -1),
+    'non-dry-run transcript': dryRun([gap, latest], { dryRun: false }),
+    'non-boolean dry-run flag': dryRun([gap, latest], { dryRun: 'true' }),
+    'missing dry-run flag': dryRun([gap, latest], { dryRun: undefined }),
+    'non-boolean up-to-date flag': dryRun([gap, latest], { upToDate: 'false' }),
+    'inconsistent up-to-date flag': dryRun([gap, latest], { upToDate: true }),
+    'false up-to-date claim': dryRun([]),
+    'unreviewed seed operation': dryRun([gap, latest], { seeds: ['fictional_seed.sql'] }),
+    'unreviewed role operation': dryRun([gap, latest], { roles: ['fictional_role.sql'] }),
   };
   for (const [label, transcript] of Object.entries(invalid)) {
     const result = await invoke({ transcript });
@@ -121,7 +133,7 @@ test('rejects mismatched, malformed, truncated and non-dry-run transcripts', asy
 test('verifies an up-to-date dry run only for an empty pending plan', async t => {
   const invoke = await fixture(t);
   const ledgerChanges = { migrationVersions: migrations.map(migration => migration.version) };
-  const result = readProof(await invoke({ ledgerChanges, transcript: `${banner}\nRemote database is up to date.\n` }));
+  const result = readProof(await invoke({ ledgerChanges, transcript: dryRun([]) }));
   assert.deepEqual(result.installedVersions, ledgerChanges.migrationVersions);
   assert.deepEqual(result.pendingMigrations, []);
   assert.equal(result.dryRunVerified, true);
