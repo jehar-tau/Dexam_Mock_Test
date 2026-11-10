@@ -18,9 +18,19 @@ export function createAttemptAccessScope({auth,actorId,isCurrent=()=>true,onChan
  function assertCurrent(){if(!current())throw ended();}
  function publish(next){if(!current())return;status=next;onChange(snapshot());}
  function invalidate(){if(!current())return;status='denied';controller.abort();onChange(snapshot());}
- async function identity(signal,sequence){
+ async function identity(signal,sequence,confirmSession=false){
   assertCurrent();let token;
-  try{token=await verifiedAccountToken(auth,actorId,signal);}
+  try{
+   token=await verifiedAccountToken(auth,actorId,signal);
+   if(token&&confirmSession){
+    const{data,error}=await auth.getSession();
+    signal.throwIfAborted();assertCurrent();
+    if(error)throw error;
+    const session=data?.session;
+    if(session?.user?.id!==actorId)token=null;
+    else if(session.access_token!==token)throw unavailable();
+   }
+  }
   catch(error){if(!current()||signal.aborted)throw error;if(identityEnded(error))invalidate();else if(sequence===verification)publish(hadAccess?'waiting':'unavailable');throw unavailable();}
   assertCurrent();signal.throwIfAborted();
   if(!token){invalidate();throw ended();}
@@ -31,7 +41,7 @@ export function createAttemptAccessScope({auth,actorId,isCurrent=()=>true,onChan
   try{return await withAccountDeadline(async active=>{
    const token=await identity(active,sequence);active.throwIfAborted();assertCurrent();
    const value = await operation(token, active);
-   if (recheckIdentity) await identity(active, sequence);
+   if (recheckIdentity) await identity(active, sequence, true);
    active.throwIfAborted();assertCurrent();return value;
   },signal,milliseconds);}
   catch(error){
@@ -45,12 +55,14 @@ export function createAttemptAccessScope({auth,actorId,isCurrent=()=>true,onChan
 }
 
 export function createAttemptServices(scope,client){
+ const verifiedRpc=(name,args,signal)=>scope.run(async(token,active)=>{
+  const{data,error,status}=await client.rpc(name,args).setHeader('Authorization','Bearer '+token).abortSignal(active);
+  if(error)throw Object.assign(new Error('Could not confirm this exam request.'),{code:error.code,status});
+  return{data,receivedAt:Date.now()};
+ },signal,{recheckIdentity:true});
  return Object.freeze({isCurrent:scope.isCurrent,signal:scope.signal,
-  checkIdentity:signal=>scope.run(()=>true,signal),
-  rpc:(name,args,signal)=>scope.run(async(token,active)=>{
-   const{data,error,status}=await client.rpc(name,args).setHeader('Authorization','Bearer '+token).abortSignal(active);
-   if(error)throw Object.assign(new Error('Could not confirm this exam request.'),{code:error.code,status});return data;
-  },signal),
+  rpc:async(name,args,signal)=>(await verifiedRpc(name,args,signal)).data,
+  readAttempt:(id,signal)=>verifiedRpc('read_attempt',{p_id:id},signal),
   functions:Object.freeze({async invoke(name,options={}){
    try{return await scope.run(async(token,signal)=>{
     const result=await client.functions.invoke(name,{...options,signal,headers:authorizationHeaders(options.headers,token)});if(result.error)throw result.error;return result;
