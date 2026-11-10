@@ -9,7 +9,8 @@ export async function verifyNidWriteRevocation(executor){
  async function run(source,name='nid-control'){
   const child=executor(),output={code:null,stdout:'',stderr:''};
   child.stdout.on('data',chunk=>{output.stdout+=chunk;});child.stderr.on('data',chunk=>{output.stderr+=chunk;});
-  const done=new Promise((resolve,reject)=>{child.on('error',reject);child.on('exit',code=>{output.code=code;resolve(output);});});
+  // The process can exit before psql's final SQLSTATE arrives on stderr.
+  const done=new Promise((resolve,reject)=>{child.on('error',reject);child.on('close',code=>{output.code=code;resolve(output);});});
   child.stdin.end(`set application_name=${quote(name)};set statement_timeout='12s';\n`+source+'\n');return done;
  }
  async function sql(source){const result=await run(source);assert.equal(result.code,0,'Original isolated concurrency fixture command failed');return result.stdout.trim();}
