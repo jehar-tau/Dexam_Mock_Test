@@ -22,7 +22,7 @@ async function fixture(page,options={}){
   else if(name==='my_exam_mock_report')data=null;
   else if(name==='save_answer_revision'){const held=state.saveHold;if(held)await held.promise;data=state.saveReceipt===undefined?{accepted:true,answer:input.p_answer,revision:input.p_revision}:state.saveReceipt;}
   else if(name==='submit_attempt'){status=state.submitStatus;data=status===200?{id:attemptId,title:'Original fictional timed paper',status:'submitted',serverNow:state.serverNow??new Date().toISOString(),deadline:state.deadline,questions:[{...question,outcome:'incorrect',explanation:'Original fictional explanation'}],score:0,total:3}:{code:'P0001',message:'SECRET_FICTIONAL_PROVIDER_DETAIL'};}
-  else if(name==='report_attempt_question')data={reportCount:1,threshold:5,held:false};
+  else if(name==='report_attempt_question'){if(state.reportReply)await state.reportReply.promise;data={reportCount:1,threshold:5,held:false};}
   else if(name==='attempt-media'){
    if(state.figureReply)await state.figureReply.promise;
    data={media:{[questionId]:[{url:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/%3E'}]}};
@@ -46,6 +46,27 @@ test('a silent account change cannot dispatch another account answer and keeps t
 });
 test('question reporting verifies the account before sending the private explanation',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();await page.getByRole('button',{name:'Report question',exact:true}).press('Enter');await page.getByLabel('Details (optional)',{exact:true}).fill('Fictional private report draft');await seedPortalSession(page,second);await page.getByRole('button',{name:'Send report',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Attempt access');expect(calls(state,'report_attempt_question')).toEqual([]);await expect(page.getByRole('textbox')).toHaveCount(0);
+});
+test('a held question report receipt cannot show after a silent account change', async ({ page }) => {
+ const reportReply = deferred();
+ const state = await fixture(page, { reportReply });
+ await expect(answer(page)).toBeEnabled();
+ await page.getByRole('button', { name: 'Report question', exact: true }).press('Enter');
+ const details = 'Original fictional private report draft';
+ const draft = page.getByLabel('Details (optional)', { exact: true });
+ await draft.fill(details);
+ await page.getByRole('button', { name: 'Send report', exact: true }).click();
+ await expect.poll(() => calls(state, 'report_attempt_question')).toEqual([{
+  name: 'report_attempt_question', actor: first.id,
+  input: { p_attempt_id: attemptId, p_question_id: questionId, p_reason: 'incorrect', p_details: details },
+ }]);
+ await seedPortalSession(page, second);
+ reportReply.resolve();
+ await expect(page.getByRole('alert')).toContainText('Attempt access ended', { timeout: 3000 });
+ await expect(draft).toHaveCount(0);
+ await expect(privateQuestion(page)).toHaveCount(0);
+ await expect(page.getByText('Report received.', { exact: false })).toHaveCount(0);
+ expect(calls(state, 'report_attempt_question')).toHaveLength(1);
 });
 test('submission never dispatches as a newly cached account',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();await page.getByRole('button',{name:'Submit attempt',exact:true}).click();await seedPortalSession(page,second);await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Attempt access');expect(calls(state,'submit_attempt')).toEqual([]);await expect(page.getByRole('dialog')).toHaveCount(0);
@@ -86,6 +107,49 @@ test('a signed figure stays hidden until the current exam account is confirmed a
  await expect(figure).toBeVisible();
  await expect(answer(page)).toBeEnabled();
  expect(calls(state, 'attempt-media')).toHaveLength(1);
+});
+
+test('a silent swap during successful figure receipt verification clears the old paper', async ({ page }) => {
+ const figureReply = deferred();
+ const state = await fixture(page, { readMedia: true, figureReply });
+ await expect.poll(() => calls(state, 'attempt-media').length).toBe(1);
+ const verification = deferred();
+ state.authHold = verification;
+ figureReply.resolve();
+ await expect.poll(() => state.heldAuth, { timeout: 3000 }).toBe(1);
+
+ const figure = page.getByRole('img', { name: 'Fictional figure', exact: true });
+ await expect(figure).toHaveCount(0);
+ await seedPortalSession(page, second);
+ state.authHold = null;
+ verification.resolve();
+
+ await expect(page.getByRole('alert')).toContainText('Attempt access ended', { timeout: 3000 });
+ await expect(privateQuestion(page)).toHaveCount(0);
+ await expect(figure).toHaveCount(0);
+ expect(calls(state, 'attempt-media').map(item => item.actor)).toEqual([first.id]);
+});
+
+test('time spent verifying a paper receipt still counts against its fixed deadline', async ({ page }) => {
+ const receivedAt = Date.now();
+ await page.clock.setFixedTime(receivedAt);
+ const readHold = deferred();
+ const state = await fixture(page, {
+  readHold, serverNow: new Date(receivedAt).toISOString(), deadline: new Date(receivedAt + 20000).toISOString(),
+ });
+ await expect.poll(() => state.heldReads).toBe(1);
+ const verification = deferred();
+ state.authHold = verification;
+ readHold.resolve();
+ await expect.poll(() => state.heldAuth).toBe(1);
+ await expect(privateQuestion(page)).toHaveCount(0);
+ await page.clock.setFixedTime(receivedAt + 3000);
+ state.authHold = null;
+ verification.resolve();
+
+ await expect(answer(page)).toBeEnabled();
+ await expect(page.getByRole('timer', { name: 'Time remaining' })).toContainText('00:00:17', { timeout: 3000 });
+ expect(calls(state, 'read_attempt').map(item => item.actor)).toEqual([first.id]);
 });
 
 test('temporary identity network failure retains the trusted paper, clock and journal until verified recovery',async({page})=>{
