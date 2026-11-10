@@ -136,6 +136,8 @@ Current account verification precedes private history. Account/history/sign-out 
 
 In **Admin review → Bug reports**, find the report, set its status and save a team reply. The queue shows 25 reports per page. The reporter sees the current status and reply in **Your reports**. If another staff member has saved a change, **Refresh report** loads their response for review before another save. If a save could not be confirmed, **Retry same reply** resends the original request and returns its existing receipt when it already committed.
 
+For payment issues, the customer can select **Get help with this order** in Purchase history. The linked purchase in the staff queue shows its application reference, recorded payment and refund amounts, and any review flag for the current environment. Verify provider evidence before following the [payment reconciliation procedure](REFUND_RECONCILIATION.md). Migration `202611090161` and the matching frontend are required for order links. The paid MVP also requires its updated companion profile.
+
 The database saves the new revision and its private audit row together. Staff access is checked after lock waits, including when returning an existing receipt. Install the support migration and matching companion profile with the frontend release. Earlier admin clients must reload to use the new support endpoints. Repeat the competing reply, queued revocation, lost acknowledgement and desktop/mobile checks on the approved staging target.
 
 ## Candidate profile and session recovery

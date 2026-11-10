@@ -3,6 +3,24 @@ import { useAdminServices } from "./AdminAccess.jsx";
 import { AdminQueueNavigation } from "./AdminQueueNavigation.jsx";
 import { adminRequestMessage, isAdminAccessFailure } from "./admin-access.js";
 import { matchesSupportReplyReceipt, supportReplyRequest, supportStatuses } from "./admin-support.js";
+import { environment } from "./environment.js";
+import { purchaseAmount, purchaseStatusLabels } from "./purchase-history.js";
+
+const purchaseMode = environment.production ? "live" : "test";
+
+function LinkedPurchase({ order }) {
+  return <section aria-label="Linked purchase" className="notice">
+    <strong>Linked purchase</strong>
+    {order.mode === "test" && <p>Test purchase</p>}
+    <dl className="purchase-order-details">
+      <div><dt>Order reference</dt><dd><code>{order.reference}</code></dd></div>
+      <div><dt>Payment status</dt><dd>{purchaseStatusLabels[order.status]}</dd></div>
+      <div><dt>Order amount</dt><dd>{purchaseAmount(order.amountMinor)}</dd></div>
+      {order.refundedMinor > 0 && <div><dt>Refunded amount</dt><dd>{purchaseAmount(order.refundedMinor)}</dd></div>}
+    </dl>
+    {order.reviewRequired && <p>Payment under review</p>}
+  </section>;
+}
 
 function ReportReply({ report, claim, release, blocked, refresh }) {
   const { rpc, isCurrent } = useAdminServices();
@@ -87,6 +105,7 @@ function ReportReply({ report, claim, release, blocked, refresh }) {
     <b>{report.title}</b>
     <p>Report reference <code>{report.id}</code></p>
     <p>{report.description}</p>
+    {report.purchase?.mode === purchaseMode && <LinkedPurchase order={report.purchase} />}
     <form className="admin-reply" aria-label={"Reply to report " + report.title} onSubmit={event => {
       event.preventDefault();
       if (!frozen && !blocked && !writing.current) void save(supportReplyRequest(report.id, displayed, crypto.randomUUID()));

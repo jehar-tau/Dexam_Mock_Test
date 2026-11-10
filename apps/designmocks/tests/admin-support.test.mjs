@@ -64,3 +64,14 @@ test("only a receipt bound to the exact report, request, next revision, status a
   }
   assert.equal(matchesSupportReplyReceipt(request, null), false);
 });
+
+test("staff support pages project the recorded payment summary and reject inconsistent money", () => {
+  const purchase = { reference: reports[1].id, mode: "test", amountMinor: 119300, currency: "INR",
+    status: "paid", refundedMinor: 2550, reviewRequired: true };
+  const source = { ...reports[0], purchase: { ...purchase, providerOrderId: "private-order" }, reporterId: actor };
+  assert.deepEqual(readSupportPage({ items: [source], nextCursor: null }, actor).items, [{ ...reports[0], purchase }]);
+  for (const invalid of [{ refundedMinor: 119301 }, { reviewRequired: "true" }, { status: ["paid"] }, { currency: "USD" }]) {
+    assert.throws(() => readSupportPage({ items: [{ ...source, purchase: { ...purchase, ...invalid } }], nextCursor: null }, actor),
+      /Invalid linked purchase/);
+  }
+});
