@@ -8,6 +8,7 @@ The paid MVP is ₹1,193 INR for exactly 12 calendar months, one payment with no
 
 ## Purchase behavior
 
+- On the checkout-enabled account page, students review the current notices before Google sign-in. They confirm the purchase separately in checkout with their verified DMocks account.
 - The purchase view verifies the current DMocks account before private pass reads. An existing active pass prevents another checkout. Consent belongs to this account/view and is cleared by account/history changes.
 - Terms acceptance, order creation and pass confirmation use the verified captured actor's bearer. After the order/script replies, presentation checks the current cached session/token again. An earlier order cannot open under a new account.
 - The server creates the order from its fixed annual plan. The client verifies the exact amount/currency and bounded provider identifiers before opening one owned widget. Simultaneous clicks are suppressed. The client never supplies a trusted entitlement, arbitrary amount or payer/account binding.

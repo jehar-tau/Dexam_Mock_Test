@@ -53,7 +53,6 @@ import {
   testLoginMode,
   stagingPortalMode,
   checkoutReady,
-  termsVersion,
   publishedNotices,
   googleLogin,
 } from "./platform.js";
@@ -288,6 +287,7 @@ function Layout({ children }) {
           <div>
             <Link to="/privacy">Privacy</Link>
             <Link to="/terms">Terms & access</Link>
+            <Link to="/refunds">Refunds</Link>
             <Link to="/contact">Contact</Link>
           </div>
         </div>
@@ -587,7 +587,7 @@ const faqs = [
   ],
   [
     "Are the papers human-reviewed?",
-    "Every sold paper must pass question, marking, timing, image and content-rights checks before release. The free sample uses separate original examples. No paid paper is released in this preview.",
+    "Every sold paper must pass question, marking, timing, image and content-rights checks before release. The free sample uses separate original examples.",
   ],
   [
     "Are drawing reviews, lessons or rankings included?",
@@ -595,7 +595,7 @@ const faqs = [
   ],
   [
     "Can I sign in and pay today?",
-    "This first-look version lets you explore the sample. Controlled Google sign-in is being accepted. Paid checkout stays closed until the first offering, final customer policies and a real test-mode purchase journey are approved.",
+    "The annual-pass page shows which sign-in and payment options are available. You can explore the free sample at any time.",
   ],
 ];
 function FAQs() {
@@ -917,17 +917,17 @@ function Account() {
   const stagingAccess = useStagingPortalAccess(session);
   const workspaceAvailable = portalReady && stagingAccess === "allowed";
   const accountId = session?.user.id;
-  const [accepted, setAccepted] = useState(false);
+  const [noticeReviewed, setNoticeReviewed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [sessionStatus, setSessionStatus] = useState("");
   const [reviewerAccountId, setReviewerAccountId] = useState(null);
   const [error, setError] = useState(() => authCallbackMessage(window.location.search, window.location.hash));
   const login = async () => {
-    if (checkoutReady && !accepted) return;
+    if (checkoutReady && !noticeReviewed) return;
     setBusy(true);
+    setNoticeReviewed(false);
     setError("");
     try {
-      if (checkoutReady) sessionStorage.setItem("designmocks-pending-terms", termsVersion);
       await googleLogin();
     } catch (e) {
       setError(e.message);
@@ -961,21 +961,6 @@ function Account() {
       setBusy(false);
     }
   };
-  useEffect(() => {
-    if (!session || !checkoutReady) return;
-    const version = sessionStorage.getItem("designmocks-pending-terms");
-    if (version && version === termsVersion) {
-      platform
-        .rpc("accept_current_terms", { p_version: version })
-        .then(({ error }) => {
-          if (error)
-            setError(
-              "Please review the current published terms before purchasing.",
-            );
-          else sessionStorage.removeItem("designmocks-pending-terms");
-        });
-    }
-  }, [session]);
   useEffect(() => {
     setReviewerAccountId(null);
     if (!postLaunchPreview || !accountId || !workspaceAvailable) return;
@@ -1041,18 +1026,18 @@ function Account() {
                 <label className="terms-checkbox">
                   <input
                     type="checkbox"
-                    checked={accepted}
-                    onChange={(e) => setAccepted(e.target.checked)}
+                    checked={noticeReviewed}
+                    onChange={(e) => setNoticeReviewed(e.target.checked)}
                   />
                   <span>
-                    I accept the <Link to="/terms">terms</Link> and{" "}
+                    I have read the <Link to="/terms">terms</Link> and{" "}
                     <Link to="/privacy">privacy notice</Link>.
                   </span>
                 </label>
               )}
               <button
                 className="google-button"
-                disabled={!authReady || busy || (checkoutReady && !accepted)}
+                disabled={!authReady || busy || (checkoutReady && !noticeReviewed)}
                 onClick={login}
               >
                 <GoogleIcon />
@@ -1067,9 +1052,9 @@ function Account() {
             )}
             {stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
               testLoginMode ? <p className="account-terms">Only server-approved test accounts can complete this check. It does not accept draft purchase terms, create an order or unlock a paid pass.</p> : <p className="account-terms">
-              Creating a new account requires accepting the published terms and
-              privacy notice in the Google sign-in launch flow. That flow will
-              open once the new account setup is active.
+              {checkoutReady
+                ? "Review the terms and privacy notice before continuing with Google. You can confirm a purchase separately in checkout."
+                : "You can try the free sample without an account."}
             </p>}
             <div className="inline-links">
               <Link to="/terms">Terms & access</Link>
@@ -1484,16 +1469,18 @@ function SampleResult() {
 }
 function Policies({ type }) {
   const privacy = type === "privacy";
+  const refunds = type === "refunds";
+  const refundTitle = "Cancellation and refunds.";
   if (publishedNotices) {
     return (
       <section className="wrap policy section">
         <span className="eyebrow">DMOCKS / CUSTOMER NOTICE</span>
-        <h1>{privacy ? "Privacy notice." : "Terms and purchase."}</h1>
+        <h1>{refunds ? refundTitle : privacy ? "Privacy notice." : "Terms and purchase."}</h1>
         <p data-notice-version={publishedNotices.version}>Notice revision {publishedNotices.version.slice(-12)}.</p>
         <OperatorDetails />
-        {publishedNotices.pages[privacy ? "privacy" : "terms"].map(({ heading, paragraph }) => (
+        {publishedNotices.pages[type].map(({ heading, paragraph }) => (
           <section key={heading}>
-            <h2>{heading}</h2>
+            {!refunds && <h2>{heading}</h2>}
             <p>{paragraph}</p>
           </section>
         ))}
@@ -1504,7 +1491,7 @@ function Policies({ type }) {
     <section className="wrap policy section">
       <span className="eyebrow">DMOCKS / FIRST-LOOK PREVIEW</span>
       <h1>
-        {privacy
+        {refunds ? refundTitle : privacy
           ? "Your space. Your information."
           : "Clear access. A little clarity."}
       </h1>
@@ -1514,7 +1501,12 @@ function Policies({ type }) {
         be published before registration and paid sales open.
       </div>
       <OperatorDetails />
-      {privacy ? (
+      {refunds ? (
+        <p>
+          The final cancellation and refund policy will be available before paid checkout opens.
+          For help with the preview, <Link to="/contact">contact the team</Link>.
+        </p>
+      ) : privacy ? (
         <>
           <h2>The sample</h2>
           <p>
@@ -1716,6 +1708,7 @@ export default function App() {
         <Route path="/privacy" element={<Policies type="privacy" />} />
           <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Policies type="terms" />} />
+        <Route path="/refunds" element={<Policies type="refunds" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </React.Suspense>

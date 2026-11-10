@@ -80,8 +80,13 @@ test('the public contact page identifies the supplied operator and support email
 });
 test('operator details remain consistent across policy pages and accessible in both themes at 320px',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});const provider=await stubPortalProvider(page,()=>undefined);await page.setViewportSize({width:320,height:900});
- for(const path of['/contact','/privacy','/terms']){
+ for(const path of['/contact','/privacy','/terms','/refunds']){
   await page.goto(path);const details=page.getByRole('region',{name:'Operator and contact',exact:true});await expect(details).toContainText('DEXAM');const email=details.getByRole('link',{name:'inquiry@designexam.com',exact:true});await email.focus();await expect(email).toBeFocused();await expect(email).toHaveAttribute('href','mailto:inquiry@designexam.com');if(path==='/terms')await expect(page.locator('.policy')).toContainText('12 calendar months');
+  if(path==='/refunds'){
+   await expect(page.getByRole('heading',{name:'Cancellation and refunds.',exact:true})).toBeVisible();
+   await expect(page.getByText(/Launch notice:/)).toBeVisible();
+   await expect(page.locator('[data-notice-version]')).toHaveCount(0);
+  }
   await page.addScriptTag({path:fileURLToPath(new URL('../../node_modules/axe-core/axe.min.js',import.meta.url))});for(const dark of[false,true]){const toggle=page.getByRole('switch',{name:'Dark mode',exact:true});if(await toggle.getAttribute('aria-checked')!==String(dark))await toggle.click();await expect(page.locator('html')).toHaveAttribute('data-theme',dark?'dark':'light');expect(await page.evaluate(async()=>(await window.axe.run('.policy',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}})).violations.map(v=>v.id))).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=320)).toBe(true);}
  }
  expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);

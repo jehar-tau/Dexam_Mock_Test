@@ -2,11 +2,11 @@
 
 ## Current release work (9 November 2026)
 
-The owner resumed Razorpay integration and reported completing video KYC. Start with a private Test checkout while work on the student and administrator portal continues through controlled staging. The first public release consists of the informational site and the original five-question sample, with account sign-in and checkout closed.
+On 9 November the owner approved public access to **Site version 6**, and the native Sites deployment succeeded. The public informational site and original five-question sample now serve at **dmocks.com**. The version 6 archive matched the build from accepted source `e457196519a5d87cf1bc63b5e72e1793db6dde68`. The [release checklist](LAUNCH_CHECKLIST.md#public-non-payment-release) records the eight signed-out desktop and mobile routes.
 
-The public candidate comes from accepted source `e457196519a5d87cf1bc63b5e72e1793db6dde68`. The build passed signed-out desktop and mobile checks through sample submission, result reload and all five explanations. The 16 site files and hosting manifest matched the archive uploaded as **Site version 6**. The receipt is `.dmocks-local-evidence/site-public-release-2026-11-09/native-site-save-progress.json`. Changes through `086ab363602219e44ba592c007909ac1fd8046e5` affected recovery scripts, documentation and tests. At this checkpoint version 5 served the owner-only site and version 6 was saved for review.
+The public checks passed sample submission, result reload and all five explanations with zero provider requests. The policy notices visibly carry draft labels. Sign-in, account creation and checkout are disabled. The owner approved the exact first paper for the paid offering after hosted Test acceptance. Hosted backend promotion, merchant setup, hosted Test acceptance and final policy approval are separate release gates.
 
-For the static release, obtain the public-audience decision, check the saved version against the receipt, deploy it, and verify signed-out direct routes on dmocks.com. Return access to owner-only if verification fails. This release is independent of backend promotion, purchase policies and merchant setup.
+The owner resumed Razorpay integration. Razorpay Onboarding confirmed approved KYC and account activation. The Test-mode dashboard showed automatic capture with a 12-minute window. Controlled checkout still requires fresh Test credentials, a signed webhook on the approved backend and a real provider journey. Live sales remain closed. Student and administrator portal work continues through controlled staging.
 
 The current source passed a real controlled Google callback, reload, refresh, local sign-out and returning-account sign-in. The private UCEED Part A review also shows the exact 57 questions and figures. Keep paper review separate from release. Full nonpayment staging uses the explicit staging build with the preview modules enabled and checkout closed. Use the full migration set on the approved private staging backend. The paid MVP companion restricts APIs used by Learn, Community, advanced practice and drawing review.
 
@@ -22,7 +22,7 @@ The **8 November 2026** scope defines the first paid offering. The wider product
 
 1. The public DMocks site and original free five-question sample. Describe only released offerings; mark unsupported exam/programme routes coming later.
 2. Controlled Google authentication, an independent DMocks account, minimal necessary account details, sign-out and account isolation. Public admission stays closed until the final notices and provider checks are accepted.
-3. The **smallest explicitly approved paid assessment catalogue**. Begin with one complete, independently usable objective offering if its exact source rights, question types, section count, marking, clock, images and result/reconnect lifecycle are accepted. A Part A offering must be named Part A. The owner now authorizes the empty-holds bank as student-recalled, adapted practice material; the first candidate is UCEED Part A, with its exact private manifest and figures still requiring final presentation/release acceptance.
+3. The **smallest explicitly approved paid assessment catalogue**. Begin with one complete, independently usable objective offering if its exact source rights, question types, section count, marking, clock, images and result/reconnect lifecycle are accepted. The owner approved the exact questions, figures and answer key for UCEED Part A Practice Mock 01 as the first paid offering after hosted Test acceptance. The underlying empty-holds bank remains student-recalled, adapted practice material with source labels preserved.
 4. **₹1,193 INR for 12 calendar months, one payment, no automatic renewal**, covering the explicitly released catalogue. Do not promise a future catalogue size, all four exams, rankings, lessons, community or teacher/AI services.
 5. Server-created Razorpay orders and a signed, duplicate-safe webhook that alone grants the entitlement. Preserve exact price/currency/order/account binding, duplicate-purchase protection and atomic entitlement writes. Add and verify refund/revocation basics before sale.
 6. Owner-approved operator, privacy, terms, refund/cancellation, support/contact, tax/invoice and younger-student information. Draft notices are not final policies. Publish clear coverage and support expectations before purchase.
@@ -46,7 +46,7 @@ Already implemented code can remain in the repository behind disabled routes. Ex
 
 ## Current evidence and remaining estimate
 
-Accepted source is PR **#108**, merge `28a8c854bc66d3bc73af91e37b33fccf1401ba83`, including the private authored NID editor through corrective #107. Exact PR/main workflows `42522831667` / `42524334979` pass **370 JavaScript tests, four Python fixtures, 424 selected desktop/mobile journeys without retries, eleven types, build/isolation, audit zero and 74 migrations/profile/47 database suites**. The original #106 main retry remains rejected; #108's superseded cancelled feature run is also preserved. Actual local provider fixtures are fictional and do not prove the real merchant/OAuth journey or hosted promotion.
+The bank conversion checkpoint was PR **#108**, merge `28a8c854bc66d3bc73af91e37b33fccf1401ba83`, including the private authored NID editor through corrective #107. Exact PR/main workflows `42522831667` / `42524334979` pass **370 JavaScript tests, four Python fixtures, 424 selected desktop/mobile journeys without retries, eleven types, build/isolation, audit zero and 74 migrations/profile/47 database suites**. The original #106 main retry remains rejected; #108's superseded cancelled feature run is also preserved. Actual local provider fixtures are fictional and do not prove the real merchant/OAuth journey or hosted promotion.
 Accepted #102 also covers lost provider/database replies, twelve concurrent orders, immutable receipt binding, service health/sweeps, desktop/mobile explicit recovery, signed fictional local Edge capture and the real admin pending-question counter. The merchant transport/widget and Google metadata are fictional. Read CHECKOUT_RECOVERY.md and MVP_DEPLOYMENT.md. PRs #103/#104 accept private bank placement/checklists, exact correction diagnostics and actual local NIFT materialization proof. Accepted #105 adds seven exact numeric-alternative conversions, with six browser precision cases and actual API/SDK scoring; every previously supported payload and the immutable first offering remain unchanged.
 
 Accepted108 binds an inspected exact canonical NID question to a current reviewed authored section, then separately materializes a server-verified practice runtime. Changes invalidate dependent conversion/approval while frozen keys preserve the earlier rubric/context. The 47-signature companion profile (21 student/account and26 staff) includes the two new staff APIs; two conversion APIs are service-only. The permanent 15-case authenticated lock regression rejects role revocation committed while writes/replays wait. Actual fictional Auth/PostgREST/private Storage/Edge/SDK/operator desktop/mobile acceptance and canonical/first-paper parity pass. No real NID binding/approval/publication is automatic and the first UCEED offering is unchanged. See BANK_CONVERSION.md.
@@ -56,11 +56,13 @@ The operator/address/support/GST inputs are supplied in the owner's certificate 
 
 The owner has resolved bank use: use all and only records whose `holds` is an explicitly empty list. The owner describes them as adapted student recollections. Preserve raw provenance/licence labels and record the owner's use/provenance statement; do not rewrite the source or claim independent verification. This resolves the earlier question about the 2,244 official-unlicensed / 48 dexam-original / 290 owner-provided labels. Do not repeat it. It does not itself publish a paper or enable payments.
 
-The read-only media source is `~/Documents/Default Project/Dexam_Mock_Test/server/data/media/`. All **2,085 canonical assets referenced by eligible records** pass hashes, dimensions and bytes. A deterministic private **UCEED Part A - Practice Mock 01** candidate contains **57 questions, 57 verified figures, 120 minutes and 200 points**. The private manifest/rendering packet remains outside tracked/public source and every one of its runtime payloads is unchanged by numeric alternatives. Current compiler/local-media support is 835 objective UCEED records; unsupported answers/types stay unavailable. The exact first offering still needs final presentation and explicit release acceptance.
+The read-only media source is `~/Documents/Default Project/Dexam_Mock_Test/server/data/media/`. All **2,085 canonical assets referenced by eligible records** pass hashes, dimensions and bytes. The owner-approved private **UCEED Part A - Practice Mock 01** contains **57 questions, 57 verified figures, 120 minutes and 200 points**. The private manifest/rendering packet remains outside tracked/public source and every one of its runtime payloads is unchanged by numeric alternatives. Current compiler/local-media support is 835 objective UCEED records. The first offering requires hosted Test acceptance before the paid release.
 
-**Historical planning estimate for the paid MVP: approximately half of its launch readiness remained at the 8 November checkpoint.** This estimate does not describe the current non-payment preview. Count accepted launch evidence, not optional modules or test volume.
+Payment readiness on main `022ebfcdafed2f6ec763c13c8da0266a611168ca` passed 32 payment unit tests, 53 isolated database suites across 76 migrations and 56 simulated desktop and mobile checkout journeys with zero retries or skips. Merchant Test configuration and the real provider journey remain open.
 
-| Frozen workstream | Weight | Accepted estimate | Remaining evidence |
+**At the 8 November planning checkpoint, the estimate put paid MVP readiness at approximately 50%.** The table records the work and estimates as of that checkpoint.
+
+| Frozen workstream | Weight | Accepted estimate | Evidence pending on 8 November |
 | --- | ---: | ---: | --- |
 | Public site and free sample | 10 | 8 | Final coverage/copy and public promotion |
 | Controlled identity/account basics | 10 | 7 | Final notices, admission and approved hosted check |
@@ -72,7 +74,7 @@ The read-only media source is `~/Documents/Default Project/Dexam_Mock_Test/serve
 | Final customer journey/release decision | 5 | 0 | Real Test journey on dmocks.com and explicit go-live |
 | **Total** | **100** | **50** | **50 remaining** |
 
-The separate optional drawing/inspector checkpoint at `d582a80` remains unmerged and incomplete. It is outside the first objective offering. The hosted private Site is still an older controlled-login publication. No content publication, policy, merchant or production switch is approved merely because source exists.
+The separate optional drawing/inspector checkpoint at `d582a80` remains unmerged and incomplete. It is outside the first objective offering.
 
 ## Critical path and engineering order
 
@@ -86,9 +88,8 @@ The separate optional drawing/inspector checkpoint at `d582a80` remains unmerged
 
 ## Owner reviews/actions still required
 
-- Review the concrete first UCEED Part A rendering/manifest before real release. The owner bank-use/provenance decision is already recorded; do not request it again.
 - Review the complete final customer notices, refund/cancellation, tax/invoice treatment, privacy/retention and younger-student policy. Operator/address/support/GST facts are already supplied and must not be requested again.
-- Replace the exposed Razorpay Test pair and enter the new pair and Test webhook secret privately on the approved backend. The owner reports video KYC complete. Handle further provider verification or OTP if the dashboard requests it.
+- Replace the exposed Razorpay Test pair and enter the new pair and Test webhook secret privately on the approved backend. Handle further provider verification or OTP if the dashboard requests it.
 - Resolve the already pending deployment-target decision and approve the final production-impact switch after the concrete acceptance packet is ready.
 
 Continue engineering that does not depend on these decisions. Do not invent a refund policy, sell unapproved content, purchase hosting or broaden the MVP to bypass a missing approval.

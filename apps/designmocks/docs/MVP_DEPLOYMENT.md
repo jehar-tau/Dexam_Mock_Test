@@ -8,6 +8,8 @@ This is a reviewable rollout procedure, not a deployment approval. The hosted ta
 
 Use the migration ledger and the companion profile at `supabase/launch/paid-mvp.sql` from the same reviewed commit. Run `node scripts/check-mvp-profile.mjs` from the application directory to verify the 47-signature permission block against `supabase/launch/paid-mvp-rpcs.json` and record the profile SHA-256. Apply the companion profile after the reviewed migrations. The database checks exercise its release, Test, practice-design and operational boundaries.
 
+Before preparing backend commands, run `node scripts/release-source-preflight.mjs --commit <reviewed-full-commit> --tree <reviewed-full-tree>` from this directory. Get both 40-character IDs from the independently reviewed source record. Do not derive expected values from the checkout being checked. The preflight requires the exact `HEAD` and tree, a clean tracked and untracked checkout, and no ignored or untracked files under `supabase/`. It compares every backend file with its Git blob and rejects unusual file modes or symlinked backend directories. It prints stable SHA-256 hashes and counts for migrations, Edge Functions and shared code, project/config files, the paid MVP profile, and its RPC grant inventory. Exact PR/main CI, approved target, and frontend artifact checks remain separate. A pass identifies source inputs only and does not authorize credentials, backup, apply, or deployment.
+
 Before rollout, check CI for the reviewed feature commit and the merged tree, including a browser run without skips or retries. Inspect the installed ledger on the approved standalone DMocks target. Use the pre-upgrade capture procedure for a database that predates the companion profile. Restore the database and private media on an isolated target, verify the captured baseline and rehearse the pending migrations there. [Private database and file recovery](RECOVERY.md)
 
 With sales false, public registration closed or testers-only and any previous merchant Test window explicitly closed:
@@ -80,6 +82,8 @@ The operator details in Contact, Terms and Privacy come from the supplied busine
 Set `DMOCKS_PUBLISHED_NOTICES_FILE` in the approved frontend build environment. Run `node scripts/published-notices.mjs "$DMOCKS_PUBLISHED_NOTICES_FILE"` to calculate the version from the reviewed paragraphs, the fixed annual offer and the operator details. Use that exact version for `VITE_TERMS_VERSION` and the approved server `launch_settings.policy_version`. The browser displays the same revision on both notices and sends it with consent. A missing bundle or a version mismatch keeps checkout closed. Synthetic notices are restricted to the explicit local test server.
 
 The server checks the published revision after waiting for any profile write and holds that revision while recording consent. A superseded form stays closed until the customer reloads and reviews the current notices. Existing accepted versions remain on the profile until the customer accepts a current revision.
+
+The direct `/refunds` page displays the same cancellation text and revision as `/terms`. Checkout links to this page and the released-paper catalogue before consent. Use the reviewed policy links and approved sample invoice for the merchant website review. [Razorpay website review requirements](https://razorpay.com/docs/payments/dashboard/account-settings/business-website-details)
 
 Required before opening the window:
 
