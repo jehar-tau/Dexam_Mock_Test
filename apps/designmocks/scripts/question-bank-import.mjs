@@ -63,11 +63,18 @@ export function buildManifest(bank, sourceCommit = "0".repeat(40)) {
   };
 }
 
-export function loadFromGit(ref = "origin/main", cwd = new URL("../../..", import.meta.url)) {
+export function readBankSource(ref = "origin/main", cwd = new URL("../../..", import.meta.url)) {
   const root = cwd instanceof URL ? fileURLToPath(cwd) : cwd;
-  const sourceCommit = execFileSync("git", ["rev-parse", ref], { cwd: root, encoding: "utf8" }).trim();
-  const raw = execFileSync("git", ["show", `${ref}:${SOURCE_PATH}`], { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
-  return buildManifest(JSON.parse(raw), sourceCommit);
+  const sourceCommit = execFileSync("git", ["rev-parse", "--verify", "--end-of-options", `${ref}^{commit}`],
+    { cwd: root, encoding: "utf8" }).trim();
+  const raw = execFileSync("git", ["show", `${sourceCommit}:${SOURCE_PATH}`],
+    { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  return { sourceCommit, bank: JSON.parse(raw) };
+}
+
+export function loadFromGit(ref, cwd) {
+  const { sourceCommit, bank } = readBankSource(ref, cwd);
+  return buildManifest(bank, sourceCommit);
 }
 
 export async function applyManifest(manifest, { batchSize = 100, ...config }, fetchImpl = fetch) {

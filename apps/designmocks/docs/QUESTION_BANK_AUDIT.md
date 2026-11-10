@@ -2,7 +2,7 @@
 
 Audit date: 5 November 2026
 
-Current conversion addendum (8 November): the read-only canonical/media/compiler audit distinguishes 1,502 objective MVP records, 361 additional code-convertible records outside that offering and 719 conversion/context blockers. The older 161 asset-free count below is historical. See [the current bank baseline and admin preview](BANK_CONVERSION.md); none of these counts independently approves hosted publication.
+The current canonical, media and compiler audit identifies 1,509 supported objective MVP records, 361 additional supported conversions and 712 conversion or context blockers. Hosted publication requires its separate review. [Bank conversion evidence](BANK_CONVERSION.md)
 
 ## What is proven
 
@@ -38,16 +38,20 @@ npm run audit:bank
 
 Build the exact import manifest without changing hosted state with `npm run bank:manifest --prefix apps/designmocks`. A hosted import requires the explicit `bank:import` command and the approved private bank target configuration. The database requires the canonical path and an explicitly empty `holds` array for each record. It records the Git commit and source hash and makes retries idempotent. Objective readiness, owner approval and paper publication are separate decisions. [Private bank target setup](MVP_DEPLOYMENT.md#select-the-private-bank-target)
 
-The deterministic runtime adapter currently converts 161 asset-free objective records into the assessment-engine contract. Records with unresolved visual media, unsupported answer notation or missing keys remain private and unavailable for mocks. Every runtime-ready record still requires a DMocks administrator to review the content and explicitly confirm usage rights; that decision is audited and automatically cleared if the canonical content hash changes.
+The first asset-free adapter supported 161 objective records. Current runtime records require an administrator's content and rights review, and a changed canonical hash clears that approval. Records with unresolved figures, answer notation or missing keys stay unavailable for mocks.
 
-## What is not yet proven
+## Local Exam app and workstation evidence
 
-The Dexam Exam app's last authoritative state record says 4,183 questions were imported and 695 were student-ready. That snapshot is older than the current 4,521-question export. Therefore:
+On 10 November, a read-only check of the local Exam app found all 4,521 current canonical keys with zero missing or unexpected keys. The latest completed local import on 4 November recorded the same raw export SHA-256 as the file on DMocks `origin/main` at `022ebfcdafed2f6ec763c13c8da0266a611168ca`. All 4,521 current per-question hashes match under the Exam app importer's own schema and hash function.
 
-- 338 current workstation questions are not accounted for in the recorded app import;
-- readiness cannot be inferred from workstation holds alone because the app importer also applies licence, media, option, answer and provenance gates;
-- no current import-run export or database query has been captured to prove the exact deployed/staging state;
-- “all manually tested Cloudboard questions are in the app” remains unverified.
+| Canonical selection | Exam app ready | Exam app quarantined |
+| --- | ---: | ---: |
+| Hold-free | 2,468 | 114 |
+| Held | 0 | 1,939 |
+
+The workstation SQLite database also contains 4,521 questions. Its export matches the Git file byte for byte. The workstation comparison accounts for 105 Part B identifier case aliases and found zero changed payloads when preserving frozen source PDF digests. The 105 workstation import runs had zero explicit Cloudboard or Claude labels. The independent manual-push manifest and current Exam app staging evidence are still pending.
+
+The Exam app's per-question hash omits source identity and provenance. Its local whole-export digest corroborates the input file. DMocks stores a separate hash of each complete canonical question, including provenance. Compare hashes within their own contracts.
 
 ## Reconciliation gate
 
@@ -57,11 +61,21 @@ Before DMocks serves the bank:
 2. Export the latest Exam-app `assessment_import_runs`, question external keys, versions, publication states and quarantine reasons from staging.
 3. Compare all three sets by stable external key and content hash; never compare only counts.
 4. Classify every difference as new, updated version, intentionally retired, quarantined or missing.
-5. Import only records whose `holds` array is present and empty, through the existing idempotent Exam-app importer; do not copy rows manually.
+5. Import into DMocks only records whose `holds` array is present and empty through the idempotent DMocks bank importer.
 6. Require zero unexplained IDs and a signed owner review of the ready/quarantined totals.
 
 The existing Exam app remains the reference implementation and should be the migration source. DMocks should not create a second incompatible bank schema.
 
-The comparison gate is implemented as `npm run bank:reconcile -- --canonical <bank-export.json> --snapshot <deployed-state.json> [--cloudboard <manual-push-manifest.json>]`. The deployed snapshot contract is illustrated by `DEPLOYED_BANK_SNAPSHOT.example.json`: one record per unique stable external key, the SHA-256 of the exact canonical JSON question, and a state of `ready`, `review`, `quarantined` or `retired`. Retired keys absent from the current canonical export are explicitly classified; all other missing, changed, unexpected or held-but-ready keys fail the command with exit 2. Output contains stable keys and counts only—never prompts or answer keys.
+The offline comparison accepts `npm run bank:reconcile -- --canonical <bank-export.json> --snapshot <deployed-state.json> [--cloudboard <manual-push-manifest.json>]`. See the [snapshot example](DEPLOYED_BANK_SNAPSHOT.example.json) for the stable key, canonical question SHA-256 and state contract. An eligible question recorded only as retired counts as missing. Historical retired records excluded by the current source remain classified as retired. The report includes discrepancy keys and counts.
 
-The workstation does not currently provide a usable current Exam-app snapshot: `server/data/dexam.sqlite` is zero bytes. The dated 28 October backup is readable but predates later imports and contains 3,343 questions, so it is evidence of history, not current deployment state, and was not substituted. A current staging export and the Cloudboard/Claude manual-push manifest are still required to make the reconciliation pass.
+## Read-only DMocks target audit
+
+From the DMocks app directory, provide `DMOCKS_BANK_AUDIT_DATABASE_URL` through the private environment for the intended loopback PostgreSQL database. Use the reviewed full commit for `DMOCKS_REVIEWED_BANK_COMMIT`.
+
+```sh
+npm run bank:reconcile-target -- --expect-source "$DMOCKS_REVIEWED_BANK_COMMIT"
+```
+
+The command reads the export from the pinned local `origin/main` ref and reads the target in one repeatable-read, read-only PostgreSQL session. It compares the last completed import's source digest, source and imported counts, exact key and hash membership, active records outside the canonical selection, and current local holds. An unfinished import also fails the comparison. The JSON report contains only counts, source and run metadata, and discrepancy keys. Exit 0 means the comparison passed, exit 2 means it found discrepancies, and exit 1 means it could not read or validate the inputs.
+
+Use the existing approved standalone DMocks database and TLS requirements from [recovery setup](RECOVERY.md) for a hosted audit. Supply its CA path with `DMOCKS_BANK_AUDIT_DATABASE_CA_FILE` if required and use `--approved-hosted` after target approval. The report's `ready` state means a canonical runtime record has owner and rights approval. Media availability, paper release and student access have their own checks. Supply `--cloudboard <manual-push-manifest.json>` to compare an independently obtained manifest. The report shows `cloudboardTotal: null` when no manifest was supplied.
