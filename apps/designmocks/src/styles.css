@@ -3943,8 +3943,8 @@ svg {
   .drawing-criterion { grid-template-columns: minmax(0, 1fr) minmax(0, 6rem); }
 }
 .drawing-feedback{margin:1rem 0;padding:1.25rem;border:1px solid var(--line);background:var(--warm)}.drawing-feedback h4{font-size:1.5rem;margin:.5rem 0}.drawing-feedback dl{display:grid;grid-template-columns:1fr auto;gap:.4rem 1rem;max-width:360px}.drawing-feedback dt,.drawing-feedback dd{margin:0}.drawing-feedback dt{text-transform:capitalize}.drawing-feedback dd{font-weight:700}
+.drawing-ai-advisory { overflow-wrap: anywhere; }
 .drawing-ai-advisory dl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .4rem 1rem; max-width: 24rem; }
-.drawing-ai-advisory dt { overflow-wrap: anywhere; }
 .drawing-ai-advisory dd { margin: 0; text-align: end; font-weight: 700; font-variant-numeric: tabular-nums; }
 .portal-shell { display: grid; grid-template-columns: 260px minmax(0,1fr); min-height: 70vh; border-top: 1px solid var(--line); }
 .portal-sidebar { position: sticky; top: 0; align-self: start; min-height: 70vh; padding: 2rem 1.25rem; border-right: 1px solid var(--line); background: var(--paper); }

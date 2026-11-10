@@ -53,6 +53,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/purchase-history.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/purchase-support-reports.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-reviewer-access.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/frozen-drawing-rubric.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/local-drawing-advice-jobs.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learning-lesson-editor.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/staging-portal.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/ai-draft-canonical.sql
