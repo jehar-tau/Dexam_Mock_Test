@@ -140,7 +140,7 @@ set local role authenticated;
 select pg_temp.bind_reject('select public.admin_nid_question_binding(''nid-binding-mcq'')','42501');
 select pg_temp.bind_reject('select public.admin_bind_nid_question(''nid-binding-mcq'',current_setting(''test.bind.sourceVersion''),''10000000-0000-4000-8000-000000002251'',1,current_setting(''test.bind.saved'')::jsonb->>''sha256'',1,''Original fictional task fits this authored observation section.'',''30000000-0000-4000-8000-000000002251'')','42501');
 reset role;
-select pg_temp.bind_assert(dm_private.mvp_profile_permissions_valid(),'47-signature default-deny MVP profile remains exact');
+select pg_temp.bind_assert(dm_private.mvp_profile_permissions_valid(),'default-deny MVP profile remains exact');
 select pg_temp.bind_assert(current_setting('test.bind.frozen')=(select md5(jsonb_build_object('paper',(select to_jsonb(p)from dm_private.papers p where id='90000000-0000-4000-8000-000000002251'),
  'questions',(select jsonb_agg(to_jsonb(q)order by ordinal)from dm_private.questions q where paper_id='90000000-0000-4000-8000-000000002251'),
  'attempt',(select to_jsonb(a)from dm_private.attempts a where id='92000000-0000-4000-8000-000000002253'),

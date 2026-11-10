@@ -401,6 +401,7 @@ insert into dm_private.mvp_rpc_allowlist(signature,category)values
  ('public.my_overview_analytics()','student'),
  ('public.my_pass()','student'),
  ('public.my_privacy_requests()','student'),
+ ('public.my_purchase_page(timestamp with time zone,uuid)','student'),
  ('public.prepare_order()','student'),
  ('public.read_attempt(uuid)','student'),
  ('public.report_attempt_question(uuid,uuid,text,text)','student'),
