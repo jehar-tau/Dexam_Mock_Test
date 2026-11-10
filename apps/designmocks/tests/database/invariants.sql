@@ -134,8 +134,7 @@ select public.admin_release_all_india_results(current_setting('test.all_india_ev
 select pg_temp.assert_true((public.admin_all_india_events()->0->>'resultsReleasedAt') is not null,'admin releases reviewed All India result');
 reset role;
 set local role anon;
-select pg_temp.assert_true(public.public_all_india_top_ten()->0->'topTen'->0->>'alias' like 'Candidate-%','public results use generated alias');
-select pg_temp.assert_true((public.public_all_india_top_ten()->0->'topTen'->0->>'rank')::integer=1,'public rank released');
+select pg_temp.assert_true(public.public_all_india_top_ten()='[]'::jsonb,'cohort release alone does not publish rankings');
 reset role;
 insert into dm_private.papers(id,title,exam,duration_seconds) values('10000000-0000-4000-8000-000000000001','Fictional QA paper','uceed',600);
 insert into dm_private.questions(id,paper_id,ordinal,prompt,options,points,topic,kind,marking,reviewed) values
