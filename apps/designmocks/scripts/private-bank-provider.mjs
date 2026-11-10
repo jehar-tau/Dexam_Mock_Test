@@ -42,15 +42,17 @@ function targetConfiguration({ url, serviceRoleKey, allowOrigin, environment, pr
   return { origin, secret, key: serviceRoleKey };
 }
 
-function providerFailure(operation, httpStatus) {
-  const error = new Error(httpStatus ? `Private bank request ${operation} failed (HTTP ${httpStatus})` : `Private bank request ${operation} failed`);
+function providerFailure(operation, requestLabel, httpStatus) {
+  const error = new Error(httpStatus ? `${requestLabel} ${operation} failed (HTTP ${httpStatus})` : `${requestLabel} ${operation} failed`);
   error.code = "PRIVATE_BANK_PROVIDER_FAILED";
   error.operation = operation;
   if (httpStatus) error.httpStatus = httpStatus;
   return error;
 }
 
-export async function openPrivateBankProvider(config, { fetchImpl = fetch, acknowledgement = "USE_PRIVATE_BANK_ON" } = {}) {
+export function openPrivateDMocksTransport(config, {
+  fetchImpl = fetch, acknowledgement = "USE_PRIVATE_BANK_ON", requestLabel = "Private bank request", timeoutMs = 45000,
+} = {}) {
   const { origin, secret, key } = targetConfiguration(config, acknowledgement);
   function fetchFromTarget(input, init = {}) {
     const request = input instanceof Request ? input : null;
@@ -62,7 +64,7 @@ export async function openPrivateBankProvider(config, { fetchImpl = fetch, ackno
     headers.set("apikey", key);
     if (secret) headers.delete("authorization");
     else headers.set("authorization", `Bearer ${key}`);
-    const deadline = AbortSignal.timeout(45000);
+    const deadline = AbortSignal.timeout(timeoutMs);
     const signal = init.signal ?? request?.signal;
     return fetchImpl(input, { ...init, headers, redirect: "error", signal: signal ? AbortSignal.any([signal, deadline]) : deadline });
   }
@@ -73,23 +75,28 @@ export async function openPrivateBankProvider(config, { fetchImpl = fetch, ackno
         method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body),
       });
     } catch {
-      throw providerFailure(operation);
+      throw providerFailure(operation, requestLabel);
     }
     if (!response.ok) {
       await response.body?.cancel().catch(() => {});
-      throw providerFailure(operation, response.status);
+      throw providerFailure(operation, requestLabel, response.status);
     }
     try {
       const content = await response.text();
       return content ? JSON.parse(content) : null;
     }
-    catch { throw providerFailure(operation); }
+    catch { throw providerFailure(operation, requestLabel); }
   }
 
+  return { origin, fetch: fetchFromTarget, rpc };
+}
+
+export async function openPrivateBankProvider(config, options) {
+  const provider = openPrivateDMocksTransport(config, options);
   // Check the installed application before sending source rows, runtime plans or files.
-  const health = await rpc("admin_operational_health");
+  const health = await provider.rpc("admin_operational_health");
   if (health?.scope !== "paid-mvp-v1" || health.monitorVersion !== 1 || health.apiProfileReady !== true) {
     throw new Error("The approved target must have the current DMocks paid MVP profile");
   }
-  return { origin, fetch: fetchFromTarget, rpc };
+  return provider;
 }

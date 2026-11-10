@@ -20,14 +20,19 @@ const mvpMetrics = new Set(["staleAttempts", "expiredAttempts", "openBugs", "pen
 
 export function OperationalHealth({ health, onRefresh }) {
   if (!health) return <p role="status">Loading operational health…</p>;
-  const showExtendedMetrics = postLaunchPreview && health.scope !== "paid-mvp-v1";
+  const paidProfile = health.scope === "paid-mvp-v1";
+  const showExtendedMetrics = postLaunchPreview && !paidProfile;
   const metrics = Object.entries(labels).filter(([key]) => key === "unverifiedPasses"
     ? Number.isSafeInteger(health[key]) && health[key] >= 0
     : showExtendedMetrics || mvpMetrics.has(key));
   return <section className="operations-health" aria-label="Operational health">
     <div>
       <span className={`status-pill health-${health.status}`}>{health.status}</span>
-      <small>Checked {new Date(health.checkedAt).toLocaleString("en-IN")}</small>
+      <small>
+        Checked {new Date(health.checkedAt).toLocaleString("en-IN")}
+        {paidProfile && health.paymentMode === "test" && <><br /><span>Test payments</span></>}
+        {paidProfile && health.paymentMode === "live" && <><br /><span>Live payments</span></>}
+      </small>
       {onRefresh && <button type="button" onClick={onRefresh}>Refresh queues</button>}
     </div>
     <div className="operations-metrics">
