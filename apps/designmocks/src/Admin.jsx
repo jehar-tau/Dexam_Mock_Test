@@ -270,7 +270,7 @@ function AdminDesk({ session }) {
     try {
       const data = await intakeRequest(functions, "question-intake", body);
       assertCurrent();
-      setMessage(`${data.name} uploaded privately for extraction.`);
+      setMessage(data.reused ? `${data.name} is already in private intake.` : `${data.name} uploaded privately for extraction.`);
       element.reset();
       await load();
     } catch (e) {

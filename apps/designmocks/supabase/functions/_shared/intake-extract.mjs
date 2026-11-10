@@ -1,4 +1,5 @@
 import { intakeFileMatches } from "./intake-file.mjs";
+import { intakeSourceDigest } from "./intake-source.mjs";
 
 const questionTypes = ["MCQ", "MSQ", "NAT", "DESCRIPTIVE"];
 export const extractedQuestionSchema = {
@@ -81,6 +82,7 @@ export async function extractIntakeAsset({ admin, actorId, assetId, model, apiKe
     if (error || !file) throw new Error("Private source download failed");
     const bytes = new Uint8Array(await file.arrayBuffer());
     if (bytes.length !== asset.byteSize || !intakeFileMatches(bytes, asset.mimeType)) throw new Error("Private source metadata mismatch");
+    if (asset.sourceSha256 != null && await intakeSourceDigest(bytes) !== asset.sourceSha256) throw new Error("Private source digest mismatch");
     let binary = "";
     for (let i = 0; i < bytes.length; i += 32768) binary += String.fromCharCode(...bytes.subarray(i, i + 32768));
     const provider = await fetcher("https://api.openai.com/v1/responses", {
