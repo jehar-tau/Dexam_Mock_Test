@@ -29,6 +29,7 @@ function PurchaseSession(){
   {state.status==='pending'&&<p role="status">Your payment is not confirmed here yet. Check your pass before trying another payment. If you paid and access remains inactive, <Link to="/contact">Contact support</Link>.</p>}
   {state.status==='paid'&&<p><Link to="/contact">Contact support</Link> with payment questions.</p>}
   {state.error&&<p className="error" role="alert">{state.error}</p>}
+  {['paid','pending'].includes(state.status)&&<p><Link to="/account/purchases">Purchase history</Link></p>}
   {!busy&&state.status!=='notices-changed'&&<button type="button" className="button quiet" onClick={()=>void flow.current?.refresh()}>Check my pass</button>}
  </>;
 }
