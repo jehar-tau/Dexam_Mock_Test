@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { appendPurchasePage, purchaseAmount, validatePurchasePage } from "../src/purchase-history.js";
+import { appendPurchasePage, purchaseAmount, purchaseSupportContext, validatePurchasePage } from "../src/purchase-history.js";
 
 const row = (number, changes = {}) => ({
   reference: `10000000-0000-4000-8000-${String(number).padStart(12, "0")}`,
@@ -45,4 +45,15 @@ test("rejects wrong-mode, malformed, inconsistent and repeated purchase replies"
   }
   assert.throws(() => validatePurchasePage(fixture([row(1), row(1)]), "test"));
   assert.throws(() => validatePurchasePage(fixture([row(1)], { reference: row(1).reference, createdAt: row(1).createdAt }), "test"));
+});
+
+test("order help carries a reference only for the same account and payment mode", () => {
+  const actorId = row(2).reference;
+  const link = { actorId, mode: "test", reference: row(1).reference };
+  const state = { purchaseSupport: link };
+  assert.deepEqual(purchaseSupportContext(state, actorId, "test"), { reference: link.reference, mode: "test" });
+  assert.equal(purchaseSupportContext(state, row(3).reference, "test"), null);
+  assert.equal(purchaseSupportContext(state, null, "test"), null);
+  assert.equal(purchaseSupportContext(state, actorId, "live"), null);
+  assert.equal(purchaseSupportContext({ purchaseSupport: { ...link, reference: "invalid" } }, actorId, "test"), null);
 });

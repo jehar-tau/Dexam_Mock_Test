@@ -55,3 +55,23 @@ test('continuations preserve existing reports and reject overlap without mutatin
  const current=[row(1)],next=[row(2)];assert.deepEqual(appendBugReports(current,next),[...current,...next]);assert.equal(current.length,1);
  assert.throws(()=>appendBugReports(current,[row(1)]));assert.equal(current.length,1);
 });
+
+test('a linked order is frozen in the request while a general report keeps its original signature',()=>{
+ const draft={title:'A purchase question',description:'A complete original description.'};
+ const source='https://dmocks.com/report', create=()=>requestId, purchaseOrder=row(2).id;
+ const general=prepareBugReport(draft,source,create).request;
+ const linked=prepareBugReport({...draft,purchaseOrder},source,create).request;
+ assert.deepEqual(linked,{...general,p_purchase_order_id:purchaseOrder});
+ assert.ok(Object.isFrozen(linked));assert.equal(Object.hasOwn(general,'p_purchase_order_id'),false);
+ assert.throws(()=>prepareBugReport({...draft,purchaseOrder:'missing'},source,create),/Invalid linked order/);
+ assert.deepEqual(bugReportFailure({code:'22023',details:'purchase_order_unavailable'}),{
+  definitive:true,message:'This order is unavailable for your account. Remove the order link to send a general report.',
+ });
+});
+
+test('owned support history projects only the linked order reference and mode',()=>{
+ const report=row(), purchase={reference:row(2).id,mode:'test'};
+ const item={...report,purchase:{...purchase,amountMinor:119300,providerPaymentId:'private-id'},reporterId:owner};
+ assert.deepEqual(validateBugReportPage({items:[item],nextCursor:null},owner).items,[{...report,purchase}]);
+ assert.throws(()=>validateBugReportPage({items:[{...report,purchase:{...purchase,mode:'unknown'}}],nextCursor:null},owner),/Invalid linked purchase/);
+});
