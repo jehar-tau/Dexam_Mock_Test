@@ -80,9 +80,12 @@ export function DrawingUploads({
             <button className="text-button" type="button" disabled={busy} aria-label={`Remove ${item.name || `image ${item.ordinal}`}`} onClick={async () => {
               setBusy(true);
               try {
-                await invoke({ action: "remove", id: item.id });
+                const result = await invoke({ action: "remove", id: item.id });
+                if (result?.removed !== item.id) throw new Error("Unconfirmed drawing removal.");
                 setItems((current) => current.filter((page) => page.id !== item.id));
-                setMessage("Drawing image removed.");
+                setMessage(result.cleanupPending === true
+                  ? "Drawing image removed from your submission. Private file cleanup is still pending."
+                  : "Drawing image removed.");
               } catch {
                 setMessage("Couldn’t confirm the removal. Check your saved pages.");
                 setItems(null);
