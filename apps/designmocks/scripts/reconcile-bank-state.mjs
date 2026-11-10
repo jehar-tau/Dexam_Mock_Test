@@ -18,8 +18,8 @@ export function reconcileBankState(canonical,snapshot,cloudboard=null){
   for(const question of canonical.questions){
     if(!Array.isArray(question.holds))throw new Error(`Malformed canonical holds: ${question.externalKey}`);
     const deployed=snapshotMap.get(question.externalKey),hash=contentSha256(question),eligible=question.holds.length===0;
-    if(eligible&&!deployed)issues.missing.push(question.externalKey);
-    if(deployed&&deployed.contentSha256!==hash)issues.changed.push(question.externalKey);
+    if(eligible&&(!deployed||deployed.state==="retired"))issues.missing.push(question.externalKey);
+    if(deployed&&(eligible||deployed.state!=="retired")&&deployed.contentSha256!==hash)issues.changed.push(question.externalKey);
     if(!eligible&&deployed?.state==="ready")issues.unsafeReady.push(question.externalKey);
   }
   for(const record of snapshot.records)if(!canonicalMap.has(record.externalKey)&&record.state!=="retired")issues.unexpected.push(record.externalKey);

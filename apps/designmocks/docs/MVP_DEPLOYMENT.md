@@ -44,6 +44,8 @@ Set `DMOCKS_SUPABASE_URL` and the private `DMOCKS_SUPABASE_SERVICE_ROLE_KEY` for
 
 Run the canonical text import after the approved target has the matching migrations and profile. For bank-wide staging, follow the text import with media registration and runtime materialization. Set `DMOCKS_MEDIA_ROOT` to the read-only media directory. The bank and media manifest commands remain available for offline inspection.
 
+After the text import, verify its completed receipt and exact current question hashes with the [read-only bank target audit](QUESTION_BANK_AUDIT.md#read-only-dmocks-target-audit). Record the report with the reviewed source and target before proceeding to content preparation.
+
 ```sh
 npm run bank:import
 npm run media:import
