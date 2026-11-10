@@ -102,6 +102,14 @@ The owner created **DesignMocks Web** in Google Cloud project `designmocks-auth-
 
 The server-owned `dm_private.registration_policy` is `testers`; exactly one approved business test account is in `registration_testers`. The global Auth signup switch must be on for Google to create that tester, but the wired before-user-created hook rejects non-Google, anonymous, missing-email and non-allowlisted creation. Public registration is still closed. A real Auth email/password signup probe returns the hook's 403 denial; transactional tests cover unknown Google addresses and the other policy modes. Anonymous student RPCs remain denied. The owner test account has no paid pass, accepted purchase policy or order.
 
+### Pre-account age and guardian approval
+
+Migration `202611100164_guardian_pre_admission.sql` adds a private admission check to the existing Auth hook. A new account needs an unexpired, unrevoked adult or guardian approval for the exact Google subject. The hook also requires Google's verified email claim to match the email in the signup event and retains the existing registration mode and tester allowlist. The record stores an opaque proof reference and consent version alongside the decision and its timestamps. The migration starts with an empty approval table. Only the Auth hook role can read that table during signup, and the app exposes no approval writer.
+
+Before use with real applicants, choose and verify the approval workflow for adults and for parents or legal guardians. Review proof and consent retention, consent withdrawal, and how existing users are handled. Keep manual identity linking disabled and privileged Auth account creation out of student enrollment. Returning Google accounts and pre-existing accounts eligible for identity linking are outside the pre-create hook. Review existing testers by Auth user ID and Google identity before admitting them to a private rehearsal.
+
+The focused database cases and stock GoTrue v2.197.0 passed on disposable fixtures. The Google ID-token and authorization-code cases used a fictional issuer and verified that denied applicants left no Auth user and approved adult and guardian cases each created one account. Repeat provider checks with the chosen verification workflow and reviewed tester records before hosted admission.
+
 Approved callback destinations are exact:
 
 - `https://dmocks.com/account/callback`
