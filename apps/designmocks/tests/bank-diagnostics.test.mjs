@@ -17,7 +17,7 @@ test('conversion diagnostics distinguish unverified context from incomplete sour
  const result=inspect(q);assert.equal(result.runtime,null);assert.deepEqual(new Set(result.issues.map(i=>i.code)),new Set(['context-unverified','answer-pending','answer-missing','choice-options-missing']));assert.deepEqual(q,before);
 });
 test('source, media and answer notation issues are independently actionable',()=>{
- const sha='a'.repeat(64),q=fixture({type:'MSQ',assets:[{sha256:sha,width:4,height:4}],options:['A','A','C','D'].map(key=>({key,text:key})),answer:{raw:'A or C',status:'verified'}});
+ const sha='a'.repeat(64),q=fixture({type:'MSQ',assets:[{sha256:sha,width:4,height:4}],options:['A','A','C','D'].map(key=>({key,text:key})),answer:{raw:'A or Z',status:'verified'}});
  assert.deepEqual(new Set(inspect(q).issues.map(i=>i.code)),new Set(['media-unverified','option-labels']));
  const fixed={...q,options:fixture().options};assert.deepEqual(new Set(inspect(fixed).issues.map(i=>i.code)),new Set(['media-unverified','answer-notation']));
  assert.deepEqual(inspect(fixture({visualDependency:true})).issues.map(i=>i.code),['visual-assets-missing']);

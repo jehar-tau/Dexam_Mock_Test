@@ -1,4 +1,5 @@
 import { isHumanTask, nidPracticeSchema, validateNidPracticeBlueprint } from './nid-practice-blueprint.js';
+import { answerAlternativesLabel, numericAnswerLabel } from "./answer-key.js";
 export const initialBankFilters = { exam: "", type: "", status: "pending", topic: "", search: "", limit: 25 };
 
 export function nidQuestionPractice(question) {
@@ -35,10 +36,12 @@ export function sourceAnswerLabel(answer) {
 
 export function deliveryAnswerLabel(key) {
   if (!key) return "Awaiting conversion";
+  const alternatives = answerAlternativesLabel(key);
+  if (alternatives) return alternatives;
   if (["mcq", "msq"].includes(key.kind) && Array.isArray(key.correct)) return key.correct.join(", ");
-  if (key.kind === "nat" && Array.isArray(key.accepted)) return key.accepted.map(value =>
-    value?.exact != null ? String(value.exact) : Array.isArray(value?.range) ? value.range.map(String).join(" to ") : "Awaiting verification"
-  ).join(" or ");
+  if (key.kind === "nat" && Array.isArray(key.accepted)) {
+    return key.accepted.map(value => numericAnswerLabel(value) ?? "Awaiting verification").join(" or ");
+  }
   return key.kind === "drawing" ? "Human review against the task rubric" : "Awaiting verification";
 }
 
