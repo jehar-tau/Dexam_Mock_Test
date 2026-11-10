@@ -110,14 +110,19 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
     await assert.rejects(readAttempt(state.other, state.completed, target));
 
     const profile = await readFile(new URL('../../supabase/launch/paid-mvp.sql', import.meta.url), 'utf8');
-    const installPaidProfile = () => sql(`begin;\n${profile}\ncommit;`, target);
+    const installPaidProfile = (profileSql = profile) => sql(`begin;\n${profileSql}\ncommit;`, target);
+    // The installed companion predates purchase history (migration 202611090160), so omit its entry when modelling it.
+    const purchaseHistoryEntry = " ('public.my_purchase_page(timestamp with time zone,uuid)','student'),\n";
+    const beforePurchaseHistory = profile.split(purchaseHistoryEntry);
+    assert.equal(beforePurchaseHistory.length, 2, 'Expected exactly one purchase history entry in the current paid profile');
+    const installedProfile = beforePurchaseHistory.join('');
     for (const file of pending) {
       if (versionOf(file) !== '202611090158') {
         await apply(file, target);
         continue;
       }
       // A deployed paid profile must remain effective while a newer migration runs.
-      await installPaidProfile();
+      await installPaidProfile(installedProfile);
       await apply(file, target);
       assert.equal(await sql(`select dm_private.mvp_profile_permissions_valid() and not exists (
         select 1 from unnest(array['anon','authenticated','service_role']) roles(role)
