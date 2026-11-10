@@ -85,6 +85,7 @@ function ReportReply({ report, claim, release, blocked, refresh }) {
 
   return <article className="bug-report-card">
     <b>{report.title}</b>
+    <p>Report reference <code>{report.id}</code></p>
     <p>{report.description}</p>
     <form className="admin-reply" aria-label={"Reply to report " + report.title} onSubmit={event => {
       event.preventDefault();

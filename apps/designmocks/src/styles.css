@@ -3625,7 +3625,8 @@ svg {
   accent-color: var(--green);
 }
 .terms-checkbox a,
-.inline-links a {
+.inline-links a,
+.annual-card > p a {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -3657,6 +3658,10 @@ svg {
   display: grid;
   gap: 14px;
   margin: 28px 0;
+}
+.live-choices > p {
+  margin: 0;
+  font-weight: 600;
 }
 .live-choices button {
   min-height: 60px;

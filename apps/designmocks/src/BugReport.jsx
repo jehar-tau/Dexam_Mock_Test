@@ -42,9 +42,9 @@ function ReportSession({actorId}){
   const timeout=new AbortController(),timer=setTimeout(()=>timeout.abort(),20000);
   const current=()=>active()&&!controller.signal.aborted&&action.current===controller&&request.current===snapshot;
   try{
-   validateBugReportReceipt(await rpc('submit_bug_report',snapshot,AbortSignal.any([lifetime.current.signal,controller.signal,timeout.signal])));
+   const reportId=validateBugReportReceipt(await rpc('submit_bug_report',snapshot,AbortSignal.any([lifetime.current.signal,controller.signal,timeout.signal])));
    if(!current())return;
-   request.current=null;setPending(null);setDraft({title:'',description:''});setErrors({});setMessage('Thanks — your report is now in the review queue.');focusForm.current=true;void load();
+   request.current=null;setPending(null);setDraft({title:'',description:''});setErrors({});setMessage(<>Your report is in the review queue. Report reference <code>{reportId}</code></>);focusForm.current=true;void load();
   }catch(error){
    if(!current())return;const failure=bugReportFailure(error);setMessage(failure.message);
    if(failure.definitive){request.current=null;setPending(null);}
@@ -70,7 +70,7 @@ function ReportSession({actorId}){
    {reading&&<p role="status">Loading your reports…</p>}
    {readError&&<p role="alert" className="error">{readError}</p>}
    {!reading&&!readError&&reports.length===0&&<p>No reports yet.</p>}
-   <div className="admin-list">{reports.map(report=><article className="bug-report-card" key={report.id} tabIndex={-1} aria-labelledby={prefix+'-'+report.id} ref={element=>{if(element)reportElements.current.set(report.id,element);else reportElements.current.delete(report.id);}}><h3 id={prefix+'-'+report.id}>{report.title}</h3><span className="status-pill">{report.status}</span><p>{report.description}</p>{report.adminReply&&<p><strong>Team reply:</strong> {report.adminReply}</p>}</article>)}</div>
+   <div className="admin-list">{reports.map(report=><article className="bug-report-card" key={report.id} tabIndex={-1} aria-labelledby={prefix+'-'+report.id} ref={element=>{if(element)reportElements.current.set(report.id,element);else reportElements.current.delete(report.id);}}><h3 id={prefix+'-'+report.id}>{report.title}</h3><span className="status-pill">{report.status}</span><p>Report reference <code>{report.id}</code></p><p>{report.description}</p>{report.adminReply&&<p><strong>Team reply:</strong> {report.adminReply}</p>}</article>)}</div>
    {cursor&&<button className="button quiet" type="button" disabled={reading} onClick={()=>void load(cursor,true)}>Load more reports</button>}
   </section>
  </>;
