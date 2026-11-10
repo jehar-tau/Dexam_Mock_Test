@@ -16,6 +16,7 @@ import { createAnswerSyncQueue, validAttemptAnswer } from "./attempt-sync.js";
 import { createAttemptAnswerJournal, pruneDeviceAnswers } from "./attempt-answer-journal.js";
 import { AttemptInsights } from "./AttemptInsights.jsx";
 import { ExamPartTransition, ExamSessionReport } from "./ExamPartTransition.jsx";
+import { answerAlternativesLabel } from "./answer-key.js";
 
 function SignInGate() {
   return (
@@ -649,27 +650,31 @@ if(postLaunchPreview){
         </div>}
         {!attempt.examResultsPending && review && (
           <div className="answer-review">
-            {attempt.questions.map((item, i) => (
-              <article key={item.id}>
-                <span className="eyebrow">
-                  QUESTION {i + 1} / {item.topic}
-                </span>
-                <h3>{item.prompt}</h3>
-                <p>
-                  {item.kind === "drawing"
-                    ? "Drawing · separate human review"
-                    : item.outcome.replaceAll("_", " ")}
-                </p>
-                <p>
-                  Your answer:{" "}
-                  {Array.isArray(item.answer)
-                    ? item.answer.join(", ")
-                    : (item.answer ?? "Not answered")}
-                </p>
-                <p>{item.explanation}</p>
-                {item.kind === "drawing" && <DrawingReviewStatus review={item.drawingReview} />}
-              </article>
-            ))}
+            {attempt.questions.map((item, i) => {
+              const alternatives = answerAlternativesLabel(item.correctKey);
+              return (
+                <article key={item.id}>
+                  <span className="eyebrow">
+                    QUESTION {i + 1} / {item.topic}
+                  </span>
+                  <h3>{item.prompt}</h3>
+                  <p>
+                    {item.kind === "drawing"
+                      ? "Drawing · separate human review"
+                      : item.outcome.replaceAll("_", " ")}
+                  </p>
+                  <p>
+                    Your answer:{" "}
+                    {Array.isArray(item.answer)
+                      ? item.answer.join(", ")
+                      : (item.answer ?? "Not answered")}
+                  </p>
+                  {alternatives && <p><strong>Accepted answers</strong> {alternatives}</p>}
+                  <p>{item.explanation}</p>
+                  {item.kind === "drawing" && <DrawingReviewStatus review={item.drawingReview} />}
+                </article>
+              );
+            })}
           </div>
         )}
       </section>
