@@ -337,27 +337,26 @@ function AttemptSession({actorId,services}) {
     autoSubmitted.current = false;
     answerSync.current = null;
     if (userId)
-      rpc("read_attempt", { p_id: id },request.signal)
-        .then(async(data) => {
-          if(!alive||!current())return;
-          await services.checkIdentity(request.signal);
+      services.readAttempt(id, request.signal)
+        .then(({ data, receivedAt }) => {
           if (!alive || !current()) return;
           if(!data||data.id!==id||!["active","submitted"].includes(data.status)||!Array.isArray(data.questions)||!Number.isFinite(Date.parse(data.serverNow))||!Number.isFinite(Date.parse(data.deadline)))throw new Error("Unconfirmed paper response.");
           if(!postLaunchPreview&&(data.resultsPending||data.examResultsPending||data.drawingUploadTasks?.length||data.questions.some(item=>!["mcq","msq","nat"].includes(item.kind))))throw new Error("This paper is outside the initial release.");
           const serverTime = Date.parse(data.serverNow);
           const deadline = Date.parse(data.deadline);
           const clientTime = Date.now();
-          offset.current = serverTime - clientTime;
+          // Count the time spent confirming identity after the server replied.
+          offset.current = serverTime - receivedAt;
+          const verifiedServerTime = clientTime + offset.current;
           setNow(clientTime);
-          pruneDeviceAnswers(userId, serverTime);
+          pruneDeviceAnswers(userId, verifiedServerTime);
           const journal = createAttemptAnswerJournal({ userId, attemptId: id, deadline });
           const queue = createAnswerSyncQueue({
             journal,
             revisionSeed: () => Date.now() + offset.current,
             send: async ({ questionId, answer, revision }) => {
               if (!alive || !navigator.onLine) throw new Error("Connection unavailable.");
-              const result=await rpc("save_answer_revision", { p_attempt_id: id, p_question_id: questionId, p_answer: answer, p_revision: revision },request.signal);
-              await services.checkIdentity(request.signal);return result;
+              return rpc("save_answer_revision", { p_attempt_id: id, p_question_id: questionId, p_answer: answer, p_revision: revision },request.signal);
             },
             onSaved: ({ questionId, answer, revision, accepted }) => {
               if (!alive || !current()) return;
@@ -374,13 +373,13 @@ function AttemptSession({actorId,services}) {
           setAttempt(data);
           if (data.status === "active") {
             queue.restore(data.questions);
-            if (queue.pendingCount() && navigator.onLine) queue.flush();
+            if (queue.pendingCount() && navigator.onLine && verifiedServerTime < deadline) queue.flush();
           } else {
             queue.discard();
           }
 if(postLaunchPreview){
-          rpc("my_exam_mock_session", { p_attempt_id: id }).then((value) => alive && current() && setExamSession(value)).catch(() => {});
-          rpc("my_exam_mock_report", { p_attempt_id: id }).then((value) => alive && current() && setExamReport(value)).catch(() => {});
+          rpc("my_exam_mock_session", { p_attempt_id: id }, request.signal).then((value) => alive && current() && setExamSession(value)).catch(() => {});
+          rpc("my_exam_mock_report", { p_attempt_id: id }, request.signal).then((value) => alive && current() && setExamReport(value)).catch(() => {});
 }
         })
         .catch(() => {
@@ -393,7 +392,7 @@ if(postLaunchPreview){
       alive = false;request.abort();
       clearTimeout(saveTimer.current);
     };
-  }, [userId, id]);
+  }, [userId, id, services]);
   useEffect(() => {
     const queued = q && answerSync.current?.hasPending(q.id) ? answerSync.current.pendingAnswer(q.id) : q?.answer;
     setDraft(queued ?? null);
@@ -498,7 +497,6 @@ if(postLaunchPreview){
         if (!sync.saved) throw new Error("Reconnect and save the waiting answers before submitting.");
       }
       const result = await rpc("submit_attempt", { p_id: id });
-      await services.checkIdentity();
       if(!result||result.id!==id||result.status!=="submitted"||!Array.isArray(result.questions)||!Number.isFinite(Date.parse(result.deadline)))throw new Error("Unconfirmed submission response.");
       if (!current() || answerSync.current !== queue) return;
       queue.discard();
@@ -529,7 +527,7 @@ if(postLaunchPreview){
   }, [left, busy, attempt?.status, reconnects]);
   const startPartB=async partA=>{
     if(!current()||mutationBusy.current)return;mutationBusy.current=true;setBusy(true);setError("");
-    try{const next=await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA});await services.checkIdentity();
+    try{const next=await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA});
       if(typeof next!=="string"||!/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(next))throw new Error("Unconfirmed Part B response.");
       if(current())navigate(`/attempt/${next}`);
     }catch{if(current())setError("Couldn’t confirm Part B. Reopen this attempt to check the fixed session before trying again.");}
