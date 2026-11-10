@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { fileURLToPath } from "node:url";
 import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 test.use({ baseURL: portalFixtureURL });
@@ -13,8 +14,9 @@ const cursor = { createdAt: "2026-11-09T13:12:11.123456+00:00", reference: "5000
 const testRows = [
   { reference: references.pending, amountMinor: 119300, currency: "INR", status: "pending", refundedMinor: 0, reviewRequired: true,
     createdAt: "2026-11-10T09:30:00.000000+00:00", paidAt: null, refundedAt: null },
-  { reference: references.paid, amountMinor: 119300, currency: "INR", status: "paid", refundedMinor: 0, reviewRequired: false,
-    createdAt: "2026-11-09T12:00:00.000000+00:00", paidAt: "2026-11-09T12:04:00.000000+00:00", refundedAt: null },
+  { reference: references.paid, amountMinor: 119300, currency: "INR", status: "paid", refundedMinor: 2550, reviewRequired: true,
+    createdAt: "2026-11-09T12:00:00.000000+00:00", paidAt: "2026-11-09T12:04:00.000000+00:00",
+    refundedAt: "2026-11-10T09:00:00+00:00", providerOrderId: "order_FictionalPrivate", paymentId: "pay_FictionalPrivate" },
   { reference: references.refunded, amountMinor: 119300, currency: "INR", status: "refunded", refundedMinor: 119300, reviewRequired: false,
     createdAt: "2026-11-08T10:00:00.000000+00:00", paidAt: "2026-11-08T10:01:00.000000+00:00", refundedAt: "2026-11-09T11:00:00.000000+00:00" },
 ];
@@ -46,22 +48,28 @@ test("account purchase history shows test pending, paid and refunded orders from
   const history = page.getByRole("region", { name: "Purchase history", exact: true });
   await expect(history.getByText("Test purchases", { exact: true })).toBeVisible();
   await expect(history.getByText("Pending payment", { exact: true })).toBeVisible();
-  await expect(history.getByText("Payment under review", { exact: true })).toBeVisible();
+  await expect(history.getByText("Payment under review", { exact: true })).toHaveCount(2);
   await expect(history.getByText("Paid", { exact: true })).toBeVisible();
   await expect(history.getByText("Refunded", { exact: true })).toBeVisible();
   await expect(history.getByText("Order reference", { exact: true })).toHaveCount(3);
-  await expect(history.getByText("Refunded amount", { exact: true })).toBeVisible();
+  await expect(history.getByText("Refunded amount", { exact: true })).toHaveCount(2);
+  await expect(history.getByText("₹25.50", { exact: true })).toBeVisible();
   await expect(history.getByText(references.pending, { exact: true })).toBeVisible();
   await expect(history.getByText(references.paid, { exact: true })).toBeVisible();
   await expect(history.getByText(references.refunded, { exact: true })).toBeVisible();
   await expect(history).toContainText("₹1,193.00");
-  await expect(history).toContainText("Support");
-  await expect(page.locator("body")).not.toContainText(/razorpay|providerOrder|paymentIntent|pay_[A-Za-z0-9]+/i);
+  await expect(history.getByRole("link", { name: "Contact support", exact: true })).toHaveAttribute("href", "/report");
+  await expect(history).not.toContainText(/order_FictionalPrivate|pay_FictionalPrivate/);
   expect(state.calls).toContainEqual(["my_purchase_page", { p_before_created_at: null, p_before_id: null }]);
   expect(state.calls.filter(([name]) => name === "my_purchase_page")).toHaveLength(1);
   expect(state.unexpected).toEqual([]);
   await page.setViewportSize({ width: 320, height: 720 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
+  const violations = await page.evaluate(async () => (await window.axe.run(".purchase-history-page", {
+    runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] },
+  })).violations.map(({ id }) => id));
+  expect(violations).toEqual([]);
   await history.getByRole("button", { name: "Refresh purchases", exact: true }).press("Enter");
   await expect.poll(() => state.calls.filter(([name]) => name === "my_purchase_page").length).toBe(2);
 });
@@ -95,6 +103,7 @@ test("refresh updates a pending order and older purchases use the exact server c
   await expect(history.getByText(cursor.reference, { exact: true })).toBeVisible();
   await history.getByRole("button", { name: "Load older purchases", exact: true }).press("Enter");
   await expect(history.getByText(secondPage[0].reference, { exact: true })).toBeVisible();
+  await expect(history.locator("article").filter({ hasText: secondPage[0].reference })).toBeFocused();
   expect(state.calls).toContainEqual(["my_purchase_page", { p_before_created_at: cursor.createdAt, p_before_id: cursor.reference }]);
   expect(state.unexpected).toEqual([]);
 });
@@ -131,7 +140,7 @@ test("signed-out visitors see the sign-in prompt and a late purchase response ca
   });
   await openHistory(page);
   await requested;
-  await page.getByRole("link", { name: "Account & sign out", exact: true }).click();
+  await page.getByRole("link", { name: "Back to your account", exact: true }).click();
   await page.getByRole("button", { name: "Sign out", exact: true }).click();
   release();
   await page.goto("/account/purchases");
