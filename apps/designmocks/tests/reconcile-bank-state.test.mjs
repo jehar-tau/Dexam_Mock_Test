@@ -24,3 +24,15 @@ test("bank reconciliation rejects malformed holds, duplicate keys and unverifiab
   assert.throws(()=>reconcileBankState({schemaVersion:1,questions:[q("one"),q("one")]},{schemaVersion:1,records:[]}),/unique/);
   assert.throws(()=>reconcileBankState(canonical,{schemaVersion:1,records:[{externalKey:"one",contentSha256:"no",state:"ready"}]}),/Invalid deployed record/);
 });
+
+test("bank reconciliation distinguishes an eligible retired row from held history",()=>{
+  const snapshot={schemaVersion:1,records:[
+    {externalKey:"one",contentSha256:contentSha256(canonical.questions[0]),state:"retired"},
+    {externalKey:"two",contentSha256:contentSha256(canonical.questions[1]),state:"review"},
+    {externalKey:"held",contentSha256:"a".repeat(64),state:"retired"},
+  ]};
+  const result=reconcileBankState(canonical,snapshot);
+  assert.equal(result.passed,false);
+  assert.deepEqual(result.issues.missing,["one"]);
+  assert.deepEqual(result.issues.changed,[]);
+});
