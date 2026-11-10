@@ -103,6 +103,8 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
   await expect(page.getByLabel("AI review advisory")).toHaveCount(0);
   await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
   const accessibilityViolations = () => page.evaluate(async () => {
+    // Measure settled colours: a toggle's 150ms background transition can otherwise be sampled mid-fade.
+    await Promise.all(document.getAnimations().map((animation) => animation.finished.catch(() => {})));
     const result = await window.axe.run(".admin-page", {
       runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] },
     });
@@ -201,6 +203,8 @@ test("an assigned teacher grades the fixed practice criteria and individual limi
   await page.setViewportSize({ width: 320, height: 760 });
   await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
   const accessibilityViolations = () => page.evaluate(async () => {
+    // Measure settled colours: a toggle's 150ms background transition can otherwise be sampled mid-fade.
+    await Promise.all(document.getAnimations().map((animation) => animation.finished.catch(() => {})));
     const result = await window.axe.run(".drawing-review-form", {
       runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] },
     });
