@@ -25,6 +25,7 @@ const dryRun = (files, overrides = {}) => JSON.stringify({
   seeds: [],
   roles: [],
   message: files.length ? 'Finished supabase db push.' : 'Remote database is up to date.',
+  target: { kind: 'linked', project_ref: RECOVERY_PROJECT, environment: 'production' },
   ...overrides,
 }) + '\n';
 
@@ -61,7 +62,7 @@ async function fixture(t, { sourceProject = RECOVERY_PROJECT } = {}) {
   const ledger = path.join(directory, 'approved-ledger.json');
   const log = path.join(directory, 'dry-run.log');
 
-  return async ({ transcript, ledgerChanges, ...release } = {}) => {
+  return async ({ transcript, ledgerChanges, localRehearsal, ...release } = {}) => {
     await writeFile(ledger, JSON.stringify({
       version: 'dmocks-pre-upgrade-ledger-v1',
       projectRef: RECOVERY_PROJECT,
@@ -74,6 +75,7 @@ async function fixture(t, { sourceProject = RECOVERY_PROJECT } = {}) {
       await writeFile(log, transcript);
       args.push('--dry-run-log', log);
     }
+    if (localRehearsal) args.push('--local-rehearsal');
     const result = spawnSync(process.execPath, args, { cwd: app, encoding: 'utf8' });
     assert.ifError(result.error);
     assert.equal(result.signal, null);
@@ -102,6 +104,7 @@ test('computes and hashes every pending migration from the reviewed source, incl
   assert.deepEqual(verified.installedVersions, proof.installedVersions);
   assert.deepEqual(verified.pendingMigrations, proof.pendingMigrations);
   assert.equal(verified.dryRunVerified, true);
+  assert.deepEqual(verified.dryRunTarget, { kind: 'linked', projectRef: RECOVERY_PROJECT, environment: 'production' });
 });
 
 test('rejects mismatched, malformed, truncated and non-dry-run transcripts', async t => {
@@ -138,6 +141,27 @@ test('verifies an up-to-date dry run only for an empty pending plan', async t =>
   assert.deepEqual(result.pendingMigrations, []);
   assert.equal(result.dryRunVerified, true);
   assert.notEqual((await invoke({ ledgerChanges, transcript: dryRun([latest]) })).status, 0);
+});
+
+test('binds a hosted plan to the reviewed project and keeps local rehearsals distinct', async t => {
+  const invoke = await fixture(t);
+  const local = { kind: 'local', host: '127.0.0.1', port: 6543 };
+  const localReport = dryRun([gap, latest], { target: local });
+  const rehearsal = readProof(await invoke({ transcript: localReport, localRehearsal: true }));
+  assert.deepEqual(rehearsal.dryRunTarget, local);
+  const invalid = [
+    undefined,
+    local,
+    { kind: 'db-url', host: 'example.test', port: 5432 },
+    { kind: 'linked', project_ref: 'fictional-foreign-project', environment: 'production' },
+    { kind: 'linked', project_ref: RECOVERY_PROJECT, environment: 'unverified' },
+  ];
+  for (const target of invalid) {
+    assert.notEqual((await invoke({ transcript: dryRun([gap, latest], { target }) })).status, 0);
+  }
+  assert.notEqual((await invoke({ transcript: dryRun([gap, latest]), localRehearsal: true })).status, 0);
+  assert.notEqual((await invoke({ transcript: dryRun([gap, latest], { target: { ...local, host: 'example.test' } }), localRehearsal: true })).status, 0);
+  assert.notEqual((await invoke({ localRehearsal: true })).status, 0);
 });
 
 test('rejects foreign, mismatched, duplicate, unknown and unordered reviewed ledgers', async t => {

@@ -170,13 +170,31 @@ The packager verifies the archived app files against Git and installs locked dep
 
 Review the pending migration ledger before applying changes. The earlier AI schema gap requires explicit inclusion in the reviewed plan, and model-backed functions require separate rights, consent and cost approval. Deploy the matching media and intake-upload functions for the staging origin before the browser acceptance run. Keep the `dmocks.com` deployment on its own approved artifact. The current private Site serves both names, so replacing its artifact requires a hosting decision even though staging sign-in is pinned to the preview hostname.
 
-From `apps/designmocks`, the read-only deployment rehearsal is
+### Verify the migration dry run
+
+After the target is approved, capture and review its fresh installed migration versions using the [pre-upgrade ledger procedure](RECOVERY.md#capture-before-the-first-upgrade). Use the same reviewed commit and tree for both the dry run and the comparison. Run the Supabase CLI in a separate clean worktree so its local connection cache stays outside the checkout used for verification. Choose a new absolute path outside both worktrees for the private JSON receipt.
 
 ```bash
-npm exec --yes --package=supabase@3.0.0 -- supabase db push --dry-run --skip-vault --include-all --remote=tiodqzvvujxvxssvjdis
+(
+  set -e
+  umask 077
+  cd "$DMOCKS_PRIVATE_DRY_RUN_WORKTREE/apps/designmocks"
+  node scripts/release-source-preflight.mjs --commit "$DMOCKS_REVIEWED_COMMIT" --tree "$DMOCKS_REVIEWED_TREE"
+  npm exec --yes --package=supabase@3.0.0 -- supabase db push --dry-run --skip-vault --include-all \
+    --remote="$DMOCKS_REVIEWED_PROJECT_REF" --output-format json > "$DMOCKS_PRIVATE_DRY_RUN_JSON"
+)
 ```
 
-The earlier 7 November CLI run through migration `202611060128` listed 27 pending migrations, starting with the older `202611060006` gap. A later read-only dashboard inventory matched all 25 applied versions; the current 69 local files through `202611060145` leave 44 pending by comparison, not a fresh dry run. Supabase labels this target as the project's production branch. It serves the current owner-private site while the app plan assigns it to staging. Review the fresh plan against the current main commit before any hosted change. [Supabase CLI targeting and dry runs](https://supabase.com/docs/guides/local-development/local-and-hosted-projects)
+From `apps/designmocks` in the clean verification worktree, compare the result with the exact reviewed source and ledger.
+
+```bash
+node scripts/release-migration-plan.mjs --commit "$DMOCKS_REVIEWED_COMMIT" --tree "$DMOCKS_REVIEWED_TREE" \
+  --ledger "$DMOCKS_REVIEWED_LEDGER_JSON" --dry-run-log "$DMOCKS_PRIVATE_DRY_RUN_JSON"
+```
+
+The verifier checks the reported project and environment and compares every pending filename in order. It rejects non-dry-run output and any seed or role changes. The receipt contains the migration file hashes, source identity and ledger digest. Use `--local-rehearsal` only for a dry run on an isolated loopback database. Omitting the dry-run receipt prints the expected plan with `dryRunVerified: false`. Recheck the installed versions before applying a hosted rollout.
+
+The earlier 7 November CLI run through migration `202611060128` listed 27 pending migrations, including the older `202611060006` gap. A subsequent dashboard inventory recorded 25 installed versions. Supabase labels this target as the project's production branch. It serves the current owner-private site while the app plan assigns it to staging. Confirm that role separately from the migration comparison. [Supabase CLI targeting and dry runs](https://supabase.com/docs/guides/local-development/local-and-hosted-projects)
 
 Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
 

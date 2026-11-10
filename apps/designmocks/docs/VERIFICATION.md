@@ -2,6 +2,12 @@
 
 > **8 November MVP freeze:** PRODUCT_EXECUTION_PLAN.md and LAUNCH_CHECKLIST.md override historical full-portal priorities and the old payment deferral. Existing proofs remain evidence for their exact source/environment, not permission to release deferred modules. Payment work is resumed; sales/registration/provider promotion remain closed until accepted. The 150-session exercise and advanced portal work are post-launch.
 
+## Exact migration rollout rehearsal — 10 November 2026
+
+The disposable Supabase stack reconstructed the recorded 25-version ledger from the reviewed backend in `859a2d146422e072e3181aedd91b751f08a0d796`. The dry run identified all 60 pending migrations in order, including `202611060006_ai_question_drafting.sql` before the latest installed version. The apply reached 85 installed versions. It preserved fictional account, saved answer and deadline, payment, support, bank and private Storage bytes. Actual local Auth and PostgREST verified tester-only admission and account separation. The sales guard rejected activation without a published policy. Applying the 49-signature paid profile after those checks restricted the catalogue while preserving the owned historical attempt.
+
+The rollout command verifies the JSON receipt against the reviewed source hashes, exact installed versions and reported project. The recorded hosted inventory supplies version IDs only. Obtain a fresh approved-target ledger and recovery proof before hosted promotion. The rehearsal uses fictional data and local provider services. [Operator procedure](PROVIDER_SETUP.md#verify-the-migration-dry-run)
+
 ## Attempt reply identity and countdown — 10 November 2026
 
 The runner pins the verified student token for attempt RPCs and private media requests. Before returning a successful reply, it verifies the current token and rereads the session within the same request deadline. A confirmed account change clears the private view. A temporary identity outage or a token refresh during the final check withholds the reply while keeping the trusted paper and device answer journal available for recovery.
@@ -20,7 +26,7 @@ Source `e0752350b7d436055c201dd70c9b0ab518eecfbe` compiled the reviewed private 
 
 Desktop and mobile used actual local Auth, PostgREST, Storage, the attempt-media handler, and the application runner. Both rendered all 57 questions and signed figures in order, resumed the same 7,200-second attempt, recovered a device-journal answer on reconnect and retained the deadline after reload. The server denied anonymous and foreign requests to read or change the attempt or obtain signed figures. The answer keys appeared after submission, and the three correct NAT, MSQ and MCQ responses scored 11 out of 200 in each browser. A separate expired attempt retained its saved answer and denied late changes. Exact nested keys and explanations matched the packet across all three results. Repeated submission and local withdrawal preserved the frozen results.
 
-The isolated rehearsal used fictional accounts and local entitlement fixtures. The expiry check shifted a fixture attempt's timestamps. The local release was withdrawn and its containers, private volumes and credentials were removed. Review of the first paper and acceptance on the approved hosted Test target are pending. Credential-free receipts are in the ignored `.dmocks-local-evidence/first-offering-rehearsal-2026-11-09/` directory.
+The isolated rehearsal used fictional accounts and local entitlement fixtures. The expiry check shifted a fixture attempt's timestamps. The local release was withdrawn and its containers, private volumes and credentials were removed. The owner subsequently approved the exact paper for release after hosted Test acceptance. Credential-free receipts are in the ignored `.dmocks-local-evidence/first-offering-rehearsal-2026-11-09/` directory.
 
 ## Checkout recovery, operator facts and corrected MVP operations - 8 November 2026
 
