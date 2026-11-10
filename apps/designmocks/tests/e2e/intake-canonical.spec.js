@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { fileURLToPath } from "node:url";
+import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 import { buildManifest, runtimeQuestion } from "../../scripts/question-bank-import.mjs";
@@ -14,7 +15,7 @@ const extracted = { type: "MCQ", prompt: "Choose the clearest fictional wayfindi
   options: ["A", "B", "C", "D"].map(id => ({ id, text: `Fictional option ${id}` })),
   answer: null, explanation: "", topic: "observation", visualDependency: null, holds: ["intake-human-review"] };
 
-async function fixture(page, { admin = true } = {}) {
+async function fixture(page, { admin = true, loseFirstUploadReceipt = false } = {}) {
   const assets = [], drafts = [], uploads = [], state = { admin };
   const provider = await stubPortalProvider(page, (procedure, input) => {
     switch (procedure) {
@@ -78,10 +79,19 @@ async function fixture(page, { admin = true } = {}) {
       path: `intake/${figureSha}.png`, sha256: figureSha, width: 1, height: 1,
     } } });
     uploads.push(body);
+    if (loseFirstUploadReceipt) {
+      const fields = await new Response(body, { headers: { "Content-Type": request.headers()["content-type"] } }).formData();
+      const file = fields.get("file");
+      expect(file.name).toBe("fictional-source.pdf");
+      expect(file.type).toBe("application/pdf");
+      expect(Buffer.from(await file.arrayBuffer())).toEqual(pdf);
+      if (uploads.length > 1) return route.fulfill({ headers, json: { ...assets[0], reused: true } });
+    }
     const isPDF = body.toString().includes('filename="fictional-source.pdf"');
     const asset = { id: `asset-${assets.length}`, name: isPDF ? "fictional-source.pdf" : "fictional-photo.png",
       mimeType: isPDF ? "application/pdf" : "image/png", status: "uploaded", candidates: [] };
     assets.push(asset);
+    if (loseFirstUploadReceipt) return route.abort("failed");
     return route.fulfill({ headers, json: asset });
   });
   await page.goto("/admin");
@@ -158,6 +168,46 @@ test("PDF/photo uploads, private source download, corrected figures and rights e
   const retained = page.waitForEvent("download");
   await page.getByRole("button", { name: "Download retained figure 1" }).click();
   expect((await retained).suggestedFilename()).toBe(`${figureSha}.png`);
+  expect(state.unexpected).toEqual([]);
+});
+
+test("retrying a committed private upload after reload keeps one asset and its review state", async ({ page }) => {
+  const state = await fixture(page, { loseFirstUploadReceipt: true });
+  const name = "fictional-source.pdf";
+  const input = page.getByLabel("Private source file");
+  const upload = page.getByRole("button", { name: "Upload for extraction", exact: true });
+  const queue = page.locator(".intake-queue article");
+  const select = () => input.setInputFiles({ name, mimeType: "application/pdf", buffer: pdf });
+
+  await select();
+  await upload.click();
+  await expect(page.getByRole("alert")).toContainText("Couldn’t complete this administrator request. Refresh and try again.");
+  expect(state.uploads).toHaveLength(1);
+  expect(state.assets).toHaveLength(1);
+  const assetId = state.assets[0].id;
+
+  await page.reload();
+  await expect(queue).toHaveCount(1);
+  await expect(queue.getByText(name, { exact: true })).toBeVisible();
+  await queue.getByRole("button", { name: "Extract with configured model" }).click();
+  const candidate = queue.getByRole("region", { name: "Candidate 2", exact: true });
+  await candidate.getByRole("button", { name: "Reject extraction" }).click();
+  await expect(candidate.getByText("rejected", { exact: true })).toBeVisible();
+
+  await select();
+  await upload.click();
+  await expect(page.getByText(name + " is already in private intake.", { exact: true })).toBeVisible();
+  await expect(input).toHaveValue("");
+  await expect(queue).toHaveCount(1);
+  await expect(candidate.getByText("rejected", { exact: true })).toBeVisible();
+  expect(state.assets.map(({ id, status }) => ({ id, status }))).toEqual([{ id: assetId, status: "reviewed" }]);
+  expect(state.uploads).toHaveLength(2);
+
+  const downloadPromise = page.waitForEvent("download");
+  await queue.getByRole("button", { name: "Download private source" }).click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe(name);
+  expect(await readFile(await download.path())).toEqual(pdf);
   expect(state.unexpected).toEqual([]);
 });
 
