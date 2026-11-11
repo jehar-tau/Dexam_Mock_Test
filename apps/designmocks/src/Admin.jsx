@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { platform } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
 import { DrawingReviewQueue } from "./DrawingReviewQueue.jsx";
 import { DrawingReviewerRoster } from "./DrawingReviewerRoster.jsx";
@@ -26,16 +25,6 @@ import { AdminAccessBoundary, useAdminServices } from "./AdminAccess.jsx";
 import { adminRequestMessage } from "./admin-access.js";
 import {postLaunchPreview}from'./launch-scope.js';
 const mvpDeskReads=new Set(['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_request_page','admin_launch_readiness']);
-
-async function rpc(name, args, signal) {
-  if (!platform) throw new Error("Student services are not connected yet.");
-  signal?.throwIfAborted();
-  const query = platform.rpc(name, args);
-  const { data, error } = await (signal ? query.abortSignal(signal) : query);
-  signal?.throwIfAborted();
-  if (error) throw error;
-  return data;
-}
 
 async function intakeRequest(functions, name, body) {
   const { data, error } = await functions.invoke(name, { body });

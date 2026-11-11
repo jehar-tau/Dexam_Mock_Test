@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { platform, stagingPortalMode } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
+import { verifiedRoleCheck } from "./account-identity.js";
 
 export function useStagingPortalAccess(session, path = "account") {
   const [decision, setDecision] = useState(null);
@@ -11,7 +12,7 @@ export function useStagingPortalAccess(session, path = "account") {
     const finish = (status) => {
       if (!controller.signal.aborted) setDecision({ session, path, status });
     };
-    platform.rpc("can_enter_staging_portal").abortSignal(controller.signal).then(({ data, error }) => {
+    verifiedRoleCheck(platform.auth, platform, session.user?.id, "can_enter_staging_portal", controller.signal).then(({ data, error }) => {
       finish(error ? "unavailable" : data === true ? "allowed" : "denied");
     }, () => finish("unavailable"));
     return () => controller.abort();

@@ -12,3 +12,33 @@ test('a cancelled identity read does not close the permitted scope or dispatch w
 test('the verified operation keeps its captured token across a later SDK change',async()=>{const scope=createAdminAccessScope({check:async()=>true});await scope.verify();let current='opaque-fictional-first';const auth={getSession:async()=>({data:{session:{user:{id:'first'},access_token:current}}}),getUser:async()=>{current='opaque-fictional-second';return{data:{user:{id:'first'}}};}};assert.equal(await runForVerifiedAccount(scope,auth,'first',token=>token),'opaque-fictional-first');assert.equal(scope.snapshot().status,'allowed');scope.dispose();});
 test('failed current identity verification clears the scope and hides the original failure',async()=>{const scope=createAdminAccessScope({check:async()=>true});await scope.verify();const auth={getSession:async()=>{throw new Error('Original private provider diagnostic');}};await assert.rejects(runForVerifiedAccount(scope,auth,'first',()=>{}),error=>error.code==='admin_access_ended'&&!error.message.includes('Original'));assert.equal(scope.snapshot().status,'unavailable');scope.dispose();});
 test('per-request authorization replaces every caller casing without mutating other headers',()=>{const original={Authorization:'old-uppercase',authorization:'old-lowercase','AUTHORIZATION':'old-other','Content-Type':'application/octet-stream','X-Original':'fictional'};assert.deepEqual(authorizationHeaders(original,'opaque-fictional-first'),{'Content-Type':'application/octet-stream','X-Original':'fictional',Authorization:'Bearer opaque-fictional-first'});assert.equal(original.authorization,'old-lowercase');});
+
+test('role probes pin the verified token and drop replies after an account change', async () => {
+  const { verifiedRoleCheck } = await import('../src/account-identity.js');
+  const make = (state) => ({
+    auth: {
+      getSession: async () => ({ data: { session: { user: { id: state.id }, access_token: state.token } }, error: null }),
+      getUser: async (token) => ({ data: { user: { id: state.id } }, error: null, token }),
+    },
+    client: { rpc(name) { const call = { name }; state.calls.push(call); const builder = {
+      setHeader(key, value) { call[key] = value; return builder; },
+      abortSignal() { return Promise.resolve({ data: true, error: null }).then(r => { state.afterRpc?.(); return r; }); },
+    }; return builder; } },
+  });
+  const state = { id: 'a', token: 'first', calls: [] };
+  const { auth, client } = make(state);
+  const ok = await verifiedRoleCheck(auth, client, 'a', 'can_review_drawings', new AbortController().signal);
+  assert.equal(ok.data, true);
+  assert.deepEqual(state.calls.map(c => c.Authorization), ['Bearer first']);
+  const wrong = await verifiedRoleCheck(auth, client, 'b', 'can_review_drawings', new AbortController().signal);
+  assert.equal(wrong.data, null);
+  assert.ok(wrong.error);
+  assert.equal(state.calls.length, 1);
+  state.afterRpc = () => { state.id = 'c'; state.token = 'second'; };
+  const swapped = await verifiedRoleCheck(auth, client, 'a', 'can_review_drawings', new AbortController().signal);
+  assert.equal(swapped.data, null);
+  assert.ok(swapped.error);
+  const controller = new AbortController(); controller.abort();
+  state.afterRpc = undefined; state.id = 'a'; state.token = 'first';
+  await assert.rejects(verifiedRoleCheck(auth, client, 'a', 'x', controller.signal));
+});
