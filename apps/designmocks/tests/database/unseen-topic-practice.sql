@@ -29,7 +29,7 @@ create function pg_temp.practice_seed(p_low integer,p_high integer) returns void
 $$;
 insert into auth.users(id)values(:'first'),(:'second'),(:'legacy'),(:'no_pass'),(:'incomplete');
 insert into public.profiles(user_id,display_name,phone_e164,phone_verified_at,appearing_year,city,exams,onboarding_completed_at)
-select id,'Fictional practice student','+919999999951',case when id<>:'incomplete'::uuid then now()end,2027,'Mumbai',array['uceed'],
+select id,'Fictional practice student','+91999951'||lpad((row_number() over(order by id))::text,2,'0'),case when id<>:'incomplete'::uuid then now()end,2027,'Mumbai',array['uceed'],
  case when id<>:'incomplete'::uuid then now()end from auth.users where id in(:'first',:'second',:'legacy',:'no_pass',:'incomplete');
 with paid as(insert into dm_private.orders(user_id,plan_id,amount,currency,mode,status)
  select id,'annual',119300,'INR','test','paid' from auth.users where id in(:'first',:'second',:'legacy',:'incomplete')returning id,user_id)
