@@ -126,14 +126,14 @@ reset role;
 
 update public.launch_settings set environment_mode='live' where singleton;
 set local role service_role;
-select pg_temp.removal_reject('select public.service_pending_drawing_removals(1)', 'Live cleanup list', '42501');
+select pg_temp.removal_assert(jsonb_array_length(public.service_pending_drawing_removals(1)) = 1, 'Live cleanup list');
 reset role;
 update public.launch_settings set environment_mode='test' where singleton;
 alter table public.launch_settings disable trigger guard_sales_activation;
 update public.launch_settings set sales_enabled=true where singleton;
 alter table public.launch_settings enable trigger guard_sales_activation;
 set local role service_role;
-select pg_temp.removal_reject('select public.service_pending_drawing_removals(1)', 'open-sales cleanup list', '42501');
+select pg_temp.removal_assert(jsonb_array_length(public.service_pending_drawing_removals(1)) = 1, 'open-sales cleanup list');
 reset role;
 update public.launch_settings set sales_enabled=false where singleton;
 

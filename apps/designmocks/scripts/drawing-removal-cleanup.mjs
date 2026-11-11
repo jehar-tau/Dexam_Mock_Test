@@ -7,10 +7,10 @@ import { finishDrawingRemoval, isDrawingRemovalPath } from "../supabase/function
 const uuid = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
 
 export async function runDrawingRemovalCleanup(config, { apply = false, limit = 25, fetchImpl = fetch } = {}) {
-  if (!["development", "staging"].includes(config.environment)) throw new Error("Use an approved nonproduction drawing cleanup target");
+  if (!["development", "staging", "production"].includes(config.environment)) throw new Error("Use an approved drawing cleanup target");
   if (!Number.isInteger(limit) || limit < 1 || limit > 50) throw new Error("Choose a drawing cleanup limit from 1 to 50");
   const provider = openPrivateDMocksTransport(config, { fetchImpl, requestLabel: "Drawing cleanup", timeoutMs: 5000 });
-  if (apply && config.environment === "staging" && config.stagingAck !== `PURGE_REMOVED_DRAWINGS_ON_${provider.origin}`) {
+  if (apply && config.environment !== "development" && config.stagingAck !== `PURGE_REMOVED_DRAWINGS_ON_${provider.origin}`) {
     throw new Error("Exact staging acknowledgement is required for drawing cleanup");
   }
   const rows = await provider.rpc("service_pending_drawing_removals", { p_limit: limit });

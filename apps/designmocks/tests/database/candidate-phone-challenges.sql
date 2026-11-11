@@ -126,6 +126,19 @@ select pg_temp.check_phone((select phone_verified_at = :'original_stamp'::timest
   and onboarding_completed_at = :'original_stamp'::timestamptz from public.profiles where user_id=pg_temp.id(3001)),
   'replay preserves both proof timestamps');
 select pg_temp.check_phone(pg_temp.start_phone(3001,3001,3102)->>'status' = 'unavailable', 'verified phone cannot reserve');
+insert into auth.users(id,email,email_confirmed_at,raw_app_meta_data)
+values (pg_temp.id(3012),'phone-3012@example.invalid',clock_timestamp(),'{"provider":"google"}');
+insert into public.profiles(user_id,display_name,phone_e164,appearing_year,city,exams)
+values (pg_temp.id(3012),'Second Fictional Candidate',pg_temp.phone(3001),2027,'Fictional City',array['uceed']);
+do $$
+begin
+  begin
+    update public.profiles set phone_verified_at=clock_timestamp() where user_id=pg_temp.id(3012);
+    raise exception 'FAIL: a second account verified an already verified number';
+  exception when unique_violation then null;
+  end;
+end
+$$;
 
 update dm_private.candidate_phone_challenges set created_at=created_at-interval '61 seconds' where challenge_id=pg_temp.id(3101);
 select pg_temp.check_phone(pg_temp.start_phone(3002,3001,3102)->>'status' = 'created', 'destination may be retried after cooldown');
