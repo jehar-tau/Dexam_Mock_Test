@@ -1,3 +1,4 @@
+import { verifiedRoleCheck } from './account-identity.js';
 import { Contact, OperatorDetails } from './Contact.jsx';
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -966,9 +967,9 @@ function Account() {
     setReviewerAccountId(null);
     if (!postLaunchPreview || !accountId || !workspaceAvailable) return;
     const controller = new AbortController();
-    platform.rpc("can_review_drawings").abortSignal(controller.signal).then(({ data, error }) => {
+    verifiedRoleCheck(platform.auth, platform, accountId, "can_review_drawings", controller.signal).then(({ data, error }) => {
       if (!controller.signal.aborted && !error && data === true) setReviewerAccountId(accountId);
-    });
+    }, () => {});
     return () => controller.abort();
   }, [accountId, workspaceAvailable]);
   return (

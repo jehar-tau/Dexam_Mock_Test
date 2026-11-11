@@ -19,3 +19,12 @@ export function authorizationHeaders(headers,token){
  const result=Object.fromEntries(Object.entries(headers??{}).filter(([key])=>key.toLowerCase()!=='authorization'));
  return{...result,Authorization:'Bearer '+token};
 }
+
+// Role probes decide what a page shows, so pin the verified token and drop a reply if the account changed meanwhile.
+export async function verifiedRoleCheck(auth,client,actorId,name,signal){
+ const unavailable={data:null,error:new Error('Account identity changed.')};
+ const token=await verifiedAccountToken(auth,actorId,signal);if(!token)return unavailable;
+ const result=await client.rpc(name).setHeader('Authorization','Bearer '+token).abortSignal(signal);
+ signal.throwIfAborted();const{data}=await auth.getSession();signal.throwIfAborted();
+ return data?.session?.user?.id===actorId&&data.session.access_token===token?result:unavailable;
+}

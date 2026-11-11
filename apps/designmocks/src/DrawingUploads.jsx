@@ -1,19 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { platform } from "./platform.js";
 import { drawingUploadWindow } from "./drawing-upload-window.js";
-import { checkDrawingFiles, drawingMediaError, drawingUploadFailure } from "./drawing-upload.js";
+import { checkDrawingFiles, drawingUploadFailure } from "./drawing-upload.js";
 import { DrawingPages } from "./DrawingInspection.jsx";
-
-async function drawingMedia(body, signal) {
-  const { data, error } = await platform.functions.invoke("drawing-media", { body, signal });
-  if (error) throw await drawingMediaError(error);
-  return data;
-}
 
 export function DrawingUploads({
   attemptId,
   questionId,
-  invoke = drawingMedia,
+  invoke,
 }) {
   const [items, setItems] = useState(null);
   const [busy, setBusy] = useState(false);
