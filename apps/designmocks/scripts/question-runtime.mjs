@@ -88,7 +88,7 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
   if(verified&&!rule.partB)issue('section-unmodelled','type');
   if(verified&&rule.partB&&!assets.length)issue('drawing-figure-missing','assets');
   if(issues.length)return blocked();
-  return{issues,runtime:{prompt:question.prompt,options:[],kind:'drawing',marking:{correct:rule.partB.points,wrong:0,humanReview:true},media,points:rule.partB.points,negativePoints:0,topic:question.topic||'drawing',key:{kind:'drawing',sourceExternalKey:question.externalKey},explanation:'Human review against the published task rubric.',context:{version:rule.version,exam:rule.exam,cycle:rule.cycle,source:rule.source,part:'B',durationSeconds:rule.partB.durationSeconds}}};
+  return{issues,runtime:{prompt:question.prompt,options:[],kind:'drawing',marking:{correct:rule.partB.points,wrong:0,humanReview:true},media,points:rule.partB.points,negativePoints:0,topic:question.topic||'drawing',key:{kind:'drawing',sourceExternalKey:question.externalKey},explanation:'Human review against the published task rubric.',context:{version:rule.version,exam:rule.exam,cycle:rule.cycle,source:rule.source,part:'B',section:'Part B',durationSeconds:rule.partB.durationSeconds}}};
  }
  const scheme=verified?rule.sections?.[question.type]:null;
  if(verified&&!scheme)issue('section-unmodelled','type');
