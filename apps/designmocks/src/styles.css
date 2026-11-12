@@ -3997,3 +3997,21 @@ svg {
 .nid-question-binding .profile-check input{width:auto;flex:none;margin-block-start:.25rem}
 .nid-question-binding button{min-height:44px;white-space:normal}
 .nid-binding-scheme{padding:.75rem;border-inline-start:3px solid var(--orange);background:var(--paper)}
+
+.exam-sections{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:1rem 0}
+.exam-sections button{border:1px solid var(--line,#3a4a40);background:transparent;color:inherit;border-radius:.6rem;padding:.5rem .9rem;text-align:left;cursor:pointer}
+.exam-sections button.active{background:var(--accent,#d9e8a0);color:#14241c}
+.exam-sections button small{display:block;opacity:.8}
+.exam-sections .section-rule{flex-basis:100%;margin:.25rem 0 0;font-size:.9rem;opacity:.85}
+.palette-legend{list-style:none;padding:0;margin:.5rem 0;display:grid;grid-template-columns:1fr 1fr;gap:.25rem;font-size:.8rem}
+.palette-legend i{display:inline-block;width:.8rem;height:.8rem;border-radius:.2rem;margin-right:.4rem;vertical-align:-.1rem;border:1px solid #888}
+.palette-legend .answered i{background:#3f9a5c;border-color:#3f9a5c}
+.palette-legend .unanswered i{background:#c9553d;border-color:#c9553d}
+.palette-legend .flagged i{background:#8a5fd1;border-color:#8a5fd1}
+.palette-group h3{margin:.8rem 0 .3rem;font-size:.8rem;letter-spacing:.08em;opacity:.8}
+.palette-group>div{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem}
+.palette-group>div>button{border:1px solid #556;border-radius:.4rem;padding:.45rem 0;background:transparent;color:inherit;cursor:pointer;position:relative}
+.palette-group>div>button.answered{background:#3f9a5c;border-color:#3f9a5c;color:#fff}
+.palette-group>div>button.unanswered{background:#c9553d;border-color:#c9553d;color:#fff}
+.palette-group>div>button.flagged{background:#8a5fd1;border-color:#8a5fd1;color:#fff}
+.palette-group>div>button[aria-current=step]{outline:2px solid currentColor;outline-offset:2px}

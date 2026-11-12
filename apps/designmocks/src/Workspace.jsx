@@ -299,6 +299,7 @@ function AttemptSession({actorId,services}) {
     [index, setIndex] = useState(0),
     [draft, setDraft] = useState(null),
     [flagged, setFlagged] = useState([]),
+    [visited, setVisited] = useState(() => new Set([0])),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [confirm, setConfirm] = useState(false),
@@ -533,7 +534,7 @@ if(postLaunchPreview){
     }catch{if(current())setError("Couldn’t confirm Part B. Reopen this attempt to check the fixed session before trying again.");}
     finally{mutationBusy.current=false;if(current())setBusy(false);}
   };
-  const move = (next) => {if(current())setIndex(next);};
+  const move = (next) => {if(current()){setIndex(next);setVisited((v)=>new Set(v).add(next));}};
   if (!attempt || loadedFor !== `${userId}:${id}`)
     return (
       <section className="wrap page-intro">
@@ -687,7 +688,7 @@ if(postLaunchPreview){
       </Link>
       <div className="runner-top">
         <div>
-          <span className="eyebrow">YOUR TIMED ATTEMPT</span>
+          <span className="eyebrow">{/Part B/i.test(attempt.title) ? "PART B" : "PART A"} · TIMED ATTEMPT</span>
           <h1>{attempt.title}</h1>
         </div>
         <div
@@ -717,6 +718,34 @@ if(postLaunchPreview){
           Retry submission <Arrow />
         </button>
       )}
+      {(() => {
+        const sections = [];
+        attempt.questions.forEach((item, i) => {
+          const last = sections[sections.length - 1];
+          if (last && last.kind === item.kind) last.end = i;
+          else sections.push({ kind: item.kind, start: i, end: i });
+        });
+        const names = { nat: "Numerical answer (NAT)", msq: "Multiple select (MSQ)", mcq: "Multiple choice (MCQ)", drawing: "Drawing" };
+        const here = sections.find((section) => index >= section.start && index <= section.end);
+        const sample = attempt.questions[here?.start ?? 0];
+        return (
+          <nav className="exam-sections" aria-label="Sections">
+            {sections.map((section) => {
+              const total = section.end - section.start + 1;
+              const done = attempt.questions.slice(section.start, section.end + 1).filter((item) => hasAnswer(answerFor(item))).length;
+              return (
+                <button key={section.start} type="button" disabled={busy} aria-current={section === here ? "true" : undefined} className={section === here ? "active" : ""} onClick={() => move(section.start)}>
+                  <b>{section.kind.toUpperCase()}</b>
+                  <small>{done}/{total} answered</small>
+                </button>
+              );
+            })}
+            {sample && sample.kind !== "drawing" && sample.marking && (
+              <p className="section-rule">{names[sample.kind]} · +{sample.marking.correct} correct · {sample.marking.wrong} wrong{sample.kind === "msq" ? " · partial marks for a correct subset" : ""}</p>
+            )}
+          </nav>
+        );
+      })()}
       <div className="runner-layout">
         <article className="question-panel">
           <div className="question-meta">
@@ -867,15 +896,37 @@ if(postLaunchPreview){
                 )
               }
             >
-              {flagged.includes(q.id) ? "Marked to revisit" : "Mark to revisit"}
+              {flagged.includes(q.id) ? "Marked for review" : "Mark for review"}
+            </button>
+            {index < attempt.questions.length - 1 && (
+              <button
+                className="text-button"
+                disabled={busy}
+                onClick={() => {
+                  setFlagged((items) => (items.includes(q.id) ? items : [...items, q.id]));
+                  move(index + 1);
+                }}
+              >
+                Mark for review &amp; Next
+              </button>
+            )}
+            <button
+              className="text-button"
+              disabled={busy || left === 0 || !hasAnswer(draft)}
+              onClick={() => (["nat", "drawing"].includes(q.kind) ? typeAnswer("") : pick(q.kind === "msq" ? [] : null))}
+            >
+              Clear response
             </button>
             {index < attempt.questions.length - 1 ? (
               <button
                 className="button"
                 disabled={busy}
-                onClick={() => move(index + 1)}
+                onClick={() => {
+                  if (["nat", "drawing"].includes(q.kind) && draft && validAttemptAnswer(q, draft)) record(draft);
+                  move(index + 1);
+                }}
               >
-                Next <Arrow />
+                Save &amp; Next <Arrow />
               </button>
             ) : (
               <button
@@ -890,25 +941,41 @@ if(postLaunchPreview){
         </article>
         <aside className="question-palette">
           <h2>Your questions.</h2>
-          <div>
-            {attempt.questions.map((item, i) => (
-              <button
-                key={item.id}
-                disabled={busy}
-                aria-current={i === index ? "step" : undefined}
-                aria-label={"Go to question " + (i + 1)}
-                className={
-                  (hasAnswer(answerFor(item)) ? "answered " : "") +
-                  (answerSync.current?.hasPending(item.id) ? "waiting " : "") +
-                  (flagged.includes(item.id) ? "flagged" : "")
-                }
-                onClick={() => move(i)}
-              >
-                {i + 1}
-                {flagged.includes(item.id) && <i aria-hidden="true" />}
-              </button>
-            ))}
-          </div>
+          {(() => {
+            const answered = (item) => hasAnswer(answerFor(item));
+            const status = (item, i) => answered(item) ? "answered" : flagged.includes(item.id) ? "flagged" : visited.has(i) ? "unanswered" : "";
+            const groups = [];
+            attempt.questions.forEach((item, i) => {
+              const last = groups[groups.length - 1];
+              if (last && last.kind === item.kind) last.items.push([item, i]);
+              else groups.push({ kind: item.kind, items: [[item, i]] });
+            });
+            const count = (name) => attempt.questions.filter((item, i) => status(item, i) === name).length;
+            return (
+              <>
+                <ul className="palette-legend" aria-label="Question status key">
+                  <li className="answered"><i />{count("answered")} Answered</li>
+                  <li className="unanswered"><i />{count("unanswered")} Not answered</li>
+                  <li className="flagged"><i />{count("flagged")} Marked for review</li>
+                  <li className="fresh"><i />{attempt.questions.length - count("answered") - count("unanswered") - count("flagged")} Not visited</li>
+                </ul>
+                {groups.map((group) => (
+                  <section className="palette-group" key={group.items[0][1]}>
+                    <h3>{group.kind.toUpperCase()}</h3>
+                    <div>
+                      {group.items.map(([item, i]) => (
+                        <button key={item.id} disabled={busy} aria-current={i === index ? "step" : undefined} aria-label={"Go to question " + (i + 1)}
+                          className={status(item, i) + (answerSync.current?.hasPending(item.id) ? " waiting" : "")} onClick={() => move(i)}>
+                          {i + 1}
+                          {flagged.includes(item.id) && <i aria-hidden="true" />}
+                        </button>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </>
+            );
+          })()}
           <p>
             {attempt.questions.filter((item) => hasAnswer(answerFor(item))).length}{" "}
             of {attempt.questions.length} answered

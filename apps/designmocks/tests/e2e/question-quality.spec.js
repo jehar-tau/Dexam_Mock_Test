@@ -165,7 +165,7 @@ test("a paused All India event preserves the existing runner, reporting and answ
   await expect(page.getByRole("status").filter({ hasText: "New attempts are held for human review" })).toBeVisible();
   await page.getByRole("button", { name: "B Fictional second option", exact: true }).click();
   await expect.poll(() => calls.filter(([name]) => name === "save_answer_revision").length).toBeGreaterThan(0);
-  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { name: "Save & Next", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Fictional runner question 2", exact: true })).toBeVisible();
   await expect(page.getByText(/Report received/)).toHaveCount(0);
   expect(calls.some(([name]) => ["start_all_india_attempt", "start_attempt"].includes(name))).toBe(false);
