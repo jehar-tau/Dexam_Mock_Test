@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 import { buildManifest, runtimeQuestion } from "../../scripts/question-bank-import.mjs";
 import { RULES_2027 } from "../../scripts/question-runtime.mjs";
+import { readJsonObject } from "../../supabase/functions/_shared/request-json.mjs";
 
 test.use({ baseURL: portalFixtureURL });
 
@@ -40,6 +41,16 @@ test("AI drafts surface reference denials and need human approval and rights evi
         return draft.export;
       default: return emptyAdminRead(procedure);
     }
+  });
+  await page.route("**/functions/v1/ai-question-draft", async route => {
+    const request = route.request();
+    if (request.method() === "POST") {
+      const input = await readJsonObject(new Request(request.url(), {
+        method: "POST", headers: {"content-type": request.headers()["content-type"]}, body: request.postDataBuffer(),
+      }), 64 * 1024, "draft");
+      expect(input.basisExternalKeys).toHaveLength(1);
+    }
+    await route.fallback();
   });
   await page.goto("/admin");
   await seedPortalSession(page, author);

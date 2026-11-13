@@ -1,3 +1,4 @@
+import { JsonRequestError, readJsonObject } from "../_shared/request-json.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { runAiDraft } from "../_shared/ai-draft-run.mjs";
 
@@ -31,9 +32,10 @@ Deno.serve(async (request) => {
   const { data: { user } } = await caller.auth.getUser();
   if (!user) return respond({ error: "Sign in required" }, 401);
   try {
-    const result = await runAiDraft({ caller, worker, actorId: user.id, input: await request.json(), model, apiKey });
+    const result = await runAiDraft({ caller, worker, actorId: user.id, input: await readJsonObject(request, 64 * 1024, "draft"), model, apiKey });
     return respond(result.body, result.status);
-  } catch {
+  } catch (error) {
+    if (error instanceof JsonRequestError) return respond({ error: error.message }, error.status);
     return respond({ error: "Draft processing could not be confirmed. Refresh the queue before trying again." }, 400);
   }
 });

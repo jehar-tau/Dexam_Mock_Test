@@ -1,3 +1,4 @@
+import { JsonRequestError } from "../_shared/request-json.mjs";
 import { IntakeRequestError, isIntakeAssetId, readIntakeJson } from "../_shared/intake-request.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { extractIntakeAsset } from "../_shared/intake-extract.mjs";
@@ -31,7 +32,7 @@ Deno.serve(async request => {
     const result = await extractIntakeAsset({ admin, actorId: user.id, assetId, model, apiKey });
     return respond(result.body, result.status);
   } catch (error) {
-    if (error instanceof IntakeRequestError) return respond({ error: error.message }, error.status);
+    if (error instanceof IntakeRequestError || error instanceof JsonRequestError) return respond({ error: error.message }, error.status);
     return respond({ error: "Private extraction request failed. Refresh the intake list before retrying." }, 400);
   }
 });

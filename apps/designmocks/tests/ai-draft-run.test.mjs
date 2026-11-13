@@ -135,3 +135,28 @@ test("AI drafting returns safe role denial when the completed response loses sta
   assert.equal(config.calls.at(-1)[0], "fail_ai_draft_request");
   assert.equal(config.calls.at(-1)[1].p_token, "fixture-run");
 });
+
+test("a streamed model response beyond the draft limit cancels the body and fails only its lease", async () => {
+  const config = setup();
+  let cancelled = false;
+  const result = await runAiDraft({ ...config, fetcher: async () => new Response(new ReadableStream({
+    start(controller) { controller.enqueue(new Uint8Array(256 * 1024 + 1)); },
+    cancel() { cancelled = true; },
+  })) });
+  assert.equal(result.status, 400);
+  assert.equal(cancelled, true);
+  assert.equal(config.calls.some(([name]) => name === "complete_ai_draft_request"), false);
+  assert.equal(config.calls.at(-1)[0], "fail_ai_draft_request");
+  assert.equal(config.calls.at(-1)[1].p_token, "fixture-run");
+});
+
+test("the draft request reader rejects oversized JSON even when the declared length is small", async () => {
+  const {readJsonObject} = await import("../supabase/functions/_shared/request-json.mjs");
+  const headers = {"content-type": "application/json", "content-length": "5"};
+  const makeRequest = body => new Request("https://fictional.example/draft", {method: "POST", headers, body, duplex: "half"});
+  assert.deepEqual(await readJsonObject(makeRequest(JSON.stringify(input)), 64 * 1024, "draft"), input);
+  const stream = new ReadableStream({start(controller) {
+    controller.enqueue(new Uint8Array(64 * 1024 + 1));
+  }});
+  await assert.rejects(readJsonObject(makeRequest(stream), 64 * 1024, "draft"), {status: 413});
+});

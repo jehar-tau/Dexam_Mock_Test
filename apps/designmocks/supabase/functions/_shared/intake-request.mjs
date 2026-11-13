@@ -1,3 +1,4 @@
+import { readJsonObject } from "./request-json.mjs";
 import { drawingRequestBody } from "./drawing-request.mjs";
 
 const SOURCE_MAX_BYTES = 25 * 1024 * 1024;
@@ -22,16 +23,8 @@ async function readBounded(request, limit) {
   }
 }
 
-export async function readIntakeJson(request) {
-  if (!/^application\/json(?:\s*;|$)/i.test(request.headers.get("content-type") ?? "")) {
-    throw new IntakeRequestError("Use a JSON intake request.", 415);
-  }
-  const bytes = await readBounded(request, 4096);
-  try {
-    const input = JSON.parse(new TextDecoder("utf-8", {fatal: true}).decode(bytes));
-    if (input && typeof input === "object" && !Array.isArray(input)) return input;
-  } catch { /* Return a stable error for malformed JSON or UTF-8. */ }
-  throw new IntakeRequestError("Use a valid JSON intake request.");
+export function readIntakeJson(request) {
+  return readJsonObject(request, 4096, "intake");
 }
 
 export async function readIntakeUpload(request) {
