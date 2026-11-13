@@ -16,6 +16,7 @@ const sourceGroups = [
   ['project', 'project.json'],
   ['paid_mvp_profile', 'launch/paid-mvp.sql'],
   ['paid_mvp_grant_inventory', 'launch/paid-mvp-rpcs.json'],
+  ['private_staging_api', 'launch/private-staging-api.sql'],
 ];
 
 function git(root, args) {

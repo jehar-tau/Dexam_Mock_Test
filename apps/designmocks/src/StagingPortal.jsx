@@ -13,7 +13,8 @@ export function useStagingPortalAccess(session, path = "account") {
       if (!controller.signal.aborted) setDecision({ session, path, status });
     };
     verifiedRoleCheck(platform.auth, platform, session.user?.id, "can_enter_staging_portal", controller.signal).then(({ data, error }) => {
-      finish(error ? "unavailable" : data === true ? "allowed" : "denied");
+      const blocked = error?.code === "42501" && error.message === "Private staging requires an approved Google tester";
+      finish(blocked ? "denied" : error ? "unavailable" : data === true ? "allowed" : "denied");
     }, () => finish("unavailable"));
     return () => controller.abort();
   }, [session, path]);

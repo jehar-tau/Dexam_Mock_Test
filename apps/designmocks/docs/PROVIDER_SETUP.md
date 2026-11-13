@@ -242,3 +242,11 @@ node scripts/compare-staging-rpcs.mjs /private/review/source.json /private/revie
 ```
 
 Exit 2 indicates drift. Review exact function signatures and effective execute rights, including rights inherited from `PUBLIC`. Profile-only functions appear as additional functions. Verify function bodies, RLS, storage policies and role-specific workflows separately. Review the delta after the encrypted backup and restore and before any approved permissions change.
+
+### Enforce private tester admission in the Data API
+
+Use `supabase/launch/private-staging-api.sql` only on the designated private staging project after the backup and hosted change review. It checks the existing confirmed Google tester policy before authenticated Data API requests, including requests made directly with an existing session. Anonymous and service requests still use their existing grants. When a tester is removed, their next Data API request is denied without waiting for token expiry. The companion refuses to overwrite a different pre-request hook.
+
+Apply the hook before restoring reviewed authenticated RPC grants. Verify direct requests from a permitted tester and a returning account outside the allowlist before admitting testers. The hook governs PostgREST. Storage and Edge handlers have their own authorization, and need separate verification. Keep the staging hook active if returning to the paid profile on the same staging project. [Supabase Data API pre-request behavior](https://supabase.com/docs/guides/api/securing-your-api)
+
+If rolling back, first restore the prior authenticated grants. Then reset `pgrst.db_pre_request` for the authenticator in the current database and notify PostgREST to reload its configuration. Confirm anonymous and authenticated behavior again after rollback.
