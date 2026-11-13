@@ -1,5 +1,26 @@
 project_id = "designmocks-independent"
 
+# Dedicated local ports keep this stack separate from Dexam's default stack.
+[api]
+port = 57321
+
+[db]
+port = 57322
+shadow_port = 57320
+major_version = 17
+
+[studio]
+port = 57323
+
+[local_smtp]
+port = 57324
+
+[analytics]
+port = 57327
+
+[db.pooler]
+port = 57329
+
 [functions.create-order]
 verify_jwt = false
 

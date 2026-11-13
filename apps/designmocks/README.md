@@ -1,6 +1,6 @@
 # DMocks
 
-The independent DMocks website and student portal, inside `jehar-tau/Dexam_Mock_Test` at `apps/designmocks`. Approved offer: **₹1,193 for one year**, one payment, no automatic renewal. The owner-connected **https://dmocks.com** domain is active with HTTPS; hosting remains owner-private.
+The independent DMocks website and student portal, inside `jehar-tau/Dexam_Mock_Test` at `apps/designmocks`. Approved offer: **₹1,193 for one year**, one payment, no automatic renewal. The owner-connected **https://dmocks.com** domain serves the public informational Site over HTTPS.
 
 ## Run locally
 
@@ -14,6 +14,18 @@ npm run designmocks:dev
 Open http://127.0.0.1:4190/ for the website or http://127.0.0.1:4190/portal-preview for the inside-portal preview. The latter is development-only, explicitly fictional and includes an example report. Its pass, marks and sample account do not grant real access. It is excluded from production builds.
 
 From this app directory, use `npm ci`, `npm run dev`, `npm run check` or `npm run build`. Build output is `dist/`. `npm run preview` serves a production build on port 4191. The original root question-bank studio and commands are preserved.
+
+## Local database development
+
+From `apps/designmocks`, run `supabase start` with Supabase CLI 3.1 and Docker. DMocks uses project ID `designmocks-independent`, API port 57321 and PostgreSQL port 57322. The local database starts from the app migrations with registration closed and sales disabled. Use fictional fixtures for development and keep the local keys separate from hosted staging credentials.
+
+For a database, Auth and Storage rehearsal with fewer containers, run:
+
+```sh
+supabase start -x realtime,imgproxy,postgres-meta,studio,edge-runtime,logflare,vector,supavisor
+```
+
+Check Auth at `http://127.0.0.1:57321/auth/v1/health`. Use `supabase stop` from the same app directory when finished. The browser's local `/portal-preview` uses fictional data. Real Google and payment acceptance use their approved hosted configurations.
 
 ## Frozen paid MVP — 8 November 2026
 
