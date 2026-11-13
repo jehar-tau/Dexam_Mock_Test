@@ -57,8 +57,12 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
       if (url.pathname.startsWith("/rest/v1/rpc/")) return Response.json({ code: "42501" }, { status: 401 });
       if (url.pathname === "/auth/v1/settings") return Response.json({ disable_signup: !${staging}, external: { google: ${staging} } });
       if (${staging} && request.method === "OPTIONS" && url.pathname.startsWith("/functions/v1/")) {
-        assert.equal(request.headers.get("origin"), environment.PUBLIC_APP_ORIGIN);
-        return new Response(null, { status: 204, headers: { "Access-Control-Allow-Origin": environment.PUBLIC_APP_ORIGIN } });
+        const approved = request.headers.get("origin") === environment.PUBLIC_APP_ORIGIN;
+        return new Response(null, { status: approved ? 204 : 403, headers: {
+          "Access-Control-Allow-Origin": environment.PUBLIC_APP_ORIGIN,
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Headers": "authorization,apikey,content-type,x-client-info",
+        } });
       }
       if (url.pathname === "/functions/v1/attempt-media") return new Response(null, { status: 401 });
       assert.fail("unexpected probe " + url.pathname);

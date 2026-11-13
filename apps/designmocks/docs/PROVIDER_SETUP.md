@@ -169,6 +169,14 @@ From `apps/designmocks`, load the staging project URL and public browser key pri
 DMOCKS_BACKEND_STAGE=staging DMOCKS_AUTH_STAGE=controlled node scripts/check-hosted-setup.mjs
 ```
 
+For a read-only list of private Edge routes that still need deployment or an origin update, run the CORS-only probe with the approved staging public configuration:
+
+```sh
+node --env-file=.env.local scripts/staging-edge-readiness.mjs
+```
+
+The probe checks all seven routes with OPTIONS from the approved and an unrelated origin. Exit 2 means at least one route failed. It reports which endpoints returned 404 or rejected the staging origin, along with any incomplete preflight or foreign-origin denial. Run the full hosted smoke and signed-in checks separately to verify Auth, permissions and workflows.
+
 This checks anonymous authorization, Google availability, and media preflights at the exact staging origin. Run the configured commerce probe separately at its approved checkout origin. The staging report does not attest payment capture, refunds, or tester admission.
 
 ### Verify the migration dry run
