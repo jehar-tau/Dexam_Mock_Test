@@ -14,7 +14,7 @@ const sentAt = {
 const send = { action: "send", phone, challengeId: id };
 const verify = code => ({ ...send, action: "verify", code });
 
-function fixture({ registration = "google", rpc, providerFetch, overrides = {} } = {}) {
+function fixture({ registration = "google", rpc, providerFetch, admission = true, overrides = {} } = {}) {
   const settings = {
     PUBLIC_APP_ORIGIN: origin,
     SUPABASE_URL: "http://127.0.0.1:5555",
@@ -49,7 +49,10 @@ function fixture({ registration = "google", rpc, providerFetch, overrides = {} }
           assert.equal(options.global.headers.Authorization, "Bearer " + token);
           if (token !== "fictional-user-token") return { error: { message: "private authentication diagnostic" } };
           return { data: { user: { id: actor, app_metadata: { provider: registration }, is_anonymous: false } } };
-        } } };
+        } }, rpc: name => {
+          assert.equal(name, "can_enter_staging_portal");
+          return { abortSignal: () => Promise.resolve({ data: admission }) };
+        } };
       }
       assert.equal(key, settings.SUPABASE_SERVICE_ROLE_KEY);
       return { rpc: async (name, args) => {
@@ -158,4 +161,13 @@ test("a provider error response is treated as delivery uncertainty even on HTTP 
   const f = fixture({ providerFetch: () => Response.json({ type: "error", message: "private vendor diagnostic" }) });
   assert.deepEqual(await (await f.handler(request(send))).json(), { status: "unconfirmed", ...sentAt });
   assert.equal(f.deliveries.length, 1);
+});
+
+test("an unapproved staging account cannot reserve a phone challenge or send SMS", async () => {
+  const f = fixture({ admission: false, overrides: { DMOCKS_EDGE_REQUIRE_STAGING_TESTER: "true" } });
+  for (const body of [send, verify("123456")]) {
+    assert.equal((await f.handler(request(body))).status, 403);
+  }
+  assert.equal(f.database.length, 0);
+  assert.equal(f.deliveries.length, 0);
 });
