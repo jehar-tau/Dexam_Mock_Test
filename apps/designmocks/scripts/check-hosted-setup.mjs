@@ -1,6 +1,7 @@
 // Read-only setup smoke checks. This never creates users, orders or payments.
 import assert from "node:assert/strict";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
+import {probeStagingEdge} from "./staging-edge-readiness.mjs";
 try {
   process.loadEnvFile(".env.local");
 } catch {}
@@ -187,15 +188,15 @@ if (staging) {
     assert.equal(response.data?.code, "42501");
     results.push({ check: "anonymous " + name + " denied", status: response.status, passed: true });
   }
-  for (const name of ["attempt-media", "drawing-media", "drawing-review-media", "community-media", "question-intake", "bank-review-media", "reported-question-media"]) {
-    response = await request("/functions/v1/" + name, "OPTIONS", undefined, {
-      Origin: origin,
-      "Access-Control-Request-Method": "POST",
-      "Access-Control-Request-Headers": "authorization,apikey,content-type,x-client-info",
+  const edge = await probeStagingEdge({url: base, key});
+  for (const row of edge.results) {
+    results.push({
+      check: row.name + " accepts the staging origin",
+      status: row.stagingStatus,
+      foreignStatus: row.foreignStatus,
+      result: row.result,
+      passed: row.result === "ready",
     });
-    assert.equal(response.status, 204, name + " staging preflight");
-    assert.equal(response.allowOrigin, origin, name + " staging origin");
-    results.push({ check: name + " accepts the staging origin", status: 204, passed: true });
   }
 }
 await mkdir("test-results", { recursive: true });
@@ -217,3 +218,5 @@ console.log(
     2,
   ),
 );
+
+if (results.some(result => !result.passed)) process.exitCode = 2;
