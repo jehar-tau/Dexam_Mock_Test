@@ -232,3 +232,13 @@ Follow [MVP deployment and Test acceptance](MVP_DEPLOYMENT.md) for the published
 Serve only the canonical main-branch empty-holds bank through the reviewed private import path. Reconcile runtime/media/key readiness and exact exam blueprints; do not equate import eligibility with paper publication. Complete provider/browser acceptance of the installed portal backend before opening its modules. Phone verification, drawing review, moderation, theory material, operational limits and policy decisions remain tracked in PRODUCT_EXECUTION_PLAN.md.
 
 Final operator/contact, younger-student, privacy, purchase/refund, tax/invoice, retention/deletion, backup and monitoring decisions are still needed. The owner must approve public registration and live payments after concrete acceptance evidence. Neither the private Site nor the owner Google login test is a public paid launch.
+
+### Compare effective staging RPC grants
+
+Capture the JSON result of `supabase/audit/staging-rpc-inventory.sql` from a disposable PostgreSQL database after applying the reviewed source migrations. Capture a second result from the selected staging project using the same SQL. Save each single JSON result as a private file. The paid MVP companion changes the grants, so collect the migration baseline before installing it.
+
+```sh
+node scripts/compare-staging-rpcs.mjs /private/review/source.json /private/review/staging.json
+```
+
+Exit 2 indicates drift. Review exact function signatures and effective execute rights, including rights inherited from `PUBLIC`. Profile-only functions appear as additional functions. Verify function bodies, RLS, storage policies and role-specific workflows separately. Review the delta after the encrypted backup and restore and before any approved permissions change.
