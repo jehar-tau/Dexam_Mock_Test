@@ -1,5 +1,11 @@
+import { drawingRequestBody } from "./drawing-request.mjs";
+import { INTAKE_EXTRACTION_MAX_BYTES } from "./intake-limits.mjs";
 import { intakeFileMatches } from "./intake-file.mjs";
 import { intakeSourceDigest } from "./intake-source.mjs";
+
+// A 100-question response can contain long wording, explanations and options.
+const EXTRACTION_RESPONSE_MAX_BYTES = 32 * 1024 * 1024;
+const oversizedSource = "Model extraction accepts files up to 10 MB. Split the source or transcribe its questions.";
 
 const questionTypes = ["MCQ", "MSQ", "NAT", "DESCRIPTIVE"];
 export const extractedQuestionSchema = {
@@ -79,9 +85,12 @@ export async function extractIntakeAsset({ admin, actorId, assetId, model, apiKe
   if (typeof token !== "string") return { status: 503, body: { error: "Question processing is temporarily unavailable. Contact the operator before retrying." } };
   try {
     const asset = claimed.data;
-    const { data: file, error } = await admin.storage.from("question-intake").download(asset.storagePath);
-    if (error || !file) throw new Error("Private source download failed");
-    const bytes = new Uint8Array(await file.arrayBuffer());
+    if (!Number.isSafeInteger(asset.byteSize) || asset.byteSize < 1) throw new Error("Invalid private source size");
+    if (asset.byteSize > INTAKE_EXTRACTION_MAX_BYTES) throw new RangeError(oversizedSource);
+    const { data: stream, error } = await admin.storage.from("question-intake")
+      .download(asset.storagePath, {}, {signal: AbortSignal.timeout(30000)}).asStream();
+    if (error || !stream) throw new Error("Private source download failed");
+    const bytes = await drawingRequestBody(new Response(stream), asset.byteSize);
     if (bytes.length !== asset.byteSize || !intakeFileMatches(bytes, asset.mimeType)) throw new Error("Private source metadata mismatch");
     if (asset.sourceSha256 != null && await intakeSourceDigest(bytes) !== asset.sourceSha256) throw new Error("Private source digest mismatch");
     let binary = "";
@@ -99,7 +108,8 @@ export async function extractIntakeAsset({ admin, actorId, assetId, model, apiKe
       body, signal: AbortSignal.timeout(90000), redirect: "error",
     });
     if (!provider.ok) throw new Error("Extraction provider request failed");
-    const response = await provider.json();
+    const responseBytes = await drawingRequestBody(provider, EXTRACTION_RESPONSE_MAX_BYTES);
+    const response = JSON.parse(new TextDecoder("utf-8", {fatal: true}).decode(responseBytes));
     const completed = await admin.rpc("complete_question_intake_asset", {
       p_asset_id: assetId, p_model: model, p_response_id: response.id, p_questions: parseIntakeExtractionResponse(response), p_token: token,
     });
@@ -107,9 +117,11 @@ export async function extractIntakeAsset({ admin, actorId, assetId, model, apiKe
     if (!Number.isInteger(completed.data) || completed.data < 1) throw new Error("Extraction receipt is incomplete");
     return { status: 200, body: { assetId, status: "extracted", questions: completed.data } };
   } catch (failure) {
-    const status = failure?.code === "42501" ? 403 : failure?.code === "40001" ? 409 : 400;
+    const status = failure?.code === "42501" ? 403 : failure?.code === "40001" ? 409
+      : failure instanceof RangeError && failure.message === oversizedSource ? 413 : 400;
     const error = status === 403 ? "Admin access required" : status === 409
       ? "The extraction job changed. Refresh the intake list before retrying."
+      : status === 413 ? oversizedSource
       : "Extraction failed. Check the private source and configured provider before retrying.";
     try {
       await admin.rpc("fail_question_intake_asset", { p_asset_id: assetId, p_model: model, p_error: error, p_token: token });
