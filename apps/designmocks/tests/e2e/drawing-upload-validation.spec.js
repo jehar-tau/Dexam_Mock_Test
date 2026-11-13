@@ -10,7 +10,7 @@ const png = () => readFile(new URL("../fixtures/drawing-images/fictional-drawing
 
 async function fixture(page, { cleanupPending = false } = {}) {
   const now = new Date(); await page.clock.install({ time: now });
-  const state = { pages: [], uploads: [], nextError: null, loseReceipt: false, removals: [] };
+  const state = { pages: [], uploads: [], nextError: null, loseReceipt: false, loseOrdinal: null, removals: [] };
   const provider = await stubPortalProvider(page, procedure => {
     switch (procedure) {
       case "read_attempt": return { id: attemptId, title: "Fictional drawing upload", status: "submitted", resultsPending: true,
@@ -40,7 +40,7 @@ async function fixture(page, { cleanupPending = false } = {}) {
     }
     const item = { id: "fictional-page-" + state.uploads.length, ordinal: Number(form.get("ordinal")), mimeType: form.get("file").type, byteSize: form.get("file").size };
     state.pages.push(item);
-    if (state.loseReceipt) { state.loseReceipt = false; return route.abort(); }
+    if (state.loseReceipt || state.loseOrdinal === item.ordinal) { state.loseReceipt = false; state.loseOrdinal = null; return route.abort(); }
     return route.fulfill({ headers, json: { id: item.id, ordinal: item.ordinal } });
   });
   await page.goto("/account"); await seedPortalSession(page, student); await page.goto("/attempt/" + attemptId);
@@ -63,8 +63,7 @@ test("a student can correct a rejected image, retry a busy upload, and replace a
   state.nextError = "drawing_busy";
   await input.setInputFiles(file);
   await expect(page.locator(".drawing-uploads").getByRole("status")).toContainText("Another image is being checked");
-  await expect(page.getByRole("button", { name: "Add images" })).toBeEnabled();
-  await input.setInputFiles(file);
+  await page.getByRole("button", { name: "Retry remaining images", exact: true }).click();
   await expect(page.locator(".drawing-uploads").getByRole("status")).toContainText("Drawing images saved privately");
   await expect(page.getByText("drawing.png", { exact: true })).toBeVisible();
   expect(state.uploads.every(item => item.attemptId === attemptId && item.questionId === questionId && item.ordinal === 1)).toBe(true);
@@ -90,6 +89,7 @@ test("an ambiguous upload receipt is reconciled from saved pages before another 
   await input.setInputFiles(file);
   await expect(page.locator(".drawing-uploads").getByRole("status")).toContainText("An upload did not confirm");
   await expect(page.getByText("Image 1", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Keep saved page 1", exact: true }).click();
   await expect(page.getByRole("button", { name: "Add images" })).toBeEnabled();
   await input.setInputFiles({ ...file, name: "second.png" });
   await expect(page.locator(".drawing-uploads").getByRole("status")).toContainText("Drawing images saved privately");
@@ -125,4 +125,36 @@ test("a logically removed drawing page can be replaced before the original cutof
   await expect(window).toHaveCount(0);
   expect(state.pages).toHaveLength(1);
   expect(state.unexpected).toEqual([]);
+});
+
+test("a lost acknowledgement in the middle of a drawing batch keeps the unsent page in its original slot", async ({page}) => {
+  const state = await fixture(page);
+  const bytes = await png();
+  state.loseOrdinal = 2;
+  await page.locator('input[type="file"]').setInputFiles(
+    [1, 2, 3].map(number => ({name: `page-${number}.png`, mimeType: "image/png", buffer: bytes})),
+  );
+  const retry = page.getByRole("button", {name: "Retry remaining images", exact: true});
+  await expect(page.getByText(/Page 2 already has a saved image/)).toBeVisible();
+  await expect(retry).toBeDisabled();
+  expect(state.uploads.map(item => item.ordinal)).toEqual([1, 2]);
+  await page.getByRole("button", {name: "Keep saved page 2", exact: true}).click();
+  await retry.click();
+  await expect(page.getByText("page-3.png", {exact: true})).toBeVisible();
+  expect(state.uploads.map(item => [item.ordinal, item.file])).toEqual([[1, "page-1.png"], [2, "page-2.png"], [3, "page-3.png"]]);
+  expect(state.pages).toHaveLength(3);
+});
+
+test("closing the drawing window clears the pending selection without sending another page", async ({page}) => {
+  const state = await fixture(page);
+  state.nextError = "drawing_busy";
+  await page.locator('input[type="file"]').setInputFiles({
+    name: "pending.png", mimeType: "image/png", buffer: await png(),
+  });
+  const retry = page.getByRole("button", {name: "Retry remaining images", exact: true});
+  await expect(retry).toBeEnabled();
+  await page.clock.fastForward(121_000);
+  await expect(retry).toHaveCount(0);
+  expect(state.uploads).toHaveLength(1);
+  expect(state.pages).toEqual([]);
 });
