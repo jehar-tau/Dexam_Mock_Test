@@ -1,3 +1,4 @@
+import { IntakeRequestError, isIntakeAssetId, readIntakeJson, readIntakeUpload } from "../_shared/intake-request.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { intakeFigureDescriptor, intakeFileMatches } from "../_shared/intake-file.mjs";
 import { intakeSourceDigest, saveIntakeSource } from "../_shared/intake-source.mjs";
@@ -27,8 +28,8 @@ Deno.serve(async request => {
   const admin = createClient(url, service, { auth: { persistSession: false } });
   try {
     if (request.headers.get("content-type")?.includes("application/json")) {
-      const { assetId, figureSha } = await request.json();
-      if (typeof assetId !== "string") return respond({ error: "Intake asset id required" }, 400);
+      const { assetId, figureSha } = await readIntakeJson(request);
+      if (!isIntakeAssetId(assetId)) return respond({ error: "Intake asset id required" }, 400);
       if (figureSha != null && (typeof figureSha !== "string" || !/^[a-f0-9]{64}$/.test(figureSha))) return respond({ error: "Invalid figure digest" }, 400);
       const source = figureSha ? await student.rpc("admin_question_intake_figure_source", { p_asset_id: assetId, p_sha256: figureSha })
         : await student.rpc("admin_question_intake_source", { p_asset_id: assetId });
@@ -47,15 +48,10 @@ Deno.serve(async request => {
       }
       return new Response(file, { headers: { ...headers, "Content-Type": "application/octet-stream", "Content-Disposition": "attachment" } });
     }
-    const form = await request.formData(), file = form.get("file");
-    if (!(file instanceof File) || !["application/pdf", "image/png", "image/jpeg", "image/webp"].includes(file.type) || file.size < 1 || file.size > 26214400) {
-      return respond({ error: "Use a PDF, PNG, JPEG or WebP up to 25 MB" }, 400);
-    }
+    const { file, assetId } = await readIntakeUpload(request);
     const bytes = new Uint8Array(await file.arrayBuffer());
     if (!intakeFileMatches(bytes, file.type)) return respond({ error: "File content does not match its PDF or image type" }, 400);
-    if (form.get("purpose") === "figure") {
-      const assetId = form.get("assetId");
-      if (file.type !== "image/png" || typeof assetId !== "string") return respond({ error: "A PNG figure and intake source are required" }, 400);
+    if (assetId !== null) {
       const source = await student.rpc("admin_question_intake_source", { p_asset_id: assetId });
       if (source.error) return respond({ error: "Intake source unavailable" }, 403);
       const figure = await intakeFigureDescriptor(bytes, crypto.subtle.digest.bind(crypto.subtle));
@@ -75,7 +71,8 @@ Deno.serve(async request => {
     }
     const saved = await saveIntakeSource({ admin, actorId: user.id, name: file.name, mimeType: file.type, bytes });
     return respond(saved.body, saved.status);
-  } catch {
+  } catch (error) {
+    if (error instanceof IntakeRequestError) return respond({ error: error.message }, error.status);
     return respond({ error: "Private intake request failed. Refresh the intake list before trying again." }, 400);
   }
 });

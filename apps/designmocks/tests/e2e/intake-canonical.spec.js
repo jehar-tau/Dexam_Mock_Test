@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 import { buildManifest, runtimeQuestion } from "../../scripts/question-bank-import.mjs";
 import { RULES_2027 } from "../../scripts/question-runtime.mjs";
+import { readIntakeJson, readIntakeUpload } from "../../supabase/functions/_shared/intake-request.mjs";
 
 test.use({ baseURL: portalFixtureURL });
 const author = { id: "00000000-0000-4000-8000-000000000107", email: "intake-fixture@example.invalid" };
@@ -70,25 +71,29 @@ async function fixture(page, { admin = true, loseFirstUploadReceipt = false } = 
     const headers = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info", "Access-Control-Allow-Methods": "POST, OPTIONS" };
     if (request.method() === "OPTIONS") return route.fulfill({ status: 204, headers });
     if (request.headers()["content-type"]?.includes("application/json")) {
-      const input = request.postDataJSON();
+      const input = await readIntakeJson(new Request(request.url(), {
+        method: "POST", headers: {"content-type": request.headers()["content-type"]}, body: request.postDataBuffer(),
+      }));
       const asset = assets.find(item => item.id === input.assetId);
       return route.fulfill({ headers: { ...headers, "Content-Type": "application/octet-stream" }, body: !input.figureSha && asset.mimeType === "application/pdf" ? pdf : png });
     }
     const body = request.postDataBuffer();
-    if (body.toString().includes('name="purpose"')) return route.fulfill({ headers, json: { asset: {
+    const parsed = await readIntakeUpload(new Request(request.url(), {
+      method: "POST", headers: {"content-type": request.headers()["content-type"]}, body,
+    }));
+    if (parsed.assetId) return route.fulfill({ headers, json: { asset: {
       path: `intake/${figureSha}.png`, sha256: figureSha, width: 1, height: 1,
     } } });
     uploads.push(body);
     if (loseFirstUploadReceipt) {
-      const fields = await new Response(body, { headers: { "Content-Type": request.headers()["content-type"] } }).formData();
-      const file = fields.get("file");
+      const {file} = parsed;
       expect(file.name).toBe("fictional-source.pdf");
       expect(file.type).toBe("application/pdf");
       expect(Buffer.from(await file.arrayBuffer())).toEqual(pdf);
       if (uploads.length > 1) return route.fulfill({ headers, json: { ...assets[0], reused: true } });
     }
     const isPDF = body.toString().includes('filename="fictional-source.pdf"');
-    const asset = { id: `asset-${assets.length}`, name: isPDF ? "fictional-source.pdf" : "fictional-photo.png",
+    const asset = { id: `00000000-0000-4000-8000-${String(111 + assets.length).padStart(12, "0")}`, name: isPDF ? "fictional-source.pdf" : "fictional-photo.png",
       mimeType: isPDF ? "application/pdf" : "image/png", status: "uploaded", candidates: [] };
     assets.push(asset);
     if (loseFirstUploadReceipt) return route.abort("failed");
@@ -256,7 +261,7 @@ test("a late model-worker role denial closes the desk and clears the private int
   let workerCalls = 0;
   await page.route("https://dmocks-portal-fixture.supabase.co/functions/v1/question-intake-extract", async route => {
     workerCalls++;
-    expect(route.request().postDataJSON()).toEqual({ assetId: "asset-0" });
+    expect(route.request().postDataJSON()).toEqual({ assetId: "00000000-0000-4000-8000-000000000111" });
     state.state.admin = false;
     await route.fulfill({ status: 403, json: { error: "Admin access required" } });
   });
