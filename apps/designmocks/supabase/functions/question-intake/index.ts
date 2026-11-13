@@ -1,3 +1,4 @@
+import { JsonRequestError } from "../_shared/request-json.mjs";
 import { IntakeRequestError, isIntakeAssetId, readIntakeJson, readIntakeUpload } from "../_shared/intake-request.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { intakeFigureDescriptor, intakeFileMatches } from "../_shared/intake-file.mjs";
@@ -72,7 +73,7 @@ Deno.serve(async request => {
     const saved = await saveIntakeSource({ admin, actorId: user.id, name: file.name, mimeType: file.type, bytes });
     return respond(saved.body, saved.status);
   } catch (error) {
-    if (error instanceof IntakeRequestError) return respond({ error: error.message }, error.status);
+    if (error instanceof IntakeRequestError || error instanceof JsonRequestError) return respond({ error: error.message }, error.status);
     return respond({ error: "Private intake request failed. Refresh the intake list before trying again." }, 400);
   }
 });
