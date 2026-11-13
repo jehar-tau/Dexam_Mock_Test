@@ -115,6 +115,8 @@ test('checkout links display the exact notice revision recorded with consent',as
  await expect(page.locator('[data-notice-version]')).toHaveAttribute('data-notice-version',noticeVersion);
  await expect(page.locator('.policy')).toContainText('₹1,193 for 12 calendar months');
  await expect(page.locator('.policy')).toContainText('This fictional refund notice');
+ await expect(page.getByRole('heading',{name:'Account eligibility',exact:true})).toBeVisible();
+ await expect(page.locator('.policy')).toContainText('This fictional younger-student notice');
  const refundText = await page.getByText('This fictional refund notice', { exact: false }).textContent();
  await page.goBack();
  await page.locator('.annual-card').getByRole('link',{name:'Cancellation and refunds',exact:true}).click();
