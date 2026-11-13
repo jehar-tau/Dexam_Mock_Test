@@ -16,7 +16,8 @@
 - [x] Prepare the exact 57-question UCEED paper for private review on desktop and mobile.
 - [ ] Verify the full student and staff workspace using the staging build, the complete migration set and approved exact origins. Enable the staging preview modules and keep checkout closed.
 - [ ] Verify confirmed Google identity against the server tester allowlist while registration policy is `testers`, environment mode is `test`, sales are closed, and `can_enter_staging_portal()` allows access. Public registration has its own approval.
-- [ ] Resolve the hosted target role and capture and restore the approved target's backup. The project dashboard returned Healthy and the CA and native clients passed local verification. The observed ledger (7 November) has 25 of the 90 current source migrations (65 pending), including a pending staging admission migration `202611060128_private_staging_portal.sql`.
+- [x] Record the owner-selected staging target `tiodqzvvujxvxssvjdis` and the requirement for a separate production project (10 November, HANDOFF.md).
+- [ ] Capture and restore the approved staging target's backup; backup/restore and a migration dry run were authorized on 11 November, while promotion remains separate. The project dashboard returned Healthy and the CA and native clients passed local verification. The observed ledger (7 November) has 25 of the 90 current source migrations (65 pending), including a pending staging admission migration `202611060128_private_staging_portal.sql`.
 - [ ] After approved target recovery and matching migration/function promotion, rerun the exact-origin staging admission, protected-route, account isolation and server authorization checks. Keep the public informational Site independent of this work.
 
 ## Controlled Razorpay Test and paid MVP
@@ -43,8 +44,10 @@ Run checkout inside the approved, expiring Test window after the requirements be
 - [ ] Replace/deactivate the previously exposed Razorpay Test pair, enter fresh server secrets privately and configure the correct signed webhook. Never place secrets in Vite, Git, logs or chat.
 - [ ] Verify configured checkout CORS, anonymous rejection and unsigned webhook rejection on the approved target using the read-only commerce probe. Then verify actual Test capture, delivery and refund separately.
 - [ ] Approve and publish final operator, support and contact, privacy, purchase, refund and cancellation, and tax and invoice details. Review retention and deletion handling.
-- [ ] State the 18+ eligibility rule in the owner-approved terms and privacy notice (wording needs owner approval). Registration is adults only by owner decision, so no guardian consent path is built.
-- [ ] Choose the approved provider/deployment target. Inspect the current hosted ledger; validate database plus private-media backup/restore and promote only matching tested source/functions.
+- [x] Record the approved 18+ eligibility sentence (11 November, HANDOFF.md): “DesignMocks is for students aged 18 or older. By creating an account you confirm that you are at least 18 years old.”
+- [ ] Publish that sentence in the terms and privacy notices and verify the public pages. Registration is adults only; no guardian consent path is built.
+- [x] Record the approved refund and tax decisions: seven calendar days before the first paid mock starts, approved refunds initiated within two business days, duplicate charges/service faults separate; no GST and Razorpay receipt as invoice until registration. Final notice publication and provider verification remain unchecked.
+- [ ] Inspect the current hosted ledger on the already selected staging target; validate database plus private-media backup/restore and promote only matching tested source/functions.
 - [ ] Connect the operations monitor and payment Edge error signals to the approved alert receiver. Verify delivery, support and incident actions. Keep initial capacity checks proportional to fewer than 100 concurrent users. [Operations runbook](OPERATIONS_RUNBOOK.md)
 - [ ] Complete one real Razorpay test-mode customer journey on dmocks.com, including Google sign-in, purchase/webhook, one annual pass, the exact paper, reconnect, submission/result, receipt/support and refund/revocation acceptance.
 - [ ] Record the explicit final go-live decision; enable public registration, the verified catalogue and sales through their separate switches. A client callback never grants access.
@@ -61,5 +64,6 @@ NID/unsupported programmes; All India events/rankings/top-ten; Community; Learn/
 
 - dmocks.com serves public Site version 6 with the informational pages and original free sample. The release involved only Site deployment and audience changes.
 - Hosted backend promotion, final notices, first-paper release, public signup, real Test acceptance and Live sales each have separate gates. Model calls remain disabled.
-- The staging-target question is already pending; avoid duplicate requests.
+- The staging target and policy choices above are already decided. Request only unresolved credentials, publication or deployment actions; do not repeat those decisions.
+- Claude owns Learn implementation; Codex owns the other full-roadmap requirements and integrates Learn after the owner pushes it. The paid MVP is the first milestone, not the full goal.
 - Never treat human question review as content-rights approval, draft policies as final policies, local fixture payments as a real provider journey, or source migrations as applied hosted migrations.
