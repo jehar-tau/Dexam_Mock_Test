@@ -51,12 +51,16 @@ select public.register_question_intake_asset('intake/fixture/source.pdf','fictio
 select public.register_question_intake_asset('intake/fixture/photo.png','fictional-photo.png','image/png',99,:'editor') as photo_id \gset
 select public.register_question_intake_asset('intake/fixture/large.pdf','fictional-large.pdf','application/pdf',10485761,:'editor') as large_id \gset
 select pg_temp.intake_reject(format('select public.claim_question_intake_asset(%L)',:'large_id'),'Split files above 10 MB');
+select pg_temp.intake_reject(format('select public.claim_question_intake_asset(%L,%L)',:'large_id',:'editor'),'Split files above 10 MB');
 select public.claim_question_intake_asset(:'asset_id');
 select pg_temp.intake_reject(format($sql$select public.complete_question_intake_asset(%L,'fictional-model','invalid-response','[{"prompt":"Incomplete fixture"}]')$sql$,:'asset_id'),'Invalid extracted question');
 select pg_temp.intake_assert(public.complete_question_intake_asset(:'asset_id','fictional-model','fixture-response',jsonb_build_array(
   pg_temp.intake_payload('MCQ','null')||'{"pageNumber":2,"confidence":0.8}',
   pg_temp.intake_payload('NAT','null')||'{"pageNumber":null,"confidence":null}'))=2,'model candidates retain missing source answers and unknown provenance');
 reset role;
+select pg_temp.intake_assert((select status = 'uploaded' and extraction_token is null
+  from dm_private.question_intake_assets where id = :'large_id'),
+  'oversized sources remain available for manual transcription without an extraction lease');
 
 select pg_temp.intake_reject(format('select dm_private.require_intake_figures(%L,pg_temp.intake_visual()->''assets'')',:'asset_id'),'retain every reviewed figure');
 insert into storage.objects(bucket_id,name,metadata) values('question-intake','figures/'||:'asset_id'||'/'||repeat('a',64)||'.png','{"mimetype":"image/png","size":99}');

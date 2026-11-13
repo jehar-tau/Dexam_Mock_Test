@@ -6,6 +6,7 @@ import { intakeFileMatches } from "../supabase/functions/_shared/intake-file.mjs
 const question = { pageNumber: 2, confidence: 0.8, type: "MCQ", prompt: "A fictional observation question",
   options: [], answer: null, explanation: "", topic: "", visualDependency: null };
 const response = questions => ({ id: "fictional-response", output: [{ content: [{ type: "output_text", text: JSON.stringify({ questions }) }] }] });
+const downloadPdf = () => ({asStream: async () => ({data: pdf.stream()})});
 const pdf = new Blob(["%PDF-1.7\nFictional byte-signature fixture"], { type: "application/pdf" });
 
 test("PDF and image extraction preserve unknown source facts in a bounded structured schema", () => {
@@ -48,7 +49,7 @@ test("a duplicate extraction cannot fail the active worker or send the source tw
       if (name === "authorize_question_intake_provider") return { data: true };
       return { data: name === "complete_question_intake_asset" ? 1 : null };
     },
-    storage: { from: () => ({ download: async () => ({ data: pdf }) }) },
+    storage: { from: () => ({ download: downloadPdf }) },
   };
   let providerCalls = 0;
   const run = () => extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture", model: "fictional-model", apiKey: "fictional-key",
@@ -85,7 +86,7 @@ test("failed extraction does not send mismatched source bytes or expose provider
         return { data: name === "claim_question_intake_asset"
           ? { token: "run-1", storagePath: "private/fixture.pdf", mimeType: "application/pdf", byteSize: pdf.size + Number(mismatch) } : null };
       },
-      storage: { from: () => ({ download: async () => ({ data: pdf }) }) },
+      storage: { from: () => ({ download: downloadPdf }) },
     };
     const result = await extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture", model: "fictional-model", apiKey: "fictional-key",
       fetcher: async () => { sent = true; throw new Error("Sensitive provider diagnostic"); },
@@ -119,7 +120,7 @@ test("extraction refuses a same-length private source whose registered digest di
       } };
       return { data: null };
     },
-    storage: { from: () => ({ download: async () => ({ data: pdf }) }) },
+    storage: { from: () => ({ download: downloadPdf }) },
   };
   let sent = false;
   const result = await extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture", model: "fixture-model",
@@ -149,7 +150,7 @@ test("intake rechecks a claimed job after the file read before sending private s
         }
         return { data: null };
       },
-      storage: { from: () => ({ async download() { fileRead = true; return { data: pdf }; } }) },
+      storage: { from: () => ({ download() { fileRead = true; return downloadPdf(); } }) },
     };
     const result = await extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture",
       model: "fictional-model", apiKey: "fictional-key", fetcher: async () => { sent = true; return Response.json(response([question])); } });
@@ -174,11 +175,62 @@ test("intake returns safe role denial when revoked after dispatch, even if clean
       if (name === "complete_question_intake_asset") return { error: { code: "42501", message: "Private role diagnostic" } };
       throw new Error("Private cleanup diagnostic");
     },
-    storage: { from: () => ({ download: async () => ({ data: pdf }) }) },
+    storage: { from: () => ({ download: downloadPdf }) },
   };
   const result = await extractIntakeAsset({ admin, actorId: "fixture-admin", assetId: "fixture", model: "fictional-model",
     apiKey: "fictional-key", fetcher: async () => Response.json(response([question])) });
   assert.deepEqual(result, { status: 403, body: { error: "Admin access required" } });
   assert.equal(calls.at(-1)[0], "fail_question_intake_asset");
   assert.equal(calls.at(-1)[1].p_token, "fixture-token");
+});
+
+test("oversized claims and overlong Storage streams never dispatch model requests", async () => {
+  for (const registeredSize of [10 * 1024 * 1024 + 1, pdf.size]) {
+    const calls = [];
+    let downloaded = false;
+    let cancelled = false;
+    const admin = {
+      async rpc(name, args) {
+        calls.push([name, args]);
+        if (name === "claim_question_intake_asset") {
+          return {data: {token: "size-test", byteSize: registeredSize, mimeType: "application/pdf", storagePath: "fictional"}};
+        }
+        return {data: null};
+      },
+      storage: {from: () => ({download: () => ({async asStream() {
+        downloaded = true;
+        return {data: new ReadableStream({
+          start(controller) { controller.enqueue(new Uint8Array(registeredSize + 1)); },
+          cancel() { cancelled = true; },
+        })};
+      }})})},
+    };
+    const result = await extractIntakeAsset({admin, actorId: "fixture-admin", assetId: "fixture",
+      fetcher: async () => assert.fail("Oversized content must not reach the model")});
+    const oversizedClaim = registeredSize > pdf.size;
+    assert.equal(result.status, oversizedClaim ? 413 : 400);
+    assert.equal(downloaded, !oversizedClaim);
+    assert.equal(cancelled, !oversizedClaim);
+    assert.deepEqual(calls.map(([name]) => name), ["claim_question_intake_asset", "fail_question_intake_asset"]);
+    assert.equal(calls[1][1].p_token, "size-test");
+  }
+});
+
+test("a model response above the transport limit fails its own lease", async () => {
+  const calls = [];
+  const admin = {
+    async rpc(name, args) {
+      calls.push([name, args]);
+      if (name === "claim_question_intake_asset") {
+        return {data: {token: "provider-limit", byteSize: pdf.size, mimeType: "application/pdf", storagePath: "fictional"}};
+      }
+      return {data: true};
+    },
+    storage: {from: () => ({download: downloadPdf})},
+  };
+  const result = await extractIntakeAsset({admin, actorId: "fixture-admin", assetId: "fixture", fetcher: async () =>
+    new Response("ignored", {headers: {"content-length": String(32 * 1024 * 1024 + 1)}})});
+  assert.equal(result.status, 400);
+  assert.deepEqual(calls.map(([name]) => name), ["claim_question_intake_asset", "authorize_question_intake_provider", "fail_question_intake_asset"]);
+  assert.equal(calls.at(-1)[1].p_token, "provider-limit");
 });
