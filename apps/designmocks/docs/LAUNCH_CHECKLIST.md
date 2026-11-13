@@ -10,6 +10,12 @@
 - [x] Record the owner’s explicit “Publish version 6 publicly” decision and the successful native Sites deployment on 9 November 2026. Verify eight signed-out direct routes on dmocks.com on desktop and mobile (`/`, `/account`, `/plans`, `/contact`, `/privacy`, `/terms`, `/sample` and `/sample/result`). The private release receipt is `.dmocks-local-evidence/site-public-release-2026-11-09/public-release-proof.json`.
 - [x] Verify visible draft labels on the public notices and confirm the static build keeps sign-in, account creation, real paper publication and checkout closed.
 
+## Current hosted observation — 14 November 2026
+
+Read-only Chrome inspection of the selected staging project lists all 90 source migration version IDs through `202611100166`. The five deployed Edge functions are attempt-media, create-order, drawing-media, drawing-review-media and payment-webhook. Source/body hashes, the companion profile, recovery provenance and signed-in behavior remain unverified by this observation. The historical 25-version ledger below is superseded for planning; do not reapply its 65-migration backlog.
+
+The working local checkout is `~/dmocks-local`, with private configuration in `apps/designmocks/.env.local`. Anonymous local-origin probes return 401 for attempt-media, create-order and drawing-media, 403 for a well-formed fictional drawing-review ID, and 401 for an unsigned webhook. The actual configured CORS origin is `http://127.0.0.1:4190`; dmocks.com is rejected. These rejection probes do not establish a successful purchase, Google journey, hosted-origin readiness or deployed-source parity.
+
 ## Non-payment portal verification (separate from Site publication)
 
 - [x] Verify real controlled Google sign-in, reload, refresh, sign-out and returning-account sign-in on the current local build.
