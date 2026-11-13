@@ -4,13 +4,13 @@ import{seedPortalSession,stubPortalProvider}from'./portal-fixture.js';
 import{runtimeQuestion,RULES_2027}from'../../scripts/question-runtime.mjs';
 test.use({baseURL:'http://127.0.0.1:4799'});
 const actor={id:'00000000-0000-4000-8000-000000001701',email:'fictional-mvp@example.invalid'},paper='10000000-0000-4000-8000-000000001701',attempt='20000000-0000-4000-8000-000000001701';
-async function fixture(page,{drawing=false,numericAlternatives=false,multipleSelect=false,released=true}={}){
+async function fixture(page,{drawing=false,numericAlternatives=false,multipleSelect=false,markings=null,released=true}={}){
  const state={answer:null,revision:0,submitted:false,released};
  const numeric=numericAlternatives?runtimeQuestion({externalKey:'original-numeric-alternatives',provenance:{exam:'uceed'},type:'NAT',prompt:'Original fictional exact-decimal practice question.',holds:[],assets:[],options:[],answer:{raw:'1.000000000000000001 or 1.000000000000000002',status:'reviewed'}},{rule:RULES_2027.uceed}):null;
  const score=()=>numericAlternatives?(numeric.key.accepted.some(value=>value.exact===state.answer)?4:0):-1;
  const kind=numeric?.kind??(drawing?'drawing':multipleSelect?'msq':'mcq');
  const question=()=>({id:'30000000-0000-4000-8000-000000001701',ordinal:1,kind,topic:'observation',prompt:numeric?.prompt??'Original fictional MVP objective question',options:numeric?.options??[{id:'A',label:'Original first choice'},{id:'B',label:'Original second choice'}],marking:numeric?.marking??{correct:4,wrong:-1,partial:multipleSelect},points:4,negativePoints:numericAlternatives?0:1,answer:state.answer,answerRevision:state.revision,media:[],...(state.submitted?{outcome:score()>0?'full_marks':'incorrect',explanation:numeric?.explanation??'Original fictional MVP answer explanation.'}:{})});
- const snapshot=()=>({id:attempt,title:'Original fictional released objective paper',status:state.submitted?'submitted':'active',deadline:new Date(Date.now()+900000).toISOString(),serverNow:new Date().toISOString(),questions:[question()],score:state.submitted?score():null,total:4});
+ const snapshot=()=>({id:attempt,title:'Original fictional released objective paper',status:state.submitted?'submitted':'active',deadline:new Date(Date.now()+900000).toISOString(),serverNow:new Date().toISOString(),questions:markings ? markings.map((marking,index)=>({...question(),id:`30000000-0000-4000-8000-${String(1701+index).padStart(12,'0')}`,ordinal:index+1,marking,points:marking.correct,negativePoints:Math.abs(marking.wrong)})) : [question()],score:state.submitted?score():null,total:4});
  const provider=await stubPortalProvider(page,(name,input)=>{
   if(name==='finalize_my_expired_attempts')return 0;
   if(name==='my_attempt_history')return[];
@@ -108,4 +108,20 @@ test('the original free sample completes without creating a provider account or 
 test('a production build cannot enable deferred modules or checkout with preview flags',async({page})=>{
  await page.goto('http://127.0.0.1:4899/dashboard/community');await expect(page.getByText('COMING LATER',{exact:true})).toBeVisible();const menu=page.getByRole('button',{name:'Student menu',exact:true});if(await menu.isVisible())await menu.click();await expect(page.getByRole('navigation',{name:'Student workspace'}).getByRole('link')).toHaveCount(2);
  await page.goto('http://127.0.0.1:4899/plans');await expect(page.getByRole('checkbox')).toHaveCount(0);await expect(page.getByRole('button',{name:/Pay .* with Razorpay/})).toHaveCount(0);await expect(page.getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();
+});
+
+for (const partial of [false, true]) test(`section guidance follows the active MSQ marking rule (partial ${partial})`, async ({ page }) => {
+ const provider = await fixture(page, { multipleSelect: true, markings: [
+  { correct: 4, wrong: -1, partial: !partial },
+  { correct: 2, wrong: 0, partial },
+ ] });
+ await page.goto('/attempt/' + attempt);
+ const guidance = page.getByRole('navigation', { name: 'Sections', exact: true }).locator('.section-rule');
+ await expect(guidance).toContainText('+4 correct · -1 wrong');
+ await page.getByRole('button', { name: 'Go to question 2', exact: true }).click();
+ await expect(guidance).toHaveText('Multiple select (MSQ) · +2 correct · 0 wrong' + (partial ? ' · partial marks for a correct subset' : ''));
+ await page.getByRole('button', { name: 'Go to question 1', exact: true }).click();
+ await expect(guidance).toHaveText('Multiple select (MSQ) · +4 correct · -1 wrong' + (!partial ? ' · partial marks for a correct subset' : ''));
+ expect(provider.calls.filter(([name]) => name === 'save_answer_revision')).toEqual([]);
+ expect(provider.unexpected).toEqual([]);
 });
