@@ -2,13 +2,13 @@
 // Mock Storage here is supplemented by the isolated real-Supabase rehearsal.
 import assert from 'node:assert/strict';
 import {spawn,execFileSync} from 'node:child_process';
-import {mkdtemp,rm,readFile} from 'node:fs/promises';
+import {mkdtemp,rm,readFile,readdir} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {randomBytes,randomUUID} from 'node:crypto';
 import {createReadStream} from 'node:fs';
 import {pipeline} from 'node:stream/promises';
-import {openRecoveryPostgres,captureRecoverySnapshot,compareRecoverySnapshots,recoveryPostgresEnvironment} from '../../scripts/recovery-postgres.mjs';
+import {openRecoveryPostgres,checkRecoveryDatabaseSource,captureRecoverySnapshot,compareRecoverySnapshots,recoveryPostgresEnvironment} from '../../scripts/recovery-postgres.mjs';
 import {createRecoveryBundle,verifyRecoveryBundle,RECOVERY_PROJECT} from '../../scripts/recovery-bundle.mjs';
 import {recoverySeed,recoveryActor,quote} from './fixtures/recovery-state.mjs';
 import {verifyPreUpgradeRecovery} from './pre-upgrade-recovery-roundtrip.mjs';
@@ -48,6 +48,8 @@ async function main(){
   return;
  }
  const workspace=await mkdtemp(path.join(tmpdir(),'dmocks-recovery-')),target='dmocks_recovery_restore_'+randomUUID().replaceAll('-','');let created=false,connection;
+ const stagingTarget = target + '_stage';
+ let stagingCreated = false;
  try{
   assert.equal(await sql('select(select count(*)from auth.users)+(select count(*)from dm_private.papers)+(select count(*)from dm_private.attempts)+(select count(*)from storage.objects);'),'0','Recovery CI starts only after rolled-back original fictional suites');
   const seeded=await sql(recoverySeed().source),state=JSON.parse(seeded.split('\n').findLast(line=>line.startsWith('{')&&line.includes('"auditMax"')));
@@ -79,9 +81,74 @@ async function main(){
   await assert.rejects(sql('set role anon;select public.my_pass();',target));
   assert.equal(await sql(`insert into dm_private.launch_gate_audit(gate,approved,evidence,actor_id)values('backup_restore',false,'Original fictional recovery after restore.',${quote(state.admin)})returning id>${Number(state.auditMax)};`,target),'t');
   assert.equal(await sql("select not sales_enabled and dm_private.mvp_profile_permissions_valid()and(select mode='closed'from dm_private.registration_policy)from public.launch_settings;",target),'t');
+  const expectedVersions = (await readdir(new URL('../../supabase/migrations', import.meta.url)))
+    .filter(file => file.endsWith('.sql')).map(file => file.split('_')[0]).sort();
+  const stagingCheck = {sourceStage: 'staging-before-permissions-repair', expectedVersions};
+  async function withStagingSnapshot(operation, database = restoredUrl) {
+    const session = await openRecoveryPostgres(database.href, {localOnly: true, spawnClient: client});
+    try {
+      return await operation(session);
+    } finally {
+      await session.close();
+    }
+  }
+  await sql(`create schema supabase_migrations;
+    create table supabase_migrations.schema_migrations(version text primary key);
+    insert into supabase_migrations.schema_migrations values ${expectedVersions.map(version => '(' + quote(version) + ')').join(',')};`, target);
+  const checkStage = session => checkRecoveryDatabaseSource(session, stagingCheck);
+  await assert.rejects(withStagingSnapshot(checkStage), /Staging recovery requires/);
+  await sql(`insert into dm_private.mvp_rpc_allowlist values ('public.community_thread(uuid)', 'student');
+    grant execute on function public.community_thread(uuid) to authenticated;
+    grant execute on function public.my_pass() to anon;`, target);
+  await assert.rejects(withStagingSnapshot(session => captureRecoverySnapshot(session)), /exact MVP permissions/);
+  for (const [open, close] of [
+    ["update public.launch_settings set environment_mode='live'", "update public.launch_settings set environment_mode='test'"],
+    ["update dm_private.registration_policy set mode='open'", "update dm_private.registration_policy set mode='testers'"],
+    [`update dm_private.mvp_test_checkout_control set enabled=true, expires_at=clock_timestamp()-interval '1 minute',
+      evidence='Fictional closed window', actor_id=${quote(state.admin)}`, 'update dm_private.mvp_test_checkout_control set enabled=false'],
+  ]) {
+    await sql(open, target);
+    await assert.rejects(withStagingSnapshot(checkStage), /Staging recovery requires/);
+    await sql(close, target);
+  }
+  // The fixture's drifted grants and private rows must survive a second isolated restore.
+  const stagingDirectory = path.join(workspace, 'staging-bundle');
+  const stagingSnapshot = await withStagingSnapshot(async session => {
+    const snapshot = await captureRecoverySnapshot(session, stagingCheck);
+    const exported = await session.exportSnapshot();
+    await createRecoveryBundle({
+      output: stagingDirectory, key, source: {projectRef: RECOVERY_PROJECT, releaseSha: 'a'.repeat(40)},
+      snapshot, database: session.dump(exported), objects: snapshot.objects,
+      readObject: async () => [bytes], assertUnchanged: async () => true,
+    });
+    return snapshot;
+  });
+  const stagingArchive = await verifyRecoveryBundle({
+    directory: stagingDirectory, key, extractTo: path.join(workspace, 'staging-verified'),
+  });
+  await sql('create database ' + stagingTarget + ';', 'postgres');
+  stagingCreated = true;
+  await restoreArchive(path.join(stagingArchive.extractedDirectory, 'payload-000000.bin'), stagingTarget);
+  const stagingUrl = new URL(restoredUrl);
+  stagingUrl.pathname = '/' + stagingTarget;
+  const stagingRestored = await withStagingSnapshot(session => captureRecoverySnapshot(session, stagingCheck), stagingUrl);
+  compareRecoverySnapshots(stagingSnapshot, stagingRestored);
+  const profileSql = await readFile(new URL('../../supabase/launch/paid-mvp.sql', import.meta.url), 'utf8');
+  await sql('begin;\n' + profileSql + '\ncommit;', stagingTarget);
+  await withStagingSnapshot(async session => {
+    const repaired = await captureRecoverySnapshot(session, {expectedVersions});
+    const preservedRows = snapshot => snapshot.rows.filter(row => row.schema !== 'dm_private' || row.name !== 'mvp_rpc_allowlist');
+    assert.deepEqual(preservedRows(repaired), preservedRows(stagingRestored), 'Permissions repair changed captured application rows');
+  }, stagingUrl);
+  assert.equal(await sql(`select not has_function_privilege('anon', 'public.my_pass()', 'EXECUTE')
+    and not has_function_privilege('authenticated', 'public.community_thread(uuid)', 'EXECUTE')
+    and not (select sales_enabled from public.launch_settings)
+    and (select mode = 'testers' from dm_private.registration_policy)
+    and not (select enabled from dm_private.mvp_test_checkout_control);`, stagingTarget), 't');
+  console.log(JSON.stringify({stagingBeforePermissionsRepairRestored: true, permissionsRepairRehearsed: true, hostedWritesPerformed: false}));
   console.log(JSON.stringify({passed:true,actualPostgres17ArchiveRestored:true,exactSchemaRlsGrantsRowsAndSequences:true,originalQuestions:57,frozenItems:114,paidPassAndEventPreserved:true,purchaseSupportLinkPreserved:true,answerRevisionAndOriginalDeadlinePreserved:true,foreignAndAnonymousDenied:true,privateBytesVerified:true,storage:'mock-catalogue-only',registrationAndSalesClosed:true,hostedWritesPerformed:false}));
  }finally{
-  await connection?.close();if(created)await sql('drop database '+target+' with(force);','postgres');await rm(workspace,{recursive:true,force:true});
+  await connection?.close();if(stagingCreated)await sql('drop database '+stagingTarget+' with(force);','postgres');if(created)await sql('drop database '+target+' with(force);','postgres');await rm(workspace,{recursive:true,force:true});
  }
 }
 main().catch(()=>{console.error('RECOVERY_ROUNDTRIP_FAILED');process.exitCode=1;});

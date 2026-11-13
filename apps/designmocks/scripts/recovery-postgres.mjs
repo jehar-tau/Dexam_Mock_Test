@@ -60,7 +60,7 @@ export const recoverySchemaQuery=`select jsonb_build_object(
 export const recoveryObjectsQuery=`select coalesce(jsonb_agg(jsonb_build_object('bucket',o.bucket_id,'name',o.name,'owner',coalesce(to_jsonb(o)->>'owner_id',to_jsonb(o)->>'owner'),'contentType',o.metadata->>'mimetype','cacheControl',o.metadata->>'cacheControl','byteSize',(o.metadata->>'size')::bigint,'userMetadata',to_jsonb(o)->'user_metadata','version',to_jsonb(o)->>'version')order by o.bucket_id,o.name),'[]')from storage.objects o`;
 export const recoveryBucketsQuery=`select coalesce(jsonb_agg(jsonb_build_object('id',id,'name',name,'public',public,'fileSizeLimit',file_size_limit,'allowedMimeTypes',(select jsonb_agg(t order by t)from unnest(allowed_mime_types)t))order by id),'[]')from storage.buckets`;
 export async function checkRecoveryDatabaseSource(connection, {sourceStage = 'mvp', expectedVersions} = {}) {
-  assert.ok(['mvp', 'pre-upgrade'].includes(sourceStage), 'Unknown recovery source stage');
+  assert.ok(['mvp', 'pre-upgrade', 'staging-before-permissions-repair'].includes(sourceStage), 'Unknown recovery source stage');
   if (sourceStage === 'pre-upgrade') {
     assert.ok(Array.isArray(expectedVersions) && expectedVersions.length > 0, 'A complete reviewed migration ledger is required');
     const withoutProfile = await connection.query(`select not exists (
@@ -71,6 +71,14 @@ export async function checkRecoveryDatabaseSource(connection, {sourceStage = 'mv
       where n.nspname = 'dm_private' and left(p.proname, 4) = 'mvp_'
     )`);
     assert.equal(withoutProfile, 't', 'Pre-upgrade recovery requires a database before the MVP profile');
+  } else if (sourceStage === 'staging-before-permissions-repair') {
+    assert.ok(Array.isArray(expectedVersions) && expectedVersions.length > 0, 'A complete reviewed migration ledger is required');
+    const closedStaging = await connection.query(`select
+      exists (select 1 from public.launch_settings where singleton and environment_mode = 'test' and sales_enabled is false)
+      and exists (select 1 from dm_private.registration_policy where id and mode in ('closed', 'testers'))
+      and exists (select 1 from dm_private.mvp_test_checkout_control where singleton and enabled is false)
+      and dm_private.mvp_profile_permissions_valid() is false`);
+    assert.equal(closedStaging, 't', 'Staging recovery requires Test mode, closed sales, restricted registration, disabled Test checkout and an invalid installed profile');
   } else {
     assert.equal(await connection.query('select dm_private.mvp_profile_permissions_valid()'), 't', 'Apply the exact MVP permissions profile before backup or verification');
   }
