@@ -6,6 +6,8 @@ import path from "node:path";
 import test from "node:test";
 import { checkoutArtifactProfile, stagingArtifactProfile, verifyCheckoutArtifact, verifyStagingArtifact } from "../scripts/staging-artifact.mjs";
 
+import actualProject from "../supabase/project.json" with { type: "json" };
+
 const sha256 = value => createHash("sha256").update(value).digest("hex");
 const project = {
   project_ref: "a".repeat(20),
@@ -131,4 +133,15 @@ test("checkout and staging verification accept only their own artifact schema", 
   });
   await assert.rejects(verifyCheckoutArtifact(staging));
   await assert.rejects(verifyStagingArtifact(checkout));
+});
+
+test("the deployed public Site alias cannot be packaged as private staging", () => {
+  const input = { frontendOrigin: actualProject.staging_frontend_origin,
+    providerOrigin: `https://${actualProject.project_ref}.supabase.co`,
+    publicKey: "sb_publishable_fictional_staging_key" };
+  assert.equal(stagingArtifactProfile(actualProject, input).checkoutEnabled, false);
+  assert.throws(() => stagingArtifactProfile(actualProject, { ...input,
+    frontendOrigin: "https://designmocks-studio.snehal1155.chatgpt.site" }), /exact private staging/);
+  assert.throws(() => stagingArtifactProfile(actualProject, { ...input,
+    frontendOrigin: actualProject.frontend_origin }), /exact private staging/);
 });
