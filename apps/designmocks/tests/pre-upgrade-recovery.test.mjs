@@ -4,7 +4,7 @@ import {randomBytes} from 'node:crypto';
 import {mkdtemp, rm, writeFile, stat} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
-import {capturePrivateRecovery, PRE_UPGRADE_LEDGER_VERSION, verifyPrivateRecovery} from '../scripts/private-recovery.mjs';
+import {capturePrivateRecovery, PRE_UPGRADE_LEDGER_VERSION, STAGING_RECOVERY_LEDGER_VERSION, verifyPrivateRecovery} from '../scripts/private-recovery.mjs';
 import {RECOVERY_PROJECT, verifyRecoveryBundle} from '../scripts/recovery-bundle.mjs';
 import {compareRecoverySnapshots, recoveryBucketsQuery, recoveryObjectsQuery, recoverySchemaQuery} from '../scripts/recovery-postgres.mjs';
 
@@ -36,17 +36,18 @@ async function fixture(run) {
   }
 }
 
-function source({versions = historicalVersions, freshVersions = versions, withProfile = false, ledgerPresent = true} = {}) {
+function source({versions = historicalVersions, freshVersions = versions, withProfile = false, ledgerPresent = true, closedStaging = false, freshSchema = {}} = {}) {
   const calls = {connections: 0, exports: 0, closed: 0};
   const connectionFactory = async () => {
     const fresh = ++calls.connections > 1;
     return {
       async query(statement) {
+        if (statement.includes('mvp_test_checkout_control')) return closedStaging ? 't' : 'f';
         if (statement.includes('left(c.relname, 4)')) return withProfile ? 'f' : 't';
         if (statement.includes('mvp_profile_permissions_valid()')) return withProfile ? 't' : 'f';
         if (statement.includes("to_regclass('supabase_migrations.schema_migrations')")) return ledgerPresent ? 't' : 'f';
         if (statement.includes('jsonb_agg(version order by version)')) return JSON.stringify(fresh ? freshVersions : versions);
-        if (statement === recoverySchemaQuery) return '{}';
+        if (statement === recoverySchemaQuery) return JSON.stringify(fresh ? freshSchema : {});
         if (statement.includes("c.relkind in('r','p')") || statement.includes('from pg_sequences')
           || statement === recoveryBucketsQuery || statement === recoveryObjectsQuery) return '[]';
         if (statement.includes('server_version_num')) return '170006';
@@ -134,3 +135,50 @@ test('restore comparison preserves the source stage and migration history', () =
   assert.throws(() => compareRecoverySnapshots(legacy, {...legacy, sourceStage: 'mvp'}), /source stage/);
   assert.throws(() => compareRecoverySnapshots(legacy, {...legacy, migrationVersions: sourceVersions}), /migration history/);
 });
+
+async function stagingFixture(run) {
+  await fixture(async ({preUpgradeLedger, ...config}) => {
+    const ledger = {...approvedLedger, version: STAGING_RECOVERY_LEDGER_VERSION, migrationVersions: sourceVersions};
+    await writeFile(preUpgradeLedger, JSON.stringify(ledger));
+    await run({...config, stagingLedger: preUpgradeLedger}, ledger);
+  });
+}
+
+test('a closed staging snapshot records drifted permissions without certifying the MVP profile', () => stagingFixture(async config => {
+  const {calls, options} = source({closedStaging: true, versions: sourceVersions});
+  await capturePrivateRecovery(config, options);
+  const verified = await verifyRecoveryBundle({directory: config.output, key: config.recoveryKey});
+  const summary = await verifyPrivateRecovery({directory: config.output, key: config.recoveryKey});
+  assert.equal(summary.sourceStage, 'staging-before-permissions-repair');
+  assert.equal(summary.databaseRestoreAccepted, false);
+  assert.equal(verified.source.profileSha256, null);
+  assert.match(verified.source.approvedLedgerSha256, /^[a-f0-9]{64}$/);
+  assert.deepEqual(verified.snapshot.migrationVersions, sourceVersions);
+  assert.deepEqual(calls, {connections: 2, exports: 1, closed: 2});
+}));
+
+test('staging capture rejects ambiguous modes, incomplete ledgers, and unreviewed server state', () => stagingFixture(async (config, ledger) => {
+  const closed = source({closedStaging: true, versions: sourceVersions});
+  await assert.rejects(capturePrivateRecovery({...config, preUpgradeLedger: config.stagingLedger}, closed.options), /only one/);
+  await writeFile(config.stagingLedger, JSON.stringify({...ledger, migrationVersions: historicalVersions}));
+  await assert.rejects(capturePrivateRecovery(config, closed.options), /complete source migration history/);
+  assert.equal(closed.calls.connections, 0);
+
+  await writeFile(config.stagingLedger, JSON.stringify(ledger));
+  const open = source({versions: sourceVersions});
+  await assert.rejects(capturePrivateRecovery(config, open.options), /Staging recovery requires/);
+  assert.equal(open.calls.exports, 0);
+  const mismatched = source({closedStaging: true});
+  await assert.rejects(capturePrivateRecovery(config, mismatched.options), /Installed migration history/);
+  assert.equal(mismatched.calls.exports, 0);
+  await assert.rejects(stat(config.output), {code: 'ENOENT'});
+}));
+
+test('staging schema drift during capture discards the partial encrypted directory', () => stagingFixture(async config => {
+  const {calls, options} = source({
+    closedStaging: true, versions: sourceVersions, freshSchema: {functions: ['changed']},
+  });
+  await assert.rejects(capturePrivateRecovery(config, options), /Staging schema or grants changed/);
+  assert.deepEqual(calls, {connections: 2, exports: 1, closed: 2});
+  await assert.rejects(stat(config.output), {code: 'ENOENT'});
+}));

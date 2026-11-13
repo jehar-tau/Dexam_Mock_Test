@@ -8,10 +8,15 @@ import {pathToFileURL} from 'node:url';
 import {createRecoveryBundle,verifyRecoveryBundle,RECOVERY_PROJECT} from './recovery-bundle.mjs';
 import {
   openRecoveryPostgres, captureRecoverySnapshot, checkRecoveryDatabaseSource,
-  recoveryBucketsQuery, recoveryObjectsQuery, recoveryPostgresEnvironment,
+  recoverySchemaQuery, recoveryBucketsQuery, recoveryObjectsQuery, recoveryPostgresEnvironment,
 } from './recovery-postgres.mjs';
 import {stableJson} from './question-bank-import.mjs';
-export const PRE_UPGRADE_LEDGER_VERSION = 'dmocks-pre-upgrade-ledger-v1';
+const ledgerVersions = {
+  'pre-upgrade': 'dmocks-pre-upgrade-ledger-v1',
+  'staging-before-permissions-repair': 'dmocks-staging-recovery-ledger-v1',
+};
+export const PRE_UPGRADE_LEDGER_VERSION = ledgerVersions['pre-upgrade'];
+export const STAGING_RECOVERY_LEDGER_VERSION = ledgerVersions['staging-before-permissions-repair'];
 const hash=value=>createHash('sha256').update(stableJson(value)).digest('hex');
 function claims(value){try{return JSON.parse(Buffer.from(value.split('.')[1],'base64url').toString());}catch{return null;}}
 export function validateRecoveryCaptureConfiguration({url,key,databaseUrl,databaseCaFile,recoveryKey,releaseSha}){
@@ -25,24 +30,32 @@ async function downloadObject(origin,key,object,fetchImpl){
  const response=await fetchImpl(objectUrl(origin,object),{headers:{apikey:key,authorization:'Bearer '+key,'accept-encoding':'identity'},redirect:'error',signal:AbortSignal.timeout(60000)});
  assert.ok(response.status===200&&response.body,'Private recovery object download failed');return response.body;
 }
-export async function readPreUpgradeLedger(file, releaseSha, sourceVersions) {
+async function readRecoveryLedger(file, releaseSha, sourceVersions, sourceStage) {
+  const label = sourceStage === 'pre-upgrade' ? 'Pre-upgrade ledger' : 'Staging recovery ledger';
   const info = await lstat(file);
-  assert.ok(info.isFile() && info.size <= 16_384, 'Use a reviewed pre-upgrade ledger JSON file');
+  assert.ok(info.isFile() && info.size <= 16_384, `${label} must be a reviewed JSON file`);
   let ledger;
   try {
     ledger = JSON.parse(await readFile(file, 'utf8'));
   } catch {
-    throw new Error('Use a readable, reviewed pre-upgrade ledger JSON file');
+    throw new Error(`${label} must be readable JSON`);
   }
   assert.ok(ledger && Object.keys(ledger).sort().join(',') === 'migrationVersions,projectRef,releaseSha,version'
-    && ledger.version === PRE_UPGRADE_LEDGER_VERSION && ledger.projectRef === RECOVERY_PROJECT
-    && ledger.releaseSha === releaseSha, 'Pre-upgrade ledger must name the approved DMocks project and release');
+    && ledger.version === ledgerVersions[sourceStage] && ledger.projectRef === RECOVERY_PROJECT
+    && ledger.releaseSha === releaseSha, `${label} must name the approved DMocks project and release`);
   const knownVersions = new Set(sourceVersions);
   assert.ok(Array.isArray(ledger.migrationVersions) && ledger.migrationVersions.length > 0
     && ledger.migrationVersions.every((version, index, versions) => typeof version === 'string'
       && knownVersions.has(version) && (index === 0 || versions[index - 1] < version)),
-  'Pre-upgrade ledger must list known migration versions in order without duplicates');
+  `${label} must list known migration versions in order without duplicates`);
+  if (sourceStage === 'staging-before-permissions-repair') {
+    assert.deepEqual(ledger.migrationVersions, sourceVersions, 'Staging recovery ledger must match the complete source migration history');
+  }
   return ledger;
+}
+
+export function readPreUpgradeLedger(file, releaseSha, sourceVersions) {
+  return readRecoveryLedger(file, releaseSha, sourceVersions, 'pre-upgrade');
 }
 
 export async function capturePrivateRecovery(config, {
@@ -52,11 +65,14 @@ export async function capturePrivateRecovery(config, {
   assert.ok(config.output, 'Choose a new private recovery directory');
   const sourceVersions = expectedVersions ?? (await readdir(new URL('../supabase/migrations', import.meta.url)))
     .filter(file => file.endsWith('.sql')).map(file => file.split('_')[0]).sort();
-  const ledger = config.preUpgradeLedger === undefined
-    ? null
-    : await readPreUpgradeLedger(config.preUpgradeLedger, config.releaseSha, sourceVersions);
+  assert.ok(config.preUpgradeLedger === undefined || config.stagingLedger === undefined,
+    'Choose only one recovery ledger');
+  const sourceStage = config.stagingLedger !== undefined ? 'staging-before-permissions-repair'
+    : config.preUpgradeLedger !== undefined ? 'pre-upgrade' : 'mvp';
+  const ledger = sourceStage === 'mvp' ? null : await readRecoveryLedger(
+    config.stagingLedger ?? config.preUpgradeLedger, config.releaseSha, sourceVersions, sourceStage,
+  );
   const versions = ledger?.migrationVersions ?? sourceVersions;
-  const sourceStage = ledger ? 'pre-upgrade' : 'mvp';
   const profile = ledger ? null : profileSha256 ?? createHash('sha256')
     .update(await readFile(new URL('../supabase/launch/paid-mvp.sql', import.meta.url))).digest('hex');
   if (!ledger) assert.match(profile, /^[a-f0-9]{64}$/);
@@ -87,6 +103,10 @@ export async function capturePrivateRecovery(config, {
         const current = await connectionFactory(config.databaseUrl, databaseOptions);
         try {
           await checkRecoveryDatabaseSource(current, sourceCheck);
+          if (sourceStage === 'staging-before-permissions-repair') {
+            const schema = JSON.parse(await current.query(recoverySchemaQuery));
+            assert.equal(hash(schema), snapshot.schemaSha256, 'Staging schema or grants changed during capture');
+          }
           const buckets = JSON.parse(await current.query(recoveryBucketsQuery));
           const latest = JSON.parse(await current.query(recoveryObjectsQuery));
           return hash({buckets, objects: latest}) === snapshot.storageInventorySha256;
@@ -129,7 +149,7 @@ export async function restoreLocalRecoveryObjects({verified,url,key,ownerKey,ass
 function parseArgs([operation, ...args]) {
   assert.ok(['capture', 'verify'].includes(operation), 'Choose capture or verify');
   const allowed = operation === 'capture'
-    ? ['--output', '--release', '--pre-upgrade-ledger']
+    ? ['--output', '--release', '--pre-upgrade-ledger', '--staging-ledger']
     : ['--bundle', '--extract-to'];
   const options = {};
   for (let n = 0; n < args.length; n += 2) {
@@ -151,7 +171,7 @@ async function main() {
       databaseUrl: process.env.DMOCKS_RECOVERY_DATABASE_URL,
       databaseCaFile: process.env.DMOCKS_RECOVERY_DATABASE_CA_FILE,
       recoveryKey, releaseSha: options['--release'], output: options['--output'],
-      preUpgradeLedger: options['--pre-upgrade-ledger'],
+      preUpgradeLedger: options['--pre-upgrade-ledger'], stagingLedger: options['--staging-ledger'],
     });
     console.log(JSON.stringify(result));
   } else {
