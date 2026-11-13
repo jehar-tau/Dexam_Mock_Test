@@ -32,3 +32,16 @@ export function drawingUploadFailure(error) {
     ? `${detail} Check your saved pages before adding the remaining images.`
     : "An upload did not confirm. Check your saved pages before adding the remaining images.";
 }
+
+export function planDrawingPages(files, savedPages) {
+  const used = new Set(savedPages.map(page => page.ordinal));
+  const free = [1, 2, 3, 4, 5].filter(ordinal => !used.has(ordinal));
+  return files.slice(0, free.length).map((file, index) => ({file, ordinal: free[index]}));
+}
+
+export function drawingPageReceipt(result, ordinal) {
+  if (typeof result?.id !== "string" || !result.id || result.ordinal !== ordinal) {
+    throw new Error("Unconfirmed drawing upload.");
+  }
+  return result.id;
+}

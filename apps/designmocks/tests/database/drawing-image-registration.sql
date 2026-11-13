@@ -59,6 +59,8 @@ select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000411'
 select pg_temp.image_assert((select jsonb_agg((item->>'byteSize')::integer order by (item->>'ordinal')::integer)
  from jsonb_array_elements(public.my_drawing_uploads('30000000-0000-4000-8000-000000000411','20000000-0000-4000-8000-000000000411')) item)='[121,725,104]',
  'owned receipts use the sanitized object sizes rather than source metadata sizes');
+select pg_temp.image_assert(not public.can_upload_drawing('30000000-0000-4000-8000-000000000411','20000000-0000-4000-8000-000000000411',2),
+ 'a saved position is unavailable to a retried upload');
 select pg_temp.image_assert(public.can_upload_drawing('30000000-0000-4000-8000-000000000411','20000000-0000-4000-8000-000000000411',4),
  'normalization does not consume an extra page or change the upload clock');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000412',true);
