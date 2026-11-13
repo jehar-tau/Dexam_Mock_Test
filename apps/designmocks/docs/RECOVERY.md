@@ -68,6 +68,8 @@ npm run recovery:capture -- --output /private/backups/staging-before-repair --re
 npm run recovery:verify -- --bundle /private/backups/staging-before-repair
 ```
 
+If the proposed upgrade adds migrations, capture the pre-upgrade staging snapshot using the reviewed checkout that matches the installed ledger. The new release checkout belongs to the upgrade rehearsal.
+
 Verification reports `staging-before-permissions-repair`. Capture records the installed schema and grants, rechecks them and the Storage inventory before committing the encrypted bundle, and records no canonical profile digest. Restore into an isolated database and compare snapshots at that same stage first. The restored snapshot will carry the original permission drift. Rehearse the reviewed repair on that isolated copy, then verify the canonical profile and the closed checkout controls before recording acceptance.
 
 ## Rehearse restoration
