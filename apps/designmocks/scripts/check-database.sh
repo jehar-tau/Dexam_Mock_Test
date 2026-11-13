@@ -73,6 +73,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/private-account-expo
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/released-overview-scores.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/unseen-topic-practice.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/media-invariants.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/private-storage-boundary.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/tests/controlled_signup.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-release-profile.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-test-checkout.sql
