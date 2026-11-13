@@ -48,7 +48,16 @@ test('the active exam verifies identity before reading its frozen private paper'
  const state=await fixture(page,{identity:second.id});await expect(page.getByRole('alert')).toContainText('Attempt access');expect(calls(state,'read_attempt')).toEqual([]);await expect(privateQuestion(page)).toHaveCount(0);
 });
 test('a silent account change cannot dispatch another account answer and keeps the original device journal',async({page})=>{
- const state=await fixture(page);await expect(answer(page)).toBeEnabled();await seedPortalSession(page,second);await answer(page).click();await expect(page.getByRole('alert')).toContainText('Attempt access');expect(calls(state,'save_answer_revision')).toEqual([]);await expect(privateQuestion(page)).toHaveCount(0);const entries=await journal(page);expect(entries).toHaveLength(1);expect(entries[0].key).toContain(first.id);expect(entries[0].answer).toBe('B');
+ // Hold unrelated exam-read replies so their identity checks cannot invalidate
+ // the page before the answer-dispatch race this test is meant to exercise.
+ const examReplies=deferred(),state=await fixture(page,{examReplies});
+ try {
+  await expect(answer(page)).toBeEnabled();await waitForExamReads(state);
+  await seedPortalSession(page,second);await answer(page).press('Enter');
+  await expect(page.getByRole('alert')).toContainText('Attempt access');
+  expect(calls(state,'save_answer_revision')).toEqual([]);await expect(privateQuestion(page)).toHaveCount(0);
+  const entries=await journal(page);expect(entries).toHaveLength(1);expect(entries[0].key).toContain(first.id);expect(entries[0].answer).toBe('B');
+ } finally { examReplies.resolve(); }
 });
 test('question reporting verifies the account before sending the private explanation',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();await page.getByRole('button',{name:'Report question',exact:true}).press('Enter');await page.getByLabel('Details (optional)',{exact:true}).fill('Fictional private report draft');await seedPortalSession(page,second);await page.getByRole('button',{name:'Send report',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Attempt access');expect(calls(state,'report_attempt_question')).toEqual([]);await expect(page.getByRole('textbox')).toHaveCount(0);
