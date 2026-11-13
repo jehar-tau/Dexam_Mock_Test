@@ -1,3 +1,4 @@
+import { stagingEdgeDenied } from "../_shared/staging-edge-admission.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { validateRaster } from "../_shared/validate-raster.ts";
 import { drawingRequestBody } from "../_shared/drawing-request.mjs";
@@ -18,6 +19,10 @@ Deno.serve(async request => {
   const student = createClient(url, anon, { global: { headers: { Authorization: request.headers.get("authorization") ?? "" } }, auth: { persistSession: false } });
   const { data: { user } } = await student.auth.getUser();
   if (!user) return respond({ error: "Sign in required" }, 401);
+  const stagingCheck = Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER");
+  const stagingDenied = () => stagingEdgeDenied(stagingCheck, student, AbortSignal.any([request.signal, AbortSignal.timeout(10000)]));
+  const stagingRejected = () => respond({ error: "Private staging requires an approved Google tester" }, 403);
+  if (await stagingDenied()) return stagingRejected();
   const admin = createClient(url, service, { auth: { persistSession: false } }), bucket = admin.storage.from("community-media");
   let reserved = false;
   try {
@@ -54,8 +59,13 @@ Deno.serve(async request => {
     const checked = await validateCommunityImage(new Uint8Array(await file.arrayBuffer()), file.type, validateRaster);
     const extension = checked.mime === "image/jpeg" ? "jpg" : checked.mime.split("/")[1];
     const path = `community/${user.id}/${targetType}/${targetId.toLowerCase()}/${crypto.randomUUID()}.${extension}`;
+    if (await stagingDenied()) return stagingRejected();
     const uploaded = await bucket.upload(path, checked.bytes, { contentType: checked.mime, cacheControl: "0", upsert: false });
     if (uploaded.error) throw uploaded.error;
+    if (await stagingDenied()) {
+      await bucket.remove([path]);
+      return stagingRejected();
+    }
     const registered = await admin.rpc("register_community_asset", {
       p_user_id: user.id, p_target_type: targetType, p_target_id: targetId, p_storage_path: path, p_ordinal: ordinal,
       p_mime_type: checked.mime, p_byte_size: checked.bytes.length, p_pixel_width: checked.width, p_pixel_height: checked.height,
