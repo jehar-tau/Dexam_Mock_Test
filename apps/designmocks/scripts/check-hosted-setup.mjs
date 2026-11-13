@@ -29,7 +29,10 @@ const commerceStage = process.env.DMOCKS_COMMERCE_STAGE || "unconfigured";
 assert.ok(["unconfigured", "configured"].includes(commerceStage), "Choose unconfigured or configured commerce handler checks");
 const configuredCommerce = commerceStage === "configured";
 const staging = backendStage === "staging";
-if (staging) assert.equal(authStage, "controlled", "Staging requires the controlled Auth stage");
+if (staging) {
+  assert.equal(authStage, "controlled", "Staging requires the controlled Auth stage");
+  assert.equal(configuredCommerce, false, "Run the configured commerce probe separately from private staging");
+}
 const origin = staging ? project.staging_frontend_origin : project.frontend_origin;
 async function request(path, method = "GET", body, headers = {}) {
   const response = await fetch(base + path, {
@@ -112,9 +115,9 @@ results.push({
   googleEnabled: Boolean(response.data.external?.google),
 });
 for (const [name, body, status] of [
-  ...(!configuredCommerce ? [["create-order", { plan: "annual" }, 503]] : []),
+  ...(!staging && !configuredCommerce ? [["create-order", { plan: "annual" }, 503]] : []),
   ["attempt-media", { attemptId: "00000000-0000-4000-8000-000000000001" }, 401],
-  ...(!configuredCommerce ? [["payment-webhook", {}, 503]] : []),
+  ...(!staging && !configuredCommerce ? [["payment-webhook", {}, 503]] : []),
 ]) {
   response = await request("/functions/v1/" + name, "POST", body, {
     Origin: origin,

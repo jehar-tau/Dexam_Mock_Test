@@ -161,6 +161,16 @@ The packager verifies the archived app files against Git and installs locked dep
 
 Review the pending migration ledger before applying changes. The earlier AI schema gap requires explicit inclusion in the reviewed plan, and model-backed functions require separate rights, consent and cost approval. Deploy the matching media and intake-upload functions for the staging origin before the browser acceptance run. Keep the `dmocks.com` deployment on its own approved artifact. The current private Site serves both names, so replacing its artifact requires a hosting decision even though staging sign-in is pinned to the preview hostname.
 
+### Check the hosted staging backend
+
+From `apps/designmocks`, load the staging project URL and public browser key privately and run:
+
+```sh
+DMOCKS_BACKEND_STAGE=staging DMOCKS_AUTH_STAGE=controlled node scripts/check-hosted-setup.mjs
+```
+
+This checks anonymous authorization, Google availability, and media preflights at the exact staging origin. Run the configured commerce probe separately at its approved checkout origin. The staging report does not attest payment capture, refunds, or tester admission.
+
 ### Verify the migration dry run
 
 After the target is approved, capture and review its fresh installed migration versions using the [pre-upgrade ledger procedure](RECOVERY.md#capture-before-the-first-upgrade). Use the same reviewed commit and tree for both the dry run and the comparison. Run the Supabase CLI in a separate clean worktree so its local connection cache stays outside the checkout used for verification. Choose a new absolute path outside both worktrees for the private JSON receipt.
