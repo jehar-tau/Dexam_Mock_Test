@@ -9,7 +9,7 @@ import {inspectRuntimeQuestion,RULES_2027} from './question-runtime.mjs';
 import {compileRuntimeManifest} from './materialize-bank-runtime.mjs';
 import {planCanonicalMedia} from './private-bank-media.mjs';
 
-export const DIAGNOSTICS_VERSION='verified-conversion-diagnostics-v1';
+export const DIAGNOSTICS_VERSION='verified-conversion-diagnostics-v2';
 export const CORRECTION_ACTIONS=Object.freeze({
  'invalid-record':'Restore a valid canonical question record.',
  'context-unverified':'Verify the exam blueprint, clock, marking and rubric before defining its delivery context.',
@@ -23,6 +23,9 @@ export const CORRECTION_ACTIONS=Object.freeze({
  'answer-pending':'Review the answer key; do not generate or infer a live key.',
  'answer-missing':'Save a reviewed answer key in the canonical source.',
  'answer-notation':'Review and encode the full answer in supported exact notation without inventing a tolerance.',
+ 'answer-scoring-disposition':'Review the dropped or full-marks source disposition before deciding whether this item belongs in a practice paper.',
+ 'answer-reference':'Resolve the referenced question against the original paper and save a reviewed key for this exact version.',
+ 'answer-annotated-numeric':'Review whether the annotation defines an accepted interval and encode the verified key as an exact value or range.',
  'option-count':'Restore exactly four options in the canonical source.',
  'choice-options-missing':'Restore at least two complete labelled choices before reviewing the exam-specific option structure.',
  'option-labels':'Correct missing or duplicate option labels without guessing their answer mapping.',
@@ -30,6 +33,19 @@ export const CORRECTION_ACTIONS=Object.freeze({
  'option-text-invalid':'Correct the option text schema.',
  'option-text-missing':'Restore option wording or the complete labelled question figure.',
 });
+
+function correctionCode(issue, question) {
+ if (issue.code !== 'answer-notation') return issue.code;
+ const raw = question.answer?.raw;
+ if (typeof raw !== 'string') return issue.code;
+ const answer = raw.trim();
+ if (/^(?:full marks|dropped)(?:\s*\([^()]+\))?$/i.test(answer)) return 'answer-scoring-disposition';
+ if (/^q\s*\d+$/i.test(answer)) return 'answer-reference';
+ if (question.type === 'NAT' && /^[+-]?[\d.]+\s*\([+\-\d.\s~–]+\)$/.test(answer)) {
+  return 'answer-annotated-numeric';
+ }
+ return issue.code;
+}
 
 export function compileConversionReport(manifest,mediaCatalog){
  assert.equal(manifest?.sourcePath,SOURCE_PATH,'Only the canonical export is supported');
@@ -49,7 +65,12 @@ export function compileConversionReport(manifest,mediaCatalog){
   const classification=!result.runtime?'blocked':['uceed','ceed'].includes(r.exam)&&result.runtime.kind!=='drawing'?'mvpObjective':'otherSupported';
   counts[classification]++;
   const exam=byExam[r.exam]??={total:0,mvpObjective:0,otherSupported:0,blocked:0};exam.total++;exam[classification]++;
-  const issues=result.issues.map(issue=>{assert.ok(CORRECTION_ACTIONS[issue.code],'Unknown compiler diagnostic');byIssue[issue.code]=(byIssue[issue.code]??0)+1;return{...issue,action:CORRECTION_ACTIONS[issue.code]};});
+  const issues = result.issues.map(issue => {
+   const code = correctionCode(issue, r.payload);
+   assert.ok(CORRECTION_ACTIONS[code], 'Unknown compiler diagnostic');
+   byIssue[code] = (byIssue[code] ?? 0) + 1;
+   return { ...issue, code, action: CORRECTION_ACTIONS[code] };
+  });
   return{externalKey:r.externalKey,contentSha256:r.contentSha256,exam:r.exam,type:r.type,classification,kind:result.runtime?.kind??null,contextVersion:result.runtime?.context.version??null,issues};
  });
  const report={schemaVersion:1,diagnosticsVersion:DIAGNOSTICS_VERSION,sourcePath:manifest.sourcePath,sourceCommit:manifest.sourceCommit,sourceSha256:manifest.sourceSha256,rulesSha256:sha256(stableJson(RULES_2027)),mediaCatalogueSha256:sha256(stableJson([...mediaCatalog].sort((a,b)=>a.sha256.localeCompare(b.sha256)))),runtimePlanSha256:plan.planSha256,total:records.length,counts,byExam,byIssue,hostedReadinessVerified:false,publicationOrApprovalChanges:false,records,correctionQueue:records.filter(r=>r.classification==='blocked')};
