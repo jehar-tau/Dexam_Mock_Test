@@ -287,7 +287,7 @@ test("an unknown staff reply result retries only the exact saved command", async
 });
 
 test("an unannounced SDK token change cannot send a private administrator reply as another actor",async({page})=>{
- const state=await fixture(page),form=page.getByRole('form',{name:'Reply to report Current fictional private bug',exact:true});await form.getByLabel('Reply to reporter',{exact:true}).fill('An original fictional reply from the first administrator');await seedPortalSession(page,other);await form.getByRole('button',{name:'Save',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Administrator access could not be verified');await expect(page.getByText('Current fictional private bug',{exact:true})).toHaveCount(0);expect(state.replyCalls).toEqual([]);
+ const state=await fixture(page),form=page.getByRole('form',{name:'Reply to report Current fictional private bug',exact:true});await form.getByLabel('Reply to reporter',{exact:true}).fill('An original fictional reply from the first administrator');await seedPortalSession(page,other);await form.getByRole('button',{name:'Save',exact:true}).press('Enter');await expect(page.getByRole('alert')).toContainText('Administrator access could not be verified');await expect(page.getByText('Current fictional private bug',{exact:true})).toHaveCount(0);expect(state.replyCalls).toEqual([]);
 });
 
 test("an unannounced SDK token change cannot fetch a private source through the administrator Edge client",async({page})=>{
