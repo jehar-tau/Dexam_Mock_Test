@@ -63,3 +63,24 @@ test('private report writes reject public paths, symlink escapes, tracked files 
   await assert.rejects(()=>writePrivateReport(path.join(root,'.git','diagnostic-leak.json'),report,{repositoryRoot:root}),/Git internals/);
  }finally{await rm(root,{recursive:true,force:true});}
 });
+
+test('the correction queue distinguishes source scoring decisions, references and numeric annotations', () => {
+ const cases = [
+  ['MCQ', 'DROPPED (+3 marks awarded to all)', 'answer-scoring-disposition'],
+  ['MSQ', 'FULL MARKS', 'answer-scoring-disposition'],
+  ['MCQ', 'Q 17', 'answer-reference'],
+  ['NAT', '2.2 (2.1~2.3)', 'answer-annotated-numeric'],
+  ['NAT', '2.2 (metres)', 'answer-notation'],
+ ];
+ const questions = cases.map(([type, raw], index) => fixture({
+  externalKey: 'correction-fixture-' + index, type, answer: { raw, status: 'verified' },
+ }));
+ const report = compileConversionReport(buildManifest({ schemaVersion: 1, questions }, 'a'.repeat(40)), []);
+ assert.equal(report.counts.blocked, cases.length);
+ for (const [index, [, raw, code]] of cases.entries()) {
+  const record = report.correctionQueue.find(row => row.externalKey === 'correction-fixture-' + index);
+  assert.deepEqual(record.issues.map(issue => issue.code), [code]);
+  assert.equal(inspect(questions[index]).runtime, null);
+  assert.equal(JSON.stringify(report).includes(raw), false);
+ }
+});
