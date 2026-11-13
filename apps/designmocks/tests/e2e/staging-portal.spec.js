@@ -114,3 +114,17 @@ test("an unavailable admission check keeps returning accounts out of protected r
   expect(calls.every(([name]) => name === "can_enter_staging_portal")).toBe(true);
   expect(unexpected).toEqual([]);
 });
+
+test("the API admission hook denial keeps a returning account out of staging", async ({page}) => {
+  const {calls, unexpected} = await stubPortalProvider(page, procedure =>
+    procedure === "can_enter_staging_portal"
+      ? {code: "42501", message: "Private staging requires an approved Google tester"} : undefined,
+  project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.goto("/dashboard");
+  await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
+  await expect(page.getByRole("heading", {name: /Welcome to your next attempt/})).toHaveCount(0);
+  expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
+  expect(unexpected).toEqual([]);
+});

@@ -23,6 +23,7 @@ async function fixture(t) {
   await writeFile(path.join(app, 'supabase/migrations/001.sql'), 'select 1;\n');
   await writeFile(path.join(app, 'supabase/functions/_shared/shared.ts'), 'export const x = 1;\n');
   await writeFile(path.join(app, 'supabase/launch/paid-mvp.sql'), 'revoke all;\n');
+  await writeFile(path.join(app, 'supabase/launch/private-staging-api.sql'), '-- fixture\n');
   await writeFile(path.join(app, 'supabase/launch/paid-mvp-rpcs.json'), '{"rpcs":[]}\n');
   const runGit = (...args) => {
     const result = spawnSync('git', ['-C', root, ...args], { encoding: 'utf8' });
@@ -48,9 +49,9 @@ test('passes exact clean source and emits stable inventory counts and hashes', a
   assert.equal(proof.passed, true);
   assert.equal(proof.head, f.commit);
   assert.equal(proof.tree, f.tree);
-  assert.deepEqual(proof.inventory.counts, { migrations: 1, functions: 1, config: 1, project: 1, paid_mvp_profile: 1, paid_mvp_grant_inventory: 1 });
+  assert.deepEqual(proof.inventory.counts, { migrations: 1, functions: 1, config: 1, project: 1, paid_mvp_profile: 1, paid_mvp_grant_inventory: 1, private_staging_api: 1 });
   assert.match(proof.inventory.sha256, /^[0-9a-f]{64}$/);
-  assert.equal(proof.inventory.files.length, 6);
+  assert.equal(proof.inventory.files.length, 7);
   assert.deepEqual(JSON.parse(f.invoke().stdout), proof);
 });
 
@@ -128,6 +129,7 @@ test('verifies extracted Git archive bytes outside the checkout', async t => {
     'apps/designmocks/supabase/functions/_shared/shared.ts',
     'apps/designmocks/supabase/launch/paid-mvp-rpcs.json',
     'apps/designmocks/supabase/launch/paid-mvp.sql',
+    'apps/designmocks/supabase/launch/private-staging-api.sql',
     'apps/designmocks/supabase/migrations/001.sql',
     'apps/designmocks/supabase/project.json',
   ]);
