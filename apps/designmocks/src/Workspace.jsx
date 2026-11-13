@@ -727,7 +727,7 @@ if(postLaunchPreview){
         });
         const names = { nat: "Numerical answer (NAT)", msq: "Multiple select (MSQ)", mcq: "Multiple choice (MCQ)", drawing: "Drawing" };
         const here = sections.find((section) => index >= section.start && index <= section.end);
-        const sample = attempt.questions[here?.start ?? 0];
+        const sample = attempt.questions[index];
         return (
           <nav className="exam-sections" aria-label="Sections">
             {sections.map((section) => {
@@ -741,7 +741,7 @@ if(postLaunchPreview){
               );
             })}
             {sample && sample.kind !== "drawing" && sample.marking && (
-              <p className="section-rule">{names[sample.kind]} · +{sample.marking.correct} correct · {sample.marking.wrong} wrong{sample.kind === "msq" ? " · partial marks for a correct subset" : ""}</p>
+              <p className="section-rule">{names[sample.kind]} · +{sample.marking.correct} correct · {sample.marking.wrong} wrong{sample.kind === "msq" && sample.marking.partial ? " · partial marks for a correct subset" : ""}</p>
             )}
           </nav>
         );
