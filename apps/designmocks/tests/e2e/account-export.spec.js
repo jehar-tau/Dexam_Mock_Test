@@ -87,19 +87,26 @@ test("legacy, mis-scoped, held-score and failed export responses save no file an
     () => { const data = payload(first);data.attempts[0].score = 16;return data; },
     () => { const data = payload(first);data.questionReports[0].contentVersion = "private-review-hash";return data; },
   ];
-  for (const response of cases) {
+  async function requestExport(response) {
     state.response = response;
+    const completed = page.waitForResponse(result =>
+      result.request().method() === "POST" && new URL(result.url()).pathname.endsWith("/rpc/export_my_account_data")
+    );
     await region.getByRole("button", { name: "Download my data", exact: true }).click();
+    await completed;
+  }
+  for (const response of cases) {
+    await requestExport(response);
     await expect(region.getByRole("status")).toHaveText("Your export could not be verified. Refresh your account and try again.");
     await expect(region.getByRole("button", { name: "Download my data", exact: true })).toBeEnabled();
   }
-  state.response = () => ({ code: "P0001", message: "Fictional export temporarily unavailable" });
-  await region.getByRole("button", { name: "Download my data", exact: true }).click();
+  await requestExport(() => ({ code: "P0001", message: "Fictional export temporarily unavailable" }));
   await expect(region.getByRole("status")).toHaveText("Couldn’t prepare your export. Try downloading your data again.");
   expect(downloads).toHaveLength(0);
   state.response = () => payload(first);
   expect((await downloadJSON(page)).accountId).toBe(first.id);
   expect(downloads).toHaveLength(1);
+  expect(state.calls.filter(([name]) => name === "export_my_account_data")).toHaveLength(cases.length + 2);
   expect(state.unexpected).toEqual([]);
 });
 
