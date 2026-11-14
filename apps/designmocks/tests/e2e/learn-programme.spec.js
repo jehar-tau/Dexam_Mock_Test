@@ -478,6 +478,7 @@ test("cube nets: three views, select-all nets and lines across faces, then the e
   // UCEED marking: ten single-choice questions at +3 and two select-all at +4.
   await expect(dialog.getByRole("heading", { name: "38 of 38 marks" })).toBeVisible();
   await expect(dialog.getByRole("status")).toContainText("12 of 12 fully correct.");
+});
 
 test("counting figures: the counter steps through sizes and every exam-hard kind is marked", async ({ page }) => {
   const base = "/learn-programme-preview/counting-figures";
