@@ -16,14 +16,14 @@ async function fixture(page,{two=false}={}){
  const bytes=await readFile(new URL("../fixtures/drawing-images/fictional-drawing.png",import.meta.url));
  const drawing={reviewId:"99000000-0000-4000-8000-000000001001",version:1,status:"assigned",prompt,uploadCount:1,canClaim:false,canReview:true,assignedToMe:true,maxScore:20,criteria:{Clarity:12},comments:"Original fictional saved teacher feedback.",score:12};
  const drawings=[drawing,...(two?[{...drawing,reviewId:"99000000-0000-4000-8000-000000001002",prompt:"Another original fictional private drawing review."}]:[])];
- const state={allowed:true,roleFailure:false,hold:null,readCalls:0,completedReads:0,actions:[],actionHold:null,actionSuccess:false,actionError:null,completedActions:0,mediaHold:null,mediaStatus:200,mediaCalls:0,completedMedia:0};
+ const state={invalidPage:false,allowed:true,roleFailure:false,hold:null,readCalls:0,completedReads:0,actions:[],actionHold:null,actionSuccess:false,actionError:null,completedActions:0,mediaHold:null,mediaStatus:200,mediaCalls:0,completedMedia:0};
  const provider=await stubPortalProvider(page,name=>{
   if(name==="can_review_drawings")return state.roleFailure?{code:"fixture-role-unavailable",message:"Private diagnostic must not render"}:state.allowed;
   if(name==="is_dmocks_admin")return false;
  });
  await page.route(api+"/rest/v1/rpc/my_drawing_review_page",async route=>{
   if(route.request().method()==="OPTIONS")return route.fulfill({headers,status:204});
-  state.readCalls++;const input=route.request().postDataJSON(),held=state.hold,status=state.allowed?200:403,value=state.allowed?{items:input.p_scope==="mine"?structuredClone(drawings):[],nextCursor:null}:{code:"42501",message:"Drawing reviewer access required"};
+  state.readCalls++;const input=route.request().postDataJSON(),held=state.hold,status=state.allowed?200:403,value=state.allowed?state.invalidPage?{items:null,nextCursor:null}:{items:input.p_scope==="mine"?structuredClone(drawings):[],nextCursor:null}:{code:"42501",message:"Drawing reviewer access required"};
   if(held)await held.promise;
   try{await route.fulfill({headers,status,json:value});}catch{}state.completedReads++;
  });
@@ -119,4 +119,19 @@ test("visible role checks close an open inspector and support keyboard recovery 
 test("a signing denial for one assigned submission retains other permitted grading drafts",async({page})=>{
  const state=await fixture(page,{two:true});await card(page,secondPrompt).getByLabel("Feedback").fill("Keep another permitted private grading draft.");state.mediaStatus=403;
  await card(page).getByRole("button",{name:"Open private images",exact:true}).click();await expect(card(page)).toHaveCount(0);await expect(card(page,secondPrompt).getByLabel("Feedback")).toHaveValue("Keep another permitted private grading draft.");await expect(page.getByRole("heading",{name:"My drawing reviews",exact:true})).toBeFocused();expect(state.actions).toEqual([]);await expect(page.locator("#root")).not.toContainText("Private diagnostic must not render");
+});
+
+
+test("a malformed reviewer refresh clears stale grading controls and can be retried", async ({page}) => {
+ const state = await fixture(page);
+ state.invalidPage = true;
+ await page.getByRole("button", {name: "Refresh drawing reviews", exact: true}).click();
+ await expect(page.getByRole("alert")).toHaveText("Couldn’t load drawing reviews.");
+ await expect(page.getByRole("button", {name: "Save human review", exact: true})).toHaveCount(0);
+ expect(state.actions).toEqual([]);
+
+ state.invalidPage = false;
+ await page.getByRole("button", {name: "Try again", exact: true}).click();
+ await expect(page.getByText(prompt, {exact: true})).toBeVisible();
+ await expect(page.getByRole("button", {name: "Save human review", exact: true})).toBeEnabled();
 });
