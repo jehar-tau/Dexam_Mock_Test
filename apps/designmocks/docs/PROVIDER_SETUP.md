@@ -179,6 +179,8 @@ node --env-file=.env.local scripts/staging-edge-readiness.mjs
 
 The probe checks ten private portal and administrator routes with browser-style OPTIONS from the approved and an unrelated origin. It advertises the headers the subsequent request will use and sends no API key or token. Exit 2 means at least one route failed. It reports which endpoints returned 404 or rejected the staging origin, along with any incomplete preflight or foreign-origin denial. The extraction, drafting and phone results identify dependencies for the full portal. Verify model and phone configuration, Auth and permissions with signed-in checks. Checkout and webhook use the separate commerce probe.
 
+For the private portal rollout before phone and model setup, add `--portal-only` to the CORS probe. It still reports all ten routes. Only the seven private portal routes are required for this check. The default probe requires all ten.
+
 This checks anonymous authorization, Google availability, and media preflights at the exact staging origin. Run the configured commerce probe separately at its approved checkout origin. The staging report does not attest payment capture, refunds, or tester admission.
 
 ### Verify the migration dry run
