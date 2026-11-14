@@ -59,6 +59,9 @@ npm run bank:prepare-addition -- \
 
 Add `--output "$DMOCKS_PRIVATE_REVIEW_DIRECTORY"` to prepare a new directory outside Git worktrees. Omit the media options for a text-only packet. The prepared export preserves existing rows and adds the exact reviewed payload. A conflicting key or figure path needs correction before review. The `receipt.json` file confirms that preparation completed. Review the proposed change at `server/data/exports/dexam-bank-export.json` and place verified figures at their recorded paths in the private media root. After the canonical change lands on `main`, follow the existing import, materialization and version approval steps.
 
+For a reviewed correction to an existing eligible question, add `--replace-expect "$DMOCKS_CURRENT_QUESTION_SHA256"` to the same command. Use the current record digest from `bank:diagnostics`. The command checks the exact source commit and record digest, preserves provenance and source labels, and prepares a private export for Git review. Held records require source review first. The canonical import and its exact-version approval still follow the Git review.
+
+
 Promote migration `202611090159` with the matching administrator frontend in an approved full staging environment. The endpoint is available to current administrators in that environment. The paid MVP permission profile excludes this endpoint.
 
 Drawing AI inference is not configured or deployed. The database accepts a rubric-linked suggestion only through the service role. Staff authorized to open that review can see the provider, model, rubric version, confidence and evidence. It cannot populate, release or change the human score. Do not connect a model until the owner approves image-processing consent, retention, cost, a labelled validation set and criterion-level accuracy/bias thresholds.

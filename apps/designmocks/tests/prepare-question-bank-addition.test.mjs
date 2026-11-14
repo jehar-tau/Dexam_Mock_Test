@@ -6,6 +6,7 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { stableJson } from '../scripts/question-bank-import.mjs';
 import { prepareAddition } from '../scripts/prepare-question-bank-addition.mjs';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const question = (key, extra = {}) => ({ externalKey: key, prompt: 'Synthetic prompt', type: 'DESCRIPTIVE', provenance: { exam: 'uceed' }, holds: [], ...extra });
@@ -111,4 +112,28 @@ test('limits figures and recognizes complete visual choice reviews', async t => 
  assert.equal((await prepareAddition({ ...visual, downloadsDir })).review, 'objective-complete');
  const tooMany = await f.packet(question('many', { assets: Array(9).fill(asset) }));
  await assert.rejects(prepareAddition({ ...tooMany, downloadsDir }), /Too many figures/);
+});
+
+test('prepares an exact-version correction while preserving siblings and provenance', async t => {
+ const before = question('existing'), neighbour = question('neighbour');
+ const f = await fixture(t, [neighbour, before, question('other')]);
+ const corrected = { ...before, prompt: 'Corrected synthetic prompt' };
+ const opts = await f.packet(corrected);
+ const replaceExpected = hash(stableJson(before));
+ await assert.rejects(prepareAddition(opts), /already exists/);
+ await assert.rejects(prepareAddition({ ...opts, replaceExpected: '0'.repeat(64) }), /current question version/);
+ const output = path.join(f.root, 'correction');
+ const receipt = await prepareAddition({ ...opts, replaceExpected, output });
+ assert.equal(receipt.replacesContentSha256, replaceExpected);
+ const proposed = await readFile(path.join(output, 'dexam-bank-export.json'), 'utf8');
+ assert.equal(proposed, JSON.stringify({ ...JSON.parse(f.raw), questions: [neighbour, corrected, question('other')] }, null, 1) + '\n');
+ const changedSource = await f.packet({ ...corrected, provenance: { exam: 'ceed' } });
+ await assert.rejects(prepareAddition({ ...changedSource, replaceExpected }), /preserve question provenance/);
+});
+
+test('rejects a correction to a held record even when its source version matches', async t => {
+ const held = question('held', { holds: ['review'] });
+ const f = await fixture(t, [held]);
+ const opts = await f.packet(question('held'));
+ await assert.rejects(prepareAddition({ ...opts, replaceExpected: hash(stableJson(held)) }), /Resolve canonical holds/);
 });
