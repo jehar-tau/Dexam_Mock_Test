@@ -3,6 +3,8 @@ import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 import { buildManifest, readBankSource } from "./question-bank-import.mjs";
 import { reconcileBankState } from "./reconcile-bank-state.mjs";
+import { planCanonicalMedia } from "./private-bank-media.mjs";
+import { BANK_RUNTIME_SNAPSHOT_SQL, expectedRuntimeFingerprints, reconcileBankRuntime } from "./reconcile-bank-runtime.mjs";
 import { openRecoveryPostgres } from "./recovery-postgres.mjs";
 
 export const BANK_TARGET_SNAPSHOT_SQL = `
@@ -96,12 +98,27 @@ async function main() {
     "expect-source": { type: "string" },
     "approved-hosted": { type: "boolean" },
     cloudboard: { type: "string" },
+    "runtime-media-root": { type: "string" },
   } });
   const expected = values["expect-source"];
   if (!/^[a-f0-9]{40}$/.test(expected ?? "")) throw new Error("Use --expect-source with the reviewed full origin/main commit");
   const { sourceCommit, bank } = readBankSource("origin/main", process.cwd());
   if (sourceCommit !== expected) throw new Error("origin/main does not match the reviewed bank commit");
   const cloudboard = values.cloudboard ? JSON.parse(await readFile(values.cloudboard, "utf8")) : null;
+  let runtimeEvidence;
+  if (values["runtime-media-root"]) {
+    const manifest = buildManifest(bank, sourceCommit);
+    const media = await planCanonicalMedia(manifest, values["runtime-media-root"]);
+    const local = await openRecoveryPostgres(
+      values["approved-hosted"] ? process.env.DMOCKS_BANK_HASH_DATABASE_URL : process.env.DMOCKS_BANK_AUDIT_DATABASE_URL,
+      { localOnly: true },
+    );
+    try {
+      runtimeEvidence = { manifest, expected: await expectedRuntimeFingerprints(manifest, media.assets, local) };
+    } finally {
+      await local.close();
+    }
+  }
   const connection = await openRecoveryPostgres(process.env.DMOCKS_BANK_AUDIT_DATABASE_URL, {
     localOnly: !values["approved-hosted"],
     databaseCaFile: process.env.DMOCKS_BANK_AUDIT_DATABASE_CA_FILE,
@@ -109,6 +126,11 @@ async function main() {
   try {
     const snapshot = JSON.parse(await connection.query(BANK_TARGET_SNAPSHOT_SQL));
     const result = reconcileBankTarget({ canonical: bank, sourceCommit, snapshot, cloudboard });
+    if (runtimeEvidence) {
+      const runtimeSnapshot = JSON.parse(await connection.query(BANK_RUNTIME_SNAPSHOT_SQL));
+      result.runtime = reconcileBankRuntime(runtimeEvidence.manifest, snapshot.records, runtimeEvidence.expected, runtimeSnapshot);
+      result.passed = result.passed && result.runtime.passed;
+    }
     process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
     if (!result.passed) process.exitCode = 2;
   } finally {
