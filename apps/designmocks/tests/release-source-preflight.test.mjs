@@ -63,6 +63,15 @@ test('fails when expected commit or tree differs', async t => {
   assert.match(f.invoke(f.commit, other).stderr, /Tree mismatch/);
 });
 
+test('can be imported by a caller whose first argument is a commit ID', async t => {
+  const f = await fixture(t);
+  const result = spawnSync('node', ['--input-type=module', '-e',
+    'import {runPreflight} from "./scripts/release-source-preflight.mjs"; console.log(typeof runPreflight)', f.commit],
+  { cwd: f.app, encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout.trim(), 'function');
+});
+
 test('fails for tracked changes and untracked files anywhere in checkout', async t => {
   const f = await fixture(t);
   await writeFile(path.join(f.app, 'supabase/migrations/001.sql'), 'select 2;\n');

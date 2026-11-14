@@ -181,7 +181,17 @@ async function main() {
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 }
 
-if (process.argv[1] && realpathSync(process.argv[1]) === realpathSync(scriptPath)) {
+function invokedDirectly(entry) {
+  if (!entry) return false;
+  try {
+    return realpathSync(entry) === realpathSync(scriptPath);
+  } catch (error) {
+    if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return false;
+    throw error;
+  }
+}
+
+if (invokedDirectly(process.argv[1])) {
   main().catch(error => {
     process.stderr.write(`release source preflight failed: ${error.message}\n`);
     process.exitCode = 1;
