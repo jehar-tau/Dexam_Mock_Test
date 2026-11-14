@@ -91,10 +91,15 @@ test("approved staging sessions can enter the workspace with checkout and draft 
   await programmes.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
   await expect(page).toHaveURL(/\/dashboard\/learn\/programme\/cube-nets$/);
   await expect(page.getByRole("heading", { name: "Cube nets", exact: true })).toBeVisible();
+  await page.goto("/dashboard/learn");
+  await programmes.locator("article", { hasText: "Gears, belts and levers" }).getByRole("link", { name: "Start programme" }).click();
+  await expect(page).toHaveURL(/\/dashboard\/learn\/programme\/mechanisms$/);
+  const mechanismsHeading = page.getByRole("heading", { name: "Gears, belts and levers", exact: true });
+  await expect(mechanismsHeading).toBeVisible();
   admitted = false;
   await page.reload();
   await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Cube nets", exact: true })).toHaveCount(0);
+  await expect(mechanismsHeading).toHaveCount(0);
   await page.goto("/plans");
   await expect(page.getByText("Checkout is closed in staging.", { exact: true })).toBeVisible();
   await expect(page.getByRole("checkbox")).toHaveCount(0);
