@@ -10,6 +10,7 @@ import {quote, recoveryActor, recoverySeed} from './fixtures/recovery-state.mjs'
 
 const migrationDirectory = new URL('../../supabase/migrations/', import.meta.url);
 const launchDirectory = new URL('../../supabase/launch/', import.meta.url);
+const rpcInventory = new URL('../../supabase/audit/staging-rpc-inventory.sql', import.meta.url);
 const storageMigration = '202611140167_private_storage_boundary.sql';
 const tester = '00000000-0000-4000-8000-000000000192';
 const testerEmail = 'restore-approved@example.invalid';
@@ -92,6 +93,21 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
     } finally {
       await restored.close();
     }
+    const inventoryQuery = await readFile(rpcInventory, 'utf8');
+    const hookSetting = `select setting from pg_db_role_setting
+      cross join lateral unnest(setconfig) as configured(setting)
+      where setrole = 'authenticator'::regrole and setdatabase = (select oid from pg_database where datname = current_database())
+        and split_part(setting, '=', 1) = 'pgrst.db_pre_request';`;
+    assert.equal(await sql(hookSetting, target), '');
+    const priorInventory = JSON.parse(await sql(inventoryQuery, target));
+    const directAuthenticatedGrants = `select coalesce(jsonb_agg(signature order by signature), '[]')
+      from (select format('%I.%I(%s)', n.nspname, p.proname, oidvectortypes(p.proargtypes)) as signature
+        from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+        where n.nspname = 'public' and p.prokind = 'f'
+          and exists (select from aclexplode(p.proacl) a
+            where a.grantee = 'authenticated'::regrole and a.privilege_type = 'EXECUTE')) grants;`;
+    const priorDirectGrants = new Set(JSON.parse(await sql(directAuthenticatedGrants, target)));
+    assert.ok(priorDirectGrants.has('public.community_thread(uuid)'));
     await apply(storageMigration, target);
     await sql(await readFile(new URL('private-staging-api.sql', launchDirectory), 'utf8'), target);
     await sql(await readFile(new URL('private-staging-portal-grants.sql', launchDirectory), 'utf8'), target);
@@ -107,7 +123,21 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
     const attempt = await sql(recoveryActor(state.owner, 'select public.read_attempt(' + quote(state.completed) + ')'), target);
     assert.equal(JSON.parse(attempt.split('\n').findLast(line => line.startsWith('{'))).score, 4);
     await assert.rejects(sql(recoveryActor(state.other, 'select public.read_attempt(' + quote(state.completed) + ')'), target));
-    console.log('PASS: the 90-version closed staging archive restores before the Storage, admission and portal-grant rollout.');
+    const portalDirectGrants = JSON.parse(await sql(directAuthenticatedGrants, target));
+    const addedGrants = portalDirectGrants.filter(signature => !priorDirectGrants.has(signature));
+    assert.ok(addedGrants.includes('public.community_feed(text, text, jsonb, integer)'));
+    await sql('revoke execute on function ' + addedGrants.join(', ') + ' from authenticated;', target);
+    assert.deepEqual(new Set(JSON.parse(await sql(directAuthenticatedGrants, target))), priorDirectGrants);
+    assert.deepEqual(JSON.parse(await sql(inventoryQuery, target)), priorInventory);
+    await assert.rejects(sql(recoveryActor(state.other, 'select dm_staging_api.check_admission()'), target));
+    assert.equal(await sql(hookSetting, target), 'pgrst.db_pre_request=dm_staging_api.check_admission');
+    await sql(`alter role authenticator in database ${target} reset pgrst.db_pre_request;
+      notify pgrst, 'reload config';`, target);
+    assert.equal(await sql(hookSetting, target), '');
+    assert.equal(await sql(`select exists (select from pg_policies where schemaname = 'storage' and tablename = 'objects'
+        and policyname = 'dmocks_private_objects_require_server' and permissive = 'RESTRICTIVE');`, target), 't');
+    assert.deepEqual(JSON.parse(await sql(inventoryQuery, target)), priorInventory);
+    console.log('PASS: the 90-version staging archive restores and rehearses rollout and exact grant rollback.');
   } finally {
     for (const database of created) await drop(database);
     await rm(directory, {recursive: true, force: true});
