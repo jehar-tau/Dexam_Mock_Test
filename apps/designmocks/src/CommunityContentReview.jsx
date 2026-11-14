@@ -84,6 +84,7 @@ export function CommunityContentReview({target,actorId,rpc,isActive,onClose,onCh
     if(group.content.assets.some(item=>!item.available))continue;
     request.signal.throwIfAborted();
     const started=performance.now();
+    if (!functions) throw new Error("Staff access required.");
     const {data,error:failure}=await functions.invoke("community-media",{body:{action:"moderate",targetType:view.targetType,targetId:view.targetId,reviewVersion:inspectedVersion,context:group.context},signal:request.signal});
     request.signal.throwIfAborted();
     if(failure)throw failure;if(data?.error)throw data;
