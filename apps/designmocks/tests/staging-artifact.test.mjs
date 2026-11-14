@@ -43,6 +43,17 @@ test("the staging profile accepts only reviewed origins and public browser crede
   assert.throws(() => stagingArtifactProfile({ ...project, frontend_origin: values.frontendOrigin }, values), /exact private staging/);
 });
 
+test("the paid paper pilot retains private admission and disables deferred modules and checkout", () => {
+  const staging = stagingArtifactProfile(project, values);
+  assert.deepEqual(stagingArtifactProfile(project, { ...values, paidPilot: true }), {
+    ...staging, backendProfile: "paid-mvp", postLaunchPreview: false,
+  });
+  assert.throws(
+    () => stagingArtifactProfile(project, { ...values, frontendOrigin: project.frontend_origin, paidPilot: true }),
+    /exact private staging/,
+  );
+});
+
 const checkoutValues = {
   ...values, frontendOrigin: project.frontend_origin, noticeVersion: "dmocks-notices-v1-" + "a".repeat(64),
 };

@@ -40,7 +40,7 @@ function isPublicKey(key, projectRef) {
   }
 }
 
-export function stagingArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey }) {
+export function stagingArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey, paidPilot = false }) {
   if (!/^[a-z0-9]{20}$/.test(project?.project_ref ?? "") || !exactHttpsOrigin(frontendOrigin) ||
       !exactHttpsOrigin(project.frontend_origin) || frontendOrigin !== project.staging_frontend_origin ||
       frontendOrigin === project.frontend_origin || frontendOrigin === providerOrigin ||
@@ -51,8 +51,8 @@ export function stagingArtifactProfile(project, { frontendOrigin, providerOrigin
     throw new Error("Supply a publishable key or an anon key for the designated staging project");
   }
   return {
-    deployment: "staging", backendProfile: "full-staging", frontendOrigin, providerOrigin, publicKeySha256: sha256(publicKey),
-    stagingPortalEnabled: true, postLaunchPreview: true, checkoutEnabled: false,
+    deployment: "staging", backendProfile: paidPilot ? "paid-mvp" : "full-staging", frontendOrigin, providerOrigin, publicKeySha256: sha256(publicKey),
+    stagingPortalEnabled: true, postLaunchPreview: !paidPilot, checkoutEnabled: false,
     releasedPortalEnabled: false, controlledLoginEnabled: false, phoneVerificationEnabled: false,
   };
 }
@@ -154,7 +154,7 @@ export function verifyStagingArtifact(options) { return verifyArtifact(options, 
 export function verifyCheckoutArtifact(options) { return verifyArtifact(options, checkoutSchema); }
 
 async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin, providerOrigin, publicKey, output,
-  noticesPath, expectedNoticeVersion }, schema) {
+  noticesPath, expectedNoticeVersion, paidPilot }, schema) {
   const preflight = await runPreflight({ cwd, commit, tree });
   const env = buildEnvironment();
   const repositoryRoot = run("git", ["rev-parse", "--show-toplevel"], { cwd, env, failure: "Could not identify the reviewed source repository" }).trim();
@@ -164,7 +164,7 @@ async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin
   const notice = schema === checkoutSchema ? await checkoutNoticeInput(noticesPath, expectedNoticeVersion) : null;
   const profile = notice
     ? checkoutArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey, noticeVersion: notice.version })
-    : stagingArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey });
+    : stagingArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey, paidPilot });
   const target = await outputDirectory(output, env);
   const sourceRoot = await mkdtemp(path.join(tmpdir(), "dmocks-artifact-source-"));
   let ownedOutput = false;
@@ -240,14 +240,14 @@ async function main() {
     const { values } = parseArgs({ args, options: {
       commit: { type: "string" }, tree: { type: "string" }, output: { type: "string" },
       "frontend-origin": { type: "string" }, "provider-origin": { type: "string" },
-      ...(checkout ? { notices: { type: "string" }, "expect-notice-version": { type: "string" } } : {}),
+      ...(checkout ? { notices: { type: "string" }, "expect-notice-version": { type: "string" } } : { "paid-pilot": { type: "boolean" } }),
     } });
     const build = checkout ? buildCheckoutArtifact : buildStagingArtifact;
     result = await build({
       commit: values.commit, tree: values.tree, output: values.output,
       frontendOrigin: values["frontend-origin"], providerOrigin: values["provider-origin"],
       publicKey: checkout ? process.env.DMOCKS_CHECKOUT_PUBLISHABLE_KEY : process.env.DMOCKS_STAGING_PUBLISHABLE_KEY,
-      noticesPath: values.notices, expectedNoticeVersion: values["expect-notice-version"],
+      noticesPath: values.notices, expectedNoticeVersion: values["expect-notice-version"], paidPilot: values["paid-pilot"],
     });
   } else if (action === "verify" || action === "verify-checkout") {
     const { values } = parseArgs({ args, options: { artifact: { type: "string" }, expect: { type: "string" } } });
