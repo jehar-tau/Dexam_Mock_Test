@@ -129,6 +129,14 @@ for (const [name, body, status] of [
   response = await request("/functions/v1/" + name, "POST", body, {
     Origin: origin,
   });
+  if (staging) {
+    results.push({
+      check: name + " setup/identity gate",
+      status: response.status,
+      passed: response.status === status && response.allowOrigin === origin && response.data?.error === "Sign in required",
+    });
+    continue;
+  }
   assert.equal(response.status, status, name + " setup gate");
   results.push({ check: name + " setup/identity gate", status, passed: true });
 }

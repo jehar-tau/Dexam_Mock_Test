@@ -64,7 +64,10 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
           "Access-Control-Allow-Headers": "authorization,apikey,content-type,x-client-info",
         } });
       }
-      if (url.pathname === "/functions/v1/attempt-media") return new Response(null, { status: 401 });
+      if (url.pathname === "/functions/v1/attempt-media") {
+        if (fixture === "staging-origin-rejected") return Response.json({ error: "Origin not allowed" }, { status: 403 });
+        return Response.json({ error: "Sign in required" }, { status: 401, headers: { "Access-Control-Allow-Origin": environment.PUBLIC_APP_ORIGIN } });
+      }
       assert.fail("unexpected probe " + url.pathname);
     };
   `;
@@ -77,7 +80,7 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
         ...(staging ? { DMOCKS_BACKEND_STAGE: "staging", DMOCKS_AUTH_STAGE: "controlled" } : {}),
       },
     });
-    if (result.status !== 0) return result;
+    if (![0, 2].includes(result.status)) return result;
     const name = stage === "configured" ? "hosted-configured-commerce-smoke.json" : staging ? "hosted-staging-smoke.json" : "hosted-smoke.json";
     return { ...result, checks: JSON.parse(readFileSync(join(folder, "test-results", name), "utf8")) };
   } finally {
@@ -123,6 +126,15 @@ test("private staging smoke rejects an exposed anonymous ranking endpoint", () =
   const result = runSmoke(undefined, "public-ranking", { staging: true });
   assert.equal(result.status, 1);
   assert.match(result.stderr, /must keep anonymous ranking access closed/);
+});
+
+test("staging records an origin failure and still checks the remaining Edge routes", () => {
+  const result = runSmoke(undefined, "staging-origin-rejected", { staging: true });
+  assert.equal(result.status, 2, result.stderr);
+  assert.deepEqual(result.checks.find(row => row.check === "attempt-media setup/identity gate"), {
+    check: "attempt-media setup/identity gate", status: 403, passed: false,
+  });
+  assert.equal(result.checks.filter(row => row.check.endsWith("accepts the staging origin")).length, 10);
 });
 
 test("staging and configured commerce probes require separate runs", () => {
