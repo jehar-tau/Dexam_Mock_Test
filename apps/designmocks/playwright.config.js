@@ -12,6 +12,7 @@ export default defineConfig({
   testMatch: scope === 'full' ? '**/*.spec.js' : [
     ...mvpFiles.map(file => '**/' + file),
     '**/all-india-ranking-consent.spec.js',
+    '**/learn-programme.spec.js',
   ],
   testDir: "./tests/e2e",
   fullyParallel: true,
