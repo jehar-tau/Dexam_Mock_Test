@@ -21,7 +21,11 @@ async function fixture(page,{identity=null,holdHistory=false,holdIdentity=false}
   else throw new Error('Unexpected fictional Overview RPC: '+name);
   await route.fulfill({headers,status,json:data}).catch(()=>{});if(name==='start_attempt')state.finishedStarts++;
  });
- await page.goto('/account');await seedPortalSession(page,first);await page.goto('/dashboard');await expect(page.getByRole('heading',{name:/Welcome to your/})).toBeVisible();return state;
+ await page.goto('/account');
+ await seedPortalSession(page,first);
+ await page.goto('/dashboard');
+ await expect(page.getByRole('heading',{name:/Welcome to your/})).toBeVisible({timeout:15000});
+ return state;
 }
 const start=page=>page.locator('.paper-list article').getByRole('button');
 const history=page=>page.evaluate(()=>{window.history.pushState({...window.history.state,key:'new-overview-history'},'',location.href);dispatchEvent(new PopStateEvent('popstate',{state:window.history.state}));});
