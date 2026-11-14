@@ -2,7 +2,11 @@ import { stagingEdgeDenied } from "../_shared/staging-edge-admission.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 // Private bank images are signed only after ownership is checked by read_attempt.
 Deno.serve(async (request) => {
-  const origin = Deno.env.get("PUBLIC_APP_ORIGIN");
+  const requestedOrigin = request.headers.get("origin");
+  const portalOrigin = Deno.env.get("PUBLIC_APP_ORIGIN");
+  const checkoutOrigin = Deno.env.get("DMOCKS_CHECKOUT_ORIGIN");
+  const origin = requestedOrigin && (requestedOrigin === portalOrigin || requestedOrigin === checkoutOrigin)
+    ? requestedOrigin : null;
   const headers = {
     "Access-Control-Allow-Origin": origin ?? "https://invalid.invalid",
     "Access-Control-Allow-Headers":
@@ -14,7 +18,7 @@ Deno.serve(async (request) => {
   };
   const reply = (body: unknown, status = 200) =>
     new Response(JSON.stringify(body), { status, headers });
-  if (!origin || request.headers.get("origin") !== origin)
+  if (!origin)
     return reply({ error: "Origin not allowed" }, 403);
   if (request.method === "OPTIONS")
     return new Response(null, { status: 204, headers });
