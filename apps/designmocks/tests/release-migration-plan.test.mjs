@@ -40,6 +40,7 @@ async function fixture(t, { sourceProject = RECOVERY_PROJECT } = {}) {
     'functions/_shared/example.ts': 'export const fixture = true;\n',
     'launch/paid-mvp.sql': 'select true;\n',
     'launch/private-staging-api.sql': '-- fixture\n',
+    'launch/private-staging-portal-grants.sql': '-- fixture\n',
     'launch/paid-mvp-rpcs.json': '[]\n',
     ...Object.fromEntries(migrations.map(({ filename, sql }) => [`migrations/${filename}`, sql])),
   };

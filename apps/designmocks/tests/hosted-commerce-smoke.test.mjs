@@ -53,7 +53,7 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
         return webhook(request);
       }
       if (url.pathname === "/rest/v1/plans") return Response.json([{ id: "annual", amount: 119300, currency: "INR", duration_months: 12 }]);
-      if (${staging} && url.pathname === "/rest/v1/rpc/public_all_india_top_ten") return Response.json([]);
+      if (fixture === "public-ranking" && url.pathname === "/rest/v1/rpc/public_all_india_top_ten") return Response.json([]);
       if (url.pathname.startsWith("/rest/v1/rpc/")) return Response.json({ code: "42501" }, { status: 401 });
       if (url.pathname === "/auth/v1/settings") return Response.json({ disable_signup: !${staging}, external: { google: ${staging} } });
       if (${staging} && request.method === "OPTIONS" && url.pathname.startsWith("/functions/v1/")) {
@@ -116,6 +116,13 @@ test("staging verifies portal preflights even when commerce credentials are pres
   }
   assert.equal(result.checks.some(check => check.check.startsWith("payment-webhook")), false);
   assert.ok(result.checks.some(check => check.check === "unapproved checkout origin denied"));
+  assert.ok(result.checks.some(check => check.check === "staging anonymous ranking denied"));
+});
+
+test("private staging smoke rejects an exposed anonymous ranking endpoint", () => {
+  const result = runSmoke(undefined, "public-ranking", { staging: true });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /must keep anonymous ranking access closed/);
 });
 
 test("staging and configured commerce probes require separate runs", () => {
