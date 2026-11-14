@@ -1,8 +1,8 @@
 import { readJsonObject } from "./request-json.mjs";
 import { drawingRequestBody } from "./drawing-request.mjs";
+import { INTAKE_FIGURE_MAX_BYTES } from "./intake-limits.mjs";
 
 const SOURCE_MAX_BYTES = 25 * 1024 * 1024;
-const FIGURE_MAX_BYTES = 10 * 1024 * 1024;
 const FORM_MAX_BYTES = SOURCE_MAX_BYTES + 64 * 1024;
 const uuid = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 export const isIntakeAssetId = value => typeof value === "string" && uuid.test(value);
@@ -53,7 +53,7 @@ export async function readIntakeUpload(request) {
   if (figure && (file.type !== "image/png" || !isIntakeAssetId(assetId))) {
     throw new IntakeRequestError("A PNG figure and intake source are required.");
   }
-  if (file.size > (figure ? FIGURE_MAX_BYTES : SOURCE_MAX_BYTES)) {
+  if (file.size > (figure ? INTAKE_FIGURE_MAX_BYTES : SOURCE_MAX_BYTES)) {
     throw new IntakeRequestError(figure ? "Use a PNG figure up to 10 MB." : "Use a source file up to 25 MB.", 413);
   }
   return {file, assetId: figure ? String(assetId).toLowerCase() : null};
