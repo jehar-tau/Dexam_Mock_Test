@@ -6,11 +6,34 @@ import { awaitAccountRequest } from "./account-request.js";
 import { learningCatalogResponse, learningCompletionMessage, learningCompletionReceipt, learningLessonResponse, learningListMessage, learningReadMessage, learningUnavailable } from "./learning-reader.js";
 import { useAuthState } from "./useAuth.js";
 import { learningPracticeLink } from "./practice-context.js";
+import { programmes } from "./learn/programmes/index.js";
+import { loadProgress } from "./learn/programme-storage.js";
+import { programmeSummary } from "./learn/programme-model.js";
 function LearnHeading({headingRef}){return<><span className="eyebrow">LEARN, THEN PRACTISE</span><h1 ref={headingRef} tabIndex={headingRef?-1:undefined}>Build the idea.<br/>Then <em>use it.</em></h1><p>Short theory lessons connect directly to topic practice.</p></>;}
-export function LearnView({ lessons = [], progress, onOpen, onRefresh, busy = false, message = "", heading = true }) {
+export function ProgrammeList({ actorId, linkFor }) {
+  if (!programmes.length) return null;
+  return <div className="programme-list" aria-label="Interactive programmes">
+    <h2>Interactive programmes</h2>
+    <p>Learn by folding, turning and building, then check yourself with generated questions.</p>
+    <div className="learn-grid">
+      {programmes.map(programme => {
+        const summary = programmeSummary(programme, loadProgress(programme.slug, actorId));
+        return <article key={programme.slug}>
+          <span className="status-pill">{summary.completed === summary.total ? "completed" : programme.exams.map(e => e.toUpperCase()).join(" · ") + " · " + programme.topic}</span>
+          <h3>{programme.title}</h3>
+          <p>{programme.summary}</p>
+          <p className="programme-meta">{summary.total} lessons · about {programme.minutes} minutes{summary.completed ? ` · ${summary.completed} of ${summary.total} complete` : ""}</p>
+          <Link className="text-button" to={linkFor(programme)}>{summary.completed === 0 ? "Start programme" : summary.completed === summary.total ? "Review programme" : "Continue programme"} →</Link>
+        </article>;
+      })}
+    </div>
+  </div>;
+}
+export function LearnView({ lessons = [], progress, onOpen, onRefresh, busy = false, message = "", heading = true, programmeActor = null, programmeLink = null }) {
   return (
     <section className={heading?"wrap section learn-page":"learn-content"}>
       {heading&&<LearnHeading/>}
+      {programmeActor && programmeLink && <ProgrammeList actorId={programmeActor} linkFor={programmeLink} />}
       {progress && (
         <div className="learning-progress" aria-label="Learning progress">
           <div>
@@ -30,6 +53,7 @@ export function LearnView({ lessons = [], progress, onOpen, onRefresh, busy = fa
       )}
       {message && <p role="status">{message}</p>}
       {onRefresh && <button className="button quiet" disabled={busy} onClick={onRefresh}>Refresh lessons</button>}
+      {programmeActor && <h2>Theory lessons</h2>}
       {lessons.length === 0 && !message && <p>No theory lessons have been published yet.</p>}
       <div className="learn-grid">
         {lessons.map((l) => (
@@ -65,10 +89,10 @@ export function Learn() {
         <Link to="/account">Student sign in</Link>
       </section>
     );
-  return <PortalShell><section className="wrap section learn-page"><LearnHeading headingRef={heading}/><AccountAccessBoundary key={scopeKey} kind="learn" actorId={session.user.id} headingRef={heading}><StudentLearn headingRef={heading}/></AccountAccessBoundary></section></PortalShell>;
+  return <PortalShell><section className="wrap section learn-page"><LearnHeading headingRef={heading}/><AccountAccessBoundary key={scopeKey} kind="learn" actorId={session.user.id} headingRef={heading}><StudentLearn headingRef={heading} actorId={session.user.id}/></AccountAccessBoundary></section></PortalShell>;
 }
 
-function StudentLearn({headingRef}) {
+function StudentLearn({headingRef,actorId}) {
  const{rpc,isCurrent}=useAccountServices(),[catalog,setCatalog]=useState(null),[lesson,setLesson]=useState(null),[selection,setSelection]=useState(null),[busy,setBusy]=useState(false),[reading,setReading]=useState(false),[message,setMessage]=useState(''),[uncertain,setUncertain]=useState(false);
  const lifetime=useRef(null),catalogRequest=useRef(null),action=useRef(null),lessonHeading=useRef(null),focusLesson=useRef(false),focusCatalog=useRef(false);
  useLayoutEffect(()=>{const controller=new AbortController();lifetime.current=controller;return()=>{controller.abort();catalogRequest.current?.abort();action.current?.abort();};},[]);
@@ -109,7 +133,7 @@ function StudentLearn({headingRef}) {
   <button className="button quiet" type="button" disabled={busy} onClick={()=>void open(selection)}>Reload lesson</button>{' '}
   {lesson&&<><button className="button" type="button" disabled={busy||uncertain||lesson.completed} onClick={()=>void complete()}>{lesson.completed?'Lesson complete':'Mark complete'}</button>{' '}<Link to={practice.to}>{practice.label} →</Link></>}
  </section>;
- return<LearnView heading={false} lessons={catalog?.lessons} progress={catalog?.progress} message={message||(reading?'Loading theory lessons…':'')} busy={busy||reading} onRefresh={()=>void loadCatalog()} onOpen={item=>void open(item)}/>;
+ return<LearnView heading={false} lessons={catalog?.lessons} progress={catalog?.progress} message={message||(reading?'Loading theory lessons…':'')} busy={busy||reading} onRefresh={()=>void loadCatalog()} onOpen={item=>void open(item)} programmeActor={actorId} programmeLink={programme=>`/dashboard/learn/programme/${programme.slug}`}/>;
 }
 export function LearnPreview() {
   const [m, setM] = useState("");
@@ -145,6 +169,8 @@ export function LearnPreview() {
       }}
       message={m}
       onOpen={(l) => setM(`Preview lesson opened: ${l.title}`)}
+      programmeActor="preview"
+      programmeLink={(programme) => `/learn-programme-preview/${programme.slug}`}
     /></PortalShell>
   );
 }
