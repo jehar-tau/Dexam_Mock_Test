@@ -172,6 +172,7 @@ commit;`, target);
       and (select environment_mode = 'test' and not sales_enabled from public.launch_settings where singleton)
       and (select mode = 'testers' from dm_private.registration_policy where id)
       and not has_function_privilege('authenticated', 'public.community_feed(text,text,jsonb,integer)', 'execute')
+      and not has_function_privilege('authenticated', 'public.admin_prepare_bank_answer_correction(text,text,text,text)', 'execute')
       and not has_function_privilege('anon', 'public.public_all_india_top_ten()', 'execute')
       and has_function_privilege('service_role', 'public.prepare_mvp_paper(jsonb)', 'execute')
       and not has_function_privilege('authenticated', 'public.prepare_mvp_paper(jsonb)', 'execute');`, target), 't');
