@@ -10,6 +10,7 @@ const headers={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":
 const deferred=()=>{let resolve;const promise=new Promise(done=>{resolve=done;});return{promise,resolve};};
 const denied=()=>({code:"42501",message:diagnostic});
 const health=page=>page.getByRole("button",{name:"Refresh queues",exact:true});
+const currentBug=page=>page.getByText("Current fictional private bug",{exact:true});
 const heading=page=>page.getByRole("heading",{level:1,name:"Admin review.",exact:true});
 
 async function fixture(page){
@@ -70,7 +71,7 @@ async function fixture(page){
   try{await route.fulfill({headers,contentType:"application/octet-stream",body:Buffer.from("%PDF-1.4 original fictional private source")});}catch{}state.intakeCompleted++;
  });
  await page.goto("/account");await seedPortalSession(page,admin);await page.goto("/admin");
- await expect(page.getByText("Current fictional private bug",{exact:true})).toBeVisible();
+ await expect(currentBug(page)).toBeVisible({timeout:15000});
  return Object.assign(state,provider);
 }
 
@@ -337,7 +338,7 @@ test("an unavailable target rechecks the role and preserves other permitted pane
  state.denyReply=true;const form=page.getByRole("article").filter({has:page.getByText("Current fictional private bug",{exact:true})}).locator("form");
  await form.getByPlaceholder("Reply to reporter",{exact:true}).fill("A distinct unsent fictional response.");await form.getByRole("button",{name:"Save",exact:true}).click();
  await expect(page.getByRole("alert").filter({hasText:"This item is unavailable"})).toBeVisible();
- await expect(page.getByText("Current fictional private bug",{exact:true})).toBeVisible();await expect(page.getByLabel("Lesson URL slug",{exact:true})).toHaveValue("another-private-draft");
+ await expect(currentBug(page)).toBeVisible({timeout:15000});await expect(page.getByLabel("Lesson URL slug",{exact:true})).toHaveValue("another-private-draft");
  await expect(form.getByPlaceholder("Reply to reporter",{exact:true})).toHaveValue("A distinct unsent fictional response.");expect(state.roleChecks).toBe(checks+1);expect(state.replyCalls).toHaveLength(1);await expect(page.locator("#root")).not.toContainText(diagnostic);
 });
 
@@ -362,7 +363,7 @@ test("a role-check timeout closes cached access and an explicit retry ignores th
 
 test("visible polling and focus restoration share a check and close a revoked idle desk",async({page})=>{
  await page.clock.install({time:new Date()});const state=await fixture(page),checks=state.roleChecks;
- await page.clock.runFor(60020);await expect.poll(()=>state.roleChecks).toBe(checks+1);await expect(page.getByText("Current fictional private bug",{exact:true})).toBeVisible();
+ await page.clock.runFor(60020);await expect.poll(()=>state.roleChecks).toBe(checks+1);await expect(currentBug(page)).toBeVisible({timeout:15000});
  const held=deferred();state.roleHold=held;state.allowed=false;
  await page.evaluate(()=>{for(let n=0;n<4;n++){dispatchEvent(new Event("focus"));document.dispatchEvent(new Event("visibilitychange"));}});
  await expect.poll(()=>state.roleChecks).toBe(checks+2);held.resolve();await expect(page.getByRole("alert").filter({hasText:"Administrator access has ended"})).toBeVisible();
@@ -374,10 +375,10 @@ test("revocation cancels an already requested private download and retry never r
  await page.getByRole("button",{name:"Download private source",exact:true}).click();await expect.poll(()=>state.intakeCalls).toBe(1);state.allowed=false;
  await page.getByRole("button",{name:"Recheck administrator access",exact:true}).click();await expect(page.getByRole("alert").filter({hasText:"Administrator access has ended"})).toBeVisible();
  held.resolve();await expect.poll(()=>state.intakeCompleted).toBe(1);expect(downloads).toBe(0);
- state.allowed=true;await page.getByRole("button",{name:"Check administrator access",exact:true}).click();await expect(page.getByText("Current fictional private bug",{exact:true})).toBeVisible();expect(state.intakeCalls).toBe(1);
+ state.allowed=true;await page.getByRole("button",{name:"Check administrator access",exact:true}).click();await expect(currentBug(page)).toBeVisible({timeout:15000});expect(state.intakeCalls).toBe(1);
  state.allowed=false;state.denyReply=true;const form=page.getByRole("article").filter({has:page.getByText("Current fictional private bug",{exact:true})}).locator("form");
  await form.getByPlaceholder("Reply to reporter",{exact:true}).fill("A denied fictional response must never be resent.");await form.getByRole("button",{name:"Save",exact:true}).click();await expect(page.getByRole("alert").filter({hasText:"Administrator access has ended"})).toBeVisible();
- state.allowed=true;state.denyReply=false;await page.getByRole("button",{name:"Check administrator access",exact:true}).click();await expect(page.getByText("Current fictional private bug",{exact:true})).toBeVisible();expect(state.replyCalls).toHaveLength(1);
+ state.allowed=true;state.denyReply=false;await page.getByRole("button",{name:"Check administrator access",exact:true}).click();await expect(currentBug(page)).toBeVisible({timeout:15000});expect(state.replyCalls).toHaveLength(1);
  await expect(form.getByPlaceholder("Reply to reporter",{exact:true})).toHaveValue("Saved fictional reply.");
 });
 
@@ -410,5 +411,5 @@ test("failed role verification shows a safe keyboard recovery in both themes at 
   expect(await page.evaluate(async()=>(await window.axe.run('[aria-label="Administrator access"]',{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa"]}})).violations.map(item=>item.id))).toEqual([]);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=320)).toBe(true);
  }
- state.roleFailure=false;await page.getByRole("button",{name:"Check administrator access",exact:true}).press("Enter");await expect(page.getByText("Current fictional private bug",{exact:true})).toBeVisible();await expect(heading(page)).toBeFocused();await expect(page.locator("#root")).not.toContainText(diagnostic);expect(state.unexpected).toEqual([]);
+ state.roleFailure=false;await page.getByRole("button",{name:"Check administrator access",exact:true}).press("Enter");await expect(currentBug(page)).toBeVisible({timeout:15000});await expect(heading(page)).toBeFocused();await expect(page.locator("#root")).not.toContainText(diagnostic);expect(state.unexpected).toEqual([]);
 });

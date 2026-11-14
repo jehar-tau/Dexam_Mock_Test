@@ -72,6 +72,8 @@ If the proposed upgrade adds migrations, capture the pre-upgrade staging snapsho
 
 Verification reports `staging-before-permissions-repair`. Capture records the installed schema and grants, rechecks them and the Storage inventory before committing the encrypted bundle, and records no canonical profile digest. Restore into an isolated database and compare snapshots at that same stage first. The restored snapshot will carry the original permission drift. Rehearse the reviewed repair on that isolated copy, then verify the canonical profile and the closed checkout controls before recording acceptance.
 
+The database suite also models the 90-version staging baseline through `202611100166`. It captures the encrypted archive through the operator command's capture routine, restores it to a new PostgreSQL 17 database and verifies the snapshot before applying the Storage boundary, private Data API hook and portal grants. It uses fictional rows and fixture Storage bytes. Verify the actual hosted database and private object bytes separately.
+
 ## Rehearse restoration
 
 1. Create a new disposable, compatible PostgreSQL 17/Supabase target with the required provider roles/extensions. Isolate its services from external OAuth, email, merchant endpoints, public DNS and scheduled jobs **before loading data**. Use original fictional data for development checks; customer recovery needs an approved protected recovery environment.

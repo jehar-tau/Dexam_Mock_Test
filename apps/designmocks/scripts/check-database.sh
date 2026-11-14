@@ -92,4 +92,5 @@ node tests/database/bank-target-reconciliation.mjs
 node tests/database/question-model-authorization-concurrency.mjs
 node tests/database/recovery-roundtrip.mjs
 node tests/database/recovery-roundtrip.mjs --pre-upgrade
+node tests/database/recovery-roundtrip.mjs --current-staging
 echo 'PASS: disposable database migrations, access/scoring/payment/media and signup decisions.'
