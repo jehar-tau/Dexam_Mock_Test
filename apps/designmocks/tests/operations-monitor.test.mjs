@@ -96,6 +96,20 @@ test("production requires the exact read-only acknowledgement and alert delivery
   assert.equal(report.status, "healthy");
 });
 
+test("the receiver rejects a legacy Supabase service key even if it belongs to another project", async () => {
+  const encode = value => Buffer.from(JSON.stringify(value)).toString("base64url");
+  const legacyToken = [
+    encode({ alg: "HS256", typ: "JWT" }),
+    encode({ role: "service_role", ref: "b".repeat(20) }),
+    "fictional_signature",
+  ].join(".");
+  let calls = 0;
+  await assert.rejects(runOperationsMonitor({ ...base, ...receiverSettings, alertToken: legacyToken }, {
+    fetchImpl: async () => { calls++; return Response.json(aggregate()); },
+  }), /separate receiver token/);
+  assert.equal(calls, 0);
+});
+
 test("the loopback receiver gets an authenticated aggregate alert and stable incident key without the service key", async t => {
   const requests = [], alerts = [];
   const database = await listen(t, (request, response) => {
