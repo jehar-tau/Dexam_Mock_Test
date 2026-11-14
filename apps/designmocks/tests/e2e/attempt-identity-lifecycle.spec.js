@@ -336,6 +336,35 @@ test('a blocked answer save explains how to retry submission without reopening t
   expect(await journal(page)).toEqual([]);
 });
 
+test('a queued revision cannot follow an acknowledged save after the deadline', async ({page}) => {
+  const startedAt = Date.now();
+  const deadline = startedAt + 5000;
+  await page.clock.setFixedTime(startedAt);
+  const saveHold = deferred();
+  const state = await fixture(page, {
+    saveHold,
+    serverNow: new Date(startedAt).toISOString(),
+    deadline: new Date(deadline).toISOString(),
+  });
+  await answer(page).click();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(1);
+  await page.getByRole('button', {name:'A Fictional first choice', exact:true}).click();
+  expect((await journal(page)).map(entry => entry.answer)).toEqual(['A']);
+  const dialog = page.getByRole('dialog');
+  await page.getByRole('button', {name:'Submit attempt', exact:true}).click();
+  const submit = dialog.getByRole('button', {name:'Submit & view report', exact:true});
+  await submit.click();
+  await expect(submit).toBeDisabled();
+
+  state.serverNow = new Date(deadline).toISOString();
+  await page.clock.setFixedTime(deadline);
+  saveHold.resolve();
+  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_answer)).toEqual(['B']);
+  expect(calls(state, 'submit_attempt')).toHaveLength(1);
+  expect(await journal(page)).toEqual([]);
+});
+
 test('a failed answer save that crosses the deadline finalizes the server snapshot once', async ({page}) => {
   const startedAt = Date.now(), deadline = startedAt + 5000;
   await page.clock.setFixedTime(startedAt);
