@@ -15,7 +15,7 @@ test("checks every bucket for unsigned reads, direct signing and listing", async
     if (new Headers(request.headers).get("apikey") === config.serviceKey) {
       assert.equal(request.headers.has("authorization"), false);
       if (url.includes("/object/list/")) return listedFixture();
-      assert.equal(request.method, "HEAD");
+      assert.equal(request.method, url.includes("/object/sign/") ? "POST" : "HEAD");
       return new Response(null, {status: 200});
     }
     count++;
@@ -73,7 +73,7 @@ test("legacy server tokens still authenticate fixture checks while foreign token
     if (headers.get("apikey") !== key) return new Response(null, {status: 404});
     assert.equal(headers.get("authorization"), "Bearer " + key);
     if (url.includes("/object/list/")) return listedFixture();
-    fixtureChecks++;
+    if (request.method === "HEAD") fixtureChecks++;
     return new Response(null, {status: 200});
   }});
   assert.equal(report.passed, true);
@@ -111,4 +111,16 @@ test("listing must find the exact fixture with the server key and hide it from b
     assert.ok(report.results.every(bucket => !bucket.results.find(row => row.access === "signed-in-listing").denied));
     assert.ok(!JSON.stringify(report).includes(config.fixture.split("/")[1]));
   }
+});
+
+test("a missing signing route cannot count as a denial", async () => {
+  const report = await checkPrivateStorage({...config, fetchImpl: async (url, request) => {
+    if (url.includes("/object/sign/")) return new Response(null, {status: 404});
+    if (new Headers(request.headers).get("apikey") === config.serviceKey) {
+      return url.includes("/object/list/") ? listedFixture() : new Response(null, {status: 200});
+    }
+    return new Response(null, {status: url.endsWith("/auth/v1/user") ? 200 : 404});
+  }});
+  assert.equal(report.passed, false);
+  assert.ok(report.results.every(bucket => !bucket.signingVerified && bucket.listingVerified));
 });

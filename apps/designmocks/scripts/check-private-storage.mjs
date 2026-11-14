@@ -37,6 +37,21 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
     }
   }
 
+  async function sign(bucket, authorization, request = fetchImpl) {
+    try {
+      const response = await request(origin + "/storage/v1/object/sign/" + bucket + "/" + fixture, {
+        method: "POST", redirect: "error", signal: AbortSignal.timeout(10000),
+        headers: {apikey: key, "Content-Type": "application/json",
+          ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
+        body: JSON.stringify({expiresIn: 60}),
+      });
+      await response.body?.cancel();
+      return response.status;
+    } catch {
+      return null;
+    }
+  }
+
   async function list(bucket, authorization, request = fetchImpl) {
     const [prefix, name] = fixture.split("/");
     try {
@@ -77,22 +92,13 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
       const status = await head(path, authorization);
       return {access, status, denied: denied.has(status)};
     }));
+    const signingControl = await sign(bucket, null, service.fetch);
     const signing = await Promise.all([
       ["anonymous-signing", null],
       ["signed-in-signing", token],
     ].map(async ([access, authorization]) => {
-      try {
-        const response = await fetchImpl(origin + "/storage/v1/object/sign/" + bucket + "/" + fixture, {
-          method: "POST", redirect: "error", signal: AbortSignal.timeout(10000),
-          headers: {apikey: key, "Content-Type": "application/json",
-            ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
-          body: JSON.stringify({expiresIn: 60}),
-        });
-        await response.body?.cancel();
-        return {access, status: response.status, denied: denied.has(response.status)};
-      } catch {
-        return {access, status: null, denied: false};
-      }
+      const status = await sign(bucket, authorization);
+      return {access, status, denied: signingControl === 200 && denied.has(status)};
     }));
     const control = await list(bucket, null, service.fetch);
     const listing = await Promise.all([
@@ -102,7 +108,7 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
       const {status, count} = await list(bucket, authorization);
       return {access, status, denied: control.fixtureListed && (denied.has(status) || status === 200 && count === 0)};
     }));
-    return {bucket, verified, listingVerified: control.fixtureListed, results: [...results, ...signing, ...listing]};
+    return {bucket, verified, signingVerified: signingControl === 200, listingVerified: control.fixtureListed, results: [...results, ...signing, ...listing]};
   }));
   return {scope: "fictional-object-read-signing-and-listing", passed: results.every(bucket => bucket.verified && bucket.results.every(result => result.denied)), results};
 }
