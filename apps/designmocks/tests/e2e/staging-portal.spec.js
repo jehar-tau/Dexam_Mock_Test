@@ -302,6 +302,14 @@ test("the staging Google callback exchanges the matching PKCE verifier and persi
       expires_in: 3600, token_type: "bearer", user: {...tester, aud: "authenticated",
         app_metadata: {provider: "google"}, user_metadata: {}}}});
   });
+  const signOutScopes = [];
+  await page.route(provider + "/auth/v1/logout?*", async route => {
+    const headers = {"Access-Control-Allow-Origin": stage,
+      "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-supabase-api-version",
+      "Access-Control-Allow-Methods": "POST, OPTIONS"};
+    if (route.request().method() === "POST") signOutScopes.push(new URL(route.request().url()).searchParams.get("scope"));
+    await route.fulfill({status: 204, headers});
+  });
   await page.goto("/account");
   await page.getByRole("button", {name: "Sign in to staging with Google"}).click();
   await expect(page.getByText("Fictional Google authorization complete.")).toBeVisible();
@@ -321,5 +329,12 @@ test("the staging Google callback exchanges the matching PKCE verifier and persi
   await page.reload();
   await expect(page.getByRole("link", {name: "Open staging workspace"})).toBeVisible();
   expect(exchanges).toHaveLength(2);
+
+  await page.getByRole("button", {name: "Sign out", exact: true}).click();
+  await expect(page.getByRole("button", {name: "Sign in to staging with Google"})).toBeEnabled();
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  expect(signOutScopes).toEqual(["local"]);
+  await page.goto("/dashboard");
+  await expect(page.getByText("Sign in with an approved Google test account.")).toBeVisible();
   expect(unexpected).toEqual([]);
 });
