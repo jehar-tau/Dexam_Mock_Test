@@ -289,6 +289,30 @@ test('an outage never restores elapsed exam time and reconnect finalizes the fix
  expect(await journal(page)).toEqual([]);
 });
 
+test('a click after the deadline cannot save an answer before the displayed clock refreshes', async ({page}) => {
+  const startedAt = Date.now();
+  const deadline = startedAt + 5000;
+  await page.clock.setFixedTime(startedAt);
+  const state = await fixture(page, {
+    serverNow: new Date(startedAt).toISOString(),
+    deadline: new Date(deadline).toISOString(),
+  });
+  await expect(answer(page)).toBeEnabled();
+  await page.evaluate(() => {
+    const originalNow = Date.now;
+    Date.now = () => originalNow() + 5000;
+    try {
+      const choice = [...document.querySelectorAll('button')].find(button => /Fictional second choice/.test(button.textContent));
+      if (!choice || choice.disabled) throw new Error('Expected an enabled choice before the clock repaint');
+      choice.click();
+    } finally {
+      Date.now = originalNow;
+    }
+  });
+  expect(await journal(page)).toEqual([]);
+  expect(calls(state, 'save_answer_revision')).toEqual([]);
+});
+
 test('a blocked answer save explains how to retry submission without reopening the paper', async ({page}) => {
   const state = await fixture(page);
   await expect(answer(page)).toBeEnabled();

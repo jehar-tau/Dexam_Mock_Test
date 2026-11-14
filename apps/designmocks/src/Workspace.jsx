@@ -363,6 +363,7 @@ function AttemptSession({actorId,services}) {
             revisionSeed: () => Date.now() + offset.current,
             send: async ({ questionId, answer, revision }) => {
               if (!alive || !navigator.onLine) throw new Error("Connection unavailable.");
+              if (Date.now() + offset.current >= deadline) throw new Error("The answer window has closed.");
               return rpc("save_answer_revision", { p_attempt_id: id, p_question_id: questionId, p_answer: answer, p_revision: revision },request.signal);
             },
             onSaved: ({ questionId, answer, revision, accepted }) => {
@@ -476,7 +477,7 @@ if(postLaunchPreview){
       )
     : 0;
   const record = (value, defer = false) => {
-    if (!current() || !q || busy || left === 0 || !validAttemptAnswer(q, value)) return;
+    if (!current() || !q || busy || Date.now() + offset.current >= Date.parse(attempt.deadline) || !validAttemptAnswer(q, value)) return;
     clearTimeout(saveTimer.current);
     answerSync.current?.enqueue(q.id, value, { defer });
     if (defer) {
