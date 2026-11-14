@@ -78,7 +78,7 @@ test("response checks distinguish accepted autosaves from successful HTTP respon
 test("checked reads reject another attempt, an exposed key, and a malformed JSON body", async () => {
   const source = plan({sessions: 1, activeAttempts: 1, iterations: 4});
   source.scenarios.activeAttempt[0].check = "active-attempt";
-  const attempt = {id: "attempt-a", status: "active", questions: [{}]};
+  const attempt = {id: "attempt-a", status: "active", deadline: "2026-11-14T12:00:00Z", questions: [{}]};
   const responses = [
     Response.json(attempt),
     Response.json({...attempt, id: "foreign"}),
@@ -126,7 +126,7 @@ test("capacity acceptance verifies each saved answer through an independent acti
       if (revision === 3) question.answerRevision--;
       if (revision === 4) question.explanation = "Private explanation";
       if (revision === 5) question.id = "foreign-question";
-      return Response.json({id: fixture.attemptId, status: "active", questions: [question]});
+      return Response.json({id: fixture.attemptId, status: "active", deadline: "2026-11-14T12:00:00Z", questions: [question]});
     },
   });
   assert.equal(result.summary.requests, 5);
@@ -156,4 +156,20 @@ test("the persistence plan requires an explicit question and answer", async () =
     fixtures: [{attemptId: "a", accessToken: "x", questionId: "q"}],
     fetchImpl: async () => assert.fail("Incomplete fixture must fail before dispatch"),
   }), /require a synthetic question ID and answer/);
+});
+
+
+test("a changed or missing attempt deadline fails the readback without appearing in the report", async () => {
+  const source = plan({sessions: 1, activeAttempts: 1, iterations: 3});
+  source.scenarios.activeAttempt[0].check = "persisted-revision";
+  const fixture = {attemptId: "attempt-a", questionId: "question-a", answer: "A", accessToken: "private-token"};
+  const deadlines = ["2026-11-14T12:00:00Z", "2026-11-14T12:01:00Z", null];
+  let revision = 0;
+  const {summary, failures} = await runCapacityTest(source, {fixtures: [fixture], fetchImpl: async () =>
+    Response.json({id: fixture.attemptId, status: "active", deadline: deadlines[revision],
+      questions: [{id: fixture.questionId, answer: fixture.answer, answerRevision: ++revision}]}),
+  });
+  assert.equal(summary.errors, 2);
+  assert.equal(summary.passed, false);
+  assert.doesNotMatch(JSON.stringify(failures), /2026-11-14|attempt-a/);
 });

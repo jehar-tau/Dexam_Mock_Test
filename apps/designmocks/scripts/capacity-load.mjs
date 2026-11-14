@@ -84,13 +84,17 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
     };
   }
 
-  function matchesCheck(check, payload, fixture) {
+  function matchesCheck(check, payload, fixture, state) {
     if (check === "accepted-revision") return payload?.accepted === true && payload.revision === fixture.revision;
     const sealed = payload?.id === fixture.attemptId && payload.status === "active"
       && Array.isArray(payload.questions) && payload.questions.length > 0
       && payload.questions.every(question => question && typeof question === "object" && !Array.isArray(question)
         && !["correctKey", "explanation", "outcome"].some(field => Object.hasOwn(question, field)));
-    if (!sealed || check === "active-attempt") return sealed;
+    if (!sealed || typeof payload.deadline !== "string" || !Number.isFinite(Date.parse(payload.deadline))) return false;
+    const deadline = Date.parse(payload.deadline);
+    if (state.deadline !== undefined && state.deadline !== deadline) return false;
+    state.deadline = deadline;
+    if (check === "active-attempt") return true;
     const matching = payload.questions.filter(question => question.id === fixture.questionId);
     return matching.length === 1 && matching[0].answerRevision === fixture.revision
       && isDeepStrictEqual(matching[0].answer, fixture.answer);
@@ -100,9 +104,9 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
     const kind = index < plan.activeAttempts ? "activeAttempt" : "browser";
     const fixture = { ...(kind === "activeAttempt" ? fixtures[index] : {}), sessionId: index + 1, revision: 1 };
     for (const spec of plan.scenarios[kind]) prepare(spec, fixture);
-    return {kind, fixture};
+    return {kind, fixture, state: {}};
   });
-  const runRequest = async (kind, spec, fixture) => {
+  const runRequest = async (kind, spec, fixture, state) => {
     const {url, headers, body} = prepare(spec, fixture);
     const started = performance.now();
     const request = requestSamples[kind].get(spec);
@@ -120,7 +124,7 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
       });
       if (response.ok && spec.check) {
         const payload = await response.json();
-        if (!matchesCheck(spec.check, payload, fixture)) {
+        if (!matchesCheck(spec.check, payload, fixture, state)) {
           recordError(response.status, "ResponseCheckFailed");
         }
       } else {
@@ -138,10 +142,10 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
       request.latencies.push(elapsed);
     }
   };
-  await Promise.all(sessions.map(async ({kind, fixture}) => {
+  await Promise.all(sessions.map(async ({kind, fixture, state}) => {
     for (let iteration = 0; iteration < plan.iterations; iteration += 1) {
       fixture.revision = iteration + 1;
-      for (const request of plan.scenarios[kind]) await runRequest(kind, request, fixture);
+      for (const request of plan.scenarios[kind]) await runRequest(kind, request, fixture, state);
     }
   }));
   const total = samples.browser.length + samples.activeAttempt.length;
