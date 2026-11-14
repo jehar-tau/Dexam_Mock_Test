@@ -155,9 +155,19 @@ test('missing merchant configuration, origin and identity failures cannot reach 
 });
 test('unknown plans and malformed JSON never prepare an order',async()=>{
   const f=handlerFixture();assert.equal((await f.handler(f.request({plan:'monthly'}))).status,400);
-  const bad=new Request(origin,{method:'POST',headers:{Origin:origin,Authorization:'Bearer fictional-actor'},body:'{'});
+  const bad=new Request(origin,{method:'POST',headers:{Origin:origin,Authorization:'Bearer fictional-actor','Content-Type':'application/json'},body:'{'});
   assert.equal((await f.handler(bad)).status,400);assert.equal(f.calls.includes('prepare_order'),false);assert.equal(f.w.state.calls.length,0);
 });
+test('oversized checkout requests never prepare or create an order', async () => {
+  const f = handlerFixture();
+  const large = {plan: 'annual', padding: 'a'.repeat(4100)};
+  assert.equal((await f.handler(f.request(large))).status, 413);
+  assert.equal((await f.handler(f.request(undefined, {'Content-Length': '5000'}))).status, 413);
+  assert.equal((await f.handler(f.request(undefined, {'Content-Type': 'text/plain'}))).status, 415);
+  assert.equal(f.calls.includes('prepare_order'), false);
+  assert.equal(f.w.state.calls.length, 0);
+});
+
 test('the complete handler deadline fences an SDK identity reply that arrives after the response',async()=>{
   let release,preparedCalls=0,providerCalls=0;
   const handler=createOrderHandler({readEnvironment:key=>({PUBLIC_APP_ORIGIN:origin,SUPABASE_URL:'fictional',SUPABASE_ANON_KEY:'fictional',SUPABASE_SERVICE_ROLE_KEY:'fictional',RAZORPAY_KEY_ID:keyId,RAZORPAY_KEY_SECRET:keySecret})[key],timeoutMilliseconds:10,
