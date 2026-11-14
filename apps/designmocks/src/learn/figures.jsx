@@ -5,6 +5,7 @@ import { SIZE, applyTransform } from './mirror.js';
 import { cubeList, drawOrder } from './cube-count.js';
 import { project } from './cube-net.js';
 import { describeFace, newell } from './solid-net.js';
+import { BeamFigure, GearsFigure, MobileFigure, RopeFigure } from './mechanism-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -262,6 +263,10 @@ export function Figure({ spec, compact = false }) {
     case 'solid': return <SolidFigure solid={spec.solid} large={spec.large && !compact} compact={compact} />;
     case 'solid-net': return <SolidNetFigure net={spec.net} compact={compact} />;
     case 'views': return <ViewsFigure top={spec.top} front={spec.front} side={spec.side} compact={compact} />;
+    case 'gears': return <GearsFigure system={spec.system} showSizes={spec.showSizes} marks={spec.marks} plain={spec.plain} caption={compact ? null : spec.caption} compact={compact} />;
+    case 'rope': return <RopeFigure rope={spec.rope} towardsPull={spec.towardsPull} compact={compact} />;
+    case 'beam': return <BeamFigure beam={spec.beam} ask={spec.ask} compact={compact} />;
+    case 'mobile': return <MobileFigure mobile={spec.mobile} known={spec.known} />;
     case 'swatch': return <Swatch colour={spec.colour} name={spec.name} large={!compact} />;
     default: return null;
   }

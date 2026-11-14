@@ -1,10 +1,61 @@
-# Gears, belts and pulleys
+# Gears, belts and levers
 
-Slug `gears-and-pulleys` · topic `mechanics` · exams uceed, ceed ·
-engine `src/learn/gears.js` · tool `gear-train`
+Slug `mechanisms` · topic `mechanical-reasoning` · exams uceed, ceed ·
+engine `src/learn/gears.js` · figures `src/learn/mechanism-figures.jsx` ·
+tools `gear-train`, `lever-bench`
 
-Status: Foundations Planned · Exam standard Planned · Exam hard Planned ·
-Mastery Planned
+Status: Foundations Built · Exam standard Built · Exam hard Built ·
+Mastery Built (14 November 2026). Section 0 records what was built; where it
+differs from the plan in sections 4 to 6, section 0 is right.
+
+## 0. As built
+
+Level reference: the owner's mechanical question bank (25 solved UCEED
+questions, 2015–2026). See `../09-topic-bank-map.md`.
+
+| Kind | Level | Mode | Matches in the bank |
+|---|---|---|---|
+| `gear-direction` | 1, 2 | single | direction tracing |
+| `belt-direction` | 2 | single | open and crossed belts |
+| `gear-speed` | 2 single, 3 numeric | | ratio through idlers |
+| `compound-speed` | 3 | numeric | two gears on one shaft |
+| `count-clockwise` | 3 | numeric | "how many turn clockwise" |
+| `lever-balance` | 3 | numeric | moments on one beam |
+| `system-speed` | 4 | numeric | gears and belts with diameters, speed of the last wheel |
+| `rope-count` | 4 | numeric | one rope past 6–9 pulleys, count clockwise |
+| `gear-realign` | 4 | numeric | marks on two gears meet again (lowest common multiple) |
+| `will-it-move` | 4 | multi | rigid or movable (rings of gears) |
+| `mobile-balance` | 4 | numeric | hanging mobile, one weight given |
+
+Every answer is recomputed by a second method in `tests/mechanisms.test.mjs`
+(a separate walk of the links, rope direction from the tangent geometry,
+tooth-by-tooth stepping, two-colouring, exact moments).
+
+Lessons: Foundations `two-gears`, `chains`, `belts`; Exam standard `ratios`,
+`compound`, `count-clockwise`, `levers`; Exam hard `mixed-systems`, `rope`,
+`locked-and-marks`, `mobiles`; Mastery `review` and a 12-question timed set.
+
+### Left for the next builder (Opus), in order
+
+1. **Linkages** — rigid frame or mechanism. Frames of bars and pins; a frame
+   folds when it has an unbraced four-sided loop. Kind `frame-rigid` L3
+   (single) and L4 (multi: which of four frames can fold). Engine: bars as
+   edges, count with `2 × joints − 3` against bars for braced frames, and
+   verify by checking each loop for a diagonal. Tool: drag a diagonal brace
+   in and out of a four-bar frame.
+2. **Stability** — which object tips first. Centre of gravity above or
+   outside the base. Kind `tip-angle` L3: compare base half-width ÷ height
+   of centre.
+3. **Rolling** — `roll-angle` L3 (distance ÷ radius, as a fraction of a
+   turn), `turn-radius` L4 (wheel radii about one centre, right triangle),
+   `ring-chain` L4 (length of N linked rings).
+4. **Lever classes** — where effort, fulcrum and load sit on everyday tools.
+   This is recall with drawn tools; wait for the recall pattern (F9).
+5. **Pulley effort** — sections 4 and 5 below (`pulley-effort`,
+   `pulley-distance`) were planned and not built.
+6. Not suitable for generation, leave out: intermittent drives, bicycle on
+   a slope, thread matching, object-function cross-sections. Teach these as
+   method lessons once F10 exists.
 
 ## 1. Outcome
 
