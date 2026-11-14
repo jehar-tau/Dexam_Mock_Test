@@ -9,7 +9,7 @@ export function bankProviderConfiguration(env) {
   };
 }
 
-function serviceClaims(key) {
+export function serviceClaims(key) {
   if (typeof key !== "string" || !/^[\w-]+\.[\w-]+\.[\w-]+$/.test(key)) return null;
   try { return JSON.parse(Buffer.from(key.split(".")[1], "base64url")); }
   catch { return null; }
