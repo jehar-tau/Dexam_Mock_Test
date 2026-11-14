@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { realpath } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 import project from "../../supabase/project.json" with { type: "json" };
@@ -265,5 +266,50 @@ test("a removed staff tester cannot reopen teacher or admin work with the same s
     await expect(page.getByRole("button", {name: "Available drawings"})).toHaveCount(0);
     expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
   }
+  expect(unexpected).toEqual([]);
+});
+
+test("the staging Google callback exchanges the matching PKCE verifier and persists the session", async ({page}) => {
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") return true;
+    if (procedure === "can_review_drawings") return false;
+    if (procedure === "my_privacy_requests") return [];
+    return undefined;
+  }, project.project_ref);
+  let challenge;
+  const exchanges = [];
+  const expires = Math.floor(Date.now() / 1000) + 3600;
+  const token = "fixture." + Buffer.from(JSON.stringify({sub: tester.id, role: "authenticated", exp: expires})).toString("base64url") + ".fixture";
+  await page.route(provider + "/auth/v1/authorize?*", async route => {
+    const query = new URL(route.request().url()).searchParams;
+    challenge = query.get("code_challenge");
+    expect(query.get("code_challenge_method")).toBe("s256");
+    expect(query.get("redirect_to")).toBe(stage + "/account/callback");
+    await route.fulfill({status: 200, contentType: "text/html", body: "<p>Fictional Google authorization complete.</p>"});
+  });
+  await page.route(provider + "/auth/v1/token?grant_type=pkce", async route => {
+    const headers = {"Access-Control-Allow-Origin": stage,
+      "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-supabase-api-version",
+      "Access-Control-Allow-Methods": "POST, OPTIONS"};
+    if (route.request().method() === "OPTIONS") return route.fulfill({status: 204, headers});
+    const input = route.request().postDataJSON();
+    exchanges.push(input.auth_code);
+    expect(createHash("sha256").update(input.code_verifier).digest("base64url")).toBe(challenge);
+    await route.fulfill({headers, json: {access_token: token, refresh_token: "fictional-google-refresh",
+      expires_in: 3600, token_type: "bearer", user: {...tester, aud: "authenticated",
+        app_metadata: {provider: "google"}, user_metadata: {}}}});
+  });
+  await page.goto("/account");
+  await page.getByRole("button", {name: "Sign in to staging with Google"}).click();
+  await expect(page.getByText("Fictional Google authorization complete.")).toBeVisible();
+  await page.goto("/account/callback?code=fictional-google-code");
+  await expect(page.getByRole("link", {name: "Open staging workspace"})).toBeVisible();
+  await expect(page).toHaveURL(url => url.pathname === "/account/callback" && !url.searchParams.has("code"));
+  expect(exchanges).toEqual(["fictional-google-code"]);
+  expect(calls.some(([name]) => name === "can_enter_staging_portal")).toBe(true);
+
+  await page.reload();
+  await expect(page.getByRole("link", {name: "Open staging workspace"})).toBeVisible();
+  expect(exchanges).toHaveLength(1);
   expect(unexpected).toEqual([]);
 });
