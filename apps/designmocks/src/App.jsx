@@ -26,13 +26,7 @@ import {
   CandidateProfile,
   CandidateProfilePreview,
 } from "./CandidateProfile.jsx";
-import { TopicPractice, TopicPracticePreview } from "./TopicPractice.jsx";
-import { ExamMocks, ExamMocksPreview } from "./ExamMocks.jsx";
-import { AllIndia, AllIndiaHighlights, AllIndiaPreview } from "./AllIndia.jsx";
 import { QuestionReportPreview } from "./QuestionReport.jsx";
-import { Learn, LearnPreview } from "./Learn.jsx";
-import { LearnProgrammePage, LearnProgrammePreview } from "./learn/LearnProgramme.jsx";
-import { Community, CommunityPreview } from "./Community.jsx";
 import { DrawingUploadsPreview } from "./DrawingUploads.jsx";
 import { DrawingReviewMediaPreview } from "./DrawingReviewMedia.jsx";
 import { DrawingReviewLifecyclePreview } from "./DrawingReviewQueue.jsx";
@@ -62,6 +56,25 @@ import {
 const PortalPreview = import.meta.env.DEV
   ? React.lazy(() => import("./PortalPreview.jsx"))
   : null;
+const TopicPractice = React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPractice })));
+const ExamMocks = React.lazy(() => import("./ExamMocks.jsx").then(module => ({ default: module.ExamMocks })));
+const AllIndia = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndia })));
+const Learn = React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.Learn })));
+const LearnProgrammePage = React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePage })));
+const Community = React.lazy(() => import("./Community.jsx").then(module => ({ default: module.Community })));
+const AllIndiaHighlights = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaHighlights })));
+const TopicPracticePreview = import.meta.env.DEV
+  ? React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPracticePreview }))) : null;
+const ExamMocksPreview = import.meta.env.DEV
+  ? React.lazy(() => import("./ExamMocks.jsx").then(module => ({ default: module.ExamMocksPreview }))) : null;
+const AllIndiaPreview = import.meta.env.DEV
+  ? React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaPreview }))) : null;
+const LearnPreview = import.meta.env.DEV
+  ? React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.LearnPreview }))) : null;
+const LearnProgrammePreview = import.meta.env.DEV
+  ? React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePreview }))) : null;
+const CommunityPreview = import.meta.env.DEV
+  ? React.lazy(() => import("./Community.jsx").then(module => ({ default: module.CommunityPreview }))) : null;
 const Admin = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.Admin })));
 const DrawingReviewerWorkspace = React.lazy(() => import("./DrawingReviewerWorkspace.jsx").then(module => ({ default: module.DrawingReviewerWorkspace })));
 const IntakeExtractionPreview = import.meta.env.DEV ? React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.IntakeExtractionPreview }))) : null;
