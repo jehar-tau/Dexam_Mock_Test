@@ -22,7 +22,21 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
     return route.fulfill({ response });
   });
   let admitted = false;
+  let submitted = false;
+  let answer = null;
+  let revision = 0;
   const deadline = new Date(Date.now() + 7200000).toISOString();
+  const readAttempt = () => ({
+    id: attempt, title, status: submitted ? "submitted" : "active", deadline, serverNow: new Date().toISOString(),
+    questions: [{
+      id: "30000000-0000-4000-8000-000000001701", ordinal: 1, kind: "mcq", topic: "observation",
+      prompt: "Original fictional objective question", options: [{ id: "A", label: "First choice" }, { id: "B", label: "Second choice" }],
+      marking: { correct: 4, wrong: -1, partial: false }, points: 4, negativePoints: 1,
+      answer, answerRevision: revision, media: [],
+      ...(submitted ? { outcome: "correct", explanation: "Fictional answer explanation." } : {}),
+    }],
+    score: submitted ? 4 : null, total: 4,
+  });
   const provider = await stubPortalProvider(page, (name, input) => {
     switch (name) {
       case "can_enter_staging_portal": return admitted;
@@ -36,16 +50,14 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
       };
       case "available_papers": return [{ id: paper, title, exam: "uceed", durationSeconds: 7200, qualityHeld: false }];
       case "start_attempt": expect(input.p_paper_id).toBe(paper); return attempt;
-      case "read_attempt": return {
-        id: attempt, title, status: "active", deadline, serverNow: new Date().toISOString(),
-        questions: [{
-          id: "30000000-0000-4000-8000-000000001701", ordinal: 1, kind: "mcq", topic: "observation",
-          prompt: "Original fictional objective question", options: [{ id: "A", label: "First choice" }, { id: "B", label: "Second choice" }],
-          marking: { correct: 4, wrong: -1, partial: false }, points: 4, negativePoints: 1,
-          answer: null, answerRevision: 0, media: [],
-        }],
-        score: null, total: 4,
-      };
+      case "save_answer_revision":
+        answer = input.p_answer;
+        revision = input.p_revision;
+        return { accepted: true, answer, revision };
+      case "submit_attempt":
+        submitted = true;
+        return readAttempt();
+      case "read_attempt": return readAttempt();
       default: return undefined;
     }
   }, project.project_ref);
@@ -65,6 +77,16 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
   await page.getByRole("button", { name: "Start or resume", exact: true }).click();
   await expect(page).toHaveURL(stage + "/attempt/" + attempt);
   await expect(page.getByText("Original fictional objective question", { exact: true })).toBeVisible();
+  await expect(page.getByText("Fictional answer explanation.")).toHaveCount(0);
+  await page.getByRole("button", { name: "A First choice", exact: true }).click();
+  await expect(page.getByText("Answers are saved to your account.", { exact: true })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole("button", { name: "A First choice", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Submit attempt", exact: true }).click();
+  await page.getByRole("dialog").getByRole("button", { name: "Submit & view report", exact: true }).click();
+  await page.getByRole("button", { name: "Open answer review", exact: true }).click();
+  await expect(page.getByText("Fictional answer explanation.")).toBeVisible();
+  expect(provider.calls.filter(([name]) => name === "submit_attempt")).toHaveLength(1);
   expect(provider.calls.filter(([name]) => name === "start_attempt")).toHaveLength(1);
   expect(provider.calls.some(([name]) => ["prepare_order", "my_exam_mock_session", "my_exam_mock_report"].includes(name))).toBe(false);
   expect(provider.unexpected).toEqual([]);
