@@ -1,8 +1,9 @@
 import { readFile } from "node:fs/promises";
+import { isDeepStrictEqual } from "node:util";
 import { pathToFileURL } from "node:url";
 
 const percentile = (values, p) => values.length === 0 ? 0 : [...values].sort((a, b) => a - b)[Math.max(0, Math.ceil(values.length * p) - 1)];
-const checks = new Set(["active-attempt", "accepted-revision"]);
+const checks = new Set(["active-attempt", "accepted-revision", "persisted-revision"]);
 const interpolate = (value, fixture) => String(value).replaceAll(/\{([A-Za-z][A-Za-z0-9]*)\}/g, (_, key) => {
   if (!(key in fixture)) throw new Error(`Missing fixture value: ${key}`);
   return String(fixture[key]);
@@ -55,6 +56,19 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
   if (plan.activeAttempts > fixtures.length) throw new Error(`Need ${plan.activeAttempts} synthetic active-attempt fixtures`);
   const local = ["127.0.0.1", "localhost", "[::1]"].includes(new URL(plan.target).hostname);
   if (!local && env.CAPACITY_ALLOW_STAGING_LOAD !== plan.target) throw new Error("Set CAPACITY_ALLOW_STAGING_LOAD to the exact staging origin before remote execution");
+  if (plan.scenarios.activeAttempt.some(request => request.check === "persisted-revision")) {
+    const used = fixtures.slice(0, plan.activeAttempts);
+    if (used.some(fixture => typeof fixture?.questionId !== "string" || !fixture.questionId.trim()
+      || fixture.answer === undefined)) {
+      throw new Error("Persistence checks require a synthetic question ID and answer");
+    }
+    for (const field of ["attemptId", "accessToken"]) {
+      const values = used.map(fixture => fixture?.[field]);
+      if (values.some(value => typeof value !== "string" || !value.trim()) || new Set(values).size !== used.length) {
+        throw new Error("Persistence checks require distinct synthetic attempts and access tokens");
+      }
+    }
+  }
   const samples = { browser: [], activeAttempt: [] }, errors = [];
   const requestSamples = Object.fromEntries(
     Object.keys(samples).map(kind => [kind, new Map(plan.scenarios[kind]
@@ -71,12 +85,15 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
   }
 
   function matchesCheck(check, payload, fixture) {
-    if (check === "active-attempt") {
-      return payload?.id === fixture.attemptId && payload.status === "active"
-        && Array.isArray(payload.questions) && payload.questions.length > 0
-        && payload.questions.every(question => question && !Object.hasOwn(question, "correctKey"));
-    }
-    return payload?.accepted === true && payload.revision === fixture.revision;
+    if (check === "accepted-revision") return payload?.accepted === true && payload.revision === fixture.revision;
+    const sealed = payload?.id === fixture.attemptId && payload.status === "active"
+      && Array.isArray(payload.questions) && payload.questions.length > 0
+      && payload.questions.every(question => question && typeof question === "object" && !Array.isArray(question)
+        && !["correctKey", "explanation", "outcome"].some(field => Object.hasOwn(question, field)));
+    if (!sealed || check === "active-attempt") return sealed;
+    const matching = payload.questions.filter(question => question.id === fixture.questionId);
+    return matching.length === 1 && matching[0].answerRevision === fixture.revision
+      && isDeepStrictEqual(matching[0].answer, fixture.answer);
   }
 
   const sessions = Array.from({ length: plan.sessions }, (_, index) => {

@@ -49,7 +49,7 @@ Static frontend traffic is served at the edge. Authentication, PostgreSQL, row-l
 
 ### Capacity test procedure
 
-The checked-in `config/capacity-plan.example.json` exercises 90 concurrent sessions, including 45 active attempts. Copy it to ignored `test-results/` and set the approved staging Supabase API origin. Prepare 45 distinct, active, synthetic attempts with unsaved answers and create ignored `capacity-fixtures/fixtures.json` with `accessToken`, `attemptId`, `questionId` and `answer` for each. Start with fresh attempts for each run so autosave revision 1 is new.
+The checked-in `config/capacity-plan.example.json` exercises 90 concurrent sessions, including 45 active attempts. Copy it to ignored `test-results/` and set the approved staging Supabase API origin. Prepare 45 distinct synthetic users and active attempts with unsaved answers and create ignored `capacity-fixtures/fixtures.json` with `accessToken`, `attemptId`, `questionId` and `answer` for each. Start with fresh attempts for each run so autosave revision 1 is new.
 
 Load the staging public API key as `CAPACITY_ANON_KEY` and set `CAPACITY_ALLOW_STAGING_LOAD` to the exact approved staging API origin.
 
@@ -57,7 +57,9 @@ Load the staging public API key as `CAPACITY_ANON_KEY` and set `CAPACITY_ALLOW_S
 npm run capacity:run -- --plan test-results/capacity-plan.json --fixtures capacity-fixtures/fixtures.json --execute
 ```
 
-The run measures complete API responses. It checks that attempt reads return the expected active attempt with sealed keys and that each autosave acknowledges the requested revision. It rejects redirects and reports only aggregate latency/error data and request names/statuses. Verify persisted final revisions, clocks, access isolation and provider metrics before recording staging capacity. Measure frontend/CDN latency separately.
+The run measures complete API responses. It checks that attempt reads return the expected active attempt with sealed keys. After each autosave it reads the attempt again and checks the saved question, exact answer and revision. It rejects redirects and reports only aggregate latency/error data and request names/statuses. Verify persisted final revisions, clocks, access isolation and provider metrics before recording staging capacity. Measure frontend/CDN latency separately.
+
+The local 90-session rehearsal against the 91-migration database and actual Supabase Auth/PostgREST passed 1,800 requests with zero errors and zero deadlocks. All 450 answer readbacks matched, all 45 final revisions persisted, and the attempt clocks and frozen snapshots were identical before and after load. Authenticated p95 was 197 ms across the three attempt requests. This run measured the local API. Hosted provider, frontend/CDN and media performance still require their own measurements.
 
 ## Required provider work before launch
 

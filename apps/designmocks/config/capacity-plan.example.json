@@ -49,6 +49,18 @@
           "p_answer": "{answer}",
           "p_revision": "{revision}"
         }
+      },
+      {
+        "name": "read-saved-answer",
+        "check": "persisted-revision",
+        "method": "POST",
+        "path": "/rest/v1/rpc/read_attempt",
+        "headers": {
+          "apikey": { "env": "CAPACITY_ANON_KEY" },
+          "authorization": "Bearer {accessToken}",
+          "content-type": "application/json"
+        },
+        "body": { "p_id": "{attemptId}" }
       }
     ]
   }

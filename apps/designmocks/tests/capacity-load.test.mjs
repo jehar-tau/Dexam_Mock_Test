@@ -111,3 +111,49 @@ test("a response that fails while streaming counts once, and an origin escape fa
     fetchImpl: async () => assert.fail("A bad fixture must fail before any request"),
   }), /escaped the target origin/);
 });
+
+test("capacity acceptance verifies each saved answer through an independent active-attempt read", async () => {
+  const source = plan({sessions: 1, activeAttempts: 1, iterations: 5});
+  source.scenarios.activeAttempt[0].check = "persisted-revision";
+  const fixture = {attemptId: "attempt-a", questionId: "question-a", answer: ["B", "D"], accessToken: "private-token"};
+  let revision = 0;
+  const result = await runCapacityTest(source, {
+    fixtures: [fixture],
+    fetchImpl: async () => {
+      revision++;
+      const question = {id: fixture.questionId, answerRevision: revision, answer: fixture.answer};
+      if (revision === 2) question.answer = ["B"];
+      if (revision === 3) question.answerRevision--;
+      if (revision === 4) question.explanation = "Private explanation";
+      if (revision === 5) question.id = "foreign-question";
+      return Response.json({id: fixture.attemptId, status: "active", questions: [question]});
+    },
+  });
+  assert.equal(result.summary.requests, 5);
+  assert.equal(result.summary.errors, 4);
+  assert.equal(result.summary.passed, false);
+  assert.doesNotMatch(JSON.stringify(result), /private-token|Private explanation|question-a|foreign-question/);
+});
+
+test("the persistence plan rejects reused synthetic attempts or accounts before dispatch", async () => {
+  const source = plan({sessions: 2, activeAttempts: 2});
+  source.scenarios.activeAttempt[0].check = "persisted-revision";
+  for (const fixtures of [
+    [{attemptId: "a", accessToken: "x"}, {attemptId: "a", accessToken: "y"}],
+    [{attemptId: "a", accessToken: "x"}, {attemptId: "b", accessToken: "x"}],
+  ]) {
+    await assert.rejects(runCapacityTest(source, {
+      fixtures: fixtures.map(fixture => ({ ...fixture, questionId: "q", answer: "A" })),
+      fetchImpl: async () => assert.fail("Repeated fixture must fail before dispatch"),
+    }), /require distinct synthetic attempts and access tokens/);
+  }
+});
+
+test("the persistence plan requires an explicit question and answer", async () => {
+  const source = plan({sessions: 1, activeAttempts: 1});
+  source.scenarios.activeAttempt[0].check = "persisted-revision";
+  await assert.rejects(runCapacityTest(source, {
+    fixtures: [{attemptId: "a", accessToken: "x", questionId: "q"}],
+    fetchImpl: async () => assert.fail("Incomplete fixture must fail before dispatch"),
+  }), /require a synthetic question ID and answer/);
+});
