@@ -87,6 +87,16 @@ select pg_temp.bank_assert(public.admin_bank_question('bank-review-026',:'figure
   and not(public.admin_bank_question('bank-review-026',:'figure_version')->'media'->0?'storagePath')
   and public.admin_bank_review_media_paths('bank-review-026',:'figure_version')->0->>'storagePath'='papers/canonical/'||repeat('a',64)||'.png',
   'private media paths are bound to registered canonical figures, separate from display metadata');
+
+-- A second request with the same actor and review version must recheck staff access.
+reset role;
+delete from dm_private.admins where user_id=:'editor';
+set local role authenticated;
+select pg_temp.bank_reject(format('select public.admin_bank_review_media_paths(%L,%L)','bank-review-026',:'figure_version'),'Admin access required');
+reset role;
+insert into dm_private.admins(user_id) values(:'editor');
+set local role authenticated;
+
 select pg_temp.bank_reject(format('select public.admin_bank_question(%L,%L)','bank-review-025',:'figure_version'),'Question changed');
 select pg_temp.bank_reject('select public.admin_bank_review_media_paths(''bank-review-026'',null)','Question changed');
 select pg_temp.bank_reject(format('select public.admin_review_bank_question(%L,true,true,%L,%L)','bank-review-062','Fictional rights note',:'inactive_version'),'Inactive or held');
