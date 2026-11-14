@@ -289,6 +289,14 @@ test("the staging build loads private intake only for an admitted administrator"
 
   admin = false;
   calls.length = 0;
+  await page.getByRole("button", {name: "Download private source"}).focus();
+  await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
+  await expect(page.getByRole("alert")).toHaveText("Administrator access has ended. Private views were cleared.");
+  await expect(page.getByText(sourceName, {exact: true})).toHaveCount(0);
+  await expect(page.getByLabel("Private source file")).toHaveCount(0);
+  expect(calls.some(([name]) => name === "admin_question_intake_assets")).toBe(false);
+
+  calls.length = 0;
   await page.reload();
   await expect(page.getByRole("alert")).toHaveText("This account is not an administrator.");
   await expect(page.getByText(sourceName, {exact: true})).toHaveCount(0);
