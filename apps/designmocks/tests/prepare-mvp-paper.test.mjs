@@ -3,7 +3,7 @@ import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
-import { compileMvpPaper, stageMvpPaper, syncMvpPaperInputs } from "../scripts/prepare-mvp-paper.mjs";
+import { compileMvpPaper, stageMvpPaper, syncMvpPaperInputs, verifyMvpPaperStorage } from "../scripts/prepare-mvp-paper.mjs";
 import { collectCanonicalMedia } from "../scripts/private-bank-media.mjs";
 import { buildManifest, sha256, stableJson } from "../scripts/question-bank-import.mjs";
 import { RULES_2027, runtimeQuestion } from "../scripts/question-runtime.mjs";
@@ -206,4 +206,61 @@ test("sync stops on an incorrect figure download and rejects an incomplete runti
   assert.ok(!corrupt.calls.some(call => call.endsWith(runtimePath) || call.includes("register_bank_media_assets")));
   const incomplete = syncTransport(compiled, { runtimeCount: 56 });
   await assert.rejects(syncMvpPaperInputs(compiled, syncTarget, root, incomplete.fetchImpl), /incomplete paper runtime receipt/);
+});
+
+test("the paper Storage audit uses only private reads for the reviewed packet", async t => {
+  const { packet, canonical, root } = await fixture(t, "uceed", true);
+  const compiled = await compileMvpPaper(packet, packet.manifestSha256, canonical, root);
+  const calls = [];
+  const fetchImpl = async (address, request) => {
+    const url = new URL(address);
+    assert.equal(url.origin, syncOrigin);
+    assert.equal(request.redirect, "error");
+    assert.equal(request.headers.get("apikey"), syncTarget.key);
+    assert.equal(request.method ?? "GET", "GET");
+    assert.equal(request.body, undefined);
+    calls.push(url.pathname);
+    if (calls.length === 1) return Response.json({ id: "paper-media", public: false });
+    return new Response(image);
+  };
+  assert.deepEqual(await verifyMvpPaperStorage(compiled, syncTarget, fetchImpl), {
+    figuresVerified: 1, bytesVerified: image.length,
+  });
+  assert.deepEqual(calls, ["/storage/v1/bucket/paper-media",
+    `/storage/v1/object/paper-media/${compiled.mediaPlan.assets[0].storagePath}`]);
+});
+
+test("the paper Storage audit rejects public buckets, redirects and invalid or oversized figure bytes", async t => {
+  const { packet, canonical, root } = await fixture(t);
+  const compiled = await compileMvpPaper(packet, packet.manifestSha256, canonical, root);
+  let calls = 0;
+  const corrupt = Buffer.from(image);
+  corrupt[30] ^= 1;
+  const foreign = async () => { calls++; };
+  await assert.rejects(verifyMvpPaperStorage(compiled, { ...syncTarget, key: "sb_publishable_fixture" }, foreign), /server-only/);
+  await assert.rejects(verifyMvpPaperStorage(compiled, { ...syncTarget, allowOrigin: "https://wrong.invalid" }, foreign), /exactly match/);
+  await assert.rejects(verifyMvpPaperStorage(compiled, { ...syncTarget, environment: "production" }, foreign), /acknowledgement/);
+  assert.equal(calls, 0);
+  await assert.rejects(verifyMvpPaperStorage(compiled, syncTarget, async () => {
+    calls++;
+    return Response.json({ id: "paper-media", public: true });
+  }), /must be private/);
+  assert.equal(calls, 1);
+  let cancelled = false;
+  const oversized = new ReadableStream({
+    start(controller) { controller.enqueue(Buffer.concat([image, Buffer.of(0)])); },
+    cancel() { cancelled = true; },
+  });
+  for (const response of [
+    Response.redirect("https://wrong.invalid"),
+    new Response("Private provider diagnostic", { status: 404 }),
+    new Response(image.subarray(1)),
+    new Response(corrupt),
+    new Response(oversized),
+  ]) {
+    await assert.rejects(verifyMvpPaperStorage(compiled, syncTarget, async address => address.endsWith("/bucket/paper-media")
+      ? Response.json({ id: "paper-media", public: false }) : response),
+    { message: "A reviewed figure is missing, unreadable, or differs from the approved bytes" });
+  }
+  assert.equal(cancelled, true);
 });

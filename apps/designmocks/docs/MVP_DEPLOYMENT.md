@@ -78,6 +78,10 @@ After presentation/manifest review, call `admin_release_mvp_paper(p_id, p_expect
 
 Paper release, withdrawal, launch attestations and Test window changes check staff access again after waiting for their database locks. A rejected decision leaves the previous status and audit history intact. Test window opening checks the current prerequisite decisions and expiry after the wait.
 
+### Verify an already stored paper's figures
+
+Add `--verify-storage` to the reviewed packet command. Use the exact approved Supabase origin and server-only credential described above. A production check requires `DMOCKS_PAPER_PRODUCTION_ACK=VERIFY_PRIVATE_PAPER_MEDIA_ON_<exact-origin>`. This mode reads the private bucket and every exact packet figure, then verifies its byte length, digest and PNG dimensions against the reviewed packet. It reports aggregate counts and sends no write or registration requests. Run it independently of `--sync-inputs` and `--apply`. A passing result establishes the stored figure bytes at the time of the check. Verify student-scoped signing and rendered delivery separately.
+
 ## Controlled merchant Test journey without opening Live sales
 
 The real merchant Test journey must precede the provider-acceptance gate. Use a separate, audited and expiring Test window; never falsely approve that gate to make checkout reachable.
