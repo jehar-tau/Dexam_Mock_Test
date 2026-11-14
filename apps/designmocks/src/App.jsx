@@ -669,7 +669,7 @@ function Home() {
         ))}
       </div>
       <Catalogue />
-      {postLaunchPreview&&<AllIndiaHighlights />}
+      {postLaunchPreview && !stagingPortalMode && <AllIndiaHighlights />}
       <section className="wrap section" id="how">
         <div className="section-heading">
           <div>

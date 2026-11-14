@@ -203,6 +203,19 @@ update dm_private.attempts set deadline=now()-interval '1 second' where id=curre
 set local role authenticated;
 select pg_temp.reject('select public.save_answer_revision(current_setting(''test.expired_attempt'')::uuid,''20000000-0000-4000-8000-000000000001'',''"A"'',1)','deadline enforced at server');
 select pg_temp.assert_true(public.read_attempt(current_setting('test.expired_attempt')::uuid)->>'status'='submitted','opening an expired attempt finalizes its latest accepted answers');
+savepoint late_submit_snapshot;
+select set_config('test.late_submit_attempt',public.start_attempt('10000000-0000-4000-8000-000000000001')::text,true);
+select public.save_answer_revision(current_setting('test.late_submit_attempt')::uuid,'20000000-0000-4000-8000-000000000001','"B"',1);
+reset role;
+update dm_private.attempts set deadline=now()-interval '1 second' where id=current_setting('test.late_submit_attempt')::uuid;
+set local role authenticated;
+select pg_temp.reject('select public.save_answer_revision(current_setting(''test.late_submit_attempt'')::uuid,''20000000-0000-4000-8000-000000000001'',''"A"'',2)','deadline rejects a newer answer revision');
+select pg_temp.assert_true(result->>'status'='submitted' and result->'questions'->0->>'answer'='B',
+  'submitting after the deadline preserves the last server-accepted answer')
+from public.submit_attempt(current_setting('test.late_submit_attempt')::uuid) result;
+select pg_temp.assert_true(public.read_attempt(current_setting('test.late_submit_attempt')::uuid)->'questions'->0->>'answer'='B','reading an expired submission preserves its frozen answer');
+rollback to late_submit_snapshot;
+release savepoint late_submit_snapshot;
 select set_config('test.expired_sweep',public.start_attempt('10000000-0000-4000-8000-000000000001')::text,true);
 reset role;
 update dm_private.attempts set deadline=now()-interval '1 second' where id=current_setting('test.expired_sweep')::uuid;

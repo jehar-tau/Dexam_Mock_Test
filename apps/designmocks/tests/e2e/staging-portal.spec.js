@@ -40,6 +40,21 @@ test("the staging artifact rejects a different host before contacting the provid
   expect(unexpected).toEqual([]);
 });
 
+test("the private staging home never requests the public ranking feed", async ({ page }) => {
+  const { calls, unexpected } = await stubPortalProvider(page, name => {
+    if (name === "public_all_india_top_ten") return [];
+  }, project.project_ref);
+  await page.goto("/");
+  await expect(page.getByText("Portal acceptance for approved testers. Checkout is closed.")).toBeVisible();
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.reload();
+  await expect(page.getByText("Portal acceptance for approved testers. Checkout is closed.")).toBeVisible();
+  await page.getByRole("link", { name: "Explore the annual pass", exact: true }).click();
+  await expect(page).toHaveURL(/\/plans$/);
+  expect(calls).toEqual([]);
+  expect(unexpected).toEqual([]);
+});
+
 test("approved staging sessions can enter the workspace with checkout and draft terms closed", async ({ page }) => {
   let admitted = true;
   const { calls, unexpected } = await stubPortalProvider(page, (procedure) => {

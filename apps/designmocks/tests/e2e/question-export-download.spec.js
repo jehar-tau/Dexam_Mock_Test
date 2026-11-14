@@ -1,5 +1,10 @@
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { expect, test } from "@playwright/test";
+import { prepareAddition } from "../../scripts/prepare-question-bank-addition.mjs";
 import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 test.use({ baseURL: portalFixtureURL });
@@ -67,7 +72,7 @@ async function openQueue(page, { adminAccess = true, exportSummary = true } = {}
   return { ...provider, setAdminRole: value => { adminRole = value; } };
 }
 
-test("an approved exported question downloads its verified immutable review packet", async ({ page }) => {
+test("an approved question downloads an immutable packet and prepares a canonical addition", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 760 });
   const state = await openQueue(page);
   const pendingCard = page.getByRole("article").filter({ hasText: "Fictional pending question" });
@@ -80,7 +85,6 @@ test("an approved exported question downloads its verified immutable review pack
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toBe(`dmocks-question-${exportId}.json`);
   const path = await download.path();
-  const { readFile } = await import("node:fs/promises");
   const bytes = await readFile(path);
   const packet = JSON.parse(bytes.toString("utf8"));
   expect(packet).toEqual(responseEnvelope);
@@ -88,6 +92,29 @@ test("an approved exported question downloads its verified immutable review pack
   expect(JSON.parse(packet.payloadText)).toEqual(reviewedPayload);
   expect(JSON.parse(packet.payloadText).holds).toEqual([]);
   expect(packet.publicationState).toBe("git-review-required");
+  const workspace = await mkdtemp(join(tmpdir(), "dmocks-export-prepare-"));
+  try {
+    const repo = join(workspace, "bank");
+    const exports = join(repo, "server", "data", "exports");
+    await mkdir(exports, { recursive: true });
+    const original = { schemaVersion: 1, questions: [] };
+    const bankFile = join(exports, "dexam-bank-export.json");
+    await writeFile(bankFile, JSON.stringify(original));
+    const git = (...args) => execFileSync("git", args, { cwd: repo, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+    git("init");
+    git("add", ".");
+    git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-m", "Fictional bank");
+    const expectedSource = git("rev-parse", "HEAD");
+    git("update-ref", "refs/remotes/origin/main", expectedSource);
+    const output = join(workspace, "review");
+    const result = await prepareAddition({ packetPath: path, expected: contentSha256, expectedSource, output, cwd: repo });
+    expect(result).toMatchObject({ mode: "staged", review: "objective-complete", figures: 0 });
+    const proposed = JSON.parse(await readFile(join(output, "dexam-bank-export.json"), "utf8"));
+    expect(proposed).toEqual({ ...original, questions: [reviewedPayload] });
+    expect(JSON.parse(await readFile(bankFile, "utf8"))).toEqual(original);
+  } finally {
+    await rm(workspace, { recursive: true, force: true });
+  }
   expect(state.calls).toContainEqual(["admin_read_question_export", { p_export_id: exportId }]);
   expect(state.unexpected).toEqual([]);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize().width);
