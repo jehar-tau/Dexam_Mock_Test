@@ -289,6 +289,47 @@ test('an outage never restores elapsed exam time and reconnect finalizes the fix
  expect(await journal(page)).toEqual([]);
 });
 
+test('a click after the deadline cannot save an answer before the displayed clock refreshes', async ({page}) => {
+  const startedAt = Date.now();
+  const deadline = startedAt + 5000;
+  await page.clock.setFixedTime(startedAt);
+  const state = await fixture(page, {
+    serverNow: new Date(startedAt).toISOString(),
+    deadline: new Date(deadline).toISOString(),
+  });
+  await expect(answer(page)).toBeEnabled();
+  await page.evaluate(() => {
+    const originalNow = Date.now;
+    Date.now = () => originalNow() + 5000;
+    try {
+      const choice = [...document.querySelectorAll('button')].find(button => /Fictional second choice/.test(button.textContent));
+      if (!choice || choice.disabled) throw new Error('Expected an enabled choice before the clock repaint');
+      choice.click();
+    } finally {
+      Date.now = originalNow;
+    }
+  });
+  expect(await journal(page)).toEqual([]);
+  expect(calls(state, 'save_answer_revision')).toEqual([]);
+});
+
+test('an invalid newer server answer cannot clear the pending device answer', async ({page}) => {
+  const state = await fixture(page);
+  state.saveHold = deferred();
+  await answer(page).click();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(1);
+  const [pending] = await journal(page);
+  state.saveReceipt = {accepted:false, revision:pending.revision + 1, answer:'not-an-option'};
+  state.saveHold.resolve();
+  await expect(page.getByText('Answers saved on this device. Waiting to sync.', {exact:true})).toBeVisible();
+  expect(await journal(page)).toEqual([pending]);
+  state.saveReceipt = {accepted:false, revision:pending.revision + 1, answer:'A'};
+  await page.getByRole('button', {name:'Retry waiting answers', exact:true}).click();
+  await expect(page.getByText('Answers are saved to your account.', {exact:true})).toBeVisible();
+  expect(await journal(page)).toEqual([]);
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual([pending.revision, pending.revision]);
+});
+
 test('a blocked answer save explains how to retry submission without reopening the paper', async ({page}) => {
   const state = await fixture(page);
   await expect(answer(page)).toBeEnabled();
@@ -308,6 +349,35 @@ test('a blocked answer save explains how to retry submission without reopening t
   await submit.click();
   await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
   expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual(Array(3).fill(saved.revision));
+  expect(calls(state, 'submit_attempt')).toHaveLength(1);
+  expect(await journal(page)).toEqual([]);
+});
+
+test('a queued revision cannot follow an acknowledged save after the deadline', async ({page}) => {
+  const startedAt = Date.now();
+  const deadline = startedAt + 5000;
+  await page.clock.setFixedTime(startedAt);
+  const saveHold = deferred();
+  const state = await fixture(page, {
+    saveHold,
+    serverNow: new Date(startedAt).toISOString(),
+    deadline: new Date(deadline).toISOString(),
+  });
+  await answer(page).click();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(1);
+  await page.getByRole('button', {name:'A Fictional first choice', exact:true}).click();
+  expect((await journal(page)).map(entry => entry.answer)).toEqual(['A']);
+  const dialog = page.getByRole('dialog');
+  await page.getByRole('button', {name:'Submit attempt', exact:true}).click();
+  const submit = dialog.getByRole('button', {name:'Submit & view report', exact:true});
+  await submit.click();
+  await expect(submit).toBeDisabled();
+
+  state.serverNow = new Date(deadline).toISOString();
+  await page.clock.setFixedTime(deadline);
+  saveHold.resolve();
+  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_answer)).toEqual(['B']);
   expect(calls(state, 'submit_attempt')).toHaveLength(1);
   expect(await journal(page)).toEqual([]);
 });
