@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 
 const origin = "https://staging.example.invalid";
+const checkout = "https://checkout.example.invalid";
 const provider = "http://127.0.0.1:1";
 const actor = "00000000-0000-4000-8000-000000000190";
 const mediaPath = "papers/fixture.png";
@@ -18,6 +19,7 @@ Deno.test("private media checks staging admission before signing and again befor
   const originalFetch = globalThis.fetch;
   const environment = {
     PUBLIC_APP_ORIGIN: origin,
+    DMOCKS_CHECKOUT_ORIGIN: checkout,
     SUPABASE_URL: provider,
     SUPABASE_ANON_KEY: "fictional-public",
     SUPABASE_SERVICE_ROLE_KEY: "fictional-service",
@@ -58,6 +60,12 @@ Deno.test("private media checks staging admission before signing and again befor
         };
         await import(`../../supabase/functions/${endpoint}/index.ts`);
         assert.ok(handler);
+        for (const [from, status] of [[origin, 204], [checkout, endpoint === "attempt-media" ? 204 : 403], [checkout + ".invalid", 403]]) {
+          const response = await handler(new Request(origin, {method: "OPTIONS", headers: {origin: from}}));
+          assert.equal(response.status, status);
+          assert.equal(response.headers.get("access-control-allow-origin") === from, status === 204);
+          await response.body?.cancel();
+        }
         for (const [stages, status] of [[[false], 403], [[true, false], 403], [[true, true], 200]]) {
           decisions.push(...stages);
           calls.length = 0;

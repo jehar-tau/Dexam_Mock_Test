@@ -289,3 +289,25 @@ test("students cannot open private intake controls", async ({ page }) => {
   expect(state.calls.every(([name]) => name === "is_dmocks_admin")).toBe(true);
   expect(state.unexpected).toEqual([]);
 });
+
+test("revocation during a private source download clears intake without saving a file", async ({page}) => {
+  const fixtureState = await fixture(page);
+  await page.getByLabel("Private source file").setInputFiles({name: "fictional-source.pdf", mimeType: "application/pdf", buffer: pdf});
+  await page.getByRole("button", {name: "Upload for extraction"}).click();
+  const asset = page.locator(".intake-queue article").filter({hasText: "fictional-source.pdf"});
+  await expect(asset).toBeVisible();
+
+  let downloads = 0;
+  page.on("download", () => { downloads++; });
+  await page.route("https://dmocks-portal-fixture.supabase.co/functions/v1/question-intake", async route => {
+    if (route.request().method() === "OPTIONS") return route.fallback();
+    expect(route.request().postDataJSON()).toEqual({assetId: fixtureState.assets[0].id});
+    fixtureState.state.admin = false;
+    await route.fulfill({status: 403, headers: {"Access-Control-Allow-Origin": "*"}, json: {error: "Admin access required"}});
+  });
+  await asset.getByRole("button", {name: "Download private source"}).click();
+  const access = page.getByRole("region", {name: "Administrator access", exact: true});
+  await expect(access.getByRole("alert")).toHaveText("Administrator access has ended. Private views were cleared.");
+  await expect(asset).toHaveCount(0);
+  expect(downloads).toBe(0);
+});

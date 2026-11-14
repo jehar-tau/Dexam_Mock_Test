@@ -6,7 +6,7 @@ import { reportCommerceFailure } from './commerce-operations.mjs';
 export function createOrderHandler({ createClient, readEnvironment, providerFetch = globalThis.fetch,
   sdkFetch = globalThis.fetch, timeoutMilliseconds = 18000, reportFailure = reportCommerceFailure }) {
   return async request => {
-    const origin = readEnvironment('PUBLIC_APP_ORIGIN');
+    const origin = readEnvironment('DMOCKS_CHECKOUT_ORIGIN') ?? readEnvironment('PUBLIC_APP_ORIGIN');
     const cors = {
       'Access-Control-Allow-Origin': origin ?? 'https://invalid.invalid',
       'Access-Control-Allow-Headers': 'authorization, apikey, content-type, x-client-info',

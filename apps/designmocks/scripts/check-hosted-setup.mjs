@@ -138,6 +138,10 @@ for (const [name, body, status] of [
     continue;
   }
   assert.equal(response.status, status, name + " setup gate");
+  if (configuredCommerce && name === "attempt-media") {
+    assert.equal(response.allowOrigin, origin, "assessment media must accept the checkout origin");
+    assert.equal(response.data?.error, "Sign in required", "assessment media handler must reject anonymous access");
+  }
   results.push({ check: name + " setup/identity gate", status, passed: true });
 }
 const checkoutPath = "/functions/v1/create-order";

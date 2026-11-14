@@ -166,3 +166,25 @@ test('the complete handler deadline fences an SDK identity reply that arrives af
   assert.equal(response.status,503);release({data:{user:{id:internal}},error:null});await new Promise(resolve=>setTimeout(resolve,1));
   assert.equal(preparedCalls,0);assert.equal(providerCalls,0);
 });
+
+test('checkout can use its exact origin independently of the private portal', async () => {
+  const checkout = 'https://checkout.example.invalid';
+  const portal = 'https://portal.example.invalid';
+  const settings = {PUBLIC_APP_ORIGIN:portal, DMOCKS_CHECKOUT_ORIGIN:checkout};
+  const handler = createOrderHandler({
+    readEnvironment:name=>settings[name],
+    createClient:()=>assert.fail('Preflight must not open a database client'),
+    providerFetch:()=>assert.fail('Preflight must not contact payment services'),
+  });
+  const preflight = origin=>handler(new Request('https://fixture.example.invalid', {
+    method:'OPTIONS',headers:{origin},
+  }));
+  const approved = await preflight(checkout);
+  assert.equal(approved.status,204);
+  assert.equal(approved.headers.get('access-control-allow-origin'),checkout);
+  assert.equal((await preflight(portal)).status,403);
+  assert.equal((await preflight(checkout + '.invalid')).status,403);
+  delete settings.DMOCKS_CHECKOUT_ORIGIN;
+  assert.equal((await preflight(portal)).status,204);
+  assert.equal((await preflight(checkout)).status,403);
+});
