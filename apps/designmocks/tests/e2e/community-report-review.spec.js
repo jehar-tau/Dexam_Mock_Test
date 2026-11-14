@@ -182,8 +182,17 @@ test("server-derived expiry clears private images and the inspector until links 
 });
 
 test("read and signing denials discard content and show no provider diagnostics", async ({ page }) => {
-  const state = await fixture(page); state.allowed = false;
-  await row(page, 1).getByRole("button", { name: "Review report", exact: true }).click();
+  const state = await fixture(page);
+  const read = deferred();
+  state.readHolds.set(ids.first, read);
+  try {
+    await row(page, 1).getByRole("button", { name: "Review report", exact: true }).click();
+    await expect.poll(() => state.reads.length).toBe(1);
+    state.allowed = false;
+  } finally {
+    state.readHolds.delete(ids.first);
+    read.resolve();
+  }
   const review = reviewRegion(page);
   await expect(page.getByRole("alert")).toContainText("Administrator access has ended");
   await expect(queueRegion(page)).toHaveCount(0);
