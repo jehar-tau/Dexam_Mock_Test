@@ -180,3 +180,45 @@ Not done, in this order:
    box with sliced corners. Same skill (diagonal fold = sloping face, on a grid), simpler solid. A closer
    match needs a two-piece solid whose faces all sit on the grid.
 5. Then the earlier list: owner bank pages 30–77, other programmes' upper tiers, release switch, server progress.
+
+## Update, 14 November 2026 (later): pushed to GitHub, mechanisms built
+
+- The first Learn pull request (six programmes) is **merged into main**
+  (jehar-tau/Dexam_Mock_Test#186). GitHub Actions did not start on it (the
+  account's Actions billing is blocked), so the checks were run by hand:
+  unit tests, build, isolation, and the full browser suite (618 journeys)
+  in an isolated copy on spare ports. Do the same until Actions is fixed:
+  see "Running the full browser suite when the ports are busy" below.
+- **Read `09-topic-bank-map.md` first.** It maps the owner's theory
+  documents and question banks to programmes, says which model builds
+  which, and records the owner's standing permission to push and merge
+  Learn work.
+- New programme `mechanisms` (Gears, belts and levers), all four tiers:
+  spec `topics/mechanisms.md` section 0. Seven programmes are now live in
+  the preview.
+- Stripes and diagonals lessons in Nets of solids now have a browser
+  journey; the audit is clean on them.
+
+### Running the full browser suite when the ports are busy
+
+Another agent often holds ports 4399–4999. Do not stop it. Make a copy:
+
+```bash
+W=/tmp/learn-e2e-copy && git worktree add --detach "$W" HEAD && cd "$W/apps/designmocks" \
+  && grep -rlE "4[3-9]99" tests/e2e playwright.config.js package.json | xargs sed -i '' -E 's/4([3-9])99/5\199/g' \
+  && npm ci && npm run test:e2e
+```
+
+Then `git worktree remove --force "$W"`. The preview server for looking at
+your own work is `designmocks-learn-work` on port 4195 (4193 is in use by a
+preview of main).
+
+### Next, in order
+
+1. Counting figures (`topics/counting-figures.md`): the engine is Fable
+   work; ask the owner before starting it on another model.
+2. Opus, from specs, in parallel sessions: cube nets tiers 2–4; paper
+   folding and mirror images tiers 2–4; `mechanisms` section 0 list;
+   quantitative aptitude; logical reasoning.
+3. Patterns F9 (recall) and F10 (method lessons) before art history,
+   Indian craft, product design, poster and storyboarding.

@@ -76,7 +76,7 @@ Status: **B** built at Foundations, **S** fully specified in `topics/`,
 
 | # | Programme | Type | Wave | Status |
 |---|---|---|---|---|
-| B1 | [Gears, belts and pulleys](topics/gears-and-pulleys.md) | Rule-based | 2 | S |
+| B1 | [Gears, belts and levers](topics/mechanisms.md) | Rule-based | 2 | S |
 | B2 | Levers, linkages and simple machines | Rule-based | 3 | C |
 | B3 | Everyday physics: balance, floating, lenses, sound | Rule-based + deck | 4 | C |
 | B4 | Materials and manufacturing processes | Deck | 5 | C |
