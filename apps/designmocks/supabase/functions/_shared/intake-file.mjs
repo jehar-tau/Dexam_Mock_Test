@@ -1,9 +1,10 @@
 import { rasterMimeType } from "./raster.mjs";
+import { INTAKE_FIGURE_MAX_BYTES } from "./intake-limits.mjs";
 
 export async function intakeFigureDescriptor(bytes, digest) {
   const signature = [137, 80, 78, 71, 13, 10, 26, 10];
   const ending = [0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130];
-  if (bytes.length < 45 || bytes.length > 10485760 ||
+  if (bytes.length < 45 || bytes.length > INTAKE_FIGURE_MAX_BYTES ||
     !signature.every((value, index) => bytes[index] === value) ||
     !ending.every((value, index) => bytes[bytes.length - 12 + index] === value)) {
     throw new Error("Use a complete PNG figure up to 10 MB.");
