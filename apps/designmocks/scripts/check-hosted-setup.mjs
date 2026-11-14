@@ -206,7 +206,7 @@ if (staging) {
     assert.equal(response.data?.code, "42501");
     results.push({ check: "anonymous " + name + " denied", status: response.status, passed: true });
   }
-  const edge = await probeStagingEdge({url: base, key});
+  const edge = await probeStagingEdge({url: base});
   for (const row of edge.results) {
     results.push({
       check: row.name + " accepts the staging origin",

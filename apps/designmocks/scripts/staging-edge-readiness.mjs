@@ -20,20 +20,8 @@ const features = [
   ["candidate-phone", "Candidate phone verification"],
 ];
 
-function publicKey(key) {
-  if (/^sb_publishable_[\w-]+$/.test(key ?? "")) return true;
-  try {
-    const token = key.split(".");
-    const claims = JSON.parse(Buffer.from(token[1], "base64url"));
-    return token.length === 3 && claims.role === "anon" && claims.ref === project.project_ref;
-  } catch {
-    return false;
-  }
-}
-
-export async function probeStagingEdge({url, key, fetchImpl = fetch}) {
+export async function probeStagingEdge({url, fetchImpl = fetch}) {
   assert.equal(url, backend, "Use the approved DMocks staging backend origin");
-  assert.ok(publicKey(key), "Use the public DMocks staging API key");
 
   async function preflight(name, from) {
     try {
@@ -42,7 +30,6 @@ export async function probeStagingEdge({url, key, fetchImpl = fetch}) {
         redirect: "error",
         signal: AbortSignal.timeout(15000),
         headers: {
-          apikey: key,
           Origin: from,
           "Access-Control-Request-Method": "POST",
           "Access-Control-Request-Headers": requestedHeaders.join(","),
@@ -79,7 +66,7 @@ export async function probeStagingEdge({url, key, fetchImpl = fetch}) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
-    const report = await probeStagingEdge({url: process.env.VITE_SUPABASE_URL, key: process.env.VITE_SUPABASE_ANON_KEY});
+    const report = await probeStagingEdge({url: process.env.VITE_SUPABASE_URL});
     console.log(JSON.stringify(report, null, 2));
     if (!report.passed) process.exitCode = 2;
   } catch (error) {
