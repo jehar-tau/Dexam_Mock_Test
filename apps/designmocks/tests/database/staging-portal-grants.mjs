@@ -52,12 +52,14 @@ try {
   for (const key of ["missingFunctions", "extraFunctions", "missingGrants", "changedDefinitions"]) {
     assert.deepEqual(delta[key], []);
   }
-  assert.equal(delta.extraGrants.length, 50);
+  assert.equal(delta.extraGrants.length, 64);
   assert.ok(delta.extraGrants.every(grant => grant.role === "authenticated"));
   for (const signature of [
     "public.community_feed(text, text, jsonb, integer)",
     "public.admin_question_intake_assets()",
     "public.can_review_drawings()",
+    "public.my_drawing_review_page(text, uuid)",
+    "public.start_exam_mock(text)",
     "public.admin_learning_lessons()",
   ]) {
     assert.ok(delta.extraGrants.some(grant => grant.signature === signature));
