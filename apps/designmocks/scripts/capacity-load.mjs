@@ -1,6 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { isDeepStrictEqual } from "node:util";
 import { pathToFileURL } from "node:url";
+import project from "../supabase/project.json" with {type: "json"};
+
+const stagingApi = "https://" + project.project_ref + ".supabase.co";
+const localHosts = new Set(["127.0.0.1", "localhost", "[::1]"]);
 
 const percentile = (values, p) => values.length === 0 ? 0 : [...values].sort((a, b) => a - b)[Math.max(0, Math.ceil(values.length * p) - 1)];
 const checks = new Set(["active-attempt", "accepted-revision", "persisted-revision"]);
@@ -54,7 +58,8 @@ function requestHeaders(spec, fixture, env) {
 export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetch, env = process.env } = {}) {
   const plan = validateCapacityPlan(rawPlan);
   if (plan.activeAttempts > fixtures.length) throw new Error(`Need ${plan.activeAttempts} synthetic active-attempt fixtures`);
-  const local = ["127.0.0.1", "localhost", "[::1]"].includes(new URL(plan.target).hostname);
+  const local = localHosts.has(new URL(plan.target).hostname);
+  if (!local && plan.target !== stagingApi) throw new Error("Remote capacity testing requires the designated DMocks staging API");
   if (!local && env.CAPACITY_ALLOW_STAGING_LOAD !== plan.target) throw new Error("Set CAPACITY_ALLOW_STAGING_LOAD to the exact staging origin before remote execution");
   if (plan.scenarios.activeAttempt.some(request => request.check === "persisted-revision")) {
     const used = fixtures.slice(0, plan.activeAttempts);
@@ -84,13 +89,17 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
     };
   }
 
-  function matchesCheck(check, payload, fixture) {
+  function matchesCheck(check, payload, fixture, state) {
     if (check === "accepted-revision") return payload?.accepted === true && payload.revision === fixture.revision;
     const sealed = payload?.id === fixture.attemptId && payload.status === "active"
       && Array.isArray(payload.questions) && payload.questions.length > 0
       && payload.questions.every(question => question && typeof question === "object" && !Array.isArray(question)
         && !["correctKey", "explanation", "outcome"].some(field => Object.hasOwn(question, field)));
-    if (!sealed || check === "active-attempt") return sealed;
+    if (!sealed || typeof payload.deadline !== "string" || !Number.isFinite(Date.parse(payload.deadline))) return false;
+    const deadline = Date.parse(payload.deadline);
+    if (state.deadline !== undefined && state.deadline !== deadline) return false;
+    state.deadline = deadline;
+    if (check === "active-attempt") return true;
     const matching = payload.questions.filter(question => question.id === fixture.questionId);
     return matching.length === 1 && matching[0].answerRevision === fixture.revision
       && isDeepStrictEqual(matching[0].answer, fixture.answer);
@@ -100,9 +109,9 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
     const kind = index < plan.activeAttempts ? "activeAttempt" : "browser";
     const fixture = { ...(kind === "activeAttempt" ? fixtures[index] : {}), sessionId: index + 1, revision: 1 };
     for (const spec of plan.scenarios[kind]) prepare(spec, fixture);
-    return {kind, fixture};
+    return {kind, fixture, state: {}};
   });
-  const runRequest = async (kind, spec, fixture) => {
+  const runRequest = async (kind, spec, fixture, state) => {
     const {url, headers, body} = prepare(spec, fixture);
     const started = performance.now();
     const request = requestSamples[kind].get(spec);
@@ -120,7 +129,7 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
       });
       if (response.ok && spec.check) {
         const payload = await response.json();
-        if (!matchesCheck(spec.check, payload, fixture)) {
+        if (!matchesCheck(spec.check, payload, fixture, state)) {
           recordError(response.status, "ResponseCheckFailed");
         }
       } else {
@@ -138,10 +147,10 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
       request.latencies.push(elapsed);
     }
   };
-  await Promise.all(sessions.map(async ({kind, fixture}) => {
+  await Promise.all(sessions.map(async ({kind, fixture, state}) => {
     for (let iteration = 0; iteration < plan.iterations; iteration += 1) {
       fixture.revision = iteration + 1;
-      for (const request of plan.scenarios[kind]) await runRequest(kind, request, fixture);
+      for (const request of plan.scenarios[kind]) await runRequest(kind, request, fixture, state);
     }
   }));
   const total = samples.browser.length + samples.activeAttempt.length;
@@ -151,11 +160,12 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
     activeAttempts: plan.activeAttempts,
     requests: total,
     errors: errors.length,
+    responseCheckFailures: errors.filter(failure => failure.error === "ResponseCheckFailed").length,
     errorRate: total === 0 ? 0 : errors.length / total,
     browserP95Ms: Math.round(percentile(samples.browser, 0.95)),
     authenticatedP95Ms: Math.round(percentile(samples.activeAttempt, 0.95)),
   };
-  summary.passed = summary.errorRate <= plan.thresholds.maxErrorRate && summary.browserP95Ms <= plan.thresholds.publicP95Ms && summary.authenticatedP95Ms <= plan.thresholds.authenticatedP95Ms;
+  summary.passed = summary.responseCheckFailures === 0 && summary.errorRate <= plan.thresholds.maxErrorRate && summary.browserP95Ms <= plan.thresholds.publicP95Ms && summary.authenticatedP95Ms <= plan.thresholds.authenticatedP95Ms;
   const requests = Object.entries(requestSamples).flatMap(([kind, entries]) => (
     [...entries].map(([spec, sample]) => ({
       kind, name: spec.name, count: sample.latencies.length, errors: sample.errors,

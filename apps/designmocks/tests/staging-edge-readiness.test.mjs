@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {readdir} from "node:fs/promises";
+import {readdir, readFile} from "node:fs/promises";
 import project from "../supabase/project.json" with {type: "json"};
 import {probeStagingEdge} from "../scripts/staging-edge-readiness.mjs";
 
@@ -42,6 +42,19 @@ test("staging CORS checks every private route using OPTIONS and denies the forei
     assert.equal(headers.has("apikey"), false);
     assert.equal(headers.has("authorization"), false);
     assert.equal(headers.get("Access-Control-Request-Headers"), "authorization,apikey,content-type,x-client-info");
+  }
+});
+
+test("each private route declares its handler-side authentication configuration", async () => {
+  const {results} = await probeStagingEdge({url, fetchImpl: async (_target, request) => ready(request)});
+  const config = await readFile(new URL("../supabase/config.toml", import.meta.url), "utf8");
+  const sections = new Map(config.split(/(?=^\[)/m).map(section => {
+    const [header, ...settings] = section.split(/\r?\n/);
+    return [header, settings];
+  }));
+  for (const {name} of results) {
+    const options = sections.get(`[functions.${name}]`) ?? [];
+    assert.ok(options.some(line => /^verify_jwt\s*=\s*false(?:\s*#.*)?\s*$/.test(line.trim())), name);
   }
 });
 
