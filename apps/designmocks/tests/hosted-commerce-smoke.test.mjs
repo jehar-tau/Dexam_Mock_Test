@@ -19,7 +19,8 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
     import { createOrderHandler } from ${JSON.stringify(orderModule.href)};
     import { createPaymentWebhookHandler } from ${JSON.stringify(webhookModule.href)};
     const fixture = ${JSON.stringify(fixture)};
-    const environment = { PUBLIC_APP_ORIGIN: ${JSON.stringify(staging ? project.staging_frontend_origin : project.frontend_origin)} };
+    const environment = { PUBLIC_APP_ORIGIN: ${JSON.stringify(staging || fixture === "separate-checkout" ? project.staging_frontend_origin : project.frontend_origin)} };
+    if (fixture === "separate-checkout") environment.DMOCKS_CHECKOUT_ORIGIN = ${JSON.stringify(project.frontend_origin)};
     if (fixture !== "unconfigured") {
       for (const name of ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY",
         "RAZORPAY_KEY_ID", "RAZORPAY_KEY_SECRET", "RAZORPAY_WEBHOOK_SECRET"]) environment[name] = "fictional";
@@ -66,7 +67,9 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
       }
       if (url.pathname === "/functions/v1/attempt-media") {
         if (fixture === "staging-origin-rejected") return Response.json({ error: "Origin not allowed" }, { status: 403 });
-        return Response.json({ error: "Sign in required" }, { status: 401, headers: { "Access-Control-Allow-Origin": environment.PUBLIC_APP_ORIGIN } });
+        const origin = fixture === "wrong-media-origin" ? ${JSON.stringify(project.staging_frontend_origin)} : request.headers.get("origin");
+        const body = fixture === "media-gateway" ? {message: "Missing authorization header"} : {error: "Sign in required"};
+        return Response.json(body, { status: 401, headers: { "Access-Control-Allow-Origin": origin } });
       }
       assert.fail("unexpected probe " + url.pathname);
     };
@@ -107,6 +110,20 @@ test("configured smoke rejects unconfigured handlers and generic gateway denials
     const result = runSmoke("configured", fixture);
     assert.equal(result.status, 1, result.stderr);
     assert.match(result.stderr, /configured checkout must reject anonymous requests|checkout handler must reject the request/);
+  }
+});
+
+test("configured commerce smoke accepts the checkout origin with a different portal origin", () => {
+  const result = runSmoke("configured", "separate-checkout");
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(result.checks.slice(-4).map(check => check.status), [204, 401, 401, 403]);
+});
+
+test("configured commerce smoke requires the assessment handler to accept the checkout origin", () => {
+  for (const fixture of ["wrong-media-origin", "media-gateway"]) {
+    const result = runSmoke("configured", fixture);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /assessment media must accept the checkout origin|assessment media handler must reject anonymous access/);
   }
 });
 
