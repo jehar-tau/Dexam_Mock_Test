@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import project from "../supabase/project.json" with {type: "json"};
+import example from "../config/capacity-plan.example.json" with {type: "json"};
 import { runCapacityTest, validateCapacityPlan } from "../scripts/capacity-load.mjs";
 
 const plan = (overrides = {}) => ({
@@ -199,4 +200,26 @@ test("transient provider failures remain subject to the configured error budget"
   assert.equal(summary.errorRate, 0.5);
   assert.equal(summary.responseCheckFailures, 0);
   assert.equal(summary.passed, true);
+});
+
+test("the example capacity plan rejects invalid public catalogue responses even under the error budget", async () => {
+  const source = {...example, target: "http://127.0.0.1:4191", sessions: 1, activeAttempts: 0, iterations: 6,
+    thresholds: {...example.thresholds, maxErrorRate: 1}};
+  const annual = {id: "annual", amount: 119300, currency: "INR", duration_months: 12};
+  const responses = [
+    Response.json([annual]),
+    Response.json([]),
+    Response.json([{...annual, currency: "USD"}]),
+    Response.json([{...annual, amount: 1193}]),
+    Response.json([annual, annual]),
+    new Response("<html>Unexpected page</html>"),
+  ];
+  const {summary, failures} = await runCapacityTest(source, {
+    env: {CAPACITY_ANON_KEY: "fixture-key"},
+    fetchImpl: async () => responses.shift(),
+  });
+  assert.equal(summary.requests, 6);
+  assert.equal(summary.responseCheckFailures, 5);
+  assert.equal(summary.passed, false);
+  assert.ok(failures.every(failure => failure.name === "public-plans" && failure.error === "ResponseCheckFailed"));
 });

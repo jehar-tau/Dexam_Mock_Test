@@ -7,7 +7,7 @@ const stagingApi = "https://" + project.project_ref + ".supabase.co";
 const localHosts = new Set(["127.0.0.1", "localhost", "[::1]"]);
 
 const percentile = (values, p) => values.length === 0 ? 0 : [...values].sort((a, b) => a - b)[Math.max(0, Math.ceil(values.length * p) - 1)];
-const checks = new Set(["active-attempt", "accepted-revision", "persisted-revision"]);
+const checks = new Set(["public-annual-plan", "active-attempt", "accepted-revision", "persisted-revision"]);
 const interpolate = (value, fixture) => String(value).replaceAll(/\{([A-Za-z][A-Za-z0-9]*)\}/g, (_, key) => {
   if (!(key in fixture)) throw new Error(`Missing fixture value: ${key}`);
   return String(fixture[key]);
@@ -90,6 +90,11 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
   }
 
   function matchesCheck(check, payload, fixture, state) {
+    if (check === "public-annual-plan") {
+      if (!Array.isArray(payload) || payload.length !== 1) return false;
+      const [plan] = payload;
+      return plan?.id === "annual" && plan.amount === 119300 && plan.currency === "INR" && plan.duration_months === 12;
+    }
     if (check === "accepted-revision") return payload?.accepted === true && payload.revision === fixture.revision;
     const sealed = payload?.id === fixture.attemptId && payload.status === "active"
       && Array.isArray(payload.questions) && payload.questions.length > 0
@@ -128,10 +133,14 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
         signal: AbortSignal.timeout(spec.timeoutMs ?? 5000),
       });
       if (response.ok && spec.check) {
-        const payload = await response.json();
-        if (!matchesCheck(spec.check, payload, fixture, state)) {
+        let payload;
+        try {
+          payload = await response.json();
+        } catch {
           recordError(response.status, "ResponseCheckFailed");
+          return;
         }
+        if (!matchesCheck(spec.check, payload, fixture, state)) recordError(response.status, "ResponseCheckFailed");
       } else {
         // Measure the complete response while discarding content that needs no assertion.
         if (response.body) {
