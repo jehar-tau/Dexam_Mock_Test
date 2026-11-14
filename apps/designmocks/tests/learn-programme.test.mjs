@@ -7,12 +7,12 @@ import {
 } from '../src/learn/programme-model.js';
 import { clearProgress, loadProgress, saveProgress } from '../src/learn/programme-storage.js';
 
-const toolNames = ['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder'];
+const toolNames = ['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench'];
 const rightResponse = q => (q.answerMode === 'numeric' ? String(q.answer.value ?? q.answer.min) : q.answer);
 const wrongResponse = q => (q.answerMode === 'numeric' ? String((q.answer.value ?? q.answer.max) + 1) : q.answerMode === 'multi' ? [q.options.find(o => !q.answer.includes(o.id)).id] : q.options.find(o => o.id !== q.answer).id);
 
 test('every registered programme validates and every lesson question can be answered and marked', () => {
-  assert.deepEqual(programmes.map(p => p.slug), ['cube-nets', 'nets-of-solids', 'paper-folding', 'mirror-images', 'counting-cubes', 'colour-basics']);
+  assert.deepEqual(programmes.map(p => p.slug), ['cube-nets', 'nets-of-solids', 'paper-folding', 'mirror-images', 'counting-cubes', 'mechanisms', 'colour-basics']);
   for (const programme of programmes) {
     assert.equal(validateProgramme(programme), programme);
     for (const lesson of lessonsOf(programme)) for (const step of lesson.steps) {

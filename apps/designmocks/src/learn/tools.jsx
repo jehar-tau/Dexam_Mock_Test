@@ -6,6 +6,8 @@ import { canFold, fold, foldKinds, freshSheet, punch, punchable } from './paper-
 import { FoldingFigure, FoldSequence, HoleGrid, ImageFigure, PunchedSheet, SolidFigure, SolidNetFigure, StackFigure, Swatch, ViewsFigure } from './figures.jsx';
 import { canAnimate, describeFace, extrusion, foldedPose, joined, polycube, profiles, pyramid, unfold, sliced } from './solid-net.js';
 import { marksOnNet, marksOnSolid, ringMarks } from './solid-pattern.js';
+import { dirWord, presetSystem, solve } from './gears.js';
+import { BeamFigure, GearsFigure } from './mechanism-figures.jsx';
 import { seededRandom } from './random.js';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
@@ -187,6 +189,60 @@ export function Unfolder({ choices = ['box'], seed = 1 }) {
   </div>;
 }
 
+// ---------- gears and belts ----------
+// A small machine that runs. Wheels turn at their true relative speeds; controls change one thing
+// at a time so the student can see what it does.
+const gearPresetNames = { pair: 'Two gears', chain: 'A chain', belt: 'A belt', compound: 'One shaft', mixed: 'Gears and a belt', ring: 'A ring' };
+export function GearTrain({ presets = ['pair'] }) {
+  const [preset, setPreset] = useState(presets[0]);
+  const [count, setCount] = useState(3);
+  const [crossed, setCrossed] = useState(false);
+  const [big, setBig] = useState(false);
+  const [running, setRunning] = useState(true);
+  const system = useMemo(() => presetSystem(preset, { count: preset === 'ring' ? Math.max(3, count) : count, crossed, big }), [preset, count, crossed, big]);
+  const result = solve(system);
+  const speedOf = i => { const f = result.speed[i]; return f.d === 1 ? `${f.n}` : (f.n / f.d).toFixed(1); };
+  const status = result.locked
+    ? `Locked. ${system.wheels.length} gears in a ring would need gear A to turn both ways at once.`
+    : system.wheels.map((w, i) => `${w.id} ${dirWord(result.dir[i])}${preset === 'chain' || preset === 'ring' ? '' : ` ${speedOf(i)}`}`).join(' · ') + (preset === 'chain' || preset === 'ring' ? '' : ' turns a minute');
+  const choose = name => { setPreset(name); setCrossed(false); setBig(false); setCount(3); };
+  return <div className="tool">
+    {presets.length > 1 && <div className="tool-row" role="group" aria-label="Choose a machine">
+      {presets.map(name => <button key={name} type="button" className={`chip${name === preset ? ' is-active' : ''}`} aria-pressed={name === preset} onClick={() => choose(name)}>{gearPresetNames[name]}</button>)}
+    </div>}
+    <div className="tool-stage">
+      <GearsFigure key={`${preset}.${count}.${crossed}.${big}`} system={system} arrows="all" showLocked animate={running} showSizes={preset !== 'chain' && preset !== 'ring'} />
+    </div>
+    <div className="tool-row">
+      <button type="button" className="chip" aria-pressed={running} onClick={() => setRunning(!running)}>{running ? 'Pause' : 'Run'}</button>
+      {(preset === 'chain' || preset === 'ring') && <label className="slider"><span>Gears</span><input type="range" min={preset === 'ring' ? 3 : 2} max="6" step="1" value={preset === 'ring' ? Math.max(3, count) : count} onChange={e => setCount(Number(e.target.value))} aria-label="Number of gears" /><output aria-hidden="true">{preset === 'ring' ? Math.max(3, count) : count}</output></label>}
+      {(preset === 'belt' || preset === 'mixed') && <button type="button" className={`chip${crossed ? ' is-active' : ''}`} aria-pressed={crossed} onClick={() => setCrossed(!crossed)}>Cross the belt</button>}
+      {(preset === 'pair' || preset === 'belt') && <button type="button" className={`chip${big ? ' is-active' : ''}`} aria-pressed={big} onClick={() => setBig(!big)}>{preset === 'pair' ? 'Bigger driver' : 'Bigger second pulley'}</button>}
+    </div>
+    <p className={`tool-status${result.locked ? ' is-wrong' : ''}`} role="status">{status}</p>
+  </div>;
+}
+
+// A beam to load by hand: tap a mark to hang or remove a 1 kg weight, and see which way it tips.
+export function LeverBench({ length = 10, pivot = 5 }) {
+  const [counts, setCounts] = useState(() => { const start = Array(length + 1).fill(0); start[pivot - 3] = 2; return start; });
+  const beam = { length, pivot, loads: counts.map((n, at) => ({ at, weight: n, label: `${n}` })).filter(l => l.weight > 0) };
+  const left = beam.loads.filter(l => l.at < pivot).reduce((sum, l) => sum + l.weight * (pivot - l.at), 0), right = beam.loads.filter(l => l.at > pivot).reduce((sum, l) => sum + l.weight * (l.at - pivot), 0);
+  const tip = Math.sign(right - left);
+  const add = (at, by) => setCounts(counts.map((n, i) => (i === at ? Math.max(0, Math.min(6, n + by)) : n)));
+  return <div className="tool">
+    <div className="tool-stage"><BeamFigure beam={{ ...beam, loads: beam.loads.map(l => ({ ...l, label: '' })) }} tilt={tip * 7} /></div>
+    <div className="tool-row lever-row" role="group" aria-label="Weights on the beam">
+      {counts.map((n, at) => at === pivot ? <span key={at} className="lever-pivot" aria-hidden="true">▲</span> : <span key={at} className="lever-cell">
+        <button type="button" className="mini-button" aria-label={`Add 1 kilogram ${Math.abs(at - pivot)} ${Math.abs(at - pivot) === 1 ? 'unit' : 'units'} to the ${at < pivot ? 'left' : 'right'} of the pivot`} onClick={() => add(at, 1)}>+</button>
+        <span className="lever-count">{n}</span>
+        <button type="button" className="mini-button" aria-label={`Remove 1 kilogram ${Math.abs(at - pivot)} ${Math.abs(at - pivot) === 1 ? 'unit' : 'units'} to the ${at < pivot ? 'left' : 'right'} of the pivot`} disabled={n === 0} onClick={() => add(at, -1)}>−</button>
+      </span>)}
+    </div>
+    <p className={`tool-status${tip === 0 ? ' is-correct' : ''}`} role="status">{`Left side: ${left}. Right side: ${right}. ${tip === 0 ? 'Balanced.' : tip < 0 ? 'The left side goes down.' : 'The right side goes down.'}`}</p>
+  </div>;
+}
+
 export function LearnTool({ tool, props = {} }) {
   switch (tool) {
     case 'fold-explorer': return <FoldExplorer {...props} />;
@@ -198,8 +254,10 @@ export function LearnTool({ tool, props = {} }) {
     case 'stack-builder': return <StackBuilder {...props} />;
     case 'colour-wheel': return <ColourWheel {...props} />;
     case 'unfolder': return <Unfolder {...props} />;
+    case 'gear-train': return <GearTrain {...props} />;
+    case 'lever-bench': return <LeverBench {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench']);
 export { IconButton };

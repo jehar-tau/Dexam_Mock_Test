@@ -192,3 +192,6 @@ programme. A reviewer session checks each tier before the next begins.
   current in the same change as the work.
 - Keep this file and the kit in the same pull request as the code they
   describe.
+
+- 2026-11-14: Owner supplied a folder of theory documents and question banks for every topic, and standing permission to push, open pull requests and merge Learn work. Topic map, model split and pull-request rules recorded in `docs/learn/09-topic-bank-map.md`. First pull request merged (#186) with checks run by hand because GitHub Actions billing is blocked.
+- 2026-11-14: Built `mechanisms` (gears, belts, ropes, levers) through all four tiers. Direction questions carry four options ("cannot turn", "rocks back and forth") to meet the four-option contract. Mixed systems are sized by diameter, as the exam sets them; pure gear trains by teeth. Pulley effort was planned and left for later.
