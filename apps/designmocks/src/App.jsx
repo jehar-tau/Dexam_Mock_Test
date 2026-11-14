@@ -31,6 +31,7 @@ import { ExamMocks, ExamMocksPreview } from "./ExamMocks.jsx";
 import { AllIndia, AllIndiaHighlights, AllIndiaPreview } from "./AllIndia.jsx";
 import { QuestionReportPreview } from "./QuestionReport.jsx";
 import { Learn, LearnPreview } from "./Learn.jsx";
+import { LearnProgrammePage, LearnProgrammePreview } from "./learn/LearnProgramme.jsx";
 import { Community, CommunityPreview } from "./Community.jsx";
 import { DrawingUploadsPreview } from "./DrawingUploads.jsx";
 import { DrawingReviewMediaPreview } from "./DrawingReviewMedia.jsx";
@@ -1612,6 +1613,7 @@ export default function App() {
           <Route path="/dashboard/all-india" element={postLaunchPreview?<AllIndia />:<DeferredModule module="all-india"/>} />
           <Route path="/dashboard/practice" element={postLaunchPreview?<TopicPractice />:<DeferredModule module="practice"/>} />
           <Route path="/dashboard/learn" element={postLaunchPreview?<Learn />:<DeferredModule module="learn"/>} />
+          <Route path="/dashboard/learn/programme/:slug" element={postLaunchPreview?<LearnProgrammePage />:<DeferredModule module="learn"/>} />
           <Route path="/dashboard/community" element={postLaunchPreview?<Community />:<DeferredModule module="community"/>} />
           <Route path="/report" element={<BugReport />} />
           <Route path="/admin" element={<Admin />} />
@@ -1660,6 +1662,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/learn-preview" element={<LearnPreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/learn-programme-preview/:slug?" element={<LearnProgrammePreview />} />
         )}
         {import.meta.env.DEV && (
           <Route path="/community-preview" element={<CommunityPreview />} />
