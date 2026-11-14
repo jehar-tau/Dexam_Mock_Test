@@ -2,6 +2,7 @@ import { realpath } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 import project from "../../supabase/project.json" with { type: "json" };
 import { serveArtifact } from "./local-artifact-fixture.js";
+import { communityFeedFixture } from "./community-feed-fixture.js";
 import { seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 const stage = project.staging_frontend_origin;
@@ -125,6 +126,31 @@ test("the API admission hook denial keeps a returning account out of staging", a
   await page.goto("/dashboard");
   await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
   await expect(page.getByRole("heading", {name: /Welcome to your next attempt/})).toHaveCount(0);
+  expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
+  expect(unexpected).toEqual([]);
+});
+
+test("an admitted tester can open Community and loses access after revocation", async ({page}) => {
+  let admitted = true;
+  const {calls, unexpected} = await stubPortalProvider(page, (procedure, input) => {
+    if (procedure === "can_enter_staging_portal") {
+      return admitted || {code: "42501", message: "Private staging requires an approved Google tester"};
+    }
+    if (procedure === "community_feed") return communityFeedFixture([], input);
+    return undefined;
+  }, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.goto("/dashboard/community");
+  await expect(page.getByRole("heading", {name: /Ask clearly/})).toBeVisible();
+  await expect(page.getByText("No discussions match these filters.")).toBeVisible();
+  expect(calls.filter(([name]) => name === "community_feed")).toHaveLength(1);
+
+  admitted = false;
+  calls.length = 0;
+  await page.reload();
+  await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
+  await expect(page.getByRole("heading", {name: /Ask clearly/})).toHaveCount(0);
   expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
   expect(unexpected).toEqual([]);
 });
