@@ -295,6 +295,9 @@ test("the staging Google callback exchanges the matching PKCE verifier and persi
     const input = route.request().postDataJSON();
     exchanges.push(input.auth_code);
     expect(createHash("sha256").update(input.code_verifier).digest("base64url")).toBe(challenge);
+    if (input.auth_code === "fictional-expired-code") {
+      return route.fulfill({headers, status: 400, json: {code: "bad_code", message: "Private fictional provider diagnostic"}});
+    }
     await route.fulfill({headers, json: {access_token: token, refresh_token: "fictional-google-refresh",
       expires_in: 3600, token_type: "bearer", user: {...tester, aud: "authenticated",
         app_metadata: {provider: "google"}, user_metadata: {}}}});
@@ -302,14 +305,21 @@ test("the staging Google callback exchanges the matching PKCE verifier and persi
   await page.goto("/account");
   await page.getByRole("button", {name: "Sign in to staging with Google"}).click();
   await expect(page.getByText("Fictional Google authorization complete.")).toBeVisible();
+  await page.goto("/account/callback?code=fictional-expired-code");
+  await expect(page.getByRole("alert")).toHaveText("Google sign-in could not be completed. Please try again.");
+  await expect(page.getByText("Private fictional provider diagnostic")).toHaveCount(0);
+  await expect(page.getByRole("link", {name: "Open staging workspace"})).toHaveCount(0);
+  expect(calls).toEqual([]);
+  await page.getByRole("button", {name: "Sign in to staging with Google"}).click();
+  await expect(page.getByText("Fictional Google authorization complete.")).toBeVisible();
   await page.goto("/account/callback?code=fictional-google-code");
   await expect(page.getByRole("link", {name: "Open staging workspace"})).toBeVisible();
   await expect(page).toHaveURL(url => url.pathname === "/account/callback" && !url.searchParams.has("code"));
-  expect(exchanges).toEqual(["fictional-google-code"]);
+  expect(exchanges).toEqual(["fictional-expired-code", "fictional-google-code"]);
   expect(calls.some(([name]) => name === "can_enter_staging_portal")).toBe(true);
 
   await page.reload();
   await expect(page.getByRole("link", {name: "Open staging workspace"})).toBeVisible();
-  expect(exchanges).toHaveLength(1);
+  expect(exchanges).toHaveLength(2);
   expect(unexpected).toEqual([]);
 });
