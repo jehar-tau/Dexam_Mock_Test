@@ -495,7 +495,11 @@ if(postLaunchPreview){
     try {
       if (Date.now() + offset.current < Date.parse(attempt.deadline)) {
         const sync = await queue.flush();
-        if (!sync.saved) throw new Error("Reconnect and save the waiting answers before submitting.");
+        if (!current() || answerSync.current !== queue) return;
+        if (!sync.saved && Date.now() + offset.current < Date.parse(attempt.deadline)) {
+          setError("Your attempt is still open. Reconnect and select Submit again to save your waiting answers.");
+          return;
+        }
       }
       const result = await rpc("submit_attempt", { p_id: id });
       if(!result||result.id!==id||result.status!=="submitted"||!Array.isArray(result.questions)||!Number.isFinite(Date.parse(result.deadline)))throw new Error("Unconfirmed submission response.");

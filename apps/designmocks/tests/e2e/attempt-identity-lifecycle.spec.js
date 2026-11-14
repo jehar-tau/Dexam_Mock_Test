@@ -265,3 +265,49 @@ test('an outage never restores elapsed exam time and reconnect finalizes the fix
  expect(calls(state,'save_answer_revision')).toEqual([]);
  expect(await journal(page)).toEqual([]);
 });
+
+test('a blocked answer save explains how to retry submission without reopening the paper', async ({page}) => {
+  const state = await fixture(page);
+  await expect(answer(page)).toBeEnabled();
+  state.saveReceipt = null;
+  await answer(page).click();
+  await expect(page.getByText('Answers saved on this device. Waiting to sync.', {exact:true})).toBeVisible();
+  const [saved] = await journal(page);
+  await page.getByRole('button', {name:'Submit attempt', exact:true}).click();
+  const dialog = page.getByRole('dialog');
+  const submit = dialog.getByRole('button', {name:'Submit & view report', exact:true});
+  await submit.click();
+  await expect(dialog.getByRole('alert')).toContainText('Your attempt is still open. Reconnect and select Submit again to save your waiting answers.');
+  expect(calls(state, 'submit_attempt')).toEqual([]);
+  expect(await journal(page)).toEqual([saved]);
+
+  state.saveReceipt = undefined;
+  await submit.click();
+  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual(Array(3).fill(saved.revision));
+  expect(calls(state, 'submit_attempt')).toHaveLength(1);
+  expect(await journal(page)).toEqual([]);
+});
+
+test('a failed answer save that crosses the deadline finalizes the server snapshot once', async ({page}) => {
+  const startedAt = Date.now(), deadline = startedAt + 5000;
+  await page.clock.setFixedTime(startedAt);
+  const state = await fixture(page, {serverNow:new Date(startedAt).toISOString(), deadline:new Date(deadline).toISOString()});
+  await expect(answer(page)).toBeEnabled();
+  state.saveHold = deferred();
+  state.saveReceipt = null;
+  await answer(page).click();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(1);
+  await page.getByRole('button', {name:'Submit attempt', exact:true}).click();
+  const submit = page.getByRole('dialog').getByRole('button', {name:'Submit & view report', exact:true});
+  await submit.click();
+  await expect(submit).toBeDisabled();
+
+  state.serverNow = new Date(deadline).toISOString();
+  await page.clock.setFixedTime(deadline);
+  state.saveHold.resolve();
+  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  expect(calls(state, 'save_answer_revision')).toHaveLength(1);
+  expect(calls(state, 'submit_attempt')).toHaveLength(1);
+  expect(await journal(page)).toEqual([]);
+});
