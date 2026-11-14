@@ -129,6 +129,22 @@ test("an invalid readback cannot acknowledge a device answer after reload", asyn
   assert.equal(journal.read("q1"), null);
 });
 
+test("reload preserves a pending answer until the server confirms a valid revision", () => {
+  const journal = createAttemptAnswerJournal({ userId: "student", attemptId: "attempt", deadline: 900, storage: memoryStorage() });
+  journal.write("q1", { answer: "B", revision: 10 });
+  for (const answerRevision of ["11", 11.5, Number.MAX_SAFE_INTEGER + 1]) {
+    const queue = createAnswerSyncQueue({ journal });
+    queue.restore([{ ...question(), answer: "A", answerRevision }]);
+    assert.equal(queue.pendingAnswer("q1"), "B");
+    assert.equal(journal.read("q1").revision, 10);
+  }
+
+  const queue = createAnswerSyncQueue({ journal });
+  queue.restore([{ ...question(11), answer: null }]);
+  assert.equal(queue.pendingCount(), 0);
+  assert.equal(journal.read("q1"), null);
+});
+
 test("pending device answers are scoped and pruned after their server deadline or sign-out", () => {
   const storage = memoryStorage();
   const journal = (userId, attemptId, deadline) => createAttemptAnswerJournal({ userId, attemptId, deadline, storage });
