@@ -139,6 +139,68 @@ test("the API admission hook denial keeps a returning account out of staging", a
   expect(unexpected).toEqual([]);
 });
 
+test("staging admission alone grants neither administrator nor drawing-review access", async ({page}) => {
+  let reviewer = false;
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") return true;
+    if (procedure === "is_dmocks_admin") return false;
+    if (procedure === "can_review_drawings") return reviewer;
+    if (procedure === "my_drawing_review_page" && reviewer) return {items: [], nextCursor: null};
+    return undefined;
+  }, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+
+  await page.goto("/review/drawings");
+  await expect(page.getByRole("alert")).toHaveText("Drawing reviewer access required.");
+  expect(calls.some(([name]) => name === "my_drawing_review_page")).toBe(false);
+
+  reviewer = true;
+  await page.getByRole("button", {name: "Check drawing reviewer access"}).click();
+  await expect(page.getByRole("button", {name: "Available drawings"})).toBeVisible();
+  await expect.poll(() => calls.filter(([name]) => name === "my_drawing_review_page").length).toBe(1);
+
+  await page.goto("/admin");
+  await expect(page.getByRole("alert")).toHaveText("This account is not an administrator.");
+  expect(calls.some(([name]) => name.startsWith("admin_"))).toBe(false);
+  expect(unexpected).toEqual([]);
+});
+
+test("a stalled identity check expires without opening staging when it replies late", async ({page}) => {
+  const {calls, unexpected} = await stubPortalProvider(page, procedure =>
+    procedure === "can_enter_staging_portal" ? true : undefined, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.clock.install();
+
+  let release;
+  const reply = new Promise(resolve => { release = resolve; });
+  let markStarted;
+  const started = new Promise(resolve => { markStarted = resolve; });
+  const identityUrl = `${provider}/auth/v1/user`;
+  await page.route(identityUrl, async route => {
+    markStarted();
+    await reply;
+    await route.fallback();
+  });
+
+  try {
+    await page.goto("/dashboard");
+    await started;
+    await expect(page.getByText("Checking staging access…")).toBeVisible();
+    await page.clock.fastForward(21_000);
+    await expect(page.getByRole("alert")).toContainText("Couldn’t verify staging access.");
+    const lateIdentity = page.waitForResponse(response => response.url() === identityUrl && response.ok());
+    release();
+    await lateIdentity;
+  } finally {
+    release();
+  }
+  await expect(page.getByRole("alert")).toContainText("Couldn’t verify staging access.");
+  expect(calls).toEqual([]);
+  expect(unexpected).toEqual([]);
+});
+
 test("an admitted tester can open Community and loses access after revocation", async ({page}) => {
   let admitted = true;
   const {calls, unexpected} = await stubPortalProvider(page, (procedure, input) => {

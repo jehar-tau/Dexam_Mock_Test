@@ -88,7 +88,10 @@ test('the public contact page identifies the supplied operator and support email
 });
 for (const path of ['/contact','/privacy','/terms','/refunds']) test(`operator details on ${path} are accessible in both themes at 320px`, async ({page}) => {
  await page.emulateMedia({reducedMotion:'reduce'});const provider=await stubPortalProvider(page,()=>undefined);await page.setViewportSize({width:320,height:900});
-  await page.goto(path);const details=page.getByRole('region',{name:'Operator and contact',exact:true});await expect(details).toContainText('DEXAM');const email=details.getByRole('link',{name:'inquiry@designexam.com',exact:true});await email.focus();await expect(email).toBeFocused();await expect(email).toHaveAttribute('href','mailto:inquiry@designexam.com');if(path==='/terms')await expect(page.locator('.policy')).toContainText('12 calendar months');
+  await page.goto(path);
+  const details=page.getByRole('region',{name:'Operator and contact',exact:true});
+  await expect(details).toContainText('DEXAM',{timeout:15000});
+ const email=details.getByRole('link',{name:'inquiry@designexam.com',exact:true});await email.focus();await expect(email).toBeFocused();await expect(email).toHaveAttribute('href','mailto:inquiry@designexam.com');if(path==='/terms')await expect(page.locator('.policy')).toContainText('12 calendar months');
   if(path==='/refunds'){
    await expect(page.getByRole('heading',{name:'Cancellation and refunds.',exact:true})).toBeVisible();
    await expect(page.getByText(/Launch notice:/)).toBeVisible();

@@ -1,3 +1,5 @@
+import { withAccountDeadline } from './account-request.js';
+
 // The SDK may read a changed token before its account event reaches the page.
 // Verify the captured token, then pin it on the request rather than allowing a
 // later SDK token lookup to send an earlier account's draft as somebody else.
@@ -21,10 +23,17 @@ export function authorizationHeaders(headers,token){
 }
 
 // Role probes decide what a page shows, so pin the verified token and drop a reply if the account changed meanwhile.
-export async function verifiedRoleCheck(auth,client,actorId,name,signal){
- const unavailable={data:null,error:new Error('Account identity changed.')};
- const token=await verifiedAccountToken(auth,actorId,signal);if(!token)return unavailable;
- const result=await client.rpc(name).setHeader('Authorization','Bearer '+token).abortSignal(signal);
- signal.throwIfAborted();const{data}=await auth.getSession();signal.throwIfAborted();
- return data?.session?.user?.id===actorId&&data.session.access_token===token?result:unavailable;
+export function verifiedRoleCheck(auth, client, actorId, name, parentSignal) {
+  return withAccountDeadline(async signal => {
+    const unavailable = { data: null, error: new Error('Account identity changed.') };
+    const token = await verifiedAccountToken(auth, actorId, signal);
+    if (!token) return unavailable;
+    const result = await client.rpc(name).setHeader('Authorization', 'Bearer ' + token).abortSignal(signal);
+    signal.throwIfAborted();
+    const { data, error } = await auth.getSession();
+    signal.throwIfAborted();
+    return !error && data?.session?.user?.id === actorId && data.session.access_token === token
+      ? result
+      : unavailable;
+  }, parentSignal);
 }
