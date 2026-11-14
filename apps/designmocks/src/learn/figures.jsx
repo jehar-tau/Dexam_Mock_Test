@@ -254,7 +254,7 @@ export function Figure({ spec, compact = false }) {
       for (const i of spec.badCells ?? []) states[i] = 'is-bad';
       return <NetDiagram cells={spec.cells} states={spec.showBad ? states : (spec.states ?? {})} compact={compact || spec.compact} />;
     }
-    case 'cube': return <CubeView view={spec.view} large={spec.large && !compact} />;
+    case 'cube': return <CubeView view={spec.view} large={spec.large && !compact} caption={spec.label ?? null} />;
     case 'fold-sequence': return <FoldSequence folds={spec.folds} punched={spec.punched} />;
     case 'holes': return <HoleGrid holes={spec.holes} compact={compact} />;
     case 'image': return <ImageFigure figure={spec.figure} transform={spec.transform} line={spec.line} compact={compact} />;
