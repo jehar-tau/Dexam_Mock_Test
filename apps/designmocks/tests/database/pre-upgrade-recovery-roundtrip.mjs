@@ -82,8 +82,12 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
           throw error;
         }
       },
-      fetchImpl: async address => {
+      fetchImpl: async (address, request) => {
         assert.equal(address, `${config.url}/storage/v1/object/paper-media/${preUpgradeMediaPath}`);
+        assert.equal(request.headers.get('apikey'), config.key);
+        assert.equal(request.headers.has('authorization'), false);
+        assert.equal(request.headers.get('accept-encoding'), 'identity');
+        assert.equal(request.redirect, 'error');
         return new Response(preUpgradePng);
       },
     };

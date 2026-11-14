@@ -7,6 +7,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { BANK_TARGET_SNAPSHOT_SQL } from '../../scripts/reconcile-bank-target.mjs';
+import { BANK_RUNTIME_SNAPSHOT_SQL } from '../../scripts/reconcile-bank-runtime.mjs';
+import { compileRuntimeManifest } from '../../scripts/materialize-bank-runtime.mjs';
 import { buildManifest, SOURCE_PATH } from '../../scripts/question-bank-import.mjs';
 
 const url = process.env.DESIGNMOCKS_TEST_DATABASE_URL;
@@ -64,7 +66,11 @@ const actor = randomUUID();
 const key = suffix => keyPrefix + '-' + suffix;
 const question = (suffix, holds = []) => ({
   externalKey: key(suffix),
-  prompt: 'Fictional bank reconciliation fixture.',
+  prompt: "Fictional bank fixture's \\ figure: Δ.",
+  ...(suffix === 'ready' && {
+    answer: { raw: 'B' },
+    options: ['A', 'B', 'C', 'D'].map(key => ({ key, text: key })),
+  }),
   provenance: { exam: 'uceed' },
   type: 'MCQ',
   holds,
@@ -134,6 +140,8 @@ try {
     select public.finish_question_bank_import(:'fixture_run');
     commit;
   `);
+  const runtime = compileRuntimeManifest(manifest, []).records.find(record => record.externalKey === key('ready')).runtime;
+  assert.equal(runtime?.kind, 'mcq');
   sql(`
     begin;
     insert into auth.users(id) values (${quote(actor)});
@@ -148,7 +156,7 @@ try {
     );
     update dm_private.bank_questions set active=false
       where external_key in (${quote(key('quarantine'))}, ${quote(key('threshold'))});
-    update dm_private.bank_questions set runtime_payload='{"kind":"mcq"}' where external_key=${quote(key('ready'))};
+    update dm_private.bank_questions set runtime_payload=${json(runtime)}, objective_ready=true where external_key=${quote(key('ready'))};
     update dm_private.bank_questions set owner_approved=true, rights_confirmed=true where external_key=${quote(key('ready'))};
     commit;
   `);
@@ -175,11 +183,27 @@ try {
   assert.equal(git('status', '--porcelain', '--untracked-files=no'), '');
   assert.equal(git('rev-parse', 'refs/remotes/origin/main'), source);
 
+  const runtimeArgs = ['--runtime-media-root', cwd];
+  const runtimeCheck = report(source, 0, runtimeArgs);
+  assert.deepEqual(runtimeCheck.runtime.counts, { matched: 1, unavailable: 1, unbound: 0 });
+  assert.equal(runtimeCheck.runtime.passed, true);
+  assert.equal(fingerprint(), before);
+  sql(`
+    update dm_private.bank_questions
+    set runtime_payload=jsonb_set(runtime_payload, '{key,correct}', '["A"]')
+    where external_key=${quote(key('ready'))};
+  `);
+  const runtimeDrift = report(source, 2, runtimeArgs);
+  assert.deepEqual(runtimeDrift.runtime.issues.mismatch, [key('ready')]);
+  assert.deepEqual(runtimeDrift.importIssues, []);
+
   for (const role of ['anon', 'authenticated', 'service_role']) {
-    const denied = runSql(`set role ${role};\n${BANK_TARGET_SNAPSHOT_SQL}`);
-    assert.notEqual(denied.status, 0, role + ' could read the private snapshot');
-    assert.match(denied.stderr, /42501/, role + ' must receive a permission error');
-    assert.equal(denied.stdout.trim(), '');
+    for (const snapshotSql of [BANK_TARGET_SNAPSHOT_SQL, BANK_RUNTIME_SNAPSHOT_SQL]) {
+      const denied = runSql(`set role ${role};\n${snapshotSql}`);
+      assert.notEqual(denied.status, 0, role + ' could read the private snapshot');
+      assert.match(denied.stderr, /42501/, role + ' must receive a permission error');
+      assert.equal(denied.stdout.trim(), '');
+    }
   }
 
   sql(`

@@ -31,6 +31,10 @@ test("capacity runner separates active attempts, interpolates fixtures and appli
   } });
   assert.equal(result.summary.requests, 12);
   assert.equal(result.summary.errors, 0);
+  assert.deepEqual(result.requests.map(({kind, name, count, errors}) => ({kind, name, count, errors})), [
+    {kind: "browser", name: "home", count: 6, errors: 0},
+    {kind: "activeAttempt", name: "autosave", count: 6, errors: 0},
+  ]);
   assert.equal(result.summary.passed, true);
   assert.equal(calls.filter(call => call.method === "POST").length, 6);
   assert.match(calls.find(call => call.method === "POST").url, /attempt\/attempt-0/);
@@ -50,4 +54,106 @@ test("capacity runner fails the gate when responses error", async () => {
   assert.equal(result.summary.passed, false);
   assert.equal(result.summary.errorRate, 1);
   assert.equal(result.failures.length, 12);
+});
+
+test("response checks distinguish accepted autosaves from successful HTTP responses with stale revisions", async () => {
+  const source = plan({sessions: 1, activeAttempts: 1});
+  source.scenarios.activeAttempt[0].check = "accepted-revision";
+  const options = {
+    fixtures: [{attemptId: "attempt-a", accessToken: "private-token"}],
+    fetchImpl: async (_url, init) => {
+      assert.equal(init.redirect, "error");
+      const {revision} = JSON.parse(init.body);
+      return Response.json({accepted: revision === 1, revision: 1, privateAnswer: "private-payload"});
+    },
+  };
+  const result = await runCapacityTest(source, options);
+  assert.equal(result.summary.requests, 2);
+  assert.equal(result.summary.errors, 1);
+  assert.equal(result.summary.passed, false);
+  assert.deepEqual(result.failures, [{kind: "activeAttempt", name: "autosave", status: 200, error: "ResponseCheckFailed"}]);
+  assert.doesNotMatch(JSON.stringify(result), /private-token|private-payload|attempt-a/);
+});
+
+test("checked reads reject another attempt, an exposed key, and a malformed JSON body", async () => {
+  const source = plan({sessions: 1, activeAttempts: 1, iterations: 4});
+  source.scenarios.activeAttempt[0].check = "active-attempt";
+  const attempt = {id: "attempt-a", status: "active", questions: [{}]};
+  const responses = [
+    Response.json(attempt),
+    Response.json({...attempt, id: "foreign"}),
+    Response.json({...attempt, questions: [{correctKey: "secret"}]}),
+    new Response("<html>Unexpected redirect target</html>"),
+  ];
+  const result = await runCapacityTest(source, {
+    fixtures: [{attemptId: attempt.id, accessToken: "private-token"}],
+    fetchImpl: async () => responses.shift(),
+  });
+  assert.equal(result.summary.errors, 3);
+  assert.equal(result.summary.passed, false);
+});
+
+test("a response that fails while streaming counts once, and an origin escape fails before any request", async () => {
+  const result = await runCapacityTest(plan({sessions: 1, activeAttempts: 0, iterations: 1}), {
+    fetchImpl: async () => new Response(new ReadableStream({
+      start(controller) { controller.error(new Error("private body error")); },
+    })),
+  });
+  assert.equal(result.summary.requests, 1);
+  assert.equal(result.summary.errors, 1);
+  assert.doesNotMatch(JSON.stringify(result), /private body error/);
+
+  const source = plan();
+  source.scenarios.activeAttempt[0].path = "/{attemptId}";
+  const fixtures = [{attemptId: "/outside.example", accessToken: "private-token"}];
+  await assert.rejects(runCapacityTest({...source, activeAttempts: 1}, {
+    fixtures,
+    fetchImpl: async () => assert.fail("A bad fixture must fail before any request"),
+  }), /escaped the target origin/);
+});
+
+test("capacity acceptance verifies each saved answer through an independent active-attempt read", async () => {
+  const source = plan({sessions: 1, activeAttempts: 1, iterations: 5});
+  source.scenarios.activeAttempt[0].check = "persisted-revision";
+  const fixture = {attemptId: "attempt-a", questionId: "question-a", answer: ["B", "D"], accessToken: "private-token"};
+  let revision = 0;
+  const result = await runCapacityTest(source, {
+    fixtures: [fixture],
+    fetchImpl: async () => {
+      revision++;
+      const question = {id: fixture.questionId, answerRevision: revision, answer: fixture.answer};
+      if (revision === 2) question.answer = ["B"];
+      if (revision === 3) question.answerRevision--;
+      if (revision === 4) question.explanation = "Private explanation";
+      if (revision === 5) question.id = "foreign-question";
+      return Response.json({id: fixture.attemptId, status: "active", questions: [question]});
+    },
+  });
+  assert.equal(result.summary.requests, 5);
+  assert.equal(result.summary.errors, 4);
+  assert.equal(result.summary.passed, false);
+  assert.doesNotMatch(JSON.stringify(result), /private-token|Private explanation|question-a|foreign-question/);
+});
+
+test("the persistence plan rejects reused synthetic attempts or accounts before dispatch", async () => {
+  const source = plan({sessions: 2, activeAttempts: 2});
+  source.scenarios.activeAttempt[0].check = "persisted-revision";
+  for (const fixtures of [
+    [{attemptId: "a", accessToken: "x"}, {attemptId: "a", accessToken: "y"}],
+    [{attemptId: "a", accessToken: "x"}, {attemptId: "b", accessToken: "x"}],
+  ]) {
+    await assert.rejects(runCapacityTest(source, {
+      fixtures: fixtures.map(fixture => ({ ...fixture, questionId: "q", answer: "A" })),
+      fetchImpl: async () => assert.fail("Repeated fixture must fail before dispatch"),
+    }), /require distinct synthetic attempts and access tokens/);
+  }
+});
+
+test("the persistence plan requires an explicit question and answer", async () => {
+  const source = plan({sessions: 1, activeAttempts: 1});
+  source.scenarios.activeAttempt[0].check = "persisted-revision";
+  await assert.rejects(runCapacityTest(source, {
+    fixtures: [{attemptId: "a", accessToken: "x", questionId: "q"}],
+    fetchImpl: async () => assert.fail("Incomplete fixture must fail before dispatch"),
+  }), /require a synthetic question ID and answer/);
 });

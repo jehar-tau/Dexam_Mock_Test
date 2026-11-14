@@ -1,3 +1,4 @@
+import { stagingEdgeDenied } from "../_shared/staging-edge-admission.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { DrawingLinksError, sameDrawingPages, signedDrawingPages } from "../_shared/drawing-links.mjs";
 import { drawingRequestBody } from "../_shared/drawing-request.mjs";
@@ -22,6 +23,9 @@ Deno.serve(async (request) => {
     global: { headers: { Authorization: request.headers.get("authorization") ?? "" } },
     auth: { persistSession: false },
   });
+  const stagingCheck = Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER");
+  const stagingDenied = () => stagingEdgeDenied(stagingCheck, reviewer, AbortSignal.any([request.signal, AbortSignal.timeout(10000)]));
+  if (await stagingDenied()) return respond({ error: "Private staging requires an approved Google tester" }, 403);
   try {
     const { reviewId } = JSON.parse(new TextDecoder().decode(await drawingRequestBody(request, 4096)));
     if (typeof reviewId !== "string") return respond({ error: "Invalid review" }, 400);
@@ -32,6 +36,7 @@ Deno.serve(async (request) => {
     // Signing is asynchronous. Recheck assignment/revocation before releasing links.
     const current = await reviewer.rpc("admin_drawing_review_media_paths", { p_review_id: reviewId });
     if (current.error || !sameDrawingPages(result.data, current.data)) return respond({ error: "Drawing pages are unavailable for this review." }, 403);
+    if (await stagingDenied()) return respond({ error: "Private staging requires an approved Google tester" }, 403);
     return respond(signed);
   } catch (error) {
     if (error instanceof DrawingLinksError) return respond({ error: error.message }, error.status);

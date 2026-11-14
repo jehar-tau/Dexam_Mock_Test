@@ -2,9 +2,11 @@ import { realpath } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 import project from "../../supabase/project.json" with { type: "json" };
 import { serveArtifact } from "./local-artifact-fixture.js";
+import { communityFeedFixture } from "./community-feed-fixture.js";
 import { seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 const stage = project.staging_frontend_origin;
+const publicHosts = [project.frontend_origin, "https://designmocks-studio.snehal1155.chatgpt.site"];
 const stagedArtifact = "http://127.0.0.1:4699";
 const artifactSite = process.env.DMOCKS_STAGING_ARTIFACT_SITE;
 const provider = `https://${project.project_ref}.supabase.co`;
@@ -15,7 +17,7 @@ test.beforeEach(async ({ page }) => {
   const site = artifactSite ? await realpath(artifactSite) : null;
   await page.route("**/*", (route) => route.abort());
   // Deliver the local artifact on both hostnames without visiting either hosted site.
-  await page.route(url => [stage, project.frontend_origin].includes(url.origin), async route => {
+  await page.route(url => [stage, ...publicHosts].includes(url.origin), async route => {
     const url = new URL(route.request().url());
     if (site) return serveArtifact(route, site, url);
     const response = await route.fetch({ url: stagedArtifact + url.pathname + url.search, maxRedirects: 0 });
@@ -25,12 +27,14 @@ test.beforeEach(async ({ page }) => {
 
 test("the staging artifact rejects a different host before contacting the provider", async ({ page }) => {
   const { calls, unexpected, authCalls } = await stubPortalProvider(page, () => undefined, project.project_ref);
-  await page.goto(project.frontend_origin + "/account");
-  await expect(page.getByRole("button", { name: "Continue with Google" })).toBeDisabled();
-  await expect(page.getByText("PRIVATE STAGING", { exact: false })).toHaveCount(0);
-  await seedPortalSession(page, tester, project.project_ref);
-  await page.goto(project.frontend_origin + "/dashboard");
-  await expect(page.getByRole("heading", { name: "One account. Your own progress." })).toBeVisible();
+  for (const origin of publicHosts) {
+    await page.goto(origin + "/account");
+    await expect(page.getByRole("button", { name: "Continue with Google" })).toBeDisabled();
+    await expect(page.getByText("PRIVATE STAGING", { exact: false })).toHaveCount(0);
+    await seedPortalSession(page, tester, project.project_ref);
+    await page.goto(origin + "/dashboard");
+    await expect(page.getByRole("heading", { name: "One account. Your own progress." })).toBeVisible();
+  }
   expect(calls).toEqual([]);
   expect(authCalls).toEqual([]);
   expect(unexpected).toEqual([]);
@@ -109,5 +113,44 @@ test("an unavailable admission check keeps returning accounts out of protected r
   await expect(page.getByRole("alert")).toContainText("Couldn’t verify staging access.");
   await expect(page.getByRole("heading", { name: "Admin review." })).toHaveCount(0);
   expect(calls.every(([name]) => name === "can_enter_staging_portal")).toBe(true);
+  expect(unexpected).toEqual([]);
+});
+
+test("the API admission hook denial keeps a returning account out of staging", async ({page}) => {
+  const {calls, unexpected} = await stubPortalProvider(page, procedure =>
+    procedure === "can_enter_staging_portal"
+      ? {code: "42501", message: "Private staging requires an approved Google tester"} : undefined,
+  project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.goto("/dashboard");
+  await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
+  await expect(page.getByRole("heading", {name: /Welcome to your next attempt/})).toHaveCount(0);
+  expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
+  expect(unexpected).toEqual([]);
+});
+
+test("an admitted tester can open Community and loses access after revocation", async ({page}) => {
+  let admitted = true;
+  const {calls, unexpected} = await stubPortalProvider(page, (procedure, input) => {
+    if (procedure === "can_enter_staging_portal") {
+      return admitted || {code: "42501", message: "Private staging requires an approved Google tester"};
+    }
+    if (procedure === "community_feed") return communityFeedFixture([], input);
+    return undefined;
+  }, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.goto("/dashboard/community");
+  await expect(page.getByRole("heading", {name: /Ask clearly/})).toBeVisible();
+  await expect(page.getByText("No discussions match these filters.")).toBeVisible();
+  expect(calls.filter(([name]) => name === "community_feed")).toHaveLength(1);
+
+  admitted = false;
+  calls.length = 0;
+  await page.reload();
+  await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
+  await expect(page.getByRole("heading", {name: /Ask clearly/})).toHaveCount(0);
+  expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
   expect(unexpected).toEqual([]);
 });

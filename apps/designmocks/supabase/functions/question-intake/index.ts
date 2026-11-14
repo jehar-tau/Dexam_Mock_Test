@@ -1,3 +1,6 @@
+import { stagingEdgeDenied } from "../_shared/staging-edge-admission.mjs";
+import { JsonRequestError } from "../_shared/request-json.mjs";
+import { IntakeRequestError, isIntakeAssetId, readIntakeJson, readIntakeUpload } from "../_shared/intake-request.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { intakeFigureDescriptor, intakeFileMatches } from "../_shared/intake-file.mjs";
 import { intakeSourceDigest, saveIntakeSource } from "../_shared/intake-source.mjs";
@@ -22,13 +25,18 @@ Deno.serve(async request => {
   });
   const { data: { user } } = await student.auth.getUser();
   if (!user) return respond({ error: "Sign in required" }, 401);
+  const stagingCheck = Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER");
+  const stagingDenied = () => stagingEdgeDenied(stagingCheck, student, AbortSignal.any([request.signal, AbortSignal.timeout(10000)]));
+  if (await stagingDenied()) {
+    return respond({ error: "Private staging requires an approved Google tester" }, 403);
+  }
   const { data: isAdmin, error: roleError } = await student.rpc("is_dmocks_admin");
   if (roleError || !isAdmin) return respond({ error: "Admin access required" }, 403);
   const admin = createClient(url, service, { auth: { persistSession: false } });
   try {
     if (request.headers.get("content-type")?.includes("application/json")) {
-      const { assetId, figureSha } = await request.json();
-      if (typeof assetId !== "string") return respond({ error: "Intake asset id required" }, 400);
+      const { assetId, figureSha } = await readIntakeJson(request);
+      if (!isIntakeAssetId(assetId)) return respond({ error: "Intake asset id required" }, 400);
       if (figureSha != null && (typeof figureSha !== "string" || !/^[a-f0-9]{64}$/.test(figureSha))) return respond({ error: "Invalid figure digest" }, 400);
       const source = figureSha ? await student.rpc("admin_question_intake_figure_source", { p_asset_id: assetId, p_sha256: figureSha })
         : await student.rpc("admin_question_intake_source", { p_asset_id: assetId });
@@ -45,17 +53,15 @@ Deno.serve(async request => {
         const figure = await intakeFigureDescriptor(new Uint8Array(await file.arrayBuffer()), crypto.subtle.digest.bind(crypto.subtle));
         if (figure.sha256 !== figureSha) return respond({ error: "Retained figure does not match its digest" }, 409);
       }
+      if (await stagingDenied()) return respond({ error: "Private staging requires an approved Google tester" }, 403);
+      const access = await student.rpc("is_dmocks_admin").abortSignal(AbortSignal.any([request.signal, AbortSignal.timeout(10000)]));
+      if (access.error || access.data !== true) return respond({ error: "Admin access required" }, 403);
       return new Response(file, { headers: { ...headers, "Content-Type": "application/octet-stream", "Content-Disposition": "attachment" } });
     }
-    const form = await request.formData(), file = form.get("file");
-    if (!(file instanceof File) || !["application/pdf", "image/png", "image/jpeg", "image/webp"].includes(file.type) || file.size < 1 || file.size > 26214400) {
-      return respond({ error: "Use a PDF, PNG, JPEG or WebP up to 25 MB" }, 400);
-    }
+    const { file, assetId } = await readIntakeUpload(request);
     const bytes = new Uint8Array(await file.arrayBuffer());
     if (!intakeFileMatches(bytes, file.type)) return respond({ error: "File content does not match its PDF or image type" }, 400);
-    if (form.get("purpose") === "figure") {
-      const assetId = form.get("assetId");
-      if (file.type !== "image/png" || typeof assetId !== "string") return respond({ error: "A PNG figure and intake source are required" }, 400);
+    if (assetId !== null) {
       const source = await student.rpc("admin_question_intake_source", { p_asset_id: assetId });
       if (source.error) return respond({ error: "Intake source unavailable" }, 403);
       const figure = await intakeFigureDescriptor(bytes, crypto.subtle.digest.bind(crypto.subtle));
@@ -75,7 +81,8 @@ Deno.serve(async request => {
     }
     const saved = await saveIntakeSource({ admin, actorId: user.id, name: file.name, mimeType: file.type, bytes });
     return respond(saved.body, saved.status);
-  } catch {
+  } catch (error) {
+    if (error instanceof IntakeRequestError || error instanceof JsonRequestError) return respond({ error: error.message }, error.status);
     return respond({ error: "Private intake request failed. Refresh the intake list before trying again." }, 400);
   }
 });

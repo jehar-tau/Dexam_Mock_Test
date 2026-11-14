@@ -59,6 +59,19 @@ npm run recovery:verify -- --bundle /private/backups/pre-upgrade
 
 Pre-upgrade capture requires the companion MVP profile to be absent. It validates the project and release in the file, checks the installed versions against the reviewed list and records the ledger digest in the authenticated manifest. The capture and verification summaries report `sourceStage: "pre-upgrade"`. Keep the reviewed ledger with the rollout evidence.
 
+## Capture closed staging before permissions repair
+
+Use this mode when the companion profile is installed in staging and its permissions verifier reports false. The source must have Test mode, sales off, registration closed or restricted to testers, and Test checkout disabled. The ledger uses the same keys as the example above, with version `dmocks-staging-recovery-ledger-v1` and every migration version from the approved source and hosted ledger. Review the exact project, release and migration list before capture.
+
+```sh
+npm run recovery:capture -- --output /private/backups/staging-before-repair --release APPROVED_FULL_RELEASE_SHA --staging-ledger /private/recovery/reviewed-staging-ledger.json
+npm run recovery:verify -- --bundle /private/backups/staging-before-repair
+```
+
+If the proposed upgrade adds migrations, capture the pre-upgrade staging snapshot using the reviewed checkout that matches the installed ledger. The new release checkout belongs to the upgrade rehearsal.
+
+Verification reports `staging-before-permissions-repair`. Capture records the installed schema and grants, rechecks them and the Storage inventory before committing the encrypted bundle, and records no canonical profile digest. Restore into an isolated database and compare snapshots at that same stage first. The restored snapshot will carry the original permission drift. Rehearse the reviewed repair on that isolated copy, then verify the canonical profile and the closed checkout controls before recording acceptance.
+
 ## Rehearse restoration
 
 1. Create a new disposable, compatible PostgreSQL 17/Supabase target with the required provider roles/extensions. Isolate its services from external OAuth, email, merchant endpoints, public DNS and scheduled jobs **before loading data**. Use original fictional data for development checks; customer recovery needs an approved protected recovery environment.

@@ -1,6 +1,6 @@
 # DMocks
 
-The independent DMocks website and student portal, inside `jehar-tau/Dexam_Mock_Test` at `apps/designmocks`. Approved offer: **₹1,193 for one year**, one payment, no automatic renewal. The owner-connected **https://dmocks.com** domain is active with HTTPS; hosting remains owner-private.
+The independent DMocks website and student portal, inside `jehar-tau/Dexam_Mock_Test` at `apps/designmocks`. Approved offer: **₹1,193 for one year**, one payment, no automatic renewal. The owner-connected **https://dmocks.com** domain serves the public informational Site over HTTPS.
 
 ## Run locally
 
@@ -14,6 +14,18 @@ npm run designmocks:dev
 Open http://127.0.0.1:4190/ for the website or http://127.0.0.1:4190/portal-preview for the inside-portal preview. The latter is development-only, explicitly fictional and includes an example report. Its pass, marks and sample account do not grant real access. It is excluded from production builds.
 
 From this app directory, use `npm ci`, `npm run dev`, `npm run check` or `npm run build`. Build output is `dist/`. `npm run preview` serves a production build on port 4191. The original root question-bank studio and commands are preserved.
+
+## Local database development
+
+From `apps/designmocks`, run `supabase start` with Supabase CLI 3.1 and Docker. DMocks uses project ID `designmocks-independent`, API port 57321 and PostgreSQL port 57322. The local database starts from the app migrations with registration closed and sales disabled. Use fictional fixtures for development and keep the local keys separate from hosted staging credentials.
+
+For a database, Auth and Storage rehearsal with fewer containers, run:
+
+```sh
+supabase start -x realtime,imgproxy,postgres-meta,studio,edge-runtime,logflare,vector,supavisor
+```
+
+Check Auth at `http://127.0.0.1:57321/auth/v1/health`. Use `supabase stop` from the same app directory when finished. The browser's local `/portal-preview` uses fictional data. Real Google and payment acceptance use their approved hosted configurations.
 
 ## Frozen paid MVP — 8 November 2026
 
@@ -61,7 +73,11 @@ For the full private staging portal, build with `VITE_DEPLOYMENT_ENV=staging`, `
 
 The separate Supabase project is `tiodqzvvujxvxssvjdis` (Mumbai). The restrictive signup hook is configured. Later source migrations and Edge Functions remain local until a deliberate staging promotion; source presence is not hosted acceptance. The canonical hold-free bank is privately imported and remains unapproved; private canonical image delivery is accepted. Use an explicit project reference and app working directory for provider operations; never target the academy's staging/production project. Do not rerun migrations blindly against an existing database.
 
-The existing owner-private Site is https://designmocks-studio.snehal1155.chatgpt.site (Site ID `appgprj_6aeac2a10f708191a6fd4160cec11651`). GitHub is now the source repository for the app. **A GitHub push does not automatically deploy this Site.** Its existing managed publication checkout remains separate; no Site token, Git metadata, hosting identity file, ignored environment file or runtime data was copied into this monorepo. To publish, deliberately synchronise only the app's source to that managed checkout and use the existing Site identity and private audience. Never publish the repository root/question bank as a Site archive. A different hosting provider should use `apps/designmocks` as its project root and `dist` as the output, only after an owner-approved deployment setup.
+The public Site is https://dmocks.com (Site ID `appgprj_6aeac2a10f708191a6fd4160cec11651`); https://designmocks-studio.snehal1155.chatgpt.site is an alias of that same public Site, not private staging. Never deploy a staging build to that Site identity.
+
+The separate owner-only staging Site is `appgprj_6af767851bc08191913c602fe8bf7e44`, with expected origin https://dmocks-staging.snehal1155.chatgpt.site. Registration reserves the Site; it does not prove deployment or backend acceptance. Its source checkout is separate from this monorepo. Keep checkout closed and preserve owner-only access. Before hosted acceptance, configure the exact Auth callback and approved backend CORS origin, verify tester admission and compare deployed source. The hosted backend currently allows the owner's local origin `http://127.0.0.1:4190`; source config changes do not update that hosted setting.
+
+**A GitHub push does not automatically deploy either Site.** Synchronise only the app's sanitized source/build to the matching Site repository. Never include the repository root, question bank, Git metadata, private evidence or environment secrets in a Site archive. Preserve each Site's separate identity and audience.
 
 ## Verification
 

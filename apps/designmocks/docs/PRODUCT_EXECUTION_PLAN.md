@@ -1,6 +1,23 @@
 # DMocks release execution plan
 
-## Current release work (9 November 2026)
+## Active ownership and execution order (14 November 2026)
+
+The owner resumed the full product goal with a split of responsibility: **Claude builds Learn; the owner pushes those changes; Codex builds the rest and integrates and verifies Learn after it is pushed.** Preserve Claude's uncommitted Learn checkout and use a separate feature worktree. The wider requirements in POST_LAUNCH_ROADMAP.md remain part of the goal; the paid MVP is the first release milestone, not completion of the whole application. Build and test unreleased modules privately without exposing them through the paid MVP profile.
+
+Source inspected at resumption was `4c1dc6ae4d4d8e41a25926a6d382b127dd543b05` (PR #154). Its GitHub Actions run `43269084239` passed. This proves source CI, not hosted deployment or merchant acceptance. Read HANDOFF.md's owner decisions before requesting any approval.
+
+Next execution order:
+
+1. Reconcile the already-deployed staging state and recovery evidence before further rollout. The selected staging project is `tiodqzvvujxvxssvjdis`; a separate production project is required before go-live. A read-only dashboard inspection on 14 November lists all 90 source migration version IDs through `202611100166`. Do not reapply the historical 65-migration backlog. Migration bodies, profile, deployed function hashes and recovery evidence still need comparison. Backup/restore and dry run are authorized; additional hosted changes remain separately gated.
+2. Reconcile and verify admitted Google identity, student/staff authorization, the exact approved UCEED paper, private media, reconnect and results against staging. The dashboard lists five deployed functions: attempt-media, create-order, drawing-media, drawing-review-media and payment-webhook. Anonymous rejection probes pass for the configured local origin `http://127.0.0.1:4190`, while an attempt-media request from `https://dmocks.com` returns 403 Origin not allowed. This is local-origin setup evidence, not hosted frontend or merchant acceptance. Use the existing private configuration in `~/dmocks-local/apps/designmocks/.env.local`; never copy its contents into Git or chat.
+3. Complete the real Razorpay Test capture/webhook/refund journey with rotated Test secrets and the approved expiring window. Final notice publication, alert delivery and the separate public admission/catalogue/Live switches remain release work.
+4. Continue the remaining non-Learn portal, bank administration and assessment requirements from the full roadmap in isolated feature branches. Integrate the owner-pushed Learn changes without replacing Claude's work. Add feature-relevant unit, authorization and desktop/mobile coverage and merge after local checks and GitHub CI pass.
+
+Approved decisions must not be asked again: adults only (18+); the approved eligibility sentence in HANDOFF.md; full change-of-mind refunds within seven calendar days before the first paid mock starts, initiated within two business days of approval; no GST, full listed price, Razorpay receipt as invoice until registration. Duplicate charges and service faults are handled separately. Approval of wording does not establish publication or hosted acceptance. The alert receiver and the owner's NID practice blueprint remain outstanding.
+
+The sections below retain dated release evidence. Historical migration counts, compiler counts, estimates and candidate descriptions are not current rollout evidence. Use the current migration directory, fresh target ledger and source checks for deployment; use HANDOFF.md for subsequent accepted slices and owner decisions.
+
+## Historical release checkpoint (9 November 2026)
 
 On 9 November the owner approved public access to **Site version 6**, and the native Sites deployment succeeded. The public informational site and original five-question sample now serve at **dmocks.com**. The version 6 archive matched the build from accepted source `e457196519a5d87cf1bc63b5e72e1793db6dde68`. The [release checklist](LAUNCH_CHECKLIST.md#public-non-payment-release) records the eight signed-out desktop and mobile routes.
 
@@ -42,7 +59,7 @@ The owner now explicitly resumes work on the original 1,080 records outside the 
 - Advanced teacher/drawing operations unless the chosen first paper strictly needs them. Prefer an objective first offering to avoid adding that dependency.
 - Malware/scanner, resumable-transfer and advanced attachment work; the large 150-session capacity exercise; further analytics and portal refinement.
 
-Already implemented code can remain in the repository behind disabled routes. Explicit nonproduction regression previews may exercise it; production must not expose or advertise it. The older detailed implementation plan is preserved in [POST_LAUNCH_ROADMAP.md](POST_LAUNCH_ROADMAP.md) as a backlog, not an execution queue.
+Already implemented code can remain in the repository behind disabled routes. Explicit nonproduction regression previews may exercise it; production must not expose or advertise it. The detailed implementation requirements are preserved in [POST_LAUNCH_ROADMAP.md](POST_LAUNCH_ROADMAP.md). The resumed full goal authorizes independent implementation, while this first paid release keeps those products disabled until their own acceptance.
 
 ## Current evidence and remaining estimate
 

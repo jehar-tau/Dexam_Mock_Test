@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { INTAKE_EXTRACTION_MAX_BYTES } from "../supabase/functions/_shared/intake-limits.mjs";
 import { intakeFigureDescriptor, intakeReviewPayload, intakeReviewValues } from "./intake-review.js";
 
 function IntakeQuestionEditor({ payload, pageNumber, manual, onSubmit, onPrepareFigures }) {
@@ -118,9 +119,9 @@ function IntakeAsset({ asset, onExtract, onPromote, onReject, onTranscribe, onDo
     {asset.error && <p className="error">{asset.error}</p>}
     <div className="admin-actions">
       {onDownload && <button disabled={busy} onClick={() => act(() => onDownload(asset))}>Download private source</button>}
-      {(["uploaded", "failed"].includes(asset.status) || asset.retryAvailable) && <button disabled={busy || asset.byteSize > 10485760} onClick={() => act(() => onExtract(asset.id))}>{asset.retryAvailable ? "Retry extraction" : "Extract with configured model"}</button>}
+      {(["uploaded", "failed"].includes(asset.status) || asset.retryAvailable) && <button disabled={busy || asset.byteSize > INTAKE_EXTRACTION_MAX_BYTES} onClick={() => act(() => onExtract(asset.id))}>{asset.retryAvailable ? "Retry extraction" : "Extract with configured model"}</button>}
     </div>
-    {asset.byteSize > 10485760 && <p>Model extraction accepts files up to 10 MB. Split the source or transcribe its questions below.</p>}
+    {asset.byteSize > INTAKE_EXTRACTION_MAX_BYTES && <p>Model extraction accepts files up to 10 MB. Split the source or transcribe its questions below.</p>}
     {asset.status === "extracting" && <p role="status">{asset.retryAvailable ? "Extraction timed out. Retry when ready." : "Extraction in progress…"}</p>}
     {asset.attemptCount > 0 && <p>Processing attempt {asset.attemptCount}</p>}
     {message && <p role="alert">{message}</p>}

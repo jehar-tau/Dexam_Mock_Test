@@ -1,5 +1,26 @@
 project_id = "designmocks-independent"
 
+# Dedicated local ports keep this stack separate from Dexam's default stack.
+[api]
+port = 57321
+
+[db]
+port = 57322
+shadow_port = 57320
+major_version = 17
+
+[studio]
+port = 57323
+
+[local_smtp]
+port = 57324
+
+[analytics]
+port = 57327
+
+[db.pooler]
+port = 57329
+
 [functions.create-order]
 verify_jwt = false
 
@@ -32,7 +53,7 @@ verify_jwt = false
 # Exact owned-origin callbacks. The server hook admits allowlisted Google testers only; public registration remains closed.
 [auth]
 site_url = "https://dmocks.com"
-additional_redirect_urls = ["https://dmocks.com/account/callback", "https://designmocks-studio.snehal1155.chatgpt.site/account/callback", "http://127.0.0.1:4190/account/callback"]
+additional_redirect_urls = ["https://dmocks.com/account/callback", "https://designmocks-studio.snehal1155.chatgpt.site/account/callback", "https://dmocks-staging.snehal1155.chatgpt.site/account/callback", "http://127.0.0.1:4190/account/callback"]
 enable_signup = true
 enable_anonymous_sign_ins = false
 

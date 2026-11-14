@@ -1,6 +1,7 @@
 // Read-only setup smoke checks. This never creates users, orders or payments.
 import assert from "node:assert/strict";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
+import {probeStagingEdge} from "./staging-edge-readiness.mjs";
 try {
   process.loadEnvFile(".env.local");
 } catch {}
@@ -29,7 +30,10 @@ const commerceStage = process.env.DMOCKS_COMMERCE_STAGE || "unconfigured";
 assert.ok(["unconfigured", "configured"].includes(commerceStage), "Choose unconfigured or configured commerce handler checks");
 const configuredCommerce = commerceStage === "configured";
 const staging = backendStage === "staging";
-if (staging) assert.equal(authStage, "controlled", "Staging requires the controlled Auth stage");
+if (staging) {
+  assert.equal(authStage, "controlled", "Staging requires the controlled Auth stage");
+  assert.equal(configuredCommerce, false, "Run the configured commerce probe separately from private staging");
+}
 const origin = staging ? project.staging_frontend_origin : project.frontend_origin;
 async function request(path, method = "GET", body, headers = {}) {
   const response = await fetch(base + path, {
@@ -93,9 +97,15 @@ if (backendStage !== "foundation") {
   assert.equal(response.data?.code, "42501");
   results.push({ check: "anonymous admin_export_question_draft denied", status: response.status, passed: true });
   response = await request("/rest/v1/rpc/public_all_india_top_ten", "POST", {});
-  assert.equal(response.status, 200, "Alias-only public ranking remains available");
-  assert.ok(Array.isArray(response.data));
-  results.push({ check: "public ranking route available", status: 200, passed: true });
+  if (staging) {
+    assert.ok([401, 403].includes(response.status), "Private staging must keep anonymous ranking access closed");
+    assert.equal(response.data?.code, "42501");
+    results.push({ check: "staging anonymous ranking denied", status: response.status, passed: true });
+  } else {
+    assert.equal(response.status, 200, "Alias-only public ranking remains available");
+    assert.ok(Array.isArray(response.data));
+    results.push({ check: "public ranking route available", status: 200, passed: true });
+  }
 }
 response = await request("/auth/v1/settings");
 assert.equal(response.status, 200);
@@ -112,14 +122,26 @@ results.push({
   googleEnabled: Boolean(response.data.external?.google),
 });
 for (const [name, body, status] of [
-  ...(!configuredCommerce ? [["create-order", { plan: "annual" }, 503]] : []),
+  ...(!staging && !configuredCommerce ? [["create-order", { plan: "annual" }, 503]] : []),
   ["attempt-media", { attemptId: "00000000-0000-4000-8000-000000000001" }, 401],
-  ...(!configuredCommerce ? [["payment-webhook", {}, 503]] : []),
+  ...(!staging && !configuredCommerce ? [["payment-webhook", {}, 503]] : []),
 ]) {
   response = await request("/functions/v1/" + name, "POST", body, {
     Origin: origin,
   });
+  if (staging) {
+    results.push({
+      check: name + " setup/identity gate",
+      status: response.status,
+      passed: response.status === status && response.allowOrigin === origin && response.data?.error === "Sign in required",
+    });
+    continue;
+  }
   assert.equal(response.status, status, name + " setup gate");
+  if (configuredCommerce && name === "attempt-media") {
+    assert.equal(response.allowOrigin, origin, "assessment media must accept the checkout origin");
+    assert.equal(response.data?.error, "Sign in required", "assessment media handler must reject anonymous access");
+  }
   results.push({ check: name + " setup/identity gate", status, passed: true });
 }
 const checkoutPath = "/functions/v1/create-order";
@@ -184,15 +206,15 @@ if (staging) {
     assert.equal(response.data?.code, "42501");
     results.push({ check: "anonymous " + name + " denied", status: response.status, passed: true });
   }
-  for (const name of ["attempt-media", "drawing-media", "drawing-review-media", "community-media", "question-intake", "bank-review-media", "reported-question-media"]) {
-    response = await request("/functions/v1/" + name, "OPTIONS", undefined, {
-      Origin: origin,
-      "Access-Control-Request-Method": "POST",
-      "Access-Control-Request-Headers": "authorization,apikey,content-type,x-client-info",
+  const edge = await probeStagingEdge({url: base, key});
+  for (const row of edge.results) {
+    results.push({
+      check: row.name + " accepts the staging origin",
+      status: row.stagingStatus,
+      foreignStatus: row.foreignStatus,
+      result: row.result,
+      passed: row.result === "ready",
     });
-    assert.equal(response.status, 204, name + " staging preflight");
-    assert.equal(response.allowOrigin, origin, name + " staging origin");
-    results.push({ check: name + " accepts the staging origin", status: 204, passed: true });
   }
 }
 await mkdir("test-results", { recursive: true });
@@ -214,3 +236,5 @@ console.log(
     2,
   ),
 );
+
+if (results.some(result => !result.passed)) process.exitCode = 2;

@@ -1,3 +1,4 @@
+import { drawingRequestBody } from "./drawing-request.mjs";
 import { buildAiDraftRequest, parseAiDraftResponse } from "./ai-draft.mjs";
 
 export async function runAiDraft({ caller, worker, actorId, input, model, apiKey, fetcher = fetch }) {
@@ -32,7 +33,8 @@ export async function runAiDraft({ caller, worker, actorId, input, model, apiKey
       body: JSON.stringify(buildAiDraftRequest({ ...basis.data, model })), signal: AbortSignal.timeout(60000), redirect: "error",
     });
     if (!generated.ok) throw new Error("Draft provider request failed");
-    const response = await generated.json();
+    const bytes = await drawingRequestBody(generated, 256 * 1024);
+    const response = JSON.parse(new TextDecoder("utf-8", {fatal: true}).decode(bytes));
     if (response.error || response.status && response.status !== "completed") throw new Error("Incomplete draft response");
     const completed = await worker.rpc("complete_ai_draft_request", {
       p_request_id: requestId, p_model: model, p_response_id: response.id, p_payload: parseAiDraftResponse(response), p_token: token,

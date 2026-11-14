@@ -1,10 +1,10 @@
 import { readFile, stat } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
-import { collectCanonicalMedia, readCanonicalAsset, uploadCanonicalMedia } from "./private-bank-media.mjs";
+import { collectCanonicalMedia, MEDIA_BUCKET, readCanonicalAsset, uploadCanonicalMedia, verifyAssetBytes } from "./private-bank-media.mjs";
 import { loadFromGit, sha256, stableJson } from "./question-bank-import.mjs";
 import { RULES_2027, runtimeQuestion } from "./question-runtime.mjs";
-import { openPrivateBankProvider } from "./private-bank-provider.mjs";
+import { openPrivateBankProvider, openPrivateDMocksTransport } from "./private-bank-provider.mjs";
 
 const digest = /^[a-f0-9]{64}$/;
 const commit = /^[a-f0-9]{40}$/;
@@ -79,6 +79,58 @@ export async function compileMvpPaper(packet, expectedSha, canonical, mediaRoot)
   };
 }
 
+// Read the exact reviewed objects without registering or repairing them.
+export async function verifyMvpPaperStorage({ mediaPlan }, config, fetchImpl = fetch) {
+  const provider = openPrivateDMocksTransport({ ...config, serviceRoleKey: config.key }, {
+    fetchImpl, acknowledgement: "VERIFY_PRIVATE_PAPER_MEDIA_ON",
+  });
+  let bucket;
+  try {
+    const response = await provider.fetch(`${provider.origin}/storage/v1/bucket/${MEDIA_BUCKET}`);
+    if (response.status !== 200) {
+      await response.body?.cancel();
+      throw new Error();
+    }
+    bucket = await response.json();
+  } catch {
+    throw new Error("The private paper media bucket could not be read");
+  }
+  if (bucket?.id !== MEDIA_BUCKET || bucket.public !== false) {
+    throw new Error("The paper media bucket must be private");
+  }
+
+  let bytesVerified = 0;
+  for (const asset of mediaPlan.assets) {
+    let reader;
+    try {
+      const response = await provider.fetch(`${provider.origin}/storage/v1/object/${MEDIA_BUCKET}/${asset.storagePath}`);
+      reader = response.body?.getReader();
+      if (response.status !== 200 || !reader) throw new Error();
+
+      const bytes = Buffer.alloc(asset.byteSize);
+      let offset = 0;
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (offset + value.byteLength > bytes.length) throw new Error();
+        bytes.set(value, offset);
+        offset += value.byteLength;
+      }
+      if (offset !== bytes.length) throw new Error();
+      verifyAssetBytes(asset, bytes);
+      bytesVerified += offset;
+    } catch {
+      throw new Error("A reviewed figure is missing, unreadable, or differs from the approved bytes");
+    } finally {
+      if (reader) {
+        void reader.cancel().catch(() => {});
+        reader.releaseLock();
+      }
+    }
+  }
+  return { figuresVerified: mediaPlan.assets.length, bytesVerified };
+}
+
 async function requireClosedTestSales(provider) {
   const settings = await provider.fetch(`${provider.origin}/rest/v1/launch_settings?select=sales_enabled,environment_mode&singleton=eq.true`)
     .then(response => response.ok ? response.json() : null)
@@ -124,9 +176,10 @@ export async function stageMvpPaper({ plan, summary }, config, fetchImpl = fetch
 
 async function main() {
   const { values } = parseArgs({ options: { packet: { type: "string" }, expect: { type: "string" },
-    apply: { type: "boolean" }, "sync-inputs": { type: "boolean" } } });
+    apply: { type: "boolean" }, "sync-inputs": { type: "boolean" }, "verify-storage": { type: "boolean" } } });
   if (!values.packet || !digest.test(values.expect ?? "")) throw new Error("Provide --packet and the reviewed --expect SHA-256");
-  if (values.apply && values["sync-inputs"]) throw new Error("Choose either --sync-inputs or --apply");
+  const actions = ["apply", "sync-inputs", "verify-storage"].filter(action => values[action]);
+  if (actions.length > 1) throw new Error("Choose only one of --verify-storage, --sync-inputs and --apply");
   let packet;
   try {
     const info = await stat(values.packet);
@@ -145,6 +198,11 @@ async function main() {
     allowOrigin: env.DMOCKS_PAPER_ALLOW_ORIGIN, environment: env.DMOCKS_PAPER_ENVIRONMENT,
     productionAck: env.DMOCKS_PAPER_PRODUCTION_ACK,
   };
+  if (values["verify-storage"]) {
+    const receipt = await verifyMvpPaperStorage(compiled, target);
+    console.log(JSON.stringify({ mode: "verified-private-storage", ...compiled.summary, ...receipt }));
+    return;
+  }
   if (values["sync-inputs"]) {
     const receipt = await syncMvpPaperInputs(compiled, target, env.DMOCKS_MEDIA_ROOT);
     console.log(JSON.stringify({ mode: "synced-private-inputs", ...compiled.summary, ...receipt }));

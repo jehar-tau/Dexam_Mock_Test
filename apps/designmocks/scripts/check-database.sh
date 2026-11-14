@@ -23,6 +23,9 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-release.sq
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-drawings.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-ranking-consent.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/portal-grants.sql
+rpc_inventory="$(mktemp -d)"
+trap 'unlink "$rpc_inventory/source.json"; if [[ -f "$rpc_inventory/paid.json" ]]; then unlink "$rpc_inventory/paid.json"; fi; rmdir "$rpc_inventory"' EXIT
+psql "$test_db_url" -X -qAt -v ON_ERROR_STOP=1 -f supabase/audit/staging-rpc-inventory.sql > "$rpc_inventory/source.json"
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bank-import-finalization.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/canonical-media.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-runtime.sql
@@ -58,6 +61,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/frozen-drawing-rubri
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/local-drawing-advice-jobs.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learning-lesson-editor.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/staging-portal.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/staging-api-admission.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/ai-draft-canonical.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/intake-canonical.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/intake-source-receipts.sql
@@ -69,6 +73,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/private-account-expo
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/released-overview-scores.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/unseen-topic-practice.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/media-invariants.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/private-storage-boundary.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/tests/controlled_signup.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-release-profile.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-test-checkout.sql
@@ -77,6 +82,9 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-service-operatio
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-practice-blueprints.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-question-bindings.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/launch/paid-mvp.sql
+psql "$test_db_url" -X -qAt -v ON_ERROR_STOP=1 -f supabase/audit/staging-rpc-inventory.sql > "$rpc_inventory/paid.json"
+node tests/database/staging-rpc-comparison.mjs "$rpc_inventory/source.json" "$rpc_inventory/paid.json"
+node tests/database/staging-portal-grants.mjs
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-paper-preparation.sql
 node tests/database/nid-write-revocation.mjs
 node tests/database/staff-write-concurrency.mjs

@@ -1,3 +1,4 @@
+import { stagingEdgeDenied } from "./staging-edge-admission.mjs";
 import { drawingRequestBody as readLimitedBody } from "./drawing-request.mjs";
 
 const phonePattern = /^\+[1-9][0-9]{7,14}$/;
@@ -102,6 +103,9 @@ export function createCandidatePhoneHandler({ createClient, readEnvironment, sdk
       if (identityError || !uuidPattern.test(user?.id ?? "") ||
           user.app_metadata?.provider !== "google" || user.is_anonymous === true) {
         return reply({ error: "Sign in with Google to verify your phone." }, 401);
+      }
+      if (await stagingEdgeDenied(readEnvironment("DMOCKS_EDGE_REQUIRE_STAGING_TESTER"), student, signal)) {
+        return reply({ error: "Private staging requires an approved Google tester" }, 403);
       }
       const key = await crypto.subtle.importKey("raw", Uint8Array.from(keyHex.match(/../g), hex => parseInt(hex, 16)),
         { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);

@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 import { buildManifest, runtimeQuestion } from "../../scripts/question-bank-import.mjs";
 import { RULES_2027 } from "../../scripts/question-runtime.mjs";
+import { readIntakeJson, readIntakeUpload } from "../../supabase/functions/_shared/intake-request.mjs";
 
 test.use({ baseURL: portalFixtureURL });
 const author = { id: "00000000-0000-4000-8000-000000000107", email: "intake-fixture@example.invalid" };
@@ -70,25 +71,29 @@ async function fixture(page, { admin = true, loseFirstUploadReceipt = false } = 
     const headers = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info", "Access-Control-Allow-Methods": "POST, OPTIONS" };
     if (request.method() === "OPTIONS") return route.fulfill({ status: 204, headers });
     if (request.headers()["content-type"]?.includes("application/json")) {
-      const input = request.postDataJSON();
+      const input = await readIntakeJson(new Request(request.url(), {
+        method: "POST", headers: {"content-type": request.headers()["content-type"]}, body: request.postDataBuffer(),
+      }));
       const asset = assets.find(item => item.id === input.assetId);
       return route.fulfill({ headers: { ...headers, "Content-Type": "application/octet-stream" }, body: !input.figureSha && asset.mimeType === "application/pdf" ? pdf : png });
     }
     const body = request.postDataBuffer();
-    if (body.toString().includes('name="purpose"')) return route.fulfill({ headers, json: { asset: {
+    const parsed = await readIntakeUpload(new Request(request.url(), {
+      method: "POST", headers: {"content-type": request.headers()["content-type"]}, body,
+    }));
+    if (parsed.assetId) return route.fulfill({ headers, json: { asset: {
       path: `intake/${figureSha}.png`, sha256: figureSha, width: 1, height: 1,
     } } });
     uploads.push(body);
     if (loseFirstUploadReceipt) {
-      const fields = await new Response(body, { headers: { "Content-Type": request.headers()["content-type"] } }).formData();
-      const file = fields.get("file");
+      const {file} = parsed;
       expect(file.name).toBe("fictional-source.pdf");
       expect(file.type).toBe("application/pdf");
       expect(Buffer.from(await file.arrayBuffer())).toEqual(pdf);
       if (uploads.length > 1) return route.fulfill({ headers, json: { ...assets[0], reused: true } });
     }
     const isPDF = body.toString().includes('filename="fictional-source.pdf"');
-    const asset = { id: `asset-${assets.length}`, name: isPDF ? "fictional-source.pdf" : "fictional-photo.png",
+    const asset = { id: `00000000-0000-4000-8000-${String(111 + assets.length).padStart(12, "0")}`, name: isPDF ? "fictional-source.pdf" : "fictional-photo.png",
       mimeType: isPDF ? "application/pdf" : "image/png", status: "uploaded", candidates: [] };
     assets.push(asset);
     if (loseFirstUploadReceipt) return route.abort("failed");
@@ -246,31 +251,36 @@ test("administrators can transcribe several source questions while model extract
   expect(state.unexpected).toEqual([]);
 });
 
-test("a late model-worker role denial closes the desk and clears the private intake source", async ({ page }) => {
-  const state = await fixture(page);
-  await page.getByLabel("Private source file").setInputFiles({ name: "fictional-source.pdf", mimeType: "application/pdf", buffer: pdf });
-  await page.getByRole("button", { name: "Upload for extraction" }).click();
-  const asset = page.locator(".intake-queue article").filter({ hasText: "fictional-source.pdf" });
-  await expect(asset).toBeVisible();
+for (const denial of [
+  { label: "model-worker role denial", message: "Admin access required" },
+  { label: "staging tester denial", message: "Private staging requires an approved Google tester" },
+]) {
+  test(`a late ${denial.label} closes the desk and clears the private intake source`, async ({ page }) => {
+    const state = await fixture(page);
+    await page.getByLabel("Private source file").setInputFiles({ name: "fictional-source.pdf", mimeType: "application/pdf", buffer: pdf });
+    await page.getByRole("button", { name: "Upload for extraction" }).click();
+    const asset = page.locator(".intake-queue article").filter({ hasText: "fictional-source.pdf" });
+    await expect(asset).toBeVisible();
 
-  let workerCalls = 0;
-  await page.route("https://dmocks-portal-fixture.supabase.co/functions/v1/question-intake-extract", async route => {
-    workerCalls++;
-    expect(route.request().postDataJSON()).toEqual({ assetId: "asset-0" });
-    state.state.admin = false;
-    await route.fulfill({ status: 403, json: { error: "Admin access required" } });
+    let workerCalls = 0;
+    await page.route("https://dmocks-portal-fixture.supabase.co/functions/v1/question-intake-extract", async route => {
+      workerCalls++;
+      expect(route.request().postDataJSON()).toEqual({ assetId: "00000000-0000-4000-8000-000000000111" });
+      state.state.admin = false;
+      await route.fulfill({ status: 403, json: { error: denial.message } });
+    });
+    await asset.getByRole("button", { name: "Extract with configured model" }).click();
+
+    const access = page.getByRole("region", { name: "Administrator access", exact: true });
+    await expect(access.getByRole("alert")).toHaveText("Administrator access has ended. Private views were cleared.");
+    await expect(page.getByLabel("Private source file")).toHaveCount(0);
+    await expect(page.locator(".intake-queue article")).toHaveCount(0);
+    await expect(page.getByText(denial.message, { exact: true })).toHaveCount(0);
+    expect(workerCalls).toBe(1);
+    expect(state.calls.filter(([name]) => name === "question-intake-extract")).toHaveLength(0);
+    expect(state.unexpected).toEqual([]);
   });
-  await asset.getByRole("button", { name: "Extract with configured model" }).click();
-
-  const access = page.getByRole("region", { name: "Administrator access", exact: true });
-  await expect(access.getByRole("alert")).toHaveText("Administrator access has ended. Private views were cleared.");
-  await expect(page.getByLabel("Private source file")).toHaveCount(0);
-  await expect(page.locator(".intake-queue article")).toHaveCount(0);
-  await expect(page.getByText("Admin access required", { exact: true })).toHaveCount(0);
-  expect(workerCalls).toBe(1);
-  expect(state.calls.filter(([name]) => name === "question-intake-extract")).toHaveLength(0);
-  expect(state.unexpected).toEqual([]);
-});
+}
 
 test("students cannot open private intake controls", async ({ page }) => {
   const state = await fixture(page, { admin: false });
@@ -278,4 +288,26 @@ test("students cannot open private intake controls", async ({ page }) => {
   await expect(page.getByLabel("Private source file")).toHaveCount(0);
   expect(state.calls.every(([name]) => name === "is_dmocks_admin")).toBe(true);
   expect(state.unexpected).toEqual([]);
+});
+
+test("revocation during a private source download clears intake without saving a file", async ({page}) => {
+  const fixtureState = await fixture(page);
+  await page.getByLabel("Private source file").setInputFiles({name: "fictional-source.pdf", mimeType: "application/pdf", buffer: pdf});
+  await page.getByRole("button", {name: "Upload for extraction"}).click();
+  const asset = page.locator(".intake-queue article").filter({hasText: "fictional-source.pdf"});
+  await expect(asset).toBeVisible();
+
+  let downloads = 0;
+  page.on("download", () => { downloads++; });
+  await page.route("https://dmocks-portal-fixture.supabase.co/functions/v1/question-intake", async route => {
+    if (route.request().method() === "OPTIONS") return route.fallback();
+    expect(route.request().postDataJSON()).toEqual({assetId: fixtureState.assets[0].id});
+    fixtureState.state.admin = false;
+    await route.fulfill({status: 403, headers: {"Access-Control-Allow-Origin": "*"}, json: {error: "Admin access required"}});
+  });
+  await asset.getByRole("button", {name: "Download private source"}).click();
+  const access = page.getByRole("region", {name: "Administrator access", exact: true});
+  await expect(access.getByRole("alert")).toHaveText("Administrator access has ended. Private views were cleared.");
+  await expect(asset).toHaveCount(0);
+  expect(downloads).toBe(0);
 });

@@ -1,3 +1,4 @@
+import { stagingEdgeDenied } from "../_shared/staging-edge-admission.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { DrawingImageError, DRAWING_MAX_BYTES } from "../_shared/drawing-image.mjs";
 import { DRAWING_FORM_MAX_BYTES, drawingRequestBody } from "../_shared/drawing-request.mjs";
@@ -21,6 +22,10 @@ Deno.serve(async (request) => {
   const student = createClient(url, anon, { global: { headers: { Authorization: request.headers.get("authorization") ?? "" } }, auth: { persistSession: false } });
   const { data: { user } } = await student.auth.getUser();
   if (!user) return respond({ error: "Sign in required" }, 401);
+  const stagingCheck = Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER");
+  const stagingDenied = () => stagingEdgeDenied(stagingCheck, student, AbortSignal.any([request.signal, AbortSignal.timeout(10000)]));
+  const stagingRejected = () => respond({ error: "Private staging requires an approved Google tester" }, 403);
+  if (await stagingDenied()) return stagingRejected();
   const admin = createClient(url, service, { auth: { persistSession: false } });
   const bucket = admin.storage.from("drawing-submissions");
   let reserved = false;
@@ -43,6 +48,7 @@ Deno.serve(async (request) => {
           p_student_id: user.id, p_attempt_id: attemptId, p_question_id: questionId,
         });
         if (current.error || !sameDrawingPages(pages.data, current.data)) return respond({ error: "Drawing pages changed. Refresh your saved pages." }, 403);
+        if (await stagingDenied()) return stagingRejected();
         return respond(signed);
       }
       if (action !== "remove" || !isId(id)) return respond({ error: "Invalid drawing action" }, 400);
@@ -83,8 +89,13 @@ Deno.serve(async (request) => {
     if (!mime) throw new DrawingImageError("Use a still PNG, JPEG or WebP image.");
     const extension = mime === "image/jpeg" ? "jpg" : mime.split("/")[1];
     const path = `drawings/${crypto.randomUUID()}.${extension}`;
+    if (await stagingDenied()) return stagingRejected();
     const uploaded = await bucket.upload(path, checked.bytes, { contentType: mime, cacheControl: "0", upsert: false });
     if (uploaded.error) throw uploaded.error;
+    if (await stagingDenied()) {
+      await bucket.remove([path]);
+      return stagingRejected();
+    }
     const registered = await admin.rpc("register_drawing_upload", {
       p_student_id: user.id, p_attempt_id: attemptId, p_question_id: questionId,
       p_storage_path: path, p_ordinal: ordinal, p_mime_type: mime, p_byte_size: checked.bytes.length,
