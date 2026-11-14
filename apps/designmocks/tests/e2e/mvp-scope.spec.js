@@ -110,6 +110,21 @@ test('a production build cannot enable deferred modules or checkout with preview
  await page.goto('http://127.0.0.1:4899/plans');await expect(page.getByRole('checkbox')).toHaveCount(0);await expect(page.getByRole('button',{name:/Pay .* with Razorpay/})).toHaveCount(0);await expect(page.getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();
 });
 
+test('the public landing and sample do not fetch deferred portal JavaScript', async ({ page }) => {
+  const origin = 'http://127.0.0.1:4899';
+  const scripts = new Set();
+  page.on('request', request => {
+    const url = new URL(request.url());
+    if (url.origin === origin && url.pathname.endsWith('.js')) scripts.add(url.pathname);
+  });
+  await page.goto(origin + '/');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.goto(origin + '/sample');
+  await expect(page.getByRole('button', { name: 'Begin the sample', exact: true })).toBeVisible();
+  expect([...scripts].some(path => /^\/assets\/index-/.test(path))).toBe(true);
+  expect([...scripts].filter(path => /^\/assets\/(?:ExamMocks|TopicPractice|AllIndia|Learn|LearnProgramme|Community)-/.test(path))).toEqual([]);
+});
+
 for (const partial of [false, true]) test(`section guidance follows the active MSQ marking rule (partial ${partial})`, async ({ page }) => {
  const provider = await fixture(page, { multipleSelect: true, markings: [
   { correct: 4, wrong: -1, partial: !partial },
