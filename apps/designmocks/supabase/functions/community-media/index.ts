@@ -29,10 +29,16 @@ Deno.serve(async request => {
     const type = request.headers.get("content-type") ?? "";
     if (type.startsWith("application/json")) {
       const input = JSON.parse(new TextDecoder().decode(await drawingRequestBody(request, 4096)));
-      if (input.action === "review") return respond(await signedCommunityReview(input,
-        (args: { p_report_id: string; p_expected_version: string; p_context: string }) => student.rpc("admin_community_report_media_paths", args), bucket));
-      if (input.action === "moderate") return respond(await signedCommunityModeration(input,
-        (args: { p_target_type: string; p_target_id: string; p_expected_version: string; p_context: string }) => student.rpc("admin_community_moderation_media_paths", args), bucket));
+      if (input.action === "review") {
+        const signed = await signedCommunityReview(input,
+          (args: { p_report_id: string; p_expected_version: string; p_context: string }) => student.rpc("admin_community_report_media_paths", args), bucket);
+        return await stagingDenied() ? stagingRejected() : respond(signed);
+      }
+      if (input.action === "moderate") {
+        const signed = await signedCommunityModeration(input,
+          (args: { p_target_type: string; p_target_id: string; p_expected_version: string; p_context: string }) => student.rpc("admin_community_moderation_media_paths", args), bucket);
+        return await stagingDenied() ? stagingRejected() : respond(signed);
+      }
       const { targetType, targetId } = input;
       if (!communityTarget(targetType, targetId)) throw new CommunityMediaError("Invalid community target", "invalid_target");
       const read = () => student.rpc("community_media_paths", { p_target_type: targetType, p_target_id: targetId });
@@ -44,6 +50,7 @@ Deno.serve(async request => {
       const signed = await signedDrawingPages(bucket, initial);
       const current = await read();
       if (current.error || !sameDrawingPages(initial, pages(current.data))) throw new CommunityMediaError("These community images are unavailable.", "target_unavailable", 403);
+      if (await stagingDenied()) return stagingRejected();
       return respond({ media: signed.images, serverNow: signed.serverNow, expiresAt: signed.expiresAt });
     }
     if (!type.startsWith("multipart/form-data")) throw new CommunityMediaError("Invalid image request", "invalid_request");
