@@ -222,3 +222,21 @@ preview of main).
    quantitative aptitude; logical reasoning.
 3. Patterns F9 (recall) and F10 (method lessons) before art history,
    Indian craft, product design, poster and storyboarding.
+
+### Starting a topic that has no spec yet
+
+Quantitative aptitude and logical reasoning have no spec. Before any code:
+
+1. Read the topic's theory document and question bank in the owner's
+   folder (`~/Desktop/untitled folder/`; most are scans, so view the
+   pages). List the archetypes, how often each appears, and the hardest
+   example of each. Copy nothing into the repository.
+2. Write `topics/<slug>.md` from `topics/_TEMPLATE.md`: outcome, exam
+   evidence table, techniques, ladder (four tiers), question kinds with
+   the rule for the answer and the rules for wrong options, hand-checked
+   cases. Use `topics/mechanisms.md` section 0 and `topics/counting-cubes.md`
+   as models of the finished thing.
+3. Then follow `05-build-playbook.md` from Step 1. For word problems the
+   "figure" may be nothing, or a small table: that is fine. The contract
+   that matters is that every number is drawn from the seed, the answer is
+   computed, and each wrong option is the result of one named mistake.
