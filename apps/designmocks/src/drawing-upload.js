@@ -33,6 +33,17 @@ export function drawingUploadFailure(error) {
     : "An upload did not confirm. Check your saved pages before adding the remaining images.";
 }
 
+export function drawingInventory(result) {
+  const items = result?.items;
+  if (!Array.isArray(items) || items.length > 5 || items.some(item =>
+    typeof item?.id !== "string" || !item.id || !Number.isInteger(item.ordinal) || item.ordinal < 1 || item.ordinal > 5) ||
+    new Set(items.map(item => item.id)).size !== items.length ||
+    new Set(items.map(item => item.ordinal)).size !== items.length) {
+    throw new Error("Unconfirmed drawing inventory.");
+  }
+  return items;
+}
+
 export function planDrawingPages(files, savedPages) {
   const used = new Set(savedPages.map(page => page.ordinal));
   const free = [1, 2, 3, 4, 5].filter(ordinal => !used.has(ordinal));

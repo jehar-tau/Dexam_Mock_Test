@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {drawingPageReceipt, planDrawingPages} from "../src/drawing-upload.js";
+import {drawingInventory, drawingPageReceipt, planDrawingPages} from "../src/drawing-upload.js";
 
 test("a batch keeps the selected order while filling only available drawing positions", () => {
   const files = ["first", "second", "third"];
@@ -22,5 +22,16 @@ test("only a confirmed ID and exact position acknowledge a drawing upload", () =
   assert.equal(drawingPageReceipt({id: "saved", ordinal: 2}, 2), "saved");
   for (const receipt of [null, {ordinal: 2}, {id: "saved", ordinal: 1}]) {
     assert.throws(() => drawingPageReceipt(receipt, 2), /Unconfirmed/);
+  }
+});
+
+
+test("inventory must confirm unique, valid saved pages before enabling changes", () => {
+  const saved = {id: "saved", ordinal: 3};
+  assert.deepEqual(drawingInventory({items: [saved]}), [saved]);
+  assert.deepEqual(drawingInventory({items: []}), []);
+  for (const items of [null, [null], [{id: "", ordinal: 1}], [{id: "strange", ordinal: 6}],
+    [saved, {...saved, ordinal: 1}], [saved, {...saved, id: "different"}]]) {
+    assert.throws(() => drawingInventory({items}), /Unconfirmed/);
   }
 });

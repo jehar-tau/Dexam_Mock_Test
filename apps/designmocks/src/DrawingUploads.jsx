@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { drawingUploadWindow } from "./drawing-upload-window.js";
-import { checkDrawingFiles, drawingPageReceipt, drawingUploadFailure, planDrawingPages } from "./drawing-upload.js";
+import { checkDrawingFiles, drawingInventory, drawingPageReceipt, drawingUploadFailure, planDrawingPages } from "./drawing-upload.js";
 import { DrawingPages } from "./DrawingInspection.jsx";
 
 export function DrawingUploads({
@@ -27,8 +27,7 @@ export function DrawingUploads({
     invoke({ action: "list", attemptId, questionId }, controller.signal)
       .then(result => {
         if (controller.signal.aborted) return;
-        if (!Array.isArray(result?.items)) throw new Error("Unconfirmed drawing inventory.");
-        setItems(result.items);
+        setItems(drawingInventory(result));
       })
       .catch(() => { if (!controller.signal.aborted) setMessage("Couldn’t load your saved pages."); });
     return () => controller.abort();
