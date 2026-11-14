@@ -158,3 +158,25 @@ test("closing the drawing window clears the pending selection without sending an
   expect(state.uploads).toHaveLength(1);
   expect(state.pages).toEqual([]);
 });
+
+
+test("a selection above the remaining drawing slots sends no files", async ({page}) => {
+  const state = await fixture(page);
+  const drawing = page.locator(".drawing-uploads");
+  const input = drawing.locator('input[type="file"]');
+  const buffer = await png();
+  const files = [1, 2, 3, 4, 5, 6].map(index => ({name: `page-${index}.png`, mimeType: "image/png", buffer}));
+
+  await input.setInputFiles(files);
+  await expect(drawing.getByRole("status")).toHaveText("Only 5 image slots are available. Select fewer images.");
+  expect(state.uploads).toEqual([]);
+  await input.setInputFiles(files.slice(0, 4));
+  await expect(drawing.getByText("page-4.png", {exact: true})).toBeVisible();
+
+  await input.setInputFiles(files.slice(4));
+  await expect(drawing.getByRole("status")).toHaveText("Only one image slot is available. Select one image.");
+  expect(state.uploads.map(item => item.ordinal)).toEqual([1, 2, 3, 4]);
+  await input.setInputFiles(files[5]);
+  await expect(drawing.getByText("page-6.png", {exact: true})).toBeVisible();
+  expect(state.uploads.map(item => item.ordinal)).toEqual([1, 2, 3, 4, 5]);
+});

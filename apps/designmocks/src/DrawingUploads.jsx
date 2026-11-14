@@ -78,8 +78,8 @@ export function DrawingUploads({
     const files = [...input.files];
     input.value = "";
     if (writing.current || pending.length || !items || !files.length) return;
-    const pages = planDrawingPages(files, items);
-    const invalid = checkDrawingFiles(pages.map(page => page.file));
+    const {pages, error} = planDrawingPages(files, items);
+    const invalid = error || checkDrawingFiles(files);
     if (invalid) { setMessage(invalid); return; }
     void save(pages);
   };

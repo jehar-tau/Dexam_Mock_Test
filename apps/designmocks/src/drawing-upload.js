@@ -36,7 +36,11 @@ export function drawingUploadFailure(error) {
 export function planDrawingPages(files, savedPages) {
   const used = new Set(savedPages.map(page => page.ordinal));
   const free = [1, 2, 3, 4, 5].filter(ordinal => !used.has(ordinal));
-  return files.slice(0, free.length).map((file, index) => ({file, ordinal: free[index]}));
+  if (files.length > free.length) {
+    return {error: free.length === 1 ? "Only one image slot is available. Select one image."
+      : `Only ${free.length} image slots are available. Select fewer images.`};
+  }
+  return {pages: files.map((file, index) => ({file, ordinal: free[index]}))};
 }
 
 export function drawingPageReceipt(result, ordinal) {
