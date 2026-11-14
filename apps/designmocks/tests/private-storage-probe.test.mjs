@@ -6,7 +6,7 @@ const token = "fixture." + Buffer.from('{"role":"authenticated"}').toString("bas
 const config = {origin: "http://127.0.0.1:63021", key: "sb_publishable_fixture", serviceKey: "sb_secret_fixture_server", token,
   fixture: "dmocks-storage-probe/00000000-0000-4000-8000-000000000001.png"};
 
-test("checks every bucket with HEAD and sends user credentials only on authenticated checks", async () => {
+test("checks every bucket for unsigned reads and direct signing", async () => {
   let count = 0;
   const report = await checkPrivateStorage({...config, fetchImpl: async (url, request) => {
     if (url.endsWith("/auth/v1/user")) return new Response(null, {status: 200});
@@ -17,12 +17,19 @@ test("checks every bucket with HEAD and sends user credentials only on authentic
     }
     count++;
     assert.ok(url.startsWith(config.origin + "/storage/v1/object/"));
-    assert.equal(request.method, "HEAD");
     assert.equal(request.redirect, "error");
-    assert.equal(request.headers.Authorization, url.includes("/object/authenticated/") ? "Bearer " + token : undefined);
+    if (url.includes("/object/sign/")) {
+      assert.equal(request.method, "POST");
+      assert.deepEqual(JSON.parse(request.body), {expiresIn: 60});
+      assert.ok([undefined, "Bearer " + token].includes(request.headers.Authorization));
+    } else {
+      assert.equal(request.method, "HEAD");
+      assert.equal(request.headers.Authorization, url.includes("/object/authenticated/") ? "Bearer " + token : undefined);
+    }
     return new Response(null, {status: 404});
   }});
-  assert.equal(count, 12);
+  assert.equal(count, 20);
+  assert.ok(report.results.every(bucket => bucket.results.some(result => result.access === "signed-in-signing" && result.denied)));
   assert.equal(report.passed, true);
   assert.ok(!JSON.stringify(report).includes(token));
   assert.ok(!JSON.stringify(report).includes(config.fixture));
@@ -64,4 +71,20 @@ test("legacy server tokens still authenticate fixture checks while foreign token
   assert.equal(fixtureChecks, 4);
   await assert.rejects(checkPrivateStorage({...config, serviceKey: legacyKey({role: "service_role", ref: "x".repeat(20)}),
     fetchImpl: async () => assert.fail("Unexpected request")}), /different provider project/);
+});
+
+test("a direct signing grant fails even when unsigned reads are denied", async () => {
+  const report = await checkPrivateStorage({...config, fetchImpl: async (url, request) => {
+    if (url.endsWith("/auth/v1/user") || new Headers(request.headers).get("apikey") === config.serviceKey) {
+      return new Response(null, {status: 200});
+    }
+    if (request.method === "POST" && request.headers.Authorization) {
+      return Response.json({signedURL: "/private?token=fictional-signature"});
+    }
+    return new Response(null, {status: 404});
+  }});
+  assert.equal(report.passed, false);
+  assert.ok(report.results.every(bucket =>
+    bucket.results.filter(result => !result.denied).map(result => result.access).join() === "signed-in-signing"));
+  assert.doesNotMatch(JSON.stringify(report), /fictional-signature/);
 });

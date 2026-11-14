@@ -56,9 +56,26 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
       const status = await head(path, authorization);
       return {access, status, denied: denied.has(status)};
     }));
-    return {bucket, verified, results};
+    const signing = await Promise.all([
+      ["anonymous-signing", null],
+      ["signed-in-signing", token],
+    ].map(async ([access, authorization]) => {
+      try {
+        const response = await fetchImpl(origin + "/storage/v1/object/sign/" + bucket + "/" + fixture, {
+          method: "POST", redirect: "error", signal: AbortSignal.timeout(10000),
+          headers: {apikey: key, "Content-Type": "application/json",
+            ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
+          body: JSON.stringify({expiresIn: 60}),
+        });
+        await response.body?.cancel();
+        return {access, status: response.status, denied: denied.has(response.status)};
+      } catch {
+        return {access, status: null, denied: false};
+      }
+    }));
+    return {bucket, verified, results: [...results, ...signing]};
   }));
-  return {scope: "unsigned-fictional-object-head", passed: results.every(bucket => bucket.verified && bucket.results.every(result => result.denied)), results};
+  return {scope: "fictional-object-read-and-signing", passed: results.every(bucket => bucket.verified && bucket.results.every(result => result.denied)), results};
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
