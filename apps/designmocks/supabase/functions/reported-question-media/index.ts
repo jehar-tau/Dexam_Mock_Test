@@ -1,3 +1,4 @@
+import { stagingEdgeDenied } from "../_shared/staging-edge-admission.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 
 type Figure = { ordinal: number; storagePath: string };
@@ -17,6 +18,9 @@ Deno.serve(async request => {
   const url = Deno.env.get("SUPABASE_URL"), anon = Deno.env.get("SUPABASE_ANON_KEY"), service = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (!url || !anon || !service) return respond({ error: "Question review images are not connected" }, 503);
   const reviewer = createClient(url, anon, { global: { headers: { Authorization: request.headers.get("authorization") ?? "" } }, auth: { persistSession: false } });
+  const stagingCheck = Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER");
+  const stagingDenied = () => stagingEdgeDenied(stagingCheck, reviewer, AbortSignal.any([request.signal, AbortSignal.timeout(10000)]));
+  if (await stagingDenied()) return respond({ error: "Private staging requires an approved Google tester" }, 403);
   try {
     const { targetKey, revision } = await request.json();
     if (typeof targetKey !== "string" || !Number.isSafeInteger(revision) || revision < 1) return respond({ error: "A reported question and current revision are required" }, 400);
@@ -29,6 +33,7 @@ Deno.serve(async request => {
     if (signed.error) return respond({ error: "Private figures could not be opened. Try again." }, 502);
     const links = new Map(signed.data.filter(entry => !entry.error && entry.signedUrl).map(entry => [entry.path, entry.signedUrl]));
     if (figures.some(figure => !links.has(figure.storagePath))) return respond({ error: "A private figure could not be opened. Try again." }, 502);
+    if (await stagingDenied()) return respond({ error: "Private staging requires an approved Google tester" }, 403);
     return respond({ images: figures.map(({ ordinal, storagePath }) => ({ ordinal, url: links.get(storagePath) })) });
   } catch {
     return respond({ error: "Invalid reported question image request" }, 400);
