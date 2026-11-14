@@ -37,6 +37,27 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
     }
   }
 
+  async function list(bucket, authorization, request = fetchImpl) {
+    const [prefix, name] = fixture.split("/");
+    try {
+      const response = await request(origin + "/storage/v1/object/list/" + bucket, {
+        method: "POST", redirect: "error", signal: AbortSignal.timeout(10000),
+        headers: {apikey: key, "Content-Type": "application/json",
+          ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
+        body: JSON.stringify({prefix, search: name, limit: 1}),
+      });
+      if (response.status === 200) {
+        const rows = await response.json();
+        return {status: response.status, count: Array.isArray(rows) ? rows.length : null,
+          fixtureListed: Array.isArray(rows) && rows.some(row => row?.name === name)};
+      }
+      await response.body?.cancel();
+      return {status: response.status, count: null, fixtureListed: false};
+    } catch {
+      return {status: null, count: null, fixtureListed: false};
+    }
+  }
+
   const identity = await fetchImpl(origin + "/auth/v1/user", {
     method: "GET", redirect: "error", signal: AbortSignal.timeout(10000),
     headers: {apikey: key, Authorization: "Bearer " + token},
@@ -73,9 +94,17 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
         return {access, status: null, denied: false};
       }
     }));
-    return {bucket, verified, results: [...results, ...signing]};
+    const control = await list(bucket, null, service.fetch);
+    const listing = await Promise.all([
+      ["anonymous-listing", null],
+      ["signed-in-listing", token],
+    ].map(async ([access, authorization]) => {
+      const {status, count} = await list(bucket, authorization);
+      return {access, status, denied: control.fixtureListed && (denied.has(status) || status === 200 && count === 0)};
+    }));
+    return {bucket, verified, listingVerified: control.fixtureListed, results: [...results, ...signing, ...listing]};
   }));
-  return {scope: "fictional-object-read-and-signing", passed: results.every(bucket => bucket.verified && bucket.results.every(result => result.denied)), results};
+  return {scope: "fictional-object-read-signing-and-listing", passed: results.every(bucket => bucket.verified && bucket.results.every(result => result.denied)), results};
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

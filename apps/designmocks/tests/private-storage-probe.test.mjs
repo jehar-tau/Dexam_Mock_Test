@@ -6,18 +6,26 @@ const token = "fixture." + Buffer.from('{"role":"authenticated"}').toString("bas
 const config = {origin: "http://127.0.0.1:63021", key: "sb_publishable_fixture", serviceKey: "sb_secret_fixture_server", token,
   fixture: "dmocks-storage-probe/00000000-0000-4000-8000-000000000001.png"};
 
-test("checks every bucket for unsigned reads and direct signing", async () => {
+const listedFixture = () => Response.json([{name: config.fixture.split("/")[1]}]);
+
+test("checks every bucket for unsigned reads, direct signing and listing", async () => {
   let count = 0;
   const report = await checkPrivateStorage({...config, fetchImpl: async (url, request) => {
     if (url.endsWith("/auth/v1/user")) return new Response(null, {status: 200});
     if (new Headers(request.headers).get("apikey") === config.serviceKey) {
-      assert.equal(request.method, "HEAD");
       assert.equal(request.headers.has("authorization"), false);
+      if (url.includes("/object/list/")) return listedFixture();
+      assert.equal(request.method, "HEAD");
       return new Response(null, {status: 200});
     }
     count++;
     assert.ok(url.startsWith(config.origin + "/storage/v1/object/"));
     assert.equal(request.redirect, "error");
+    if (url.includes("/object/list/")) {
+      assert.equal(request.method, "POST");
+      assert.deepEqual(JSON.parse(request.body), {prefix: "dmocks-storage-probe", search: config.fixture.split("/")[1], limit: 1});
+      return Response.json([]);
+    }
     if (url.includes("/object/sign/")) {
       assert.equal(request.method, "POST");
       assert.deepEqual(JSON.parse(request.body), {expiresIn: 60});
@@ -28,7 +36,7 @@ test("checks every bucket for unsigned reads and direct signing", async () => {
     }
     return new Response(null, {status: 404});
   }});
-  assert.equal(count, 20);
+  assert.equal(count, 28);
   assert.ok(report.results.every(bucket => bucket.results.some(result => result.access === "signed-in-signing" && result.denied)));
   assert.equal(report.passed, true);
   assert.ok(!JSON.stringify(report).includes(token));
@@ -64,6 +72,7 @@ test("legacy server tokens still authenticate fixture checks while foreign token
     const headers = new Headers(request.headers);
     if (headers.get("apikey") !== key) return new Response(null, {status: 404});
     assert.equal(headers.get("authorization"), "Bearer " + key);
+    if (url.includes("/object/list/")) return listedFixture();
     fixtureChecks++;
     return new Response(null, {status: 200});
   }});
@@ -76,9 +85,9 @@ test("legacy server tokens still authenticate fixture checks while foreign token
 test("a direct signing grant fails even when unsigned reads are denied", async () => {
   const report = await checkPrivateStorage({...config, fetchImpl: async (url, request) => {
     if (url.endsWith("/auth/v1/user") || new Headers(request.headers).get("apikey") === config.serviceKey) {
-      return new Response(null, {status: 200});
+      return url.includes("/object/list/") ? listedFixture() : new Response(null, {status: 200});
     }
-    if (request.method === "POST" && request.headers.Authorization) {
+    if (url.includes("/object/sign/") && request.headers.Authorization) {
       return Response.json({signedURL: "/private?token=fictional-signature"});
     }
     return new Response(null, {status: 404});
@@ -87,4 +96,19 @@ test("a direct signing grant fails even when unsigned reads are denied", async (
   assert.ok(report.results.every(bucket =>
     bucket.results.filter(result => !result.denied).map(result => result.access).join() === "signed-in-signing"));
   assert.doesNotMatch(JSON.stringify(report), /fictional-signature/);
+});
+
+test("listing must find the exact fixture with the server key and hide it from browser roles", async () => {
+  for (const controlPresent of [false, true]) {
+    const report = await checkPrivateStorage({...config, fetchImpl: async (url, request) => {
+      const service = new Headers(request.headers).get("apikey") === config.serviceKey;
+      if (!url.includes("/object/list/")) return new Response(null, {status: service || url.endsWith("/auth/v1/user") ? 200 : 404});
+      if (service) return controlPresent ? listedFixture() : Response.json([{name: "unrelated.png"}]);
+      return request.headers.Authorization ? listedFixture() : Response.json([]);
+    }});
+    assert.equal(report.passed, false);
+    assert.ok(report.results.every(bucket => bucket.listingVerified === controlPresent));
+    assert.ok(report.results.every(bucket => !bucket.results.find(row => row.access === "signed-in-listing").denied));
+    assert.ok(!JSON.stringify(report).includes(config.fixture.split("/")[1]));
+  }
 });
