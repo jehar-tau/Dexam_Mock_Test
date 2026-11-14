@@ -1,11 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {readdir} from "node:fs/promises";
+import {readdir, readFile} from "node:fs/promises";
 import project from "../supabase/project.json" with {type: "json"};
-import {probeStagingEdge} from "../scripts/staging-edge-readiness.mjs";
+import {probeStagingEdge, stagingEdgeSetupChecks} from "../scripts/staging-edge-readiness.mjs";
 
 const url = `https://${project.project_ref}.supabase.co`;
-const key = "sb_publishable_fixture_only";
 const origin = project.staging_frontend_origin;
 function ready(request) {
   const approved = request.headers.Origin === origin;
@@ -21,7 +20,7 @@ function ready(request) {
 
 test("staging CORS checks every private route using OPTIONS and denies the foreign origin", async () => {
   const calls = [];
-  const result = await probeStagingEdge({url, key, fetchImpl: async (target, request) => {
+  const result = await probeStagingEdge({url, fetchImpl: async (target, request) => {
     calls.push({target, ...request});
     return ready(request);
   }});
@@ -37,12 +36,30 @@ test("staging CORS checks every private route using OPTIONS and denies the forei
   assert.deepEqual(result.results.map(({name}) => name).sort(), portalFunctions);
   assert.equal(calls.length, 2 * portalFunctions.length);
   assert.ok(calls.every(call => call.target.startsWith(url + "/functions/v1/") && call.method === "OPTIONS"
-    && call.redirect === "error" && !call.body && !call.headers.Authorization));
-  assert.doesNotMatch(JSON.stringify(result), /fixture_only/);
+    && call.redirect === "error" && !call.body));
+  for (const call of calls) {
+    const headers = new Headers(call.headers);
+    assert.equal(headers.has("apikey"), false);
+    assert.equal(headers.has("authorization"), false);
+    assert.equal(headers.get("Access-Control-Request-Headers"), "authorization,apikey,content-type,x-client-info");
+  }
+});
+
+test("each private route declares its handler-side authentication configuration", async () => {
+  const {results} = await probeStagingEdge({url, fetchImpl: async (_target, request) => ready(request)});
+  const config = await readFile(new URL("../supabase/config.toml", import.meta.url), "utf8");
+  const sections = new Map(config.split(/(?=^\[)/m).map(section => {
+    const [header, ...settings] = section.split(/\r?\n/);
+    return [header, settings];
+  }));
+  for (const {name} of results) {
+    const options = sections.get(`[functions.${name}]`) ?? [];
+    assert.ok(options.some(line => /^verify_jwt\s*=\s*false(?:\s*#.*)?\s*$/.test(line.trim())), name);
+  }
 });
 
 test("a broken route leaves the complete readiness report available", async () => {
-  const report = await probeStagingEdge({url, key, fetchImpl: async (target, request) => {
+  const report = await probeStagingEdge({url, fetchImpl: async (target, request) => {
     if (target.endsWith("/attempt-media")) return new Response(null, {status: 403});
     if (target.endsWith("/question-intake") || target.endsWith("/question-intake-extract")) return new Response("private gateway diagnostic", {status: 404});
     if (target.endsWith("/drawing-media")) throw new Error("private diagnostic");
@@ -60,8 +77,27 @@ test("a broken route leaves the complete readiness report available", async () =
   assert.doesNotMatch(JSON.stringify(report), /private (gateway )?diagnostic/);
 });
 
-test("unexpected targets and non-public credentials fail before any fetch", async () => {
+test("unexpected targets fail before any fetch", async () => {
   const fetchImpl = async () => assert.fail("Unexpected network request");
-  await assert.rejects(probeStagingEdge({url: "https://dmocks.com", key, fetchImpl}), /approved DMocks staging/);
-  await assert.rejects(probeStagingEdge({url, key: "sb_secret_fixture", fetchImpl}), /public DMocks staging/);
+  await assert.rejects(probeStagingEdge({url: "https://dmocks.com", fetchImpl}), /approved DMocks staging/);
+});
+
+test("private portal scope reports provider-dependent failures while requiring all seven portal routes", async () => {
+  const probe = async ({portalOnly, missingPortal = false}) => probeStagingEdge({url, portalOnly, fetchImpl: async (target, request) => {
+    const name = target.split("/").at(-1);
+    if (["question-intake-extract", "ai-question-draft", "candidate-phone"].includes(name)
+      || (missingPortal && name === "question-intake")) return new Response(null, {status: 404});
+    return ready(request);
+  }});
+  const full = await probe({portalOnly: false});
+  assert.equal(full.passed, false);
+  assert.equal(full.results.filter(row => row.required).length, 10);
+  const portal = await probe({portalOnly: true});
+  assert.equal(portal.passed, true);
+  const checks = stagingEdgeSetupChecks(portal);
+  assert.equal(checks.filter(check => check.required === false && !check.passed).length, 3);
+  assert.equal(checks.filter(check => check.required && check.passed).length, 7);
+  assert.equal(portal.results.filter(row => row.required).length, 7);
+  assert.deepEqual(portal.results.filter(row => !row.required).map(row => row.result), Array(3).fill("endpoint-not-found"));
+  assert.equal((await probe({portalOnly: true, missingPortal: true})).passed, false);
 });

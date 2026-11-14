@@ -1,9 +1,10 @@
+import { createHash } from "node:crypto";
 import { realpath } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 import project from "../../supabase/project.json" with { type: "json" };
 import { serveArtifact } from "./local-artifact-fixture.js";
 import { communityFeedFixture } from "./community-feed-fixture.js";
-import { seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
+import { emptyAdminRead, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 const stage = project.staging_frontend_origin;
 const publicHosts = [project.frontend_origin, "https://designmocks-studio.snehal1155.chatgpt.site"];
@@ -37,6 +38,21 @@ test("the staging artifact rejects a different host before contacting the provid
   }
   expect(calls).toEqual([]);
   expect(authCalls).toEqual([]);
+  expect(unexpected).toEqual([]);
+});
+
+test("the private staging home never requests the public ranking feed", async ({ page }) => {
+  const { calls, unexpected } = await stubPortalProvider(page, name => {
+    if (name === "public_all_india_top_ten") return [];
+  }, project.project_ref);
+  await page.goto("/");
+  await expect(page.getByText("Portal acceptance for approved testers. Checkout is closed.")).toBeVisible();
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.reload();
+  await expect(page.getByText("Portal acceptance for approved testers. Checkout is closed.")).toBeVisible();
+  await page.getByRole("link", { name: "Explore the annual pass", exact: true }).click();
+  await expect(page).toHaveURL(/\/plans$/);
+  expect(calls).toEqual([]);
   expect(unexpected).toEqual([]);
 });
 
@@ -87,10 +103,19 @@ test("approved staging sessions can enter the workspace with checkout and draft 
   if (await menu.isVisible()) await menu.click();
   await page.getByRole("navigation", { name: "Student workspace" }).getByRole("link", { name: "Learn" }).click();
   await expect(page.getByRole("heading", { name: /Build the idea/ })).toBeVisible();
+  const programmes = page.getByLabel("Interactive programmes");
+  await programmes.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
+  await expect(page).toHaveURL(/\/dashboard\/learn\/programme\/cube-nets$/);
+  await expect(page.getByRole("heading", { name: "Cube nets", exact: true })).toBeVisible();
+  await page.goto("/dashboard/learn");
+  await programmes.locator("article", { hasText: "Gears, belts and levers" }).getByRole("link", { name: "Start programme" }).click();
+  await expect(page).toHaveURL(/\/dashboard\/learn\/programme\/mechanisms$/);
+  const mechanismsHeading = page.getByRole("heading", { name: "Gears, belts and levers", exact: true });
+  await expect(mechanismsHeading).toBeVisible();
   admitted = false;
   await page.reload();
   await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
-  await expect(page.getByRole("heading", { name: /Build the idea/ })).toHaveCount(0);
+  await expect(mechanismsHeading).toHaveCount(0);
   await page.goto("/plans");
   await expect(page.getByText("Checkout is closed in staging.", { exact: true })).toBeVisible();
   await expect(page.getByRole("checkbox")).toHaveCount(0);
@@ -130,6 +155,68 @@ test("the API admission hook denial keeps a returning account out of staging", a
   expect(unexpected).toEqual([]);
 });
 
+test("staging admission alone grants neither administrator nor drawing-review access", async ({page}) => {
+  let reviewer = false;
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") return true;
+    if (procedure === "is_dmocks_admin") return false;
+    if (procedure === "can_review_drawings") return reviewer;
+    if (procedure === "my_drawing_review_page" && reviewer) return {items: [], nextCursor: null};
+    return undefined;
+  }, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+
+  await page.goto("/review/drawings");
+  await expect(page.getByRole("alert")).toHaveText("Drawing reviewer access required.");
+  expect(calls.some(([name]) => name === "my_drawing_review_page")).toBe(false);
+
+  reviewer = true;
+  await page.getByRole("button", {name: "Check drawing reviewer access"}).click();
+  await expect(page.getByRole("button", {name: "Available drawings"})).toBeVisible();
+  await expect.poll(() => calls.filter(([name]) => name === "my_drawing_review_page").length).toBe(1);
+
+  await page.goto("/admin");
+  await expect(page.getByRole("alert")).toHaveText("This account is not an administrator.");
+  expect(calls.some(([name]) => name.startsWith("admin_"))).toBe(false);
+  expect(unexpected).toEqual([]);
+});
+
+test("a stalled identity check expires without opening staging when it replies late", async ({page}) => {
+  const {calls, unexpected} = await stubPortalProvider(page, procedure =>
+    procedure === "can_enter_staging_portal" ? true : undefined, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.clock.install();
+
+  let release;
+  const reply = new Promise(resolve => { release = resolve; });
+  let markStarted;
+  const started = new Promise(resolve => { markStarted = resolve; });
+  const identityUrl = `${provider}/auth/v1/user`;
+  await page.route(identityUrl, async route => {
+    markStarted();
+    await reply;
+    await route.fallback();
+  });
+
+  try {
+    await page.goto("/dashboard");
+    await started;
+    await expect(page.getByText("Checking staging access…")).toBeVisible();
+    await page.clock.fastForward(21_000);
+    await expect(page.getByRole("alert")).toContainText("Couldn’t verify staging access.");
+    const lateIdentity = page.waitForResponse(response => response.url() === identityUrl && response.ok());
+    release();
+    await lateIdentity;
+  } finally {
+    release();
+  }
+  await expect(page.getByRole("alert")).toContainText("Couldn’t verify staging access.");
+  expect(calls).toEqual([]);
+  expect(unexpected).toEqual([]);
+});
+
 test("an admitted tester can open Community and loses access after revocation", async ({page}) => {
   let admitted = true;
   const {calls, unexpected} = await stubPortalProvider(page, (procedure, input) => {
@@ -152,5 +239,137 @@ test("an admitted tester can open Community and loses access after revocation", 
   await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
   await expect(page.getByRole("heading", {name: /Ask clearly/})).toHaveCount(0);
   expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
+  expect(unexpected).toEqual([]);
+});
+
+test("a removed staff tester cannot reopen teacher or admin work with the same session", async ({page}) => {
+  let admitted = true;
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") {
+      return admitted || {code: "42501", message: "Private staging requires an approved Google tester"};
+    }
+    if (procedure === "can_review_drawings" || procedure === "is_dmocks_admin") return true;
+    if (procedure === "my_drawing_review_page") return {items: [], nextCursor: null};
+    return undefined;
+  }, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.goto("/review/drawings");
+  await expect(page.getByText("No drawing submissions await review.")).toBeVisible();
+  expect(calls.some(([name]) => name === "can_review_drawings")).toBe(true);
+
+  admitted = false;
+  for (const path of ["/review/drawings", "/admin"]) {
+    calls.length = 0;
+    await page.goto(path);
+    await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
+    await expect(page.getByRole("button", {name: "Available drawings"})).toHaveCount(0);
+    expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
+  }
+  expect(unexpected).toEqual([]);
+});
+
+test("the staging build loads private intake only for an admitted administrator", async ({page}) => {
+  let admin = true;
+  const sourceName = "original-fictional-private-intake.pdf";
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") return true;
+    if (procedure === "is_dmocks_admin") return admin;
+    if (procedure === "admin_question_intake_assets") {
+      return [{id: "00000000-0000-4000-8000-000000000883", name: sourceName, status: "uploaded", candidates: []}];
+    }
+    return emptyAdminRead(procedure);
+  }, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.goto("/admin");
+  await expect(page.getByRole("heading", {name: "PDF and photo question intake"})).toBeVisible();
+  await expect(page.getByText(sourceName, {exact: true})).toBeVisible();
+  expect(calls.some(([name]) => name === "admin_question_intake_assets")).toBe(true);
+
+  admin = false;
+  calls.length = 0;
+  await page.getByRole("button", {name: "Download private source"}).focus();
+  await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
+  await expect(page.getByRole("alert")).toHaveText("Administrator access has ended. Private views were cleared.");
+  await expect(page.getByText(sourceName, {exact: true})).toHaveCount(0);
+  await expect(page.getByLabel("Private source file")).toHaveCount(0);
+  expect(calls.some(([name]) => name === "admin_question_intake_assets")).toBe(false);
+
+  calls.length = 0;
+  await page.reload();
+  await expect(page.getByRole("alert")).toHaveText("This account is not an administrator.");
+  await expect(page.getByText(sourceName, {exact: true})).toHaveCount(0);
+  expect(calls.some(([name]) => name === "admin_question_intake_assets")).toBe(false);
+  expect(unexpected).toEqual([]);
+});
+
+test("the staging Google callback exchanges the matching PKCE verifier and persists the session", async ({page}) => {
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") return true;
+    if (procedure === "can_review_drawings") return false;
+    if (procedure === "my_privacy_requests") return [];
+    return undefined;
+  }, project.project_ref);
+  let challenge;
+  const exchanges = [];
+  const expires = Math.floor(Date.now() / 1000) + 3600;
+  const token = "fixture." + Buffer.from(JSON.stringify({sub: tester.id, role: "authenticated", exp: expires})).toString("base64url") + ".fixture";
+  await page.route(provider + "/auth/v1/authorize?*", async route => {
+    const query = new URL(route.request().url()).searchParams;
+    challenge = query.get("code_challenge");
+    expect(query.get("code_challenge_method")).toBe("s256");
+    expect(query.get("redirect_to")).toBe(stage + "/account/callback");
+    await route.fulfill({status: 200, contentType: "text/html", body: "<p>Fictional Google authorization complete.</p>"});
+  });
+  await page.route(provider + "/auth/v1/token?grant_type=pkce", async route => {
+    const headers = {"Access-Control-Allow-Origin": stage,
+      "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-supabase-api-version",
+      "Access-Control-Allow-Methods": "POST, OPTIONS"};
+    if (route.request().method() === "OPTIONS") return route.fulfill({status: 204, headers});
+    const input = route.request().postDataJSON();
+    exchanges.push(input.auth_code);
+    expect(createHash("sha256").update(input.code_verifier).digest("base64url")).toBe(challenge);
+    if (input.auth_code === "fictional-expired-code") {
+      return route.fulfill({headers, status: 400, json: {code: "bad_code", message: "Private fictional provider diagnostic"}});
+    }
+    await route.fulfill({headers, json: {access_token: token, refresh_token: "fictional-google-refresh",
+      expires_in: 3600, token_type: "bearer", user: {...tester, aud: "authenticated",
+        app_metadata: {provider: "google"}, user_metadata: {}}}});
+  });
+  const signOutScopes = [];
+  await page.route(provider + "/auth/v1/logout?*", async route => {
+    const headers = {"Access-Control-Allow-Origin": stage,
+      "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-supabase-api-version",
+      "Access-Control-Allow-Methods": "POST, OPTIONS"};
+    if (route.request().method() === "POST") signOutScopes.push(new URL(route.request().url()).searchParams.get("scope"));
+    await route.fulfill({status: 204, headers});
+  });
+  await page.goto("/account");
+  await page.getByRole("button", {name: "Sign in to staging with Google"}).click();
+  await expect(page.getByText("Fictional Google authorization complete.")).toBeVisible();
+  await page.goto("/account/callback?code=fictional-expired-code");
+  await expect(page.getByRole("alert")).toHaveText("Google sign-in could not be completed. Please try again.");
+  await expect(page.getByText("Private fictional provider diagnostic")).toHaveCount(0);
+  await expect(page.getByRole("link", {name: "Open staging workspace"})).toHaveCount(0);
+  expect(calls).toEqual([]);
+  await page.getByRole("button", {name: "Sign in to staging with Google"}).click();
+  await expect(page.getByText("Fictional Google authorization complete.")).toBeVisible();
+  await page.goto("/account/callback?code=fictional-google-code");
+  await expect(page.getByRole("link", {name: "Open staging workspace"})).toBeVisible();
+  await expect(page).toHaveURL(url => url.pathname === "/account/callback" && !url.searchParams.has("code"));
+  expect(exchanges).toEqual(["fictional-expired-code", "fictional-google-code"]);
+  expect(calls.some(([name]) => name === "can_enter_staging_portal")).toBe(true);
+
+  await page.reload();
+  await expect(page.getByRole("link", {name: "Open staging workspace"})).toBeVisible();
+  expect(exchanges).toHaveLength(2);
+
+  await page.getByRole("button", {name: "Sign out", exact: true}).click();
+  await expect(page.getByRole("button", {name: "Sign in to staging with Google"})).toBeEnabled();
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  expect(signOutScopes).toEqual(["local"]);
+  await page.goto("/dashboard");
+  await expect(page.getByText("Sign in with an approved Google test account.")).toBeVisible();
   expect(unexpected).toEqual([]);
 });

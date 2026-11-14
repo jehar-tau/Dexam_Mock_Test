@@ -46,6 +46,23 @@ test('changed source bytes or a changed inventory leave no ready or partial bund
   await assert.rejects(capture(folder,overrides));assert.equal(await stat(path.join(folder,'backup')).catch(()=>null),null);
  }
 }));
+test('an oversized private object stops capture before consuming the rest of its stream', () => fixture(async folder => {
+ let consumedRemainder = false;
+ let closed = false;
+ async function* oversized() {
+  try {
+   yield Buffer.alloc(image.length + 1);
+   consumedRemainder = true;
+   yield image;
+  } finally {
+   closed = true;
+  }
+ }
+ await assert.rejects(capture(folder, {readObject: async () => oversized()}), /payload exceeds/);
+ assert.equal(consumedRemainder, false);
+ assert.equal(closed, true);
+ assert.equal(await stat(path.join(folder, 'backup')).catch(() => null), null);
+}));
 test('capture rejects an ambiguous source, bad keys and duplicate or unsafe object identities',()=>fixture(async folder=>{
  for(const overrides of[{source:{...source,projectRef:'another-project'}},{source:{...source,releaseSha:'main'}},{key:'a password'},{objects:[{bucket:'paper-media',name:'../escape',contentType:'image/png',byteSize:0}]},{objects:[{bucket:'paper-media',name:'one',contentType:'image/png',byteSize:0},{bucket:'paper-media',name:'one',contentType:'image/png',byteSize:0}]}])await assert.rejects(capture(folder,overrides));assert.equal(await stat(path.join(folder,'backup')).catch(()=>null),null);
 }));

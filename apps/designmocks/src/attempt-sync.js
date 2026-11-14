@@ -49,7 +49,9 @@ export function createAnswerSyncQueue({
   return {
     restore(questions) {
       for (const question of questions) {
-        const serverRevision = question.answerRevision ?? 0;
+        const hasConfirmedAnswer = Number.isSafeInteger(question.answerRevision)
+          && question.answerRevision > 0 && validAttemptAnswer(question, question.answer);
+        const serverRevision = hasConfirmedAnswer ? question.answerRevision : 0;
         revisions.set(question.id, serverRevision);
         const record = journal?.read(question.id);
         if (!record) continue;

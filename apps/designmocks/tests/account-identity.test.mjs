@@ -1,6 +1,6 @@
 import test from'node:test';
 import assert from'node:assert/strict';
-import{authorizationHeaders,runForVerifiedAccount,verifiedAccountToken}from'../src/account-identity.js';
+import{authorizationHeaders,runForVerifiedAccount,verifiedAccountToken,verifiedRoleCheck}from'../src/account-identity.js';
 import{createAdminAccessScope}from'../src/admin-access.js';
 const signal=()=>new AbortController().signal;
 test('a verified account returns only the exact captured token even if SDK state changes',async()=>{let token='opaque-fictional-first',seen;const auth={getSession:async()=>({data:{session:{user:{id:'first'},access_token:token}}}),getUser:async value=>{seen=value;token='opaque-fictional-second';return{data:{user:{id:'first'}}};}};assert.equal(await verifiedAccountToken(auth,'first',signal()),'opaque-fictional-first');assert.equal(seen,'opaque-fictional-first');});
@@ -14,7 +14,6 @@ test('failed current identity verification clears the scope and hides the origin
 test('per-request authorization replaces every caller casing without mutating other headers',()=>{const original={Authorization:'old-uppercase',authorization:'old-lowercase','AUTHORIZATION':'old-other','Content-Type':'application/octet-stream','X-Original':'fictional'};assert.deepEqual(authorizationHeaders(original,'opaque-fictional-first'),{'Content-Type':'application/octet-stream','X-Original':'fictional',Authorization:'Bearer opaque-fictional-first'});assert.equal(original.authorization,'old-lowercase');});
 
 test('role probes pin the verified token and drop replies after an account change', async () => {
-  const { verifiedRoleCheck } = await import('../src/account-identity.js');
   const make = (state) => ({
     auth: {
       getSession: async () => ({ data: { session: { user: { id: state.id }, access_token: state.token } }, error: null }),
@@ -41,4 +40,25 @@ test('role probes pin the verified token and drop replies after an account chang
   const controller = new AbortController(); controller.abort();
   state.afterRpc = undefined; state.id = 'a'; state.token = 'first';
   await assert.rejects(verifiedRoleCheck(auth, client, 'a', 'x', controller.signal));
+});
+
+test('role probes expire during a stalled identity verification and never dispatch after its reply', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let finishIdentity;
+  const identity = new Promise(resolve => { finishIdentity = resolve; });
+  const auth = {
+    getSession: async () => ({ data: { session: { user: { id: 'a' }, access_token: 'first' } } }),
+    getUser: () => identity,
+  };
+  let calls = 0;
+  const client = { rpc() { calls++; } };
+  const result = verifiedRoleCheck(auth, client, 'a', 'can_enter_staging_portal', signal());
+  const rejection = assert.rejects(result, { name: 'AbortError' });
+  await Promise.resolve();
+  await Promise.resolve();
+  t.mock.timers.tick(20_000);
+  await rejection;
+  finishIdentity({ data: { user: { id: 'a' } } });
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(calls, 0);
 });

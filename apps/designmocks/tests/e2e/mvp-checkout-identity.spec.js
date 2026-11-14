@@ -192,7 +192,24 @@ test('failed pass inspection hides diagnostics and allows only an explicit new r
  const state=await setup(page,s=>{s.fail='my_pass';});await expect(page.getByRole('alert')).toContainText('Couldn’t confirm your pass');await expect(page.getByRole('alert')).not.toContainText('private fictional');await expect(pay(page)).toBeDisabled();expect(state.calls.filter(row=>row.name==='create-order')).toEqual([]);state.fail=null;await page.getByRole('button',{name:'Check my pass',exact:true}).click();await expect(consent(page)).toBeEnabled();await consent(page).check();await expect(pay(page)).toBeEnabled();
 });
 test('a timed-out order stays closed after its late receipt and requires a pass read before retry',async({page})=>{
- const state=await setup(page);await consent(page).check();await page.clock.install();state.holds['create-order']=true;await pay(page).click();await expect.poll(()=>Boolean(state.waits['create-order'])).toBe(true);await page.clock.fastForward(20001);await expect(page.getByRole('alert')).toContainText('Couldn’t confirm checkout');state.holds['create-order']=false;state.waits['create-order']();await expect(pay(page)).toBeDisabled();expect(await page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(0);await page.getByRole('button',{name:'Check my pass',exact:true}).click();await expect(pay(page)).toBeEnabled();await pay(page).click();await expect.poll(()=>page.evaluate(()=>window.checkoutFixture?.opened??0)).toBe(1);expect(state.calls.filter(row=>row.name==='create-order')).toHaveLength(2);
+ await page.clock.install();
+ const state = await setup(page, value => { value.holds['create-order'] = true; });
+ await expect(consent(page)).toBeEnabled();
+ await consent(page).check();
+ await expect(pay(page)).toBeEnabled();
+ await pay(page).press('Enter');
+ await expect.poll(() => Boolean(state.waits['create-order'])).toBe(true);
+ await page.clock.runFor(20001);
+ await expect(page.getByRole('alert')).toContainText('Couldn’t confirm checkout');
+ state.holds['create-order'] = false;
+ state.waits['create-order']();
+ await expect(pay(page)).toBeDisabled();
+ expect(await page.evaluate(() => window.checkoutFixture?.opened ?? 0)).toBe(0);
+ await page.getByRole('button', {name:'Check my pass',exact:true}).click();
+ await expect(pay(page)).toBeEnabled();
+ await pay(page).click();
+ await expect.poll(() => page.evaluate(() => window.checkoutFixture?.opened ?? 0)).toBe(1);
+ expect(state.calls.filter(row => row.name === 'create-order')).toHaveLength(2);
 });
 test('an already active server pass prevents checkout before another consent or charge',async({page})=>{
  const state=await setup(page,s=>{s.active=true;});await expect(page.getByText('Your pass is active.',{exact:false})).toBeVisible();await expect(consent(page)).toHaveCount(0);await expect(pay(page)).toHaveCount(0);expect(state.calls.filter(row=>['accept_current_terms','create-order'].includes(row.name))).toEqual([]);

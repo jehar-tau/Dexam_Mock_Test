@@ -50,6 +50,17 @@ verify_jwt = false
 [functions.community-media]
 verify_jwt = false
 
+# Intake checks Auth, staging admission and staff authorization in each handler.
+# Browser preflight must reach the handler without an access token.
+[functions.question-intake]
+verify_jwt = false
+
+[functions.question-intake-extract]
+verify_jwt = false
+
+[functions.ai-question-draft]
+verify_jwt = false
+
 # Exact owned-origin callbacks. The server hook admits allowlisted Google testers only; public registration remains closed.
 [auth]
 site_url = "https://dmocks.com"

@@ -24,7 +24,8 @@ Deno.serve(async request => {
   try {
     const { targetKey, revision } = await request.json();
     if (typeof targetKey !== "string" || !Number.isSafeInteger(revision) || revision < 1) return respond({ error: "A reported question and current revision are required" }, 400);
-    const paths = await reviewer.rpc("admin_reported_question_media_paths", { p_target_key: targetKey, p_expected_revision: revision });
+    const readPaths = () => reviewer.rpc("admin_reported_question_media_paths", { p_target_key: targetKey, p_expected_revision: revision });
+    const paths = await readPaths();
     if (paths.error) return respond({ error: "Question figures are unavailable. Refresh the reported case and review it again." }, paths.error.code === "42501" ? 403 : 409);
     const figures: Figure[] = paths.data;
     if (!figures.length) return respond({ images: [] });
@@ -34,6 +35,12 @@ Deno.serve(async request => {
     const links = new Map(signed.data.filter(entry => !entry.error && entry.signedUrl).map(entry => [entry.path, entry.signedUrl]));
     if (figures.some(figure => !links.has(figure.storagePath))) return respond({ error: "A private figure could not be opened. Try again." }, 502);
     if (await stagingDenied()) return respond({ error: "Private staging requires an approved Google tester" }, 403);
+    const currentPaths = await readPaths();
+    const identity = (rows: Figure[]) => rows.map(figure => [figure.ordinal, figure.storagePath]);
+    if (currentPaths.error || !Array.isArray(currentPaths.data)
+      || JSON.stringify(identity(currentPaths.data)) !== JSON.stringify(identity(figures))) {
+      return respond({ error: "Question figures are unavailable. Refresh the reported case and review it again." }, currentPaths.error?.code === "42501" ? 403 : 409);
+    }
     return respond({ images: figures.map(({ ordinal, storagePath }) => ({ ordinal, url: links.get(storagePath) })) });
   } catch {
     return respond({ error: "Invalid reported question image request" }, 400);

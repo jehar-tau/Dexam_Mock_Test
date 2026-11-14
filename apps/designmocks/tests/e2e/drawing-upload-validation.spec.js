@@ -8,7 +8,8 @@ const student = { id: "00000000-0000-4000-8000-000000000401", email: "drawing-up
 const attemptId = "30000000-0000-4000-8000-000000000401", questionId = "20000000-0000-4000-8000-000000000401";
 const png = () => readFile(new URL("../fixtures/drawing-images/fictional-drawing.png", import.meta.url));
 
-async function fixture(page, { cleanupPending = false } = {}) {
+async function fixture(page, { cleanupPending = false, initialInventory = null } = {}) {
+  const allowInvalidInventory = initialInventory !== null;
   const now = new Date(); await page.clock.install({ time: now });
   const state = { pages: [], uploads: [], nextError: null, loseReceipt: false, loseOrdinal: null, removals: [] };
   const provider = await stubPortalProvider(page, procedure => {
@@ -27,7 +28,11 @@ async function fixture(page, { cleanupPending = false } = {}) {
     const contentType = request.headers()["content-type"];
     if (contentType.includes("application/json")) {
       const body = request.postDataJSON();
-      if (body.action === "list") return route.fulfill({ headers, json: { items: state.pages } });
+      if (body.action === "list") {
+        const items = initialInventory ?? state.pages;
+        initialInventory = null;
+        return route.fulfill({headers, json: {items}});
+      }
       state.removals.push(body);
       state.pages = state.pages.filter(item => item.id !== body.id);
       return route.fulfill({ headers, json: cleanupPending ? { removed: body.id, cleanupPending: true } : { removed: body.id } });
@@ -44,7 +49,7 @@ async function fixture(page, { cleanupPending = false } = {}) {
     return route.fulfill({ headers, json: { id: item.id, ordinal: item.ordinal } });
   });
   await page.goto("/account"); await seedPortalSession(page, student); await page.goto("/attempt/" + attemptId);
-  await expect(page.getByRole("button", { name: "Add images" })).toBeEnabled();
+  if (!allowInvalidInventory) await expect(page.getByRole("button", {name: "Add images"})).toBeEnabled();
   return Object.assign(state, provider);
 }
 
@@ -157,4 +162,42 @@ test("closing the drawing window clears the pending selection without sending an
   await expect(retry).toHaveCount(0);
   expect(state.uploads).toHaveLength(1);
   expect(state.pages).toEqual([]);
+});
+
+
+test("a selection above the remaining drawing slots sends no files", async ({page}) => {
+  const state = await fixture(page);
+  const drawing = page.locator(".drawing-uploads");
+  const input = drawing.locator('input[type="file"]');
+  const buffer = await png();
+  const files = [1, 2, 3, 4, 5, 6].map(index => ({name: `page-${index}.png`, mimeType: "image/png", buffer}));
+
+  await input.setInputFiles(files);
+  await expect(drawing.getByRole("status")).toHaveText("Only 5 image slots are available. Select fewer images.");
+  expect(state.uploads).toEqual([]);
+  await input.setInputFiles(files.slice(0, 4));
+  await expect(drawing.getByText("page-4.png", {exact: true})).toBeVisible();
+
+  await input.setInputFiles(files.slice(4));
+  await expect(drawing.getByRole("status")).toHaveText("Only one image slot is available. Select one image.");
+  expect(state.uploads.map(item => item.ordinal)).toEqual([1, 2, 3, 4]);
+  await input.setInputFiles(files[5]);
+  await expect(drawing.getByText("page-6.png", {exact: true})).toBeVisible();
+  expect(state.uploads.map(item => item.ordinal)).toEqual([1, 2, 3, 4, 5]);
+});
+
+
+test("an invalid saved-page list blocks uploads until a confirmed reload", async ({page}) => {
+  const state = await fixture(page, {initialInventory: [{id: "a", ordinal: 1}, {id: "b", ordinal: 1}]});
+  const drawing = page.locator(".drawing-uploads");
+  const add = drawing.getByRole("button", {name: "Add images"});
+  await expect(drawing.getByRole("status")).toHaveText("Couldn’t load your saved pages.");
+  await expect(add).toBeDisabled();
+  expect(state.uploads).toEqual([]);
+
+  await drawing.getByRole("button", {name: "Reload saved pages"}).click();
+  await expect(add).toBeEnabled();
+  await drawing.locator('input[type="file"]').setInputFiles({name: "saved.png", mimeType: "image/png", buffer: await png()});
+  await expect(drawing.getByText("saved.png", {exact: true})).toBeVisible();
+  expect(state.uploads.map(item => item.ordinal)).toEqual([1]);
 });

@@ -6,7 +6,10 @@ const provider = "http://127.0.0.1:1";
 const actor = "00000000-0000-4000-8000-000000000190";
 const mediaPath = "papers/fixture.png";
 
+const communityPath = "community/fixture.png";
+const revision = "a".repeat(64);
 const endpoints = [
+  ["community-media", {targetType: "post", targetId: actor}, "community_media_paths"],
   ["attempt-media", { attemptId: actor }, "read_attempt"],
   ["drawing-review-media", { reviewId: actor }, "admin_drawing_review_media_paths"],
   ["bank-review-media", { externalKey: "fixture", reviewVersion: "fixture" }, "admin_bank_review_media_paths"],
@@ -35,6 +38,8 @@ Deno.test("private media checks staging admission before signing and again befor
         Deno.serve = handle => { handler = handle; };
         const decisions = [];
         const calls = [];
+        let afterSigning;
+        let activeRpc = authorization;
         globalThis.fetch = async (input, init) => {
           const request = new Request(input, init);
           const url = new URL(request.url);
@@ -46,15 +51,19 @@ Deno.test("private media checks staging admission before signing and again befor
             assert.ok(decisions.length);
             return Response.json(decisions.shift());
           }
-          if (url.pathname.endsWith("/" + authorization)) {
+          if (url.pathname.endsWith("/" + activeRpc)) {
+            if (endpoint === "community-media") return Response.json([{
+              id: actor, ordinal: 1, path: communityPath, mimeType: "image/png", width: 1, height: 1, orientation: 1,
+            }]);
             if (authorization === "read_attempt") return Response.json({
               deadline: new Date(Date.now() + 60000).toISOString(),
               questions: [{ id: actor, media: [{ path: mediaPath }] }],
             });
+            if (afterSigning && calls.some(path => path.includes("/object/sign/"))) return afterSigning();
             return Response.json([{ id: actor, ordinal: 1, storagePath: mediaPath, width: 1, height: 1 }]);
           }
           if (url.pathname.includes("/object/sign/")) return Response.json([
-            { path: mediaPath, signedURL: "/object/sign/fixture.png?token=fictional-signature" },
+            { path: endpoint === "community-media" ? communityPath : mediaPath, signedURL: "/object/sign/fixture.png?token=fictional-signature" },
           ]);
           assert.fail("Unexpected provider request");
         };
@@ -79,6 +88,45 @@ Deno.test("private media checks staging admission before signing and again befor
           assert.equal(text.includes("fictional-signature"), status === 200);
           assert.equal(calls.some(path => path.includes("/object/sign/")), stages.length === 2);
           assert.equal(decisions.length, 0);
+        }
+        if (endpoint === "community-media") {
+          for (const [requestBody, rpc] of [
+            [{action: "review", reportId: actor, reviewVersion: revision, context: "target"}, "admin_community_report_media_paths"],
+            [{action: "moderate", ...body, reviewVersion: revision, context: "target"}, "admin_community_moderation_media_paths"],
+          ]) {
+            activeRpc = rpc;
+            for (const allowed of [false, true]) {
+              decisions.push(true, allowed);
+              calls.length = 0;
+              const response = await handler(new Request(origin, {method: "POST",
+                headers: {origin, authorization: "Bearer fictional-tester", "content-type": "application/json"},
+                body: JSON.stringify(requestBody),
+              }));
+              assert.equal(response.status, allowed ? 200 : 403);
+              assert.equal((await response.text()).includes("fictional-signature"), allowed);
+              assert.equal(calls.filter(path => path.endsWith("/" + rpc)).length, 2);
+              assert.equal(decisions.length, 0);
+            }
+          }
+        }
+        if (endpoint === "bank-review-media" || endpoint === "reported-question-media") {
+          for (const [result, status] of [
+            [() => Response.json({ code: "42501", message: "Permission denied" }, { status: 403 }), 403],
+            [() => Response.json([{ ordinal: 1, storagePath: "papers/changed.png", width: 1, height: 1 }]), 409],
+          ]) {
+            afterSigning = result;
+            decisions.push(true, true);
+            calls.length = 0;
+            const response = await handler(new Request(origin, {
+              method: "POST",
+              headers: { origin, authorization: "Bearer fictional-tester", "content-type": "application/json" },
+              body: JSON.stringify(body),
+            }));
+            assert.equal(response.status, status);
+            assert.ok(!(await response.text()).includes("fictional-signature"));
+            assert.equal(calls.filter(path => path.endsWith("/" + authorization)).length, 2);
+            assert.equal(decisions.length, 0);
+          }
         }
       });
     }

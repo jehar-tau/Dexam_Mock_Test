@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createClient } from '@supabase/supabase-js';
 import { resolveProviderOrder } from '../supabase/functions/_shared/provider-order.mjs';
 import { createOrderHandler } from '../supabase/functions/_shared/create-order.mjs';
 
@@ -155,9 +156,42 @@ test('missing merchant configuration, origin and identity failures cannot reach 
 });
 test('unknown plans and malformed JSON never prepare an order',async()=>{
   const f=handlerFixture();assert.equal((await f.handler(f.request({plan:'monthly'}))).status,400);
-  const bad=new Request(origin,{method:'POST',headers:{Origin:origin,Authorization:'Bearer fictional-actor'},body:'{'});
+  const bad=new Request(origin,{method:'POST',headers:{Origin:origin,Authorization:'Bearer fictional-actor','Content-Type':'application/json'},body:'{'});
   assert.equal((await f.handler(bad)).status,400);assert.equal(f.calls.includes('prepare_order'),false);assert.equal(f.w.state.calls.length,0);
 });
+test('oversized checkout requests never prepare or create an order', async () => {
+  const f = handlerFixture();
+  const large = {plan: 'annual', padding: 'a'.repeat(4100)};
+  assert.equal((await f.handler(f.request(large))).status, 413);
+  assert.equal((await f.handler(f.request(undefined, {'Content-Length': '5000'}))).status, 413);
+  assert.equal((await f.handler(f.request(undefined, {'Content-Type': 'text/plain'}))).status, 415);
+  assert.equal(f.calls.includes('prepare_order'), false);
+  assert.equal(f.w.state.calls.length, 0);
+});
+
+test('checkout accepts the annual plan request serialized by the browser SDK', async () => {
+  const f = handlerFixture();
+  const client = createClient(origin, 'fictional-anon', {
+    auth: {persistSession: false, autoRefreshToken: false, detectSessionInUrl: false},
+    accessToken: async () => 'fictional-actor',
+    global: {
+      fetch: (url, init) => {
+        const headers = new Headers(init.headers);
+        headers.set('Origin', origin);
+        assert.equal(headers.get('Content-Type'), 'application/json');
+        return f.handler(new Request(url, {...init, headers}));
+      },
+    },
+  });
+  const {data, error} = await client.functions.invoke('create-order', {
+    body: {plan: 'annual'},
+    signal: new AbortController().signal,
+  });
+  assert.equal(error, null);
+  assert.deepEqual(data, {orderId: 'order_fictional', keyId, amount: 119300, currency: 'INR'});
+  assert.deepEqual(f.calls, ['getUser', 'prepare_order', 'attach_provider_order']);
+});
+
 test('the complete handler deadline fences an SDK identity reply that arrives after the response',async()=>{
   let release,preparedCalls=0,providerCalls=0;
   const handler=createOrderHandler({readEnvironment:key=>({PUBLIC_APP_ORIGIN:origin,SUPABASE_URL:'fictional',SUPABASE_ANON_KEY:'fictional',SUPABASE_SERVICE_ROLE_KEY:'fictional',RAZORPAY_KEY_ID:keyId,RAZORPAY_KEY_SECRET:keySecret})[key],timeoutMilliseconds:10,

@@ -43,6 +43,17 @@ test("the staging profile accepts only reviewed origins and public browser crede
   assert.throws(() => stagingArtifactProfile({ ...project, frontend_origin: values.frontendOrigin }, values), /exact private staging/);
 });
 
+test("the paid paper pilot retains private admission and disables deferred modules and checkout", () => {
+  const staging = stagingArtifactProfile(project, values);
+  assert.deepEqual(stagingArtifactProfile(project, { ...values, paidPilot: true }), {
+    ...staging, backendProfile: "paid-mvp", postLaunchPreview: false,
+  });
+  assert.throws(
+    () => stagingArtifactProfile(project, { ...values, frontendOrigin: project.frontend_origin, paidPilot: true }),
+    /exact private staging/,
+  );
+});
+
 const checkoutValues = {
   ...values, frontendOrigin: project.frontend_origin, noticeVersion: "dmocks-notices-v1-" + "a".repeat(64),
 };
@@ -105,6 +116,16 @@ test("artifact verification pins the reviewed digest and all stored site bytes",
     ...artifact.manifest, source: { ...artifact.source, tree: "e".repeat(40) }, bundleSha256: artifact.expected,
   }));
   await assert.rejects(verifyStagingArtifact(artifact), /reviewed manifest hash/);
+});
+
+test("pilot verification rejects a valid package for the broader staging workspace", async t => {
+  const workspace = await bundle(t);
+  const profile = stagingArtifactProfile(project, { ...values, paidPilot: true });
+  const pilot = await bundle(t, { profile });
+  const checkoutOpened = await bundle(t, { profile: { ...profile, checkoutEnabled: true } });
+  assert.equal((await verifyStagingArtifact({ ...pilot, paidPilot: true })).verified, true);
+  await assert.rejects(verifyStagingArtifact({ ...workspace, paidPilot: true }), /private paid-paper pilot/);
+  await assert.rejects(verifyStagingArtifact({ ...checkoutOpened, paidPilot: true }), /private paid-paper pilot/);
 });
 
 test("artifact verification rejects altered, extra, missing and symlink assets", async t => {

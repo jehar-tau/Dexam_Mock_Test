@@ -115,6 +115,16 @@ select public.admin_reported_question(:'case_key',:'case_revision')->>'bankVersi
 select pg_temp.quality_assert(public.admin_reported_question(:'case_key',:'case_revision')->'snapshot'->'key'->'correct'='["B"]'::jsonb
   and not(public.admin_reported_question(:'case_key',:'case_revision')->'snapshot'?'answer'),'admin sees the delivered key and no student answer');
 select pg_temp.quality_assert(public.admin_reported_question_media_paths(:'case_key',:'case_revision')->0->>'storagePath'='papers/canonical/'||repeat('a',64)||'.png','signing uses frozen, registered canonical figure paths');
+
+-- A second request with the same actor and review version must recheck staff access.
+reset role;
+delete from dm_private.admins where user_id=:'editor';
+set local role authenticated;
+select pg_temp.quality_reject(format('select public.admin_reported_question_media_paths(%L,%s)',:'case_key',:'case_revision'),'Admin access required');
+reset role;
+insert into dm_private.admins(user_id) values(:'editor');
+set local role authenticated;
+
 select pg_temp.quality_reject(format('select public.admin_resolve_reported_question(%L,%L,%L,%s,%L)',:'case_key','dismiss','short',:'case_revision',:'bank_version'),'review reason');
 reset role;
 select pg_temp.quality_assert((select a.score=3 and a.deadline=o.deadline from dm_private.attempts a cross join(select deadline from dm_private.attempts where id=(select attempt_id from quality_people where n=2)) o where a.id=(select attempt_id from quality_people where n=1)),'holding the source changes neither submitted marking nor the original clock');

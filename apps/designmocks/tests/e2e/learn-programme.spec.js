@@ -336,6 +336,12 @@ test("nets of solids: stripes join up across folds and sliced corners sit on a g
 test("mechanisms: the machine runs, a ring locks, and every exam-hard kind is marked", async ({ page }) => {
   const base = "/learn-programme-preview/mechanisms";
   const dialog = player(page);
+  const duplicateKeys = [];
+  page.on("console", message => {
+    if (message.type() === "error" && message.text().includes("two children with the same key")) {
+      duplicateKeys.push(message.text());
+    }
+  });
 
   // The gear tool reports true directions and speeds, and reacts to its controls.
   await page.goto(`${base}?lesson=two-gears`);
@@ -365,6 +371,7 @@ test("mechanisms: the machine runs, a ring locks, and every exam-hard kind is ma
   const add = dialog.getByRole("button", { name: "Add 1 kilogram 2 units to the right of the pivot" });
   await add.click(); await add.click(); await add.click();
   await expect(dialog.getByRole("status")).toContainText("Balanced.");
+  expect(duplicateKeys).toEqual([]);
 
   // The exam-hard quiz: speeds, rope, ring, marks and mobile, each answered from the engine.
   const { mechanismsProgramme } = await import("../../src/learn/programmes/mechanisms.js");

@@ -37,9 +37,20 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
       assert.equal(url.origin, ${JSON.stringify(base)});
       assert.equal(init.redirect, "error");
       const request = new Request(input, init);
-      assert.equal(request.headers.get("apikey"), "sb_publishable_fictional");
+      const browserPreflight = request.method === "OPTIONS";
+      assert.equal(request.headers.get("apikey"), browserPreflight ? null : "sb_publishable_fictional");
       assert.equal(request.headers.get("authorization"), null);
+      if (browserPreflight) {
+        assert.equal(request.headers.get("content-type"), null);
+        assert.equal(request.headers.get("access-control-request-headers"), "authorization,apikey,content-type,x-client-info");
+      }
       if (url.pathname === "/functions/v1/create-order") {
+        if (fixture === "missing-checkout-allow-headers" && browserPreflight)
+          return new Response(null, {status: 204, headers: {
+            "Access-Control-Allow-Origin": environment.PUBLIC_APP_ORIGIN,
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "content-type",
+          }});
         if (fixture === "gateway" && request.method === "POST" &&
           request.headers.get("origin") === environment.PUBLIC_APP_ORIGIN)
           return Response.json({ message: "Missing authorization header" }, {
@@ -158,4 +169,10 @@ test("staging and configured commerce probes require separate runs", () => {
   const result = runSmoke("configured", "configured", { staging: true });
   assert.equal(result.status, 1);
   assert.match(result.stderr, /Run the configured commerce probe separately/);
+});
+
+test("configured smoke rejects a checkout preflight missing browser request headers", () => {
+  const result = runSmoke("configured", "missing-checkout-allow-headers");
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /approved checkout preflight must allow the browser request headers/);
 });
