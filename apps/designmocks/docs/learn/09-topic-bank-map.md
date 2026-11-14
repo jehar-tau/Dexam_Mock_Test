@@ -54,7 +54,7 @@ the geometry or the pattern would be copied into everything after it.
 
 | # | Programme (slug) | Source | Kind | Builder | State |
 |---|---|---|---|---|---|
-| 1 | Cube nets (`cube-nets`) | Spatial | computable | Fable built Foundations; Opus adds tiers 2–4 from `topics/cube-nets.md` | Foundations done |
+| 1 | Cube nets (`cube-nets`) | Spatial | computable | Fable built Foundations; Opus added tiers 2–4 from `topics/cube-nets.md` | All four tiers done |
 | 2 | Nets of solids (`nets-of-solids`) | Spatial | computable | Fable | All four tiers done |
 | 3 | Counting cubes (`counting-cubes`) | Spatial | computable | Fable | All four tiers done |
 | 4 | Gears, belts and levers (`mechanisms`) | Mechanical | computable | **Fable: engine, tool, all tiers for gears, belts, levers.** Opus adds linkages, stability, rolling from `topics/mechanisms.md` | All four tiers done for gears, belts, ropes, levers |

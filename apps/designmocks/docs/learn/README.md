@@ -60,7 +60,7 @@ Update this table in the same change as the work.
 
 | Programme | Spec | Foundations | Exam standard | Exam hard | Mastery | Portal |
 |---|---|---|---|---|---|---|
-| Cube nets | [spec](topics/cube-nets.md) | Built | Planned | Planned | Planned | Preview |
+| Cube nets | [spec](topics/cube-nets.md) | Built | Built | Built | Built | Preview |
 | Nets of solids | [spec](topics/nets-of-solids.md) | Built | Built | Built | Built | Preview |
 | Dice | [spec](topics/dice.md) | Planned | Planned | Planned | Planned | — |
 | Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Planned | Planned | Planned | Preview |

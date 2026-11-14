@@ -104,7 +104,7 @@ the current programmes do not reach it for folding, surfaces or views.
    and shadows, assembly and mechanism) and extend section 8.4 of the
    reference standard and the matching specifications.
 4. Paper folding, tiers 2–4 ([topics/paper-folding.md](topics/paper-folding.md)).
-5. Cube nets, tiers 2–4.
+5. ~~Cube nets, tiers 2–4.~~ Built 14 November 2026; see the update at the end.
 6. Mirror images, tiers 2–4.
 7. Colour, tiers 2–4.
 8. Wave 2, starting with views and rotation. Extend the views, surfaces
@@ -240,3 +240,42 @@ Quantitative aptitude and logical reasoning have no spec. Before any code:
    "figure" may be nothing, or a small table: that is fine. The contract
    that matters is that every number is drawn from the seed, the answer is
    computed, and each wrong option is the result of one named mistake.
+
+## Update, 14 November 2026 (evening): cube nets tiers 2–4
+
+Branch `feature/dmocks-learn-cube-nets-tiers`. Cube nets now has all four
+tiers (spec `topics/cube-nets.md`, status line and section 11).
+
+- `programmes/cube-nets.js` is in the tiered shape. Foundations is the old
+  five lessons with every lesson id and kind unchanged; its quiz is the old
+  challenge (10 questions, pass 7), and `?lesson=challenge` still opens it.
+  Twelve lessons in all: `turns`, `from-views`, `open-box`;
+  `same-cube`, `partial-views`, `lines-across`; `review`.
+- Engine (`cube-net.js`): cell turns (`content.turn`, `glyphAxes`),
+  `foldCells`, `openBox`, named `pentominoes`, `edgeNeighbours`,
+  `mirrorNet`, `unfoldCube`; glyphs `line`, `bend`, `blank`. Level 1–2
+  questions are byte-identical to before (checked on 200 seeds per kind).
+- Kinds: `which-cube` and `cannot-cube` L3, `which-net` L3–L4,
+  `net-from-views` L3–L4, `open-box` L3, `same-cube` L4 (select all),
+  `path-cube` L4.
+- `tests/cube-net-exam.test.mjs` recomputes every option of every new kind
+  over 60 seeds by a second method (frame matching under 24 rotations, not
+  view signatures). `tests/learn-programme.test.mjs` no longer uses cube
+  nets as its v1 example; it rebuilds a v1 programme from the Foundations
+  tier instead. Two new browser journeys in `learn-programme.spec.js`; the
+  overview journey now expects "0 of 12 lessons".
+- Checked in the browser: every new kind at 375 px in light theme and the
+  tools, a select-all quiz and the results screen at desktop in dark theme;
+  the audit found zero violations on all of them.
+- `npm test` 649 pass; build and isolation check pass.
+
+**Disk was full when this was written** (under 600 MB free on the owner's
+Mac, filled by other sessions' copies and caches). The Learn browser
+journeys and the full browser suite could not be started, so a copy with
+remapped ports did not fit either. Running them is the first thing to do on
+this branch; 5x99 ports were also in use by a sibling session, 6x99 were
+free. Not done either: hand-solving 20 seeds per kind and timing five L4
+questions (ladder 2.6, steps 4–5) — a reviewer session should do that.
+
+The preview server for this branch is `designmocks-learn-cube-nets` on port
+4187 (added to the session root's `.claude/launch.json`).
