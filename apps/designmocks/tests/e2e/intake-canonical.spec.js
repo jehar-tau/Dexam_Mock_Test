@@ -251,31 +251,36 @@ test("administrators can transcribe several source questions while model extract
   expect(state.unexpected).toEqual([]);
 });
 
-test("a late model-worker role denial closes the desk and clears the private intake source", async ({ page }) => {
-  const state = await fixture(page);
-  await page.getByLabel("Private source file").setInputFiles({ name: "fictional-source.pdf", mimeType: "application/pdf", buffer: pdf });
-  await page.getByRole("button", { name: "Upload for extraction" }).click();
-  const asset = page.locator(".intake-queue article").filter({ hasText: "fictional-source.pdf" });
-  await expect(asset).toBeVisible();
+for (const denial of [
+  { label: "model-worker role denial", message: "Admin access required" },
+  { label: "staging tester denial", message: "Private staging requires an approved Google tester" },
+]) {
+  test(`a late ${denial.label} closes the desk and clears the private intake source`, async ({ page }) => {
+    const state = await fixture(page);
+    await page.getByLabel("Private source file").setInputFiles({ name: "fictional-source.pdf", mimeType: "application/pdf", buffer: pdf });
+    await page.getByRole("button", { name: "Upload for extraction" }).click();
+    const asset = page.locator(".intake-queue article").filter({ hasText: "fictional-source.pdf" });
+    await expect(asset).toBeVisible();
 
-  let workerCalls = 0;
-  await page.route("https://dmocks-portal-fixture.supabase.co/functions/v1/question-intake-extract", async route => {
-    workerCalls++;
-    expect(route.request().postDataJSON()).toEqual({ assetId: "00000000-0000-4000-8000-000000000111" });
-    state.state.admin = false;
-    await route.fulfill({ status: 403, json: { error: "Admin access required" } });
+    let workerCalls = 0;
+    await page.route("https://dmocks-portal-fixture.supabase.co/functions/v1/question-intake-extract", async route => {
+      workerCalls++;
+      expect(route.request().postDataJSON()).toEqual({ assetId: "00000000-0000-4000-8000-000000000111" });
+      state.state.admin = false;
+      await route.fulfill({ status: 403, json: { error: denial.message } });
+    });
+    await asset.getByRole("button", { name: "Extract with configured model" }).click();
+
+    const access = page.getByRole("region", { name: "Administrator access", exact: true });
+    await expect(access.getByRole("alert")).toHaveText("Administrator access has ended. Private views were cleared.");
+    await expect(page.getByLabel("Private source file")).toHaveCount(0);
+    await expect(page.locator(".intake-queue article")).toHaveCount(0);
+    await expect(page.getByText(denial.message, { exact: true })).toHaveCount(0);
+    expect(workerCalls).toBe(1);
+    expect(state.calls.filter(([name]) => name === "question-intake-extract")).toHaveLength(0);
+    expect(state.unexpected).toEqual([]);
   });
-  await asset.getByRole("button", { name: "Extract with configured model" }).click();
-
-  const access = page.getByRole("region", { name: "Administrator access", exact: true });
-  await expect(access.getByRole("alert")).toHaveText("Administrator access has ended. Private views were cleared.");
-  await expect(page.getByLabel("Private source file")).toHaveCount(0);
-  await expect(page.locator(".intake-queue article")).toHaveCount(0);
-  await expect(page.getByText("Admin access required", { exact: true })).toHaveCount(0);
-  expect(workerCalls).toBe(1);
-  expect(state.calls.filter(([name]) => name === "question-intake-extract")).toHaveLength(0);
-  expect(state.unexpected).toEqual([]);
-});
+}
 
 test("students cannot open private intake controls", async ({ page }) => {
   const state = await fixture(page, { admin: false });
