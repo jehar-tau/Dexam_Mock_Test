@@ -113,7 +113,7 @@ const shapeList = shapes => (shapes === 'pentominoes' ? pentominoList : cubeNets
 function NetPicker({ index, onChange, orientation, onFlip, shapes }) {
   const list = shapeList(shapes);
   return <div className="net-picker" role="group" aria-label={shapes === 'pentominoes' ? 'Choose a five-square shape' : 'Choose a net'}>
-    {list.map((net, i) => <button key={net.id} type="button" className={`net-thumb${i === index ? ' is-active' : ''}`} aria-pressed={i === index} aria-label={`Shape ${i + 1} of ${list.length}, ${net.family}`} onClick={() => onChange(i)}>
+    {list.map((net, i) => <button key={net.id} type="button" className={`net-thumb${i === index ? ' is-active' : ''}`} aria-pressed={i === index} aria-label={`${shapes === 'pentominoes' ? 'Shape' : 'Net'} ${i + 1} of ${list.length}, ${net.family}`} onClick={() => onChange(i)}>
       <NetDiagram cells={net.cells.map(c => ({ ...c }))} size="mini" label={`Net ${i + 1}`} />
     </button>)}
     <IconButton label={`Turn the net (${orientation + 1} of 8)`} onClick={onFlip}>{arrowIcon(0)}</IconButton>

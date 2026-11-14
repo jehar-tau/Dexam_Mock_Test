@@ -72,14 +72,14 @@ test("a lesson runs one screen at a time with Check, feedback and Continue, and 
   await dialog.getByRole("button", { name: "Finish lesson" }).click();
 
   await expect(page.getByRole("status")).toContainText("Lesson complete: From flat to solid.");
-  await expect(page.getByLabel("Programme progress")).toContainText("1 of 5 lessons");
+  await expect(page.getByLabel("Programme progress")).toContainText("1 of 12 lessons");
   const first = page.locator(".path-item", { hasText: "From flat to solid" });
   await expect(first).toHaveClass(/is-complete/);
   await expect(first).toContainText(/\d of 4 right/);
   await expect(page.locator(".path-item", { hasText: "Opposite faces" }).getByRole("button", { name: "Start" })).toBeVisible();
 
   await page.reload();
-  await expect(page.getByLabel("Programme progress")).toContainText("1 of 5 lessons");
+  await expect(page.getByLabel("Programme progress")).toContainText("1 of 12 lessons");
   await expect(page.locator(".path-item", { hasText: "From flat to solid" }).getByRole("button", { name: "Review" })).toBeVisible();
 });
 
@@ -139,7 +139,7 @@ test("the challenge times a seeded question set, scores it and stores the best r
   await expect(dialog.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "2");
   await dialog.getByRole("button", { name: "Submit now" }).click();
   await expect(dialog.getByRole("heading", { name: /\d+ of 10 correct/ })).toBeVisible();
-  await expect(dialog.getByRole("status")).toContainText("Aim for 7 fully correct.");
+  await expect(dialog.getByRole("status")).toContainText("You need 7 to open the next tier.");
   await expect(dialog.locator(".review > li")).toHaveCount(10);
   await expect(dialog.locator(".review > li").nth(1)).toContainText("Not answered");
   await dialog.getByRole("button", { name: "Back to programme" }).click();

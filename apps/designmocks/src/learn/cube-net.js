@@ -935,7 +935,7 @@ function sameCubeQuestion(rng, seed) {
   const refFold = foldNet(reference.cells);
   return {
     kind: 'same-cube', seed, answerMode: 'multi', net: reference,
-    prompt: 'Which of these nets fold into the same cube as the net above? Select all that apply.',
+    prompt: 'Which of these nets fold into the same cube as the net above?',
     options: shuffled, answer,
     explanation: `${answer.length === 1 ? 'Only option' : 'Options'} ${answer.join(' and ')} ${answer.length === 1 ? 'passes' : 'pass'} all three parts of the same-cube test: pairs, the order round a corner and the turns.`,
     hints: ['Check the opposite pairs on every net first. Any net with a wrong pair is out.', 'Then anchor on one face and check which face sits across the top of its symbol.'],
