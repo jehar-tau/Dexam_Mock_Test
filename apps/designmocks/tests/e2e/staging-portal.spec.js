@@ -240,3 +240,30 @@ test("an admitted tester can open Community and loses access after revocation", 
   expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
   expect(unexpected).toEqual([]);
 });
+
+test("a removed staff tester cannot reopen teacher or admin work with the same session", async ({page}) => {
+  let admitted = true;
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") {
+      return admitted || {code: "42501", message: "Private staging requires an approved Google tester"};
+    }
+    if (procedure === "can_review_drawings" || procedure === "is_dmocks_admin") return true;
+    if (procedure === "my_drawing_review_page") return {items: [], nextCursor: null};
+    return undefined;
+  }, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.goto("/review/drawings");
+  await expect(page.getByText("No drawing submissions await review.")).toBeVisible();
+  expect(calls.some(([name]) => name === "can_review_drawings")).toBe(true);
+
+  admitted = false;
+  for (const path of ["/review/drawings", "/admin"]) {
+    calls.length = 0;
+    await page.goto(path);
+    await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
+    await expect(page.getByRole("button", {name: "Available drawings"})).toHaveCount(0);
+    expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
+  }
+  expect(unexpected).toEqual([]);
+});
