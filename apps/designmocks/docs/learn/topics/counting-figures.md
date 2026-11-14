@@ -1,10 +1,58 @@
 # Counting figures
 
 Slug `counting-figures` · topic `observation` · exams uceed, ceed, nid, nift ·
-engine `src/learn/figure-count.js` · tool `figure-counter`
+engine `src/learn/figure-count.js` · questions `src/learn/figure-questions.js` ·
+figure `src/learn/lines-figure.jsx` · tool `figure-counter`
 
-Status: Foundations Planned · Exam standard Planned · Exam hard Planned ·
-Mastery Planned
+Status: Foundations Built · Exam standard Built · Exam hard Built ·
+Mastery Built (14 November 2026). Section 0 records what was built; where it
+differs from sections 4 to 7, section 0 is right.
+
+## 0. As built
+
+Level reference: the owner's Shape and Area Counting question bank (16
+counting questions, UCEED 2015–2026). See `../09-topic-bank-map.md`.
+
+**Engine.** Two counters that share only the merged segments: by points
+(`countOf`) and by lines (`countByLines`). Tests require them to agree on
+every figure and question, and check formulas for grids, fans and rows of
+triangles. Arithmetic is floating point with a tolerance, because the
+regular polygons need cos and sin; the spec's exact-integer plan was
+dropped. Shapes counted: triangle, right-angled triangle, square (any
+tilt), rectangle (any tilt), parallelogram.
+
+| Kind | Level | Mode | Matches in the bank |
+|---|---|---|---|
+| `count-squares` | 1 single, 3 numeric | | squares in a figure, including tilted ones |
+| `count-rectangles` | 2 single, 3–4 numeric | | uneven panels; at L4 also slanted panels counted as parallelograms |
+| `count-triangles` | 2 single, 3–4 numeric | | star in a pentagon (35), rhombus with crossing lines, rows of triangles; at L4 also right-angled triangles |
+| `count-missing` | 3 (one piece), 4 (two pieces) | numeric | figure with a part removed |
+| `count-joined` | 4 | numeric | figure cloned and reflected once or twice |
+| `figure-with-n` | 4 | multi | — (select-all practice) |
+
+Lessons: Foundations `by-size`, `rectangles`, `fans`; Exam standard
+`layered-triangles`, `tilted`, `missing-lines`; Exam hard `stars`,
+`reflected`, `panels-and-slants`, `exactly-n`; Mastery `review` and a
+12-question timed set.
+
+### Left for the next builder (Opus), in order
+
+1. **Area and shaded regions** (the bank's second half, 14 questions):
+   area of a shaded part of a square, ratio of nested shapes, probability
+   of landing on a shaded area, largest of four irregular shapes on a
+   grid. New engine `src/learn/area.js` with polygons on a lattice (use the
+   shoelace formula and Pick's theorem as the two independent methods),
+   kinds `shaded-area` L3, `area-ratio` L3–L4, `largest-area` L4. Add as
+   lessons in this programme or as a programme `areas`.
+2. **Overlaid figures** (three transparent sheets laid on each other, count
+   in the result): union of three segment sets, counted with `countOf`.
+   Kind `count-overlaid` L4. Needs a three-panel figure.
+3. **Irregular figures** like the bank's 2024–2026 questions (a square cut
+   by many random lines): generate random chords in a square, keep counts
+   between 15 and 40. Check both counters agree and that no two crossing
+   points are closer than half a unit, so the drawing is readable.
+4. Not suitable for generation: counting circles in a tangle, counting
+   lines in a scribble, circles on strips. These need curves; leave out.
 
 ## 1. Outcome
 
