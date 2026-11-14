@@ -36,7 +36,9 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
       assert.equal(url.origin, ${JSON.stringify(base)});
       assert.equal(init.redirect, "error");
       const request = new Request(input, init);
-      assert.equal(request.headers.get("apikey"), "sb_publishable_fictional");
+      const browserPreflight = ${staging} && request.method === "OPTIONS"
+        && url.pathname.startsWith("/functions/v1/") && url.pathname !== "/functions/v1/create-order";
+      assert.equal(request.headers.get("apikey"), browserPreflight ? null : "sb_publishable_fictional");
       assert.equal(request.headers.get("authorization"), null);
       if (url.pathname === "/functions/v1/create-order") {
         if (fixture === "gateway" && request.method === "POST" &&
