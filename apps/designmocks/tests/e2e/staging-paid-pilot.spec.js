@@ -8,6 +8,8 @@ const stage = project.staging_frontend_origin;
 const actor = { id: "00000000-0000-4000-8000-000000001701", email: "pilot-fixture@example.invalid" };
 const paper = "10000000-0000-4000-8000-000000001701";
 const attempt = "20000000-0000-4000-8000-000000001701";
+const question = "30000000-0000-4000-8000-000000001701";
+const figure = "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22/%3E";
 const title = "Fictional UCEED Part A rehearsal";
 test.use({ serviceWorkers: "block" });
 
@@ -29,10 +31,10 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
   const readAttempt = () => ({
     id: attempt, title, status: submitted ? "submitted" : "active", deadline, serverNow: new Date().toISOString(),
     questions: [{
-      id: "30000000-0000-4000-8000-000000001701", ordinal: 1, kind: "mcq", topic: "observation",
+      id: question, ordinal: 1, kind: "mcq", topic: "observation",
       prompt: "Original fictional objective question", options: [{ id: "A", label: "First choice" }, { id: "B", label: "Second choice" }],
       marking: { correct: 4, wrong: -1, partial: false }, points: 4, negativePoints: 1,
-      answer, answerRevision: revision, media: [],
+      answer, answerRevision: revision, media: [{ path: "fictional-figure.svg", alt: "Fictional paper figure" }],
       ...(submitted ? { outcome: "correct", explanation: "Fictional answer explanation." } : {}),
     }],
     score: submitted ? 4 : null, total: 4,
@@ -58,6 +60,9 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
         submitted = true;
         return readAttempt();
       case "read_attempt": return readAttempt();
+      case "attempt-media":
+        expect(input.attemptId).toBe(attempt);
+        return { media: { [question]: [{ url: figure }] } };
       default: return undefined;
     }
   }, project.project_ref);
@@ -77,6 +82,12 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
   await page.getByRole("button", { name: "Start or resume", exact: true }).click();
   await expect(page).toHaveURL(stage + "/attempt/" + attempt);
   await expect(page.getByText("Original fictional objective question", { exact: true })).toBeVisible();
+  const image = page.getByRole("img", { name: "Fictional paper figure" });
+  await expect(image).toBeVisible();
+  expect(await image.evaluate(async node => {
+    await node.decode();
+    return node.naturalWidth;
+  })).toBe(10);
   await expect(page.getByText("Fictional answer explanation.")).toHaveCount(0);
   await page.getByRole("button", { name: "A First choice", exact: true }).click();
   await expect(page.getByText("Answers are saved to your account.", { exact: true })).toBeVisible();
