@@ -130,6 +130,22 @@ update dm_private.all_india_events set starts_at=now()-interval '21 days',ends_a
 set local role authenticated;
 select set_config('request.jwt.claim.role','authenticated',true);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
+reset role;
+-- Move the cutoff explicitly when simulating the end of the upload and review windows.
+update dm_private.attempts set upload_deadline=clock_timestamp()+interval '1 minute'
+where id=current_setting('test.all_india_attempt')::uuid;
+set local role authenticated;
+do $$
+begin
+  perform public.admin_release_all_india_results(current_setting('test.all_india_event')::uuid);
+  raise exception 'Expected the candidate upload window to block release';
+exception when raise_exception then
+  if sqlerrm <> 'A candidate upload window is still open' then raise; end if;
+end $$;
+reset role;
+update dm_private.attempts set upload_deadline=clock_timestamp()-interval '1 minute'
+where id=current_setting('test.all_india_attempt')::uuid;
+set local role authenticated;
 select public.admin_release_all_india_results(current_setting('test.all_india_event')::uuid);
 select pg_temp.assert_true((public.admin_all_india_events()->0->>'resultsReleasedAt') is not null,'admin releases reviewed All India result');
 reset role;
