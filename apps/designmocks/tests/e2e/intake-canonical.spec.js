@@ -134,6 +134,23 @@ test("PDF/photo uploads, private source download, corrected figures and rights e
   await candidate.getByRole("button", { name: "Send to human review" }).click();
   await expect(candidate.getByRole("alert")).toHaveText("Attach the reviewed figures required to understand this question.");
   const figures = candidate.getByLabel("Reviewed question figures (PNG)");
+  const oversizedRead = await figures.evaluate(input => {
+    const oversized = new File([new Uint8Array(10 * 1024 * 1024 + 1)], "oversized.png", {type: "image/png"});
+    const files = new DataTransfer();
+    files.items.add(oversized);
+    input.files = files.files;
+    const original = File.prototype.arrayBuffer;
+    let read = false;
+    File.prototype.arrayBuffer = function (...args) {
+      if (this.name === "oversized.png") read = true;
+      return original.apply(this, args);
+    };
+    try { input.dispatchEvent(new Event("change", {bubbles: true})); }
+    finally { File.prototype.arrayBuffer = original; }
+    return read;
+  });
+  expect(oversizedRead).toBe(false);
+  await expect(candidate.getByRole("alert")).toHaveText("Use a complete PNG figure up to 10 MB.");
   await figures.setInputFiles({ name: "invalid.png", mimeType: "image/png", buffer: Buffer.from("<svg/>") });
   await expect(candidate.getByRole("alert")).toHaveText("Use a complete PNG figure up to 10 MB.");
   await figures.setInputFiles({ name: "figure.png", mimeType: "image/png", buffer: png });
