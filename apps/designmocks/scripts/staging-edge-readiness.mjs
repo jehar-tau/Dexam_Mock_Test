@@ -15,6 +15,9 @@ const features = [
   ["question-intake", "Question intake"],
   ["bank-review-media", "Question bank review"],
   ["reported-question-media", "Reported question review"],
+  ["question-intake-extract", "Question extraction"],
+  ["ai-question-draft", "AI-assisted question drafting"],
+  ["candidate-phone", "Candidate phone verification"],
 ];
 
 function publicKey(key) {

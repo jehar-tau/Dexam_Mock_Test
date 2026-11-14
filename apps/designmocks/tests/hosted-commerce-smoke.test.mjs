@@ -107,10 +107,13 @@ test("configured smoke rejects unconfigured handlers and generic gateway denials
   }
 });
 
-test("staging verifies media preflights even when commerce credentials are present", () => {
+test("staging verifies portal preflights even when commerce credentials are present", () => {
   const result = runSmoke(undefined, "configured", { staging: true });
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(result.checks.filter(check => check.check.endsWith("accepts the staging origin")).length, 7);
+  assert.equal(result.checks.filter(check => check.check.endsWith("accepts the staging origin")).length, 10);
+  for (const name of ["question-intake-extract", "ai-question-draft", "candidate-phone"]) {
+    assert.ok(result.checks.some(check => check.check === name + " accepts the staging origin" && check.passed));
+  }
   assert.equal(result.checks.some(check => check.check.startsWith("payment-webhook")), false);
   assert.ok(result.checks.some(check => check.check === "unapproved checkout origin denied"));
 });
