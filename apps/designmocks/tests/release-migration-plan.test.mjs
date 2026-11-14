@@ -64,7 +64,7 @@ async function fixture(t, { sourceProject = RECOVERY_PROJECT } = {}) {
   const ledger = path.join(directory, 'approved-ledger.json');
   const log = path.join(directory, 'dry-run.log');
 
-  return async ({ transcript, ledgerChanges, localRehearsal, ...release } = {}) => {
+  return async ({ transcript, ledgerChanges, localRehearsal, hostedText, ...release } = {}) => {
     await writeFile(ledger, JSON.stringify({
       version: 'dmocks-pre-upgrade-ledger-v1',
       projectRef: RECOVERY_PROJECT,
@@ -78,6 +78,7 @@ async function fixture(t, { sourceProject = RECOVERY_PROJECT } = {}) {
       args.push('--dry-run-log', log);
     }
     if (localRehearsal) args.push('--local-rehearsal');
+    if (hostedText) args.push('--hosted-text');
     const result = spawnSync(process.execPath, args, { cwd: app, encoding: 'utf8' });
     assert.ifError(result.error);
     assert.equal(result.signal, null);
@@ -143,6 +144,36 @@ test('verifies an up-to-date dry run only for an empty pending plan', async t =>
   assert.deepEqual(result.pendingMigrations, []);
   assert.equal(result.dryRunVerified, true);
   assert.notEqual((await invoke({ ledgerChanges, transcript: dryRun([latest]) })).status, 0);
+});
+
+test('verifies hosted CLI 3.1 text with an exact target and ordered migration list', async t => {
+  const invoke = await fixture(t);
+  const transcript = [
+    'Finished supabase db push.',
+    `Target: project DesignMocks (${RECOVERY_PROJECT}) · production`,
+    'Initialising login role...',
+    'DRY RUN: migrations will *not* be pushed to the database.',
+    'Would push these migrations:',
+    ` • ${gap}`,
+    ` • ${latest}`,
+    '',
+  ].join('\n');
+  const result = readProof(await invoke({transcript, hostedText: true}));
+  assert.equal(result.dryRunVerified, true);
+  assert.equal(result.dryRunTranscriptFormat, 'supabase-3.1-hosted-text');
+  assert.equal(result.dryRunTranscriptSha256, createHash('sha256').update(transcript).digest('hex'));
+  for (const invalid of [
+    transcript.replace(RECOVERY_PROJECT, 'a'.repeat(20)),
+    transcript.replace('DRY RUN:', 'APPLY:'),
+    transcript.replace(gap, latest),
+    transcript.replace(` • ${latest}\n`, ''),
+    transcript + 'Would apply roles.sql\n',
+    transcript.replace('Finished supabase db push.\n', ''),
+  ]) {
+    assert.notEqual((await invoke({transcript: invalid, hostedText: true})).status, 0);
+  }
+  assert.notEqual((await invoke({transcript, hostedText: true, localRehearsal: true})).status, 0);
+  assert.notEqual((await invoke({transcript})).status, 0);
 });
 
 test('binds a hosted plan to the reviewed project and keeps local rehearsals distinct', async t => {
