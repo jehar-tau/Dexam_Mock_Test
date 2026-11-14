@@ -9,7 +9,7 @@ export function PortalShell({ children }) {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
   const developmentPreviewRoute = import.meta.env.DEV && (
-    pathname === "/portal-preview" || pathname.startsWith("/portal-preview/") ||
+    pathname === "/portal-preview" || pathname.startsWith("/portal-preview/") || pathname.startsWith("/learn-programme-preview") ||
     ["/exam-mocks-preview", "/all-india-preview", "/topic-practice-preview", "/learn-preview", "/community-preview"].includes(pathname)
   );
   const inDevelopmentPreview = developmentPreviewRoute && postLaunchPreview;

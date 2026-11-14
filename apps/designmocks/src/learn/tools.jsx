@@ -1,0 +1,205 @@
+import React, { useMemo, useState } from 'react';
+import { FoldExplorer, IconButton, NetBuilder, OppositeExplorer, buildPracticeQuestion } from './CubeNetTool.jsx';
+import { Question } from './Question.jsx';
+import { generateQuestion } from './questions.js';
+import { canFold, fold, foldKinds, freshSheet, punch, punchable } from './paper-fold.js';
+import { FoldingFigure, FoldSequence, HoleGrid, ImageFigure, PunchedSheet, SolidFigure, SolidNetFigure, StackFigure, Swatch, ViewsFigure } from './figures.jsx';
+import { canAnimate, describeFace, extrusion, foldedPose, joined, polycube, profiles, pyramid, unfold, sliced } from './solid-net.js';
+import { marksOnNet, marksOnSolid, ringMarks } from './solid-pattern.js';
+import { seededRandom } from './random.js';
+import { SIZE } from './mirror.js';
+import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
+import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
+
+function WorkedCube({ seed }) {
+  const question = useMemo(() => generateQuestion('which-cube', seed), [seed]);
+  return <Question question={question} worked response={question.answer} idPrefix={`worked-${seed}-`} />;
+}
+function PracticeBuilder({ seed }) {
+  const question = useMemo(() => buildPracticeQuestion(seed), [seed]);
+  return <NetBuilder key={seed} question={question} />;
+}
+
+// ---------- paper folding ----------
+export function FoldPunchExplorer() {
+  const [sheet, setSheet] = useState(freshSheet);
+  const [cells, setCells] = useState([]);
+  const holes = punch(sheet, cells);
+  const spots = punchable(sheet);
+  const toggle = p => setCells(cells.some(c => c.x === p.x && c.y === p.y) ? cells.filter(c => !(c.x === p.x && c.y === p.y)) : [...cells, p].slice(-2));
+  const doFold = kind => { setSheet(fold(sheet, kind)); setCells([]); };
+  return <div className="tool">
+    <div className="tool-row">
+      {Object.entries(foldKinds).map(([kind, text]) => <button key={kind} type="button" className="pill quiet" disabled={!canFold(sheet, kind)} onClick={() => doFold(kind)}>{text}</button>)}
+      <button type="button" className="pill quiet" disabled={!sheet.folds.length && !cells.length} onClick={() => { setSheet(freshSheet()); setCells([]); }}>Start again</button>
+    </div>
+    <div className="tool-stage">
+      <div className="stage-block">
+        <span className="stage-caption">Folds so far</span>
+        {sheet.folds.length ? <FoldSequence folds={sheet.folds} punched={null} /> : <p className="stage-hint">No folds yet.</p>}
+      </div>
+      <div className="stage-block">
+        <span className="stage-caption">Folded sheet: tap to punch (up to two)</span>
+        <PunchedSheet state={sheet} cells={cells} onPunch={toggle} punchable={spots} />
+      </div>
+      <div className="stage-block">
+        <span className="stage-caption">Unfolded</span>
+        <HoleGrid holes={holes} />
+      </div>
+    </div>
+    <p className="tool-status" role="status">{cells.length ? `${sheet.layers.length} layer${sheet.layers.length === 1 ? '' : 's'} × ${cells.length} punch${cells.length === 1 ? '' : 'es'} = ${holes.length} hole${holes.length === 1 ? '' : 's'} when unfolded.` : sheet.folds.length ? `${sheet.layers.length} layer${sheet.layers.length === 1 ? '' : 's'} now. Punch the sheet to see the holes.` : 'Fold the sheet, then punch it.'}</p>
+  </div>;
+}
+
+// ---------- mirror ----------
+export function MirrorExplorer({ initial = ['1,0', '1,1', '1,2', '1,3', '2,3', '3,3', '2,1'] }) {
+  const [cells, setCells] = useState(initial);
+  const toggle = k => setCells(cells.includes(k) ? cells.filter(c => c !== k) : [...cells, k]);
+  const figure = { type: 'pattern', cells };
+  return <div className="tool">
+    <div className="tool-stage">
+      <div className="stage-block">
+        <span className="stage-caption">Draw: tap cells</span>
+        <div className="pixel-grid" role="group" aria-label="Drawing grid" style={{ gridTemplateColumns: `repeat(${SIZE}, 1fr)` }}>
+          {Array.from({ length: SIZE * SIZE }, (_, i) => { const x = i % SIZE, y = Math.floor(i / SIZE), k = `${x},${y}`; return <button key={k} type="button" className={`pixel${cells.includes(k) ? ' is-on' : ''}`} aria-pressed={cells.includes(k)} aria-label={`Cell ${x + 1}, ${y + 1}`} onClick={() => toggle(k)} />; })}
+        </div>
+      </div>
+      <div className="stage-block"><span className="stage-caption">Mirror image</span><ImageFigure figure={figure} transform="mirror" /></div>
+      <div className="stage-block"><span className="stage-caption">Water image</span><ImageFigure figure={figure} transform="water" /></div>
+    </div>
+    <p className="tool-status">Mirror swaps left and right. Water swaps top and bottom. Neither turns the figure.</p>
+  </div>;
+}
+
+// ---------- cube stacks ----------
+// One tool for the whole programme. Props switch on what each tier needs:
+// `size` (3 or 4), `showViews` (live top, front and side views), `paint`
+// (counts unpainted faces) and `layers` (a slider that lifts off the upper
+// layers so the student can look inside).
+export function StackBuilder({ initial = null, size = 3, showViews = false, paint = false, layers = false }) {
+  const start = initial ?? (size === 4 ? [[4, 3, 2, 1], [3, 3, 2, 1], [2, 2, 1, 0], [1, 1, 0, 0]] : [[2, 1, 0], [1, 3, 1], [0, 1, 2]]);
+  const tallest = size === 4 ? 4 : 3;
+  const [heights, setHeights] = useState(start);
+  const [active, setActive] = useState(null);
+  const [shown, setShown] = useState(tallest);
+  const bump = (x, y) => setHeights(heights.map((row, i) => row.map((h, j) => (i === x && j === y ? (h + 1) % (tallest + 1) : h))));
+  const capped = heights.map(row => row.map(h => Math.min(h, shown)));
+  const list = cubeList(heights);
+  const n = total(heights);
+  const unpainted = 6 * n - exposure(list, { floorPainted: false }).reduce((a, b) => a + b, 0);
+  const views = viewsOf(heights);
+  const range = minMaxFromViews(views.top, views.front, views.side);
+  const status = layers && shown < tallest
+    ? `Showing layers 1 to ${shown}: ${total(capped)} of ${n} cubes.`
+    : paint ? `${n} cube${n === 1 ? '' : 's'}. Painted while standing on a table, ${unpainted} faces would get no paint.`
+      : showViews ? `${n} cube${n === 1 ? '' : 's'} here. These three views fit anything from ${range.min} to ${range.max} cubes.`
+        : `${n} cube${n === 1 ? '' : 's'} in total, ${hiddenCount(heights)} completely hidden.`;
+  return <div className="tool">
+    <div className="tool-stage">
+      <div className="stage-block">
+        <span className="stage-caption">Plan: tap a square to add cubes</span>
+        <div className="plan-grid" role="group" aria-label="Column heights" style={{ gridTemplateColumns: `repeat(${heights[0].length}, 1fr)` }}>
+          {heights.map((row, x) => row.map((h, y) => <button key={`${x}-${y}`} type="button" className={`plan-cell h${Math.min(h, 3)}${active && active.x === x && active.y === y ? ' is-active' : ''}`} aria-label={`Column ${x + 1}, ${y + 1}: ${h} cube${h === 1 ? '' : 's'}`} onClick={() => bump(x, y)} onFocus={() => setActive({ x, y })} onMouseEnter={() => setActive({ x, y })} onMouseLeave={() => setActive(null)}>{h}</button>))}
+        </div>
+      </div>
+      <div className="stage-block"><StackFigure heights={capped} large={size !== 4} highlight={active} /></div>
+      {showViews && <div className="stage-block"><ViewsFigure top={views.top} front={views.front} side={views.side} /></div>}
+    </div>
+    {layers && <div className="tool-row">
+      <label className="slider"><span>Layers</span><input type="range" min="1" max={tallest} step="1" value={shown} onChange={e => setShown(Number(e.target.value))} aria-label="Layers shown" /><output aria-hidden="true">{shown}/{tallest}</output></label>
+    </div>}
+    <p className="tool-status" role="status">{status}</p>
+  </div>;
+}
+
+// ---------- colour wheel ----------
+export function ColourWheel({ initial = 'blue' }) {
+  const [hue, setHue] = useState(initial);
+  const [value, setValue] = useState(null);
+  const [saturation, setSaturation] = useState(null);
+  const base = wheel.find(h => h.id === hue);
+  const hslBase = hexToHsl(base.hex);
+  const current = hsl(hslBase.h, saturation ?? hslBase.s, value ?? hslBase.l);
+  return <div className="tool">
+    <div className="tool-stage">
+      <div className="colour-wheel" role="group" aria-label="Colour wheel">
+        {wheel.map((h, i) => <button key={h.id} type="button" className={`wheel-chip${h.id === hue ? ' is-active' : ''}`} style={{ background: h.hex, transform: `rotate(${i * 30}deg) translateY(-78px) rotate(${-i * 30}deg)` }} aria-pressed={h.id === hue} aria-label={h.name} onClick={() => { setHue(h.id); setValue(null); setSaturation(null); }} />)}
+        <span className="wheel-centre" style={{ background: current }} aria-hidden="true" />
+      </div>
+      <div className="stage-block">
+        <p className="stage-caption">{base.name} · {base.role}{['red', 'red-orange', 'orange', 'yellow-orange', 'yellow', 'red-violet'].includes(base.id) ? ' · warm' : ' · cool'}</p>
+        <div className="swatch-row"><Swatch colour={complement(hue).hex} name={`complement: ${complement(hue).name}`} /></div>
+        <div className="swatch-row">{analogous(hue).map(h => <Swatch key={h.id} colour={h.hex} name={`analogous: ${h.name}`} />)}</div>
+        <div className="swatch-row">{triad(hue).map(h => <Swatch key={h.id} colour={h.hex} name={`triad: ${h.name}`} />)}</div>
+        <label className="slider"><span>Value</span><input type="range" min="10" max="90" value={Math.round((value ?? hslBase.l) * 100)} onChange={e => setValue(Number(e.target.value) / 100)} aria-label="Value, light to dark" /></label>
+        <label className="slider"><span>Saturation</span><input type="range" min="0" max="100" value={Math.round((saturation ?? hslBase.s) * 100)} onChange={e => setSaturation(Number(e.target.value) / 100)} aria-label="Saturation" /></label>
+      </div>
+    </div>
+  </div>;
+}
+
+// ---------- nets of solids ----------
+const solidChoices = {
+  box: () => extrusion(profiles.box(3, 2), 1), wedge: () => extrusion(profiles.wedge(), 2), pyramid: () => pyramid(4),
+  ell: () => extrusion(profiles.ell(), 2), tee: () => extrusion(profiles.tee(), 1), stairs: () => extrusion(profiles.stairs(), 2),
+  ramp: () => extrusion(profiles.ramp(), 2), neck: () => extrusion(profiles.neck(), 1), bow: () => extrusion(profiles.bow(), 1),
+  roundEnd: () => extrusion(profiles.roundEnd(), 2), stripes: () => { const base = extrusion(profiles.box(4, 2), 3), pattern = ringMarks(base, [{ axis: 0, at: 1 }, { axis: 1, at: 3 }]); return { ...base, pattern, marks: marksOnSolid(base, pattern) }; }, twin: () => joined(6, 5), sliced: () => sliced([2, 2, 2], [[0, 1, 1], [1, 0, 1], [1, 1, 0]]), slicedLong: () => sliced([3, 2, 2], [[1, 1, 1], [0, 1, 1]]), cubes: () => polycube([[0, 0, 0], [1, 0, 0], [0, 0, 1], [0, 1, 0]]),
+};
+const solidNames = { box: 'Box', wedge: 'Wedge', pyramid: 'Pyramid', ell: 'L block', tee: 'T block', stairs: 'Stairs', ramp: 'Ramp', neck: 'Joined boxes', bow: 'Long strip', roundEnd: 'Round end', twin: 'Two prisms', stripes: 'Striped box', sliced: 'Three corners cut', slicedLong: 'Two corners cut', cubes: 'Four cubes' };
+// The net beside the solid it makes. For solids with flat faces the slider swings every face
+// about its hinge, from flat to closed. A solid with a curved side cannot swing rigidly, so there
+// the slider adds faces one at a time instead. Tapping a face of the net shows where it goes.
+export function Unfolder({ choices = ['box'], seed = 1 }) {
+  const [choice, setChoice] = useState(choices[0]);
+  const { solid, net, moving } = useMemo(() => {
+    const built = solidChoices[choice](), flat = unfold(built, seededRandom(seed));
+    return { solid: built, net: built.pattern ? { ...flat, marks: marksOnNet(built, flat, built.pattern) } : flat, moving: canAnimate(built) };
+  }, [choice, seed]);
+  const [amount, setAmount] = useState(100);
+  const [selected, setSelected] = useState(null);
+  const [turns, setTurns] = useState(0);
+  const pick = name => { setChoice(name); setSelected(null); setAmount(100); };
+  const total = net.faces.length;
+  const count = moving ? total : Math.max(1, Math.round((amount / 100) * total));
+  const face = selected === null ? null : net.faces[selected];
+  const role = face && (face.role === 'cap' ? 'an end face' : face.kind === 'curved' ? 'the curved side, unrolled flat' : 'a side face');
+  const status = face ? `${describeFace(face).replace(/^the /, 'This ')} is ${role}.`
+    : moving ? (amount === 100 ? `Closed: ${total} faces. Drag Fold back to open it out flat.` : amount === 0 ? 'Opened out flat. This is the net.' : `Folding: ${amount}% closed.`)
+      : `${count} of ${total} faces folded. This solid has a curved side, so its faces go on one at a time.`;
+  return <div className="tool">
+    {choices.length > 1 && <div className="tool-row" role="group" aria-label="Choose a solid">
+      {choices.map(name => <button key={name} type="button" className={`chip${name === choice ? ' is-active' : ''}`} aria-pressed={name === choice} onClick={() => pick(name)}>{solidNames[name]}</button>)}
+    </div>}
+    <div className="tool-stage">
+      <SolidNetFigure net={net} shown={moving ? null : new Set(net.faces.map((_, i) => i).filter(i => i < count))} selected={selected} onSelect={setSelected} label="Net: tap a face" />
+      {moving
+        ? <FoldingFigure pose={foldedPose(solid, net, amount / 100)} marks={solid.marks ?? []} turns={turns} closed={amount === 100} highlight={face ? face.id : null} label={`The net ${amount}% folded`} />
+        : <SolidFigure solid={solid} turns={turns} shown={new Set(net.faces.slice(0, count).map(f => f.id))} highlight={face && selected < count ? face.id : null} large />}
+    </div>
+    <div className="tool-row">
+      <label className="slider"><span>Fold</span><input type="range" min="0" max="100" step="5" value={amount} onChange={e => setAmount(Number(e.target.value))} aria-label="How far folded" /><output aria-hidden="true">{amount}%</output></label>
+      <div className="icon-cluster" role="group" aria-label="Turn the solid">
+        <IconButton label="Turn left" onClick={() => setTurns(turns + 1)}>↺</IconButton>
+        <IconButton label="Turn right" onClick={() => setTurns(turns + 3)}>↻</IconButton>
+      </div>
+    </div>
+    <p className="tool-status" role="status">{status}</p>
+  </div>;
+}
+
+export function LearnTool({ tool, props = {} }) {
+  switch (tool) {
+    case 'fold-explorer': return <FoldExplorer {...props} />;
+    case 'opposite-explorer': return <OppositeExplorer {...props} />;
+    case 'worked-cube': return <WorkedCube {...props} />;
+    case 'net-builder': return <PracticeBuilder seed={props.seed ?? 1} />;
+    case 'fold-punch': return <FoldPunchExplorer {...props} />;
+    case 'mirror': return <MirrorExplorer {...props} />;
+    case 'stack-builder': return <StackBuilder {...props} />;
+    case 'colour-wheel': return <ColourWheel {...props} />;
+    case 'unfolder': return <Unfolder {...props} />;
+    default: return <p role="alert">This tool is not available.</p>;
+  }
+}
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder']);
+export { IconButton };
