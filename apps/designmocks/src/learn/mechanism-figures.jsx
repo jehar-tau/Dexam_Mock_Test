@@ -174,7 +174,7 @@ export function BeamFigure({ beam, ask = null, tilt = 0, compact = false }) {
       <g transform={`rotate(${tilt} ${beam.pivot * u} 0)`}>
         <rect className="beam" x={0} y={-5} width={w} height={10} rx={2} />
         {Array.from({ length: beam.length + 1 }, (_, i) => <line key={i} className="beam-tick" x1={i * u} y1={-5} x2={i * u} y2={i === beam.pivot ? -14 : -10} />)}
-        {beam.loads.map(l => <g key={l.label} transform={`translate(${l.at * u} 5)`}>
+        {beam.loads.map(l => <g key={`load-${l.at}-${l.label}`} transform={`translate(${l.at * u} 5)`}>
           <line className="string" x1={0} y1={0} x2={0} y2={drop} />
           <rect className={`beam-load${l.hidden ? ' is-unknown' : ''}`} x={-17} y={drop} width={34} height={30} rx={4} />
           <text className="beam-load-name" y={drop + 13}>{l.label}</text>
