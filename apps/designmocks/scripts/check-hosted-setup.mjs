@@ -97,9 +97,15 @@ if (backendStage !== "foundation") {
   assert.equal(response.data?.code, "42501");
   results.push({ check: "anonymous admin_export_question_draft denied", status: response.status, passed: true });
   response = await request("/rest/v1/rpc/public_all_india_top_ten", "POST", {});
-  assert.equal(response.status, 200, "Alias-only public ranking remains available");
-  assert.ok(Array.isArray(response.data));
-  results.push({ check: "public ranking route available", status: 200, passed: true });
+  if (staging) {
+    assert.ok([401, 403].includes(response.status), "Private staging must keep anonymous ranking access closed");
+    assert.equal(response.data?.code, "42501");
+    results.push({ check: "staging anonymous ranking denied", status: response.status, passed: true });
+  } else {
+    assert.equal(response.status, 200, "Alias-only public ranking remains available");
+    assert.ok(Array.isArray(response.data));
+    results.push({ check: "public ranking route available", status: 200, passed: true });
+  }
 }
 response = await request("/auth/v1/settings");
 assert.equal(response.status, 200);
@@ -123,6 +129,14 @@ for (const [name, body, status] of [
   response = await request("/functions/v1/" + name, "POST", body, {
     Origin: origin,
   });
+  if (staging) {
+    results.push({
+      check: name + " setup/identity gate",
+      status: response.status,
+      passed: response.status === status && response.allowOrigin === origin && response.data?.error === "Sign in required",
+    });
+    continue;
+  }
   assert.equal(response.status, status, name + " setup gate");
   results.push({ check: name + " setup/identity gate", status, passed: true });
 }

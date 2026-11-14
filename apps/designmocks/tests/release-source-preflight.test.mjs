@@ -24,6 +24,7 @@ async function fixture(t) {
   await writeFile(path.join(app, 'supabase/functions/_shared/shared.ts'), 'export const x = 1;\n');
   await writeFile(path.join(app, 'supabase/launch/paid-mvp.sql'), 'revoke all;\n');
   await writeFile(path.join(app, 'supabase/launch/private-staging-api.sql'), '-- fixture\n');
+  await writeFile(path.join(app, 'supabase/launch/private-staging-portal-grants.sql'), '-- fixture\n');
   await writeFile(path.join(app, 'supabase/launch/paid-mvp-rpcs.json'), '{"rpcs":[]}\n');
   const runGit = (...args) => {
     const result = spawnSync('git', ['-C', root, ...args], { encoding: 'utf8' });
@@ -49,9 +50,9 @@ test('passes exact clean source and emits stable inventory counts and hashes', a
   assert.equal(proof.passed, true);
   assert.equal(proof.head, f.commit);
   assert.equal(proof.tree, f.tree);
-  assert.deepEqual(proof.inventory.counts, { migrations: 1, functions: 1, config: 1, project: 1, paid_mvp_profile: 1, paid_mvp_grant_inventory: 1, private_staging_api: 1 });
+  assert.deepEqual(proof.inventory.counts, { migrations: 1, functions: 1, config: 1, project: 1, paid_mvp_profile: 1, paid_mvp_grant_inventory: 1, private_staging_api: 1, private_staging_portal_grants: 1 });
   assert.match(proof.inventory.sha256, /^[0-9a-f]{64}$/);
-  assert.equal(proof.inventory.files.length, 7);
+  assert.equal(proof.inventory.files.length, 8);
   assert.deepEqual(JSON.parse(f.invoke().stdout), proof);
 });
 
@@ -60,6 +61,15 @@ test('fails when expected commit or tree differs', async t => {
   const other = '0'.repeat(40);
   assert.match(f.invoke(other, f.tree).stderr, /HEAD mismatch/);
   assert.match(f.invoke(f.commit, other).stderr, /Tree mismatch/);
+});
+
+test('can be imported by a caller whose first argument is a commit ID', async t => {
+  const f = await fixture(t);
+  const result = spawnSync('node', ['--input-type=module', '-e',
+    'import {runPreflight} from "./scripts/release-source-preflight.mjs"; console.log(typeof runPreflight)', f.commit],
+  { cwd: f.app, encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout.trim(), 'function');
 });
 
 test('fails for tracked changes and untracked files anywhere in checkout', async t => {
@@ -130,6 +140,7 @@ test('verifies extracted Git archive bytes outside the checkout', async t => {
     'apps/designmocks/supabase/launch/paid-mvp-rpcs.json',
     'apps/designmocks/supabase/launch/paid-mvp.sql',
     'apps/designmocks/supabase/launch/private-staging-api.sql',
+    'apps/designmocks/supabase/launch/private-staging-portal-grants.sql',
     'apps/designmocks/supabase/migrations/001.sql',
     'apps/designmocks/supabase/project.json',
   ]);
