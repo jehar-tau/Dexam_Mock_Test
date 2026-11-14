@@ -17,7 +17,7 @@ test("the Learn preview lists every programme and opens an overview", async ({ p
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
   await expect(page).toHaveURL(/\/learn-programme-preview\/cube-nets$/);
   await expect(page.getByRole("heading", { name: "Cube nets", exact: true })).toBeVisible();
-  await expect(page.getByLabel("Programme progress")).toContainText("0 of 5 lessons");
+  await expect(page.getByLabel("Programme progress")).toContainText("0 of 12 lessons");
   await expect(page.locator(".path-item.is-quiz").getByRole("button", { name: "Take quiz" })).toBeEnabled();
   await expect(page.getByRole("link", { name: /Practise this topic|Browse practice/ })).toHaveAttribute("href", /\/dashboard\/practice\?exam=uceed&topic=visualisation/);
 });
@@ -72,14 +72,14 @@ test("a lesson runs one screen at a time with Check, feedback and Continue, and 
   await dialog.getByRole("button", { name: "Finish lesson" }).click();
 
   await expect(page.getByRole("status")).toContainText("Lesson complete: From flat to solid.");
-  await expect(page.getByLabel("Programme progress")).toContainText("1 of 5 lessons");
+  await expect(page.getByLabel("Programme progress")).toContainText("1 of 12 lessons");
   const first = page.locator(".path-item", { hasText: "From flat to solid" });
   await expect(first).toHaveClass(/is-complete/);
   await expect(first).toContainText(/\d of 4 right/);
   await expect(page.locator(".path-item", { hasText: "Opposite faces" }).getByRole("button", { name: "Start" })).toBeVisible();
 
   await page.reload();
-  await expect(page.getByLabel("Programme progress")).toContainText("1 of 5 lessons");
+  await expect(page.getByLabel("Programme progress")).toContainText("1 of 12 lessons");
   await expect(page.locator(".path-item", { hasText: "From flat to solid" }).getByRole("button", { name: "Review" })).toBeVisible();
 });
 
@@ -139,7 +139,7 @@ test("the challenge times a seeded question set, scores it and stores the best r
   await expect(dialog.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "2");
   await dialog.getByRole("button", { name: "Submit now" }).click();
   await expect(dialog.getByRole("heading", { name: /\d+ of 10 correct/ })).toBeVisible();
-  await expect(dialog.getByRole("status")).toContainText("Aim for 7 fully correct.");
+  await expect(dialog.getByRole("status")).toContainText("You need 7 to open the next tier.");
   await expect(dialog.locator(".review > li")).toHaveCount(10);
   await expect(dialog.locator(".review > li").nth(1)).toContainText("Not answered");
   await dialog.getByRole("button", { name: "Back to programme" }).click();
@@ -385,6 +385,99 @@ test("mechanisms: the machine runs, a ring locks, and every exam-hard kind is ma
     await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+// ---------- cube nets: exam standard, exam hard and the mastery set ----------
+const optionButton = (dialog, question, id) => {
+  const option = question.options.find(o => o.id === id);
+  return dialog.getByRole("button", { name: option.figure ? `Option ${id}` : option.text, exact: true });
+};
+async function answerQuiz(dialog, set) {
+  for (const question of set) {
+    if (question.answerMode === "multi") {
+      await expect(dialog.getByText("Select all that apply.")).toBeVisible();
+      for (const id of question.answer) await optionButton(dialog, question, id).click();
+    } else await optionButton(dialog, question, question.answer).click();
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+}
+
+test("cube nets: anchor and walk, open boxes, and an exam-standard lesson with hints and the working", async ({ page }) => {
+  await page.goto(`${programme}?lesson=turns&seed=40`);
+  const dialog = player(page);
+  await expect(dialog.getByText("Try this first")).toBeVisible();
+  await expect(dialog.getByRole("img", { name: /^Cube showing/ }).first()).toBeVisible();
+  await dialog.getByRole("button", { name: "Continue" }).click();
+
+  // The fold explorer names the face across each edge of the chosen symbol.
+  await expect(dialog.getByRole("heading", { name: "Anchor and walk" })).toBeVisible();
+  await dialog.getByRole("button", { name: /^Square 1,/ }).click();
+  await expect(dialog.locator(".edge-walk")).toContainText("Across the top of its symbol:");
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await dialog.getByRole("button", { name: "Continue" }).click();
+
+  await expect(dialog.getByText("Worked example")).toBeVisible();
+  const nextStep = dialog.getByRole("button", { name: "Next step" });
+  while (await nextStep.count()) await nextStep.click();
+  await expect(dialog.getByLabel("Worked solution")).toContainText("Anchor on");
+  await dialog.getByRole("button", { name: "Continue" }).click();
+
+  // Check 1: a hint, a wrong option, then the working.
+  const first = generateQuestion("which-cube", 3, 3);
+  await dialog.getByRole("button", { name: "Hint", exact: true }).click();
+  await expect(dialog.locator(".hint-box")).toContainText("Every symbol has a direction");
+  const wrong = first.options.find(o => o.id !== first.answer).id;
+  await dialog.getByRole("button", { name: `Option ${wrong}`, exact: true }).click();
+  await dialog.getByRole("button", { name: "Check" }).click();
+  await expect(feedback(page)).toContainText("Not quite");
+  await feedback(page).getByRole("button", { name: "See the working" }).click();
+  await expect(dialog.getByLabel("Worked solution")).toContainText("Opposite pairs on the net");
+  await dialog.getByRole("button", { name: "Continue" }).click();
+
+  // Check 2: the right option.
+  const second = generateQuestion("which-cube", 4, 3);
+  await dialog.getByRole("button", { name: `Option ${second.answer}`, exact: true }).click();
+  await dialog.getByRole("button", { name: "Check" }).click();
+  await expect(feedback(page)).toContainText("Correct");
+
+  // Open boxes: the tool takes five-square shapes and names the clash in one that cannot fold.
+  await page.goto(`${programme}?lesson=open-box`);
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await expect(dialog.getByRole("heading", { name: "Five squares, one face missing" })).toBeVisible();
+  await dialog.getByRole("button", { name: "Shape 7 of 12, U shape" }).click();
+  await expect(dialog.getByRole("status")).toContainText("cannot make an open box");
+  await dialog.getByRole("button", { name: "Shape 10 of 12, X shape" }).click();
+  await dialog.getByRole("slider", { name: "Folded squares" }).fill("5");
+  await expect(dialog.getByRole("status")).toContainText("the missing face is the open top");
+});
+
+test("cube nets: three views, select-all nets and lines across faces, then the exam-hard quiz and the timed set", async ({ page }) => {
+  await page.goto(`${programme}?lesson=partial-views`);
+  const dialog = player(page);
+  for (const n of [1, 2, 3]) await expect(dialog.getByRole("img", { name: new RegExp(`^View ${n}: Cube showing`) })).toBeVisible();
+  await page.goto(`${programme}?lesson=lines-across`);
+  await expect(dialog.getByRole("img", { name: /with a (straight|bent) line/ }).first()).toBeVisible();
+
+  const { cubeNetsProgramme } = await import("../../src/learn/programmes/cube-nets.js");
+  const hard = cubeNetsProgramme.tiers[2].quiz;
+  let seed = 1, set = buildQuiz(hard, seed);
+  while (!set.some(q => q.answerMode === "multi" && q.answer.length > 1)) set = buildQuiz(hard, ++seed);
+  await page.goto(`${programme}?lesson=quiz-exam-hard&seed=${seed}`);
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  await answerQuiz(dialog, set);
+  await expect(dialog.getByRole("heading", { name: "8 of 8 correct" })).toBeVisible();
+  await expect(dialog.getByRole("status")).toContainText("Passed: the next tier is open.");
+  await dialog.getByRole("button", { name: "Back to programme" }).click();
+  await expect(page.getByRole("region", { name: "Mastery" }).getByRole("button", { name: "Take quiz" })).toBeEnabled();
+
+  const mastery = buildQuiz(cubeNetsProgramme.tiers[3].quiz, 3);
+  await page.goto(`${programme}?lesson=quiz-mastery&seed=3`);
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  await expect(dialog.getByRole("progressbar")).toHaveAttribute("aria-valuemax", "12");
+  await answerQuiz(dialog, mastery);
+  // UCEED marking: ten single-choice questions at +3 and two select-all at +4.
+  await expect(dialog.getByRole("heading", { name: "38 of 38 marks" })).toBeVisible();
+  await expect(dialog.getByRole("status")).toContainText("12 of 12 fully correct.");
 });
 
 test("counting figures: the counter steps through sizes and every exam-hard kind is marked", async ({ page }) => {

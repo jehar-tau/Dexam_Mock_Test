@@ -29,7 +29,8 @@ test('every registered programme validates and every lesson question can be answ
     for (const tier of tiersOf(programme)) assert.ok(quizLength(tier.quiz) >= 5);
   }
   const cubeNets = findProgramme('cube-nets');
-  assert.equal(lessonsOf(cubeNets).length, 5);
+  assert.equal(lessonsOf(cubeNets).length, 12);
+  assert.deepEqual(tiersOf(cubeNets).map(t => [t.id, t.lessons.length, quizLength(t.quiz)]), [['foundations', 5, 10], ['exam-standard', 3, 8], ['exam-hard', 3, 8], ['mastery', 1, 12]]);
   assert.equal(quizLength(tiersOf(cubeNets)[0].quiz), 10);
   assert.equal(findProgramme('missing'), null);
 });
@@ -101,8 +102,18 @@ test('answers are checked and marked in all three modes under every scheme', () 
   assert.throws(() => markFor(multi, ['a'], 'gate'), /Unknown marking scheme/);
 });
 
+// Every programme may now be tiered, so the v1 shape (lessons plus a challenge) is rebuilt from the cube nets Foundations tier.
+function v1Programme() {
+  const programme = JSON.parse(JSON.stringify(findProgramme('cube-nets')));
+  const [foundations] = programme.tiers;
+  delete programme.tiers;
+  return { ...programme, lessons: foundations.lessons, challenge: { title: 'Cube net challenge', minutes: 10, description: foundations.quiz.description, questions: foundations.quiz.questions.map(({ kind, count }) => ({ kind, count })) } };
+}
+
 test('programme validation names the broken part', () => {
-  const clone = slug => JSON.parse(JSON.stringify(findProgramme(slug)));
+  const clone = slug => (slug === 'cube-nets' ? v1Programme() : JSON.parse(JSON.stringify(findProgramme(slug))));
+  assert.ok(validateProgramme(clone('cube-nets')), 'the v1 shape still validates');
+  assert.equal(tiersOf(clone('cube-nets'))[0].quiz.pass, 7, 'a v1 challenge passes at 70%');
   assert.throws(() => validateProgramme({ ...clone('cube-nets'), slug: 'Bad Slug' }), /slug/);
   assert.throws(() => validateProgramme({ ...clone('cube-nets'), exams: ['jee'] }), /exams/);
   const dupe = clone('cube-nets'); dupe.lessons[1].id = dupe.lessons[0].id;
@@ -145,7 +156,7 @@ test('progress records first answers and hints, completes lessons once and keeps
   progress = completeLesson(progress, 'fold', '2026-11-12T10:00:00.000Z');
   assert.equal(completeLesson(progress, 'fold', '2026-11-13T10:00:00.000Z').lessons.fold.completedAt, '2026-11-12T10:00:00.000Z');
   const summary = programmeSummary(programme, progress);
-  assert.deepEqual({ completed: summary.completed, total: summary.total, percent: summary.percent, next: summary.next.id }, { completed: 1, total: 5, percent: 20, next: 'opposite' });
+  assert.deepEqual({ completed: summary.completed, total: summary.total, percent: summary.percent, next: summary.next.id }, { completed: 1, total: 12, percent: 8, next: 'opposite' });
   progress = recordQuiz(progress, 'foundations', { score: 6, total: 10, seconds: 400, passed: false, at: '2026-11-12T11:00:00.000Z' });
   progress = recordQuiz(progress, 'foundations', { score: 6, total: 10, seconds: 300, passed: false, at: '2026-11-12T12:00:00.000Z' });
   progress = recordQuiz(progress, 'foundations', { score: 4, total: 10, seconds: 100, passed: false, at: '2026-11-12T13:00:00.000Z' });

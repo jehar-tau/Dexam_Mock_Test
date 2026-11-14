@@ -4142,6 +4142,12 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .views-figure{display:grid;grid-template-columns:auto auto;gap:.6rem 1.2rem;align-items:end;justify-content:center}.view{display:flex;flex-direction:column;align-items:flex-start;gap:.25rem}.view-top{grid-column:1;grid-row:1}.view-front{grid-column:1;grid-row:2}.view-side{grid-column:2;grid-row:2}
 .view-caption{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.view-cell{fill:none;stroke:var(--line);stroke-width:.8}.view-cell.is-on{fill:#a9ae9c;stroke:#162824;stroke-width:1.1}
 .plan-cell.h4{background:#8fae5e}
+/* Learn: cube nets, exam tiers */
+.cube-view-captioned{margin:0;display:flex;flex-direction:column;align-items:center;gap:.25rem}.cube-view-captioned figcaption{font-size:.85rem;font-weight:600;color:var(--muted,var(--ink))}
+.glyph.path-line{stroke-width:.24;stroke-linecap:butt}
+.question-figure .cube-view-captioned .cube-view.large{width:170px}
+@media (max-width:480px){.question-figure .cube-view-captioned .cube-view.large{width:120px}.question-figure:has(.cube-view-captioned){gap:.5rem;padding:.6rem}}
+.tool-status .edge-walk{display:block;margin-top:.2rem}
 /* Learn: solids and their nets */
 .solid-figure{display:block;max-width:100%;height:auto}.solid-face{stroke:#162824;stroke-width:1;stroke-linejoin:round}.solid-face.is-smooth{stroke-width:.6}.solid-face.is-highlight{fill:#ef8a63;stroke:#162824}
 .solid-net{display:block;max-width:100%;height:auto;overflow:visible}.net-face-shape{fill:#fffef9;stroke:none}.net-face-shape.is-flat{fill:#e3e5d8}.net-face-shape.is-selected{fill:#ef8a63}

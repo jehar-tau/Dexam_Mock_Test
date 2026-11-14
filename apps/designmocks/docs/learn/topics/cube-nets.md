@@ -3,8 +3,10 @@
 Slug `cube-nets` · topic `visualisation` · exams uceed, ceed, nid, nift ·
 engine `src/learn/cube-net.js` · tool `fold-explorer`
 
-Status: Foundations **Built** (five lessons; reorganise into tiers with F2) ·
-Exam standard Planned · Exam hard Planned · Mastery Planned
+Status: Foundations **Built** · Exam standard **Built** · Exam hard **Built** ·
+Mastery **Built** (14 November 2026; programme converted to tiers, every
+Foundations lesson id and kind kept). See section 11 for what differs from
+this specification.
 
 ## 1. Outcome
 
@@ -78,12 +80,13 @@ L3 ×2, `cannot-cube` L3 ×1, `which-net` L3 ×1, `net-from-views` L3 ×2 and L4
 | Kind | Levels | Mode | State |
 |---|---|---|---|
 | `is-net`, `opposite` | 1 | single | exist |
-| `which-cube`, `cannot-cube`, `which-net` | 2 (as built), 3 (below) | single | exist at L2 |
-| `build-net` | 2 | interactive | exists |
-| `net-from-views` | 3, 4 | single | new |
-| `open-box` | 3 | single | new |
-| `same-cube` | 4 | multi | new |
-| `path-cube` | 4 | single | new |
+| `which-cube`, `cannot-cube` | 2, 3 | single | built |
+| `which-net` | 2, 3, 4 | single | built (L4 added, see section 11) |
+| `build-net` | 2 | interactive | built |
+| `net-from-views` | 3, 4 | single | built |
+| `open-box` | 3 | single | built |
+| `same-cube` | 4 | multi | built |
+| `path-cube` | 4 | single | built |
 
 ### `which-cube`, `cannot-cube`, `which-net` at L3
 
@@ -188,13 +191,31 @@ Differences from L2:
 
 | Archetype | Kind and level | Verified on seeds | Notes |
 |---|---|---|---|
-| N1 | `which-cube`, `cannot-cube` L2–L3 | | |
-| N2 | `which-net` L2–L3 | | |
-| N3 | `net-from-views` L3–L4 | | |
-| N4 | `same-cube` L4 for cubes | | Other solids out of scope |
-| N5 | `opposite` L1; see Dice | | |
-| N6 | `open-box` L3 partly | | Cut-box pieces out of scope |
-| N7 | `path-cube` L4 | | |
+| N1 | `which-cube`, `cannot-cube` L2–L3 | 1–60, second method | L3: six one-handed symbols, never shown mirrored; wrong options are the mirror cube, one face turned, or two faces swapped |
+| N2 | `which-net` L2–L4 | 1–60, second method | L3/L4: four different net shapes, turned symbols; L4 also shuffles the hidden faces |
+| N3 | `net-from-views` L3–L4 | 1–60, second method | L4: three views in different orientations, one face never seen |
+| N4 | `same-cube` L4 for cubes | 1–60, second method | One, two or three right; other solids are in Nets of solids |
+| N5 | `opposite` L1; see Dice | built earlier | |
+| N6 | `open-box` L3 partly | 1–60, second method | Cut-box pieces out of scope |
+| N7 | `path-cube` L4 | 1–60, second method | Path of three or four faces; it often crosses cut edges, so it looks broken on the flat net |
+
+"Second method" means `tests/cube-net-exam.test.mjs` recomputes every
+option without view signatures: faces are matched by their folded frames
+(normal plus the symbol's own axes, allowing for its symmetry) under all 24
+rotations, and open boxes by a root-independent touching rule and the
+named-shape list.
+
+Calibration (ladder, section 2.6), honestly stated: steps 3 and 4 were met
+by construction and by the sweep (every L3 option needs the turn or order
+test because no symbol is ever drawn mirrored and no L3 `which-cube` shows
+an opposite pair; options use different net shapes so they cannot be
+compared position by position). Hand-solving 20 seeds per kind and timing
+five L4 questions (steps 4 and 5) was **not** done; a reviewer session
+should do it. Against the owner's anchors (section 8.6 of the reference
+standard): the anchors are compound solids and live in Nets of solids.
+This programme stays the cube end of the ladder; its Exam hard tier is as
+hard as plain-cube questions get (select-all over four shapes, unseen faces,
+paths across cut edges), not as hard as the anchors.
 
 ## 10. Out of scope
 
@@ -203,3 +224,31 @@ These are **not** optional: the owner's reference standard shows they are
 the real exam level. They live in their own programme,
 [nets-of-solids.md](nets-of-solids.md), which is the top of the folding
 ladder. This programme teaches the rules on a cube and hands over to it.
+
+## 11. As built, where it differs from the text above
+
+- **`which-net` has a level 4.** Section 4 used it in `partial-views`; the
+  kinds table did not list it. At L4 only one view is given and every
+  option's three hidden faces are shuffled and turned at random, so the
+  student must ignore them.
+- **`bend` is symmetric under the anti-diagonal reflection**, not trivially.
+  A quarter arc from one edge midpoint to the next really is symmetric, and
+  calling it one-handed would let two identical drawings count as different.
+  New glyphs `line` (edge to opposite edge) and `blank` (the unseen face).
+- **`mirrorNet` keeps symbols readable.** It reflects the layout; a symbol
+  whose mirror image is a turned copy of itself (a line, a bend) is turned
+  to that copy, a one-handed symbol keeps its shape with its turn reversed.
+  The result never folds into the original cube (tested), and no option ever
+  shows a mirrored letter, which would be eliminated at a glance.
+- **`open-box` always has four options.** Four forms: which square is the
+  base, which is opposite a given wall, which shape folds, which shape
+  cannot. No yes/no form.
+- **`foldCells` and `openBox`** fold up to six squares; `pentominoes` names
+  the twelve shapes. **`edgeNeighbours`** gives the face across each edge of
+  a symbol and drives "anchor and walk" in hints, solutions and the tool.
+- **Tool `fold-explorer`:** `follow` reads out the face across each edge of
+  the chosen symbol and marks the four faces it meets; it does not draw the
+  shared edge on the cube. `shapes: 'pentominoes'` takes the five-square
+  shapes and shows the missing face as the open top.
+- **Mastery set** passes at 9 of 12, as counting cubes does.
+
