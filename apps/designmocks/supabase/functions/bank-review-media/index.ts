@@ -24,7 +24,8 @@ Deno.serve(async request => {
   try {
     const { externalKey, reviewVersion } = await request.json();
     if (typeof externalKey !== "string" || typeof reviewVersion !== "string") return respond({ error: "A bank question and review version are required" }, 400);
-    const paths = await reviewer.rpc("admin_bank_review_media_paths", { p_external_key: externalKey, p_expected_version: reviewVersion });
+    const readPaths = () => reviewer.rpc("admin_bank_review_media_paths", { p_external_key: externalKey, p_expected_version: reviewVersion });
+    const paths = await readPaths();
     if (paths.error) return respond({ error: "Question figures are unavailable. Refresh the bank and review it again." }, paths.error.code === "42501" ? 403 : 409);
     const figures: Figure[] = paths.data;
     if (!figures.length) return respond({ images: [] });
@@ -34,6 +35,12 @@ Deno.serve(async request => {
     const links = new Map(signed.data.filter(entry => !entry.error && entry.signedUrl).map(entry => [entry.path, entry.signedUrl]));
     if (figures.some(figure => !links.has(figure.storagePath))) return respond({ error: "A private figure could not be opened. Try again." }, 502);
     if (await stagingDenied()) return respond({ error: "Private staging requires an approved Google tester" }, 403);
+    const currentPaths = await readPaths();
+    const identity = (rows: Figure[]) => rows.map(figure => [figure.ordinal, figure.storagePath, figure.width, figure.height]);
+    if (currentPaths.error || !Array.isArray(currentPaths.data)
+      || JSON.stringify(identity(currentPaths.data)) !== JSON.stringify(identity(figures))) {
+      return respond({ error: "Question figures are unavailable. Refresh the bank and review it again." }, currentPaths.error?.code === "42501" ? 403 : 409);
+    }
     return respond({ images: figures.map(({ ordinal, width, height, storagePath }) => ({ ordinal, width, height, url: links.get(storagePath) })) });
   } catch {
     return respond({ error: "Invalid bank review image request" }, 400);
