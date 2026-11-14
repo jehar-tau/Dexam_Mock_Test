@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import {readFile} from "node:fs/promises";
 import {pathToFileURL} from "node:url";
+import {parseArgs} from "node:util";
 
 const project = JSON.parse(await readFile(new URL("../supabase/project.json", import.meta.url), "utf8"));
 const backend = `https://${project.project_ref}.supabase.co`;
@@ -15,12 +16,12 @@ const features = [
   ["question-intake", "Question intake"],
   ["bank-review-media", "Question bank review"],
   ["reported-question-media", "Reported question review"],
-  ["question-intake-extract", "Question extraction"],
-  ["ai-question-draft", "AI-assisted question drafting"],
-  ["candidate-phone", "Candidate phone verification"],
+  ["question-intake-extract", "Question extraction", true],
+  ["ai-question-draft", "AI-assisted question drafting", true],
+  ["candidate-phone", "Candidate phone verification", true],
 ];
 
-export async function probeStagingEdge({url, fetchImpl = fetch}) {
+export async function probeStagingEdge({url, fetchImpl = fetch, portalOnly = false}) {
   assert.equal(url, backend, "Use the approved DMocks staging backend origin");
 
   async function preflight(name, from) {
@@ -50,7 +51,7 @@ export async function probeStagingEdge({url, fetchImpl = fetch}) {
     }
   }
 
-  const results = await Promise.all(features.map(async ([name, feature]) => {
+  const results = await Promise.all(features.map(async ([name, feature, providerDependent = false]) => {
     const [approved, rejected] = await Promise.all([preflight(name, origin), preflight(name, foreign)]);
     let result = "ready";
     if (approved.status === 404) result = "endpoint-not-found";
@@ -58,15 +59,17 @@ export async function probeStagingEdge({url, fetchImpl = fetch}) {
     else if (approved.status === 403 && !approved.approvedOrigin) result = "staging-origin-rejected";
     else if (approved.status !== 204 || !approved.approvedOrigin || !approved.allowsPost || !approved.requiredHeaders) result = "invalid-staging-preflight";
     else if (rejected.status !== 403 || rejected.allowsForeignOrigin) result = "foreign-origin-not-denied";
-    return {name, feature, result, stagingStatus: approved.status, foreignStatus: rejected.status};
+    return {name, feature, required: !portalOnly || !providerDependent, result, stagingStatus: approved.status, foreignStatus: rejected.status};
   }));
 
-  return {scope: "staging-edge-cors-only", passed: results.every(row => row.result === "ready"), results};
+  return {scope: portalOnly ? "staging-portal-edge-cors-only" : "staging-edge-cors-only",
+    passed: results.every(row => !row.required || row.result === "ready"), results};
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
-    const report = await probeStagingEdge({url: process.env.VITE_SUPABASE_URL});
+    const {values} = parseArgs({options: {"portal-only": {type: "boolean"}}});
+    const report = await probeStagingEdge({url: process.env.VITE_SUPABASE_URL, portalOnly: values["portal-only"]});
     console.log(JSON.stringify(report, null, 2));
     if (!report.passed) process.exitCode = 2;
   } catch (error) {
