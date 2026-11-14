@@ -269,13 +269,15 @@ tiers (spec `topics/cube-nets.md`, status line and section 11).
   the audit found zero violations on all of them.
 - `npm test` 649 pass; build and isolation check pass.
 
-**Disk was full when this was written** (under 600 MB free on the owner's
-Mac, filled by other sessions' copies and caches). The Learn browser
-journeys and the full browser suite could not be started, so a copy with
-remapped ports did not fit either. Running them is the first thing to do on
-this branch; 5x99 ports were also in use by a sibling session, 6x99 were
-free. Not done either: hand-solving 20 seeds per kind and timing five L4
-questions (ladder 2.6, steps 4–5) — a reviewer session should do that.
+Browser runs, after merging `origin/main` (counting figures): the Learn
+journeys pass on desktop Chromium and Pixel 7 (26 of 26 with counting
+figures), and the full suite (`npm run test:e2e:full`) passes: 1046 tests. Both were
+run in this branch's own worktree with ports moved to 6x99: 4x99 belong to
+Codex and 5x99 were in use by a sibling session; the staging pilot's
+server on 4689 (also in Codex's range) must move too (to 6689); and the disk (briefly
+under 600 MB free) had no room for a separate copy. Not done: hand-solving
+20 seeds per kind and timing five L4 questions (ladder 2.6, steps 4–5) — a
+reviewer session should do that.
 
 The preview server for this branch is `designmocks-learn-cube-nets` on port
 4187 (added to the session root's `.claude/launch.json`).
