@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createClient } from '@supabase/supabase-js';
 import { resolveProviderOrder } from '../supabase/functions/_shared/provider-order.mjs';
 import { createOrderHandler } from '../supabase/functions/_shared/create-order.mjs';
 
@@ -166,6 +167,29 @@ test('oversized checkout requests never prepare or create an order', async () =>
   assert.equal((await f.handler(f.request(undefined, {'Content-Type': 'text/plain'}))).status, 415);
   assert.equal(f.calls.includes('prepare_order'), false);
   assert.equal(f.w.state.calls.length, 0);
+});
+
+test('checkout accepts the annual plan request serialized by the browser SDK', async () => {
+  const f = handlerFixture();
+  const client = createClient(origin, 'fictional-anon', {
+    auth: {persistSession: false, autoRefreshToken: false, detectSessionInUrl: false},
+    accessToken: async () => 'fictional-actor',
+    global: {
+      fetch: (url, init) => {
+        const headers = new Headers(init.headers);
+        headers.set('Origin', origin);
+        assert.equal(headers.get('Content-Type'), 'application/json');
+        return f.handler(new Request(url, {...init, headers}));
+      },
+    },
+  });
+  const {data, error} = await client.functions.invoke('create-order', {
+    body: {plan: 'annual'},
+    signal: new AbortController().signal,
+  });
+  assert.equal(error, null);
+  assert.deepEqual(data, {orderId: 'order_fictional', keyId, amount: 119300, currency: 'INR'});
+  assert.deepEqual(f.calls, ['getUser', 'prepare_order', 'attach_provider_order']);
 });
 
 test('the complete handler deadline fences an SDK identity reply that arrives after the response',async()=>{
