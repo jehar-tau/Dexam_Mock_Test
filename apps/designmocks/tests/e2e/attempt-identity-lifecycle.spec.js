@@ -313,6 +313,23 @@ test('a click after the deadline cannot save an answer before the displayed cloc
   expect(calls(state, 'save_answer_revision')).toEqual([]);
 });
 
+test('an invalid newer server answer cannot clear the pending device answer', async ({page}) => {
+  const state = await fixture(page);
+  state.saveHold = deferred();
+  await answer(page).click();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(1);
+  const [pending] = await journal(page);
+  state.saveReceipt = {accepted:false, revision:pending.revision + 1, answer:'not-an-option'};
+  state.saveHold.resolve();
+  await expect(page.getByText('Answers saved on this device. Waiting to sync.', {exact:true})).toBeVisible();
+  expect(await journal(page)).toEqual([pending]);
+  state.saveReceipt = {accepted:false, revision:pending.revision + 1, answer:'A'};
+  await page.getByRole('button', {name:'Retry waiting answers', exact:true}).click();
+  await expect(page.getByText('Answers are saved to your account.', {exact:true})).toBeVisible();
+  expect(await journal(page)).toEqual([]);
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual([pending.revision, pending.revision]);
+});
+
 test('a blocked answer save explains how to retry submission without reopening the paper', async ({page}) => {
   const state = await fixture(page);
   await expect(answer(page)).toBeEnabled();
