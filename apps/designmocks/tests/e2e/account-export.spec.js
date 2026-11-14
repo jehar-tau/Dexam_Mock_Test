@@ -87,21 +87,24 @@ test("legacy, mis-scoped, held-score and failed export responses save no file an
     () => { const data = payload(first);data.attempts[0].score = 16;return data; },
     () => { const data = payload(first);data.questionReports[0].contentVersion = "private-review-hash";return data; },
   ];
-  async function requestExport(response) {
+  await expect(region.getByText("Loading privacy requests…")).toHaveCount(0);
+  const downloadButton = region.getByRole("button", { name: "Download my data", exact: true });
+  const exportCalls = () => state.calls.filter(([name]) => name === "export_my_account_data").length;
+  async function requestRejectedExport(response, message) {
+    const previousCalls = exportCalls();
     state.response = response;
-    const completed = page.waitForResponse(result =>
-      result.request().method() === "POST" && new URL(result.url()).pathname.endsWith("/rpc/export_my_account_data")
-    );
-    await region.getByRole("button", { name: "Download my data", exact: true }).click();
-    await completed;
+    await downloadButton.press("Enter");
+    await expect(region.getByRole("status")).toHaveText(message);
+    await expect(downloadButton).toBeEnabled();
+    expect(exportCalls()).toBe(previousCalls + 1);
   }
   for (const response of cases) {
-    await requestExport(response);
-    await expect(region.getByRole("status")).toHaveText("Your export could not be verified. Refresh your account and try again.");
-    await expect(region.getByRole("button", { name: "Download my data", exact: true })).toBeEnabled();
+    await requestRejectedExport(response, "Your export could not be verified. Refresh your account and try again.");
   }
-  await requestExport(() => ({ code: "P0001", message: "Fictional export temporarily unavailable" }));
-  await expect(region.getByRole("status")).toHaveText("Couldn’t prepare your export. Try downloading your data again.");
+  await requestRejectedExport(
+    () => ({ code: "P0001", message: "Fictional export temporarily unavailable" }),
+    "Couldn’t prepare your export. Try downloading your data again.",
+  );
   expect(downloads).toHaveLength(0);
   state.response = () => payload(first);
   expect((await downloadJSON(page)).accountId).toBe(first.id);
