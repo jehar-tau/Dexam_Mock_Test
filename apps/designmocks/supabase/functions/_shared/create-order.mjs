@@ -1,5 +1,6 @@
 import { resolveProviderOrder } from './provider-order.mjs';
 import { reportCommerceFailure } from './commerce-operations.mjs';
+import { JsonRequestError, readJsonObject } from './request-json.mjs';
 
 // The Edge entry point and isolated integration harness use this same handler.
 // Provider transport injection is a code dependency, never a configurable URL.
@@ -48,7 +49,12 @@ export function createOrderHandler({ createClient, readEnvironment, providerFetc
       deadline.signal.throwIfAborted();
       if (identityError || !user?.user?.id) return json({ error: 'Sign in required' }, 401);
       let input;
-      try { input = await request.json(); } catch { return json({ error: 'Invalid request' }, 400); }
+      try {
+        input = await readJsonObject(request, 4096, 'checkout');
+      } catch (failure) {
+        if (!(failure instanceof JsonRequestError)) throw failure;
+        return json({ error: 'Invalid checkout request.' }, failure.status);
+      }
       deadline.signal.throwIfAborted();
       if (input?.plan !== 'annual') return json({ error: 'Unknown plan' }, 400);
       const { data: order, error } = await student.rpc('prepare_order');
