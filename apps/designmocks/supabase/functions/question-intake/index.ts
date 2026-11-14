@@ -1,3 +1,4 @@
+import { stagingEdgeDenied } from "../_shared/staging-edge-admission.mjs";
 import { JsonRequestError } from "../_shared/request-json.mjs";
 import { IntakeRequestError, isIntakeAssetId, readIntakeJson, readIntakeUpload } from "../_shared/intake-request.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
@@ -24,6 +25,10 @@ Deno.serve(async request => {
   });
   const { data: { user } } = await student.auth.getUser();
   if (!user) return respond({ error: "Sign in required" }, 401);
+  const admissionSignal = AbortSignal.any([request.signal, AbortSignal.timeout(10000)]);
+  if (await stagingEdgeDenied(Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER"), student, admissionSignal)) {
+    return respond({ error: "Private staging requires an approved Google tester" }, 403);
+  }
   const { data: isAdmin, error: roleError } = await student.rpc("is_dmocks_admin");
   if (roleError || !isAdmin) return respond({ error: "Admin access required" }, 403);
   const admin = createClient(url, service, { auth: { persistSession: false } });
