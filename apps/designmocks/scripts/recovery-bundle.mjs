@@ -62,7 +62,13 @@ export async function createRecoveryBundle({output,key,source,snapshot,database,
  const owned=await ownedDirectory(output,{repositoryRoot}),header={version:RECOVERY_VERSION,id:randomUUID(),salt:randomBytes(16).toString('hex'),createdAt:new Date().toISOString(),projectRef:RECOVERY_PROJECT,entries:objects.length+1},derived=derive(key,header),entries=[];
  try{
   entries.push({...await sealStream(database,path.join(owned.target,'payload-000000.enc'),derived,header,'payload-000000.enc',{database:true}),kind:'database'});
-  for(const object of objects){const slot='payload-'+String(entries.length).padStart(6,'0')+'.enc',entry=await sealStream(await readObject(object),path.join(owned.target,slot),derived,header,slot);assert.equal(entry.byteSize,object.byteSize,'Private object changed during capture');if(object.sha256)assert.equal(entry.sha256,object.sha256,'Private object digest disagrees with its source');entries.push({...entry,kind:'object',object});}
+  for (const object of objects) {
+   const slot = 'payload-' + String(entries.length).padStart(6, '0') + '.enc';
+   const entry = await sealStream(await readObject(object), path.join(owned.target, slot), derived, header, slot, {maxBytes: object.byteSize});
+   assert.equal(entry.byteSize, object.byteSize, 'Private object changed during capture');
+   if (object.sha256) assert.equal(entry.sha256, object.sha256, 'Private object digest disagrees with its source');
+   entries.push({...entry, kind: 'object', object});
+  }
   assert.equal(await assertUnchanged(),true,'Private storage changed during capture; discard and retry from a new database snapshot');
   const manifest={version:RECOVERY_VERSION,id:header.id,createdAt:header.createdAt,source,snapshot,entries},bytes=Buffer.from(stableJson(manifest));assert.ok(bytes.length<=maxManifestBytes,'Recovery manifest exceeds its supported limit');
   await sealStream(Readable.from([bytes]),path.join(owned.target,'manifest.enc'),derived,header,'manifest.enc',{maxBytes:maxManifestBytes});

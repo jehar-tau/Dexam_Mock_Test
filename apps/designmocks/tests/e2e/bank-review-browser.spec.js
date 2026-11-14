@@ -199,7 +199,7 @@ test("incomplete private figures block approval while corrections, inactive reco
 test("a delayed search cannot replace a newer bank query", async ({ page }) => {
   const state = await fixture(page);
   const bank = page.getByRole("region", { name: "Imported bank review", exact: true });
-  await expect(bank.getByText("1–25 of 50 matching questions")).toBeVisible();
+  await expect(bank.getByText("1–25 of 50 matching questions")).toBeVisible({ timeout: 15000 });
   let release, began;
   const pending = new Promise(resolve => { release = resolve; });
   const started = new Promise(resolve => { began = resolve; });

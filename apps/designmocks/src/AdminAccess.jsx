@@ -6,8 +6,7 @@ import {authorizationHeaders,runForVerifiedAccount,verifiedAccountToken}from'./a
 const AdminServices=createContext(null);
 export const useAdminServices=()=>useContext(AdminServices);
 export const useStaffServices=useAdminServices;
-// Shared drawing and fictional previews also run outside the administrator desk.
-export const useAdminFunctions=()=>useContext(AdminServices)?.functions??platform?.functions;
+export const useAdminFunctions=()=>useContext(AdminServices)?.functions;
 
 const adminAccess=Object.freeze({region:"Administrator access",procedure:"is_dmocks_admin",checking:"Checking administrator access…",required:"This account is not an administrator.",
   ended:"Administrator access has ended. Private views were cleared.",unavailable:"Administrator access could not be verified. Private views were cleared. Try again.",check:"Check administrator access",recheck:"Recheck administrator access"});

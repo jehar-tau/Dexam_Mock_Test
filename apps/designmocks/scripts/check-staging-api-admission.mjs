@@ -49,10 +49,15 @@ export async function checkStagingApiAdmission({origin, key, admitted, excluded,
   assert.ok(identity.every(({status, data}, index) => status === 200 && data?.id === sessions[index].sub),
     "Both fictional sessions must be valid on this staging backend");
 
+  assert.ok(identity.every(({data}) => data.app_metadata?.provider === "google" && data.is_anonymous === false &&
+    typeof data.email_confirmed_at === "string" && Number.isFinite(Date.parse(data.email_confirmed_at))),
+    "Both fictional accounts must have confirmed Google identities");
+
   const rpc = (name, token) => request("/rest/v1/rpc/" + name, token, "{}");
-  const [eligible, admittedAdmin, excludedAdmin, excludedHistory, anonymous] = await Promise.all([
+  const [eligible, admittedAdmin, admittedHistory, excludedAdmin, excludedHistory, anonymous] = await Promise.all([
     rpc("can_enter_staging_portal", admitted),
     rpc("is_dmocks_admin", admitted),
+    rpc("my_attempt_history", admitted),
     rpc("is_dmocks_admin", excluded),
     rpc("my_attempt_history", excluded),
     rpc("can_enter_staging_portal"),
@@ -61,6 +66,7 @@ export async function checkStagingApiAdmission({origin, key, admitted, excluded,
   const checks = [
     {check: "admitted-tester", status: eligible.status, passed: eligible.status === 200 && eligible.data === true},
     {check: "admitted-admin-rpc", status: admittedAdmin.status, passed: admittedAdmin.status === 200 && typeof admittedAdmin.data === "boolean"},
+    {check: "admitted-history-rpc", status: admittedHistory.status, passed: admittedHistory.status === 200 && Array.isArray(admittedHistory.data)},
     {check: "excluded-admin-rpc", status: excludedAdmin.status, passed: deniedByHook(excludedAdmin)},
     {check: "excluded-history-rpc", status: excludedHistory.status, passed: deniedByHook(excludedHistory)},
     {check: "anonymous-admission-rpc", status: anonymous.status, passed: [401, 403].includes(anonymous.status) && anonymous.data?.code === "42501"},

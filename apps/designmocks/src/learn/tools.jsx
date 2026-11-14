@@ -9,6 +9,9 @@ import { marksOnNet, marksOnSolid, ringMarks } from './solid-pattern.js';
 import { dirWord, presetSystem, solve } from './gears.js';
 import { BeamFigure, GearsFigure } from './mechanism-figures.jsx';
 import { seededRandom } from './random.js';
+import { bySize, shapesOf } from './figure-count.js';
+import { counterPresets } from './figure-questions.js';
+import { LinesFigure } from './lines-figure.jsx';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -243,6 +246,35 @@ export function LeverBench({ length = 10, pivot = 5 }) {
   </div>;
 }
 
+// ---------- counting figures ----------
+// Steps through every shape in a figure, one size at a time, lighting each one up. The tally
+// under it is the method: count by size, add the sizes.
+export function FigureCounter({ figures = ['grid-2'] }) {
+  const [name, setName] = useState(figures[0]);
+  const preset = counterPresets[name];
+  const { segments, groups } = useMemo(() => { const segs = preset.segments(); return { segments: segs, groups: bySize(shapesOf(segs, preset.shape)) }; }, [name]);
+  const [size, setSize] = useState(0);
+  const [index, setIndex] = useState(0);
+  const group = groups[Math.min(size, groups.length - 1)], total = groups.reduce((sum, g) => sum + g.count, 0);
+  const word = n => ({ triangle: ['triangle', 'triangles'], square: ['square', 'squares'], rectangle: ['rectangle', 'rectangles'], parallelogram: ['parallelogram', 'parallelograms'] })[preset.shape][n === 1 ? 0 : 1];
+  const choose = next => { setName(next); setSize(0); setIndex(0); };
+  const step = by => setIndex((index + by + group.count) % group.count);
+  return <div className="tool">
+    {figures.length > 1 && <div className="tool-row" role="group" aria-label="Choose a figure">
+      {figures.map(f => <button key={f} type="button" className={`chip${f === name ? ' is-active' : ''}`} aria-pressed={f === name} onClick={() => choose(f)}>{counterPresets[f].name}</button>)}
+    </div>}
+    <div className="tool-stage"><LinesFigure segments={segments} highlight={group.shapes[Math.min(index, group.count - 1)].points} label={`The figure with one ${word(1)} lit up`} /></div>
+    <div className="tool-row">
+      <label className="slider"><span>Size</span><input type="range" min="1" max={groups.length} step="1" value={size + 1} onChange={e => { setSize(Number(e.target.value) - 1); setIndex(0); }} aria-label="Size of shape" /><output aria-hidden="true">{size + 1} of {groups.length}</output></label>
+      <div className="icon-cluster" role="group" aria-label="Step through the shapes of this size">
+        <IconButton label="Previous shape" onClick={() => step(-1)}>‹</IconButton>
+        <IconButton label="Next shape" onClick={() => step(1)}>›</IconButton>
+      </div>
+    </div>
+    <p className="tool-status" role="status">{`Size ${size + 1}: ${word(2)} ${Math.min(index, group.count - 1) + 1} of ${group.count}. All sizes: ${groups.map(g => g.count).join(' + ')} = ${total} ${word(total)}.`}</p>
+  </div>;
+}
+
 export function LearnTool({ tool, props = {} }) {
   switch (tool) {
     case 'fold-explorer': return <FoldExplorer {...props} />;
@@ -256,8 +288,9 @@ export function LearnTool({ tool, props = {} }) {
     case 'unfolder': return <Unfolder {...props} />;
     case 'gear-train': return <GearTrain {...props} />;
     case 'lever-bench': return <LeverBench {...props} />;
+    case 'figure-counter': return <FigureCounter {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter']);
 export { IconButton };

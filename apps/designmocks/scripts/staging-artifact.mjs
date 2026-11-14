@@ -40,7 +40,7 @@ function isPublicKey(key, projectRef) {
   }
 }
 
-export function stagingArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey }) {
+export function stagingArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey, paidPilot = false }) {
   if (!/^[a-z0-9]{20}$/.test(project?.project_ref ?? "") || !exactHttpsOrigin(frontendOrigin) ||
       !exactHttpsOrigin(project.frontend_origin) || frontendOrigin !== project.staging_frontend_origin ||
       frontendOrigin === project.frontend_origin || frontendOrigin === providerOrigin ||
@@ -51,8 +51,8 @@ export function stagingArtifactProfile(project, { frontendOrigin, providerOrigin
     throw new Error("Supply a publishable key or an anon key for the designated staging project");
   }
   return {
-    deployment: "staging", backendProfile: "full-staging", frontendOrigin, providerOrigin, publicKeySha256: sha256(publicKey),
-    stagingPortalEnabled: true, postLaunchPreview: true, checkoutEnabled: false,
+    deployment: "staging", backendProfile: paidPilot ? "paid-mvp" : "full-staging", frontendOrigin, providerOrigin, publicKeySha256: sha256(publicKey),
+    stagingPortalEnabled: true, postLaunchPreview: !paidPilot, checkoutEnabled: false,
     releasedPortalEnabled: false, controlledLoginEnabled: false, phoneVerificationEnabled: false,
   };
 }
@@ -133,7 +133,7 @@ async function siteFiles(directory) {
   return files;
 }
 
-async function verifyArtifact({ directory, expected }, schema) {
+async function verifyArtifact({ directory, expected, paidPilot = false }, schema) {
   if (!digestPattern.test(expected ?? "")) throw new Error("Supply the reviewed full SHA-256 of the artifact");
   if (!(await lstat(directory)).isDirectory() || (await readdir(directory)).sort().join(",") !== "manifest.json,site") {
     throw new Error("The artifact directory must contain exactly manifest.json and site");
@@ -145,6 +145,11 @@ async function verifyArtifact({ directory, expected }, schema) {
       !gitIdPattern.test(manifest.source?.tree ?? "") || bundleSha256 !== expected || hashManifest(manifest) !== expected) {
     throw new Error("The artifact does not match the reviewed manifest hash");
   }
+  if (paidPilot && (manifest.profile?.backendProfile !== "paid-mvp" ||
+      manifest.profile.stagingPortalEnabled !== true || manifest.profile.postLaunchPreview !== false ||
+      manifest.profile.checkoutEnabled !== false || manifest.profile.releasedPortalEnabled !== false)) {
+    throw new Error("Use the reviewed private paid-paper pilot artifact");
+  }
   const files = await siteFiles(path.join(directory, "site"));
   if (JSON.stringify(files) !== JSON.stringify(manifest.files)) throw new Error("The artifact site files differ from the reviewed manifest");
   return { verified: true, commit: manifest.source.commit, tree: manifest.source.tree, bundleSha256, fileCount: files.length };
@@ -154,7 +159,7 @@ export function verifyStagingArtifact(options) { return verifyArtifact(options, 
 export function verifyCheckoutArtifact(options) { return verifyArtifact(options, checkoutSchema); }
 
 async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin, providerOrigin, publicKey, output,
-  noticesPath, expectedNoticeVersion }, schema) {
+  noticesPath, expectedNoticeVersion, paidPilot }, schema) {
   const preflight = await runPreflight({ cwd, commit, tree });
   const env = buildEnvironment();
   const repositoryRoot = run("git", ["rev-parse", "--show-toplevel"], { cwd, env, failure: "Could not identify the reviewed source repository" }).trim();
@@ -164,7 +169,7 @@ async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin
   const notice = schema === checkoutSchema ? await checkoutNoticeInput(noticesPath, expectedNoticeVersion) : null;
   const profile = notice
     ? checkoutArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey, noticeVersion: notice.version })
-    : stagingArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey });
+    : stagingArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey, paidPilot });
   const target = await outputDirectory(output, env);
   const sourceRoot = await mkdtemp(path.join(tmpdir(), "dmocks-artifact-source-"));
   let ownedOutput = false;
@@ -220,7 +225,7 @@ async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin
     await writeFile(path.join(target, "manifest.json"), JSON.stringify({ ...manifest, bundleSha256 }, null, 2) + "\n", {
       mode: 0o600, flag: "wx",
     });
-    return await verifyArtifact({ directory: target, expected: bundleSha256 }, schema);
+    return await verifyArtifact({ directory: target, expected: bundleSha256, paidPilot }, schema);
   } catch (error) {
     if (ownedOutput) await rm(target, { recursive: true, force: true });
     throw error;
@@ -240,19 +245,20 @@ async function main() {
     const { values } = parseArgs({ args, options: {
       commit: { type: "string" }, tree: { type: "string" }, output: { type: "string" },
       "frontend-origin": { type: "string" }, "provider-origin": { type: "string" },
-      ...(checkout ? { notices: { type: "string" }, "expect-notice-version": { type: "string" } } : {}),
+      ...(checkout ? { notices: { type: "string" }, "expect-notice-version": { type: "string" } } : { "paid-pilot": { type: "boolean" } }),
     } });
     const build = checkout ? buildCheckoutArtifact : buildStagingArtifact;
     result = await build({
       commit: values.commit, tree: values.tree, output: values.output,
       frontendOrigin: values["frontend-origin"], providerOrigin: values["provider-origin"],
       publicKey: checkout ? process.env.DMOCKS_CHECKOUT_PUBLISHABLE_KEY : process.env.DMOCKS_STAGING_PUBLISHABLE_KEY,
-      noticesPath: values.notices, expectedNoticeVersion: values["expect-notice-version"],
+      noticesPath: values.notices, expectedNoticeVersion: values["expect-notice-version"], paidPilot: values["paid-pilot"],
     });
   } else if (action === "verify" || action === "verify-checkout") {
-    const { values } = parseArgs({ args, options: { artifact: { type: "string" }, expect: { type: "string" } } });
+    const { values } = parseArgs({ args, options: { artifact: { type: "string" }, expect: { type: "string" },
+      ...(action === "verify" ? { "paid-pilot": { type: "boolean" } } : {}) } });
     const verify = action === "verify-checkout" ? verifyCheckoutArtifact : verifyStagingArtifact;
-    result = await verify({ directory: values.artifact, expected: values.expect });
+    result = await verify({ directory: values.artifact, expected: values.expect, paidPilot: values["paid-pilot"] });
   } else {
     throw new Error("Choose build or verify for the private staging artifact, or build-checkout or verify-checkout for private Test checkout");
   }

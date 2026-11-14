@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {createDrawingReviewRequests,isDrawingReviewUnavailable} from "../src/drawing-review-lifecycle.js";
+import {createDrawingReviewRequests,drawingReviewPage,isDrawingReviewUnavailable} from "../src/drawing-review-lifecycle.js";
 
 const deferred=()=>{let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});return{promise,resolve,reject};};
 test("known assignment/version denials discard the target while ordinary mark validation remains correctable",()=>{
@@ -39,4 +39,15 @@ test("page cleanup aborts in-flight work and an ignored late result cannot reope
  const scope=createDrawingReviewRequests(()=>true),held=deferred();let signal;
  const pending=scope.read(active=>{signal=active;return held.promise;});scope.dispose();assert.equal(signal.aborted,true);
  held.resolve(["detached page content"]);assert.equal((await pending).current(),false);assert.equal(scope.isCurrent(),false);
+});
+
+
+test("requires a unique review and a matching continuation cursor", () => {
+ const card = {reviewId: "99000000-0000-4000-8000-000000001001", version: 0};
+ assert.deepEqual(drawingReviewPage({items: [card], nextCursor: card.reviewId}), {items: [card], nextCursor: card.reviewId});
+ assert.deepEqual(drawingReviewPage({items: [], nextCursor: null}), {items: [], nextCursor: null});
+ for (const page of [null, {items: []}, {items: [null], nextCursor: null}, {items: [card, card], nextCursor: null},
+   {items: [card], nextCursor: "unrelated"}, {items: [{...card, version: -1}], nextCursor: null}]) {
+   assert.throws(() => drawingReviewPage(page), /Unconfirmed/);
+ }
 });

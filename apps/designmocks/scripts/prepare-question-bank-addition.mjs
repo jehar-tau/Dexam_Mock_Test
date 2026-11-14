@@ -8,24 +8,41 @@ import { collectCanonicalMedia, readCanonicalAsset } from './private-bank-media.
 import { verifyQuestionExportPacket } from '../src/question-export-packet.mjs';
 
 function git(cwd, ...args) { return execFileSync('git', args, { cwd, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] }).trimEnd(); }
-function fail(message) { throw new Error(message); }
+class BankAdditionError extends Error {}
+function fail(message) { throw new BankAdditionError(message); }
 function within(parent, candidate) { return candidate === parent || candidate.startsWith(parent + path.sep); }
 
-export async function prepareAddition({ packetPath, expected, expectedSource, output, mediaRoot, downloadsDir, cwd = process.cwd() }) {
+export async function prepareAddition({ packetPath, expected, expectedSource, replaceExpected, output, mediaRoot, downloadsDir, cwd = process.cwd() }) {
   if (!packetPath || !/^[a-f0-9]{64}$/.test(expected || '') || !/^[a-f0-9]{40}$/.test(expectedSource || '')) fail('A packet, reviewed SHA-256 and full source commit are required');
   const source = git(cwd, 'rev-parse', '--verify', 'refs/remotes/origin/main^{commit}');
   if (source !== expectedSource) fail('origin/main does not match the expected source commit');
   const raw = execFileSync('git', ['show', `${source}:${SOURCE_PATH}`], { cwd, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   const bank = JSON.parse(raw);
   buildManifest(bank, source);
-  const packetInfo = await stat(packetPath);
-  if (!packetInfo.isFile() || packetInfo.size > 4 * 1024 * 1024) fail('Unsupported packet file');
-  const { packet, payload } = await verifyQuestionExportPacket(JSON.parse(await readFile(packetPath, 'utf8')), { contentSha256: expected });
-  const existing = bank.questions.filter(q => q.externalKey === payload.externalKey);
-  if (existing.length) {
-    if (existing.length === 1 && stableJson(existing[0]) === stableJson(payload)) return { mode: 'no-op', sourceCommit: source };
-    fail('External key already exists in the source bank');
+  const packetInfo = await stat(packetPath).catch(() => null);
+  if (!packetInfo?.isFile() || packetInfo.size > 4 * 1024 * 1024) fail('Choose a readable question export packet of at most 4 MiB.');
+  let verified;
+  try {
+    const input = JSON.parse(await readFile(packetPath, 'utf8'));
+    verified = await verifyQuestionExportPacket(input, { contentSha256: expected });
+  } catch {
+    fail('The packet does not match the reviewed question checksum. Export the approved question again.');
   }
+  const { packet, payload } = verified;
+  const index = bank.questions.findIndex(q => q.externalKey === payload.externalKey);
+  const previous = bank.questions[index];
+  if (replaceExpected !== undefined) {
+    if (!/^[a-f0-9]{64}$/.test(replaceExpected) || !previous || sha256(stableJson(previous)) !== replaceExpected) {
+      fail('The correction requires the current question version SHA-256');
+    }
+    if (stableJson(previous.holds) !== '[]') fail('Resolve canonical holds before preparing a correction');
+    if (stableJson(previous.provenance) !== stableJson(payload.provenance) ||
+      previous.licence !== payload.licence || previous.sourceKind !== payload.sourceKind) {
+      fail('A correction must preserve question provenance and source labels');
+    }
+  }
+  if (previous && stableJson(previous) === stableJson(payload)) return { mode: 'no-op', sourceCommit: source };
+  if (previous && replaceExpected === undefined) fail('External key already exists in the source bank');
   const one = buildManifest({ schemaVersion: 1, questions: [payload] }, source);
   if (one.eligibleTotal !== 1) fail('Question is not eligible');
   // Validate every path independently, including distinct paths sharing the same digest.
@@ -58,14 +75,28 @@ export async function prepareAddition({ packetPath, expected, expectedSource, ou
   if (Object.keys(bank).at(-1) !== 'questions') fail('Questions must be the final top-level key');
   const end = /\](\s*\}\s*)$/.exec(raw);
   if (!end) fail('Unsupported source layout');
-  const proposed = raw.slice(0, end.index) + (bank.questions.length ? ',' : '') + '\n' + packet.payloadText + '\n' + raw.slice(end.index);
+  let proposed;
+  const expectedQuestions = bank.questions.slice();
+  if (previous) {
+    // Preserve the original bytes around the exact current record.
+    const indentRecord = record => JSON.stringify(record, null, 1).replaceAll('\n', '\n  ');
+    const block = [indentRecord(previous), JSON.stringify(previous)].find(candidate => raw.includes(candidate));
+    if (!block) fail('Cannot locate the exact source record');
+    const location = raw.indexOf(block);
+    if (location < 0 || raw.indexOf(block, location + block.length) >= 0) fail('Cannot locate the exact source record');
+    proposed = raw.slice(0, location) + indentRecord(payload) + raw.slice(location + block.length);
+    expectedQuestions[index] = payload;
+  } else {
+    proposed = raw.slice(0, end.index) + (bank.questions.length ? ',' : '') + '\n' + packet.payloadText + '\n' + raw.slice(end.index);
+    expectedQuestions.push(payload);
+  }
   const parsed = JSON.parse(proposed);
-  if (stableJson(parsed.questions.slice(0, -1)) !== stableJson(bank.questions) || stableJson({ ...parsed, questions: [] }) !== stableJson({ ...bank, questions: [] }) || stableJson(parsed.questions.at(-1)) !== stableJson(payload)) fail('Source preservation check failed');
+  if (stableJson(parsed.questions) !== stableJson(expectedQuestions) || stableJson({ ...parsed, questions: [] }) !== stableJson({ ...bank, questions: [] })) fail('Source preservation check failed');
   buildManifest(parsed, source);
   const mediaCatalog = media.map(({ asset, bytes }) => ({ sha256: asset.sha256, path: asset.storagePath, width: asset.width, height: asset.height, byteSize: bytes.length }));
   const answerIssues = inspectRuntimeQuestion(payload, { rule: RULES_2027[payload.provenance.exam], mediaCatalog }).issues.some(issue => /^(answer-|option-|choice-options)/.test(issue.code));
   const review = ['MCQ', 'MSQ', 'NAT'].includes(payload.type) ? (objectiveReady(payload) && !answerIssues ? 'objective-complete' : 'objective-incomplete') : 'descriptive';
-  const summary = { mode: output ? 'staged' : 'dry-run', sourceCommit: source, contentSha256: packet.contentSha256, proposedSha256: sha256(proposed), review, figures: media.length };
+  const summary = { mode: output ? 'staged' : 'dry-run', sourceCommit: source, contentSha256: packet.contentSha256, proposedSha256: sha256(proposed), review, figures: media.length, ...(previous && { replacesContentSha256: replaceExpected }) };
   if (!output) return summary;
   if (review === 'objective-incomplete') fail('Objective review is incomplete');
   const parent = await realpath(path.dirname(path.resolve(output)));
@@ -88,13 +119,18 @@ export async function prepareAddition({ packetPath, expected, expectedSource, ou
 }
 
 async function main() {
-  const names = new Set(['--packet', '--expect', '--expect-source', '--output', '--media-root', '--downloads-dir']);
+  const names = new Set(['--packet', '--expect', '--expect-source', '--replace-expect', '--output', '--media-root', '--downloads-dir']);
   const args = process.argv.slice(2), options = {};
   for (let i = 0; i < args.length; i += 2) {
     if (!names.has(args[i]) || !args[i + 1] || args[i + 1].startsWith('--') || options[args[i]]) fail('Invalid arguments');
     options[args[i]] = args[i + 1];
   }
-  const result = await prepareAddition({ packetPath: options['--packet'], expected: options['--expect'], expectedSource: options['--expect-source'], output: options['--output'], mediaRoot: options['--media-root'], downloadsDir: options['--downloads-dir'], cwd: fileURLToPath(new URL('../../..', import.meta.url)) });
+  const result = await prepareAddition({ packetPath: options['--packet'], expected: options['--expect'], expectedSource: options['--expect-source'], replaceExpected: options['--replace-expect'], output: options['--output'], mediaRoot: options['--media-root'], downloadsDir: options['--downloads-dir'], cwd: fileURLToPath(new URL('../../..', import.meta.url)) });
   console.log(JSON.stringify(result));
 }
-if (import.meta.url === pathToFileURL(process.argv[1] || '').href) main().catch(() => { console.error('Question addition preparation failed; check inputs and source.'); process.exitCode = 1; });
+if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
+  main().catch(error => {
+    console.error(error instanceof BankAdditionError ? error.message : 'Question addition preparation failed; check inputs and source.');
+    process.exitCode = 1;
+  });
+}

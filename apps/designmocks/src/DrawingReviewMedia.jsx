@@ -4,6 +4,7 @@ import { DrawingPages } from "./DrawingInspection.jsx";
 import { isAdminAccessFailure } from "./admin-access.js";
 
 async function loadDrawingPages(functions, reviewId, signal, onUnavailable) {
+  if (!functions) throw new Error("Couldn’t open drawing pages. Refresh the queue and try again.");
   const { data, error } = await functions.invoke("drawing-review-media", { body: { reviewId }, signal });
   if (error) {
     if(isAdminAccessFailure(error))onUnavailable?.(reviewId,error);

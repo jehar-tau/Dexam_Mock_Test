@@ -1,7 +1,10 @@
 // Read-only setup smoke checks. This never creates users, orders or payments.
 import assert from "node:assert/strict";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
-import {probeStagingEdge} from "./staging-edge-readiness.mjs";
+import {parseArgs} from "node:util";
+import {probeStagingEdge, stagingEdgeSetupChecks} from "./staging-edge-readiness.mjs";
+const {values} = parseArgs({options: {"portal-only": {type: "boolean"}}});
+const portalOnly = values["portal-only"] === true;
 try {
   process.loadEnvFile(".env.local");
 } catch {}
@@ -30,6 +33,7 @@ const commerceStage = process.env.DMOCKS_COMMERCE_STAGE || "unconfigured";
 assert.ok(["unconfigured", "configured"].includes(commerceStage), "Choose unconfigured or configured commerce handler checks");
 const configuredCommerce = commerceStage === "configured";
 const staging = backendStage === "staging";
+assert.ok(staging || !portalOnly, "--portal-only requires the staging backend");
 if (staging) {
   assert.equal(authStage, "controlled", "Staging requires the controlled Auth stage");
   assert.equal(configuredCommerce, false, "Run the configured commerce probe separately from private staging");
@@ -38,7 +42,7 @@ const origin = staging ? project.staging_frontend_origin : project.frontend_orig
 async function request(path, method = "GET", body, headers = {}) {
   const response = await fetch(base + path, {
     method,
-    headers: { apikey: key, "Content-Type": "application/json", ...headers },
+    headers: method === "OPTIONS" ? headers : { apikey: key, "Content-Type": "application/json", ...headers },
     body: body === undefined ? undefined : JSON.stringify(body),
     signal: AbortSignal.timeout(30000),
     redirect: "error",
@@ -48,6 +52,8 @@ async function request(path, method = "GET", body, headers = {}) {
     status: response.status,
     data: text ? JSON.parse(text) : null,
     allowOrigin: response.headers.get("access-control-allow-origin"),
+    allowMethods: response.headers.get("access-control-allow-methods"),
+    allowHeaders: response.headers.get("access-control-allow-headers"),
     cacheControl: response.headers.get("cache-control"),
   };
 }
@@ -156,6 +162,11 @@ if (configuredCommerce) {
   });
   assert.equal(response.status, 204, "approved checkout preflight");
   assert.equal(response.allowOrigin, approvedOrigin, "approved checkout origin");
+  const allowedMethods = (response.allowMethods ?? "").toLowerCase().split(",").map(value => value.trim());
+  const allowedHeaders = (response.allowHeaders ?? "").toLowerCase().split(",").map(value => value.trim());
+  assert.ok(allowedMethods.includes("post"), "approved checkout preflight must allow POST");
+  assert.ok(["authorization", "apikey", "content-type", "x-client-info"].every(header => allowedHeaders.includes(header)),
+    "approved checkout preflight must allow the browser request headers");
   results.push({ check: "approved checkout preflight", status: 204, passed: true });
 
   response = await request(checkoutPath, "POST", { plan: "annual" }, { Origin: approvedOrigin });
@@ -206,16 +217,8 @@ if (staging) {
     assert.equal(response.data?.code, "42501");
     results.push({ check: "anonymous " + name + " denied", status: response.status, passed: true });
   }
-  const edge = await probeStagingEdge({url: base, key});
-  for (const row of edge.results) {
-    results.push({
-      check: row.name + " accepts the staging origin",
-      status: row.stagingStatus,
-      foreignStatus: row.foreignStatus,
-      result: row.result,
-      passed: row.result === "ready",
-    });
-  }
+  const edge = await probeStagingEdge({url: base, portalOnly});
+  results.push(...stagingEdgeSetupChecks(edge));
 }
 await mkdir("test-results", { recursive: true });
 await writeFile(
@@ -223,18 +226,20 @@ await writeFile(
     : staging ? "test-results/hosted-staging-smoke.json" : "test-results/hosted-smoke.json",
   JSON.stringify(results, null, 2) + "\n",
 );
+const passed = results.every(result => result.required === false || result.passed);
 console.log(
   JSON.stringify(
     {
       project: project.name,
       backendStage,
+      ...(staging ? { edgeScope: portalOnly ? "private-portal" : "full" } : {}),
       ...(configuredCommerce ? { commerceStage, commerceScope: "Handler rejection only. Merchant mode, secrets and provider acceptance are unverified." } : {}),
       checks: results.length,
-      passed: results.every((result) => result.passed),
+      passed,
     },
     null,
     2,
   ),
 );
 
-if (results.some(result => !result.passed)) process.exitCode = 2;
+if (!passed) process.exitCode = 2;

@@ -4,6 +4,7 @@ import { bankReviewImages, bankSearchInput, conversionChecklist, deliveryAnswerL
 import { NidQuestionBinding } from './NidQuestionBinding.jsx';
 
 async function loadBankFigures(functions, question) {
+  if (!functions) throw new Error("Question figures could not be opened. Refresh the bank and try again.");
   const { data, error } = await functions.invoke("bank-review-media", {
     body: { externalKey: question.externalKey, reviewVersion: question.reviewVersion },
   });

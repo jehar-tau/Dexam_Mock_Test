@@ -12,6 +12,7 @@ import {openRecoveryPostgres,checkRecoveryDatabaseSource,captureRecoverySnapshot
 import {createRecoveryBundle,verifyRecoveryBundle,RECOVERY_PROJECT} from '../../scripts/recovery-bundle.mjs';
 import {recoverySeed,recoveryActor,quote} from './fixtures/recovery-state.mjs';
 import {verifyPreUpgradeRecovery} from './pre-upgrade-recovery-roundtrip.mjs';
+import {verifyCurrentStagingRecovery} from './current-staging-recovery-roundtrip.mjs';
 
 async function main(){
  const url=process.env.DESIGNMOCKS_TEST_DATABASE_URL,environment=recoveryPostgresEnvironment(url,{localOnly:true});
@@ -42,6 +43,10 @@ async function main(){
   const done = new Promise((resolve, reject) => { child.on('error', reject); child.on('close', resolve); });
   await pipeline(createReadStream(file), child.stdin);
   assert.equal(await done, 0, 'The private PostgreSQL archive must restore without ignored errors');
+ }
+ if (process.argv[2] === '--current-staging') {
+  await verifyCurrentStagingRecovery({client, sql, restoreArchive, url});
+  return;
  }
  if (process.argv[2] === '--pre-upgrade') {
   await verifyPreUpgradeRecovery({client, sql, restoreArchive, url});

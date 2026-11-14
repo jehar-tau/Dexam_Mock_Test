@@ -1,10 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { stableJson } from '../scripts/question-bank-import.mjs';
 import { prepareAddition } from '../scripts/prepare-question-bank-addition.mjs';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const question = (key, extra = {}) => ({ externalKey: key, prompt: 'Synthetic prompt', type: 'DESCRIPTIVE', provenance: { exam: 'uceed' }, holds: [], ...extra });
@@ -43,6 +45,26 @@ test('rejects tampering, source mismatch, held and colliding keys', async t => {
  await assert.rejects(prepareAddition(await f.packet(question('held'))));
  await assert.rejects(prepareAddition(await f.packet(question('new', { holds: ['review'] }))));
  await assert.rejects(prepareAddition(await f.packet(question('held', { holds: ['review'] }))));
+});
+test('the CLI reports corrective steps without printing private packet content or local paths', async t => {
+ const f = await fixture(t);
+ const script = fileURLToPath(new URL('../scripts/prepare-question-bank-addition.mjs', import.meta.url));
+ const opts = await f.packet(question('new'));
+ await writeFile(opts.packetPath, 'PRIVATE_FICTIONAL_QUESTION_TEXT');
+ const run = (packet, commit) => spawnSync(process.execPath, [script, '--packet', packet,
+  '--expect', opts.expected, '--expect-source', commit], {
+   env: { ...process.env, GIT_DIR: path.join(f.repo, '.git'), GIT_WORK_TREE: f.repo }, encoding: 'utf8',
+  });
+ for (const [result, message] of [
+  [run(opts.packetPath, '0'.repeat(40)), /origin\/main does not match/],
+  [run(path.join(f.root, 'missing.json'), f.expectedSource), /Choose a readable question export packet/],
+  [run(opts.packetPath, f.expectedSource), /Export the approved question again/],
+ ]) {
+  assert.equal(result.status, 1);
+  assert.equal(result.stdout, '');
+  assert.match(result.stderr, message);
+  assert.doesNotMatch(result.stderr, /PRIVATE_FICTIONAL_QUESTION_TEXT|bank-addition-test-/);
+ }
 });
 test('validates required figures and rejects tampering', async t => {
  const f = await fixture(t), downloadsDir = path.join(f.root, 'downloads'); await mkdir(downloadsDir);
@@ -90,4 +112,28 @@ test('limits figures and recognizes complete visual choice reviews', async t => 
  assert.equal((await prepareAddition({ ...visual, downloadsDir })).review, 'objective-complete');
  const tooMany = await f.packet(question('many', { assets: Array(9).fill(asset) }));
  await assert.rejects(prepareAddition({ ...tooMany, downloadsDir }), /Too many figures/);
+});
+
+test('prepares an exact-version correction while preserving siblings and provenance', async t => {
+ const before = question('existing'), neighbour = question('neighbour');
+ const f = await fixture(t, [neighbour, before, question('other')]);
+ const corrected = { ...before, prompt: 'Corrected synthetic prompt' };
+ const opts = await f.packet(corrected);
+ const replaceExpected = hash(stableJson(before));
+ await assert.rejects(prepareAddition(opts), /already exists/);
+ await assert.rejects(prepareAddition({ ...opts, replaceExpected: '0'.repeat(64) }), /current question version/);
+ const output = path.join(f.root, 'correction');
+ const receipt = await prepareAddition({ ...opts, replaceExpected, output });
+ assert.equal(receipt.replacesContentSha256, replaceExpected);
+ const proposed = await readFile(path.join(output, 'dexam-bank-export.json'), 'utf8');
+ assert.equal(proposed, JSON.stringify({ ...JSON.parse(f.raw), questions: [neighbour, corrected, question('other')] }, null, 1) + '\n');
+ const changedSource = await f.packet({ ...corrected, provenance: { exam: 'ceed' } });
+ await assert.rejects(prepareAddition({ ...changedSource, replaceExpected }), /preserve question provenance/);
+});
+
+test('rejects a correction to a held record even when its source version matches', async t => {
+ const held = question('held', { holds: ['review'] });
+ const f = await fixture(t, [held]);
+ const opts = await f.packet(question('held'));
+ await assert.rejects(prepareAddition({ ...opts, replaceExpected: hash(stableJson(held)) }), /Resolve canonical holds/);
 });

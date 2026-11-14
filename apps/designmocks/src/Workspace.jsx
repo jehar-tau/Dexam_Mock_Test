@@ -308,9 +308,13 @@ function AttemptSession({actorId,services}) {
     [now, setNow] = useState(Date.now()),
     [review, setReview] = useState(false),
     [media, setMedia] = useState({}),
+    [mediaStatus, setMediaStatus] = useState("loading"),
+    [mediaRetry, setMediaRetry] = useState(0),
+    [brokenFigures, setBrokenFigures] = useState({}),
     [examSession, setExamSession] = useState(null),
     [examReport, setExamReport] = useState(null);
   const dialog = useRef(),
+    questionHeading = useRef(null),
     offset = useRef(0),
     autoSubmitted = useRef(false),
     answerSync = useRef(null),
@@ -332,6 +336,8 @@ function AttemptSession({actorId,services}) {
     setConfirm(false);
     setFlagged([]);
     setMedia({});
+    setMediaStatus("loading");
+    setBrokenFigures({});
     setExamSession(null);
     setExamReport(null);
     setSyncState({ kind: "saved", pending: 0 });
@@ -352,12 +358,17 @@ function AttemptSession({actorId,services}) {
           setNow(clientTime);
           pruneDeviceAnswers(userId, verifiedServerTime);
           const journal = createAttemptAnswerJournal({ userId, attemptId: id, deadline });
+          const questionsById = new Map(data.questions.map(question => [question.id, question]));
           const queue = createAnswerSyncQueue({
             journal,
             revisionSeed: () => Date.now() + offset.current,
             send: async ({ questionId, answer, revision }) => {
               if (!alive || !navigator.onLine) throw new Error("Connection unavailable.");
-              return rpc("save_answer_revision", { p_attempt_id: id, p_question_id: questionId, p_answer: answer, p_revision: revision },request.signal);
+              if (Date.now() + offset.current >= deadline) throw new Error("The answer window has closed.");
+              const receipt = await rpc("save_answer_revision", { p_attempt_id: id, p_question_id: questionId, p_answer: answer, p_revision: revision },request.signal);
+              const question = questionsById.get(questionId);
+              if (!question || !validAttemptAnswer(question, receipt?.answer)) throw new Error("Couldn’t confirm the current saved answer.");
+              return receipt;
             },
             onSaved: ({ questionId, answer, revision, accepted }) => {
               if (!alive || !current()) return;
@@ -441,24 +452,26 @@ if(postLaunchPreview){
     if (confirm && !dialog.current?.open) dialog.current?.showModal();
   }, [confirm]);
   useEffect(() => {
-    let alive = true;
-    if (attempt?.questions.some((item) => item.media?.length)) {
-      services.functions
-        .invoke("attempt-media", { body: { attemptId: id } })
-        .then(({ data, error }) => {
-          if (alive && current()) {
-            if (error)
-              setError(
-                "Couldn’t load the question images. Refresh before continuing.",
-              );
-            else setMedia(data?.media ?? {});
-          }
-        });
-    }
-    return () => {
-      alive = false;
-    };
-  }, [attempt?.id]);
+    if (attempt?.status !== "active" || !attempt.questions.some(item => item.media?.length)) return;
+    const request = new AbortController();
+    const stillOpen = () => !request.signal.aborted && current();
+    const fail = () => { if (stillOpen()) setMediaStatus("failed"); };
+    services.functions.invoke("attempt-media", { body: { attemptId: id }, signal: request.signal })
+      .then(({ data, error }) => {
+        if (!stillOpen()) return;
+        if (error || !data?.media) return fail();
+        setMedia(data.media);
+        setMediaStatus("loaded");
+      }, fail);
+    return () => request.abort();
+  }, [attempt?.id, attempt?.status, mediaRetry, services]);
+  const retryFigures = () => {
+    questionHeading.current?.focus();
+    setMedia({});
+    setBrokenFigures({});
+    setMediaStatus("loading");
+    setMediaRetry(value => value + 1);
+  };
   const left = attempt
     ? Math.max(
         0,
@@ -468,7 +481,7 @@ if(postLaunchPreview){
       )
     : 0;
   const record = (value, defer = false) => {
-    if (!current() || !q || busy || left === 0 || !validAttemptAnswer(q, value)) return;
+    if (!current() || !q || busy || Date.now() + offset.current >= Date.parse(attempt.deadline) || !validAttemptAnswer(q, value)) return;
     clearTimeout(saveTimer.current);
     answerSync.current?.enqueue(q.id, value, { defer });
     if (defer) {
@@ -495,7 +508,11 @@ if(postLaunchPreview){
     try {
       if (Date.now() + offset.current < Date.parse(attempt.deadline)) {
         const sync = await queue.flush();
-        if (!sync.saved) throw new Error("Reconnect and save the waiting answers before submitting.");
+        if (!current() || answerSync.current !== queue) return;
+        if (!sync.saved && Date.now() + offset.current < Date.parse(attempt.deadline)) {
+          setError("Your attempt is still open. Reconnect and select Submit again to save your waiting answers.");
+          return;
+        }
       }
       const result = await rpc("submit_attempt", { p_id: id });
       if(!result||result.id!==id||result.status!=="submitted"||!Array.isArray(result.questions)||!Number.isFinite(Date.parse(result.deadline)))throw new Error("Unconfirmed submission response.");
@@ -756,7 +773,7 @@ if(postLaunchPreview){
               {q.kind.toUpperCase()} · {q.topic}
             </span>
           </div>
-          <h2>{q.prompt}</h2>
+          <h2 ref={questionHeading} tabIndex={-1}>{q.prompt}</h2>
           {q.kind !== "drawing" && (
             <p>
               +{q.marking.correct} for a correct answer · {q.marking.wrong} for
@@ -766,20 +783,25 @@ if(postLaunchPreview){
                 : ""}
             </p>
           )}
-          {q.media?.map((image, i) =>
-            media[q.id]?.[i] ? (
-              <figure className="paper-media" key={image.path}>
+          {q.media?.map((image, i) => {
+            const key = `${q.id}:${i}`;
+            const url = media[q.id]?.[i]?.url;
+            if (url && !brokenFigures[key]) return (
+              <figure className="paper-media" key={key}>
                 <img
-                  src={media[q.id][i].url}
+                  src={url}
                   alt={image.alt || "Question figure " + (i + 1)}
+                  onError={() => setBrokenFigures(value => ({...value, [key]: true}))}
                 />
               </figure>
-            ) : (
-              <p role="status" key={image.path}>
-                Loading question figure…
-              </p>
-            ),
-          )}
+            );
+            return mediaStatus === "loading"
+              ? <p role="status" key={key}>Loading question figure…</p>
+              : <div key={key}>
+                  <p role="status">Couldn’t load question figure {i + 1}.</p>
+                  <button className="text-button" type="button" onClick={retryFigures}>Retry figure {i + 1}</button>
+                </div>;
+          })}
           {["mcq", "msq"].includes(q.kind) ? (
             <div
               className="live-choices"

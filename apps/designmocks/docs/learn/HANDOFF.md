@@ -279,3 +279,19 @@ questions (ladder 2.6, steps 4–5) — a reviewer session should do that.
 
 The preview server for this branch is `designmocks-learn-cube-nets` on port
 4187 (added to the session root's `.claude/launch.json`).
+
+## Update, 14 November 2026 (evening): counting figures built
+
+- New programme `counting-figures`, all four tiers: spec
+  `topics/counting-figures.md` section 0. Eight programmes are in the
+  preview. The engine counts every figure two independent ways and the
+  tests require agreement; keep that rule for any new family.
+- Work in your own git worktree (`git worktree add`), not the shared
+  checkout: several sessions run at once. Pick a free port for your preview
+  (`lsof -nP -iTCP -sTCP:LISTEN | grep 41`).
+- CSS class names are global. Before adding one, grep `src/styles.css` for
+  it: `.net-grid` and `.text-link` have both clashed before.
+- Check every new figure in the dark theme. Lines drawn in the ink colour
+  vanish on the dark card unless a dark-theme rule is added.
+- Next Fable-level work: the recall pattern (F9) and the method-lesson
+  pattern (F10) in `09-topic-bank-map.md`.

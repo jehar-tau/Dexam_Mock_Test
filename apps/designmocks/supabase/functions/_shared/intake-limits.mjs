@@ -1,1 +1,2 @@
 export const INTAKE_EXTRACTION_MAX_BYTES = 10 * 1024 * 1024;
+export const INTAKE_FIGURE_MAX_BYTES = 10 * 1024 * 1024;

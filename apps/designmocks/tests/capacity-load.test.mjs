@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import project from "../supabase/project.json" with {type: "json"};
+import example from "../config/capacity-plan.example.json" with {type: "json"};
 import { runCapacityTest, validateCapacityPlan } from "../scripts/capacity-load.mjs";
 
 const plan = (overrides = {}) => ({
@@ -44,8 +46,20 @@ test("capacity runner separates active attempts, interpolates fixtures and appli
 });
 
 test("remote execution requires an exact staging-origin acknowledgement and enough synthetic fixtures", async () => {
-  const remote = plan({ target: "https://staging.example" });
+  const origin = "https://" + project.project_ref + ".supabase.co";
+  const remote = plan({ target: origin });
   await assert.rejects(() => runCapacityTest(remote, { fixtures: Array(3), env: {}, fetchImpl: async () => new Response() }), /CAPACITY_ALLOW_STAGING_LOAD/);
+  for (const target of ["http://" + new URL(origin).hostname, "https://other-project.supabase.co"]) {
+    await assert.rejects(runCapacityTest(plan({target, activeAttempts: 0}), {
+      env: {CAPACITY_ALLOW_STAGING_LOAD: target},
+      fetchImpl: async () => assert.fail("An unrelated or insecure host cannot receive requests"),
+    }), /designated DMocks staging API/);
+  }
+  const allowed = await runCapacityTest(plan({target: origin, activeAttempts: 0}), {
+    env: {CAPACITY_ALLOW_STAGING_LOAD: origin},
+    fetchImpl: async url => { assert.equal(url.origin, origin); return new Response(null, {status: 200}); },
+  });
+  assert.equal(allowed.summary.passed, true);
   await assert.rejects(() => runCapacityTest(plan(), { fixtures: [] }), /synthetic active-attempt fixtures/);
 });
 
@@ -78,7 +92,7 @@ test("response checks distinguish accepted autosaves from successful HTTP respon
 test("checked reads reject another attempt, an exposed key, and a malformed JSON body", async () => {
   const source = plan({sessions: 1, activeAttempts: 1, iterations: 4});
   source.scenarios.activeAttempt[0].check = "active-attempt";
-  const attempt = {id: "attempt-a", status: "active", questions: [{}]};
+  const attempt = {id: "attempt-a", status: "active", deadline: "2026-11-14T12:00:00Z", questions: [{}]};
   const responses = [
     Response.json(attempt),
     Response.json({...attempt, id: "foreign"}),
@@ -126,7 +140,7 @@ test("capacity acceptance verifies each saved answer through an independent acti
       if (revision === 3) question.answerRevision--;
       if (revision === 4) question.explanation = "Private explanation";
       if (revision === 5) question.id = "foreign-question";
-      return Response.json({id: fixture.attemptId, status: "active", questions: [question]});
+      return Response.json({id: fixture.attemptId, status: "active", deadline: "2026-11-14T12:00:00Z", questions: [question]});
     },
   });
   assert.equal(result.summary.requests, 5);
@@ -156,4 +170,56 @@ test("the persistence plan requires an explicit question and answer", async () =
     fixtures: [{attemptId: "a", accessToken: "x", questionId: "q"}],
     fetchImpl: async () => assert.fail("Incomplete fixture must fail before dispatch"),
   }), /require a synthetic question ID and answer/);
+});
+
+
+test("a changed or missing attempt deadline fails the readback without appearing in the report", async () => {
+  const source = plan({sessions: 1, activeAttempts: 1, iterations: 3});
+  source.thresholds.maxErrorRate = 1;
+  source.scenarios.activeAttempt[0].check = "persisted-revision";
+  const fixture = {attemptId: "attempt-a", questionId: "question-a", answer: "A", accessToken: "private-token"};
+  const deadlines = ["2026-11-14T12:00:00Z", "2026-11-14T12:01:00Z", null];
+  let revision = 0;
+  const {summary, failures} = await runCapacityTest(source, {fixtures: [fixture], fetchImpl: async () =>
+    Response.json({id: fixture.attemptId, status: "active", deadline: deadlines[revision],
+      questions: [{id: fixture.questionId, answer: fixture.answer, answerRevision: ++revision}]}),
+  });
+  assert.equal(summary.errors, 2);
+  assert.equal(summary.responseCheckFailures, 2);
+  assert.equal(summary.passed, false);
+  assert.doesNotMatch(JSON.stringify(failures), /2026-11-14|attempt-a/);
+});
+
+test("transient provider failures remain subject to the configured error budget", async () => {
+  const source = plan({sessions: 1, activeAttempts: 0, iterations: 2});
+  source.thresholds.maxErrorRate = 0.5;
+  const statuses = [503, 200];
+  const {summary} = await runCapacityTest(source, {
+    fetchImpl: async () => new Response(null, {status: statuses.shift()}),
+  });
+  assert.equal(summary.errorRate, 0.5);
+  assert.equal(summary.responseCheckFailures, 0);
+  assert.equal(summary.passed, true);
+});
+
+test("the example capacity plan rejects invalid public catalogue responses even under the error budget", async () => {
+  const source = {...example, target: "http://127.0.0.1:4191", sessions: 1, activeAttempts: 0, iterations: 6,
+    thresholds: {...example.thresholds, maxErrorRate: 1}};
+  const annual = {id: "annual", amount: 119300, currency: "INR", duration_months: 12};
+  const responses = [
+    Response.json([annual]),
+    Response.json([]),
+    Response.json([{...annual, currency: "USD"}]),
+    Response.json([{...annual, amount: 1193}]),
+    Response.json([annual, annual]),
+    new Response("<html>Unexpected page</html>"),
+  ];
+  const {summary, failures} = await runCapacityTest(source, {
+    env: {CAPACITY_ANON_KEY: "fixture-key"},
+    fetchImpl: async () => responses.shift(),
+  });
+  assert.equal(summary.requests, 6);
+  assert.equal(summary.responseCheckFailures, 5);
+  assert.equal(summary.passed, false);
+  assert.ok(failures.every(failure => failure.name === "public-plans" && failure.error === "ResponseCheckFailed"));
 });

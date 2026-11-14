@@ -70,7 +70,7 @@ export function CommunityReportReview({ reportId, rpc, onClose, onReopen, onReso
   };
   const openImages = async () => {
     const controller = scope.current;
-    if (!controller || !current(controller) || !report || mutation.current || mediaBusy || withImages.every(group => group.content.assets.some(item => !item.available))) return;
+    if (!functions || !controller || !current(controller) || !report || mutation.current || mediaBusy || withImages.every(group => group.content.assets.some(item => !item.available))) return;
     mediaRequest.current?.abort();
     const request = new AbortController(); mediaRequest.current = request;
     const abort = () => request.abort(); controller.signal.addEventListener("abort", abort, { once: true });

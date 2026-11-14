@@ -58,7 +58,7 @@ the geometry or the pattern would be copied into everything after it.
 | 2 | Nets of solids (`nets-of-solids`) | Spatial | computable | Fable | All four tiers done |
 | 3 | Counting cubes (`counting-cubes`) | Spatial | computable | Fable | All four tiers done |
 | 4 | Gears, belts and levers (`mechanisms`) | Mechanical | computable | **Fable: engine, tool, all tiers for gears, belts, levers.** Opus adds linkages, stability, rolling from `topics/mechanisms.md` | All four tiers done for gears, belts, ropes, levers |
-| 5 | Counting figures (`counting-figures`) | Shape and area counting | computable | **Fable: the counting engine** (it must count by brute force, and that is easy to get wrong). Opus: area questions | Spec exists |
+| 5 | Counting figures (`counting-figures`) | Shape and area counting | computable | Fable built the counting engine and all four tiers. Opus adds area questions, overlaid sheets and irregular figures from `topics/counting-figures.md` section 0 | Counting done; area not started |
 | 6 | Paper folding (`paper-folding`), Mirror images (`mirror-images`) | Spatial | computable | Opus, tiers 2–4 from their specs | Foundations done |
 | 7 | Views and rotation, Dice, Solid surfaces | Spatial | computable | Opus from specs; ask Fable only if the 3D conventions fight back | Specs exist |
 | 8 | Number and quantity (`quant`) | Quantitative aptitude | computable | Opus. Word problems with drawn numbers; no figure engine needed | Spec to write (short) |

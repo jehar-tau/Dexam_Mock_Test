@@ -14,7 +14,7 @@ async function fixture(page,options={}){
   if(path==='/auth/v1/user'){const identity=state.identity??who,status=state.authStatus,held=state.authHold;if(held){state.heldAuth++;await held.promise;}return route.fulfill({headers,status,json:status===200?{id:identity,aud:'authenticated',app_metadata:{provider:'google'},user_metadata:{}}:{code:'unexpected_failure',message:'Fictional provider private diagnostic'}}).catch(()=>{});}
   const name=path.split('/').at(-1),multipart=request.headers()['content-type']?.startsWith('multipart/'),input=multipart?{multipart:true}:request.postDataJSON()??{};state.calls.push({name,actor:who,input});
   let data,status=200;
-  const question={id:questionId,ordinal:1,kind:state.drawing?'drawing':'mcq',topic:'observation',prompt:who===second.id?'Original fictional second account question':'Original fictional first account question',options:[{id:'A',label:'Fictional first choice'},{id:'B',label:'Fictional second choice'}],marking:{correct:3,wrong:-1},points:3,negativePoints:1,media:state.readMedia?[{path:'fictional-figure.png',alt:'Fictional figure'}]:[],answer:null,answerRevision:0};
+  const question={id:questionId,ordinal:1,kind:state.drawing?'drawing':'mcq',topic:'observation',prompt:who===second.id?'Original fictional second account question':'Original fictional first account question',options:[{id:'A',label:'Fictional first choice'},{id:'B',label:'Fictional second choice'}],marking:{correct:3,wrong:-1},points:3,negativePoints:1,media:state.readMedia?[{path:'fictional-figure.png',alt:'Fictional figure'}]:[],answer:state.readAnswer?.answer ?? null,answerRevision:state.readAnswer?.revision ?? 0};
   if(name==='read_attempt'){
    const held=state.readHold;if(held){state.heldReads++;await held.promise;}
    data={id:attemptId,title:'Original fictional timed paper',status:state.submitted?'submitted':'active',serverNow:state.serverNow??new Date().toISOString(),deadline:state.deadline,questions:state.submitted?[]:[question],score:0,total:3,examResultsPending:!!state.partBReady,resultsPending:!!state.submitted&&!state.partBReady,uploadDeadline:state.submitted?new Date(Date.now()+600000).toISOString():null,drawingUploadTasks:state.submitted?[{id:questionId,prompt:'Original fictional drawing task'}]:[]};
@@ -25,7 +25,8 @@ async function fixture(page,options={}){
   else if(name==='report_attempt_question'){if(state.reportReply)await state.reportReply.promise;data={reportCount:1,threshold:5,held:false};}
   else if(name==='attempt-media'){
    if(state.figureReply)await state.figureReply.promise;
-   data={media:{[questionId]:[{url:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/%3E'}]}};
+   status=state.figureStatus??200;
+   data=status===200?{media:{[questionId]:[{url:state.figureUrl??'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/%3E'}]}}:{error:'Fictional media failure'};
   }
   else if(name==='drawing-media')data=multipart?{id:'30000000-0000-4000-8000-000000000961',ordinal:1}:input.action==='list'?{items:[]}:{images:[]};
   else if(name==='start_exam_mock_part_b'){if(state.startHold)await state.startHold.promise;data=partB;}
@@ -104,6 +105,28 @@ test('a delayed question figure reply clears the old paper after a silent accoun
  await expect(privateQuestion(page)).toHaveCount(0);
  await expect(page.getByRole('img', { name: 'Fictional figure', exact: true })).toHaveCount(0);
  expect(calls(state, 'attempt-media').map(item => item.actor)).toEqual([first.id]);
+});
+
+test('a failed question figure can be retried without reopening the timed attempt', async ({page}) => {
+  const state = await fixture(page, {readMedia:true, figureStatus:503});
+  const retry = page.getByRole('button', {name:'Retry figure 1', exact:true});
+  await expect(retry).toBeVisible();
+  await expect(page.getByText('Loading question figure…', {exact:true})).toHaveCount(0);
+  state.figureStatus = 200;
+  state.figureUrl = 'data:image/png;base64,AAAA';
+  await retry.press('Enter');
+  await expect(privateQuestion(page)).toBeFocused();
+  await expect.poll(() => calls(state, 'attempt-media').length).toBe(2);
+  await expect(retry).toBeVisible();
+
+  state.figureUrl = undefined;
+  await retry.click();
+  const figure = page.getByRole('img', {name:'Fictional figure', exact:true});
+  await expect.poll(() => figure.evaluate(img => img.naturalWidth)).toBeGreaterThan(0);
+  await expect(retry).toHaveCount(0);
+  expect(calls(state, 'read_attempt')).toHaveLength(1);
+  expect(calls(state, 'attempt-media').map(call => call.actor)).toEqual(Array(3).fill(first.id));
+  await expect(page.getByRole('timer', {name:'Time remaining'})).toBeVisible();
 });
 
 test('a signed figure stays hidden until the current exam account is confirmed again', async ({ page }) => {
@@ -264,4 +287,137 @@ test('an outage never restores elapsed exam time and reconnect finalizes the fix
  expect(calls(state,'submit_attempt')).toHaveLength(1);
  expect(calls(state,'save_answer_revision')).toEqual([]);
  expect(await journal(page)).toEqual([]);
+});
+
+test('a click after the deadline cannot save an answer before the displayed clock refreshes', async ({page}) => {
+  const startedAt = Date.now();
+  const deadline = startedAt + 5000;
+  await page.clock.setFixedTime(startedAt);
+  const state = await fixture(page, {
+    serverNow: new Date(startedAt).toISOString(),
+    deadline: new Date(deadline).toISOString(),
+  });
+  await expect(answer(page)).toBeEnabled();
+  await page.evaluate(() => {
+    const originalNow = Date.now;
+    Date.now = () => originalNow() + 5000;
+    try {
+      const choice = [...document.querySelectorAll('button')].find(button => /Fictional second choice/.test(button.textContent));
+      if (!choice || choice.disabled) throw new Error('Expected an enabled choice before the clock repaint');
+      choice.click();
+    } finally {
+      Date.now = originalNow;
+    }
+  });
+  expect(await journal(page)).toEqual([]);
+  expect(calls(state, 'save_answer_revision')).toEqual([]);
+});
+
+test('an invalid newer server answer cannot clear the pending device answer', async ({page}) => {
+  const state = await fixture(page);
+  state.saveHold = deferred();
+  await answer(page).click();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(1);
+  const [pending] = await journal(page);
+  state.saveReceipt = {accepted:false, revision:pending.revision + 1, answer:'not-an-option'};
+  state.saveHold.resolve();
+  await expect(page.getByText('Answers saved on this device. Waiting to sync.', {exact:true})).toBeVisible();
+  expect(await journal(page)).toEqual([pending]);
+  state.saveReceipt = {accepted:false, revision:pending.revision + 1, answer:'A'};
+  await page.getByRole('button', {name:'Retry waiting answers', exact:true}).click();
+  await expect(page.getByText('Answers are saved to your account.', {exact:true})).toBeVisible();
+  expect(await journal(page)).toEqual([]);
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual([pending.revision, pending.revision]);
+});
+
+test('reloading with an invalid newer readback retries the original device answer', async ({page}) => {
+  const state = await fixture(page, {saveReceipt: null});
+  await answer(page).click();
+  await expect(page.getByText('Answers saved on this device. Waiting to sync.', {exact:true})).toBeVisible();
+  const [pending] = await journal(page);
+  state.readAnswer = {answer:'not-an-option', revision:pending.revision + 1};
+  state.saveHold = deferred();
+  await page.reload();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(2);
+  expect(await journal(page)).toEqual([pending]);
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual([pending.revision, pending.revision]);
+  state.saveReceipt = {accepted:false, answer:'A', revision:pending.revision + 1};
+  state.saveHold.resolve();
+  await expect(page.getByText('Answers are saved to your account.', {exact:true})).toBeVisible();
+  expect(await journal(page)).toEqual([]);
+});
+
+test('a blocked answer save explains how to retry submission without reopening the paper', async ({page}) => {
+  const state = await fixture(page);
+  await expect(answer(page)).toBeEnabled();
+  state.saveReceipt = null;
+  await answer(page).click();
+  await expect(page.getByText('Answers saved on this device. Waiting to sync.', {exact:true})).toBeVisible();
+  const [saved] = await journal(page);
+  await page.getByRole('button', {name:'Submit attempt', exact:true}).click();
+  const dialog = page.getByRole('dialog');
+  const submit = dialog.getByRole('button', {name:'Submit & view report', exact:true});
+  await submit.click();
+  await expect(dialog.getByRole('alert')).toContainText('Your attempt is still open. Reconnect and select Submit again to save your waiting answers.');
+  expect(calls(state, 'submit_attempt')).toEqual([]);
+  expect(await journal(page)).toEqual([saved]);
+
+  state.saveReceipt = undefined;
+  await submit.click();
+  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual(Array(3).fill(saved.revision));
+  expect(calls(state, 'submit_attempt')).toHaveLength(1);
+  expect(await journal(page)).toEqual([]);
+});
+
+test('a queued revision cannot follow an acknowledged save after the deadline', async ({page}) => {
+  const startedAt = Date.now();
+  const deadline = startedAt + 5000;
+  await page.clock.setFixedTime(startedAt);
+  const saveHold = deferred();
+  const state = await fixture(page, {
+    saveHold,
+    serverNow: new Date(startedAt).toISOString(),
+    deadline: new Date(deadline).toISOString(),
+  });
+  await answer(page).click();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(1);
+  await page.getByRole('button', {name:'A Fictional first choice', exact:true}).click();
+  expect((await journal(page)).map(entry => entry.answer)).toEqual(['A']);
+  const dialog = page.getByRole('dialog');
+  await page.getByRole('button', {name:'Submit attempt', exact:true}).click();
+  const submit = dialog.getByRole('button', {name:'Submit & view report', exact:true});
+  await submit.click();
+  await expect(submit).toBeDisabled();
+
+  state.serverNow = new Date(deadline).toISOString();
+  await page.clock.setFixedTime(deadline);
+  saveHold.resolve();
+  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_answer)).toEqual(['B']);
+  expect(calls(state, 'submit_attempt')).toHaveLength(1);
+  expect(await journal(page)).toEqual([]);
+});
+
+test('a failed answer save that crosses the deadline finalizes the server snapshot once', async ({page}) => {
+  const startedAt = Date.now(), deadline = startedAt + 5000;
+  await page.clock.setFixedTime(startedAt);
+  const state = await fixture(page, {serverNow:new Date(startedAt).toISOString(), deadline:new Date(deadline).toISOString()});
+  await expect(answer(page)).toBeEnabled();
+  state.saveHold = deferred();
+  state.saveReceipt = null;
+  await answer(page).click();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(1);
+  await page.getByRole('button', {name:'Submit attempt', exact:true}).click();
+  const submit = page.getByRole('dialog').getByRole('button', {name:'Submit & view report', exact:true});
+  await submit.click();
+  await expect(submit).toBeDisabled();
+
+  state.serverNow = new Date(deadline).toISOString();
+  await page.clock.setFixedTime(deadline);
+  state.saveHold.resolve();
+  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  expect(calls(state, 'save_answer_revision')).toHaveLength(1);
+  expect(calls(state, 'submit_attempt')).toHaveLength(1);
+  expect(await journal(page)).toEqual([]);
 });
