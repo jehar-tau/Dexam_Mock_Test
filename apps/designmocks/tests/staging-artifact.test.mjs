@@ -118,6 +118,16 @@ test("artifact verification pins the reviewed digest and all stored site bytes",
   await assert.rejects(verifyStagingArtifact(artifact), /reviewed manifest hash/);
 });
 
+test("pilot verification rejects a valid package for the broader staging workspace", async t => {
+  const workspace = await bundle(t);
+  const profile = stagingArtifactProfile(project, { ...values, paidPilot: true });
+  const pilot = await bundle(t, { profile });
+  const checkoutOpened = await bundle(t, { profile: { ...profile, checkoutEnabled: true } });
+  assert.equal((await verifyStagingArtifact({ ...pilot, paidPilot: true })).verified, true);
+  await assert.rejects(verifyStagingArtifact({ ...workspace, paidPilot: true }), /private paid-paper pilot/);
+  await assert.rejects(verifyStagingArtifact({ ...checkoutOpened, paidPilot: true }), /private paid-paper pilot/);
+});
+
 test("artifact verification rejects altered, extra, missing and symlink assets", async t => {
   const artifact = await bundle(t);
   const script = path.join(artifact.site, "assets/app.js");

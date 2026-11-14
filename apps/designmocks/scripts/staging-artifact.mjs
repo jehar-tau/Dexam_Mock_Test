@@ -133,7 +133,7 @@ async function siteFiles(directory) {
   return files;
 }
 
-async function verifyArtifact({ directory, expected }, schema) {
+async function verifyArtifact({ directory, expected, paidPilot = false }, schema) {
   if (!digestPattern.test(expected ?? "")) throw new Error("Supply the reviewed full SHA-256 of the artifact");
   if (!(await lstat(directory)).isDirectory() || (await readdir(directory)).sort().join(",") !== "manifest.json,site") {
     throw new Error("The artifact directory must contain exactly manifest.json and site");
@@ -144,6 +144,11 @@ async function verifyArtifact({ directory, expected }, schema) {
   if (manifest.schema !== schema || !gitIdPattern.test(manifest.source?.commit ?? "") ||
       !gitIdPattern.test(manifest.source?.tree ?? "") || bundleSha256 !== expected || hashManifest(manifest) !== expected) {
     throw new Error("The artifact does not match the reviewed manifest hash");
+  }
+  if (paidPilot && (manifest.profile?.backendProfile !== "paid-mvp" ||
+      manifest.profile.stagingPortalEnabled !== true || manifest.profile.postLaunchPreview !== false ||
+      manifest.profile.checkoutEnabled !== false || manifest.profile.releasedPortalEnabled !== false)) {
+    throw new Error("Use the reviewed private paid-paper pilot artifact");
   }
   const files = await siteFiles(path.join(directory, "site"));
   if (JSON.stringify(files) !== JSON.stringify(manifest.files)) throw new Error("The artifact site files differ from the reviewed manifest");
@@ -220,7 +225,7 @@ async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin
     await writeFile(path.join(target, "manifest.json"), JSON.stringify({ ...manifest, bundleSha256 }, null, 2) + "\n", {
       mode: 0o600, flag: "wx",
     });
-    return await verifyArtifact({ directory: target, expected: bundleSha256 }, schema);
+    return await verifyArtifact({ directory: target, expected: bundleSha256, paidPilot }, schema);
   } catch (error) {
     if (ownedOutput) await rm(target, { recursive: true, force: true });
     throw error;
@@ -250,9 +255,10 @@ async function main() {
       noticesPath: values.notices, expectedNoticeVersion: values["expect-notice-version"], paidPilot: values["paid-pilot"],
     });
   } else if (action === "verify" || action === "verify-checkout") {
-    const { values } = parseArgs({ args, options: { artifact: { type: "string" }, expect: { type: "string" } } });
+    const { values } = parseArgs({ args, options: { artifact: { type: "string" }, expect: { type: "string" },
+      ...(action === "verify" ? { "paid-pilot": { type: "boolean" } } : {}) } });
     const verify = action === "verify-checkout" ? verifyCheckoutArtifact : verifyStagingArtifact;
-    result = await verify({ directory: values.artifact, expected: values.expect });
+    result = await verify({ directory: values.artifact, expected: values.expect, paidPilot: values["paid-pilot"] });
   } else {
     throw new Error("Choose build or verify for the private staging artifact, or build-checkout or verify-checkout for private Test checkout");
   }
