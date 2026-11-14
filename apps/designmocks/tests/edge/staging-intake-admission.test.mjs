@@ -32,15 +32,28 @@ Deno.test("intake and draft retries check staging admission before privileged re
         Deno.serve = handle => { handler = handle; };
         const calls = [];
         let admitted = false;
+        let isAdmin = true;
+        let revokeDuringDownload;
+        const file = new TextEncoder().encode("%PDF-1.7\nOriginal fictional file");
         globalThis.fetch = async (input, init) => {
           const request = new Request(input, init);
           const url = new URL(request.url);
           assert.equal(url.origin, provider);
-          assert.equal(request.headers.get("authorization"), "Bearer fictional-tester");
           calls.push(url.pathname);
+          if (url.pathname.startsWith("/storage/v1/object/")) {
+            assert.equal(endpoint, "question-intake");
+            assert.equal(request.headers.get("authorization"), "Bearer fictional-service");
+            if (revokeDuringDownload === "tester") admitted = false;
+            if (revokeDuringDownload === "admin") isAdmin = false;
+            return new Response(file, { headers: { "content-type": "application/pdf" } });
+          }
+          assert.equal(request.headers.get("authorization"), "Bearer fictional-tester");
           if (url.pathname === "/auth/v1/user") return Response.json({ id: actor });
           if (url.pathname === "/rest/v1/rpc/can_enter_staging_portal") return Response.json(admitted);
-          if (url.pathname === "/rest/v1/rpc/is_dmocks_admin") return Response.json(true);
+          if (url.pathname === "/rest/v1/rpc/is_dmocks_admin") return Response.json(isAdmin);
+          if (url.pathname === "/rest/v1/rpc/admin_question_intake_source") {
+            return Response.json({ storagePath: "fictional-source.pdf", byteSize: file.length, mimeType: "application/pdf" });
+          }
           assert.fail("Unexpected privileged request");
         };
         await import(`../../supabase/functions/${endpoint}/index.ts`);
@@ -62,6 +75,22 @@ Deno.test("intake and draft retries check staging admission before privileged re
         await invalid.body?.cancel();
         assert.deepEqual(calls, ["/auth/v1/user", "/rest/v1/rpc/can_enter_staging_portal",
           ...(endpoint === "ai-question-draft" ? [] : ["/rest/v1/rpc/is_dmocks_admin"])]);
+        if (endpoint !== "question-intake") return;
+        const available = await post(body);
+        assert.equal(available.status, 200);
+        assert.deepEqual(new Uint8Array(await available.arrayBuffer()), file);
+        for (const lostAccess of ["tester", "admin"]) {
+          admitted = isAdmin = true;
+          revokeDuringDownload = lostAccess;
+          calls.length = 0;
+          const revoked = await post(body);
+          assert.equal(revoked.status, 403);
+          assert.equal(revoked.headers.get("content-disposition"), null);
+          const error = lostAccess === "tester" ? "Private staging requires an approved Google tester" : "Admin access required";
+          assert.deepEqual(await revoked.json(), { error });
+          assert.equal(calls.filter(path => path.startsWith("/storage/v1/object/")).length, 1);
+        }
+
       });
     }
   } finally {

@@ -25,8 +25,9 @@ Deno.serve(async request => {
   });
   const { data: { user } } = await student.auth.getUser();
   if (!user) return respond({ error: "Sign in required" }, 401);
-  const admissionSignal = AbortSignal.any([request.signal, AbortSignal.timeout(10000)]);
-  if (await stagingEdgeDenied(Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER"), student, admissionSignal)) {
+  const stagingCheck = Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER");
+  const stagingDenied = () => stagingEdgeDenied(stagingCheck, student, AbortSignal.any([request.signal, AbortSignal.timeout(10000)]));
+  if (await stagingDenied()) {
     return respond({ error: "Private staging requires an approved Google tester" }, 403);
   }
   const { data: isAdmin, error: roleError } = await student.rpc("is_dmocks_admin");
@@ -52,6 +53,9 @@ Deno.serve(async request => {
         const figure = await intakeFigureDescriptor(new Uint8Array(await file.arrayBuffer()), crypto.subtle.digest.bind(crypto.subtle));
         if (figure.sha256 !== figureSha) return respond({ error: "Retained figure does not match its digest" }, 409);
       }
+      if (await stagingDenied()) return respond({ error: "Private staging requires an approved Google tester" }, 403);
+      const access = await student.rpc("is_dmocks_admin").abortSignal(AbortSignal.any([request.signal, AbortSignal.timeout(10000)]));
+      if (access.error || access.data !== true) return respond({ error: "Admin access required" }, 403);
       return new Response(file, { headers: { ...headers, "Content-Type": "application/octet-stream", "Content-Disposition": "attachment" } });
     }
     const { file, assetId } = await readIntakeUpload(request);
