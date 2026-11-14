@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import {pathToFileURL} from "node:url";
+import {openPrivateDMocksTransport} from "./private-bank-provider.mjs";
 import project from "../supabase/project.json" with {type: "json"};
 
 const buckets = ["paper-media", "drawing-submissions", "community-media", "question-intake"];
@@ -16,14 +17,18 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
   assert.ok(origin === url.origin && (local || origin === `https://${project.project_ref}.supabase.co`), "Use local or designated DMocks staging Storage");
   assert.match(fixture ?? "", fixturePattern, "Use an exact fictional Storage fixture path");
   assert.ok(jwtRole(key) === "anon" || /^sb_publishable_[\w-]+$/.test(key ?? ""), "Use a public API key");
-  assert.ok(jwtRole(serviceKey) === "service_role" || /^sb_secret_[\w-]+$/.test(serviceKey ?? ""), "Use a server-only key to verify fixture existence");
   assert.ok(jwtRole(token) === "authenticated", "Use a synthetic signed-in account token");
 
-  async function head(path, authorization, apiKey = key) {
+  const service = openPrivateDMocksTransport({
+    url: origin, allowOrigin: origin, serviceRoleKey: serviceKey,
+    environment: local ? "development" : "staging",
+  }, {fetchImpl, timeoutMs: 10000});
+
+  async function head(path, authorization, request = fetchImpl) {
     try {
-      const response = await fetchImpl(origin + "/storage/v1/object/" + path, {
+      const response = await request(origin + "/storage/v1/object/" + path, {
         method: "HEAD", redirect: "error", signal: AbortSignal.timeout(10000),
-        headers: {apikey: apiKey, ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
+        headers: {apikey: key, ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
       });
       await response.body?.cancel();
       return response.status;
@@ -41,7 +46,7 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
 
   const results = await Promise.all(buckets.map(async bucket => {
     const object = `authenticated/${bucket}/${fixture}`;
-    const verified = await head(object, serviceKey, serviceKey) === 200;
+    const verified = await head(object, null, service.fetch) === 200;
     if (!verified) return {bucket, verified, results: []};
     const results = await Promise.all([
       ["public-url", `public/${bucket}/${fixture}`],

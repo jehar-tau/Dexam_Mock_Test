@@ -10,9 +10,9 @@ test("checks every bucket with HEAD and sends user credentials only on authentic
   let count = 0;
   const report = await checkPrivateStorage({...config, fetchImpl: async (url, request) => {
     if (url.endsWith("/auth/v1/user")) return new Response(null, {status: 200});
-    if (request.headers.apikey === config.serviceKey) {
+    if (new Headers(request.headers).get("apikey") === config.serviceKey) {
       assert.equal(request.method, "HEAD");
-      assert.equal(request.headers.Authorization, "Bearer " + config.serviceKey);
+      assert.equal(request.headers.has("authorization"), false);
       return new Response(null, {status: 200});
     }
     count++;
@@ -30,7 +30,7 @@ test("checks every bucket with HEAD and sends user credentials only on authentic
 
 test("exposure and provider failure both fail the probe", async () => {
   for (const status of [200, 503]) {
-    const report = await checkPrivateStorage({...config, fetchImpl: async (url, request) => new Response(null, {status: url.endsWith("/auth/v1/user") || request.headers.apikey === config.serviceKey ? 200 : status})});
+    const report = await checkPrivateStorage({...config, fetchImpl: async (url, request) => new Response(null, {status: url.endsWith("/auth/v1/user") || new Headers(request.headers).get("apikey") === config.serviceKey ? 200 : status})});
     assert.equal(report.passed, false);
   }
 });
@@ -46,4 +46,22 @@ test("a missing control object cannot produce a passing denial report", async ()
     new Response(null, {status: url.endsWith("/auth/v1/user") ? 200 : 404})});
   assert.equal(report.passed, false);
   assert.ok(report.results.every(bucket => !bucket.verified && bucket.results.length === 0));
+});
+
+test("legacy server tokens still authenticate fixture checks while foreign tokens fail before dispatch", async () => {
+  const legacyKey = claims => "fixture." + Buffer.from(JSON.stringify(claims)).toString("base64url") + ".signature";
+  const key = legacyKey({role: "service_role"});
+  let fixtureChecks = 0;
+  const report = await checkPrivateStorage({...config, serviceKey: key, fetchImpl: async (url, request) => {
+    if (url.endsWith("/auth/v1/user")) return new Response(null, {status: 200});
+    const headers = new Headers(request.headers);
+    if (headers.get("apikey") !== key) return new Response(null, {status: 404});
+    assert.equal(headers.get("authorization"), "Bearer " + key);
+    fixtureChecks++;
+    return new Response(null, {status: 200});
+  }});
+  assert.equal(report.passed, true);
+  assert.equal(fixtureChecks, 4);
+  await assert.rejects(checkPrivateStorage({...config, serviceKey: legacyKey({role: "service_role", ref: "x".repeat(20)}),
+    fetchImpl: async () => assert.fail("Unexpected request")}), /different provider project/);
 });
