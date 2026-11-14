@@ -152,13 +152,18 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
     await sql(await readFile(new URL('private-staging-api.sql', launchDirectory), 'utf8'), target);
     await sql(await readFile(new URL('private-staging-portal-grants.sql', launchDirectory), 'utf8'), target);
     assert.equal(await sql('select dm_private.mvp_profile_permissions_valid()', target), 'f');
-    await sql(await readFile(new URL('paid-mvp.sql', launchDirectory), 'utf8'), target);
+    const paidProfile = await readFile(new URL('paid-mvp.sql', launchDirectory), 'utf8');
+    await sql(`begin;
+${paidProfile}
+commit;`, target);
     assert.equal(await sql(`select dm_private.mvp_profile_permissions_valid()
       and not (select enabled from dm_private.mvp_test_checkout_control where singleton)
       and (select environment_mode = 'test' and not sales_enabled from public.launch_settings where singleton)
       and (select mode = 'testers' from dm_private.registration_policy where id)
       and not has_function_privilege('authenticated', 'public.community_feed(text,text,jsonb,integer)', 'execute')
-      and not has_function_privilege('anon', 'public.public_all_india_top_ten()', 'execute');`, target), 't');
+      and not has_function_privilege('anon', 'public.public_all_india_top_ten()', 'execute')
+      and has_function_privilege('service_role', 'public.prepare_mvp_paper(jsonb)', 'execute')
+      and not has_function_privilege('authenticated', 'public.prepare_mvp_paper(jsonb)', 'execute');`, target), 't');
     assert.equal(await sql(hookSetting, target), 'pgrst.db_pre_request=dm_staging_api.check_admission');
     await sql(recoveryActor(tester, 'select dm_staging_api.check_admission()'), target);
     await assert.rejects(sql(recoveryActor(state.other, 'select dm_staging_api.check_admission()'), target));
