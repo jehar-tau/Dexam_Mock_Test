@@ -183,7 +183,7 @@ The probe checks ten private portal and administrator routes with browser-style 
 
 Deploy only the seven required routes for the initial private portal. Check the deployed gateway settings against `supabase/config.toml`. DMocks serves browser preflight in the handlers, then checks the Supabase session and feature permissions on POST. The intake upload, extraction and draft handlers declare `verify_jwt = false` explicitly, matching the other private handlers. [Supabase CLI function configuration](https://supabase.com/docs/guides/local-development/cli/config#functionsfunction_nameverify_jwt)
 
-For the private portal rollout before phone and model setup, add `--portal-only` to the CORS probe. It still reports all ten routes. Only the seven private portal routes are required for this check. The default probe requires all ten.
+For the private portal rollout before phone and model setup, add `--portal-only` to the hosted setup command or the CORS probe. Both still report all ten Edge routes, with only the seven private portal routes required. The hosted setup command still requires all its Auth and anonymous authorization checks. By default, both commands require all ten Edge routes.
 
 This checks anonymous authorization, Google availability, and media preflights at the exact staging origin. Run the configured commerce probe separately at its approved checkout origin. The staging report does not attest payment capture, refunds, or tester admission.
 

@@ -66,6 +66,17 @@ export async function probeStagingEdge({url, fetchImpl = fetch, portalOnly = fal
     passed: results.every(row => !row.required || row.result === "ready"), results};
 }
 
+export function stagingEdgeSetupChecks({results}) {
+  return results.map(row => ({
+    check: row.name + " accepts the staging origin",
+    status: row.stagingStatus,
+    foreignStatus: row.foreignStatus,
+    required: row.required,
+    result: row.result,
+    passed: row.result === "ready",
+  }));
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
     const {values} = parseArgs({options: {"portal-only": {type: "boolean"}}});

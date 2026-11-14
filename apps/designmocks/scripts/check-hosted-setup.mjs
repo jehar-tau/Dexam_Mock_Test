@@ -1,7 +1,10 @@
 // Read-only setup smoke checks. This never creates users, orders or payments.
 import assert from "node:assert/strict";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
-import {probeStagingEdge} from "./staging-edge-readiness.mjs";
+import {parseArgs} from "node:util";
+import {probeStagingEdge, stagingEdgeSetupChecks} from "./staging-edge-readiness.mjs";
+const {values} = parseArgs({options: {"portal-only": {type: "boolean"}}});
+const portalOnly = values["portal-only"] === true;
 try {
   process.loadEnvFile(".env.local");
 } catch {}
@@ -30,6 +33,7 @@ const commerceStage = process.env.DMOCKS_COMMERCE_STAGE || "unconfigured";
 assert.ok(["unconfigured", "configured"].includes(commerceStage), "Choose unconfigured or configured commerce handler checks");
 const configuredCommerce = commerceStage === "configured";
 const staging = backendStage === "staging";
+assert.ok(staging || !portalOnly, "--portal-only requires the staging backend");
 if (staging) {
   assert.equal(authStage, "controlled", "Staging requires the controlled Auth stage");
   assert.equal(configuredCommerce, false, "Run the configured commerce probe separately from private staging");
@@ -213,16 +217,8 @@ if (staging) {
     assert.equal(response.data?.code, "42501");
     results.push({ check: "anonymous " + name + " denied", status: response.status, passed: true });
   }
-  const edge = await probeStagingEdge({url: base});
-  for (const row of edge.results) {
-    results.push({
-      check: row.name + " accepts the staging origin",
-      status: row.stagingStatus,
-      foreignStatus: row.foreignStatus,
-      result: row.result,
-      passed: row.result === "ready",
-    });
-  }
+  const edge = await probeStagingEdge({url: base, portalOnly});
+  results.push(...stagingEdgeSetupChecks(edge));
 }
 await mkdir("test-results", { recursive: true });
 await writeFile(
@@ -230,18 +226,20 @@ await writeFile(
     : staging ? "test-results/hosted-staging-smoke.json" : "test-results/hosted-smoke.json",
   JSON.stringify(results, null, 2) + "\n",
 );
+const passed = results.every(result => result.required === false || result.passed);
 console.log(
   JSON.stringify(
     {
       project: project.name,
       backendStage,
+      ...(staging ? { edgeScope: portalOnly ? "private-portal" : "full" } : {}),
       ...(configuredCommerce ? { commerceStage, commerceScope: "Handler rejection only. Merchant mode, secrets and provider acceptance are unverified." } : {}),
       checks: results.length,
-      passed: results.every((result) => result.passed),
+      passed,
     },
     null,
     2,
   ),
 );
 
-if (results.some(result => !result.passed)) process.exitCode = 2;
+if (!passed) process.exitCode = 2;

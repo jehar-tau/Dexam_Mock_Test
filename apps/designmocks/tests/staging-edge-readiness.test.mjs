@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {readdir, readFile} from "node:fs/promises";
 import project from "../supabase/project.json" with {type: "json"};
-import {probeStagingEdge} from "../scripts/staging-edge-readiness.mjs";
+import {probeStagingEdge, stagingEdgeSetupChecks} from "../scripts/staging-edge-readiness.mjs";
 
 const url = `https://${project.project_ref}.supabase.co`;
 const origin = project.staging_frontend_origin;
@@ -94,6 +94,9 @@ test("private portal scope reports provider-dependent failures while requiring a
   assert.equal(full.results.filter(row => row.required).length, 10);
   const portal = await probe({portalOnly: true});
   assert.equal(portal.passed, true);
+  const checks = stagingEdgeSetupChecks(portal);
+  assert.equal(checks.filter(check => check.required === false && !check.passed).length, 3);
+  assert.equal(checks.filter(check => check.required && check.passed).length, 7);
   assert.equal(portal.results.filter(row => row.required).length, 7);
   assert.deepEqual(portal.results.filter(row => !row.required).map(row => row.result), Array(3).fill("endpoint-not-found"));
   assert.equal((await probe({portalOnly: true, missingPortal: true})).passed, false);
