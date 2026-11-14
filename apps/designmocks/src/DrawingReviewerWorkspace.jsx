@@ -4,7 +4,7 @@ import { DrawingReviewQueue } from "./DrawingReviewQueue.jsx";
 import { drawingReviewActions } from "./drawing-review.js";
 import { useAuthState } from "./useAuth.js";
 import { DrawingReviewerAccessBoundary, useStaffServices } from "./AdminAccess.jsx";
-import { createDrawingReviewRequests, isDrawingReviewUnavailable } from "./drawing-review-lifecycle.js";
+import { createDrawingReviewRequests, drawingReviewPage, isDrawingReviewUnavailable } from "./drawing-review-lifecycle.js";
 
 const actionMessages = {
   admin_claim_drawing_review: "Review claimed.",
@@ -26,7 +26,7 @@ function ReviewerQueuePage({ scope, cursor, pageNumber, onPrevious, onNext, onCh
 
   useEffect(() => {
     const context=requests.current;setNotice("");
-    context.read(signal=>rpc("my_drawing_review_page",{p_scope:scope,p_after:cursor},signal)).then(value=>{
+    context.read(async signal => drawingReviewPage(await rpc("my_drawing_review_page", {p_scope: scope, p_after: cursor}, signal))).then(value=>{
       if(value.current())setResult(value.error?{error:value.error}:{data:value.data});
     });
     return()=>context.invalidateReads();

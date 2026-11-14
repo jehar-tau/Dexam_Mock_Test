@@ -72,7 +72,7 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
         if (input.p_scope === "mine") return { items: drawing.canReview ? [drawing] : [], nextCursor: null };
         return input.p_after
           ? { items: [secondDrawing], nextCursor: null }
-          : { items: drawing.canClaim ? [drawing] : [], nextCursor: drawingId };
+          : { items: drawing.canClaim ? [drawing] : [], nextCursor: drawing.canClaim ? drawingId : null };
       case "admin_claim_drawing_review":
         drawing = { ...drawing, status: "assigned", version: 1, canClaim: false, canReview: true, assignedToMe: true,
           aiSuggestion: { provider: "Fictional provider", model: "Synthetic model", rubricVersion: "fixture-v1",
