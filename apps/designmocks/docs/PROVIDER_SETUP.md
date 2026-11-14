@@ -253,6 +253,8 @@ Apply the hook before restoring reviewed authenticated RPC grants. Verify direct
 
 Assessment figures, drawing review, bank review and reported-question media also check staging admission before private signing. They recheck admission before returning newly signed links so a tester removed during signing cannot receive them. This check uses the caller's session and complements the per-attempt or staff authorization checks.
 
+After the approved rollout, run `node scripts/check-staging-api-admission.mjs` with the staging URL and public key in `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Load short-lived sessions for two fictional Google accounts from private storage into `DMOCKS_ADMITTED_TEST_TOKEN` and `DMOCKS_EXCLUDED_TEST_TOKEN`. Use an allowlisted account for the first session and a returning account with a valid session but no allowlist entry for the second. A just-removed tester can supply the second session to verify that revocation takes effect before token expiry. The probe verifies both sessions with Auth and checks the exact hook denial on two read-only RPCs, admitted RPC access and anonymous rejection. It reports statuses without identity or session details. Run the separate Edge and Storage checks for those surfaces.
+
 If rolling back, first restore the prior authenticated grants. Then reset `pgrst.db_pre_request` for the authenticator in the current database and notify PostgREST to reload its configuration. Confirm anonymous and authenticated behavior again after rollback.
 
 ### Restore private staging portal grants
