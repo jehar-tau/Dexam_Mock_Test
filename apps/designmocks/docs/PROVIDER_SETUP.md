@@ -205,6 +205,8 @@ node scripts/release-migration-plan.mjs --commit "$DMOCKS_REVIEWED_COMMIT" --tre
 
 The verifier checks the reported project and environment and compares every pending filename in order. It rejects non-dry-run output and any seed or role changes. The receipt contains the migration file hashes, source identity and ledger digest. Use `--local-rehearsal` only for a dry run on an isolated loopback database. Omitting the dry-run receipt prints the expected plan with `dryRunVerified: false`. Recheck the installed versions before applying a hosted rollout.
 
+If Supabase CLI 3.1 returns text despite JSON output selection, capture stdout and stderr separately in private files. After a successful migrations-only command with `--dry-run --skip-vault`, concatenate the complete stdout first and stderr second into a new transcript. Pass that file with `--dry-run-log` and `--hosted-text`. This format requires the hosted project, dry-run banner, completion line and exact ordered pending filenames. Use the JSON format for loopback rehearsals and empty migration plans.
+
 The earlier 7 November CLI run through migration `202611060128` listed 27 pending migrations, including the older `202611060006` gap. A subsequent dashboard inventory recorded 25 installed versions. Supabase labels this target as the project's production branch. It serves the current owner-private site while the app plan assigns it to staging. Confirm that role separately from the migration comparison. [Supabase CLI targeting and dry runs](https://supabase.com/docs/guides/local-development/local-and-hosted-projects)
 
 Reference: https://supabase.com/docs/guides/auth/social-sign-in/auth-google and https://supabase.com/docs/guides/auth/auth-hooks/before-user-created-hook
