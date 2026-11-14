@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { INTAKE_EXTRACTION_MAX_BYTES } from "../supabase/functions/_shared/intake-limits.mjs";
+import { INTAKE_EXTRACTION_MAX_BYTES, INTAKE_FIGURE_MAX_BYTES } from "../supabase/functions/_shared/intake-limits.mjs";
 import { intakeFigureDescriptor, intakeReviewPayload, intakeReviewValues } from "./intake-review.js";
 
 function IntakeQuestionEditor({ payload, pageNumber, manual, onSubmit, onPrepareFigures }) {
@@ -19,6 +19,7 @@ function IntakeQuestionEditor({ payload, pageNumber, manual, onSubmit, onPrepare
     setBusy(true);
     try {
       if (files.length > 8) throw new Error("Choose up to eight reviewed figures.");
+      if (files.some(file => file.size > INTAKE_FIGURE_MAX_BYTES)) throw new Error("Use a complete PNG figure up to 10 MB.");
       const prepared = [];
       for (const file of files) {
         const bytes = new Uint8Array(await file.arrayBuffer());
