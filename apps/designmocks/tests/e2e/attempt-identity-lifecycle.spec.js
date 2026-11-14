@@ -14,7 +14,7 @@ async function fixture(page,options={}){
   if(path==='/auth/v1/user'){const identity=state.identity??who,status=state.authStatus,held=state.authHold;if(held){state.heldAuth++;await held.promise;}return route.fulfill({headers,status,json:status===200?{id:identity,aud:'authenticated',app_metadata:{provider:'google'},user_metadata:{}}:{code:'unexpected_failure',message:'Fictional provider private diagnostic'}}).catch(()=>{});}
   const name=path.split('/').at(-1),multipart=request.headers()['content-type']?.startsWith('multipart/'),input=multipart?{multipart:true}:request.postDataJSON()??{};state.calls.push({name,actor:who,input});
   let data,status=200;
-  const question={id:questionId,ordinal:1,kind:state.drawing?'drawing':'mcq',topic:'observation',prompt:who===second.id?'Original fictional second account question':'Original fictional first account question',options:[{id:'A',label:'Fictional first choice'},{id:'B',label:'Fictional second choice'}],marking:{correct:3,wrong:-1},points:3,negativePoints:1,media:state.readMedia?[{path:'fictional-figure.png',alt:'Fictional figure'}]:[],answer:null,answerRevision:0};
+  const question={id:questionId,ordinal:1,kind:state.drawing?'drawing':'mcq',topic:'observation',prompt:who===second.id?'Original fictional second account question':'Original fictional first account question',options:[{id:'A',label:'Fictional first choice'},{id:'B',label:'Fictional second choice'}],marking:{correct:3,wrong:-1},points:3,negativePoints:1,media:state.readMedia?[{path:'fictional-figure.png',alt:'Fictional figure'}]:[],answer:state.readAnswer?.answer ?? null,answerRevision:state.readAnswer?.revision ?? 0};
   if(name==='read_attempt'){
    const held=state.readHold;if(held){state.heldReads++;await held.promise;}
    data={id:attemptId,title:'Original fictional timed paper',status:state.submitted?'submitted':'active',serverNow:state.serverNow??new Date().toISOString(),deadline:state.deadline,questions:state.submitted?[]:[question],score:0,total:3,examResultsPending:!!state.partBReady,resultsPending:!!state.submitted&&!state.partBReady,uploadDeadline:state.submitted?new Date(Date.now()+600000).toISOString():null,drawingUploadTasks:state.submitted?[{id:questionId,prompt:'Original fictional drawing task'}]:[]};
@@ -328,6 +328,23 @@ test('an invalid newer server answer cannot clear the pending device answer', as
   await expect(page.getByText('Answers are saved to your account.', {exact:true})).toBeVisible();
   expect(await journal(page)).toEqual([]);
   expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual([pending.revision, pending.revision]);
+});
+
+test('reloading with an invalid newer readback retries the original device answer', async ({page}) => {
+  const state = await fixture(page, {saveReceipt: null});
+  await answer(page).click();
+  await expect(page.getByText('Answers saved on this device. Waiting to sync.', {exact:true})).toBeVisible();
+  const [pending] = await journal(page);
+  state.readAnswer = {answer:'not-an-option', revision:pending.revision + 1};
+  state.saveHold = deferred();
+  await page.reload();
+  await expect.poll(() => calls(state, 'save_answer_revision').length).toBe(2);
+  expect(await journal(page)).toEqual([pending]);
+  expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual([pending.revision, pending.revision]);
+  state.saveReceipt = {accepted:false, answer:'A', revision:pending.revision + 1};
+  state.saveHold.resolve();
+  await expect(page.getByText('Answers are saved to your account.', {exact:true})).toBeVisible();
+  expect(await journal(page)).toEqual([]);
 });
 
 test('a blocked answer save explains how to retry submission without reopening the paper', async ({page}) => {
