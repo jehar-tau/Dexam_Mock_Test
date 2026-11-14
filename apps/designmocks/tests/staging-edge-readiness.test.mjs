@@ -68,3 +68,20 @@ test("unexpected targets fail before any fetch", async () => {
   const fetchImpl = async () => assert.fail("Unexpected network request");
   await assert.rejects(probeStagingEdge({url: "https://dmocks.com", fetchImpl}), /approved DMocks staging/);
 });
+
+test("private portal scope reports provider-dependent failures while requiring all seven portal routes", async () => {
+  const probe = async ({portalOnly, missingPortal = false}) => probeStagingEdge({url, portalOnly, fetchImpl: async (target, request) => {
+    const name = target.split("/").at(-1);
+    if (["question-intake-extract", "ai-question-draft", "candidate-phone"].includes(name)
+      || (missingPortal && name === "question-intake")) return new Response(null, {status: 404});
+    return ready(request);
+  }});
+  const full = await probe({portalOnly: false});
+  assert.equal(full.passed, false);
+  assert.equal(full.results.filter(row => row.required).length, 10);
+  const portal = await probe({portalOnly: true});
+  assert.equal(portal.passed, true);
+  assert.equal(portal.results.filter(row => row.required).length, 7);
+  assert.deepEqual(portal.results.filter(row => !row.required).map(row => row.result), Array(3).fill("endpoint-not-found"));
+  assert.equal((await probe({portalOnly: true, missingPortal: true})).passed, false);
+});
