@@ -35,9 +35,9 @@ async function adminFixture(page, { admin = true } = {}) {
     }
   });
   await page.route(figureURL, route => route.fulfill({ body: png, contentType: "image/png" }));
-  await page.goto("/admin");
+  await page.goto("/account");
   await seedPortalSession(page, editor);
-  await page.reload();
+  await page.goto("/admin");
   return Object.assign(state, provider);
 }
 
@@ -81,8 +81,19 @@ test("new reports or changed bank content reject an old decision and a corrected
   state.report.revision++;
   await review.getByRole("button", { name: "Retire this version", exact: true }).click();
   await expect(review.getByRole("alert")).toHaveText("Reports changed. Refresh and review this case again.");
-  await queue.getByRole("button", { name: "Refresh question reports" }).click();
-  await expect(review).toHaveCount(0);
+  let releaseRefresh;
+  const heldRefresh = new Promise(resolve => { releaseRefresh = resolve; });
+  await page.route("**/rest/v1/rpc/admin_reported_questions", async route => {
+    await heldRefresh;
+    await route.fallback();
+  }, { times: 1 });
+  try {
+    await queue.getByRole("button", { name: "Refresh question reports" }).click();
+    await expect(review).toHaveCount(0);
+    await expect(queue.getByRole("button", { name: "Review reported version quality-fixture", exact: true })).toBeDisabled();
+  } finally {
+    releaseRefresh();
+  }
   await open();
   await expect(review.getByRole("checkbox")).not.toBeChecked();
   await review.getByLabel("Question review reason").fill("Fictional source needs human correction.");

@@ -79,19 +79,31 @@ export function ReportedQuestionQueue({ reports, rpc, onChanged, loadMedia }) {
   const functions = useAdminFunctions();
   const defaultMedia = useCallback(report => loadReportedFigures(functions, report), [functions]);
   const [selected, setSelected] = useState(null), [message, setMessage] = useState(""), [error, setError] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
   useEffect(() => { setSelected(null); }, [reports]);
-  const refresh = async () => { setError("");try { await onChanged(); } catch (failure) { setError(failure.message); } };
+  const refresh = async () => {
+    setSelected(null);
+    setError("");
+    setRefreshing(true);
+    try {
+      await onChanged();
+    } catch (failure) {
+      setError(failure.message);
+    } finally {
+      setRefreshing(false);
+    }
+  };
   const resolved = async () => { setSelected(null);setMessage("Review recorded. Existing attempts are unchanged; bank approval is separate.");await refresh(); };
   return <section className="reported-question-queue bank-review-browser" aria-label="Reported questions">
     <h2>Reported questions</h2>
     <p>Unique student reports hold a delivered version from new attempts at the configured threshold. Ten reports raise its priority. A human reviews every restore, retirement or corrected-source release.</p>
-    <button type="button" onClick={refresh}>Refresh question reports</button>
+    <button type="button" onClick={refresh} disabled={refreshing}>Refresh question reports</button>
     {message && <p role="status">{message}</p>}{error && <p role="alert" className="error">{error}</p>}
     {selected && <ReportedQuestionReview key={`${selected.targetKey}:${selected.revision}`} selected={selected} rpc={rpc} onClose={() => setSelected(null)} onChanged={resolved} loadMedia={loadMedia??defaultMedia} />}
     <div className="admin-list">{reports.length ? reports.map(report => <article key={report.targetKey}>
       <b className="bank-review-key">{report.sourceExternalKey || report.targetKey}</b><span className="status-pill">{report.status} · {report.reportCount} unique students{report.priority === "high" ? " · High priority" : ""}</span>
       <p>{report.prompt}</p><small>{Object.entries(report.reasons || {}).map(([reason, count]) => `${reason}: ${count}`).join(" · ")}</small>
-      <button type="button" onClick={() => { setMessage("");setSelected(report); }}>Review reported version {report.sourceExternalKey || report.targetKey}</button>
+      <button type="button" disabled={refreshing} onClick={() => { setMessage("");setSelected(report); }}>Review reported version {report.sourceExternalKey || report.targetKey}</button>
     </article>) : <p>No question has reached the report threshold.</p>}</div>
   </section>;
 }
