@@ -2,6 +2,7 @@
 -- against the designated staging database. This query reads the catalogue.
 with application_functions as (
   select format('%I.%I(%s)', n.nspname, p.proname, oidvectortypes(p.proargtypes)) as signature,
+    encode(sha256(convert_to(pg_get_functiondef(p.oid), 'UTF8')), 'hex') as definition_sha256,
     has_function_privilege('anon', p.oid, 'execute') as anon,
     has_function_privilege('authenticated', p.oid, 'execute') as authenticated,
     has_function_privilege('service_role', p.oid, 'execute') as service,
@@ -15,7 +16,7 @@ with application_functions as (
     )
 )
 select jsonb_build_object(
-  'version', 1,
+  'version', 2,
   'functions', coalesce(jsonb_agg(to_jsonb(f) order by f.signature collate "C"), '[]')
 ) as rpc_inventory
 from application_functions f;
