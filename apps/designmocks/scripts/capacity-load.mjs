@@ -155,11 +155,12 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
     activeAttempts: plan.activeAttempts,
     requests: total,
     errors: errors.length,
+    responseCheckFailures: errors.filter(failure => failure.error === "ResponseCheckFailed").length,
     errorRate: total === 0 ? 0 : errors.length / total,
     browserP95Ms: Math.round(percentile(samples.browser, 0.95)),
     authenticatedP95Ms: Math.round(percentile(samples.activeAttempt, 0.95)),
   };
-  summary.passed = summary.errorRate <= plan.thresholds.maxErrorRate && summary.browserP95Ms <= plan.thresholds.publicP95Ms && summary.authenticatedP95Ms <= plan.thresholds.authenticatedP95Ms;
+  summary.passed = summary.responseCheckFailures === 0 && summary.errorRate <= plan.thresholds.maxErrorRate && summary.browserP95Ms <= plan.thresholds.publicP95Ms && summary.authenticatedP95Ms <= plan.thresholds.authenticatedP95Ms;
   const requests = Object.entries(requestSamples).flatMap(([kind, entries]) => (
     [...entries].map(([spec, sample]) => ({
       kind, name: spec.name, count: sample.latencies.length, errors: sample.errors,

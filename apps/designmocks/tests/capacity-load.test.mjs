@@ -161,6 +161,7 @@ test("the persistence plan requires an explicit question and answer", async () =
 
 test("a changed or missing attempt deadline fails the readback without appearing in the report", async () => {
   const source = plan({sessions: 1, activeAttempts: 1, iterations: 3});
+  source.thresholds.maxErrorRate = 1;
   source.scenarios.activeAttempt[0].check = "persisted-revision";
   const fixture = {attemptId: "attempt-a", questionId: "question-a", answer: "A", accessToken: "private-token"};
   const deadlines = ["2026-11-14T12:00:00Z", "2026-11-14T12:01:00Z", null];
@@ -170,6 +171,19 @@ test("a changed or missing attempt deadline fails the readback without appearing
       questions: [{id: fixture.questionId, answer: fixture.answer, answerRevision: ++revision}]}),
   });
   assert.equal(summary.errors, 2);
+  assert.equal(summary.responseCheckFailures, 2);
   assert.equal(summary.passed, false);
   assert.doesNotMatch(JSON.stringify(failures), /2026-11-14|attempt-a/);
+});
+
+test("transient provider failures remain subject to the configured error budget", async () => {
+  const source = plan({sessions: 1, activeAttempts: 0, iterations: 2});
+  source.thresholds.maxErrorRate = 0.5;
+  const statuses = [503, 200];
+  const {summary} = await runCapacityTest(source, {
+    fetchImpl: async () => new Response(null, {status: statuses.shift()}),
+  });
+  assert.equal(summary.errorRate, 0.5);
+  assert.equal(summary.responseCheckFailures, 0);
+  assert.equal(summary.passed, true);
 });
