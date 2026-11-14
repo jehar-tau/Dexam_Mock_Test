@@ -10,6 +10,7 @@ import {
   openRecoveryPostgres, captureRecoverySnapshot, checkRecoveryDatabaseSource,
   recoverySchemaQuery, recoveryBucketsQuery, recoveryObjectsQuery, recoveryPostgresEnvironment,
 } from './recovery-postgres.mjs';
+import {openPrivateDMocksTransport} from './private-bank-provider.mjs';
 import {stableJson} from './question-bank-import.mjs';
 const ledgerVersions = {
   'pre-upgrade': 'dmocks-pre-upgrade-ledger-v1',
@@ -21,14 +22,18 @@ const hash=value=>createHash('sha256').update(stableJson(value)).digest('hex');
 function claims(value){try{return JSON.parse(Buffer.from(value.split('.')[1],'base64url').toString());}catch{return null;}}
 export function validateRecoveryCaptureConfiguration({url,key,databaseUrl,databaseCaFile,recoveryKey,releaseSha}){
  assert.ok(url===`https://${RECOVERY_PROJECT}.supabase.co`,'Only the standalone DMocks Storage origin is permitted');
- const jwt=claims(key??'');assert.ok(key?.startsWith('sb_secret_')||jwt?.role==='service_role'&&jwt.ref===RECOVERY_PROJECT,'A standalone server-only Storage credential is required');
+ openPrivateDMocksTransport({url,serviceRoleKey:key,allowOrigin:url,environment:'staging'});
  recoveryPostgresEnvironment(databaseUrl, {databaseCaFile});
  assert.match(recoveryKey??'',/^[a-f0-9]{64}$/,'A private random 32-byte recovery key is required');assert.match(releaseSha??'',/^[a-f0-9]{40}$/,'Specify the exact approved database release SHA');return true;
 }
 const objectUrl=(origin,object)=>origin+'/storage/v1/object/'+[object.bucket,...object.name.split('/')].map(encodeURIComponent).join('/');
-async function downloadObject(origin,key,object,fetchImpl){
- const response=await fetchImpl(objectUrl(origin,object),{headers:{apikey:key,authorization:'Bearer '+key,'accept-encoding':'identity'},redirect:'error',signal:AbortSignal.timeout(60000)});
- assert.ok(response.status===200&&response.body,'Private recovery object download failed');return response.body;
+async function downloadObject(transport, object) {
+ const response = await transport.fetch(objectUrl(transport.origin, object), {headers: {'accept-encoding': 'identity'}});
+ if (response.status !== 200 || !response.body) {
+  await response.body?.cancel().catch(() => {});
+  throw new Error('Private recovery object download failed');
+ }
+ return response.body;
 }
 async function readRecoveryLedger(file, releaseSha, sourceVersions, sourceStage) {
   const label = sourceStage === 'pre-upgrade' ? 'Pre-upgrade ledger' : 'Staging recovery ledger';
@@ -79,6 +84,9 @@ export async function capturePrivateRecovery(config, {
 
   const sourceCheck = {sourceStage, expectedVersions: versions};
   const databaseOptions = {databaseCaFile: config.databaseCaFile};
+  const storage = openPrivateDMocksTransport({
+    url: config.url, serviceRoleKey: config.key, allowOrigin: config.url, environment: 'staging',
+  }, {fetchImpl, timeoutMs: 60000});
   const connection = await connectionFactory(config.databaseUrl, databaseOptions);
   try {
     const snapshot = await captureRecoverySnapshot(connection, sourceCheck);
@@ -98,7 +106,7 @@ export async function capturePrivateRecovery(config, {
       snapshot,
       database: connection.dump(exported),
       objects,
-      readObject: object => downloadObject(config.url, config.key, object, fetchImpl),
+      readObject: object => downloadObject(storage, object),
       assertUnchanged: async () => {
         const current = await connectionFactory(config.databaseUrl, databaseOptions);
         try {
@@ -131,7 +139,9 @@ export async function verifyPrivateRecovery(options) {
 }
 function localOrigin(value){let url;try{url=new URL(value);}catch{throw new Error('Invalid local recovery origin');}assert.ok(url.protocol==='http:'&&['127.0.0.1','localhost','[::1]'].includes(url.hostname)&&!url.username&&!url.password&&!url.search&&!url.hash&&url.pathname==='/','Private object restore permits only an isolated loopback target');return url.origin;}
 export async function restoreLocalRecoveryObjects({verified,url,key,ownerKey,assertDatabaseRestored,assertStorageRestored},{fetchImpl=fetch}={}){
- const origin=localOrigin(url);assert.ok(verified?.extractedDirectory&&typeof assertDatabaseRestored==='function'&&typeof assertStorageRestored==='function','Fully verified extraction and restored-database checks are required');
+ const origin=localOrigin(url);
+ const storage=openPrivateDMocksTransport({url:origin,serviceRoleKey:key,allowOrigin:origin,environment:'development'},{fetchImpl,timeoutMs:60000});
+ assert.ok(verified?.extractedDirectory&&typeof assertDatabaseRestored==='function'&&typeof assertStorageRestored==='function','Fully verified extraction and restored-database checks are required');
  const objects=verified.entries.filter(row=>row.kind==='object');assert.ok(!objects.some(row=>row.object.owner!=null)||typeof ownerKey==='function','A local owner-preserving signing adapter is required');
  assert.equal(await assertDatabaseRestored(),true,'Restore the matching database snapshot before private object bytes');
  // Prepare and validate every request before writing the first object.
@@ -141,7 +151,7 @@ export async function restoreLocalRecoveryObjects({verified,url,key,ownerKey,ass
   assert.match(entry.slot,/^payload-\d{6}\.enc$/);const file=path.join(verified.extractedDirectory,entry.slot.replace('.enc','.bin'));const info=await lstat(file);assert.ok(info.isFile()&&!info.isSymbolicLink()&&info.size===entry.byteSize,'Recovered payload file changed');const checksum=createHash('sha256');for await(const chunk of createReadStream(file))checksum.update(chunk);assert.equal(checksum.digest('hex'),entry.sha256,'Recovered payload changed before restoration');requests.push({entry,object,token,headers,file});
  }
  for(const request of requests){const response=await fetchImpl(objectUrl(origin,request.object),{method:'POST',headers:request.headers,body:createReadStream(request.file),duplex:'half',redirect:'error',signal:AbortSignal.timeout(60000)});if(!response.ok){const error=new Error('Local private object restore failed');error.httpStatus=response.status;throw error;}await response.body?.cancel();
-  const digest=createHash('sha256');let bytes=0;for await(const chunk of await downloadObject(origin,key,request.object,fetchImpl)){digest.update(chunk);bytes+=chunk.length;}assert.equal(bytes,request.entry.byteSize,'Recovered private object size changed');assert.equal(digest.digest('hex'),request.entry.sha256,'Recovered private object bytes changed');
+  const digest=createHash('sha256');let bytes=0;for await(const chunk of await downloadObject(storage,request.object)){digest.update(chunk);bytes+=chunk.length;}assert.equal(bytes,request.entry.byteSize,'Recovered private object size changed');assert.equal(digest.digest('hex'),request.entry.sha256,'Recovered private object bytes changed');
  }
  assert.equal(await assertStorageRestored(objects.map(row=>row.object)),true,'Recovered private object ownership or metadata differs');
  return{restoredObjects:objects.length,allBytesVerified:true,ownerAndMetadataVerified:true,target:'isolated-local-recovery',hostedWritesPerformed:false};

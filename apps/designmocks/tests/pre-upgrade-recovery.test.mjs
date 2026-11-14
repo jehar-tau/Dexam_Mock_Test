@@ -36,7 +36,7 @@ async function fixture(run) {
   }
 }
 
-function source({versions = historicalVersions, freshVersions = versions, withProfile = false, ledgerPresent = true, closedStaging = false, freshSchema = {}} = {}) {
+function source({versions = historicalVersions, freshVersions = versions, withProfile = false, ledgerPresent = true, closedStaging = false, freshSchema = {}, objects = []} = {}) {
   const calls = {connections: 0, exports: 0, closed: 0};
   const connectionFactory = async () => {
     const fresh = ++calls.connections > 1;
@@ -48,8 +48,10 @@ function source({versions = historicalVersions, freshVersions = versions, withPr
         if (statement.includes("to_regclass('supabase_migrations.schema_migrations')")) return ledgerPresent ? 't' : 'f';
         if (statement.includes('jsonb_agg(version order by version)')) return JSON.stringify(fresh ? freshVersions : versions);
         if (statement === recoverySchemaQuery) return JSON.stringify(fresh ? freshSchema : {});
+        if (statement === recoveryObjectsQuery) return JSON.stringify(objects);
+        if (statement === recoveryBucketsQuery) return JSON.stringify(objects.length ? [{id: 'paper-media', public: false}] : []);
         if (statement.includes("c.relkind in('r','p')") || statement.includes('from pg_sequences')
-          || statement === recoveryBucketsQuery || statement === recoveryObjectsQuery) return '[]';
+         ) return '[]';
         if (statement.includes('server_version_num')) return '170006';
         assert.fail('Unexpected SQL in the recovery fixture');
       },
@@ -181,4 +183,30 @@ test('staging schema drift during capture discards the partial encrypted directo
   await assert.rejects(capturePrivateRecovery(config, options), /Staging schema or grants changed/);
   assert.deepEqual(calls, {connections: 2, exports: 1, closed: 2});
   await assert.rejects(stat(config.output), {code: 'ENOENT'});
+}));
+
+test('recovery downloads private bytes using the correct authentication for each server key type', () => fixture(async config => {
+  const bytes = Buffer.from('Fictional backup bytes.');
+  const object = {bucket: 'paper-media', name: 'figure.png', byteSize: bytes.length, owner: null, contentType: 'image/png'};
+  const legacyKey = 'x.' + Buffer.from(JSON.stringify({role:'service_role', ref: RECOVERY_PROJECT})).toString('base64url') + '.x';
+  for (const [index, key] of [config.key, legacyKey].entries()) {
+    const {options} = source({objects: [object]});
+    let reads = 0;
+    const output = config.output + '-' + index;
+    const captured = await capturePrivateRecovery({...config, key, output}, {
+      ...options,
+      async fetchImpl(address, request) {
+        reads++;
+        assert.equal(address, config.url + '/storage/v1/object/paper-media/figure.png');
+        assert.equal(request.headers.get('apikey'), key);
+        assert.equal(request.headers.get('authorization'), index === 0 ? null : 'Bearer ' + key);
+        assert.equal(request.redirect, 'error');
+        assert.equal(request.method ?? 'GET', 'GET');
+        return new Response(bytes);
+      },
+    });
+    assert.equal(reads, 1);
+    assert.equal(captured.privateObjects, 1);
+    assert.equal(captured.providerWritesPerformed, false);
+  }
 }));
