@@ -67,7 +67,7 @@ function memoryStorage() {
   };
 }
 
-const question = (answerRevision = 0) => ({ id: "q1", kind: "mcq", options: [{ id: "A" }, { id: "B" }], answerRevision });
+const question = (answerRevision = 0) => ({ id: "q1", kind: "mcq", options: [{ id: "A" }, { id: "B" }], answer: answerRevision ? "A" : null, answerRevision });
 
 test("device persistence precedes network writes and replays the same revision after reload", async () => {
   const storage = memoryStorage();
@@ -109,6 +109,23 @@ test("reload ignores answers superseded on the server and stale acknowledgements
   assert.equal(journal.read("q1"), null);
   await queue.enqueue("q1", "B");
   assert.deepEqual(updates, [{ questionId: "q1", answer: "A", revision: 13, accepted: false }]);
+  assert.equal(journal.read("q1"), null);
+});
+
+test("an invalid readback cannot acknowledge a device answer after reload", async () => {
+  const journal = createAttemptAnswerJournal({ userId: "student", attemptId: "attempt", deadline: 900, storage: memoryStorage() });
+  journal.write("q1", { answer: "B", revision: 10 });
+  const queue = createAnswerSyncQueue({
+    journal,
+    send: async (entry) => {
+      assert.deepEqual(entry, { questionId: "q1", answer: "B", revision: 10 });
+      return { accepted: false, answer: "A", revision: 11 };
+    },
+  });
+  queue.restore([{ ...question(11), answer: "unknown" }]);
+  assert.equal(queue.pendingAnswer("q1"), "B");
+  assert.equal(journal.read("q1").revision, 10);
+  assert.equal((await queue.flush()).saved, true);
   assert.equal(journal.read("q1"), null);
 });
 
