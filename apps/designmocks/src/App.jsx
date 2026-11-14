@@ -925,10 +925,16 @@ function Account() {
   const [sessionStatus, setSessionStatus] = useState("");
   const [reviewerAccountId, setReviewerAccountId] = useState(null);
   const [error, setError] = useState(() => authCallbackMessage(window.location.search, window.location.hash));
+  const [callbackStarted, setCallbackStarted] = useState(() =>
+    window.location.pathname === "/account/callback" && new URLSearchParams(window.location.search).has("code"));
+  const callbackFailure = callbackStarted && !loading && !session
+    ? "Google sign-in could not be completed. Please try again."
+    : "";
   const login = async () => {
     if (checkoutReady && !noticeReviewed) return;
     setBusy(true);
     setNoticeReviewed(false);
+    setCallbackStarted(false);
     setError("");
     try {
       await googleLogin();
@@ -952,6 +958,7 @@ function Account() {
   };
   const signOut = async () => {
     setBusy(true);
+    setCallbackStarted(false);
     setError("");
     setSessionStatus("");
     try {
@@ -1069,9 +1076,9 @@ function Account() {
             </Link>
           </>
         )}
-        {(error || authError) && (
+        {(error || authError || callbackFailure) && (
           <p className="error" role="alert">
-            {error || authError}
+            {error || authError || callbackFailure}
           </p>
         )}
         <span className="account-footnote">

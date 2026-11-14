@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { realpath } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 import project from "../../supabase/project.json" with { type: "json" };
@@ -238,5 +239,102 @@ test("an admitted tester can open Community and loses access after revocation", 
   await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
   await expect(page.getByRole("heading", {name: /Ask clearly/})).toHaveCount(0);
   expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
+  expect(unexpected).toEqual([]);
+});
+
+test("a removed staff tester cannot reopen teacher or admin work with the same session", async ({page}) => {
+  let admitted = true;
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") {
+      return admitted || {code: "42501", message: "Private staging requires an approved Google tester"};
+    }
+    if (procedure === "can_review_drawings" || procedure === "is_dmocks_admin") return true;
+    if (procedure === "my_drawing_review_page") return {items: [], nextCursor: null};
+    return undefined;
+  }, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.goto("/review/drawings");
+  await expect(page.getByText("No drawing submissions await review.")).toBeVisible();
+  expect(calls.some(([name]) => name === "can_review_drawings")).toBe(true);
+
+  admitted = false;
+  for (const path of ["/review/drawings", "/admin"]) {
+    calls.length = 0;
+    await page.goto(path);
+    await expect(page.getByText("Staging access is closed for this account.")).toBeVisible();
+    await expect(page.getByRole("button", {name: "Available drawings"})).toHaveCount(0);
+    expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
+  }
+  expect(unexpected).toEqual([]);
+});
+
+test("the staging Google callback exchanges the matching PKCE verifier and persists the session", async ({page}) => {
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") return true;
+    if (procedure === "can_review_drawings") return false;
+    if (procedure === "my_privacy_requests") return [];
+    return undefined;
+  }, project.project_ref);
+  let challenge;
+  const exchanges = [];
+  const expires = Math.floor(Date.now() / 1000) + 3600;
+  const token = "fixture." + Buffer.from(JSON.stringify({sub: tester.id, role: "authenticated", exp: expires})).toString("base64url") + ".fixture";
+  await page.route(provider + "/auth/v1/authorize?*", async route => {
+    const query = new URL(route.request().url()).searchParams;
+    challenge = query.get("code_challenge");
+    expect(query.get("code_challenge_method")).toBe("s256");
+    expect(query.get("redirect_to")).toBe(stage + "/account/callback");
+    await route.fulfill({status: 200, contentType: "text/html", body: "<p>Fictional Google authorization complete.</p>"});
+  });
+  await page.route(provider + "/auth/v1/token?grant_type=pkce", async route => {
+    const headers = {"Access-Control-Allow-Origin": stage,
+      "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-supabase-api-version",
+      "Access-Control-Allow-Methods": "POST, OPTIONS"};
+    if (route.request().method() === "OPTIONS") return route.fulfill({status: 204, headers});
+    const input = route.request().postDataJSON();
+    exchanges.push(input.auth_code);
+    expect(createHash("sha256").update(input.code_verifier).digest("base64url")).toBe(challenge);
+    if (input.auth_code === "fictional-expired-code") {
+      return route.fulfill({headers, status: 400, json: {code: "bad_code", message: "Private fictional provider diagnostic"}});
+    }
+    await route.fulfill({headers, json: {access_token: token, refresh_token: "fictional-google-refresh",
+      expires_in: 3600, token_type: "bearer", user: {...tester, aud: "authenticated",
+        app_metadata: {provider: "google"}, user_metadata: {}}}});
+  });
+  const signOutScopes = [];
+  await page.route(provider + "/auth/v1/logout?*", async route => {
+    const headers = {"Access-Control-Allow-Origin": stage,
+      "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info, x-supabase-api-version",
+      "Access-Control-Allow-Methods": "POST, OPTIONS"};
+    if (route.request().method() === "POST") signOutScopes.push(new URL(route.request().url()).searchParams.get("scope"));
+    await route.fulfill({status: 204, headers});
+  });
+  await page.goto("/account");
+  await page.getByRole("button", {name: "Sign in to staging with Google"}).click();
+  await expect(page.getByText("Fictional Google authorization complete.")).toBeVisible();
+  await page.goto("/account/callback?code=fictional-expired-code");
+  await expect(page.getByRole("alert")).toHaveText("Google sign-in could not be completed. Please try again.");
+  await expect(page.getByText("Private fictional provider diagnostic")).toHaveCount(0);
+  await expect(page.getByRole("link", {name: "Open staging workspace"})).toHaveCount(0);
+  expect(calls).toEqual([]);
+  await page.getByRole("button", {name: "Sign in to staging with Google"}).click();
+  await expect(page.getByText("Fictional Google authorization complete.")).toBeVisible();
+  await page.goto("/account/callback?code=fictional-google-code");
+  await expect(page.getByRole("link", {name: "Open staging workspace"})).toBeVisible();
+  await expect(page).toHaveURL(url => url.pathname === "/account/callback" && !url.searchParams.has("code"));
+  expect(exchanges).toEqual(["fictional-expired-code", "fictional-google-code"]);
+  expect(calls.some(([name]) => name === "can_enter_staging_portal")).toBe(true);
+
+  await page.reload();
+  await expect(page.getByRole("link", {name: "Open staging workspace"})).toBeVisible();
+  expect(exchanges).toHaveLength(2);
+
+  await page.getByRole("button", {name: "Sign out", exact: true}).click();
+  await expect(page.getByRole("button", {name: "Sign in to staging with Google"})).toBeEnabled();
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  expect(signOutScopes).toEqual(["local"]);
+  await page.goto("/dashboard");
+  await expect(page.getByText("Sign in with an approved Google test account.")).toBeVisible();
   expect(unexpected).toEqual([]);
 });
