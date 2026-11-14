@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import {readdir} from "node:fs/promises";
 import project from "../supabase/project.json" with {type: "json"};
 import {probeStagingEdge} from "../scripts/staging-edge-readiness.mjs";
 
@@ -25,8 +26,16 @@ test("staging CORS checks every private route using OPTIONS and denies the forei
     return ready(request);
   }});
   assert.equal(result.passed, true);
-  assert.equal(result.results.length, 7);
-  assert.equal(calls.length, 14);
+  assert.deepEqual(result.results.map(({name}) => name), [
+    "attempt-media", "drawing-media", "drawing-review-media", "community-media", "question-intake",
+    "bank-review-media", "reported-question-media", "question-intake-extract", "ai-question-draft", "candidate-phone",
+  ]);
+  const directories = await readdir(new URL("../supabase/functions/", import.meta.url), {withFileTypes: true});
+  const separateCommerceChecks = new Set(["create-order", "payment-webhook"]);
+  const portalFunctions = directories.filter(entry => entry.isDirectory()
+    && !entry.name.startsWith("_") && !separateCommerceChecks.has(entry.name)).map(entry => entry.name).sort();
+  assert.deepEqual(result.results.map(({name}) => name).sort(), portalFunctions);
+  assert.equal(calls.length, 2 * portalFunctions.length);
   assert.ok(calls.every(call => call.target.startsWith(url + "/functions/v1/") && call.method === "OPTIONS"
     && call.redirect === "error" && !call.body && !call.headers.Authorization));
   assert.doesNotMatch(JSON.stringify(result), /fixture_only/);
@@ -35,7 +44,7 @@ test("staging CORS checks every private route using OPTIONS and denies the forei
 test("a broken route leaves the complete readiness report available", async () => {
   const report = await probeStagingEdge({url, key, fetchImpl: async (target, request) => {
     if (target.endsWith("/attempt-media")) return new Response(null, {status: 403});
-    if (target.endsWith("/question-intake")) return new Response("private gateway diagnostic", {status: 404});
+    if (target.endsWith("/question-intake") || target.endsWith("/question-intake-extract")) return new Response("private gateway diagnostic", {status: 404});
     if (target.endsWith("/drawing-media")) throw new Error("private diagnostic");
     if (target.endsWith("/bank-review-media")) return new Response(null, {status: 204, headers: {"Access-Control-Allow-Origin": origin}});
     if (target.endsWith("/community-media") && request.headers.Origin !== origin) {
@@ -46,7 +55,7 @@ test("a broken route leaves the complete readiness report available", async () =
   assert.equal(report.passed, false);
   assert.deepEqual(report.results.map(row => row.result), [
     "staging-origin-rejected", "request-failed", "ready", "foreign-origin-not-denied",
-    "endpoint-not-found", "invalid-staging-preflight", "ready",
+    "endpoint-not-found", "invalid-staging-preflight", "ready", "endpoint-not-found", "ready", "ready",
   ]);
   assert.doesNotMatch(JSON.stringify(report), /private (gateway )?diagnostic/);
 });

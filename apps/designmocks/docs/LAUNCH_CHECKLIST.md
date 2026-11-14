@@ -16,6 +16,8 @@ Read-only Chrome inspection of the selected staging project lists all 90 source 
 
 The working local checkout is `~/dmocks-local`, with private configuration in `apps/designmocks/.env.local`. Anonymous local-origin probes return 401 for attempt-media, create-order and drawing-media, 403 for a well-formed fictional drawing-review ID, and 401 for an unsigned webhook. The actual configured CORS origin is `http://127.0.0.1:4190`; dmocks.com is rejected. These rejection probes do not establish a successful purchase, Google journey, hosted-origin readiness or deployed-source parity.
 
+The follow-up read-only preflight covered all ten private portal and administrator Edge routes. The three deployed media routes rejected the designated staging origin. Community attachments, question intake, bank review media, reported-question media, extraction, AI drafting and phone verification returned 404. The three newly checked handlers accepted the staging origin in a local HTTP rehearsal and rejected an unrelated origin. This leaves the hosted rollout and signed-in verification open.
+
 An existing Google-backed tester session on the local origin loads Overview and the exam-mock catalogue. UCEED and NIFT show remaining free-attempt allowances; NID is unreleased. The fixed-paper catalogue is empty. This read-only inspection neither starts an attempt nor proves a fresh OAuth callback, paper publication, result correctness, payment fulfilment or cross-account isolation.
 
 ## Non-payment portal verification (separate from Site publication)
