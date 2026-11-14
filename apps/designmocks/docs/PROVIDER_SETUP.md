@@ -61,6 +61,9 @@ Add `--output "$DMOCKS_PRIVATE_REVIEW_DIRECTORY"` to prepare a new directory out
 
 For a reviewed correction to an existing eligible question, add `--replace-expect "$DMOCKS_CURRENT_QUESTION_SHA256"` to the same command. Use the current record digest from `bank:diagnostics`. The command checks the exact source commit and record digest, preserves provenance and source labels, and prepares a private export for Git review. Held records require source review first. The canonical import and its exact-version approval still follow the Git review.
 
+In the private admin bank, open the question and its figures, then use **Prepare answer correction**. Enter the revised key and a note identifying the evidence. The downloaded JSON contains the proposed packet digest in `contentSha256` and the reviewed source record digest in `replacesContentSha256`. Use those values for `--expect` and `--replace-expect`. Use the full commit of the current fetched `origin/main` for `--expect-source`. The packet's `sourceCommit` identifies the import the admin reviewed and may predate the current branch. The record digest must still match before the command prepares an export.
+
+
 
 Promote migration `202611090159` with the matching administrator frontend in an approved full staging environment. The endpoint is available to current administrators in that environment. The paid MVP permission profile excludes this endpoint.
 

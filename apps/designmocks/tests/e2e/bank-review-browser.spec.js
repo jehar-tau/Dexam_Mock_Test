@@ -256,7 +256,13 @@ test("an administrator downloads a version-pinned answer correction for Git revi
   await review.getByRole("button", {name: "Download correction for Git review"}).click();
   const download = await pending;
   const packet = JSON.parse(await readFile(await download.path(), "utf8"));
+  expect(packet.sourceCommit).toBe("a".repeat(40));
+  expect(packet.contentSha256).toBe(createHash("sha256").update(packet.payloadText).digest("hex"));
   expect(packet.replacesContentSha256).toBe("b".repeat(64));
   expect(JSON.parse(packet.payloadText).answer).toEqual({raw: "A", status: "human-reviewed"});
+  expect(state.calls).toContainEqual(["admin_prepare_bank_answer_correction", {
+    p_external_key: "bank-review-001", p_expected_version: "version-1-1",
+    p_answer: "A", p_review_note: "Verified against the fictional answer key.",
+  }]);
   expect(state.questions[0].answer.raw).toBe("B");
 });
