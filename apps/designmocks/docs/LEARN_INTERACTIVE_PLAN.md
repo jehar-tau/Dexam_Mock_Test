@@ -161,6 +161,11 @@ programme. A reviewer session checks each tier before the next begins.
   programme, Nets of solids, is specified and becomes the next build after
   the counting-cubes review. The surfaces, views and dice specifications
   must be extended before they are built.
+- **2026-11-14 — Cube nets upper tiers: symbols are never drawn mirrored.**
+  A mirrored letter is thrown out at a glance, so from Exam standard up the
+  mirror distractor is the mirror *cube* with every symbol kept readable,
+  and options sit on different net shapes. `which-net` gained a level 4
+  (hidden faces shuffled). Details in `learn/topics/cube-nets.md` section 11.
 - **2026-11-13 — Topics that need reviewed facts are "decks", not
   engines.** Crafts, designers, materials and general knowledge cannot be
   generated and proven by code; they wait for a deck tool and sourced,

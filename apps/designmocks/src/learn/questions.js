@@ -18,12 +18,13 @@ import { figureQuestion } from './figure-questions.js';
 
 function cubeNetFigures(q) {
   const figures = [];
-  if (q.net) figures.push({ type: 'net', cells: q.net.cells, states: q.kind === 'opposite' ? { [q.focus]: 'is-focus' } : {}, badCells: q.highlight ?? [] });
+  if (q.net) figures.push({ type: 'net', cells: q.net.cells, states: q.focus !== undefined && q.focus !== null ? { [q.focus]: 'is-focus' } : {}, badCells: q.highlight ?? [] });
   if (q.view) figures.push({ type: 'cube', view: q.view, large: true });
+  for (const [i, view] of (q.views ?? []).entries()) figures.push({ type: 'cube', view, large: true, label: `View ${i + 1}` });
   const options = q.options?.map(o => ({ ...o, figure: o.view ? { type: 'cube', view: o.view } : o.net ? { type: 'net', cells: o.net.cells, compact: true } : null, text: o.view || o.net ? null : o.label }));
   return { ...q, figures, options: options ?? [] };
 }
-const net = kind => seed => cubeNetFigures(cubeNet.generateQuestion(kind, seed));
+const net = kind => (seed, level) => cubeNetFigures(cubeNet.generateQuestion(kind, seed, level));
 function imageFigures(q, line) {
   return { ...q, figures: [{ type: 'image', figure: q.figure, transform: 'same', line }], options: q.options.map(o => ({ ...o, figure: { type: 'image', figure: q.figure, transform: o.transform } })) };
 }
@@ -46,9 +47,13 @@ const colour = kind => seed => colourFigures(colourQuestion(seed, kind));
 const kinds = {
   'is-net': { topic: 'cube-nets', levels: [1], generate: net('is-net') },
   'opposite': { topic: 'cube-nets', levels: [1], generate: net('opposite') },
-  'which-cube': { topic: 'cube-nets', levels: [2], generate: net('which-cube') },
-  'cannot-cube': { topic: 'cube-nets', levels: [2], generate: net('cannot-cube') },
-  'which-net': { topic: 'cube-nets', levels: [2], generate: net('which-net') },
+  'which-cube': { topic: 'cube-nets', levels: [2, 3], generate: net('which-cube') },
+  'cannot-cube': { topic: 'cube-nets', levels: [2, 3], generate: net('cannot-cube') },
+  'which-net': { topic: 'cube-nets', levels: [2, 3, 4], generate: net('which-net') },
+  'net-from-views': { topic: 'cube-nets', levels: [3, 4], generate: net('net-from-views') },
+  'open-box': { topic: 'cube-nets', levels: [3], generate: net('open-box') },
+  'same-cube': { topic: 'cube-nets', levels: [4], generate: net('same-cube') },
+  'path-cube': { topic: 'cube-nets', levels: [4], generate: net('path-cube') },
   'build-net': { topic: 'cube-nets', levels: [2], generate: seed => ({ ...cubeNet.generateQuestion('build-net', seed), figures: [], options: [], interactive: 'build-net' }) },
   'fold-count': { topic: 'paper-folding', levels: [1], generate: seed => { const q = foldCountQuestion(seed); return { ...q, figures: [{ type: 'fold-sequence', folds: q.folds, punched: null }] }; } },
   'unfold': { topic: 'paper-folding', levels: [2], generate: seed => { const q = unfoldQuestion(seed); return { ...q, figures: [{ type: 'fold-sequence', folds: q.folds, punched: q.punched }], options: q.options.map(o => ({ ...o, figure: { type: 'holes', holes: o.holes } })) }; } },
