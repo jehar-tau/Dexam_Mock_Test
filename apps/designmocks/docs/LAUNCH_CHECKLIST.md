@@ -24,6 +24,7 @@ An existing Google-backed tester session on the local origin loads Overview and 
 
 - [x] Verify real controlled Google sign-in, reload, refresh, sign-out and returning-account sign-in on the current local build.
 - [x] Prepare the exact 57-question UCEED paper for private review on desktop and mobile.
+- [x] Reverify the approved packet against current `main`, its local figures and the hosted bank. The 14 November dry run matched the separately approved packet digest, all 57 questions and 57 figures, the 120-minute clock and 200 marks. All selected question hashes match ready records in staging. The hosted catalogue has zero prepared papers and zero active paid releases. Private hosted figure-byte verification and separate paper preparation remain pending.
 - [ ] Verify the full student and staff workspace using the staging build, the complete migration set and approved exact origins. Enable the staging preview modules and keep checkout closed.
 - [ ] Verify confirmed Google identity against the server tester allowlist while registration policy is `testers`, environment mode is `test`, sales are closed, and `can_enter_staging_portal()` allows access. Public registration has its own approval.
 - [x] Record the owner-selected staging target `tiodqzvvujxvxssvjdis` and the requirement for a separate production project (10 November, HANDOFF.md).
