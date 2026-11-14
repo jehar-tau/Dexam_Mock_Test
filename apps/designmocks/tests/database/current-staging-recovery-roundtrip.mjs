@@ -123,6 +123,18 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
     const attempt = await sql(recoveryActor(state.owner, 'select public.read_attempt(' + quote(state.completed) + ')'), target);
     assert.equal(JSON.parse(attempt.split('\n').findLast(line => line.startsWith('{'))).score, 4);
     await assert.rejects(sql(recoveryActor(state.other, 'select public.read_attempt(' + quote(state.completed) + ')'), target));
+    const expiredAttempt = quote(state.active);
+    await sql(`update dm_private.attempts set started_at = now() - interval '7201 seconds',
+      deadline = now() - interval '1 second' where id = ${expiredAttempt};`, target);
+    await assert.rejects(sql(recoveryActor(tester, 'select public.finalize_expired_attempts(10)'), target));
+    const sweep = () => sql(`begin; set local role service_role; set local "request.jwt.claim.role" = 'service_role';
+      select public.finalize_expired_attempts(10); commit;`, target);
+    assert.equal(await sweep(), '1');
+    assert.equal(await sweep(), '0');
+    assert.equal(await sql(`select a.status = 'submitted' and a.submitted_at = a.deadline
+      and a.score = 4 and i.answer = '"1"'::jsonb and i.answer_revision = 9
+      from dm_private.attempts a join dm_private.attempt_items i on i.attempt_id = a.id
+      where a.id = ${expiredAttempt} and i.ordinal = 2;`, target), 't');
     const portalDirectGrants = JSON.parse(await sql(directAuthenticatedGrants, target));
     const addedGrants = portalDirectGrants.filter(signature => !priorDirectGrants.has(signature));
     assert.ok(addedGrants.includes('public.community_feed(text, text, jsonb, integer)'));
