@@ -13,6 +13,7 @@
     "browser": [
       {
         "name": "public-plans",
+        "check": "public-annual-plan",
         "method": "GET",
         "path": "/rest/v1/plans?select=id,amount,currency,duration_months",
         "headers": {
