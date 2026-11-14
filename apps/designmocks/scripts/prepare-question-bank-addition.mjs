@@ -8,7 +8,8 @@ import { collectCanonicalMedia, readCanonicalAsset } from './private-bank-media.
 import { verifyQuestionExportPacket } from '../src/question-export-packet.mjs';
 
 function git(cwd, ...args) { return execFileSync('git', args, { cwd, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] }).trimEnd(); }
-function fail(message) { throw new Error(message); }
+class BankAdditionError extends Error {}
+function fail(message) { throw new BankAdditionError(message); }
 function within(parent, candidate) { return candidate === parent || candidate.startsWith(parent + path.sep); }
 
 export async function prepareAddition({ packetPath, expected, expectedSource, output, mediaRoot, downloadsDir, cwd = process.cwd() }) {
@@ -18,9 +19,16 @@ export async function prepareAddition({ packetPath, expected, expectedSource, ou
   const raw = execFileSync('git', ['show', `${source}:${SOURCE_PATH}`], { cwd, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   const bank = JSON.parse(raw);
   buildManifest(bank, source);
-  const packetInfo = await stat(packetPath);
-  if (!packetInfo.isFile() || packetInfo.size > 4 * 1024 * 1024) fail('Unsupported packet file');
-  const { packet, payload } = await verifyQuestionExportPacket(JSON.parse(await readFile(packetPath, 'utf8')), { contentSha256: expected });
+  const packetInfo = await stat(packetPath).catch(() => null);
+  if (!packetInfo?.isFile() || packetInfo.size > 4 * 1024 * 1024) fail('Choose a readable question export packet of at most 4 MiB.');
+  let verified;
+  try {
+    const input = JSON.parse(await readFile(packetPath, 'utf8'));
+    verified = await verifyQuestionExportPacket(input, { contentSha256: expected });
+  } catch {
+    fail('The packet does not match the reviewed question checksum. Export the approved question again.');
+  }
+  const { packet, payload } = verified;
   const existing = bank.questions.filter(q => q.externalKey === payload.externalKey);
   if (existing.length) {
     if (existing.length === 1 && stableJson(existing[0]) === stableJson(payload)) return { mode: 'no-op', sourceCommit: source };
@@ -97,4 +105,9 @@ async function main() {
   const result = await prepareAddition({ packetPath: options['--packet'], expected: options['--expect'], expectedSource: options['--expect-source'], output: options['--output'], mediaRoot: options['--media-root'], downloadsDir: options['--downloads-dir'], cwd: fileURLToPath(new URL('../../..', import.meta.url)) });
   console.log(JSON.stringify(result));
 }
-if (import.meta.url === pathToFileURL(process.argv[1] || '').href) main().catch(() => { console.error('Question addition preparation failed; check inputs and source.'); process.exitCode = 1; });
+if (import.meta.url === pathToFileURL(process.argv[1] || '').href) {
+  main().catch(error => {
+    console.error(error instanceof BankAdditionError ? error.message : 'Question addition preparation failed; check inputs and source.');
+    process.exitCode = 1;
+  });
+}
