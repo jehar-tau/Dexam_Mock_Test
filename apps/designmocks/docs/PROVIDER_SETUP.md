@@ -251,6 +251,8 @@ Use `supabase/launch/private-staging-api.sql` only on the designated private sta
 
 Apply the hook before restoring reviewed authenticated RPC grants. Verify direct requests from a permitted tester and a returning account outside the allowlist before admitting testers. The hook governs PostgREST. Set the Edge secret `DMOCKS_EDGE_REQUIRE_STAGING_TESTER=true` on the dedicated staging project before deploying the matching drawing, Community and candidate-phone handlers. These handlers check admission with the caller’s token before using service credentials. The setting is optional for other deployments. Existing signed URLs retain their original expiry, so verify direct Storage access and Edge behavior separately. Keep the staging hook active if returning to the paid profile on the same staging project. [Supabase Data API pre-request behavior](https://supabase.com/docs/guides/api/securing-your-api)
 
+Assessment figures, drawing review, bank review and reported-question media also check staging admission before private signing. They recheck admission before returning newly signed links so a tester removed during signing cannot receive them. This check uses the caller's session and complements the per-attempt or staff authorization checks.
+
 If rolling back, first restore the prior authenticated grants. Then reset `pgrst.db_pre_request` for the authenticator in the current database and notify PostgREST to reload its configuration. Confirm anonymous and authenticated behavior again after rollback.
 
 ### Verify the private Storage boundary
