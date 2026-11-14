@@ -25,7 +25,8 @@ async function fixture(page,options={}){
   else if(name==='report_attempt_question'){if(state.reportReply)await state.reportReply.promise;data={reportCount:1,threshold:5,held:false};}
   else if(name==='attempt-media'){
    if(state.figureReply)await state.figureReply.promise;
-   data={media:{[questionId]:[{url:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/%3E'}]}};
+   status=state.figureStatus??200;
+   data=status===200?{media:{[questionId]:[{url:state.figureUrl??'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/%3E'}]}}:{error:'Fictional media failure'};
   }
   else if(name==='drawing-media')data=multipart?{id:'30000000-0000-4000-8000-000000000961',ordinal:1}:input.action==='list'?{items:[]}:{images:[]};
   else if(name==='start_exam_mock_part_b'){if(state.startHold)await state.startHold.promise;data=partB;}
@@ -104,6 +105,28 @@ test('a delayed question figure reply clears the old paper after a silent accoun
  await expect(privateQuestion(page)).toHaveCount(0);
  await expect(page.getByRole('img', { name: 'Fictional figure', exact: true })).toHaveCount(0);
  expect(calls(state, 'attempt-media').map(item => item.actor)).toEqual([first.id]);
+});
+
+test('a failed question figure can be retried without reopening the timed attempt', async ({page}) => {
+  const state = await fixture(page, {readMedia:true, figureStatus:503});
+  const retry = page.getByRole('button', {name:'Retry figure 1', exact:true});
+  await expect(retry).toBeVisible();
+  await expect(page.getByText('Loading question figure…', {exact:true})).toHaveCount(0);
+  state.figureStatus = 200;
+  state.figureUrl = 'data:image/png;base64,AAAA';
+  await retry.press('Enter');
+  await expect(privateQuestion(page)).toBeFocused();
+  await expect.poll(() => calls(state, 'attempt-media').length).toBe(2);
+  await expect(retry).toBeVisible();
+
+  state.figureUrl = undefined;
+  await retry.click();
+  const figure = page.getByRole('img', {name:'Fictional figure', exact:true});
+  await expect.poll(() => figure.evaluate(img => img.naturalWidth)).toBeGreaterThan(0);
+  await expect(retry).toHaveCount(0);
+  expect(calls(state, 'read_attempt')).toHaveLength(1);
+  expect(calls(state, 'attempt-media').map(call => call.actor)).toEqual(Array(3).fill(first.id));
+  await expect(page.getByRole('timer', {name:'Time remaining'})).toBeVisible();
 });
 
 test('a signed figure stays hidden until the current exam account is confirmed again', async ({ page }) => {
