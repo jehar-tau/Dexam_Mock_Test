@@ -33,10 +33,25 @@ export function drawingUploadFailure(error) {
     : "An upload did not confirm. Check your saved pages before adding the remaining images.";
 }
 
+export function drawingInventory(result) {
+  const items = result?.items;
+  if (!Array.isArray(items) || items.length > 5 || items.some(item =>
+    typeof item?.id !== "string" || !item.id || !Number.isInteger(item.ordinal) || item.ordinal < 1 || item.ordinal > 5) ||
+    new Set(items.map(item => item.id)).size !== items.length ||
+    new Set(items.map(item => item.ordinal)).size !== items.length) {
+    throw new Error("Unconfirmed drawing inventory.");
+  }
+  return items;
+}
+
 export function planDrawingPages(files, savedPages) {
   const used = new Set(savedPages.map(page => page.ordinal));
   const free = [1, 2, 3, 4, 5].filter(ordinal => !used.has(ordinal));
-  return files.slice(0, free.length).map((file, index) => ({file, ordinal: free[index]}));
+  if (files.length > free.length) {
+    return {error: free.length === 1 ? "Only one image slot is available. Select one image."
+      : `Only ${free.length} image slots are available. Select fewer images.`};
+  }
+  return {pages: files.map((file, index) => ({file, ordinal: free[index]}))};
 }
 
 export function drawingPageReceipt(result, ordinal) {
