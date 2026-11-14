@@ -32,7 +32,24 @@ test("compares effective role grants for exact overloads", () => {
 
 test("rejects incomplete or duplicate input", () => {
   const row = rpc("public.read_attempt(uuid)");
-  for (const bad of [inventory(), inventory(row, row), inventory({signature: row.signature}), {version: 2, functions: [row]}]) {
+  for (const bad of [inventory(), inventory(row, row), inventory({signature: row.signature}), {version: 3, functions: [row]}]) {
     assert.throws(() => compareStagingRpcs(inventory(row), bad), /staging RPC/);
   }
+});
+
+test("definition fingerprints catch altered behavior with identical effective grants", () => {
+  const signature = "public.read_attempt(uuid)";
+  const source = {version: 2, functions: [rpc(signature, {authenticated: true, definition_sha256: "a".repeat(64)})]};
+  const staging = structuredClone(source);
+  staging.functions[0].definition_sha256 = "b".repeat(64);
+  const report = compareStagingRpcs(source, staging);
+  assert.equal(report.scope, "public-rpc-definitions-and-grants");
+  assert.equal(report.matchesMigrationBaseline, false);
+  assert.deepEqual(report.changedDefinitions, [signature]);
+  assert.deepEqual(report.extraGrants, []);
+  assert.deepEqual(report.missingGrants, []);
+  assert.doesNotMatch(JSON.stringify(report), /[ab]{64}/);
+  assert.throws(() => compareStagingRpcs(source, inventory(rpc(signature))), /same staging RPC inventory version/);
+  staging.functions[0].definition_sha256 = null;
+  assert.throws(() => compareStagingRpcs(source, staging), /staging RPC signature/);
 });
