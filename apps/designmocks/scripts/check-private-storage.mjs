@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import {pathToFileURL} from "node:url";
+import {openPrivateDMocksTransport} from "./private-bank-provider.mjs";
 import project from "../supabase/project.json" with {type: "json"};
 
 const buckets = ["paper-media", "drawing-submissions", "community-media", "question-intake"];
@@ -16,19 +17,59 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
   assert.ok(origin === url.origin && (local || origin === `https://${project.project_ref}.supabase.co`), "Use local or designated DMocks staging Storage");
   assert.match(fixture ?? "", fixturePattern, "Use an exact fictional Storage fixture path");
   assert.ok(jwtRole(key) === "anon" || /^sb_publishable_[\w-]+$/.test(key ?? ""), "Use a public API key");
-  assert.ok(jwtRole(serviceKey) === "service_role" || /^sb_secret_[\w-]+$/.test(serviceKey ?? ""), "Use a server-only key to verify fixture existence");
   assert.ok(jwtRole(token) === "authenticated", "Use a synthetic signed-in account token");
 
-  async function head(path, authorization, apiKey = key) {
+  const service = openPrivateDMocksTransport({
+    url: origin, allowOrigin: origin, serviceRoleKey: serviceKey,
+    environment: local ? "development" : "staging",
+  }, {fetchImpl, timeoutMs: 10000});
+
+  async function head(path, authorization, request = fetchImpl) {
     try {
-      const response = await fetchImpl(origin + "/storage/v1/object/" + path, {
+      const response = await request(origin + "/storage/v1/object/" + path, {
         method: "HEAD", redirect: "error", signal: AbortSignal.timeout(10000),
-        headers: {apikey: apiKey, ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
+        headers: {apikey: key, ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
       });
       await response.body?.cancel();
       return response.status;
     } catch {
       return null;
+    }
+  }
+
+  async function sign(bucket, authorization, request = fetchImpl) {
+    try {
+      const response = await request(origin + "/storage/v1/object/sign/" + bucket + "/" + fixture, {
+        method: "POST", redirect: "error", signal: AbortSignal.timeout(10000),
+        headers: {apikey: key, "Content-Type": "application/json",
+          ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
+        body: JSON.stringify({expiresIn: 60}),
+      });
+      await response.body?.cancel();
+      return response.status;
+    } catch {
+      return null;
+    }
+  }
+
+  async function list(bucket, authorization, request = fetchImpl) {
+    const [prefix, name] = fixture.split("/");
+    try {
+      const response = await request(origin + "/storage/v1/object/list/" + bucket, {
+        method: "POST", redirect: "error", signal: AbortSignal.timeout(10000),
+        headers: {apikey: key, "Content-Type": "application/json",
+          ...(authorization ? {Authorization: "Bearer " + authorization} : {})},
+        body: JSON.stringify({prefix, search: name, limit: 1}),
+      });
+      if (response.status === 200) {
+        const rows = await response.json();
+        return {status: response.status, count: Array.isArray(rows) ? rows.length : null,
+          fixtureListed: Array.isArray(rows) && rows.some(row => row?.name === name)};
+      }
+      await response.body?.cancel();
+      return {status: response.status, count: null, fixtureListed: false};
+    } catch {
+      return {status: null, count: null, fixtureListed: false};
     }
   }
 
@@ -41,7 +82,7 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
 
   const results = await Promise.all(buckets.map(async bucket => {
     const object = `authenticated/${bucket}/${fixture}`;
-    const verified = await head(object, serviceKey, serviceKey) === 200;
+    const verified = await head(object, null, service.fetch) === 200;
     if (!verified) return {bucket, verified, results: []};
     const results = await Promise.all([
       ["public-url", `public/${bucket}/${fixture}`],
@@ -51,9 +92,25 @@ export async function checkPrivateStorage({origin, key, serviceKey, token, fixtu
       const status = await head(path, authorization);
       return {access, status, denied: denied.has(status)};
     }));
-    return {bucket, verified, results};
+    const signingControl = await sign(bucket, null, service.fetch);
+    const signing = await Promise.all([
+      ["anonymous-signing", null],
+      ["signed-in-signing", token],
+    ].map(async ([access, authorization]) => {
+      const status = await sign(bucket, authorization);
+      return {access, status, denied: signingControl === 200 && denied.has(status)};
+    }));
+    const control = await list(bucket, null, service.fetch);
+    const listing = await Promise.all([
+      ["anonymous-listing", null],
+      ["signed-in-listing", token],
+    ].map(async ([access, authorization]) => {
+      const {status, count} = await list(bucket, authorization);
+      return {access, status, denied: control.fixtureListed && (denied.has(status) || status === 200 && count === 0)};
+    }));
+    return {bucket, verified, signingVerified: signingControl === 200, listingVerified: control.fixtureListed, results: [...results, ...signing, ...listing]};
   }));
-  return {scope: "unsigned-fictional-object-head", passed: results.every(bucket => bucket.verified && bucket.results.every(result => result.denied)), results};
+  return {scope: "fictional-object-read-signing-and-listing", passed: results.every(bucket => bucket.verified && bucket.results.every(result => result.denied)), results};
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
