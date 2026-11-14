@@ -67,7 +67,9 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
       }
       if (url.pathname === "/functions/v1/attempt-media") {
         if (fixture === "staging-origin-rejected") return Response.json({ error: "Origin not allowed" }, { status: 403 });
-        return Response.json({ error: "Sign in required" }, { status: 401, headers: { "Access-Control-Allow-Origin": environment.PUBLIC_APP_ORIGIN } });
+        const origin = fixture === "wrong-media-origin" ? ${JSON.stringify(project.staging_frontend_origin)} : request.headers.get("origin");
+        const body = fixture === "media-gateway" ? {message: "Missing authorization header"} : {error: "Sign in required"};
+        return Response.json(body, { status: 401, headers: { "Access-Control-Allow-Origin": origin } });
       }
       assert.fail("unexpected probe " + url.pathname);
     };
@@ -115,6 +117,14 @@ test("configured commerce smoke accepts the checkout origin with a different por
   const result = runSmoke("configured", "separate-checkout");
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(result.checks.slice(-4).map(check => check.status), [204, 401, 401, 403]);
+});
+
+test("configured commerce smoke requires the assessment handler to accept the checkout origin", () => {
+  for (const fixture of ["wrong-media-origin", "media-gateway"]) {
+    const result = runSmoke("configured", fixture);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /assessment media must accept the checkout origin|assessment media handler must reject anonymous access/);
+  }
 });
 
 test("staging verifies portal preflights even when commerce credentials are present", () => {
