@@ -3,6 +3,7 @@ import { existsSync, realpathSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { openOperationsProvider, operationsConfiguration, readOperationsHealth } from "./operations-sweep.mjs";
+import { serviceClaims } from "./private-bank-provider.mjs";
 
 const alertWindowMs = 15 * 60 * 1000;
 const loopback = new Set(["localhost", "127.0.0.1", "[::1]"]);
@@ -12,7 +13,8 @@ const verificationIdPattern = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
 function alertDestination({ alertUrl, alertAllowOrigin, alertToken, key }, databaseOrigin) {
   if (!alertUrl && !alertAllowOrigin && !alertToken) return null;
   if (!alertUrl || !alertAllowOrigin || typeof alertToken !== "string"
-    || !/^[A-Za-z0-9._~+/=-]{16,256}$/.test(alertToken) || alertToken === key || alertToken.startsWith("sb_secret_")) {
+    || !/^[A-Za-z0-9._~+/=-]{16,256}$/.test(alertToken) || alertToken === key
+    || alertToken.startsWith("sb_secret_") || serviceClaims(alertToken)?.role === "service_role") {
     throw new Error("An explicit alert destination and separate receiver token are required");
   }
   const target = new URL(alertUrl);
