@@ -5,7 +5,8 @@ import { netsOfSolidsProgramme } from './nets-of-solids.js';
 import { paperFoldingProgramme } from './paper-folding.js';
 import { mirrorImagesProgramme } from './mirror-images.js';
 import { countingCubesProgramme } from './counting-cubes.js';
+import { mechanismsProgramme } from './mechanisms.js';
 import { colourBasicsProgramme } from './colour-basics.js';
 
-export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, colourBasicsProgramme]);
+export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, mechanismsProgramme, colourBasicsProgramme]);
 export const findProgramme = slug => programmes.find(p => p.slug === slug) ?? null;

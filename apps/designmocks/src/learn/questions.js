@@ -13,6 +13,7 @@ import { colourQuestion } from './colour.js';
 import { seededRandom } from './random.js';
 import { beltQuestion, inventoryQuestion, netQuestion } from './solid-net.js';
 import { patternedCuboidQuestion } from './solid-pattern.js';
+import { mechanismQuestion } from './gears.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -36,6 +37,7 @@ function colourFigures(q) {
 function solidFigures(q) {
   return { ...q, figures: [{ type: 'solid', solid: q.solid, large: true }], options: (q.options ?? []).map(o => ({ ...o, figure: { type: 'solid-net', net: o.net } })) };
 }
+const mechanism = kind => (seed, level) => mechanismQuestion(seed, kind, level);
 const colour = kind => seed => colourFigures(colourQuestion(seed, kind));
 
 // kind → { topic, levels, generate(seed, level) }. Never rename a kind once a programme uses it.
@@ -65,6 +67,17 @@ const kinds = {
   'patterned-cuboid': { topic: 'nets-of-solids', levels: [3], generate: seed => solidFigures(patternedCuboidQuestion(seed)) },
   'grid-net': { topic: 'nets-of-solids', levels: [4], generate: seed => solidFigures(netQuestion(seed, 4, 'grid-net')) },
   'belt-length': { topic: 'nets-of-solids', levels: [3], generate: seed => solidFigures(beltQuestion(seed)) },
+  'gear-direction': { topic: 'mechanisms', levels: [1, 2], generate: mechanism('gear-direction') },
+  'belt-direction': { topic: 'mechanisms', levels: [2], generate: mechanism('belt-direction') },
+  'gear-speed': { topic: 'mechanisms', levels: [2, 3], generate: mechanism('gear-speed') },
+  'compound-speed': { topic: 'mechanisms', levels: [3], generate: mechanism('compound-speed') },
+  'count-clockwise': { topic: 'mechanisms', levels: [3], generate: mechanism('count-clockwise') },
+  'lever-balance': { topic: 'mechanisms', levels: [3], generate: mechanism('lever-balance') },
+  'system-speed': { topic: 'mechanisms', levels: [4], generate: mechanism('system-speed') },
+  'rope-count': { topic: 'mechanisms', levels: [4], generate: mechanism('rope-count') },
+  'gear-realign': { topic: 'mechanisms', levels: [4], generate: mechanism('gear-realign') },
+  'will-it-move': { topic: 'mechanisms', levels: [4], generate: mechanism('will-it-move') },
+  'mobile-balance': { topic: 'mechanisms', levels: [4], generate: mechanism('mobile-balance') },
   'mix': { topic: 'colour-basics', levels: [1], generate: colour('mix') },
   'complement': { topic: 'colour-basics', levels: [2], generate: colour('complement') },
   'warm-cool': { topic: 'colour-basics', levels: [2], generate: colour('warm-cool') },

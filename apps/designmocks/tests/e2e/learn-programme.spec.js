@@ -11,7 +11,7 @@ const feedback = page => player(page).locator(".feedback");
 test("the Learn preview lists every programme and opens an overview", async ({ page }) => {
   await page.goto("/learn-preview");
   const list = page.getByLabel("Interactive programmes");
-  for (const title of ["Cube nets", "Nets of solids", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Colour basics"]) {
+  for (const title of ["Cube nets", "Nets of solids", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Gears, belts and levers", "Colour basics"]) {
     await expect(list.locator("article", { hasText: title })).toBeVisible();
   }
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
@@ -331,4 +331,51 @@ test("nets of solids: stripes join up across folds and sliced corners sit on a g
   await expect(dialog.getByRole("heading", { name: "Slice a corner, gain a triangle" })).toBeVisible();
   await dialog.getByRole("button", { name: "Two corners cut" }).click();
   await expect(dialog.getByRole("status")).toContainText("Closed: 8 faces.");
+});
+
+test("mechanisms: the machine runs, a ring locks, and every exam-hard kind is marked", async ({ page }) => {
+  const base = "/learn-programme-preview/mechanisms";
+  const dialog = player(page);
+
+  // The gear tool reports true directions and speeds, and reacts to its controls.
+  await page.goto(`${base}?lesson=two-gears`);
+  await expect(dialog.getByRole("heading", { name: "Touching gears turn opposite ways" })).toBeVisible();
+  await expect(dialog.getByRole("status")).toContainText("A clockwise 60 · B anticlockwise 60");
+  await dialog.getByRole("button", { name: "Bigger driver" }).click();
+  await expect(dialog.getByRole("status")).toContainText("B anticlockwise 100");
+  await dialog.getByRole("button", { name: "Pause" }).click();
+  await expect(dialog.getByRole("button", { name: "Run" })).toBeVisible();
+
+  // A ring of five gears is locked; four turn.
+  await page.goto(`${base}?lesson=locked-and-marks`);
+  const move = generateQuestion("will-it-move", 2, 4);
+  for (const id of move.answer) await dialog.getByRole("button", { name: `Option ${id}`, exact: true }).click();
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  const count = dialog.getByRole("slider", { name: "Number of gears" });
+  await count.fill("5");
+  await expect(dialog.getByRole("status")).toContainText("Locked.");
+  await count.fill("4");
+  await expect(dialog.getByRole("status")).toContainText("A clockwise");
+
+  // The lever bench balances 2 kg at 3 units against 3 kg at 2 units.
+  await page.goto(`${base}?lesson=levers`);
+  await dialog.getByRole("textbox", { name: "Your answer" }).fill("1");
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await expect(dialog.getByRole("status")).toContainText("Left side: 6. Right side: 0. The left side goes down.");
+  const add = dialog.getByRole("button", { name: "Add 1 kilogram 2 units to the right of the pivot" });
+  await add.click(); await add.click(); await add.click();
+  await expect(dialog.getByRole("status")).toContainText("Balanced.");
+
+  // The exam-hard quiz: speeds, rope, ring, marks and mobile, each answered from the engine.
+  const { mechanismsProgramme } = await import("../../src/learn/programmes/mechanisms.js");
+  const set = buildQuiz(mechanismsProgramme.tiers[2].quiz, 3);
+  await page.goto(`${base}?lesson=quiz-exam-hard&seed=3`);
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else if (question.answerMode === "multi") for (const id of question.answer) await dialog.getByRole("button", { name: `Option ${id}`, exact: true }).click();
+    else await dialog.getByRole("button", { name: `Option ${question.answer}`, exact: true }).click();
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
 });
