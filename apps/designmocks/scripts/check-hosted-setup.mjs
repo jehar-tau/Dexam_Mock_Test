@@ -38,7 +38,7 @@ const origin = staging ? project.staging_frontend_origin : project.frontend_orig
 async function request(path, method = "GET", body, headers = {}) {
   const response = await fetch(base + path, {
     method,
-    headers: { apikey: key, "Content-Type": "application/json", ...headers },
+    headers: method === "OPTIONS" ? headers : { apikey: key, "Content-Type": "application/json", ...headers },
     body: body === undefined ? undefined : JSON.stringify(body),
     signal: AbortSignal.timeout(30000),
     redirect: "error",
@@ -48,6 +48,8 @@ async function request(path, method = "GET", body, headers = {}) {
     status: response.status,
     data: text ? JSON.parse(text) : null,
     allowOrigin: response.headers.get("access-control-allow-origin"),
+    allowMethods: response.headers.get("access-control-allow-methods"),
+    allowHeaders: response.headers.get("access-control-allow-headers"),
     cacheControl: response.headers.get("cache-control"),
   };
 }
@@ -156,6 +158,11 @@ if (configuredCommerce) {
   });
   assert.equal(response.status, 204, "approved checkout preflight");
   assert.equal(response.allowOrigin, approvedOrigin, "approved checkout origin");
+  const allowedMethods = (response.allowMethods ?? "").toLowerCase().split(",").map(value => value.trim());
+  const allowedHeaders = (response.allowHeaders ?? "").toLowerCase().split(",").map(value => value.trim());
+  assert.ok(allowedMethods.includes("post"), "approved checkout preflight must allow POST");
+  assert.ok(["authorization", "apikey", "content-type", "x-client-info"].every(header => allowedHeaders.includes(header)),
+    "approved checkout preflight must allow the browser request headers");
   results.push({ check: "approved checkout preflight", status: 204, passed: true });
 
   response = await request(checkoutPath, "POST", { plan: "annual" }, { Origin: approvedOrigin });
