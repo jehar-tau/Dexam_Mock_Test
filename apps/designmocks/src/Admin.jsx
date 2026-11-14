@@ -201,6 +201,24 @@ function AdminDesk({ session }) {
       downloadPrivateBlob(json, `dmocks-question-${packet.artifactId}.json`);
     }, active);
   }, signal);
+  const downloadBankCorrection = (question, answer, note, signal) => withAccountDeadline(async active => {
+    const response = await rpc("admin_prepare_bank_answer_correction", {
+      p_external_key: question.externalKey, p_expected_version: question.reviewVersion,
+      p_answer: answer, p_review_note: note,
+    }, active);
+    if (response?.replacesContentSha256 !== question.contentSha256 || response.sourceCommit !== question.sourceCommit) {
+      throw new Error("Question changed. Refresh the bank and review it again.");
+    }
+    const { packet, payload } = await verifyQuestionExportPacket(response.packet, { externalKey: question.externalKey });
+    if (payload.answer?.raw !== answer || payload.answer.status !== "human-reviewed" || packet.rightsNote !== note) {
+      throw new Error("The correction packet did not match your review.");
+    }
+    await presentForCurrentStaff(() => {
+      const json = new Blob([JSON.stringify({ ...packet, replacesContentSha256: response.replacesContentSha256,
+        sourceCommit: response.sourceCommit }, null, 2) + "\n"], { type: "application/json" });
+      downloadPrivateBlob(json, `dmocks-correction-${packet.externalKey}.json`);
+    }, active);
+  }, signal);
   const configureMock = async (event, exam) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
@@ -508,7 +526,7 @@ function AdminDesk({ session }) {
             ))}
           </div>
           </>}
-          <BankReviewBrowser rpc={rpc} onReviewed={load} refreshToken={bankRefreshToken} />
+          <BankReviewBrowser rpc={rpc} onDownloadCorrection={downloadBankCorrection} onReviewed={load} refreshToken={bankRefreshToken} />
           <NidPracticeBlueprints />
           {postLaunchPreview&&<>
           <h2>Question review queue</h2>
