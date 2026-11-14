@@ -251,7 +251,7 @@ test("an administrator downloads a version-pinned answer correction for Git revi
   const review = page.getByRole("region", {name: "Question review"});
   await review.getByText("Prepare answer correction", {exact: true}).click();
   await review.getByLabel("Proposed answer").fill("A");
-  await review.getByLabel("Correction review note").fill("Verified against the fictional answer key.");
+  await review.getByLabel("Source evidence").fill("Verified against the fictional answer key.");
   const pending = page.waitForEvent("download");
   await review.getByRole("button", {name: "Download correction for Git review"}).click();
   const download = await pending;

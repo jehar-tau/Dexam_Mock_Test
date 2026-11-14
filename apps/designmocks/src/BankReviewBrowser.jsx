@@ -42,7 +42,7 @@ function AnswerCorrection({ question, onDownload, disabled }) {
     <summary>Prepare answer correction</summary>
     <form className="admin-form" onSubmit={submit}>
       <label>Proposed answer<input name="answer" maxLength={200} required /></label>
-      <label>Correction review note<textarea name="note" minLength={10} maxLength={1000} required /></label>
+      <label>Source evidence<textarea name="note" minLength={10} maxLength={1000} required /></label>
       <button disabled={disabled || busy}>Download correction for Git review</button>
       {message && <p role="status">{message}</p>}
     </form>
