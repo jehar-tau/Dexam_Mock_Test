@@ -20,9 +20,14 @@ test("hosted setup requires every core endpoint in portal mode and every endpoin
         return Response.json([{ id: "annual", amount: 119300, currency: "INR", duration_months: 12 }]);
       }
       if (pathname === "/auth/v1/settings") {
-        return Response.json({ disable_signup: false, external: { google: true } });
+        return Response.json({ disable_signup: false, external: { google: process.env.FIXTURE_GOOGLE !== "disabled" } });
       }
-      if (pathname.startsWith("/rest/v1/rpc/")) return Response.json({ code: "42501" }, { status: 403 });
+      if (pathname.startsWith("/rest/v1/rpc/")) {
+        if (pathname.endsWith("/my_attempt_history") && process.env.FIXTURE_ANONYMOUS_HISTORY === "allowed") {
+          return Response.json([]);
+        }
+        return Response.json({ code: "42501" }, { status: 403 });
+      }
       const name = pathname.split("/").at(-1);
       if (name === "create-order") return Response.json({ error: "Origin not allowed" }, { status: 403 });
       if (request.method === "POST" && name === "attempt-media") {
@@ -49,6 +54,8 @@ test("hosted setup requires every core endpoint in portal mode and every endpoin
     { args: ["--portal-only"], missing: "", status: 0, optional: 3 },
     { args: [], missing: "", status: 2, optional: 0 },
     { args: ["--portal-only"], missing: "question-intake", status: 2, optional: 3 },
+    { args: ["--portal-only"], google: "disabled", status: 1 },
+    { args: ["--portal-only"], anonymousHistory: "allowed", status: 1 },
   ]) {
     const result = spawnSync(process.execPath, ["--import", provider, script, ...scenario.args], {
       cwd: directory,
@@ -60,10 +67,17 @@ test("hosted setup requires every core endpoint in portal mode and every endpoin
         DMOCKS_BACKEND_STAGE: "staging",
         DMOCKS_AUTH_STAGE: "controlled",
         DMOCKS_COMMERCE_STAGE: "unconfigured",
-        FIXTURE_MISSING_CORE: scenario.missing,
+        FIXTURE_MISSING_CORE: scenario.missing ?? "",
+        FIXTURE_GOOGLE: scenario.google ?? "enabled",
+        FIXTURE_ANONYMOUS_HISTORY: scenario.anonymousHistory ?? "denied",
       },
     });
     assert.equal(result.status, scenario.status, result.stderr);
+    if (scenario.status === 1) {
+      assert.match(result.stderr, /AssertionError/);
+      assert.equal(result.stdout, "");
+      continue;
+    }
     const summary = JSON.parse(result.stdout);
     assert.equal(summary.passed, scenario.status === 0);
     const report = JSON.parse(await readFile(join(directory, "test-results/hosted-staging-smoke.json"), "utf8"));
