@@ -4,6 +4,7 @@ import { bankReviewImages, deliveryAnswerLabel } from "./bank-review.js";
 import { questionReviewInput } from "./question-quality.js";
 
 async function loadReportedFigures(functions, report) {
+  if (!functions) throw new Error("Question figures could not be opened. Refresh the queue and try again.");
   const { data, error } = await functions.invoke("reported-question-media", { body: { targetKey: report.targetKey, revision: report.revision } });
   if (error || data?.error) throw new Error("Private question figures could not be opened. Refresh the case and try again.");
   return data.images;
