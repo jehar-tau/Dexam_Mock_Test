@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 import project from "../../supabase/project.json" with { type: "json" };
 import { serveArtifact } from "./local-artifact-fixture.js";
 import { communityFeedFixture } from "./community-feed-fixture.js";
-import { seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
+import { emptyAdminRead, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 const stage = project.staging_frontend_origin;
 const publicHosts = [project.frontend_origin, "https://designmocks-studio.snehal1155.chatgpt.site"];
@@ -266,6 +266,33 @@ test("a removed staff tester cannot reopen teacher or admin work with the same s
     await expect(page.getByRole("button", {name: "Available drawings"})).toHaveCount(0);
     expect(calls.map(([name]) => name)).toEqual(["can_enter_staging_portal"]);
   }
+  expect(unexpected).toEqual([]);
+});
+
+test("the staging build loads private intake only for an admitted administrator", async ({page}) => {
+  let admin = true;
+  const sourceName = "original-fictional-private-intake.pdf";
+  const {calls, unexpected} = await stubPortalProvider(page, procedure => {
+    if (procedure === "can_enter_staging_portal") return true;
+    if (procedure === "is_dmocks_admin") return admin;
+    if (procedure === "admin_question_intake_assets") {
+      return [{id: "00000000-0000-4000-8000-000000000883", name: sourceName, status: "uploaded", candidates: []}];
+    }
+    return emptyAdminRead(procedure);
+  }, project.project_ref);
+  await page.goto("/account");
+  await seedPortalSession(page, tester, project.project_ref);
+  await page.goto("/admin");
+  await expect(page.getByRole("heading", {name: "PDF and photo question intake"})).toBeVisible();
+  await expect(page.getByText(sourceName, {exact: true})).toBeVisible();
+  expect(calls.some(([name]) => name === "admin_question_intake_assets")).toBe(true);
+
+  admin = false;
+  calls.length = 0;
+  await page.reload();
+  await expect(page.getByRole("alert")).toHaveText("This account is not an administrator.");
+  await expect(page.getByText(sourceName, {exact: true})).toHaveCount(0);
+  expect(calls.some(([name]) => name === "admin_question_intake_assets")).toBe(false);
   expect(unexpected).toEqual([]);
 });
 
