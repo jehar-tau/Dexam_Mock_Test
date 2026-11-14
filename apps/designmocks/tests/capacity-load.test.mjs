@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import project from "../supabase/project.json" with {type: "json"};
 import { runCapacityTest, validateCapacityPlan } from "../scripts/capacity-load.mjs";
 
 const plan = (overrides = {}) => ({
@@ -44,8 +45,20 @@ test("capacity runner separates active attempts, interpolates fixtures and appli
 });
 
 test("remote execution requires an exact staging-origin acknowledgement and enough synthetic fixtures", async () => {
-  const remote = plan({ target: "https://staging.example" });
+  const origin = "https://" + project.project_ref + ".supabase.co";
+  const remote = plan({ target: origin });
   await assert.rejects(() => runCapacityTest(remote, { fixtures: Array(3), env: {}, fetchImpl: async () => new Response() }), /CAPACITY_ALLOW_STAGING_LOAD/);
+  for (const target of ["http://" + new URL(origin).hostname, "https://other-project.supabase.co"]) {
+    await assert.rejects(runCapacityTest(plan({target, activeAttempts: 0}), {
+      env: {CAPACITY_ALLOW_STAGING_LOAD: target},
+      fetchImpl: async () => assert.fail("An unrelated or insecure host cannot receive requests"),
+    }), /designated DMocks staging API/);
+  }
+  const allowed = await runCapacityTest(plan({target: origin, activeAttempts: 0}), {
+    env: {CAPACITY_ALLOW_STAGING_LOAD: origin},
+    fetchImpl: async url => { assert.equal(url.origin, origin); return new Response(null, {status: 200}); },
+  });
+  assert.equal(allowed.summary.passed, true);
   await assert.rejects(() => runCapacityTest(plan(), { fixtures: [] }), /synthetic active-attempt fixtures/);
 });
 

@@ -1,6 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { isDeepStrictEqual } from "node:util";
 import { pathToFileURL } from "node:url";
+import project from "../supabase/project.json" with {type: "json"};
+
+const stagingApi = "https://" + project.project_ref + ".supabase.co";
+const localHosts = new Set(["127.0.0.1", "localhost", "[::1]"]);
 
 const percentile = (values, p) => values.length === 0 ? 0 : [...values].sort((a, b) => a - b)[Math.max(0, Math.ceil(values.length * p) - 1)];
 const checks = new Set(["active-attempt", "accepted-revision", "persisted-revision"]);
@@ -54,7 +58,8 @@ function requestHeaders(spec, fixture, env) {
 export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetch, env = process.env } = {}) {
   const plan = validateCapacityPlan(rawPlan);
   if (plan.activeAttempts > fixtures.length) throw new Error(`Need ${plan.activeAttempts} synthetic active-attempt fixtures`);
-  const local = ["127.0.0.1", "localhost", "[::1]"].includes(new URL(plan.target).hostname);
+  const local = localHosts.has(new URL(plan.target).hostname);
+  if (!local && plan.target !== stagingApi) throw new Error("Remote capacity testing requires the designated DMocks staging API");
   if (!local && env.CAPACITY_ALLOW_STAGING_LOAD !== plan.target) throw new Error("Set CAPACITY_ALLOW_STAGING_LOAD to the exact staging origin before remote execution");
   if (plan.scenarios.activeAttempt.some(request => request.check === "persisted-revision")) {
     const used = fixtures.slice(0, plan.activeAttempts);
