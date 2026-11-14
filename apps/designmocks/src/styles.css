@@ -4170,3 +4170,9 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 :root[data-theme="dark"] .beam .beam-tick{stroke:#162824}:root[data-theme="dark"] .rope{stroke:#e6a878}:root[data-theme="dark"] .rope-weight{fill:#e9e7d8}:root[data-theme="dark"] .mobile-name,:root[data-theme="dark"] .beam-note{fill:#e9e7d8}
 :root[data-theme="dark"] .turn-arrow:not(.is-driver) path{stroke:#b9c9c2}:root[data-theme="dark"] .turn-arrow:not(.is-driver) polygon{fill:#b9c9c2}:root[data-theme="dark"] .turn-arrow.is-driver path{stroke:#f08a63}:root[data-theme="dark"] .turn-arrow.is-driver polygon{fill:#f08a63}:root[data-theme="dark"] .pivot{fill:#9fb3ab;stroke:#e9e7d8}:root[data-theme="dark"] .mobile-weight{stroke:#e9e7d8}
 .gears-figure.is-wide{display:block;overflow-x:auto;width:100%}.gears-figure.is-wide svg{max-width:none;min-width:min(100%,460px);margin:0 auto}@media (max-width:520px){.gears-figure.is-wide svg{min-width:460px;height:auto}}.gears-figure.is-wide:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+/* Learn: counting figures */
+.lines-figure{display:block;max-width:100%;height:auto;overflow:visible}.lines-stroke{stroke:#162824;stroke-width:1.8;stroke-linecap:round}.lines-figure.compact .lines-stroke{stroke-width:1.4}
+.lines-ghost{stroke:#c8532c;stroke-width:2.4;stroke-dasharray:2 6;stroke-linecap:round}.lines-mirror{stroke:#c8532c;stroke-width:1.8;stroke-dasharray:8 5}.lines-mirror-label{font:600 11px/1 var(--font-sans,system-ui,sans-serif);fill:#a8431f;text-anchor:start}
+.lines-highlight{fill:#ef8a63;fill-opacity:.75;stroke:none}
+:root[data-theme="dark"] .lines-mirror,:root[data-theme="dark"] .lines-ghost{stroke:#f08a63}:root[data-theme="dark"] .lines-mirror-label{fill:#f4a586}
+:root[data-theme="dark"] .lines-stroke{stroke:#e9e7d8}

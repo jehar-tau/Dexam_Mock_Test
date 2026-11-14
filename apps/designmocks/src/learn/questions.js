@@ -14,6 +14,7 @@ import { seededRandom } from './random.js';
 import { beltQuestion, inventoryQuestion, netQuestion } from './solid-net.js';
 import { patternedCuboidQuestion } from './solid-pattern.js';
 import { mechanismQuestion } from './gears.js';
+import { figureQuestion } from './figure-questions.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -38,6 +39,7 @@ function solidFigures(q) {
   return { ...q, figures: [{ type: 'solid', solid: q.solid, large: true }], options: (q.options ?? []).map(o => ({ ...o, figure: { type: 'solid-net', net: o.net } })) };
 }
 const mechanism = kind => (seed, level) => mechanismQuestion(seed, kind, level);
+const figure = kind => (seed, level) => figureQuestion(seed, kind, level);
 const colour = kind => seed => colourFigures(colourQuestion(seed, kind));
 
 // kind → { topic, levels, generate(seed, level) }. Never rename a kind once a programme uses it.
@@ -78,6 +80,12 @@ const kinds = {
   'gear-realign': { topic: 'mechanisms', levels: [4], generate: mechanism('gear-realign') },
   'will-it-move': { topic: 'mechanisms', levels: [4], generate: mechanism('will-it-move') },
   'mobile-balance': { topic: 'mechanisms', levels: [4], generate: mechanism('mobile-balance') },
+  'count-squares': { topic: 'counting-figures', levels: [1, 3], generate: figure('count-squares') },
+  'count-rectangles': { topic: 'counting-figures', levels: [2, 3, 4], generate: figure('count-rectangles') },
+  'count-triangles': { topic: 'counting-figures', levels: [2, 3, 4], generate: figure('count-triangles') },
+  'count-missing': { topic: 'counting-figures', levels: [3, 4], generate: figure('count-missing') },
+  'count-joined': { topic: 'counting-figures', levels: [4], generate: figure('count-joined') },
+  'figure-with-n': { topic: 'counting-figures', levels: [4], generate: figure('figure-with-n') },
   'mix': { topic: 'colour-basics', levels: [1], generate: colour('mix') },
   'complement': { topic: 'colour-basics', levels: [2], generate: colour('complement') },
   'warm-cool': { topic: 'colour-basics', levels: [2], generate: colour('warm-cool') },

@@ -68,7 +68,7 @@ Update this table in the same change as the work.
 | Counting cubes | [spec](topics/counting-cubes.md) | Built | Built | Built | Built | Preview |
 | Views and rotation | [spec](topics/views-and-rotation.md) | Planned | Planned | Planned | Planned | — |
 | Surfaces of solids | [spec](topics/solid-surfaces.md) | Planned | Planned | Planned | Planned | — |
-| Counting figures | [spec](topics/counting-figures.md) | Planned | Planned | Planned | Planned | — |
+| Counting figures | [spec](topics/counting-figures.md) | Built | Built | Built | Built | `counting-figures` |
 | Gears, belts and levers | [spec](topics/mechanisms.md) | Built | Built | Built | Built | `mechanisms` |
 | Shadows and light | [spec](topics/shadows-and-light.md) | Planned | Planned | Planned | Planned | — |
 | Colour | [spec](topics/colour.md) | Built | Planned | Planned | Planned | Preview |
