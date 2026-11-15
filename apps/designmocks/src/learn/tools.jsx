@@ -12,6 +12,7 @@ import { seededRandom } from './random.js';
 import { bySize, shapesOf } from './figure-count.js';
 import { counterPresets } from './figure-questions.js';
 import { LinesFigure } from './lines-figure.jsx';
+import { NOTCHES, S, notch, openings, packetAfter, packetOutline, refold, unfoldShapes } from './paper-cut.js';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -275,6 +276,48 @@ export function FigureCounter({ figures = ['grid-2'] }) {
   </div>;
 }
 
+// ---------- unfolding cuts, one fold at a time ----------
+const cutFoldSets = { half: ['left'], quarter: ['left', 'up'], corner: ['left', 'up', 'diagonal'] };
+const cutFoldNames = { half: 'One fold', quarter: 'Two folds', corner: 'Three folds' };
+export function CutUnfolder({ sets = ['half', 'quarter'], shapes = ['semicircle', 'triangle'] }) {
+  const [set, setSet] = useState(sets[0]);
+  const [shape, setShape] = useState(shapes[0]);
+  const folds = cutFoldSets[set], packet = packetAfter(folds), edges = packet.triangle ? ['left', 'bottom', 'diagonal'] : ['top', 'right', 'bottom', 'left'];
+  const [edge, setEdge] = useState('right');
+  const usedEdge = edges.includes(edge) ? edge : edges[1];
+  const [opened, setOpened] = useState(0);
+  const cut = notch(packet, usedEdge, 0.5, shape, Math.min(0.8, (usedEdge === 'diagonal' ? packet.w * Math.SQRT2 : usedEdge === 'left' || usedEdge === 'right' ? packet.h : packet.w) * 0.16));
+  const all = unfoldShapes(packet, [cut]), still = folds.slice(0, folds.length - opened), now = packetAfter(still);
+  const shown = all.map(s => ({ ...s, points: refold(s.points, still) }));
+  const isFold = { right: folds.includes('left'), bottom: folds.includes('up'), diagonal: folds.includes('diagonal'), top: false, left: false }[usedEdge];
+  const open = openings(all), holes = open.filter(o => !o.notch).length;
+  const choose = next => { setSet(next); setOpened(0); };
+  const status = opened === 0 ? `Folded: ${packet.layers.length} layers. The ${usedEdge} edge is ${isFold ? 'a fold' : "the sheet's own edge"}.`
+    : opened < folds.length ? `${opened} of ${folds.length} folds undone: the cut now shows ${2 ** opened} times.`
+      : `Fully open: ${holes} hole${holes === 1 ? '' : 's'} and ${open.length - holes} notch${open.length - holes === 1 ? '' : 'es'} at the edge.`;
+  const u = 20, uniq = new Map(shown.map(s => [s.points.map(p => p.map(v => v.toFixed(3)).join(',')).sort().join(';'), s]));
+  return <div className="tool">
+    <div className="tool-row" role="group" aria-label="Choose the folds">
+      {sets.map(name => <button key={name} type="button" className={`chip${name === set ? ' is-active' : ''}`} aria-pressed={name === set} onClick={() => choose(name)}>{cutFoldNames[name]}</button>)}
+    </div>
+    <div className="tool-row" role="group" aria-label="Choose the edge to cut">
+      {edges.map(name => <button key={name} type="button" className={`chip${name === usedEdge ? ' is-active' : ''}`} aria-pressed={name === usedEdge} onClick={() => { setEdge(name); setOpened(0); }}>{`Cut the ${name} edge`}</button>)}
+      {shapes.length > 1 && shapes.map(name => <button key={name} type="button" className={`chip${name === shape ? ' is-active' : ''}`} aria-pressed={name === shape} onClick={() => setShape(name)}>{NOTCHES[name].name.replace(/^a /, '').replace(/^./, c => c.toUpperCase())}</button>)}
+    </div>
+    <div className="tool-stage">
+      <svg className="cut-sheet" viewBox={`-4 -4 ${S * u + 8} ${S * u + 8}`} width={S * u + 8} height={S * u + 8} role="img" aria-label={`The sheet with ${opened} of ${folds.length} folds undone`}>
+        <rect className="sheet-ghost" x="0" y="0" width={S * u} height={S * u} />
+        <polygon className="sheet" points={packetOutline(now).map(([x, y]) => `${x * u},${y * u}`).join(' ')} />
+        {[...uniq.values()].map((s, i) => <polygon key={i} className="cut-away" points={s.points.map(([x, y]) => `${(x * u).toFixed(1)},${(y * u).toFixed(1)}`).join(' ')} />)}
+      </svg>
+    </div>
+    <div className="tool-row">
+      <label className="slider"><span>Unfold</span><input type="range" min="0" max={folds.length} step="1" value={opened} onChange={e => setOpened(Number(e.target.value))} aria-label="Folds undone" /><output aria-hidden="true">{opened} of {folds.length}</output></label>
+    </div>
+    <p className="tool-status" role="status">{status}</p>
+  </div>;
+}
+
 export function LearnTool({ tool, props = {} }) {
   switch (tool) {
     case 'fold-explorer': return <FoldExplorer {...props} />;
@@ -289,8 +332,9 @@ export function LearnTool({ tool, props = {} }) {
     case 'gear-train': return <GearTrain {...props} />;
     case 'lever-bench': return <LeverBench {...props} />;
     case 'figure-counter': return <FigureCounter {...props} />;
+    case 'cut-unfolder': return <CutUnfolder {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder']);
 export { IconButton };

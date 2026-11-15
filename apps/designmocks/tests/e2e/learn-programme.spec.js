@@ -514,3 +514,36 @@ test("counting figures: the counter steps through sizes and every exam-hard kind
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
 });
+
+test("paper folding: cuts unfold step by step and every exam-hard kind is marked", async ({ page }) => {
+  const base = "/learn-programme-preview/paper-folding";
+  const dialog = player(page);
+
+  // The unfolding tool: a cut on the fold opens into one hole; on the outer edge it stays notches.
+  await page.goto(`${base}?lesson=notches`);
+  const hookQuestion = generateQuestion("unfold-cuts", 2, 3);
+  await dialog.getByRole("button", { name: `Option ${hookQuestion.answer}`, exact: true }).click();
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await expect(dialog.getByRole("heading", { name: "Which edges are folds?" })).toBeVisible();
+  await expect(dialog.getByRole("status")).toHaveText("Folded: 2 layers. The right edge is a fold.");
+  const unfold = dialog.getByRole("slider", { name: "Folds undone" });
+  await unfold.fill("1");
+  await expect(dialog.getByRole("status")).toHaveText("Fully open: 1 hole and 0 notches at the edge.");
+  await unfold.fill("0");
+  await dialog.getByRole("button", { name: "Cut the left edge" }).click();
+  await expect(dialog.getByRole("status")).toContainText("the sheet's own edge");
+  await unfold.fill("1");
+  await expect(dialog.getByRole("status")).toHaveText("Fully open: 0 holes and 2 notches at the edge.");
+
+  // The exam-hard quiz, answered from the engine.
+  const { paperFoldingProgramme } = await import("../../src/learn/programmes/paper-folding.js");
+  const set = buildQuiz(paperFoldingProgramme.tiers[2].quiz, 4);
+  await page.goto(`${base}?lesson=quiz-exam-hard&seed=4`);
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else await dialog.getByRole("button", { name: `Option ${question.answer}`, exact: true }).click();
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
