@@ -17,6 +17,8 @@ import { MATRICES, NAMES, applyTo, imageAngles, imageCount, multiply, nameOf, tr
 import { ClockFace, MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
 import { CLUE_CHECK, shiftCode } from './logic.js';
 import { mirror as mirrorSolid, rotate as rotateSolid } from './voxel.js';
+import { roll as rollDie, standardDie as standardDieState } from './dice.js';
+import { DieFigure } from './dice-figures.jsx';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -491,6 +493,26 @@ export function SolidTurner() {
   </div>;
 }
 
+// ---------- rolling a die ----------
+export function DieRoller() {
+  const [die, setDie] = useState(standardDieState());
+  const [rolls, setRolls] = useState([]);
+  const go = dir => { setDie(rollDie(die, dir)); setRolls([...rolls, dir]); };
+  return <div className="tool">
+    <div className="tool-stage"><DieFigure top={die.U} front={die.S} right={die.E} /></div>
+    <div className="tool-row">
+      <div className="icon-cluster" role="group" aria-label="Roll the die">
+        <IconButton label="Roll north" onClick={() => go('north')}>↑</IconButton>
+        <IconButton label="Roll west" onClick={() => go('west')}>←</IconButton>
+        <IconButton label="Roll east" onClick={() => go('east')}>→</IconButton>
+        <IconButton label="Roll south" onClick={() => go('south')}>↓</IconButton>
+      </div>
+      <button type="button" className="chip" onClick={() => { setDie(standardDieState()); setRolls([]); }}>Start again</button>
+    </div>
+    <p className="tool-status" role="status">{`Top ${die.U}, front ${die.S}, right ${die.E}. Bottom ${die.D}, back ${die.N}, left ${die.W}.${rolls.length ? ` Rolls: ${rolls.join(', ')}.` : ''}`}</p>
+  </div>;
+}
+
 export function LearnTool({ tool, props = {} }) {
   switch (tool) {
     case 'fold-explorer': return <FoldExplorer {...props} />;
@@ -510,8 +532,9 @@ export function LearnTool({ tool, props = {} }) {
     case 'number-lab': return <NumberLab {...props} />;
     case 'logic-lab': return <LogicLab {...props} />;
     case 'solid-turner': return <SolidTurner {...props} />;
+    case 'die-roller': return <DieRoller {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner', 'die-roller']);
 export { IconButton };

@@ -63,7 +63,7 @@ Update this table in the same change as the work.
 |---|---|---|---|---|---|---|
 | Cube nets | [spec](topics/cube-nets.md) | Built | Built | Built | Built | Preview |
 | Nets of solids | [spec](topics/nets-of-solids.md) | Built | Built | Built | Built | Preview |
-| Dice | [spec](topics/dice.md) | Planned | Planned | Planned | Planned | — |
+| Dice | [spec](topics/dice.md) | Built | Built | Built | Built | `dice` |
 | Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Built | Built | Built | Preview |
 | Mirror and water images | [spec](topics/mirror-images.md) | Built | Built | Built | Built | Preview |
 | Counting cubes | [spec](topics/counting-cubes.md) | Built | Built | Built | Built | Preview |
