@@ -166,5 +166,21 @@ select pg_temp.bank_assert((select dm_private.bank_review_version(q)=:'utc_versi
   'review digests do not depend on session timezone');
 select pg_temp.bank_assert(not has_function_privilege('authenticated','dm_private.bank_review_figures(text)','EXECUTE')
   and not has_function_privilege('service_role','dm_private.bank_review_version(dm_private.bank_questions)','EXECUTE'),'internal helpers are not client APIs');
+select dm_private.bank_review_version(q) as correction_version from dm_private.bank_questions q where external_key='bank-review-026' \gset
+set local role anon;
+select pg_temp.bank_reject('select public.admin_prepare_bank_answer_correction(''bank-review-026'',''fake'',''A'',''Verified review note'')','permission denied');
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claim.sub',:'student',true);
+select pg_temp.bank_reject('select public.admin_prepare_bank_answer_correction(''bank-review-026'',''fake'',''A'',''Verified review note'')','Admin access required');
+select set_config('request.jwt.claim.sub',:'editor',true);
+select pg_temp.bank_reject('select public.admin_prepare_bank_answer_correction(''bank-review-026'',''stale'',''A'',''Verified review note'')','Question changed');
+select public.admin_prepare_bank_answer_correction('bank-review-026',:'correction_version','A','Verified review note') as correction \gset
+select pg_temp.bank_assert((:'correction'::jsonb#>>'{packet,payloadText}')::jsonb#>>'{answer,raw}'='A'
+  and :'correction'::jsonb#>>'{packet,contentSha256}'=encode(sha256(convert_to(:'correction'::jsonb#>>'{packet,payloadText}','UTF8')),'hex'),
+  'the correction is a digested answer-only review packet');
+reset role;
+select pg_temp.bank_assert((select payload#>>'{answer,raw}'='B' from dm_private.bank_questions where external_key='bank-review-026'),
+  'preparing a correction preserves the canonical record');
 rollback;
 \echo 'PASS: complete bank pagination, filters, canonical figures, admin authorization, version fencing and audited review.'

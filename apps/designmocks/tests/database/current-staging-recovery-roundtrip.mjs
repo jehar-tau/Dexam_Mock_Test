@@ -100,6 +100,12 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
         and split_part(setting, '=', 1) = 'pgrst.db_pre_request';`;
     assert.equal(await sql(hookSetting, target), '');
     const priorInventory = JSON.parse(await sql(inventoryQuery, target));
+    const verifyPriorInventory = async () => {
+      const current = JSON.parse(await sql(inventoryQuery, target));
+      const correction = current.functions.find(row => row.signature === answerCorrectionSignature);
+      assert.ok(correction && !correction.anon && !correction.authenticated);
+      assert.deepEqual({ ...current, functions: current.functions.filter(row => row !== correction) }, priorInventory);
+    };
     const directAuthenticatedGrants = `select coalesce(jsonb_agg(signature order by signature), '[]')
       from (select format('%I.%I(%s)', n.nspname, p.proname, oidvectortypes(p.proargtypes)) as signature
         from pg_proc p join pg_namespace n on n.oid = p.pronamespace
@@ -108,11 +114,16 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
             where a.grantee = 'authenticated'::regrole and a.privilege_type = 'EXECUTE')) grants;`;
     const priorDirectGrants = new Set(JSON.parse(await sql(directAuthenticatedGrants, target)));
     assert.ok(priorDirectGrants.has('public.community_thread(uuid)'));
+    const answerCorrectionMigration = '202611140168_bank_answer_correction_packets.sql';
+    const answerCorrectionSignature = 'public.admin_prepare_bank_answer_correction(text, text, text, text)';
     await apply(storageMigration, target);
+    await apply(answerCorrectionMigration, target);
+    await sql("revoke execute on function " + answerCorrectionSignature + " from authenticated", target);
     await sql(await readFile(new URL('private-staging-api.sql', launchDirectory), 'utf8'), target);
     await sql(await readFile(new URL('private-staging-portal-grants.sql', launchDirectory), 'utf8'), target);
     assert.equal(await sql(`select exists (select from pg_policies where schemaname='storage' and tablename='objects'
         and policyname='dmocks_private_objects_require_server' and permissive='RESTRICTIVE')
+      and has_function_privilege('authenticated','public.admin_prepare_bank_answer_correction(text,text,text,text)','execute')
       and has_function_privilege('authenticated','public.community_feed(text,text,jsonb,integer)','execute')
       and not has_function_privilege('anon','public.public_all_india_top_ten()','execute')
       and not dm_private.mvp_test_checkout_allowed()
@@ -140,7 +151,7 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
     assert.ok(addedGrants.includes('public.community_feed(text, text, jsonb, integer)'));
     await sql('revoke execute on function ' + addedGrants.join(', ') + ' from authenticated;', target);
     assert.deepEqual(new Set(JSON.parse(await sql(directAuthenticatedGrants, target))), priorDirectGrants);
-    assert.deepEqual(JSON.parse(await sql(inventoryQuery, target)), priorInventory);
+    await verifyPriorInventory();
     await assert.rejects(sql(recoveryActor(state.other, 'select dm_staging_api.check_admission()'), target));
     assert.equal(await sql(hookSetting, target), 'pgrst.db_pre_request=dm_staging_api.check_admission');
     await sql(`alter role authenticator in database ${target} reset pgrst.db_pre_request;
@@ -148,7 +159,7 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
     assert.equal(await sql(hookSetting, target), '');
     assert.equal(await sql(`select exists (select from pg_policies where schemaname = 'storage' and tablename = 'objects'
         and policyname = 'dmocks_private_objects_require_server' and permissive = 'RESTRICTIVE');`, target), 't');
-    assert.deepEqual(JSON.parse(await sql(inventoryQuery, target)), priorInventory);
+    await verifyPriorInventory();
     await sql(await readFile(new URL('private-staging-api.sql', launchDirectory), 'utf8'), target);
     await sql(await readFile(new URL('private-staging-portal-grants.sql', launchDirectory), 'utf8'), target);
     assert.equal(await sql('select dm_private.mvp_profile_permissions_valid()', target), 'f');
@@ -161,6 +172,7 @@ commit;`, target);
       and (select environment_mode = 'test' and not sales_enabled from public.launch_settings where singleton)
       and (select mode = 'testers' from dm_private.registration_policy where id)
       and not has_function_privilege('authenticated', 'public.community_feed(text,text,jsonb,integer)', 'execute')
+      and not has_function_privilege('authenticated', 'public.admin_prepare_bank_answer_correction(text,text,text,text)', 'execute')
       and not has_function_privilege('anon', 'public.public_all_india_top_ten()', 'execute')
       and has_function_privilege('service_role', 'public.prepare_mvp_paper(jsonb)', 'execute')
       and not has_function_privilege('authenticated', 'public.prepare_mvp_paper(jsonb)', 'execute');`, target), 't');

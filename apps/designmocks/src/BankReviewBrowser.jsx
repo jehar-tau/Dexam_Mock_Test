@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAdminFunctions } from "./AdminAccess.jsx";
 import { bankReviewImages, bankSearchInput, conversionChecklist, deliveryAnswerLabel, initialBankFilters, practiceApprovalReady, questionUsage, sourceAnswerLabel } from "./bank-review.js";
 import { NidQuestionBinding } from './NidQuestionBinding.jsx';
@@ -13,7 +13,43 @@ async function loadBankFigures(functions, question) {
   return data.images;
 }
 
-function BankQuestionReview({ selected, rpc, onClose, onReviewed, onBound, bindingLocked, onBindingLockChange, loadMedia }) {
+function AnswerCorrection({ question, onDownload, disabled }) {
+  const [message, setMessage] = useState("");
+  const [busy, setBusy] = useState(false);
+  const request = useRef(null);
+  useEffect(() => () => request.current?.abort(), []);
+
+  const submit = async event => {
+    event.preventDefault();
+    if (disabled || request.current) return;
+    const form = new FormData(event.currentTarget);
+    const controller = new AbortController();
+    request.current = controller;
+    setBusy(true);
+    setMessage("");
+    try {
+      await onDownload(question, String(form.get("answer")).trim(), String(form.get("note")).trim(), controller.signal);
+      if (!controller.signal.aborted) setMessage("Correction downloaded for Git review.");
+    } catch {
+      if (!controller.signal.aborted) setMessage("Couldn’t prepare the correction. Check the answer and refresh the question before trying again.");
+    } finally {
+      request.current = null;
+      if (!controller.signal.aborted) setBusy(false);
+    }
+  };
+
+  return <details>
+    <summary>Prepare answer correction</summary>
+    <form className="admin-form" onSubmit={submit}>
+      <label>Proposed answer<input name="answer" maxLength={200} required /></label>
+      <label>Source evidence<textarea name="note" minLength={10} maxLength={1000} required /></label>
+      <button disabled={disabled || busy}>Download correction for Git review</button>
+      {message && <p role="status">{message}</p>}
+    </form>
+  </details>;
+}
+
+function BankQuestionReview({ selected, rpc, onClose, onReviewed, onBound, bindingLocked, onBindingLockChange, loadMedia, onDownloadCorrection }) {
   const [question, setQuestion] = useState(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -112,12 +148,14 @@ function BankQuestionReview({ selected, rpc, onClose, onReviewed, onBound, bindi
           <button name="decision" value="reject" disabled={busy || bindingLocked}>Request correction</button>
         </div>
       </form>}
+      {canReview && onDownloadCorrection && ["MCQ", "MSQ", "NAT"].includes(question.type) &&
+        <AnswerCorrection question={question} onDownload={onDownloadCorrection} disabled={!figuresReady || busy || bindingLocked} />}
       <details><summary>Source record</summary><p>Canonical key {question.externalKey}</p><p>Source commit <code>{question.sourceCommit}</code></p><p>Content digest <code>{question.contentSha256}</code></p></details>
     </>}
   </section>;
 }
 
-export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia, refreshToken = 0 }) {
+export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia, refreshToken = 0, onDownloadCorrection }) {
   const functions = useAdminFunctions();
   const defaultMedia = useCallback(question => loadBankFigures(functions, question), [functions]);
   const [filters, setFilters] = useState(initialBankFilters);
@@ -172,7 +210,7 @@ export function BankReviewBrowser({ rpc, onReviewed = async () => {}, loadMedia,
     {message && <p role="status">{message}</p>}
     {error && <p role="alert" className="error">{error}</p>}
     {loading && <p role="status">Loading question bank…</p>}
-    {selected && <BankQuestionReview key={`${selected.externalKey}-${selected.reviewVersion}`} selected={selected} rpc={rpc} onClose={() => setSelected(null)} onReviewed={reviewed} onBound={bound} bindingLocked={bindingLocked} onBindingLockChange={setBindingLocked} loadMedia={loadMedia??defaultMedia} />}
+    {selected && <BankQuestionReview key={`${selected.externalKey}-${selected.reviewVersion}`} selected={selected} rpc={rpc} onClose={() => setSelected(null)} onReviewed={reviewed} onBound={bound} bindingLocked={bindingLocked} onBindingLockChange={setBindingLocked} loadMedia={loadMedia??defaultMedia} onDownloadCorrection={onDownloadCorrection} />}
     {result && !loading && <>
       <p>{result.total ? `${result.offset + 1}–${Math.min(result.offset + result.limit, result.total)} of ${result.total} matching questions` : "No questions match these filters."}</p>
       <div className="admin-list">{result.items.map(question => <article key={question.externalKey}>

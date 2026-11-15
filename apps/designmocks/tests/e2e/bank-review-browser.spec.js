@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 import { fileURLToPath } from "node:url";
 import { emptyAdminRead, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
@@ -39,6 +41,17 @@ async function fixture(page, { admin = true } = {}) {
       case "admin_bank_question": {
         const q = questions.find(q => q.externalKey === input.p_external_key);
         return input.p_expected_version === q.reviewVersion ? q : { code: "40001", message: changedMessage };
+      }
+      case "admin_prepare_bank_answer_correction": {
+        const q = questions.find(q => q.externalKey === input.p_external_key);
+        if (q.reviewVersion !== input.p_expected_version) return { code: "40001", message: changedMessage };
+        const payloadText = JSON.stringify({ externalKey: q.externalKey, prompt: q.prompt, type: q.type,
+          provenance: { exam: q.exam }, holds: [], answer: { raw: input.p_answer, status: "human-reviewed" } });
+        return { replacesContentSha256: q.contentSha256, sourceCommit: q.sourceCommit, packet: {
+          format: "dmocks-question-export-v1", artifactId: editor.id, externalKey: q.externalKey, payloadText,
+          contentSha256: createHash("sha256").update(payloadText).digest("hex"), rightsNote: input.p_review_note,
+          sourceType: "manual", createdAt: "2026-11-14T00:00:00Z", publicationState: "git-review-required",
+        } };
       }
       case "bank-review-media": return { images: [{ ordinal: 1, width: 1, height: 1, url: figureURL }] };
       case "admin_review_bank_question": {
@@ -230,4 +243,26 @@ test("students cannot load bank questions or private review figures from the adm
   await expect(page.getByRole("region", { name: "Imported bank review", exact: true })).toHaveCount(0);
   expect(state.calls.some(([name]) => ["admin_search_bank_questions", "admin_bank_question", "bank-review-media"].includes(name))).toBe(false);
   expect(state.unexpected).toEqual([]);
+});
+
+test("an administrator downloads a version-pinned answer correction for Git review", async ({ page }) => {
+  const state = await fixture(page);
+  await page.getByRole("button", {name: "Open question bank-review-001", exact: true}).click();
+  const review = page.getByRole("region", {name: "Question review"});
+  await review.getByText("Prepare answer correction", {exact: true}).click();
+  await review.getByLabel("Proposed answer").fill("A");
+  await review.getByLabel("Source evidence").fill("Verified against the fictional answer key.");
+  const pending = page.waitForEvent("download");
+  await review.getByRole("button", {name: "Download correction for Git review"}).click();
+  const download = await pending;
+  const packet = JSON.parse(await readFile(await download.path(), "utf8"));
+  expect(packet.sourceCommit).toBe("a".repeat(40));
+  expect(packet.contentSha256).toBe(createHash("sha256").update(packet.payloadText).digest("hex"));
+  expect(packet.replacesContentSha256).toBe("b".repeat(64));
+  expect(JSON.parse(packet.payloadText).answer).toEqual({raw: "A", status: "human-reviewed"});
+  expect(state.calls).toContainEqual(["admin_prepare_bank_answer_correction", {
+    p_external_key: "bank-review-001", p_expected_version: "version-1-1",
+    p_answer: "A", p_review_note: "Verified against the fictional answer key.",
+  }]);
+  expect(state.questions[0].answer.raw).toBe("B");
 });

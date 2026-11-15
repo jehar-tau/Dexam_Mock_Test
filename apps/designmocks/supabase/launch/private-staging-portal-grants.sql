@@ -53,6 +53,7 @@ grant execute on function
   public.admin_export_question_draft(uuid, text, boolean, text),
   public.admin_learning_lessons(),
   public.admin_moderate_community(text, uuid, text, text, text, uuid),
+  public.admin_prepare_bank_answer_correction(text, text, text, text),
   public.admin_promote_intake_asset(uuid, jsonb),
   public.admin_promote_intake_candidate(uuid, jsonb),
   public.admin_question_drafts(),
