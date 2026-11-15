@@ -18,6 +18,7 @@ import { Outline } from './surface-figures.jsx';
 import { CubeCut, Revolve } from './section-figures.jsx';
 import { Pieces } from './fit-figures.jsx';
 import { Sheet } from './overlay-figures.jsx';
+import { Coins, Frame, LeverLine, PulleyBlock, Standing } from './machine-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -308,6 +309,11 @@ export function Figure({ spec, compact = false }) {
     case 'panel': return <Panel panel={spec.panel} size={compact ? 56 : 72} />;
     case 'panel-row': return <PanelRow panels={spec.panels} ask={spec.ask} analogy={spec.analogy} />;
     case 'panel-grid': return <PanelGrid grid={spec.grid} />;
+    case 'lever-line': return <LeverLine order={spec.order} arms={spec.arms} />;
+    case 'pulley-block': return <PulleyBlock strands={spec.strands} />;
+    case 'frame': return <Frame points={spec.points} bars={spec.bars} compact={compact} />;
+    case 'standing': return <Standing poly={spec.poly} compact={compact} />;
+    case 'coins': return <Coins R={spec.R} r={spec.r} inside={spec.inside} />;
     case 'sheet': return <Sheet n={spec.n} cells={spec.cells} label={spec.label} fold={spec.fold} region={spec.region} compact={compact} />;
     case 'pieces': return <Pieces pieces={spec.pieces} compact={compact} />;
     case 'cube-cut': return <CubeCut points={spec.points} polygon={spec.polygon} compact={compact} />;

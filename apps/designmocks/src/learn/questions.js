@@ -29,6 +29,7 @@ import { SECTION_KINDS, sectionsQuestion } from './sections.js';
 import { FIT_KINDS, fitQuestion } from './fit.js';
 import { OVERLAY_KINDS, overlayQuestion } from './overlay.js';
 import { AREA_KINDS, areaQuestion } from './area.js';
+import { MACHINE_KINDS, machinesQuestion } from './machines.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -127,6 +128,7 @@ const kinds = {
   'same-solid': { topic: 'views-and-rotation', levels: [2, 3, 4], generate: (seed, level) => viewsQuestion(seed, 'same-solid', level) },
   'view-after-turn': { topic: 'views-and-rotation', levels: [4], generate: seed => viewsQuestion(seed, 'view-after-turn', 4) },
   ...Object.fromEntries(Object.entries(DICE_KINDS).map(([kind, levels]) => [kind, { topic: 'dice', levels, generate: (seed, level) => diceQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(MACHINE_KINDS).map(([kind, levels]) => [kind, { topic: 'mechanisms', levels, generate: (seed, level) => machinesQuestion(seed, kind, level) }])),
   ...Object.fromEntries(Object.entries(AREA_KINDS).map(([kind, levels]) => [kind, { topic: 'counting-figures', levels, generate: (seed, level) => areaQuestion(seed, kind, level) }])),
   ...Object.fromEntries(Object.entries(OVERLAY_KINDS).map(([kind, levels]) => [kind, { topic: 'overlays', levels, generate: (seed, level) => overlayQuestion(seed, kind, level) }])),
   ...Object.fromEntries(Object.entries(FIT_KINDS).map(([kind, levels]) => [kind, { topic: 'fit', levels, generate: (seed, level) => fitQuestion(seed, kind, level) }])),
