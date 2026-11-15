@@ -14,7 +14,7 @@ import { counterPresets } from './figure-questions.js';
 import { LinesFigure } from './lines-figure.jsx';
 import { NOTCHES, S, notch, openings, packetAfter, packetOutline, refold, unfoldShapes } from './paper-cut.js';
 import { MATRICES, NAMES, applyTo, imageAngles, imageCount, multiply, nameOf, traceRay } from './mirror-exam.js';
-import { MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
+import { ClockFace, MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -372,6 +372,39 @@ export function MirrorLab({ mode = 'line', lines = ['right', 'bottom', 'falling'
   </div>;
 }
 
+// ---------- number lab: clock hands, and a bar split in a ratio ----------
+export function NumberLab({ mode = 'clock' }) {
+  const [minutes, setMinutes] = useState(120);
+  const [parts, setParts] = useState([2, 3]);
+  const [total, setTotal] = useState(250);
+  if (mode === 'bar') {
+    const sum = parts[0] + parts[1], unit = total / sum;
+    return <div className="tool">
+      <div className="tool-stage"><div className="ratio-bar" role="img" aria-label={`A bar of ${total} split ${parts[0]} to ${parts[1]}`}>
+        {parts.flatMap((n, side) => Array.from({ length: n }, (_, i) => <span key={`${side}.${i}`} className={`ratio-part side-${side}`}>{Number.isInteger(unit) ? unit : unit.toFixed(1)}</span>))}
+      </div></div>
+      <div className="tool-row">
+        <label className="slider"><span>First</span><input type="range" min="1" max="6" step="1" value={parts[0]} onChange={e => setParts([Number(e.target.value), parts[1]])} aria-label="Parts for the first share" /><output aria-hidden="true">{parts[0]}</output></label>
+        <label className="slider"><span>Second</span><input type="range" min="1" max="6" step="1" value={parts[1]} onChange={e => setParts([parts[0], Number(e.target.value)])} aria-label="Parts for the second share" /><output aria-hidden="true">{parts[1]}</output></label>
+        <label className="slider"><span>Total</span><input type="range" min="50" max="600" step="50" value={total} onChange={e => setTotal(Number(e.target.value))} aria-label="Total to share" /><output aria-hidden="true">{total}</output></label>
+      </div>
+      <p className="tool-status" role="status">{`${sum} parts, each ${Number.isInteger(unit) ? unit : unit.toFixed(2)}. Shares: ${Number.isInteger(unit * parts[0]) ? unit * parts[0] : (unit * parts[0]).toFixed(2)} and ${Number.isInteger(unit * parts[1]) ? unit * parts[1] : (unit * parts[1]).toFixed(2)}.`}</p>
+    </div>;
+  }
+  const h = Math.floor(minutes / 60) % 12 || 12, m = minutes % 60, hourAngle = (30 * (h % 12) + m / 2) % 360, minuteAngle = 6 * m, gap = Math.abs(hourAngle - minuteAngle), angle = Math.min(gap, 360 - gap);
+  return <div className="tool">
+    <div className="tool-stage"><ClockFace h={h} m={m} size={170} label={`Clock showing ${h}:${String(m).padStart(2, '0')}`} /></div>
+    <div className="tool-row">
+      <label className="slider"><span>Time</span><input type="range" min="0" max="719" step="1" value={minutes} onChange={e => setMinutes(Number(e.target.value))} aria-label="Minutes after 12 o'clock" /><output aria-hidden="true">{`${h}:${String(m).padStart(2, '0')}`}</output></label>
+      <div className="icon-cluster" role="group" aria-label="Step the time">
+        <IconButton label="One minute back" onClick={() => setMinutes((minutes + 719) % 720)}>‹</IconButton>
+        <IconButton label="One minute on" onClick={() => setMinutes((minutes + 1) % 720)}>›</IconButton>
+      </div>
+    </div>
+    <p className="tool-status" role="status">{`${h}:${String(m).padStart(2, '0')}. Hour hand at ${hourAngle}°, minute hand at ${minuteAngle}°: ${angle}° apart.`}</p>
+  </div>;
+}
+
 export function LearnTool({ tool, props = {} }) {
   switch (tool) {
     case 'fold-explorer': return <FoldExplorer {...props} />;
@@ -388,8 +421,9 @@ export function LearnTool({ tool, props = {} }) {
     case 'figure-counter': return <FigureCounter {...props} />;
     case 'cut-unfolder': return <CutUnfolder {...props} />;
     case 'mirror-lab': return <MirrorLab {...props} />;
+    case 'number-lab': return <NumberLab {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab']);
 export { IconButton };

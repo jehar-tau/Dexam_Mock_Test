@@ -17,6 +17,7 @@ import { mechanismQuestion } from './gears.js';
 import { figureQuestion } from './figure-questions.js';
 import { paperQuestion } from './paper-cut.js';
 import { mirrorExamQuestion } from './mirror-exam.js';
+import { QUANT_LEVELS, quantQuestion } from './quant.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -107,6 +108,7 @@ const kinds = {
   'count-missing': { topic: 'counting-figures', levels: [3, 4], generate: figure('count-missing') },
   'count-joined': { topic: 'counting-figures', levels: [4], generate: figure('count-joined') },
   'figure-with-n': { topic: 'counting-figures', levels: [4], generate: figure('figure-with-n') },
+  ...Object.fromEntries(Object.entries(QUANT_LEVELS).map(([kind, level]) => [kind, { topic: 'quant', levels: [level], generate: seed => quantQuestion(seed, kind) }])),
   'mix': { topic: 'colour-basics', levels: [1], generate: colour('mix') },
   'complement': { topic: 'colour-basics', levels: [2], generate: colour('complement') },
   'warm-cool': { topic: 'colour-basics', levels: [2], generate: colour('warm-cool') },
