@@ -526,7 +526,7 @@ function AdminDesk({ session }) {
             ))}
           </div>
           </>}
-          <BankReviewBrowser rpc={rpc} onDownloadCorrection={downloadBankCorrection} onReviewed={load} refreshToken={bankRefreshToken} />
+          <BankReviewBrowser rpc={rpc} onDownloadCorrection={postLaunchPreview ? downloadBankCorrection : undefined} onReviewed={load} refreshToken={bankRefreshToken} />
           <NidPracticeBlueprints />
           {postLaunchPreview&&<>
           <h2>Question review queue</h2>
