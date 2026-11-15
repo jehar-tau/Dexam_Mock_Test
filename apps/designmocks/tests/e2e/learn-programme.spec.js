@@ -11,7 +11,7 @@ const feedback = page => player(page).locator(".feedback");
 test("the Learn preview lists every programme and opens an overview", async ({ page }) => {
   await page.goto("/learn-preview");
   const list = page.getByLabel("Interactive programmes");
-  for (const title of ["Cube nets", "Nets of solids", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Gears, belts and levers", "Counting figures", "Colour basics"]) {
+  for (const title of ["Cube nets", "Nets of solids", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Colour basics"]) {
     await expect(list.locator("article", { hasText: title })).toBeVisible();
   }
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
@@ -513,4 +513,132 @@ test("counting figures: the counter steps through sizes and every exam-hard kind
     await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("paper folding: cuts unfold step by step and every exam-hard kind is marked", async ({ page }) => {
+  const base = "/learn-programme-preview/paper-folding";
+  const dialog = player(page);
+
+  // The unfolding tool: a cut on the fold opens into one hole; on the outer edge it stays notches.
+  await page.goto(`${base}?lesson=notches`);
+  const hookQuestion = generateQuestion("unfold-cuts", 2, 3);
+  await dialog.getByRole("button", { name: `Option ${hookQuestion.answer}`, exact: true }).click();
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await expect(dialog.getByRole("heading", { name: "Which edges are folds?" })).toBeVisible();
+  await expect(dialog.getByRole("status")).toHaveText("Folded: 2 layers. The right edge is a fold.");
+  const unfold = dialog.getByRole("slider", { name: "Folds undone" });
+  await unfold.fill("1");
+  await expect(dialog.getByRole("status")).toHaveText("Fully open: 1 hole and 0 notches at the edge.");
+  await unfold.fill("0");
+  await dialog.getByRole("button", { name: "Cut the left edge" }).click();
+  await expect(dialog.getByRole("status")).toContainText("the sheet's own edge");
+  await unfold.fill("1");
+  await expect(dialog.getByRole("status")).toHaveText("Fully open: 0 holes and 2 notches at the edge.");
+
+  // The exam-hard quiz, answered from the engine.
+  const { paperFoldingProgramme } = await import("../../src/learn/programmes/paper-folding.js");
+  const set = buildQuiz(paperFoldingProgramme.tiers[2].quiz, 4);
+  await page.goto(`${base}?lesson=quiz-exam-hard&seed=4`);
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else await dialog.getByRole("button", { name: `Option ${question.answer}`, exact: true }).click();
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("mirror images: the mirror lab and every exam-hard kind are marked", async ({ page }) => {
+  const base = "/learn-programme-preview/mirror-images";
+  const dialog = player(page);
+
+  // Two mirrors at an angle: the count follows the rule as the angle changes.
+  await page.goto(`${base}?lesson=two-mirrors`);
+  await dialog.getByRole("textbox", { name: "Your answer" }).fill("1");
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("360 ÷ 90 = 4, even. 3 images.");
+  const angle = dialog.getByRole("slider", { name: "Angle between the mirrors" });
+  await angle.fill("3");
+  await expect(dialog.getByRole("status")).toHaveText("360 ÷ 72 = 5, odd. 5 images.");
+  await dialog.getByRole("button", { name: "Object half way" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("360 ÷ 72 = 5, odd. 4 images.");
+
+  // A chain of two reflections in lines at right angles is a half turn.
+  await page.goto(`${base}?lesson=chains`);
+  const chain = generateQuestion("reflection-chain", 1, 4);
+  await dialog.getByRole("button", { name: `Option ${chain.answer}`, exact: true }).click();
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await dialog.getByRole("button", { name: "Then below" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("Result: turned half way round.");
+
+  // The exam-hard quiz, answered from the engine.
+  const { mirrorImagesProgramme } = await import("../../src/learn/programmes/mirror-images.js");
+  const set = buildQuiz(mirrorImagesProgramme.tiers[2].quiz, 6);
+  await page.goto(`${base}?lesson=quiz-exam-hard&seed=6`);
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    const right = question.options?.find(o => o.id === question.answer);
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click();
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("number and quantity: the clock lab and the exam-hard set are marked", async ({ page }) => {
+  const base = "/learn-programme-preview/quant";
+  const dialog = player(page);
+  await page.goto(`${base}?lesson=clocks`);
+  await dialog.getByRole("textbox", { name: "Your answer" }).fill("1");
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("2:00. Hour hand at 60°, minute hand at 0°: 60° apart.");
+  await dialog.getByRole("button", { name: "One minute on" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("2:01. Hour hand at 60.5°, minute hand at 6°: 54.5° apart.");
+
+  const { quantProgramme } = await import("../../src/learn/programmes/quant.js");
+  const set = buildQuiz(quantProgramme.tiers[2].quiz, 2);
+  await page.goto(`${base}?lesson=quiz-exam-hard&seed=2`);
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else await dialog.getByRole("button", { name: question.options.find(o => o.id === question.answer).text, exact: true }).click();
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("reasoning: the logic lab tools work and the exam-hard sets are marked", async ({ page }) => {
+  const dialog = player(page);
+  await page.goto("/learn-programme-preview/codes-patterns?lesson=letter-codes");
+  await expect(dialog.getByRole("status")).toHaveText("CHAIR is written DIBJS: each letter moves 1 forward.");
+  await dialog.getByRole("button", { name: "Write it backwards" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("CHAIR is written SJBID: each letter moves 1 forward, then the code is reversed.");
+
+  await page.goto("/learn-programme-preview/arrangements?lesson=rows");
+  await expect(dialog.getByRole("status")).toContainText("clues hold");
+  await dialog.getByRole("button", { name: "Asha", exact: true }).click();
+  await expect(dialog.getByRole("status")).toHaveText("Now tap the seat to swap Asha with.");
+  await dialog.getByRole("button", { name: "Esha", exact: true }).click();
+  await expect(dialog.getByRole("button", { name: "Esha", exact: true })).toBeVisible();
+
+  await page.goto("/learn-programme-preview/directions?lesson=turns");
+  await dialog.getByRole("button", { name: "Walk 1 m" }).click();
+  await dialog.getByRole("button", { name: "Turn right" }).click();
+  await dialog.getByRole("button", { name: "Walk 1 m" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("Facing east. 1 m east and 1 m north of the start: 1.41 m away.");
+
+  for (const slug of ["codes-patterns", "arrangements", "directions"]) {
+    const programmes = await import("../../src/learn/programmes/logic.js");
+    const programme = Object.values(programmes).find(p => p.slug === slug);
+    const set = buildQuiz(programme.tiers[2].quiz, 3);
+    await page.goto(`/learn-programme-preview/${slug}?lesson=quiz-exam-hard&seed=3`);
+    await dialog.getByRole("button", { name: "Begin" }).click();
+    for (const question of set) {
+      const right = question.options?.find(o => o.id === question.answer);
+      if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+      else await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click();
+      await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+    }
+    await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+  }
 });

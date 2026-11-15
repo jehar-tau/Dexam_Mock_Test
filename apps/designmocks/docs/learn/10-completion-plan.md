@@ -26,17 +26,17 @@ timed set with exam marking). Rules for building and merging are in
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 1 | Paper folding and cutting (tiers 2–4) | Diagonal folds; three and four folds; cuts on a folded edge; unfolded pattern of holes; counting holes and pieces | Spatial bank |
-| 2 | Mirror and water images (tiers 2–4) | Two mirrors one after another; mirror plus a turn; clocks in a mirror; words and numbers in a mirror or water | Spatial bank |
+| 1 | Paper folding and cutting (tiers 2–4) **Done** | Diagonal folds; three and four folds; cuts on a folded edge; unfolded pattern of holes; counting holes and pieces | Spatial bank |
+| 2 | Mirror and water images (tiers 2–4) **Done** | Two mirrors one after another; mirror plus a turn; clocks in a mirror; words and numbers in a mirror or water | Spatial bank |
 
 ### Group 2: the heaviest written sections
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 3 | Number and quantity | Percentages and discount slabs; profit and loss; ratio and exchange; averages and ages; time and work; speed, meeting and overtaking; clock hands; LCM, HCF and digits; mensuration (cutting, stacking, volume) | Quant theory and bank |
-| 4 | Codes and number patterns | Letter and symbol coding; number grids, diamonds and wheels; next term in a sequence; missing number | Logic theory and bank |
-| 5 | Arrangements and puzzles | Seating in a row and a circle; ordering and ranking; constraint puzzles (handshakes, groups); symbol equations | Logic bank |
-| 6 | Directions, clocks and calendars | Walking directions and distance; paths through a maze; relations; day of the week; clock angles | Logic bank |
+| 3 | Number and quantity **Done** | Percentages and discount slabs; profit and loss; ratio and exchange; averages and ages; time and work; speed, meeting and overtaking; clock hands; LCM, HCF and digits; mensuration (cutting, stacking, volume) | Quant theory and bank |
+| 4 | Codes and number patterns **Done** | Letter and symbol coding; number grids, diamonds and wheels; next term in a sequence; missing number | Logic theory and bank |
+| 5 | Arrangements and puzzles **Done** | Seating in a row and a circle; ordering and ranking; constraint puzzles (handshakes, groups); symbol equations | Logic bank |
+| 6 | Directions, clocks and calendars **Done** | Walking directions and distance; paths through a maze; relations; day of the week; clock angles | Logic bank |
 
 ### Group 3: the rest of visualisation
 

@@ -64,14 +64,18 @@ Update this table in the same change as the work.
 | Cube nets | [spec](topics/cube-nets.md) | Built | Built | Built | Built | Preview |
 | Nets of solids | [spec](topics/nets-of-solids.md) | Built | Built | Built | Built | Preview |
 | Dice | [spec](topics/dice.md) | Planned | Planned | Planned | Planned | — |
-| Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Planned | Planned | Planned | Preview |
-| Mirror and water images | [spec](topics/mirror-images.md) | Built | Planned | Planned | Planned | Preview |
+| Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Built | Built | Built | Preview |
+| Mirror and water images | [spec](topics/mirror-images.md) | Built | Built | Built | Built | Preview |
 | Counting cubes | [spec](topics/counting-cubes.md) | Built | Built | Built | Built | Preview |
 | Views and rotation | [spec](topics/views-and-rotation.md) | Planned | Planned | Planned | Planned | — |
 | Surfaces of solids | [spec](topics/solid-surfaces.md) | Planned | Planned | Planned | Planned | — |
 | Counting figures | [spec](topics/counting-figures.md) | Built | Built | Built | Built | `counting-figures` |
 | Gears, belts and levers | [spec](topics/mechanisms.md) | Built | Built | Built | Built | `mechanisms` |
 | Shadows and light | [spec](topics/shadows-and-light.md) | Planned | Planned | Planned | Planned | — |
+| Number and quantity | [spec](topics/quant.md) | Built | Built | Built | Built | `quant` |
+| Codes and number patterns | [spec](topics/logic.md) | Built | Built | Built | Built | `codes-patterns` |
+| Arrangements and puzzles | [spec](topics/logic.md) | Built | Built | Built | Built | `arrangements` |
+| Directions, clocks and calendars | [spec](topics/logic.md) | Built | Built | Built | Built | `directions` |
 | Colour | [spec](topics/colour.md) | Built | Planned | Planned | Planned | Preview |
 
 Foundation work packages: F6, F1, F3, F4, F5, F2 and F9 are done; see the
