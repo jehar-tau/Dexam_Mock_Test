@@ -8,6 +8,8 @@ import { describeFace, newell } from './solid-net.js';
 import { BeamFigure, GearsFigure, MobileFigure, RopeFigure } from './mechanism-figures.jsx';
 import { LinesFigure } from './lines-figure.jsx';
 import { CutSequence, CutSheet, FlapPlan, FlapSheet, LetterSheet } from './paper-figures.jsx';
+import { ClockFace, MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
+import { MazeFigure, NumberDiamond } from './logic-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -275,6 +277,13 @@ export function Figure({ spec, compact = false }) {
     case 'flap-plan': return <FlapPlan flaps={spec.flaps} />;
     case 'flap-sheet': return <FlapSheet outline={spec.outline} back={spec.back} allFront={spec.allFront} compact={compact} />;
     case 'letter-sheet': return <LetterSheet strokes={spec.strokes} creases={spec.creases} compact={compact} />;
+    case 'tone-grid': return <ToneGrid cells={spec.cells} n={spec.n} lines={spec.lines} compact={compact} />;
+    case 'clock': return <ClockFace h={spec.h} m={spec.m} />;
+    case 'mirror-angle': return <MirrorAngle theta={spec.theta} onBisector={spec.onBisector} />;
+    case 'ray-grid': return <RayGrid n={spec.n} mirrors={spec.mirrors} start={spec.start} labels={spec.labels} compact={compact} />;
+    case 'table': return <table className="data-table"><thead><tr>{spec.head.map(h => <th key={h} scope="col">{h}</th>)}</tr></thead><tbody>{spec.rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>)}</tbody></table>;
+    case 'number-diamond': return <NumberDiamond outer={spec.outer} centre={spec.centre} compact={compact} />;
+    case 'maze': return <MazeFigure n={spec.n} m={spec.m} open={spec.open} from={spec.from} to={spec.to} compact={compact} />;
     case 'swatch': return <Swatch colour={spec.colour} name={spec.name} large={!compact} />;
     default: return null;
   }

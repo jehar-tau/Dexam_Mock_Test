@@ -3,8 +3,12 @@
 Slug `mirror-images` · topic `visualisation` · exams uceed, ceed, nid, nift ·
 engine `src/learn/mirror.js` · tool `mirror`
 
-Status: Foundations **Built** · Exam standard Planned · Exam hard Planned ·
-Mastery Planned
+Status: Foundations Built · Exam standard Built · Exam hard Built ·
+Mastery Built (15 November 2026). The upper tiers use `src/learn/mirror-exam.js`,
+figures in `src/learn/mirror-figures.jsx` and the tool `mirror-lab`. Tests in
+`tests/mirror-exam.test.mjs` redo every answer another way: flips cell by cell,
+clock hands as angles, images found by following the reflections, rays walked
+with a separate turn table. Added `image-count` at 40° (360 ÷ 40 = 9, odd).
 
 ## 1. Outcome
 

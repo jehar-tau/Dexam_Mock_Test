@@ -297,3 +297,15 @@ The preview server for this branch is `designmocks-learn-cube-nets` on port
   vanish on the dark card unless a dark-theme rule is added.
 - Next Fable-level work: the recall pattern (F9) and the method-lesson
   pattern (F10) in `09-topic-bank-map.md`.
+
+## Update, 15 November 2026: the full browser suite needs more ports remapped
+
+Main now starts a test server on port 4689 as well, and BSD `sed` on macOS
+does not understand `\b`. Use this recipe in the isolated copy instead:
+
+```bash
+grep -rlE "4[3-9]99|4689" playwright.config.js tests/e2e package.json scripts | xargs sed -i '' -E 's/4([3-9])99/5\199/g; s/4689/5689/g'
+```
+
+Check nothing is left with `grep -ohE "4[0-9]{3}" playwright.config.js | sort -u`
+before running `npm run test:e2e`.
