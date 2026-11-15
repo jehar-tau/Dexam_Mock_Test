@@ -63,7 +63,7 @@ Update this table in the same change as the work.
 |---|---|---|---|---|---|---|
 | Cube nets | [spec](topics/cube-nets.md) | Built | Built | Built | Built | Preview |
 | Nets of solids | [spec](topics/nets-of-solids.md) | Built | Built | Built | Built | Preview |
-| Dice | [spec](topics/dice.md) | Planned | Planned | Planned | Planned | — |
+| Dice | [spec](topics/dice.md) | Built | Built | Built | Built | `dice` |
 | Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Built | Built | Built | Preview |
 | Mirror and water images | [spec](topics/mirror-images.md) | Built | Built | Built | Built | Preview |
 | Counting cubes | [spec](topics/counting-cubes.md) | Built | Built | Built | Built | Preview |
@@ -76,6 +76,7 @@ Update this table in the same change as the work.
 | Codes and number patterns | [spec](topics/logic.md) | Built | Built | Built | Built | `codes-patterns` |
 | Arrangements and puzzles | [spec](topics/logic.md) | Built | Built | Built | Built | `arrangements` |
 | Directions, clocks and calendars | [spec](topics/logic.md) | Built | Built | Built | Built | `directions` |
+| Visual series and matrices | [spec](topics/visual-patterns.md) | Built | Built | Built | Built | `visual-patterns` |
 | Colour | [spec](topics/colour.md) | Built | Planned | Planned | Planned | Preview |
 
 Foundation work packages: F6, F1, F3, F4, F5, F2 and F9 are done; see the

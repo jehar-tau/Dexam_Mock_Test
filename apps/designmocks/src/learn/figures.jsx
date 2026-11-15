@@ -10,6 +10,8 @@ import { LinesFigure } from './lines-figure.jsx';
 import { CutSequence, CutSheet, FlapPlan, FlapSheet, LetterSheet } from './paper-figures.jsx';
 import { ClockFace, MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
 import { MazeFigure, NumberDiamond } from './logic-figures.jsx';
+import { DieFigure, DiePath, DieRow, DieStack } from './dice-figures.jsx';
+import { Panel, PanelGrid, PanelRow } from './pattern-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -293,6 +295,13 @@ export function Figure({ spec, compact = false }) {
     case 'number-diamond': return <NumberDiamond outer={spec.outer} centre={spec.centre} compact={compact} />;
     case 'maze': return <MazeFigure n={spec.n} m={spec.m} open={spec.open} from={spec.from} to={spec.to} compact={compact} />;
     case 'view-grid': return <ViewGrid grid={spec.grid} compact={compact} />;
+    case 'die': return <DieFigure top={spec.top} front={spec.front} right={spec.right} compact={compact} />;
+    case 'die-stack': return <DieStack dice={spec.dice} />;
+    case 'die-row': return <DieRow dice={spec.dice} />;
+    case 'die-path': return <DiePath path={spec.path} />;
+    case 'panel': return <Panel panel={spec.panel} size={compact ? 56 : 72} />;
+    case 'panel-row': return <PanelRow panels={spec.panels} ask={spec.ask} analogy={spec.analogy} />;
+    case 'panel-grid': return <PanelGrid grid={spec.grid} />;
     case 'swatch': return <Swatch colour={spec.colour} name={spec.name} large={!compact} />;
     default: return null;
   }
