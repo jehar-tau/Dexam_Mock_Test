@@ -241,3 +241,23 @@ gears, or two shafts geared at clashing ratios). One to three can move.
 
 Worm gears, bevel gears, rack and pinion, cams and linkages (programme B2).
 Friction, rope weight and efficiency.
+
+## More machines (added 16 November 2026, completion plan item 17)
+
+Engine `src/learn/machines.js`, figures `src/learn/machine-figures.jsx`,
+tests `tests/machines.test.mjs`. New lessons: `lever-classes`
+(foundations), `effort` and `frames-balance` (exam standard),
+`machines-hard` (exam hard); each tier quiz gains questions.
+
+| Kind | Levels | Mode | Model |
+|---|---|---|---|
+| `lever-class` | 2 | single | The middle one of pivot, load and effort, from a drawing or an everyday lever |
+| `lever-effort` | 3 | typed | Effort × effort arm = load × load arm, in class 1, 2 and 3 settings |
+| `pulley-effort` | 3, 4 | typed | Load ÷ strands holding the bottom block; at level 4 also rope pulled = strands × lift |
+| `rigid-frame` | 3 (which frame is rigid), 4 (fewest bars to add) | single / typed | Rank of the rigidity matrix against 2J − 3, on jittered convex frames |
+| `topple` | 3 | single | Centroid of a leaning or arm-loaded block against its base, with a safety margin |
+| `rolling` | 3, 4 | typed | Wheel distance with π = 22/7, plank on logs (twice), coin round a coin (outside +1, inside −1) |
+
+Verification: frames by Laman's counting rule over every subset of joints;
+toppling by sampling points inside each block; levers by moments; pulleys
+by work in = work out; coins by the path of the centre.

@@ -57,14 +57,14 @@ timed set with exam marking). Rules for building and merging are in
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
 | 16 | Counting figures: areas **Done** | Area of a shaded part; ratio of nested shapes; chance of landing on a shaded part; largest of four shapes on a grid | Shape and area bank |
-| 17 | Mechanisms: more machines | Rigid frame or mechanism; stability and centre of gravity; rolling and turning; pulley effort; lever classes | Mechanical bank |
+| 17 | Mechanisms: more machines **Done** | Rigid frame or mechanism; stability and centre of gravity; rolling and turning; pulley effort; lever classes | Mechanical bank |
 
 ### Group 5: observation and perspective
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 18 | Visual observation | Odd one out; spot the differences; hidden shapes; figure and ground; detail memory | Observation theory and earlier bank |
-| 19 | Perspective and viewpoint | Horizon and eye level; one, two and three-point perspective; vanishing points; camera position; which view is from where | Perspective theory |
+| 18 | Visual observation **Done** | Odd one out; spot the differences; hidden shapes; figure and ground; detail memory | Observation theory and earlier bank |
+| 19 | Perspective and viewpoint **Done** | Horizon and eye level; one, two and three-point perspective; vanishing points; camera position; which view is from where | Perspective theory |
 
 ### Group 6: knowledge and design method
 
@@ -76,8 +76,8 @@ first on product design.
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 20 | Indian crafts and textiles | Crafts by state; techniques and materials; textiles and weaves; printing and dyeing | Indian craft theory |
-| 21 | Art and design history | Periods and movements; artists and works; architecture and monuments; designers and products | Art history theory |
+| 20 | Indian crafts and textiles **Done** | Crafts by state; techniques and materials; textiles and weaves; printing and dyeing | Indian craft theory |
+| 21 | Art and design history **Done** | Periods and movements; artists and works; architecture and monuments; designers and products | Art history theory |
 | 22 | Product design thinking | Identifying users; context; pain points; ideas from needs; the order of the design process | Product design theory and bank |
 | 23 | Posters, mascots and campaigns | Visual hierarchy; slogans; symbols and stamps; choosing media for an audience | Poster theory and bank |
 | 24 | Storyboarding | Sequence; shots and framing; continuity; telling a story in six frames | Storyboarding theory |
