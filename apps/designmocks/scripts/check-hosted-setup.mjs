@@ -57,6 +57,18 @@ async function request(path, method = "GET", body, headers = {}) {
     cacheControl: response.headers.get("cache-control"),
   };
 }
+async function recordCommerceCheck(check, load, isExpected) {
+  let observation;
+  try {
+    observation = await load();
+  } catch {
+    // Report transport or response-format failures without logging remote payloads.
+    results.push({ check, status: null, passed: false });
+    return;
+  }
+  results.push({ check, status: observation.status, passed: isExpected(observation) });
+}
+
 let response = await request(
   "/rest/v1/plans?select=id,amount,currency,duration_months",
 );
@@ -129,7 +141,7 @@ results.push({
 });
 for (const [name, body, status] of [
   ...(!staging && !configuredCommerce ? [["create-order", { plan: "annual" }, 503]] : []),
-  ["attempt-media", { attemptId: "00000000-0000-4000-8000-000000000001" }, 401],
+  ...(!configuredCommerce ? [["attempt-media", { attemptId: "00000000-0000-4000-8000-000000000001" }, 401]] : []),
   ...(!staging && !configuredCommerce ? [["payment-webhook", {}, 503]] : []),
 ]) {
   response = await request("/functions/v1/" + name, "POST", body, {
@@ -144,10 +156,6 @@ for (const [name, body, status] of [
     continue;
   }
   assert.equal(response.status, status, name + " setup gate");
-  if (configuredCommerce && name === "attempt-media") {
-    assert.equal(response.allowOrigin, origin, "assessment media must accept the checkout origin");
-    assert.equal(response.data?.error, "Sign in required", "assessment media handler must reject anonymous access");
-  }
   results.push({ check: name + " setup/identity gate", status, passed: true });
 }
 const checkoutPath = "/functions/v1/create-order";
@@ -155,39 +163,35 @@ const foreignOrigin = "https://invalid.example";
 if (configuredCommerce) {
   // This checks only deployment rejection paths. No account or provider credentials are sent.
   const approvedOrigin = project.frontend_origin;
-  response = await request(checkoutPath, "OPTIONS", undefined, {
-    Origin: approvedOrigin,
-    "Access-Control-Request-Method": "POST",
-    "Access-Control-Request-Headers": "authorization,apikey,content-type,x-client-info",
-  });
-  assert.equal(response.status, 204, "approved checkout preflight");
-  assert.equal(response.allowOrigin, approvedOrigin, "approved checkout origin");
-  const allowedMethods = (response.allowMethods ?? "").toLowerCase().split(",").map(value => value.trim());
-  const allowedHeaders = (response.allowHeaders ?? "").toLowerCase().split(",").map(value => value.trim());
-  assert.ok(allowedMethods.includes("post"), "approved checkout preflight must allow POST");
-  assert.ok(["authorization", "apikey", "content-type", "x-client-info"].every(header => allowedHeaders.includes(header)),
-    "approved checkout preflight must allow the browser request headers");
-  results.push({ check: "approved checkout preflight", status: 204, passed: true });
+  const headerTokens = value => (value ?? "").toLowerCase().split(",").map(token => token.trim());
+  const signInRequired = result => result.status === 401 &&
+    result.allowOrigin === approvedOrigin && result.data?.error === "Sign in required";
 
-  response = await request(checkoutPath, "POST", { plan: "annual" }, { Origin: approvedOrigin });
-  assert.equal(response.status, 401, "configured checkout must reject anonymous requests");
-  assert.equal(response.allowOrigin, approvedOrigin, "anonymous checkout response origin");
-  assert.equal(response.data?.error, "Sign in required", "checkout handler must reject the request");
-  results.push({ check: "configured checkout handler rejects anonymous requests", status: 401, passed: true });
-
-  response = await request("/functions/v1/payment-webhook", "POST", { event: "smoke.invalid" });
-  assert.equal(response.status, 401, "configured webhook must reject a nonempty unsigned body");
-  assert.equal(response.data, null, "webhook handler must return an empty rejection");
-  assert.equal(response.cacheControl, "no-store", "webhook handler must return an uncached rejection");
-  results.push({ check: "configured webhook handler rejects unsigned requests", status: 401, passed: true });
+  await recordCommerceCheck("attempt-media setup/identity gate",
+    () => request("/functions/v1/attempt-media", "POST", { attemptId: "00000000-0000-4000-8000-000000000001" }, { Origin: approvedOrigin }),
+    signInRequired);
+  await recordCommerceCheck("approved checkout preflight",
+    () => request(checkoutPath, "OPTIONS", undefined, {
+      Origin: approvedOrigin,
+      "Access-Control-Request-Method": "POST",
+      "Access-Control-Request-Headers": "authorization,apikey,content-type,x-client-info",
+    }),
+    result => result.status === 204 && result.allowOrigin === approvedOrigin &&
+      headerTokens(result.allowMethods).includes("post") &&
+      ["authorization", "apikey", "content-type", "x-client-info"].every(header => headerTokens(result.allowHeaders).includes(header)));
+  await recordCommerceCheck("configured checkout handler rejects anonymous requests",
+    () => request(checkoutPath, "POST", { plan: "annual" }, { Origin: approvedOrigin }), signInRequired);
+  await recordCommerceCheck("configured webhook handler rejects unsigned requests",
+    () => request("/functions/v1/payment-webhook", "POST", { event: "smoke.invalid" }),
+    result => result.status === 401 && result.data === null && result.cacheControl === "no-store");
+  await recordCommerceCheck("unapproved checkout origin denied",
+    () => request(checkoutPath, "POST", { plan: "annual" }, { Origin: foreignOrigin }),
+    result => result.status === 403 && result.allowOrigin === approvedOrigin && result.data?.error === "Origin not allowed");
+} else {
+  response = await request(checkoutPath, "POST", { plan: "annual" }, { Origin: foreignOrigin });
+  assert.equal(response.status, 403);
+  results.push({ check: "unapproved checkout origin denied", status: 403, passed: true });
 }
-response = await request(checkoutPath, "POST", { plan: "annual" }, { Origin: foreignOrigin });
-assert.equal(response.status, 403);
-if (configuredCommerce) {
-  assert.equal(response.allowOrigin, project.frontend_origin, "foreign checkout response origin");
-  assert.equal(response.data?.error, "Origin not allowed", "checkout handler must reject the foreign origin");
-}
-results.push({ check: "unapproved checkout origin denied", status: 403, passed: true });
 if (staging) {
   for (const [name, body] of [
     ["my_candidate_profile", {}],
