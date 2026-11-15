@@ -7,6 +7,7 @@ import { project } from './cube-net.js';
 import { describeFace, newell } from './solid-net.js';
 import { BeamFigure, GearsFigure, MobileFigure, RopeFigure } from './mechanism-figures.jsx';
 import { LinesFigure } from './lines-figure.jsx';
+import { CutSequence, CutSheet, FlapPlan, FlapSheet, LetterSheet } from './paper-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -269,6 +270,11 @@ export function Figure({ spec, compact = false }) {
     case 'beam': return <BeamFigure beam={spec.beam} ask={spec.ask} compact={compact} />;
     case 'mobile': return <MobileFigure mobile={spec.mobile} known={spec.known} />;
     case 'lines': return <LinesFigure segments={spec.segments} ghost={spec.ghost} mirrors={spec.mirrors} compact={compact} />;
+    case 'cut-sequence': return <CutSequence folds={spec.folds} cuts={spec.cuts} cutLines={spec.cutLines} strokes={spec.strokes} />;
+    case 'cut-sheet': return <CutSheet shapes={spec.shapes} compact={compact} />;
+    case 'flap-plan': return <FlapPlan flaps={spec.flaps} />;
+    case 'flap-sheet': return <FlapSheet outline={spec.outline} back={spec.back} allFront={spec.allFront} compact={compact} />;
+    case 'letter-sheet': return <LetterSheet strokes={spec.strokes} creases={spec.creases} compact={compact} />;
     case 'swatch': return <Swatch colour={spec.colour} name={spec.name} large={!compact} />;
     default: return null;
   }

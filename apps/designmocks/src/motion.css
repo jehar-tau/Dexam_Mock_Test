@@ -1,0 +1,247 @@
+/* Animated DMocks illustrations (Motion.jsx).
+   Every animated part reads one number, --p, that runs 0 -> 1 -> 0 on a shared
+   8 second loop. With motion reduced (or animation switched off) --p stays at
+   1, so each picture rests complete. */
+@property --p {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+.motif {
+  --m-ink: #244735;
+  --m-on-ink: #faf9f3;
+  --m-paper: #fffef9;
+  --m-line: #cfd5c2;
+  --m-tint: #e3e8d2;
+  --m-mid: #9db39a;
+  --m-lime: #dceba1;
+  --m-yellow: #edc668;
+  --m-orange: #ef633d;
+  --m-cube-top: #dceba1;
+  --m-cube-left: #244735;
+  --m-cube-right: #6f8f72;
+  --m-ticket: #244735;
+  --m-on-ticket: #faf9f3;
+  --m-ticket-soft: #dceba1;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+:root[data-theme="dark"] .motif {
+  --m-ink: #dceba1;
+  --m-on-ink: #162824;
+  --m-paper: #1a3027;
+  --m-line: #4b6152;
+  --m-tint: #32503f;
+  --m-mid: #6f8f78;
+  --m-cube-left: #3f6a52;
+  --m-cube-right: #86a88c;
+  --m-ticket: #dceba1;
+  --m-on-ticket: #162824;
+  --m-ticket-soft: #244735;
+}
+.motif * {
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.motif:not(.is-live) * {
+  animation-play-state: paused;
+}
+
+/* Fills and strokes */
+.m-ink { fill: var(--m-ink); }
+.m-mid { fill: var(--m-mid); }
+.m-tint { fill: var(--m-tint); }
+.m-lime { fill: var(--m-lime); }
+:root[data-theme="dark"] .m-lime { fill: #3f6a52; }
+.m-lime-solid { fill: var(--m-lime); }
+.m-yellow { fill: var(--m-yellow); }
+.m-orange { fill: var(--m-orange); }
+.m-on-ink-fill { fill: var(--m-on-ink); opacity: 0.75; }
+.m-on-accent-fill { fill: #fffef9; }
+.m-sheet { fill: var(--m-paper); stroke: var(--m-line); stroke-width: 1.5; }
+.m-cube-top { fill: var(--m-cube-top); }
+.m-cube-left { fill: var(--m-cube-left); }
+.m-cube-right { fill: var(--m-cube-right); }
+.m-cube-top, .m-cube-left, .m-cube-right { stroke: var(--m-paper); stroke-width: 1.5; stroke-linejoin: round; }
+.m-track { stroke: var(--m-mid); stroke-width: 3; stroke-dasharray: 2 7; stroke-linecap: round; }
+.m-node { fill: var(--m-paper); stroke: var(--m-mid); stroke-width: 2; }
+.m-node-on { fill: var(--m-ink); }
+.m-option { fill: var(--m-paper); stroke: var(--m-ink); stroke-width: 2; }
+.m-check { fill: none; stroke: #fffef9; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.m-glyph { fill: none; stroke: var(--m-ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.m-sketch { fill: none; stroke: var(--m-ink); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.m-hatch { fill: none; stroke: var(--m-mid); stroke-width: 3; stroke-linecap: round; }
+.m-mark { fill: none; stroke: var(--m-orange); stroke-width: 3; stroke-linecap: round; }
+.m-ring-track { fill: none; stroke: var(--m-tint); stroke-width: 5; }
+.m-ring-run { fill: none; stroke: var(--m-orange); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 1; }
+.m-ring-big { stroke-width: 8; }
+.m-ring-wide { stroke-width: 13; }
+.m-ring-score {
+  fill: none;
+  stroke: var(--m-ink);
+  stroke-width: 13;
+  stroke-linecap: round;
+  stroke-dasharray: 0.72 1;
+  stroke-dashoffset: calc((1 - var(--p)) * 0.72);
+}
+.m-label { font: 600 11px Figtree, system-ui, sans-serif; fill: var(--m-ink); }
+.m-label.m-on-ink { fill: var(--m-on-ink); }
+.m-label.m-on-accent { fill: #fffef9; }
+.m-number { font: 700 26px "Zilla Slab", serif; fill: var(--m-ink); }
+.m-number-big { font-size: 34px; }
+.m-ticket { fill: var(--m-ticket); }
+.m-tear { stroke: var(--m-on-ticket); stroke-width: 2; stroke-dasharray: 3 6; stroke-linecap: round; opacity: 0.6; }
+.m-ticket-kicker { font: 600 9px Figtree, system-ui, sans-serif; letter-spacing: 0.14em; fill: var(--m-on-ticket); opacity: 0.8; }
+.m-ticket-title { font: 700 38px "Zilla Slab", serif; fill: var(--m-on-ticket); }
+.m-ticket-note { font: 600 11px Figtree, system-ui, sans-serif; fill: var(--m-on-ticket); opacity: 0.8; }
+.m-sheen { fill: #fffef9; opacity: 0.2; transform: skewX(-18deg); animation-name: m-sheen; animation-duration: 5s; animation-timing-function: ease-in-out; }
+
+/* Effects: each reads --p */
+.m-fade { opacity: var(--p); }
+.m-pop {
+  opacity: var(--p);
+  transform: scale(calc(0.55 + 0.45 * var(--p)));
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.m-pop.m-from-left { transform-origin: left bottom; }
+.m-pop.m-from-right { transform-origin: right bottom; }
+.m-drop { opacity: var(--p); transform: translateY(calc((1 - var(--p)) * -38px)); }
+.m-grow { transform: scaleX(var(--p)); transform-box: fill-box; transform-origin: left center; }
+.m-draw { stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
+
+/* Steps on the shared loop */
+.m-s1 { animation-name: m-step-1; }
+.m-s2 { animation-name: m-step-2; }
+.m-s3 { animation-name: m-step-3; }
+.m-s4 { animation-name: m-step-4; }
+.m-s5 { animation-name: m-step-5; }
+.m-s6 { animation-name: m-step-6; }
+.m-s7 { animation-name: m-step-7; }
+.m-s8 { animation-name: m-step-8; }
+@keyframes m-step-1 { 0%, 3% { --p: 0; } 10%, 92% { --p: 1; } 98%, 100% { --p: 0; } }
+@keyframes m-step-2 { 0%, 11% { --p: 0; } 18%, 92% { --p: 1; } 98%, 100% { --p: 0; } }
+@keyframes m-step-3 { 0%, 19% { --p: 0; } 26%, 92% { --p: 1; } 98%, 100% { --p: 0; } }
+@keyframes m-step-4 { 0%, 27% { --p: 0; } 34%, 92% { --p: 1; } 98%, 100% { --p: 0; } }
+@keyframes m-step-5 { 0%, 35% { --p: 0; } 42%, 92% { --p: 1; } 98%, 100% { --p: 0; } }
+@keyframes m-step-6 { 0%, 43% { --p: 0; } 50%, 92% { --p: 1; } 98%, 100% { --p: 0; } }
+@keyframes m-step-7 { 0%, 51% { --p: 0; } 58%, 92% { --p: 1; } 98%, 100% { --p: 0; } }
+@keyframes m-step-8 { 0%, 59% { --p: 0; } 66%, 92% { --p: 1; } 98%, 100% { --p: 0; } }
+
+/* Free-running loops */
+.m-timer { animation-name: m-timer; animation-timing-function: linear; }
+@keyframes m-timer { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 1; } }
+.m-pulse {
+  fill: none;
+  stroke: var(--m-orange);
+  stroke-width: 1.5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-name: m-pulse;
+  animation-duration: 3.2s;
+  animation-timing-function: ease-out;
+}
+@keyframes m-pulse { 0% { transform: scale(1); opacity: 0.8; } 70%, 100% { transform: scale(4.5); opacity: 0; } }
+.m-bounce { transform-box: fill-box; animation-name: m-bounce; animation-duration: 1.1s; animation-timing-function: ease-in-out; }
+@keyframes m-bounce { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(-6px); } }
+.m-float { transform-box: fill-box; transform-origin: center; animation-name: m-float; animation-duration: 5s; animation-timing-function: ease-in-out; }
+.m-float.m-late { animation-delay: -1.6s; }
+.m-float.m-later { animation-delay: -3.1s; }
+@keyframes m-float { 0%, 100% { translate: 0 0; rotate: 0deg; } 50% { translate: 0 -8px; rotate: 10deg; } }
+.m-sway { transform-origin: 160px 120px; transform: rotate(-5deg); animation-name: m-sway; animation-duration: 6s; animation-timing-function: ease-in-out; }
+@keyframes m-sway { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(-2deg) translateY(-5px); } }
+.m-spin { transform-box: fill-box; transform-origin: center; animation-name: m-spin; animation-duration: 9s; animation-timing-function: linear; }
+@keyframes m-spin { to { rotate: 360deg; } }
+@keyframes m-sheen { 0%, 55% { translate: 0 0; } 85%, 100% { translate: 460px 0; } }
+
+/* Scroll reveal: only when the visitor has not asked for less motion */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .reveal.is-in { opacity: 1; transform: none; }
+}
+
+/* Topic and stage illustrations (TopicMotion.jsx) */
+.m-line { fill: none; stroke: var(--m-ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.m-dash { fill: none; stroke: var(--m-mid); stroke-width: 2.5; stroke-dasharray: 5 6; stroke-linecap: round; }
+.m-edge { stroke: var(--m-ink); stroke-width: 2; stroke-linejoin: round; }
+.m-paper { fill: var(--m-paper); }
+.m-shadow { fill: var(--m-ink); opacity: 0.28; }
+.m-pip { fill: var(--m-ink); }
+.m-badge-text { font: 700 20px "Zilla Slab", serif; fill: #fffef9; }
+.m-slide {
+  opacity: var(--p);
+  translate: calc((1 - var(--p)) * var(--dx, 0px)) calc((1 - var(--p)) * var(--dy, 0px));
+}
+.m-foldx { transform: scaleX(var(--p)); transform-box: fill-box; transform-origin: right center; }
+.m-rev { animation-direction: reverse; }
+.m-wedge { stroke: var(--m-paper); stroke-width: 2; }
+
+/* Logo that lifts from flat to solid and settles back (LogoMotion.jsx) */
+@property --lift { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --turn { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
+.logo-motion {
+  --size: 28px;
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  flex: none;
+}
+/* Inside the header mark the wrapper sets the size; keep the depth in step. */
+.logo-symbol.has-motion { display: block; transform: none; }
+.logo-symbol.has-motion .logo-motion { width: 100%; height: 100%; }
+.logo-motion-scene {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(calc(var(--lift) * 58deg)) rotateZ(calc(-12deg - var(--lift) * 33deg + var(--turn)));
+}
+.logo-motion.is-looping .logo-motion-scene,
+.logo-motion.is-once .logo-motion-scene,
+a:hover .logo-motion .logo-motion-scene,
+a:focus-visible .logo-motion .logo-motion-scene {
+  animation: logo-lift 7s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+.logo-motion.is-once .logo-motion-scene { animation-iteration-count: 1; }
+@keyframes logo-lift {
+  0%, 10% { --lift: 0; --turn: 0deg; }
+  32% { --lift: 1; --turn: 0deg; }
+  74% { --lift: 1; --turn: 360deg; }
+  94%, 100% { --lift: 0; --turn: 360deg; }
+}
+.logo-motion-tile {
+  position: absolute;
+  width: calc(50% - 1px);
+  height: calc(50% - 1px);
+  transform-style: preserve-3d;
+}
+.logo-motion-tile:nth-child(1) { left: 0; top: 0; --tone: var(--green); --rise: 0.62; rotate: 0deg; }
+.logo-motion-tile:nth-child(2) { right: 0; top: 0; --tone: var(--yellow); --rise: 0.36; rotate: 90deg; }
+.logo-motion-tile:nth-child(3) { left: 0; bottom: 0; --tone: var(--art-orange); --rise: 0.86; rotate: -90deg; }
+.logo-motion-tile:nth-child(4) { right: 0; bottom: 0; --tone: var(--green); --rise: 0.18; rotate: 180deg; }
+.logo-motion-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 100% 0 0 0;
+  background: color-mix(in srgb, var(--tone) 68%, #10201a);
+  transform: translateZ(calc(var(--lift) * var(--rise) * var(--size) * 0.42 * var(--k)));
+}
+.logo-motion-layer:last-child { background: var(--tone); }
+
+/* Motion gallery (development preview) */
+.motion-gallery h1 { font-size: 3.4rem; margin-bottom: 14px; }
+.motion-gallery > p { max-width: 560px; line-height: 1.7; }
+.motion-gallery h2 { font-size: 1.9rem; margin: 54px 0 18px; }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.gallery-tile { margin: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.gallery-art { padding: 16px 20px; background: color-mix(in srgb, var(--lime) 26%, var(--surface)); }
+:root[data-theme="dark"] .gallery-art { background: color-mix(in srgb, var(--lime) 8%, var(--surface)); }
+.gallery-tile figcaption { display: flex; justify-content: space-between; gap: 10px; padding: 12px 16px; font-size: .875rem; }
+.gallery-tile figcaption span { color: var(--muted); font-size: .75rem; }
+.gallery-logo { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; padding: 48px; border: 1px solid var(--line); border-radius: 10px; }
+.gallery-logo p { max-width: 380px; line-height: 1.7; margin: 0; }

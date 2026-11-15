@@ -25,6 +25,7 @@ the detail.
 | 7 | [07-portal-rollout.md](07-portal-rollout.md) | When a topic is ready to reach students. Server progress, release switch, gates. |
 | 8 | [08-owner-reference-standard.md](08-owner-reference-standard.md) | Before any Exam hard or Mastery tier. The owner's question bank is the difficulty reference; this says what its hardest questions demand. |
 | 9 | [topics/](topics/) | The specification for the topic you are building. One file per topic. |
+| 10 | [10-completion-plan.md](10-completion-plan.md) | When choosing what to build next. Every programme still to build, in order, and what "complete" means. |
 
 ## The one-paragraph version
 
@@ -63,7 +64,7 @@ Update this table in the same change as the work.
 | Cube nets | [spec](topics/cube-nets.md) | Built | Built | Built | Built | Preview |
 | Nets of solids | [spec](topics/nets-of-solids.md) | Built | Built | Built | Built | Preview |
 | Dice | [spec](topics/dice.md) | Planned | Planned | Planned | Planned | — |
-| Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Planned | Planned | Planned | Preview |
+| Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Built | Built | Built | Preview |
 | Mirror and water images | [spec](topics/mirror-images.md) | Built | Planned | Planned | Planned | Preview |
 | Counting cubes | [spec](topics/counting-cubes.md) | Built | Built | Built | Built | Preview |
 | Views and rotation | [spec](topics/views-and-rotation.md) | Planned | Planned | Planned | Planned | — |

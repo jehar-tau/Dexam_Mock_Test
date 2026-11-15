@@ -7,7 +7,7 @@ import {
 } from '../src/learn/programme-model.js';
 import { clearProgress, loadProgress, saveProgress } from '../src/learn/programme-storage.js';
 
-const toolNames = ['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter'];
+const toolNames = ['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder'];
 const rightResponse = q => (q.answerMode === 'numeric' ? String(q.answer.value ?? q.answer.min) : q.answer);
 const wrongResponse = q => (q.answerMode === 'numeric' ? String((q.answer.value ?? q.answer.max) + 1) : q.answerMode === 'multi' ? [q.options.find(o => !q.answer.includes(o.id)).id] : q.options.find(o => o.id !== q.answer).id);
 

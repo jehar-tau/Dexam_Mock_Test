@@ -3,8 +3,12 @@
 Slug `paper-folding` · topic `visualisation` · exams uceed, ceed, nid, nift ·
 engine `src/learn/paper-fold.js` · tool `fold-punch`
 
-Status: Foundations **Built** · Exam standard Planned · Exam hard Planned ·
-Mastery Planned
+Status: Foundations Built · Exam standard Built · Exam hard Built ·
+Mastery Built (15 November 2026). The upper tiers use a new engine,
+`src/learn/paper-cut.js` (8 × 8 sheet), with figures in
+`src/learn/paper-figures.jsx` and the tool `cut-unfolder`; Foundations keeps
+`paper-fold.js`. Tests: `tests/paper-cut.test.mjs` unfolds every cut a second
+way, by mirroring across the folds in reverse, and recounts holes and pieces.
 
 ## 1. Outcome
 

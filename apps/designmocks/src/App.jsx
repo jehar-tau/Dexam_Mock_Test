@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 import { brand, exams, money } from "./config.js";
 import { Art, Arrow, Spark, Stimulus, ChoiceArt } from "./Art.jsx";
+import { FeatureShowcase, FreePass, JoinLink } from "./LandingFeatures.jsx";
+import { LogoMotion } from "./LogoMotion.jsx";
 import {
   sampleQuestions,
   sampleReport,
@@ -73,6 +75,8 @@ const LearnPreview = import.meta.env.DEV
   ? React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.LearnPreview }))) : null;
 const LearnProgrammePreview = import.meta.env.DEV
   ? React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePreview }))) : null;
+const MotionGallery = import.meta.env.DEV
+  ? React.lazy(() => import("./MotionGallery.jsx")) : null;
 const CommunityPreview = import.meta.env.DEV
   ? React.lazy(() => import("./Community.jsx").then(module => ({ default: module.CommunityPreview }))) : null;
 const Admin = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.Admin })));
@@ -85,11 +89,8 @@ function Logo() {
   return (
     <div className="brand-lockup">
       <Link to="/" className="logo" aria-label="DMocks home">
-        <span className="logo-symbol" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-          <i />
+        <span className="logo-symbol has-motion" aria-hidden="true">
+          <LogoMotion />
         </span>
         <span>
           d<span>mocks</span>
@@ -223,8 +224,8 @@ function Layout({ children }) {
             id="navigation"
           >
             <NavLink to="/tests">Mock tests</NavLink>
+            <Link to="/#features">What’s inside</Link>
             <Link to="/#how">How it works</Link>
-            <Link to="/#report">Your report</Link>
             <NavLink to="/plans">The annual pass</NavLink>
             <NavLink to="/account" className="sign-in">
               Student sign in <Arrow size={16} />
@@ -272,6 +273,7 @@ function Layout({ children }) {
           </div>
           <div>
             <b>MAKE YOUR NEXT MOVE</b>
+            <Link to="/account">Join free</Link>
             <Link to="/sample">Try the sample</Link>
             <Link to="/plans">One-year pass</Link>
             <Link to="/account">Student sign in</Link>
@@ -606,8 +608,12 @@ const faqs = [
     "Every sold paper must pass question, marking, timing, image and content-rights checks before release. The free sample uses separate original examples.",
   ],
   [
-    "Are drawing reviews, lessons or rankings included?",
-    "These are planned for a later release. The initial offer covers only the explicitly released assessment papers. No drawing, AI, Community, Learn or All India ranking service is promised with this launch.",
+    "Is it free to join?",
+    "Yes. A student account is free and needs no card, and the five-question sample is open to everyone. The full released papers need the annual pass.",
+  ],
+  [
+    "What about Learn, Topic practice, All India mocks, Community and drawing review?",
+    "They are all part of DMocks and are opening in stages. Anything marked Opening soon on this page is not open to students yet, and the annual pass covers only the released papers listed before you pay.",
   ],
   [
     "Can I sign in and pay today?",
@@ -652,12 +658,11 @@ function Home() {
             <br /> <em>count.</em>
           </h1>
           <p>
-            Mock tests for the way designers think.
-            <br /> Practise with purpose. Review with clarity.
-            <br /> Go into your exam a little more yourself.
+            Learn the ideas. Practise by topic. Sit full mocks and All India
+            tests. One place to get ready for UCEED, CEED, NIFT and NID DAT.
           </p>
           <div className="hero-actions">
-            <Button to="/tests">Find your mock test</Button>
+            <JoinLink>Join free</JoinLink>
             <Link to="/sample" className="sample-link">
               Try 5 sample questions <Arrow size={17} />
             </Link>
@@ -665,7 +670,7 @@ function Home() {
           <div className="hero-proof">
             <span>
               <i />
-              Original free sample
+              Free to join. No card needed.
             </span>
             <span>Made for design aspirants</span>
           </div>
@@ -681,6 +686,7 @@ function Home() {
           </Link>
         ))}
       </div>
+      <FeatureShowcase />
       <Catalogue />
       {postLaunchPreview && !stagingPortalMode && <AllIndiaHighlights />}
       <section className="wrap section" id="how">
@@ -730,6 +736,7 @@ function Home() {
         </div>
       </section>
       <ReportPreview />
+      <FreePass />
       <PassPanel />
       <FAQs />
       <section className="wrap final-cta">
@@ -738,9 +745,14 @@ function Home() {
           One small attempt.
           <br /> A fresh <em>perspective.</em>
         </h2>
-        <p>No sign-in. No perfect score needed. Just begin.</p>
-        <Button to="/sample">Try the free sample</Button>
-        <span>5 original questions · 6 minutes · Instant sample feedback</span>
+        <p>Free to join. No perfect score needed. Just begin.</p>
+        <div className="final-actions">
+          <JoinLink>Join free</JoinLink>
+          <Link to="/sample" className="sample-link">
+            Try the free sample <Arrow size={17} />
+          </Link>
+        </div>
+        <span>5 original questions · 6 minutes · No sign-in for the sample</span>
       </section>
     </>
   );
@@ -1685,6 +1697,9 @@ export default function App() {
         )}
         {import.meta.env.DEV && (
           <Route path="/learn-programme-preview/:slug?" element={<LearnProgrammePreview />} />
+        )}
+        {import.meta.env.DEV && (
+          <Route path="/motion-preview" element={<MotionGallery />} />
         )}
         {import.meta.env.DEV && (
           <Route path="/community-preview" element={<CommunityPreview />} />
