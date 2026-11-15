@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Arrow } from "./Art.jsx";
 import { Motif, Reveal } from "./Motion.jsx";
 import { postLaunchPreview } from "./launch-scope.js";
-import { portalReady } from "./platform.js";
 
 // `module` names the portal module a feature belongs to. Modules still held
 // back by the launch scope (launch-scope.mjs) carry an "Opening soon" label so
@@ -25,7 +24,7 @@ export const features = [
   },
   {
     id: "mocks",
-    module: "exam-mocks",
+    module: null,
     motif: "mocks",
     tone: "yellow",
     eyebrow: "EXAM-WISE MOCKS",
@@ -98,10 +97,10 @@ export const features = [
   },
 ];
 
-function JoinLink() {
+function JoinLink({ children = "Join free" }) {
   return (
     <Link className="button join-button" to="/account">
-      Student account
+      {children}
       <Arrow size={18} />
     </Link>
   );
@@ -112,19 +111,20 @@ export function FeatureShowcase() {
     <section className="wrap section features" id="features">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">DMocks features</span>
+          <span className="eyebrow">EVERYTHING INSIDE DMOCKS</span>
           <h2>
             Learn it. Practise it.
             <br /> <em>Prove it.</em>
           </h2>
         </div>
         <p>
-          Explore the free sample and see which features are planned.
+          One place for the whole journey, from your first cube net to an All
+          India rank.
         </p>
       </div>
       <div className="feature-grid">
         {features.map((feature) => {
-          const soon = Boolean(feature.module) && !(postLaunchPreview && portalReady);
+          const soon = Boolean(feature.module) && !postLaunchPreview;
           return (
             <Reveal
               as="article"
@@ -149,11 +149,9 @@ export function FeatureShowcase() {
                     </li>
                   ))}
                 </ul>
-                {(!soon || feature.module === "exam-mocks") && (
-                  <Link className="text-link" to={feature.to}>
-                    {soon ? "Explore exam guides" : feature.link} <Arrow />
-                  </Link>
-                )}
+                <Link className="text-link" to={feature.to}>
+                  {feature.link} <Arrow />
+                </Link>
               </div>
             </Reveal>
           );
@@ -171,23 +169,26 @@ export function FreePass() {
           <Motif kind="pass" label="A DMocks free pass ticket" />
         </div>
         <div className="join-copy">
-          <span className="eyebrow">FREE SAMPLE</span>
+          <span className="eyebrow">YOUR FREE PASS</span>
           <h2>
             Come on in.
             <br /> <em>It’s free.</em>
           </h2>
           <p>
-            Try five original practice questions with a timer and answer review.
+            Join DMocks with a free student account. Look around, try the
+            sample and start building a practice habit. The annual pass is there
+            whenever you want the full papers.
           </p>
           <div className="join-actions">
-            {portalReady && <JoinLink />}
-            <Link to="/sample" className={portalReady ? "sample-link" : "button join-button"}>
+            <JoinLink />
+            <Link to="/sample" className="sample-link">
               Try 5 sample questions <Arrow size={17} />
             </Link>
           </div>
           <div className="join-chips">
-            <span>No sign-in needed</span>
-            <span>Six minutes</span>
+            <span>Free to join</span>
+            <span>No card needed</span>
+            <span>Takes a minute</span>
           </div>
         </div>
       </Reveal>

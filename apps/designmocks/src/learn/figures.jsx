@@ -12,6 +12,7 @@ import { ClockFace, MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx'
 import { MazeFigure, NumberDiamond } from './logic-figures.jsx';
 import { DieFigure, DiePath, DieRow, DieStack } from './dice-figures.jsx';
 import { Panel, PanelGrid, PanelRow } from './pattern-figures.jsx';
+import { TextSwatch, WheelMarks } from './colour-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -302,6 +303,8 @@ export function Figure({ spec, compact = false }) {
     case 'panel': return <Panel panel={spec.panel} size={compact ? 56 : 72} />;
     case 'panel-row': return <PanelRow panels={spec.panels} ask={spec.ask} analogy={spec.analogy} />;
     case 'panel-grid': return <PanelGrid grid={spec.grid} />;
+    case 'wheel-marks': return <WheelMarks marks={spec.marks} size={compact ? 104 : 132} />;
+    case 'text-swatch': return <TextSwatch fg={spec.fg} bg={spec.bg} name={spec.name} />;
     case 'swatch': return <Swatch colour={spec.colour} name={spec.name} large={!compact} />;
     default: return null;
   }

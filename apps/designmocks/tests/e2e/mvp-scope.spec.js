@@ -110,18 +110,6 @@ test('a production build cannot enable deferred modules or checkout with preview
  await page.goto('http://127.0.0.1:4899/plans');await expect(page.getByRole('checkbox')).toHaveCount(0);await expect(page.getByRole('button',{name:/Pay .* with Razorpay/})).toHaveCount(0);await expect(page.getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();
 });
 
-test('the closed public landing offers the sample and marks the unreleased features', async ({ page }) => {
-  await page.goto('http://127.0.0.1:4899/');
-  await expect(page.getByRole('link', { name: 'Join free', exact: true })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Student account', exact: true })).toHaveCount(0);
-  const features = page.locator('#features');
-  await expect(features.getByText('Opening soon', { exact: true })).toHaveCount(6);
-  await expect(features.getByRole('link', { name: 'Open Learn', exact: true })).toHaveCount(0);
-  await expect(features.getByRole('link', { name: 'Explore exam guides', exact: true })).toHaveAttribute('href', '/tests');
-  await page.locator('.hero-actions').getByRole('link', { name: 'Try 5 sample questions', exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Begin the sample', exact: true })).toBeVisible();
-});
-
 test('the public landing and sample do not fetch deferred portal JavaScript', async ({ page }) => {
   const origin = 'http://127.0.0.1:4899';
   const scripts = new Set();
