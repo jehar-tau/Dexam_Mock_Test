@@ -273,7 +273,7 @@ function Layout({ children }) {
           </div>
           <div>
             <b>MAKE YOUR NEXT MOVE</b>
-            <Link to="/account">Join free</Link>
+
             <Link to="/sample">Try the sample</Link>
             <Link to="/plans">One-year pass</Link>
             <Link to="/account">Student sign in</Link>
@@ -609,7 +609,7 @@ const faqs = [
   ],
   [
     "Is it free to join?",
-    "Yes. A student account is free and needs no card, and the five-question sample is open to everyone. The full released papers need the annual pass.",
+    "Student accounts are free when registration opens. The five-question sample is available now without an account.",
   ],
   [
     "What about Learn, Topic practice, All India mocks, Community and drawing review?",
@@ -658,19 +658,18 @@ function Home() {
             <br /> <em>count.</em>
           </h1>
           <p>
-            Learn the ideas. Practise by topic. Sit full mocks and All India
-            tests. One place to get ready for UCEED, CEED, NIFT and NID DAT.
+            Try five visual questions from DMocks, a practice platform for design entrance exams.
           </p>
           <div className="hero-actions">
-            <JoinLink>Join free</JoinLink>
-            <Link to="/sample" className="sample-link">
+            {portalReady && <JoinLink />}
+            <Link to="/sample" className={portalReady ? "sample-link" : "button join-button"}>
               Try 5 sample questions <Arrow size={17} />
             </Link>
           </div>
           <div className="hero-proof">
             <span>
               <i />
-              Free to join. No card needed.
+              Free sample. No sign-in.
             </span>
             <span>Made for design aspirants</span>
           </div>
@@ -745,10 +744,9 @@ function Home() {
           One small attempt.
           <br /> A fresh <em>perspective.</em>
         </h2>
-        <p>Free to join. No perfect score needed. Just begin.</p>
         <div className="final-actions">
-          <JoinLink>Join free</JoinLink>
-          <Link to="/sample" className="sample-link">
+          {portalReady && <JoinLink />}
+          <Link to="/sample" className={portalReady ? "sample-link" : "button join-button"}>
             Try the free sample <Arrow size={17} />
           </Link>
         </div>
