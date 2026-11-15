@@ -19,6 +19,19 @@ import { paperQuestion } from './paper-cut.js';
 import { mirrorExamQuestion } from './mirror-exam.js';
 import { QUANT_LEVELS, quantQuestion } from './quant.js';
 import { LOGIC_KINDS, logicQuestion } from './logic.js';
+import { viewsQuestion } from './voxel.js';
+import { DICE_KINDS, diceQuestion } from './dice.js';
+import { PATTERN_KINDS, patternQuestion } from './patterns.js';
+import { COLOUR_EXAM_KINDS, colourExamQuestion } from './colour-exam.js';
+import { SHADOW_KINDS, shadowQuestion } from './shadows.js';
+import { SURFACE_KINDS, surfacesQuestion } from './surfaces.js';
+import { SECTION_KINDS, sectionsQuestion } from './sections.js';
+import { FIT_KINDS, fitQuestion } from './fit.js';
+import { OVERLAY_KINDS, overlayQuestion } from './overlay.js';
+import { AREA_KINDS, areaQuestion } from './area.js';
+import { MACHINE_KINDS, machinesQuestion } from './machines.js';
+import { OBSERVATION_KINDS, observationQuestion } from './observation.js';
+import { PERSPECTIVE_KINDS, perspectiveQuestion } from './perspective.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -111,6 +124,23 @@ const kinds = {
   'figure-with-n': { topic: 'counting-figures', levels: [4], generate: figure('figure-with-n') },
   ...Object.fromEntries(Object.entries(QUANT_LEVELS).map(([kind, level]) => [kind, { topic: 'quant', levels: [level], generate: seed => quantQuestion(seed, kind) }])),
   ...Object.fromEntries(Object.entries(LOGIC_KINDS).map(([kind, [topic, level]]) => [kind, { topic, levels: [level], generate: seed => logicQuestion(seed, kind, level) }])),
+  'view-of-stack': { topic: 'views-and-rotation', levels: [1, 2], generate: (seed, level) => viewsQuestion(seed, 'view-of-stack', level) },
+  'solid-from-views': { topic: 'views-and-rotation', levels: [3], generate: seed => viewsQuestion(seed, 'solid-from-views', 3) },
+  'missing-view': { topic: 'views-and-rotation', levels: [3], generate: seed => viewsQuestion(seed, 'missing-view', 3) },
+  'same-solid': { topic: 'views-and-rotation', levels: [2, 3, 4], generate: (seed, level) => viewsQuestion(seed, 'same-solid', level) },
+  'view-after-turn': { topic: 'views-and-rotation', levels: [4], generate: seed => viewsQuestion(seed, 'view-after-turn', 4) },
+  ...Object.fromEntries(Object.entries(DICE_KINDS).map(([kind, levels]) => [kind, { topic: 'dice', levels, generate: (seed, level) => diceQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(PERSPECTIVE_KINDS).map(([kind, levels]) => [kind, { topic: 'perspective', levels, generate: (seed, level) => perspectiveQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(OBSERVATION_KINDS).map(([kind, levels]) => [kind, { topic: 'observation-skills', levels, generate: (seed, level) => observationQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(MACHINE_KINDS).map(([kind, levels]) => [kind, { topic: 'mechanisms', levels, generate: (seed, level) => machinesQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(AREA_KINDS).map(([kind, levels]) => [kind, { topic: 'counting-figures', levels, generate: (seed, level) => areaQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(OVERLAY_KINDS).map(([kind, levels]) => [kind, { topic: 'overlays', levels, generate: (seed, level) => overlayQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(FIT_KINDS).map(([kind, levels]) => [kind, { topic: 'fit', levels, generate: (seed, level) => fitQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(SECTION_KINDS).map(([kind, levels]) => [kind, { topic: 'sections', levels, generate: (seed, level) => sectionsQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(SURFACE_KINDS).map(([kind, levels]) => [kind, { topic: 'solid-surfaces', levels, generate: (seed, level) => surfacesQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(SHADOW_KINDS).map(([kind, levels]) => [kind, { topic: 'shadows-and-light', levels, generate: (seed, level) => shadowQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(COLOUR_EXAM_KINDS).map(([kind, levels]) => [kind, { topic: 'colour-basics', levels, generate: (seed, level) => colourExamQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(PATTERN_KINDS).map(([kind, levels]) => [kind, { topic: 'visual-patterns', levels, generate: (seed, level) => patternQuestion(seed, kind, level) }])),
   'mix': { topic: 'colour-basics', levels: [1], generate: colour('mix') },
   'complement': { topic: 'colour-basics', levels: [2], generate: colour('complement') },
   'warm-cool': { topic: 'colour-basics', levels: [2], generate: colour('warm-cool') },

@@ -3,7 +3,7 @@ import { FoldExplorer, IconButton, NetBuilder, OppositeExplorer, buildPracticeQu
 import { Question } from './Question.jsx';
 import { generateQuestion } from './questions.js';
 import { canFold, fold, foldKinds, freshSheet, punch, punchable } from './paper-fold.js';
-import { FoldingFigure, FoldSequence, HoleGrid, ImageFigure, PunchedSheet, SolidFigure, SolidNetFigure, StackFigure, Swatch, ViewsFigure } from './figures.jsx';
+import { VoxelFigure, FoldingFigure, FoldSequence, HoleGrid, ImageFigure, PunchedSheet, SolidFigure, SolidNetFigure, StackFigure, Swatch, ViewsFigure } from './figures.jsx';
 import { canAnimate, describeFace, extrusion, foldedPose, joined, polycube, profiles, pyramid, unfold, sliced } from './solid-net.js';
 import { marksOnNet, marksOnSolid, ringMarks } from './solid-pattern.js';
 import { dirWord, presetSystem, solve } from './gears.js';
@@ -16,6 +16,19 @@ import { NOTCHES, S, notch, openings, packetAfter, packetOutline, refold, unfold
 import { MATRICES, NAMES, applyTo, imageAngles, imageCount, multiply, nameOf, traceRay } from './mirror-exam.js';
 import { ClockFace, MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
 import { CLUE_CHECK, shiftCode } from './logic.js';
+import { mirror as mirrorSolid, rotate as rotateSolid } from './voxel.js';
+import { roll as rollDie, standardDie as standardDieState } from './dice.js';
+import { DieFigure } from './dice-figures.jsx';
+import { seriesOf } from './patterns.js';
+import { PanelRow } from './pattern-figures.jsx';
+import { ColourMixer } from './colour-figures.jsx';
+import { SunTable } from './shadow-figures.jsx';
+import { SurfaceExplorer } from './surface-figures.jsx';
+import { SectionSlicer } from './section-figures.jsx';
+import { PieceFitter } from './fit-figures.jsx';
+import { SheetStacker } from './overlay-figures.jsx';
+import { FeatureScanner } from './observation-figures.jsx';
+import { PerspectiveBox } from './perspective-figures.jsx';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -463,6 +476,68 @@ export function LogicLab({ mode = 'shift' }) {
   </div>;
 }
 
+// ---------- turning a solid ----------
+const TURNER_SOLID = [[0, 0, 0], [1, 0, 0], [2, 0, 0], [2, 1, 0], [2, 1, 1], [0, 0, 1]];
+const TURNS = { left: [[0, -1, 0], [1, 0, 0], [0, 0, 1]], right: [[0, 1, 0], [-1, 0, 0], [0, 0, 1]], forward: [[0, 0, 1], [0, 1, 0], [-1, 0, 0]], back: [[0, 0, -1], [0, 1, 0], [1, 0, 0]] };
+export function SolidTurner() {
+  const [cubes, setCubes] = useState(TURNER_SOLID);
+  const [mirrored, setMirrored] = useState(false);
+  const [moves, setMoves] = useState(0);
+  const shown = mirrored ? mirrorSolid(cubes) : cubes;
+  const go = name => { setCubes(rotateSolid(cubes, TURNS[name])); setMoves(moves + 1); };
+  return <div className="tool">
+    <div className="tool-stage">
+      <div className="stage-block"><span className="stage-caption">Start</span><VoxelFigure cubes={TURNER_SOLID.map(([x, y, z]) => ({ x, y, z }))} label="The solid at the start" /></div>
+      <div className="stage-block"><span className="stage-caption">{mirrored ? 'Mirror image, turned' : 'Turned'}</span><VoxelFigure cubes={shown.map(([x, y, z]) => ({ x, y, z }))} large label={mirrored ? 'The mirror image of the solid' : 'The solid after the turns'} /></div>
+    </div>
+    <div className="tool-row">
+      <div className="icon-cluster" role="group" aria-label="Turn the solid">
+        <IconButton label="Turn left, seen from above" onClick={() => go('left')}>↺</IconButton>
+        <IconButton label="Turn right, seen from above" onClick={() => go('right')}>↻</IconButton>
+        <IconButton label="Tip forward" onClick={() => go('forward')}>⤓</IconButton>
+        <IconButton label="Tip back" onClick={() => go('back')}>⤒</IconButton>
+      </div>
+      <button type="button" className={`chip${mirrored ? ' is-active' : ''}`} aria-pressed={mirrored} onClick={() => setMirrored(!mirrored)}>Show the mirror image</button>
+    </div>
+    <p className="tool-status" role="status">{mirrored ? 'The mirror image: no amount of turning makes it match the start.' : moves ? `${moves} turn${moves === 1 ? '' : 's'}: still the same solid.` : 'Turn the solid and compare it with the start.'}</p>
+  </div>;
+}
+
+// ---------- rolling a die ----------
+export function DieRoller() {
+  const [die, setDie] = useState(standardDieState());
+  const [rolls, setRolls] = useState([]);
+  const go = dir => { setDie(rollDie(die, dir)); setRolls([...rolls, dir]); };
+  return <div className="tool">
+    <div className="tool-stage"><DieFigure top={die.U} front={die.S} right={die.E} /></div>
+    <div className="tool-row">
+      <div className="icon-cluster" role="group" aria-label="Roll the die">
+        <IconButton label="Roll north" onClick={() => go('north')}>↑</IconButton>
+        <IconButton label="Roll west" onClick={() => go('west')}>←</IconButton>
+        <IconButton label="Roll east" onClick={() => go('east')}>→</IconButton>
+        <IconButton label="Roll south" onClick={() => go('south')}>↓</IconButton>
+      </div>
+      <button type="button" className="chip" onClick={() => { setDie(standardDieState()); setRolls([]); }}>Start again</button>
+    </div>
+    <p className="tool-status" role="status">{`Top ${die.U}, front ${die.S}, right ${die.E}. Bottom ${die.D}, back ${die.N}, left ${die.W}.${rolls.length ? ` Rolls: ${rolls.join(', ')}.` : ''}`}</p>
+  </div>;
+}
+
+// ---------- rule mixer: switch rules on and watch a series build ----------
+const MIX_RULES = { spin: 'Turn', orbit: 'Move round', count: 'Add one', fill: 'Change colour' };
+export function RuleMixer({ rules = ['spin', 'orbit', 'fill'] }) {
+  const [on, setOn] = useState([rules[0]]);
+  const series = useMemo(() => seriesOf(seededRandom(21), on.length ? on : [rules[0]]), [on.join()]);
+  const toggle = r => setOn(on.includes(r) ? on.filter(x => x !== r) : [...on, r]);
+  return <div className="tool">
+    <div className="tool-row" role="group" aria-label="Rules in the series">
+      {rules.map(r => <button key={r} type="button" className={`chip${on.includes(r) ? ' is-active' : ''}`} aria-pressed={on.includes(r)} onClick={() => toggle(r)}>{MIX_RULES[r]}</button>)}
+    </div>
+    <div className="tool-stage"><PanelRow panels={Array.from({ length: 5 }, (_, k) => series.at(k))} /></div>
+    <p className="tool-status" role="status">{`Rules: ${series.text.join('; ')}.`}</p>
+  </div>;
+}
+
 export function LearnTool({ tool, props = {} }) {
   switch (tool) {
     case 'fold-explorer': return <FoldExplorer {...props} />;
@@ -481,8 +556,19 @@ export function LearnTool({ tool, props = {} }) {
     case 'mirror-lab': return <MirrorLab {...props} />;
     case 'number-lab': return <NumberLab {...props} />;
     case 'logic-lab': return <LogicLab {...props} />;
+    case 'solid-turner': return <SolidTurner {...props} />;
+    case 'die-roller': return <DieRoller {...props} />;
+    case 'rule-mixer': return <RuleMixer {...props} />;
+    case 'colour-mixer': return <ColourMixer {...props} />;
+    case 'sun-table': return <SunTable {...props} />;
+    case 'surface-explorer': return <SurfaceExplorer {...props} />;
+    case 'section-slicer': return <SectionSlicer {...props} />;
+    case 'piece-fitter': return <PieceFitter {...props} />;
+    case 'sheet-stacker': return <SheetStacker {...props} />;
+    case 'feature-scanner': return <FeatureScanner {...props} />;
+    case 'perspective-box': return <PerspectiveBox {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner', 'die-roller', 'rule-mixer', 'colour-mixer', 'sun-table', 'surface-explorer', 'section-slicer', 'piece-fitter', 'sheet-stacker', 'feature-scanner', 'perspective-box']);
 export { IconButton };

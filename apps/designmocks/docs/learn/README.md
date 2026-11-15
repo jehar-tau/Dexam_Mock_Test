@@ -63,20 +63,26 @@ Update this table in the same change as the work.
 |---|---|---|---|---|---|---|
 | Cube nets | [spec](topics/cube-nets.md) | Built | Built | Built | Built | Preview |
 | Nets of solids | [spec](topics/nets-of-solids.md) | Built | Built | Built | Built | Preview |
-| Dice | [spec](topics/dice.md) | Planned | Planned | Planned | Planned | — |
+| Dice | [spec](topics/dice.md) | Built | Built | Built | Built | `dice` |
 | Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Built | Built | Built | Preview |
 | Mirror and water images | [spec](topics/mirror-images.md) | Built | Built | Built | Built | Preview |
 | Counting cubes | [spec](topics/counting-cubes.md) | Built | Built | Built | Built | Preview |
-| Views and rotation | [spec](topics/views-and-rotation.md) | Planned | Planned | Planned | Planned | — |
-| Surfaces of solids | [spec](topics/solid-surfaces.md) | Planned | Planned | Planned | Planned | — |
+| Views and rotation | [spec](topics/views-and-rotation.md) | Built | Built | Built | Built | `views-and-rotation` |
+| Surfaces of solids | [spec](topics/solid-surfaces.md) | Built | Built | Built | Built | `solid-surfaces` |
 | Counting figures | [spec](topics/counting-figures.md) | Built | Built | Built | Built | `counting-figures` |
 | Gears, belts and levers | [spec](topics/mechanisms.md) | Built | Built | Built | Built | `mechanisms` |
-| Shadows and light | [spec](topics/shadows-and-light.md) | Planned | Planned | Planned | Planned | — |
+| Shadows and light | [spec](topics/shadows-and-light.md) | Built | Built | Built | Built | `shadows-and-light` |
+| Sections of solids | [spec](topics/sections.md) | Built | Built | Built | Built | `sections` |
+| Fit and hidden figures | [spec](topics/fit.md) | Built | Built | Built | Built | `fit` |
+| Transparent sheets | [spec](topics/overlays.md) | Built | Built | Built | Built | `overlays` |
+| Visual observation | [spec](topics/observation.md) | Built | Built | Built | Built | `observation-skills` |
+| Perspective and viewpoint | [spec](topics/perspective.md) | Built | Built | Built | Built | `perspective` |
 | Number and quantity | [spec](topics/quant.md) | Built | Built | Built | Built | `quant` |
 | Codes and number patterns | [spec](topics/logic.md) | Built | Built | Built | Built | `codes-patterns` |
 | Arrangements and puzzles | [spec](topics/logic.md) | Built | Built | Built | Built | `arrangements` |
 | Directions, clocks and calendars | [spec](topics/logic.md) | Built | Built | Built | Built | `directions` |
-| Colour | [spec](topics/colour.md) | Built | Planned | Planned | Planned | Preview |
+| Visual series and matrices | [spec](topics/visual-patterns.md) | Built | Built | Built | Built | `visual-patterns` |
+| Colour | [spec](topics/colour.md) | Built | Built | Built | Built | `colour-basics` |
 
 Foundation work packages: F6, F1, F3, F4, F5, F2 and F9 are done; see the
 status table at the top of

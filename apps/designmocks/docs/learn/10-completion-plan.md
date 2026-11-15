@@ -42,29 +42,29 @@ timed set with exam marking). Rules for building and merging are in
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 7 | Views and rotation | Front, top and side views of block solids; solid from three views; same object or mirror image after a turn; isometric drawing | Spatial bank; spec exists |
-| 8 | Dice | Standard dice rules; opposite faces from two or three views; same die or different; a die rolled along a path | Spatial bank; spec exists |
-| 9 | Visual series and matrices | Next figure in a series; missing cell of a 3 × 3 grid; analogies; odd one out; two rules at once; rotation series | Logic bank (visual series) |
-| 10 | Colour (tiers 2–4) | Mixing systems; complements and harmonies; value and saturation; warm and cool; colour in use | Colour theory and bank |
-| 11 | Shadows and light | Shadow direction and length from the sun; silhouettes from views; which light makes this shadow | Spatial bank; spec exists |
-| 12 | Surfaces of solids | Faces, edges and corners; visible and hidden faces; surfaces of cube stacks; painted surfaces | Spatial bank; spec exists |
-| 13 | Sections of solids | Shape of a cut face; pieces after a cut; oblique cuts of a cube | Spatial bank |
-| 14 | Fit and embedded figures | Which piece completes a shape; which figure hides a shape; pieces that make a target | Spatial and observation banks |
-| 15 | Transparent sheets and overlays | Fold a transparent sheet and superimpose; stack three sheets; count in the result | Spatial and counting banks |
+| 7 | Views and rotation **Done** | Front, top and side views of block solids; solid from three views; same object or mirror image after a turn; isometric drawing | Spatial bank; spec exists |
+| 8 | Dice **Done** | Standard dice rules; opposite faces from two or three views; same die or different; a die rolled along a path | Spatial bank; spec exists |
+| 9 | Visual series and matrices **Done** | Next figure in a series; missing cell of a 3 × 3 grid; analogies; odd one out; two rules at once; rotation series | Logic bank (visual series) |
+| 10 | Colour (tiers 2–4) **Done** | Mixing systems; complements and harmonies; value and saturation; warm and cool; colour in use | Colour theory and bank |
+| 11 | Shadows and light **Done** | Shadow direction and length from the sun; silhouettes from views; which light makes this shadow | Spatial bank; spec exists |
+| 12 | Surfaces of solids **Done** | Faces, edges and corners; visible and hidden faces; surfaces of cube stacks; painted surfaces | Spatial bank; spec exists |
+| 13 | Sections of solids **Done** | Shape of a cut face; pieces after a cut; oblique cuts of a cube | Spatial bank |
+| 14 | Fit and embedded figures **Done** | Which piece completes a shape; which figure hides a shape; pieces that make a target | Spatial and observation banks |
+| 15 | Transparent sheets and overlays **Done** | Fold a transparent sheet and superimpose; stack three sheets; count in the result | Spatial and counting banks |
 
 ### Group 4: extend two finished programmes
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 16 | Counting figures: areas | Area of a shaded part; ratio of nested shapes; chance of landing on a shaded part; largest of four shapes on a grid | Shape and area bank |
-| 17 | Mechanisms: more machines | Rigid frame or mechanism; stability and centre of gravity; rolling and turning; pulley effort; lever classes | Mechanical bank |
+| 16 | Counting figures: areas **Done** | Area of a shaded part; ratio of nested shapes; chance of landing on a shaded part; largest of four shapes on a grid | Shape and area bank |
+| 17 | Mechanisms: more machines **Done** | Rigid frame or mechanism; stability and centre of gravity; rolling and turning; pulley effort; lever classes | Mechanical bank |
 
 ### Group 5: observation and perspective
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 18 | Visual observation | Odd one out; spot the differences; hidden shapes; figure and ground; detail memory | Observation theory and earlier bank |
-| 19 | Perspective and viewpoint | Horizon and eye level; one, two and three-point perspective; vanishing points; camera position; which view is from where | Perspective theory |
+| 18 | Visual observation **Done** | Odd one out; spot the differences; hidden shapes; figure and ground; detail memory | Observation theory and earlier bank |
+| 19 | Perspective and viewpoint **Done** | Horizon and eye level; one, two and three-point perspective; vanishing points; camera position; which view is from where | Perspective theory |
 
 ### Group 6: knowledge and design method
 

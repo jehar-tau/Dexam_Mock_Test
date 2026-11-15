@@ -4242,3 +4242,27 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .code-pair{display:flex;gap:1rem;align-items:center;justify-content:center;font:600 1.5rem/1.2 var(--font-mono,ui-monospace,monospace);letter-spacing:.12em;margin:0;flex-wrap:wrap}
 .walk-figure{display:block;max-width:100%;height:auto}.walk-path{fill:none;stroke:#3f78c9;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.walk-start{fill:#162824}.walk-now{fill:#c8532c;stroke:#162824}
 :root[data-theme="dark"] .walk-start{fill:#e9e7d8}:root[data-theme="dark"] .walk-path{stroke:#7fb0ea}
+.view-unknown{display:flex;align-items:center;justify-content:center;width:72px;height:72px;border:1.5px dashed var(--line);border-radius:6px;font:700 1.5rem/1 var(--font-sans,system-ui,sans-serif);color:var(--muted)}
+/* Learn: dice */
+.die-figure{display:block;max-width:100%;height:auto}.die-face{stroke:#162824;stroke-width:1.2;stroke-linejoin:round}.die-face.top{fill:#fffef9}.die-face.left{fill:#f1ede0}.die-face.right{fill:#e2dccb}.die-number{font:700 15px/1 var(--font-sans,system-ui,sans-serif);fill:#162824;text-anchor:middle}
+.die-path{display:block}.die-path-cell{fill:#fffef9;stroke:#162824;stroke-width:.5;opacity:.6}.die-path-start{fill:#9cc9a7;stroke:#162824}.die-path-step{stroke:#c8532c;stroke-width:2.4}#die-arrow path{fill:#c8532c}.die-path-compass{font:600 11px/1 var(--font-sans,system-ui,sans-serif);fill:#162824}
+:root[data-theme="dark"] .die-path-compass{fill:#e9e7d8}
+/* Learn: visual patterns */
+.pattern-panel{display:block;flex:none}.pattern-frame{fill:#fffef9;stroke:#162824;stroke-width:.025}.pattern-panel.is-ask .pattern-frame{stroke-dasharray:.06 .04;fill:#f4f1e4}.pattern-ask{font:700 .5px/1 var(--font-sans,system-ui,sans-serif);fill:#c8532c;text-anchor:middle}
+.pattern-item{stroke:#162824;stroke-width:.02;stroke-linejoin:round}.pattern-item.fill-black{fill:#162824}.pattern-item.fill-white{fill:#fffef9}.pattern-item.fill-grey{fill:#9aa39c}
+.pattern-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:center}.pattern-sep{font-weight:600;color:var(--muted)}.pattern-grid{display:grid;grid-template-columns:repeat(3,auto);gap:.35rem;justify-content:center}
+.wheel-marks{display:block}
+.text-swatch{display:inline-flex;align-items:center;justify-content:center;min-width:96px;padding:.7rem 1rem;border-radius:8px;font-weight:800;letter-spacing:.08em;font-size:1.15rem;border:1px solid rgba(0,0,0,.15)}
+.wheel-chip.flat{position:static;width:30px;height:30px}
+.mixer-circles{position:relative;width:170px;height:150px;margin:.4rem auto;border-radius:12px;isolation:isolate}.mixer-circles.light{background:#000}.mixer-circles.ink{background:#fff;border:1px solid var(--line)}
+.mixer-circle{position:absolute;width:90px;height:90px;border-radius:50%;transition:opacity .2s}.mixer-circle.is-off{opacity:0}
+.mixer-circles.light .mixer-circle{mix-blend-mode:screen}.mixer-circles.ink .mixer-circle{mix-blend-mode:multiply}
+.mixer-circle.red,.mixer-circle.cyan{left:18px;top:8px}.mixer-circle.green,.mixer-circle.magenta{left:62px;top:8px}.mixer-circle.blue,.mixer-circle.yellow{left:40px;top:50px}
+.mixer-circle.red{background:#f00}.mixer-circle.green{background:#0f0}.mixer-circle.blue{background:#00f}.mixer-circle.cyan{background:#0ff}.mixer-circle.magenta{background:#f0f}.mixer-circle.yellow{background:#ff0}
+.stack-cube.piece-1 .face.top{fill:#9ec5e8}.stack-cube.piece-1 .face.left{fill:#7aa7d1}.stack-cube.piece-1 .face.right{fill:#5c8ab7}
+.stack-cube.piece-2 .face.top{fill:#f2c38b}.stack-cube.piece-2 .face.left{fill:#dca469}.stack-cube.piece-2 .face.right{fill:#bf8650}
+.stack-cube.piece-3 .face.top{fill:#b9dca0}.stack-cube.piece-3 .face.left{fill:#98c27c}.stack-cube.piece-3 .face.right{fill:#78a35e}
+.stack-cube.piece-4 .face.top{fill:#e3b4d6}.stack-cube.piece-4 .face.left{fill:#c992ba}.stack-cube.piece-4 .face.right{fill:#a9739b}
+.outline-figure{display:inline-flex;flex-direction:column;align-items:center;gap:.25rem}
+.pieces-figure{display:inline-flex;gap:.6rem;align-items:flex-end;flex-wrap:wrap;justify-content:center}
+.piece-stage{display:flex;gap:1.4rem;align-items:center;justify-content:center;flex-wrap:wrap}

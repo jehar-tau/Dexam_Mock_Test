@@ -10,6 +10,17 @@ import { LinesFigure } from './lines-figure.jsx';
 import { CutSequence, CutSheet, FlapPlan, FlapSheet, LetterSheet } from './paper-figures.jsx';
 import { ClockFace, MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
 import { MazeFigure, NumberDiamond } from './logic-figures.jsx';
+import { DieFigure, DiePath, DieRow, DieStack } from './dice-figures.jsx';
+import { Panel, PanelGrid, PanelRow } from './pattern-figures.jsx';
+import { TextSwatch, WheelMarks } from './colour-figures.jsx';
+import { ShadowSide, ShadowTop, Silhouette, Walkers } from './shadow-figures.jsx';
+import { Outline } from './surface-figures.jsx';
+import { CubeCut, Revolve } from './section-figures.jsx';
+import { Pieces } from './fit-figures.jsx';
+import { Sheet } from './overlay-figures.jsx';
+import { Coins, Frame, LeverLine, PulleyBlock, Standing } from './machine-figures.jsx';
+import { Clutter, IconGrid } from './observation-figures.jsx';
+import { Persp, PerspPeople, PlanView, ViewStrip } from './perspective-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -95,7 +106,7 @@ export function VoxelFigure({ cubes: list, box = null, large = false, marked = n
   const isHighlight = c => highlight && highlight.x === c.x && highlight.y === c.y;
   return <svg className="stack-figure" viewBox={`${minX} ${minY} ${maxX - minX} ${maxY - minY}`} width={maxX - minX} height={maxY - minY} role="img" aria-label={label ?? `Solid made of ${list.length} cubes`}>
     <polygon className="floor" points={face([[0, 0, 0], [nx, 0, 0], [nx, ny, 0], [0, ny, 0]])} />
-    {drawOrder(list).map(c => { const { x, y, z } = c; return <g key={`${x}-${y}-${z}`} className={`stack-cube${isHighlight(c) ? ' is-highlight' : ''}${isMarked(c) ? ' is-marked' : ''}`}>
+    {drawOrder(list).map(c => { const { x, y, z } = c; return <g key={`${x}-${y}-${z}`} className={`stack-cube${isHighlight(c) ? ' is-highlight' : ''}${isMarked(c) ? ' is-marked' : ''}${c.piece != null ? ` piece-${c.piece}` : ''}`}>
       <polygon className="face top" points={face([[x, y, z + 1], [x + 1, y, z + 1], [x + 1, y + 1, z + 1], [x, y + 1, z + 1]])} />
       <polygon className="face left" points={face([[x + 1, y, z], [x + 1, y + 1, z], [x + 1, y + 1, z + 1], [x + 1, y, z + 1]])} />
       <polygon className="face right" points={face([[x, y + 1, z], [x + 1, y + 1, z], [x + 1, y + 1, z + 1], [x, y + 1, z + 1]])} />
@@ -111,17 +122,25 @@ export function StackFigure({ heights, large = false, highlight = null, marked =
 
 // Top, front and right-side views. Top: x runs down, y runs right. Front (seen from +x): y runs
 // right. Right side (seen from +y): x runs LEFT, so the front of the stack is at its left edge.
+// One view on its own: rows top to bottom, each a list of filled cells left to right.
+export function ViewGrid({ grid, compact = false }) {
+  const cell = compact ? 14 : 22, rows = grid.length, cols = grid[0].length;
+  return <svg className="view-grid" viewBox={`-1 -1 ${cols * cell + 2} ${rows * cell + 2}`} width={cols * cell + 2} height={rows * cell + 2} role="img" aria-label={`A view ${cols} squares wide and ${rows} high, with ${grid.flat().filter(Boolean).length} squares filled`}>
+    {grid.flatMap((row, r) => row.map((on, c) => <rect key={`${r}-${c}`} className={on ? 'view-cell is-on' : 'view-cell'} x={c * cell} y={r * cell} width={cell} height={cell} />))}
+  </svg>;
+}
 export function ViewsFigure({ top, front, side, compact = false }) {
   const cell = compact ? 12 : 24;
-  const nx = top.length, ny = top[0].length, nz = Math.max(1, ...front, ...side);
+  const nx = top.length, ny = top[0].length, nz = Math.max(1, ...front, ...(side ?? []));
   const grid = (columns, rows, filled, key) => <svg className="view-grid" viewBox={`-1 -1 ${columns * cell + 2} ${rows * cell + 2}`} width={columns * cell + 2} height={rows * cell + 2} aria-hidden="true">
     {Array.from({ length: columns * rows }, (_, i) => { const c = i % columns, r = Math.floor(i / columns); return <rect key={`${key}-${i}`} className={filled(c, r) ? 'view-cell is-on' : 'view-cell'} x={c * cell} y={r * cell} width={cell} height={cell} />; })}
   </svg>;
-  const description = `Top view with ${top.flat().filter(Boolean).length} floor squares. Front view, column heights left to right: ${front.join(', ')}. Right-side view, column heights left to right: ${[...side].reverse().join(', ')}.`;
+  const description = `Top view with ${top.flat().filter(Boolean).length} floor squares. Front view, column heights left to right: ${front.join(', ')}. ${side ? `Right-side view, column heights left to right: ${[...side].reverse().join(', ')}.` : 'The right-side view is not given.'}`;
   return <div className="views-figure" role="img" aria-label={description}>
     <div className="view view-top"><span className="view-caption">Top</span>{grid(ny, nx, (c, r) => top[r][c], 'top')}</div>
     <div className="view view-front"><span className="view-caption">Front</span>{grid(ny, nz, (c, r) => front[c] > nz - 1 - r, 'front')}</div>
-    <div className="view view-side"><span className="view-caption">Right side</span>{grid(nx, nz, (c, r) => side[nx - 1 - c] > nz - 1 - r, 'side')}</div>
+    {side ? <div className="view view-side"><span className="view-caption">Right side</span>{grid(nx, nz, (c, r) => side[nx - 1 - c] > nz - 1 - r, 'side')}</div>
+      : <div className="view view-side"><span className="view-caption">Right side</span><span className="view-unknown" aria-hidden="true">?</span></div>}
   </div>;
 }
 
@@ -263,7 +282,7 @@ export function Figure({ spec, compact = false }) {
     case 'holes': return <HoleGrid holes={spec.holes} compact={compact} />;
     case 'image': return <ImageFigure figure={spec.figure} transform={spec.transform} line={spec.line} compact={compact} />;
     case 'stack': return <StackFigure heights={spec.heights} large={spec.large && !compact} marked={spec.marked} />;
-    case 'voxels': return <VoxelFigure cubes={spec.cubes} box={spec.box ? [spec.box, spec.box, spec.box] : null} large={spec.large && !compact} marked={spec.marked} />;
+    case 'voxels': return <VoxelFigure cubes={spec.cubes} box={Array.isArray(spec.box) ? spec.box : spec.box ? [spec.box, spec.box, spec.box] : null} large={spec.large && !compact} marked={spec.marked} label={spec.label} />;
     case 'solid': return <SolidFigure solid={spec.solid} large={spec.large && !compact} compact={compact} />;
     case 'solid-net': return <SolidNetFigure net={spec.net} compact={compact} />;
     case 'views': return <ViewsFigure top={spec.top} front={spec.front} side={spec.side} compact={compact} />;
@@ -271,7 +290,7 @@ export function Figure({ spec, compact = false }) {
     case 'rope': return <RopeFigure rope={spec.rope} towardsPull={spec.towardsPull} compact={compact} />;
     case 'beam': return <BeamFigure beam={spec.beam} ask={spec.ask} compact={compact} />;
     case 'mobile': return <MobileFigure mobile={spec.mobile} known={spec.known} />;
-    case 'lines': return <LinesFigure segments={spec.segments} ghost={spec.ghost} mirrors={spec.mirrors} compact={compact} />;
+    case 'lines': return <LinesFigure segments={spec.segments} ghost={spec.ghost} mirrors={spec.mirrors} compact={compact} unit={spec.unit} label={spec.label} />;
     case 'cut-sequence': return <CutSequence folds={spec.folds} cuts={spec.cuts} cutLines={spec.cutLines} strokes={spec.strokes} />;
     case 'cut-sheet': return <CutSheet shapes={spec.shapes} compact={compact} />;
     case 'flap-plan': return <FlapPlan flaps={spec.flaps} />;
@@ -284,6 +303,36 @@ export function Figure({ spec, compact = false }) {
     case 'table': return <table className="data-table"><thead><tr>{spec.head.map(h => <th key={h} scope="col">{h}</th>)}</tr></thead><tbody>{spec.rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>)}</tbody></table>;
     case 'number-diamond': return <NumberDiamond outer={spec.outer} centre={spec.centre} compact={compact} />;
     case 'maze': return <MazeFigure n={spec.n} m={spec.m} open={spec.open} from={spec.from} to={spec.to} compact={compact} />;
+    case 'view-grid': return <ViewGrid grid={spec.grid} compact={compact} />;
+    case 'die': return <DieFigure top={spec.top} front={spec.front} right={spec.right} compact={compact} />;
+    case 'die-stack': return <DieStack dice={spec.dice} />;
+    case 'die-row': return <DieRow dice={spec.dice} />;
+    case 'die-path': return <DiePath path={spec.path} />;
+    case 'panel': return <Panel panel={spec.panel} size={compact ? 56 : 72} />;
+    case 'panel-row': return <PanelRow panels={spec.panels} ask={spec.ask} analogy={spec.analogy} />;
+    case 'panel-grid': return <PanelGrid grid={spec.grid} />;
+    case 'persp': return <Persp lines={spec.lines} horizon={spec.horizon} points={spec.points} compact={compact} />;
+    case 'persp-people': return <PerspPeople people={spec.people} horizon={spec.horizon} />;
+    case 'plan-view': return <PlanView objects={spec.objects} camera={spec.camera} />;
+    case 'view-strip': return <ViewStrip items={spec.items} />;
+    case 'icon-grid': return <IconGrid icons={spec.icons} cols={spec.cols} label={spec.label} />;
+    case 'clutter': return <Clutter shapes={spec.shapes} />;
+    case 'lever-line': return <LeverLine order={spec.order} arms={spec.arms} />;
+    case 'pulley-block': return <PulleyBlock strands={spec.strands} />;
+    case 'frame': return <Frame points={spec.points} bars={spec.bars} compact={compact} />;
+    case 'standing': return <Standing poly={spec.poly} compact={compact} />;
+    case 'coins': return <Coins R={spec.R} r={spec.r} inside={spec.inside} />;
+    case 'sheet': return <Sheet n={spec.n} cells={spec.cells} label={spec.label} fold={spec.fold} region={spec.region} compact={compact} />;
+    case 'pieces': return <Pieces pieces={spec.pieces} compact={compact} />;
+    case 'cube-cut': return <CubeCut points={spec.points} polygon={spec.polygon} compact={compact} />;
+    case 'revolve': return <Revolve shape={spec.shape} />;
+    case 'outline': return <Outline cells={spec.cells} holes={spec.holes} label={spec.label} compact={compact} />;
+    case 'shadow-top': return <ShadowTop outlines={spec.outlines} apexes={spec.apexes} shadows={spec.shadows} light={spec.light} dashed={spec.dashed} compassOnly={spec.compassOnly} compact={compact} />;
+    case 'shadow-side': return <ShadowSide objects={spec.objects} lamp={spec.lamp} />;
+    case 'walkers': return <Walkers walkers={spec.walkers} />;
+    case 'silhouette': return <Silhouette outline={spec.outline} />;
+    case 'wheel-marks': return <WheelMarks marks={spec.marks} size={compact ? 104 : 132} />;
+    case 'text-swatch': return <TextSwatch fg={spec.fg} bg={spec.bg} name={spec.name} />;
     case 'swatch': return <Swatch colour={spec.colour} name={spec.name} large={!compact} />;
     default: return null;
   }

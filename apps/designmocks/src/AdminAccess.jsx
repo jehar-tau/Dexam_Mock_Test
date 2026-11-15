@@ -50,8 +50,6 @@ function AccessSession({actorId,headingRef,children,onRetry,config}){
   },[access.status,headingRef]);
   const services=useMemo(()=>scope?{
     rpc:(name,args,signal)=>runForVerifiedAccount(scope,platform.auth,actorId,(token,active)=>checkedRpc(name,args,active,token),signal),
-    withVerifiedRpc:(operation,requestSignal)=>runForVerifiedAccount(scope,platform.auth,actorId,
-      (token,signal)=>operation((name,args)=>checkedRpc(name,args,signal,token)),requestSignal),
     presentForCurrentStaff:(operation,requestSignal)=>runForVerifiedAccount(scope,platform.auth,actorId,async(token,signal)=>{
       if(await checkedRpc(config.procedure,undefined,signal,token)!==true){
         throw Object.assign(new Error('Staff access required'),{code:'42501'});
