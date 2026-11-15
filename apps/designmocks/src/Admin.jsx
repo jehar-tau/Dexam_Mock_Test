@@ -73,7 +73,7 @@ export function Admin() {
 }
 
 function AdminDesk({ session }) {
-  const { rpc, functions, assertCurrent, isCurrent, presentForCurrentStaff } = useAdminServices();
+  const { rpc, functions, assertCurrent, isCurrent, presentForCurrentStaff, withVerifiedRpc } = useAdminServices();
   const batch = useRef(null), sequence = useRef(0);
   const positions = useRef({
     support: { cursor: null, previous: [] }, privacy: { cursor: null, previous: [] },
@@ -105,15 +105,15 @@ function AdminDesk({ session }) {
         admin_bug_report_page: { p_cursor: target.support.cursor, p_limit: supportPageLimit },
         admin_privacy_request_page: { p_cursor: target.privacy.cursor, p_limit: privacyQueueLimit },
       };
-      const [d, b, m, a, r, l, w, i, c, ai, h, privacy, launch] = await Promise.all(
+      const [d, b, m, a, r, l, w, i, c, ai, h, privacy, launch] = await withVerifiedRpc(read => Promise.all(
           ["admin_question_drafts", "admin_bug_report_page", "admin_exam_mock_blueprints", "admin_all_india_events",
             "admin_reported_questions", "admin_learning_lessons", "admin_drawing_queue", "admin_question_intake_assets",
             "admin_community_report_queue", "admin_ai_draft_requests", "admin_operational_health", "admin_privacy_request_page",
             "admin_launch_readiness"].map(name => {
               if (!postLaunchPreview && !mvpDeskReads.has(name)) return [];
-              return rpc(name, pageArgs[name], request.signal);
+              return read(name, pageArgs[name]);
             }),
-      );
+      ), request.signal);
       return await withAccountDeadline(active => presentForCurrentStaff(() => {
         if (!current()) return false;
         const supportPage = readSupportPage(b, session.user.id);
@@ -138,7 +138,7 @@ function AdminDesk({ session }) {
       if (current()) { request.abort(); setMessage(adminRequestMessage(e)); }
       return false;
     }
-  }, [rpc, assertCurrent, isCurrent, presentForCurrentStaff, session.user.id]);
+  }, [withVerifiedRpc, assertCurrent, isCurrent, presentForCurrentStaff, session.user.id]);
   const load = useCallback(() => loadDesk(positions.current), [loadDesk]);
   const loadSupportPage = useCallback(support => loadDesk({ ...positions.current, support }), [loadDesk]);
   const loadPrivacyPage = useCallback(privacy => loadDesk({ ...positions.current, privacy }), [loadDesk]);

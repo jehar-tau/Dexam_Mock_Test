@@ -76,8 +76,8 @@ first on product design.
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 20 | Indian crafts and textiles | Crafts by state; techniques and materials; textiles and weaves; printing and dyeing | Indian craft theory |
-| 21 | Art and design history | Periods and movements; artists and works; architecture and monuments; designers and products | Art history theory |
+| 20 | Indian crafts and textiles **Done** | Crafts by state; techniques and materials; textiles and weaves; printing and dyeing | Indian craft theory |
+| 21 | Art and design history **Done** | Periods and movements; artists and works; architecture and monuments; designers and products | Art history theory |
 | 22 | Product design thinking | Identifying users; context; pain points; ideas from needs; the order of the design process | Product design theory and bank |
 | 23 | Posters, mascots and campaigns | Visual hierarchy; slogans; symbols and stamps; choosing media for an audience | Poster theory and bank |
 | 24 | Storyboarding | Sequence; shots and framing; continuity; telling a story in six frames | Storyboarding theory |

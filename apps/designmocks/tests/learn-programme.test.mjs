@@ -12,7 +12,7 @@ const rightResponse = q => (q.answerMode === 'numeric' ? String(q.answer.value ?
 const wrongResponse = q => (q.answerMode === 'numeric' ? String((q.answer.value ?? q.answer.max) + 1) : q.answerMode === 'multi' ? [q.options.find(o => !q.answer.includes(o.id)).id] : q.options.find(o => o.id !== q.answer).id);
 
 test('every registered programme validates and every lesson question can be answered and marked', () => {
-  assert.deepEqual(programmes.map(p => p.slug), ['cube-nets', 'nets-of-solids', 'dice', 'paper-folding', 'mirror-images', 'counting-cubes', 'views-and-rotation', 'mechanisms', 'counting-figures', 'quant', 'codes-patterns', 'arrangements', 'directions', 'visual-patterns', 'colour-basics', 'shadows-and-light', 'solid-surfaces', 'sections', 'fit', 'overlays', 'observation-skills', 'perspective']);
+  assert.deepEqual(programmes.map(p => p.slug), ['cube-nets', 'nets-of-solids', 'dice', 'paper-folding', 'mirror-images', 'counting-cubes', 'views-and-rotation', 'mechanisms', 'counting-figures', 'quant', 'codes-patterns', 'arrangements', 'directions', 'visual-patterns', 'colour-basics', 'shadows-and-light', 'solid-surfaces', 'sections', 'fit', 'overlays', 'observation-skills', 'perspective', 'crafts', 'art-history']);
   for (const programme of programmes) {
     assert.equal(validateProgramme(programme), programme);
     for (const lesson of lessonsOf(programme)) for (const step of lesson.steps) {
