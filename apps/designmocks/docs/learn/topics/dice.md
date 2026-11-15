@@ -3,8 +3,13 @@
 Slug `dice` · topic `visualisation` · exams uceed, ceed, nid, nift ·
 engine `src/learn/dice.js` (builds on `cube-net.js`) · tool `die-roller`
 
-Status: Foundations Planned · Exam standard Planned · Exam hard Planned ·
-Mastery Planned
+Status: Foundations Built · Exam standard Built · Exam hard Built ·
+Mastery Built (15 November 2026). As built: `src/learn/dice.js` models a die
+as its six compass faces; figures in `src/learn/dice-figures.jsx` show numbers
+rather than pips; tool `die-roller`. Every net shown is built to fold into the
+exact die, handedness included (`netFor`). `standard-check` was left out.
+Tests in `tests/dice.test.mjs` re-roll with rotation matrices and re-solve
+picture puzzles by trying every numbering.
 
 ## 1. Outcome
 
