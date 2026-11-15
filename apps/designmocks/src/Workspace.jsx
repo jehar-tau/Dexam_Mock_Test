@@ -895,7 +895,12 @@ if(postLaunchPreview){
             disabled={busy}
             onSubmit={async({ reason, details }) => {
               try{return await rpc("report_attempt_question",{p_attempt_id:id,p_question_id:q.id,p_reason:reason,p_details:details});}
-              catch{throw new Error("Couldn’t confirm this report. Reconnect and try again.");}
+              catch(error){
+                const message = error?.code === "question_report_limit"
+                  ? "You’ve reached the hourly question report limit. Try again later."
+                  : "Couldn’t confirm this report. Reconnect and try again.";
+                throw new Error(message);
+              }
             }}
           />
           <div className="runner-actions">
