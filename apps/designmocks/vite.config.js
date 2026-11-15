@@ -19,8 +19,8 @@ export default defineConfig(({ command, mode }) => {
   const stagingTarget = { url: `https://${project.project_ref}.supabase.co`, origin: project.staging_frontend_origin };
   const checkoutTarget = { url: stagingTarget.url, origin: project.frontend_origin };
   resolveAuthConfiguration({
-    mode, deployment, origin: mode === "test" ? checkoutTarget.origin : stagingTarget.origin,
-    stagingTarget, checkoutTarget, portalEnabled, checkoutEnabled,
+    mode, deployment, origin: deployment === "production" || mode === "test" ? project.frontend_origin : stagingTarget.origin,
+    productionOrigin: project.frontend_origin, stagingTarget, checkoutTarget, portalEnabled, checkoutEnabled,
     testLoginEnabled: env.VITE_TEST_LOGIN_ENABLED === "true",
     stagingPortalEnabled: env.VITE_STAGING_PORTAL_ENABLED === "true",
     url: env.VITE_SUPABASE_URL,
