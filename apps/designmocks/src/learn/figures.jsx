@@ -15,6 +15,7 @@ import { Panel, PanelGrid, PanelRow } from './pattern-figures.jsx';
 import { TextSwatch, WheelMarks } from './colour-figures.jsx';
 import { ShadowSide, ShadowTop, Silhouette, Walkers } from './shadow-figures.jsx';
 import { Outline } from './surface-figures.jsx';
+import { CubeCut, Revolve } from './section-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -305,6 +306,8 @@ export function Figure({ spec, compact = false }) {
     case 'panel': return <Panel panel={spec.panel} size={compact ? 56 : 72} />;
     case 'panel-row': return <PanelRow panels={spec.panels} ask={spec.ask} analogy={spec.analogy} />;
     case 'panel-grid': return <PanelGrid grid={spec.grid} />;
+    case 'cube-cut': return <CubeCut points={spec.points} polygon={spec.polygon} compact={compact} />;
+    case 'revolve': return <Revolve shape={spec.shape} />;
     case 'outline': return <Outline cells={spec.cells} holes={spec.holes} label={spec.label} compact={compact} />;
     case 'shadow-top': return <ShadowTop outlines={spec.outlines} apexes={spec.apexes} shadows={spec.shadows} light={spec.light} dashed={spec.dashed} compassOnly={spec.compassOnly} compact={compact} />;
     case 'shadow-side': return <ShadowSide objects={spec.objects} lamp={spec.lamp} />;
