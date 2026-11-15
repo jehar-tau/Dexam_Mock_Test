@@ -148,7 +148,7 @@ function BankQuestionReview({ selected, rpc, onClose, onReviewed, onBound, bindi
           <button name="decision" value="reject" disabled={busy || bindingLocked}>Request correction</button>
         </div>
       </form>}
-      {canReview && onDownloadCorrection && ["MCQ", "MSQ", "NAT"].includes(question.type) &&
+      {question.active && onDownloadCorrection && ["MCQ", "MSQ", "NAT"].includes(question.type) &&
         <AnswerCorrection question={question} onDownload={onDownloadCorrection} disabled={!figuresReady || busy || bindingLocked} />}
       <details><summary>Source record</summary><p>Canonical key {question.externalKey}</p><p>Source commit <code>{question.sourceCommit}</code></p><p>Content digest <code>{question.contentSha256}</code></p></details>
     </>}
