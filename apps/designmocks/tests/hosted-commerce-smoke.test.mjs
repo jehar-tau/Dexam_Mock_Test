@@ -119,8 +119,8 @@ test("configured smoke uses actual handlers and reports rejection-only scope", (
 test("configured smoke rejects unconfigured handlers and generic gateway denials", () => {
   for (const fixture of ["unconfigured", "gateway"]) {
     const result = runSmoke("configured", fixture);
-    assert.equal(result.status, 1, result.stderr);
-    assert.match(result.stderr, /configured checkout must reject anonymous requests|checkout handler must reject the request/);
+    assert.equal(result.status, 2, result.stderr);
+    assert.equal(result.checks.find(row => row.check === "configured checkout handler rejects anonymous requests").passed, false);
   }
 });
 
@@ -131,10 +131,11 @@ test("configured commerce smoke accepts the checkout origin with a different por
 });
 
 test("configured commerce smoke requires the assessment handler to accept the checkout origin", () => {
-  for (const fixture of ["wrong-media-origin", "media-gateway"]) {
+  for (const fixture of ["wrong-media-origin", "media-gateway", "staging-origin-rejected"]) {
     const result = runSmoke("configured", fixture);
-    assert.equal(result.status, 1);
-    assert.match(result.stderr, /assessment media must accept the checkout origin|assessment media handler must reject anonymous access/);
+    assert.equal(result.status, 2, result.stderr);
+    assert.equal(result.checks.find(row => row.check === "attempt-media setup/identity gate").passed, false);
+    assert.ok(result.checks.slice(-4).every(row => row.passed));
   }
 });
 
@@ -173,6 +174,7 @@ test("staging and configured commerce probes require separate runs", () => {
 
 test("configured smoke rejects a checkout preflight missing browser request headers", () => {
   const result = runSmoke("configured", "missing-checkout-allow-headers");
-  assert.equal(result.status, 1);
-  assert.match(result.stderr, /approved checkout preflight must allow the browser request headers/);
+  assert.equal(result.status, 2, result.stderr);
+  assert.equal(result.checks.find(row => row.check === "approved checkout preflight").passed, false);
+  assert.ok(result.checks.slice(-3).every(row => row.passed));
 });
