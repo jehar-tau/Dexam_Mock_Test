@@ -3,7 +3,7 @@ import { FoldExplorer, IconButton, NetBuilder, OppositeExplorer, buildPracticeQu
 import { Question } from './Question.jsx';
 import { generateQuestion } from './questions.js';
 import { canFold, fold, foldKinds, freshSheet, punch, punchable } from './paper-fold.js';
-import { FoldingFigure, FoldSequence, HoleGrid, ImageFigure, PunchedSheet, SolidFigure, SolidNetFigure, StackFigure, Swatch, ViewsFigure } from './figures.jsx';
+import { VoxelFigure, FoldingFigure, FoldSequence, HoleGrid, ImageFigure, PunchedSheet, SolidFigure, SolidNetFigure, StackFigure, Swatch, ViewsFigure } from './figures.jsx';
 import { canAnimate, describeFace, extrusion, foldedPose, joined, polycube, profiles, pyramid, unfold, sliced } from './solid-net.js';
 import { marksOnNet, marksOnSolid, ringMarks } from './solid-pattern.js';
 import { dirWord, presetSystem, solve } from './gears.js';
@@ -16,6 +16,7 @@ import { NOTCHES, S, notch, openings, packetAfter, packetOutline, refold, unfold
 import { MATRICES, NAMES, applyTo, imageAngles, imageCount, multiply, nameOf, traceRay } from './mirror-exam.js';
 import { ClockFace, MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
 import { CLUE_CHECK, shiftCode } from './logic.js';
+import { mirror as mirrorSolid, rotate as rotateSolid } from './voxel.js';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -463,6 +464,33 @@ export function LogicLab({ mode = 'shift' }) {
   </div>;
 }
 
+// ---------- turning a solid ----------
+const TURNER_SOLID = [[0, 0, 0], [1, 0, 0], [2, 0, 0], [2, 1, 0], [2, 1, 1], [0, 0, 1]];
+const TURNS = { left: [[0, -1, 0], [1, 0, 0], [0, 0, 1]], right: [[0, 1, 0], [-1, 0, 0], [0, 0, 1]], forward: [[0, 0, 1], [0, 1, 0], [-1, 0, 0]], back: [[0, 0, -1], [0, 1, 0], [1, 0, 0]] };
+export function SolidTurner() {
+  const [cubes, setCubes] = useState(TURNER_SOLID);
+  const [mirrored, setMirrored] = useState(false);
+  const [moves, setMoves] = useState(0);
+  const shown = mirrored ? mirrorSolid(cubes) : cubes;
+  const go = name => { setCubes(rotateSolid(cubes, TURNS[name])); setMoves(moves + 1); };
+  return <div className="tool">
+    <div className="tool-stage">
+      <div className="stage-block"><span className="stage-caption">Start</span><VoxelFigure cubes={TURNER_SOLID.map(([x, y, z]) => ({ x, y, z }))} label="The solid at the start" /></div>
+      <div className="stage-block"><span className="stage-caption">{mirrored ? 'Mirror image, turned' : 'Turned'}</span><VoxelFigure cubes={shown.map(([x, y, z]) => ({ x, y, z }))} large label={mirrored ? 'The mirror image of the solid' : 'The solid after the turns'} /></div>
+    </div>
+    <div className="tool-row">
+      <div className="icon-cluster" role="group" aria-label="Turn the solid">
+        <IconButton label="Turn left, seen from above" onClick={() => go('left')}>↺</IconButton>
+        <IconButton label="Turn right, seen from above" onClick={() => go('right')}>↻</IconButton>
+        <IconButton label="Tip forward" onClick={() => go('forward')}>⤓</IconButton>
+        <IconButton label="Tip back" onClick={() => go('back')}>⤒</IconButton>
+      </div>
+      <button type="button" className={`chip${mirrored ? ' is-active' : ''}`} aria-pressed={mirrored} onClick={() => setMirrored(!mirrored)}>Show the mirror image</button>
+    </div>
+    <p className="tool-status" role="status">{mirrored ? 'The mirror image: no amount of turning makes it match the start.' : moves ? `${moves} turn${moves === 1 ? '' : 's'}: still the same solid.` : 'Turn the solid and compare it with the start.'}</p>
+  </div>;
+}
+
 export function LearnTool({ tool, props = {} }) {
   switch (tool) {
     case 'fold-explorer': return <FoldExplorer {...props} />;
@@ -481,8 +509,9 @@ export function LearnTool({ tool, props = {} }) {
     case 'mirror-lab': return <MirrorLab {...props} />;
     case 'number-lab': return <NumberLab {...props} />;
     case 'logic-lab': return <LogicLab {...props} />;
+    case 'solid-turner': return <SolidTurner {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner']);
 export { IconButton };

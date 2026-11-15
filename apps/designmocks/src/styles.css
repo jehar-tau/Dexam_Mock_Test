@@ -4242,3 +4242,4 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .code-pair{display:flex;gap:1rem;align-items:center;justify-content:center;font:600 1.5rem/1.2 var(--font-mono,ui-monospace,monospace);letter-spacing:.12em;margin:0;flex-wrap:wrap}
 .walk-figure{display:block;max-width:100%;height:auto}.walk-path{fill:none;stroke:#3f78c9;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.walk-start{fill:#162824}.walk-now{fill:#c8532c;stroke:#162824}
 :root[data-theme="dark"] .walk-start{fill:#e9e7d8}:root[data-theme="dark"] .walk-path{stroke:#7fb0ea}
+.view-unknown{display:flex;align-items:center;justify-content:center;width:72px;height:72px;border:1.5px dashed var(--line);border-radius:6px;font:700 1.5rem/1 var(--font-sans,system-ui,sans-serif);color:var(--muted)}
