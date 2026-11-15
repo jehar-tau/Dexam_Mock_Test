@@ -65,7 +65,7 @@ Update this table in the same change as the work.
 | Nets of solids | [spec](topics/nets-of-solids.md) | Built | Built | Built | Built | Preview |
 | Dice | [spec](topics/dice.md) | Planned | Planned | Planned | Planned | — |
 | Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Built | Built | Built | Preview |
-| Mirror and water images | [spec](topics/mirror-images.md) | Built | Planned | Planned | Planned | Preview |
+| Mirror and water images | [spec](topics/mirror-images.md) | Built | Built | Built | Built | Preview |
 | Counting cubes | [spec](topics/counting-cubes.md) | Built | Built | Built | Built | Preview |
 | Views and rotation | [spec](topics/views-and-rotation.md) | Planned | Planned | Planned | Planned | — |
 | Surfaces of solids | [spec](topics/solid-surfaces.md) | Planned | Planned | Planned | Planned | — |

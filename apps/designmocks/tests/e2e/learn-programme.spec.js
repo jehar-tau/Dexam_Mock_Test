@@ -547,3 +547,40 @@ test("paper folding: cuts unfold step by step and every exam-hard kind is marked
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
 });
+
+test("mirror images: the mirror lab and every exam-hard kind are marked", async ({ page }) => {
+  const base = "/learn-programme-preview/mirror-images";
+  const dialog = player(page);
+
+  // Two mirrors at an angle: the count follows the rule as the angle changes.
+  await page.goto(`${base}?lesson=two-mirrors`);
+  await dialog.getByRole("textbox", { name: "Your answer" }).fill("1");
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("360 ÷ 90 = 4, even. 3 images.");
+  const angle = dialog.getByRole("slider", { name: "Angle between the mirrors" });
+  await angle.fill("3");
+  await expect(dialog.getByRole("status")).toHaveText("360 ÷ 72 = 5, odd. 5 images.");
+  await dialog.getByRole("button", { name: "Object half way" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("360 ÷ 72 = 5, odd. 4 images.");
+
+  // A chain of two reflections in lines at right angles is a half turn.
+  await page.goto(`${base}?lesson=chains`);
+  const chain = generateQuestion("reflection-chain", 1, 4);
+  await dialog.getByRole("button", { name: `Option ${chain.answer}`, exact: true }).click();
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await dialog.getByRole("button", { name: "Then below" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("Result: turned half way round.");
+
+  // The exam-hard quiz, answered from the engine.
+  const { mirrorImagesProgramme } = await import("../../src/learn/programmes/mirror-images.js");
+  const set = buildQuiz(mirrorImagesProgramme.tiers[2].quiz, 6);
+  await page.goto(`${base}?lesson=quiz-exam-hard&seed=6`);
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    const right = question.options?.find(o => o.id === question.answer);
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click();
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});

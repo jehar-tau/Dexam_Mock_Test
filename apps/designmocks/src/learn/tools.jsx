@@ -13,6 +13,8 @@ import { bySize, shapesOf } from './figure-count.js';
 import { counterPresets } from './figure-questions.js';
 import { LinesFigure } from './lines-figure.jsx';
 import { NOTCHES, S, notch, openings, packetAfter, packetOutline, refold, unfoldShapes } from './paper-cut.js';
+import { MATRICES, NAMES, applyTo, imageAngles, imageCount, multiply, nameOf, traceRay } from './mirror-exam.js';
+import { MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -318,6 +320,58 @@ export function CutUnfolder({ sets = ['half', 'quarter'], shapes = ['semicircle'
   </div>;
 }
 
+// ---------- the mirror lab: a movable mirror, two mirrors at an angle, a ray on a grid ----------
+const LAB_PATTERN = { '2,1': 1, '2,2': 1, '2,3': 1, '3,3': 1, '4,3': 2, '3,1': 2, '1,4': 1, '2,4': 1 };
+const LAB_LINES = { right: 'mirror', left: 'mirror', bottom: 'water', top: 'water', falling: 'transposed', rising: 'anti' };
+const LAB_LINE_NAMES = { right: 'Right side', left: 'Left side', bottom: 'Below', top: 'Above', falling: 'Falling 45°', rising: 'Rising 45°' };
+const LAB_MIRRORS = { '3,1': '\\', '3,3': '/', '1,3': '\\', '1,0': '/' };
+export function MirrorLab({ mode = 'line', lines = ['right', 'bottom', 'falling'] }) {
+  const [line, setLine] = useState(lines[0]);
+  const [second, setSecond] = useState(null);
+  const [theta, setTheta] = useState(90);
+  const [onBisector, setOnBisector] = useState(false);
+  const [mirrors, setMirrors] = useState(LAB_MIRRORS);
+  if (mode === 'angle') {
+    const m = 360 / theta, count = imageCount(theta, onBisector);
+    // Image positions: the object's angle reflected in the two mirrors in turn, as far as they reach.
+    const a1 = ((90 - theta / 2) * Math.PI) / 180, phi = onBisector ? theta / 2 : theta * 0.3;
+    const images = imageAngles(theta, phi).map(a => a1 + (a * Math.PI) / 180);
+    return <div className="tool">
+      <div className="tool-stage"><MirrorAngle theta={theta} onBisector={onBisector} images={images} /></div>
+      <div className="tool-row">
+        <label className="slider"><span>Angle</span><input type="range" min="0" max="5" step="1" value={[30, 45, 60, 72, 90, 120].indexOf(theta)} onChange={e => setTheta([30, 45, 60, 72, 90, 120][Number(e.target.value)])} aria-label="Angle between the mirrors" /><output aria-hidden="true">{theta}°</output></label>
+        <button type="button" className={`chip${onBisector ? ' is-active' : ''}`} aria-pressed={onBisector} onClick={() => setOnBisector(!onBisector)}>Object half way</button>
+      </div>
+      <p className="tool-status" role="status">{`360 ÷ ${theta} = ${m}, ${m % 2 ? 'odd' : 'even'}. ${count} image${count === 1 ? '' : 's'}.`}</p>
+    </div>;
+  }
+  if (mode === 'ray') {
+    const n = 5, start = { x: -1, y: 1, d: [1, 0] }, result = traceRay(n, mirrors, { x: 0, y: 1, d: [1, 0] });
+    const flip = k => setMirrors({ ...mirrors, [k]: mirrors[k] === '/' ? '\\' : '/' });
+    return <div className="tool">
+      <div className="tool-stage"><RayGrid n={n} mirrors={mirrors} start={start} path={result ? [[-1, 1], ...result.path] : null} /></div>
+      <div className="tool-row" role="group" aria-label="Turn a mirror">
+        {Object.keys(mirrors).map(k => <button key={k} type="button" className="chip" onClick={() => flip(k)}>{`Turn mirror at ${k.split(',').map(v => Number(v) + 1).join(', ')}`}</button>)}
+      </div>
+      <p className="tool-status" role="status">{result ? `The ray bounces ${result.bounces} time${result.bounces === 1 ? '' : 's'} and leaves the grid.` : 'The ray goes round in a loop.'}</p>
+    </div>;
+  }
+  const first = LAB_LINES[line], total = second ? nameOf(multiply(MATRICES[LAB_LINES[second]], MATRICES[first])) : first;
+  return <div className="tool">
+    <div className="tool-row" role="group" aria-label="Place the mirror">
+      {lines.map(l => <button key={l} type="button" className={`chip${l === line ? ' is-active' : ''}`} aria-pressed={l === line} onClick={() => setLine(l)}>{LAB_LINE_NAMES[l]}</button>)}
+    </div>
+    {mode === 'chain' && <div className="tool-row" role="group" aria-label="Then reflect in">
+      {[null, ...lines].map(l => <button key={l ?? 'none'} type="button" className={`chip${l === second ? ' is-active' : ''}`} aria-pressed={l === second} onClick={() => setSecond(l)}>{l ? `Then ${LAB_LINE_NAMES[l].toLowerCase()}` : 'One mirror only'}</button>)}
+    </div>}
+    <div className="tool-stage">
+      <div className="stage-block"><span className="stage-caption">Figure</span><ToneGrid cells={LAB_PATTERN} n={6} lines={[{ at: line, label: mode === 'chain' ? '1' : undefined }, ...(second ? [{ at: second, label: '2' }] : [])]} /></div>
+      <div className="stage-block"><span className="stage-caption">Result</span><ToneGrid cells={applyTo(LAB_PATTERN, total, 6)} n={6} label={`The figure ${NAMES[total]}`} /></div>
+    </div>
+    <p className="tool-status" role="status">{`Result: ${NAMES[total]}.`}</p>
+  </div>;
+}
+
 export function LearnTool({ tool, props = {} }) {
   switch (tool) {
     case 'fold-explorer': return <FoldExplorer {...props} />;
@@ -333,8 +387,9 @@ export function LearnTool({ tool, props = {} }) {
     case 'lever-bench': return <LeverBench {...props} />;
     case 'figure-counter': return <FigureCounter {...props} />;
     case 'cut-unfolder': return <CutUnfolder {...props} />;
+    case 'mirror-lab': return <MirrorLab {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab']);
 export { IconButton };

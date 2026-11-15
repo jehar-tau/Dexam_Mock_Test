@@ -16,6 +16,7 @@ import { patternedCuboidQuestion } from './solid-pattern.js';
 import { mechanismQuestion } from './gears.js';
 import { figureQuestion } from './figure-questions.js';
 import { paperQuestion } from './paper-cut.js';
+import { mirrorExamQuestion } from './mirror-exam.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -43,6 +44,7 @@ function solidFigures(q) {
 const mechanism = kind => (seed, level) => mechanismQuestion(seed, kind, level);
 const figure = kind => (seed, level) => figureQuestion(seed, kind, level);
 const paper = kind => (seed, level) => paperQuestion(seed, kind, level);
+const mirrorExam = kind => (seed, level) => mirrorExamQuestion(seed, kind, level);
 const colour = kind => seed => colourFigures(colourQuestion(seed, kind));
 
 // kind → { topic, levels, generate(seed, level) }. Never rename a kind once a programme uses it.
@@ -64,7 +66,14 @@ const kinds = {
   'piece-count': { topic: 'paper-folding', levels: [4], generate: paper('piece-count') },
   'two-colour-fold': { topic: 'paper-folding', levels: [4], generate: paper('two-colour-fold') },
   'seen-from-behind': { topic: 'paper-folding', levels: [4], generate: paper('seen-from-behind') },
-  'mirror-image': { topic: 'mirror-images', levels: [1], generate: seed => imageFigures(imageQuestion(seed, 'mirror-image'), 'mirror') },
+  'mirror-image': { topic: 'mirror-images', levels: [1, 3], generate: (seed, level) => (level === 3 ? mirrorExamQuestion(seed, 'mirror-image', 3) : imageFigures(imageQuestion(seed, 'mirror-image'), 'mirror')) },
+  'diagonal-mirror': { topic: 'mirror-images', levels: [3], generate: mirrorExam('diagonal-mirror') },
+  'symmetric-words': { topic: 'mirror-images', levels: [3], generate: mirrorExam('symmetric-words') },
+  'clock-mirror': { topic: 'mirror-images', levels: [3], generate: mirrorExam('clock-mirror') },
+  'reflection-chain': { topic: 'mirror-images', levels: [4], generate: mirrorExam('reflection-chain') },
+  'image-count': { topic: 'mirror-images', levels: [4], generate: mirrorExam('image-count') },
+  'ray-exit': { topic: 'mirror-images', levels: [4], generate: mirrorExam('ray-exit') },
+  'ray-bounces': { topic: 'mirror-images', levels: [4], generate: mirrorExam('ray-bounces') },
   'water-image': { topic: 'mirror-images', levels: [2], generate: seed => imageFigures(imageQuestion(seed, 'water-image'), 'water') },
   'count-cubes': { topic: 'counting-cubes', levels: [1, 3], generate: stack('count-cubes') },
   'count-hidden': { topic: 'counting-cubes', levels: [2, 3], generate: stack('count-hidden') },
