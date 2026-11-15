@@ -11,7 +11,7 @@ const feedback = page => player(page).locator(".feedback");
 test("the Learn preview lists every programme and opens an overview", async ({ page }) => {
   await page.goto("/learn-preview");
   const list = page.getByLabel("Interactive programmes");
-  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour", "Shadows and light", "Surfaces of solids", "Sections of solids", "Fit and hidden figures", "Transparent sheets", "Visual observation", "Perspective and viewpoint", "Crafts, materials and making", "Art and design history"]) {
+  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour", "Shadows and light", "Surfaces of solids", "Sections of solids", "Fit and hidden figures", "Transparent sheets", "Visual observation", "Perspective and viewpoint", "Crafts, materials and making", "Art and design history", "Product design thinking", "Posters, mascots and campaigns", "Storyboarding", "Everyday physics"]) {
     await expect(list.locator("article", { hasText: title })).toBeVisible();
   }
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
@@ -876,3 +876,19 @@ test("art history: the exam-hard set", async ({ page }) => {
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
 });
+
+for (const [slug, file, name] of [["product-design", "product-design.js", "productDesignProgramme"], ["posters", "communication.js", "postersProgramme"], ["storyboarding", "communication.js", "storyboardingProgramme"], ["everyday-physics", "everyday-physics.js", "physicsProgramme"]]) {
+  test(`${slug}: the exam-standard set is marked`, async ({ page }) => {
+    const dialog = player(page);
+    const mod = await import(`../../src/learn/programmes/${file}`);
+    const set = buildQuiz(mod[name].tiers[1].quiz, 3);
+    await page.goto(`/learn-programme-preview/${slug}?lesson=quiz-exam-standard&seed=3`);
+    await dialog.getByRole("button", { name: "Begin" }).click();
+    for (const question of set) {
+      if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+      else await dialog.getByRole("button", { name: question.options.find(o => o.id === question.answer).text, exact: true }).click();
+      await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+    }
+    await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+  });
+}
