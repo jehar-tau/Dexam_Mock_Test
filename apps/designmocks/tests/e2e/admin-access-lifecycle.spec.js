@@ -325,6 +325,20 @@ test("a bare RPC authorization failure rechecks the role without needing a SQL e
  await expect(page.getByText("Current fictional private bug",{exact:true})).toHaveCount(0);await expect(heading(page)).toBeFocused();expect(state.roleChecks).toBe(checks+1);await expect(page.locator("#root")).not.toContainText(diagnostic);
 });
 
+test("refresh verifies one identity for the read batch and another before displaying it", async ({page}) => {
+ const state=await fixture(page);
+ const reads=state.bugReads;
+ const auth=await holdIdentity(page);
+ await health(page).evaluate(button=>button.click());
+ await expect.poll(auth.reads).toBe(1);
+ expect(state.bugReads).toBe(reads);
+ state.bugVersion=2;
+ auth.release();
+ await expect(page.getByText("Refreshed fictional private bug 2",{exact:true})).toBeVisible();
+ expect(auth.reads()).toBe(2);
+ expect(state.bugReads).toBe(reads+1);
+});
+
 test("an older bulk response cannot replace a newer refresh or reopen a revoked workspace",async({page})=>{
  const state=await fixture(page),older=deferred(),reads=state.bugReads;state.bugHolds[1]=older;state.bugVersion=1;
  await health(page).click();await expect.poll(()=>state.bugReads).toBe(reads+1);state.bugVersion=2;await health(page).click();await expect(page.getByText("Refreshed fictional private bug 2",{exact:true})).toBeVisible();
