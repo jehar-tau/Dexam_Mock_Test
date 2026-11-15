@@ -22,7 +22,11 @@ async function fixture(page,options={}){
   else if(name==='my_exam_mock_report')data=null;
   else if(name==='save_answer_revision'){const held=state.saveHold;if(held)await held.promise;data=state.saveReceipt===undefined?{accepted:true,answer:input.p_answer,revision:input.p_revision}:state.saveReceipt;}
   else if(name==='submit_attempt'){status=state.submitStatus;data=status===200?{id:attemptId,title:'Original fictional timed paper',status:'submitted',serverNow:state.serverNow??new Date().toISOString(),deadline:state.deadline,questions:[{...question,outcome:'incorrect',explanation:'Original fictional explanation'}],score:0,total:3}:{code:'P0001',message:'SECRET_FICTIONAL_PROVIDER_DETAIL'};}
-  else if(name==='report_attempt_question'){if(state.reportReply)await state.reportReply.promise;data={reportCount:1,threshold:5,held:false};}
+  else if(name==='report_attempt_question'){
+   if(state.reportReply)await state.reportReply.promise;
+   status=state.reportError?.status??200;
+   data=state.reportError?.body??{reportCount:1,threshold:5,held:false};
+  }
   else if(name==='attempt-media'){
    if(state.figureReply)await state.figureReply.promise;
    status=state.figureStatus??200;
@@ -62,6 +66,43 @@ test('a silent account change cannot dispatch another account answer and keeps t
 });
 test('question reporting verifies the account before sending the private explanation',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();await page.getByRole('button',{name:'Report question',exact:true}).press('Enter');await page.getByLabel('Details (optional)',{exact:true}).fill('Fictional private report draft');await seedPortalSession(page,second);await page.getByRole('button',{name:'Send report',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Attempt access');expect(calls(state,'report_attempt_question')).toEqual([]);await expect(page.getByRole('textbox')).toHaveCount(0);
+});
+test('an ambiguous question report can be retried and confirms the original report', async ({ page }) => {
+ const state = await fixture(page);
+ await expect(answer(page)).toBeEnabled();
+ await page.getByRole('button', {name:'Report question', exact:true}).press('Enter');
+ const details = page.getByLabel('Details (optional)', {exact:true});
+ await details.fill('Fictional report with a lost receipt');
+ const send = page.getByRole('button', {name:'Send report', exact:true});
+ state.reportError = {status:503, body:{code:'P0001', message:'Private fixture error'}};
+ await send.click();
+ await expect(page.getByText('Couldn’t confirm this report. Reconnect and try again.')).toBeVisible();
+ await expect(details).toHaveValue('Fictional report with a lost receipt');
+ await expect(page.getByText('Private fixture error')).toHaveCount(0);
+
+ state.reportError = {status:400, body:{code:'P0001', message:'You have already reported this issue for this question version'}};
+ await send.click();
+ await expect(page.getByText('You already reported this issue for this question version.')).toBeVisible();
+ await expect(details).toHaveCount(0);
+ const requests = calls(state, 'report_attempt_question');
+ expect(requests).toHaveLength(2);
+ expect(requests[1]).toEqual(requests[0]);
+});
+test('question reporting preserves the draft when the hourly limit is reached', async ({ page }) => {
+ const state = await fixture(page, {
+  reportError: {status:400, body:{code:'P0001', message:'Too many question reports. Please try again after the hourly window'}},
+ });
+ await expect(answer(page)).toBeEnabled();
+ await page.getByRole('button', {name:'Report question', exact:true}).press('Enter');
+ const details = page.getByLabel('Details (optional)', {exact:true});
+ await details.fill('Fictional report draft at the hourly limit');
+ await page.getByRole('button', {name:'Send report', exact:true}).evaluate(button => {
+  button.click();
+  button.click();
+ });
+ await expect(page.getByText('You’ve reached the hourly question report limit. Try again later.')).toBeVisible();
+ await expect(details).toHaveValue('Fictional report draft at the hourly limit');
+ expect(calls(state, 'report_attempt_question')).toHaveLength(1);
 });
 test('a held question report receipt cannot show after a silent account change', async ({ page }) => {
  const reportReply = deferred();
