@@ -1,5 +1,6 @@
 import {verifiedAccountToken,authorizationHeaders} from './account-identity.js';
 import {withAccountDeadline} from './account-request.js';
+import {questionReportFailure} from './question-quality.js';
 
 const ended=()=>Object.assign(new Error('Attempt access ended.'),{name:'AbortError',code:'attempt_access_ended'});
 const unavailable=()=>Object.assign(new Error('Could not verify your exam account. Reconnect and try again.'),{code:'attempt_identity_unavailable'});
@@ -57,11 +58,20 @@ export function createAttemptAccessScope({auth,actorId,isCurrent=()=>true,onChan
 export function createAttemptServices(scope,client){
  const verifiedRpc=(name,args,signal)=>scope.run(async(token,active)=>{
   const{data,error,status}=await client.rpc(name,args).setHeader('Authorization','Bearer '+token).abortSignal(active);
-  if(error)throw Object.assign(new Error('Could not confirm this exam request.'),{code:error.code,status});
+  if(error){
+   const reportFailure=name==='report_attempt_question'?questionReportFailure(error):null;
+   if(reportFailure)return{reportFailure};
+   throw Object.assign(new Error('Could not confirm this exam request.'),{code:error.code,status});
+  }
   return{data,receivedAt:Date.now()};
  },signal,{recheckIdentity:true});
  return Object.freeze({isCurrent:scope.isCurrent,signal:scope.signal,
-  rpc:async(name,args,signal)=>(await verifiedRpc(name,args,signal)).data,
+  async rpc(name,args,signal){
+   const result=await verifiedRpc(name,args,signal);
+   if(result.reportFailure==='duplicate')return {alreadyReported:true};
+   if(result.reportFailure==='limited')throw Object.assign(new Error('Question report limit reached.'),{code:'question_report_limit'});
+   return result.data;
+  },
   readAttempt:(id,signal)=>verifiedRpc('read_attempt',{p_id:id},signal),
   functions:Object.freeze({async invoke(name,options={}){
    try{return await scope.run(async(token,signal)=>{
