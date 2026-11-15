@@ -1,11 +1,13 @@
 # Colour
 
 Slug `colour-basics` (keep the slug; title becomes "Colour") · topic
-`design-sensitivity` · exams uceed, ceed, nid, nift · engine
-`src/learn/colour.js` · tool `colour-wheel`
+`design-sensitivity` · exams uceed, ceed, nid, nift · engines
+`src/learn/colour.js` (foundations) and `src/learn/colour-exam.js` · figures
+`src/learn/colour-figures.jsx` · tools `colour-wheel`, `colour-mixer`
 
-Status: Foundations **Built** · Exam standard Planned · Exam hard Planned ·
-Mastery Planned
+Status: all four tiers **Built** (16 November 2026). Sections 4 onward
+describe what was built; the original plan for these tiers was replaced by
+the archetypes in the owner's colour question bank (section 2a).
 
 ## 1. Outcome
 
@@ -28,6 +30,15 @@ surroundings.
 | C8 | Same colour on different backgrounds looks different | Single choice | Occasional |
 | C9 | Warm and cool, advancing and receding; colour meaning and codes | Single choice | Regular |
 
+## 2a. What the owner's colour bank adds
+
+Read for form and level only; nothing is copied. Its questions ask for: the
+result of pots mixed in thirds and poured together; a colour named from RGB
+values, a hex grey as a white and black mix, and CMYK values checked against
+names; a colour filter on black and white film; naming a split-complementary
+pair; continuing a walk round the wheel and matching neighbour triples;
+judging which wheel diagram marks a true triad; high-contrast sign colours.
+
 ## 3. Techniques taught
 
 - **The wheel.** Twelve steps; complement six steps across; analogous next
@@ -44,170 +55,71 @@ surroundings.
 - **Surroundings shift a colour** away from the background: lighter on
   dark, more saturated on its complement.
 
-## 4. Ladder
+## 4. Ladder (as built)
 
-### Foundations (L1–L2) — built
+### Foundations (L1–L2)
 
-`wheel` (mix ×3), `complements` (complement ×4), `value` (value ×2, warm-cool
-×2). Quiz as built.
+`wheel` (mix ×3) · `light-ink` (tool in light and ink modes; `light-ink` ×3) ·
+`complements` (complement ×2, `harmony-name` L2, `analogous-run` L2) ·
+`value` (value, `tint-shade-tone` ×2, warm-cool). Quiz 10, pass 7.
 
 ### Exam standard (L3)
 
-| Lesson | Title | Screens | Checks |
-|---|---|---|---|
-| `schemes` | Naming a scheme | hook (`scheme-name`) · slide: split-complement, tool with scheme chips · slide: tetrad and monochrome · worked | `scheme-name` ×3, `scheme-complete` ×2 (multiple select), practice |
-| `light-and-ink` | Light adds, ink subtracts | hook (`mix-light`) · slide: red, green and blue light, tool in light mode with three sliders · slide: cyan, magenta and yellow ink · worked | `mix-light` ×2, `mix-ink` ×2, practice |
-| `tint-shade-tone` | Tint, shade and tone | hook (`value-order`) · slide: add white, black or grey, tool sliders · worked | `value-order` ×2, `tint-shade-tone` ×2, practice |
+| Lesson | Teaches | Checks |
+|---|---|---|
+| `harmonies` | Name a scheme by its gaps: 6-6, 1-1, 4-4-4, 5-2-5, 3-3-3-3 | `harmony-name`, `scheme-check` ×2, practice |
+| `walks` | Direction and step size round the wheel; neighbour triples in order | `analogous-run`, `neighbour-analogy` ×2, practice |
+| `codes` | RGB channels off, half, full; a hex grey as a share of white | `code-read`, `hex-grey` ×2, practice |
+| `filters` | Filters pass their own colour; sheets and coloured light; legibility is value | `filter-photo`, `filter-light` ×2, `contrast-pick` ×2, practice |
 
-Quiz (8, pass 6): `scheme-name` 2, `scheme-complete` 1, `mix-light` 2,
-`mix-ink` 1, `value-order` 1, `tint-shade-tone` 1.
+Quiz 10, pass 7.
 
 ### Exam hard (L4)
 
-| Lesson | Title | Screens | Checks |
-|---|---|---|---|
-| `filters` | Filters and coloured light | hook (`filter-overlap`) · slide: a filter passes its own light, tool with two draggable filter discs (tap to move between three positions) · slide: an object under coloured light · worked | `filter-overlap` ×3, `object-under-light` ×2, practice |
-| `legibility` | Contrast you can read | hook (`contrast-rank`) · slide: value difference decides, tool showing text on a background with the contrast figure · worked | `contrast-rank` ×3, `contrast-pick` ×2 (multiple select), practice |
-| `surroundings` | The same colour, different neighbours | hook (`same-patch`) · slide: a grey patch on light and dark · slide: a colour on its complement · worked | `same-patch` ×4, practice |
+| Lesson | Teaches | Checks |
+|---|---|---|
+| `print` | Hex codes of near neighbours; CMYK to RGB, R = 255 (1 − C)(1 − K) | `code-read` L4, `cmyk-channel` ×2 (typed), practice |
+| `proportions` | Equal pots: average the share in each pot | `paint-share` ×3, practice |
+| `value-across` | The same grey from different hues; close contrasts; object, light and lens together | `same-value`, `contrast-pick` L4 ×2, `filter-light` L4, practice |
 
-Quiz (8, pass 5): `filter-overlap` 2, `object-under-light` 1, `contrast-rank`
-2, `contrast-pick` 1, `same-patch` 2.
+Quiz 9, pass 6.
 
 ### Mastery (L5)
 
-Review lesson, then 15 questions, 15 minutes, `ceed` marking, three of each
-family: wheel and schemes, mixing, filters and light, value and contrast,
-surroundings.
+Review lesson with mixed practice, then a timed set of 12 at UCEED marking.
 
 ## 5. Question kinds
 
-| Kind | Levels | Mode | State |
+| Kind | Levels | Mode | Model |
 |---|---|---|---|
-| `mix`, `complement`, `warm-cool`, `value` | 1–2 | single | exist |
-| `scheme-name` | 3 | single | new |
-| `scheme-complete` | 3 | multi | new |
-| `mix-light`, `mix-ink` | 3 | single | new |
-| `value-order` | 3 | single | new |
-| `tint-shade-tone` | 3 | single | new |
-| `filter-overlap` | 4 | single | new |
-| `object-under-light` | 4 | single | new |
-| `contrast-rank` | 4 | single | new |
-| `contrast-pick` | 4 | multi | new |
-| `same-patch` | 4 | single | new |
+| `light-ink` | 2 | single | Lights add channels; inks multiply what each lets through |
+| `harmony-name` | 2, 3 | single | Gaps between wheel positions; level 3 adds split and square |
+| `scheme-check` | 3 | single | Four marked wheels, one with triad or split gaps |
+| `analogous-run` | 2, 3 | single | Five colours in even steps (level 3: steps of two, either way), one missing |
+| `neighbour-analogy` | 3 | single | Neighbour triple matched to a new centre, same order |
+| `tint-shade-tone` | 2 | single | Lightness up, down, saturation down, or a new hue |
+| `filter-photo` | 3 | single | Filter lightens its own colour, darkens its complement |
+| `filter-light` | 3, 4 | single | Channel sets: two sheets, or an object under coloured light; level 4 adds coloured glasses |
+| `code-read` | 3, 4 | single | Named RGB table; level 4 in hex with the three nearest names as options |
+| `hex-grey` | 3 | single | Equal channels; value ÷ 255 is the share of white |
+| `contrast-pick` | 3, 4 | single | WCAG contrast ratio; level 4 keeps the runner-up within 1.25–1.8× |
+| `cmyk-channel` | 4 | typed | Whole-number results only |
+| `paint-share` | 4 | single | Average of pot shares; the pooled-parts mistake is always an option |
+| `same-value` | 4 | single | Relative luminance; colours built by searching HSL lightness |
 
-### `scheme-name` and `scheme-complete`
+The old foundations kinds (`mix`, `complement`, `value`, `warm-cool`) stay
+in `colour.js`.
 
-- Palettes of 2–4 wheel hues. Name: complementary, analogous, triadic,
-  split-complementary, tetradic, monochromatic (one hue at three values).
-- `scheme-complete`: "Which colours complete a split-complementary scheme
-  with orange?" Select the two correct hues among five.
-- Reasons state the step distances on the wheel.
+## 6. Verification
 
-### `mix-light` and `mix-ink`
+`tests/colour-exam.test.mjs` checks every answer a second way: light and ink
+as sets of channels, harmonies from angle gaps, walks and analogies from
+wheel positions, tints and tones from parsed HSL, codes from a hex table,
+CMYK in whole-number arithmetic, paint shares as exact fractions, and value
+and contrast from a separately written luminance table. Every option list has
+four distinct options and exactly one answer.
 
-- Light: R+G = yellow, G+B = cyan, R+B = magenta, R+G+B = white.
-- Ink: C+M = blue, M+Y = red, C+Y = green, C+M+Y = near black.
-- Distractors: the answer under the other model; the third primary.
-- Swatches use fixed display colours (section 6).
+## 7. Not built
 
-### `value-order`
-
-Four swatches of different hues with clearly different lightness (steps of
-at least 12% in L). Ask for the order light to dark as one of four orderings.
-Answer by relative luminance, not by HSL lightness.
-
-### `tint-shade-tone`
-
-A base hue and a changed swatch: more white (tint), more black (shade),
-more grey (tone), or a hue shift. Ask which was done.
-
-### `filter-overlap`
-
-- **Scenario.** Two or three overlapping discs chosen from cyan, magenta,
-  yellow filters over white light (or red, green, blue lights on a dark
-  wall; the prompt says which). One overlap region is marked.
-- **Answer.** Filters: multiply channel by channel. Lights: add.
-- **Distractors.** The other model's answer; one disc's own colour.
-
-### `object-under-light`
-
-Object colour from {red, green, blue, yellow, white, black}, light from
-{white, red, green, blue, yellow}. Appearance = channel-wise product; name
-the result (red object under green light: black). Options are swatches with
-names.
-
-### `contrast-rank` and `contrast-pick`
-
-- Four text-on-background pairs. Rank by WCAG contrast ratio; ask for the
-  most legible, or select all with ratio at least 4.5.
-- Pairs are chosen so hue difference is large where value difference is
-  small (red on green) to target the misconception.
-- Reasons quote the two values in words ("both are mid-dark").
-
-### `same-patch`
-
-- **Scenario.** Two backgrounds side by side with a small patch on each.
-  Either the patches are identical and look different, or differ and look
-  alike. Ask "Are the two small patches the same colour?" with options same
-  / left is lighter / right is lighter, or four panels where one pair is
-  truly identical.
-- **Answer.** From the patch colours.
-- The feedback screen offers a "remove the backgrounds" toggle so the
-  student sees the truth.
-
-## 6. Engine
-
-- Channel model: colours as `[r, g, b]` in 0–1. `addLight(a, b)` = channel
-  sum clipped; `multiply(a, b)` = channel product.
-- Named display colours: red `#e53935`, green `#43a047`, blue `#1e63d0`,
-  cyan `#19b5c8`, magenta `#d81b8c`, yellow `#f5d400`, white, near-black
-  `#1a1a1a`. Classification of a computed colour back to a name uses the
-  ideal channel triples (1,0,0) and so on, not the display hex.
-- `relativeLuminance(hex)` with the sRGB transfer (c ≤ 0.03928 → c ÷ 12.92,
-  else ((c + 0.055) ÷ 1.055)^2.4) and weights 0.2126, 0.7152, 0.0722.
-  `contrastRatio(a, b)` = (L₁ + 0.05) ÷ (L₂ + 0.05), lighter first.
-- Scheme helpers: `splitComplement(id)`, `tetrad(id)`,
-  `schemeOf(ids)` → name or null.
-
-## 7. Figures and tool
-
-- New figures: `palette` (row of swatches), `discs` (overlapping circles
-  with a marked region, blend mode computed, not CSS `mix-blend-mode`, so
-  it is exact in both themes), `text-pair` (sample word on a background),
-  `patch-pair`.
-- Tool `colour-wheel` gains scheme chips (complement, split, triad, tetrad,
-  analogous) that draw the scheme on the wheel; a **light mode** with three
-  sliders and a mixed spot; a **contrast mode** with foreground and
-  background pickers from the wheel plus value, showing the ratio.
-
-## 8. Hand-checked cases
-
-- `contrastRatio('#000000', '#ffffff')` = 21; `('#777777', '#ffffff')` ≈
-  4.48 (below 4.5); `('#767676', '#ffffff')` ≈ 4.54.
-- `multiply(cyan, yellow)` → green; `multiply(cyan, magenta)` → blue;
-  `multiply(magenta, yellow)` → red; all three → black.
-- `addLight(red, green)` → yellow; all three → white.
-- Red object under green light → black. White object under blue light →
-  blue. Yellow object under red light → red.
-- `splitComplement('orange')` = blue-green and blue-violet.
-- `schemeOf(['red', 'yellow', 'blue'])` = triadic.
-
-## 9. Archetype coverage
-
-| Archetype | Kind and level | Verified on seeds | Notes |
-|---|---|---|---|
-| C1 | `mix`, `complement` L1–L2 | | |
-| C2 | `mix-light`, `mix-ink` L3 | | |
-| C3 | `filter-overlap` L4 | | |
-| C4 | `object-under-light` L4 | | |
-| C5 | `scheme-name`, `scheme-complete` L3 | | |
-| C6 | `value`, `value-order`, `tint-shade-tone` | | |
-| C7 | `contrast-rank`, `contrast-pick` L4 | | |
-| C8 | `same-patch` L4 | | |
-| C9 | `warm-cool` L2 | | Colour meaning and codes belong to a deck |
-
-## 10. Out of scope
-
-Colour psychology, cultural meanings, named colour systems and colour
-codes: facts for a reviewed deck (wave 5). Colour-vision deficiency
-simulation.
+Simultaneous contrast (the same patch on different surroundings) is
+perceptual and has no reliable computed answer, so it is not asked.

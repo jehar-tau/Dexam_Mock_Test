@@ -77,7 +77,7 @@ Update this table in the same change as the work.
 | Arrangements and puzzles | [spec](topics/logic.md) | Built | Built | Built | Built | `arrangements` |
 | Directions, clocks and calendars | [spec](topics/logic.md) | Built | Built | Built | Built | `directions` |
 | Visual series and matrices | [spec](topics/visual-patterns.md) | Built | Built | Built | Built | `visual-patterns` |
-| Colour | [spec](topics/colour.md) | Built | Planned | Planned | Planned | Preview |
+| Colour | [spec](topics/colour.md) | Built | Built | Built | Built | `colour-basics` |
 
 Foundation work packages: F6, F1, F3, F4, F5, F2 and F9 are done; see the
 status table at the top of
