@@ -67,7 +67,7 @@ Update this table in the same change as the work.
 | Paper folding and cutting | [spec](topics/paper-folding.md) | Built | Built | Built | Built | Preview |
 | Mirror and water images | [spec](topics/mirror-images.md) | Built | Built | Built | Built | Preview |
 | Counting cubes | [spec](topics/counting-cubes.md) | Built | Built | Built | Built | Preview |
-| Views and rotation | [spec](topics/views-and-rotation.md) | Planned | Planned | Planned | Planned | — |
+| Views and rotation | [spec](topics/views-and-rotation.md) | Built | Built | Built | Built | `views-and-rotation` |
 | Surfaces of solids | [spec](topics/solid-surfaces.md) | Planned | Planned | Planned | Planned | — |
 | Counting figures | [spec](topics/counting-figures.md) | Built | Built | Built | Built | `counting-figures` |
 | Gears, belts and levers | [spec](topics/mechanisms.md) | Built | Built | Built | Built | `mechanisms` |

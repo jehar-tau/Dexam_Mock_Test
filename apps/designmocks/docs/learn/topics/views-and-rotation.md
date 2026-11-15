@@ -3,8 +3,14 @@
 Slug `views-and-rotation` · topic `visualisation` · exams uceed, ceed, nid,
 nift · engine `src/learn/voxel.js` · tool `solid-builder`
 
-Status: Foundations Planned · Exam standard Planned · Exam hard Planned ·
-Mastery Planned
+Status: Foundations Built · Exam standard Built · Exam hard Built ·
+Mastery Built (15 November 2026). As built: engine `src/learn/voxel.js`;
+views kinds use stacks (a supported solid is a height map), drawn with the
+existing `stack`, `views` and new `view-grid` figures; rotation kinds use
+asymmetric chiral polycubes drawn with `voxels`. Tools: `stack-builder`
+(with views) and the new `solid-turner`. `third-picture` is folded into
+`same-solid` L4 (select all), and `views-count` reuses Counting cubes'
+`views-max`. Tests in `tests/voxel.test.mjs`.
 
 This is the highest-weight spatial family in UCEED and CEED (about 160
 bank questions match its keywords). Build it first in wave 2. Its `voxels`

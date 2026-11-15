@@ -19,6 +19,7 @@ import { paperQuestion } from './paper-cut.js';
 import { mirrorExamQuestion } from './mirror-exam.js';
 import { QUANT_LEVELS, quantQuestion } from './quant.js';
 import { LOGIC_KINDS, logicQuestion } from './logic.js';
+import { viewsQuestion } from './voxel.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -111,6 +112,11 @@ const kinds = {
   'figure-with-n': { topic: 'counting-figures', levels: [4], generate: figure('figure-with-n') },
   ...Object.fromEntries(Object.entries(QUANT_LEVELS).map(([kind, level]) => [kind, { topic: 'quant', levels: [level], generate: seed => quantQuestion(seed, kind) }])),
   ...Object.fromEntries(Object.entries(LOGIC_KINDS).map(([kind, [topic, level]]) => [kind, { topic, levels: [level], generate: seed => logicQuestion(seed, kind, level) }])),
+  'view-of-stack': { topic: 'views-and-rotation', levels: [1, 2], generate: (seed, level) => viewsQuestion(seed, 'view-of-stack', level) },
+  'solid-from-views': { topic: 'views-and-rotation', levels: [3], generate: seed => viewsQuestion(seed, 'solid-from-views', 3) },
+  'missing-view': { topic: 'views-and-rotation', levels: [3], generate: seed => viewsQuestion(seed, 'missing-view', 3) },
+  'same-solid': { topic: 'views-and-rotation', levels: [2, 3, 4], generate: (seed, level) => viewsQuestion(seed, 'same-solid', level) },
+  'view-after-turn': { topic: 'views-and-rotation', levels: [4], generate: seed => viewsQuestion(seed, 'view-after-turn', 4) },
   'mix': { topic: 'colour-basics', levels: [1], generate: colour('mix') },
   'complement': { topic: 'colour-basics', levels: [2], generate: colour('complement') },
   'warm-cool': { topic: 'colour-basics', levels: [2], generate: colour('warm-cool') },

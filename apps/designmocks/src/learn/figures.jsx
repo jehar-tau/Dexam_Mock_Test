@@ -111,17 +111,25 @@ export function StackFigure({ heights, large = false, highlight = null, marked =
 
 // Top, front and right-side views. Top: x runs down, y runs right. Front (seen from +x): y runs
 // right. Right side (seen from +y): x runs LEFT, so the front of the stack is at its left edge.
+// One view on its own: rows top to bottom, each a list of filled cells left to right.
+export function ViewGrid({ grid, compact = false }) {
+  const cell = compact ? 14 : 22, rows = grid.length, cols = grid[0].length;
+  return <svg className="view-grid" viewBox={`-1 -1 ${cols * cell + 2} ${rows * cell + 2}`} width={cols * cell + 2} height={rows * cell + 2} role="img" aria-label={`A view ${cols} squares wide and ${rows} high, with ${grid.flat().filter(Boolean).length} squares filled`}>
+    {grid.flatMap((row, r) => row.map((on, c) => <rect key={`${r}-${c}`} className={on ? 'view-cell is-on' : 'view-cell'} x={c * cell} y={r * cell} width={cell} height={cell} />))}
+  </svg>;
+}
 export function ViewsFigure({ top, front, side, compact = false }) {
   const cell = compact ? 12 : 24;
-  const nx = top.length, ny = top[0].length, nz = Math.max(1, ...front, ...side);
+  const nx = top.length, ny = top[0].length, nz = Math.max(1, ...front, ...(side ?? []));
   const grid = (columns, rows, filled, key) => <svg className="view-grid" viewBox={`-1 -1 ${columns * cell + 2} ${rows * cell + 2}`} width={columns * cell + 2} height={rows * cell + 2} aria-hidden="true">
     {Array.from({ length: columns * rows }, (_, i) => { const c = i % columns, r = Math.floor(i / columns); return <rect key={`${key}-${i}`} className={filled(c, r) ? 'view-cell is-on' : 'view-cell'} x={c * cell} y={r * cell} width={cell} height={cell} />; })}
   </svg>;
-  const description = `Top view with ${top.flat().filter(Boolean).length} floor squares. Front view, column heights left to right: ${front.join(', ')}. Right-side view, column heights left to right: ${[...side].reverse().join(', ')}.`;
+  const description = `Top view with ${top.flat().filter(Boolean).length} floor squares. Front view, column heights left to right: ${front.join(', ')}. ${side ? `Right-side view, column heights left to right: ${[...side].reverse().join(', ')}.` : 'The right-side view is not given.'}`;
   return <div className="views-figure" role="img" aria-label={description}>
     <div className="view view-top"><span className="view-caption">Top</span>{grid(ny, nx, (c, r) => top[r][c], 'top')}</div>
     <div className="view view-front"><span className="view-caption">Front</span>{grid(ny, nz, (c, r) => front[c] > nz - 1 - r, 'front')}</div>
-    <div className="view view-side"><span className="view-caption">Right side</span>{grid(nx, nz, (c, r) => side[nx - 1 - c] > nz - 1 - r, 'side')}</div>
+    {side ? <div className="view view-side"><span className="view-caption">Right side</span>{grid(nx, nz, (c, r) => side[nx - 1 - c] > nz - 1 - r, 'side')}</div>
+      : <div className="view view-side"><span className="view-caption">Right side</span><span className="view-unknown" aria-hidden="true">?</span></div>}
   </div>;
 }
 
@@ -284,6 +292,7 @@ export function Figure({ spec, compact = false }) {
     case 'table': return <table className="data-table"><thead><tr>{spec.head.map(h => <th key={h} scope="col">{h}</th>)}</tr></thead><tbody>{spec.rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>)}</tbody></table>;
     case 'number-diamond': return <NumberDiamond outer={spec.outer} centre={spec.centre} compact={compact} />;
     case 'maze': return <MazeFigure n={spec.n} m={spec.m} open={spec.open} from={spec.from} to={spec.to} compact={compact} />;
+    case 'view-grid': return <ViewGrid grid={spec.grid} compact={compact} />;
     case 'swatch': return <Swatch colour={spec.colour} name={spec.name} large={!compact} />;
     default: return null;
   }
