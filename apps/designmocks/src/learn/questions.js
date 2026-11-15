@@ -15,6 +15,7 @@ import { beltQuestion, inventoryQuestion, netQuestion } from './solid-net.js';
 import { patternedCuboidQuestion } from './solid-pattern.js';
 import { mechanismQuestion } from './gears.js';
 import { figureQuestion } from './figure-questions.js';
+import { paperQuestion } from './paper-cut.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -41,6 +42,7 @@ function solidFigures(q) {
 }
 const mechanism = kind => (seed, level) => mechanismQuestion(seed, kind, level);
 const figure = kind => (seed, level) => figureQuestion(seed, kind, level);
+const paper = kind => (seed, level) => paperQuestion(seed, kind, level);
 const colour = kind => seed => colourFigures(colourQuestion(seed, kind));
 
 // kind → { topic, levels, generate(seed, level) }. Never rename a kind once a programme uses it.
@@ -56,7 +58,12 @@ const kinds = {
   'path-cube': { topic: 'cube-nets', levels: [4], generate: net('path-cube') },
   'build-net': { topic: 'cube-nets', levels: [2], generate: seed => ({ ...cubeNet.generateQuestion('build-net', seed), figures: [], options: [], interactive: 'build-net' }) },
   'fold-count': { topic: 'paper-folding', levels: [1], generate: seed => { const q = foldCountQuestion(seed); return { ...q, figures: [{ type: 'fold-sequence', folds: q.folds, punched: null }] }; } },
-  'unfold': { topic: 'paper-folding', levels: [2], generate: seed => { const q = unfoldQuestion(seed); return { ...q, figures: [{ type: 'fold-sequence', folds: q.folds, punched: q.punched }], options: q.options.map(o => ({ ...o, figure: { type: 'holes', holes: o.holes } })) }; } },
+  'unfold': { topic: 'paper-folding', levels: [2, 3], generate: (seed, level) => { const q = unfoldQuestion(seed, { level }); return { ...q, figures: [{ type: 'fold-sequence', folds: q.folds, punched: q.punched }], options: q.options.map(o => ({ ...o, figure: { type: 'holes', holes: o.holes } })) }; } },
+  'unfold-cuts': { topic: 'paper-folding', levels: [3, 4], generate: paper('unfold-cuts') },
+  'hole-count': { topic: 'paper-folding', levels: [3], generate: paper('hole-count') },
+  'piece-count': { topic: 'paper-folding', levels: [4], generate: paper('piece-count') },
+  'two-colour-fold': { topic: 'paper-folding', levels: [4], generate: paper('two-colour-fold') },
+  'seen-from-behind': { topic: 'paper-folding', levels: [4], generate: paper('seen-from-behind') },
   'mirror-image': { topic: 'mirror-images', levels: [1], generate: seed => imageFigures(imageQuestion(seed, 'mirror-image'), 'mirror') },
   'water-image': { topic: 'mirror-images', levels: [2], generate: seed => imageFigures(imageQuestion(seed, 'water-image'), 'water') },
   'count-cubes': { topic: 'counting-cubes', levels: [1, 3], generate: stack('count-cubes') },

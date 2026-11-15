@@ -26,7 +26,7 @@ timed set with exam marking). Rules for building and merging are in
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 1 | Paper folding and cutting (tiers 2–4) | Diagonal folds; three and four folds; cuts on a folded edge; unfolded pattern of holes; counting holes and pieces | Spatial bank |
+| 1 | Paper folding and cutting (tiers 2–4) **Done** | Diagonal folds; three and four folds; cuts on a folded edge; unfolded pattern of holes; counting holes and pieces | Spatial bank |
 | 2 | Mirror and water images (tiers 2–4) | Two mirrors one after another; mirror plus a turn; clocks in a mirror; words and numbers in a mirror or water | Spatial bank |
 
 ### Group 2: the heaviest written sections
