@@ -141,6 +141,18 @@ Only after the final owner production-impact decision configure the separate Liv
 
 Production sign-in and checkout open only at the configured apex origin, `https://dmocks.com`. Link to the apex from the public `www` alias and register `https://dmocks.com/account/callback` for the production portal.
 
+Use `DMOCKS_PRODUCTION_PUBLISHABLE_KEY` with the approved separate production API origin. Build and verify from the clean, reviewed commit with the same versioned customer notice input used for Test. Production checkout defaults to closed. Build with `--enable-checkout` only for the separately approved sales release.
+
+```sh
+npm run production:package -- --commit "$DMOCKS_REVIEWED_COMMIT" --tree "$DMOCKS_REVIEWED_TREE" \
+  --frontend-origin https://dmocks.com --provider-origin "$DMOCKS_REVIEWED_PRODUCTION_ORIGIN" \
+  --notices "$DMOCKS_PUBLISHED_NOTICES_FILE" --expect-notice-version "$DMOCKS_REVIEWED_NOTICE_VERSION" \
+  --output "$DMOCKS_PRIVATE_PRODUCTION_ARTIFACT"
+npm run production:verify -- --artifact "$DMOCKS_PRIVATE_PRODUCTION_ARTIFACT" --expect "$DMOCKS_REVIEWED_ARTIFACT_SHA256"
+```
+
+Keep the verified `site/` and manifest together for rollback. Hosting takes only `site/`. The manifest records the exact production origins, browser key digest, notice revision and checkout setting.
+
 The server checks current launch approvals when preparing a new Live order. Revoking a required approval blocks queued and subsequent order preparation. Reconcile orders already prepared under the prior approval through the existing payment procedure.
 
 Use the health view and read-only monitor for stale attempts, order and payment reviews, unverified passes, support and question reports. Configure the approved alert receiver and payment Edge log filters as part of hosted acceptance. A duplicate or partial payment review requires operator reconciliation. See [Refund reconciliation](REFUND_RECONCILIATION.md) and [Operations runbook](OPERATIONS_RUNBOOK.md). Preserve service-only attempt recovery, private-media backups and a tested restore. Paid infrastructure and point-in-time recovery require a separate budget decision.
