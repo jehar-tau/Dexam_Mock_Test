@@ -141,6 +141,15 @@ Only after the final owner production-impact decision configure the separate Liv
 
 Production sign-in and checkout open only at the configured apex origin, `https://dmocks.com`. Link to the apex from the public `www` alias and register `https://dmocks.com/account/callback` for the production portal.
 
+After provisioning the separate production backend, run the read-only production smoke from `apps/designmocks`. Supply the reviewed production Supabase origin independently as `DMOCKS_PRODUCTION_PROVIDER_ORIGIN`, and point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at that same project with its public browser key. The command rejects the staging project and skips local dotenv fallback. With registrations still globally closed and the payment handlers configured, run:
+
+```sh
+DMOCKS_AUTH_STAGE=closed DMOCKS_BACKEND_STAGE=foundation DMOCKS_COMMERCE_STAGE=configured \
+  npm run test:hosted-setup -- --production
+```
+
+The receipt in `test-results/hosted-production-configured-smoke.json` records the production backend, the apex origin, and each anonymous check. The `unconfigured` commerce stage expects the setup gates before payment secrets are installed and writes its own receipt. For controlled Google acceptance, select `DMOCKS_AUTH_STAGE=controlled` and verify tester allowlisting separately. The smoke verifies rejection paths with a public key. The real signed-in and merchant acceptance steps still apply.
+
 The server checks current launch approvals when preparing a new Live order. Revoking a required approval blocks queued and subsequent order preparation. Reconcile orders already prepared under the prior approval through the existing payment procedure.
 
 Use the health view and read-only monitor for stale attempts, order and payment reviews, unverified passes, support and question reports. Configure the approved alert receiver and payment Edge log filters as part of hosted acceptance. A duplicate or partial payment review requires operator reconciliation. See [Refund reconciliation](REFUND_RECONCILIATION.md) and [Operations runbook](OPERATIONS_RUNBOOK.md). Preserve service-only attempt recovery, private-media backups and a tested restore. Paid infrastructure and point-in-time recovery require a separate budget decision.
