@@ -22,6 +22,7 @@ import { LOGIC_KINDS, logicQuestion } from './logic.js';
 import { viewsQuestion } from './voxel.js';
 import { DICE_KINDS, diceQuestion } from './dice.js';
 import { PATTERN_KINDS, patternQuestion } from './patterns.js';
+import { COLOUR_EXAM_KINDS, colourExamQuestion } from './colour-exam.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -120,6 +121,7 @@ const kinds = {
   'same-solid': { topic: 'views-and-rotation', levels: [2, 3, 4], generate: (seed, level) => viewsQuestion(seed, 'same-solid', level) },
   'view-after-turn': { topic: 'views-and-rotation', levels: [4], generate: seed => viewsQuestion(seed, 'view-after-turn', 4) },
   ...Object.fromEntries(Object.entries(DICE_KINDS).map(([kind, levels]) => [kind, { topic: 'dice', levels, generate: (seed, level) => diceQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(COLOUR_EXAM_KINDS).map(([kind, levels]) => [kind, { topic: 'colour-basics', levels, generate: (seed, level) => colourExamQuestion(seed, kind, level) }])),
   ...Object.fromEntries(Object.entries(PATTERN_KINDS).map(([kind, levels]) => [kind, { topic: 'visual-patterns', levels, generate: (seed, level) => patternQuestion(seed, kind, level) }])),
   'mix': { topic: 'colour-basics', levels: [1], generate: colour('mix') },
   'complement': { topic: 'colour-basics', levels: [2], generate: colour('complement') },

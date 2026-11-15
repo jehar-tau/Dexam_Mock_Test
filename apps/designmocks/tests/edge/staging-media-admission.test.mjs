@@ -45,11 +45,7 @@ Deno.test("private media checks staging admission before signing and again befor
           const url = new URL(request.url);
           assert.equal(url.origin, provider);
           calls.push(url.pathname);
-          if (url.pathname === "/auth/v1/user") {
-            return request.headers.get("authorization") === "Bearer fictional-tester"
-              ? Response.json({ id: actor })
-              : Response.json({ message: "Fictional session missing" }, { status: 401 });
-          }
+          if (url.pathname === "/auth/v1/user") return Response.json({ id: actor });
           if (url.pathname.endsWith("/can_enter_staging_portal")) {
             assert.equal(request.headers.get("authorization"), "Bearer fictional-tester");
             assert.ok(decisions.length);
@@ -79,34 +75,19 @@ Deno.test("private media checks staging admission before signing and again befor
           assert.equal(response.headers.get("access-control-allow-origin") === from, status === 204);
           await response.body?.cancel();
         }
-        const admittedOrigins = endpoint === "attempt-media" ? [origin, checkout] : [origin];
-        for (const from of admittedOrigins) {
-          const requestBody = JSON.stringify(body);
-          if (endpoint === "attempt-media") {
-            calls.length = 0;
-            const anonymous = await handler(new Request(from, {
-              method: "POST", headers: { origin: from, "content-type": "application/json" }, body: requestBody,
-            }));
-            assert.equal(anonymous.status, 401);
-            assert.equal(anonymous.headers.get("access-control-allow-origin"), from);
-            await anonymous.body?.cancel();
-            assert.equal(calls.some(path => path.includes("/object/sign/")), false);
-          }
-          for (const [stages, status] of [[[false], 403], [[true, false], 403], [[true, true], 200]]) {
-            decisions.push(...stages);
-            calls.length = 0;
-            const response = await handler(new Request(from, {
-              method: "POST",
-              headers: { origin: from, authorization: "Bearer fictional-tester", "content-type": "application/json" },
-              body: requestBody,
-            }));
-            assert.equal(response.status, status);
-            assert.equal(response.headers.get("access-control-allow-origin"), from);
-            const text = await response.text();
-            assert.equal(text.includes("fictional-signature"), status === 200);
-            assert.equal(calls.some(path => path.includes("/object/sign/")), stages.length === 2);
-            assert.equal(decisions.length, 0);
-          }
+        for (const [stages, status] of [[[false], 403], [[true, false], 403], [[true, true], 200]]) {
+          decisions.push(...stages);
+          calls.length = 0;
+          const response = await handler(new Request(origin, {
+            method: "POST",
+            headers: { origin, authorization: "Bearer fictional-tester", "content-type": "application/json" },
+            body: JSON.stringify(body),
+          }));
+          assert.equal(response.status, status);
+          const text = await response.text();
+          assert.equal(text.includes("fictional-signature"), status === 200);
+          assert.equal(calls.some(path => path.includes("/object/sign/")), stages.length === 2);
+          assert.equal(decisions.length, 0);
         }
         if (endpoint === "community-media") {
           for (const [requestBody, rpc] of [

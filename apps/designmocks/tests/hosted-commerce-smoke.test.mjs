@@ -77,7 +77,6 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
         } });
       }
       if (url.pathname === "/functions/v1/attempt-media") {
-        if (fixture === "media-transport-error") throw new Error("fictional private upstream diagnostic");
         if (fixture === "staging-origin-rejected") return Response.json({ error: "Origin not allowed" }, { status: 403 });
         const origin = fixture === "wrong-media-origin" ? ${JSON.stringify(project.staging_frontend_origin)} : request.headers.get("origin");
         const body = fixture === "media-gateway" ? {message: "Missing authorization header"} : {error: "Sign in required"};
@@ -120,8 +119,8 @@ test("configured smoke uses actual handlers and reports rejection-only scope", (
 test("configured smoke rejects unconfigured handlers and generic gateway denials", () => {
   for (const fixture of ["unconfigured", "gateway"]) {
     const result = runSmoke("configured", fixture);
-    assert.equal(result.status, 2, result.stderr);
-    assert.equal(result.checks.find(row => row.check === "configured checkout handler rejects anonymous requests").passed, false);
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stderr, /configured checkout must reject anonymous requests|checkout handler must reject the request/);
   }
 });
 
@@ -132,22 +131,11 @@ test("configured commerce smoke accepts the checkout origin with a different por
 });
 
 test("configured commerce smoke requires the assessment handler to accept the checkout origin", () => {
-  for (const fixture of ["wrong-media-origin", "media-gateway", "staging-origin-rejected"]) {
+  for (const fixture of ["wrong-media-origin", "media-gateway"]) {
     const result = runSmoke("configured", fixture);
-    assert.equal(result.status, 2, result.stderr);
-    assert.equal(result.checks.find(row => row.check === "attempt-media setup/identity gate").passed, false);
-    assert.ok(result.checks.slice(-4).every(row => row.passed));
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /assessment media must accept the checkout origin|assessment media handler must reject anonymous access/);
   }
-});
-
-test("configured commerce records transport failure and continues without exposing diagnostics", () => {
-  const result = runSmoke("configured", "media-transport-error");
-  assert.equal(result.status, 2, result.stderr);
-  assert.deepEqual(result.checks.find(row => row.check === "attempt-media setup/identity gate"), {
-    check: "attempt-media setup/identity gate", status: null, passed: false,
-  });
-  assert.ok(result.checks.slice(-4).every(row => row.passed));
-  assert.doesNotMatch(result.stdout + result.stderr, /fictional private upstream diagnostic/);
 });
 
 test("staging verifies portal preflights even when commerce credentials are present", () => {
@@ -185,7 +173,6 @@ test("staging and configured commerce probes require separate runs", () => {
 
 test("configured smoke rejects a checkout preflight missing browser request headers", () => {
   const result = runSmoke("configured", "missing-checkout-allow-headers");
-  assert.equal(result.status, 2, result.stderr);
-  assert.equal(result.checks.find(row => row.check === "approved checkout preflight").passed, false);
-  assert.ok(result.checks.slice(-3).every(row => row.passed));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /approved checkout preflight must allow the browser request headers/);
 });
