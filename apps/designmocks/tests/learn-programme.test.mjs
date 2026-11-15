@@ -7,12 +7,12 @@ import {
 } from '../src/learn/programme-model.js';
 import { clearProgress, loadProgress, saveProgress } from '../src/learn/programme-storage.js';
 
-const toolNames = ['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner', 'die-roller', 'rule-mixer', 'colour-mixer', 'sun-table', 'surface-explorer', 'section-slicer'];
+const toolNames = ['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner', 'die-roller', 'rule-mixer', 'colour-mixer', 'sun-table', 'surface-explorer', 'section-slicer', 'piece-fitter'];
 const rightResponse = q => (q.answerMode === 'numeric' ? String(q.answer.value ?? q.answer.min) : q.answer);
 const wrongResponse = q => (q.answerMode === 'numeric' ? String((q.answer.value ?? q.answer.max) + 1) : q.answerMode === 'multi' ? [q.options.find(o => !q.answer.includes(o.id)).id] : q.options.find(o => o.id !== q.answer).id);
 
 test('every registered programme validates and every lesson question can be answered and marked', () => {
-  assert.deepEqual(programmes.map(p => p.slug), ['cube-nets', 'nets-of-solids', 'dice', 'paper-folding', 'mirror-images', 'counting-cubes', 'views-and-rotation', 'mechanisms', 'counting-figures', 'quant', 'codes-patterns', 'arrangements', 'directions', 'visual-patterns', 'colour-basics', 'shadows-and-light', 'solid-surfaces', 'sections']);
+  assert.deepEqual(programmes.map(p => p.slug), ['cube-nets', 'nets-of-solids', 'dice', 'paper-folding', 'mirror-images', 'counting-cubes', 'views-and-rotation', 'mechanisms', 'counting-figures', 'quant', 'codes-patterns', 'arrangements', 'directions', 'visual-patterns', 'colour-basics', 'shadows-and-light', 'solid-surfaces', 'sections', 'fit']);
   for (const programme of programmes) {
     assert.equal(validateProgramme(programme), programme);
     for (const lesson of lessonsOf(programme)) for (const step of lesson.steps) {
