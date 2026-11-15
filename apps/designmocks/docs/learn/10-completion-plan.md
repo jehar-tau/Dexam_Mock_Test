@@ -33,7 +33,7 @@ timed set with exam marking). Rules for building and merging are in
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 3 | Number and quantity | Percentages and discount slabs; profit and loss; ratio and exchange; averages and ages; time and work; speed, meeting and overtaking; clock hands; LCM, HCF and digits; mensuration (cutting, stacking, volume) | Quant theory and bank |
+| 3 | Number and quantity **Done** | Percentages and discount slabs; profit and loss; ratio and exchange; averages and ages; time and work; speed, meeting and overtaking; clock hands; LCM, HCF and digits; mensuration (cutting, stacking, volume) | Quant theory and bank |
 | 4 | Codes and number patterns | Letter and symbol coding; number grids, diamonds and wheels; next term in a sequence; missing number | Logic theory and bank |
 | 5 | Arrangements and puzzles | Seating in a row and a circle; ordering and ranking; constraint puzzles (handshakes, groups); symbol equations | Logic bank |
 | 6 | Directions, clocks and calendars | Walking directions and distance; paths through a maze; relations; day of the week; clock angles | Logic bank |
