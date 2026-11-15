@@ -14,6 +14,8 @@ import { DieFigure, DiePath, DieRow, DieStack } from './dice-figures.jsx';
 import { Panel, PanelGrid, PanelRow } from './pattern-figures.jsx';
 import { TextSwatch, WheelMarks } from './colour-figures.jsx';
 import { ShadowSide, ShadowTop, Silhouette, Walkers } from './shadow-figures.jsx';
+import { Outline } from './surface-figures.jsx';
+import { CubeCut, Revolve } from './section-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -99,7 +101,7 @@ export function VoxelFigure({ cubes: list, box = null, large = false, marked = n
   const isHighlight = c => highlight && highlight.x === c.x && highlight.y === c.y;
   return <svg className="stack-figure" viewBox={`${minX} ${minY} ${maxX - minX} ${maxY - minY}`} width={maxX - minX} height={maxY - minY} role="img" aria-label={label ?? `Solid made of ${list.length} cubes`}>
     <polygon className="floor" points={face([[0, 0, 0], [nx, 0, 0], [nx, ny, 0], [0, ny, 0]])} />
-    {drawOrder(list).map(c => { const { x, y, z } = c; return <g key={`${x}-${y}-${z}`} className={`stack-cube${isHighlight(c) ? ' is-highlight' : ''}${isMarked(c) ? ' is-marked' : ''}`}>
+    {drawOrder(list).map(c => { const { x, y, z } = c; return <g key={`${x}-${y}-${z}`} className={`stack-cube${isHighlight(c) ? ' is-highlight' : ''}${isMarked(c) ? ' is-marked' : ''}${c.piece != null ? ` piece-${c.piece}` : ''}`}>
       <polygon className="face top" points={face([[x, y, z + 1], [x + 1, y, z + 1], [x + 1, y + 1, z + 1], [x, y + 1, z + 1]])} />
       <polygon className="face left" points={face([[x + 1, y, z], [x + 1, y + 1, z], [x + 1, y + 1, z + 1], [x + 1, y, z + 1]])} />
       <polygon className="face right" points={face([[x, y + 1, z], [x + 1, y + 1, z], [x + 1, y + 1, z + 1], [x, y + 1, z + 1]])} />
@@ -275,7 +277,7 @@ export function Figure({ spec, compact = false }) {
     case 'holes': return <HoleGrid holes={spec.holes} compact={compact} />;
     case 'image': return <ImageFigure figure={spec.figure} transform={spec.transform} line={spec.line} compact={compact} />;
     case 'stack': return <StackFigure heights={spec.heights} large={spec.large && !compact} marked={spec.marked} />;
-    case 'voxels': return <VoxelFigure cubes={spec.cubes} box={spec.box ? [spec.box, spec.box, spec.box] : null} large={spec.large && !compact} marked={spec.marked} />;
+    case 'voxels': return <VoxelFigure cubes={spec.cubes} box={Array.isArray(spec.box) ? spec.box : spec.box ? [spec.box, spec.box, spec.box] : null} large={spec.large && !compact} marked={spec.marked} label={spec.label} />;
     case 'solid': return <SolidFigure solid={spec.solid} large={spec.large && !compact} compact={compact} />;
     case 'solid-net': return <SolidNetFigure net={spec.net} compact={compact} />;
     case 'views': return <ViewsFigure top={spec.top} front={spec.front} side={spec.side} compact={compact} />;
@@ -304,6 +306,9 @@ export function Figure({ spec, compact = false }) {
     case 'panel': return <Panel panel={spec.panel} size={compact ? 56 : 72} />;
     case 'panel-row': return <PanelRow panels={spec.panels} ask={spec.ask} analogy={spec.analogy} />;
     case 'panel-grid': return <PanelGrid grid={spec.grid} />;
+    case 'cube-cut': return <CubeCut points={spec.points} polygon={spec.polygon} compact={compact} />;
+    case 'revolve': return <Revolve shape={spec.shape} />;
+    case 'outline': return <Outline cells={spec.cells} holes={spec.holes} label={spec.label} compact={compact} />;
     case 'shadow-top': return <ShadowTop outlines={spec.outlines} apexes={spec.apexes} shadows={spec.shadows} light={spec.light} dashed={spec.dashed} compassOnly={spec.compassOnly} compact={compact} />;
     case 'shadow-side': return <ShadowSide objects={spec.objects} lamp={spec.lamp} />;
     case 'walkers': return <Walkers walkers={spec.walkers} />;

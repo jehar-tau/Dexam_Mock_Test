@@ -11,7 +11,7 @@ const feedback = page => player(page).locator(".feedback");
 test("the Learn preview lists every programme and opens an overview", async ({ page }) => {
   await page.goto("/learn-preview");
   const list = page.getByLabel("Interactive programmes");
-  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour", "Shadows and light"]) {
+  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour", "Shadows and light", "Surfaces of solids", "Sections of solids"]) {
     await expect(list.locator("article", { hasText: title })).toBeVisible();
   }
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
@@ -739,6 +739,41 @@ test("shadows: the sun table and the exam-hard set", async ({ page }) => {
     if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
     else if (question.answerMode === "multi") for (const id of question.answer) await dialog.getByRole("button", { name: question.options.find(o => o.id === id).text, exact: true }).click();
     else { const right = question.options.find(o => o.id === question.answer); await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click(); }
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("surfaces: the explorer and the exam-hard set", async ({ page }) => {
+  const dialog = player(page);
+  await page.goto("/learn-programme-preview/solid-surfaces?lesson=what-is-a-surface");
+  await expect(dialog.getByRole("status")).toContainText("8 surfaces in all");
+  await dialog.getByRole("button", { name: "up", exact: true }).click();
+  await expect(dialog.getByRole("status")).toContainText("Facing up: 1 surface.");
+  const { surfacesProgramme } = await import("../../src/learn/programmes/solid-surfaces.js");
+  const set = buildQuiz(surfacesProgramme.tiers[2].quiz, 2);
+  await page.goto("/learn-programme-preview/solid-surfaces?lesson=quiz-exam-hard&seed=2");
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("sections: the slicer and the exam-hard set", async ({ page }) => {
+  const dialog = player(page);
+  await page.goto("/learn-programme-preview/sections?lesson=cut-faces");
+  await expect(dialog.getByRole("status")).toContainText("The cut face is a square");
+  await dialog.getByRole("button", { name: "Edge to edge", exact: true }).click();
+  await expect(dialog.getByRole("status")).toContainText("rectangle");
+  const { sectionsProgramme } = await import("../../src/learn/programmes/sections.js");
+  const set = buildQuiz(sectionsProgramme.tiers[2].quiz, 5);
+  await page.goto("/learn-programme-preview/sections?lesson=quiz-exam-hard&seed=5");
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else await dialog.getByRole("button", { name: question.options.find(o => o.id === question.answer).text, exact: true }).click();
     await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();

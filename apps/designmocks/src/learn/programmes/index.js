@@ -14,6 +14,8 @@ import { arrangementsProgramme, codesPatternsProgramme, directionsProgramme } fr
 import { visualPatternsProgramme } from './visual-patterns.js';
 import { colourBasicsProgramme } from './colour-basics.js';
 import { shadowsProgramme } from './shadows-and-light.js';
+import { surfacesProgramme } from './solid-surfaces.js';
+import { sectionsProgramme } from './sections.js';
 
-export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, diceProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, viewsRotationProgramme, mechanismsProgramme, countingFiguresProgramme, quantProgramme, codesPatternsProgramme, arrangementsProgramme, directionsProgramme, visualPatternsProgramme, colourBasicsProgramme, shadowsProgramme]);
+export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, diceProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, viewsRotationProgramme, mechanismsProgramme, countingFiguresProgramme, quantProgramme, codesPatternsProgramme, arrangementsProgramme, directionsProgramme, visualPatternsProgramme, colourBasicsProgramme, shadowsProgramme, surfacesProgramme, sectionsProgramme]);
 export const findProgramme = slug => programmes.find(p => p.slug === slug) ?? null;
