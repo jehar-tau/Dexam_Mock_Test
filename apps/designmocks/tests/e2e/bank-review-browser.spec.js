@@ -158,7 +158,10 @@ test("a changed question cannot be approved from an open review and refreshed de
   await bank.getByRole("button", { name: "Open question bank-review-001", exact: true }).click();
   const review = bank.getByRole("region", { name: "Question review", exact: true });
   await review.getByLabel("Review note").fill("Fictional source and answer reviewed.");
-  await review.getByRole("checkbox").check();
+  const rightsLabel = "I checked the question and confirm DMocks has the right to use it.";
+  const rightsConfirmation = review.getByRole("checkbox", { name: rightsLabel, exact: true });
+  await review.getByText(rightsLabel, { exact: true }).click();
+  await expect(rightsConfirmation).toBeChecked();
   state.questions[0].reviewVersion = "version-1-2";
   state.questions[0].prompt = "Changed fictional source wording.";
   await review.getByRole("button", { name: "Approve for practice", exact: true }).click();
@@ -168,7 +171,7 @@ test("a changed question cannot be approved from an open review and refreshed de
   await expect(review).toHaveCount(0);
   await bank.getByRole("button", { name: "Open question bank-review-001", exact: true }).click();
   await expect(review.getByText("Changed fictional source wording.").first()).toBeVisible();
-  await expect(review.getByRole("checkbox")).not.toBeChecked();
+  await expect(rightsConfirmation).not.toBeChecked();
   await expect(review.getByRole("button", { name: "Approve for practice", exact: true })).toBeDisabled();
   expect(state.unexpected).toEqual([]);
 });
