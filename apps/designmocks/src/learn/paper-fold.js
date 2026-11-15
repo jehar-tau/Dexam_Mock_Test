@@ -75,9 +75,12 @@ export function randomFoldSequence(rng, count) {
   return state;
 }
 
-export function unfoldQuestion(seed, { folds = 2, punches = 1 } = {}) {
+export function unfoldQuestion(seed, { folds = 2, punches = 1, level = 2 } = {}) {
   const rng = seededRandom(seed);
-  const state = randomFoldSequence(rng, folds);
+  // Level 3: three folds, the last on the diagonal, and one or two punches.
+  let state;
+  if (level === 3) { state = freshSheet(); for (const kind of [...shuffle(rng, ['left', 'up']), 'diagonal']) state = fold(state, kind); punches = 1 + Math.floor(rng() * 2); }
+  else state = randomFoldSequence(rng, folds);
   const cells = shuffle(rng, punchable(state)).slice(0, punches);
   const holes = punch(state, cells);
   const correctKey = holeKey(holes);
@@ -110,6 +113,15 @@ export function unfoldQuestion(seed, { folds = 2, punches = 1 } = {}) {
     kind: 'unfold', seed, prompt: 'The sheet is folded as shown, then punched. Which pattern appears when it is unfolded?',
     folds: state.folds, punched: { state: { w: state.w, h: state.h, triangle: state.triangle }, cells },
     options: shuffled, answer: answer.id, explanation: answer.reason,
+    ...(level === 3 ? {
+      hints: ['Undo the diagonal fold first: mirror each hole across the diagonal.', 'Then undo the other two folds, mirroring everything across each fold line.'],
+      solution: [
+        { text: `Three folds: ${state.folds.join(', then ')}. That makes ${state.layers.length} layers.` },
+        { text: `Undo the diagonal fold: each hole is copied across the line from corner to corner.` },
+        { text: `Undo the ${state.folds[1]} fold, then the ${state.folds[0]} fold, mirroring every hole each time.` },
+        { text: `${holes.length} holes. So the answer is ${answer.label}.` },
+      ],
+    } : {}),
   };
 }
 function allCells() { const out = []; for (let y = 0; y < GRID; y++) for (let x = 0; x < GRID; x++) out.push({ x, y }); return out; }
