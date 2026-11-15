@@ -32,6 +32,9 @@ import { AREA_KINDS, areaQuestion } from './area.js';
 import { MACHINE_KINDS, machinesQuestion } from './machines.js';
 import { OBSERVATION_KINDS, observationQuestion } from './observation.js';
 import { PERSPECTIVE_KINDS, perspectiveQuestion } from './perspective.js';
+import { recallKinds } from './recall.js';
+import { makingDeck, materialsDeck, textilesDeck } from './decks/crafts.js';
+import { artDeck, designDeck, heritageDeck } from './decks/history.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -130,6 +133,7 @@ const kinds = {
   'same-solid': { topic: 'views-and-rotation', levels: [2, 3, 4], generate: (seed, level) => viewsQuestion(seed, 'same-solid', level) },
   'view-after-turn': { topic: 'views-and-rotation', levels: [4], generate: seed => viewsQuestion(seed, 'view-after-turn', 4) },
   ...Object.fromEntries(Object.entries(DICE_KINDS).map(([kind, levels]) => [kind, { topic: 'dice', levels, generate: (seed, level) => diceQuestion(seed, kind, level) }])),
+  ...recallKinds(textilesDeck), ...recallKinds(materialsDeck), ...recallKinds(makingDeck), ...recallKinds(artDeck), ...recallKinds(heritageDeck), ...recallKinds(designDeck),
   ...Object.fromEntries(Object.entries(PERSPECTIVE_KINDS).map(([kind, levels]) => [kind, { topic: 'perspective', levels, generate: (seed, level) => perspectiveQuestion(seed, kind, level) }])),
   ...Object.fromEntries(Object.entries(OBSERVATION_KINDS).map(([kind, levels]) => [kind, { topic: 'observation-skills', levels, generate: (seed, level) => observationQuestion(seed, kind, level) }])),
   ...Object.fromEntries(Object.entries(MACHINE_KINDS).map(([kind, levels]) => [kind, { topic: 'mechanisms', levels, generate: (seed, level) => machinesQuestion(seed, kind, level) }])),

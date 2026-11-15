@@ -77,6 +77,8 @@ Update this table in the same change as the work.
 | Transparent sheets | [spec](topics/overlays.md) | Built | Built | Built | Built | `overlays` |
 | Visual observation | [spec](topics/observation.md) | Built | Built | Built | Built | `observation-skills` |
 | Perspective and viewpoint | [spec](topics/perspective.md) | Built | Built | Built | Built | `perspective` |
+| Crafts, materials and making | [spec](topics/crafts.md) | Built | Built | Built | Built | `crafts` |
+| Art and design history | [spec](topics/art-history.md) | Built | Built | Built | Built | `art-history` |
 | Number and quantity | [spec](topics/quant.md) | Built | Built | Built | Built | `quant` |
 | Codes and number patterns | [spec](topics/logic.md) | Built | Built | Built | Built | `codes-patterns` |
 | Arrangements and puzzles | [spec](topics/logic.md) | Built | Built | Built | Built | `arrangements` |
