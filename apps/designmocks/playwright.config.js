@@ -7,6 +7,7 @@ const noticeFile = fileURLToPath(new URL("./tests/fixtures/fictional-published-n
 const fixtureNotices = readPublishedNotices(noticeFile, { allowFixture: true });
 const scope=process.env.DMOCKS_E2E_SCOPE??'mvp';
 if(!['mvp','full'].includes(scope))throw new Error('Choose the mvp or full browser scope.');
+const fallbackRunner = process.env.DMOCKS_E2E_FALLBACK_RUNNER === '1';
 const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','staging-portal.spec.js','staging-paid-pilot.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','admin-access-lifecycle.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','drawing-reviewer.spec.js','drawing-reviewer-lifecycle.spec.js','drawing-inspection.spec.js','drawing-upload-validation.spec.js','intake-canonical.spec.js','ai-draft-canonical.spec.js'];
 export default defineConfig({
   testMatch: scope === 'full' ? '**/*.spec.js' : [
@@ -19,7 +20,8 @@ export default defineConfig({
   ],
   testDir: "./tests/e2e",
   fullyParallel: true,
-  workers: process.env.CI ? 3 : undefined,
+  workers: fallbackRunner ? 2 : process.env.CI ? 3 : undefined,
+  timeout: fallbackRunner ? 60_000 : 30_000,
   retries: process.env.CI ? 1 : 0,
   reporter: [[process.env.CI ? "github" : "list"], ["json", {outputFile: "test-results/browser-results.json"}]],
   use: { baseURL: "http://127.0.0.1:4399", trace: "retain-on-failure" },

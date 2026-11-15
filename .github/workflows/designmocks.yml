@@ -56,6 +56,8 @@ jobs:
           python-version: '3.12'
       - run: npm ci
       - run: npm run check
+        env:
+          DMOCKS_E2E_FALLBACK_RUNNER: ${{ runner.environment == 'self-hosted' && '1' || '0' }}
       - run: npm audit --omit=dev --audit-level=high
       - name: Type-check server functions
         run: npx --yes deno@2.9.6 check supabase/functions/create-order/index.ts supabase/functions/payment-webhook/index.ts supabase/functions/attempt-media/index.ts
