@@ -280,6 +280,7 @@ export function Figure({ spec, compact = false }) {
     case 'clock': return <ClockFace h={spec.h} m={spec.m} />;
     case 'mirror-angle': return <MirrorAngle theta={spec.theta} onBisector={spec.onBisector} />;
     case 'ray-grid': return <RayGrid n={spec.n} mirrors={spec.mirrors} start={spec.start} labels={spec.labels} compact={compact} />;
+    case 'table': return <table className="data-table"><thead><tr>{spec.head.map(h => <th key={h} scope="col">{h}</th>)}</tr></thead><tbody>{spec.rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>)}</tbody></table>;
     case 'swatch': return <Swatch colour={spec.colour} name={spec.name} large={!compact} />;
     default: return null;
   }

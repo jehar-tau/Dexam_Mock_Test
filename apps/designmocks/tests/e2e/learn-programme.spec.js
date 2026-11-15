@@ -11,7 +11,7 @@ const feedback = page => player(page).locator(".feedback");
 test("the Learn preview lists every programme and opens an overview", async ({ page }) => {
   await page.goto("/learn-preview");
   const list = page.getByLabel("Interactive programmes");
-  for (const title of ["Cube nets", "Nets of solids", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Gears, belts and levers", "Counting figures", "Colour basics"]) {
+  for (const title of ["Cube nets", "Nets of solids", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Gears, belts and levers", "Counting figures", "Number and quantity", "Colour basics"]) {
     await expect(list.locator("article", { hasText: title })).toBeVisible();
   }
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
@@ -580,6 +580,28 @@ test("mirror images: the mirror lab and every exam-hard kind are marked", async 
     const right = question.options?.find(o => o.id === question.answer);
     if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
     else await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click();
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("number and quantity: the clock lab and the exam-hard set are marked", async ({ page }) => {
+  const base = "/learn-programme-preview/quant";
+  const dialog = player(page);
+  await page.goto(`${base}?lesson=clocks`);
+  await dialog.getByRole("textbox", { name: "Your answer" }).fill("1");
+  await dialog.getByRole("button", { name: "Continue" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("2:00. Hour hand at 60°, minute hand at 0°: 60° apart.");
+  await dialog.getByRole("button", { name: "One minute on" }).click();
+  await expect(dialog.getByRole("status")).toHaveText("2:01. Hour hand at 60.5°, minute hand at 6°: 54.5° apart.");
+
+  const { quantProgramme } = await import("../../src/learn/programmes/quant.js");
+  const set = buildQuiz(quantProgramme.tiers[2].quiz, 2);
+  await page.goto(`${base}?lesson=quiz-exam-hard&seed=2`);
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else await dialog.getByRole("button", { name: question.options.find(o => o.id === question.answer).text, exact: true }).click();
     await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
