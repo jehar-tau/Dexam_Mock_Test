@@ -47,7 +47,7 @@ timed set with exam marking). Rules for building and merging are in
 | 9 | Visual series and matrices **Done** | Next figure in a series; missing cell of a 3 × 3 grid; analogies; odd one out; two rules at once; rotation series | Logic bank (visual series) |
 | 10 | Colour (tiers 2–4) **Done** | Mixing systems; complements and harmonies; value and saturation; warm and cool; colour in use | Colour theory and bank |
 | 11 | Shadows and light **Done** | Shadow direction and length from the sun; silhouettes from views; which light makes this shadow | Spatial bank; spec exists |
-| 12 | Surfaces of solids | Faces, edges and corners; visible and hidden faces; surfaces of cube stacks; painted surfaces | Spatial bank; spec exists |
+| 12 | Surfaces of solids **Done** | Faces, edges and corners; visible and hidden faces; surfaces of cube stacks; painted surfaces | Spatial bank; spec exists |
 | 13 | Sections of solids | Shape of a cut face; pieces after a cut; oblique cuts of a cube | Spatial bank |
 | 14 | Fit and embedded figures | Which piece completes a shape; which figure hides a shape; pieces that make a target | Spatial and observation banks |
 | 15 | Transparent sheets and overlays | Fold a transparent sheet and superimpose; stack three sheets; count in the result | Spatial and counting banks |

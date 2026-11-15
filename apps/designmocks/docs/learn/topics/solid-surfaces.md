@@ -3,8 +3,17 @@
 Slug `solid-surfaces` · topic `visualisation` · exams uceed, ceed ·
 engine `src/learn/surfaces.js` (uses `voxel.js`) · tool `surface-explorer`
 
-Status: Foundations Planned · Exam standard Planned · Exam hard Planned ·
-Mastery Planned
+Status: all four tiers **Built** (16 November 2026). Figures
+`src/learn/surface-figures.jsx`; tests `tests/surfaces.test.mjs`.
+
+Changes from the plan below, so that every drawing fixes the solid:
+`polycube-surfaces` and `notch-surfaces` use column stacks whose every
+column top can be seen (`stackReadable`), with notches only on the sides in
+view; tunnels are described in words as well as drawn; painted blocks are
+split into prism pieces (a footprint piece times a layer) and shown both
+assembled, each piece tinted, and one by one. A foundations lesson on faces,
+edges and corners of prisms and pyramids (`edges-corners`, with Euler's
+rule) was added for the completion plan.
 
 Build after Views and rotation, whose `voxels` figure it reuses.
 
@@ -189,11 +198,11 @@ All computed with the algorithm above.
 
 | Archetype | Kind and level | Verified on seeds | Notes |
 |---|---|---|---|
-| S1 | `polycube-surfaces` L2–L3 | | |
-| S2 | `notch-surfaces` L3, `tunnel-surfaces` L4 | | Pyramids with cut-outs out of scope |
-| S3 | `extrusion-surfaces`, `extrusion-set` | | |
-| S4 | `unpainted-surfaces` L4 | | |
-| S5 | `operation-transfer` L4 | | |
+| S1 | `polycube-surfaces` L2–L3 | 1–40 | Array flood fill |
+| S2 | `notch-surfaces` L3, `tunnel-surfaces` L4 | 1–40 | Array flood fill; pyramids with cut-outs out of scope |
+| S3 | `extrusion-surfaces`, `extrusion-set` | 1–40 | Sides by straight boundary runs |
+| S4 | `unpainted-surfaces` L4 | 1–40 | All surfaces minus painted ones |
+| S5 | `operation-transfer` L4 | 1–40 | Recomputed from runs |
 
 ## 10. Out of scope
 

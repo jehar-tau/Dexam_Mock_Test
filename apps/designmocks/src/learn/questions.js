@@ -24,6 +24,7 @@ import { DICE_KINDS, diceQuestion } from './dice.js';
 import { PATTERN_KINDS, patternQuestion } from './patterns.js';
 import { COLOUR_EXAM_KINDS, colourExamQuestion } from './colour-exam.js';
 import { SHADOW_KINDS, shadowQuestion } from './shadows.js';
+import { SURFACE_KINDS, surfacesQuestion } from './surfaces.js';
 
 function cubeNetFigures(q) {
   const figures = [];
@@ -122,6 +123,7 @@ const kinds = {
   'same-solid': { topic: 'views-and-rotation', levels: [2, 3, 4], generate: (seed, level) => viewsQuestion(seed, 'same-solid', level) },
   'view-after-turn': { topic: 'views-and-rotation', levels: [4], generate: seed => viewsQuestion(seed, 'view-after-turn', 4) },
   ...Object.fromEntries(Object.entries(DICE_KINDS).map(([kind, levels]) => [kind, { topic: 'dice', levels, generate: (seed, level) => diceQuestion(seed, kind, level) }])),
+  ...Object.fromEntries(Object.entries(SURFACE_KINDS).map(([kind, levels]) => [kind, { topic: 'solid-surfaces', levels, generate: (seed, level) => surfacesQuestion(seed, kind, level) }])),
   ...Object.fromEntries(Object.entries(SHADOW_KINDS).map(([kind, levels]) => [kind, { topic: 'shadows-and-light', levels, generate: (seed, level) => shadowQuestion(seed, kind, level) }])),
   ...Object.fromEntries(Object.entries(COLOUR_EXAM_KINDS).map(([kind, levels]) => [kind, { topic: 'colour-basics', levels, generate: (seed, level) => colourExamQuestion(seed, kind, level) }])),
   ...Object.fromEntries(Object.entries(PATTERN_KINDS).map(([kind, levels]) => [kind, { topic: 'visual-patterns', levels, generate: (seed, level) => patternQuestion(seed, kind, level) }])),
