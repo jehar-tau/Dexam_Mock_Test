@@ -4247,3 +4247,7 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .die-figure{display:block;max-width:100%;height:auto}.die-face{stroke:#162824;stroke-width:1.2;stroke-linejoin:round}.die-face.top{fill:#fffef9}.die-face.left{fill:#f1ede0}.die-face.right{fill:#e2dccb}.die-number{font:700 15px/1 var(--font-sans,system-ui,sans-serif);fill:#162824;text-anchor:middle}
 .die-path{display:block}.die-path-cell{fill:#fffef9;stroke:#162824;stroke-width:.5;opacity:.6}.die-path-start{fill:#9cc9a7;stroke:#162824}.die-path-step{stroke:#c8532c;stroke-width:2.4}#die-arrow path{fill:#c8532c}.die-path-compass{font:600 11px/1 var(--font-sans,system-ui,sans-serif);fill:#162824}
 :root[data-theme="dark"] .die-path-compass{fill:#e9e7d8}
+/* Learn: visual patterns */
+.pattern-panel{display:block;flex:none}.pattern-frame{fill:#fffef9;stroke:#162824;stroke-width:.025}.pattern-panel.is-ask .pattern-frame{stroke-dasharray:.06 .04;fill:#f4f1e4}.pattern-ask{font:700 .5px/1 var(--font-sans,system-ui,sans-serif);fill:#c8532c;text-anchor:middle}
+.pattern-item{stroke:#162824;stroke-width:.02;stroke-linejoin:round}.pattern-item.fill-black{fill:#162824}.pattern-item.fill-white{fill:#fffef9}.pattern-item.fill-grey{fill:#9aa39c}
+.pattern-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:center}.pattern-sep{font-weight:600;color:var(--muted)}.pattern-grid{display:grid;grid-template-columns:repeat(3,auto);gap:.35rem;justify-content:center}

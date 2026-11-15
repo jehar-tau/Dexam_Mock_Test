@@ -11,7 +11,7 @@ const feedback = page => player(page).locator(".feedback");
 test("the Learn preview lists every programme and opens an overview", async ({ page }) => {
   await page.goto("/learn-preview");
   const list = page.getByLabel("Interactive programmes");
-  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Colour basics"]) {
+  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour basics"]) {
     await expect(list.locator("article", { hasText: title })).toBeVisible();
   }
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
@@ -685,6 +685,23 @@ test("dice: the die roller and the exam-hard set", async ({ page }) => {
   await dialog.getByRole("button", { name: "Begin" }).click();
   for (const question of set) {
     await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("visual patterns: the rule mixer and the exam-hard set", async ({ page }) => {
+  const dialog = player(page);
+  await page.goto("/learn-programme-preview/visual-patterns?lesson=one-rule");
+  await expect(dialog.getByRole("status")).toContainText("Rules: the");
+  await dialog.getByRole("button", { name: "Move round" }).click();
+  await expect(dialog.getByRole("status")).toContainText("moves");
+  const { visualPatternsProgramme } = await import("../../src/learn/programmes/visual-patterns.js");
+  const set = buildQuiz(visualPatternsProgramme.tiers[2].quiz, 2);
+  await page.goto("/learn-programme-preview/visual-patterns?lesson=quiz-exam-hard&seed=2");
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    await dialog.getByRole("button", { name: `Option ${question.answer}`, exact: true }).click();
     await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
