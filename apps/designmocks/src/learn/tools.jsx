@@ -28,6 +28,7 @@ import { SectionSlicer } from './section-figures.jsx';
 import { PieceFitter } from './fit-figures.jsx';
 import { SheetStacker } from './overlay-figures.jsx';
 import { FeatureScanner } from './observation-figures.jsx';
+import { PerspectiveBox } from './perspective-figures.jsx';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -565,8 +566,9 @@ export function LearnTool({ tool, props = {} }) {
     case 'piece-fitter': return <PieceFitter {...props} />;
     case 'sheet-stacker': return <SheetStacker {...props} />;
     case 'feature-scanner': return <FeatureScanner {...props} />;
+    case 'perspective-box': return <PerspectiveBox {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner', 'die-roller', 'rule-mixer', 'colour-mixer', 'sun-table', 'surface-explorer', 'section-slicer', 'piece-fitter', 'sheet-stacker', 'feature-scanner']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner', 'die-roller', 'rule-mixer', 'colour-mixer', 'sun-table', 'surface-explorer', 'section-slicer', 'piece-fitter', 'sheet-stacker', 'feature-scanner', 'perspective-box']);
 export { IconButton };
