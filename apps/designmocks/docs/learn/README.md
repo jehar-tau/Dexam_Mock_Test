@@ -71,7 +71,7 @@ Update this table in the same change as the work.
 | Surfaces of solids | [spec](topics/solid-surfaces.md) | Planned | Planned | Planned | Planned | — |
 | Counting figures | [spec](topics/counting-figures.md) | Built | Built | Built | Built | `counting-figures` |
 | Gears, belts and levers | [spec](topics/mechanisms.md) | Built | Built | Built | Built | `mechanisms` |
-| Shadows and light | [spec](topics/shadows-and-light.md) | Planned | Planned | Planned | Planned | — |
+| Shadows and light | [spec](topics/shadows-and-light.md) | Built | Built | Built | Built | `shadows-and-light` |
 | Number and quantity | [spec](topics/quant.md) | Built | Built | Built | Built | `quant` |
 | Codes and number patterns | [spec](topics/logic.md) | Built | Built | Built | Built | `codes-patterns` |
 | Arrangements and puzzles | [spec](topics/logic.md) | Built | Built | Built | Built | `arrangements` |
