@@ -4,10 +4,11 @@ import { bounds } from './figure-count.js';
 // A figure of straight lines from figure-count.js. Screen coordinates, y down.
 // ghost: pieces that were rubbed out, drawn dotted. mirrors: dashed lines to
 // reflect in, numbered when there are two. highlight: one shape to fill.
-export function LinesFigure({ segments, ghost = [], mirrors = [], highlight = null, compact = false, label }) {
+export function LinesFigure({ segments, ghost = [], mirrors = [], highlight = null, compact = false, label, unit = null }) {
   const b = bounds([...segments, ...ghost]);
   const w = b.maxX - b.minX || 1, h = b.maxY - b.minY || 1;
-  const s = Math.min((compact ? 150 : 300) / w, (compact ? 120 : 260) / h, compact ? 30 : 56);
+  // unit: a fixed size per grid step, so figures meant to be compared are drawn to one scale.
+  const s = unit ? unit : Math.min((compact ? 150 : 300) / w, (compact ? 120 : 260) / h, compact ? 30 : 56);
   const pad = mirrors.length ? 40 : 8;
   const at = ([x, y]) => [((x - b.minX) * s).toFixed(1), ((y - b.minY) * s).toFixed(1)];
   const line = ([p, q], className, key) => { const a = at(p), c = at(q); return <line key={key} className={className} x1={a[0]} y1={a[1]} x2={c[0]} y2={c[1]} />; };

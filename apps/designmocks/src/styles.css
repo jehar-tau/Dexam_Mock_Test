@@ -4264,3 +4264,5 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .stack-cube.piece-3 .face.top{fill:#b9dca0}.stack-cube.piece-3 .face.left{fill:#98c27c}.stack-cube.piece-3 .face.right{fill:#78a35e}
 .stack-cube.piece-4 .face.top{fill:#e3b4d6}.stack-cube.piece-4 .face.left{fill:#c992ba}.stack-cube.piece-4 .face.right{fill:#a9739b}
 .outline-figure{display:inline-flex;flex-direction:column;align-items:center;gap:.25rem}
+.pieces-figure{display:inline-flex;gap:.6rem;align-items:flex-end;flex-wrap:wrap;justify-content:center}
+.piece-stage{display:flex;gap:1.4rem;align-items:center;justify-content:center;flex-wrap:wrap}
