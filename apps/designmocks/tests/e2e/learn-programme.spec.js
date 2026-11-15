@@ -11,7 +11,7 @@ const feedback = page => player(page).locator(".feedback");
 test("the Learn preview lists every programme and opens an overview", async ({ page }) => {
   await page.goto("/learn-preview");
   const list = page.getByLabel("Interactive programmes");
-  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour"]) {
+  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour", "Shadows and light"]) {
     await expect(list.locator("article", { hasText: title })).toBeVisible();
   }
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
@@ -719,6 +719,25 @@ test("colour: the mixer and the exam-hard set", async ({ page }) => {
   await dialog.getByRole("button", { name: "Begin" }).click();
   for (const question of set) {
     if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else { const right = question.options.find(o => o.id === question.answer); await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click(); }
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("shadows: the sun table and the exam-hard set", async ({ page }) => {
+  const dialog = player(page);
+  await page.goto("/learn-programme-preview/shadows-and-light?lesson=direction");
+  await expect(dialog.getByRole("status")).toContainText("Sun from the east at 45°");
+  await dialog.getByRole("button", { name: "south", exact: true }).click();
+  await expect(dialog.getByRole("status")).toContainText("towards the north");
+  const { shadowsProgramme } = await import("../../src/learn/programmes/shadows-and-light.js");
+  const set = buildQuiz(shadowsProgramme.tiers[2].quiz, 4);
+  await page.goto("/learn-programme-preview/shadows-and-light?lesson=quiz-exam-hard&seed=4");
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else if (question.answerMode === "multi") for (const id of question.answer) await dialog.getByRole("button", { name: question.options.find(o => o.id === id).text, exact: true }).click();
     else { const right = question.options.find(o => o.id === question.answer); await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click(); }
     await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
   }

@@ -22,6 +22,7 @@ import { DieFigure } from './dice-figures.jsx';
 import { seriesOf } from './patterns.js';
 import { PanelRow } from './pattern-figures.jsx';
 import { ColourMixer } from './colour-figures.jsx';
+import { SunTable } from './shadow-figures.jsx';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -553,8 +554,9 @@ export function LearnTool({ tool, props = {} }) {
     case 'die-roller': return <DieRoller {...props} />;
     case 'rule-mixer': return <RuleMixer {...props} />;
     case 'colour-mixer': return <ColourMixer {...props} />;
+    case 'sun-table': return <SunTable {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner', 'die-roller', 'rule-mixer', 'colour-mixer']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab', 'solid-turner', 'die-roller', 'rule-mixer', 'colour-mixer', 'sun-table']);
 export { IconButton };
