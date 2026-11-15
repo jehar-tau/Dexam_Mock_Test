@@ -11,7 +11,7 @@ const feedback = page => player(page).locator(".feedback");
 test("the Learn preview lists every programme and opens an overview", async ({ page }) => {
   await page.goto("/learn-preview");
   const list = page.getByLabel("Interactive programmes");
-  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour", "Shadows and light", "Surfaces of solids", "Sections of solids", "Fit and hidden figures", "Transparent sheets", "Visual observation"]) {
+  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour", "Shadows and light", "Surfaces of solids", "Sections of solids", "Fit and hidden figures", "Transparent sheets", "Visual observation", "Perspective and viewpoint"]) {
     await expect(list.locator("article", { hasText: title })).toBeVisible();
   }
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
@@ -828,6 +828,24 @@ test("observation: the feature scanner and the exam-hard set", async ({ page }) 
   await dialog.getByRole("button", { name: "Begin" }).click();
   for (const question of set) {
     await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("perspective: the box tool and the exam-standard set", async ({ page }) => {
+  const dialog = player(page);
+  await page.goto("/learn-programme-preview/perspective?lesson=horizon");
+  await expect(dialog.getByRole("status")).toContainText("One-point perspective");
+  await dialog.getByRole("slider", { name: "Turn the view, degrees" }).fill("20");
+  await expect(dialog.getByRole("status")).toContainText("Two-point perspective");
+  const { perspectiveProgramme } = await import("../../src/learn/programmes/perspective.js");
+  const set = buildQuiz(perspectiveProgramme.tiers[1].quiz, 2);
+  await page.goto("/learn-programme-preview/perspective?lesson=quiz-exam-standard&seed=2");
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else { const right = question.options.find(o => o.id === question.answer); await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click(); }
     await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();

@@ -64,7 +64,7 @@ timed set with exam marking). Rules for building and merging are in
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
 | 18 | Visual observation **Done** | Odd one out; spot the differences; hidden shapes; figure and ground; detail memory | Observation theory and earlier bank |
-| 19 | Perspective and viewpoint | Horizon and eye level; one, two and three-point perspective; vanishing points; camera position; which view is from where | Perspective theory |
+| 19 | Perspective and viewpoint **Done** | Horizon and eye level; one, two and three-point perspective; vanishing points; camera position; which view is from where | Perspective theory |
 
 ### Group 6: knowledge and design method
 
