@@ -509,7 +509,8 @@ test("counting figures: the counter steps through sizes and every exam-hard kind
   await dialog.getByRole("button", { name: "Begin" }).click();
   for (const question of set) {
     if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
-    else for (const id of question.answer) await dialog.getByRole("button", { name: `Option ${id}`, exact: true }).click();
+    else if (question.answerMode === "multi") for (const id of question.answer) await dialog.getByRole("button", { name: `Option ${id}`, exact: true }).click();
+    else { const right = question.options.find(o => o.id === question.answer); await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click(); }
     await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();

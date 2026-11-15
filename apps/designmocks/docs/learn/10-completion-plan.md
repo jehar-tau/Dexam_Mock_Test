@@ -56,7 +56,7 @@ timed set with exam marking). Rules for building and merging are in
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 16 | Counting figures: areas | Area of a shaded part; ratio of nested shapes; chance of landing on a shaded part; largest of four shapes on a grid | Shape and area bank |
+| 16 | Counting figures: areas **Done** | Area of a shaded part; ratio of nested shapes; chance of landing on a shaded part; largest of four shapes on a grid | Shape and area bank |
 | 17 | Mechanisms: more machines | Rigid frame or mechanism; stability and centre of gravity; rolling and turning; pulley effort; lever classes | Mechanical bank |
 
 ### Group 5: observation and perspective
