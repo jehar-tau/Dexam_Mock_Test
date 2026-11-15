@@ -4235,3 +4235,10 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .ratio-bar{display:flex;flex-wrap:wrap;gap:3px;max-width:100%}.ratio-part{display:inline-flex;align-items:center;justify-content:center;min-width:2.6rem;height:2.4rem;padding:0 .3rem;border:1.5px solid #162824;border-radius:4px;font-size:.85rem;font-variant-numeric:tabular-nums;color:#162824}.ratio-part.side-0{background:#9cc9a7}.ratio-part.side-1{background:#f0a77e}
 :root[data-theme="dark"] .clock-rim{fill:#f4f3e8}
 .data-table th{white-space:nowrap}
+/* Learn: reasoning */
+.number-diamond{display:block}.diamond-shape{fill:#fffef9;stroke:#162824;stroke-width:1.4}.diamond-cross{stroke:#162824;stroke-width:.7;opacity:.35}.diamond-centre{fill:#f4f1e4;stroke:#162824;stroke-width:1}.diamond-num{font:600 13px/1 var(--font-sans,system-ui,sans-serif);fill:#162824;text-anchor:middle}.diamond-num.is-ask{fill:#c8532c;font-weight:700}
+.maze-figure{display:block;max-width:100%;height:auto}.maze-floor{fill:#fffef9}.maze-wall{stroke:#162824;stroke-width:2.6;stroke-linecap:square}.maze-border{fill:none;stroke:#162824;stroke-width:3.4}.maze-mark{font:700 14px/1 var(--font-sans,system-ui,sans-serif);fill:#c8532c;text-anchor:middle}
+.seat-row{justify-content:center}.chip.seat{min-width:4.2rem}.clue-list{list-style:none;padding:0;margin:.5rem 0;display:grid;gap:.3rem;font-size:.95rem}.clue-list .is-true{color:var(--green)}.clue-list .is-false{color:var(--muted)}
+.code-pair{display:flex;gap:1rem;align-items:center;justify-content:center;font:600 1.5rem/1.2 var(--font-mono,ui-monospace,monospace);letter-spacing:.12em;margin:0;flex-wrap:wrap}
+.walk-figure{display:block;max-width:100%;height:auto}.walk-path{fill:none;stroke:#3f78c9;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.walk-start{fill:#162824}.walk-now{fill:#c8532c;stroke:#162824}
+:root[data-theme="dark"] .walk-start{fill:#e9e7d8}:root[data-theme="dark"] .walk-path{stroke:#7fb0ea}

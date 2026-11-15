@@ -73,6 +73,9 @@ Update this table in the same change as the work.
 | Gears, belts and levers | [spec](topics/mechanisms.md) | Built | Built | Built | Built | `mechanisms` |
 | Shadows and light | [spec](topics/shadows-and-light.md) | Planned | Planned | Planned | Planned | — |
 | Number and quantity | [spec](topics/quant.md) | Built | Built | Built | Built | `quant` |
+| Codes and number patterns | [spec](topics/logic.md) | Built | Built | Built | Built | `codes-patterns` |
+| Arrangements and puzzles | [spec](topics/logic.md) | Built | Built | Built | Built | `arrangements` |
+| Directions, clocks and calendars | [spec](topics/logic.md) | Built | Built | Built | Built | `directions` |
 | Colour | [spec](topics/colour.md) | Built | Planned | Planned | Planned | Preview |
 
 Foundation work packages: F6, F1, F3, F4, F5, F2 and F9 are done; see the
