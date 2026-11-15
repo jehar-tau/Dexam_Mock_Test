@@ -42,7 +42,7 @@ timed set with exam marking). Rules for building and merging are in
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 7 | Views and rotation | Front, top and side views of block solids; solid from three views; same object or mirror image after a turn; isometric drawing | Spatial bank; spec exists |
+| 7 | Views and rotation **Done** | Front, top and side views of block solids; solid from three views; same object or mirror image after a turn; isometric drawing | Spatial bank; spec exists |
 | 8 | Dice | Standard dice rules; opposite faces from two or three views; same die or different; a die rolled along a path | Spatial bank; spec exists |
 | 9 | Visual series and matrices | Next figure in a series; missing cell of a 3 × 3 grid; analogies; odd one out; two rules at once; rotation series | Logic bank (visual series) |
 | 10 | Colour (tiers 2–4) | Mixing systems; complements and harmonies; value and saturation; warm and cool; colour in use | Colour theory and bank |
