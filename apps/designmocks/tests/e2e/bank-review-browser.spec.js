@@ -247,8 +247,11 @@ test("students cannot load bank questions or private review figures from the adm
 
 test("an administrator downloads a version-pinned answer correction for Git review", async ({ page }) => {
   const state = await fixture(page);
+  state.questions[0].holdReason = "Held after multiple student reports.";
   await page.getByRole("button", {name: "Open question bank-review-001", exact: true}).click();
   const review = page.getByRole("region", {name: "Question review"});
+  await expect(review.getByText("Held after multiple student reports.")).toBeVisible();
+  await expect(review.getByRole("button", {name: "Approve for practice"})).toHaveCount(0);
   await review.getByText("Prepare answer correction", {exact: true}).click();
   await review.getByLabel("Proposed answer").fill("A");
   await review.getByLabel("Source evidence").fill("Verified against the fictional answer key.");
