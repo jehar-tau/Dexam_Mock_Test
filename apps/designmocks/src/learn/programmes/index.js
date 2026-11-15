@@ -13,6 +13,7 @@ import { quantProgramme } from './quant.js';
 import { arrangementsProgramme, codesPatternsProgramme, directionsProgramme } from './logic.js';
 import { visualPatternsProgramme } from './visual-patterns.js';
 import { colourBasicsProgramme } from './colour-basics.js';
+import { shadowsProgramme } from './shadows-and-light.js';
 
-export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, diceProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, viewsRotationProgramme, mechanismsProgramme, countingFiguresProgramme, quantProgramme, codesPatternsProgramme, arrangementsProgramme, directionsProgramme, visualPatternsProgramme, colourBasicsProgramme]);
+export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, diceProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, viewsRotationProgramme, mechanismsProgramme, countingFiguresProgramme, quantProgramme, codesPatternsProgramme, arrangementsProgramme, directionsProgramme, visualPatternsProgramme, colourBasicsProgramme, shadowsProgramme]);
 export const findProgramme = slug => programmes.find(p => p.slug === slug) ?? null;
