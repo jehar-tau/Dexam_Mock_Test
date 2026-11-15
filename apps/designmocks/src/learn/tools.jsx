@@ -15,6 +15,7 @@ import { LinesFigure } from './lines-figure.jsx';
 import { NOTCHES, S, notch, openings, packetAfter, packetOutline, refold, unfoldShapes } from './paper-cut.js';
 import { MATRICES, NAMES, applyTo, imageAngles, imageCount, multiply, nameOf, traceRay } from './mirror-exam.js';
 import { ClockFace, MirrorAngle, RayGrid, ToneGrid } from './mirror-figures.jsx';
+import { CLUE_CHECK, shiftCode } from './logic.js';
 import { SIZE } from './mirror.js';
 import { cubeList, exposure, hiddenCount, minMaxFromViews, total, viewsOf } from './cube-count.js';
 import { analogous, complement, hexToHsl, hsl, triad, wheel } from './colour.js';
@@ -405,6 +406,63 @@ export function NumberLab({ mode = 'clock' }) {
   </div>;
 }
 
+// ---------- logic lab: a letter code, a row of seats, a walk on a compass ----------
+const LAB_WORDS = ['CHAIR', 'PLANT', 'RIVER', 'STONE'];
+const LAB_CLUES = [{ type: 'end', who: ['Esha'] }, { type: 'leftOf', who: ['Charu', 'Asha'] }, { type: 'gapOne', who: ['Bilal', 'Asha'] }, { type: 'notEnd', who: ['Dev'] }];
+const LAB_CLUE_TEXT = { end: x => `${x} sits at one end`, notEnd: x => `${x} does not sit at either end`, leftOf: (x, y) => `${x} sits immediately to the left of ${y}`, gapOne: (x, y) => `exactly one person sits between ${x} and ${y}` };
+export function LogicLab({ mode = 'shift' }) {
+  const [word, setWord] = useState(LAB_WORDS[0]);
+  const [k, setK] = useState(1);
+  const [backwards, setBackwards] = useState(false);
+  const [row, setRow] = useState(['Asha', 'Bilal', 'Charu', 'Dev', 'Esha']);
+  const [picked, setPicked] = useState(null);
+  const [path, setPath] = useState([{ x: 0, y: 0 }]);
+  const [facing, setFacing] = useState(0);
+  if (mode === 'seats') {
+    const holds = LAB_CLUES.map(c => CLUE_CHECK[c.type](row, ...c.who));
+    const tap = i => { if (picked === null) setPicked(i); else { const r = [...row]; [r[picked], r[i]] = [r[i], r[picked]]; setRow(r); setPicked(null); } };
+    return <div className="tool">
+      <div className="tool-row seat-row" role="group" aria-label="Seats from left to right">
+        {row.map((name, i) => <button key={name} type="button" className={`chip seat${picked === i ? ' is-active' : ''}`} aria-pressed={picked === i} onClick={() => tap(i)}>{name}</button>)}
+      </div>
+      <ul className="clue-list">{LAB_CLUES.map((c, i) => <li key={i} className={holds[i] ? 'is-true' : 'is-false'}>{holds[i] ? '✓ ' : '✗ '}{LAB_CLUE_TEXT[c.type](...c.who)}</li>)}</ul>
+      <p className="tool-status" role="status">{picked !== null ? `Now tap the seat to swap ${row[picked]} with.` : `${holds.filter(Boolean).length} of ${LAB_CLUES.length} clues hold.${holds.every(Boolean) ? ' Every clue fits.' : ''}`}</p>
+    </div>;
+  }
+  if (mode === 'compass') {
+    const D = [[0, 1], [1, 0], [0, -1], [-1, 0]], names = ['north', 'east', 'south', 'west'], last = path[path.length - 1];
+    const step = () => setPath([...path, { x: last.x + D[facing][0], y: last.y + D[facing][1] }]);
+    const xs = path.map(p => p.x), ys = path.map(p => p.y), minX = Math.min(...xs, -2), maxX = Math.max(...xs, 2), minY = Math.min(...ys, -2), maxY = Math.max(...ys, 2), u = 24;
+    const pt = p => `${(p.x - minX) * u + 10},${(maxY - p.y) * u + 10}`;
+    return <div className="tool">
+      <div className="tool-stage"><svg className="walk-figure" viewBox={`0 0 ${(maxX - minX) * u + 20} ${(maxY - minY) * u + 20}`} width={(maxX - minX) * u + 20} height={(maxY - minY) * u + 20} role="img" aria-label={`A walk of ${path.length - 1} metres`}>
+        <polyline className="walk-path" points={path.map(pt).join(' ')} />
+        <circle className="walk-start" cx={pt(path[0]).split(',')[0]} cy={pt(path[0]).split(',')[1]} r="5" />
+        <circle className="walk-now" cx={pt(last).split(',')[0]} cy={pt(last).split(',')[1]} r="6" />
+      </svg></div>
+      <div className="tool-row">
+        <button type="button" className="chip" onClick={() => setFacing((facing + 3) % 4)}>Turn left</button>
+        <button type="button" className="chip" onClick={step}>Walk 1 m</button>
+        <button type="button" className="chip" onClick={() => setFacing((facing + 1) % 4)}>Turn right</button>
+        <button type="button" className="chip" onClick={() => { setPath([{ x: 0, y: 0 }]); setFacing(0); }}>Start again</button>
+      </div>
+      <p className="tool-status" role="status">{`Facing ${names[facing]}. ${Math.abs(last.x)} m ${last.x >= 0 ? 'east' : 'west'} and ${Math.abs(last.y)} m ${last.y >= 0 ? 'north' : 'south'} of the start: ${Math.hypot(last.x, last.y).toFixed(Number.isInteger(Math.hypot(last.x, last.y)) ? 0 : 2)} m away.`}</p>
+    </div>;
+  }
+  const coded = (backwards ? [...shiftCode(word, k)].reverse().join('') : shiftCode(word, k));
+  return <div className="tool">
+    <div className="tool-row" role="group" aria-label="Choose a word">
+      {LAB_WORDS.map(w => <button key={w} type="button" className={`chip${w === word ? ' is-active' : ''}`} aria-pressed={w === word} onClick={() => setWord(w)}>{w}</button>)}
+    </div>
+    <div className="tool-stage"><p className="code-pair"><span>{word}</span><span aria-hidden="true">→</span><span>{coded}</span></p></div>
+    <div className="tool-row">
+      <label className="slider"><span>Shift</span><input type="range" min="-5" max="5" step="1" value={k} onChange={e => setK(Number(e.target.value))} aria-label="Letters to move along the alphabet" /><output aria-hidden="true">{k > 0 ? `+${k}` : k}</output></label>
+      <button type="button" className={`chip${backwards ? ' is-active' : ''}`} aria-pressed={backwards} onClick={() => setBackwards(!backwards)}>Write it backwards</button>
+    </div>
+    <p className="tool-status" role="status">{`${word} is written ${coded}: each letter moves ${Math.abs(k)} ${k >= 0 ? 'forward' : 'back'}${backwards ? ', then the code is reversed' : ''}.`}</p>
+  </div>;
+}
+
 export function LearnTool({ tool, props = {} }) {
   switch (tool) {
     case 'fold-explorer': return <FoldExplorer {...props} />;
@@ -422,8 +480,9 @@ export function LearnTool({ tool, props = {} }) {
     case 'cut-unfolder': return <CutUnfolder {...props} />;
     case 'mirror-lab': return <MirrorLab {...props} />;
     case 'number-lab': return <NumberLab {...props} />;
+    case 'logic-lab': return <LogicLab {...props} />;
     default: return <p role="alert">This tool is not available.</p>;
   }
 }
-export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab']);
+export const toolNames = Object.freeze(['fold-explorer', 'opposite-explorer', 'worked-cube', 'net-builder', 'fold-punch', 'mirror', 'stack-builder', 'colour-wheel', 'unfolder', 'gear-train', 'lever-bench', 'figure-counter', 'cut-unfolder', 'mirror-lab', 'number-lab', 'logic-lab']);
 export { IconButton };
