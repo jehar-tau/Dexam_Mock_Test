@@ -233,3 +233,20 @@ Verified with the method above.
 
 Curved figures (circles, arcs), counting lines or regions, and
 three-dimensional counts (see Counting cubes and Surfaces of solids).
+
+## Areas (added 16 November 2026, completion plan item 16)
+
+Engine `src/learn/area.js`, tests `tests/area.test.mjs`. New lessons:
+`areas` (foundations), `area-grids` (exam standard), `ratios-chance` (exam
+hard); the three tier quizzes gain area questions.
+
+| Kind | Levels | Mode | Model |
+|---|---|---|---|
+| `shaded-area` | 2 (right triangles, trapezia, parallelograms), 3 (any lattice polygon, never its own bounding box) | typed | Shoelace area; mistakes: the bounding box, forgetting to halve, rounding |
+| `largest-shape` | 3 | single | Four lattice polygons; the largest beats the next by 0.5 to 2.5 squares |
+| `nested-ratio` | 4 | single | Square midpoints repeated (1/2 each time), triangle midpoints (1/4 each time), or a shaded lattice polygon as a fraction of the grid |
+| `land-chance` | 4 | single | Shaded area ÷ whole area; the chance of missing is always a distractor |
+
+Verification: every area is re-counted by Pick's theorem (interior and
+boundary lattice points), and nested shapes are measured against the
+outermost shape drawn with a different area sum.

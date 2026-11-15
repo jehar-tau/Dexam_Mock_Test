@@ -11,7 +11,7 @@ const feedback = page => player(page).locator(".feedback");
 test("the Learn preview lists every programme and opens an overview", async ({ page }) => {
   await page.goto("/learn-preview");
   const list = page.getByLabel("Interactive programmes");
-  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour", "Shadows and light", "Surfaces of solids", "Sections of solids", "Fit and hidden figures"]) {
+  for (const title of ["Cube nets", "Nets of solids", "Dice", "Paper folding and punching", "Mirror and water images", "Counting cubes", "Views and rotation", "Gears, belts and levers", "Counting figures", "Number and quantity", "Codes and number patterns", "Arrangements and puzzles", "Directions, clocks and calendars", "Visual series and matrices", "Colour", "Shadows and light", "Surfaces of solids", "Sections of solids", "Fit and hidden figures", "Transparent sheets"]) {
     await expect(list.locator("article", { hasText: title })).toBeVisible();
   }
   await list.locator("article", { hasText: "Cube nets" }).getByRole("link", { name: "Start programme" }).click();
@@ -509,7 +509,8 @@ test("counting figures: the counter steps through sizes and every exam-hard kind
   await dialog.getByRole("button", { name: "Begin" }).click();
   for (const question of set) {
     if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
-    else for (const id of question.answer) await dialog.getByRole("button", { name: `Option ${id}`, exact: true }).click();
+    else if (question.answerMode === "multi") for (const id of question.answer) await dialog.getByRole("button", { name: `Option ${id}`, exact: true }).click();
+    else { const right = question.options.find(o => o.id === question.answer); await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click(); }
     await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
   }
   await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
@@ -788,6 +789,24 @@ test("fit: the piece fitter and the exam-hard set", async ({ page }) => {
   const { fitProgramme } = await import("../../src/learn/programmes/fit.js");
   const set = buildQuiz(fitProgramme.tiers[2].quiz, 3);
   await page.goto("/learn-programme-preview/fit?lesson=quiz-exam-hard&seed=3");
+  await dialog.getByRole("button", { name: "Begin" }).click();
+  for (const question of set) {
+    if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
+    else await dialog.getByRole("button", { name: `Option ${question.answer}`, exact: true }).click();
+    await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
+  }
+  await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();
+});
+
+test("overlays: the sheet stacker and the exam-hard set", async ({ page }) => {
+  const dialog = player(page);
+  await page.goto("/learn-programme-preview/overlays?lesson=stack");
+  await expect(dialog.getByRole("status")).toContainText("every mark shows through");
+  await dialog.getByRole("button", { name: "Turn sheet 2" }).click();
+  await expect(dialog.getByRole("status")).toContainText("Sheet 2 turned");
+  const { overlaysProgramme } = await import("../../src/learn/programmes/overlays.js");
+  const set = buildQuiz(overlaysProgramme.tiers[2].quiz, 2);
+  await page.goto("/learn-programme-preview/overlays?lesson=quiz-exam-hard&seed=2");
   await dialog.getByRole("button", { name: "Begin" }).click();
   for (const question of set) {
     if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));

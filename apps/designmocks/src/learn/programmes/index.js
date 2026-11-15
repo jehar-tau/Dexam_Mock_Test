@@ -17,6 +17,7 @@ import { shadowsProgramme } from './shadows-and-light.js';
 import { surfacesProgramme } from './solid-surfaces.js';
 import { sectionsProgramme } from './sections.js';
 import { fitProgramme } from './fit.js';
+import { overlaysProgramme } from './overlays.js';
 
-export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, diceProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, viewsRotationProgramme, mechanismsProgramme, countingFiguresProgramme, quantProgramme, codesPatternsProgramme, arrangementsProgramme, directionsProgramme, visualPatternsProgramme, colourBasicsProgramme, shadowsProgramme, surfacesProgramme, sectionsProgramme, fitProgramme]);
+export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, diceProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, viewsRotationProgramme, mechanismsProgramme, countingFiguresProgramme, quantProgramme, codesPatternsProgramme, arrangementsProgramme, directionsProgramme, visualPatternsProgramme, colourBasicsProgramme, shadowsProgramme, surfacesProgramme, sectionsProgramme, fitProgramme, overlaysProgramme]);
 export const findProgramme = slug => programmes.find(p => p.slug === slug) ?? null;
