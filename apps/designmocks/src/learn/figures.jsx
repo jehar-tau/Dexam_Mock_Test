@@ -17,6 +17,7 @@ import { ShadowSide, ShadowTop, Silhouette, Walkers } from './shadow-figures.jsx
 import { Outline } from './surface-figures.jsx';
 import { CubeCut, Revolve } from './section-figures.jsx';
 import { Pieces } from './fit-figures.jsx';
+import { Sheet } from './overlay-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -307,6 +308,7 @@ export function Figure({ spec, compact = false }) {
     case 'panel': return <Panel panel={spec.panel} size={compact ? 56 : 72} />;
     case 'panel-row': return <PanelRow panels={spec.panels} ask={spec.ask} analogy={spec.analogy} />;
     case 'panel-grid': return <PanelGrid grid={spec.grid} />;
+    case 'sheet': return <Sheet n={spec.n} cells={spec.cells} label={spec.label} fold={spec.fold} region={spec.region} compact={compact} />;
     case 'pieces': return <Pieces pieces={spec.pieces} compact={compact} />;
     case 'cube-cut': return <CubeCut points={spec.points} polygon={spec.polygon} compact={compact} />;
     case 'revolve': return <Revolve shape={spec.shape} />;
