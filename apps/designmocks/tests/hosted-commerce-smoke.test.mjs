@@ -77,6 +77,7 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
         } });
       }
       if (url.pathname === "/functions/v1/attempt-media") {
+        if (fixture === "media-transport-error") throw new Error("fictional private upstream diagnostic");
         if (fixture === "staging-origin-rejected") return Response.json({ error: "Origin not allowed" }, { status: 403 });
         const origin = fixture === "wrong-media-origin" ? ${JSON.stringify(project.staging_frontend_origin)} : request.headers.get("origin");
         const body = fixture === "media-gateway" ? {message: "Missing authorization header"} : {error: "Sign in required"};
@@ -137,6 +138,16 @@ test("configured commerce smoke requires the assessment handler to accept the ch
     assert.equal(result.checks.find(row => row.check === "attempt-media setup/identity gate").passed, false);
     assert.ok(result.checks.slice(-4).every(row => row.passed));
   }
+});
+
+test("configured commerce records transport failure and continues without exposing diagnostics", () => {
+  const result = runSmoke("configured", "media-transport-error");
+  assert.equal(result.status, 2, result.stderr);
+  assert.deepEqual(result.checks.find(row => row.check === "attempt-media setup/identity gate"), {
+    check: "attempt-media setup/identity gate", status: null, passed: false,
+  });
+  assert.ok(result.checks.slice(-4).every(row => row.passed));
+  assert.doesNotMatch(result.stdout + result.stderr, /fictional private upstream diagnostic/);
 });
 
 test("staging verifies portal preflights even when commerce credentials are present", () => {
