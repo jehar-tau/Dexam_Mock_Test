@@ -104,7 +104,7 @@ export function DrawingUploads({
       </div>}
       <ol>
         {items?.slice().sort((a, b) => a.ordinal - b.ordinal).map((item) => (
-          <li key={item.id}>
+          <li key={item.id} value={item.ordinal}>
             <span>{item.name || `Image ${item.ordinal}`}</span>
             <button className="text-button" type="button" disabled={busy} aria-label={`Remove ${item.name || `image ${item.ordinal}`}`} onClick={async () => {
               const signal = lifetime.current.signal;

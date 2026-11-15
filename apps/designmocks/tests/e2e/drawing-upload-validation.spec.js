@@ -132,6 +132,26 @@ test("a logically removed drawing page can be replaced before the original cutof
   expect(state.unexpected).toEqual([]);
 });
 
+test("removing a middle page preserves visible page numbers and its replacement slot", async ({ page }) => {
+  const state = await fixture(page, { cleanupPending: true });
+  const drawing = page.locator(".drawing-uploads");
+  const input = drawing.locator('input[type="file"]');
+  const buffer = await png();
+  await input.setInputFiles([1, 2, 3].map(ordinal => ({ name: `page-${ordinal}.png`, mimeType: "image/png", buffer })));
+  const lastPage = drawing.getByRole("listitem").filter({ hasText: "page-3.png" });
+  await expect(lastPage).toHaveAttribute("value", "3");
+  await drawing.getByRole("button", { name: "Remove page-2.png", exact: true }).press("Enter");
+  await expect(drawing.getByText("page-2.png", { exact: true })).toHaveCount(0);
+  await expect(lastPage).toHaveAttribute("value", "3");
+  expect(state.pages.map(page => page.ordinal)).toEqual([1, 3]);
+
+  await input.setInputFiles({ name: "replacement.png", mimeType: "image/png", buffer });
+  await expect(drawing.getByRole("listitem").filter({ hasText: "replacement.png" })).toHaveAttribute("value", "2");
+  expect(await drawing.locator("ol > li").evaluateAll(pages => pages.map(page => page.value))).toEqual([1, 2, 3]);
+  expect(state.uploads.map(upload => upload.ordinal)).toEqual([1, 2, 3, 2]);
+  expect(state.unexpected).toEqual([]);
+});
+
 test("a lost acknowledgement in the middle of a drawing batch keeps the unsent page in its original slot", async ({page}) => {
   const state = await fixture(page);
   const bytes = await png();

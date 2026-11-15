@@ -77,6 +77,9 @@ select pg_temp.removal_assert(
   not exists (select 1 from dm_private.drawing_uploads where id=:'old_id')
   and exists (select 1 from storage.objects where bucket_id='drawing-submissions' and name=:'old_path'),
   'logical removal frees the ordinal while Storage deletion remains pending');
+select pg_temp.removal_assert((select array_agg(ordinal order by ordinal) = array[1,3]
+  from dm_private.drawing_uploads where attempt_id=:'attempt' and question_id=:'question'),
+  'saved page ordinals retain the empty middle slot after removal and replacement');
 select to_jsonb(u) as replacement_before from dm_private.drawing_uploads u where id=:'replacement_id' \gset
 
 update dm_private.attempts set started_at=now()-interval '1 hour',
