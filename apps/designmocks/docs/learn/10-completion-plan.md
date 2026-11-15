@@ -49,7 +49,7 @@ timed set with exam marking). Rules for building and merging are in
 | 11 | Shadows and light **Done** | Shadow direction and length from the sun; silhouettes from views; which light makes this shadow | Spatial bank; spec exists |
 | 12 | Surfaces of solids **Done** | Faces, edges and corners; visible and hidden faces; surfaces of cube stacks; painted surfaces | Spatial bank; spec exists |
 | 13 | Sections of solids **Done** | Shape of a cut face; pieces after a cut; oblique cuts of a cube | Spatial bank |
-| 14 | Fit and embedded figures | Which piece completes a shape; which figure hides a shape; pieces that make a target | Spatial and observation banks |
+| 14 | Fit and embedded figures **Done** | Which piece completes a shape; which figure hides a shape; pieces that make a target | Spatial and observation banks |
 | 15 | Transparent sheets and overlays | Fold a transparent sheet and superimpose; stack three sheets; count in the result | Spatial and counting banks |
 
 ### Group 4: extend two finished programmes

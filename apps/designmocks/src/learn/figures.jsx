@@ -16,6 +16,7 @@ import { TextSwatch, WheelMarks } from './colour-figures.jsx';
 import { ShadowSide, ShadowTop, Silhouette, Walkers } from './shadow-figures.jsx';
 import { Outline } from './surface-figures.jsx';
 import { CubeCut, Revolve } from './section-figures.jsx';
+import { Pieces } from './fit-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -285,7 +286,7 @@ export function Figure({ spec, compact = false }) {
     case 'rope': return <RopeFigure rope={spec.rope} towardsPull={spec.towardsPull} compact={compact} />;
     case 'beam': return <BeamFigure beam={spec.beam} ask={spec.ask} compact={compact} />;
     case 'mobile': return <MobileFigure mobile={spec.mobile} known={spec.known} />;
-    case 'lines': return <LinesFigure segments={spec.segments} ghost={spec.ghost} mirrors={spec.mirrors} compact={compact} />;
+    case 'lines': return <LinesFigure segments={spec.segments} ghost={spec.ghost} mirrors={spec.mirrors} compact={compact} unit={spec.unit} label={spec.label} />;
     case 'cut-sequence': return <CutSequence folds={spec.folds} cuts={spec.cuts} cutLines={spec.cutLines} strokes={spec.strokes} />;
     case 'cut-sheet': return <CutSheet shapes={spec.shapes} compact={compact} />;
     case 'flap-plan': return <FlapPlan flaps={spec.flaps} />;
@@ -306,6 +307,7 @@ export function Figure({ spec, compact = false }) {
     case 'panel': return <Panel panel={spec.panel} size={compact ? 56 : 72} />;
     case 'panel-row': return <PanelRow panels={spec.panels} ask={spec.ask} analogy={spec.analogy} />;
     case 'panel-grid': return <PanelGrid grid={spec.grid} />;
+    case 'pieces': return <Pieces pieces={spec.pieces} compact={compact} />;
     case 'cube-cut': return <CubeCut points={spec.points} polygon={spec.polygon} compact={compact} />;
     case 'revolve': return <Revolve shape={spec.shape} />;
     case 'outline': return <Outline cells={spec.cells} holes={spec.holes} label={spec.label} compact={compact} />;
