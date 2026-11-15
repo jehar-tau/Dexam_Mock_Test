@@ -139,6 +139,8 @@ All seven relevant gates remain required: content rights, privacy/terms, refund 
 
 Only after the final owner production-impact decision configure the separate Live merchant setup, production frontend expected mode, public admission and sales in the reviewed sequence. The activation trigger rejects Test mode/open Test windows/missing gates. The client rejects a Test key/pass on the production checkout path. There is no auto-renewal.
 
+Production sign-in and checkout open only at the configured apex origin, `https://dmocks.com`. Link to the apex from the public `www` alias and register `https://dmocks.com/account/callback` for the production portal.
+
 The server checks current launch approvals when preparing a new Live order. Revoking a required approval blocks queued and subsequent order preparation. Reconcile orders already prepared under the prior approval through the existing payment procedure.
 
 Use the health view and read-only monitor for stale attempts, order and payment reviews, unverified passes, support and question reports. Configure the approved alert receiver and payment Edge log filters as part of hosted acceptance. A duplicate or partial payment review requires operator reconciliation. See [Refund reconciliation](REFUND_RECONCILIATION.md) and [Operations runbook](OPERATIONS_RUNBOOK.md). Preserve service-only attempt recovery, private-media backups and a tested restore. Paid infrastructure and point-in-time recovery require a separate budget decision.
