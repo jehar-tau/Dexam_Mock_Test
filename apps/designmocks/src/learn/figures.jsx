@@ -19,6 +19,7 @@ import { CubeCut, Revolve } from './section-figures.jsx';
 import { Pieces } from './fit-figures.jsx';
 import { Sheet } from './overlay-figures.jsx';
 import { Coins, Frame, LeverLine, PulleyBlock, Standing } from './machine-figures.jsx';
+import { Clutter, IconGrid } from './observation-figures.jsx';
 
 // ---------- paper folding ----------
 const U = 10; // pixels per grid unit
@@ -309,6 +310,8 @@ export function Figure({ spec, compact = false }) {
     case 'panel': return <Panel panel={spec.panel} size={compact ? 56 : 72} />;
     case 'panel-row': return <PanelRow panels={spec.panels} ask={spec.ask} analogy={spec.analogy} />;
     case 'panel-grid': return <PanelGrid grid={spec.grid} />;
+    case 'icon-grid': return <IconGrid icons={spec.icons} cols={spec.cols} label={spec.label} />;
+    case 'clutter': return <Clutter shapes={spec.shapes} />;
     case 'lever-line': return <LeverLine order={spec.order} arms={spec.arms} />;
     case 'pulley-block': return <PulleyBlock strands={spec.strands} />;
     case 'frame': return <Frame points={spec.points} bars={spec.bars} compact={compact} />;

@@ -75,6 +75,7 @@ Update this table in the same change as the work.
 | Sections of solids | [spec](topics/sections.md) | Built | Built | Built | Built | `sections` |
 | Fit and hidden figures | [spec](topics/fit.md) | Built | Built | Built | Built | `fit` |
 | Transparent sheets | [spec](topics/overlays.md) | Built | Built | Built | Built | `overlays` |
+| Visual observation | [spec](topics/observation.md) | Built | Built | Built | Built | `observation-skills` |
 | Number and quantity | [spec](topics/quant.md) | Built | Built | Built | Built | `quant` |
 | Codes and number patterns | [spec](topics/logic.md) | Built | Built | Built | Built | `codes-patterns` |
 | Arrangements and puzzles | [spec](topics/logic.md) | Built | Built | Built | Built | `arrangements` |
