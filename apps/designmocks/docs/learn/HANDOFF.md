@@ -309,3 +309,10 @@ grep -rlE "4[3-9]99|4689" playwright.config.js tests/e2e package.json scripts | 
 
 Check nothing is left with `grep -ohE "4[0-9]{3}" playwright.config.js | sort -u`
 before running `npm run test:e2e`.
+
+## Update, 16 November 2026: give the test copy its own branch name
+
+The isolated copy used for the full browser suite is a worktree of the same
+repository, so `git checkout -B feature/x` there moves the `feature/x` branch
+that the working worktree has checked out. Name the copy's branch
+`e2e/<topic>` and push with `git push origin e2e/<topic>:refs/heads/feature/<topic>`.

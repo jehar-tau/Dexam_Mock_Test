@@ -4259,3 +4259,8 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .mixer-circles.light .mixer-circle{mix-blend-mode:screen}.mixer-circles.ink .mixer-circle{mix-blend-mode:multiply}
 .mixer-circle.red,.mixer-circle.cyan{left:18px;top:8px}.mixer-circle.green,.mixer-circle.magenta{left:62px;top:8px}.mixer-circle.blue,.mixer-circle.yellow{left:40px;top:50px}
 .mixer-circle.red{background:#f00}.mixer-circle.green{background:#0f0}.mixer-circle.blue{background:#00f}.mixer-circle.cyan{background:#0ff}.mixer-circle.magenta{background:#f0f}.mixer-circle.yellow{background:#ff0}
+.stack-cube.piece-1 .face.top{fill:#9ec5e8}.stack-cube.piece-1 .face.left{fill:#7aa7d1}.stack-cube.piece-1 .face.right{fill:#5c8ab7}
+.stack-cube.piece-2 .face.top{fill:#f2c38b}.stack-cube.piece-2 .face.left{fill:#dca469}.stack-cube.piece-2 .face.right{fill:#bf8650}
+.stack-cube.piece-3 .face.top{fill:#b9dca0}.stack-cube.piece-3 .face.left{fill:#98c27c}.stack-cube.piece-3 .face.right{fill:#78a35e}
+.stack-cube.piece-4 .face.top{fill:#e3b4d6}.stack-cube.piece-4 .face.left{fill:#c992ba}.stack-cube.piece-4 .face.right{fill:#a9739b}
+.outline-figure{display:inline-flex;flex-direction:column;align-items:center;gap:.25rem}
