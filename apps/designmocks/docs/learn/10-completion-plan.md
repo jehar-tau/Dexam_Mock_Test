@@ -57,13 +57,13 @@ timed set with exam marking). Rules for building and merging are in
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
 | 16 | Counting figures: areas **Done** | Area of a shaded part; ratio of nested shapes; chance of landing on a shaded part; largest of four shapes on a grid | Shape and area bank |
-| 17 | Mechanisms: more machines | Rigid frame or mechanism; stability and centre of gravity; rolling and turning; pulley effort; lever classes | Mechanical bank |
+| 17 | Mechanisms: more machines **Done** | Rigid frame or mechanism; stability and centre of gravity; rolling and turning; pulley effort; lever classes | Mechanical bank |
 
 ### Group 5: observation and perspective
 
 | # | Programme | Sub-topics | Owner material |
 |---|---|---|---|
-| 18 | Visual observation | Odd one out; spot the differences; hidden shapes; figure and ground; detail memory | Observation theory and earlier bank |
+| 18 | Visual observation **Done** | Odd one out; spot the differences; hidden shapes; figure and ground; detail memory | Observation theory and earlier bank |
 | 19 | Perspective and viewpoint | Horizon and eye level; one, two and three-point perspective; vanishing points; camera position; which view is from where | Perspective theory |
 
 ### Group 6: knowledge and design method
