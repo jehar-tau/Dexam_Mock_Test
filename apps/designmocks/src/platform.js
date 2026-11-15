@@ -15,6 +15,7 @@ export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkou
   origin: window.location.origin,
   stagingTarget: { url: designatedProvider, origin: staging_frontend_origin },
   checkoutTarget: { url: designatedProvider, origin: frontend_origin },
+  productionOrigin: frontend_origin,
   portalEnabled: import.meta.env.VITE_PORTAL_ENABLED === "true",
   checkoutEnabled: import.meta.env.VITE_CHECKOUT_ENABLED === "true",
   testLoginEnabled: import.meta.env.VITE_TEST_LOGIN_ENABLED === "true",
