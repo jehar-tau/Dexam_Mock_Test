@@ -3,8 +3,14 @@
 Slug `shadows-and-light` · topic `visualisation` · exams uceed, ceed, nid ·
 engine `src/learn/shadows.js` · tool `sun-table`
 
-Status: Foundations Planned · Exam standard Planned · Exam hard Planned ·
-Mastery Planned
+Status: all four tiers **Built** (16 November 2026). Figures
+`src/learn/shadow-figures.jsx`; tests `tests/shadows.test.mjs`.
+
+Changes from the plan below: `compass-shadows` is single choice (one right
+drawing, three wrong ones: a shadow that turned with the walker, shadows
+towards the sun, shadows across the light). The sun-table tool has no lamp
+mode; lamps are taught with the side-view figure. All drawn shadows use a
+45° sun so reach equals height.
 
 ## 1. Outcome
 
@@ -215,13 +221,13 @@ page. Units are grid cells.
 
 | Archetype | Kind and level | Verified on seeds | Notes |
 |---|---|---|---|
-| L1 | `solid-shadow`, `row-shadows` L3 | | |
-| L2 | `flat-shadow` L2 | | |
-| L3 | `stacked-shadow` L4 | | |
-| L4 | `shadow-ratio` L3, `lamp-shadow` L4 | | |
-| L5 | `compass-shadows` L4 | | |
+| L1 | `solid-shadow`, `row-shadows` L3 | 1–40 | Ray-cast check of every option |
+| L2 | `flat-shadow` L2 | 1–40 | Translation check |
+| L3 | `stacked-shadow` L4 | 1–40 | Each part cast from its own height |
+| L4 | `shadow-ratio` L3, `lamp-shadow` L4 | 1–40 | Cross-multiplied |
+| L5 | `compass-shadows` L4 | 1–40 | Shadow vectors parallel to the light |
 | L6 | — | | Shadow puppetry needs scene illustration; out of scope |
-| L7 | `silhouette-set` L4 | | |
+| L7 | `silhouette-set` L4 | 1–40 | Separate table of views |
 
 ## 10. Out of scope
 
