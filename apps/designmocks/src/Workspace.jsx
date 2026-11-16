@@ -171,11 +171,14 @@ export function WorkspaceView({
                   <h2>{data.analytics.drawingReviews?.released ?? 0} released</h2>
                   <p>{data.analytics.drawingReviews?.pending ?? 0} awaiting teacher release.</p>
                 </article>}
-                {data.analytics.exams?.slice(0, 2).map((exam) => (
+                {data.analytics.exams?.slice(0, postLaunchPreview ? 4 : 2).map((exam) => (
                   <article key={exam.exam}>
                     <span>{exam.exam.toUpperCase()} PERFORMANCE</span>
                     <h2>{exam.averagePercent}% average</h2>
                     <p>Best {exam.bestPercent}% across {exam.attempts} released test{exam.attempts === 1 ? "" : "s"}.</p>
+                    {postLaunchPreview && <Link to={`/dashboard/all-india?exam=${exam.exam}`}>
+                      {exam.exam.toUpperCase()} All India results →
+                    </Link>}
                   </article>
                 ))}
               </div>

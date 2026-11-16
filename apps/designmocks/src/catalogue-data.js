@@ -4,9 +4,15 @@ const finite=value=>typeof value==='number'&&Number.isFinite(value);
 const text=value=>typeof value==='string'&&value.trim().length>0&&Array.from(value).length<=1000;
 const uuid=value=>typeof value==='string'&&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(value);
 const date=value=>typeof value==='string'&&/^\d{4}-\d\d-\d\dT/.test(value)&&Number.isFinite(Date.parse(value));
-const exam=value=>['uceed','ceed','nid','nift'].includes(value);
+export const assessmentExams = Object.freeze(['uceed', 'ceed', 'nid', 'nift']);
+const exam=value=>assessmentExams.includes(value);
 const candidateAlias = value => typeof value === 'string' && /^Candidate-[A-F0-9]{6}(?:[A-F0-9]{4})?$/.test(value);
 const invalid=()=>{throw new Error('The current mock choices could not be verified.');};
+
+export function allIndiaExamSelection(events, requestedExam) {
+  const selectedExam = exam(requestedExam) ? requestedExam : '';
+  return { selectedExam, visibleEvents: selectedExam ? events.filter(event => event.exam === selectedExam) : events };
+}
 
 function resultSharing(value) {
  if (!record(value) || !uuid(value.publicationId) || !integer(value.revision) ||
