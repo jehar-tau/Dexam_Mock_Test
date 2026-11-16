@@ -207,13 +207,14 @@ export function quizPassed(programme, progress, tierId) {
   return Boolean(entry && (entry.passedAt || entry.best.score >= tier.quiz.pass));
 }
 
-export function programmeSummary(programme, progress) {
+// unlockAll: the development preview's review switch opens every tier; students never get it.
+export function programmeSummary(programme, progress, { unlockAll = false } = {}) {
   const tiers = tiersOf(programme);
   const passed = tiers.map(tier => quizPassed(programme, progress, tier.id));
   const tierStates = tiers.map((tier, i) => {
     const lessons = tier.lessons.map(lesson => ({ lesson, ...lessonState(programme, progress, lesson.id) }));
     // Open when it is the first tier, the previous quiz is passed, or the student has skipped ahead past it.
-    const open = i === 0 || passed[i - 1] || passed.slice(i).some(Boolean);
+    const open = unlockAll || i === 0 || passed[i - 1] || passed.slice(i).some(Boolean);
     return { tier, open, lessons, lessonsDone: lessons.filter(l => l.status === 'complete').length, quiz: { best: progress.quizzes[tier.id]?.best ?? null, attempts: progress.quizzes[tier.id]?.attempts ?? 0, passed: passed[i] } };
   });
   const all = tierStates.flatMap(t => t.lessons);

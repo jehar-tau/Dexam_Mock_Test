@@ -212,3 +212,11 @@ test('local storage round trip tolerates a missing or failing store', () => {
   assert.equal(saveProgress('cube-nets', 'actor-1', progress), false);
   delete globalThis.localStorage;
 });
+
+test('the preview review switch opens every tier without changing the student lock', () => {
+  for (const programme of programmes.filter(p => tiersOf(p).length > 1)) {
+    const fresh = emptyProgress();
+    assert.deepEqual(programmeSummary(programme, fresh).tiers.map(t => t.open), tiersOf(programme).map((_, i) => i === 0), programme.slug);
+    assert.ok(programmeSummary(programme, fresh, { unlockAll: true }).tiers.every(t => t.open), programme.slug);
+  }
+});
