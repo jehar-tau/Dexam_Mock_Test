@@ -115,7 +115,9 @@ A tool is a live figure the student manipulates. It is not scored.
   programmes (crafts, art and design history), only from openly licensed
   sources, each credited on screen and in the programme's credits list
   (owner decision, 16 November 2026; see `topics/images.md`). Posters,
-  product design and storyboards use drawings made in code.
+  product design and storyboards use AI-generated illustrations made for
+  DMocks, except where a picture's numbers decide the answer (ramps,
+  pendulum frames): those stay exact diagrams drawn in code.
 - Engines are pure and fast: generating one question takes under 20 ms on a
   laptop; the 60-seed sweep in tests takes under two seconds per kind.
 
