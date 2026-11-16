@@ -111,7 +111,11 @@ A tool is a live figure the student manipulates. It is not scored.
   violations in both themes on every new screen kind and tool.
 - Works at 320 px width with no horizontal scroll inside the player.
 - No new runtime dependency. Figures are inline SVG or HTML grids. No
-  canvas, no WebGL, no images.
+  canvas, no WebGL. Photographs are allowed only in the knowledge
+  programmes (crafts, art and design history), only from openly licensed
+  sources, each credited on screen and in the programme's credits list
+  (owner decision, 16 November 2026; see `topics/images.md`). Posters,
+  product design and storyboards use drawings made in code.
 - Engines are pure and fast: generating one question takes under 20 ms on a
   laptop; the 60-seed sweep in tests takes under two seconds per kind.
 

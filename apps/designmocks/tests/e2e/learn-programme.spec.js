@@ -886,7 +886,7 @@ for (const [slug, file, name] of [["product-design", "product-design.js", "produ
     await dialog.getByRole("button", { name: "Begin" }).click();
     for (const question of set) {
       if (question.answerMode === "numeric") await dialog.getByRole("textbox", { name: "Your answer" }).fill(String(question.answer.value));
-      else await dialog.getByRole("button", { name: question.options.find(o => o.id === question.answer).text, exact: true }).click();
+      else { const right = question.options.find(o => o.id === question.answer); await dialog.getByRole("button", { name: right.figure ? `Option ${question.answer}` : right.text, exact: true }).click(); }
       await dialog.getByRole("button", { name: /Next question|Finish quiz/ }).click();
     }
     await expect(dialog.getByRole("heading", { name: `${set.length} of ${set.length} correct` })).toBeVisible();

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { PortalShell } from '../PortalShell.jsx';
+import { ImageCredits } from './photo-figures.jsx';
 import { useAuthState } from '../useAuth.js';
 import { learningPracticeLink } from '../practice-context.js';
 import { findProgramme } from './programmes/index.js';
@@ -69,6 +70,7 @@ export function ProgrammeOverview({ programme, progress, open, notice, message, 
     })}
     <p className="programme-meta"><Link to={practice.to}>{practice.label} →</Link></p>
     {notice && <p className="programme-notice">{notice}</p>}
+    <ImageCredits credits={programme.credits} />
   </section>;
 }
 

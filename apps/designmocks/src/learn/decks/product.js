@@ -18,7 +18,7 @@ function rampItems() {
   const sets = [[[0.5, 6], [0.6, 6], [0.8, 8], [0.4, 3]], [[0.3, 4], [0.45, 5], [0.6, 9], [0.5, 4]], [[0.6, 10], [0.4, 5], [0.9, 12], [0.3, 3]], [[0.75, 9], [0.5, 5], [0.4, 6], [0.6, 6]]];
   return sets.map(rs => {
     const slope = ([h, l]) => h / l, best = rs.reduce((a, b) => (slope(b) < slope(a) ? b : a)), say = ([h, l]) => `Rise ${h} m over ${l} m`;
-    return { prompt: 'Which ramp is easiest to push a wheelchair up?', right: say(best), wrong: rs.filter(r => r !== best).map(r => ({ text: say(r), why: `Its slope is ${(slope(r) * 100).toFixed(1)}%, steeper than ${(slope(best) * 100).toFixed(1)}%. Length alone does not decide it; rise ÷ length does.` })), why: `The variable that matters is slope, rise ÷ length: ${(slope(best) * 100).toFixed(1)}% is the gentlest.`, steps: ['The context depends on one physical variable: the slope.', `Slopes: ${rs.map(r => `${(slope(r) * 100).toFixed(1)}%`).join(', ')}.`, `The gentlest is ${say(best)}.`] };
+    return { prompt: 'Which ramp is easiest to push a wheelchair up? (Heights are drawn six times taller so they show.)', optionFigures: Object.fromEntries(rs.map(r => [say(r), { type: 'ramp', rise: r[0], run: r[1] }])), right: say(best), wrong: rs.filter(r => r !== best).map(r => ({ text: say(r), why: `Its slope is ${(slope(r) * 100).toFixed(1)}%, steeper than ${(slope(best) * 100).toFixed(1)}%. Length alone does not decide it; rise ÷ length does.` })), why: `The variable that matters is slope, rise ÷ length: ${(slope(best) * 100).toFixed(1)}% is the gentlest.`, steps: ['The context depends on one physical variable: the slope.', `Slopes: ${rs.map(r => `${(slope(r) * 100).toFixed(1)}%`).join(', ')}.`, `The gentlest is ${say(best)}.`] };
   });
 }
 
@@ -49,7 +49,7 @@ export const productDeck = Object.freeze({
     ],
     material: [
       { prompt: 'A shower caddy must stay in a wet bathroom for years. Which single property should decide its material?', right: 'Waterproof and rust-free', wrong: ['Shiny', 'Heavy', 'Cheapest possible, whatever happens to it'], why: 'Constant water is the main thing it must survive.' },
-      { prompt: 'Four chair designs: P stands on four straight legs set wide, Q on three thin legs, R on one central post, S on two narrow runners. Which is most stable?', right: 'P', wrong: ['Q', 'R', 'S'], why: 'The widest base and lowest bulk keep the centre of gravity well inside the base.' },
+      { prompt: 'Four chair designs: P stands on four straight legs set wide, Q on three thin legs, R on one central post, S on two narrow runners. Which is most stable?', figure: { type: 'chairs', chairs: [{ label: 'P', kind: 'wide' }, { label: 'Q', kind: 'thin' }, { label: 'R', kind: 'post' }, { label: 'S', kind: 'runners' }] }, right: 'P', wrong: ['Q', 'R', 'S'], why: 'The widest base and lowest bulk keep the centre of gravity well inside the base.' },
       { prompt: 'Which chair is made of the fewest visible parts?', right: 'One continuous bent piece of plywood', wrong: ['A frame of separate jointed struts', 'Four legs, a seat and a back screwed together', 'A seat on a stand with arms bolted on'], why: 'A single continuous formed piece has the fewest parts.' },
       { prompt: 'A lunch box for children must be cleaned every day. Which material word justifies the choice best?', right: 'Washable', wrong: ['Decorative', 'Rare', 'Traditional'], why: 'Daily cleaning is the demand; washable answers it in one word.' },
     ],
