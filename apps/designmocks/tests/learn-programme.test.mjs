@@ -220,3 +220,10 @@ test('the preview review switch opens every tier without changing the student lo
     assert.ok(programmeSummary(programme, fresh, { unlockAll: true }).tiers.every(t => t.open), programme.slug);
   }
 });
+
+test('every programme has its own topic animation', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const source = await readFile(new URL('../src/TopicMotion.jsx', import.meta.url), 'utf8');
+  const keys = [...source.slice(source.indexOf('const topics = {')).matchAll(/^\s+"?([a-z-]+)"?: \[/gm)].map(m => m[1]);
+  for (const programme of programmes) assert.ok(keys.includes(programme.slug), `${programme.slug} has no animation`);
+});

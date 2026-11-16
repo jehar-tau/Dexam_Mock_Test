@@ -1,5 +1,5 @@
 // Animated illustrations for Learn topics and for the four stages of a topic.
-// Parked for the student portal: nothing in the portal imports these yet.
+// Used on Learn programme cards and programme pages (released 16 November 2026).
 //
 //   <TopicMotif topic="cube-nets" />        keys match the programme slugs
 //   <StageMotif stage="exam-hard" />        foundations | exam-standard | exam-hard | mastery
@@ -279,6 +279,195 @@ function ShadowsAndLight() {
   );
 }
 
+
+// ---------- added 16 November 2026: the programmes built after the first twelve ----------
+function Quant() {
+  return (
+    <>
+      <path className="m-line" d="M50 196h220" />
+      {[[70, 60, "m-tint"], [120, 100, "m-yellow"], [170, 70, "m-lime-solid"], [220, 130, "m-orange"]].map(([x, h, tone], i) => (
+        <rect key={x} className={tone + " m-edge m-drop m-s" + (i + 1)} x={x} y={196 - h} width="34" height={h} rx="3" />
+      ))}
+      <path className="m-mark m-draw m-s6" pathLength="1" d="M87 136L137 96 187 126 237 66" />
+      <Badge x={262} y={50} text="%" step={8} />
+    </>
+  );
+}
+function CodesPatterns() {
+  const box = (x, text, step, tone = "m-paper") => (
+    <g key={x} className={"m-pop m-s" + step}>
+      <rect className={tone + " m-edge"} x={x} y={96} width="46" height="46" rx="8" />
+      <text className="m-number" x={x + 23} y={128} textAnchor="middle">{text}</text>
+    </g>
+  );
+  return <>{box(28, "2", 1)}{box(92, "4", 2)}{box(156, "8", 3)}{box(220, "?", 5, "m-yellow")}<Badge x={243} y={72} text="16" step={8} /></>;
+}
+function Arrangements() {
+  const seats = Array.from({ length: 6 }, (_, i) => { const a = (i * 60 - 90) * Math.PI / 180; return [160 + 78 * Math.cos(a), 120 + 78 * Math.sin(a)]; });
+  return (
+    <>
+      <circle className="m-tint m-edge m-fade m-s1" cx="160" cy="120" r="46" />
+      {seats.map(([x, y], i) => <circle key={i} className={(i === 3 ? "m-orange" : "m-lime-solid") + " m-edge m-pop m-s" + (i + 2)} cx={x} cy={y} r="16" />)}
+      <path className="m-mark m-draw m-s8" pathLength="1" d="M160 198a78 78 0 0 0 67-39" />
+    </>
+  );
+}
+function Directions() {
+  return (
+    <>
+      <circle className="m-paper m-edge" cx="88" cy="120" r="54" />
+      <text className="m-label" x="88" y="80" textAnchor="middle">N</text>
+      <g transform="translate(88 120)"><g className="m-spin" style={{ animationDuration: "10s" }}><path className="m-orange" d="M0-40l9 40H-9Z" /><path className="m-ink" d="M0 40l9-40H-9Z" /></g></g>
+      <path className="m-line m-draw m-s3" pathLength="1" d="M170 190V120h60V60h40" />
+      <circle className="m-lime-solid m-edge m-pop m-s2" cx="170" cy="190" r="9" />
+      <circle className="m-orange m-pop m-s7" cx="270" cy="60" r="9" />
+    </>
+  );
+}
+function VisualPatterns() {
+  const panel = (x, rot, step, q = false) => (
+    <g key={x} className={"m-pop m-s" + step}>
+      <rect className={(q ? "m-yellow" : "m-paper") + " m-edge"} x={x} y={84} width="60" height="72" rx="8" />
+      {q ? <text className="m-number" x={x + 30} y={130} textAnchor="middle">?</text> : <path className="m-lime-solid m-edge" transform={`rotate(${rot} ${x + 30} 120)`} d={`M${x + 30} 100l18 32h-36Z`} />}
+    </g>
+  );
+  return <>{panel(24, 0, 1)}{panel(96, 90, 2)}{panel(168, 180, 3)}{panel(240, 270, 5, true)}</>;
+}
+function Sections() {
+  return (
+    <>
+      <Iso x={160} y={58} w={72} h={36} d={78} className="m-pop m-s1" />
+      <polygon className="m-orange m-fade m-s4" style={{ opacity: 0.85 }} points={pts([[124, 112], [196, 112], [232, 148], [196, 184], [124, 184], [88, 148]])} />
+      <path className="m-line m-draw m-s3" pathLength="1" d="M124 112h72l36 36-36 36h-72l-36-36Z" />
+      <Badge x={272} y={52} text="6" step={8} />
+    </>
+  );
+}
+function Fit() {
+  const sq = 28, board = [];
+  for (let i = 0; i < 4; i++) for (let j = 0; j < 3; j++) if (!(i === 1 && j <= 1) && !(i === 2 && j === 1)) board.push([60 + i * sq, 76 + j * sq]);
+  return (
+    <>
+      {board.map(([x, y], k) => <rect key={k} className="m-tint m-edge" x={x} y={y} width={sq} height={sq} />)}
+      <path className="m-dash" d="M88 76h28v28h28v28h-56Z" />
+      <g className="m-slide m-s5" style={{ "--dx": "120px" }}>
+        <path className="m-lime-solid m-edge" d="M88 76h28v28h28v28h-56Z" />
+      </g>
+      <Badge x={250} y={70} text="✓" step={8} />
+    </>
+  );
+}
+function Overlays() {
+  const sheet = (dx, marks, step, cls) => (
+    <g className={"m-slide m-s" + step} style={{ "--dx": dx }}>
+      <rect className={cls} x={110} y={60} width="100" height="120" rx="8" style={{ opacity: 0.7 }} />
+      {marks}
+    </g>
+  );
+  return (
+    <>
+      {sheet("-90px", <><circle className="m-ink" cx="135" cy="85" r="7" /><path className="m-line" d="M170 150l25-25" /></>, 2, "m-tint m-edge")}
+      {sheet("90px", <><circle className="m-orange" cx="185" cy="90" r="9" /><path className="m-line" d="M130 155h30" /></>, 4, "m-yellow m-edge")}
+      <Badge x={252} y={56} text="+" step={8} />
+    </>
+  );
+}
+function ObservationSkills() {
+  const dots = [];
+  for (let i = 0; i < 4; i++) for (let j = 0; j < 3; j++) dots.push([70 + i * 46, 74 + j * 46, i === 2 && j === 1]);
+  return (
+    <>
+      {dots.map(([x, y, odd], k) => <g key={k} className={"m-pop m-s" + (1 + (k % 4))}><circle className="m-paper m-edge" cx={x} cy={y} r="15" /><path className="m-line" d={odd ? `M${x} ${y}l9-9` : `M${x} ${y}l9 9`} /></g>)}
+      <circle className="m-mark m-pop m-s7" cx="162" cy="120" r="26" />
+      <path className="m-sketch m-draw m-s7" pathLength="1" d="M181 139l26 26" />
+    </>
+  );
+}
+function Perspective() {
+  return (
+    <>
+      <path className="m-dash" d="M20 96h280" />
+      <circle className="m-orange m-pop m-s1" cx="160" cy="96" r="6" />
+      <path className="m-line m-draw m-s2" pathLength="1" d="M60 210L160 96M260 210L160 96" />
+      <polygon className="m-lime-solid m-edge m-pop m-s4" points={pts([[112, 150], [208, 150], [222, 176], [98, 176]])} />
+      <polygon className="m-tint m-edge m-pop m-s5" points={pts([[98, 176], [222, 176], [222, 206], [98, 206]])} />
+      <path className="m-line m-draw m-s6" pathLength="1" d="M112 150L160 96M208 150L160 96" style={{ opacity: 0.5 }} />
+    </>
+  );
+}
+function Crafts() {
+  const warp = Array.from({ length: 9 }, (_, i) => 92 + i * 17);
+  return (
+    <>
+      <rect className="m-paper m-edge" x="80" y="40" width="160" height="160" rx="6" />
+      {warp.map((x, i) => <path key={x} className={"m-line m-draw m-s" + (1 + (i % 3))} pathLength="1" d={`M${x} 48v144`} />)}
+      {[70, 100, 130, 160].map((y, i) => <path key={y} className={(i % 2 ? "m-mark" : "m-sketch") + " m-draw m-s" + (4 + i)} pathLength="1" d={`M86 ${y}h148`} />)}
+    </>
+  );
+}
+function ArtHistory() {
+  return (
+    <>
+      <rect className="m-yellow m-edge m-pop m-s1" x="70" y="36" width="180" height="170" rx="4" />
+      <rect className="m-paper m-edge m-pop m-s2" x="86" y="52" width="148" height="138" />
+      <path className="m-line m-draw m-s3" pathLength="1" d="M104 180V128h112v52M118 128v-14h84v14M160 72c-26 0-30 30-30 42h60c0-12-4-42-30-42ZM160 72v-10" />
+      <path className="m-line m-draw m-s5" pathLength="1" d="M96 180V100M224 180V100" />
+      <circle className="m-orange m-pop m-s7" cx="160" cy="58" r="4" />
+    </>
+  );
+}
+function ProductDesign() {
+  return (
+    <>
+      <path className="m-sketch m-draw m-s1" pathLength="1" d="M110 60v80h70M110 140l-10 56M180 140l10 56M110 104h70v36" />
+      <path className="m-mark m-draw m-s4" pathLength="1" d="M180 110l50-30h44" />
+      <rect className="m-lime-solid m-edge m-pop m-s5" x="226" y="66" width="60" height="26" rx="6" />
+      <path className="m-line m-pop m-s7" d="M244 79l6 6 12-12" />
+      <path className="m-mark m-draw m-s6" pathLength="1" d="M104 170l-40 16h-24" />
+    </>
+  );
+}
+function Posters() {
+  return (
+    <>
+      <rect className="m-paper m-edge m-pop m-s1" x="100" y="24" width="120" height="192" rx="6" />
+      <rect className="m-lime-solid m-pop m-s2" x="114" y="40" width="92" height="80" rx="6" />
+      <rect className="m-ink m-drop m-s4" x="114" y="132" width="92" height="18" rx="3" />
+      <rect className="m-tint m-fade m-s5" x="114" y="158" width="64" height="7" rx="3" />
+      <rect className="m-orange m-pop m-s7" x="160" y="180" width="46" height="20" rx="10" />
+    </>
+  );
+}
+function Storyboarding() {
+  const frame = (x, step, pose) => (
+    <g key={x} className={"m-pop m-s" + step}>
+      <rect className="m-paper m-edge" x={x} y={74} width="82" height="92" rx="6" />
+      <circle className="m-sketch" cx={x + 41} cy={100} r="10" />
+      <path className="m-sketch" d={pose(x + 41)} />
+    </g>
+  );
+  return (
+    <>
+      {frame(18, 1, x => `M${x} 110v28m0 0l-10 18m10-18l10 18M${x} 118l-14 6m14-6l14 6`)}
+      {frame(119, 3, x => `M${x} 110v28m0 0l-12 18m12-18l14 14M${x} 118l-14-10m14 10l16-8`)}
+      {frame(220, 5, x => `M${x} 110v28m0 0l-10 18m10-18l10 18M${x} 118l-12-16m12 16l12-16`)}
+      <Arrow x={102} y={192} step={2} /><Arrow x={203} y={192} step={4} />
+    </>
+  );
+}
+function EverydayPhysics() {
+  return (
+    <>
+      <path className="m-line" d="M40 150h120" />
+      <rect className="m-tint" x="40" y="150" width="120" height="60" style={{ opacity: 0.6 }} />
+      <rect className="m-yellow m-edge m-float" x="78" y="124" width="44" height="40" rx="4" />
+      <path className="m-lime-solid m-edge m-pop m-s2" d="M230 60c18 30 18 90 0 120c-18-30-18-90 0-120Z" />
+      {[84, 120, 156].map((y, i) => <path key={y} className={"m-mark m-draw m-s" + (3 + i)} pathLength="1" d={`M180 ${y}H230L290 120`} />)}
+      <circle className="m-orange m-pop m-s7" cx="290" cy="120" r="6" />
+    </>
+  );
+}
+
 const topics = {
   "cube-nets": [CubeNets, "Cube nets"],
   "nets-of-solids": [NetsOfSolids, "Nets of solids"],
@@ -292,6 +481,22 @@ const topics = {
   dice: [Dice, "Dice"],
   "solid-surfaces": [SolidSurfaces, "Surfaces of solids"],
   "shadows-and-light": [ShadowsAndLight, "Shadows and light"],
+  quant: [Quant, "Number and quantity"],
+  "codes-patterns": [CodesPatterns, "Codes and number patterns"],
+  arrangements: [Arrangements, "Arrangements and puzzles"],
+  directions: [Directions, "Directions, clocks and calendars"],
+  "visual-patterns": [VisualPatterns, "Visual series and matrices"],
+  sections: [Sections, "Sections of solids"],
+  fit: [Fit, "Fit and hidden figures"],
+  overlays: [Overlays, "Transparent sheets"],
+  "observation-skills": [ObservationSkills, "Visual observation"],
+  perspective: [Perspective, "Perspective and viewpoint"],
+  crafts: [Crafts, "Crafts, materials and making"],
+  "art-history": [ArtHistory, "Art and design history"],
+  "product-design": [ProductDesign, "Product design thinking"],
+  posters: [Posters, "Posters, mascots and campaigns"],
+  storyboarding: [Storyboarding, "Storyboarding"],
+  "everyday-physics": [EverydayPhysics, "Everyday physics"],
 };
 
 export const topicMotifs = Object.entries(topics).map(([key, [, name]]) => ({ key, name }));

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Arrow } from "./Art.jsx";
 import { Motif, Reveal } from "./Motion.jsx";
 import { postLaunchPreview } from "./launch-scope.js";
+import { releasedModules } from "./launch-scope.mjs";
 import { portalReady } from "./platform.js";
 
 // `module` names the portal module a feature belongs to. Modules still held
@@ -18,7 +19,7 @@ export const features = [
     wide: true,
     eyebrow: "LEARN",
     title: "See the idea. Then try it.",
-    copy: "Short interactive lessons that build one idea at a time: cube nets, paper folding, mirror images, counting cubes, mechanisms and colour. Every step asks you to do something, then shows you why.",
+    copy: "Twenty-eight interactive programmes that build one idea at a time, from cube nets, paper folding and perspective to colour, art history, posters and product design. Every step asks you to do something, then shows you why.",
     points: ["Step-by-step programmes", "Fresh questions on every try", "From first ideas to exam level"],
     to: "/dashboard/learn",
     link: "Open Learn",
@@ -124,7 +125,7 @@ export function FeatureShowcase() {
       </div>
       <div className="feature-grid">
         {features.map((feature) => {
-          const soon = Boolean(feature.module) && !(postLaunchPreview && portalReady);
+          const soon = Boolean(feature.module) && !(releasedModules[feature.module] && portalReady) && !(postLaunchPreview && portalReady);
           return (
             <Reveal
               as="article"
