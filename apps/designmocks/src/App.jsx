@@ -62,6 +62,7 @@ const TopicPractice = React.lazy(() => import("./TopicPractice.jsx").then(module
 const ExamMocks = React.lazy(() => import("./ExamMocks.jsx").then(module => ({ default: module.ExamMocks })));
 const AllIndia = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndia })));
 const Learn = React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.Learn })));
+const LearnProgrammes = React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.LearnProgrammes })));
 const LearnProgrammePage = React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePage })));
 const Community = React.lazy(() => import("./Community.jsx").then(module => ({ default: module.Community })));
 const AllIndiaHighlights = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaHighlights })));
@@ -1642,8 +1643,8 @@ export default function App() {
           <Route path="/dashboard/mocks" element={postLaunchPreview?<ExamMocks />:<Workspace catalogueOnly/>} />
           <Route path="/dashboard/all-india" element={postLaunchPreview?<AllIndia />:<DeferredModule module="all-india"/>} />
           <Route path="/dashboard/practice" element={postLaunchPreview?<TopicPractice />:<DeferredModule module="practice"/>} />
-          <Route path="/dashboard/learn" element={postLaunchPreview?<Learn />:<DeferredModule module="learn"/>} />
-          <Route path="/dashboard/learn/programme/:slug" element={postLaunchPreview?<LearnProgrammePage />:<DeferredModule module="learn"/>} />
+          <Route path="/dashboard/learn" element={postLaunchPreview?<Learn />:<LearnProgrammes />} />
+          <Route path="/dashboard/learn/programme/:slug" element={<LearnProgrammePage />} />
           <Route path="/dashboard/community" element={postLaunchPreview?<Community />:<DeferredModule module="community"/>} />
           <Route path="/report" element={<BugReport />} />
           <Route path="/admin" element={<Admin />} />

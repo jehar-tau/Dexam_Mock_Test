@@ -4290,3 +4290,10 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .illustration-card .illustration{width:100%;border:1px solid var(--line)}
 .illustration-card figcaption{font-weight:800}
 .method-figure{max-width:100%;height:auto}
+.programme-card-art{margin:-.2rem 0 .4rem;max-width:200px}
+.programme-card-art .motif{display:block;width:100%;height:auto}
+.programme-head-art{flex:0 0 150px;max-width:150px}
+.programme-head-art .motif{display:block;width:100%;height:auto}
+@media (max-width:560px){.programme-head-art{display:none}}
+.tier-art{display:inline-block;width:56px;vertical-align:middle;margin-right:.4rem}
+.tier-art .motif{display:block;width:100%;height:auto}

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { PortalShell } from '../PortalShell.jsx';
 import { ImageCredits } from './photo-figures.jsx';
+import { StageMotif, TopicMotif } from '../TopicMotion.jsx';
+import { postLaunchPreview } from '../launch-scope.js';
 import { useAuthState } from '../useAuth.js';
 import { learningPracticeLink } from '../practice-context.js';
 import { findProgramme } from './programmes/index.js';
@@ -24,6 +26,7 @@ export function ProgrammeOverview({ programme, progress, open, notice, message, 
   const tiered = summary.tiers.length > 1;
   return <section className="programme" aria-label={programme.title}>
     <div className="programme-head">
+      <div className="programme-head-art"><TopicMotif topic={programme.slug} label={`${programme.title} illustration`} /></div>
       <Ring percent={summary.percent} />
       <div>
         <span className="eyebrow">{programme.exams.map(e => e.toUpperCase()).join(' · ')}</span>
@@ -37,6 +40,7 @@ export function ProgrammeOverview({ programme, progress, open, notice, message, 
       const { tier } = state, quiz = tier.quiz, last = t === summary.tiers.length - 1;
       return <section key={tier.id} className={`tier${state.open ? '' : ' is-locked'}`} aria-label={tier.title}>
         {tiered && <header className="tier-head">
+          <span className="tier-art"><StageMotif stage={tier.id} /></span>
           <h3>{tier.title}</h3>
           <span className="status-pill">{levelLabel(tier, summary.tiers[t - 1]?.tier)}</span>
           {!state.open && <p className="programme-meta">Locked. Pass the {summary.tiers[t - 1].tier.title} quiz to open it, or pass this tier’s quiz to skip ahead.</p>}
@@ -68,7 +72,8 @@ export function ProgrammeOverview({ programme, progress, open, notice, message, 
         </ol>
       </section>;
     })}
-    <p className="programme-meta"><Link to={practice.to}>{practice.label} →</Link></p>
+    {/* Topic practice is still deferred on the released site. */}
+    {(import.meta.env.DEV || postLaunchPreview) && <p className="programme-meta"><Link to={practice.to}>{practice.label} →</Link></p>}
     {notice && <p className="programme-notice">{notice}</p>}
     <ImageCredits credits={programme.credits} />
   </section>;
