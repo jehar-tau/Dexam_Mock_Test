@@ -65,7 +65,7 @@ Update this table in the same change as the work.
 | Phase | Scope | Status |
 |---|---|---|
 | 0 | Moderated discussions: posts, threaded replies, helpful marks, images, reporting, admin moderation | Built before this plan, behind the preview |
-| 1 | Articles, likes, saved folders, drafts, contact-details guard, block an author | Planned; waiting for owner approval |
+| 1 | Articles, likes, saved folders, drafts, contact-details guard, block an author | Built behind the preview, 16 November 2026; evaluation with the owner pending |
 | 2 | Questions with an accepted answer; work for feedback | Planned |
 | 3 | Link import and private link saves | Planned |
 | 4 | Chrome extension | Planned |

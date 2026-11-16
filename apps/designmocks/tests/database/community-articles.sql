@@ -111,11 +111,16 @@ select pg_temp.ok(public.remove_community_save((select id from ids where name='d
 select pg_temp.ok(public.remove_community_save((select id from ids where name='d1'),(select id from ids where name='f1'))->'removed'='true'::jsonb,'one save is removed');
 select pg_temp.ok(jsonb_array_length(public.community_saved((select id from ids where name='f1'),null,25)->'items')=1,'the folder keeps its other save');
 select public.set_community_saves((select id from ids where name='d1'),array[(select id from ids where name='f1')]);
+select public.save_community_draft(null,'nid','Export','A fictional draft for export','kept text');
+select pg_temp.ok((select e @> '{"schemaVersion":1,"accountId":"00000000-0000-4000-8000-000000000902","likes":[],"blocked":[]}'
+ and jsonb_array_length(e->'folders')=2 and jsonb_array_length(e->'drafts')=1 and e#>>'{drafts,0,body}'='kept text'
+ and (select sum(jsonb_array_length(f->'saves'))=2 from jsonb_array_elements(e->'folders')f) from public.export_my_community_library() e),'library export holds folders, saves and drafts');
 select pg_temp.as_user(3);
 select pg_temp.rejects($q$select public.set_community_saves((select id from ids where name='a1'),array[(select id from ids where name='f1')])$q$,'42501','community_folder_unavailable');
 select pg_temp.rejects($q$select public.community_saved((select id from ids where name='f1'),null,25)$q$,'42501','community_folder_unavailable');
 select pg_temp.rejects($q$select public.delete_community_folder((select id from ids where name='f1'))$q$,'42501','community_folder_unavailable');
 select pg_temp.ok(public.community_folders()->'folders'='[]'::jsonb,'folders are private to their owner');
+select pg_temp.ok((select e->'folders'='[]'::jsonb and e->'drafts'='[]'::jsonb and e->>'accountId'='00000000-0000-4000-8000-000000000903' from public.export_my_community_library() e),'library export is scoped to the caller');
 
 -- Blocking: posts leave feeds, the thread is unavailable, replies become placeholders.
 select pg_temp.as_user(2);
@@ -179,6 +184,7 @@ select pg_temp.ok((select count(*)=0 from dm_private.community_post_likes where 
 -- Privileges: nothing is callable signed out, and no table is readable.
 select pg_temp.ok(not has_function_privilege('anon','public.community_articles(text,text,jsonb,integer)','execute')
  and not has_function_privilege('anon','public.set_community_like(uuid,boolean)','execute')
+ and not has_function_privilege('anon','public.export_my_community_library()','execute')
  and not has_function_privilege('anon','public.create_community_article(text,text,text,text,uuid,uuid)','execute')
  and not has_function_privilege('authenticated','dm_private.community_contact_check(text)','execute'),'function privileges');
 select pg_temp.ok(not has_table_privilege('authenticated','dm_private.community_post_likes','select')

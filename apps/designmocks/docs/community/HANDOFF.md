@@ -3,72 +3,78 @@
 The live state of the Community build. Whoever is building updates this at
 every checkpoint. Read it first, then [README.md](README.md).
 
-**Last updated:** 16 November 2026. Owner approved the plan and decisions 1
-to 5. Phase 1 server side and pure modules are built and tested; the screens
-and Playwright journeys are not built yet.
+**Last updated:** 16 November 2026. Phase 1 is built behind the post-launch
+preview. Next step is the owner's evaluation, then phase 2.
 
 ## State
 
-- Branch `feature/dmocks-community-phase1`, draft PR #263. Ask the owner
-  before merging.
-- Built: `src/community-article.mjs`, `src/community-library.js`, migration
-  `202611160170_community_articles.sql`, `tests/database/community-articles.sql`,
-  unit tests. `npm test` passes; the database test and the seven existing
-  community database suites pass on PostgreSQL 17.
-- The migration is generated: the three re-created functions are copied from
-  their latest definitions with marked edits, and the contact patterns come
-  from `CONTACT_PATTERNS`. Edit by hand from here on, keeping the patterns
-  equal (a unit test compares them).
-- Not built: `CommunityFrame`, `CommunityArticle`, `CommunityArticles`,
-  `CommunityEditor`, `CommunityReader`, `CommunitySaved`, routes, styles,
-  `tests/e2e/community-articles.spec.js`, account export of the new tables.
-- Design notes for the screens: keep `/dashboard/community` as the existing
-  discussions page (ten existing specs depend on it) and add
-  `/dashboard/community/articles`, `/write`, `/post/:id`, `/saved`. Build the
-  reading page as a custom `View` for `CommunityController` so comments,
-  images and reporting are reused; pass `rpc` to the View and skip the
-  initial feed load there. Give `CommunityThread` an `embedded` mode and a
-  placeholder for `comment.blocked`. Authors add images from the reading
-  page after publishing.
-- Differences from the written plan: no `like_count` column (likes are
-  counted on read, so a like never touches the post row); the phone rule is
-  ten digits, not seven; a blocked author's replies show as placeholders;
-  "Top" is a single page; `remove_community_save` was added.
+- Branch `feature/dmocks-community-phase1`, pull request #263. Standing
+  permission for Community: open pull requests, but ask the owner before
+  merging.
+- The owner approved the plan and decisions 1 to 5 on 16 November 2026
+  (recorded in [05-open-decisions.md](05-open-decisions.md)).
+- Community is still in `deferredModules`. Nothing here is released.
 
-## Next
+## What phase 1 added
 
-1. Owner approves the plan and answers decisions 1 to 5 in
-   [05-open-decisions.md](05-open-decisions.md). Record the answers there.
-2. Build phase 1 in this order, committing at each step:
-   1. `src/community-article.mjs` (Markdown subset, excerpt, contact check)
-      and `src/community-library.js` (response validation) with unit tests.
-   2. Migration `202611160170_community_articles.sql` and
-      `tests/database/community-articles.sql`; add it to
-      `scripts/check-database.sh`.
-   3. Hub, editor, reader and saved pages; routes behind the existing gate.
-   4. `tests/e2e/community-articles.spec.js`, added to the default
-      Playwright scope.
-   5. Account export covers the new tables.
-3. Evaluate with the owner before phase 2.
+| Area | Files |
+|---|---|
+| Article format, toolbar edits, contact guard | `src/community-article.mjs` |
+| Response checks and failure sentences | `src/community-library.js` |
+| Screens | `src/CommunityFrame.jsx`, `CommunityArticles.jsx`, `CommunityEditor.jsx`, `CommunityReader.jsx`, `CommunitySaved.jsx`, `CommunitySaveDialog.jsx`, `CommunityArticle.jsx` |
+| Hooks into existing code | `CommunityController.jsx` (section links, `rpc` passed to the View, `loadFeed` option), `CommunityThread.jsx` (`embedded` mode, blocked-reply placeholder, `onBlock`), `Community.jsx` (recovery panels exported) |
+| Server | `supabase/migrations/202611160170_community_articles.sql` |
+| Tests | `tests/community-article.test.mjs`, `tests/community-library.test.mjs`, `tests/database/community-articles.sql`, `tests/e2e/community-articles.spec.js` |
 
-## Phase 1 journeys that must pass (desktop Chromium and Pixel 7)
+Routes: `/dashboard/community/articles`, `/write`, `/post/:id`, `/saved`.
+`/dashboard/community` is still the discussions page; ten existing browser
+specs depend on it.
 
-1. Write an article with a heading, a list and bold text; preview it; save
-   it as a draft; reload; the draft is still there; publish it.
-2. The article appears first under Articles, Latest; opening it shows the
-   formatted text.
-3. An article containing a phone number or a handle is refused with a
-   message that says why; nothing is posted.
-4. A second student likes the article; the count rises; liking again
-   removes it; the author cannot like their own.
-5. The second student saves the article into a new folder, sees it on the
-   Saved page, renames the folder, removes the save.
-6. The second student comments, using the existing threaded replies.
-7. The second student blocks the author; the article leaves their feed;
-   unblocking restores it.
-8. Keyboard only: every control in journeys 1 to 5 is reachable and
-   labelled; the accessibility audit reports no violations.
-9. Production-mode build: every Community route shows "Coming later".
+## Things the next builder must know
+
+- **Contact patterns live in one place.** `CONTACT_PATTERNS` in
+  `community-article.mjs` and the array in the migration must be identical;
+  a unit test compares them. Use only syntax that means the same in
+  JavaScript and PostgreSQL (no `\b`, no lookarounds). To change a pattern
+  after this migration has been applied anywhere, add a new migration that
+  re-creates `dm_private.community_contact_check` and point the unit test
+  at it.
+- **Three existing functions were re-created** in the migration
+  (`community_feed`, `community_thread`, `report_community_content`) from
+  their latest definitions with small additions. If one of them changes
+  again, start from this migration's text.
+- **Likes are counted on read.** There is no counter column, on purpose: a
+  like must not touch the post row, because the moderation version and feed
+  paging are derived from it.
+- **The reading page is a `View` for `CommunityController`.** Comment
+  writes, image upload and signing, retries and reporting are the existing
+  code. The View opens its post in a microtask because the session creates
+  its request scope in a parent effect.
+- **Buttons that keep focus during a request use `aria-disabled`,** not
+  `disabled`; a disabled button drops keyboard focus.
+- **`export_my_account_data` was not touched** because it is part of the
+  paid release. The new private data is exported by
+  `export_my_community_library`; joining the two is a release step.
+- **The administrator screens accept articles** (body limit raised to
+  20,000 and the two new report reasons in the validators), but they still
+  label everything "discussion". Wording for articles is phase 2 work.
+
+## Phase 1 journeys (desktop Chromium and Pixel 7), all in `community-articles.spec.js`
+
+1. Write with formatting, preview, save a draft, reload, continue the
+   draft, publish, read; the article heads the feed.
+2. Contact details refused in the browser and by the server; typed markup
+   appears as text and never runs.
+3. Like and unlike; Top follows likes; the author has no like button.
+4. Save into a new folder; Saved page; rename; duplicate name refused;
+   remove the save; delete the folder.
+5. Comment; contact details refused in a reply; block from a reply
+   (placeholder) and from an article (leaves the feed, cannot be opened);
+   unblock from Saved.
+6. Keyboard use, accessibility audit on all four pages and the save
+   dialog, no horizontal scroll with a very long title.
+7. The production-mode build shows "Coming later" on every new route and
+   makes no Community request.
 
 ## How to verify
 
@@ -80,15 +86,39 @@ npm run build
 npm run test:e2e
 ```
 
-CI is blocked, so run these by hand. If the Playwright ports (4399 to
-4999, 4689) are in use by another session, run the suite in an isolated
-copy with the ports remapped; never stop another session's servers.
+CI is blocked, so run these by hand. The Playwright ports (4399 to 4999,
+4689) belong to other work on this machine: run the suite in a copy of the
+app with the ports remapped, and never stop another session's servers.
 
-Database tests need an empty, disposable local PostgreSQL 17 and
-`DESIGNMOCKS_TEST_DATABASE_URL`; this machine has Docker but no local
-`psql`, so run them in a throwaway container.
+Database tests need an empty, disposable local PostgreSQL 17. This machine
+has no `psql`; run `tests/database/bootstrap.sql`, every migration in
+order, then the test files inside a throwaway `postgres:17` container.
+Starting Colima also starts another project's containers; stop Colima
+afterwards.
 
-## Not verified yet
+## Verified on 16 November 2026
 
-Nothing in phase 1 exists to verify. The phase 0 checks were recorded in
-`docs/POST_LAUNCH_ROADMAP.md` and `docs/VERIFICATION.md`.
+See the pull request description for the exact counts of the last run.
+
+## Not verified, and known gaps
+
+- Nothing has run against a real Supabase project: Auth, PostgREST, Storage
+  and the `community-media` function were stubbed in the browser journeys.
+  Image upload from an article's page uses the existing path and was not
+  re-tested for articles.
+- `scripts/check-database.sh` was not run as a whole; the migrations and
+  the Community, export, privacy, grants and invariants suites were run
+  individually in a container.
+- The contact guard cannot read text in images, digits written as words or
+  a number split across replies.
+- Safety reports are not yet listed first for the administrator.
+- No published article can be edited or deleted by its author yet
+  (decision 5: phase 2).
+- "Top" is a single page of 25.
+
+## Next
+
+1. Owner evaluates phase 1 in the preview.
+2. Phase 2 as in [01-product-scope.md](01-product-scope.md): questions with
+   an accepted answer, work for feedback, teacher label and moderation,
+   editing with history, sanctions, safety-first queue order.

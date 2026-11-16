@@ -451,6 +451,27 @@ begin
  return jsonb_build_object('removed',found);
 end $$;
 
+-- 8b. The reader's own Community library, for a data export. Kept separate from
+-- export_my_account_data, which belongs to the paid release, until Community is
+-- released. Blocked accounts appear by first name only.
+create function public.export_my_community_library()
+returns jsonb language plpgsql stable security definer set search_path=pg_catalog,dm_private,public set timezone='UTC' as $$
+declare actor uuid:=auth.uid();
+begin
+ if actor is null then raise exception 'Sign in required' using errcode='42501'; end if;
+ return jsonb_build_object('schemaVersion',1,'exportedAt',now(),'accountId',actor,
+  'likes',coalesce((select jsonb_agg(jsonb_build_object('postId',post_id,'createdAt',created_at) order by created_at,post_id)
+   from dm_private.community_post_likes where user_id=actor),'[]'::jsonb),
+  'folders',coalesce((select jsonb_agg(jsonb_build_object('id',f.id,'name',f.name,'createdAt',f.created_at,
+   'saves',coalesce((select jsonb_agg(jsonb_build_object('postId',s.post_id,'savedAt',s.created_at) order by s.created_at,s.post_id)
+    from dm_private.community_saves s where s.folder_id=f.id and s.user_id=actor),'[]'::jsonb)) order by f.created_at,f.id)
+   from dm_private.community_folders f where f.user_id=actor),'[]'::jsonb),
+  'drafts',coalesce((select jsonb_agg(jsonb_build_object('id',id,'exam',exam,'topic',topic,'title',title,'body',body,'updatedAt',updated_at) order by updated_at,id)
+   from dm_private.community_drafts where user_id=actor),'[]'::jsonb),
+  'blocked',coalesce((select jsonb_agg(jsonb_build_object('author',coalesce(nullif(split_part(pr.display_name,' ',1),''),'Student'),'createdAt',b.created_at) order by b.created_at,b.blocked_id)
+   from dm_private.community_blocks b left join public.profiles pr on pr.user_id=b.blocked_id where b.blocker_id=actor),'[]'::jsonb));
+end $$;
+
 -- 9. Existing functions, re-created from their latest definitions.
 -- community_feed: discussions only; authors the reader blocked are left out.
 create or replace function public.community_feed(p_exam text,p_topic text,p_cursor jsonb,p_limit integer)
@@ -622,11 +643,11 @@ revoke all on function public.create_community_article(text,text,text,text,uuid,
  public.set_community_like(uuid,boolean),public.community_folders(),public.save_community_folder(uuid,text),public.delete_community_folder(uuid),
  public.set_community_saves(uuid,uuid[]),public.remove_community_save(uuid,uuid),public.community_saved(uuid,jsonb,integer),public.community_drafts(),
  public.save_community_draft(uuid,text,text,text,text),public.delete_community_draft(uuid),public.set_community_block(uuid,uuid),
- public.community_blocked(),public.remove_community_block(text) from public,anon;
+ public.community_blocked(),public.remove_community_block(text),public.export_my_community_library() from public,anon;
 grant execute on function public.create_community_article(text,text,text,text,uuid,uuid),public.community_articles(text,text,jsonb,integer),
  public.set_community_like(uuid,boolean),public.community_folders(),public.save_community_folder(uuid,text),public.delete_community_folder(uuid),
  public.set_community_saves(uuid,uuid[]),public.remove_community_save(uuid,uuid),public.community_saved(uuid,jsonb,integer),public.community_drafts(),
  public.save_community_draft(uuid,text,text,text,text),public.delete_community_draft(uuid),public.set_community_block(uuid,uuid),
- public.community_blocked(),public.remove_community_block(text) to authenticated;
+ public.community_blocked(),public.remove_community_block(text),public.export_my_community_library() to authenticated;
 
 commit;

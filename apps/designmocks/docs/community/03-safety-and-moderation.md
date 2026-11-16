@@ -39,39 +39,48 @@ with metadata removed, served through short-lived signed links.
 creates a post, article or reply, and raises `community_contact_details`
 when the text contains:
 
-- a phone number: seven or more digits in a run, allowing spaces, dots,
-  dashes and brackets between them, and digits written with "at/dot"
-  style obfuscation where practical;
-- an email address;
-- a social or messaging handle: `@name`, or the words WhatsApp, Telegram,
-  Instagram, Insta, Snapchat, Discord, "DM me", "ping me on", followed by a
-  handle or number;
+- a phone number: ten or more digits in a run, allowing spaces, dots,
+  dashes and brackets between them. Ten, not seven, so that years, marks,
+  ranks and fees pass; a shorter landline number is not caught;
+- an email address, including "name (at) site (dot) com";
+- a social or messaging handle: `@name`; an invitation such as "DM me",
+  "message me", "ping me", "follow me", "add me"; "my Insta/WhatsApp/…";
+  or WhatsApp, Telegram, Instagram, Snapchat or Discord followed by "id",
+  "handle", "number", "group" or "username". Naming a platform in passing
+  ("I found this on Instagram") is allowed;
 - a link to a messaging or social profile (`wa.me`, `t.me`, `instagram.com/`,
   `discord.gg`, …). Other web addresses are allowed as plain text in phase
   1 and governed by the link policy in phase 3.
 
 The same rules run in the browser (`community-article.mjs`) so the writer
-is told which sentence to change before submitting, but the server is the
-authority. The guard is deliberately strict; a false refusal ("call 1800…
-helpline") is acceptable, a missed phone number is not. Years, marks,
-ranks and fees must still pass: the test list in
-`tests/community-contact.test.mjs` pins both directions.
+is told what to change before submitting, but the server is the authority,
+through a trigger on every post and reply. One pattern list is shared: a
+unit test fails if the browser and the migration differ. The guard is
+deliberately strict; a false refusal is acceptable. Years, marks, ranks
+and fees must still pass: `tests/community-article.test.mjs` pins both
+directions.
+
+What it cannot catch: digits spelled as words, a number split across
+replies, or text inside an image. Reporting ("Shares personal or contact
+details") covers those.
 
 Images cannot be scanned for text in phase 1. The upload help already says
 to remove names, faces and personal details, and images remain reportable.
 
 ### Block an author
 
-"Block this author" on any post or reply. The reader no longer sees that
-author's posts, articles or replies, anywhere. The blocked person is not
-told. The block list is manageable from the Saved page. Blocking never
+"Block this author" on any post or reply. That author's posts and articles
+leave the reader's feeds and cannot be opened; their replies in other
+threads show as "A reply from an author you blocked", so the conversation
+keeps its shape. The blocked person is not told. The block list is manageable from the Saved page. Blocking never
 replaces reporting: the menu offers both.
 
 ### Reporting
 
 Two more reasons: "Shares personal or contact details" and "I am worried
-about someone's safety". A safety report is listed first in the
-administrator's queue.
+about someone's safety". Listing safety reports first in the
+administrator's queue is not built yet; it moves to phase 2 with the
+moderator roles.
 
 When three different accounts report the same post or reply, it is hidden
 at once pending review and the action is logged as automatic. An
@@ -82,7 +91,7 @@ sanctions).
 ### Limits
 
 Three articles a day; five discussions and thirty replies an hour
-(existing); 120 like changes an hour; 50 folders; 1,000 saves; ten drafts;
+(existing); 120 new likes an hour; 50 folders; 1,000 saves; ten drafts;
 200 blocks.
 
 ## Added in phase 2

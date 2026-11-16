@@ -34,7 +34,8 @@ it, comment, like it and file it into their own folders.
 
 - **Articles.** A second kind of post beside discussions. Title, exam,
   topic, a body of 200 to 20,000 characters, up to three images through the
-  existing image path. Written in a simple editor with a toolbar (heading,
+  existing image path, added from the article's page after publishing.
+  Written in a simple editor with a toolbar (heading,
   bold, italic, list, quote) and a live preview. Stored as plain text in a
   small Markdown subset and rendered by our own code.
 - **Drafts.** An unfinished article is saved to the student's account, not
@@ -57,7 +58,8 @@ it, comment, like it and file it into their own folders.
   contact-details guard on every post, article and reply; "block this
   author"; two new report reasons; automatic hiding after three independent
   reports.
-- **Feed.** Tabs for Articles and Discussions, each with Latest and Top.
+- **Sections.** Articles (Latest and Top, exam filter), Discussions (the
+  existing page), Saved and Write.
 
 Out of scope for phase 1: editing a published article (see open decision
 5), inline images inside the text, clickable links, teacher badges.

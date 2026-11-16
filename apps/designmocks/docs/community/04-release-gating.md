@@ -58,7 +58,8 @@ Before that pull request merges:
       exist (document 3).
 - [ ] The published terms and privacy notice cover Community content,
       reporting, moderation and retention.
-- [ ] Account export and deletion include the new tables, verified.
+- [ ] `export_my_account_data` includes the Community library
+      (`export_my_community_library`), and deletion is verified.
 - [ ] The Community rules panel is approved by the owner.
 - [ ] Unit tests, build and the full Playwright suite pass on the exact
       commit.
