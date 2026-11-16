@@ -76,6 +76,17 @@ Deno.test("intake and draft retries check staging admission before privileged re
         assert.deepEqual(calls, ["/auth/v1/user", "/rest/v1/rpc/can_enter_staging_portal",
           ...(endpoint === "ai-question-draft" ? [] : ["/rest/v1/rpc/is_dmocks_admin"])]);
         if (endpoint !== "question-intake") return;
+        for (const [admin, status, error] of [
+          [false, 403, "Admin access required"], [true, 400, "Intake asset id required"],
+        ]) {
+          isAdmin = admin;
+          calls.length = 0;
+          const empty = await post({});
+          assert.equal(empty.status, status);
+          assert.equal(empty.headers.get("access-control-allow-origin"), origin);
+          assert.deepEqual(await empty.json(), {error});
+          assert.deepEqual(calls, ["/auth/v1/user", "/rest/v1/rpc/can_enter_staging_portal", "/rest/v1/rpc/is_dmocks_admin"]);
+        }
         const available = await post(body);
         assert.equal(available.status, 200);
         assert.deepEqual(new Uint8Array(await available.arrayBuffer()), file);

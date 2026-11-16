@@ -11,13 +11,22 @@ const revision = "a".repeat(64);
 const endpoints = [
   ["community-media", {targetType: "post", targetId: actor}, "community_media_paths"],
   ["attempt-media", { attemptId: actor }, "read_attempt"],
+  ["drawing-media", {}, null],
   ["drawing-review-media", { reviewId: actor }, "admin_drawing_review_media_paths"],
   ["bank-review-media", { externalKey: "fixture", reviewVersion: "fixture" }, "admin_bank_review_media_paths"],
   ["reported-question-media", { targetKey: "fixture", revision: 1 }, "admin_reported_question_media_paths"],
 ];
+const emptyRequestErrors = {
+  "community-media": "Invalid community target",
+  "attempt-media": "Invalid attempt",
+  "drawing-media": "Invalid drawing action",
+  "drawing-review-media": "Invalid review",
+  "bank-review-media": "A bank question and review version are required",
+  "reported-question-media": "A reported question and current revision are required",
+};
 
 
-Deno.test("private media checks staging admission before signing and again before returning links", async (test) => {
+Deno.test("private media checks staging admission before handling a request and before returning signed links", async (test) => {
   const originalServe = Deno.serve;
   const originalFetch = globalThis.fetch;
   const environment = {
@@ -80,6 +89,28 @@ Deno.test("private media checks staging admission before signing and again befor
           await response.body?.cancel();
         }
         const admittedOrigins = endpoint === "attempt-media" ? [origin, checkout] : [origin];
+        const emptyRequest = () => handler(new Request(origin, {
+          method: "POST", headers: {origin, authorization: "Bearer fictional-tester", "content-type": "application/json"},
+          body: "{}",
+        }));
+        decisions.push(true);
+        const empty = await emptyRequest();
+        assert.equal(empty.status, 400);
+        assert.equal(empty.headers.get("access-control-allow-origin"), origin);
+        assert.equal((await empty.json()).error, emptyRequestErrors[endpoint]);
+        assert.ok(calls.every(path => path.endsWith("/user") || path.endsWith("/can_enter_staging_portal")));
+        assert.equal(decisions.length, 0);
+        calls.length = 0;
+        if (endpoint === "drawing-media") {
+          decisions.push(false);
+          const denied = await emptyRequest();
+          assert.equal(denied.status, 403);
+          assert.equal(denied.headers.get("access-control-allow-origin"), origin);
+          assert.deepEqual(await denied.json(), {error: "Private staging requires an approved Google tester"});
+          assert.deepEqual(calls, ["/auth/v1/user", "/rest/v1/rpc/can_enter_staging_portal"]);
+          assert.equal(decisions.length, 0);
+          return;
+        }
         for (const from of admittedOrigins) {
           const requestBody = JSON.stringify(body);
           if (endpoint === "attempt-media") {
