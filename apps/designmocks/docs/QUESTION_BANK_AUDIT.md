@@ -49,16 +49,20 @@ On 10 November, a read-only check of the local Exam app found all 4,521 current 
 | Hold-free | 2,468 | 114 |
 | Held | 0 | 1,939 |
 
-The workstation SQLite database also contains 4,521 questions. Its export matches the Git file byte for byte. The workstation comparison accounts for 105 Part B identifier case aliases and found zero changed payloads when preserving frozen source PDF digests. The 105 workstation import runs had zero explicit Cloudboard or Claude labels. The independent manual-push manifest and current Exam app staging evidence are still pending.
+The workstation SQLite database also contains 4,521 questions. Its export matches the Git file byte for byte. The workstation comparison accounts for 105 Part B identifier case aliases and found zero changed payloads when preserving frozen source PDF digests. The 105 workstation import runs had zero explicit Cloudboard or Claude labels. The independent manual-push manifest is still pending.
 
 The Exam app's per-question hash omits source identity and provenance. Its local whole-export digest corroborates the input file. DMocks stores a separate hash of each complete canonical question, including provenance. Compare hashes within their own contracts.
+
+On 16 November, a fresh read-only comparison matched all 4,521 current local Exam app keys and hashes to the DMocks export at `b214957dab618c5ae9b42613561bf90cf11e9fe2`. There were zero missing keys, unexpected keys or mismatched hashes. The latest of 16 completed local imports recorded the exact byte digest, `14bbb98149450fe7dc753a7e1b08b8396588adb51975abbb71386f15a81c010e`. The local database also retained 8,609 retired historical versions. The comparison used the schema and hash function from Exam app `main` at `7c6664a0741a2b9b651cdbe904c8a652f4f879d0`.
+
+The separate hosted Exam app staging database had both assessment tables and a migration ledger through `20261106020000`, with zero assessment question versions and zero import runs. That matches its fixture-only staging boundary. The real local bank remains the Exam app comparison point. DMocks staging is a different database and contains the 2,582 hold-free records. The reads used question IDs, hashes, states, quarantine reasons and import metadata. Neither database was changed. [Exam app staging policy](https://github.com/jehar-tau/Dexam.App/blob/7c6664a0741a2b9b651cdbe904c8a652f4f879d0/docs/STAGING.md)
 
 ## Reconciliation gate
 
 Before DMocks serves the bank:
 
 1. Export the Cloudboard/Claude manual-push manifest with a stable source ID for each question. If none exists, create a one-time manifest from the source history.
-2. Export the latest Exam-app `assessment_import_runs`, question external keys, versions, publication states and quarantine reasons from staging.
+2. Export the latest Exam app `assessment_import_runs`, question external keys, versions, publication states and quarantine reasons from the local real bank. Check that the separate Exam app staging database keeps its fixture-only boundary.
 3. Compare all three sets by stable external key and content hash; never compare only counts.
 4. Classify every difference as new, updated version, intentionally retired, quarantined or missing.
 5. Import into DMocks only records whose `holds` array is present and empty through the idempotent DMocks bank importer.
