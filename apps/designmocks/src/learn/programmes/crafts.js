@@ -1,6 +1,8 @@
 // Crafts, textiles, materials and making: the first programme built on the
 // recall pattern. Facts live in src/learn/decks/crafts.js.
 // Specification: docs/learn/topics/crafts.md and recall-pattern.md.
+import { creditsFor, imageFor } from '../decks/images.js';
+import { textilesDeck } from '../decks/crafts.js';
 const check = (id, kind, seed, level) => ({ id, kind: 'check', question: { kind, seed, level } });
 const hook = (text, kind, seed, level) => ({ id: 'hook', kind: 'hook', text, question: { kind, seed, level } });
 const practice = (kind, level) => ({ id: 'practice', kind: 'practice', question: { kind, level }, streak: 3 });
@@ -9,12 +11,13 @@ export const craftsProgramme = Object.freeze({
   slug: 'crafts', title: 'Crafts, materials and making',
   summary: 'Indian embroidery, weaves, printing and dyeing; plastics, metals, fibres and clay; how things are moulded, cast, bound and printed; and the words of sustainable design.',
   topic: 'design-sensitivity', exams: ['nid', 'nift', 'uceed', 'ceed'], minutes: 90, status: 'preview', pattern: 'recall',
+  credits: creditsFor(textilesDeck.facts.map(f => f.name)),
   tiers: [
     { id: 'foundations', title: 'Foundations', level: 2, lessons: [
       { id: 'textiles', title: 'Embroidery and weaves', minutes: 10, level: 2, summary: 'Where each style comes from and what makes it itself.', steps: [
-        { id: 'embroidery', kind: 'slide', title: 'Embroidery by region', text: ['Chikankari, Lucknow: white-on-white shadow work. Phulkari, Punjab: flower work in silk floss. Kantha, West Bengal: running stitch quilting old saris.', 'Zardozi, Lucknow and Bhopal: gold and silver thread. Kashida, Kashmir: chain-stitch flowers. Aari, Gujarat: hooked-needle chain stitch. Shisha, Kutch and Rajasthan: mirror work.'] },
-        { id: 'weaves', kind: 'slide', title: 'Weaves by region', text: ['Banarasi, Varanasi: zari brocade. Jamdani, Bengal: fine muslin with extra weft figures. Kanjeevaram, Tamil Nadu: heavy silk with contrast zari borders.', 'Patola, Patan in Gujarat: double ikat. Pochampally, Telangana, and Sambalpuri, Odisha: ikat.'] },
-        check('check-1', 'tex-name', 1, 1), check('check-2', 'tex-name', 2, 1), check('check-3', 'tex-which', 1, 2), check('check-4', 'tex-which', 2, 2),
+        { id: 'embroidery', kind: 'slide', title: 'Embroidery by region', figure: { type: 'photo-row', items: [{ image: imageFor('Chikankari'), label: 'Chikankari' }, { image: imageFor('Phulkari'), label: 'Phulkari' }, { image: imageFor('Kantha'), label: 'Kantha' }, { image: imageFor('Zardozi'), label: 'Zardozi' }, { image: imageFor('Bandhani'), label: 'Bandhani' }, { image: imageFor('Batik'), label: 'Batik' }, { image: imageFor('Bagru printing'), label: 'Bagru printing' }].filter(i => i.image) }, text: ['Chikankari, Lucknow: white-on-white shadow work. Phulkari, Punjab: flower work in silk floss. Kantha, West Bengal: running stitch quilting old saris.', 'Zardozi, Lucknow and Bhopal: gold and silver thread. Kashida, Kashmir: chain-stitch flowers. Aari, Gujarat: hooked-needle chain stitch. Shisha, Kutch and Rajasthan: mirror work.'] },
+        { id: 'weaves', kind: 'slide', title: 'Weaves by region', figure: { type: 'photo-row', items: [{ image: imageFor('Banarasi silk'), label: 'Banarasi silk' }, { image: imageFor('Jamdani'), label: 'Jamdani' }, { image: imageFor('Kanjeevaram silk'), label: 'Kanjeevaram silk' }, { image: imageFor('Pochampally ikat'), label: 'Pochampally ikat' }, { image: imageFor('Sambalpuri'), label: 'Sambalpuri' }].filter(i => i.image) }, text: ['Banarasi, Varanasi: zari brocade. Jamdani, Bengal: fine muslin with extra weft figures. Kanjeevaram, Tamil Nadu: heavy silk with contrast zari borders.', 'Patola, Patan in Gujarat: double ikat. Pochampally, Telangana, and Sambalpuri, Odisha: ikat.'] },
+        check('check-1', 'tex-name', 1, 1), check('check-2', 'tex-name', 2, 1), check('check-3', 'tex-which', 1, 2), check('check-4', 'tex-identify', 1, 2), check('check-5', 'tex-identify', 2, 2),
         { id: 'remember', kind: 'takeaway', body: 'Learn each style as a pair: its region and the one feature that makes it recognisable.' }] },
       { id: 'materials', title: 'Materials', minutes: 10, level: 2, summary: 'Plastics, metals, fibres and clay, and how to tell their groups apart.', steps: [
         { id: 'groups', kind: 'slide', title: 'Groups that matter', text: ['Thermoplastics (PET, HDPE, PVC, polypropylene, ABS) soften on heating and can be remoulded. Thermosets (epoxy, melamine, Bakelite) set for good.', 'Ferrous metals contain iron (steel, cast iron). Brass is copper and zinc; bronze is copper and tin.', 'Plant fibres: cotton, jute. Animal fibres: silk, wool. Synthetic: polyester, nylon. Clay fired hotter gets denser: terracotta, stoneware, porcelain.'] },
@@ -43,7 +46,7 @@ export const craftsProgramme = Object.freeze({
         check('check-1', 'make-match', 2, 3), check('check-2', 'make-odd', 1, 3), check('check-3', 'make-odd', 2, 3),
         practice('make-match', 3), check('check-hook', 'make-match', 1, 3),
         { id: 'remember', kind: 'takeaway', body: 'Moulding is for plastics, casting for metal, binding for books.' }] },
-    ], quiz: { title: 'Exam standard quiz', minutes: 12, pass: 6, marking: 'plain', questions: [{ kind: 'tex-match', level: 3, count: 2 }, { kind: 'tex-odd', level: 3, count: 1 }, { kind: 'mat-odd', level: 3, count: 2 }, { kind: 'mat-match', level: 3, count: 1 }, { kind: 'make-match', level: 3, count: 1 }, { kind: 'make-odd', level: 3, count: 1 }] } },
+    ], quiz: { title: 'Exam standard quiz', minutes: 12, pass: 6, marking: 'plain', questions: [{ kind: 'tex-identify', level: 3, count: 2 }, { kind: 'tex-match', level: 3, count: 2 }, { kind: 'tex-odd', level: 3, count: 1 }, { kind: 'mat-odd', level: 3, count: 2 }, { kind: 'mat-match', level: 3, count: 1 }, { kind: 'make-match', level: 3, count: 1 }, { kind: 'make-odd', level: 3, count: 1 }] } },
     { id: 'exam-hard', title: 'Exam hard', level: 4, lessons: [
       { id: 'sequences', title: 'Processes in order', minutes: 10, level: 4, summary: 'Put the steps of a process in order.', steps: [
         hook('Lost-wax casting, shuffled.', 'make-order', 1, 4),

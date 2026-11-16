@@ -4,6 +4,7 @@
 // one out, put in order, and two conditions at once.
 // Specification: docs/learn/topics/recall-pattern.md.
 import { pick, seededRandom, shuffle } from './random.js';
+import { imageFor } from './decks/images.js';
 
 const LETTERS = 'ABCD';
 function retry(seed, build) {
@@ -26,7 +27,16 @@ export function recallQuestion(deck, kind, seed, level) {
     const wrong = [...new Set(shuffle(rng, withField(f).filter(x => x[f] !== right && x.type === fact.type)).concat(shuffle(rng, withField(f).filter(x => x[f] !== right))).map(x => x[f]))].slice(0, 3);
     if (wrong.length < 3) return null;
     const { options, answer } = lettered(rng, [right, ...wrong].map(t => ({ correct: t === right, text: t, reason: t === right ? `${fact.name}: ${right}.${lessonNote(fact)}` : `That fits ${facts.filter(x => x[f] === t).map(x => x.name).slice(0, 2).join(' and ')}, not ${fact.name}.` })));
-    return { ...base, answerMode: 'single', prompt: deck.fields[f].replace('{name}', fact.name), figures: [], options, answer, explanation: `${fact.name} — ${deck.types[fact.type]}: ${fields.filter(g => fact[g]).map(g => fact[g]).join('; ')}.` };
+    const pic = imageFor(fact.name);
+    return { ...base, answerMode: 'single', prompt: deck.fields[f].replace('{name}', fact.name), figures: pic ? [{ type: 'photo', image: pic, alt: fact.name }] : [], options, answer, explanation: `${fact.name} — ${deck.types[fact.type]}: ${fields.filter(g => fact[g]).map(g => fact[g]).join('; ')}.` };
+  });
+  if (kind === 'identify') return retry(seed, rng => {
+    const shown = facts.filter(x => imageFor(x.name)), fact = pick(rng, shown), label = deck.types[fact.type];
+    const same = shuffle(rng, facts.filter(x => x !== fact && x.type === fact.type)), near = shuffle(rng, facts.filter(x => (deck.near?.[fact.type] ?? []).includes(x.type)));
+    const wrong = [...same, ...near].filter((x, i, l) => l.indexOf(x) === i).slice(0, 3);
+    if (wrong.length < 3) return null;
+    const { options, answer } = lettered(rng, [fact, ...wrong].map(x => ({ correct: x === fact, text: x.name, reason: x === fact ? `This is ${fact.name}.${fact.how ? ' ' + fact.how + '.' : ''}` : `${x.name}${x.how ? ': ' + x.how.charAt(0).toLowerCase() + x.how.slice(1) : ''} — not what the picture shows.` })));
+    return { ...base, answerMode: 'single', prompt: `This picture shows ${article(label)} ${label}. Which one?`, figures: [{ type: 'photo', image: imageFor(fact.name), alt: `A photograph of ${article(label)} ${label}` }], options, answer, explanation: `${fact.name}${fact.place ? ', ' + fact.place : ''}. ${fact.how ?? ''}`.trim(), ...(level >= 3 ? { hints: ['Look for the one feature that sets it apart: material, colour, pattern or shape.'], solution: [{ text: 'Name what kind of thing it is.' }, { text: `Look for its telling feature: ${fact.how ?? fact.name}.` }, { text: `It is ${fact.name}.` }] } : {}) };
   });
   if (kind === 'which') return retry(seed, rng => {
     const type = pick(rng, Object.keys(deck.types)), yes = facts.filter(x => x.type === type), no = facts.filter(x => x.type !== type && !(deck.near?.[type] ?? []).includes(x.type) ? true : x.type !== type);
@@ -75,7 +85,8 @@ export function recallQuestion(deck, kind, seed, level) {
   });
   throw new Error('Unknown recall kind ' + kind);
 }
-export const RECALL_LEVELS = Object.freeze({ name: [1], which: [2], match: [3, 4], odd: [3], order: [4], two: [4] });
+export const RECALL_LEVELS = Object.freeze({ name: [1], identify: [2, 3], which: [2], match: [3, 4], odd: [3], order: [4], two: [4] });
+export const hasPictures = deck => deck.facts.filter(x => imageFor(x.name)).length >= 4;
 export function recallKinds(deck) {
-  return Object.fromEntries(Object.entries(RECALL_LEVELS).filter(([kind]) => kind !== 'two' || deck.twoFields).map(([kind, levels]) => [`${deck.prefix}-${kind}`, { topic: deck.topic, levels, generate: (seed, level) => recallQuestion(deck, kind, seed, level) }]));
+  return Object.fromEntries(Object.entries(RECALL_LEVELS).filter(([kind]) => (kind !== 'two' || deck.twoFields) && (kind !== 'identify' || hasPictures(deck))).map(([kind, levels]) => [`${deck.prefix}-${kind}`, { topic: deck.topic, levels, generate: (seed, level) => recallQuestion(deck, kind, seed, level) }]));
 }

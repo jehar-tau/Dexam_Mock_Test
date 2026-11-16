@@ -47,3 +47,12 @@ test('pendulum frames: equal time steps follow a cosine', () => {
     assert.equal(item.right, want.map(x => `${x}°`).join(', '));
   }
 });
+
+test('drawn figures belong to real options', () => {
+  for (const deck of DECKS) for (const [kind, items] of Object.entries(deck.items)) for (const item of items) {
+    if (!item.optionFigures) continue;
+    const texts = [item.right, ...item.wrong.map(w => (typeof w === 'string' ? w : w.text))];
+    for (const t of texts) assert.ok(item.optionFigures[t], `${deck.prefix}-${kind}: “${t}” has no figure`);
+    assert.equal(Object.keys(item.optionFigures).length, texts.length);
+  }
+});
