@@ -205,6 +205,14 @@ Deploy only the seven required routes for the initial private portal. Check the 
 
 For the private portal rollout before phone and model setup, add `--portal-only` to the hosted setup command or the CORS probe. Both still report all ten Edge routes, with only the seven private portal routes required. The hosted setup command still requires all its Auth and anonymous authorization checks. By default, both commands require all ten Edge routes.
 
+Check the exact Google callback separately before testing a signed-in staging session. Use the authenticated Supabase CLI from the application directory:
+
+```sh
+node scripts/check-staging-google-redirect.mjs
+```
+
+This reads the hosted Auth configuration in dry-run mode and reports whether Google is enabled and the exact staging `/account/callback` URL is listed. Exit 2 means a configuration requirement is missing. A passing result still requires a real Google sign-in and tester admission check.
+
 This checks anonymous authorization, Google availability, and media preflights at the exact staging origin. Run the configured commerce probe separately at its approved checkout origin. The staging report does not attest payment capture, refunds, or tester admission.
 
 ### Verify the migration dry run
