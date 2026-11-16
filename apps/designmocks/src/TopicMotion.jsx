@@ -468,7 +468,7 @@ function Perspective() {
     const side = x1 < vp[0] ? x1 : x0 > vp[0] ? x0 : null;
     return (
       <g key={step}>
-        <path className={"m-dash m-draw m-s" + (step + 1)} pathLength="1" style={{ strokeWidth: 1.5 }} d={[[x0, y0], [x1, y0]].map(([x, y]) => `M${x} ${y}L${vp[0]} ${vp[1]}`).join("")} />
+        <path className={"m-dash m-draw m-s" + (step + 1)} pathLength="1" style={{ strokeWidth: 2 }} d={[[x0, y0], [x1, y0]].map(([x, y]) => `M${x} ${y}L${vp[0]} ${vp[1]}`).join("")} />
         <g className={"m-drop m-s" + step}>
           <polygon className="m-cube-top" points={pts([[x0, y0], [x1, y0], back([x1, y0]), back([x0, y0])])} />
           {side !== null && <polygon className="m-cube-left" points={pts([[side, y0], [side, y1], back([side, y1]), back([side, y0])])} />}
@@ -479,32 +479,36 @@ function Perspective() {
   };
   return (
     <>
+      <g transform="translate(18 40) scale(0.72)">
       <path className="m-dash m-draw m-s1" pathLength="1" d="M16 66h288" />
       {solid([36, 118, 104, 204], 2)}
       {solid([216, 100, 284, 204], 4)}
       {solid([136, 166, 184, 210], 6)}
-      <circle className="m-orange m-pop m-s1" cx={vp[0]} cy={vp[1]} r="7" />
+      <circle className="m-orange m-pop m-s1" cx={vp[0]} cy={vp[1]} r="8" />
+      </g>
+      <Tick x={262} y={62} step={8} />
     </>
   );
 }
 
 // Crafts: a pot coiled up ring by ring on the wheel.
 function Crafts() {
-  const u = 18, at = grid(160, 176, u);
-  const coils = [[1.4], [2.0], [2.35, "var(--m-orange)"], [2.3], [1.9, "var(--m-yellow)"], [1.25], [1.5]];
+  const u = 15, at = grid(136, 146, u);
+  const coils = [[1.5], [2.2], [2.35, "var(--m-orange)"], [1.9, "var(--m-yellow)"], [1.25], [1.5]];
   return (
     <>
       <Round at={at} u={u} pos={[0, 0, 0]} r={3.1} c={0.5} className="m-pop m-s1" />
       {coils.map(([r, tone], i) => (
-        <Round key={i} at={at} u={u} pos={[0, 0, 0.5 + i * 0.62]} r={r} c={0.62} tone={tone} hole={i === coils.length - 1 ? 0.7 : 0} className={"m-drop m-s" + (i + 2)} />
+        <Round key={i} at={at} u={u} pos={[0, 0, 0.5 + i * 0.7]} r={r} c={0.7} tone={tone} hole={i === coils.length - 1 ? 0.7 : 0} className={"m-drop m-s" + (i + 2)} />
       ))}
+      <Tick x={262} y={62} step={8} />
     </>
   );
 }
 
 // Art history: plinth, hall, minarets, drum, dome, then the finial.
 function ArtHistory() {
-  const u = 13, at = grid(160, 84, u);
+  const u = 8.5, at = grid(136, 98, u);
   const minaret = (x, y, step) => (
     <g key={x + "-" + y} className={"m-drop m-s" + step}>
       <Round at={at} u={u} pos={[x, y, 0.8]} r={0.42} c={3.2} />
@@ -526,14 +530,15 @@ function ArtHistory() {
       <Dome at={at} u={u} pos={[5, 5, 5.3]} r={1.75} h={4.2} className="m-drop m-s6" />
       <g className="m-drop m-s7">{small(6.8, 6.8)}</g>
       {minaret(9.2, 9.2, 4)}
-      <circle className="m-orange m-pop m-s8" cx={at(5, 5, 9.7)[0]} cy={at(5, 5, 9.7)[1]} r="5" />
+      <circle className="m-orange m-pop m-s7" cx={at(5, 5, 9.8)[0]} cy={at(5, 5, 9.8)[1]} r="3.5" />
+      <Tick x={262} y={62} step={8} />
     </>
   );
 }
 
 // Product design: four legs, a seat, a back, a cushion: a finished chair.
 function ProductDesign() {
-  const u = 19, at = grid(150, 132, u), leg = [0.45, 0.45, 3];
+  const u = 16, at = grid(136, 150, u), leg = [0.45, 0.45, 3];
   return (
     <>
       <Block at={at} pos={[0, 0, 0]} size={leg} className="m-drop m-s1" />
@@ -554,7 +559,7 @@ function ProductDesign() {
 
 // Everyday physics: a lever. Two blocks near the pivot balance one far away.
 function EverydayPhysics() {
-  const u = 17, at = grid(96, 96, u);
+  const u = 14, at = grid(80, 100, u);
   return (
     <>
       <Block at={at} pos={[4.5, 0.2, 0]} size={[1, 1.4, 1.4]} className="m-pop m-s1" />
