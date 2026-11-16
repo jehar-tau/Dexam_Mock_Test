@@ -1,12 +1,16 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import { rm } from "node:fs/promises";
+import { join } from "node:path";
 import { resolveAuthConfiguration } from "./src/authConfiguration.mjs";
+import { allowPostLaunchPreview } from "./src/launch-scope.mjs";
 import { readPublishedNotices } from "./scripts/published-notices.mjs";
 import project from "./supabase/project.json" with { type: "json" };
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), ["VITE_", "DMOCKS_PUBLISHED_NOTICES_FILE"]);
   const deployment = env.VITE_DEPLOYMENT_ENV || mode;
+  const includeLearnImages = mode !== "production" && allowPostLaunchPreview(deployment, env.VITE_POST_LAUNCH_PREVIEW === "true");
   const portalEnabled = env.VITE_PORTAL_ENABLED === "true";
   const checkoutEnabled = env.VITE_CHECKOUT_ENABLED === "true";
   if (command === "build" && deployment === "test" && portalEnabled && checkoutEnabled && mode !== "test") {
@@ -28,5 +32,15 @@ export default defineConfig(({ command, mode }) => {
     termsVersion: env.VITE_TERMS_VERSION,
     noticeVersion: notices?.version,
   });
-  return { plugins: [react()], define: { __DMOCKS_PUBLISHED_NOTICES__: JSON.stringify(notices) } };
+  return {
+    plugins: [react(), {
+      name: "dmocks-learn-image-isolation",
+      apply: "build",
+      async writeBundle({dir}) {
+        // Vite copies public files even when the routes that use them are disabled.
+        if (!includeLearnImages) await rm(join(dir, "learn-images"), {recursive: true, force: true});
+      },
+    }],
+    define: { __DMOCKS_PUBLISHED_NOTICES__: JSON.stringify(notices) },
+  };
 });

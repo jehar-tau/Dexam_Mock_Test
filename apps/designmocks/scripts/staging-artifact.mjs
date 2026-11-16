@@ -174,6 +174,10 @@ async function verifyArtifact({ directory, expected, paidPilot = false }, schema
   }
   const files = await siteFiles(path.join(directory, "site"));
   if (JSON.stringify(files) !== JSON.stringify(manifest.files)) throw new Error("The artifact site files differ from the reviewed manifest");
+  const learnPreview = schema === stagingSchema && manifest.profile?.backendProfile === "full-staging" && manifest.profile.postLaunchPreview === true;
+  if (!learnPreview && files.some(file => file.path === "learn-images" || file.path.startsWith("learn-images/"))) {
+    throw new Error("A closed artifact contains Learn preview images");
+  }
   return { verified: true, commit: manifest.source.commit, tree: manifest.source.tree, bundleSha256, fileCount: files.length };
 }
 
@@ -233,7 +237,7 @@ async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin
         ...(notice ? { VITE_TERMS_VERSION: notice.version, DMOCKS_PUBLISHED_NOTICES_FILE: noticeFile } : {}),
       }, failure: "Could not build the reviewed private portal source",
     });
-    run(process.execPath, ["scripts/check-preview-isolation.mjs"], {
+    run(process.execPath, ["scripts/check-preview-isolation.mjs", ...(profile.postLaunchPreview ? ["--allow-learn-images"] : [])], {
       cwd: app, env, failure: "Local development views entered the private portal build",
     });
     const dist = path.join(app, "dist");

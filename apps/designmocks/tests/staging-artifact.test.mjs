@@ -109,12 +109,17 @@ test("production binds the reviewed apex to a separate database and defaults che
 async function bundle(t, {
   schema = "dmocks-private-staging-artifact-v1",
   profile = stagingArtifactProfile(project, values),
+  includeLearnImage = false,
 } = {}) {
   const directory = await mkdtemp(path.join(tmpdir(), "dmocks-staging-bundle-fixture-"));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const site = path.join(directory, "site");
   await mkdir(path.join(site, "assets"), { recursive: true });
   const original = { "assets/app.js": "console.log('fictional fixture');\n", "index.html": "<p>Private fixture</p>\n" };
+  if (includeLearnImage) {
+    await mkdir(path.join(site, "learn-images"));
+    original["learn-images/fictional.jpg"] = "fictional image bytes";
+  }
   for (const [file, content] of Object.entries(original)) await writeFile(path.join(site, file), content);
   const source = { commit: "a".repeat(40), tree: "b".repeat(40), backendInventorySha256: "c".repeat(64) };
   const manifest = {
@@ -147,6 +152,19 @@ test("pilot verification rejects a valid package for the broader staging workspa
   assert.equal((await verifyStagingArtifact({ ...pilot, paidPilot: true })).verified, true);
   await assert.rejects(verifyStagingArtifact({ ...workspace, paidPilot: true }), /private paid-paper pilot/);
   await assert.rejects(verifyStagingArtifact({ ...checkoutOpened, paidPilot: true }), /private paid-paper pilot/);
+});
+
+test("only the full staging preview may contain Learn photos", async t => {
+  assert.equal((await verifyStagingArtifact(await bundle(t, {includeLearnImage:true}))).fileCount, 3);
+  const pilot = await bundle(t, {includeLearnImage:true,
+    profile:stagingArtifactProfile(project, {...values, paidPilot:true})});
+  await assert.rejects(verifyStagingArtifact({...pilot, paidPilot:true}), /closed artifact contains Learn preview images/);
+  const checkout = await bundle(t, {includeLearnImage:true, schema:"dmocks-private-checkout-artifact-v1",
+    profile:checkoutArtifactProfile(project, checkoutValues)});
+  await assert.rejects(verifyCheckoutArtifact(checkout), /closed artifact contains Learn preview images/);
+  const production = await bundle(t, {includeLearnImage:true, schema:"dmocks-production-artifact-v1",
+    profile:{...productionArtifactProfile(project, productionValues), postLaunchPreview:true}});
+  await assert.rejects(verifyProductionArtifact(production), /closed artifact contains Learn preview images/);
 });
 
 test("artifact verification rejects altered, extra, missing and symlink assets", async t => {

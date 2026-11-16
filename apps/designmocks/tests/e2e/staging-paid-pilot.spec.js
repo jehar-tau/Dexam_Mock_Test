@@ -67,6 +67,8 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
     }
   }, project.project_ref);
 
+  const photo = await page.goto(stage + "/learn-images/bagru-printing.jpg");
+  expect(photo?.status()).toBe(404);
   await page.goto(project.frontend_origin + "/account");
   await expect(page.getByRole("button", { name: "Continue with Google" })).toBeDisabled();
   await page.goto(stage + "/plans");

@@ -57,6 +57,9 @@ test("the production artifact opens Google sign-in only from the approved origin
   });
   const google = page.getByRole("button", { name: "Continue with Google", exact: true });
 
+  const photo = await page.goto(approved + "/learn-images/bagru-printing.jpg");
+  expect(photo?.status()).toBe(404);
+
   for (const origin of otherOrigins) {
     await page.goto(origin + "/account");
     await seedPortalSession(page, student, providerRef);
