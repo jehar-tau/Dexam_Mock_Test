@@ -23,6 +23,7 @@ export function PortalShell({ children }) {
   ] : developmentPreviewRoute ? [
     { ...launchNavigation[0], to: "/portal-preview" },
     { ...launchNavigation[1], to: "/exam-mocks-preview" },
+    { ...launchNavigation[2], to: "/learn-preview" },
   ] : null;
   const navigation = developmentPreviewNavigation ?? (postLaunchPreview ? portalItems : launchNavigation);
   return <div className="portal-shell">

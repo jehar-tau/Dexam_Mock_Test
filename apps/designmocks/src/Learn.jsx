@@ -8,6 +8,7 @@ import { useAuthState } from "./useAuth.js";
 import { learningPracticeLink } from "./practice-context.js";
 import { programmes } from "./learn/programmes/index.js";
 import { loadProgress } from "./learn/programme-storage.js";
+import { TopicMotif } from "./TopicMotion.jsx";
 import { programmeSummary } from "./learn/programme-model.js";
 function LearnHeading({headingRef}){return<><span className="eyebrow">LEARN, THEN PRACTISE</span><h1 ref={headingRef} tabIndex={headingRef?-1:undefined}>Build the idea.<br/>Then <em>use it.</em></h1><p>Short theory lessons connect directly to topic practice.</p></>;}
 export function ProgrammeList({ actorId, linkFor }) {
@@ -18,7 +19,8 @@ export function ProgrammeList({ actorId, linkFor }) {
     <div className="learn-grid">
       {programmes.map(programme => {
         const summary = programmeSummary(programme, loadProgress(programme.slug, actorId));
-        return <article key={programme.slug}>
+        return <article key={programme.slug} className="programme-card">
+          <div className="programme-card-art"><TopicMotif topic={programme.slug} /></div>
           <span className="status-pill">{summary.completed === summary.total ? "completed" : programme.exams.map(e => e.toUpperCase()).join(" · ") + " · " + programme.topic}</span>
           <h3>{programme.title}</h3>
           <p>{programme.summary}</p>
@@ -75,6 +77,29 @@ export function LearnView({ lessons = [], progress, onOpen, onRefresh, busy = fa
     </section>
   );
 }
+// The released Learn page: the interactive programmes only. They need no
+// backend call, so this page never asks the server for anything.
+export function LearnProgrammes() {
+  const { session, loading } = useAuthState();
+  const heading = useRef(null);
+  if (loading) return <p className="wrap" role="status">Checking your account…</p>;
+  if (!session)
+    return (
+      <section className="wrap section">
+        <h1>
+          Sign in to <em>learn.</em>
+        </h1>
+        <Link to="/account">Student sign in</Link>
+      </section>
+    );
+  return <PortalShell><section className="wrap section learn-page">
+    <span className="eyebrow">LEARN, THEN PRACTISE</span>
+    <h1 ref={heading} tabIndex={-1}>Learn by <em>doing.</em></h1>
+    <p>Step-by-step programmes from the first idea to exam level. Your progress is saved in this browser.</p>
+    <ProgrammeList actorId={session.user.id} linkFor={programme => `/dashboard/learn/programme/${programme.slug}`} />
+  </section></PortalShell>;
+}
+
 export function Learn() {
   const { session, loading } = useAuthState();
   const location=useLocation(),heading=useRef(null),scopeKey=(session?.user.id??'signed-out')+':'+location.key,previous=useRef(scopeKey);
