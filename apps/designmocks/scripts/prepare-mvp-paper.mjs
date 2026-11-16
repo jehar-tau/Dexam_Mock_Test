@@ -1,10 +1,12 @@
-import { readFile, stat } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
+import { readFile, stat, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 import { collectCanonicalMedia, MEDIA_BUCKET, readCanonicalAsset, uploadCanonicalMedia, verifyAssetBytes } from "./private-bank-media.mjs";
 import { loadFromGit, sha256, stableJson } from "./question-bank-import.mjs";
 import { RULES_2027, runtimeQuestion } from "./question-runtime.mjs";
 import { openPrivateBankProvider, openPrivateDMocksTransport } from "./private-bank-provider.mjs";
+import { privateRecoveryPath } from "./recovery-bundle.mjs";
 
 const digest = /^[a-f0-9]{64}$/;
 const commit = /^[a-f0-9]{40}$/;
@@ -12,11 +14,16 @@ const uuid = /^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/;
 const maxPacketBytes = 4 * 1024 * 1024;
 const same = (left, right) => stableJson(left) === stableJson(right);
 
-export async function compileMvpPaper(packet, expectedSha, canonical, mediaRoot) {
+function verifiedPacketBody(packet, expectedSha) {
   const { manifestSha256, ...body } = packet ?? {};
   if (!digest.test(expectedSha ?? "") || manifestSha256 !== expectedSha || sha256(stableJson(body)) !== expectedSha) {
     throw new Error("The packet does not match the separately reviewed SHA-256");
   }
+  return body;
+}
+
+export async function compileMvpPaper(packet, expectedSha, canonical, mediaRoot) {
+  const body = verifiedPacketBody(packet, expectedSha);
   const { exam, title, durationSeconds, source, questions } = body;
   if (!["uceed", "ceed"].includes(exam) || body.format !== "dmocks-private-mvp-paper-v1" || body.part !== "A"
     || body.published !== false || body.salesEnabled !== false || body.hostedWritesPerformed !== false
@@ -77,6 +84,25 @@ export async function compileMvpPaper(packet, expectedSha, canonical, mediaRoot)
     mediaPlan: { assets: mediaAssets, totalBytes: mediaAssets.reduce((total, asset) => total + asset.byteSize, 0),
       mediaSha256: sha256(stableJson(mediaAssets)) },
   };
+}
+
+// A proposal may refresh only the source reference. It needs its own review SHA before use.
+export async function proposeMvpPaperRefresh(packet, expectedSha, original, current, mediaRoot) {
+  await compileMvpPaper(packet, expectedSha, original, mediaRoot);
+  if (original.sourceCommit !== packet.source.commit || !commit.test(current.sourceCommit ?? "")) {
+    throw new Error("The reviewed and current canonical commits must be exact");
+  }
+  if (original.sourceSha256 === current.sourceSha256) {
+    throw new Error("The canonical bank digest is unchanged. Use the existing reviewed packet");
+  }
+  const { manifestSha256: previousPacketSha256, ...body } = packet;
+  body.source = {
+    commit: current.sourceCommit, path: current.sourcePath, sha256: current.sourceSha256,
+    eligible: current.eligibleTotal, total: current.sourceTotal,
+  };
+  const refreshedPacket = { ...body, manifestSha256: sha256(stableJson(body)) };
+  const { summary } = await compileMvpPaper(refreshedPacket, refreshedPacket.manifestSha256, current, mediaRoot);
+  return { packet: refreshedPacket, summary: { ...summary, previousPacketSha256, reviewRequired: true } };
 }
 
 // Read the exact reviewed objects without registering or repairing them.
@@ -176,10 +202,12 @@ export async function stageMvpPaper({ plan, summary }, config, fetchImpl = fetch
 
 async function main() {
   const { values } = parseArgs({ options: { packet: { type: "string" }, expect: { type: "string" },
-    apply: { type: "boolean" }, "sync-inputs": { type: "boolean" }, "verify-storage": { type: "boolean" } } });
+    apply: { type: "boolean" }, "sync-inputs": { type: "boolean" }, "verify-storage": { type: "boolean" },
+    "propose-source-refresh": { type: "string" } } });
   if (!values.packet || !digest.test(values.expect ?? "")) throw new Error("Provide --packet and the reviewed --expect SHA-256");
-  const actions = ["apply", "sync-inputs", "verify-storage"].filter(action => values[action]);
-  if (actions.length > 1) throw new Error("Choose only one of --verify-storage, --sync-inputs and --apply");
+  const actions = ["apply", "sync-inputs", "verify-storage", "propose-source-refresh"]
+    .filter(action => values[action] !== undefined);
+  if (actions.length > 1) throw new Error("Choose only one of --verify-storage, --sync-inputs, --apply and --propose-source-refresh");
   let packet;
   try {
     const info = await stat(values.packet);
@@ -192,6 +220,29 @@ async function main() {
   try { canonical = loadFromGit("origin/main"); }
   catch { throw new Error("The canonical bank cannot be read from origin/main"); }
   const env = process.env;
+  if (values["propose-source-refresh"] !== undefined) {
+    const { source } = verifiedPacketBody(packet, values.expect);
+    if (!commit.test(source?.commit ?? "")) throw new Error("The original reviewed bank commit is required");
+    let original;
+    try {
+      execFileSync("git", ["merge-base", "--is-ancestor", source.commit, canonical.sourceCommit],
+        { cwd: new URL("../../..", import.meta.url), stdio: "ignore" });
+      original = loadFromGit(source.commit);
+    } catch {
+      throw new Error("The original reviewed bank commit must be in the current main history");
+    }
+    const proposal = await proposeMvpPaperRefresh(packet, values.expect, original, canonical, env.DMOCKS_MEDIA_ROOT);
+    const bytes = JSON.stringify(proposal.packet) + "\n";
+    if (Buffer.byteLength(bytes) > maxPacketBytes) throw new Error("The refreshed packet exceeds the supported size");
+    try {
+      const output = await privateRecoveryPath(values["propose-source-refresh"]);
+      await writeFile(output, bytes, { flag: "wx", mode: 0o600 });
+    } catch {
+      throw new Error("Choose a new private path for the source refresh proposal");
+    }
+    console.log(JSON.stringify({ mode: "source-refresh-proposal", ...proposal.summary }));
+    return;
+  }
   const compiled = await compileMvpPaper(packet, values.expect, canonical, env.DMOCKS_MEDIA_ROOT);
   const target = {
     url: env.DMOCKS_SUPABASE_URL, key: env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,
