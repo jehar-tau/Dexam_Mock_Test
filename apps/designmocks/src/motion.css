@@ -245,3 +245,8 @@ a:focus-visible .logo-motion .logo-motion-scene {
 .gallery-tile figcaption span { color: var(--muted); font-size: .75rem; }
 .gallery-logo { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; padding: 48px; border: 1px solid var(--line); border-radius: 10px; }
 .gallery-logo p { max-width: 380px; line-height: 1.7; margin: 0; }
+
+/* Turning 3D models (Motion3D.jsx): drawn by script, not by CSS animation. */
+.motif-3d { overflow: hidden; }
+.motif-3d path { stroke-linejoin: round; stroke-linecap: round; }
+.m3-shadow { fill: var(--m-ink); opacity: 0.08; }

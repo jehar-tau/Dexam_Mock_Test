@@ -12,7 +12,7 @@ import "./motion.css";
 const SPARK =
   "M0-10C1.5-3 3-1.5 10 0 3 1.5 1.5 3 0 10-1.5 3-3 1.5-10 0-3-1.5-1.5-3 0-10Z";
 
-function useLive() {
+export function useLive() {
   const ref = useRef(null);
   const [live, setLive] = useState(false);
   useEffect(() => {

@@ -7,6 +7,7 @@
 // Drawn on the same canvas and with the same CSS as Motion.jsx.
 import React from "react";
 import { MotifFrame, MotifSpark } from "./Motion.jsx";
+import { Chair3D, Crafts3D, Monument3D, Perspective3D, Physics3D } from "./Motion3D.jsx";
 
 const pts = (list) => list.map(([a, b]) => `${a},${b}`).join(" ");
 
@@ -383,50 +384,6 @@ function ObservationSkills() {
     </>
   );
 }
-function Perspective() {
-  return (
-    <>
-      <path className="m-dash" d="M20 96h280" />
-      <circle className="m-orange m-pop m-s1" cx="160" cy="96" r="6" />
-      <path className="m-line m-draw m-s2" pathLength="1" d="M60 210L160 96M260 210L160 96" />
-      <polygon className="m-lime-solid m-edge m-pop m-s4" points={pts([[112, 150], [208, 150], [222, 176], [98, 176]])} />
-      <polygon className="m-tint m-edge m-pop m-s5" points={pts([[98, 176], [222, 176], [222, 206], [98, 206]])} />
-      <path className="m-line m-draw m-s6" pathLength="1" d="M112 150L160 96M208 150L160 96" style={{ opacity: 0.5 }} />
-    </>
-  );
-}
-function Crafts() {
-  const warp = Array.from({ length: 9 }, (_, i) => 92 + i * 17);
-  return (
-    <>
-      <rect className="m-paper m-edge" x="80" y="40" width="160" height="160" rx="6" />
-      {warp.map((x, i) => <path key={x} className={"m-line m-draw m-s" + (1 + (i % 3))} pathLength="1" d={`M${x} 48v144`} />)}
-      {[70, 100, 130, 160].map((y, i) => <path key={y} className={(i % 2 ? "m-mark" : "m-sketch") + " m-draw m-s" + (4 + i)} pathLength="1" d={`M86 ${y}h148`} />)}
-    </>
-  );
-}
-function ArtHistory() {
-  return (
-    <>
-      <rect className="m-yellow m-edge m-pop m-s1" x="70" y="36" width="180" height="170" rx="4" />
-      <rect className="m-paper m-edge m-pop m-s2" x="86" y="52" width="148" height="138" />
-      <path className="m-line m-draw m-s3" pathLength="1" d="M104 180V128h112v52M118 128v-14h84v14M160 72c-26 0-30 30-30 42h60c0-12-4-42-30-42ZM160 72v-10" />
-      <path className="m-line m-draw m-s5" pathLength="1" d="M96 180V100M224 180V100" />
-      <circle className="m-orange m-pop m-s7" cx="160" cy="58" r="4" />
-    </>
-  );
-}
-function ProductDesign() {
-  return (
-    <>
-      <path className="m-sketch m-draw m-s1" pathLength="1" d="M110 60v80h70M110 140l-10 56M180 140l10 56M110 104h70v36" />
-      <path className="m-mark m-draw m-s4" pathLength="1" d="M180 110l50-30h44" />
-      <rect className="m-lime-solid m-edge m-pop m-s5" x="226" y="66" width="60" height="26" rx="6" />
-      <path className="m-line m-pop m-s7" d="M244 79l6 6 12-12" />
-      <path className="m-mark m-draw m-s6" pathLength="1" d="M104 170l-40 16h-24" />
-    </>
-  );
-}
 function Posters() {
   return (
     <>
@@ -455,18 +412,6 @@ function Storyboarding() {
     </>
   );
 }
-function EverydayPhysics() {
-  return (
-    <>
-      <path className="m-line" d="M40 150h120" />
-      <rect className="m-tint" x="40" y="150" width="120" height="60" style={{ opacity: 0.6 }} />
-      <rect className="m-yellow m-edge m-float" x="78" y="124" width="44" height="40" rx="4" />
-      <path className="m-lime-solid m-edge m-pop m-s2" d="M230 60c18 30 18 90 0 120c-18-30-18-90 0-120Z" />
-      {[84, 120, 156].map((y, i) => <path key={y} className={"m-mark m-draw m-s" + (3 + i)} pathLength="1" d={`M180 ${y}H230L290 120`} />)}
-      <circle className="m-orange m-pop m-s7" cx="290" cy="120" r="6" />
-    </>
-  );
-}
 
 const topics = {
   "cube-nets": [CubeNets, "Cube nets"],
@@ -490,19 +435,20 @@ const topics = {
   fit: [Fit, "Fit and hidden figures"],
   overlays: [Overlays, "Transparent sheets"],
   "observation-skills": [ObservationSkills, "Visual observation"],
-  perspective: [Perspective, "Perspective and viewpoint"],
-  crafts: [Crafts, "Crafts, materials and making"],
-  "art-history": [ArtHistory, "Art and design history"],
-  "product-design": [ProductDesign, "Product design thinking"],
+  perspective: [Perspective3D, "Perspective and viewpoint", true],
+  crafts: [Crafts3D, "Crafts, materials and making", true],
+  "art-history": [Monument3D, "Art and design history", true],
+  "product-design": [Chair3D, "Product design thinking", true],
   posters: [Posters, "Posters, mascots and campaigns"],
   storyboarding: [Storyboarding, "Storyboarding"],
-  "everyday-physics": [EverydayPhysics, "Everyday physics"],
+  "everyday-physics": [Physics3D, "Everyday physics", true],
 };
 
 export const topicMotifs = Object.entries(topics).map(([key, [, name]]) => ({ key, name }));
 
 export function TopicMotif({ topic, label = "", className = "" }) {
-  const [Picture] = topics[topic] ?? topics["cube-nets"];
+  const [Picture, , solid] = topics[topic] ?? topics["cube-nets"];
+  if (solid) return <Picture label={label} className={className} />;
   return (
     <MotifFrame kind={"topic-" + topic} label={label} className={className}>
       <Picture />
