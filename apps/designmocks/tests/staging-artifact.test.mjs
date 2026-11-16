@@ -4,7 +4,7 @@ import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
-import { checkoutArtifactProfile, stagingArtifactProfile, verifyCheckoutArtifact, verifyStagingArtifact } from "../scripts/staging-artifact.mjs";
+import { checkoutArtifactProfile, productionArtifactProfile, stagingArtifactProfile, verifyCheckoutArtifact, verifyProductionArtifact, verifyStagingArtifact } from "../scripts/staging-artifact.mjs";
 
 import actualProject from "../supabase/project.json" with { type: "json" };
 
@@ -85,6 +85,27 @@ test("the checkout profile rejects an unapproved origin, backend, key or notice 
   ]) assert.throws(() => checkoutArtifactProfile(project, { ...checkoutValues, ...patch }), JSON.stringify(patch));
 });
 
+const productionRef = "b".repeat(20);
+const productionValues = { ...checkoutValues, providerOrigin: `https://${productionRef}.supabase.co`, publicKey: jwt(productionRef) };
+
+test("production binds the reviewed apex to a separate database and defaults checkout closed", () => {
+  const profile = productionArtifactProfile(project, productionValues);
+  assert.deepEqual(profile, {
+    deployment: "production", backendProfile: "paid-mvp", frontendOrigin: productionValues.frontendOrigin,
+    providerOrigin: productionValues.providerOrigin, publicKeySha256: sha256(productionValues.publicKey),
+    stagingPortalEnabled: false, postLaunchPreview: false, checkoutEnabled: false,
+    releasedPortalEnabled: true, controlledLoginEnabled: false, phoneVerificationEnabled: false,
+    noticeVersion: productionValues.noticeVersion,
+  });
+  assert.deepEqual(productionArtifactProfile(project, { ...productionValues, enableCheckout: true }), { ...profile, checkoutEnabled: true });
+  for (const patch of [
+    { frontendOrigin: project.staging_frontend_origin }, { providerOrigin: values.providerOrigin },
+    { providerOrigin: productionValues.providerOrigin + "/" }, { publicKey: jwt(project.project_ref) },
+    { publicKey: jwt(productionRef, "service_role") }, { publicKey: "sb_secret_fictional_key" },
+    { noticeVersion: "unreviewed" }, { enableCheckout: "true" },
+  ]) assert.throws(() => productionArtifactProfile(project, { ...productionValues, ...patch }), JSON.stringify(patch));
+});
+
 async function bundle(t, {
   schema = "dmocks-private-staging-artifact-v1",
   profile = stagingArtifactProfile(project, values),
@@ -143,17 +164,26 @@ test("artifact verification rejects altered, extra, missing and symlink assets",
   await assert.rejects(verifyStagingArtifact(artifact), /non-regular file/);
 });
 
-test("checkout and staging verification accept only their own artifact schema", async t => {
+test("production, Test checkout and staging verification accept only their own artifact schema", async t => {
   const staging = await bundle(t);
   const checkout = await bundle(t, {
     schema: "dmocks-private-checkout-artifact-v1",
     profile: checkoutArtifactProfile(project, checkoutValues),
+  });
+  const production = await bundle(t, {
+    schema: "dmocks-production-artifact-v1",
+    profile: productionArtifactProfile(project, productionValues),
   });
   assert.deepEqual(await verifyCheckoutArtifact(checkout), {
     verified: true, commit: checkout.source.commit, tree: checkout.source.tree, bundleSha256: checkout.expected, fileCount: 2,
   });
   await assert.rejects(verifyCheckoutArtifact(staging));
   await assert.rejects(verifyStagingArtifact(checkout));
+  assert.equal((await verifyProductionArtifact(production)).verified, true);
+  await assert.rejects(verifyProductionArtifact(staging));
+  await assert.rejects(verifyProductionArtifact(checkout));
+  await assert.rejects(verifyCheckoutArtifact(production));
+  await assert.rejects(verifyStagingArtifact(production));
 });
 
 test("the deployed public Site alias cannot be packaged as private staging", () => {
