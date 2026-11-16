@@ -67,11 +67,13 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
     }
   }, project.project_ref);
 
-  const photo = await page.goto(stage + "/learn-images/bagru-printing.jpg");
-  // The local Vite preview may serve the app shell for unknown navigation paths.
-  if (photo?.status() !== 404) {
-    expect(photo?.status()).toBe(200);
-    expect(await photo.headerValue("content-type")).toContain("text/html");
+  for (const path of ["/learn-images/bagru-printing.jpg", "/learn-images/illustrations/chair-post.jpg"]) {
+    const image = await page.goto(stage + path);
+    // The local Vite preview may serve the app shell for unknown navigation paths.
+    if (image?.status() !== 404) {
+      expect(image?.status()).toBe(200);
+      expect(await image.headerValue("content-type")).toContain("text/html");
+    }
   }
   await page.goto(project.frontend_origin + "/account");
   await expect(page.getByRole("button", { name: "Continue with Google" })).toBeDisabled();

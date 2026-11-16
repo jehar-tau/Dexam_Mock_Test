@@ -57,8 +57,10 @@ test("the production artifact opens Google sign-in only from the approved origin
   });
   const google = page.getByRole("button", { name: "Continue with Google", exact: true });
 
-  const photo = await page.goto(approved + "/learn-images/bagru-printing.jpg");
-  expect(photo?.status()).toBe(404);
+  for (const path of ["/learn-images/bagru-printing.jpg", "/learn-images/illustrations/chair-post.jpg"]) {
+    const image = await page.goto(approved + path);
+    expect(image?.status()).toBe(404);
+  }
 
   for (const origin of otherOrigins) {
     await page.goto(origin + "/account");
