@@ -74,3 +74,65 @@ test("valid access tokens without confirmed Google identities cannot establish a
     assert.equal(rpcRequests, 0);
   }
 });
+
+function portalFixture(override = () => null, admin = false) {
+  const frontend = project.staging_frontend_origin;
+  const expected = {
+    "attempt-media": "Invalid attempt",
+    "drawing-media": "Invalid drawing action",
+    "drawing-review-media": "Invalid review",
+    "community-media": "Invalid community target",
+    "question-intake": admin ? "Intake asset id required" : "Admin access required",
+    "bank-review-media": "A bank question and review version are required",
+    "reported-question-media": "A reported question and current revision are required",
+  };
+  const rpcFixture = fixture((path, actor) => actor === 0 && path.endsWith("is_dmocks_admin") && response(200, admin));
+  return {
+    ...rpcFixture, portalEdge: true,
+    fetchImpl: async (url, options) => {
+      const path = url.slice(origin.length);
+      if (!path.startsWith("/functions/v1/")) return rpcFixture.fetchImpl(url, options);
+      const name = path.split("/").at(-1);
+      const actor = tokens.indexOf(options.headers.Authorization?.slice(7));
+      assert.ok(Object.hasOwn(expected, name) && actor !== -1);
+      assert.equal(options.headers.Origin, frontend);
+      assert.equal(options.headers["Content-Type"], "application/json");
+      assert.equal(options.body, "{}");
+      assert.equal(options.method, "POST");
+      assert.equal(options.redirect, "error");
+      const status = actor === 1 || name === "question-intake" && !admin ? 403 : 400;
+      const body = {error: actor === 1 ? denial.message : expected[name]};
+      const headers = {"access-control-allow-origin": frontend};
+      return override(name, actor, body, headers) ?? Response.json(body, {status, headers});
+    },
+  };
+}
+
+test("checks admitted and excluded Google sessions at all seven portal Edge handlers without data or files", async () => {
+  for (const admin of [false, true]) {
+    const report = await checkStagingApiAdmission(portalFixture(undefined, admin));
+    assert.equal(report.scope, "staging-postgrest-and-portal-edge-admission");
+    assert.equal(report.passed, true);
+    assert.equal(report.checks.length, 20);
+    assert.equal(report.checks.find(row => row.check === "question-intake-admitted").status, admin ? 400 : 403);
+    assert.equal(report.checks.filter(row => row.check.endsWith("-excluded") && row.status === 403).length, 7);
+    for (const secret of [...tokens, ...ids, denial.message, "fictional@example.invalid"]) {
+      assert.ok(!JSON.stringify(report).includes(secret));
+    }
+  }
+});
+
+test("rejects wrong-origin responses, missing deployments and Edge admission bypass or leaks", async () => {
+  const report = await checkStagingApiAdmission(portalFixture((name, actor, body, headers) => {
+    if (name === "attempt-media" && actor === 0) return Response.json(body, {status: 400, headers: {"access-control-allow-origin": "*"}});
+    if (name === "drawing-media" && actor === 1) return Response.json({error: "Origin not allowed"}, {status: 403, headers});
+    if (name === "community-media" && actor === 0) return response(404, {});
+    if (name === "bank-review-media" && actor === 1) return Response.json({error: "Invalid input"}, {status: 400, headers});
+    if (name === "reported-question-media" && actor === 1) return Response.json({...body, images: ["private-link"]}, {status: 403, headers});
+  }));
+  assert.equal(report.passed, false);
+  assert.deepEqual(report.checks.filter(check => !check.passed).map(check => check.check), [
+    "attempt-media-admitted", "drawing-media-excluded", "community-media-admitted", "bank-review-media-excluded", "reported-question-media-excluded",
+  ]);
+  assert.ok(!JSON.stringify(report).includes("private-link"));
+});

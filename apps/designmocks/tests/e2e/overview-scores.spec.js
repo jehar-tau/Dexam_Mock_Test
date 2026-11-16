@@ -8,7 +8,7 @@ const empty = () => ({ completed: 1, waitingForResults: 1, objectiveAccuracy: nu
   topics: [], exams: [], drawingReviews: { pending: 1, released: 0 } });
 
 async function fixture(page) {
-  const state = { analytics: empty(), attempts: [] };
+  const state = { analytics: empty(), attempts: [], events: [] };
   const provider = await stubPortalProvider(page, procedure => {
     switch (procedure) {
       case "finalize_my_expired_attempts": return 0;
@@ -16,6 +16,7 @@ async function fixture(page) {
       case "my_pass": return { active: true, expiresAt: "2027-11-07T00:00:00Z" };
       case "my_overview_analytics": return state.analytics;
       case "available_papers": return [];
+      case "all_india_event_catalog": return state.events;
     }
   });
   await page.goto("/dashboard");
@@ -25,6 +26,45 @@ async function fixture(page) {
   await expect(page.getByText("1 submitted attempt is awaiting results.", { exact: true })).toBeVisible();
   return Object.assign(state, provider);
 }
+
+test("each exam in Overview links to its own All India results, including ranks outside the public ten", async ({ page }) => {
+  const state = await fixture(page);
+  state.analytics.exams = ["nift", "ceed", "uceed", "nid"].map(exam => ({
+    exam, attempts: 1, averagePercent: 67, bestPercent: 67,
+  }));
+  const dates = { startsAt: "2026-10-01T00:00:00Z", endsAt: "2026-10-01T01:00:00Z", lastStartAt: "2026-10-01T00:45:00Z",
+    reviewEndsAt: "2026-10-02T00:00:00Z", durationSeconds: 3600, uploadGraceSeconds: 0, qualityHeld: false };
+  state.events = [
+    { ...dates, id: "10000000-0000-4000-8000-000000000291", exam: "uceed", title: "Fictional UCEED final", state: "released",
+      attemptId: "20000000-0000-4000-8000-000000000291", result: { rank: 14, cohortSize: 48, score: 27, total: 30 } },
+    { ...dates, id: "10000000-0000-4000-8000-000000000292", exam: "nift", title: "Fictional NIFT review", state: "review",
+      attemptId: "20000000-0000-4000-8000-000000000292", result: null },
+  ];
+
+  await page.reload();
+  await expect(page.getByRole("link", { name: "NID All India results →", exact: true })).toBeVisible();
+  await page.getByRole("link", { name: "UCEED All India results →", exact: true }).click();
+  await expect(page).toHaveURL(/\/dashboard\/all-india\?exam=uceed$/);
+  const exam = page.getByRole("combobox", { name: "Exam", exact: true });
+  await expect(exam).toHaveValue("uceed");
+  await expect(page.getByText("Rank 14 of 48 · 27/30 marks", { exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "View attempt", exact: true })).toHaveAttribute("href", "/attempt/20000000-0000-4000-8000-000000000291");
+  await expect(page.getByRole("heading", { name: "Fictional NIFT review" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Share on public results/ })).toHaveCount(0);
+
+  await exam.selectOption("nift");
+  await expect(exam).toHaveValue("nift");
+  await expect(page.getByText(/Results under review until/)).toBeVisible();
+  await expect(page.getByText(/Rank 14 of 48/)).toHaveCount(0);
+
+  await exam.selectOption("nid");
+  await expect(page.getByText("No NID All India mocks are listed yet.", { exact: true })).toBeVisible();
+  await exam.selectOption("");
+  await expect(page.getByRole("heading", { name: "Fictional UCEED final" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Fictional NIFT review" })).toBeVisible();
+  expect(state.calls.filter(([name]) => name.startsWith("start_") || name === "public_all_india_top_ten")).toEqual([]);
+  expect(state.unexpected).toEqual([]);
+});
 
 test("Overview displays released whole-test percentages after cohort and combined-exam holds", async ({ page }) => {
   const state = await fixture(page);

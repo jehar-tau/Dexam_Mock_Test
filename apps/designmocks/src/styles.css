@@ -2437,7 +2437,7 @@ svg {
 .candidate-profile-form .profile-check input { width: auto; }
 .practice-builder { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin-top: 2rem; }
 .practice-builder label { display: grid; gap: .45rem; font-weight: 700; }
-.practice-builder select { width: 100%; padding: .85rem; color: inherit; background: var(--paper); border: 1px solid var(--line); font: inherit; }
+.practice-builder select, .all-india-exam-filter select { width: 100%; padding: .85rem; color: inherit; background: var(--paper); border: 1px solid var(--line); font: inherit; }
 .practice-builder .button { grid-column: 1/-1; justify-self: start; }
 .admin-list .profile-check { display: flex; gap: .65rem; align-items: flex-start; margin: 1rem 0; }
 @media(max-width:700px){.practice-builder{grid-template-columns:1fr}}
@@ -2445,6 +2445,7 @@ svg {
 .exam-mock-grid article { padding: 1.5rem; border: 1px solid var(--line); background: var(--paper); }
 .exam-mock-grid h2 { margin-block: .5rem; }
 @media(max-width:700px){.exam-mock-grid{grid-template-columns:1fr}}
+.all-india-exam-filter { display: grid; gap: .45rem; max-width: 15rem; margin-top: 1rem; font-weight: 700; }
 .all-india-list { display: grid; gap: 1rem; margin-top: 2rem; }
 .all-india-list article { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; padding: 1.5rem; border: 1px solid var(--line); background: var(--paper); }
 .all-india-list article > div { min-width: 0; overflow-wrap: anywhere; }
@@ -3967,6 +3968,10 @@ svg {
 }
 
 .community-fields{display:contents;border:0;padding:0;margin:0;min-width:0}
+.community-image-selection{min-width:0}
+.community-image-selection ul{display:grid;gap:.25rem;list-style:none;margin:.5rem 0 0;padding:0}
+.community-image-selection li{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.community-image-selection li span{min-width:0;overflow-wrap:anywhere}
 .community-upload-recovery{margin-block:1rem;display:flex;gap:.65rem;flex-wrap:wrap;align-items:center}
 .community-upload-recovery p{flex-basis:100%;margin:0}
 .community-upload-recovery button{min-height:44px;padding:.5rem .8rem}

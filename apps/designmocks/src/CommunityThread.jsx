@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { CommunityImages } from "./CommunityImages.jsx";
+import { CommunityImageSelection } from "./CommunityImageSelection.jsx";
 import { communityCommentOrder } from "./community-write.js";
 import { CommunityAttachments } from "./CommunityAttachments.jsx";
 
@@ -54,7 +55,7 @@ export function CommunityThread({ thread, busy, pendingPost, pendingReply, pendi
         <button type="button" disabled={busy || Boolean(pendingTextReply)} onClick={cancelReply}>Cancel nested reply</button></div>}
       <fieldset className="community-fields" aria-label="New reply" disabled={busy || Boolean(pendingReply) || Boolean(pendingTextReply) || thread.status==="locked"}>
         <label>{replyTo ? "Your reply to comment" : "Add a reply"}<textarea ref={textarea} name="body" minLength="2" maxLength="3000" required /></label>
-        <label>Solution images (optional, up to 3)<input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple aria-describedby="community-reply-image-help" /></label>
+        <CommunityImageSelection label="Solution images (optional, up to 3)" helpId="community-reply-image-help" />
         <small id="community-reply-image-help">Up to 5 MB and 24 megapixels each. Remove visible personal details before sharing.</small>
         <button className="button">Reply</button>
       </fieldset>

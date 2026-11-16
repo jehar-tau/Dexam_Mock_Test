@@ -137,8 +137,8 @@ Every releasable slice must include focused unit coverage, database/authorizatio
 - [x] Replace the first-25 bank list with searchable pagination and exam/type/topic/review filters. Open complete canonical wording, options, private figures, source/delivery answers and marking before a written, version-checked review. Verify admin-only signing, missing figures, stale decisions and desktop/mobile access.
 - [x] Prove the new migrations and authorization rules on disposable PostgreSQL 17.
 - [x] Add a service-role-only, idempotent canonical-bank importer that reads `origin/main`, imports only explicit empty-holds records and keeps objective readiness separate from import eligibility.
-- [ ] Export current Exam-app import state and reconcile every external key/content hash.
-- [x] Implement the exact stable-key/SHA-256 reconciliation gate and privacy-safe deployed-snapshot contract; current Exam-app and Cloudboard exports remain required inputs.
+- [x] Export the current local Exam app import state and match all 4,521 current keys and hashes to the canonical export. Inspect the separate fixture-only staging environment. [Bank audit](QUESTION_BANK_AUDIT.md)
+- [x] Implement the exact stable-key/SHA-256 reconciliation gate and privacy-safe deployed-snapshot contract. The independent Cloudboard export remains open.
 - [ ] Obtain the Cloudboard/Claude source manifest; prove the 290 owner-provided items and any later pushes.
 - [ ] Decide whether DMocks imports the proven Dexam modules or the products converge on one shared package/repository. Recommendation: extract and reuse the assessment domain rather than fork it.
 

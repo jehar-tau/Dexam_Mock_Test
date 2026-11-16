@@ -106,6 +106,24 @@ test("invalid selection never reads upload scope and cancellation restores its o
  await picker(page).getByRole("button",{name:"Cancel image selection",exact:true}).press("Enter");await expect(picker(page)).toHaveCount(0);await expect(opener).toBeFocused();
 });
 
+test("removing the only selected image on a saved discussion requires a new selection", async ({page}) => {
+  const state = await fixture(page);
+  const [file] = await files();
+  await select(page, [file]);
+  await picker(page).getByRole("button", {name: `Remove image 1: ${file.name}`, exact: true}).click();
+  const input = picker(page).getByLabel("Additional images", {exact: true});
+  await expect(input).toBeFocused();
+  expect(await input.evaluate(node => node.validity.valueMissing)).toBe(true);
+  await send(page).click();
+  expect(state.scopeReads).toBe(0);
+  expect(state.uploads).toEqual([]);
+  await input.setInputFiles([file]);
+  await send(page).click();
+  await expect(page.getByText("Additional images confirmed.", {exact: true})).toBeVisible();
+  expect(state.uploads.map(item => item.ordinal)).toEqual([2]);
+  expect(state.writes).toBe(0);
+});
+
 test("a target becoming unavailable retains the selection without showing private diagnostics",async({page})=>{
  const state=await fixture(page);state.scopeError=true;await select(page,(await files()).slice(0,1));await send(page).click();await expect(page.getByText("This saved discussion or reply could not be checked for uploads. Refresh it and try again.",{exact:true})).toBeVisible();
  expect(state.uploads).toEqual([]);await expect(picker(page)).toBeVisible();await expect(page.getByText("private-followup-diagnostic",{exact:false})).toHaveCount(0);
@@ -137,5 +155,8 @@ test("late follow-up completion respects a newer discussion and feed filter",asy
 
 test("follow-up selection reflows at 320px and passes keyboard accessibility in both themes",async({page})=>{
  await fixture(page);await page.setViewportSize({width:320,height:900});await page.getByRole("button",{name:"Add discussion images",exact:true}).press("Enter");await page.addScriptTag({path:fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js",import.meta.url))});
+ const [file] = await files();
+ await picker(page).getByLabel("Additional images", {exact: true}).setInputFiles([{...file, name: `${"original-fictional-drawing-".repeat(5)}.png`}]);
+ await expect(picker(page).getByRole("list", {name: "Selected images"})).toBeVisible();
  for(const dark of [false,true]){if(dark)await page.getByRole("switch",{name:"Dark mode",exact:true}).click();await expect(send(page)).toHaveCSS("background-color",dark?"rgb(220, 235, 161)":"rgb(36, 71, 53)");expect(await page.evaluate(async()=> (await window.axe.run(".community-page",{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa"]}})).violations.map(item=>item.id))).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);}
 });

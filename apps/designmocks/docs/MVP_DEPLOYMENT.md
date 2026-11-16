@@ -141,6 +141,8 @@ Only after the final owner production-impact decision configure the separate Liv
 
 Production sign-in and checkout open only at the configured apex origin, `https://dmocks.com`. Link to the apex from the public `www` alias and register `https://dmocks.com/account/callback` for the production portal.
 
+### Package the production frontend
+
 Use `DMOCKS_PRODUCTION_PUBLISHABLE_KEY` with the approved separate production API origin. Build and verify from the clean, reviewed commit with the same versioned customer notice input used for Test. Production checkout defaults to closed. Build with `--enable-checkout` only for the separately approved sales release.
 
 ```sh
@@ -152,6 +154,17 @@ npm run production:verify -- --artifact "$DMOCKS_PRIVATE_PRODUCTION_ARTIFACT" --
 ```
 
 Keep the verified `site/` and manifest together for rollback. Hosting takes only `site/`. The manifest records the exact production origins, browser key digest, notice revision and checkout setting.
+
+### Verify the production backend
+
+After provisioning the separate production backend, run the read-only production smoke from `apps/designmocks`. Supply the reviewed production Supabase origin independently as `DMOCKS_PRODUCTION_PROVIDER_ORIGIN`, and point `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` at that same project with its public browser key. The command rejects the staging project and skips local dotenv fallback. With registrations still globally closed and the payment handlers configured, run:
+
+```sh
+DMOCKS_AUTH_STAGE=closed DMOCKS_BACKEND_STAGE=foundation DMOCKS_COMMERCE_STAGE=configured \
+  npm run test:hosted-setup -- --production
+```
+
+The receipt in `test-results/hosted-production-configured-smoke.json` records the production backend, the apex origin, and each anonymous check. The `unconfigured` commerce stage expects the setup gates before payment secrets are installed and writes its own receipt. For controlled Google acceptance, select `DMOCKS_AUTH_STAGE=controlled` and verify tester allowlisting separately. The smoke verifies rejection paths with a public key. The real signed-in and merchant acceptance steps still apply.
 
 The server checks current launch approvals when preparing a new Live order. Revoking a required approval blocks queued and subsequent order preparation. Reconcile orders already prepared under the prior approval through the existing payment procedure.
 

@@ -1,9 +1,21 @@
 import assert from'node:assert/strict';
 import test from'node:test';
-import{catalogueInput,catalogueSpec,catalogueStartFailure,rankingShareReceipt,savedCatalogueAttempts,validateCatalogue,validatePublicAllIndiaResults}from'../src/catalogue-data.js';
+import{allIndiaExamSelection,catalogueInput,catalogueSpec,catalogueStartFailure,rankingShareReceipt,savedCatalogueAttempts,validateCatalogue,validatePublicAllIndiaResults}from'../src/catalogue-data.js';
 const event='10000000-0000-4000-8000-000000001801',attempt='20000000-0000-4000-8000-000000001801';
 const mock=()=>({exam:'uceed',questionCount:57,durationSeconds:7200,freeAttemptLimit:1,freeAttemptsUsed:0,enabled:true,ready:true,structureVersion:'iitb-2027-v1',sectionLabel:'Part A',sectionCounts:{nat:14,msq:15,mcq:28},privateExtra:'discard'});
 const cohort=()=>({id:event,exam:'uceed',title:'Original fictional cohort',state:'open',startsAt:'2026-11-08T00:00:00Z',endsAt:'2026-11-18T00:00:00Z',lastStartAt:'2026-11-17T23:45:00Z',reviewEndsAt:'2026-11-28T00:00:00Z',durationSeconds:900,uploadGraceSeconds:0,qualityHeld:false,attemptId:null,result:null,privateExtra:'discard'});
+
+test('the All India exam view filters verified events without changing their released result', () => {
+ const uceed = { ...cohort(), state: 'released', attemptId: attempt, result: { rank: 14, cohortSize: 48, score: 27, total: 30 } };
+ const nift = { ...cohort(), id: '10000000-0000-4000-8000-000000001802', exam: 'nift', state: 'review' };
+ const rows = validateCatalogue('allIndia', [uceed, nift]);
+ assert.deepEqual(allIndiaExamSelection(rows, 'uceed'), { selectedExam: 'uceed', visibleEvents: [rows[0]] });
+ assert.deepEqual(allIndiaExamSelection(rows, 'nift'), { selectedExam: 'nift', visibleEvents: [rows[1]] });
+ assert.deepEqual(allIndiaExamSelection(rows, 'nid'), { selectedExam: 'nid', visibleEvents: [] });
+ for (const unknown of [null, '', 'unknown']) {
+  assert.deepEqual(allIndiaExamSelection(rows, unknown), { selectedExam: '', visibleEvents: rows });
+ }
+});
 test('exam choices preserve exact verified sections, free usage and the nullable empty API contract',()=>{assert.deepEqual(validateCatalogue('exam',null),[]);const value=validateCatalogue('exam',[mock()]);assert.deepEqual(value[0].sectionCounts,{nat:14,msq:15,mcq:28});assert.equal(value[0].privateExtra,undefined);assert.deepEqual(catalogueInput('exam',value,'uceed'),{p_exam:'uceed'});assert.throws(()=>catalogueSpec('toString'));});
 test('malformed, duplicated and contradictory exam readiness cannot enable a start',()=>{for(const mutate of[row=>{row.ready=true;row.enabled=false;},row=>{row.sectionCounts.mcq=27;},row=>{row.questionCount=0;},row=>{row.freeAttemptsUsed=NaN;},row=>{delete row.enabled;}]){const row=mock();mutate(row);assert.throws(()=>validateCatalogue('exam',[row]));}assert.throws(()=>validateCatalogue('exam',[mock(),mock()]));const rows=validateCatalogue('exam',[{...mock(),ready:false}]);assert.throws(()=>catalogueInput('exam',rows,'uceed'));});
 test('topic choices retain exact exam, Unicode topic and allowed counts and clocks',()=>{const topic='Space / form & रंग',rows=validateCatalogue('topic',[{exam:'uceed',topic,questions:30,privateExtra:true}]);assert.deepEqual(catalogueInput('topic',rows,{exam:'uceed',topic,count:30,duration:2700}),{p_exam:'uceed',p_topic:topic,p_count:30,p_duration_seconds:2700});assert.equal(rows[0].privateExtra,undefined);for(const input of[{exam:'ceed',topic,count:10,duration:900},{exam:'uceed',topic:topic.toLowerCase(),count:10,duration:900},{exam:'uceed',topic,count:40,duration:900},{exam:'uceed',topic,count:10,duration:1000}])assert.throws(()=>catalogueInput('topic',rows,input));assert.throws(()=>validateCatalogue('topic',[...rows,...rows]));});
