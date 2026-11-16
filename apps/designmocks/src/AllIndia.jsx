@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import {platform} from "./platform.js";
 import {PortalShell} from "./PortalShell.jsx";
 import {AssessmentCatalogue} from "./AssessmentCatalogue.jsx";
-import {validatePublicAllIndiaResults} from "./catalogue-data.js";
+import {allIndiaExamSelection, assessmentExams, validatePublicAllIndiaResults} from "./catalogue-data.js";
 
 async function rpc(name,args){const {data,error}=await platform.rpc(name,args);if(error)throw error;return data;}
 const when=(value)=>new Date(value).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
@@ -20,9 +20,10 @@ function eventDetails(event) {
 }
 
 function AllIndiaHeading({headingRef}){return<><span className="eyebrow">ALL INDIA MOCKS</span><h1 ref={headingRef} tabIndex={-1}>One paper. One <em>attempt.</em></h1><p>Every candidate receives the same frozen paper. The exam timer continues through disconnects, and ranks stay hidden until results are released.</p></>;}
-export function AllIndiaView({ events, onStart, onShare, heading=true, embedded=false, blocked=false, sharingBlocked=false }) {
+export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelectExam, heading=true, embedded=false, blocked=false, sharingBlocked=false }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
+  const { selectedExam, visibleEvents } = allIndiaExamSelection(events, requestedExam);
   const start = async (id) => {
     if(busy||blocked)return;
     setBusy(id);
@@ -33,8 +34,15 @@ export function AllIndiaView({ events, onStart, onShare, heading=true, embedded=
   };
   return <section className={embedded?"catalogue-content":"section portal-module all-india"}>
     {heading&&<AllIndiaHeading/>}
+    {onSelectExam && <label className="all-india-exam-filter">
+      Exam
+      <select value={selectedExam} onChange={event => onSelectExam(event.target.value)}>
+        <option value="">All exams</option>
+        {assessmentExams.map(exam => <option key={exam} value={exam}>{exam.toUpperCase()}</option>)}
+      </select>
+    </label>}
     <div className="all-india-list">
-      {events.length ? events.map((event) => <article key={event.id}>
+      {visibleEvents.length ? visibleEvents.map((event) => <article key={event.id}>
         <div>
           <span className="eyebrow">{event.exam.toUpperCase()} · {event.state}</span>
           <h2>{event.title}</h2>
@@ -61,13 +69,25 @@ export function AllIndiaView({ events, onStart, onShare, heading=true, embedded=
           onClick={() => start(event.id)}>
           {busy === event.id ? "Opening…" : event.state === "open" ? "Start once" : "Unavailable"}
         </button>}
-      </article>) : <div className="notice">No All India mock has been scheduled yet.</div>}
+      </article>) : <div className="notice" role="status">{selectedExam
+        ? `No ${selectedExam.toUpperCase()} All India mocks are listed yet.`
+        : "No All India mock has been scheduled yet."}</div>}
     </div>
     {message && <p className="error" role="alert">{message}</p>}
   </section>;
 }
 
-export function AllIndia(){return<AssessmentCatalogue kind="allIndia" Heading={AllIndiaHeading} View={AllIndiaView}/>;}
+export function AllIndia() {
+  const [params, setParams] = useSearchParams();
+  const selectExam = exam => {
+    const next = new URLSearchParams(params);
+    if (exam) next.set("exam", exam);
+    else next.delete("exam");
+    setParams(next);
+  };
+  return <AssessmentCatalogue kind="allIndia" Heading={AllIndiaHeading} View={AllIndiaView}
+    viewProps={{ requestedExam: params.get("exam"), onSelectExam: selectExam }} />;
+}
 
 export function AllIndiaHighlights({ example = null }) {
   const [events, setEvents] = useState([]);
