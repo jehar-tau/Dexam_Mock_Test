@@ -1,5 +1,6 @@
 import React, { useId, useLayoutEffect, useRef, useState } from "react";
 import { CommunityController } from "./CommunityController.jsx";
+import { CommunityImageSelection } from "./CommunityImageSelection.jsx";
 import { CommunityThread } from "./CommunityThread.jsx";
 import { CommunityReporting } from "./CommunityReporting.jsx";
 import { communityFeedFilters } from "./community-feed.js";
@@ -119,10 +120,7 @@ export function CommunityView({
           Your approach or question
           <textarea name="body" required minLength="20" maxLength="5000" />
         </label>
-        <label>
-          Question images (optional, up to 3)
-          <input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple aria-describedby="community-post-image-help" />
-        </label>
+        <CommunityImageSelection label="Question images (optional, up to 3)" helpId="community-post-image-help" />
         <small id="community-post-image-help">Still PNG, JPEG or WebP, up to 5 MB and 24 megapixels each. Use your own or permitted images; remove names, faces and personal details.</small>
         <button className="button">Post to community</button>
         </fieldset>

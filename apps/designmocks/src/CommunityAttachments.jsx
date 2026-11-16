@@ -1,5 +1,6 @@
 import React,{useId,useLayoutEffect,useRef,useState} from "react";
 import {communityAttachmentFiles} from "./community-attachments.js";
+import {CommunityImageSelection} from "./CommunityImageSelection.jsx";
 
 export function CommunityAttachments({target,busy,onSubmit,onClose}) {
   const input=useRef(null),inFlight=useRef(false),scope=useRef(null),helpId=useId(),[message,setMessage]=useState("");
@@ -18,7 +19,7 @@ export function CommunityAttachments({target,busy,onSubmit,onClose}) {
       finally{if(scope.current===current)inFlight.current=false;}
     }}>
       <fieldset className="community-fields" disabled={busy}>
-        <label>Additional images<input ref={input} name="images" type="file" required multiple accept="image/png,image/jpeg,image/webp" aria-describedby={helpId}/></label>
+        <CommunityImageSelection inputRef={input} label="Additional images" helpId={helpId} required />
         <button type="submit" className="button">Add selected images</button>
       </fieldset>
       <button type="button" className="button quiet" disabled={busy} onClick={()=>onClose(false)}>Cancel image selection</button>
