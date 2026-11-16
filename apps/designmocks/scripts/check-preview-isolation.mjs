@@ -1,6 +1,9 @@
 // Fail CI if local-only fictional account views leak into a production bundle.
 import { readdir, readFile } from "node:fs/promises";
 import assert from "node:assert/strict";
+const allowLearnImages = process.argv.includes("--allow-learn-images");
+const rootEntries = await readdir("dist");
+if (!allowLearnImages) assert.ok(!rootEntries.includes("learn-images"), "Learn preview images leaked into a closed build");
 async function check(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const path = `${directory}/${entry.name}`;
@@ -13,4 +16,4 @@ async function check(directory) {
   }
 }
 await check("dist");
-console.log("Production bundle excludes the local portal fixture and accessibility panel.");
+console.log("Build passes preview isolation checks.");
