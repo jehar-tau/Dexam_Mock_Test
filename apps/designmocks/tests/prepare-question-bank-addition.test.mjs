@@ -2,12 +2,12 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { stableJson } from '../scripts/question-bank-import.mjs';
-import { prepareAddition } from '../scripts/prepare-question-bank-addition.mjs';
+import { prepareAddition, prepareAdditions } from '../scripts/prepare-question-bank-addition.mjs';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const question = (key, extra = {}) => ({ externalKey: key, prompt: 'Synthetic prompt', type: 'DESCRIPTIVE', provenance: { exam: 'uceed' }, holds: [], ...extra });
 async function fixture(t, existing = [question('existing')]) {
@@ -18,9 +18,11 @@ async function fixture(t, existing = [question('existing')]) {
  const git = (...args) => execFileSync('git', args, { cwd: repo, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
  git('init'); git('config', 'user.email', 'test@example.invalid'); git('config', 'user.name', 'Test'); git('add', '.'); git('commit', '-m', 'fixture');
  const expectedSource = git('rev-parse', 'HEAD'); git('update-ref', 'refs/remotes/origin/main', expectedSource);
+ let nextPacket = 0;
  async function packet(payload) {
-  const payloadText = JSON.stringify(payload), expected = hash(payloadText), packetPath = path.join(root, 'packet.json');
-  await writeFile(packetPath, JSON.stringify({ format: 'dmocks-question-export-v1', artifactId: '11111111-1111-1111-1111-111111111111', externalKey: payload.externalKey, contentSha256: expected, payloadText, rightsNote: 'Synthetic rights confirmation', createdAt: '2026-01-01T00:00:00Z', sourceType: 'manual', publicationState: 'git-review-required' }));
+  const number = String(++nextPacket).padStart(12, '0');
+  const payloadText = JSON.stringify(payload), expected = hash(payloadText), packetPath = path.join(root, `packet-${number}.json`);
+  await writeFile(packetPath, JSON.stringify({ format: 'dmocks-question-export-v1', artifactId: `11111111-1111-1111-1111-${number}`, externalKey: payload.externalKey, contentSha256: expected, payloadText, rightsNote: 'Synthetic rights confirmation', createdAt: '2026-01-01T00:00:00Z', sourceType: 'manual', publicationState: 'git-review-required' }));
   return { packetPath, expected, expectedSource, cwd: repo };
  }
  return { root, repo, raw, packet, expectedSource };
@@ -136,4 +138,87 @@ test('rejects a correction to a held record even when its source version matches
  const f = await fixture(t, [held]);
  const opts = await f.packet(question('held'));
  await assert.rejects(prepareAddition({ ...opts, replaceExpected: hash(stableJson(held)) }), /Resolve canonical holds/);
+});
+
+test('prepares several reviewed questions in one private append-only export', async t => {
+ const f = await fixture(t);
+ const png = Buffer.from('89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000d49444154789c6360000000020001e221bc330000000049454e44ae426082','hex');
+ const asset = { path: 'figures/shared.png', sha256: hash(png), width: 1, height: 1 };
+ const extra = { ...asset, path: 'figures/other.png' };
+ const downloadsDir = path.join(f.root, 'downloads');
+ await mkdir(downloadsDir);
+ await writeFile(path.join(downloadsDir, `${asset.sha256}.png`), png);
+
+ const first = question('batch-first', { assets: [asset] });
+ const second = question('batch-second', { assets: [asset, extra] });
+ const packets = await Promise.all([f.packet(first), f.packet(question('existing')), f.packet(second)]);
+ const options = { packets, cwd: f.repo, expectedSource: f.expectedSource, downloadsDir };
+ const dryRun = await prepareAdditions(options);
+ assert.equal(dryRun.added, 2);
+ assert.equal(dryRun.alreadyPresent, 1);
+ assert.equal(dryRun.figures, 2);
+ assert.equal(dryRun.reviews.descriptive, 2);
+ assert.doesNotMatch(JSON.stringify(dryRun), /batch-first|batch-second|Synthetic prompt/);
+
+ const script = fileURLToPath(new URL('../scripts/prepare-question-bank-addition.mjs', import.meta.url));
+ const args = ['--expect-source', f.expectedSource, '--downloads-dir', downloadsDir,
+  ...packets.flatMap(({ packetPath, expected }) => ['--packet', packetPath, '--expect', expected])];
+ const run = moreArgs => spawnSync(process.execPath, [script, ...moreArgs], {
+  env: { ...process.env, GIT_DIR: path.join(f.repo, '.git'), GIT_WORK_TREE: f.repo }, encoding: 'utf8',
+ });
+ const result = run(args);
+ assert.equal(result.status, 0, result.stderr);
+ assert.deepEqual(JSON.parse(result.stdout), dryRun);
+ const unpaired = run(args.slice(0, -2));
+ assert.equal(unpaired.status, 1);
+ assert.match(unpaired.stderr, /one reviewed SHA-256 for every packet/);
+ const duplicateSource = run([...args, '--expect-source', f.expectedSource]);
+ assert.equal(duplicateSource.status, 1);
+ assert.match(duplicateSource.stderr, /Repeat only packet paths and review digests/);
+
+ const output = path.join(f.root, 'batch');
+ const staged = await prepareAdditions({ ...options, output });
+ assert.equal(staged.proposedSha256, dryRun.proposedSha256);
+ const raw = await readFile(path.join(output, 'dexam-bank-export.json'), 'utf8');
+ assert.ok(raw.startsWith(f.raw.slice(0, f.raw.lastIndexOf(']'))));
+ assert.deepEqual(JSON.parse(raw).questions, [question('existing'), first, second]);
+ assert.deepEqual(await readFile(path.join(output, 'media', asset.path)), png);
+ assert.deepEqual(await readFile(path.join(output, 'media', extra.path)), png);
+ const receipt = JSON.parse(await readFile(path.join(output, 'receipt.json')));
+ assert.deepEqual(receipt.additions.map(item => item.externalKey), ['batch-first', 'batch-second']);
+ assert.equal(receipt.existingArtifacts[0].externalKey, 'existing');
+ assert.equal((await stat(output)).mode & 0o777, 0o700);
+ assert.equal((await stat(path.join(output, 'receipt.json'))).mode & 0o777, 0o600);
+});
+
+test('leaves no partial export if any batch packet or figure fails review', async t => {
+ const f = await fixture(t);
+ const first = await f.packet(question('batch-first'));
+ const second = await f.packet(question('batch-second', {
+  type: 'MCQ',
+  options: ['A','B','C','D'].map(key => ({ key, text: key })),
+  answer: { raw: 'Z', status: 'verified' },
+ }));
+ const output = path.join(f.root, 'batch');
+ const prepare = (packets, extra = {}) => prepareAdditions({ packets, cwd: f.repo, expectedSource: f.expectedSource, ...extra });
+ assert.equal((await prepare([first, second])).reviews['objective-incomplete'], 1);
+ await assert.rejects(prepare([first, second], { output }), /Objective review is incomplete/);
+ await assert.rejects(prepare([first, first], { output }), /appears more than once/);
+ await assert.rejects(prepare([first, { ...second, expected: 'b'.repeat(64) }], { output }));
+ const asset = { path: 'figures/collision.png', sha256: 'a'.repeat(64), width: 1, height: 1 };
+ const one = await f.packet(question('one', { assets: [asset] }));
+ const two = await f.packet(question('two', { assets: [{ ...asset, sha256: 'b'.repeat(64) }] }));
+ await assert.rejects(prepare([one, two], { output }), /Conflicting asset paths/);
+ await assert.rejects(prepare([first, one], { output }), /Required figure is missing/);
+ await assert.rejects(stat(output), { code: 'ENOENT' });
+});
+
+test('a batch already present in the pinned bank is an exact no-op', async t => {
+ const questions = [question('first'), question('second')];
+ const f = await fixture(t, questions);
+ const packets = await Promise.all(questions.map(f.packet));
+ const output = path.join(f.root, 'no-op');
+ assert.deepEqual(await prepareAdditions({ packets, expectedSource: f.expectedSource, cwd: f.repo, output }),
+  { mode: 'no-op', sourceCommit: f.expectedSource, added: 0, alreadyPresent: 2 });
+ await assert.rejects(stat(output), { code: 'ENOENT' });
 });
