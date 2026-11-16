@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { runPreflight, verifyTrackedFiles } from "./release-source-preflight.mjs";
 import { compilePublishedNotices } from "./published-notices.mjs";
+import { allowReleasedLearn } from "../src/launch-scope.mjs";
 import { publishedNoticeVersionPattern } from "../src/authConfiguration.mjs";
 
 const appPath = "apps/designmocks";
@@ -155,6 +156,18 @@ async function siteFiles(directory) {
   return files;
 }
 
+function artifactAllowsLearnImages(profile, schema) {
+  if (schema === stagingSchema && profile?.deployment === "staging") {
+    if (profile.backendProfile === "full-staging" && profile.postLaunchPreview === true) return true;
+    return allowReleasedLearn(profile.stagingPortalEnabled);
+  }
+  if ((schema === checkoutSchema && profile?.deployment === "test") ||
+      (schema === productionSchema && profile?.deployment === "production")) {
+    return allowReleasedLearn(profile.releasedPortalEnabled);
+  }
+  return false;
+}
+
 async function verifyArtifact({ directory, expected, paidPilot = false }, schema) {
   if (!digestPattern.test(expected ?? "")) throw new Error("Supply the reviewed full SHA-256 of the artifact");
   if (!(await lstat(directory)).isDirectory() || (await readdir(directory)).sort().join(",") !== "manifest.json,site") {
@@ -174,6 +187,9 @@ async function verifyArtifact({ directory, expected, paidPilot = false }, schema
   }
   const files = await siteFiles(path.join(directory, "site"));
   if (JSON.stringify(files) !== JSON.stringify(manifest.files)) throw new Error("The artifact site files differ from the reviewed manifest");
+  if (!artifactAllowsLearnImages(manifest.profile, schema) && files.some(file => file.path === "learn-images" || file.path.startsWith("learn-images/"))) {
+    throw new Error("A closed artifact contains Learn preview images");
+  }
   return { verified: true, commit: manifest.source.commit, tree: manifest.source.tree, bundleSha256, fileCount: files.length };
 }
 
@@ -233,7 +249,7 @@ async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin
         ...(notice ? { VITE_TERMS_VERSION: notice.version, DMOCKS_PUBLISHED_NOTICES_FILE: noticeFile } : {}),
       }, failure: "Could not build the reviewed private portal source",
     });
-    run(process.execPath, ["scripts/check-preview-isolation.mjs"], {
+    run(process.execPath, ["scripts/check-preview-isolation.mjs", ...(artifactAllowsLearnImages(profile, schema) ? ["--allow-learn-images"] : [])], {
       cwd: app, env, failure: "Local development views entered the private portal build",
     });
     const dist = path.join(app, "dist");

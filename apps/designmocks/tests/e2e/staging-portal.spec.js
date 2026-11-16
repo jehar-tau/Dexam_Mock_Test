@@ -41,6 +41,14 @@ test("the staging artifact rejects a different host before contacting the provid
   expect(unexpected).toEqual([]);
 });
 
+test("the full staging artifact serves Learn photographs and illustrations", async ({ page }) => {
+  for (const path of ["/learn-images/bagru-printing.jpg", "/learn-images/illustrations/chair-post.jpg"]) {
+    const image = await page.goto(stage + path);
+    expect(image?.ok()).toBe(true);
+    expect(await image.headerValue("content-type")).toContain("image/jpeg");
+  }
+});
+
 test("the private staging home never requests the public ranking feed", async ({ page }) => {
   const { calls, unexpected } = await stubPortalProvider(page, name => {
     if (name === "public_all_india_top_ten") return [];

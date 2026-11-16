@@ -57,6 +57,8 @@ npm run bank:prepare-addition -- \
   --downloads-dir "$DMOCKS_RETAINED_FIGURES"
 ```
 
+For several approved questions, repeat `--packet "<private packet path>" --expect "<reviewed question SHA-256>"` for each one and provide `--expect-source` once. Pair the packet paths and digests in the same order. Review the batch totals before adding `--output`. The prepared export appends every new packet in order. An identical question already in the pinned source is counted separately. A duplicate key in the batch or an invalid packet, objective answer or required figure blocks the entire staged output. The private receipt lists the reviewed additions and any already-present questions.
+
 Add `--output "$DMOCKS_PRIVATE_REVIEW_DIRECTORY"` to prepare a new directory outside Git worktrees. Omit the media options for a text-only packet. The prepared export preserves existing rows and adds the exact reviewed payload. A conflicting key or figure path needs correction before review. The `receipt.json` file confirms that preparation completed. Review the proposed change at `server/data/exports/dexam-bank-export.json` and place verified figures at their recorded paths in the private media root. After the canonical change lands on `main`, follow the existing import, materialization and version approval steps.
 
 For a reviewed correction to an existing eligible question, add `--replace-expect "$DMOCKS_CURRENT_QUESTION_SHA256"` to the same command. Use the current record digest from `bank:diagnostics`. The command checks the exact source commit and record digest, preserves provenance and source labels, and prepares a private export for Git review. Held records require source review first. The canonical import and its exact-version approval still follow the Git review.

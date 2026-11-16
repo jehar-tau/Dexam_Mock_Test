@@ -14,7 +14,7 @@ export async function serveArtifact(route, site, url) {
   const entry = route.request().isNavigationRequest() && !extname(pathname)
     ? "index.html"
     : segments.join("/");
-  if (entry !== "index.html" && entry !== "favicon.svg" && !entry.startsWith("assets/")) {
+  if (entry !== "index.html" && entry !== "favicon.svg" && !entry.startsWith("assets/") && !entry.startsWith("learn-images/")) {
     return route.fulfill({ status: 404 });
   }
   const file = await realpath(join(site, entry)).catch(error => {
