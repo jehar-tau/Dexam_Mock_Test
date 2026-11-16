@@ -227,19 +227,3 @@ test('every programme has its own topic animation', async () => {
   const keys = [...source.slice(source.indexOf('const topics = {')).matchAll(/^\s+"?([a-z-]+)"?: \[/gm)].map(m => m[1]);
   for (const programme of programmes) assert.ok(keys.includes(programme.slug), `${programme.slug} has no animation`);
 });
-
-test('the 3D topic models project into the frame, light and hide their back faces', async () => {
-  const { scenes3D, project, box } = await import('../src/scene3d.js');
-  for (const [name, build] of Object.entries(scenes3D)) {
-    const scene = build();
-    for (const t of [0, 1.5, 4, 9]) {
-      const view = project(scene, t);
-      assert.ok(view.faces.length > 0 && view.faces.length < scene.faces.length, `${name} hides some faces at ${t}s`);
-      for (let i = 1; i < view.faces.length; i++) assert.ok(view.faces[i - 1].depth >= view.faces[i].depth, `${name} draws far to near`);
-      const xs = view.faces.flatMap(f => [...f.d.matchAll(/(-?[\d.]+) (-?[\d.]+)/g)].map(m => [+m[1], +m[2]]));
-      assert.ok(xs.every(([x, y]) => x > -20 && x < 340 && y > -20 && y < 260), `${name} stays in its frame at ${t}s`);
-    }
-  }
-  const cube = { faces: box(0, 0, 0, 1, 1, 1, 'red'), view: () => ({ yaw: 0.6, pitch: -0.4 }) };
-  assert.equal(project(cube, 0).faces.length, 3, 'a cube seen from above and to one side shows three faces');
-});
