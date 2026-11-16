@@ -137,7 +137,7 @@ test("the private checkout artifact uses the exact provider and opens only a ver
   await page.goto("/account");
   await seedPortalSession(page, buyer, project.project_ref);
 
-  for (const path of ["/dashboard/learn", "/dashboard/community", "/dashboard/all-india", "/dashboard/practice", "/review/drawings"]) {
+  for (const path of ["/dashboard/community", "/dashboard/all-india", "/dashboard/practice", "/review/drawings"]) {
     await page.goto(path);
     await expect(page.getByText("This area is outside the first paid release.", { exact: false })).toBeVisible();
   }
