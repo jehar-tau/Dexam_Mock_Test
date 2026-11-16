@@ -65,6 +65,10 @@ const Learn = React.lazy(() => import("./Learn.jsx").then(module => ({ default: 
 const LearnProgrammes = React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.LearnProgrammes })));
 const LearnProgrammePage = React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePage })));
 const Community = React.lazy(() => import("./Community.jsx").then(module => ({ default: module.Community })));
+const CommunityArticles = React.lazy(() => import("./CommunityArticles.jsx").then(module => ({ default: module.CommunityArticles })));
+const CommunityEditor = React.lazy(() => import("./CommunityEditor.jsx").then(module => ({ default: module.CommunityEditor })));
+const CommunityReader = React.lazy(() => import("./CommunityReader.jsx").then(module => ({ default: module.CommunityReader })));
+const CommunitySaved = React.lazy(() => import("./CommunitySaved.jsx").then(module => ({ default: module.CommunitySaved })));
 const AllIndiaHighlights = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaHighlights })));
 const TopicPracticePreview = import.meta.env.DEV
   ? React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPracticePreview }))) : null;
@@ -1646,6 +1650,10 @@ export default function App() {
           <Route path="/dashboard/learn" element={postLaunchPreview?<Learn />:<LearnProgrammes />} />
           <Route path="/dashboard/learn/programme/:slug" element={<LearnProgrammePage />} />
           <Route path="/dashboard/community" element={postLaunchPreview?<Community />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/articles" element={postLaunchPreview?<CommunityArticles />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/write" element={postLaunchPreview?<CommunityEditor />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/post/:id" element={postLaunchPreview?<CommunityReader />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/saved" element={postLaunchPreview?<CommunitySaved />:<DeferredModule module="community"/>} />
           <Route path="/report" element={<BugReport />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/review/drawings" element={postLaunchPreview?<DrawingReviewerWorkspace />:<DeferredModule module="drawings"/>} />
