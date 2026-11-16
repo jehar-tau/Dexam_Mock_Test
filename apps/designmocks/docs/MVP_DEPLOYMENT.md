@@ -68,6 +68,8 @@ Use the frozen private packet and its separately reviewed SHA-256 to prepare the
 npm run paper:prepare -- --packet "$DMOCKS_REVIEWED_PAPER_PACKET" --expect "$DMOCKS_REVIEWED_PAPER_SHA256"
 ```
 
+After an unrelated canonical bank update, prepare a new private proposal with `--propose-source-refresh "$DMOCKS_REFRESH_PROPOSAL"`. Supply the original reviewed packet and its original digest. The command checks that the packet's original source is in main history, verifies the original packet, and recompiles it against the current bank. It requires identical selected question versions, answer keys, marking, order and private figures. The written proposal changes only the source reference and packet digest. Review that new digest separately before using the proposal as a release input. The command works without hosted credentials.
+
 To stage the exact first paper's inputs on the approved Test target after canonical text import, add `--sync-inputs` to that command. Set `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_PAPER_ALLOW_ORIGIN` and `DMOCKS_PAPER_ENVIRONMENT` for that target. A managed production target also requires `DMOCKS_PAPER_PRODUCTION_ACK=USE_PRIVATE_BANK_ON_<exact-origin>` for this bank operation.
 
 The command checks Test mode and closed sales before transferring the packet's figures and again before recording its runtime. It verifies the bytes in private Storage and reports counts for uploaded figures, reused figures and recorded questions. A retry verifies existing bytes before reuse. Staff review and paper preparation follow as separate steps.
