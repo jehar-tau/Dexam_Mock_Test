@@ -1,5 +1,17 @@
 // Private authoring helpers. Source questions and figures stay outside public assets.
+import {intakeFileMatches} from "../supabase/functions/_shared/intake-file.mjs";
+
 const reviewText = value => typeof value === "string" ? value : "";
+
+export const isIntakePhoto = mimeType => ["image/png", "image/jpeg", "image/webp"].includes(mimeType);
+
+export async function intakePhotoBlob(blob, {mimeType, byteSize}) {
+  const error = "The source photo could not be verified. Download the original to inspect it separately.";
+  if (!isIntakePhoto(mimeType) || !(blob instanceof Blob) || !blob.size || blob.size !== byteSize) throw new Error(error);
+  const signature = new Uint8Array(await blob.slice(0, 12).arrayBuffer());
+  if (!intakeFileMatches(signature, mimeType)) throw new Error(error);
+  return blob.slice(0, blob.size, mimeType);
+}
 
 export function intakeReviewValues(payload = {}) {
   const supplied = Array.isArray(payload.options) ? payload.options : [];

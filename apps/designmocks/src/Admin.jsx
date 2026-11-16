@@ -14,6 +14,7 @@ import { verifyQuestionExportPacket } from "./question-export-packet.mjs";
 import { withAccountDeadline } from "./account-request.js";
 import { LaunchReadiness } from "./LaunchReadiness.jsx";
 import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQueue.jsx";
+import { intakePhotoBlob } from "./intake-review.js";
 import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
 import { NidPracticeBlueprints } from "./NidPracticeBlueprints.jsx";
 import { ReportedQuestionQueue } from "./ReportedQuestionQueue.jsx";
@@ -26,8 +27,8 @@ import { adminRequestMessage } from "./admin-access.js";
 import {postLaunchPreview}from'./launch-scope.js';
 const mvpDeskReads=new Set(['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_request_page','admin_launch_readiness']);
 
-async function intakeRequest(functions, name, body) {
-  const { data, error } = await functions.invoke(name, { body });
+async function intakeRequest(functions, name, body, signal) {
+  const { data, error } = await functions.invoke(name, { body, signal });
   if (error) {
     const detail = error.context instanceof Response ? await error.context.json().catch(() => null) : null;
     throw new Error(detail?.error ?? error.message ?? "Private intake request failed.");
@@ -322,6 +323,11 @@ function AdminDesk({ session }) {
     if (!(blob instanceof Blob)) throw new Error("Private source could not be downloaded.");
     downloadPrivateBlob(blob, figure ? `${figure.sha256}.png` : asset.name);
   };
+  const inspectIntake = async (asset, signal, present) => {
+    const blob = await intakeRequest(functions, "question-intake", {assetId:asset.id}, signal);
+    const photo = await intakePhotoBlob(blob, asset);
+    await presentForCurrentStaff(() => present(photo), signal);
+  };
   return (
     <>
       {message && (
@@ -346,7 +352,7 @@ function AdminDesk({ session }) {
             </label>
             <button disabled={intakeUploading}>{intakeUploading ? "Uploading…" : "Upload for extraction"}</button>
           </form>
-          <IntakeExtractionQueue assets={intake} onExtract={extractIntake} onPromote={promoteIntake} onReject={rejectIntake} onTranscribe={transcribeIntake} onDownload={downloadIntake} onPrepareFigures={prepareIntakeFigures} />
+          <IntakeExtractionQueue assets={intake} onExtract={extractIntake} onPromote={promoteIntake} onReject={rejectIntake} onTranscribe={transcribeIntake} onDownload={downloadIntake} onInspect={inspectIntake} onPrepareFigures={prepareIntakeFigures} />
           <h2>Drawing review queue</h2>
           <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings} {...drawingActions} />
           <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
