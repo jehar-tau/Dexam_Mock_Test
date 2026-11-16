@@ -12,6 +12,8 @@
     "staging:verify": "node scripts/staging-artifact.mjs verify",
     "checkout:package": "node scripts/staging-artifact.mjs build-checkout",
     "checkout:verify": "node scripts/staging-artifact.mjs verify-checkout",
+    "production:package": "node scripts/staging-artifact.mjs build-production",
+    "production:verify": "node scripts/staging-artifact.mjs verify-production",
     "build:production": "vite build --mode production",
     "preview": "vite preview --host 127.0.0.1 --port 4191 --strictPort",
     "test": "node --test tests/*.test.mjs",

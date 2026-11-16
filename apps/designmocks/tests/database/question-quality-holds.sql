@@ -9,8 +9,11 @@
 begin;
 create function pg_temp.quality_assert(ok boolean,label text) returns void language plpgsql as $$
 begin if ok is distinct from true then raise exception 'FAIL: %',label;end if;end $$;
-create function pg_temp.quality_reject(statement text,expected_error text) returns void language plpgsql as $$
-begin begin execute statement;exception when others then if position(expected_error in sqlerrm)>0 then return;end if;raise;end;
+create function pg_temp.quality_reject(statement text,expected_error text,expected_code text default null) returns void language plpgsql as $$
+begin begin execute statement;exception when others then
+  if (expected_code is null and position(expected_error in sqlerrm)>0)
+    or (sqlstate=expected_code and sqlerrm=expected_error) then return;end if;
+  raise;end;
   raise exception 'FAIL, expected error: %',expected_error;end $$;
 create temp table quality_people as select n,('00000000-0000-4000-8000-'||lpad((210+n)::text,12,'0'))::uuid user_id,
   ('30000000-0000-4000-8000-'||lpad((210+n)::text,12,'0'))::uuid attempt_id from generate_series(1,12) n;
@@ -73,7 +76,8 @@ select public.report_attempt_question((select attempt_id from quality_people whe
 select pg_temp.quality_assert(:'first_receipt'::jsonb->>'reportCount'='1' and not(:'first_receipt'::jsonb?'targetKey')
   and not(:'first_receipt'::jsonb?'contentVersion'),'a student receipt counts the reporter without exposing an answer-dependent fingerprint');
 select pg_temp.quality_assert(public.report_attempt_question((select attempt_id from quality_people where n=1),:'question','media','Another issue')->>'reportCount'='1','several reasons from one student cannot inflate the threshold');
-select pg_temp.quality_reject(format('select public.report_attempt_question(%L,%L,%L,null)',(select attempt_id from quality_people where n=1),:'question','incorrect'),'already reported this issue');
+select pg_temp.quality_reject(format('select public.report_attempt_question(%L,%L,%L,null)',(select attempt_id from quality_people where n=1),:'question','incorrect'),
+  'You have already reported this issue for this question version','P0001');
 do $$declare person record;begin for person in select * from quality_people where n between 2 and 4 loop
   perform set_config('request.jwt.claim.sub',person.user_id::text,true);
   perform public.report_attempt_question(person.attempt_id,'20000000-0000-4000-8000-000000000201','incomplete',null);
@@ -212,7 +216,8 @@ do $$declare item record;begin for item in select * from quality_rate_questions 
   perform public.report_attempt_question((select attempt_id from quality_people where n=12),item.question_id,'other','Fictional rate fixture');
 end loop;end $$;
 select pg_temp.quality_reject(format('select public.report_attempt_question(%L,%L,%L,null)',(select attempt_id from quality_people where n=12),
-  (select question_id from quality_rate_questions offset 20 limit 1),'other'),'Too many question reports');
+  (select question_id from quality_rate_questions offset 20 limit 1),'other'),
+  'Too many question reports. Please try again after the hourly window','P0001');
 select pg_temp.quality_reject('select * from dm_private.question_review_events','permission denied');
 reset role;
 select pg_temp.quality_assert((select count(*)=20 from dm_private.question_reports where reporter_id=(select user_id from quality_people where n=12)),

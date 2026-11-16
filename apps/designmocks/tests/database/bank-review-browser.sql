@@ -150,7 +150,16 @@ select dm_private.bank_review_version(q) as hold_after from dm_private.bank_ques
 set local role authenticated;
 select pg_temp.bank_reject(format('select public.admin_review_bank_question(%L,true,true,%L,%L)','bank-review-027','Fictional rights note',:'hold_before'),'Question changed');
 select pg_temp.bank_reject(format('select public.admin_review_bank_question(%L,true,true,%L,%L)','bank-review-027','Fictional rights note',:'hold_after'),'Inactive or held');
+select pg_temp.bank_reject(format('select public.admin_prepare_bank_answer_correction(%L,%L,%L,%L)','bank-review-027',:'hold_before','A','Verified review note'),'Question changed');
+select public.admin_prepare_bank_answer_correction('bank-review-027',:'hold_after','A','Verified review note') as held_correction \gset
+select pg_temp.bank_assert(:'held_correction'::jsonb#>>'{packet,publicationState}'='git-review-required',
+  'an administrator can prepare an exact-version correction for a locally held question');
+
 reset role;
+
+select pg_temp.bank_assert((select payload#>>'{answer,raw}'='B' from dm_private.bank_questions where external_key='bank-review-027')
+  and (select count(*)=1 from dm_private.bank_local_holds where external_key='bank-review-027'),
+  'preparing a correction leaves the held record and hold in place');
 
 select dm_private.bank_review_version(q) as approve_version from dm_private.bank_questions q where external_key='bank-review-028' \gset
 set local role authenticated;

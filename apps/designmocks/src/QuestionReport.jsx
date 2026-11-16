@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { questionReportConfirmation } from "./question-quality.js";
 
 export function QuestionReport({ disabled = false, onSubmit }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+  const submitting = useRef(false);
 
   const submit = async (event) => {
     event.preventDefault();
+    if (disabled || submitting.current) return;
     const form = new FormData(event.currentTarget);
+    submitting.current = true;
     setBusy(true);
     setMessage("");
     try {
@@ -21,6 +24,7 @@ export function QuestionReport({ disabled = false, onSubmit }) {
     } catch (error) {
       setMessage(error.message);
     } finally {
+      submitting.current = false;
       setBusy(false);
     }
   };
@@ -53,7 +57,7 @@ export function QuestionReport({ disabled = false, onSubmit }) {
             <textarea name="details" maxLength="1000" rows="3" />
           </label>
           <div className="admin-actions">
-            <button className="button quiet" disabled={busy}>
+            <button className="button quiet" disabled={disabled || busy}>
               {busy ? "Sending…" : "Send report"}
             </button>
             <button
@@ -83,7 +87,7 @@ export function QuestionReportPreview() {
         Review a <em>question.</em>
       </h1>
       <QuestionReport
-        onSubmit={async () => ({ reportCount: 2, threshold: 5 })}
+        onSubmit={async () => ({ reportCount: 2, threshold: 5, held: false })}
       />
     </section>
   );

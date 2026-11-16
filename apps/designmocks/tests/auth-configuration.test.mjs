@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { resolveAuthConfiguration, authCallbackMessage } from "../src/authConfiguration.mjs";
 
 const base = { deployment: "staging", url: "https://fixture-project.supabase.co", key: "sb_publishable_fictional_fixture" };
+const productionOrigin = "https://dmocks.com";
+const production = { ...base, deployment: "production", origin: productionOrigin, productionOrigin, portalEnabled: true };
 const closed = { authReady: false, portalReady: false, testLoginMode: false, stagingPortalMode: false, checkoutReady: false };
 test("closed defaults do not instantiate authentication or paid access", () => {
   assert.deepEqual(resolveAuthConfiguration({ deployment: "production" }), closed);
@@ -14,14 +16,14 @@ test("test login cannot become a production release or coincide with paid portal
   assert.throws(() => resolveAuthConfiguration({ ...base, deployment: "production", testLoginEnabled: true }));
   assert.throws(() => resolveAuthConfiguration({ ...base, mode: "production", deployment: "development", testLoginEnabled: true }));
   assert.throws(() => resolveAuthConfiguration({ ...base, portalEnabled: true, testLoginEnabled: true, termsVersion: "fixture" }));
-  assert.throws(() => resolveAuthConfiguration({ ...base, deployment: "production", portalEnabled: true }));
-  assert.deepEqual(resolveAuthConfiguration({ ...base, deployment: "production", portalEnabled: true, termsVersion: "fixture" }), {
+  assert.throws(() => resolveAuthConfiguration(production), /published terms/);
+  assert.deepEqual(resolveAuthConfiguration({ ...production, termsVersion: "fixture" }), {
     ...closed, authReady: true, portalReady: true, checkoutReady: false,
   });
 });
 test("opening checkout requires its separate explicit switch and a matching customer notice revision",()=>{
  const version='fictional-approved-terms';
- const input={...base,deployment:'production',portalEnabled:true,termsVersion:version,noticeVersion:version};
+ const input={...production,termsVersion:version,noticeVersion:version};
  for(const checkoutEnabled of[undefined,false,'true',1])assert.equal(resolveAuthConfiguration({...input,checkoutEnabled}).checkoutReady,false);
  assert.equal(resolveAuthConfiguration({...input,checkoutEnabled:true}).checkoutReady,true);
  for (const noticeVersion of [undefined, null, "earlier-version"]) {
@@ -31,6 +33,15 @@ test("opening checkout requires its separate explicit switch and a matching cust
  }
  assert.equal(resolveAuthConfiguration({...base,testLoginEnabled:true,checkoutEnabled:true}).checkoutReady,false);
  assert.equal(resolveAuthConfiguration({deployment:'production',checkoutEnabled:true}).checkoutReady,false);
+});
+
+test("a copied production portal stays closed outside the approved apex origin", () => {
+  const input = { ...production, checkoutEnabled: true, termsVersion: "fixture", noticeVersion: "fixture" };
+  assert.equal(resolveAuthConfiguration(input).checkoutReady, true);
+  assert.throws(() => resolveAuthConfiguration({ ...input, productionOrigin: undefined }), /approved origin/);
+  for (const origin of ["https://www.dmocks.com", "https://dmocks.com.example.invalid", "http://127.0.0.1:4192"]) {
+    assert.deepEqual(resolveAuthConfiguration({ ...input, origin }), closed);
+  }
 });
 test("the private staging portal pins the build, browser origin and backend with checkout closed", () => {
   const stagingTarget = { url: base.url, origin: "https://approved-staging.example" };

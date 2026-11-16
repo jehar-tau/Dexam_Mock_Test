@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 import { fileURLToPath } from "node:url";
-import { emptyAdminRead, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
+import { emptyAdminRead, portalFixtureURL, seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 test.use({ baseURL: 'http://127.0.0.1:4799' });
 const editor = { id: "00000000-0000-4000-8000-000000000121", email: "bank-review@example.invalid" };
@@ -11,7 +11,7 @@ const figureURL = "https://bank-figure-fixture.invalid/figure.png";
 const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info", "Access-Control-Allow-Methods": "POST, OPTIONS" };
 const changedMessage = "Question changed. Refresh the bank and review it again.";
 
-async function fixture(page, { admin = true } = {}) {
+async function fixture(page, { admin = true, fullPortal = false } = {}) {
   const questions = Array.from({ length: 52 }, (_, index) => {
     const n = index + 1;
     return { externalKey: `bank-review-${String(n).padStart(3, "0")}`, exam: n % 2 ? "uceed" : "ceed", type: "MCQ",
@@ -67,7 +67,7 @@ async function fixture(page, { admin = true } = {}) {
     }
   });
   await page.route(figureURL, route => route.fulfill({ body: png, contentType: "image/png" }));
-  await page.goto("/admin");
+  await page.goto(fullPortal ? portalFixtureURL + "/admin" : "/admin");
   await seedPortalSession(page, editor);
   await page.reload();
   return { ...state, ...provider };
@@ -249,9 +249,12 @@ test("students cannot load bank questions or private review figures from the adm
 });
 
 test("an administrator downloads a version-pinned answer correction for Git review", async ({ page }) => {
-  const state = await fixture(page);
+  const state = await fixture(page, { fullPortal: true });
+  state.questions[0].holdReason = "Held after multiple student reports.";
   await page.getByRole("button", {name: "Open question bank-review-001", exact: true}).click();
   const review = page.getByRole("region", {name: "Question review"});
+  await expect(review.getByText("Held after multiple student reports.")).toBeVisible();
+  await expect(review.getByRole("button", {name: "Approve for practice"})).toHaveCount(0);
   await review.getByText("Prepare answer correction", {exact: true}).click();
   await review.getByLabel("Proposed answer").fill("A");
   await review.getByLabel("Source evidence").fill("Verified against the fictional answer key.");
@@ -268,4 +271,13 @@ test("an administrator downloads a version-pinned answer correction for Git revi
     p_answer: "A", p_review_note: "Verified against the fictional answer key.",
   }]);
   expect(state.questions[0].answer.raw).toBe("B");
+});
+
+test("paid MVP bank review hides the full portal correction action", async ({ page }) => {
+  const state = await fixture(page);
+  await page.getByRole("button", {name: "Open question bank-review-001", exact: true}).click();
+  const review = page.getByRole("region", {name: "Question review"});
+  await expect(review.getByRole("button", {name: "Request correction", exact: true})).toBeVisible();
+  await expect(review.getByText("Prepare answer correction", {exact: true})).toHaveCount(0);
+  expect(state.calls.some(([name]) => name === "admin_prepare_bank_answer_correction")).toBe(false);
 });

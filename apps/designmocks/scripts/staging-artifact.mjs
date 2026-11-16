@@ -13,6 +13,7 @@ import { publishedNoticeVersionPattern } from "../src/authConfiguration.mjs";
 const appPath = "apps/designmocks";
 const stagingSchema = "dmocks-private-staging-artifact-v1";
 const checkoutSchema = "dmocks-private-checkout-artifact-v1";
+const productionSchema = "dmocks-production-artifact-v1";
 const gitIdPattern = /^[0-9a-f]{40}$/;
 const digestPattern = /^[0-9a-f]{64}$/;
 const sha256 = value => createHash("sha256").update(value).digest("hex");
@@ -76,7 +77,28 @@ export function checkoutArtifactProfile(project, { frontendOrigin, providerOrigi
   };
 }
 
-async function checkoutNoticeInput(noticesPath, expectedVersion) {
+export function productionArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey, noticeVersion, enableCheckout = false }) {
+  const productionRef = /^https:\/\/([a-z0-9]{20})\.supabase\.co$/.exec(providerOrigin ?? "")?.[1];
+  if (!/^[a-z0-9]{20}$/.test(project?.project_ref ?? "") || !exactHttpsOrigin(frontendOrigin) ||
+      frontendOrigin !== project.frontend_origin || frontendOrigin === project.staging_frontend_origin ||
+      !productionRef || productionRef === project.project_ref || providerOrigin === frontendOrigin) {
+    throw new Error("Use the approved DMocks origin and a separate production Supabase project");
+  }
+  if (!isPublicKey(publicKey, productionRef)) {
+    throw new Error("Supply a publishable key or an anon key for the production project");
+  }
+  if (typeof noticeVersion !== "string" || !publishedNoticeVersionPattern.test(noticeVersion)) {
+    throw new Error("Supply the reviewed customer notice version for production");
+  }
+  if (typeof enableCheckout !== "boolean") throw new Error("Choose an explicit checkout switch");
+  return {
+    deployment: "production", backendProfile: "paid-mvp", frontendOrigin, providerOrigin, publicKeySha256: sha256(publicKey),
+    stagingPortalEnabled: false, postLaunchPreview: false, checkoutEnabled: enableCheckout,
+    releasedPortalEnabled: true, controlledLoginEnabled: false, phoneVerificationEnabled: false, noticeVersion,
+  };
+}
+
+async function reviewedNoticeInput(noticesPath, expectedVersion) {
   if (typeof noticesPath !== "string" || !path.isAbsolute(noticesPath) ||
       typeof expectedVersion !== "string" || !publishedNoticeVersionPattern.test(expectedVersion)) {
     throw new Error("Supply an absolute customer notice file and its reviewed version");
@@ -88,7 +110,7 @@ async function checkoutNoticeInput(noticesPath, expectedVersion) {
   try {
     notices = compilePublishedNotices(JSON.parse(bytes.toString("utf8")));
   } catch {
-    throw new Error("The Test checkout artifact requires a reviewed release notice bundle");
+    throw new Error("The artifact requires a reviewed release notice bundle");
   }
   if (notices.version !== expectedVersion) throw new Error("The customer notice does not match its reviewed version");
   return { bytes, version: notices.version };
@@ -157,19 +179,22 @@ async function verifyArtifact({ directory, expected, paidPilot = false }, schema
 
 export function verifyStagingArtifact(options) { return verifyArtifact(options, stagingSchema); }
 export function verifyCheckoutArtifact(options) { return verifyArtifact(options, checkoutSchema); }
+export function verifyProductionArtifact(options) { return verifyArtifact(options, productionSchema); }
 
 async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin, providerOrigin, publicKey, output,
-  noticesPath, expectedNoticeVersion, paidPilot }, schema) {
+  noticesPath, expectedNoticeVersion, paidPilot, enableCheckout }, schema) {
   const preflight = await runPreflight({ cwd, commit, tree });
   const env = buildEnvironment();
   const repositoryRoot = run("git", ["rev-parse", "--show-toplevel"], { cwd, env, failure: "Could not identify the reviewed source repository" }).trim();
   const project = JSON.parse(run("git", ["show", `${preflight.head}:${appPath}/supabase/project.json`], {
     cwd: repositoryRoot, env, failure: "Could not read the reviewed DMocks project",
   }));
-  const notice = schema === checkoutSchema ? await checkoutNoticeInput(noticesPath, expectedNoticeVersion) : null;
-  const profile = notice
-    ? checkoutArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey, noticeVersion: notice.version })
-    : stagingArtifactProfile(project, { frontendOrigin, providerOrigin, publicKey, paidPilot });
+  const notice = schema === stagingSchema ? null : await reviewedNoticeInput(noticesPath, expectedNoticeVersion);
+  const profileInputs = { frontendOrigin, providerOrigin, publicKey, noticeVersion: notice?.version, paidPilot, enableCheckout };
+  const profileFor = {
+    [stagingSchema]: stagingArtifactProfile, [checkoutSchema]: checkoutArtifactProfile, [productionSchema]: productionArtifactProfile,
+  };
+  const profile = profileFor[schema](project, profileInputs);
   const target = await outputDirectory(output, env);
   const sourceRoot = await mkdtemp(path.join(tmpdir(), "dmocks-artifact-source-"));
   let ownedOutput = false;
@@ -236,31 +261,40 @@ async function buildArtifact({ cwd = process.cwd(), commit, tree, frontendOrigin
 
 export function buildStagingArtifact(options) { return buildArtifact(options, stagingSchema); }
 export function buildCheckoutArtifact(options) { return buildArtifact(options, checkoutSchema); }
+export function buildProductionArtifact(options) { return buildArtifact(options, productionSchema); }
 
 async function main() {
   const [action, ...args] = process.argv.slice(2);
+  const builders = {
+    build: [buildStagingArtifact, "DMOCKS_STAGING_PUBLISHABLE_KEY"],
+    "build-checkout": [buildCheckoutArtifact, "DMOCKS_CHECKOUT_PUBLISHABLE_KEY"],
+    "build-production": [buildProductionArtifact, "DMOCKS_PRODUCTION_PUBLISHABLE_KEY"],
+  };
+  const verifiers = { verify: verifyStagingArtifact, "verify-checkout": verifyCheckoutArtifact, "verify-production": verifyProductionArtifact };
   let result;
-  if (action === "build" || action === "build-checkout") {
-    const checkout = action === "build-checkout";
+  if (Object.hasOwn(builders, action)) {
+    const [build, publicKeyVariable] = builders[action];
     const { values } = parseArgs({ args, options: {
       commit: { type: "string" }, tree: { type: "string" }, output: { type: "string" },
       "frontend-origin": { type: "string" }, "provider-origin": { type: "string" },
-      ...(checkout ? { notices: { type: "string" }, "expect-notice-version": { type: "string" } } : { "paid-pilot": { type: "boolean" } }),
+      ...(action === "build" ? { "paid-pilot": { type: "boolean" } } :
+        { notices: { type: "string" }, "expect-notice-version": { type: "string" } }),
+      ...(action === "build-production" ? { "enable-checkout": { type: "boolean" } } : {}),
     } });
-    const build = checkout ? buildCheckoutArtifact : buildStagingArtifact;
     result = await build({
       commit: values.commit, tree: values.tree, output: values.output,
       frontendOrigin: values["frontend-origin"], providerOrigin: values["provider-origin"],
-      publicKey: checkout ? process.env.DMOCKS_CHECKOUT_PUBLISHABLE_KEY : process.env.DMOCKS_STAGING_PUBLISHABLE_KEY,
+      publicKey: process.env[publicKeyVariable],
       noticesPath: values.notices, expectedNoticeVersion: values["expect-notice-version"], paidPilot: values["paid-pilot"],
+      enableCheckout: values["enable-checkout"],
     });
-  } else if (action === "verify" || action === "verify-checkout") {
+  } else if (Object.hasOwn(verifiers, action)) {
     const { values } = parseArgs({ args, options: { artifact: { type: "string" }, expect: { type: "string" },
       ...(action === "verify" ? { "paid-pilot": { type: "boolean" } } : {}) } });
-    const verify = action === "verify-checkout" ? verifyCheckoutArtifact : verifyStagingArtifact;
+    const verify = verifiers[action];
     result = await verify({ directory: values.artifact, expected: values.expect, paidPilot: values["paid-pilot"] });
   } else {
-    throw new Error("Choose build or verify for the private staging artifact, or build-checkout or verify-checkout for private Test checkout");
+    throw new Error("Choose build or verify for staging, build-checkout or verify-checkout for Razorpay Test, or build-production or verify-production");
   }
   process.stdout.write(JSON.stringify(result, null, 2) + "\n");
 }
