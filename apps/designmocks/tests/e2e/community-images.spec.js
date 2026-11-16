@@ -60,6 +60,34 @@ test("invalid attachment counts, size and types create no Community text or uplo
   expect(state.postWrites).toBe(0);expect(state.uploads).toEqual([]);expect(state.unexpected).toEqual([]);
 });
 
+test("students can remove individual draft images from discussions and replies before upload", async ({page}) => {
+  const state = await fixture(page);
+  const [png, jpeg, webp] = await files();
+  await compose(page, [png, jpeg, webp]);
+  const discussion = page.getByRole("group", {name: "New discussion", exact: true});
+  const postPicker = discussion.getByLabel("Question images (optional, up to 3)", {exact: true});
+  await discussion.getByRole("button", {name: "Remove image 2: fictional.jpg"}).click();
+  await expect(postPicker).toBeFocused();
+  await expect(discussion.getByRole("list", {name: "Selected images"}).getByRole("listitem")).toHaveCount(2);
+  await page.getByRole("button", {name: "Post to community", exact: true}).click();
+  await expect(page.getByRole("img", {name: "Question attachment 2", exact: true})).toBeVisible();
+  await expect(discussion.getByRole("list", {name: "Selected images"})).toHaveCount(0);
+
+  const reply = page.getByRole("group", {name: "New reply", exact: true});
+  await reply.getByLabel("Add a reply", {exact: true}).fill("This original fictional answer keeps one image.");
+  await reply.getByLabel("Solution images (optional, up to 3)", {exact: true}).setInputFiles([png, jpeg]);
+  await reply.getByRole("button", {name: "Remove image 1: fictional.png"}).press("Enter");
+  await reply.getByRole("button", {name: "Reply", exact: true}).click();
+  await expect(page.getByRole("img", {name: "Solution attachment 1", exact: true})).toBeVisible();
+  await expect(reply.getByRole("list", {name: "Selected images"})).toHaveCount(0);
+  expect(state.uploads.map(({targetType, ordinal, name}) => [targetType, ordinal, name])).toEqual([
+    ["post", 1, "fictional.png"], ["post", 2, "fictional.webp"], ["comment", 1, "fictional.jpg"],
+  ]);
+  expect(state.postWrites).toBe(1);
+  expect(state.replyWrites).toBe(1);
+  expect(state.unexpected).toEqual([]);
+});
+
 test("partial post images resume one saved discussion and preserve order and WebP orientation",async({page})=>{
   const state=await fixture(page);await expect(page.getByText("No discussions match these filters.",{exact:true})).toBeVisible();
   let releaseFeed,heldFeed=0;const held=new Promise(resolve=>{releaseFeed=resolve;});

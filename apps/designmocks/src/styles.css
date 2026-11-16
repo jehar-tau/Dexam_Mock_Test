@@ -3967,6 +3967,10 @@ svg {
 }
 
 .community-fields{display:contents;border:0;padding:0;margin:0;min-width:0}
+.community-image-selection{min-width:0}
+.community-image-selection ul{display:grid;gap:.25rem;list-style:none;margin:.5rem 0 0;padding:0}
+.community-image-selection li{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.community-image-selection li span{min-width:0;overflow-wrap:anywhere}
 .community-upload-recovery{margin-block:1rem;display:flex;gap:.65rem;flex-wrap:wrap;align-items:center}
 .community-upload-recovery p{flex-basis:100%;margin:0}
 .community-upload-recovery button{min-height:44px;padding:.5rem .8rem}

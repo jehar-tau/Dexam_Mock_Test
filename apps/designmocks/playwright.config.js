@@ -17,6 +17,8 @@ export default defineConfig({
     '**/learn-lifecycle.spec.js',
     '**/learn-practice-context.spec.js',
     '**/learning-editor.spec.js',
+    '**/community-images.spec.js',
+    '**/community-followup-images.spec.js',
   ],
   testDir: "./tests/e2e",
   fullyParallel: true,
