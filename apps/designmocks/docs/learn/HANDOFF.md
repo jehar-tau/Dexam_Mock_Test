@@ -316,3 +316,32 @@ The isolated copy used for the full browser suite is a worktree of the same
 repository, so `git checkout -B feature/x` there moves the `feature/x` branch
 that the working worktree has checked out. Name the copy's branch
 `e2e/<topic>` and push with `git push origin e2e/<topic>:refs/heads/feature/<topic>`.
+
+## Update, 16 November 2026: the completion plan is finished
+
+Every row of `10-completion-plan.md` is marked Done (PRs 225–238). Built in
+this stretch: dice, visual series, colour tiers 2–4, shadows and light,
+surfaces of solids, sections of solids, fit and hidden figures,
+transparent sheets, areas (in counting figures), more machines (in
+mechanisms), visual observation, perspective and viewpoint, crafts, art and
+design history, product design thinking, posters, storyboarding and
+everyday physics.
+
+Two generic patterns now serve the knowledge topics:
+
+- **Recall** (`src/learn/recall.js`, decks in `src/learn/decks/`):
+  name-it, which-is-a, match the following, odd one out, put in order, two
+  conditions. Spec: `topics/recall-pattern.md`.
+- **Method** (`src/learn/method.js`): authored brief items plus computed
+  ones, ending with a checklist for the student's own drawing. Spec:
+  `topics/method-pattern.md`.
+
+Open items for the owner:
+
+- Read the recall decks (`decks/crafts.js`, `decks/history.js`) before the
+  crafts and art-history programmes leave the preview.
+- Known gaps are listed in each topic spec's "Not built" section; the
+  largest is detail-memory questions in visual observation, which need a
+  timed-reveal step in the player.
+- GitHub Actions still does not start; every PR was checked by hand with
+  the full browser suite in an isolated copy (see the two notes above).
