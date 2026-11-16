@@ -8,11 +8,12 @@ import test from "node:test";
 import project from "../supabase/project.json" with { type: "json" };
 
 const base = `https://${project.project_ref}.supabase.co`;
+const productionBase = `https://${"p".repeat(20)}.supabase.co`;
 const script = fileURLToPath(new URL("../scripts/check-hosted-setup.mjs", import.meta.url));
 const orderModule = new URL("../supabase/functions/_shared/create-order.mjs", import.meta.url);
 const webhookModule = new URL("../supabase/functions/_shared/payment-webhook.mjs", import.meta.url);
 
-function runSmoke(stage, fixture, { staging = false } = {}) {
+function runSmoke(stage, fixture, { staging = false, production = false, overrides = {} } = {}) {
   const folder = mkdtempSync(join(tmpdir(), "dmocks-commerce-smoke-"));
   const preload = `
     import assert from "node:assert/strict";
@@ -34,7 +35,8 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
     const webhook = createPaymentWebhookHandler(dependencies);
     globalThis.fetch = async (input, init) => {
       const url = new URL(input);
-      assert.equal(url.origin, ${JSON.stringify(base)});
+      assert.notEqual(fixture, "no-network", "the probe must fail before fetching");
+      assert.equal(url.origin, ${JSON.stringify(production ? productionBase : base)});
       assert.equal(init.redirect, "error");
       const request = new Request(input, init);
       const browserPreflight = request.method === "OPTIONS";
@@ -87,17 +89,22 @@ function runSmoke(stage, fixture, { staging = false } = {}) {
     };
   `;
   try {
-    const result = spawnSync(process.execPath, ["--import", "data:text/javascript," + encodeURIComponent(preload), script], {
+    const result = spawnSync(process.execPath, ["--import", "data:text/javascript," + encodeURIComponent(preload), script,
+      ...(production ? ["--production"] : [])], {
       cwd: folder, encoding: "utf8",
       env: {
         VITE_SUPABASE_URL: base, VITE_SUPABASE_ANON_KEY: "sb_publishable_fictional",
         ...(stage ? { DMOCKS_COMMERCE_STAGE: stage } : {}),
         ...(staging ? { DMOCKS_BACKEND_STAGE: "staging", DMOCKS_AUTH_STAGE: "controlled" } : {}),
+        ...(production ? { VITE_SUPABASE_URL: productionBase, DMOCKS_PRODUCTION_PROVIDER_ORIGIN: productionBase } : {}),
+        ...overrides,
       },
     });
     if (![0, 2].includes(result.status)) return result;
-    const name = stage === "configured" ? "hosted-configured-commerce-smoke.json" : staging ? "hosted-staging-smoke.json" : "hosted-smoke.json";
-    return { ...result, checks: JSON.parse(readFileSync(join(folder, "test-results", name), "utf8")) };
+    const name = production ? `hosted-production-${stage ?? "unconfigured"}-smoke.json`
+      : stage === "configured" ? "hosted-configured-commerce-smoke.json" : staging ? "hosted-staging-smoke.json" : "hosted-smoke.json";
+    const receipt = JSON.parse(readFileSync(join(folder, "test-results", name), "utf8"));
+    return { ...result, receipt, checks: production ? receipt.checks : receipt };
   } finally {
     rmSync(folder, { recursive: true, force: true });
   }
@@ -108,6 +115,36 @@ test("default hosted smoke retains the unconfigured 503 checks", () => {
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(result.checks.filter(check => check.status === 503).map(check => check.check),
     ["create-order setup/identity gate", "payment-webhook setup/identity gate"]);
+});
+
+test("production smoke binds a separate backend to the apex and writes a production-only receipt", () => {
+  for (const stage of ["unconfigured", "configured"]) {
+    const result = runSmoke(stage, stage, { production: true });
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(result.receipt.environment, "production");
+    assert.equal(result.receipt.providerOrigin, productionBase);
+    assert.equal(result.receipt.frontendOrigin, project.frontend_origin);
+    assert.equal(result.receipt.authStage, "closed");
+    assert.equal(result.receipt.commerceStage, stage);
+    assert.ok(result.checks.every(check => check.passed));
+  }
+});
+
+test("production smoke rejects staging, unapproved origins and stray credentials before fetching", () => {
+  const legacyKey = "fixture." + Buffer.from(JSON.stringify({ role: "anon", ref: project.project_ref })).toString("base64url") + ".fixture";
+  for (const [overrides, error] of [
+    [{ DMOCKS_PRODUCTION_PROVIDER_ORIGIN: "" }, /separate production provider origin/],
+    [{ VITE_SUPABASE_URL: base, DMOCKS_PRODUCTION_PROVIDER_ORIGIN: base }, /separate production provider origin/],
+    [{ VITE_SUPABASE_URL: "https://private-target.invalid" }, /separate production provider origin/],
+    [{ VITE_SUPABASE_ANON_KEY: "sb_secret_fictional" }, /publishable or legacy anon key/],
+    [{ VITE_SUPABASE_ANON_KEY: legacyKey }, /anon key must match the production project/],
+    [{ DMOCKS_BACKEND_STAGE: "staging" }, /paid MVP foundation checks/],
+  ]) {
+    const result = runSmoke("configured", "no-network", { production: true, overrides });
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, error);
+    assert.doesNotMatch(result.stderr, /must fail before fetching|sb_secret_fictional|private-target\.invalid/);
+  }
 });
 
 test("configured smoke uses actual handlers and reports rejection-only scope", () => {

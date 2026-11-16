@@ -3,26 +3,38 @@ import assert from "node:assert/strict";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import {parseArgs} from "node:util";
 import {probeStagingEdge, stagingEdgeSetupChecks} from "./staging-edge-readiness.mjs";
-const {values} = parseArgs({options: {"portal-only": {type: "boolean"}}});
+const {values} = parseArgs({options: {"portal-only": {type: "boolean"}, production: {type: "boolean"}}});
 const portalOnly = values["portal-only"] === true;
-try {
-  process.loadEnvFile(".env.local");
-} catch {}
+const production = values.production === true;
+if (!production) {
+  try {
+    process.loadEnvFile(".env.local");
+  } catch {}
+}
 const project = JSON.parse(
   await readFile(new URL("../supabase/project.json", import.meta.url), "utf8"),
 );
 const base = process.env.VITE_SUPABASE_URL,
   key = process.env.VITE_SUPABASE_ANON_KEY;
-assert.equal(
-  base,
-  `https://${project.project_ref}.supabase.co`,
-  "Explicit independent project URL required",
-);
+const stagingProvider = `https://${project.project_ref}.supabase.co`;
+if (production) {
+  assert.ok(/^https:\/\/[a-z0-9]{20}\.supabase\.co$/.test(base ?? "") && base !== stagingProvider &&
+    base === process.env.DMOCKS_PRODUCTION_PROVIDER_ORIGIN, "Explicit separate production provider origin required");
+} else {
+  assert.ok(base === stagingProvider, "Explicit independent project URL required");
+}
 assert.ok(key, "A public anon key is required; never use a service key");
-if (!key.startsWith("sb_publishable_")) {
-  assert.equal(key.split(".").length, 3, "A publishable or legacy anon key is required");
-  const payload = JSON.parse(Buffer.from(key.split(".")[1], "base64url"));
-  assert.equal(payload.role, "anon", "Only the public anon role is allowed");
+if (!/^sb_publishable_[\w-]+$/.test(key)) {
+  const segments = key.split(".");
+  assert.ok(segments.length === 3 && segments.every(segment => /^[\w-]+$/.test(segment)), "A publishable or legacy anon key is required");
+  let payload;
+  try {
+    payload = JSON.parse(Buffer.from(segments[1], "base64url"));
+  } catch {
+    throw new Error("A publishable or legacy anon key is required");
+  }
+  assert.ok(payload?.role === "anon", "Only the public anon role is allowed");
+  if (production) assert.ok(payload.ref === new URL(base).hostname.split(".")[0], "The public anon key must match the production project");
 }
 const results = [];
 const authStage = process.env.DMOCKS_AUTH_STAGE || "closed";
@@ -33,6 +45,7 @@ const commerceStage = process.env.DMOCKS_COMMERCE_STAGE || "unconfigured";
 assert.ok(["unconfigured", "configured"].includes(commerceStage), "Choose unconfigured or configured commerce handler checks");
 const configuredCommerce = commerceStage === "configured";
 const staging = backendStage === "staging";
+assert.ok(!production || backendStage === "foundation", "Production requires the paid MVP foundation checks");
 assert.ok(staging || !portalOnly, "--portal-only requires the staging backend");
 if (staging) {
   assert.equal(authStage, "controlled", "Staging requires the controlled Auth stage");
@@ -225,25 +238,23 @@ if (staging) {
   results.push(...stagingEdgeSetupChecks(edge));
 }
 await mkdir("test-results", { recursive: true });
-await writeFile(
-  configuredCommerce ? "test-results/hosted-configured-commerce-smoke.json"
-    : staging ? "test-results/hosted-staging-smoke.json" : "test-results/hosted-smoke.json",
-  JSON.stringify(results, null, 2) + "\n",
-);
 const passed = results.every(result => result.required === false || result.passed);
-console.log(
-  JSON.stringify(
-    {
-      project: project.name,
-      backendStage,
-      ...(staging ? { edgeScope: portalOnly ? "private-portal" : "full" } : {}),
-      ...(configuredCommerce ? { commerceStage, commerceScope: "Handler rejection only. Merchant mode, secrets and provider acceptance are unverified." } : {}),
-      checks: results.length,
-      passed,
-    },
-    null,
-    2,
-  ),
+const summary = {
+  project: project.name,
+  backendStage,
+  ...(production ? { environment: "production", providerOrigin: base, frontendOrigin: origin, authStage } : {}),
+  ...(staging ? { edgeScope: portalOnly ? "private-portal" : "full" } : {}),
+  ...(production || configuredCommerce ? { commerceStage } : {}),
+  ...(configuredCommerce ? { commerceScope: "Handler rejection only. Merchant mode, secrets and provider acceptance are unverified." } : {}),
+  checks: results.length,
+  passed,
+};
+await writeFile(
+  production ? `test-results/hosted-production-${commerceStage}-smoke.json`
+    : configuredCommerce ? "test-results/hosted-configured-commerce-smoke.json"
+      : staging ? "test-results/hosted-staging-smoke.json" : "test-results/hosted-smoke.json",
+  JSON.stringify(production ? { ...summary, checks: results } : results, null, 2) + "\n",
 );
+console.log(JSON.stringify(summary, null, 2));
 
 if (!passed) process.exitCode = 2;
