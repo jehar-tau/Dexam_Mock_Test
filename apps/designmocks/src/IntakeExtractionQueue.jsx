@@ -83,7 +83,7 @@ function IntakeQuestionEditor({ payload, pageNumber, manual, onSubmit, onPrepare
       <label>Topic, when known<input name="topic" value={values.topic} onChange={change} maxLength="120" /></label>
       {choice && <fieldset><legend>Answer options</legend>
         {values.options.map((option, index) => <div className="intake-option" key={index}>
-          <label>Option {index + 1} key<input required maxLength="32" pattern="[A-Za-z0-9_-]+" value={option.key} onChange={event => updateOption(index, "key", event.target.value)} /></label>
+          <label>Option {index + 1} key<input required maxLength="32" pattern={"[A-Za-z0-9_\\-]+"} value={option.key} onChange={event => updateOption(index, "key", event.target.value)} /></label>
           <label>Option {index + 1} text<textarea required maxLength="2000" rows="2" value={option.text} onChange={event => updateOption(index, "text", event.target.value)} /></label>
           <button type="button" disabled={values.options.length <= 2} onClick={() => setValues(current => ({ ...current, options: current.options.filter((_, at) => at !== index) }))}>Remove option {index + 1}</button>
         </div>)}

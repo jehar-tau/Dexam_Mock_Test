@@ -173,6 +173,10 @@ test("PDF/photo uploads, private source download, corrected figures and rights e
   await asset.getByRole("button", { name: "Extract with configured model" }).click();
   const candidate = asset.getByRole("region", { name: "Candidate 1", exact: true });
   await expect(candidate.getByLabel("Question wording")).toHaveValue(extracted.prompt);
+  const key = candidate.getByLabel("Option 1 key", {exact:true});
+  await key.fill("invalid key");
+  expect(await key.evaluate(input => input.validity.patternMismatch)).toBe(true);
+  await key.fill("A");
   await expect(candidate.getByRole("combobox", { name: "Exam", exact: true })).toHaveValue("");
   await expect(candidate.getByLabel("Verified answer")).toHaveValue("");
   await candidate.getByRole("combobox", { name: "Exam", exact: true }).selectOption("uceed");
