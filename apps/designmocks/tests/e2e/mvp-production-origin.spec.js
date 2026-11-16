@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { mkdtemp, realpath, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { isAbsolute, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, test } from "@playwright/test";
 import project from "../../supabase/project.json" with { type: "json" };
@@ -11,7 +11,7 @@ import { seedPortalSession } from "./portal-fixture.js";
 const app = fileURLToPath(new URL("../../", import.meta.url));
 const approved = project.frontend_origin;
 const otherOrigins = [new URL(approved).protocol + "//www." + new URL(approved).host, project.staging_frontend_origin];
-const providerRef = "dmocks-fictitious-production";
+const providerRef = "dmocksprodfixture001";
 const provider = "https://" + providerRef + ".supabase.co";
 const student = { id: "00000000-0000-4000-8000-000000009681", email: "fictional-production@example.invalid" };
 
@@ -19,6 +19,12 @@ let directory, site;
 test.use({ serviceWorkers: "block" });
 
 test.beforeAll(async () => {
+  const suppliedSite = process.env.DMOCKS_PRODUCTION_ARTIFACT_SITE;
+  if (suppliedSite !== undefined) {
+    if (!isAbsolute(suppliedSite)) throw new Error("Use an absolute DMOCKS_PRODUCTION_ARTIFACT_SITE");
+    site = await realpath(suppliedSite);
+    return;
+  }
   directory = await mkdtemp(join(tmpdir(), "dmocks-production-origin-"));
   site = join(directory, "site");
   const env = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith("VITE_") && key !== "DMOCKS_PUBLISHED_NOTICES_FILE"));
@@ -60,6 +66,8 @@ test("the production artifact opens Google sign-in only from the approved origin
   }
   expect(providerRequests).toEqual([]);
 
+  await page.goto(approved + "/plans");
+  await expect(page.getByRole("button", { name: "Pay ₹1,193 with Razorpay", exact: true })).toHaveCount(0);
   await page.goto(approved + "/account");
   await expect(google).toBeEnabled();
   await google.click();
