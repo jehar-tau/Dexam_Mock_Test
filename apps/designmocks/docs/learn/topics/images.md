@@ -26,13 +26,23 @@ kind, `identify` ("This picture shows a … Which one?"), for every deck with
 at least four photographs. Its alt text describes the kind of thing without
 naming the answer.
 
-## Drawings
+## AI illustrations and diagrams
 
-`src/learn/method-figures.jsx`: ramps drawn to scale (heights six times
-taller), four chairs for the stability question, poster layouts (clear
-hierarchy, equal pictures, a wall of text, a tiny headline), storyboard
-shots (wide, close-up, reaction), and pendulum frames drawn on top of each
-other.
+Owner decision, 16 November 2026, after reviewing the first drawings made
+in code: illustrative pictures are AI-generated; pictures whose numbers
+decide the answer stay as exact diagrams, redrawn more carefully.
+
+- **AI-generated** (Figma image generation, model gpt-image-2.5-flare,
+  made for DMocks in the Figma file "DMocks Learn illustrations"): four
+  chairs for the stability question, four poster layouts, four storyboard
+  shots (wide, close-up, reaction, empty sky). Prompts asked for no
+  letters or words, so no garbled text appears; each image was checked
+  before use. Files: `public/learn-images/illustrations/` (12 images,
+  about 220 KB).
+- **Exact diagrams** (`src/learn/method-figures.jsx`): ramps drawn to scale
+  (heights six times taller) with a wheelchair, shading and dimension
+  arrows; pendulum frames on a mounted bracket with a dashed swing guide
+  and numbered bobs. AI images cannot keep these numbers exact.
 
 ## Checks
 
