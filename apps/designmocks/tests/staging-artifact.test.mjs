@@ -109,12 +109,17 @@ test("production binds the reviewed apex to a separate database and defaults che
 async function bundle(t, {
   schema = "dmocks-private-staging-artifact-v1",
   profile = stagingArtifactProfile(project, values),
+  includeLearnImage = false,
 } = {}) {
   const directory = await mkdtemp(path.join(tmpdir(), "dmocks-staging-bundle-fixture-"));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const site = path.join(directory, "site");
   await mkdir(path.join(site, "assets"), { recursive: true });
   const original = { "assets/app.js": "console.log('fictional fixture');\n", "index.html": "<p>Private fixture</p>\n" };
+  if (includeLearnImage) {
+    await mkdir(path.join(site, "learn-images"));
+    original["learn-images/fictional.jpg"] = "fictional image bytes";
+  }
   for (const [file, content] of Object.entries(original)) await writeFile(path.join(site, file), content);
   const source = { commit: "a".repeat(40), tree: "b".repeat(40), backendInventorySha256: "c".repeat(64) };
   const manifest = {
@@ -147,6 +152,24 @@ test("pilot verification rejects a valid package for the broader staging workspa
   assert.equal((await verifyStagingArtifact({ ...pilot, paidPilot: true })).verified, true);
   await assert.rejects(verifyStagingArtifact({ ...workspace, paidPilot: true }), /private paid-paper pilot/);
   await assert.rejects(verifyStagingArtifact({ ...checkoutOpened, paidPilot: true }), /private paid-paper pilot/);
+});
+
+test("Learn images follow the approved portal build profile", async t => {
+  assert.equal((await verifyStagingArtifact(await bundle(t, { includeLearnImage: true }))).fileCount, 3);
+  const pilot = await bundle(t, { includeLearnImage: true,
+    profile: stagingArtifactProfile(project, { ...values, paidPilot: true }) });
+  assert.equal((await verifyStagingArtifact({ ...pilot, paidPilot: true })).fileCount, 3);
+  const checkout = await bundle(t, { includeLearnImage: true, schema: "dmocks-private-checkout-artifact-v1",
+    profile: checkoutArtifactProfile(project, checkoutValues) });
+  assert.equal((await verifyCheckoutArtifact(checkout)).fileCount, 3);
+
+  const profile = productionArtifactProfile(project, productionValues);
+  const schema = "dmocks-production-artifact-v1";
+  const production = await bundle(t, { includeLearnImage: true, schema, profile });
+  assert.equal((await verifyProductionArtifact(production)).fileCount, 3);
+  const closed = await bundle(t, { includeLearnImage: true, schema,
+    profile: { ...profile, releasedPortalEnabled: false, postLaunchPreview: true } });
+  await assert.rejects(verifyProductionArtifact(closed), /closed artifact contains Learn preview images/);
 });
 
 test("artifact verification rejects altered, extra, missing and symlink assets", async t => {

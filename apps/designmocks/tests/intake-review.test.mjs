@@ -1,12 +1,23 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { webcrypto } from "node:crypto";
-import { intakeFigureDescriptor, intakeReviewPayload, intakeReviewValues } from "../src/intake-review.js";
+import { intakeFigureDescriptor, intakePhotoBlob, intakeReviewPayload, intakeReviewValues } from "../src/intake-review.js";
 import { collectCanonicalMedia, verifyAssetBytes } from "../scripts/private-bank-media.mjs";
 import { buildManifest, runtimeQuestion } from "../scripts/question-bank-import.mjs";
 import { RULES_2027 } from "../scripts/question-runtime.mjs";
 
 const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4+vEFAAWtAs+P9YeZAAAAAElFTkSuQmCC", "base64");
+
+test("source photo inspection preserves verified bytes and refuses a mismatched file or PDF", async () => {
+  const downloaded = new Blob([png], {type:"application/octet-stream"});
+  const photo = await intakePhotoBlob(downloaded, {mimeType:"image/png",byteSize:png.length});
+  assert.equal(photo.type, "image/png");
+  assert.deepEqual(Buffer.from(await photo.arrayBuffer()), png);
+  await assert.rejects(intakePhotoBlob(downloaded, {mimeType:"image/jpeg",byteSize:png.length}), /could not be verified/);
+  await assert.rejects(intakePhotoBlob(downloaded, {mimeType:"image/png",byteSize:png.length + 1}), /could not be verified/);
+  const pdf = new Blob(["%PDF-1.7"], {type:"application/pdf"});
+  await assert.rejects(intakePhotoBlob(pdf, {mimeType:"application/pdf",byteSize:pdf.size}), /could not be verified/);
+});
 
 test("intake review reads raw and legacy canonical options without guessing source facts", () => {
   const raw = intakeReviewValues({ type: "MSQ", options: [{ id: "B", text: "Source option" }], answer: ["B", "D"] });

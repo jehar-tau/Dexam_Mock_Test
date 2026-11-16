@@ -8,6 +8,9 @@ export function allowPostLaunchPreview(deployment,optIn){
 // backend function; the theory-lesson catalogue stays in the preview until
 // its migrations are promoted.
 export const releasedModules=Object.freeze({learn:'Learn'});
+export function allowReleasedLearn(portalReady) {
+ return portalReady === true && Object.hasOwn(releasedModules, 'learn');
+}
 export const launchNavigation=Object.freeze([
  {to:'/dashboard',label:'Overview',mark:'O',end:true},
  {to:'/dashboard/mocks',label:'Released papers',mark:'M'},

@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import { expect, test } from "@playwright/test";
 import project from "../../supabase/project.json" with { type: "json" };
 import { serveArtifact } from "./local-artifact-fixture.js";
-import { seedPortalSession } from "./portal-fixture.js";
+import { seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 const app = fileURLToPath(new URL("../../", import.meta.url));
 const approved = project.frontend_origin;
@@ -74,4 +74,28 @@ test("the production artifact opens Google sign-in only from the approved origin
   await expect(page.getByText("Fictional Google sign-in", { exact: true })).toBeVisible();
   expect(providerRequests).toHaveLength(1);
   expect(providerRequests[0].searchParams.get("redirect_to")).toBe(approved + "/account/callback");
+});
+
+test("a signed-in student can open a Learn programme and load its published images", async ({ page }) => {
+  await page.route("**/*", route => route.abort());
+  await page.route(url => url.origin === approved, route =>
+    serveArtifact(route, site, new URL(route.request().url())));
+  const fixture = await stubPortalProvider(page, () => undefined, providerRef);
+  const learn = approved + "/dashboard/learn";
+  await page.goto(learn);
+  await expect(page.getByRole("heading", { name: "Sign in to learn." })).toBeVisible();
+  await seedPortalSession(page, student, providerRef);
+  await page.reload();
+  await expect(page.locator(".programme-list article")).toHaveCount(28);
+  const crafts = page.getByRole("article").filter({ has: page.getByRole("heading", { name: "Crafts, materials and making" }) });
+  await crafts.getByRole("link", { name: /Start programme/ }).click();
+  const textiles = page.getByRole("listitem").filter({ has: page.getByRole("heading", { name: "Embroidery and weaves" }) });
+  await textiles.getByRole("button", { name: "Start", exact: true }).click();
+  const photo = page.locator('img[src="/learn-images/bagru-printing.jpg"]');
+  await expect(photo).toBeVisible();
+  await expect.poll(() => photo.evaluate(element => element.naturalWidth)).toBeGreaterThan(0);
+  const illustration = await page.goto(approved + "/learn-images/illustrations/chair-post.jpg");
+  expect(illustration?.ok()).toBe(true);
+  expect(await illustration.headerValue("content-type")).toContain("image/jpeg");
+  expect(fixture.calls).toEqual([]);
 });
