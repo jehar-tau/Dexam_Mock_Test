@@ -78,10 +78,10 @@ first on product design.
 |---|---|---|---|
 | 20 | Indian crafts and textiles **Done** | Crafts by state; techniques and materials; textiles and weaves; printing and dyeing | Indian craft theory |
 | 21 | Art and design history **Done** | Periods and movements; artists and works; architecture and monuments; designers and products | Art history theory |
-| 22 | Product design thinking | Identifying users; context; pain points; ideas from needs; the order of the design process | Product design theory and bank |
-| 23 | Posters, mascots and campaigns | Visual hierarchy; slogans; symbols and stamps; choosing media for an audience | Poster theory and bank |
-| 24 | Storyboarding | Sequence; shots and framing; continuity; telling a story in six frames | Storyboarding theory |
-| 25 | Everyday physics | Floating; lenses and mirrors; balance; sound and light in everyday objects; how a mechanism works | Mechanical theory |
+| 22 | Product design thinking **Done** | Identifying users; context; pain points; ideas from needs; the order of the design process | Product design theory and bank |
+| 23 | Posters, mascots and campaigns **Done** | Visual hierarchy; slogans; symbols and stamps; choosing media for an audience | Poster theory and bank |
+| 24 | Storyboarding **Done** | Sequence; shots and framing; continuity; telling a story in six frames | Storyboarding theory |
+| 25 | Everyday physics **Done** | Floating; lenses and mirrors; balance; sound and light in everyday objects; how a mechanism works | Mechanical theory |
 
 ## Not in this plan
 
