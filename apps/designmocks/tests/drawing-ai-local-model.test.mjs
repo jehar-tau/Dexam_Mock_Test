@@ -112,6 +112,7 @@ test('rechecks metadata and runs the caller fence immediately before sending onl
   const body = JSON.parse(options.body);
   assert.equal(body.model, tag);
   assert.equal(body.stream, false);
+  assert.equal(body.think, false);
   assert.equal(body.truncate, false);
   assert.equal(body.shift, false);
   assert.deepEqual(body.messages[1].images, ['AP8=', 'Af4=']);
@@ -119,8 +120,12 @@ test('rechecks metadata and runs the caller fence immediately before sending onl
     prompt: task.prompt,
     rubric: task.rubric.map(({ label, points, guidance }) => ({ label, points, guidance })),
     images: [{ role: 'figure', ordinal: 1 }, { role: 'drawing', ordinal: 2 }],
+    responseSchema: body.format,
   });
+  assert.match(body.messages[0].content, /listed role and ordinal/);
+  assert.match(body.messages[0].content, /object defined by responseSchema/);
   assert.equal(body.format.additionalProperties, false);
+  assert.deepEqual(body.format.required, ['evidence', 'criterionMarks', 'comments', 'confidence']);
   assert.deepEqual(body.format.properties.criterionMarks.required, ['Form', 'Detail']);
   assert.equal(body.format.properties.criterionMarks.properties.Form.maximum, 3.25);
   assert.doesNotMatch(options.body, /\/private\/|private-criterion-id/);

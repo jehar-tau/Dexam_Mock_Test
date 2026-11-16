@@ -75,6 +75,8 @@ The `drawing:advise` worker pairs the frozen drawing rubric migration `202611090
 
 Run Ollama as a private loopback daemon with cloud features disabled and keep its model tags stable during a job. Set `OLLAMA_NO_CLOUD=1` for the daemon and verify its startup logs. Use an approved locally installed vision model and pin its tag and full SHA-256 digest from the local model list. Supabase stores the private images and advice while the separate host runs inference. [Ollama cloud settings](https://docs.ollama.com/faq#how-do-i-disable-ollamas-cloud-features) · [Ollama model list API](https://docs.ollama.com/api/tags) · [Supabase Edge Function limits](https://supabase.com/docs/guides/functions/limits)
 
+A local Qwen3-VL 2B trial completed five synthetic rubric responses with the evidence-first response schema. It awarded full marks when the required circle was missing, outside the square, or only in the reference figure. Treat this model as unqualified for student work. Evaluate model accuracy on teacher-marked samples before enabling advisory use. The worker stores advice separately from the teacher's grade.
+
 Set `DMOCKS_DRAWING_AI_ENABLED=true` and `DMOCKS_DRAWING_AI_ISOLATED_MODEL=true` only for the approved worker. Supply `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, the exact `DMOCKS_DRAWING_AI_ALLOW_ORIGIN`, and `DMOCKS_DRAWING_AI_ENVIRONMENT` as `development` or `staging`. Staging requires `DMOCKS_DRAWING_AI_STAGING_ACK=APPROVED_DRAWING_AI_ON_<exact origin>`. Keep the service key on the operator host. Set `DMOCKS_DRAWING_AI_OLLAMA_URL` to the literal loopback HTTP origin and set `DMOCKS_DRAWING_AI_MODEL_TAG` and `DMOCKS_DRAWING_AI_MODEL_SHA256` for the approved model.
 
 ```sh
