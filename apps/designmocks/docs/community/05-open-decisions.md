@@ -19,7 +19,7 @@ way (this plan does), keep admission as it is for now, and treat "admit
 under-18s" as a separate decision with advice before Community is
 released. It does not block building phase 1.
 
-**Answer:** _pending_
+**Answer:** Approved as recommended, 16 November 2026: build minor-safe, keep admission unchanged, decide on under-18s before release.
 
 ### 2. How rich should the article editor be?
 
@@ -33,7 +33,7 @@ released. It does not block building phase 1.
 **Recommendation:** (a) for phase 1. Inline images can follow in phase 2
 without a library. Revisit (b) only if writers ask for it.
 
-**Answer:** _pending_
+**Answer:** Approved as recommended, 16 November 2026: (a), in-house toolbar over the Markdown subset.
 
 ### 3. What does "help a post reach more people" mean?
 
@@ -45,7 +45,7 @@ without a library. Revisit (b) only if writers ask for it.
 **Recommendation:** (a) in phase 1, (b) in phase 2 with teacher roles, not
 (c).
 
-**Answer:** _pending_
+**Answer:** Approved as recommended, 16 November 2026: (a) now, (b) in phase 2, not (c).
 
 ### 4. Should a new member's first article be held for review?
 
@@ -56,7 +56,7 @@ new writers wait.
 **Recommendation:** not in phase 1 (there are no real members behind the
 flag); decide before release, leaning yes if a moderator can check daily.
 
-**Answer:** _pending_
+**Answer:** Approved as recommended, 16 November 2026: not in phase 1; decide before release.
 
 ### 5. Can authors edit a published article?
 
@@ -66,7 +66,7 @@ able to see what a post said when it was reported.
 **Recommendation:** phase 2, with revision history. In phase 1 an author
 can save drafts and preview before publishing, but not edit afterwards.
 
-**Answer:** _pending_
+**Answer:** Approved as recommended, 16 November 2026: phase 2, with revision history.
 
 ## Needed for later phases
 

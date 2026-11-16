@@ -9,9 +9,11 @@
   `VITE_POST_LAUNCH_PREVIEW=true`.
 - Community is absent from `launchNavigation`, so the sidebar does not link
   to it in the released build.
-- No Community function is in `supabase/launch/paid-mvp-rpcs.json`, and
-  the Community migrations are not part of the paid release SQL, so the
-  released backend cannot serve it even if a client asked.
+- No Community function is in `supabase/launch/paid-mvp-rpcs.json`. The
+  paid release applies every migration and then the companion profile
+  `supabase/launch/paid-mvp.sql`, which leaves only the listed functions
+  callable, so the released backend refuses Community calls even if a
+  client made them.
 
 Learn was released on 16 November 2026 by moving it into
 `releasedModules`. Learn's programmes run in the browser. Community does
@@ -42,8 +44,8 @@ in checks. In one pull request:
    `deferredModules`, add the navigation entry.
 2. Route `/dashboard/community/*` on `releasedModules`, not on
    `postLaunchPreview`.
-3. Add the Community functions to the release function list and the
-   Community migrations to the release SQL.
+3. Add the Community functions to the release function list
+   (`paid-mvp-rpcs.json` and the manifest block in `paid-mvp.sql`).
 
 Before that pull request merges:
 
