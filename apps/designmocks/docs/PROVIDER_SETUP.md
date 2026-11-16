@@ -77,6 +77,16 @@ Run Ollama as a private loopback daemon with cloud features disabled and keep it
 
 A local Qwen3-VL 2B trial completed five synthetic rubric responses with the evidence-first response schema. It awarded full marks when the required circle was missing, outside the square, or only in the reference figure. Treat this model as unqualified for student work. Evaluate model accuracy on teacher-marked samples before enabling advisory use. The worker stores advice separately from the teacher's grade.
 
+For an offline evaluation, freeze one task and rubric per run. Agree the test groups and thresholds before seeing any model output. Have teachers mark withheld drawings without seeing model predictions. Use test groups that cover known errors, such as recognising a feature shown only in a prompt figure, and image conditions representative of the intended use. Keep the drawings, case manifest and predictions in private storage.
+
+```sh
+node scripts/drawing-ai-calibration.mjs --plan "$DMOCKS_DRAWING_CALIBRATION_PLAN" --predictions "$DMOCKS_DRAWING_CALIBRATION_PREDICTIONS"
+```
+
+Both JSON files use `version: 1` and the same lowercase `taskSha256`, `modelSha256` and `configurationSha256`. These pin the frozen task with its prompt, figures and rubric, the model artifact, and the exact preprocessing, prompt and inference settings. The plan contains a `rubric` array of `{label, points}`, the required `groups` array, and unique `cases` entries with `{caseId, inputSha256, group, teacher}`. Use neutral identifiers and hash the exact ordered inputs. In the predictions file, `cases` entries contain `{caseId, inputSha256, criterionMarks}`. Both marks objects map each rubric label to its numeric mark. Leave an unavailable model prediction absent so it counts against group coverage.
+
+The plan's `limits` requires positive integers for `minScoredPerGroup` and `minBelowFullPerCriterion`. Specify `minCoverage`, `maxMeanAbsoluteError`, `maxAbsoluteMeanBias` and `maxFalseFullRate` as fractions. Every criterion in every required group must pass. Error and bias are fractions of the criterion maximum, and false full credit is measured among scored cases with a below-full teacher mark. The report includes aggregate metrics and input fingerprints. Exit 2 means the evaluation missed a threshold, and exit 1 means invalid input. Running the evaluator makes no provider requests and grants no grading authority.
+
 Set `DMOCKS_DRAWING_AI_ENABLED=true` and `DMOCKS_DRAWING_AI_ISOLATED_MODEL=true` only for the approved worker. Supply `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, the exact `DMOCKS_DRAWING_AI_ALLOW_ORIGIN`, and `DMOCKS_DRAWING_AI_ENVIRONMENT` as `development` or `staging`. Staging requires `DMOCKS_DRAWING_AI_STAGING_ACK=APPROVED_DRAWING_AI_ON_<exact origin>`. Keep the service key on the operator host. Set `DMOCKS_DRAWING_AI_OLLAMA_URL` to the literal loopback HTTP origin and set `DMOCKS_DRAWING_AI_MODEL_TAG` and `DMOCKS_DRAWING_AI_MODEL_SHA256` for the approved model.
 
 ```sh
