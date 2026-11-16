@@ -68,7 +68,11 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
   }, project.project_ref);
 
   const photo = await page.goto(stage + "/learn-images/bagru-printing.jpg");
-  expect(photo?.status()).toBe(404);
+  // The local Vite preview may serve the app shell for unknown navigation paths.
+  if (photo?.status() !== 404) {
+    expect(photo?.status()).toBe(200);
+    expect(await photo.headerValue("content-type")).toContain("text/html");
+  }
   await page.goto(project.frontend_origin + "/account");
   await expect(page.getByRole("button", { name: "Continue with Google" })).toBeDisabled();
   await page.goto(stage + "/plans");
