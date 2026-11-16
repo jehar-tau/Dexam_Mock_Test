@@ -98,7 +98,15 @@ afterwards.
 
 ## Verified on 16 November 2026
 
-See the pull request description for the exact counts of the last run.
+- `npm test`: 828 of 828.
+- `npm run build`, `scripts/check-mvp-profile.mjs`,
+  `scripts/check-preview-isolation.mjs`: pass.
+- Playwright default scope, in a port-remapped copy: 884 of 884, no
+  retries. All Community specs in the full scope: 242 of 242.
+- PostgreSQL 17 in a container: all 94 migrations apply;
+  `community-articles.sql`, the seven earlier Community suites,
+  `private-account-export.sql`, `account-privacy-lifecycle.sql`,
+  `portal-grants.sql` and `invariants.sql` pass.
 
 ## Not verified, and known gaps
 

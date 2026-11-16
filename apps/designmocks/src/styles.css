@@ -4349,3 +4349,4 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .community-folder-choices label{display:flex;gap:.6rem;align-items:center;min-height:44px}
 .community-folder-choices input{width:1.2rem;height:1.2rem;flex:none}
 @media (max-width:760px){.community-saved-layout{grid-template-columns:minmax(0,1fr)}.community-toolbar{align-items:stretch}}
+.community-reader .community-thread h2,.community-drafts h2,.community-saved h2{font-size:clamp(1.4rem,3vw,1.9rem)}
