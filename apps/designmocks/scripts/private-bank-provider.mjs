@@ -1,3 +1,5 @@
+import project from "../supabase/project.json" with { type: "json" };
+
 const loopback = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const managedHost = /^([a-z0-9]{20})\.supabase\.co$/;
 
@@ -32,6 +34,7 @@ function targetConfiguration({ url, serviceRoleKey, allowOrigin, environment, pr
     throw new Error("Exact production bank acknowledgement is required");
   }
   if (environment === "production" && !ref) throw new Error("Production bank work requires a managed Supabase project");
+  if (environment === "production" && ref === project.project_ref) throw new Error("Production operations require a separate Supabase project from DMocks staging");
 
   const secret = typeof serviceRoleKey === "string" && /^sb_secret_[A-Za-z0-9_-]+$/.test(serviceRoleKey);
   const claims = secret ? null : serviceClaims(serviceRoleKey);

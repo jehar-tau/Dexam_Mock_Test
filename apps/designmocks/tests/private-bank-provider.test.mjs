@@ -4,6 +4,7 @@ import { createServer } from "node:http";
 import { test } from "node:test";
 import { openPrivateBankProvider } from "../scripts/private-bank-provider.mjs";
 import { applyManifest, buildManifest } from "../scripts/question-bank-import.mjs";
+import project from "../supabase/project.json" with { type: "json" };
 
 const health = { scope: "paid-mvp-v1", monitorVersion: 1, apiProfileReady: true };
 const reference = "a".repeat(20);
@@ -34,6 +35,21 @@ test("private bank transport validates the selected project, environment and cre
   ]) await assert.rejects(openPrivateBankProvider({ ...hosted, ...changes }, { fetchImpl }), failure);
   assert.equal(calls, 0);
   await openPrivateBankProvider({ ...hosted, environment: "production", productionAck: "USE_PRIVATE_BANK_ON_" + managedOrigin }, { fetchImpl });
+  assert.equal(calls, 1);
+});
+
+test("operator tools refuse the designated staging project in production mode before any request", async () => {
+  const stagingOrigin = `https://${project.project_ref}.supabase.co`;
+  let calls = 0;
+  const fetchImpl = async () => { calls++; return Response.json(health); };
+  const config = {
+    url: stagingOrigin, allowOrigin: stagingOrigin, serviceRoleKey: "sb_secret_fictional_staging",
+  };
+  await assert.rejects(openPrivateBankProvider({
+    ...config, environment: "production", productionAck: "USE_PRIVATE_BANK_ON_" + stagingOrigin,
+  }, { fetchImpl }), /separate Supabase project/);
+  assert.equal(calls, 0);
+  await openPrivateBankProvider({ ...config, environment: "staging" }, { fetchImpl });
   assert.equal(calls, 1);
 });
 
