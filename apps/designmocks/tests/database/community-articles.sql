@@ -107,6 +107,10 @@ select pg_temp.ok(jsonb_array_length(public.community_saved((select id from ids 
 select pg_temp.ok(public.community_saved((select id from ids where name='f1'),null,1)->'nextCursor' is not null
  and jsonb_array_length(public.community_saved((select id from ids where name='f1'),public.community_saved((select id from ids where name='f1'),null,1)->'nextCursor',1)->'items')=1,'saved page continues');
 select pg_temp.ok(public.community_articles(null,'latest',null,25)#>'{articles,2,saved}'='true'::jsonb,'card shows saved state');
+select pg_temp.ok(public.remove_community_save((select id from ids where name='d1'),(select id from ids where name='f2'))->'removed'='false'::jsonb,'a save in another folder is untouched');
+select pg_temp.ok(public.remove_community_save((select id from ids where name='d1'),(select id from ids where name='f1'))->'removed'='true'::jsonb,'one save is removed');
+select pg_temp.ok(jsonb_array_length(public.community_saved((select id from ids where name='f1'),null,25)->'items')=1,'the folder keeps its other save');
+select public.set_community_saves((select id from ids where name='d1'),array[(select id from ids where name='f1')]);
 select pg_temp.as_user(3);
 select pg_temp.rejects($q$select public.set_community_saves((select id from ids where name='a1'),array[(select id from ids where name='f1')])$q$,'42501','community_folder_unavailable');
 select pg_temp.rejects($q$select public.community_saved((select id from ids where name='f1'),null,25)$q$,'42501','community_folder_unavailable');

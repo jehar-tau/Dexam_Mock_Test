@@ -3,16 +3,37 @@
 The live state of the Community build. Whoever is building updates this at
 every checkpoint. Read it first, then [README.md](README.md).
 
-**Last updated:** 16 November 2026. Plan written; waiting for the owner's
-approval and answers to the open decisions before phase 1 is built.
+**Last updated:** 16 November 2026. Owner approved the plan and decisions 1
+to 5. Phase 1 server side and pure modules are built and tested; the screens
+and Playwright journeys are not built yet.
 
 ## State
 
-- Branch `feature/dmocks-community-phase1`, cut from `main` at `93bed60`.
-- Phase 0 (moderated discussions) exists on `main` behind the post-launch
-  preview. Nothing in phase 1 is built yet.
-- Standing permission for Community: open pull requests, but ask the owner
+- Branch `feature/dmocks-community-phase1`, draft PR #263. Ask the owner
   before merging.
+- Built: `src/community-article.mjs`, `src/community-library.js`, migration
+  `202611160170_community_articles.sql`, `tests/database/community-articles.sql`,
+  unit tests. `npm test` passes; the database test and the seven existing
+  community database suites pass on PostgreSQL 17.
+- The migration is generated: the three re-created functions are copied from
+  their latest definitions with marked edits, and the contact patterns come
+  from `CONTACT_PATTERNS`. Edit by hand from here on, keeping the patterns
+  equal (a unit test compares them).
+- Not built: `CommunityFrame`, `CommunityArticle`, `CommunityArticles`,
+  `CommunityEditor`, `CommunityReader`, `CommunitySaved`, routes, styles,
+  `tests/e2e/community-articles.spec.js`, account export of the new tables.
+- Design notes for the screens: keep `/dashboard/community` as the existing
+  discussions page (ten existing specs depend on it) and add
+  `/dashboard/community/articles`, `/write`, `/post/:id`, `/saved`. Build the
+  reading page as a custom `View` for `CommunityController` so comments,
+  images and reporting are reused; pass `rpc` to the View and skip the
+  initial feed load there. Give `CommunityThread` an `embedded` mode and a
+  placeholder for `comment.blocked`. Authors add images from the reading
+  page after publishing.
+- Differences from the written plan: no `like_count` column (likes are
+  counted on read, so a like never touches the post row); the phone rule is
+  ten digits, not seven; a blocked author's replies show as placeholders;
+  "Top" is a single page; `remove_community_save` was added.
 
 ## Next
 

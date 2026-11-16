@@ -305,6 +305,16 @@ begin
   from dm_private.community_saves where user_id=actor and post_id=p_post_id),'[]'::jsonb));
 end $$;
 
+-- Removes one post from one folder, for the folder page.
+create function public.remove_community_save(p_post_id uuid,p_folder_id uuid)
+returns jsonb language plpgsql security definer set search_path=pg_catalog,dm_private as $$
+declare actor uuid:=auth.uid();
+begin
+ if actor is null then raise exception 'Sign in required' using errcode='42501'; end if;
+ delete from dm_private.community_saves where user_id=actor and post_id=p_post_id and folder_id=p_folder_id;
+ return jsonb_build_object('removed',found);
+end $$;
+
 create function public.community_saved(p_folder_id uuid,p_cursor jsonb,p_limit integer)
 returns jsonb language plpgsql stable security definer set search_path=pg_catalog,dm_private,public set timezone='UTC' as $$
 declare actor uuid:=auth.uid(); v_folder dm_private.community_folders; v_saved timestamptz; v_post uuid;
@@ -610,12 +620,12 @@ end $$;
 
 revoke all on function public.create_community_article(text,text,text,text,uuid,uuid),public.community_articles(text,text,jsonb,integer),
  public.set_community_like(uuid,boolean),public.community_folders(),public.save_community_folder(uuid,text),public.delete_community_folder(uuid),
- public.set_community_saves(uuid,uuid[]),public.community_saved(uuid,jsonb,integer),public.community_drafts(),
+ public.set_community_saves(uuid,uuid[]),public.remove_community_save(uuid,uuid),public.community_saved(uuid,jsonb,integer),public.community_drafts(),
  public.save_community_draft(uuid,text,text,text,text),public.delete_community_draft(uuid),public.set_community_block(uuid,uuid),
  public.community_blocked(),public.remove_community_block(text) from public,anon;
 grant execute on function public.create_community_article(text,text,text,text,uuid,uuid),public.community_articles(text,text,jsonb,integer),
  public.set_community_like(uuid,boolean),public.community_folders(),public.save_community_folder(uuid,text),public.delete_community_folder(uuid),
- public.set_community_saves(uuid,uuid[]),public.community_saved(uuid,jsonb,integer),public.community_drafts(),
+ public.set_community_saves(uuid,uuid[]),public.remove_community_save(uuid,uuid),public.community_saved(uuid,jsonb,integer),public.community_drafts(),
  public.save_community_draft(uuid,text,text,text,text),public.delete_community_draft(uuid),public.set_community_block(uuid,uuid),
  public.community_blocked(),public.remove_community_block(text) to authenticated;
 
