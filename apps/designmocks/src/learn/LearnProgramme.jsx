@@ -17,8 +17,8 @@ function Ring({ percent }) {
 }
 const levelLabel = (tier, previous) => (previous && previous.level + 1 < tier.level ? `Levels ${previous.level + 1}–${tier.level}` : tier.level <= 2 && !previous ? `Levels 1–${tier.level}` : `Level ${tier.level}`);
 
-export function ProgrammeOverview({ programme, progress, open, notice, message }) {
-  const summary = programmeSummary(programme, progress);
+export function ProgrammeOverview({ programme, progress, open, notice, message, unlockAll = false }) {
+  const summary = programmeSummary(programme, progress, { unlockAll });
   const practice = learningPracticeLink({ exam: programme.exams[0], topic: programme.topic });
   const tiered = summary.tiers.length > 1;
   return <section className="programme" aria-label={programme.title}>
@@ -72,7 +72,7 @@ export function ProgrammeOverview({ programme, progress, open, notice, message }
   </section>;
 }
 
-export function ProgrammeRunner({ programme, actorId, notice = '', seed = null }) {
+export function ProgrammeRunner({ programme, actorId, notice = '', seed = null, unlockAll = false }) {
   const [params, setParams] = useSearchParams();
   const [progress, setProgress] = useState(() => loadProgress(programme.slug, actorId));
   const [message, setMessage] = useState('');
@@ -87,7 +87,7 @@ export function ProgrammeRunner({ programme, actorId, notice = '', seed = null }
   const lesson = view ? findLesson(programme, view) : null;
   if (lesson) return <LessonPlayer key={lesson.id} lesson={lesson} progress={progress} onProgress={update} onExit={() => open(null)} seedBase={seed}
     onComplete={() => { setParams({}); setMessage(`Lesson complete: ${lesson.title}.`); }} />;
-  return <ProgrammeOverview programme={programme} progress={progress} open={open} notice={notice} message={message} />;
+  return <ProgrammeOverview programme={programme} progress={progress} open={open} notice={notice} message={message} unlockAll={unlockAll} />;
 }
 
 function ProgrammeHeading({ headingRef }) {
@@ -110,16 +110,23 @@ export function LearnProgrammePage() {
   </section></PortalShell>;
 }
 
+const REVIEW_KEY = 'dmocks.learn-preview.unlock-all';
+function readReviewUnlock() { try { return window.localStorage.getItem(REVIEW_KEY) === 'on'; } catch { return false; } }
+function writeReviewUnlock(on) { try { window.localStorage.setItem(REVIEW_KEY, on ? 'on' : 'off'); } catch { /* the switch still works for this visit */ } }
+
 export function LearnProgrammePreview() {
   const { slug = 'cube-nets' } = useParams();
   const [params] = useSearchParams();
   const programme = findProgramme(slug);
   const seed = params.has('seed') ? Number(params.get('seed')) : null;
+  const [unlockAll, setUnlockAll] = useState(readReviewUnlock);
+  const toggle = on => { setUnlockAll(on); writeReviewUnlock(on); };
   return <PortalShell><section className="wrap section learn-page">
     <ProgrammeHeading />
     <p><Link to="/learn-preview">← Learn preview</Link></p>
+    {!params.get('lesson') && <label className="review-unlock"><input type="checkbox" checked={unlockAll} onChange={e => toggle(e.target.checked)} /> Review mode: unlock every tier (this preview only; students still unlock tiers by passing quizzes)</label>}
     {programme
-      ? <ProgrammeRunner programme={programme} actorId="preview" notice="Development preview. Progress is saved only in this browser." seed={seed} />
+      ? <ProgrammeRunner programme={programme} actorId="preview" notice="Development preview. Progress is saved only in this browser." seed={seed} unlockAll={unlockAll} />
       : <p role="alert">No programme with that name.</p>}
   </section></PortalShell>;
 }
