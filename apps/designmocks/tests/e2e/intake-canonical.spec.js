@@ -17,7 +17,7 @@ const extracted = { type: "MCQ", prompt: "Choose the clearest fictional wayfindi
   answer: null, explanation: "", topic: "observation", visualDependency: null, holds: ["intake-human-review"] };
 
 async function fixture(page, { admin = true, loseFirstUploadReceipt = false } = {}) {
-  const assets = [], drafts = [], uploads = [], state = { admin };
+  const assets = [], drafts = [], uploads = [], state = { admin, sourceReads:0, holdSource:null };
   const provider = await stubPortalProvider(page, (procedure, input) => {
     switch (procedure) {
       case "is_dmocks_admin": return state.admin;
@@ -75,7 +75,11 @@ async function fixture(page, { admin = true, loseFirstUploadReceipt = false } = 
         method: "POST", headers: {"content-type": request.headers()["content-type"]}, body: request.postDataBuffer(),
       }));
       const asset = assets.find(item => item.id === input.assetId);
-      return route.fulfill({ headers: { ...headers, "Content-Type": "application/octet-stream" }, body: !input.figureSha && asset.mimeType === "application/pdf" ? pdf : png });
+      if (!input.figureSha) {
+        state.sourceReads++;
+        if (state.holdSource) await state.holdSource;
+      }
+      return route.fulfill({ headers: { ...headers, "Content-Type": "application/octet-stream" }, body: !input.figureSha && asset.mimeType === "application/pdf" ? pdf : png }).catch(() => {});
     }
     const body = request.postDataBuffer();
     const parsed = await readIntakeUpload(new Request(request.url(), {
@@ -92,9 +96,8 @@ async function fixture(page, { admin = true, loseFirstUploadReceipt = false } = 
       expect(Buffer.from(await file.arrayBuffer())).toEqual(pdf);
       if (uploads.length > 1) return route.fulfill({ headers, json: { ...assets[0], reused: true } });
     }
-    const isPDF = body.toString().includes('filename="fictional-source.pdf"');
-    const asset = { id: `00000000-0000-4000-8000-${String(111 + assets.length).padStart(12, "0")}`, name: isPDF ? "fictional-source.pdf" : "fictional-photo.png",
-      mimeType: isPDF ? "application/pdf" : "image/png", status: "uploaded", candidates: [] };
+    const asset = { id: `00000000-0000-4000-8000-${String(111 + assets.length).padStart(12, "0")}`, name:parsed.file.name,
+      mimeType:parsed.file.type, byteSize:parsed.file.size, status: "uploaded", candidates: [] };
     assets.push(asset);
     if (loseFirstUploadReceipt) return route.abort("failed");
     return route.fulfill({ headers, json: asset });
@@ -104,6 +107,55 @@ async function fixture(page, { admin = true, loseFirstUploadReceipt = false } = 
   await page.reload();
   return { ...provider, assets, drafts, uploads, state };
 }
+
+test("the verified administrator can inspect a private source photo and a revoked account cannot finish opening it", async ({page}) => {
+  await page.addInitScript(() => {
+    window.intakePhotoUrls = {opened:[], revoked:[]};
+    const create = URL.createObjectURL.bind(URL), revoke = URL.revokeObjectURL.bind(URL);
+    URL.createObjectURL = blob => {
+      const url = create(blob);
+      window.intakePhotoUrls.opened.push(url);
+      return url;
+    };
+    URL.revokeObjectURL = url => {
+      window.intakePhotoUrls.revoked.push(url);
+      revoke(url);
+    };
+  });
+  const fixtureState = await fixture(page);
+  const upload = page.getByLabel("Private source file");
+  const submit = page.getByRole("button", {name:"Upload for extraction"});
+  await upload.setInputFiles({name:"fictional-source.pdf",mimeType:"application/pdf",buffer:pdf});
+  await submit.click();
+  const pdfCard = page.locator(".intake-queue article").filter({hasText:"fictional-source.pdf"});
+  await expect(pdfCard.getByRole("button", {name:"Download private source"})).toBeVisible();
+  await expect(pdfCard.getByRole("button", {name:"Inspect source photo"})).toHaveCount(0);
+  const photoName = `${"fictional-source-photo-".repeat(6)}.png`;
+  await upload.setInputFiles({name:photoName,mimeType:"image/png",buffer:png});
+  await submit.click();
+  const inspect = page.getByRole("button", {name:"Inspect source photo",exact:true});
+  await inspect.click();
+  const viewer = page.getByRole("dialog", {name:photoName,exact:true});
+  await expect(viewer).toBeVisible();
+  await expect.poll(() => viewer.getByRole("img", {name:photoName}).evaluate(image => image.naturalWidth)).toBe(1);
+  expect(await viewer.evaluate(dialog => dialog.scrollWidth <= dialog.clientWidth)).toBe(true);
+  await viewer.getByRole("button", {name:"Rotate right"}).click();
+  await expect(viewer.getByRole("status")).toContainText("rotated 90°");
+  await viewer.getByRole("button", {name:"Close image"}).click();
+  await expect(inspect).toBeFocused();
+  expect(await page.evaluate(() => window.intakePhotoUrls.revoked)).toEqual(await page.evaluate(() => window.intakePhotoUrls.opened));
+
+  let release;
+  fixtureState.state.holdSource = new Promise(resolve => {release = resolve;});
+  await inspect.click();
+  await expect.poll(() => fixtureState.state.sourceReads).toBe(2);
+  fixtureState.state.admin = false;
+  await page.getByRole("button", {name:"Recheck administrator access"}).click();
+  await expect(page.getByRole("alert").filter({hasText:"Administrator access has ended"})).toBeVisible();
+  release();
+  await expect(viewer).toHaveCount(0);
+  expect(await page.evaluate(() => window.intakePhotoUrls.opened.length)).toBe(1);
+});
 
 test("PDF/photo uploads, private source download, corrected figures and rights export use the actual admin route", async ({ page }) => {
   const state = await fixture(page);
