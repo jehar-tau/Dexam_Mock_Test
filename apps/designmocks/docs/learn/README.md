@@ -79,6 +79,10 @@ Update this table in the same change as the work.
 | Perspective and viewpoint | [spec](topics/perspective.md) | Built | Built | Built | Built | `perspective` |
 | Crafts, materials and making | [spec](topics/crafts.md) | Built | Built | Built | Built | `crafts` |
 | Art and design history | [spec](topics/art-history.md) | Built | Built | Built | Built | `art-history` |
+| Product design thinking | [spec](topics/product-design.md) | Built | Built | Built | Built | `product-design` |
+| Posters, mascots and campaigns | [spec](topics/posters.md) | Built | Built | Built | Built | `posters` |
+| Storyboarding | [spec](topics/storyboarding.md) | Built | Built | Built | Built | `storyboarding` |
+| Everyday physics | [spec](topics/everyday-physics.md) | Built | Built | Built | Built | `everyday-physics` |
 | Number and quantity | [spec](topics/quant.md) | Built | Built | Built | Built | `quant` |
 | Codes and number patterns | [spec](topics/logic.md) | Built | Built | Built | Built | `codes-patterns` |
 | Arrangements and puzzles | [spec](topics/logic.md) | Built | Built | Built | Built | `arrangements` |

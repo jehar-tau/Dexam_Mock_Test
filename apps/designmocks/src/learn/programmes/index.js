@@ -22,6 +22,9 @@ import { observationProgramme } from './observation.js';
 import { perspectiveProgramme } from './perspective.js';
 import { craftsProgramme } from './crafts.js';
 import { artHistoryProgramme } from './art-history.js';
+import { productDesignProgramme } from './product-design.js';
+import { postersProgramme, storyboardingProgramme } from './communication.js';
+import { physicsProgramme } from './everyday-physics.js';
 
-export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, diceProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, viewsRotationProgramme, mechanismsProgramme, countingFiguresProgramme, quantProgramme, codesPatternsProgramme, arrangementsProgramme, directionsProgramme, visualPatternsProgramme, colourBasicsProgramme, shadowsProgramme, surfacesProgramme, sectionsProgramme, fitProgramme, overlaysProgramme, observationProgramme, perspectiveProgramme, craftsProgramme, artHistoryProgramme]);
+export const programmes = Object.freeze([cubeNetsProgramme, netsOfSolidsProgramme, diceProgramme, paperFoldingProgramme, mirrorImagesProgramme, countingCubesProgramme, viewsRotationProgramme, mechanismsProgramme, countingFiguresProgramme, quantProgramme, codesPatternsProgramme, arrangementsProgramme, directionsProgramme, visualPatternsProgramme, colourBasicsProgramme, shadowsProgramme, surfacesProgramme, sectionsProgramme, fitProgramme, overlaysProgramme, observationProgramme, perspectiveProgramme, craftsProgramme, artHistoryProgramme, productDesignProgramme, postersProgramme, storyboardingProgramme, physicsProgramme]);
 export const findProgramme = slug => programmes.find(p => p.slug === slug) ?? null;
