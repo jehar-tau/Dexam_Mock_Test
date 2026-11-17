@@ -76,9 +76,11 @@ can save drafts and preview before publishing, but not edit afterwards.
 teachers get a label; only teachers you mark as moderators can hide
 content, and only pending your review.
 
-**Answer:** Built to the recommendation after the owner said to start
-phase 2 on 17 November 2026. Teachers can also feature up to ten
-articles or work posts. Confirm or change before release.
+**Answer:** Confirmed by the owner as built, 17 November 2026: an
+administrator-managed list of teachers set by account email; teachers get
+a label and may feature up to ten articles or work posts; moderators (who
+must also be teachers) can only hold content for the administrator's
+review.
 
 ### 7. Are links clickable, and which sites are allowed? (phase 3)
 
