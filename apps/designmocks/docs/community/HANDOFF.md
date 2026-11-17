@@ -3,15 +3,17 @@
 The live state of the Community build. Whoever is building updates this at
 every checkpoint. Read it first, then [README.md](README.md).
 
-**Last updated:** 17 November 2026. Phases 1 and 2 are built behind the
-post-launch preview. Next step is the owner's evaluation of phase 2, then
-phase 3 (link import).
+**Last updated:** 17 November 2026. Phases 1 to 3 are built behind the
+post-launch preview. The owner asked to continue through every remaining
+phase: phase 4 (browser extension), phase 5 (prep space) and the Learn
+audio track are next, each as its own stacked pull request.
 
 ## State
 
 - Phase 1: branch `feature/dmocks-community-phase1`, pull request #263.
-- Phase 2: branch `feature/dmocks-community-phase2`, stacked on phase 1,
-  with its own pull request. Merge #263 first.
+- Phase 2: branch `feature/dmocks-community-phase2`, pull request #266,
+  stacked on phase 1. Merge #263 first.
+- Phase 3: branch `feature/dmocks-community-phase3`, stacked on phase 2.
 - Both branches include `main` as of 17 November 2026 (merged cleanly).
 - Standing permission for Community: open pull requests, but ask the owner
   before merging.
@@ -25,10 +27,11 @@ phase 3 (link import).
 | Phase | Server | Screens | Tests |
 |---|---|---|---|
 | 1 | `202611160170_community_articles.sql` | `CommunityFrame`, `CommunityArticles`, `CommunityEditor`, `CommunityReader`, `CommunitySaved`, `CommunitySaveDialog`, `CommunityArticle` | `community-article.test.mjs`, `community-library.test.mjs`, `database/community-articles.sql`, `e2e/community-articles.spec.js` |
+| 3 | `202611170172_community_links.sql`; `_shared/community-link.mjs`; `link` action in `community-media` | `CommunityLinks` (preview, save form, saved link, suggest form), `CommunityLinkReview`, Links view in `CommunityCards`, link posts in the reader | `community-link.test.mjs`, additions to `community-library.test.mjs`, `database/community-links.sql`, `edge/community-link-preview.test.mjs`, `e2e/community-links.spec.js` |
 | 2 | `202611160171_community_feedback.sql` | `CommunityCards` (Work, Unanswered, shared card), `CommunityWorkForm`, `CommunityStaffDialog`, `CommunityStaff` (admin page), reader rewritten | additions to both unit files, `database/community-feedback.sql`, `e2e/community-feedback.spec.js`, shared `e2e/community-library-fixture.js` |
 
 Routes: `/dashboard/community` (discussions), `/articles`, `/unanswered`,
-`/work`, `/work/new`, `/write`, `/post/:id`, `/saved`, all under
+`/work`, `/work/new`, `/links`, `/review`, `/write`, `/post/:id`, `/saved`, all under
 `/dashboard/community` and all behind the existing gate. The roles and
 pauses panel is on `/admin` under Community moderation.
 
@@ -66,6 +69,17 @@ pauses panel is on `/admin` under Community moderation.
   `disabled`; a disabled button drops keyboard focus.
 - **`export_my_account_data` was not touched** because it is part of the
   paid release. The Community library export is separate until release.
+- **No new server function.** Adding a directory under
+  `supabase/functions` changes counts that the staging readiness, hosted
+  commerce and admission tests check. Link previews are therefore a `link`
+  action of `community-media`. The extension in phase 4 must follow the
+  same rule or update those tests deliberately.
+- **Edge tests import handlers by a computed path.** A fixed path pulls the
+  handler into Deno's up-front type check, which needs Node type
+  definitions this project does not install.
+- **Social-site list lives in one place.** `socialHosts` in
+  `_shared/community-link.mjs` and the array in migration 172 must match;
+  a unit test compares them.
 - **Browser fixture.** `e2e/community-library-fixture.js` models every
   Community function in memory. Switching accounts mid-test replaces the
   stored session in place (see `signIn`) instead of visiting `/account`.
@@ -92,25 +106,26 @@ afterwards.
 
 ## Verified
 
-17 November 2026, on the phase 2 branch with `main` merged in:
+17 November 2026, on the phase 3 branch:
 
-- `npm test`: 845 of 845. `npm run build`, `scripts/check-mvp-profile.mjs`
-  and `scripts/check-preview-isolation.mjs` pass.
-- Playwright default scope, in a port-remapped copy: 906 of 906, no
-  retries. The specs that open `/admin` and every Community spec, full
-  scope: 244 of 244.
-- PostgreSQL 17 in a container: all 95 migrations apply;
-  `community-feedback.sql`, `community-articles.sql`, the seven earlier
-  Community suites, `private-account-export.sql`,
+- `npm test`: 858 of 858. `npm run build`, `scripts/check-mvp-profile.mjs`,
+  `scripts/check-preview-isolation.mjs`, `npm run test:server-types` and
+  `npm run test:edge` (including the new link preview test) pass.
+- Playwright default scope, in a port-remapped copy: 916 of 916, no
+  retries. Every Community spec and the admin access spec, full scope:
+  314 of 314.
+- PostgreSQL 17 in a container: all 96 migrations apply;
+  `community-links.sql`, `community-feedback.sql`, `community-articles.sql`,
+  the seven earlier Community suites, `private-account-export.sql`,
   `account-privacy-lifecycle.sql`, `portal-grants.sql` and `invariants.sql`
   pass.
-- A final CSS line (left-aligning the feedback template button) went in
-  after the browser runs; only the build was rerun.
 
 ## Not verified, and known gaps
 
 - Nothing has run against a real Supabase project: Auth, PostgREST, Storage
   and the `community-media` function were stubbed in the browser journeys.
+  No link preview has fetched a real web page; whether the hosted runtime
+  offers `Deno.resolveDns` (the private-address DNS check) is unverified.
   Image upload on article and work pages uses the existing path and was
   not re-tested for them.
 - `scripts/check-database.sh` was not run as a whole; the migrations and
@@ -127,5 +142,5 @@ afterwards.
 ## Next
 
 1. Owner evaluates phase 2 in the preview, and confirms decision 6.
-2. Phase 3 as in [01-product-scope.md](01-product-scope.md): link import
-   and private link saves. Decision 7 (link policy) is needed first.
+2. Owner confirms decision 7 (link policy), built to its recommendation.
+3. Phase 4 (browser extension), phase 5 (prep space), Learn audio track.

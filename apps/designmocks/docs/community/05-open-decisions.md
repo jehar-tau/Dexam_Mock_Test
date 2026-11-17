@@ -86,6 +86,12 @@ articles or work posts. Confirm or change before release.
 them or from a trusted-domain list you control; approved links open in a
 new tab with a "you are leaving DMocks" label.
 
+**Answer:** Built to the recommendation after the owner asked, on 17
+November 2026, to continue building the remaining features. Moderators
+approve; only the administrator trusts sites; social and messaging sites
+stay private; links open in a new tab, marked as outside DMocks. Confirm
+or change before release.
+
 ### 8. Chrome extension publishing (phase 4)
 
 Needs your Chrome Web Store developer account, a privacy-policy entry and

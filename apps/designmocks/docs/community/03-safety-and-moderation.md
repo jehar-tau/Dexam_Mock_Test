@@ -121,11 +121,19 @@ Built 17 November 2026, behind the preview.
 
 ## Added with links and the extension (phases 3 and 4)
 
-- Links become public only through a moderator, or from a domain the
-  administrator has trusted.
+Phase 3 is built (17 November 2026). The rules below hold in code:
+
+- Links become public only through a moderator or the administrator, or
+  at once from a site the administrator has trusted. A moderator cannot
+  review their own suggestion; only the administrator trusts a site.
 - The server fetches only the title, site and description; nothing is
   embedded and no remote image is loaded in a student's browser.
-- Social-profile and messaging links are never accepted for the feed.
+- Social-profile and messaging links are never accepted for the feed and
+  can never be trusted; students may keep them privately.
+- The server never contacts private or local addresses, checks every
+  redirect, stops after six seconds or 512 KB, and keeps only plain text.
+- A suggestion's reason passes the contact-details guard, and a paused
+  member can neither suggest nor be published.
 - The extension reads only the tab the student clicks and stores nothing
   about browsing.
 
