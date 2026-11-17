@@ -98,6 +98,11 @@ Needs your Chrome Web Store developer account, a privacy-policy entry and
 store review time. **Recommendation:** decide after phase 3 shows whether
 students use link saving.
 
+**Status:** Built and testable by loading it unpacked, 17 November 2026
+(see [07-browser-extension.md](07-browser-extension.md)). Publishing still
+needs the owner's decision, store account, store assets and a privacy-policy
+entry.
+
 ### 9. Is Community free for every signed-in student, or part of the pass?
 
 The roadmap says free for signed-in students. **Recommendation:** keep it

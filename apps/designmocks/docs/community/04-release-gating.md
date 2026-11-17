@@ -63,6 +63,10 @@ Before that pull request merges:
 - [ ] `export_my_account_data` includes the Community library
       (`export_my_community_library`), and deletion is verified.
 - [ ] The Community rules panel is approved by the owner.
+- [ ] If the extension is released too: add `extension_community_folders`
+      and `extension_save_community_link` to the release profile with
+      public-key access, publish the extension (document 7) and update the
+      privacy notice.
 - [ ] Unit tests, build and the full Playwright suite pass on the exact
       commit.
 

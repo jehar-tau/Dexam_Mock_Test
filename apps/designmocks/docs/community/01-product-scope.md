@@ -164,6 +164,15 @@ from a member who is later paused cannot be published.
 - Instagram and Facebook links are saved as addresses with the student's
   note; their content cannot be fetched and is not scraped.
 
+Built 17 November 2026, behind the preview; details in
+[07-browser-extension.md](07-browser-extension.md). The student connects a
+browser from the Saved page and pastes a one-time key into the extension;
+the extension lists folders and saves the current tab, with the tab title
+as the private note. Previews are fetched later from Saved (Get preview).
+Pulling good saved items into the feed uses phase 3's Suggest for the
+Links feed. Not published: needs the owner's store account, icons,
+screenshots, a privacy-policy entry and store review (decision 8).
+
 ## Phase 5: the prep space
 
 - One page that gathers everything a student has kept: folders of saved

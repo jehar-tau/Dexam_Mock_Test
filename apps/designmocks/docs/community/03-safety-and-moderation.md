@@ -134,8 +134,12 @@ Phase 3 is built (17 November 2026). The rules below hold in code:
   redirect, stops after six seconds or 512 KB, and keeps only plain text.
 - A suggestion's reason passes the contact-details guard, and a paused
   member can neither suggest nor be published.
-- The extension reads only the tab the student clicks and stores nothing
-  about browsing.
+- The extension reads only the address and title of the tab the student
+  clicks, and stores nothing about browsing. Its connection key can only
+  list folder names and save an address; the key is stored as a SHA-256
+  fingerprint, expires after 180 days and can be revoked from Saved. The
+  tab title stays in the student's private note and never reaches the
+  shared link record, so one student cannot label a page for others.
 
 ## Content rules shown to students
 
