@@ -92,7 +92,20 @@ afterwards.
 
 ## Verified
 
-See the phase 2 pull request for the exact counts of the last run.
+17 November 2026, on the phase 2 branch with `main` merged in:
+
+- `npm test`: 845 of 845. `npm run build`, `scripts/check-mvp-profile.mjs`
+  and `scripts/check-preview-isolation.mjs` pass.
+- Playwright default scope, in a port-remapped copy: 906 of 906, no
+  retries. The specs that open `/admin` and every Community spec, full
+  scope: 244 of 244.
+- PostgreSQL 17 in a container: all 95 migrations apply;
+  `community-feedback.sql`, `community-articles.sql`, the seven earlier
+  Community suites, `private-account-export.sql`,
+  `account-privacy-lifecycle.sql`, `portal-grants.sql` and `invariants.sql`
+  pass.
+- A final CSS line (left-aligning the feedback template button) went in
+  after the browser runs; only the build was rerun.
 
 ## Not verified, and known gaps
 

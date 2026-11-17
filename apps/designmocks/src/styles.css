@@ -4371,3 +4371,4 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .community-history section{border-top:1px solid var(--line);padding-top:.75rem;margin-top:.75rem}
 .community-edit{grid-template-columns:minmax(0,1fr);margin-block:1rem}
 .community-edit textarea{width:100%;min-height:14rem;font:inherit;line-height:1.6;box-sizing:border-box}
+.community-reply .text-button{justify-self:start;text-align:start}
