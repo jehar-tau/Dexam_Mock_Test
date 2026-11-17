@@ -1,11 +1,12 @@
 import React, { useEffect, useId, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { CommunityFrame, communityDate, useCommunityRpc } from "./CommunityFrame.jsx";
+import { CommunityFrame, communityDate, useCommunityPreview, useCommunityRpc } from "./CommunityFrame.jsx";
+import { CommunitySaveLink, CommunitySavedLink } from "./CommunityLinks.jsx";
 import { COMMUNITY_FOLDER_LIMIT, communityFailure, communityFolderName, communitySavedInput, validateCommunityBlocked, validateCommunityFolder,
   validateCommunityFolders, validateCommunitySaved } from "./community-library.js";
 
 function SavedSession() {
-  const rpc = useCommunityRpc(), newId = useId(), renameId = useId();
+  const rpc = useCommunityRpc(), preview = useCommunityPreview(), newId = useId(), renameId = useId();
   const [folders, setFolders] = useState(null), [selected, setSelected] = useState(null), [page, setPage] = useState(null), [pageLoading, setPageLoading] = useState(false);
   const [blocked, setBlocked] = useState(null), [status, setStatus] = useState(""), [busy, setBusy] = useState(false);
   const [newName, setNewName] = useState(""), [renaming, setRenaming] = useState(null), [confirmDelete, setConfirmDelete] = useState(false);
@@ -75,6 +76,22 @@ function SavedSession() {
     setPage(value => value && { ...value, items: value.items.filter(other => other.postId !== item.postId) });
     await loadFolders(signal, selected); setStatus("Removed from this folder."); folderHeading.current?.focus();
   }, "Not removed. Try again.");
+  const unsaveLink = item => run(async signal => {
+    await rpc("remove_community_link_save", { p_link_id: item.id, p_folder_id: selected }, signal);
+    if (signal.aborted) return;
+    setPage(value => value && { ...value, items: value.items.filter(other => !(other.type === "link" && other.id === item.id)) });
+    await loadFolders(signal, selected); setStatus("Link removed from this folder."); folderHeading.current?.focus();
+  }, "Not removed. Try again.");
+  async function linkSaved(folderId, message) {
+    const signal = scope.current?.signal; if (!signal || signal.aborted) return;
+    setStatus(message);
+    try { await loadFolders(signal, folderId); if (folderId === selected) await loadPage(folderId); } catch { /* The folder list keeps its last good state. */ }
+  }
+  function suggested(item, result) {
+    setPage(value => value && { ...value, items: value.items.map(other => other.type === "link" && other.id === item.id
+      ? { ...other, suggestion: { status: result.status, postId: result.postId, reason: null } } : other) });
+    setStatus(result.status === "approved" ? "Your link is in the Links feed." : "Suggestion sent. A moderator will review it.");
+  }
   const unblock = item => run(async signal => {
     await rpc("remove_community_block", { p_handle: item.handle }, signal);
     if (signal.aborted) return;
@@ -85,6 +102,7 @@ function SavedSession() {
   if (folders === null) return <p role="status">Loading your folders…</p>;
   return <div className="community-saved">
     {status && <p role="status" className="notice">{status}</p>}
+    <CommunitySaveLink folders={folders} rpc={rpc} preview={preview} onSaved={linkSaved} />
     <div className="community-saved-layout">
       <section aria-label="Your folders" className="community-folders">
         <h2>Folders</h2>
@@ -111,9 +129,11 @@ function SavedSession() {
         {!page && pageLoading && <p role="status">Loading saved posts…</p>}
         {page && page.items.length === 0 && <p className="muted">Nothing saved here yet.</p>}
         <div className="community-feed">
-          {page?.items.map(item => <article key={item.postId}>
+          {page?.items.map(item => item.type === "link"
+            ? <CommunitySavedLink key={`link:${item.id}`} item={item} rpc={rpc} busy={busy} onRemove={unsaveLink} onSuggested={suggested} />
+            : <article key={`post:${item.id}`}>
             {item.available ? <>
-              <span className="eyebrow">{item.kind === "article" ? "Article" : "Discussion"} · {item.exam} · {item.topic}</span>
+              <span className="eyebrow">{{ article: "Article", work: "Work for feedback", link: "Link", discussion: "Discussion" }[item.kind]} · {item.exam} · {item.topic}</span>
               <h3><Link to={`/dashboard/community/post/${item.postId}`}>{item.title}</Link></h3>
               <p>{item.excerpt}</p>
               <small>By {item.author} · saved {communityDate(item.savedAt)}</small>
@@ -121,7 +141,7 @@ function SavedSession() {
             <button type="button" className="text-button" disabled={busy} aria-label={item.available ? `Remove from folder: ${item.title}` : "Remove from folder: unavailable post"} onClick={() => unsave(item)}>Remove from folder</button>
           </article>)}
         </div>
-        {page?.nextCursor && <button type="button" className="button quiet" aria-disabled={pageLoading} onClick={() => { if (!pageLoading) loadPage(selected, page); }}>{pageLoading ? "Loading…" : "Load more saved posts"}</button>}
+        {page?.nextCursor && <button type="button" className="button quiet" aria-disabled={pageLoading} onClick={() => { if (!pageLoading) loadPage(selected, page); }}>{pageLoading ? "Loading…" : "Load more saved items"}</button>}
       </section>}
     </div>
     <section aria-label="Blocked authors" className="community-blocked">

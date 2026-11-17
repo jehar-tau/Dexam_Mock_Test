@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { communitySanctionNotice, validateCommunityStanding } from "./community-library.js";
+import { communitySanctionNotice, validateCommunityLinkPreview, validateCommunityStanding } from "./community-library.js";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { PortalShell } from "./PortalShell.jsx";
 import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
@@ -13,6 +13,7 @@ export function CommunityNav() {
     {item("/dashboard/community", "Discussions", true)}
     {item("/dashboard/community/unanswered", "Unanswered")}
     {item("/dashboard/community/work", "Work")}
+    {item("/dashboard/community/links", "Links")}
     {item("/dashboard/community/saved", "Saved")}
     {item("/dashboard/community/write", "Write")}
   </nav>;
@@ -22,6 +23,16 @@ export function CommunityNav() {
 export function useCommunityRpc() {
   const services = useAccountServices();
   return useCallback((name, input, signal) => withAccountDeadline(active => services.rpc(name, input, active), signal), [services]);
+}
+
+// Fetches a link preview through the community-media function's link action.
+export function useCommunityPreview() {
+  const services = useAccountServices();
+  return useCallback(async (url, signal) => {
+    const { data, error } = await withAccountDeadline(active => services.functions.invoke("community-media", { body: { action: "link", url }, signal: active }), signal, 20000);
+    if (error) throw error;
+    return validateCommunityLinkPreview(data?.link);
+  }, [services]);
 }
 
 // The reader's own roles and any pause on posting. null while loading or unknown.

@@ -6,6 +6,7 @@ import { CommunityReporting } from "./CommunityReporting.jsx";
 import { CommunityImages } from "./CommunityImages.jsx";
 import { CommunityArticle } from "./CommunityArticle.jsx";
 import { CommunitySaveDialog } from "./CommunitySaveDialog.jsx";
+import { CommunityLinkPreview } from "./CommunityLinks.jsx";
 import { CommunityStaffDialog } from "./CommunityStaffDialog.jsx";
 import { PendingImages, PendingText } from "./Community.jsx";
 import { CommunityStandingNotice, communityDate, useCommunityStanding } from "./CommunityFrame.jsx";
@@ -17,6 +18,7 @@ const kinds = {
   discussion: { back: "/dashboard/community", backLabel: "Back to discussions", images: "Question attachment", attach: "Add discussion images", body: [20, 5000] },
   article: { back: "/dashboard/community/articles", backLabel: "Back to articles", images: "Article image", attach: "Add article images", body: [200, 20000] },
   work: { back: "/dashboard/community/work", backLabel: "Back to work", images: "Work image", attach: "Add images of your work", body: [40, 5000] },
+  link: { back: "/dashboard/community/links", backLabel: "Back to links", images: "Image", attach: "Add images", body: [20, 5000] },
 };
 const length = value => [...value].length;
 
@@ -90,7 +92,7 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
   </div>;
 
   const kind = kinds[header.kind], liked = like?.liked ?? header.liked, likes = like?.likes ?? header.likes, folders = folderIds ?? header.folderIds;
-  const isFeatured = featured ?? header.featured, locked = thread.status === "locked", formatted = header.kind !== "discussion", stats = articleStats(header.body);
+  const isFeatured = featured ?? header.featured, locked = thread.status === "locked", formatted = header.kind === "article" || header.kind === "work", stats = articleStats(header.body);
   const toggleLike = () => act(async signal => {
     const next = !liked, value = validateCommunityLike(await rpc("set_community_like", { p_post_id: id, p_liked: next }, signal), id, next);
     if (!signal.aborted) setLike(value);
@@ -154,7 +156,7 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
     <CommunityStandingNotice standing={standing} />
     {(notice || message) && <p role="status" className="notice">{notice || message}</p>}
     <article aria-labelledby="community-reader-title">
-      <span className="eyebrow">{header.kind === "work" ? "Work for feedback · " : ""}{thread.exam} · {thread.topic}{locked ? " · Locked" : ""}{isFeatured ? " · Featured" : ""}</span>
+      <span className="eyebrow">{header.kind === "work" ? "Work for feedback · " : header.kind === "link" ? "Link · " : ""}{thread.exam} · {thread.topic}{locked ? " · Locked" : ""}{isFeatured ? " · Featured" : ""}</span>
       <h2 id="community-reader-title" ref={title} tabIndex={-1}>{thread.title}</h2>
       <p className="community-byline">By {header.author}{header.teacher ? " · Teacher" : ""}{header.isMine ? " (you)" : ""} · {communityDate(header.createdAt)}
         {header.kind === "article" ? ` · ${stats.minutes} min read` : ""}{header.editedAt ? ` · Edited ${communityDate(header.editedAt)}` : ""}</p>
@@ -171,7 +173,10 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
           </div>
           <small>Readers see that the post was edited. Moderators can see earlier versions.</small>
         </fieldset>
-      </form> : formatted ? <CommunityArticle source={header.body} /> : <p className="community-comment-body">{header.body}</p>}
+      </form> : formatted ? <CommunityArticle source={header.body} /> : header.kind === "link" ? <>
+        <div className="community-link-preview-frame"><CommunityLinkPreview link={header.link} /></div>
+        <p className="community-note"><strong>Why {header.isMine ? "you" : header.author} shared it:</strong> <span className="community-comment-body">{header.body}</span></p>
+      </> : <p className="community-comment-body">{header.body}</p>}
       <CommunityImages images={thread.media} label={kind.images} expiresAt={thread.mediaExpiresAt} onUnavailableFocus={() => title.current?.focus()} />
     </article>
     {header.kind === "discussion" && (acceptedId
