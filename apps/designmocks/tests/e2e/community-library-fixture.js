@@ -2,6 +2,7 @@ import { expect } from "@playwright/test";
 import { fileURLToPath } from "node:url";
 import { portalFixtureURL, seedPortalSession, stubPortalIdentity } from "./portal-fixture.js";
 import { contactDetails } from "../../src/community-article.mjs";
+import { isSocialHost, normalizeLinkUrl } from "../../supabase/functions/_shared/community-link.mjs";
 
 // An in-memory model of the Community phase 1 and 2 server functions, for
 // browser journeys. Fictional accounts and original fixture text only.
@@ -20,7 +21,8 @@ const excerpt = text => text.replace(/(\*\*|\*|^#{2,3}\s+|^>\s?|^-\s+)/gm, "").r
 
 export function backend() {
   const state = { posts: [], comments: [], likes: new Set(), folders: [], saves: [], drafts: [], blocks: new Set(), receipts: new Map(), calls: [], clock: 0, refuseContact: false,
-    roles: new Map(), admins: new Set([admin.id]), sanctions: [], featured: new Set(), revisions: [] };
+    roles: new Map(), admins: new Set([admin.id]), sanctions: [], featured: new Set(), revisions: [],
+    links: [], linkSaves: [], notes: [], suggestions: [], trusted: new Set(), previews: new Map(), previewCalls: [] };
   const now = () => `2026-11-16T00:${String(Math.floor(++state.clock / 60)).padStart(2, "0")}:${String(state.clock % 60).padStart(2, "0")}.000000+00:00`;
   const fail = (details, code = "22023") => ({ status: code === "42501" ? 403 : 400, value: { code, details, message: "private-fixture-diagnostic" } });
   const ok = value => ({ status: 200, value });
@@ -34,7 +36,17 @@ export function backend() {
   const base = (actor, post) => ({ id: post.id, exam: post.exam, topic: post.topic, title: post.title, excerpt: excerpt(post.body), author: names[post.authorId], teacher: teacher(post.authorId),
     createdAt: post.createdAt, status: post.status, comments: visibleComments(post).length, likes: likes(post.id), liked: state.likes.has(`${actor}:${post.id}`),
     saved: state.saves.some(save => save.userId === actor && save.postId === post.id), isMine: post.authorId === actor, words: post.body.split(/\s+/).length });
-  const card = (actor, post) => ({ ...base(actor, post), kind: post.kind, answered: Boolean(accepted(post)), assetCount: post.assetCount ?? 0 });
+  const linkJson = link => ({ id: link.id, url: link.url, host: link.host, status: link.status, title: link.title, site: link.site, description: link.description, fetchedAt: "2026-11-17T00:00:00.000000+00:00" });
+  const linkOf = post => post.kind === "link" ? linkJson(state.links.find(link => link.id === post.linkId)) : null;
+  const card = (actor, post) => ({ ...base(actor, post), kind: post.kind, answered: Boolean(accepted(post)), assetCount: post.assetCount ?? 0, link: linkOf(post) });
+  const trusted = host => [...state.trusted].some(item => host === item || host.endsWith("." + item));
+  const publish = (suggestion, reviewer) => {
+    const link = state.links.find(item => item.id === suggestion.linkId);
+    if (paused(suggestion.userId)) return paused(suggestion.userId);
+    const post = state.seed({ id: suggestion.userId }, link.title ?? link.host, { kind: "link", exam: suggestion.exam, topic: suggestion.topic, body: suggestion.note, linkId: link.id });
+    Object.assign(suggestion, { status: "approved", postId: post.id, reviewer });
+    return null;
+  };
   const comment = (actor, item) => {
     const hidden = blocked(actor, item.authorId);
     return { id: item.id, parentId: null, body: hidden ? "" : item.body, author: hidden ? "Blocked author" : names[item.authorId], helpful: 0, blocked: hidden, createdAt: item.createdAt,
@@ -44,11 +56,11 @@ export function backend() {
     canAttach: post.authorId === actor && post.status === "visible", assetCount: 0, version: post.version ?? 1, nextCursor: null,
     comments: visibleComments(post).slice(from).map(item => comment(actor, item)),
     kind: post.kind, createdAt: post.createdAt, author: names[post.authorId], likes: likes(post.id), liked: state.likes.has(`${actor}:${post.id}`),
-    folderIds: state.saves.filter(save => save.userId === actor && save.postId === post.id).map(save => save.folderId).sort(),
+    folderIds: state.saves.filter(save => save.userId === actor && save.postId === post.id).map(save => save.folderId).sort(), link: linkOf(post),
     teacher: teacher(post.authorId), editedAt: post.editedAt ?? null, acceptedCommentId: accepted(post),
     canAccept: post.authorId === actor && post.kind === "discussion" && post.status === "visible", canEdit: post.authorId === actor && post.status === "visible",
     canHold: moderator(actor) || isAdmin(actor), canSanction: isAdmin(actor),
-    canFeature: post.kind !== "discussion" && post.status === "visible" && (teacher(actor) || isAdmin(actor)), featured: state.featured.has(post.id) });
+    canFeature: (post.kind === "article" || post.kind === "work") && post.status === "visible" && (teacher(actor) || isAdmin(actor)), featured: state.featured.has(post.id) });
   const paused = actor => sanction(actor) ? fail("community_sanctioned", "P0001") : null;
   const receipt = post => ({ id: post.id, postId: post.id, parentId: null, status: "visible", postStatus: "visible", canUpload: true, replayed: false });
   const handlers = {
@@ -93,14 +105,14 @@ export function backend() {
     },
     community_cards(actor, input) {
       const rows = state.posts.filter(post => readable(actor, post.id) && (!input.p_exam || post.exam === input.p_exam) &&
-        (input.p_view === "work" ? post.kind === "work" : post.kind === "discussion" && post.status === "visible" && !accepted(post)))
+        (input.p_view === "work" ? post.kind === "work" : input.p_view === "links" ? post.kind === "link" : post.kind === "discussion" && post.status === "visible" && !accepted(post)))
         .sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, input.p_limit);
       return ok({ cards: rows.map(post => card(actor, post)), nextCursor: null, view: input.p_view, exam: input.p_exam });
     },
     community_featured_list: actor => ok({ cards: [...state.featured].map(id => readable(actor, id)).filter(post => post && post.status === "visible").map(post => card(actor, post)) }),
     my_community_standing(actor) {
       const s = sanction(actor);
-      return ok({ teacher: teacher(actor), moderator: moderator(actor), sanction: s && { kind: s.kind, until: s.until, reason: s.reason } });
+      return ok({ admin: isAdmin(actor), teacher: teacher(actor), moderator: moderator(actor), sanction: s && { kind: s.kind, until: s.until, reason: s.reason } });
     },
     community_thread(actor, input) { const post = readable(actor, input.p_post_id); return post ? ok(thread(actor, post)) : fail("community_target_unavailable", "42501"); },
     community_reply_context(actor, input) {
@@ -182,7 +194,7 @@ export function backend() {
       return ok({ postId: post.id, liked: input.p_liked, likes: likes(post.id) });
     },
     community_folders: actor => ok({ folders: state.folders.filter(folder => folder.userId === actor).sort((a, b) => a.name.localeCompare(b.name))
-      .map(folder => ({ id: folder.id, name: folder.name, count: state.saves.filter(save => save.folderId === folder.id).length })) }),
+      .map(folder => ({ id: folder.id, name: folder.name, count: state.saves.filter(save => save.folderId === folder.id).length + state.linkSaves.filter(save => save.folderId === folder.id).length })) }),
     save_community_folder(actor, input) {
       if (state.folders.some(folder => folder.userId === actor && folder.id !== input.p_folder_id && folder.name.toLowerCase() === input.p_name.toLowerCase())) return fail("community_folder_exists", "23505");
       let folder = state.folders.find(item => item.id === input.p_folder_id && item.userId === actor);
@@ -192,7 +204,8 @@ export function backend() {
     },
     delete_community_folder(actor, input) {
       state.folders = state.folders.filter(folder => !(folder.id === input.p_folder_id && folder.userId === actor));
-      state.saves = state.saves.filter(save => save.folderId !== input.p_folder_id); return ok({ id: input.p_folder_id });
+      state.saves = state.saves.filter(save => save.folderId !== input.p_folder_id);
+      state.linkSaves = state.linkSaves.filter(save => save.folderId !== input.p_folder_id); return ok({ id: input.p_folder_id });
     },
     set_community_saves(actor, input) {
       if (!readable(actor, input.p_post_id)) return fail("community_target_unavailable", "42501");
@@ -208,11 +221,72 @@ export function backend() {
     community_saved(actor, input) {
       const folder = state.folders.find(item => item.id === input.p_folder_id && item.userId === actor);
       if (!folder) return fail("community_folder_unavailable", "42501");
-      return ok({ folder: { id: folder.id, name: folder.name }, nextCursor: null, items: state.saves.filter(save => save.folderId === folder.id).map(save => {
+      const posts = state.saves.filter(save => save.folderId === folder.id).map(save => {
         const post = readable(actor, save.postId);
-        return post ? { postId: post.id, savedAt: save.savedAt, available: true, kind: post.kind, exam: post.exam, topic: post.topic, title: post.title, excerpt: excerpt(post.body), author: names[post.authorId] }
-          : { postId: save.postId, savedAt: save.savedAt, available: false };
+        return post ? { type: "post", id: post.id, postId: post.id, savedAt: save.savedAt, available: true, kind: post.kind, exam: post.exam, topic: post.topic, title: post.title,
+          excerpt: excerpt(post.body), author: names[post.authorId], note: null } : { type: "post", id: save.postId, postId: save.postId, savedAt: save.savedAt, available: false };
+      });
+      const links = state.linkSaves.filter(save => save.folderId === folder.id).map(save => {
+        const link = state.links.find(item => item.id === save.linkId), mine = state.suggestions.filter(item => item.userId === actor && item.linkId === link.id).at(-1);
+        return { type: "link", id: link.id, savedAt: save.savedAt, link: linkJson(link), note: state.notes.find(item => item.userId === actor && item.linkId === link.id)?.body ?? null,
+          suggestion: mine ? { status: mine.status, postId: mine.postId ?? null, reason: mine.reason ?? null } : null,
+          postId: state.posts.find(post => post.linkId === link.id && post.status !== "hidden")?.id ?? null };
+      });
+      return ok({ folder: { id: folder.id, name: folder.name }, nextCursor: null, items: [...posts, ...links].sort((a, b) => b.savedAt.localeCompare(a.savedAt)) });
+    },
+    save_community_link(actor, input) {
+      if (!state.links.some(link => link.id === input.p_link_id)) return fail("community_link_unavailable", "42501");
+      if (input.p_folder_ids.some(id => !state.folders.some(folder => folder.id === id && folder.userId === actor))) return fail("community_folder_unavailable", "42501");
+      state.linkSaves = state.linkSaves.filter(save => !(save.userId === actor && save.linkId === input.p_link_id && !input.p_folder_ids.includes(save.folderId)));
+      for (const folderId of input.p_folder_ids) if (!state.linkSaves.some(save => save.userId === actor && save.linkId === input.p_link_id && save.folderId === folderId))
+        state.linkSaves.push({ userId: actor, linkId: input.p_link_id, folderId, savedAt: now() });
+      state.notes = state.notes.filter(item => !(item.userId === actor && item.linkId === input.p_link_id));
+      const note = (input.p_note ?? "").trim();
+      if (note) state.notes.push({ userId: actor, linkId: input.p_link_id, body: note });
+      return ok({ linkId: input.p_link_id, folderIds: [...input.p_folder_ids].sort(), note: note || null });
+    },
+    remove_community_link_save(actor, input) {
+      const before = state.linkSaves.length;
+      state.linkSaves = state.linkSaves.filter(save => !(save.userId === actor && save.linkId === input.p_link_id && save.folderId === input.p_folder_id));
+      return ok({ removed: state.linkSaves.length < before });
+    },
+    suggest_community_link(actor, input) {
+      const link = state.links.find(item => item.id === input.p_link_id);
+      if (paused(actor)) return paused(actor);
+      if (!link || !state.linkSaves.some(save => save.userId === actor && save.linkId === link.id)) return fail("community_link_unavailable", "42501");
+      if (isSocialHost(link.host)) return fail("community_link_social");
+      if (contactDetails(`${input.p_topic}\n${input.p_note}`)) return fail("community_contact_details");
+      if (state.posts.some(post => post.linkId === link.id)) return fail("community_link_posted", "P0001");
+      const suggestion = { id: uid("e", state.suggestions.length + 1), linkId: link.id, userId: actor, exam: input.p_exam, topic: input.p_topic, note: input.p_note, status: "pending", createdAt: now() };
+      state.suggestions.push(suggestion);
+      if (trusted(link.host)) { publish(suggestion, null); return ok({ id: suggestion.id, status: "approved", postId: suggestion.postId }); }
+      return ok({ id: suggestion.id, status: "pending", postId: null });
+    },
+    community_link_review_queue(actor) {
+      if (!moderator(actor) && !isAdmin(actor)) return fail("community_moderator_required", "42501");
+      return ok({ canTrust: isAdmin(actor), items: state.suggestions.filter(item => item.status === "pending").map(item => {
+        const link = state.links.find(other => other.id === item.linkId);
+        return { id: item.id, link: linkJson(link), author: names[item.userId], isMine: item.userId === actor, exam: item.exam, topic: item.topic, note: item.note, createdAt: item.createdAt, social: isSocialHost(link.host) };
       }) });
+    },
+    review_community_link_suggestion(actor, input) {
+      if (!moderator(actor) && !isAdmin(actor)) return fail("community_moderator_required", "42501");
+      if (input.p_trust && !isAdmin(actor)) return fail("community_admin_required", "42501");
+      const suggestion = state.suggestions.find(item => item.id === input.p_id && item.status === "pending");
+      if (!suggestion) return fail("community_link_unavailable", "42501");
+      if (suggestion.userId === actor) return fail("community_review_own");
+      if (!input.p_approve) { Object.assign(suggestion, { status: "rejected", reason: input.p_reason }); return ok({ id: suggestion.id, status: "rejected", postId: null }); }
+      const refused = publish(suggestion, actor); if (refused) return refused;
+      if (input.p_trust) state.trusted.add(state.links.find(link => link.id === suggestion.linkId).host);
+      return ok({ id: suggestion.id, status: "approved", postId: suggestion.postId });
+    },
+    admin_community_trusted_hosts: actor => isAdmin(actor) ? ok({ hosts: [...state.trusted].sort().map(host => ({ host, createdAt: "2026-11-17T00:00:00.000000+00:00" })) }) : fail("admin", "42501"),
+    admin_set_community_trusted_host(actor, input) {
+      if (!isAdmin(actor)) return fail("admin", "42501");
+      const host = input.p_host.trim().toLowerCase();
+      if (isSocialHost(host)) return fail("community_link_social");
+      if (input.p_trusted) state.trusted.add(host); else state.trusted.delete(host);
+      return ok({ host, trusted: input.p_trusted });
     },
     set_community_block(actor, input) {
       const author = input.p_post_id ? state.posts.find(post => post.id === input.p_post_id)?.authorId : state.comments.find(item => item.id === input.p_comment_id)?.authorId;
@@ -243,11 +317,33 @@ export function backend() {
       }
       try { await route.fulfill({ headers, status: result.status, json: result.value }); } catch { /* page moved on */ }
     });
+    // Link previews arrive through the community-media function's link action.
+    await page.route(api + "/functions/v1/community-media", async route => {
+      const request = route.request();
+      if (request.method() === "OPTIONS") return route.fulfill({ headers, status: 204 });
+      const input = request.postDataJSON() ?? {};
+      if (input.action !== "link") throw new Error("Unexpected fictional media request");
+      state.previewCalls.push(input.url);
+      let normalized; try { normalized = normalizeLinkUrl(input.url); } catch (error) { return route.fulfill({ headers, status: 400, json: { error: "private", code: error.code } }); }
+      let link = state.links.find(item => item.url === normalized.url);
+      if (!link) {
+        const known = state.previews.get(normalized.url), social = isSocialHost(normalized.host);
+        link = { id: uid("f", 100 + state.links.length), url: normalized.url, host: normalized.host, status: social ? "skipped" : known?.status ?? "fetched",
+          title: social ? null : known?.title ?? "A fictional page", site: social ? normalized.host : known?.site ?? null, description: social ? null : known?.description ?? null };
+        state.links.push(link);
+      }
+      return route.fulfill({ headers, status: 200, json: { link: linkJson(link) } });
+    });
     await stubPortalIdentity(page);
   };
   state.seed = (author, title, extra = {}) => {
     const post = { id: uid("a", state.posts.length + 1), kind: "article", authorId: author.id, exam: "nid", topic: "Studio test", title, body, status: "visible", version: 1, createdAt: now(), ...extra };
     state.posts.push(post); return post;
+  };
+  state.link = (url, extra = {}) => {
+    const normalized = normalizeLinkUrl(url);
+    const link = { id: uid("f", 100 + state.links.length), url: normalized.url, host: normalized.host, status: "fetched", title: "A fictional page", site: null, description: null, ...extra };
+    state.links.push(link); return link;
   };
   state.reply = (author, post, text) => {
     const item = { id: uid("c", state.comments.length + 1), postId: post.id, authorId: author.id, body: text, status: "visible", createdAt: now() };

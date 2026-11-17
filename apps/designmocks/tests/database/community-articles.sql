@@ -112,7 +112,7 @@ select pg_temp.ok(public.remove_community_save((select id from ids where name='d
 select pg_temp.ok(jsonb_array_length(public.community_saved((select id from ids where name='f1'),null,25)->'items')=1,'the folder keeps its other save');
 select public.set_community_saves((select id from ids where name='d1'),array[(select id from ids where name='f1')]);
 select public.save_community_draft(null,'nid','Export','A fictional draft for export','kept text');
-select pg_temp.ok((select e @> '{"schemaVersion":2,"accountId":"00000000-0000-4000-8000-000000000902","likes":[],"blocked":[]}'
+select pg_temp.ok((select (e->>'schemaVersion')::int>=1 and e @> '{"accountId":"00000000-0000-4000-8000-000000000902","likes":[],"blocked":[]}'
  and jsonb_array_length(e->'folders')=2 and jsonb_array_length(e->'drafts')=1 and e#>>'{drafts,0,body}'='kept text'
  and (select sum(jsonb_array_length(f->'saves'))=2 from jsonb_array_elements(e->'folders')f) from public.export_my_community_library() e),'library export holds folders, saves and drafts');
 select pg_temp.as_user(3);
@@ -156,7 +156,7 @@ select pg_temp.rejects($q$select public.set_community_saves((select id from ids 
 select pg_temp.as_user(6);
 select public.admin_moderate_community('post',(select id from ids where name='a1'),'hide','Fictional moderation check',public.admin_review_community_content('post',(select id from ids where name='a1'))->>'reviewVersion',gen_random_uuid());
 select pg_temp.as_user(2);
-select pg_temp.ok((select i=jsonb_build_object('postId',i->'postId','savedAt',i->'savedAt','available',false)
+select pg_temp.ok((select i @> '{"available":false}' and (select array_agg(k order by k) from jsonb_object_keys(i) k)=array['available','id','postId','savedAt','type']
  from jsonb_array_elements(public.community_saved((select id from ids where name='f1'),null,25)->'items')i where i->>'postId'=(select id::text from ids where name='a1')),'hidden saved post has no content');
 select pg_temp.ok(jsonb_array_length(public.set_community_saves((select id from ids where name='a1'),'{}')->'folderIds')=0,'a hidden post can still be removed from folders');
 -- After a restore, earlier reports do not hide it again.

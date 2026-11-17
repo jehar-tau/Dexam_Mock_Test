@@ -86,6 +86,12 @@ articles or work posts. Confirm or change before release.
 them or from a trusted-domain list you control; approved links open in a
 new tab with a "you are leaving DMocks" label.
 
+**Answer:** Confirmed by the owner as built, 17 November 2026. Links reach
+the public Links feed only after a moderator approves them, or at once from
+a site the administrator trusts; only the administrator trusts sites;
+social and messaging sites stay in students' private folders and can never
+be trusted; links open in a new tab, marked as outside DMocks.
+
 ### 8. Chrome extension publishing (phase 4)
 
 Needs your Chrome Web Store developer account, a privacy-policy entry and

@@ -143,11 +143,28 @@ from the section links), `/dashboard/community/articles`,
   `community_articles` (teacher), `export_my_community_library` (schema
   version 2, with replaced text and sanctions) and
   `admin_community_report_queue` (safety reports first).
-- **Phase 3.** `community_links(id, url, url_hash, title, site,
-  description, fetched_at, status)`; `community_link_saves(user_id,
-  link_id, folder_id, note)`; `community_link_suggestions` for the review
-  queue; `community_trusted_domains`; a `community-link` server function
-  that fetches metadata.
+- **Phase 3 (built, migration `202611170172_community_links.sql`).**
+  `community_links(id, url unique, host, status fetched|unavailable|skipped,
+  title, site, description, fetched_at)` shared between members;
+  `community_link_requests` for the hourly fetch limit;
+  `community_link_saves(user_id, link_id, folder_id)`;
+  `community_notes(user_id, post_id or link_id, body)` for private notes
+  (used for links now, for posts in phase 5);
+  `community_link_suggestions(link_id, user_id, exam, topic, note, status,
+  post_id, reason)`; `community_trusted_hosts(host)`. Posts gain kind
+  `link` and `link_id` (one post per link). Functions:
+  `community_link_lookup`, service-only `service_begin_community_link_fetch`
+  and `service_record_community_link`, `save_community_link`,
+  `remove_community_link_save`, `suggest_community_link`,
+  `community_link_review_queue`, `review_community_link_suggestion`,
+  `admin_community_trusted_hosts`, `admin_set_community_trusted_host`.
+  Re-created: `community_saved` (posts and links, cursor
+  `{savedAt, type, id}`), `community_folders` (counts links),
+  `community_card` and `community_cards` (a `links` view),
+  `community_thread` (the link preview), `my_community_standing` (an
+  `admin` flag) and `export_my_community_library` (schema version 3). The
+  preview code is `supabase/functions/_shared/community-link.mjs`, served
+  by the `link` action of `community-media`.
 - **Phase 4.** `community_extension_tokens(user_id, token_hash, created_at,
   last_used_at, revoked_at)`; the extension calls the phase 3 save path.
 - **Phase 5.** `community_notes(user_id, target_type, target_id, body)`;

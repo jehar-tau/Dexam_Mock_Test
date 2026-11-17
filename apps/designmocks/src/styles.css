@@ -4372,3 +4372,30 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .community-edit{grid-template-columns:minmax(0,1fr);margin-block:1rem}
 .community-edit textarea{width:100%;min-height:14rem;font:inherit;line-height:1.6;box-sizing:border-box}
 .community-reply .text-button{justify-self:start;text-align:start}
+
+/* Community phase 3: links */
+.community-save-link{margin-bottom:2rem;padding:1.25rem;border:1px solid var(--line);background:var(--surface);min-width:0}
+.community-save-link h2{margin-top:0;font-size:clamp(1.3rem,3vw,1.7rem)}
+.community-link-form{grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:.75rem}
+.community-link-form input{width:100%;box-sizing:border-box}
+.community-link-save{grid-template-columns:minmax(0,1fr);margin-top:1rem}
+.community-link-preview-frame{padding:1rem 1.25rem;border:1px solid var(--line);border-inline-start:4px solid var(--green);background:var(--paper);min-width:0}
+.community-link-preview-frame:focus{outline:2px solid var(--green);outline-offset:2px}
+.community-link-preview .community-link-title{margin:.25rem 0 .5rem;font-size:1.2rem;overflow-wrap:anywhere}
+.community-link-preview p{margin:0 0 .5rem}
+.community-external{display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--green);overflow-wrap:anywhere}
+.community-external::after{content:"↗";margin-inline-start:.35rem}
+.community-link-host{margin:.25rem 0;color:var(--muted)}
+.community-link-address{font-size:.85rem;overflow-wrap:anywhere}
+.community-note{margin-block:.75rem}
+.community-saved-link{padding:1.25rem;border:1px solid var(--line);background:var(--paper);min-width:0}
+.community-saved-link .community-actions{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem}
+.community-saved-link .community-actions .text-button{display:inline;margin-top:0;min-height:44px}
+.community-suggest{grid-template-columns:minmax(0,1fr);margin-top:.75rem}
+.community-review-item{padding:1.25rem;border:1px solid var(--line);background:var(--paper);min-width:0}
+.community-review-item .community-actions{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;align-items:center}
+.community-review-item .text-button{display:inline;margin-top:0;min-height:44px}
+.community-trust{display:inline-flex;gap:.5rem;align-items:center;min-height:44px}
+.community-trusted{margin-top:2.5rem}
+.community-trusted .admin-form{grid-template-columns:minmax(0,1fr) auto;align-items:end;max-width:36rem}
+@media (max-width:560px){.community-link-form,.community-trusted .admin-form{grid-template-columns:minmax(0,1fr)}}

@@ -118,6 +118,39 @@ Not done in phase 2, and why:
 - Fetching is server-side with a blocklist, a size cap and a timeout, and
   never follows links to private network addresses.
 
+Built 17 November 2026, behind the preview:
+
+- **Save a link** on the Saved page: paste an address, see the preview,
+  choose folders (or name a new one), add a private note. Folders hold
+  posts and links together, newest first.
+- **Previews** come from a `link` action of the existing `community-media`
+  server function, so the server-function inventory used by the staging
+  and release checks is unchanged. Only `http` and `https` addresses on
+  ordinary ports; no addresses written as numbers, local names or private
+  ranges; every redirect (at most three) is checked the same way; DNS
+  answers in private ranges are refused where the runtime can resolve
+  names; six seconds and 512 KB at most; only `<title>` and `<meta>` tags
+  are read. Previews are shared between members and refreshed after seven
+  days. Thirty fetches an hour per member.
+- **Social and messaging sites** (Instagram, Facebook, X, WhatsApp,
+  Telegram, Discord and similar) are saved with the student's own note but
+  never fetched, never suggested and never trusted.
+- **Suggest for the Links feed** from a saved link: exam, topic and why it
+  helps (this becomes the post's text, under the student's first name).
+  Five suggestions a day. The contact guard checks the reason.
+- **Review** at `/dashboard/community/review` for moderators and the
+  administrator: add to the feed, or turn down with a reason the student
+  sees. The administrator can also trust a site while approving, and
+  manage the trusted list; suggestions from a trusted site (or its
+  subdomains) publish at once.
+- **Links section**: approved links as posts with the usual comments,
+  likes, saves, reports and moderation. The address opens in a new tab
+  with `rel="noopener noreferrer nofollow ugc"`.
+
+Not done: re-fetching a stale preview on demand, and previews for pages
+behind a sign-in. A paused member cannot suggest, and a pending suggestion
+from a member who is later paused cannot be published.
+
 ## Phase 4: Chrome extension
 
 - A small Manifest V3 extension: "Save to DMocks" for the current tab, with

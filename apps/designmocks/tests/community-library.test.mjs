@@ -65,14 +65,20 @@ test("folder names are trimmed and bounded; folder lists are unique", () => {
   assert.deepEqual(validateCommunityFolder({ id: id(1), name: "Saved" }), { id: id(1), name: "Saved", count: 0 });
 });
 
-test("saved pages show unavailable posts without any content", () => {
-  const item = { postId: id(1), savedAt: at, available: true, kind: "article", exam: "nid", topic: "Studio", title: "A fictional title", excerpt: "Text", author: "Asha" };
-  const gone = { postId: id(2), savedAt: at, available: false };
-  const value = { folder: { id: id(9), name: "Saved" }, items: [item, gone], nextCursor: { savedAt: at, postId: id(2) } };
-  assert.equal(validateCommunitySaved(value, id(9)).items.length, 2);
-  assert.deepEqual(communitySavedInput(id(9)), { p_folder_id: id(9), p_cursor: null, p_limit: 20 });
+test("saved pages show unavailable posts without any content, and links with their preview and note", () => {
+  const item = { type: "post", id: id(1), postId: id(1), savedAt: at, available: true, kind: "article", exam: "nid", topic: "Studio", title: "A fictional title", excerpt: "Text", author: "Asha", note: null };
+  const gone = { type: "post", id: id(2), postId: id(2), savedAt: at, available: false };
+  const link = { type: "link", id: id(3), savedAt: at, note: "Read before the mock.", postId: null, suggestion: { status: "pending", postId: null, reason: null },
+    link: { id: id(3), url: "https://example.org/plan", host: "example.org", status: "fetched", title: "A fictional plan", site: null, description: null, fetchedAt: at } };
+  const value = { folder: { id: id(9), name: "Saved" }, items: [item, gone, link], nextCursor: { savedAt: at, type: "link", id: id(3) } };
+  const read = validateCommunitySaved(value, id(9));
+  assert.equal(read.items.length, 3); assert.equal(read.items[2].link.url, "https://example.org/plan");
+  assert.deepEqual(communitySavedInput(id(9), read.nextCursor), { p_folder_id: id(9), p_cursor: { savedAt: at, type: "link", id: id(3) }, p_limit: 20 });
   for (const broken of [{ ...value, folder: { id: id(8), name: "Saved" } }, { ...value, items: [{ ...gone, title: "leaked" }] }, { ...value, items: [item, item] },
-    { ...value, items: [{ ...item, kind: "link" }] }, { ...value, nextCursor: { savedAt: at, postId: id(1) } }]) assert.throws(() => validateCommunitySaved(broken, id(9)));
+    { ...value, items: [{ ...item, kind: "poll" }] }, { ...value, nextCursor: { savedAt: at, type: "post", id: id(1) } },
+    { ...value, items: [{ ...link, link: { ...link.link, url: "javascript:alert(1)" } }] }, { ...value, items: [{ ...link, link: { ...link.link, host: "evil.example" } }] },
+    { ...value, items: [{ ...link, link: { ...link.link, id: id(4) } }] }, { ...value, items: [{ ...link, suggestion: { status: "maybe" } }] },
+    { ...value, items: [{ ...link, note: "x".repeat(2001) }] }]) assert.throws(() => validateCommunitySaved(broken, id(9)));
   assert.throws(() => communitySavedInput("x"));
 });
 
@@ -135,8 +141,9 @@ test("accept, edit and feature receipts must match the request", () => {
 });
 
 test("standing explains a pause in plain words and never hides that reading still works", () => {
-  assert.deepEqual(validateCommunityStanding({ teacher: true, moderator: false, sanction: null }), { teacher: true, moderator: false, sanction: null });
-  const mute = validateCommunityStanding({ teacher: false, moderator: false, sanction: { kind: "mute", until: "2026-11-24T00:00:00.000000+00:00", reason: "Repeated unkind replies" } });
+  assert.deepEqual(validateCommunityStanding({ admin: false, teacher: true, moderator: false, sanction: null }), { admin: false, teacher: true, moderator: false, sanction: null });
+  assert.throws(() => validateCommunityStanding({ teacher: true, moderator: false, sanction: null }));
+  const mute = validateCommunityStanding({ admin: false, teacher: false, moderator: false, sanction: { kind: "mute", until: "2026-11-24T00:00:00.000000+00:00", reason: "Repeated unkind replies" } });
   assert.match(communitySanctionNotice(mute.sanction), /^Posting is paused for your account until 24 Nov 2026\. Reason: Repeated unkind replies You can still read/);
   assert.match(communitySanctionNotice({ kind: "ban", until: null, reason: "Fictional ban reason" }), /^Posting is closed for your account\./);
   assert.equal(communitySanctionNotice(null), "");
@@ -176,4 +183,65 @@ test("the new server codes become sentences", () => {
   assert.match(communityFailure({ details: "community_sanctioned" }), /paused/);
   assert.match(communityFailure({ details: "community_thread_changed" }), /Reload it/);
   assert.match(communityFailure({ details: "community_featured_limit" }), /ten posts/);
+});
+
+import { validateCommunityLinkPreview, validateCommunityLinkSave, communitySuggestionInput, validateCommunitySuggestion, validateCommunityLinkQueue,
+  validateCommunityReview, validateCommunityTrustedHosts, communityLinkFailure } from "../src/community-library.js";
+import { readFileSync } from "node:fs";
+
+const preview = (n, extra = {}) => ({ id: id(n), url: `https://example.org/${n}`, host: "example.org", status: "fetched", title: "A fictional page", site: "Fictional",
+  description: "A fictional description.", fetchedAt: at, ...extra });
+
+test("link previews must be plain web addresses whose host matches", () => {
+  assert.equal(validateCommunityLinkPreview(preview(1)).url, "https://example.org/1");
+  assert.equal(validateCommunityLinkPreview(preview(1, { status: "skipped", title: null, site: null, description: null })).title, null);
+  for (const value of [preview(1, { url: "javascript:alert(1)" }), preview(1, { url: "data:text/html,x" }), preview(1, { host: "other.org" }), preview(1, { status: "ok" }),
+    preview(1, { title: "" }), preview(1, { title: "x".repeat(201) }), preview(1, { url: "https://example.org/" + "x".repeat(2000) }), null])
+    assert.throws(() => validateCommunityLinkPreview(value));
+});
+
+test("link cards and the reading page carry a preview only for link posts", () => {
+  const card = { id: id(5), kind: "link", exam: "nid", topic: "Colour", title: "A fictional colour guide", excerpt: "Why it helps", author: "Asha", teacher: false, createdAt: at,
+    status: "visible", comments: 0, likes: 0, liked: false, saved: false, isMine: false, answered: false, assetCount: 0, words: 3, link: preview(5) };
+  assert.equal(validateCommunityCards({ cards: [card], view: "links", exam: null, nextCursor: null }, "links").cards.length, 1);
+  assert.throws(() => validateCommunityCards({ cards: [{ ...card, link: null }], view: "links", exam: null }, "links"));
+  assert.throws(() => validateCommunityCards({ cards: [{ ...card, kind: "work" }], view: "links", exam: null }, "links"));
+  const header = { kind: "link", author: "Asha", createdAt: at, likes: 0, liked: false, isMine: false, folderIds: [], body: "Why it helps", version: 1, teacher: false,
+    editedAt: null, acceptedCommentId: null, canAccept: false, canEdit: false, canHold: false, canSanction: false, canFeature: false, featured: false, link: preview(5) };
+  assert.equal(validateCommunityReader(header).link.host, "example.org");
+  assert.throws(() => validateCommunityReader({ ...header, link: null }));
+  assert.throws(() => validateCommunityReader({ ...header, kind: "article", link: preview(5) }));
+});
+
+test("saving, suggesting and reviewing links check every reply", () => {
+  assert.deepEqual(validateCommunityLinkSave({ linkId: id(1), folderIds: [id(2)], note: null }, id(1)), { folderIds: [id(2)], note: null });
+  assert.throws(() => validateCommunityLinkSave({ linkId: id(3), folderIds: [], note: null }, id(1)));
+  assert.deepEqual(communitySuggestionInput(id(1), " NID ", " Colour ", " A fictional reason that is long enough. "),
+    { p_link_id: id(1), p_exam: "nid", p_topic: "Colour", p_note: "A fictional reason that is long enough." });
+  assert.throws(() => communitySuggestionInput(id(1), "", "Colour", "A fictional reason that is long enough."), /exam/);
+  assert.throws(() => communitySuggestionInput(id(1), "nid", "Colour", "Too short"), /20 to 2,000/);
+  assert.deepEqual(validateCommunitySuggestion({ id: id(1), status: "approved", postId: id(2) }), { id: id(1), status: "approved", postId: id(2) });
+  for (const value of [{ id: id(1), status: "approved", postId: null }, { id: id(1), status: "pending", postId: id(2) }, { id: id(1), status: "rejected", postId: null }])
+    assert.throws(() => validateCommunitySuggestion(value));
+  const entry = { id: id(7), link: preview(7), author: "Asha", isMine: false, social: false, exam: "uceed", topic: "Time", note: "A fictional reason that is long enough.", createdAt: at };
+  assert.equal(validateCommunityLinkQueue({ canTrust: true, items: [entry] }).items[0].link.host, "example.org");
+  assert.throws(() => validateCommunityLinkQueue({ canTrust: true, items: [{ ...entry, link: preview(7, { url: "file:///etc" }) }] }));
+  assert.deepEqual(validateCommunityReview({ id: id(7), status: "approved", postId: id(8) }, id(7)), { status: "approved", postId: id(8) });
+  assert.throws(() => validateCommunityReview({ id: id(6), status: "approved", postId: id(8) }, id(7)));
+  assert.deepEqual(validateCommunityTrustedHosts({ hosts: [{ host: "example.org", createdAt: at }] }), ["example.org"]);
+});
+
+test("preview failures become sentences without provider diagnostics", async () => {
+  const reply = body => ({ context: new Response(JSON.stringify(body)) });
+  assert.match(await communityLinkFailure(reply({ code: "link_blocked", error: "private" })), /public website/);
+  assert.match(await communityLinkFailure(reply({ code: "secret_diagnostic" })), /unavailable/);
+  assert.match(await communityLinkFailure(new Error("network")), /unavailable/);
+});
+
+test("the server's social-site list is generated from the browser's", () => {
+  const sql = readFileSync(new URL("../supabase/migrations/202611170172_community_links.sql", import.meta.url), "utf8");
+  const js = readFileSync(new URL("../supabase/functions/_shared/community-link.mjs", import.meta.url), "utf8");
+  const server = /unnest\(array\[([^\]]*)\]::text\[\]\)/.exec(sql)[1].split(",").map(item => item.replace(/'/g, ""));
+  const browser = JSON.parse(/const socialHosts = (\[[^\]]*\]);/s.exec(js)[1]);
+  assert.deepEqual(server, browser);
 });

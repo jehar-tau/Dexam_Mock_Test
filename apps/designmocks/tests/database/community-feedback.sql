@@ -141,7 +141,7 @@ select pg_temp.rejects($q$select public.admin_community_sanction('post',(select 
 select pg_temp.as_user(1);
 select pg_temp.ok(public.my_community_standing() @> '{"sanction":{"kind":"ban","until":null}}','ban has no end date');
 select pg_temp.rejects($q$select public.edit_community_post((select id from ids where name='q1'),'time management','A fictional edit while banned',pg_temp.text(11),(public.community_thread((select id from ids where name='q1'),null,25)->>'version')::bigint)$q$,'P0001','community_sanctioned');
-select pg_temp.ok((select e->>'schemaVersion'='2' and jsonb_array_length(e->'revisions')=1 and e#>>'{sanctions,0,kind}'='ban' from public.export_my_community_library() e),'export includes replaced text and sanctions');
+select pg_temp.ok((select (e->>'schemaVersion')::int>=2 and jsonb_array_length(e->'revisions')=1 and e#>>'{sanctions,0,kind}'='ban' from public.export_my_community_library() e),'export includes replaced text and sanctions');
 
 -- Safety reports come first for the administrator.
 select pg_temp.as_user(2);

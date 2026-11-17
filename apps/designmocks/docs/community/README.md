@@ -67,7 +67,7 @@ Update this table in the same change as the work.
 | 0 | Moderated discussions: posts, threaded replies, helpful marks, images, reporting, admin moderation | Built before this plan, behind the preview |
 | 1 | Articles, likes, saved folders, drafts, contact-details guard, block an author | Built behind the preview, 16 November 2026; evaluation with the owner pending |
 | 2 | Accepted answers, work for feedback, teachers, moderator hold, pauses, editing, featured shelf | Built behind the preview, 17 November 2026; evaluation with the owner pending |
-| 3 | Link import and private link saves | Planned |
+| 3 | Link import and private link saves | Built behind the preview, 17 November 2026; evaluation with the owner pending |
 | 4 | Chrome extension | Planned |
 | 5 | Prep space: notes, search, saved Learn items | Planned |
 | L | Learn audio feedback (separate track) | Planned |
