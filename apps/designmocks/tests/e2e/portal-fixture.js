@@ -14,6 +14,8 @@ export function emptyAdminRead(procedure) {
   if (procedure === "admin_nid_practice_blueprints") return { items: [], total: 0, offset: 0, limit: 10 };
   if (procedure === "admin_search_bank_questions") return { items: [], total: 0, offset: 0, limit: 25, topics: [], summary: { active: 0, available: 0, approved: 0, inactive: 0 } };
   if (adminLists.has(procedure)) return [];
+  if (procedure === "admin_community_roles") return { roles: [] };
+  if (procedure === "admin_community_sanctions") return { sanctions: [] };
   if (procedure === "admin_operational_health") return { status: "healthy", checkedAt: "2026-11-06T12:00:00Z" };
   if (procedure === "admin_launch_readiness") return { gates: [], readyForSales: false, salesEnabled: false };
 }

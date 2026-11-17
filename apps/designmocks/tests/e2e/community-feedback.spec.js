@@ -164,6 +164,7 @@ test("a moderator holds a reply and a post for an administrator's review", async
   await expect(dialog).toHaveCount(0);
   await expect(status(page, "Reply held for review.")).toBeVisible();
   await expect(comment(page, "Kabir")).toHaveCount(0);
+  await expect(page.getByRole("heading", { level: 2, name: work.title })).toBeFocused();
   expect(state.comments[0].status).toBe("hidden");
 
   await page.getByRole("group", { name: "Moderation" }).getByRole("button", { name: "Hold for review" }).click();

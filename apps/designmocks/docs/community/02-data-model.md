@@ -122,10 +122,27 @@ from the section links), `/dashboard/community/articles`,
 
 ## Later phases, in outline
 
-- **Phase 2.** `community_posts.kind` gains `work`; `accepted_comment_id`
-  on posts; `community_roles(user_id, role)` with `teacher` and
-  `moderator`; `community_post_revisions` for edit history;
-  `community_sanctions(user_id, kind, until, reason, actor_id)`.
+- **Phase 2 (built, migration `202611160171_community_feedback.sql`).**
+  `community_posts` gains kind `work` (body 40 to 5,000),
+  `accepted_comment_id` and `edited_at`. New tables:
+  `community_roles(user_id, teacher, moderator)`,
+  `community_post_revisions` (replaced topic, title and body),
+  `community_sanctions(user_id, kind mute|ban, until, reason, actor_id,
+  lifted_at)` and `community_featured(post_id)`. A trigger refuses posts,
+  replies and edits from a paused account, whichever function writes them.
+  New functions: `create_community_work`, `community_cards` (work and
+  unanswered lists), `accept_community_answer`, `edit_community_post`
+  (with the thread version), `my_community_standing`,
+  `moderator_hold_community`, `set_community_featured`,
+  `community_featured_list`, and for administrators
+  `admin_set_community_role`, `admin_community_roles`,
+  `admin_community_sanction`, `admin_community_sanctions`,
+  `admin_lift_community_sanction`, `admin_community_post_revisions`.
+  Re-created: `community_feed` (teacher, answered), `community_thread`
+  (teacher, accepted answer, edit time, what the reader may do),
+  `community_articles` (teacher), `export_my_community_library` (schema
+  version 2, with replaced text and sanctions) and
+  `admin_community_report_queue` (safety reports first).
 - **Phase 3.** `community_links(id, url, url_hash, title, site,
   description, fetched_at, status)`; `community_link_saves(user_id,
   link_id, folder_id, note)`; `community_link_suggestions` for the review

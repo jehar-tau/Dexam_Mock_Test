@@ -70,21 +70,39 @@ a disposable local PostgreSQL.
 
 ## Phase 2: questions and work for feedback
 
-- **Questions.** Discussions gain a question flag, an "accepted answer"
-  chosen by the asker, and an "Unanswered" filter. Suggested topics cover
-  the things the owner listed: time management, a specific problem,
-  colleges.
-- **Work for feedback.** A post kind for a drawing or portfolio piece: the
-  images come first, with two prompts ("What I was trying to do", "What I
-  want feedback on"). Replies use a light structure: what works, what to
-  improve, how. Image limit raised to six for this kind.
-- **Teachers.** A verified-teacher list managed by the administrator. A
-  teacher's posts and replies carry a "Teacher" label, and a teacher's
-  feedback on a work post is shown first.
-- **Teacher moderation.** A teacher marked as moderator can hide content
-  pending an administrator's review.
-- **Editing.** If not brought forward: authors edit their own post for
-  typos, with the revision history kept for moderators.
+Built 17 November 2026, behind the preview. What shipped:
+
+- **Questions.** Every discussion is a question that can have an accepted
+  answer, chosen only by the asker from someone else's reply, and cleared
+  again. An Unanswered section lists open questions; answered ones say so
+  in the discussion list. No separate question flag was needed.
+- **Work for feedback.** A post kind for a drawing or portfolio piece with
+  two prompts ("What I was trying to do", "What I want feedback on"),
+  stored as two headed sections. Images are added on the post's page
+  right after posting, up to three. Replies can start from a "what works,
+  what to improve, how" template. A Work section lists them.
+- **Teachers.** An administrator-managed list. A teacher's posts and
+  replies carry a "Teacher" label, and on work posts a teacher's
+  top-level feedback is listed first.
+- **Featured shelf.** Teachers and the administrator can feature up to ten
+  articles or work posts; the shelf sits at the top of Articles.
+- **Moderation.** A teacher marked as moderator can hold a post or reply:
+  it is hidden at once and waits for an administrator. The administrator
+  can pause an author (for 1 to 365 days, or until lifted) from any of
+  their posts or replies, and lift it from the admin page. Safety reports
+  come first in the administrator's queue.
+- **Editing.** Authors edit their own posts. Readers see "Edited"; the
+  administrator sees every earlier version.
+
+Not done in phase 2, and why:
+
+- **Six images for work posts.** The three-image limit is enforced in the
+  database, the image function and every client check; raising it for one
+  kind touches the verified upload path, so it is its own change.
+- **Images before text.** Work is posted first and images are added next,
+  using the existing upload path.
+- **Holding a new member's first post** (decision 4) is not built; it
+  waits for the owner's decision before release.
 
 ## Phase 3: link import
 

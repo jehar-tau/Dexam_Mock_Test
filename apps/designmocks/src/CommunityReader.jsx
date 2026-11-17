@@ -102,7 +102,7 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
   const blockReply = commentId => act(async signal => {
     await rpc("set_community_block", { p_post_id: null, p_comment_id: commentId }, signal);
     if (signal.aborted) return;
-    setNotice("Author blocked. Their replies are hidden from you. Unblock from Saved."); onOpen(id);
+    refocus.current = true; setNotice("Author blocked. Their replies are hidden from you. Unblock from Saved."); onOpen(id);
   }, "Couldn’t block this author. Try again.");
   const accept = comment => act(async signal => {
     const next = acceptedId === comment.id ? null : comment.id;
@@ -133,7 +133,8 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
   function closeStaff(saved) {
     const action = staff; setStaff(null);
     if (saved && action.kind === "hold" && action.targetType === "post") { navigate(kind.back, { state: { notice: "Held for review. An administrator will decide whether to restore it." } }); return; }
-    if (saved) { setNotice(action.kind === "hold" ? "Reply held for review." : "The author is paused. Lift it from the admin page."); if (action.kind === "hold") onOpen(id); }
+    if (saved && action.kind === "hold") { refocus.current = true; setNotice("Reply held for review."); onOpen(id); title.current?.focus(); return; }
+    if (saved) setNotice("The author is paused. Lift it from the admin page.");
     if (staffOpener.current?.isConnected) staffOpener.current.focus(); else title.current?.focus();
   }
   function report(postId, commentId, opener) {

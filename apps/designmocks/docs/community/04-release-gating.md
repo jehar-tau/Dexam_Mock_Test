@@ -49,8 +49,10 @@ in checks. In one pull request:
 
 Before that pull request merges:
 
-- [ ] Open decisions 1 to 4 in document 5 are answered and recorded in
-      `docs/PRODUCT_DECISIONS.md`.
+- [ ] Open decisions 1 to 4 and 6 in document 5 are answered and recorded
+      in `docs/PRODUCT_DECISIONS.md`.
+- [ ] At least one teacher account and the administrator's own account are
+      given their Community roles on the target project.
 - [ ] Database tests for every Community migration pass on PostgreSQL 17.
 - [ ] Migrations and the `community-media` function are promoted to
       staging and the staging journeys pass, including image upload.
