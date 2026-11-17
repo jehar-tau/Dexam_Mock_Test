@@ -37,6 +37,7 @@ the build stands and what to do next.
 | 4 | [04-release-gating.md](04-release-gating.md) | What stays behind the release flag and the checklist for releasing it. |
 | 5 | [05-open-decisions.md](05-open-decisions.md) | Decisions only the owner can make, each with a recommendation. |
 | 6 | [06-learn-audio-feedback.md](06-learn-audio-feedback.md) | The separate Learn track for spoken feedback. |
+| 7 | [07-browser-extension.md](07-browser-extension.md) | The Save to DMocks extension: permissions, building, publishing. |
 
 ## Rules that never bend
 
@@ -68,6 +69,6 @@ Update this table in the same change as the work.
 | 1 | Articles, likes, saved folders, drafts, contact-details guard, block an author | Built behind the preview, 16 November 2026; evaluation with the owner pending |
 | 2 | Accepted answers, work for feedback, teachers, moderator hold, pauses, editing, featured shelf | Built behind the preview, 17 November 2026; evaluation with the owner pending |
 | 3 | Link import and private link saves | Built behind the preview, 17 November 2026; evaluation with the owner pending |
-| 4 | Chrome extension | Planned |
+| 4 | Chrome extension | Built, not published, 17 November 2026; publishing needs the owner |
 | 5 | Prep space: notes, search, saved Learn items | Planned |
 | L | Learn audio feedback (separate track) | Planned |

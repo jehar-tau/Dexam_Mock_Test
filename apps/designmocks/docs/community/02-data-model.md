@@ -165,8 +165,18 @@ from the section links), `/dashboard/community/articles`,
   `admin` flag) and `export_my_community_library` (schema version 3). The
   preview code is `supabase/functions/_shared/community-link.mjs`, served
   by the `link` action of `community-media`.
-- **Phase 4.** `community_extension_tokens(user_id, token_hash, created_at,
-  last_used_at, revoked_at)`; the extension calls the phase 3 save path.
+- **Phase 4 (built, migration `202611170173_community_extension.sql`).**
+  `community_extension_tokens(id, user_id, label, token_hash, created_at,
+  last_used_at, expires_at, revoked_at)`. Member functions:
+  `create_community_extension_token` (returns the key once),
+  `community_extension_tokens`, `revoke_community_extension_token`.
+  Key-checked functions callable with the public key on preview projects:
+  `extension_community_folders(p_token)` and
+  `extension_save_community_link(p_token, p_url, p_folder_ids,
+  p_new_folder, p_note)`. A page saved this way gets a shared link record
+  without a preview (`fetched_at` 1970), so the first Get preview fetches
+  it. `dm_private.community_link_host` checks that the address is already
+  in the normalized public form the browser module produces.
 - **Phase 5.** `community_notes(user_id, target_type, target_id, body)`;
   `position` on saves for playlist order; a search function over the
   reader's own saves.

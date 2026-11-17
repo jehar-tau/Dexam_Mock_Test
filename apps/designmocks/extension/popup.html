@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Save to DMocks</title>
+  <link rel="stylesheet" href="popup.css">
+  <script type="module" src="popup.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Save to DMocks</h1>
+    <p id="status" role="status" aria-live="polite"></p>
+    <section id="connect" hidden aria-labelledby="connect-title">
+      <h2 id="connect-title">Connect this browser</h2>
+      <ol>
+        <li>On DMocks, open Community, then Saved.</li>
+        <li>Under Browser extension, choose Connect a browser.</li>
+        <li>Copy the connection key and paste it here.</li>
+      </ol>
+      <form id="connect-form" novalidate>
+        <label for="key">Connection key</label>
+        <input id="key" name="key" autocomplete="off" spellcheck="false">
+        <button type="submit">Connect</button>
+      </form>
+      <p class="small">The key lets this extension list your folders and save pages into them. Nothing else.</p>
+    </section>
+    <section id="save" hidden aria-labelledby="page-title">
+      <p class="small" id="page-host"></p>
+      <h2 id="page-title"></h2>
+      <form id="save-form" novalidate>
+        <fieldset id="folders"><legend>Save into</legend></fieldset>
+        <label for="new-folder">Or a new folder</label>
+        <input id="new-folder" maxlength="60" autocomplete="off">
+        <label for="note">Your note (private)</label>
+        <textarea id="note" rows="4" maxlength="2000"></textarea>
+        <button type="submit">Save</button>
+      </form>
+      <p class="small">Only the address is sent. DMocks fetches a preview when you open Saved.</p>
+    </section>
+    <section id="done" hidden aria-labelledby="done-title">
+      <h2 id="done-title" tabindex="-1">Saved to DMocks</h2>
+      <p>Find it in your folders. To share it with other students, suggest it for the Links feed from Saved.</p>
+      <button type="button" id="open-saved">Open my folders</button>
+    </section>
+    <p class="footer"><button type="button" id="disconnect" class="link" hidden>Disconnect this browser</button></p>
+  </main>
+</body>
+</html>

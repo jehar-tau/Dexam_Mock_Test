@@ -293,7 +293,21 @@ export async function communityLinkFailure(error) {
   return linkFailures.link_unavailable;
 }
 
+// Browser extension connections.
+export function validateExtensionTokens(value) {
+  if (!value || !Array.isArray(value.tokens) || value.tokens.length > 5 || !value.tokens.every(item => item && uuid(item.id) && text(item.label, 60, 1) &&
+    timestamp(item.createdAt) && (item.lastUsedAt === null || timestamp(item.lastUsedAt)) && timestamp(item.expiresAt) && !Object.hasOwn(item, "token"))) return invalid();
+  return value.tokens;
+}
+export function validateExtensionTokenCreated(value) {
+  if (!value || !uuid(value.id) || !text(value.label, 60, 1) || typeof value.token !== "string" || !/^dmx_[0-9a-f]{64}$/.test(value.token) || !timestamp(value.expiresAt)) return invalid();
+  return { id: value.id, label: value.label, token: value.token, expiresAt: value.expiresAt };
+}
+// A link saved from the extension has no preview until one is fetched.
+export const communityLinkNeedsPreview = link => link.status === "unavailable" && Date.parse(link.fetchedAt) < Date.now() - 7 * 86400000;
+
 const failures = Object.freeze({
+  community_extension_limit: "You can connect five browsers. Remove one first.",
   community_link_unavailable: "That link is no longer available. Save it again.",
   community_link_social: "Links to social or messaging sites stay in your private folders.",
   community_link_posted: "This link is already in the Links feed.",

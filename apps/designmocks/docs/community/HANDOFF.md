@@ -13,7 +13,8 @@ audio track are next, each as its own stacked pull request.
 - Phase 1: branch `feature/dmocks-community-phase1`, pull request #263.
 - Phase 2: branch `feature/dmocks-community-phase2`, pull request #266,
   stacked on phase 1. Merge #263 first.
-- Phase 3: branch `feature/dmocks-community-phase3`, stacked on phase 2.
+- Phase 3: branch `feature/dmocks-community-phase3`, pull request #267.
+- Phase 4: branch `feature/dmocks-community-phase4`, stacked on phase 3.
 - Both branches include `main` as of 17 November 2026 (merged cleanly).
 - Standing permission for Community: open pull requests, but ask the owner
   before merging.
@@ -28,6 +29,7 @@ audio track are next, each as its own stacked pull request.
 |---|---|---|---|
 | 1 | `202611160170_community_articles.sql` | `CommunityFrame`, `CommunityArticles`, `CommunityEditor`, `CommunityReader`, `CommunitySaved`, `CommunitySaveDialog`, `CommunityArticle` | `community-article.test.mjs`, `community-library.test.mjs`, `database/community-articles.sql`, `e2e/community-articles.spec.js` |
 | 3 | `202611170172_community_links.sql`; `_shared/community-link.mjs`; `link` action in `community-media` | `CommunityLinks` (preview, save form, saved link, suggest form), `CommunityLinkReview`, Links view in `CommunityCards`, link posts in the reader | `community-link.test.mjs`, additions to `community-library.test.mjs`, `database/community-links.sql`, `edge/community-link-preview.test.mjs`, `e2e/community-links.spec.js` |
+| 4 | `202611170173_community_extension.sql` | `extension/` (popup, core), `scripts/build-extension.mjs`, `CommunityExtension` on Saved, Get preview on saved links | `community-extension.test.mjs`, `database/community-extension.sql`, `e2e/community-extension.spec.js` |
 | 2 | `202611160171_community_feedback.sql` | `CommunityCards` (Work, Unanswered, shared card), `CommunityWorkForm`, `CommunityStaffDialog`, `CommunityStaff` (admin page), reader rewritten | additions to both unit files, `database/community-feedback.sql`, `e2e/community-feedback.spec.js`, shared `e2e/community-library-fixture.js` |
 
 Routes: `/dashboard/community` (discussions), `/articles`, `/unanswered`,
@@ -80,6 +82,13 @@ pauses panel is on `/admin` under Community moderation.
 - **Social-site list lives in one place.** `socialHosts` in
   `_shared/community-link.mjs` and the array in migration 172 must match;
   a unit test compares them.
+- **Public-key functions.** The two `extension_*` functions are the only
+  Community functions granted to the public key. The paid release profile
+  revokes them; the database script's grant comparison checks that.
+- **Extension popup tests** serve `extension/` from a stand-in origin with a
+  minimal `chrome.*` (see `installExtension` in the fixture). Copying to
+  the clipboard takes window focus from the test page, so that journey
+  checks the popup's active element instead of `toBeFocused`.
 - **Browser fixture.** `e2e/community-library-fixture.js` models every
   Community function in memory. Switching accounts mid-test replaces the
   stored session in place (see `signIn`) instead of visiting `/account`.
@@ -106,19 +115,21 @@ afterwards.
 
 ## Verified
 
-17 November 2026, on the phase 3 branch:
+17 November 2026, on the phase 4 branch:
 
-- `npm test`: 858 of 858. `npm run build`, `scripts/check-mvp-profile.mjs`,
+- `npm test`: 867 of 867. `npm run build`, `scripts/check-mvp-profile.mjs`,
   `scripts/check-preview-isolation.mjs`, `npm run test:server-types` and
-  `npm run test:edge` (including the new link preview test) pass.
-- Playwright default scope, in a port-remapped copy: 916 of 916, no
-  retries. Every Community spec and the admin access spec, full scope:
-  314 of 314.
-- PostgreSQL 17 in a container: all 96 migrations apply;
-  `community-links.sql`, `community-feedback.sql`, `community-articles.sql`,
-  the seven earlier Community suites, `private-account-export.sql`,
-  `account-privacy-lifecycle.sql`, `portal-grants.sql` and `invariants.sql`
-  pass.
+  `npm run test:edge` pass.
+- Playwright default scope, in a port-remapped copy: 921 of 922. The one
+  failure was outside Community (`staging-portal.spec.js`, the staging
+  Google callback on Pixel 7: the page closed during a route fetch); that
+  spec then passed 72 of 72 over three repeats. Every Community spec and
+  the admin access spec, full scope: 320 of 320.
+- PostgreSQL 17 in a container: all 97 migrations apply; the four phase
+  test files, the seven earlier Community suites, export, privacy, grants
+  and invariants pass. The paid release profile applies after them, the
+  grant comparison passes, and the public key can no longer call the
+  extension functions.
 
 ## Not verified, and known gaps
 
@@ -132,6 +143,8 @@ afterwards.
   the Community, export, privacy, grants and invariants suites were run
   individually in a container.
 - Work posts allow three images, not the six in the plan.
+- The extension has not been loaded into a real Chrome; its popup was
+  tested in Chromium from a stand-in origin with a stand-in `chrome.*`.
 - A new member's first post is not held for review (decision 4).
 - The contact guard cannot read text in images, digits written as words or
   a number split across replies.
