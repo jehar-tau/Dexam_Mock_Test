@@ -4297,3 +4297,8 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 @media (max-width:560px){.programme-head-art{display:none}}
 .tier-art{display:inline-block;width:56px;vertical-align:middle;margin-right:.4rem}
 .tier-art .motif{display:block;width:100%;height:auto}
+
+/* Learn: spoken feedback switch in the player header */
+.player-audio{flex:none;display:inline-flex;align-items:center;gap:.35rem;min-height:44px;padding:.35rem .8rem;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
+.player-audio[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--paper)}
+@media (max-width:480px){.player-audio{font-size:0;gap:0;padding:.35rem .7rem}.player-audio span{font-size:1.1rem}}
