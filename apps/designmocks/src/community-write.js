@@ -4,6 +4,7 @@ const known = {
   community_request_conflict: "This request belongs to different text. Check your saved discussions before posting again.",
   community_post_limit: "You’ve reached the hourly post limit. Try again later.",
   community_reply_limit: "You’ve reached the hourly reply limit. Try again later.",
+  community_sanctioned: "Posting is paused for your account. Open Write to see why and for how long.",
   community_contact_details: "Remove phone numbers, email addresses, social handles and invitations to contact you, then try again.",
   community_target_unavailable: "This discussion or reply is unavailable or locked. Refresh it before replying.",
 };
