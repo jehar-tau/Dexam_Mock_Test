@@ -31,6 +31,10 @@ generated audio would need a provider the owner chooses).
 `25%` as "3 to 5", "10 minus 4", "1 over 4", "25 percent". Long
 explanations stop at a sentence, at 600 characters.
 
+Until the student turns it on, the speech engine is not touched at all
+(no voice list, no cancelling): on some devices and in headless browsers
+that first touch is slow, and an earlier version slowed every lesson.
+
 If a device has no speech, the switch is not shown. If the speech engine
 fails, the lesson carries on and the switch turns itself off for that visit.
 
