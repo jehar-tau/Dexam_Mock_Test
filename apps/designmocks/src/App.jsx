@@ -73,6 +73,7 @@ const CommunityWork = React.lazy(() => import("./CommunityCards.jsx").then(modul
 const CommunityUnanswered = React.lazy(() => import("./CommunityCards.jsx").then(module => ({ default: module.CommunityUnanswered })));
 const CommunityLinksFeed = React.lazy(() => import("./CommunityCards.jsx").then(module => ({ default: module.CommunityLinksFeed })));
 const CommunityLinkReview = React.lazy(() => import("./CommunityLinkReview.jsx").then(module => ({ default: module.CommunityLinkReview })));
+const CommunityPrep = React.lazy(() => import("./CommunityPrep.jsx").then(module => ({ default: module.CommunityPrep })));
 const CommunityWorkForm = React.lazy(() => import("./CommunityWorkForm.jsx").then(module => ({ default: module.CommunityWorkForm })));
 const AllIndiaHighlights = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaHighlights })));
 const TopicPracticePreview = import.meta.env.DEV
@@ -1663,6 +1664,7 @@ export default function App() {
           <Route path="/dashboard/community/work/new" element={postLaunchPreview?<CommunityWorkForm />:<DeferredModule module="community"/>} />
           <Route path="/dashboard/community/links" element={postLaunchPreview?<CommunityLinksFeed />:<DeferredModule module="community"/>} />
           <Route path="/dashboard/community/review" element={postLaunchPreview?<CommunityLinkReview />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/prep" element={postLaunchPreview?<CommunityPrep />:<DeferredModule module="community"/>} />
           <Route path="/dashboard/community/unanswered" element={postLaunchPreview?<CommunityUnanswered />:<DeferredModule module="community"/>} />
           <Route path="/report" element={<BugReport />} />
           <Route path="/admin" element={<Admin />} />

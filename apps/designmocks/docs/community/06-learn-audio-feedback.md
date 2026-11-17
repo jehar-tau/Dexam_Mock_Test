@@ -1,5 +1,11 @@
 # 6. Track L: audio feedback in Learn
 
+**Status, 17 November 2026:** built with device voices, off by default,
+in the post-launch preview only, on branch
+`feature/dmocks-learn-audio-feedback` (pull request #270). The live
+description is `docs/learn/11-spoken-feedback.md` on that branch; this file
+is the original plan.
+
 A separate track from Community. It touches only `src/learn/`, follows the
 Learn build kit in `docs/learn/`, and ships under Learn's own release
 switch. It is recorded here because it arrived with the Community brief;

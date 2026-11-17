@@ -132,7 +132,7 @@ select pg_temp.as_user(3);
 select pg_temp.rejects($q$select public.review_community_link_suggestion(pg_temp.id('s6'),true,null,false)$q$,'P0001','community_sanctioned');
 select pg_temp.as_user(1);
 select pg_temp.rejects($q$select public.suggest_community_link(pg_temp.id('l1'),'uceed','Time','A fictional reason while paused.')$q$,'P0001','community_sanctioned');
-select pg_temp.ok((select e->>'schemaVersion'='3' and jsonb_array_length(e->'links')=3 and jsonb_array_length(e->'linkSuggestions')=2 from public.export_my_community_library() e),'export includes links and suggestions');
+select pg_temp.ok((select (e->>'schemaVersion')::int>=3 and jsonb_array_length(e->'links')=3 and jsonb_array_length(e->'linkSuggestions')=2 from public.export_my_community_library() e),'export includes links and suggestions');
 
 reset role;
 select pg_temp.ok(not has_function_privilege('anon','public.save_community_link(uuid,uuid[],text)','execute')

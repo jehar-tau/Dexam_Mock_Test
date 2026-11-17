@@ -4,12 +4,17 @@ import { PortalShell } from '../PortalShell.jsx';
 import { ImageCredits } from './photo-figures.jsx';
 import { StageMotif, TopicMotif } from '../TopicMotion.jsx';
 import { postLaunchPreview } from '../launch-scope.js';
+import { stagingPortalMode } from '../platform.js';
 import { useAuthState } from '../useAuth.js';
 import { learningPracticeLink } from '../practice-context.js';
 import { findProgramme } from './programmes/index.js';
 import { findLesson, formatMarks, formatSeconds, programmeSummary, quizLength, tiersOf } from './programme-model.js';
 import { loadProgress, saveProgress } from './programme-storage.js';
 import { LessonPlayer, QuizPlayer } from './LessonPlayer.jsx';
+// Preview only, and not on the private staging portal, whose backend does not
+// carry Community: keep a programme in the Community prep space. Loaded on
+// demand so released Learn pages carry no Community code.
+const LearnSaveToPrep = React.lazy(() => import('../CommunityLearnSave.jsx').then(module => ({ default: module.LearnSaveToPrep })));
 
 function Ring({ percent }) {
   const r = 16, c = 2 * Math.PI * r;
@@ -111,6 +116,7 @@ export function LearnProgrammePage() {
   return <PortalShell><section className="wrap section learn-page">
     <ProgrammeHeading headingRef={heading} />
     <p><Link to="/dashboard/learn">← All of Learn</Link></p>
+    {programme && postLaunchPreview && !stagingPortalMode && <React.Suspense fallback={null}><LearnSaveToPrep programme={programme} actorId={session.user.id} headingRef={heading} /></React.Suspense>}
     {programme
       ? <ProgrammeRunner programme={programme} actorId={session.user.id} notice="Progress in interactive programmes is saved in this browser for now. Server-side saving arrives with the next Learn release." />
       : <p role="alert">This programme is not available. <Link to="/dashboard/learn">Back to Learn</Link></p>}

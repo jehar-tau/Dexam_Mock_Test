@@ -23,7 +23,7 @@ const excerpt = text => text.replace(/(\*\*|\*|^#{2,3}\s+|^>\s?|^-\s+)/gm, "").r
 export function backend() {
   const state = { posts: [], comments: [], likes: new Set(), folders: [], saves: [], drafts: [], blocks: new Set(), receipts: new Map(), calls: [], clock: 0, refuseContact: false,
     roles: new Map(), admins: new Set([admin.id]), sanctions: [], featured: new Set(), revisions: [],
-    links: [], linkSaves: [], notes: [], suggestions: [], trusted: new Set(), previews: new Map(), previewCalls: [], tokens: [], extensionCalls: [] };
+    links: [], linkSaves: [], notes: [], suggestions: [], trusted: new Set(), previews: new Map(), previewCalls: [], tokens: [], extensionCalls: [], learnSaves: [] };
   const now = () => `2026-11-16T00:${String(Math.floor(++state.clock / 60)).padStart(2, "0")}:${String(state.clock % 60).padStart(2, "0")}.000000+00:00`;
   const fail = (details, code = "22023") => ({ status: code === "42501" ? 403 : 400, value: { code, details, message: "private-fixture-diagnostic" } });
   const ok = value => ({ status: 200, value });
@@ -226,7 +226,7 @@ export function backend() {
       const posts = state.saves.filter(save => save.folderId === folder.id).map(save => {
         const post = readable(actor, save.postId);
         return post ? { type: "post", id: post.id, postId: post.id, savedAt: save.savedAt, available: true, kind: post.kind, exam: post.exam, topic: post.topic, title: post.title,
-          excerpt: excerpt(post.body), author: names[post.authorId], note: null } : { type: "post", id: save.postId, postId: save.postId, savedAt: save.savedAt, available: false };
+          excerpt: excerpt(post.body), author: names[post.authorId], note: state.notes.find(item => item.userId === actor && item.postId === post.id)?.body ?? null } : { type: "post", id: save.postId, postId: save.postId, savedAt: save.savedAt, available: false };
       });
       const links = state.linkSaves.filter(save => save.folderId === folder.id).map(save => {
         const link = state.links.find(item => item.id === save.linkId), mine = state.suggestions.filter(item => item.userId === actor && item.linkId === link.id).at(-1);
@@ -281,6 +281,65 @@ export function backend() {
       const refused = publish(suggestion, actor); if (refused) return refused;
       if (input.p_trust) state.trusted.add(state.links.find(link => link.id === suggestion.linkId).host);
       return ok({ id: suggestion.id, status: "approved", postId: suggestion.postId });
+    },
+    community_my_note(actor, input) {
+      const note = state.notes.find(item => item.userId === actor && item.postId === input.p_post_id);
+      return ok({ postId: input.p_post_id, note: note?.body ?? null, updatedAt: note ? note.updatedAt : null });
+    },
+    set_community_note(actor, input) {
+      const body = (input.p_body ?? "").trim();
+      state.notes = state.notes.filter(item => !(item.userId === actor && item.postId === input.p_post_id));
+      if (!body) return ok({ postId: input.p_post_id, note: null, updatedAt: null });
+      if (!readable(actor, input.p_post_id)) return fail("community_target_unavailable", "42501");
+      const note = { userId: actor, postId: input.p_post_id, body, updatedAt: now() };
+      state.notes.push(note); return ok({ postId: input.p_post_id, note: body, updatedAt: note.updatedAt });
+    },
+    learn_programme_saved: (actor, input) => ok({ programme: input.p_programme, saved: state.learnSaves.some(item => item.userId === actor && item.programme === input.p_programme) }),
+    set_learn_programme_saved(actor, input) {
+      state.learnSaves = state.learnSaves.filter(item => !(item.userId === actor && item.programme === input.p_programme));
+      if (input.p_saved) state.learnSaves.push({ userId: actor, programme: input.p_programme, title: input.p_title, savedAt: now() });
+      return ok({ programme: input.p_programme, saved: input.p_saved });
+    },
+    community_prep(actor) {
+      const mine = state.posts.filter(post => post.authorId === actor && post.status !== "hidden").reverse();
+      const notes = state.notes.filter(item => item.userId === actor).map(item => {
+        if (item.postId) { const post = readable(actor, item.postId); return post && { type: "post", id: post.id, title: post.title, note: item.body.slice(0, 280), updatedAt: item.updatedAt ?? "2026-11-17T00:00:00.000000+00:00", url: null }; }
+        const link = state.links.find(other => other.id === item.linkId);
+        return { type: "link", id: link.id, title: link.title ?? link.host, note: item.body.slice(0, 280), updatedAt: item.updatedAt ?? "2026-11-17T00:00:00.000000+00:00", url: link.url };
+      }).filter(Boolean);
+      return ok({ counts: { folders: state.folders.filter(item => item.userId === actor).length, savedPosts: new Set(state.saves.filter(item => item.userId === actor).map(item => item.postId)).size,
+        savedLinks: new Set(state.linkSaves.filter(item => item.userId === actor).map(item => item.linkId)).size, notes: notes.length, posts: mine.length,
+        drafts: state.drafts.filter(item => item.userId === actor).length, learn: state.learnSaves.filter(item => item.userId === actor).length },
+        learn: state.learnSaves.filter(item => item.userId === actor).map(({ programme, title, savedAt }) => ({ programme, title, savedAt })),
+        posts: mine.map(post => ({ id: post.id, kind: post.kind, title: post.title, status: post.status, createdAt: post.createdAt, comments: visibleComments(post).length, likes: likes(post.id) })),
+        drafts: state.drafts.filter(item => item.userId === actor).map(item => ({ id: item.id, title: item.title, updatedAt: item.updatedAt })), notes });
+    },
+    community_prep_search(actor, input) {
+      const query = input.p_query.trim().replace(/\s+/g, " "), terms = query.toLowerCase().split(" ");
+      const match = (...parts) => terms.every(term => parts.filter(Boolean).join(" ").toLowerCase().includes(term));
+      const noteOf = (field, value) => state.notes.find(item => item.userId === actor && item[field] === value)?.body ?? null;
+      const results = [];
+      for (const save of state.saves.filter(item => item.userId === actor)) {
+        const post = readable(actor, save.postId);
+        if (post && match(post.title, post.topic, post.body, noteOf("postId", post.id)) && !results.some(item => item.id === post.id))
+          results.push({ type: "saved-post", id: post.id, kind: post.kind, title: post.title, snippet: excerpt(post.body), note: noteOf("postId", post.id) });
+      }
+      for (const save of state.linkSaves.filter(item => item.userId === actor)) {
+        const link = state.links.find(item => item.id === save.linkId);
+        if (match(link.title, link.site, link.host, link.description, link.url, noteOf("linkId", link.id)) && !results.some(item => item.id === link.id))
+          results.push({ type: "link", id: link.id, title: link.title ?? link.host, snippet: link.description ?? link.url, url: link.url, note: noteOf("linkId", link.id) });
+      }
+      for (const item of state.learnSaves.filter(item => item.userId === actor && match(item.title, item.programme.replace(/-/g, " "))))
+        results.push({ type: "learn", id: item.programme, title: item.title, snippet: null, note: null });
+      for (const post of state.posts.filter(post => post.authorId === actor && post.status !== "hidden" && match(post.title, post.topic, post.body)))
+        results.push({ type: "my-post", id: post.id, kind: post.kind, title: post.title, snippet: excerpt(post.body), note: null });
+      for (const note of state.notes.filter(item => item.userId === actor && item.postId && !state.saves.some(save => save.userId === actor && save.postId === item.postId))) {
+        const post = readable(actor, note.postId);
+        if (post && post.authorId !== actor && match(post.title, note.body)) results.push({ type: "note", id: post.id, kind: post.kind, title: post.title, snippet: note.body.slice(0, 280), note: note.body });
+      }
+      for (const draft of state.drafts.filter(item => item.userId === actor && match(item.title, item.topic, item.body)))
+        results.push({ type: "draft", id: draft.id, title: draft.title || null, snippet: draft.body.slice(0, 280), note: null });
+      return ok({ query, results: results.slice(0, 30) });
     },
     create_community_extension_token(actor, input) {
       if (state.tokens.filter(item => item.userId === actor && !item.revoked).length >= 5) return fail("community_extension_limit", "P0001");

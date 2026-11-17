@@ -7,6 +7,7 @@ import { CommunityImages } from "./CommunityImages.jsx";
 import { CommunityArticle } from "./CommunityArticle.jsx";
 import { CommunitySaveDialog } from "./CommunitySaveDialog.jsx";
 import { CommunityLinkPreview } from "./CommunityLinks.jsx";
+import { CommunityNotePanel } from "./CommunityNotePanel.jsx";
 import { CommunityStaffDialog } from "./CommunityStaffDialog.jsx";
 import { PendingImages, PendingText } from "./Community.jsx";
 import { CommunityStandingNotice, communityDate, useCommunityStanding } from "./CommunityFrame.jsx";
@@ -194,6 +195,7 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
         ? <span className="community-confirm">Hide everything from {header.author}? <button type="button" className="text-button" disabled={working} onClick={blockAuthor}>Yes, block</button> <button type="button" className="text-button" onClick={() => setConfirmBlock(false)}>Cancel</button></span>
         : <button type="button" className="text-button" onClick={() => setConfirmBlock(true)}>Block this author</button>)}
     </div>
+    <CommunityNotePanel postId={id} rpc={rpc} />
     {(header.canHold || header.canSanction) && <div className="community-reader-actions community-staff-actions" role="group" aria-label="Moderation">
       {header.canHold && !header.isMine && <button type="button" className="text-button" onClick={event => openStaff({ kind: "hold", targetType: "post", targetId: id, label: thread.title }, event.currentTarget)}>Hold for review</button>}
       {header.canSanction && !header.isMine && <button type="button" className="text-button" onClick={event => openStaff({ kind: "sanction", targetType: "post", targetId: id, label: `Author of: ${thread.title}` }, event.currentTarget)}>Pause this author</button>}
