@@ -1,6 +1,7 @@
 // Response checks for Community articles, likes, folders, saves, drafts and
 // blocks. Every server reply is verified before it reaches the screen.
 import { ARTICLE_BODY, ARTICLE_EXAMS } from "./community-article.mjs";
+import { LINK_DESCRIPTION_MAX, LINK_SITE_MAX, LINK_TITLE_MAX, LINK_URL_MAX } from "../supabase/functions/_shared/community-link.mjs";
 
 const uuidPattern = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 const uuid = value => typeof value === "string" && uuidPattern.test(value);
@@ -29,7 +30,17 @@ export function communityArticleInput(query, cursor = null) {
   if (cursor !== null && selected.sort !== "latest") return invalid();
   return { p_exam: selected.exam, p_sort: selected.sort, p_cursor: articleCursor(cursor), p_limit: 20 };
 }
-const kinds = new Set(["discussion", "article", "work"]);
+const kinds = new Set(["discussion", "article", "work", "link"]);
+// A shared link preview. Plain text only; the address must be http or https.
+export function validateCommunityLinkPreview(value) {
+  const optional = (item, max) => item === null || text(item, max, 1);
+  if (!value || !uuid(value.id) || typeof value.url !== "string" || value.url.length > LINK_URL_MAX || !/^https?:\/\//.test(value.url) ||
+    !text(value.host, 253, 3) || !["fetched", "unavailable", "skipped"].includes(value.status) || !optional(value.title, LINK_TITLE_MAX) ||
+    !optional(value.site, LINK_SITE_MAX) || !optional(value.description, LINK_DESCRIPTION_MAX) || !timestamp(value.fetchedAt)) return invalid();
+  let parsed; try { parsed = new URL(value.url); } catch { return invalid(); }
+  if (!["http:", "https:"].includes(parsed.protocol) || parsed.hostname !== value.host) return invalid();
+  return { id: value.id, url: value.url, host: value.host, status: value.status, title: value.title, site: value.site, description: value.description, fetchedAt: value.fetchedAt };
+}
 function card(item) {
   return item && uuid(item.id) && exams.has(item.exam) && typeof item.teacher === "boolean" && text(item.topic, 100) && text(item.title, 160) && text(item.excerpt, 400) &&
     text(item.author, 100) && timestamp(item.createdAt) && ["visible", "locked"].includes(item.status) && count(item.comments) && count(item.likes) &&
@@ -57,6 +68,7 @@ export function validateCommunityReader(value) {
     !value.folderIds.every(uuid) || !text(value.body, ARTICLE_BODY.max) || !Number.isSafeInteger(value.version) || value.version < 1 ||
     ![value.teacher, value.canAccept, value.canEdit, value.canHold, value.canSanction, value.canFeature, value.featured].every(flag => typeof flag === "boolean") ||
     !(value.editedAt === null || timestamp(value.editedAt)) || !(value.acceptedCommentId === null || uuid(value.acceptedCommentId)) ||
+    (value.kind === "link" ? !value.link || validateCommunityLinkPreview(value.link).id !== value.link.id : value.link !== undefined && value.link !== null) ||
     (value.canAccept && (value.kind !== "discussion" || !value.isMine)) || (value.canEdit && !value.isMine)) return invalid();
   return value;
 }
@@ -87,24 +99,38 @@ export function validateCommunitySaves(value, postId) {
 }
 function savedCursor(value) {
   if (value === null) return null;
-  if (!value || Object.keys(value).length !== 2 || !uuid(value.postId) || !timestamp(value.savedAt)) return invalid();
-  return { savedAt: value.savedAt, postId: value.postId };
+  if (!value || Object.keys(value).length !== 3 || !uuid(value.id) || !["post", "link"].includes(value.type) || !timestamp(value.savedAt)) return invalid();
+  return { savedAt: value.savedAt, type: value.type, id: value.id };
 }
+const suggestion = value => value === null || (value && ["pending", "approved", "rejected"].includes(value.status) && (value.postId === null || uuid(value.postId)) &&
+  (value.reason === null || text(value.reason, 1000, 1)));
 export function communitySavedInput(folderId, cursor = null) {
   if (!uuid(folderId)) return invalid();
   return { p_folder_id: folderId, p_cursor: savedCursor(cursor), p_limit: 20 };
 }
 export function validateCommunitySaved(value, folderId) {
   if (!value || value.folder?.id !== folderId || !text(value.folder.name, COMMUNITY_FOLDER_NAME_MAX, 1) || !Array.isArray(value.items) || value.items.length > 25 ||
-    new Set(value.items.map(item => item?.postId)).size !== value.items.length) return invalid();
-  for (const item of value.items) {
-    if (!item || !uuid(item.postId) || !timestamp(item.savedAt) || typeof item.available !== "boolean") return invalid();
-    if (item.available ? !(kinds.has(item.kind) && exams.has(item.exam) && text(item.topic, 100) && text(item.title, 160) &&
-      text(item.excerpt, 400) && text(item.author, 100)) : Object.keys(item).length !== 3) return invalid();
-  }
-  const nextCursor = savedCursor(value.nextCursor ?? null), last = value.items.at(-1);
-  if (nextCursor && (!last || last.postId !== nextCursor.postId || last.savedAt !== nextCursor.savedAt)) return invalid();
-  return { folder: { id: value.folder.id, name: value.folder.name }, items: value.items, nextCursor };
+    new Set(value.items.map(item => `${item?.type}:${item?.id}`)).size !== value.items.length) return invalid();
+  const items = value.items.map(item => {
+    if (!item || !uuid(item.id) || !timestamp(item.savedAt) || !["post", "link"].includes(item.type)) return invalid();
+    const note = item.note === undefined || item.note === null || text(item.note, 2000, 1);
+    if (item.type === "link") {
+      if (!note || !suggestion(item.suggestion ?? null) || !(item.postId === null || uuid(item.postId))) return invalid();
+      const link = validateCommunityLinkPreview(item.link);
+      if (link.id !== item.id) return invalid();
+      return { type: "link", id: item.id, savedAt: item.savedAt, link, note: item.note ?? null, suggestion: item.suggestion ?? null, postId: item.postId };
+    }
+    if (item.postId !== item.id || typeof item.available !== "boolean") return invalid();
+    if (!item.available) {
+      if (Object.keys(item).sort().join() !== "available,id,postId,savedAt,type") return invalid();
+      return { type: "post", id: item.id, postId: item.postId, savedAt: item.savedAt, available: false };
+    }
+    if (!(kinds.has(item.kind) && exams.has(item.exam) && text(item.topic, 100) && text(item.title, 160) && text(item.excerpt, 400) && text(item.author, 100) && note)) return invalid();
+    return { ...item, note: item.note ?? null };
+  });
+  const nextCursor = savedCursor(value.nextCursor ?? null), last = items.at(-1);
+  if (nextCursor && (!last || last.id !== nextCursor.id || last.type !== nextCursor.type || last.savedAt !== nextCursor.savedAt)) return invalid();
+  return { folder: { id: value.folder.id, name: value.folder.name }, items, nextCursor };
 }
 
 const draft = item => item && uuid(item.id) && (item.exam === null || exams.has(item.exam)) && text(item.topic, 100) && text(item.title, 160) &&
@@ -124,11 +150,12 @@ export function validateCommunityBlocked(value) {
 }
 
 // Cards for the work list, the unanswered list and the featured shelf.
-export const communityCardViews = Object.freeze(["work", "unanswered"]);
+export const communityCardViews = Object.freeze(["work", "unanswered", "links"]);
 function cardOf(item) {
   return item && uuid(item.id) && kinds.has(item.kind) && exams.has(item.exam) && text(item.topic, 100) && text(item.title, 160) && text(item.excerpt, 400) &&
     text(item.author, 100) && timestamp(item.createdAt) && ["visible", "locked"].includes(item.status) && count(item.comments) && count(item.likes) &&
-    count(item.words) && count(item.assetCount) && item.assetCount <= 3 && [item.liked, item.saved, item.isMine, item.teacher, item.answered].every(flag => typeof flag === "boolean");
+    count(item.words) && count(item.assetCount) && item.assetCount <= 3 && [item.liked, item.saved, item.isMine, item.teacher, item.answered].every(flag => typeof flag === "boolean") &&
+    (item.kind === "link" ? Boolean(item.link) && validateCommunityLinkPreview(item.link).id === item.link.id : item.link === undefined || item.link === null);
 }
 export function communityCardsInput(view, exam = null, cursor = null) {
   const selected = communityArticleQuery(exam, "latest").exam;
@@ -139,7 +166,8 @@ export function validateCommunityCards(value, view, exam = null) {
   const selected = communityArticleQuery(exam, "latest").exam;
   if (!value || value.view !== view || (value.exam ?? null) !== selected || !Array.isArray(value.cards) || value.cards.length > 25 || !value.cards.every(cardOf) ||
     new Set(value.cards.map(item => item.id.toLowerCase())).size !== value.cards.length ||
-    value.cards.some(item => (selected && item.exam !== selected) || (view === "work" ? item.kind !== "work" : item.kind !== "discussion" || item.answered || item.status !== "visible"))) return invalid();
+    value.cards.some(item => (selected && item.exam !== selected) || (view === "work" ? item.kind !== "work" : view === "links" ? item.kind !== "link"
+      : item.kind !== "discussion" || item.answered || item.status !== "visible"))) return invalid();
   const nextCursor = articleCursor(value.nextCursor ?? null), last = value.cards.at(-1);
   if (nextCursor && (!last || last.id !== nextCursor.id || last.createdAt !== nextCursor.createdAt)) return invalid();
   return { cards: value.cards, nextCursor, view, exam: selected };
@@ -170,10 +198,10 @@ export function validateCommunityFeature(value, postId, featured) {
   return featured;
 }
 export function validateCommunityStanding(value) {
-  if (!value || typeof value.teacher !== "boolean" || typeof value.moderator !== "boolean" || (value.moderator && !value.teacher)) return invalid();
+  if (!value || typeof value.admin !== "boolean" || typeof value.teacher !== "boolean" || typeof value.moderator !== "boolean" || (value.moderator && !value.teacher)) return invalid();
   const s = value.sanction;
   if (s !== null && !(s && ["mute", "ban"].includes(s.kind) && text(s.reason, 1000, 8) && (s.kind === "ban" ? s.until === null : timestamp(s.until)))) return invalid();
-  return { teacher: value.teacher, moderator: value.moderator, sanction: s && { kind: s.kind, until: s.until, reason: s.reason } };
+  return { admin: value.admin, teacher: value.teacher, moderator: value.moderator, sanction: s && { kind: s.kind, until: s.until, reason: s.reason } };
 }
 export function communitySanctionNotice(sanction) {
   if (!sanction) return "";
@@ -218,7 +246,60 @@ export function validateCommunityRevisions(value, postId) {
   return { current: value.current, revisions: value.revisions };
 }
 
+// Links: saves, suggestions, the review queue and trusted sites.
+export function validateCommunityLinkSave(value, linkId) {
+  if (!value || value.linkId !== linkId || !Array.isArray(value.folderIds) || value.folderIds.length > COMMUNITY_FOLDER_LIMIT || !value.folderIds.every(uuid) ||
+    !(value.note === null || text(value.note, 2000, 1))) return invalid();
+  return { folderIds: value.folderIds, note: value.note };
+}
+export function communitySuggestionInput(linkId, exam, topic, note) {
+  const selected = communityArticleQuery(exam, "latest").exam, subject = String(topic ?? "").trim(), reason = String(note ?? "").trim();
+  if (!uuid(linkId)) return invalid();
+  if (!selected) throw new Error("Choose the exam this link helps with.");
+  if (!subject || [...subject].length > 100) throw new Error("Add a topic of up to 100 characters.");
+  if ([...reason].length < 20 || [...reason].length > 2000) throw new Error("Say why it helps in 20 to 2,000 characters. This becomes the post’s text.");
+  return { p_link_id: linkId, p_exam: selected, p_topic: subject, p_note: reason };
+}
+export function validateCommunitySuggestion(value) {
+  if (!value || !uuid(value.id) || !["pending", "approved"].includes(value.status) || (value.status === "approved" ? !uuid(value.postId) : value.postId !== null)) return invalid();
+  return { id: value.id, status: value.status, postId: value.postId };
+}
+export function validateCommunityLinkQueue(value) {
+  if (!value || typeof value.canTrust !== "boolean" || !Array.isArray(value.items) || value.items.length > 50) return invalid();
+  const items = value.items.map(item => {
+    if (!item || !uuid(item.id) || !text(item.author, 100) || typeof item.isMine !== "boolean" || typeof item.social !== "boolean" || !exams.has(item.exam) ||
+      !text(item.topic, 100, 1) || !text(item.note, 2000, 20) || !timestamp(item.createdAt)) return invalid();
+    return { ...item, link: validateCommunityLinkPreview(item.link) };
+  });
+  return { canTrust: value.canTrust, items };
+}
+export function validateCommunityReview(value, id) {
+  if (!value || value.id !== id || !["approved", "rejected"].includes(value.status) || (value.status === "approved" ? !uuid(value.postId) : value.postId !== null)) return invalid();
+  return { status: value.status, postId: value.postId };
+}
+export function validateCommunityTrustedHosts(value) {
+  if (!value || !Array.isArray(value.hosts) || value.hosts.length > 500 || !value.hosts.every(item => item && text(item.host, 253, 3) && timestamp(item.createdAt))) return invalid();
+  return value.hosts.map(item => item.host);
+}
+const linkFailures = Object.freeze({
+  link_invalid: "That doesn’t look like a web address. Paste the full address, starting with https://.",
+  link_blocked: "That address can’t be saved. Use a public website.",
+  link_limit: "You’ve fetched thirty previews this hour. Try again later.",
+  link_unavailable: "Link previews are unavailable right now. Try again.",
+});
+// Errors from the preview request arrive as a function reply with a code.
+export async function communityLinkFailure(error) {
+  try { const body = await error?.context?.clone().json(); if (Object.hasOwn(linkFailures, body?.code)) return linkFailures[body.code]; } catch { /* Diagnostics stay private. */ }
+  return linkFailures.link_unavailable;
+}
+
 const failures = Object.freeze({
+  community_link_unavailable: "That link is no longer available. Save it again.",
+  community_link_social: "Links to social or messaging sites stay in your private folders.",
+  community_link_posted: "This link is already in the Links feed.",
+  community_suggest_limit: "You’ve suggested five links today. Try again tomorrow.",
+  community_review_own: "Another moderator must review your own suggestion.",
+  community_admin_required: "Only an administrator can trust a site.",
   community_sanctioned: "Posting is paused for your account. You can still read, like and save.",
   community_work_limit: "You’ve shared five pieces of work today. Try again tomorrow.",
   community_edit_limit: "You’ve made twenty edits today. Try again tomorrow.",

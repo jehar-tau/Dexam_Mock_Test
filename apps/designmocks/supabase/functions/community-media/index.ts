@@ -5,6 +5,15 @@ import { drawingRequestBody } from "../_shared/drawing-request.mjs";
 import { sameDrawingPages, signedDrawingPages } from "../_shared/drawing-links.mjs";
 import { COMMUNITY_FORM_MAX_BYTES, COMMUNITY_MAX_BYTES, CommunityMediaError, communityMediaFailure, communityTarget, validateCommunityImage } from "../_shared/community-image.mjs";
 import { signedCommunityModeration, signedCommunityReview } from "../_shared/community-review.mjs";
+import { CommunityLinkError, fetchLinkPreview, normalizeLinkUrl } from "../_shared/community-link.mjs";
+
+// Looks up the public addresses of a host so a link preview never reaches a
+// private network. Returns null where the runtime cannot resolve names.
+async function resolveHost(host: string): Promise<string[] | null> {
+  if (typeof Deno.resolveDns !== "function") return null;
+  const answers = await Promise.allSettled([Deno.resolveDns(host, "A"), Deno.resolveDns(host, "AAAA")]);
+  return answers.flatMap(answer => answer.status === "fulfilled" ? answer.value : []);
+}
 
 let uploadBusy = false;
 Deno.serve(async request => {
@@ -33,6 +42,26 @@ Deno.serve(async request => {
         const signed = await signedCommunityReview(input,
           (args: { p_report_id: string; p_expected_version: string; p_context: string }) => student.rpc("admin_community_report_media_paths", args), bucket);
         return await stagingDenied() ? stagingRejected() : respond(signed);
+      }
+      // Link previews: title, site and description only, as plain text.
+      if (input.action === "link") {
+        try {
+          const { url: address, host } = normalizeLinkUrl(input.url);
+          const cached = await student.rpc("community_link_lookup", { p_url: address });
+          if (cached.error) throw new CommunityLinkError("Link previews are unavailable. Try again.", "link_unavailable", 502);
+          if (cached.data) return await stagingDenied() ? stagingRejected() : respond({ link: cached.data });
+          const reserved = await admin.rpc("service_begin_community_link_fetch", { p_user_id: user.id });
+          if (reserved.error?.details === "community_link_limit") throw new CommunityLinkError("You’ve fetched thirty previews this hour. Try again later.", "link_limit", 429);
+          if (reserved.error) throw new CommunityLinkError("Link previews are unavailable. Try again.", "link_unavailable", 502);
+          const preview = await fetchLinkPreview(address, { signal: request.signal, resolve: resolveHost });
+          const recorded = await admin.rpc("service_record_community_link", { p_url: address, p_host: host, p_status: preview.status,
+            p_title: preview.title, p_site: preview.site, p_description: preview.description });
+          if (recorded.error) throw new CommunityLinkError("Link previews are unavailable. Try again.", "link_unavailable", 502);
+          return await stagingDenied() ? stagingRejected() : respond({ link: recorded.data });
+        } catch (error) {
+          if (error instanceof CommunityLinkError) return respond({ error: error.message, code: error.code }, error.status);
+          return respond({ error: "Link previews are unavailable. Try again.", code: "link_unavailable" }, 502);
+        }
       }
       if (input.action === "moderate") {
         const signed = await signedCommunityModeration(input,
