@@ -112,7 +112,7 @@ select pg_temp.ok(public.remove_community_save((select id from ids where name='d
 select pg_temp.ok(jsonb_array_length(public.community_saved((select id from ids where name='f1'),null,25)->'items')=1,'the folder keeps its other save');
 select public.set_community_saves((select id from ids where name='d1'),array[(select id from ids where name='f1')]);
 select public.save_community_draft(null,'nid','Export','A fictional draft for export','kept text');
-select pg_temp.ok((select e @> '{"schemaVersion":1,"accountId":"00000000-0000-4000-8000-000000000902","likes":[],"blocked":[]}'
+select pg_temp.ok((select e @> '{"schemaVersion":2,"accountId":"00000000-0000-4000-8000-000000000902","likes":[],"blocked":[]}'
  and jsonb_array_length(e->'folders')=2 and jsonb_array_length(e->'drafts')=1 and e#>>'{drafts,0,body}'='kept text'
  and (select sum(jsonb_array_length(f->'saves'))=2 from jsonb_array_elements(e->'folders')f) from public.export_my_community_library() e),'library export holds folders, saves and drafts');
 select pg_temp.as_user(3);

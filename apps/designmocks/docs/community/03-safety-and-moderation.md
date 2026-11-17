@@ -96,18 +96,28 @@ Three articles a day; five discussions and thirty replies an hour
 
 ## Added in phase 2
 
-- **Roles.** `teacher` and `moderator`, granted only by the administrator.
-  A moderator can hide and lock; restoring, sanctioning and dismissing
-  reports stay with the administrator. Every action is logged with the
-  actor.
-- **Sanctions.** Mute (cannot post or reply) for a period, or a permanent
-  Community ban, with a recorded reason. The student sees why and how to
-  appeal through the existing support report.
-- **First posts.** An account's first article or work post is held for
-  review before it appears (see decision 4 for whether to bring this
-  forward).
-- **Edits.** An edited post keeps its earlier revisions for moderators, and
-  an edit re-runs the contact guard.
+Built 17 November 2026, behind the preview.
+
+- **Roles.** Teacher and moderator, granted and removed only by the
+  administrator, by account email, from the admin page. A moderator must
+  also be a teacher. A moderator can only hold: hide a post or reply now,
+  pending the administrator's review, with a note, logged with the
+  moderator as actor. Restoring, pausing and resolving reports stay with
+  the administrator. A moderator cannot hold their own content and may
+  hold thirty items an hour.
+- **Pauses.** The administrator pauses the author of a post or reply for 1
+  to 365 days, or until lifted, with a reason of 8 to 1,000 characters.
+  A trigger refuses every post, reply and edit from a paused account. The
+  student can still read, like and save, and sees the reason and the end
+  date on the Write page and the post pages, with a pointer to Report a
+  problem. A new pause replaces the previous one.
+- **Safety reports first.** The administrator's report queue lists "I am
+  worried about someone's safety" before everything else.
+- **Edits.** An edited post keeps every earlier version for the
+  administrator, shows "Edited" to readers, and re-runs the contact guard
+  and the pause check. Twenty edits a day.
+- **First posts.** Holding an account's first article or work post for
+  review is not built (decision 4).
 
 ## Added with links and the extension (phases 3 and 4)
 

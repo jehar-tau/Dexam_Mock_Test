@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CommunityFrame, communityDate, useCommunityRpc } from "./CommunityFrame.jsx";
-import { communityArticleInput, communityArticleQuery, mergeCommunityArticles, validateCommunityArticles } from "./community-library.js";
+import { communityArticleInput, communityArticleQuery, mergeCommunityArticles, validateCommunityArticles, validateCommunityFeatured } from "./community-library.js";
+import { CommunityCard } from "./CommunityCards.jsx";
 import { ARTICLE_EXAMS } from "./community-article.mjs";
 
 const plural = (count, word) => `${count} ${word}${count === 1 ? "" : "s"}`;
@@ -28,9 +29,22 @@ function ArticlesSession() {
     } finally { if (request.current === controller) setLoading(false); }
   }, [rpc]);
   useEffect(() => { load(query); return () => request.current?.abort(); }, [query, load]);
+  const [featured, setFeatured] = useState([]);
+  useEffect(() => {
+    const controller = new AbortController();
+    (async () => {
+      try { const value = validateCommunityFeatured(await rpc("community_featured_list", {}, controller.signal)); if (!controller.signal.aborted) setFeatured(value); }
+      catch { /* The shelf is optional; the feed still loads. */ }
+    })();
+    return () => controller.abort();
+  }, [rpc]);
   const articles = data?.articles ?? [];
   return <section aria-label="Community articles" aria-busy={loading}>
     {typeof location.state?.notice === "string" && <p role="status" className="notice">{location.state.notice}</p>}
+    {featured.length > 0 && <section aria-label="Featured by teachers" className="community-featured">
+      <h2>Featured by teachers</h2>
+      <div className="community-feed community-article-feed">{featured.map(card => <CommunityCard key={card.id} card={card} heading="h3" />)}</div>
+    </section>}
     <div className="community-toolbar">
       <div role="group" aria-label="Article order" className="community-segments">
         {[["latest", "Latest"], ["top", "Top"]].map(([value, label]) => <button key={value} type="button" aria-pressed={query.sort === value}
@@ -51,7 +65,7 @@ function ArticlesSession() {
         <span className="eyebrow">{article.exam} · {article.topic}{article.status === "locked" ? " · Locked" : ""}</span>
         <h2><Link to={`/dashboard/community/post/${article.id}`}>{article.title}</Link></h2>
         <p>{article.excerpt}</p>
-        <small>By {article.author}{article.isMine ? " (you)" : ""} · {communityDate(article.createdAt)} · {Math.max(1, Math.round(article.words / 200))} min read · {plural(article.likes, "like")} · {plural(article.comments, "comment")}{article.saved ? " · Saved" : ""}</small>
+        <small>By {article.author}{article.teacher ? " · Teacher" : ""}{article.isMine ? " (you)" : ""} · {communityDate(article.createdAt)} · {Math.max(1, Math.round(article.words / 200))} min read · {plural(article.likes, "like")} · {plural(article.comments, "comment")}{article.saved ? " · Saved" : ""}</small>
       </article>)}
     </div>
     {added && <p role="status">{added}</p>}

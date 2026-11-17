@@ -1,4 +1,5 @@
-import React, { useCallback, useLayoutEffect, useRef } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { communitySanctionNotice, validateCommunityStanding } from "./community-library.js";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { PortalShell } from "./PortalShell.jsx";
 import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
@@ -10,6 +11,8 @@ export function CommunityNav() {
   return <nav className="community-nav" aria-label="Community sections">
     {item("/dashboard/community/articles", "Articles")}
     {item("/dashboard/community", "Discussions", true)}
+    {item("/dashboard/community/unanswered", "Unanswered")}
+    {item("/dashboard/community/work", "Work")}
     {item("/dashboard/community/saved", "Saved")}
     {item("/dashboard/community/write", "Write")}
   </nav>;
@@ -19,6 +22,23 @@ export function CommunityNav() {
 export function useCommunityRpc() {
   const services = useAccountServices();
   return useCallback((name, input, signal) => withAccountDeadline(active => services.rpc(name, input, active), signal), [services]);
+}
+
+// The reader's own roles and any pause on posting. null while loading or unknown.
+export function useCommunityStanding(rpc) {
+  const [standing, setStanding] = useState(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    (async () => {
+      try { const value = validateCommunityStanding(await rpc("my_community_standing", {}, controller.signal)); if (!controller.signal.aborted) setStanding(value); }
+      catch { /* Writes are still checked by the server. */ }
+    })();
+    return () => controller.abort();
+  }, [rpc]);
+  return standing;
+}
+export function CommunityStandingNotice({ standing }) {
+  return standing?.sanction ? <p role="status" className="notice community-standing">{communitySanctionNotice(standing.sanction)}</p> : null;
 }
 
 export function communityDate(value) {

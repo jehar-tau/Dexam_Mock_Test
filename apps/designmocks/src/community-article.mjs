@@ -141,3 +141,22 @@ export function articleProblems(input) {
   if (contact) problems.contact = contactMessages[contact];
   return problems;
 }
+
+// Work for feedback: two prompts that the server turns into headed sections.
+export const WORK_PROMPT = Object.freeze({ min: 20, max: 2000 });
+export function normalizeWork(input = {}) {
+  return { ...normalizeArticle({ exam: input.exam, topic: input.topic, title: input.title, body: "" }),
+    intent: String(input.intent ?? "").replace(/\r\n?/g, "\n").trim(), request: String(input.request ?? "").replace(/\r\n?/g, "\n").trim() };
+}
+export function workProblems(input) {
+  const value = normalizeWork(input), problems = {};
+  if (!ARTICLE_EXAMS.includes(value.exam)) problems.exam = "Choose an exam.";
+  if (!value.topic || length(value.topic) > ARTICLE_TOPIC_MAX) problems.topic = "Add a topic of up to 100 characters.";
+  if (length(value.title) < ARTICLE_TITLE.min || length(value.title) > ARTICLE_TITLE.max) problems.title = "Write a title of 8 to 160 characters.";
+  for (const [field, label] of [["intent", "what you were trying to do"], ["request", "what you want feedback on"]])
+    if (length(value[field]) < WORK_PROMPT.min || length(value[field]) > WORK_PROMPT.max) problems[field] = `Describe ${label} in 20 to 2,000 characters.`;
+  const contact = contactDetails(`${value.topic}\n${value.title}\n${value.intent}\n${value.request}`);
+  if (contact) problems.contact = contactMessages[contact];
+  return problems;
+}
+export const FEEDBACK_TEMPLATE = "What works:\n\nWhat to improve:\n\nHow to improve it:\n";

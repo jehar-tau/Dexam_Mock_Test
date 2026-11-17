@@ -45,6 +45,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-feed.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-followup-images.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-moderation-workspace.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-articles.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/community-feedback.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bug-report-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/support-queue-replies.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/profile-lifecycle.sql

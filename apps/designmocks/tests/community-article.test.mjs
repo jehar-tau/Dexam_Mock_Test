@@ -96,3 +96,17 @@ test("publishing problems name each field and the contact reason", () => {
   assert.match(articleProblems({ ...valid, body: valid.body + " Call 9876543210." }).contact, /phone number/);
   assert.match(articleProblems({ ...valid, title: "Follow @asha.draws for more" }).contact, /handle/);
 });
+
+import { workProblems, normalizeWork, FEEDBACK_TEMPLATE } from "../src/community-article.mjs";
+
+test("work posts need both prompts, a title and no contact details", () => {
+  const valid = { exam: "NID", topic: " Studio test ", title: "My first fictional poster for review",
+    intent: "I wanted a calm poster that reads well from far away.", request: "Is the hierarchy clear, and does the type fit?" };
+  assert.deepEqual(workProblems(valid), {});
+  assert.equal(normalizeWork(valid).topic, "Studio test");
+  assert.deepEqual(Object.keys(workProblems({})).sort(), ["exam", "intent", "request", "title", "topic"]);
+  assert.match(workProblems({ ...valid, request: "too short" }).request, /what you want feedback on/);
+  assert.match(workProblems({ ...valid, intent: "x".repeat(2001) }).intent, /2,000/);
+  assert.match(workProblems({ ...valid, request: valid.request + " Message me on Instagram id ashadraws." }).contact, /handle/);
+  assert.match(FEEDBACK_TEMPLATE, /^What works:\n\nWhat to improve:\n\nHow to improve it:\n$/);
+});

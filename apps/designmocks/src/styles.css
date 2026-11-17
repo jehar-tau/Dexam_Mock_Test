@@ -4350,3 +4350,25 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .community-folder-choices input{width:1.2rem;height:1.2rem;flex:none}
 @media (max-width:760px){.community-saved-layout{grid-template-columns:minmax(0,1fr)}.community-toolbar{align-items:stretch}}
 .community-reader .community-thread h2,.community-drafts h2,.community-saved h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+
+/* Community phase 2: answers, work, staff tools */
+.community-comment-body{white-space:pre-line}
+.community-accepted{display:inline-block;margin:0 0 .5rem;padding:.15rem .6rem;border-radius:999px;background:var(--green);color:var(--paper);font-size:.85rem;font-weight:600}
+.community-answered{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.community-answered .text-button,.community-staff-actions .text-button,.community-staff-list .text-button{display:inline;margin-top:0;min-height:44px}
+.community-staff-actions{border-top:0;margin-top:-1rem;padding-top:0}
+.community-featured{margin-bottom:2rem;padding:1.25rem;border:1px solid var(--line);background:var(--soft)}
+.community-featured h2{margin-top:0;font-size:clamp(1.3rem,3vw,1.7rem)}
+.community-featured .community-feed article{background:var(--surface)}
+.community-work-form textarea{min-height:7rem}
+.community-standing{margin-block:0 1rem}
+.community-staff{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--line);min-width:0;overflow-wrap:anywhere}
+.community-staff .admin-form{grid-template-columns:minmax(0,1fr);max-width:40rem}
+.community-staff-list{list-style:none;padding:0;margin:0 0 1.5rem;display:grid;gap:.25rem}
+.community-staff-list li{display:flex;flex-wrap:wrap;gap:.25rem 1rem;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--line)}
+.community-staff-dialog{max-height:calc(100dvh - 2rem);overflow:auto;overflow-wrap:anywhere}
+.community-staff-dialog .admin-form{grid-template-columns:minmax(0,1fr);margin-bottom:1rem}
+.community-history section{border-top:1px solid var(--line);padding-top:.75rem;margin-top:.75rem}
+.community-edit{grid-template-columns:minmax(0,1fr);margin-block:1rem}
+.community-edit textarea{width:100%;min-height:14rem;font:inherit;line-height:1.6;box-sizing:border-box}
+.community-reply .text-button{justify-self:start;text-align:start}

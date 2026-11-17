@@ -1,6 +1,6 @@
 import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CommunityFrame, CommunityRules, communityDate, useCommunityRpc } from "./CommunityFrame.jsx";
+import { CommunityFrame, CommunityRules, CommunityStandingNotice, communityDate, useCommunityRpc, useCommunityStanding } from "./CommunityFrame.jsx";
 import { CommunityArticle } from "./CommunityArticle.jsx";
 import { ARTICLE_BODY, ARTICLE_EXAMS, ARTICLE_TITLE, ARTICLE_TOPIC_MAX, applyFormat, articleProblems, articleStats, normalizeArticle } from "./community-article.mjs";
 import { communityFailure, validateCommunityDraftReceipt, validateCommunityDrafts } from "./community-library.js";
@@ -12,7 +12,7 @@ const snapshot = fields => JSON.stringify([fields.exam, fields.topic, fields.tit
 const clock = () => new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
 
 function EditorSession() {
-  const rpc = useCommunityRpc(), navigate = useNavigate(), bodyId = useId(), problemsId = useId(), examId = useId();
+  const rpc = useCommunityRpc(), standing = useCommunityStanding(rpc), navigate = useNavigate(), bodyId = useId(), problemsId = useId(), examId = useId();
   const [fields, setFields] = useState(empty), [mode, setMode] = useState("write"), [drafts, setDrafts] = useState(null);
   const [draftId, setDraftId] = useState(null), [status, setStatus] = useState(""), [problems, setProblems] = useState(null), [busy, setBusy] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(null);
@@ -111,6 +111,7 @@ function EditorSession() {
   }
   const stats = articleStats(fields.body), characters = [...fields.body].length;
   return <div className="community-editor">
+    <CommunityStandingNotice standing={standing} />
     <form className="admin-form" onSubmit={publish} noValidate aria-describedby={problems ? problemsId : undefined}>
       <fieldset className="community-fields" aria-label="New article" disabled={busy}>
         <div><label htmlFor={examId}>Exam</label>
@@ -141,10 +142,10 @@ function EditorSession() {
         <CommunityRules />
         {problems && <div id={problemsId} ref={problemList} tabIndex={-1} role="alert" className="error"><p>Before this can be published:</p><ul>{problems.map(problem => <li key={problem}>{problem}</li>)}</ul></div>}
         <div className="community-editor-actions">
-          <button className="button" type="submit">{busy ? "Publishing…" : "Publish article"}</button>
+          <button className="button" type="submit" disabled={Boolean(standing?.sanction)}>{busy ? "Publishing…" : "Publish article"}</button>
           <button className="button quiet" type="button" onClick={() => saveDraft()}>Save draft</button>
         </div>
-        <small>You can add up to three images from the article’s page after publishing. Published articles can’t be edited yet, so preview first.</small>
+        <small>You can add up to three images from the article’s page after publishing, and edit the text there later. Earlier versions are kept for moderators.</small>
       </fieldset>
     </form>
     {status && <p role="status">{status}</p>}
