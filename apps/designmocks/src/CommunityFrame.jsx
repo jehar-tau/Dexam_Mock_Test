@@ -15,6 +15,7 @@ export function CommunityNav() {
     {item("/dashboard/community/work", "Work")}
     {item("/dashboard/community/links", "Links")}
     {item("/dashboard/community/saved", "Saved")}
+    {item("/dashboard/community/prep", "My prep")}
     {item("/dashboard/community/write", "Write")}
   </nav>;
 }

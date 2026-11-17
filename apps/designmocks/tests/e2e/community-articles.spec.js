@@ -220,7 +220,7 @@ test("the new pages work from the keyboard and pass the accessibility audit with
   await page.getByRole("group", { name: "Editor view" }).getByRole("button", { name: "Write" }).click(); await audit(page);
   // The existing discussions page gains only the section links.
   await page.goto("/dashboard/community/write");
-  await expect(page.getByRole("navigation", { name: "Community sections" }).getByRole("link")).toHaveText(["Articles", "Discussions", "Unanswered", "Work", "Links", "Saved", "Write"]);
+  await expect(page.getByRole("navigation", { name: "Community sections" }).getByRole("link")).toHaveText(["Articles", "Discussions", "Unanswered", "Work", "Links", "Saved", "My prep", "Write"]);
 });
 
 test("the released build keeps every Community page behind Coming later and makes no Community request", async ({ page }) => {

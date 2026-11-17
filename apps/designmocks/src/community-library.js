@@ -293,6 +293,48 @@ export async function communityLinkFailure(error) {
   return linkFailures.link_unavailable;
 }
 
+// The prep space: notes, saved Learn programmes, the overview and search.
+const slug = value => typeof value === "string" && value.length <= 60 && /^[a-z0-9]+(-[a-z0-9]+)*$/.test(value);
+const webAddress = value => typeof value === "string" && /^https?:\/\//.test(value) && value.length <= 2000;
+export function validateCommunityNote(value, postId) {
+  if (!value || value.postId !== postId || !(value.note === null || text(value.note, 2000, 1)) || !(value.updatedAt === null || timestamp(value.updatedAt)) ||
+    (value.note === null) !== (value.updatedAt === null)) return invalid();
+  return { note: value.note, updatedAt: value.updatedAt };
+}
+export function validateLearnSaved(value, programme) {
+  if (!value || value.programme !== programme || typeof value.saved !== "boolean") return invalid();
+  return value.saved;
+}
+export function validateCommunityPrep(value) {
+  const keys = ["folders", "savedPosts", "savedLinks", "notes", "posts", "drafts", "learn"];
+  if (!value || !value.counts || !keys.every(key => count(value.counts[key])) || !Array.isArray(value.learn) || !Array.isArray(value.posts) ||
+    !Array.isArray(value.drafts) || !Array.isArray(value.notes) || value.posts.length > 20 || value.drafts.length > 10 || value.notes.length > 20 || value.learn.length > 200) return invalid();
+  if (!value.learn.every(item => item && slug(item.programme) && text(item.title, 120, 1) && timestamp(item.savedAt)) ||
+    !value.posts.every(item => item && uuid(item.id) && kinds.has(item.kind) && text(item.title, 160, 1) && ["visible", "locked"].includes(item.status) &&
+      timestamp(item.createdAt) && count(item.comments) && count(item.likes)) ||
+    !value.drafts.every(item => item && uuid(item.id) && text(item.title, 160) && timestamp(item.updatedAt)) ||
+    !value.notes.every(item => item && ["post", "link"].includes(item.type) && uuid(item.id) && text(item.title, LINK_URL_MAX, 1) && text(item.note, 280, 1) &&
+      timestamp(item.updatedAt) && (item.type === "link" ? webAddress(item.url) : item.url === null || item.url === undefined))) return invalid();
+  return value;
+}
+export const communityPrepTypes = Object.freeze(["saved-post", "link", "my-post", "note", "draft", "learn"]);
+export function communityPrepQuery(value) {
+  const query = String(value ?? "").replace(/\s+/g, " ").trim();
+  if ([...query].length < 2 || [...query].length > 100) throw new Error("Search for 2 to 100 characters.");
+  return query;
+}
+export function validateCommunityPrepSearch(value, query) {
+  if (!value || value.query !== query || !Array.isArray(value.results) || value.results.length > 30) return invalid();
+  for (const item of value.results) {
+    if (!item || !communityPrepTypes.includes(item.type) || (item.type === "learn" ? !slug(item.id) : !uuid(item.id)) ||
+      !(item.title === null || text(item.title, LINK_URL_MAX, 1)) || !(item.snippet === null || item.snippet === undefined || text(item.snippet, 2000)) ||
+      !(item.note === null || item.note === undefined || text(item.note, 2000, 1)) || (item.type === "link" ? !webAddress(item.url) : false) ||
+      (["saved-post", "my-post", "note"].includes(item.type) && !kinds.has(item.kind))) return invalid();
+  }
+  return value.results;
+}
+export const communityNoteLimit = 2000;
+
 // Browser extension connections.
 export function validateExtensionTokens(value) {
   if (!value || !Array.isArray(value.tokens) || value.tokens.length > 5 || !value.tokens.every(item => item && uuid(item.id) && text(item.label, 60, 1) &&
@@ -307,6 +349,7 @@ export function validateExtensionTokenCreated(value) {
 export const communityLinkNeedsPreview = link => link.status === "unavailable" && Date.parse(link.fetchedAt) < Date.now() - 7 * 86400000;
 
 const failures = Object.freeze({
+  community_note_limit: "You’ve written 2,000 notes. Remove some first.",
   community_extension_limit: "You can connect five browsers. Remove one first.",
   community_link_unavailable: "That link is no longer available. Save it again.",
   community_link_social: "Links to social or messaging sites stay in your private folders.",

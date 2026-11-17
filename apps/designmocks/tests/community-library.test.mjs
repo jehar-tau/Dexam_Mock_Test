@@ -265,3 +265,39 @@ test("only stale, unavailable previews offer Get preview", () => {
   assert.equal(communityLinkNeedsPreview({ ...link, status: "skipped" }), false);
   assert.equal(communityLinkNeedsPreview({ ...link, status: "fetched" }), false);
 });
+
+import { validateCommunityNote, validateLearnSaved, validateCommunityPrep, communityPrepQuery, validateCommunityPrepSearch } from "../src/community-library.js";
+
+test("notes and Learn saves are checked against the request", () => {
+  assert.deepEqual(validateCommunityNote({ postId: id(1), note: "Try this", updatedAt: at }, id(1)), { note: "Try this", updatedAt: at });
+  assert.deepEqual(validateCommunityNote({ postId: id(1), note: null, updatedAt: null }, id(1)), { note: null, updatedAt: null });
+  for (const value of [{ postId: id(2), note: null, updatedAt: null }, { postId: id(1), note: "x", updatedAt: null }, { postId: id(1), note: "x".repeat(2001), updatedAt: at }])
+    assert.throws(() => validateCommunityNote(value, id(1)));
+  assert.equal(validateLearnSaved({ programme: "cube-nets", saved: true }, "cube-nets"), true);
+  assert.throws(() => validateLearnSaved({ programme: "dice", saved: true }, "cube-nets"));
+});
+
+test("the prep overview is bounded and typed", () => {
+  const value = { counts: { folders: 1, savedPosts: 2, savedLinks: 1, notes: 2, posts: 1, drafts: 1, learn: 1 },
+    learn: [{ programme: "cube-nets", title: "Cube nets", savedAt: at }],
+    posts: [{ id: id(1), kind: "work", title: "A fictional poster", status: "visible", createdAt: at, comments: 2, likes: 1 }],
+    drafts: [{ id: id(2), title: "", updatedAt: at }],
+    notes: [{ type: "post", id: id(3), title: "A fictional plan", note: "Try it", updatedAt: at, url: null },
+      { type: "link", id: id(4), title: "example.org", note: "Grid", updatedAt: at, url: "https://example.org/grid" }] };
+  assert.equal(validateCommunityPrep(value), value);
+  for (const broken of [{ ...value, counts: { ...value.counts, learn: -1 } }, { ...value, learn: [{ programme: "../x", title: "x", savedAt: at }] },
+    { ...value, posts: [{ ...value.posts[0], status: "hidden" }] }, { ...value, notes: [{ ...value.notes[1], url: "javascript:alert(1)" }] },
+    { ...value, notes: [{ ...value.notes[0], note: "x".repeat(281) }] }]) assert.throws(() => validateCommunityPrep(broken));
+});
+
+test("search queries are normalized and results are typed", () => {
+  assert.equal(communityPrepQuery("  two   hours "), "two hours");
+  assert.throws(() => communityPrepQuery("x"), /2 to 100/);
+  assert.throws(() => communityPrepQuery("x".repeat(101)), /2 to 100/);
+  const results = [{ type: "saved-post", id: id(1), kind: "discussion", title: "A plan", snippet: "Text", note: null },
+    { type: "link", id: id(2), title: "A guide", snippet: "Grid", url: "https://example.org/grid", note: "Twice a week" },
+    { type: "learn", id: "cube-nets", title: "Cube nets", snippet: null, note: null }, { type: "draft", id: id(3), title: null, snippet: "Notes", note: null }];
+  assert.equal(validateCommunityPrepSearch({ query: "plan", results }, "plan").length, 4);
+  for (const broken of [{ query: "other", results }, { query: "plan", results: [{ ...results[0], type: "secret" }] }, { query: "plan", results: [{ ...results[1], url: "file:///x" }] },
+    { query: "plan", results: [{ ...results[2], id: "Cube Nets" }] }, { query: "plan", results: [{ ...results[0], kind: undefined }] }]) assert.throws(() => validateCommunityPrepSearch(broken, "plan"));
+});
