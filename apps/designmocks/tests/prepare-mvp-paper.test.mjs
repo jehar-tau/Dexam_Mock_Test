@@ -3,7 +3,7 @@ import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
-import { compileMvpPaper, stageMvpPaper, syncMvpPaperInputs, verifyMvpPaperStorage } from "../scripts/prepare-mvp-paper.mjs";
+import { compileMvpPaper, proposeMvpPaperRefresh, stageMvpPaper, syncMvpPaperInputs, verifyMvpPaperStorage } from "../scripts/prepare-mvp-paper.mjs";
 import { collectCanonicalMedia } from "../scripts/private-bank-media.mjs";
 import { buildManifest, sha256, stableJson } from "../scripts/question-bank-import.mjs";
 import { RULES_2027, runtimeQuestion } from "../scripts/question-runtime.mjs";
@@ -80,6 +80,39 @@ test("rejects changed packet, source, order, question, key and inventory even wi
   corrupt[30] ^= 1;
   await writeFile(join(root, "figure.png"), corrupt);
   await assert.rejects(compileMvpPaper(packet, packet.manifestSha256, canonical, root), /figure failed its byte or dimension check/);
+});
+
+test("proposes a separate review digest after an unrelated bank change", async t => {
+  const { packet, canonical, root } = await fixture(t);
+  const questions = canonical.records.map(({ payload }) => payload);
+  const extra = { ...questions[0], externalKey: "fictional-added", assets: [] };
+  const updated = buildManifest({ schemaVersion: 1, questions: [...questions, extra] }, "b".repeat(40));
+  const { packet: refreshed, summary } = await proposeMvpPaperRefresh(packet, packet.manifestSha256, canonical, updated, root);
+  const { source, manifestSha256, ...examContent } = refreshed;
+  const { source: previousSource, manifestSha256: previousHash, ...previousContent } = packet;
+  assert.deepEqual(examContent, previousContent);
+  assert.notEqual(source.sha256, previousSource.sha256);
+  assert.notEqual(manifestSha256, previousHash);
+  assert.equal(source.commit, updated.sourceCommit);
+  assert.equal(summary.previousPacketSha256, previousHash);
+  assert.equal(summary.reviewRequired, true);
+  await assert.rejects(compileMvpPaper(refreshed, previousHash, updated, root), /separately reviewed/);
+  await assert.rejects(compileMvpPaper(packet, previousHash, updated, root), /main bank/);
+  await compileMvpPaper(refreshed, manifestSha256, updated, root);
+});
+
+test("refuses a refresh after any selected question changes or leaves the hold-free bank", async t => {
+  const { packet, canonical, root } = await fixture(t);
+  const questions = canonical.records.map(({ payload }) => payload);
+  for (const change of [{ holds: ["review"] }, { answer: { raw: "0.26", status: "reviewed" } },
+    { assets: [{ ...questions[0].assets[0], width: 2 }] }, { licence: "changed-source-label" }]) {
+    const first = { ...questions[0], ...change };
+    const current = buildManifest({ schemaVersion: 1, questions: [first, ...questions.slice(1)] }, "b".repeat(40));
+    await assert.rejects(proposeMvpPaperRefresh(packet, packet.manifestSha256, canonical, current, root), /hold-free canonical record/);
+  }
+  await assert.rejects(proposeMvpPaperRefresh(packet, packet.manifestSha256, canonical, canonical, root), /digest is unchanged/);
+  const wrongOriginal = { ...canonical, sourceCommit: "c".repeat(40) };
+  await assert.rejects(proposeMvpPaperRefresh(packet, packet.manifestSha256, wrongOriginal, canonical, root), /canonical commits must be exact/);
 });
 
 test("preparation checks the target before sending the packet and only returns the verified receipt fields", async t => {

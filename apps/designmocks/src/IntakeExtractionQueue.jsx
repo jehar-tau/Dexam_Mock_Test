@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { INTAKE_EXTRACTION_MAX_BYTES, INTAKE_FIGURE_MAX_BYTES } from "../supabase/functions/_shared/intake-limits.mjs";
-import { intakeFigureDescriptor, intakeReviewPayload, intakeReviewValues } from "./intake-review.js";
+import { intakeFigureDescriptor, intakeReviewPayload, intakeReviewValues, isIntakePhoto } from "./intake-review.js";
+import { PrivateImageInspectionDialog } from "./DrawingInspection.jsx";
 
 function IntakeQuestionEditor({ payload, pageNumber, manual, onSubmit, onPrepareFigures }) {
   const [values, setValues] = useState(() => intakeReviewValues(payload));
@@ -82,7 +83,7 @@ function IntakeQuestionEditor({ payload, pageNumber, manual, onSubmit, onPrepare
       <label>Topic, when known<input name="topic" value={values.topic} onChange={change} maxLength="120" /></label>
       {choice && <fieldset><legend>Answer options</legend>
         {values.options.map((option, index) => <div className="intake-option" key={index}>
-          <label>Option {index + 1} key<input required maxLength="32" pattern="[A-Za-z0-9_-]+" value={option.key} onChange={event => updateOption(index, "key", event.target.value)} /></label>
+          <label>Option {index + 1} key<input required maxLength="32" pattern={"[A-Za-z0-9_\\-]+"} value={option.key} onChange={event => updateOption(index, "key", event.target.value)} /></label>
           <label>Option {index + 1} text<textarea required maxLength="2000" rows="2" value={option.text} onChange={event => updateOption(index, "text", event.target.value)} /></label>
           <button type="button" disabled={values.options.length <= 2} onClick={() => setValues(current => ({ ...current, options: current.options.filter((_, at) => at !== index) }))}>Remove option {index + 1}</button>
         </div>)}
@@ -105,7 +106,7 @@ function IntakeQuestionEditor({ payload, pageNumber, manual, onSubmit, onPrepare
   </form>;
 }
 
-function IntakeAsset({ asset, onExtract, onPromote, onReject, onTranscribe, onDownload, onPrepareFigures }) {
+function IntakeAsset({ asset, onExtract, onPromote, onReject, onTranscribe, onDownload, onInspect, onPrepareFigures }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const act = async action => {
@@ -120,6 +121,10 @@ function IntakeAsset({ asset, onExtract, onPromote, onReject, onTranscribe, onDo
     {asset.error && <p className="error">{asset.error}</p>}
     <div className="admin-actions">
       {onDownload && <button disabled={busy} onClick={() => act(() => onDownload(asset))}>Download private source</button>}
+      {onInspect && isIntakePhoto(asset.mimeType) && <button type="button" disabled={busy} onClick={event => {
+        const opener = event.currentTarget;
+        void act(() => onInspect(asset, opener));
+      }}>Inspect source photo</button>}
       {(["uploaded", "failed"].includes(asset.status) || asset.retryAvailable) && <button disabled={busy || asset.byteSize > INTAKE_EXTRACTION_MAX_BYTES} onClick={() => act(() => onExtract(asset.id))}>{asset.retryAvailable ? "Retry extraction" : "Extract with configured model"}</button>}
     </div>
     {asset.byteSize > INTAKE_EXTRACTION_MAX_BYTES && <p>Model extraction accepts files up to 10 MB. Split the source or transcribe its questions below.</p>}
@@ -138,9 +143,47 @@ function IntakeAsset({ asset, onExtract, onPromote, onReject, onTranscribe, onDo
   </article>;
 }
 
-export function IntakeExtractionQueue({ assets = [], ...actions }) {
-  return <div className="admin-list intake-queue">{assets.length === 0 ? <p>No private source files uploaded.</p>
-    : assets.map(asset => <IntakeAsset key={asset.id} asset={asset} {...actions} />)}</div>;
+export function IntakeExtractionQueue({ assets = [], onInspect, ...actions }) {
+  const [preview, setPreview] = useState(null);
+  const activeRequest = useRef(null);
+  const activeUrl = useRef(null);
+  useLayoutEffect(() => () => {
+    activeRequest.current?.abort();
+    if (activeUrl.current) URL.revokeObjectURL(activeUrl.current);
+  }, []);
+
+  async function inspect(asset, opener) {
+    activeRequest.current?.abort();
+    const request = new AbortController();
+    activeRequest.current = request;
+    try {
+      await onInspect(asset, request.signal, photo => {
+        request.signal.throwIfAborted();
+        if (activeUrl.current) URL.revokeObjectURL(activeUrl.current);
+        const url = URL.createObjectURL(photo);
+        activeUrl.current = url;
+        setPreview({url, mimeType:photo.type, label:asset.name, opener});
+      });
+    } catch (error) {
+      if (!request.signal.aborted) throw error;
+    } finally {
+      if (activeRequest.current === request) activeRequest.current = null;
+    }
+  }
+
+  function close() {
+    if (activeUrl.current !== preview.url) return;
+    URL.revokeObjectURL(preview.url);
+    activeUrl.current = null;
+    setPreview(null);
+    if (preview.opener.isConnected) preview.opener.focus();
+  }
+
+  return <div className="admin-list intake-queue">
+    {assets.length === 0 ? <p>No private source files uploaded.</p>
+      : assets.map(asset => <IntakeAsset key={asset.id} asset={asset} onInspect={onInspect && inspect} {...actions} />)}
+    {preview && <PrivateImageInspectionDialog key={preview.url} image={preview} label={preview.label} onClose={close} />}
+  </div>;
 }
 
 export function IntakeDraftFigures({ draft, onDownload }) {

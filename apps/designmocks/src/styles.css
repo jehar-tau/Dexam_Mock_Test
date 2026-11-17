@@ -3926,7 +3926,7 @@ svg {
 .drawing-image-canvas img{position:absolute;display:block;left:50%;top:50%;max-width:none;max-height:none;object-fit:fill;border:0;background:transparent;image-orientation:from-image}
 .drawing-inspection-dialog{width:min(1100px,calc(100% - 1.5rem));height:min(900px,calc(100dvh - 1.5rem));max-height:calc(100dvh - 1.5rem);overflow:auto;border:1px solid var(--line);border-radius:12px;padding:1rem;color:var(--ink);background:var(--paper)}
 .drawing-inspection-dialog[open]{display:flex;flex-direction:column}.drawing-inspection-dialog>.drawing-image-viewport.expanded{flex:1;min-height:140px;height:auto}.drawing-inspection-dialog>p,.drawing-inspection-header,.drawing-inspection-toolbar{flex-shrink:0}
-.drawing-inspection-dialog::backdrop{background:rgb(0 0 0 / .7)}.drawing-inspection-header{display:flex;align-items:start;justify-content:space-between;gap:1rem}.drawing-inspection-header h2{font-size:1.5rem;margin:0}.drawing-inspection-header button{flex-shrink:0}
+.drawing-inspection-dialog::backdrop{background:rgb(0 0 0 / .7)}.drawing-inspection-header{display:flex;align-items:start;justify-content:space-between;gap:1rem}.drawing-inspection-header h2{font-size:1.5rem;margin:0;min-width:0;overflow-wrap:anywhere}.drawing-inspection-header button{flex-shrink:0}
 .drawing-inspection-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:1rem 0}.drawing-inspection-toolbar [role="status"]{flex-basis:100%;color:var(--muted);font-size:.9rem}
 .drawing-inspection-toolbar button[aria-pressed="true"]{background:var(--action);color:var(--on-action);border-color:var(--action)}
 .drawing-image-viewport:not(.expanded){overflow:hidden}
