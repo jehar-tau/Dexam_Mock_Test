@@ -177,6 +177,12 @@ from the section links), `/dashboard/community/articles`,
   without a preview (`fetched_at` 1970), so the first Get preview fetches
   it. `dm_private.community_link_host` checks that the address is already
   in the normalized public form the browser module produces.
-- **Phase 5.** `community_notes(user_id, target_type, target_id, body)`;
-  `position` on saves for playlist order; a search function over the
-  reader's own saves.
+- **Phase 5 (built, migration `202611170174_community_prep.sql`).** Notes
+  reuse phase 3's `community_notes` (post notes now have functions:
+  `community_my_note`, `set_community_note`). New table
+  `community_learn_saves(user_id, programme, title)` with
+  `set_learn_programme_saved` and `learn_programme_saved`. Read-only
+  `community_prep()` (counts, Learn, own posts, drafts, notes) and
+  `community_prep_search(p_query)` (up to six terms, all must match,
+  thirty results). Re-created: `export_my_community_library` (schema 4,
+  with Learn saves). Folder ordering (`position` on saves) is not built.

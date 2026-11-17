@@ -184,6 +184,26 @@ screenshots, a privacy-policy entry and store review (decision 8).
   feed ("good saved articles can be pulled into the feed"), never straight
   from a student's private folder without the student suggesting it.
 
+Built 17 November 2026, behind the preview:
+
+- **My prep** (`/dashboard/community/prep`): counts, saved Learn
+  programmes, the student's notes, their own posts and their drafts, with
+  links to each, and one search box over all of it plus saved posts and
+  links. Every word searched for must appear; `%` and `_` are ordinary
+  characters; hidden posts and blocked authors never appear.
+- **Private notes** on any post the student can read, from a panel on the
+  post's page; they show in Saved, My prep and search. Link notes from
+  phase 3 use the same store.
+- **Save to my prep** on Learn programme pages, in the preview only and not
+  on the private staging portal (its backend does not carry Community). It
+  is loaded on demand, so released Learn pages carry no Community code.
+- Pulling good saved items into the feed is phase 3's Suggest for the Links
+  feed and the moderator queue; teachers feature articles and work (phase
+  2).
+
+Not done: folder ordering as a playlist (folders are newest first), and
+saving individual Learn lessons rather than whole programmes.
+
 ## Track L: Learn audio feedback
 
 Separate from Community, different code, different release switch. See

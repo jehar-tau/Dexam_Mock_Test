@@ -70,5 +70,5 @@ Update this table in the same change as the work.
 | 2 | Accepted answers, work for feedback, teachers, moderator hold, pauses, editing, featured shelf | Built behind the preview, 17 November 2026; evaluation with the owner pending |
 | 3 | Link import and private link saves | Built behind the preview, 17 November 2026; evaluation with the owner pending |
 | 4 | Chrome extension | Built, not published, 17 November 2026; publishing needs the owner |
-| 5 | Prep space: notes, search, saved Learn items | Planned |
+| 5 | Prep space: notes, search, saved Learn items | Built behind the preview, 17 November 2026; folder ordering not built |
 | L | Learn audio feedback (separate track) | Planned |
