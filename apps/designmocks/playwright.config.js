@@ -20,6 +20,7 @@ export default defineConfig({
     '**/community-images.spec.js',
     '**/community-followup-images.spec.js',
     '**/community-articles.spec.js',
+    '**/community-feedback.spec.js',
   ],
   testDir: "./tests/e2e",
   fullyParallel: true,

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { PortalShell } from "./PortalShell.jsx";
 import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
@@ -16,7 +16,8 @@ function withoutImages(value) {
 
 function CommunitySession({View,headingRef,loadFeed}) {
   const services=useAccountServices();
-  const rpc=(name,input,signal)=>withAccountDeadline(active=>services.rpc(name,input,active),signal);
+  // Stable across renders, so child effects keyed on it do not refetch.
+  const rpc=useCallback((name,input,signal)=>withAccountDeadline(active=>services.rpc(name,input,active),signal),[services]);
   const media=async(body,signal)=>{try{return await withAccountDeadline(active=>services.functions.invoke('community-media',{body,signal:active}),signal,body instanceof FormData?60000:20000);}catch(error){return{data:null,error};}};
   const [feed,setFeed]=useState(null),[feedFilters,setFeedFilters]=useState(()=>communityFeedFilters());
   const [feedLoading,setFeedLoading]=useState(false),[feedNotice,setFeedNotice]=useState("");

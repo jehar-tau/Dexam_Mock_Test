@@ -5,6 +5,7 @@ import { CommunityThread } from "./CommunityThread.jsx";
 import { CommunityReporting } from "./CommunityReporting.jsx";
 import { communityFeedFilters } from "./community-feed.js";
 import { PortalShell } from "./PortalShell.jsx";
+import { Link } from "react-router-dom";
 
 export function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   if (!job) return null;
@@ -155,11 +156,12 @@ export function CommunityView({
             <h2>{p.title}</h2>
             <p>{p.body}</p>
             <small>
-              By {p.author} · {p.comments} replies
+              By {p.author}{p.teacher === true ? " · Teacher" : ""} · {p.comments} replies{p.answered === true ? " · Answered" : ""}
             </small>
             <button className="text-button" ref={node=>{if(node)openers.current.set(p.id,node);else openers.current.delete(p.id);}} onClick={() => onOpen(p.id)}>
               Open discussion
             </button>
+            <Link className="text-button" to={`/dashboard/community/post/${p.id}`} aria-label={`Open on its own page: ${p.title}`}>Open on its own page</Link>
           </article>
         ))}
       </div>
