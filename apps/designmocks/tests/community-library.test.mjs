@@ -245,3 +245,23 @@ test("the server's social-site list is generated from the browser's", () => {
   const browser = JSON.parse(/const socialHosts = (\[[^\]]*\]);/s.exec(js)[1]);
   assert.deepEqual(server, browser);
 });
+
+import { validateExtensionTokens, validateExtensionTokenCreated, communityLinkNeedsPreview } from "../src/community-library.js";
+
+test("connection lists never carry a key; a new key is shown once in full", () => {
+  const row = { id: id(1), label: "Chrome", createdAt: at, lastUsedAt: null, expiresAt: at };
+  assert.equal(validateExtensionTokens({ tokens: [row] }).length, 1);
+  assert.throws(() => validateExtensionTokens({ tokens: [{ ...row, token: "dmx_" + "0".repeat(64) }] }));
+  assert.throws(() => validateExtensionTokens({ tokens: Array.from({ length: 6 }, () => row) }));
+  const created = { id: id(1), label: "Chrome", token: "dmx_" + "ab".repeat(32), createdAt: at, expiresAt: at };
+  assert.equal(validateExtensionTokenCreated(created).token, created.token);
+  for (const token of ["dmx_123", "DMX_" + "ab".repeat(32), null]) assert.throws(() => validateExtensionTokenCreated({ ...created, token }));
+});
+
+test("only stale, unavailable previews offer Get preview", () => {
+  const link = { status: "unavailable", fetchedAt: "1970-01-01T00:00:00+00:00" };
+  assert.equal(communityLinkNeedsPreview(link), true);
+  assert.equal(communityLinkNeedsPreview({ ...link, fetchedAt: new Date().toISOString() }), false);
+  assert.equal(communityLinkNeedsPreview({ ...link, status: "skipped" }), false);
+  assert.equal(communityLinkNeedsPreview({ ...link, status: "fetched" }), false);
+});

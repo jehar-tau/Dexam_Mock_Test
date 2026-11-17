@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { communityDate } from "./CommunityFrame.jsx";
 import { ARTICLE_EXAMS } from "./community-article.mjs";
 import { isSocialHost, normalizeLinkUrl } from "../supabase/functions/_shared/community-link.mjs";
-import { COMMUNITY_FOLDER_LIMIT, communityFailure, communityFolderName, communityLinkFailure, communitySuggestionInput, validateCommunityFolder,
+import { COMMUNITY_FOLDER_LIMIT, communityFailure, communityFolderName, communityLinkFailure, communityLinkNeedsPreview, communitySuggestionInput, validateCommunityFolder,
   validateCommunityLinkSave, validateCommunitySuggestion } from "./community-library.js";
 
 // A link preview. The address opens outside DMocks, in a new tab, without
@@ -14,7 +14,8 @@ export function CommunityLinkPreview({ link, heading: Heading = "h3" }) {
     <span className="eyebrow">{link.site && link.site !== link.host ? `${link.site} · ${link.host}` : link.host}</span>
     <Heading className="community-link-title">{title}</Heading>
     {link.description && <p>{link.description}</p>}
-    {link.status !== "fetched" && <p className="muted">{link.status === "skipped" ? "Social and messaging pages are not previewed." : "No preview is available for this page."}</p>}
+    {link.status !== "fetched" && <p className="muted">{link.status === "skipped" ? "Social and messaging pages are not previewed."
+      : Date.parse(link.fetchedAt) < Date.now() - 7 * 86400000 ? "Saved from the browser extension. No preview yet." : "No preview is available for this page."}</p>}
     <a className="community-external" href={link.url} target="_blank" rel="noopener noreferrer nofollow ugc">Open on {link.host}<span className="visually-hidden"> (opens outside DMocks in a new tab)</span></a>
   </div>;
 }
@@ -123,7 +124,7 @@ function SuggestForm({ item, rpc, onDone, onCancel }) {
 const suggestionText = { pending: "Suggested for the Links feed. Waiting for a moderator.", approved: "In the Links feed.", rejected: "Not added to the Links feed." };
 
 // A saved link inside a folder.
-export function CommunitySavedLink({ item, rpc, busy, onRemove, onSuggested }) {
+export function CommunitySavedLink({ item, rpc, busy, onRemove, onSuggested, onRefresh }) {
   const [suggesting, setSuggesting] = useState(false), opener = useRef(null);
   const social = isSocialHost(item.link.host), feedPost = item.postId ?? item.suggestion?.postId ?? null;
   const name = item.link.title ?? item.link.host;
@@ -137,6 +138,7 @@ export function CommunitySavedLink({ item, rpc, busy, onRemove, onSuggested }) {
     {suggesting ? <SuggestForm item={item} rpc={rpc} onCancel={() => { setSuggesting(false); opener.current?.focus(); }}
       onDone={result => { setSuggesting(false); onSuggested(item, result); }} /> : <div className="community-actions">
       {!social && !feedPost && item.suggestion?.status !== "pending" && <button ref={opener} type="button" className="text-button" disabled={busy} aria-label={`Suggest for the Links feed: ${name}`} onClick={() => setSuggesting(true)}>Suggest for the Links feed</button>}
+      {onRefresh && communityLinkNeedsPreview(item.link) && <button type="button" className="text-button" disabled={busy} aria-label={`Get preview: ${name}`} onClick={() => onRefresh(item)}>Get preview</button>}
       <button type="button" className="text-button" disabled={busy} aria-label={`Remove from folder: ${name}`} onClick={() => onRemove(item)}>Remove from folder</button>
     </div>}
     {social && <small className="muted">Social and messaging links stay in your private folders.</small>}

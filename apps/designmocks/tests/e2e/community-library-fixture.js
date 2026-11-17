@@ -1,5 +1,6 @@
 import { expect } from "@playwright/test";
 import { fileURLToPath } from "node:url";
+import { randomBytes } from "node:crypto";
 import { portalFixtureURL, seedPortalSession, stubPortalIdentity } from "./portal-fixture.js";
 import { contactDetails } from "../../src/community-article.mjs";
 import { isSocialHost, normalizeLinkUrl } from "../../supabase/functions/_shared/community-link.mjs";
@@ -22,7 +23,7 @@ const excerpt = text => text.replace(/(\*\*|\*|^#{2,3}\s+|^>\s?|^-\s+)/gm, "").r
 export function backend() {
   const state = { posts: [], comments: [], likes: new Set(), folders: [], saves: [], drafts: [], blocks: new Set(), receipts: new Map(), calls: [], clock: 0, refuseContact: false,
     roles: new Map(), admins: new Set([admin.id]), sanctions: [], featured: new Set(), revisions: [],
-    links: [], linkSaves: [], notes: [], suggestions: [], trusted: new Set(), previews: new Map(), previewCalls: [] };
+    links: [], linkSaves: [], notes: [], suggestions: [], trusted: new Set(), previews: new Map(), previewCalls: [], tokens: [], extensionCalls: [] };
   const now = () => `2026-11-16T00:${String(Math.floor(++state.clock / 60)).padStart(2, "0")}:${String(state.clock % 60).padStart(2, "0")}.000000+00:00`;
   const fail = (details, code = "22023") => ({ status: code === "42501" ? 403 : 400, value: { code, details, message: "private-fixture-diagnostic" } });
   const ok = value => ({ status: 200, value });
@@ -36,7 +37,8 @@ export function backend() {
   const base = (actor, post) => ({ id: post.id, exam: post.exam, topic: post.topic, title: post.title, excerpt: excerpt(post.body), author: names[post.authorId], teacher: teacher(post.authorId),
     createdAt: post.createdAt, status: post.status, comments: visibleComments(post).length, likes: likes(post.id), liked: state.likes.has(`${actor}:${post.id}`),
     saved: state.saves.some(save => save.userId === actor && save.postId === post.id), isMine: post.authorId === actor, words: post.body.split(/\s+/).length });
-  const linkJson = link => ({ id: link.id, url: link.url, host: link.host, status: link.status, title: link.title, site: link.site, description: link.description, fetchedAt: "2026-11-17T00:00:00.000000+00:00" });
+  const linkJson = link => ({ id: link.id, url: link.url, host: link.host, status: link.status, title: link.title, site: link.site, description: link.description, fetchedAt: link.fetchedAt ?? "2026-11-17T00:00:00.000000+00:00" });
+  const tokenUser = token => state.tokens.find(item => item.token === token && !item.revoked)?.userId ?? null;
   const linkOf = post => post.kind === "link" ? linkJson(state.links.find(link => link.id === post.linkId)) : null;
   const card = (actor, post) => ({ ...base(actor, post), kind: post.kind, answered: Boolean(accepted(post)), assetCount: post.assetCount ?? 0, link: linkOf(post) });
   const trusted = host => [...state.trusted].some(item => host === item || host.endsWith("." + item));
@@ -280,6 +282,50 @@ export function backend() {
       if (input.p_trust) state.trusted.add(state.links.find(link => link.id === suggestion.linkId).host);
       return ok({ id: suggestion.id, status: "approved", postId: suggestion.postId });
     },
+    create_community_extension_token(actor, input) {
+      if (state.tokens.filter(item => item.userId === actor && !item.revoked).length >= 5) return fail("community_extension_limit", "P0001");
+      const item = { id: uid("d", 100 + state.tokens.length), userId: actor, label: input.p_label || "Browser", token: "dmx_" + randomBytes(32).toString("hex"),
+        createdAt: "2026-11-17T00:00:00.000000+00:00", lastUsedAt: null, expiresAt: "2027-05-16T00:00:00.000000+00:00", revoked: false };
+      state.tokens.push(item);
+      return ok({ id: item.id, label: item.label, token: item.token, createdAt: item.createdAt, expiresAt: item.expiresAt });
+    },
+    community_extension_tokens: actor => ok({ tokens: state.tokens.filter(item => item.userId === actor && !item.revoked)
+      .map(({ id, label, createdAt, lastUsedAt, expiresAt }) => ({ id, label, createdAt, lastUsedAt, expiresAt })) }),
+    revoke_community_extension_token(actor, input) {
+      const item = state.tokens.find(other => other.id === input.p_id && other.userId === actor && !other.revoked);
+      if (item) item.revoked = true; return ok({ revoked: Boolean(item) });
+    },
+    extension_community_folders(_actor, input) {
+      const user = tokenUser(input.p_token);
+      if (!user) return fail("community_extension_token", "42501");
+      state.tokens.find(item => item.token === input.p_token).lastUsedAt = "2026-11-17T01:00:00.000000+00:00";
+      return ok({ folders: state.folders.filter(folder => folder.userId === user).map(folder => ({ id: folder.id, name: folder.name })) });
+    },
+    extension_save_community_link(_actor, input) {
+      const user = tokenUser(input.p_token);
+      if (!user) return fail("community_extension_token", "42501");
+      let normalized; try { normalized = normalizeLinkUrl(input.p_url); } catch { return fail("community_link_invalid"); }
+      if (normalized.url !== input.p_url) return fail("community_link_invalid");
+      if (input.p_folder_ids.some(id => !state.folders.some(folder => folder.id === id && folder.userId === user))) return fail("community_folder_unavailable", "42501");
+      const ids = [...input.p_folder_ids];
+      if (input.p_new_folder) {
+        let folder = state.folders.find(item => item.userId === user && item.name.toLowerCase() === input.p_new_folder.toLowerCase());
+        if (!folder) { folder = { id: uid("f", state.folders.length + 1), userId: user, name: input.p_new_folder }; state.folders.push(folder); }
+        ids.push(folder.id);
+      }
+      if (!ids.length) return fail("community_invalid_input");
+      let link = state.links.find(item => item.url === normalized.url);
+      if (!link) {
+        link = { id: uid("f", 100 + state.links.length), url: normalized.url, host: normalized.host, status: isSocialHost(normalized.host) ? "skipped" : "unavailable",
+          title: null, site: null, description: null, fetchedAt: "1970-01-01T00:00:00+00:00" };
+        state.links.push(link);
+      }
+      for (const folderId of ids) if (!state.linkSaves.some(save => save.userId === user && save.linkId === link.id && save.folderId === folderId))
+        state.linkSaves.push({ userId: user, linkId: link.id, folderId, savedAt: now() });
+      if (input.p_note) { state.notes = state.notes.filter(item => !(item.userId === user && item.linkId === link.id)); state.notes.push({ userId: user, linkId: link.id, body: input.p_note }); }
+      state.extensionCalls.push(input);
+      return ok({ linkId: link.id, folderIds: [...new Set(ids)].sort() });
+    },
     admin_community_trusted_hosts: actor => isAdmin(actor) ? ok({ hosts: [...state.trusted].sort().map(host => ({ host, createdAt: "2026-11-17T00:00:00.000000+00:00" })) }) : fail("admin", "42501"),
     admin_set_community_trusted_host(actor, input) {
       if (!isAdmin(actor)) return fail("admin", "42501");
@@ -309,7 +355,9 @@ export function backend() {
       let actor; try { actor = JSON.parse(Buffer.from(request.headers().authorization.split(" ")[1].split(".")[1], "base64url")).sub; } catch { /* signed out */ }
       state.calls.push([name, input, actor]);
       let result;
-      if (handlers[name]) result = actor ? handlers[name](actor, input) : fail("sign_in", "42501");
+      // The extension calls with the public key and its own connection key, never a session.
+      if (handlers[name] && name.startsWith("extension_")) result = handlers[name](null, input);
+      else if (handlers[name]) result = actor ? handlers[name](actor, input) : fail("sign_in", "42501");
       else {
         const value = fallback?.(name, actor);
         if (value === undefined) throw new Error("Unexpected fictional Community procedure: " + name);
@@ -326,6 +374,10 @@ export function backend() {
       state.previewCalls.push(input.url);
       let normalized; try { normalized = normalizeLinkUrl(input.url); } catch (error) { return route.fulfill({ headers, status: 400, json: { error: "private", code: error.code } }); }
       let link = state.links.find(item => item.url === normalized.url);
+      if (link && link.fetchedAt?.startsWith("1970")) {
+        const known = state.previews.get(normalized.url);
+        Object.assign(link, { status: "fetched", title: known?.title ?? "A fictional page", site: known?.site ?? null, description: known?.description ?? null, fetchedAt: "2026-11-17T02:00:00.000000+00:00" });
+      }
       if (!link) {
         const known = state.previews.get(normalized.url), social = isSocialHost(normalized.host);
         link = { id: uid("f", 100 + state.links.length), url: normalized.url, host: normalized.host, status: social ? "skipped" : known?.status ?? "fetched",
@@ -355,7 +407,8 @@ export function backend() {
 // The first sign-in opens the app; switching accounts later replaces the stored
 // session in place, so the account page's own reads are not involved.
 export async function signIn(page, actor, path) {
-  if (!page.url().startsWith(portalFixtureURL)) await page.goto("/account");
+  // The home page makes no account reads, signed in or not.
+  if (!page.url().startsWith(portalFixtureURL)) await page.goto("/");
   await seedPortalSession(page, actor); await page.goto(path);
 }
 export const called = (state, name) => state.calls.filter(call => call[0] === name);
@@ -366,4 +419,34 @@ export async function audit(page, selector = ".community-page") {
 }
 export async function fitsWidth(page) {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+}
+
+// Serves the extension popup from a stand-in origin, with a minimal chrome.* API.
+export const extensionOrigin = "https://extension.fixture";
+export const extensionAppOrigin = "https://dmocks.example.org";
+export async function installExtension(page) {
+  const files = { "popup.html": "extension/popup.html", "popup.css": "extension/popup.css", "popup.js": "extension/popup.js", "popup-core.mjs": "extension/popup-core.mjs",
+    "community-link.mjs": "supabase/functions/_shared/community-link.mjs" };
+  const types = { html: "text/html", css: "text/css", js: "text/javascript", mjs: "text/javascript", json: "application/json" };
+  const { readFile } = await import("node:fs/promises");
+  await page.route(extensionOrigin + "/**", async route => {
+    const name = new URL(route.request().url()).pathname.slice(1);
+    if (name === "config.json") return route.fulfill({ contentType: types.json, body: JSON.stringify({ supabaseUrl: api, anonKey: "sb_publishable_dmocks_browser_fixture", appOrigin: extensionAppOrigin }) });
+    if (!files[name]) return route.fulfill({ status: 404, body: "" });
+    return route.fulfill({ contentType: types[name.split(".").at(-1)], body: await readFile(new URL("../../" + files[name], import.meta.url)) });
+  });
+  await page.addInitScript(origin => {
+    if (location.origin !== origin) return;
+    const store = { get: async name => { const value = localStorage.getItem("chrome:" + name); return value === null ? {} : { [name]: JSON.parse(value) }; },
+      set: async values => { for (const [name, value] of Object.entries(values)) localStorage.setItem("chrome:" + name, JSON.stringify(value)); },
+      remove: async name => { localStorage.removeItem("chrome:" + name); } };
+    window.chrome = { storage: { local: store }, runtime: { getURL: path => `${origin}/${path}` },
+      tabs: { query: async () => [JSON.parse(localStorage.getItem("fixture-tab") ?? "{}")], create: ({ url }) => localStorage.setItem("fixture-opened", url) } };
+    window.close = () => localStorage.setItem("fixture-closed", "yes");
+  }, extensionOrigin);
+}
+export async function openPopup(page, tab) {
+  await page.goto(extensionOrigin + "/popup.html");
+  await page.evaluate(value => localStorage.setItem("fixture-tab", JSON.stringify(value)), tab);
+  await page.reload();
 }

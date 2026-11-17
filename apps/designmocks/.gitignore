@@ -12,3 +12,4 @@ supabase/.temp/
 supabase/.branches/
 private-import/
 __pycache__/
+dist-extension/

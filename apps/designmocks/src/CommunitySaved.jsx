@@ -2,6 +2,7 @@ import React, { useEffect, useId, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { CommunityFrame, communityDate, useCommunityPreview, useCommunityRpc } from "./CommunityFrame.jsx";
 import { CommunitySaveLink, CommunitySavedLink } from "./CommunityLinks.jsx";
+import { CommunityExtension } from "./CommunityExtension.jsx";
 import { COMMUNITY_FOLDER_LIMIT, communityFailure, communityFolderName, communitySavedInput, validateCommunityBlocked, validateCommunityFolder,
   validateCommunityFolders, validateCommunitySaved } from "./community-library.js";
 
@@ -87,6 +88,12 @@ function SavedSession() {
     setStatus(message);
     try { await loadFolders(signal, folderId); if (folderId === selected) await loadPage(folderId); } catch { /* The folder list keeps its last good state. */ }
   }
+  const refreshPreview = item => run(async signal => {
+    const link = await preview(item.link.url, signal);
+    if (signal.aborted) return;
+    setPage(value => value && { ...value, items: value.items.map(other => other.type === "link" && other.id === item.id && link.id === item.id ? { ...other, link } : other) });
+    setStatus(link.status === "fetched" ? "Preview added." : "No preview is available for this page.");
+  }, "Link previews are unavailable right now. Try again.");
   function suggested(item, result) {
     setPage(value => value && { ...value, items: value.items.map(other => other.type === "link" && other.id === item.id
       ? { ...other, suggestion: { status: result.status, postId: result.postId, reason: null } } : other) });
@@ -130,7 +137,7 @@ function SavedSession() {
         {page && page.items.length === 0 && <p className="muted">Nothing saved here yet.</p>}
         <div className="community-feed">
           {page?.items.map(item => item.type === "link"
-            ? <CommunitySavedLink key={`link:${item.id}`} item={item} rpc={rpc} busy={busy} onRemove={unsaveLink} onSuggested={suggested} />
+            ? <CommunitySavedLink key={`link:${item.id}`} item={item} rpc={rpc} busy={busy} onRemove={unsaveLink} onSuggested={suggested} onRefresh={refreshPreview} />
             : <article key={`post:${item.id}`}>
             {item.available ? <>
               <span className="eyebrow">{{ article: "Article", work: "Work for feedback", link: "Link", discussion: "Discussion" }[item.kind]} · {item.exam} · {item.topic}</span>
@@ -144,6 +151,7 @@ function SavedSession() {
         {page?.nextCursor && <button type="button" className="button quiet" aria-disabled={pageLoading} onClick={() => { if (!pageLoading) loadPage(selected, page); }}>{pageLoading ? "Loading…" : "Load more saved items"}</button>}
       </section>}
     </div>
+    <CommunityExtension rpc={rpc} />
     <section aria-label="Blocked authors" className="community-blocked">
       <h2>Blocked authors</h2>
       {blocked === null ? <p role="status">Loading…</p> : blocked.length === 0 ? <p className="muted">You haven’t blocked anyone. Blocking hides an author’s posts and replies from you; they are not told.</p> : <ul>

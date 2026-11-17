@@ -4399,3 +4399,10 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .community-trusted{margin-top:2.5rem}
 .community-trusted .admin-form{grid-template-columns:minmax(0,1fr) auto;align-items:end;max-width:36rem}
 @media (max-width:560px){.community-link-form,.community-trusted .admin-form{grid-template-columns:minmax(0,1fr)}}
+
+/* Community phase 4: browser extension */
+.community-extension{margin-top:2.5rem;min-width:0}
+.community-extension .admin-form{grid-template-columns:minmax(0,1fr) auto;align-items:end;max-width:40rem}
+.community-extension-key{display:grid;gap:.5rem;max-width:44rem}
+.community-extension-key input{width:100%;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85rem;box-sizing:border-box}
+@media (max-width:560px){.community-extension .admin-form{grid-template-columns:minmax(0,1fr)}}
