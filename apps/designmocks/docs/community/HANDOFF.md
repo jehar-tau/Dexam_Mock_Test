@@ -163,4 +163,7 @@ afterwards.
 1. Owner evaluates phase 2 in the preview, and confirms decision 6.
 2. Owner confirms decision 7 (link policy), built to its recommendation,
    and decides on publishing the extension (decision 8).
-3. Learn audio track, then folder ordering if the owner wants it.
+3. Learn spoken feedback is built separately (pull request #270, from
+   `main`); its release and decision 10 are the owner's.
+4. Folder ordering, saving single Learn lessons and six-image work posts,
+   if the owner wants them.
