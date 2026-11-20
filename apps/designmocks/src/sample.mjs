@@ -60,11 +60,12 @@ export const sampleQuestions = [
       "Study letterforms, a bicycle frame or a chair. Draw the empty spaces first, then add the object around them.",
   },
 ];
-export function sampleReport(answers = {}) {
+export function sampleReport(answers = {}, version = 2) {
   const items = sampleQuestions.map((q) => ({
     ...q,
     chosen: answers[q.id] ?? null,
-    correct: answers[q.id] === q.answer,
+    // B and C depicted the same rotation in the first public sample.
+    correct: answers[q.id] === q.answer || (version === 1 && q.id === "rotation" && answers[q.id] === 1),
   }));
   return {
     items,
@@ -75,6 +76,7 @@ export function sampleReport(answers = {}) {
   };
 }
 export const SAMPLE_STORAGE = "designmocks-experience-sample-v1";
+export const SAMPLE_DURATION_MS = 6 * 60 * 1000;
 
 export function restoreSample(raw) {
   try {
@@ -84,7 +86,8 @@ export function restoreSample(raw) {
       !["active", "submitted"].includes(state.status) ||
       !Number.isFinite(state.startedAt) ||
       !Number.isFinite(state.deadline) ||
-      state.deadline - state.startedAt !== 360000 ||
+      state.deadline < state.startedAt + SAMPLE_DURATION_MS ||
+      state.deadline > state.startedAt + SAMPLE_DURATION_MS + 1000 ||
       !state.answers ||
       Array.isArray(state.answers) ||
       typeof state.answers !== "object" ||
@@ -94,6 +97,8 @@ export function restoreSample(raw) {
     const ids = sampleQuestions.map((q) => q.id);
     return {
       ...state,
+      // Older versions read the clock twice when starting a sample.
+      deadline: state.startedAt + SAMPLE_DURATION_MS,
       answers: Object.fromEntries(
         Object.entries(state.answers).filter(
           ([id, value]) =>

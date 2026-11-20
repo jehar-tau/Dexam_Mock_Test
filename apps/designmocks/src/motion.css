@@ -160,8 +160,8 @@
 
 /* Scroll reveal: only when the visitor has not asked for less motion */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
-  .reveal.is-in { opacity: 1; transform: none; }
+  [data-interactive] .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  [data-interactive] .reveal.is-in { opacity: 1; transform: none; }
 }
 
 /* Topic and stage illustrations (TopicMotion.jsx) */

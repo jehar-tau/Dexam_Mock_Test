@@ -178,9 +178,9 @@ const shapeCells = {
       [1, 2],
     ],
     [
-      [0, 0],
       [0, 1],
-      [1, 0],
+      [1, 1],
+      [2, 1],
       [2, 0],
     ],
     [
@@ -217,7 +217,7 @@ function Shape({ cells, color = "#244735" }) {
 export function Stimulus({ kind }) {
   if (kind === "rotation")
     return (
-      <div className="rotation-stimulus">
+      <div className="rotation-stimulus" role="img" aria-label="Three squares in a vertical column with a fourth square to the right of the bottom square. Rotate the shape 90 degrees clockwise.">
         <Shape cells={shapeCells.base} />
         <span>↻ 90°</span>
         <span className="missing">?</span>
@@ -231,7 +231,7 @@ export function Stimulus({ kind }) {
     );
   if (kind === "sequence")
     return (
-      <div className="pattern-matrix">
+      <div className="pattern-matrix" role="img" aria-label="Top row: one circle, two circles, three circles. Bottom row: one square, two squares, empty tile.">
         {[1, 2, 3, 1, 2, 0].map((n, i) => (
           <div key={i}>
             {n ? (
@@ -258,7 +258,7 @@ export function Stimulus({ kind }) {
       className="negative-stimulus"
       viewBox="0 0 320 150"
       role="img"
-      aria-label="A dark rectangular structure containing white openings and a notch connected to the outer edge"
+      aria-label="White slots sit at the left, left of centre, right of centre and right of a dark rectangle. A shallow white notch opens at its top edge."
     >
       <path d="M35 25h250v100H35Z" fill="#244735" />
       <path
@@ -268,8 +268,23 @@ export function Stimulus({ kind }) {
     </svg>
   );
 }
-export function ChoiceArt({ kind, index }) {
-  if (kind === "rotation") return <Shape cells={shapeCells.choices[index]} />;
+const rotationDescriptions = [
+  "Three squares down the right, with one to the left of the top square.",
+  "Three squares along the bottom, with one above the right end.",
+  "Three squares along the top, with one below the left end.",
+  "Three squares down the right, with one to the left of the bottom square.",
+];
+
+export function describeChoice(kind, index, legacyRotation) {
+  if (kind === "rotation") return rotationDescriptions[legacyRotation && index === 1 ? 2 : index];
+  if (kind === "contrast") return ["Beige and cream.", "Dark green-black and pale cream.", "Medium green and sage.", "Orange and yellow."][index];
+  if (kind === "sequence") return index === 0 ? "One square." : (index + 1) + " squares.";
+  if (kind === "hierarchy") return ["Title largest, date next, venue smallest.", "Date largest.", "Venue largest.", "All three lines the same size."][index];
+  return String(index + 1);
+}
+
+export function ChoiceArt({ kind, index, legacyRotation = false }) {
+  if (kind === "rotation") return <Shape cells={shapeCells.choices[legacyRotation && index === 1 ? 2 : index]} />;
   if (kind === "contrast") {
     const pairs = [
       ["#c8c6b1", "#f0e9d2"],

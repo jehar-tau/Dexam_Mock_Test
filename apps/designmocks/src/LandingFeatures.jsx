@@ -6,6 +6,7 @@ import { Motif, Reveal } from "./Motion.jsx";
 import { postLaunchPreview } from "./launch-scope.js";
 import { releasedModules } from "./launch-scope.mjs";
 import { portalReady } from "./platform.js";
+import { useAuthState } from "./useAuth.js";
 
 // `module` names the portal module a feature belongs to. Modules still held
 // back by the launch scope (launch-scope.mjs) carry an "Opening soon" label so
@@ -109,6 +110,7 @@ function JoinLink() {
 }
 
 export function FeatureShowcase() {
+  const { session } = useAuthState();
   return (
     <section className="wrap section features" id="features">
       <div className="section-heading">
@@ -126,6 +128,7 @@ export function FeatureShowcase() {
       <div className="feature-grid">
         {features.map((feature) => {
           const soon = Boolean(feature.module) && !(releasedModules[feature.module] && portalReady) && !(postLaunchPreview && portalReady);
+          const needsSignIn = feature.to.startsWith("/dashboard") && !session;
           return (
             <Reveal
               as="article"
@@ -150,9 +153,14 @@ export function FeatureShowcase() {
                     </li>
                   ))}
                 </ul>
+                {feature.id === "learn" && soon && (
+                  <Link className="text-link" to="/practice/visual-hierarchy">
+                    Try a free visual hierarchy exercise <Arrow />
+                  </Link>
+                )}
                 {(!soon || feature.module === "exam-mocks") && (
-                  <Link className="text-link" to={feature.to}>
-                    {soon ? "Explore exam guides" : feature.link} <Arrow />
+                  <Link className="text-link" to={needsSignIn ? "/account" : feature.to}>
+                    {needsSignIn ? "Go to student account" : soon ? "Explore exam guides" : feature.link} <Arrow />
                   </Link>
                 )}
               </div>

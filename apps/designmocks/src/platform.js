@@ -12,7 +12,7 @@ export const publishedNotices = __DMOCKS_PUBLISHED_NOTICES__;
 export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkoutReady } = resolveAuthConfiguration({
   mode: environment.mode,
   deployment: environment.deployment,
-  origin: window.location.origin,
+  origin: import.meta.env.SSR ? frontend_origin : window.location.origin,
   stagingTarget: { url: designatedProvider, origin: staging_frontend_origin },
   checkoutTarget: { url: designatedProvider, origin: frontend_origin },
   productionOrigin: frontend_origin,
@@ -25,7 +25,7 @@ export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkou
   termsVersion,
   noticeVersion: publishedNotices?.version,
 });
-export const platform = authReady
+export const platform = authReady && !import.meta.env.SSR
   ? createClient(url, key, {
       auth: {
         persistSession: true,

@@ -1,0 +1,56 @@
+.discovery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.warmup-compass {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  background: #edf0df;
+  color: #244735;
+  padding: .5rem;
+}
+
+.warmup-compass span, .warmup-direction {
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.exam-resources > *, .sign-exercise > * { max-width: 47rem; }
+.exam-resources p, .sign-exercise p { line-height: 1.6; }
+.exam-resources a { text-decoration: underline; }
+.exam-resources li + li { margin-top: .6rem; }
+.exam-resources .source-date { font-size: .9rem; color: var(--muted); }
+
+.sign-exercise { max-width: 64rem; }
+.sign-exercise h1 { margin: 1.2rem 0; font-size: clamp(2.45rem, 6vw, 4.5rem); line-height: 1.04; }
+.sign-exercise h2 { margin-top: 2rem; }
+.sign-exercise > .button { margin-top: .75rem; }
+.sign-exercise .museum-signs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.museum-signs figure { margin: 0; }
+.museum-signs figcaption { color: var(--muted); margin-bottom: .5rem; font-weight: 600; }
+.museum-sign {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 10rem;
+  border-inline-start: .5rem solid #edc668;
+  border-radius: .25rem;
+  padding: 1.25rem;
+  background: #244735;
+  color: #fffef9;
+}
+.museum-sign strong { font: 700 clamp(1.75rem, 4vw, 3rem)/1.05 "Zilla Slab", serif; }
+.museum-sign small { font-size: .875rem; }
+.sign-exercise details { margin-top: 1rem; padding: 1rem 1.25rem; border: 1px solid var(--line); border-radius: .3rem; background: var(--surface); }
+.sign-exercise summary { cursor: pointer; color: var(--green); font-weight: 700; }
+@media (max-width: 34rem) {
+  .sign-exercise .museum-signs { grid-template-columns: 1fr; }
+  .museum-sign { min-height: 8rem; }
+}

@@ -10,6 +10,10 @@ async function check(directory) {
     if (entry.isDirectory()) await check(path);
     else if (/\.(js|html)$/.test(entry.name)) {
       const source = await readFile(path, "utf8");
+      if (!allowLearnImages) {
+        assert.doesNotMatch(entry.name, /^(Learn|LearnProgramme)-/, "Interactive Learn code in a closed build");
+        assert.ok(!source.includes("Embroidery and weaves"), "Signed-in Learn lesson content in a closed build");
+      }
       for (const marker of ["Sample Student", "illustrative-uceed", "portal-preview/report", "portal-preview/pending", "Fictional All India mock", "PortalPreview", "OFFLINE SYNC PREVIEW", "PRIVATE INTAKE PREVIEW", "drawing-review-lifecycle-preview", "Draw a portable reading light.", "Run accessibility check", "/learn-programme-preview", "Development preview. Progress is saved only in this browser."])
         assert.ok(!source.includes(marker), `Local QA content leaked into ${path}: ${marker}`);
     }

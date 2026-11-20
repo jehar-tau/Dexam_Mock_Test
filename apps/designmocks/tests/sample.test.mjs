@@ -32,6 +32,13 @@ test("every sample item provides a concrete exercise and an explanation", () => 
   }
 });
 
+test("both identical rotation options receive credit on the original sample", () => {
+  assert.equal(sampleReport({ rotation: 1 }, 1).correct, 1);
+  assert.equal(sampleReport({ rotation: 2 }, 1).correct, 1);
+  assert.equal(sampleReport({ rotation: 1 }, 2).correct, 0);
+  assert.equal(sampleReport({ rotation: 2 }, 2).correct, 1);
+});
+
 test("restores only valid device samples and discards unknown answer ids", () => {
   const state = {
     status: "active",
@@ -41,6 +48,7 @@ test("restores only valid device samples and discards unknown answer ids", () =>
     flagged: ["rotation", "rotation", "unknown"],
   };
   const restored = restoreSample(JSON.stringify(state));
+  assert.equal(restoreSample(JSON.stringify({ ...state, deadline: 361001 })).deadline, 361000);
   assert.deepEqual(restored.answers, { rotation: 2 });
   assert.deepEqual(restored.flagged, ["rotation"]);
   for (const raw of [
@@ -50,6 +58,7 @@ test("restores only valid device samples and discards unknown answer ids", () =>
     '"hello"',
     JSON.stringify({ ...state, flagged: null }),
     JSON.stringify({ ...state, deadline: 0 }),
+    JSON.stringify({ ...state, deadline: 370000 }),
   ])
     assert.equal(restoreSample(raw), null);
 });
