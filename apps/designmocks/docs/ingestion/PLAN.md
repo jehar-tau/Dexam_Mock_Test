@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: plan written 20 November 2026; stages 1 and 2 built. This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: plan written 20 November 2026; stages 1–3 built (stage 3 on 21 November). This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## What the owner asked for
 
@@ -53,7 +53,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | --- | --- | --- | --- |
 | 1 | **Intake** | PDF or page photos → hashed source copy, page renders, per-page text with word boxes, embedded-image inventory with native bytes and placement, vector-drawing inventory, a `needsOcr` flag per page | [x] built 20 Nov 2026 |
 | 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
-| 3 | Figures | Figure regions → canonical PNG (native bytes where possible) and, where it passes verification, an SVG recreation; comparison board for review | [ ] |
+| 3 | **Figures** | Figure placements → canonical PNG (embedded pixels, or a page render when the page shows something else), a block crop of every question, an SVG trial with metrics and a comparison board | [x] built 21 Nov 2026 |
 | 4 | Answer key | Key PDF → per-question official answer; match by number and section; report missing, extra and malformed keys; compare with the existing canonical record if one exists | [ ] |
 | 5 | Solutions | Question + verified key → draft worked solution (format below); a draft that does not reach the official answer is held | [ ] |
 | 6 | Review | Side-by-side review page: source block, extracted text, figures, key, solution; approve/fix per question with exact hashes | [ ] |
@@ -74,16 +74,17 @@ A **vector recreation** (SVG) is added on top, never instead, when the figure is
 
 | Check | Pass |
 | --- | --- |
-| Ink overlap (IoU of binarised dark pixels) | ≥ 0.98 |
-| Worst edge distance (Hausdorff on edges) | ≤ 1.5 source pixels |
+| Ink overlap (IoU of non-background pixels, both images classified with the same palette) | ≥ 0.98 |
+| Edge distance (99th percentile of distances between Canny edges, both directions; the maximum is recorded too) | ≤ 1.5 source pixels |
 | Structural similarity (SSIM, greyscale) | ≥ 0.95 |
-| Flat-fill colour difference (ΔE 2000, per region) | ≤ 3 |
-| Text inside the figure | kept as real `<text>` and matched to OCR, or the figure fails |
+| Flat-fill colour difference (ΔE 2000, region interiors only) | ≤ 3 |
 | Human look at the comparison board (source, SVG, difference) | approved |
+
+As built (21 Nov 2026): the maximum edge distance was replaced by the 99th percentile because JPEG noise puts single stray pixels several pixels away in every figure. The rule that text inside a figure must be real `<text>` was dropped. OCR misses single letters such as option labels and cannot read Devanagari, so it could not enforce the rule; traced letters also pass the pixel checks. Text that OCR does find is recorded, and the SVG is marked `textAsOutlines` for the reviewer.
 
 The SVG must be sanitised: no scripts, no external references, no embedded raster. Photos, shaded renders, textures, hand sketches and anything that fails a check stay as the crop only. Where the answer depends on a fine detail (as in a question about slightly different corner radii) the crop stays primary even if the SVG passes, because a trace can smooth exactly the detail being tested.
 
-Recreation method, cheapest first: potrace for one-colour line art (locally installed tool, run only on the operator's machine); a parametric SVG authored by a model or by hand for geometric figures (cube nets, grids), which is then held to the same checks; never a generative image model.
+Recreation method, cheapest first: potrace (locally installed, operator machine only) on a smooth 4× upscale, one layer per flat colour. A colour counts when it covers at least 1% of the pixels; anti-aliased edge pixels join their nearest colour. Next, a parametric SVG authored by a model or by hand for geometric figures (cube nets, grids), held to the same checks (not built yet). Never a generative image model.
 
 **Solution drawings do not need the figure vectorised.** A solution's annotations (markers, highlights, arrows, labels, step reveals) are an SVG overlay in the canonical image's pixel coordinates, drawn on top of the PNG or SVG. This gives Roughworks-style annotated solutions for every question, including those whose figure must stay a crop.
 
@@ -153,6 +154,7 @@ Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
 - 20 Nov 2026: plan written. Pipeline lives in `apps/designmocks/ingestion/` as Python stages with `unittest` tests run by `npm run test:ingestion`. Work folders and real papers stay outside the repo; the tool refuses to write inside a Git worktree.
 - 20 Nov 2026: owner approved D2 (PNG plus verified SVG), D3 (Claude drafts solutions in a local session, human review), D4 (UCEED 2026 re-ingest first) and D5 (all recommended analysis charts). D1, D6 and D7 stand as proposed until the owner says otherwise.
 - 20 Nov 2026: stage 2 built and evaluated on 18 papers (above). OCR results are cached in `<work>/.cache` by page-render digest; the Swift helper is compiled once into `<work>/.tools`.
+- 21 Nov 2026: stage 3 built. Changed two verification rules (see the figure decision): 99th-percentile edge distance, and text inside figures is flagged rather than disqualifying.
 - 20 Nov 2026: figures default to the embedded image's native bytes; SVG only as a verified addition; solution annotations are overlays and do not depend on vectorising.
 
 ## Stage 1 evaluation (20 November 2026)
@@ -198,12 +200,23 @@ Lessons built into the code, each found on a real paper:
 - Broken text layers lose single labels such as "Q.03", too small for any ink threshold. If any page of a paper needs OCR, stage 2 reads every page; a "Q.19" read by OCR is kept even when the text layer has the rest of the line; a lone "55" fills the slot of a lost "Q.55". Full-page scans are body text, not figures.
 - The bank's `visualDependency` reflects whole-question images, not real figures (UCEED 2026 q35 is plain text), so it cannot be used to check figures.
 
-## Running stages 1 and 2
+## Stage 3 evaluation (21 November 2026)
+
+All results are in the private work folder; boards are at `03-figures/<key>/fig-N.board.png`.
+
+- **Canonical PNG.** 119 of 120 figures in UCEED 2026 and UCEED 2015 are the embedded image's own pixels, checked by a lossless round trip. One was cropped on the page, so its PNG is a page render at the image's own resolution or 200 dpi, whichever is higher. A one-pixel-tolerant comparison against the page catches Word crops and labels drawn over a picture.
+- **SVG trial.** UCEED 2026: 8 of 47 verified, 33 failed, 6 not eligible (photos and shaded renders). UCEED 2015: 7 of 73 verified. Most failures are hairlines that lose more than 2% of their ink, small grey details merged into a neighbouring colour, and gradients flattened into one grey. The boards show the checks reject the right things.
+- **Caveat from looking at the boards.** A verified trace can still taper hairline gaps and round their ends (UCEED 2026 q29). Each SVG therefore stays `approval: pending` until a person approves its board in stage 6, and the PNG stays primary for questions about fine detail.
+- **Cost.** About 30 seconds per paper, mostly tracing and the OCR of each figure (cached).
+
+## Running stages 1 to 3
 
 ```bash
-pip3 install -r apps/designmocks/ingestion/requirements.txt   # PyMuPDF and Pillow, operator machine only
+pip3 install -r apps/designmocks/ingestion/requirements.txt   # operator machine only
+brew install potrace                                         # stage 3 SVG trials
 python3 apps/designmocks/ingestion/intake.py --paper /path/to/UCEED_2026_Question_Paper.pdf --exam uceed --year 2026 --work ~/dmocks-ingestion-work
 python3 apps/designmocks/ingestion/segment.py --paper-id uceed-2026 --work ~/dmocks-ingestion-work
+python3 apps/designmocks/ingestion/figures.py --paper-id uceed-2026 --work ~/dmocks-ingestion-work
 npm --prefix apps/designmocks run test:ingestion
 ```
 
