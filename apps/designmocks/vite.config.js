@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { resolveAuthConfiguration } from "./src/authConfiguration.mjs";
 import { allowPostLaunchPreview, allowReleasedLearn } from "./src/launch-scope.mjs";
 import { readPublishedNotices } from "./scripts/published-notices.mjs";
+import { publicDiscovery } from "./scripts/public-discovery.mjs";
 import project from "./supabase/project.json" with { type: "json" };
 
 export default defineConfig(({ command, mode }) => {
@@ -31,18 +32,27 @@ export default defineConfig(({ command, mode }) => {
     termsVersion: env.VITE_TERMS_VERSION,
     noticeVersion: notices?.version,
   });
-  const includeLearnImages = allowReleasedLearn(auth.portalReady) ||
+  const includeLearnContent = allowReleasedLearn(auth.portalReady) ||
     (mode !== "production" && allowPostLaunchPreview(deployment, env.VITE_POST_LAUNCH_PREVIEW === "true"));
 
+  // The informational Site is the accepted search surface. Staging, merchant Test,
+  // and the separately gated commercial portal do not publish this discovery profile.
+  const publicBuild = mode === "production" && deployment === "production" && !portalEnabled && !checkoutEnabled
+    && env.VITE_TEST_LOGIN_ENABLED !== "true" && env.VITE_STAGING_PORTAL_ENABLED !== "true";
+
   return {
-    plugins: [react(), {
+    plugins: [react(), publicDiscovery(publicBuild), {
       name: "dmocks-learn-image-isolation",
       apply: "build",
       async writeBundle({dir}) {
         // Vite copies public files even when the routes that use them are disabled.
-        if (!includeLearnImages) await rm(join(dir, "learn-images"), {recursive: true, force: true});
+        if (!includeLearnContent) await rm(join(dir, "learn-images"), {recursive: true, force: true});
       },
     }],
-    define: { __DMOCKS_PUBLISHED_NOTICES__: JSON.stringify(notices) },
+    define: {
+      __DMOCKS_PUBLIC_DISCOVERY__: JSON.stringify(publicBuild),
+      __DMOCKS_PUBLISHED_NOTICES__: JSON.stringify(notices),
+      __DMOCKS_INCLUDE_LEARN__: JSON.stringify(includeLearnContent),
+    },
   };
 });

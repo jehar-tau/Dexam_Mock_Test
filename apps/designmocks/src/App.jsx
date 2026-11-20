@@ -9,16 +9,19 @@ import {
   Routes,
   useLocation,
   useNavigate,
+  useParams,
 } from "react-router-dom";
 import { brand, exams, money } from "./config.js";
-import { Art, Arrow, Spark, Stimulus, ChoiceArt } from "./Art.jsx";
-import { FeatureShowcase, FreePass, JoinLink } from "./LandingFeatures.jsx";
+import { Art, Arrow, Spark, Stimulus, ChoiceArt, describeChoice } from "./Art.jsx";
+import { FeatureShowcase, FreePass, JoinLink, PublicPracticeOptions } from "./LandingFeatures.jsx";
+import { SignReadingExercise } from "./SignReadingExercise.jsx";
 import { LogoMotion } from "./LogoMotion.jsx";
 import {
   sampleQuestions,
   sampleReport,
   restoreSample,
   SAMPLE_STORAGE,
+  SAMPLE_DURATION_MS,
 } from "./sample.mjs";
 import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
 import {Purchase} from "./Purchase.jsx";
@@ -61,9 +64,18 @@ const PortalPreview = import.meta.env.DEV
 const TopicPractice = React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPractice })));
 const ExamMocks = React.lazy(() => import("./ExamMocks.jsx").then(module => ({ default: module.ExamMocks })));
 const AllIndia = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndia })));
-const Learn = React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.Learn })));
-const LearnProgrammes = React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.LearnProgrammes })));
-const LearnProgrammePage = React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePage })));
+function LearnSignIn() {
+  return <section className="wrap section">
+    <h1>Sign in to <em>learn.</em></h1>
+    <Link to="/account">Student sign in</Link>
+  </section>;
+}
+const Learn = __DMOCKS_INCLUDE_LEARN__
+  ? React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.Learn }))) : LearnSignIn;
+const LearnProgrammes = __DMOCKS_INCLUDE_LEARN__
+  ? React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.LearnProgrammes }))) : LearnSignIn;
+const LearnProgrammePage = __DMOCKS_INCLUDE_LEARN__
+  ? React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePage }))) : LearnSignIn;
 const Community = React.lazy(() => import("./Community.jsx").then(module => ({ default: module.Community })));
 const AllIndiaHighlights = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaHighlights })));
 const TopicPracticePreview = import.meta.env.DEV
@@ -111,7 +123,7 @@ function Logo() {
 }
 function Theme() {
   const [dark, setDark] = useState(
-    document.documentElement.dataset.theme === "dark",
+    typeof document !== "undefined" && document.documentElement.dataset.theme === "dark",
   );
   return (
     <button
@@ -180,6 +192,7 @@ function GoogleIcon() {
   );
 }
 function Layout({ children }) {
+  const { session } = useAuthState();
   const [menu, setMenu] = useState(false);
   const location = useLocation();
   const menuRef = useRef();
@@ -266,7 +279,7 @@ function Layout({ children }) {
             </p>
           </div>
           <div>
-            <b>FIND YOUR FOCUS</b>
+            <b>EXAM GUIDES</b>
             <Link to="/tests/uceed">UCEED</Link>
             <Link to="/tests/nid">NID DAT</Link>
             <Link to="/tests/nift">NIFT</Link>
@@ -278,10 +291,7 @@ function Layout({ children }) {
             <Link to="/sample">Try the sample</Link>
             <Link to="/plans">One-year pass</Link>
             <Link to="/account">Student sign in</Link>
-            <Link to="/report">Report a problem</Link>
-            <a href={brand.supportUrl} target="_blank" rel="noreferrer">
-              Talk to the team <span aria-hidden="true">↗</span>
-            </a>
+            <Link to={session ? "/report" : "/contact"}>Report a problem</Link>
           </div>
         </div>
         <div className="wrap academy-footer-note">
@@ -323,44 +333,42 @@ function HeroQuestion() {
       <div className="hero-question">
         <div className="paper-top" aria-hidden="true">
           <span>THE PRACTICE ROOM</span>
-          <span>01 / 05</span>
+          <span>WARM-UP</span>
         </div>
         <h2>
           A little shift
           <br /> in <em>perspective.</em>
         </h2>
         <div className="hero-puzzle">
-          <Stimulus kind="rotation" />
+          <div className="warmup-compass" aria-label="Facing north, turn a quarter-turn left" role="img"><span aria-hidden="true">↑</span> North</div>
         </div>
-        <p>Turn it 90° clockwise. Which one fits?</p>
+        <p>You face north and turn a quarter-turn left. Which direction do you face?</p>
         <div className="hero-options">
-          {[0, 1, 2, 3].map((i) => (
+          {["North", "East", "South", "West"].map((direction, i) => (
             <button
-              key={i}
-              aria-label={"Hero sample option " + String.fromCharCode(65 + i)}
+              key={direction}
+              aria-label={direction}
               aria-pressed={choice === i}
               onClick={() => setChoice(i)}
               className={choice === i ? "selected" : ""}
             >
-              <ChoiceArt kind="rotation" index={i} />
-              <span>{String.fromCharCode(65 + i)}</span>
+              <b aria-hidden="true" className="warmup-direction">{["↑", "→", "↓", "←"][i]}</b>
+              <span>{direction}</span>
             </button>
           ))}
         </div>
         <div className="hero-feedback" aria-live="polite">
           {choice === null ? (
             <>
-              <span className="small-dot" /> Go on. Trust your eye.
+              <span className="small-dot" /> Choose a direction.
             </>
-          ) : choice === 2 ? (
+          ) : choice === 3 ? (
             <>
-              <span className="small-dot" /> You found it. The whole shape turns
-              together.
+              <span className="small-dot" /> West. On a north-up map, a left turn takes you west.
             </>
           ) : (
             <>
-              <span className="small-dot orange" /> Follow the little square as
-              the shape turns. Try again.
+              <span className="small-dot orange" /> Point up, then rotate your finger left by 90°. Try again.
             </>
           )}
         </div>
@@ -394,7 +402,7 @@ function ExamCard({ exam, index = 0 }) {
           <span>{exam.level}</span>
         </div>
         <p>{exam.description}</p>
-        <span className="eyebrow">{["nid","nift"].includes(exam.id)?"Coming later":"Paid release under review"}</span>
+        <span className="eyebrow">{exam.id === "uceed" ? "First planned paid paper" : "Outside the initial pass"}</span>
         <Link className="text-link" to={"/tests/" + exam.id}>
           Explore {exam.name} <Arrow />
         </Link>
@@ -417,8 +425,7 @@ function Catalogue({ full = false }) {
         </div>
         <div className="section-side">
           <p>
-            A space to practise for the design entrance exam you’re working
-            towards.
+            Choose an exam for official preparation resources and the current DMocks offer.
           </p>
           <div className="filters" role="group" aria-label="Filter exam level">
             {[
@@ -447,8 +454,7 @@ function Catalogue({ full = false }) {
       </div>
       {full && (
         <p className="catalogue-note">
-          The sample shows the test experience using original questions. Full
-          papers open after the separate student portal is activated.
+          The free DMocks sample uses five original visual questions. Paid access covers only the papers listed when checkout opens.
         </p>
       )}
     </section>
@@ -645,38 +651,9 @@ function FAQs() {
     </section>
   );
 }
-function Home() {
+function PortalHomeSections() {
   return (
     <>
-      <section className="wrap hero">
-        <div className="hero-copy">
-          <span className="eyebrow">
-            <i className="small-dot orange" /> DESIGN ENTRANCE PRACTICE / 2027
-          </span>
-          <h1>
-            Make your
-            <br /> next attempt
-            <br /> <em>count.</em>
-          </h1>
-          <p>
-            Try five visual questions from DMocks, a practice platform for design entrance exams.
-          </p>
-          <div className="hero-actions">
-            {portalReady && <JoinLink />}
-            <Link to="/sample" className={portalReady ? "sample-link" : "button join-button"}>
-              Try 5 sample questions <Arrow size={17} />
-            </Link>
-          </div>
-          <div className="hero-proof">
-            <span>
-              <i />
-              Free sample. No sign-in.
-            </span>
-            <span>Made for design aspirants</span>
-          </div>
-        </div>
-        <HeroQuestion />
-      </section>
       <div className="exam-ribbon wrap">
         <span>YOUR NEXT CHAPTER</span>
         {exams.map((e) => (
@@ -739,6 +716,87 @@ function Home() {
       <FreePass />
       <PassPanel />
       <FAQs />
+    </>
+  );
+}
+
+function PublicHomeSections() {
+  return (
+    <>
+      <PublicPracticeOptions />
+      <section className="wrap section" id="how">
+        <div className="section-heading">
+          <h2>How the free sample works</h2>
+          <p>Start when you have six minutes. You can take the sample without an account.</p>
+        </div>
+        <div className="doing-grid">
+          {[
+            ["Start the timer", "Choose one answer for each visual question. Answers and flags are saved in this browser when device storage is available.", "space"],
+            ["Check before submitting", "Return to flagged questions while time remains. Submit to finish early. If time runs out, the answers you saved are used.", "object"],
+            ["Read your five-question report", "See your score out of five and a result for each question. Open answer review to read the explanations, then try one of the suggested practice exercises.", "report"],
+          ].map(([title, text, art]) => (
+            <article key={title}>
+              <div><Art kind={art} /></div>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="wrap section faq-section" id="faq">
+        <h2>Practice questions</h2>
+        <div>
+          <details>
+            <summary>How is the sample scored?</summary>
+            <p>Each correct answer earns one point. Incorrect and unanswered questions score zero. The score describes only this five-question sample.</p>
+          </details>
+          <details>
+            <summary>Can I practise without a timer?</summary>
+            <p>Yes. The <Link to="/practice/visual-hierarchy">visual hierarchy exercise</Link> is untimed and includes a worked explanation.</p>
+          </details>
+          <details>
+            <summary>Can I buy a UCEED mock now?</summary>
+            <p>Paid checkout is closed. The <Link to="/tests/uceed">UCEED Part A guide</Link> explains the planned paper and links to official past papers you can use now.</p>
+          </details>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function Home() {
+  return (
+    <>
+      <section className="wrap hero">
+        <div className="hero-copy">
+          <span className="eyebrow">
+            <i className="small-dot orange" /> DESIGN ENTRANCE PRACTICE / 2027
+          </span>
+          <h1>
+            Make your
+            <br /> next attempt
+            <br /> <em>count.</em>
+          </h1>
+          <p>
+            Practise for design entrance exams with five free visual questions. Take the six-minute sample, then review each answer.
+          </p>
+          <div className="hero-actions">
+            {portalReady && <JoinLink />}
+            <Link to="/sample" className={portalReady ? "sample-link" : "button join-button"}>
+              Try 5 sample questions <Arrow size={17} />
+            </Link>
+          </div>
+          <div className="hero-proof">
+            <span>
+              <i />
+              Free sample. No sign-in.
+            </span>
+            <span>Made for design aspirants</span>
+          </div>
+        </div>
+        <HeroQuestion />
+      </section>
+      {portalReady || postLaunchPreview ? <PortalHomeSections /> : <PublicHomeSections />}
       <section className="wrap final-cta">
         <Spark size={44} />
         <h2>
@@ -760,14 +818,14 @@ function Tests() {
   return (
     <>
       <section className="wrap page-intro">
-        <span className="eyebrow">THE PRACTICE ROOM</span>
-        <h1>
-          What are you
-          <br /> working <em>towards?</em>
-        </h1>
+        <h1>Design entrance <em>mock tests and practice.</em></h1>
         <p>
-          Choose your exam. Explore the practice. Begin with the free sample.
+          Choose a timed sample or work through a design exercise at your own pace. Both are free and open without an account.
         </p>
+        <div className="discovery-actions">
+          <Button to="/sample">Try the timed sample</Button>
+          <Link className="text-link" to="/practice/visual-hierarchy">Try a visual hierarchy exercise <Arrow /></Link>
+        </div>
       </section>
       <Catalogue full />
       <PassPanel />
@@ -775,8 +833,8 @@ function Tests() {
   );
 }
 function ExamDetail() {
-  const location = useLocation();
-  const exam = exams.find((e) => location.pathname.endsWith("/" + e.id));
+  const { exam: examId } = useParams();
+  const exam = exams.find((item) => item.id === examId);
   if (!exam) return <NotFound />;
   return (
     <>
@@ -788,55 +846,32 @@ function ExamDetail() {
           <span className="eyebrow">
             {exam.name} / {exam.level}
           </span>
-          <h1>
-            {exam.title.split(". ").map((s, i) => (
-              <React.Fragment key={s}>
-                {i ? <em>{s}</em> : s + "."}
-                {!i && <br />}
-              </React.Fragment>
-            ))}
-          </h1>
+          <h1>{exam.title}</h1>
           <p>{exam.description}</p>
-          <p className="notice">{["nid","nift"].includes(exam.id)?"This exam is coming later and is outside the initial annual-pass offer.":"The first paid offering is under review. Only its exact released paper and part will be included; a full two-part exam is not promised."}</p>
-          <Button to="/sample">Try the experience sample</Button>
-          <a
-            className="source-link"
-            href={exam.source}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Official exam information ↗
-          </a>
+          <p className="notice">
+            {exam.id === "uceed"
+              ? "UCEED Part A Practice Mock 01 is the first planned paid DMocks paper. The annual-pass page shows current purchase availability."
+              : "This exam is coming later and is outside the initial annual-pass offer."}
+          </p>
+          <Button to="/sample">Try the free design practice sample</Button>
+          <p className="sample-disclosure">Five original visual questions, six minutes and feedback after submission. No account required.</p>
         </div>
         <div className={"detail-art exam-" + exam.id}>
           <Art kind={exam.art} />
           <span>{exam.tag}</span>
         </div>
       </section>
-      <section className="wrap section">
-        <span className="eyebrow">ABOUT THE EXAM</span>
-        <div className="skills-grid">
-          {exam.skills.map((s, i) => (
-            <article key={s}>
-              <span>0{i + 1}</span>
-              <h2>{s}</h2>
-              <p>
-                {
-                  [
-                    "Look closely. Find connections. Make sense of what you see.",
-                    "Break a problem down. Explore the possibilities. Check your assumptions.",
-                    "Make your thinking visible and communicate an idea clearly.",
-                  ][i]
-                }
-              </p>
-            </article>
-          ))}
-        </div>
-        <p className="catalogue-note">
-          Exam routes and published papers are verified separately. The
-          experience sample is a short demonstration, not a complete {exam.name}{" "}
-          paper or a claim of an official exam pattern.
-        </p>
+      <section className="wrap section exam-resources">
+        <h2>{exam.resourceTitle}</h2>
+        {exam.id === "uceed" && (
+          <p>IIT Bombay’s UCEED 2027 Part A is a two-hour computer-based test with numerical-answer, multiple-select and multiple-choice questions. The DMocks sample uses single-choice questions and its own scoring.</p>
+        )}
+        <p>{exam.resource}</p>
+        <ul>
+          {exam.practiceSource && <li><a href={exam.practiceSource}>{exam.practiceLabel}</a></li>}
+          <li><a href={exam.source}>{exam.sourceLabel}</a></li>
+        </ul>
+        <p className="source-date">Official resources checked <time dateTime="2026-11-21">21 November 2026</time>.</p>
       </section>
       <PassPanel />
     </>
@@ -850,8 +885,7 @@ function Plans() {
       <section className="wrap page-intro centered">
         <span className="eyebrow">ONE SIMPLE PASS</span>
         <h1 ref={heading} tabIndex={-1}>
-          Your next year.
-          <br /> More <em>possibilities.</em>
+          The DMocks <em>annual pass.</em>
         </h1>
         <p>
           Mock-test practice that stands on its own.
@@ -880,7 +914,9 @@ function Plans() {
           <ul>
             {[
               "Only the explicitly released papers listed in the catalogue",
-              "Adapted practice questions based on student recollections",
+              portalReady || postLaunchPreview
+                ? "Adapted practice questions based on student recollections"
+                : "The planned UCEED Part A Practice Mock 01 uses adapted questions based on student recollections",
               "Timed attempts and saved progress",
               "Answer review after submission",
               "Your own student account",
@@ -898,9 +934,9 @@ function Plans() {
           )}
           {session && checkoutReady ? <Purchase actorId={session.user.id} headingRef={heading}/> : session ? (
             <button type="button" className="button full" disabled>Pay {money(brand.price)} with Razorpay <Arrow/></button>
-          ) : (
+          ) : authReady ? (
             <Button to="/account?next=plans">Continue with Google <GoogleIcon/></Button>
-          )}
+          ) : null}
           <Link className="sample-link" to="/sample">
             Try the sample first <Arrow size={17} />
           </Link>
@@ -1171,12 +1207,14 @@ function Sample() {
   }, [now, active]);
   const start = () => {
     window.scrollTo({ top: 0, behavior: "instant" });
-    setNow(Date.now());
+    const startedAt = Date.now();
+    setNow(startedAt);
     setIndex(0);
     setState({
       status: "active",
-      startedAt: Date.now(),
-      deadline: Date.now() + 360000,
+      version: 2,
+      startedAt,
+      deadline: startedAt + SAMPLE_DURATION_MS,
       answers: {},
       flagged: [],
     });
@@ -1185,14 +1223,9 @@ function Sample() {
     return (
       <section className="wrap sample-start split">
         <div>
-          <span className="eyebrow">A SMALL FIRST ATTEMPT</span>
-          <h1>
-            Meet the test.
-            <br /> Trust your <em>eye.</em>
-          </h1>
+          <h1>Free design entrance <em>practice sample.</em></h1>
           <p>
-            A short, original sample to explore how an attempt feels. No account
-            or payment needed.
+            Try visual questions on rotation, contrast, patterns, poster layout and observation. See your score and an explanation for each question after you submit. No account or payment required.
           </p>
           <ul className="sample-facts">
             <li>
@@ -1219,19 +1252,17 @@ function Sample() {
             </Link>
           )}
           <p className="sample-disclosure">
-            This is an experience sample, not a full-length mock, official paper
-            or prediction of your exam result. Each correct answer earns one
-            point. There is no negative marking.
+            Each correct answer earns one point out of five. Wrong or unanswered questions score zero. Full exam papers have their own formats and marking rules.
           </p>
         </div>
         <div className="sample-instructions">
           <Art kind="space" />
-          <h2>A little orientation.</h2>
+          <h2>How the sample works</h2>
           <ol>
             <li>Choose one answer for each visual question.</li>
             <li>Move between questions or mark one to revisit.</li>
             <li>Your sample answers are saved on this device.</li>
-            <li>Submit when you’re ready; the timer also submits at zero.</li>
+            <li>The timer continues if you refresh or leave. Your attempt submits at zero or when you return after time runs out.</li>
           </ol>
         </div>
       </section>
@@ -1281,13 +1312,15 @@ function Sample() {
                 className={state.answers[q.id] === i ? "chosen" : ""}
                 key={i}
                 aria-label={"Option " + String.fromCharCode(65 + i)}
+                aria-describedby={"choice-description-" + i}
                 aria-pressed={state.answers[q.id] === i}
                 onClick={() => answer(i)}
               >
                 <span className="choice-letter">
                   {String.fromCharCode(65 + i)}
                 </span>
-                <ChoiceArt kind={q.kind} index={i} />
+                <ChoiceArt kind={q.kind} index={i} legacyRotation={state.version !== 2} />
+                <span className="sr-only" id={"choice-description-" + i}>{describeChoice(q.kind, i, state.version !== 2)}</span>
               </button>
             ))}
           </div>
@@ -1403,7 +1436,7 @@ function SampleResult() {
         <Button to="/sample">Try the sample</Button>
       </section>
     );
-  const report = sampleReport(state.answers);
+  const report = sampleReport(state.answers, state.version ?? 1);
   const focus = report.focus.length ? report.focus : report.items.slice(0, 3);
   return (
     <section className="wrap section sample-result">
@@ -1486,7 +1519,7 @@ function SampleResult() {
                 {q.chosen === null
                   ? "Not answered"
                   : String.fromCharCode(65 + q.chosen)}{" "}
-                · Correct choice: {String.fromCharCode(65 + q.answer)}
+                · Correct choice: {q.id === "rotation" && (state.version ?? 1) === 1 ? "B or C (both showed the same shape)" : String.fromCharCode(65 + q.answer)}
               </p>
               <p>{q.explanation}</p>
             </article>
@@ -1565,9 +1598,7 @@ function Policies({ type }) {
           </p>
           <h2>Questions</h2>
           <p>
-            <a href={brand.supportUrl} target="_blank" rel="noreferrer">
-              Contact the team
-            </a>{" "}
+            <Link to="/contact">Contact the team</Link>{" "}
             about the preview.
           </p>
         </>
@@ -1632,6 +1663,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tests" element={<Tests />} />
+        <Route path="/practice/visual-hierarchy" element={<SignReadingExercise />} />
         <Route path="/tests/:exam" element={<ExamDetail />} />
         <Route path="/plans" element={<Plans />} />
         <Route path="/account" element={<Account />} />

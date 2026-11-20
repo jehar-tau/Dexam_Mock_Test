@@ -1,24 +1,24 @@
 @font-face {
   font-family: Figtree;
-  src: url("/assets/fonts/Figtree-Regular.ttf") format("truetype");
+  src: url("/assets/fonts/Figtree-Regular.woff2") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: Figtree;
-  src: url("/assets/fonts/Figtree-SemiBold.ttf") format("truetype");
+  src: url("/assets/fonts/Figtree-SemiBold.woff2") format("woff2");
   font-weight: 600 800;
   font-display: swap;
 }
 @font-face {
   font-family: "Zilla Slab";
-  src: url("/assets/fonts/ZillaSlab-Medium.ttf") format("truetype");
+  src: url("/assets/fonts/ZillaSlab-Medium.woff2") format("woff2");
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: "Zilla Slab";
-  src: url("/assets/fonts/ZillaSlab-Bold.ttf") format("truetype");
+  src: url("/assets/fonts/ZillaSlab-Bold.woff2") format("woff2");
   font-weight: 700;
   font-display: swap;
 }
@@ -3806,7 +3806,7 @@ svg {
 .footer-top .brand-lockup {
   margin-bottom: 24px;
 }
-@media (max-width: 370px) {
+@media (max-width: 400px) {
   .header-inner {
     gap: 12px;
   }
