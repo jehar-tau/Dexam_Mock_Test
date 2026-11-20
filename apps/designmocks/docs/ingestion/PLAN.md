@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: plan written 20 November 2026; stage 1 built. This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: plan written 20 November 2026; stages 1 and 2 built. This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## What the owner asked for
 
@@ -52,7 +52,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | # | Stage | Input → output | Status |
 | --- | --- | --- | --- |
 | 1 | **Intake** | PDF or page photos → hashed source copy, page renders, per-page text with word boxes, embedded-image inventory with native bytes and placement, vector-drawing inventory, a `needsOcr` flag per page | [x] built 20 Nov 2026 |
-| 2 | Segmentation | Page text and boxes → one record per question: number, section, type, prompt text, options, figure regions, page spans. OCR (Apple Vision helper) for flagged pages | [ ] |
+| 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
 | 3 | Figures | Figure regions → canonical PNG (native bytes where possible) and, where it passes verification, an SVG recreation; comparison board for review | [ ] |
 | 4 | Answer key | Key PDF → per-question official answer; match by number and section; report missing, extra and malformed keys; compare with the existing canonical record if one exists | [ ] |
 | 5 | Solutions | Question + verified key → draft worked solution (format below); a draft that does not reach the official answer is held | [ ] |
@@ -152,6 +152,7 @@ Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
 
 - 20 Nov 2026: plan written. Pipeline lives in `apps/designmocks/ingestion/` as Python stages with `unittest` tests run by `npm run test:ingestion`. Work folders and real papers stay outside the repo; the tool refuses to write inside a Git worktree.
 - 20 Nov 2026: owner approved D2 (PNG plus verified SVG), D3 (Claude drafts solutions in a local session, human review), D4 (UCEED 2026 re-ingest first) and D5 (all recommended analysis charts). D1, D6 and D7 stand as proposed until the owner says otherwise.
+- 20 Nov 2026: stage 2 built and evaluated on 18 papers (above). OCR results are cached in `<work>/.cache` by page-render digest; the Swift helper is compiled once into `<work>/.tools`.
 - 20 Nov 2026: figures default to the embedded image's native bytes; SVG only as a verified addition; solution annotations are overlays and do not depend on vectorising.
 
 ## Stage 1 evaluation (20 November 2026)
@@ -173,11 +174,36 @@ What it showed:
 - The first OCR rule (little text, mostly image) missed real problems. CEED 2025 and UCEED 2025 have lines that are visible on the page but absent from the text layer, including question labels such as "Q.19", section headings and the marking scheme. A second rule now compares the render's dark pixels with what the text layer, figures and ruled lines explain. Clean papers score 0; the affected pages score 0.2–4%. Checked by eye on CEED 2025 page 13 and UCEED 2025 page 8: every flagged region was genuinely missing text.
 - Consequence for stage 2: segmentation must merge OCR lines into the text layer on flagged pages before looking for question markers, or questions such as CEED 2025 Q.19 will be lost.
 
-## Running stage 1
+## Stage 2 evaluation (20 November 2026)
+
+Run on all 18 official papers on the owner's machine (UCEED 2015–2026, CEED 2021–2026) and compared with the canonical bank by key. Only scores and keys were printed; no question content left the private folder.
+
+| Measure | Result |
+| --- | --- |
+| Questions found | 1,173 (888 UCEED, 285 CEED), no gaps in any paper's numbering |
+| Type (NAT/MSQ/MCQ/descriptive) agreeing with the bank | 100% of the 1,164 questions both have |
+| Median prompt similarity with the bank, per paper | 0.95–1.00 (CEED 2025, the paper with a broken text layer, is 0.95) |
+| Figure placements assigned to exactly one question | 100% on the six papers checked (UCEED 2015/2025/2026, CEED 2021/2025/2026) |
+| Questions flagged for review | 1–8 per paper: text only inside the figure, animated figures shown as one still, option-count anomalies |
+
+The remaining text differences are mostly on the bank's side: page footers inside options ("Birch Bark 2015 \| 31 May 2015"), section intros and the next question inside a prompt, and figure text pasted into a prompt. These become correction candidates once stage 7 exists.
+
+Found in the papers but **missing from the bank** (owner to confirm): UCEED 2017 q51; UCEED 2019 q43, q71, q85; UCEED 2020 q37, q62; UCEED 2021 q52, q66; UCEED 2025 q36. The bank's UCEED 2021 `qb2` has no counterpart in the paper, which has one Part B question.
+
+Lessons built into the code, each found on a real paper:
+
+- Numbered instructions ("1. … 10.") flow into the question numbering. The questions are the longest run in one marker style, "Q.n" is preferred, and of two equal runs that share markers the later one wins.
+- Section headings can split across two lines ("Section 3:" then "Multiple Choice Questions"), and a section's intro must not join the previous question.
+- Part B either continues the numbering (UCEED), restarts at Q.1 (CEED), or is one unnumbered question under "PART B" (UCEED 2020–2023). Numbered evaluation criteria are not questions; lettered sub-tasks are not options.
+- Broken text layers lose single labels such as "Q.03", too small for any ink threshold. If any page of a paper needs OCR, stage 2 reads every page; a "Q.19" read by OCR is kept even when the text layer has the rest of the line; a lone "55" fills the slot of a lost "Q.55". Full-page scans are body text, not figures.
+- The bank's `visualDependency` reflects whole-question images, not real figures (UCEED 2026 q35 is plain text), so it cannot be used to check figures.
+
+## Running stages 1 and 2
 
 ```bash
 pip3 install -r apps/designmocks/ingestion/requirements.txt   # PyMuPDF and Pillow, operator machine only
 python3 apps/designmocks/ingestion/intake.py --paper /path/to/UCEED_2026_Question_Paper.pdf --exam uceed --year 2026 --work ~/dmocks-ingestion-work
+python3 apps/designmocks/ingestion/segment.py --paper-id uceed-2026 --work ~/dmocks-ingestion-work
 npm --prefix apps/designmocks run test:ingestion
 ```
 
