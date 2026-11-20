@@ -38,8 +38,12 @@ test('built search documents contain one canonical, real public text, and no per
     assert.doesNotMatch(html, /<div id="root"><\/div>|name="robots" content="noindex/);
     titles.add(html.match(/<title[^>]*>([^<]+)<\/title>/)[1]);
     const schema = html.match(/<script[^>]+type="application\/ld\+json">(.*?)<\/script>/);
-    if (path === '/') assert.deepEqual(JSON.parse(schema[1]), {'@context':'https://schema.org','@type':'WebSite',name:'DMocks',url:'https://dmocks.com/'});
-    else assert.equal(schema, null);
+    if (path === '/') {
+      assert.deepEqual(JSON.parse(schema[1]), {'@context':'https://schema.org','@type':'WebSite',name:'DMocks',url:'https://dmocks.com/'});
+      assert.match(html, /Read your five-question report/);
+      assert.match(html, /UCEED Part A Practice Mock 01 is the first planned paid paper/);
+      assert.doesNotMatch(html, /Opening soon|top ten|All India mocks|Community|Reviewed questions|reviewer feedback|interactive programmes|Illustrative preview/i);
+    } else assert.equal(schema, null);
   }
   assert.equal(titles.size, indexedPaths.length);
   for (const path of ['account', 'account/callback', 'sample/result', 'admin', 'dashboard', 'contact', 'terms', 'privacy', 'refunds', 'tests/nid', 'tests/nift', 'tests/ceed', '404']) {

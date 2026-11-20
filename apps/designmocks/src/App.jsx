@@ -13,7 +13,7 @@ import {
 } from "react-router-dom";
 import { brand, exams, money } from "./config.js";
 import { Art, Arrow, Spark, Stimulus, ChoiceArt, describeChoice } from "./Art.jsx";
-import { FeatureShowcase, FreePass, JoinLink } from "./LandingFeatures.jsx";
+import { FeatureShowcase, FreePass, JoinLink, PublicPracticeOptions } from "./LandingFeatures.jsx";
 import { SignReadingExercise } from "./SignReadingExercise.jsx";
 import { LogoMotion } from "./LogoMotion.jsx";
 import {
@@ -279,7 +279,7 @@ function Layout({ children }) {
             </p>
           </div>
           <div>
-            <b>FIND YOUR FOCUS</b>
+            <b>EXAM GUIDES</b>
             <Link to="/tests/uceed">UCEED</Link>
             <Link to="/tests/nid">NID DAT</Link>
             <Link to="/tests/nift">NIFT</Link>
@@ -651,38 +651,9 @@ function FAQs() {
     </section>
   );
 }
-function Home() {
+function PortalHomeSections() {
   return (
     <>
-      <section className="wrap hero">
-        <div className="hero-copy">
-          <span className="eyebrow">
-            <i className="small-dot orange" /> DESIGN ENTRANCE PRACTICE / 2027
-          </span>
-          <h1>
-            Make your
-            <br /> next attempt
-            <br /> <em>count.</em>
-          </h1>
-          <p>
-            Practise for design entrance exams with five free visual questions. Take the six-minute sample, then review each answer.
-          </p>
-          <div className="hero-actions">
-            {portalReady && <JoinLink />}
-            <Link to="/sample" className={portalReady ? "sample-link" : "button join-button"}>
-              Try 5 sample questions <Arrow size={17} />
-            </Link>
-          </div>
-          <div className="hero-proof">
-            <span>
-              <i />
-              Free sample. No sign-in.
-            </span>
-            <span>Made for design aspirants</span>
-          </div>
-        </div>
-        <HeroQuestion />
-      </section>
       <div className="exam-ribbon wrap">
         <span>YOUR NEXT CHAPTER</span>
         {exams.map((e) => (
@@ -745,6 +716,87 @@ function Home() {
       <FreePass />
       <PassPanel />
       <FAQs />
+    </>
+  );
+}
+
+function PublicHomeSections() {
+  return (
+    <>
+      <PublicPracticeOptions />
+      <section className="wrap section" id="how">
+        <div className="section-heading">
+          <h2>How the free sample works</h2>
+          <p>Start when you have six minutes. You can take the sample without an account.</p>
+        </div>
+        <div className="doing-grid">
+          {[
+            ["Start the timer", "Choose one answer for each visual question. Answers and flags are saved in this browser when device storage is available.", "space"],
+            ["Check before submitting", "Return to flagged questions while time remains. Submit to finish early. If time runs out, the answers you saved are used.", "object"],
+            ["Read your five-question report", "See your score out of five and a result for each question. Open answer review to read the explanations, then try one of the suggested practice exercises.", "report"],
+          ].map(([title, text, art]) => (
+            <article key={title}>
+              <div><Art kind={art} /></div>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="wrap section faq-section" id="faq">
+        <h2>Practice questions</h2>
+        <div>
+          <details>
+            <summary>How is the sample scored?</summary>
+            <p>Each correct answer earns one point. Incorrect and unanswered questions score zero. The score describes only this five-question sample.</p>
+          </details>
+          <details>
+            <summary>Can I practise without a timer?</summary>
+            <p>Yes. The <Link to="/practice/visual-hierarchy">visual hierarchy exercise</Link> is untimed and includes a worked explanation.</p>
+          </details>
+          <details>
+            <summary>Can I buy a UCEED mock now?</summary>
+            <p>Paid checkout is closed. The <Link to="/tests/uceed">UCEED Part A guide</Link> explains the planned paper and links to official past papers you can use now.</p>
+          </details>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function Home() {
+  return (
+    <>
+      <section className="wrap hero">
+        <div className="hero-copy">
+          <span className="eyebrow">
+            <i className="small-dot orange" /> DESIGN ENTRANCE PRACTICE / 2027
+          </span>
+          <h1>
+            Make your
+            <br /> next attempt
+            <br /> <em>count.</em>
+          </h1>
+          <p>
+            Practise for design entrance exams with five free visual questions. Take the six-minute sample, then review each answer.
+          </p>
+          <div className="hero-actions">
+            {portalReady && <JoinLink />}
+            <Link to="/sample" className={portalReady ? "sample-link" : "button join-button"}>
+              Try 5 sample questions <Arrow size={17} />
+            </Link>
+          </div>
+          <div className="hero-proof">
+            <span>
+              <i />
+              Free sample. No sign-in.
+            </span>
+            <span>Made for design aspirants</span>
+          </div>
+        </div>
+        <HeroQuestion />
+      </section>
+      {portalReady || postLaunchPreview ? <PortalHomeSections /> : <PublicHomeSections />}
       <section className="wrap final-cta">
         <Spark size={44} />
         <h2>
@@ -862,7 +914,9 @@ function Plans() {
           <ul>
             {[
               "Only the explicitly released papers listed in the catalogue",
-              "Adapted practice questions based on student recollections",
+              portalReady || postLaunchPreview
+                ? "Adapted practice questions based on student recollections"
+                : "The planned UCEED Part A Practice Mock 01 uses adapted questions based on student recollections",
               "Timed attempts and saved progress",
               "Answer review after submission",
               "Your own student account",

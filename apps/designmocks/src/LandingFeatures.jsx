@@ -109,6 +109,43 @@ function JoinLink() {
   );
 }
 
+export function PublicPracticeOptions() {
+  const options = [
+    {
+      title: "Free timed sample",
+      copy: "Answer five original visual questions in six minutes. You can flag a question and return to it before submitting.",
+      to: "/sample", link: "Start the free sample", motif: "mocks", tone: "yellow",
+    },
+    {
+      title: "Visual hierarchy exercise",
+      copy: "Compare two museum signs and decide which one helps a visitor find the workshop. Open the worked example when you’re ready.",
+      to: "/practice/visual-hierarchy", link: "Compare the museum signs", motif: "learn", tone: "lime",
+    },
+    {
+      title: "UCEED Part A practice",
+      copy: "UCEED Part A Practice Mock 01 is the first planned paid paper. While checkout is closed, use the UCEED guide to find IIT Bombay’s exam format and past papers.",
+      to: "/tests/uceed", link: "Read the UCEED Part A guide", motif: "practice", tone: "orange",
+    },
+  ];
+  return (
+    <section className="wrap section features" id="features">
+      <div className="section-heading"><h2>Choose your practice.</h2></div>
+      <div className="feature-grid">
+        {options.map(option => (
+          <article key={option.to} className={"feature-card tone-" + option.tone}>
+            <div className="feature-art"><Motif kind={option.motif} /></div>
+            <div className="feature-copy">
+              <h3>{option.title}</h3>
+              <p>{option.copy}</p>
+              <Link className="text-link" to={option.to}>{option.link} <Arrow /></Link>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function FeatureShowcase() {
   const { session } = useAuthState();
   return (
