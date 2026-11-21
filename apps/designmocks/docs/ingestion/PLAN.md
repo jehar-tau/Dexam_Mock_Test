@@ -56,8 +56,8 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `470 to 480`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
 | 5 | **Solutions** | `solutions.py` provides an objective question, figures, key evidence and a structured draft template. Key disagreements are held, while answers proposed without a readable official key stay drafts | [~] tooling built; UCEED 2026 Section 1: 8 of 14 drafted |
 | 6 | Review | The private solution review page shows the source question, key provenance and solution. An operator can approve a solution with a verified official key for the exact reviewed evidence | [~] objective-solution approval built; full ingestion review still open |
-| 7 | Export | Approved objective question and solution → temporary packet for the existing `bank:prepare-addition` dry run | [~] individual additions and corrections checked; persistent export still open |
-| 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [ ] |
+| 7 | Export | Approved objective question and solution → temporary packet for the existing `bank:prepare-addition` dry run. Preserve step overlays as typed shapes linked to a canonical PNG | [~] individual additions and corrections checked; persistent export still open |
+| 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [~] released answer review can display visual worked solutions; paper analysis still open |
 
 Stage 1 is deterministic and needs no model. Stages 2–4 are deterministic with optional local OCR. Stage 5 is the only stage that needs a language model (decision D3).
 
@@ -134,9 +134,11 @@ python3 apps/designmocks/ingestion/export.py uceed-2026 q1 \
   --rights-note "$REVIEWED_RIGHTS_NOTE"
 ```
 
-For a correction, add `--replace-expect "$CURRENT_QUESTION_SHA256"`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The worked explanation uses the current runtime's plain-text format. The dry run refuses flagged segments, questions that need image bytes outside the reviewed set, and solutions that include SVG overlays.
+For a correction, add `--replace-expect "$CURRENT_QUESTION_SHA256"`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
 
-The command reports whether the existing checks accept the proposed addition or correction. It deletes its temporary packet and media copies when it finishes. Persistent export, publication and student-facing overlay rendering remain subsequent work.
+For visual solutions, the packet carries the full plain-text explanation and typed steps with drawing shapes. Each overlay uses the exact PNG's hash and dimensions. Supported SVG shapes and short text labels are converted to data, with no links, styles or embedded images. Visual corrections require the overlay's PNG to match an existing canonical figure. The runtime validates the shapes again and freezes the solution in the private explanation snapshot. The answer review displays the steps and requests the attempt's signed figure only when the existing result release gates are open. The text remains readable if the figure fails to load.
+
+The command reports whether the existing checks accept the proposed addition or correction. It deletes its temporary packet and media copies when it finishes. Persistent export and publication remain subsequent work.
 
 ## Analysis
 

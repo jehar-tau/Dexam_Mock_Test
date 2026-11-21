@@ -144,7 +144,7 @@ export async function prepareAdditions({ packets, expectedSource, replaceExpecte
   const reviews = additions.map(({ packet, payload, assets }) => {
     const mediaCatalog = assets.map(asset => verifiedMedia.get(asset.relativePath));
     const answerIssues = inspectRuntimeQuestion(payload, { rule: RULES_2027[payload.provenance.exam], mediaCatalog })
-      .issues.some(issue => /^(answer-|option-|choice-options)/.test(issue.code));
+      .issues.some(issue => /^(answer-|option-|choice-options|worked-solution-)/.test(issue.code));
     const review = ['MCQ', 'MSQ', 'NAT'].includes(payload.type)
       ? (objectiveReady(payload) && !answerIssues ? 'objective-complete' : 'objective-incomplete')
       : 'descriptive';

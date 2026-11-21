@@ -3874,6 +3874,13 @@ svg {
 .bank-review-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .bank-review-filters .admin-actions { grid-column: 1 / -1; }
 .bank-review-key, .bank-question-review code { overflow-wrap: anywhere; }
+.worked-solution-figure { margin: 1rem 0; }
+.worked-solution-figure > div { position: relative; display: inline-block; max-width: 100%; }
+.worked-solution-figure img { display: block; max-width: 100%; height: auto; }
+.worked-solution-figure svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.worked-solution-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.worked-solution [aria-current="step"] { font-weight: 700; }
+.worked-solution-text { white-space: pre-line; }
 .bank-review-browser .admin-list button { display: block; margin-top: 1rem; }
 .bank-question-review { min-width: 0; padding: 1.25rem; margin-block: 2rem; border: 1px solid var(--line); background: var(--paper); }
 .bank-question-review .admin-actions { align-items: start; }

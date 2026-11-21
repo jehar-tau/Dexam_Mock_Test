@@ -199,10 +199,23 @@ class ExportTest(unittest.TestCase):
         with self.assertRaisesRegex(solutions.SolutionError, "figures differ"):
             self.export(fingerprint, replace_expected="b" * 64)
 
-    def test_unsupported_overlay_cannot_silently_disappear_from_the_export(self):
+    def test_overlay_is_bound_to_the_reviewed_png_and_preserves_each_step(self):
+        self.fictional_block()
         self.draft = copy.deepcopy(NAT)
         self.save_draft()
-        with self.assertRaisesRegex(solutions.SolutionError, "without SVG overlays"):
+        self.export(self.approve())
+        worked = self.payload["workedSolution"]
+        self.assertEqual(self.payload["assets"][0]["sha256"], worked["figure"]["sha256"])
+        self.assertEqual("rect", worked["steps"][0]["shapes"][0]["tag"])
+        self.assertEqual("12", worked["steps"][1]["shapes"][0]["text"])
+        self.assertIn("3 × 4 = 12", self.payload["explanation"])
+
+    def test_worked_packet_refuses_unrendered_overlay_content(self):
+        self.fictional_block()
+        self.draft = copy.deepcopy(NAT)
+        self.draft["overlay"]["steps"]["total"] = '<text x="4"><tspan>12</tspan></text>'
+        self.save_draft()
+        with self.assertRaisesRegex(solutions.SolutionError, "shape groups and short SVG labels"):
             self.export(self.approve())
 
     def test_incomplete_objective_result_is_a_refusal(self):

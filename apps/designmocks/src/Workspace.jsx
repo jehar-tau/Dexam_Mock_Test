@@ -17,6 +17,8 @@ import { createAttemptAnswerJournal, pruneDeviceAnswers } from "./attempt-answer
 import { AttemptInsights } from "./AttemptInsights.jsx";
 import { ExamPartTransition, ExamSessionReport } from "./ExamPartTransition.jsx";
 import { answerAlternativesLabel } from "./answer-key.js";
+import { WorkedSolution } from "./WorkedSolution.jsx";
+import { hasWorkedExplanation, readWorkedExplanation, workedFigureIndex } from "./worked-solution.js";
 
 function SignInGate() {
   return (
@@ -455,7 +457,10 @@ if(postLaunchPreview){
     if (confirm && !dialog.current?.open) dialog.current?.showModal();
   }, [confirm]);
   useEffect(() => {
-    if (attempt?.status !== "active" || !attempt.questions.some(item => item.media?.length)) return;
+    const activeWithMedia = attempt?.status === "active" && attempt.questions.some(item => item.media?.length);
+    const releasedWithSolution = attempt?.status === "submitted" && !attempt.resultsPending && !attempt.examResultsPending
+      && review && attempt.questions.some(item => item.media?.length && hasWorkedExplanation(item.explanation));
+    if (!activeWithMedia && !releasedWithSolution) return;
     const request = new AbortController();
     const stillOpen = () => !request.signal.aborted && current();
     const fail = () => { if (stillOpen()) setMediaStatus("failed"); };
@@ -467,7 +472,7 @@ if(postLaunchPreview){
         setMediaStatus("loaded");
       }, fail);
     return () => request.abort();
-  }, [attempt?.id, attempt?.status, mediaRetry, services]);
+  }, [attempt?.id, attempt?.status, attempt?.resultsPending, attempt?.examResultsPending, mediaRetry, review, services]);
   const retryFigures = () => {
     questionHeading.current?.focus();
     setMedia({});
@@ -673,6 +678,8 @@ if(postLaunchPreview){
           <div className="answer-review">
             {attempt.questions.map((item, i) => {
               const alternatives = answerAlternativesLabel(item.correctKey);
+              const { explanation, solution } = readWorkedExplanation(attempt, item);
+              const figureIndex = solution ? workedFigureIndex(item.media, solution.figure) : -1;
               return (
                 <article key={item.id}>
                   <span className="eyebrow">
@@ -691,7 +698,9 @@ if(postLaunchPreview){
                       : (item.answer ?? "Not answered")}
                   </p>
                   {alternatives && <p><strong>Accepted answers</strong> {alternatives}</p>}
-                  <p>{item.explanation}</p>
+                  {solution ? <WorkedSolution solution={solution} explanation={explanation}
+                    figureUrl={media[item.id]?.[figureIndex]?.url} mediaStatus={mediaStatus} onRetry={retryFigures} />
+                    : <p className="worked-solution-text">{explanation}</p>}
                   {item.kind === "drawing" && <DrawingReviewStatus review={item.drawingReview} />}
                 </article>
               );

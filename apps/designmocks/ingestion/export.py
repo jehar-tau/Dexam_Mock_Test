@@ -10,14 +10,20 @@ import subprocess
 import sys
 import tempfile
 import uuid
+import xml.etree.ElementTree as ET
 
-from solutions import QUESTION_KEY, SolutionError, collect, load, sha256
+from solutions import QUESTION_KEY, SVG_NS, SolutionError, collect, load, sha256
 
 
 REPO = pathlib.Path(__file__).resolve().parents[3]
 BANK_PATH = "server/data/exports/dexam-bank-export.json"
 PREPARE = "apps/designmocks/scripts/prepare-question-bank-addition.mjs"
 DIGEST = re.compile(r"[0-9a-f]{64}")
+SHAPES = {"circle", "ellipse", "rect", "line", "polyline", "polygon", "path", "text", "g"}
+ATTRIBUTES = {"cx", "cy", "r", "rx", "ry", "x", "y", "x1", "y1", "x2", "y2", "width", "height",
+              "points", "d", "fill", "fill-opacity", "stroke", "stroke-width", "stroke-dasharray",
+              "stroke-linecap", "stroke-linejoin", "opacity", "font-size", "font-weight", "text-anchor", "transform"}
+SVG_VALUE = re.compile(r"[-#%.,()0-9A-Za-z \t]{1,1200}")
 
 
 def read_bank(repo, expected_source):
@@ -62,8 +68,6 @@ def paper_evidence(base, paper_id, approval):
 
 
 def worked_explanation(draft):
-    if draft.get("overlay"):
-        raise SolutionError("This dry run supports explanations that can be read without SVG overlays")
     parts = [draft["keyIdea"].strip()]
     parts.extend(f"{index}. {step['text'].strip()}" for index, step in enumerate(draft["steps"], 1))
     for option in draft.get("optionCheck", []):
@@ -76,6 +80,52 @@ def worked_explanation(draft):
     if len(explanation) > 8000:
         raise SolutionError("The worked explanation exceeds the bank's 8,000-character limit")
     return explanation
+
+
+def shape_nodes(fragment, budget):
+    root = ET.fromstring(f'<g xmlns="{SVG_NS}">{fragment}</g>')
+
+    def convert(node, depth):
+        tag = node.tag.removeprefix(f"{{{SVG_NS}}}")
+        budget[0] -= 1
+        if (tag not in SHAPES or depth > 4 or budget[0] < 0
+                or any(name not in ATTRIBUTES or not SVG_VALUE.fullmatch(value) or "url" in value.lower()
+                       for name, value in node.attrib.items())
+                or (node.tail or "").strip()):
+            raise SolutionError("The solution overlay uses unsupported drawing markup")
+        label = (node.text or "").strip()
+        if (label and tag != "text") or len(label) > 160 or (len(node) and tag != "g"):
+            raise SolutionError("Use shape groups and short SVG labels in solution overlays")
+        return {"tag": tag, "attrs": node.attrib,
+                **({"text": label} if label else {}),
+                **({"children": [convert(child, depth + 1) for child in node]} if len(node) else {})}
+
+    if (root.text or "").strip():
+        raise SolutionError("Place overlay labels inside SVG text elements")
+    return [convert(node, 1) for node in root]
+
+
+def visual_solution(draft, image_record):
+    overlay = draft.get("overlay")
+    if not overlay:
+        return None, None
+    figure = next(f["canonical"] for f in image_record["figures"] if f["id"] == overlay["figure"])
+    referenced = {step["overlay"] for step in draft["steps"] if step.get("overlay")}
+    if referenced != set(overlay["steps"]) or not referenced:
+        raise SolutionError("Each solution overlay must correspond to a worked step")
+    budget = [96]
+    layers = {name: shape_nodes(fragment, budget) for name, fragment in overlay["steps"].items()}
+    solution = {
+        "version": 1, "figure": {name: figure[name] for name in ("sha256", "width", "height")},
+        "keyIdea": draft["keyIdea"], "steps": [
+            {"text": step["text"], "shapes": layers.pop(step.get("overlay"), [])} for step in draft["steps"]
+        ],
+    }
+    if not any(step["shapes"] for step in solution["steps"]):
+        raise SolutionError("Add a visible shape to at least one worked step")
+    if len(json.dumps(solution, ensure_ascii=False).encode()) > 32000:
+        raise SolutionError("The worked solution overlay exceeds the delivery size limit")
+    return solution, figure
 
 
 def question_options(question):
@@ -175,6 +225,7 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
 
     solution = json.loads(drafts[key])
     explanation = worked_explanation(solution)
+    worked_solution, overlay_figure = visual_solution(solution, image_record)
     options = question_options(question)
     external_key = f"{paper_id}-{key}"
     provenance = {
@@ -197,7 +248,10 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
         assets = current.get("assets", [])
         if visual and not assets:
             raise SolutionError("Existing canonical figures are required for a visual correction")
+        if overlay_figure and not any(asset["sha256"] == overlay_figure["sha256"] for asset in assets):
+            raise SolutionError("The correction's overlay must match an existing canonical figure")
         payload = {**current, "answer": answer, "explanation": explanation, "solutionReview": evidence}
+        payload.pop("workedSolution", None)
     else:
         if current is not None or any(same_position(item, provenance) for item in bank["questions"]):
             raise SolutionError("This question already exists. Use the exact-version correction path")
@@ -208,6 +262,9 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
                 raise SolutionError("The reviewed source block is required for a visual question")
             assets.append({"role": "figure", "review": "approved", "path": f"ingestion/{external_key}.png",
                            **{field: block[field] for field in ("sha256", "width", "height")}})
+            if overlay_figure and overlay_figure["sha256"] != block["sha256"]:
+                assets.append({"role": "figure", "review": "approved", "path": f"ingestion/{external_key}-solution-figure.png",
+                               **{field: overlay_figure[field] for field in ("sha256", "width", "height")}})
         payload = {
             "externalKey": external_key, "type": question["type"], "prompt": question["prompt"], "options": options,
             "assets": assets, "answer": answer, "explanation": explanation, "solutionReview": evidence,
@@ -216,6 +273,8 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
             "display": "block" if assets else "text", "sourceKind": "official", "licence": "official-unlicensed",
             "holds": [], "provenance": provenance,
         }
+    if worked_solution:
+        payload["workedSolution"] = worked_solution
 
     payload_text = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
     payload_hash = sha256(payload_text.encode("utf-8"))
