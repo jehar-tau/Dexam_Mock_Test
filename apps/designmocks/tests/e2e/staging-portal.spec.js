@@ -104,7 +104,7 @@ test("approved staging sessions can enter the workspace with checkout and draft 
   await page.goto("/account");
   await page.getByRole("link", { name: "Open staging workspace" }).click();
   await expect(page.getByRole("heading", { name: /Welcome to your next attempt/ })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Not active" })).toBeVisible();
+  await expect(page.getByText("Not active", { exact: true })).toBeVisible();
   expect(calls.filter(([name]) => name === "can_enter_staging_portal").length).toBeGreaterThanOrEqual(2);
 
   const menu = page.getByRole("button", { name: "Student menu" });

@@ -1,9 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {allowPostLaunchPreview,launchNavigation,deferredModules,releasedModules} from '../src/launch-scope.mjs';
+import {allowPostLaunchPreview,launchNavigation,deferredModules,releasedModules,releasedStudentModules,studentNavigation} from '../src/launch-scope.mjs';
 test('production cannot opt into deferred modules and nonproduction needs explicit opt-in',()=>{
  for(const deployment of['production',undefined,'unknown'])for(const value of[true,false,undefined])assert.equal(allowPostLaunchPreview(deployment,value),false);
  for(const deployment of['development','staging','test']){assert.equal(allowPostLaunchPreview(deployment,true),true);for(const value of[false,undefined,'true',1])assert.equal(allowPostLaunchPreview(deployment,value),false);}
+});
+test('student modules open only from an exact, explicit release list',()=>{
+ assert.deepEqual(releasedStudentModules(undefined),[]);
+ assert.deepEqual(releasedStudentModules('all-india,practice'),['all-india','practice']);
+ for(const invalid of['all-india,unknown','all-india,all-india','all-india,','admin','learn'])assert.deepEqual(releasedStudentModules(invalid),[]);
+ assert.deepEqual(studentNavigation([]).map(item=>item.label),['Overview','Released papers','Learn']);
+ assert.deepEqual(studentNavigation(['mocks','all-india','practice','community']).map(item=>item.label),
+  ['Overview','Exam-wise mocks','All India mocks','Topic practice','Learn','Community']);
 });
 test('the MVP navigation offers owned progress, released papers and Learn',()=>{
  assert.deepEqual(launchNavigation.map(item=>item.to),['/dashboard','/dashboard/mocks','/dashboard/learn']);

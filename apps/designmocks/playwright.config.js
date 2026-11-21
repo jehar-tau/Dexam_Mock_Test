@@ -8,11 +8,15 @@ const fixtureNotices = readPublishedNotices(noticeFile, { allowFixture: true });
 const scope=process.env.DMOCKS_E2E_SCOPE??'mvp';
 if(!['mvp','full'].includes(scope))throw new Error('Choose the mvp or full browser scope.');
 const fallbackRunner = process.env.DMOCKS_E2E_FALLBACK_RUNNER === '1';
-const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','staging-portal.spec.js','staging-paid-pilot.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','admin-access-lifecycle.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','drawing-reviewer.spec.js','drawing-reviewer-lifecycle.spec.js','drawing-inspection.spec.js','drawing-upload-validation.spec.js','intake-canonical.spec.js','ai-draft-canonical.spec.js'];
+const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','staging-portal.spec.js','staging-review.spec.js','staging-paid-pilot.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','admin-access-lifecycle.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','drawing-reviewer.spec.js','drawing-reviewer-lifecycle.spec.js','drawing-inspection.spec.js','drawing-upload-validation.spec.js','intake-canonical.spec.js','ai-draft-canonical.spec.js'];
 export default defineConfig({
   testMatch: scope === 'full' ? '**/*.spec.js' : [
     ...mvpFiles.map(file => '**/' + file),
+    '**/student-release-modules.spec.js',
+    '**/overview-desk.spec.js',
     '**/all-india-ranking-consent.spec.js',
+    '**/all-india-event-boundary.spec.js',
+    '**/practice-events-preview.spec.js',
     '**/learn-programme.spec.js',
     '**/learn-lifecycle.spec.js',
     '**/learn-practice-context.spec.js',
@@ -33,6 +37,27 @@ export default defineConfig({
     { name: "mobile-chromium", use: { ...devices["Pixel 7"] } },
   ],
   webServer: [
+    {
+      command:"npm exec -- vite --host 127.0.0.1 --port 4788 --strictPort",
+      url:"http://127.0.0.1:4788",
+      env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_RELEASED_STUDENT_MODULES:"all-india,practice",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"false",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:"fictional-portal-fixture"},
+      reuseExistingServer:false,timeout:60000,
+    },
+    {
+      command: "npm run build:staging -- --outDir test-results/staging-review && npm exec -- vite preview --mode staging --outDir test-results/staging-review --host 127.0.0.1 --port 4789 --strictPort",
+      url: "http://127.0.0.1:4789",
+      env: {
+        VITE_DEPLOYMENT_ENV: "staging",
+        VITE_STAGING_REVIEW_PREVIEW: "true",
+        VITE_POST_LAUNCH_PREVIEW: "false",
+        VITE_TEST_LOGIN_ENABLED: "false",
+        VITE_PORTAL_ENABLED: "false",
+        VITE_STAGING_PORTAL_ENABLED: "false",
+        VITE_CHECKOUT_ENABLED: "false",
+      },
+      reuseExistingServer: false,
+      timeout: 60_000,
+    },
     {
       command:"npm exec -- vite --host 127.0.0.1 --port 4999 --strictPort",
       url:"http://127.0.0.1:4999",

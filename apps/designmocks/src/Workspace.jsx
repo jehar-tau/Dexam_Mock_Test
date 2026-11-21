@@ -11,12 +11,11 @@ import { QuestionReport } from "./QuestionReport.jsx";
 import { DrawingUploads, DrawingUploadWindow } from "./DrawingUploads.jsx";
 import { AttemptAccessBoundary } from "./AttemptAccess.jsx";
 import { drawingMediaError } from "./drawing-upload.js";
-import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 import { createAnswerSyncQueue, validAttemptAnswer } from "./attempt-sync.js";
 import { createAttemptAnswerJournal, pruneDeviceAnswers } from "./attempt-answer-journal.js";
-import { AttemptInsights } from "./AttemptInsights.jsx";
+import { AttemptInsights, AnswerReview } from "./AttemptInsights.jsx";
 import { ExamPartTransition, ExamSessionReport } from "./ExamPartTransition.jsx";
-import { answerAlternativesLabel } from "./answer-key.js";
+import { PaperFigures, PaperNavigation, paperSections } from "./PaperNavigation.jsx";
 
 function SignInGate() {
   return (
@@ -72,7 +71,7 @@ function WorkspaceSession({headingRef,catalogueOnly=false}) {
   return <WorkspaceView heading={false} embedded catalogueOnly={catalogueOnly} data={data} papers={papers} error={error} busy={busy} loading={loading} unconfirmed={unconfirmed} onStart={start}
     onRefresh={()=>{headingRef.current?.focus();void load();}}/>;
 }
-export function WorkspaceHeading({headingRef,catalogueOnly=false}){return<><span className="eyebrow">YOUR PRACTICE SPACE</span><h1 ref={headingRef} tabIndex={-1}>{catalogueOnly?<>Choose your<br/><em>released paper.</em></>:<>Welcome to your<br/> next <em>attempt.</em></>}</h1></>;}
+export function WorkspaceHeading({headingRef,catalogueOnly=false}){return<><span className="eyebrow">STUDENT DESK / OVERVIEW</span><h1 ref={headingRef} tabIndex={-1}>{catalogueOnly?"Released papers":"Welcome to your next attempt."}</h1></>;}
 export function Workspace({catalogueOnly=false}){
   const{session,loading}=useAuthState(),location=useLocation(),heading=useRef(null),scopeKey=(session?.user.id??'signed-out')+':'+location.key,previous=useRef(scopeKey);
   useLayoutEffect(()=>{if(previous.current!==scopeKey&&(document.activeElement===document.body||heading.current?.parentElement.contains(document.activeElement)))heading.current?.focus();previous.current=scopeKey;},[scopeKey]);
@@ -96,10 +95,12 @@ export function WorkspaceView({
   passLabel = "YOUR PASS",
   practiceHref = "/dashboard/practice",
   allIndiaHref = "/dashboard/all-india",
+  examHref = "/dashboard/mocks",
+  preview = false,
   heading = true,embedded = false,onRefresh,unconfirmed = false,catalogueOnly = false,
 }) {
   return (
-    <section className={embedded?"workspace-content":"wrap section workspace"}>
+    <section className={(embedded?"workspace-content":"wrap section workspace")+(catalogueOnly?" workspace-catalogue":" overview-desk")}>
       {heading&&<WorkspaceHeading/>}
       {(loading || (!data && !error)) && (
         <p role="status">Loading your workspace…</p>
@@ -109,41 +110,25 @@ export function WorkspaceView({
           {error}
         </p>
       )}
-      {onRefresh&&<button type="button" className="button quiet" disabled={Boolean(busy)||loading} onClick={onRefresh}>{catalogueOnly?"Refresh papers":"Refresh workspace"}</button>}
+      {onRefresh&&<button type="button" className="button quiet overview-refresh" disabled={Boolean(busy)||loading} onClick={onRefresh}>{catalogueOnly?"Refresh papers":"Refresh workspace"}</button>}
       {data && (
         <>
           {!catalogueOnly && <>
-          <div className="dashboard-stats">
-            <article>
-              <span>{passLabel}</span>
-              <h2>{data.access?.active ? "Active" : "Not active"}</h2>
-              {data.access?.active ? (
-                <p>
-                  Until{" "}
-                  {new Date(data.access.expiresAt).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </p>
-              ) : (
-                <Link to="/plans">View the annual pass →</Link>
-              )}
-            </article>
-            <article>
-              <span>COMPLETED ATTEMPTS</span>
-              <h2>{data.analytics?.completed ?? 0}</h2>
-              <p>Submitted and safely stored.</p>
-            </article>
-            <article>
-              <span>YOUR NEXT STEP</span>
-              <h2>{data.analytics?.recommendedTopic?.topic ?? "Begin."}</h2>
-              {postLaunchPreview&&data.analytics?.recommendedTopic ? (
-                <Link to={practiceHref}>Practise the recommended topic →</Link>
-              ) : (
-                <a href="#your-papers">Choose a released paper →</a>
-              )}
-            </article>
+          <div className="overview-banner">
+            <div><span className="overview-kicker">YOUR NEXT SESSION</span><h2>{data.analytics?.activeAttempt ? "A paper is in progress" : "Ready when you are"}</h2><p>{data.analytics?.activeAttempt ? "Your saved answers are waiting. The original deadline still applies." : "Choose an exam paper or build a focused practice session."}</p></div>
+            <Link className="overview-primary-link" to={data.analytics?.activeAttempt ? attemptHref(data.analytics.activeAttempt.id) : examHref}>{data.analytics?.activeAttempt ? "Resume paper" : "Explore exam papers"}<Arrow size={18}/></Link>
+          </div>
+          <div className="overview-metrics" aria-label="Your progress at a glance">
+            <article><span>COMPLETED PAPERS</span><strong>{data.analytics?.completed ?? 0}</strong><small>Submitted attempts</small></article>
+            <article><span>OBJECTIVE ACCURACY</span><strong>{data.analytics?.objectiveAccuracy == null ? "—" : `${data.analytics.objectiveAccuracy}%`}</strong><small>{data.analytics?.objectiveAccuracy == null ? "After a released result" : `From ${data.analytics.objectiveAnswered} answered questions`}</small></article>
+            <article><span>{passLabel}</span><strong>{data.access?.active ? "Active" : "Not active"}</strong><small>{data.access?.active ? `Until ${new Date(data.access.expiresAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}` : <Link to="/plans">View the annual pass →</Link>}</small></article>
+            <article><span>RESULTS IN REVIEW</span><strong>{data.analytics?.waitingForResults ?? 0}</strong><small>Released after review</small></article>
+          </div>
+          <div className="overview-section-head"><div><span className="overview-kicker">CHOOSE YOUR PATH</span><h2>What would you like to work on?</h2></div></div>
+          <div className="overview-paths">
+            <Link to={examHref}><span className="overview-path-icon">01</span><span><b>Exam-wise mocks</b><small>Choose NID, NIFT, UCEED or CEED and open a released paper.</small></span><Arrow size={18}/></Link>
+            <Link to={allIndiaHref}><span className="overview-path-icon">02</span><span><b>All India mocks</b><small>One common paper, one attempt, results after the review window.</small></span><Arrow size={18}/></Link>
+            <Link to={practiceHref}><span className="overview-path-icon">03</span><span><b>Topic-wise practice</b><small>Build a short session around the skills you want to improve.</small></span><Arrow size={18}/></Link>
           </div>
           </>}
           {data.analytics?.activeAttempt && (
@@ -155,15 +140,14 @@ export function WorkspaceView({
               </Link>
             </div>
           )}
-          {!catalogueOnly && data.analytics?.waitingForResults > 0 && <p className="notice" role="status">
+          {!catalogueOnly && data.analytics?.waitingForResults > 0 && <p className="notice overview-pending" role="status">
             {data.analytics.waitingForResults === 1 ? "1 submitted attempt is awaiting results." :
               `${data.analytics.waitingForResults} submitted attempts are awaiting results.`}
           </p>}
           {!catalogueOnly && (data.analytics?.exams?.length > 0 || data.analytics?.objectiveAccuracy != null || data.analytics?.drawingReviews?.pending > 0 ||
             data.analytics?.drawingReviews?.released > 0) && (
             <>
-              <h2>Your performance snapshot.</h2>
-              <p>{postLaunchPreview?"Exam averages use released whole tests, including drawing marks.":"Averages use your released objective papers."}</p>
+              <div className="overview-section-head"><div><span className="overview-kicker">AFTER RESULTS RELEASE</span><h2>Performance snapshot</h2></div><p>{postLaunchPreview?"Exam averages use released whole tests, including drawing marks.":"Averages use your released objective papers."}</p></div>
               <div className="dashboard-stats analytics-snapshot" aria-label="Performance snapshot">
                 {data.analytics.objectiveAccuracy != null && <article>
                   <span>OBJECTIVE ACCURACY</span>
@@ -190,7 +174,7 @@ export function WorkspaceView({
           )}
           {!catalogueOnly && data.analytics?.topics?.length > 0 && (
             <>
-              <h2>Your topic picture.</h2>
+              <div className="overview-section-head"><div><span className="overview-kicker">SKILLS</span><h2>Your topic picture</h2></div>{data.analytics?.recommendedTopic&&<Link to={practiceHref}>Practise the recommended topic →</Link>}</div>
               <div className="dashboard-stats">
                 {data.analytics.topics.slice(0, 3).map((topic) => (
                   <article key={topic.topic}>
@@ -206,7 +190,7 @@ export function WorkspaceView({
             </>
           )}
           {catalogueOnly && !data.access?.active && <p className="notice">An active pass is needed to start a released paper. <Link to="/plans">View the annual pass →</Link></p>}
-          <h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2>
+          <div className="overview-section-head"><div><span className="overview-kicker">{catalogueOnly?"PAPER CATALOGUE":"EXAM PAPERS"}</span><h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2></div>{!catalogueOnly&&<Link to={examHref}>View exam-wise mocks →</Link>}</div>
           {papers.length ? (
             <div className="paper-list">
               {papers.map((p) => (
@@ -228,12 +212,12 @@ export function WorkspaceView({
               ))}
             </div>
           ) : (
-            <div className="notice">
-              No papers have been released yet. They’ll appear here after the
-              reviewed bank is imported and published.
+            <div className="overview-empty-papers">
+              <div><span className="overview-kicker">RELEASE STATUS</span><h3>No papers have been released yet</h3><p>Reviewed papers will appear here when they are published.</p></div>
+              {preview&&<Link className="overview-secondary-link" to={attemptHref("example-paper")}>Try an example paper <Arrow size={17}/></Link>}
             </div>
           )}
-          {!catalogueOnly && <><h2>Your recent attempts.</h2>
+          {!catalogueOnly && <><div className="overview-section-head"><div><span className="overview-kicker">YOUR RECORD</span><h2>Your recent attempts.</h2></div></div>
           {data.attempts.length ? (
             data.attempts.map((a) => (
               <article className="history-row" key={a.id}>
@@ -290,11 +274,10 @@ export function Attempt() {
   if(!session&&!loading)return <SignInGate/>;
   if(loading)return <section className="wrap page-intro"><p role="status">Checking your account…</p></section>;
   return <AttemptAccessBoundary key={`${session.user.id}:${id}:${location.key}:${location.search}`} actorId={session.user.id}>
-    {services=><AttemptSession actorId={session.user.id} services={services}/>}
+    {services=><AttemptSession id={id} actorId={session.user.id} services={services}/>}
   </AttemptAccessBoundary>;
 }
-function AttemptSession({actorId,services}) {
-  const { id } = useParams();
+export function AttemptSession({actorId, services, id, workspaceHref = "/dashboard", practicePath, demo = false, onRestart}) {
   const choiceInstructionId = React.useId();
   const rpc=services.rpc,current=services.isCurrent;
   const drawingInvoke=React.useCallback(async(body,signal)=>{
@@ -315,12 +298,14 @@ function AttemptSession({actorId,services}) {
     [reconnects, setReconnects] = useState(0),
     [now, setNow] = useState(Date.now()),
     [review, setReview] = useState(false),
+    [reviewFilter, setReviewFilter] = useState({outcome:"", revision:0}),
     [media, setMedia] = useState({}),
     [mediaStatus, setMediaStatus] = useState("loading"),
     [mediaRetry, setMediaRetry] = useState(0),
     [brokenFigures, setBrokenFigures] = useState({}),
     [examSession, setExamSession] = useState(null),
     [examReport, setExamReport] = useState(null);
+  const reviewHeading = useRef(null);
   const dialog = useRef(),
     questionHeading = useRef(null),
     offset = useRef(0),
@@ -460,7 +445,7 @@ if(postLaunchPreview){
     if (confirm && !dialog.current?.open) dialog.current?.showModal();
   }, [confirm]);
   useEffect(() => {
-    if (attempt?.status !== "active" || !attempt.questions.some(item => item.media?.length)) return;
+    if (!attempt || attempt.resultsPending || attempt.examResultsPending || !attempt.questions.some(item => item.media?.length)) return;
     const request = new AbortController();
     const stillOpen = () => !request.signal.aborted && current();
     const fail = () => { if (stillOpen()) setMediaStatus("failed"); };
@@ -472,7 +457,7 @@ if(postLaunchPreview){
         setMediaStatus("loaded");
       }, fail);
     return () => request.abort();
-  }, [attempt?.id, attempt?.status, mediaRetry, services]);
+  }, [attempt?.id, attempt?.status, attempt?.resultsPending, attempt?.examResultsPending, mediaRetry, services]);
   const retryFigures = () => {
     questionHeading.current?.focus();
     setMedia({});
@@ -480,6 +465,13 @@ if(postLaunchPreview){
     setMediaStatus("loading");
     setMediaRetry(value => value + 1);
   };
+  const figures = item => <PaperFigures question={item} media={media} status={mediaStatus} broken={brokenFigures}
+    onBroken={key => setBrokenFigures(value => ({...value, [key]: true}))} onRetry={retryFigures}/>;
+  const previousIndex = useRef(0);
+  useLayoutEffect(() => {
+    if (index !== previousIndex.current) questionHeading.current?.focus();
+    previousIndex.current = index;
+  }, [index]);
   const left = attempt
     ? Math.max(
         0,
@@ -576,34 +568,24 @@ if(postLaunchPreview){
     const uploadWindow = <DrawingUploadWindow attempt={attempt} serverTime={now + offset.current} invoke={drawingInvoke} />;
     if (attempt.resultsPending) return <PendingAttemptResult title={attempt.title} reviewEndsAt={attempt.reviewEndsAt}>{uploadWindow}</PendingAttemptResult>;
     if (attempt.examResultsPending && examSession?.partAAttemptId === attempt.id) return <section className="wrap section sample-result"><Link className="back-link" to="/dashboard">← Your workspace</Link><h1>Your Part A is <em>locked.</em></h1>{error&&<p className="error" role="alert">{error}</p>}<ExamPartTransition session={examSession} busy={busy} onStart={startPartB}/></section>;
-    const topics = [
-      ...new Set(
-        attempt.questions
-          .filter((item) => item.kind !== "drawing")
-          .map((item) => item.topic),
-      ),
-    ];
     const cohort = attempt.cohortResult;
     return (
-      <section className="wrap section sample-result">
-        <Link className="back-link" to="/dashboard">
-          ← Your workspace
+      <section className="wrap section sample-result analysis-workspace">
+        <Link className="back-link" to={workspaceHref}>
+          ← {demo ? "Your preview workspace" : "Your workspace"}
         </Link>
-        <div className="result-title">
+        <div className="result-title analysis-hero">
           <div>
-            <span className="eyebrow">{attempt.title} / YOUR REPORT</span>
-            <h1>
-              Make this attempt
-              <br /> your next <em>step.</em>
-            </h1>
+            <span className="eyebrow">{attempt.title} / {demo ? "SAMPLE REPORT" : "YOUR REPORT"}</span>
+            <h1>Paper analysis</h1>
             {cohort ? <p>All India rank {cohort.rank}. Objective marks {cohort.objectiveScore}/{cohort.objectiveTotal}.
               {cohort.drawingTotal > 0 && ` Drawing marks ${cohort.drawingScore}/${cohort.drawingTotal}.`}
             </p> : attempt.scoreKind === "drawing" ? <p>
               {attempt.examResultsPending ? "Drawing marks appear after the fixed upload window and teacher review." :
                 "Your drawing marks include released teacher reviews. Missing submissions receive zero marks."}
             </p> : <p>
-              Objective answers are marked with the paper’s reviewed key.
-              {postLaunchPreview?" Drawing is excluded from this score and remains a separate teacher-reviewed submission.":" This report covers the objective paper you submitted."}
+              {demo ? "Sample marks follow the original paper’s answer key." : "Objective answers are marked with the paper’s reviewed key."}
+              {!demo && (postLaunchPreview?" Drawing is excluded from this score and remains a separate teacher-reviewed submission.":" This report covers the objective paper you submitted.")}
             </p>}
           </div>
           <div className="sample-score" role="group" aria-label={cohort ? "All India result" : attempt.scoreKind === "drawing" ? "Drawing result" : "Objective result"}>
@@ -619,53 +601,17 @@ if(postLaunchPreview){
         {error&&<p className="error" role="alert">{error}</p>}
         {uploadWindow}
         {!attempt.examResultsPending && <>
-        <div className="result-grid">
-          <article>
-            <span className="eyebrow">A GLIMPSE OF EACH TOPIC</span>
-            <h2>What you noticed.</h2>
-            {topics.map((topic) => {
-              const items = attempt.questions.filter(
-                (item) =>
-                  item.topic === topic &&
-                  item.kind !== "drawing" &&
-                  item.outcome !== "dropped",
-              );
-              return (
-                <div className="result-topic" key={topic}>
-                  <span>{topic}</span>
-                  <b>
-                    {
-                      items.filter((item) =>
-                        ["correct", "full_marks"].includes(item.outcome),
-                      ).length
-                    }
-                    /{items.length} correct
-                  </b>
-                </div>
-              );
-            })}
-          </article>
-          <article>
-            <span className="eyebrow">A PURPOSE FOR YOUR NEXT SESSION</span>
-            <h2>Look for the pattern.</h2>
-            <p>
-              Choose one topic you found difficult. Review its explanations,
-              solve the questions again without the timer, then compare your
-              approach.
-            </p>
-            <p>
-              Keep a short error notebook: what you missed, why you missed it
-              and what you’ll check next time.
-            </p>
-            <p>This is feedback on this paper, not an admission prediction.</p>
-          </article>
-        </div>
-        <AttemptInsights questions={attempt.questions} />
+        <AttemptInsights questions={attempt.questions} practicePath={practicePath} onReviewOutcome={value => {
+          setReviewFilter(previous => ({outcome:value, revision:previous.revision + 1}));
+          setReview(true);
+          reviewHeading.current?.focus();
+          reviewHeading.current?.scrollIntoView({block:"start"});
+        }} />
         </>}
         <ExamSessionReport report={examReport} />
         <ExamPartTransition session={examSession} busy={busy} onStart={startPartB}/>
-        {!attempt.examResultsPending && <div className="review-toggle">
-          <h2>Explore the explanations.</h2>
+        {!attempt.examResultsPending && <div className="review-toggle analysis-review-heading">
+          <h2 ref={reviewHeading} tabIndex={-1}>Question review</h2>
           <button
             className="text-button"
             aria-expanded={review}
@@ -675,63 +621,24 @@ if(postLaunchPreview){
           </button>
         </div>}
         {!attempt.examResultsPending && review && (
-          <div className="answer-review">
-            {attempt.questions.map((item, i) => {
-              const alternatives = answerAlternativesLabel(item.correctKey);
-              return (
-                <article key={item.id}>
-                  <span className="eyebrow">
-                    QUESTION {i + 1} / {item.topic}
-                  </span>
-                  <h3>{item.prompt}</h3>
-                  <p>
-                    {item.kind === "drawing"
-                      ? "Drawing · separate human review"
-                      : item.outcome.replaceAll("_", " ")}
-                  </p>
-                  <p>
-                    Your answer:{" "}
-                    {Array.isArray(item.answer)
-                      ? item.answer.join(", ")
-                      : (item.answer ?? "Not answered")}
-                  </p>
-                  {alternatives && <p><strong>Accepted answers</strong> {alternatives}</p>}
-                  <p>{item.explanation}</p>
-                  {item.kind === "drawing" && <DrawingReviewStatus review={item.drawingReview} />}
-                </article>
-              );
-            })}
-          </div>
+          <AnswerReview key={reviewFilter.revision} initialOutcome={reviewFilter.outcome} questions={attempt.questions} figures={figures}/>
         )}
+        {onRestart && <button type="button" className="button quiet" onClick={onRestart}>Start a fresh sample paper</button>}
       </section>
     );
   }
   return (
-    <section className="wrap sample-run">
-      <Link className="back-link" to="/dashboard">
+    <section className="wrap sample-run attempt-workspace">
+      <Link className="back-link" to={workspaceHref}>
         ← Your workspace
       </Link>
-      <div className="runner-top">
+      <div className="runner-top attempt-masthead">
         <div>
-          <span className="eyebrow">{/Part B/i.test(attempt.title) ? "PART B" : "PART A"} · TIMED ATTEMPT</span>
+          <span className="eyebrow">{demo ? "ORIGINAL DMOCKS SAMPLE" : "TIMED ATTEMPT"}</span>
           <h1>{attempt.title}</h1>
+          <p className="attempt-summary">{attempt.questions.length} questions <i>·</i> {paperSections(attempt.questions).length} sections</p>
         </div>
-        <div
-          className="timer"
-          role="timer"
-          aria-live="off"
-          aria-label="Time remaining"
-        >
-          <span>
-            {Math.floor(left / 3600)
-              .toString()
-              .padStart(2, "0")}
-            :{Math.floor(left / 60) % 60 < 10 ? "0" : ""}
-            {Math.floor(left / 60) % 60}:
-            {(left % 60).toString().padStart(2, "0")}
-          </span>
-          <small>remaining</small>
-        </div>
+
       </div>
       {error && !confirm && (
         <p className="error" role="alert">
@@ -744,17 +651,12 @@ if(postLaunchPreview){
         </button>
       )}
       {(() => {
-        const sections = [];
-        attempt.questions.forEach((item, i) => {
-          const last = sections[sections.length - 1];
-          if (last && last.kind === item.kind) last.end = i;
-          else sections.push({ kind: item.kind, start: i, end: i });
-        });
+        const sections = paperSections(attempt.questions).map(({kind,indices}) => ({kind, start: indices[0], end: indices.at(-1)}));
         const names = { nat: "Numerical answer (NAT)", msq: "Multiple select (MSQ)", mcq: "Multiple choice (MCQ)", drawing: "Drawing" };
         const here = sections.find((section) => index >= section.start && index <= section.end);
         const sample = attempt.questions[index];
         return (
-          <nav className="exam-sections" aria-label="Sections">
+          <nav className="exam-sections attempt-sections" aria-label="Sections">
             {sections.map((section) => {
               const total = section.end - section.start + 1;
               const done = attempt.questions.slice(section.start, section.end + 1).filter((item) => hasAnswer(answerFor(item))).length;
@@ -771,7 +673,27 @@ if(postLaunchPreview){
           </nav>
         );
       })()}
-      <div className="runner-layout">
+      <div className="attempt-clockbar">
+        <b>Question {index + 1}<small> of {attempt.questions.length}</small></b>
+        <div
+          className="timer"
+          role="timer"
+          aria-live="off"
+          aria-label="Time remaining"
+        >
+          <span>
+            {Math.floor(left / 3600)
+              .toString()
+              .padStart(2, "0")}
+            :{Math.floor(left / 60) % 60 < 10 ? "0" : ""}
+            {Math.floor(left / 60) % 60}:
+            {(left % 60).toString().padStart(2, "0")}
+          </span>
+          <small>remaining</small>
+        </div>
+      <a className="attempt-jump" href="#attempt-navigator" onClick={event => {event.preventDefault(); const nav = document.getElementById("attempt-navigator"); nav?.focus(); nav?.scrollIntoView({block:"start"});}}>Navigator ↓</a>
+      </div>
+      <div className="runner-layout attempt-layout">
         <article className="question-panel">
           <div className="question-meta">
             <span>
@@ -791,25 +713,7 @@ if(postLaunchPreview){
                 : ""}
             </p>
           )}
-          {q.media?.map((image, i) => {
-            const key = `${q.id}:${i}`;
-            const url = media[q.id]?.[i]?.url;
-            if (url && !brokenFigures[key]) return (
-              <figure className="paper-media" key={key}>
-                <img
-                  src={url}
-                  alt={image.alt || "Question figure " + (i + 1)}
-                  onError={() => setBrokenFigures(value => ({...value, [key]: true}))}
-                />
-              </figure>
-            );
-            return mediaStatus === "loading"
-              ? <p role="status" key={key}>Loading question figure…</p>
-              : <div key={key}>
-                  <p role="status">Couldn’t load question figure {i + 1}.</p>
-                  <button className="text-button" type="button" onClick={retryFigures}>Retry figure {i + 1}</button>
-                </div>;
-          })}
+          {figures(q)}
           {["mcq", "msq"].includes(q.kind) ? (
             <div
               className="live-choices"
@@ -895,10 +799,10 @@ if(postLaunchPreview){
           <p className="save-status" role="status">
             {syncState.kind === "saving" ? "Saving…" : syncState.pending
               ? syncState.deviceSaved ? "Answers saved on this device. Waiting to sync." : "Answers waiting to sync. Keep this page open."
-              : "Answers are saved to your account."}
+              : demo ? "Sample answers saved in this tab." : "Answers are saved to your account."}
           </p>
           {syncState.pending > 0 && left > 0 && <button className="text-button" type="button" disabled={busy} onClick={() => answerSync.current.flush()}>Retry waiting answers</button>}
-          <QuestionReport
+          {!demo && <QuestionReport
             key={q.id}
             disabled={busy}
             onSubmit={async({ reason, details }) => {
@@ -910,7 +814,7 @@ if(postLaunchPreview){
                 throw new Error(message);
               }
             }}
-          />
+          />}
           <div className="runner-actions">
             <button
               className="text-button"
@@ -974,58 +878,10 @@ if(postLaunchPreview){
             )}
           </div>
         </article>
-        <aside className="question-palette">
-          <h2>Your questions.</h2>
-          {(() => {
-            const answered = (item) => hasAnswer(answerFor(item));
-            const status = (item, i) => answered(item) ? "answered" : flagged.includes(item.id) ? "flagged" : visited.has(i) ? "unanswered" : "";
-            const groups = [];
-            attempt.questions.forEach((item, i) => {
-              const last = groups[groups.length - 1];
-              if (last && last.kind === item.kind) last.items.push([item, i]);
-              else groups.push({ kind: item.kind, items: [[item, i]] });
-            });
-            const count = (name) => attempt.questions.filter((item, i) => status(item, i) === name).length;
-            return (
-              <>
-                <ul className="palette-legend" aria-label="Question status key">
-                  <li className="answered"><i />{count("answered")} Answered</li>
-                  <li className="unanswered"><i />{count("unanswered")} Not answered</li>
-                  <li className="flagged"><i />{count("flagged")} Marked for review</li>
-                  <li className="fresh"><i />{attempt.questions.length - count("answered") - count("unanswered") - count("flagged")} Not visited</li>
-                </ul>
-                {groups.map((group) => (
-                  <section className="palette-group" key={group.items[0][1]}>
-                    <h3>{group.kind.toUpperCase()}</h3>
-                    <div>
-                      {group.items.map(([item, i]) => (
-                        <button key={item.id} disabled={busy} aria-current={i === index ? "step" : undefined} aria-label={"Go to question " + (i + 1)}
-                          className={status(item, i) + (answerSync.current?.hasPending(item.id) ? " waiting" : "")} onClick={() => move(i)}>
-                          {i + 1}
-                          {flagged.includes(item.id) && <i aria-hidden="true" />}
-                        </button>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </>
-            );
-          })()}
-          <p>
-            {attempt.questions.filter((item) => hasAnswer(answerFor(item))).length}{" "}
-            of {attempt.questions.length} answered
-          </p>
-          <button
-            className="button quiet"
-            disabled={busy || left === 0}
-            onClick={() => setConfirm(true)}
-          >
-            Submit attempt <Arrow />
-          </button>
-          <small>
-            Answers autosave as you work. Reconnect before the server deadline to sync anything waiting on this device.
-          </small>
-        </aside>
+        <PaperNavigation questions={attempt.questions} index={index} answered={item => hasAnswer(answerFor(item))}
+          waiting={item => answerSync.current?.hasPending(item.id)} flagged={flagged} visited={visited}
+          move={move} busy={busy} canSubmit={!busy && left > 0} onSubmit={() => setConfirm(true)}/>
+
       </div>
       {confirm && (
         <dialog

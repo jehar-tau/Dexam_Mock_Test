@@ -1,22 +1,53 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useMemo, useState, useEffect, useRef } from "react";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { PortalShell } from "./PortalShell.jsx";
 import { practicePools, practiceSelection } from "./practice-context.js";
 import { AssessmentCatalogue } from "./AssessmentCatalogue.jsx";
+import { examplePools, TopicPracticeExample } from "./TopicPracticeExamples.jsx";
+import "./practice-events.css";
 
-function TopicPracticeHeading({headingRef}){return<><span className="eyebrow">FOCUSED PRACTICE</span><h1 ref={headingRef} tabIndex={-1}>Build a topic <em>session.</em></h1><p>Choose a reviewed topic and a time limit. New questions come first when available; review questions fill the rest. Your questions stay the same when you reconnect.</p></>;}
-export function TopicPracticeView({ catalog, onStart, initialExam = "", initialTopic = "", heading=true, embedded=false, blocked=false }) {
+const topicName = value => value.replaceAll("-", " ").replace(/^./, letter => letter.toUpperCase());
+
+function TopicPracticeHeading({ headingRef, preview }) {
+  return <header className="topic-heading">
+    <span className="topic-kicker">Topic practice</span>
+    <h1 ref={headingRef} tabIndex={-1}>Build a topic session.</h1>
+    <p>{preview ? "Try a worked example and plan a timed session. The topics and session sizes here are fictional examples."
+      : "Choose an exam, a topic and a time limit for your next practice session."}</p>
+  </header>;
+}
+
+export function TopicPracticeView({ catalog, onStart, initialExam = "", initialTopic = "", heading = true, embedded = false, blocked = false, preview = false, Example }) {
+  const location = useLocation();
+  const topicControl = useRef(null);
   const [initial] = useState(() => practiceSelection(catalog, { exam: initialExam, topic: initialTopic }));
   const [exam, setExam] = useState(initial.exam), [topic, setTopic] = useState(initial.topic);
   const [count, setCount] = useState(10), [duration, setDuration] = useState(900);
   const [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   const [notice, setNotice] = useState(initial.notice);
+  const [search, setSearch] = useState("");
+  const [previewReceipt, setPreviewReceipt] = useState("");
   const exams = useMemo(() => [...new Set(practicePools(catalog).map(item => item.exam))], [catalog]);
   const pools = useMemo(() => practicePools(catalog, count), [catalog, count]);
   const topics = useMemo(() => pools.filter(item => item.exam === exam), [pools, exam]);
   const ready = topics.some(item => item.topic === topic);
   useEffect(() => { if (topic && !ready) setTopic(""); }, [ready, topic]);
 
+  const availableTopics = useMemo(() => practicePools(catalog), [catalog]);
+  const words = search.trim().toLowerCase().split(/\s+/);
+  const matches = availableTopics.filter(item => {
+    const label = `${item.exam} ${topicName(item.topic)}`.toLowerCase();
+    return words.every(word => label.includes(word));
+  });
+
+  const chooseTopic = item => {
+    setExam(item.exam);
+    setTopic(item.topic);
+    topicControl.current?.focus();
+    setNotice("");
+    setMessage("");
+    setPreviewReceipt("");
+  };
   const changeExam = value => {
     setExam(value);
     const requestedTopic = typeof initialTopic === "string" ? initialTopic.trim() : "";
@@ -28,49 +59,90 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
   const submit = async event => {
     event.preventDefault();
     if (busy || blocked || !ready) return;
+    if (preview) {
+      setPreviewReceipt(`Preview created: ${count} ${topic} questions · ${duration / 60} minutes`);
+      return;
+    }
     setBusy(true);
     setMessage("");
     try { await onStart({ exam, topic, count, duration }); }
     catch (error) { setMessage(error.message); }
     finally { setBusy(false); }
   };
-  return <section className={embedded?"catalogue-content":"section portal-module topic-practice"}>
-    {heading&&<TopicPracticeHeading/>}
+  return <section className={embedded ? "catalogue-content topic-content" : "section portal-module topic-practice"}>
+    {heading && <TopicPracticeHeading preview={preview} />}
     {notice && <p className="notice" role="status">{notice}</p>}
-    {exams.length ? <form className="practice-builder" aria-busy={busy} onSubmit={submit}>
-      <label>Exam<select value={exam} required disabled={busy||blocked} onChange={event => changeExam(event.target.value)}>
-        {!exam && <option value="">Choose an exam</option>}
-        {exams.map(value => <option key={value} value={value}>{value.toUpperCase()}</option>)}
-      </select></label>
-      <label>Questions<select value={count} disabled={busy||blocked} onChange={event => setCount(Number(event.target.value))}>
-        {[10, 20, 30].map(value => <option key={value}>{value}</option>)}
-      </select></label>
-      <label>Time<select value={duration} disabled={busy||blocked} onChange={event => setDuration(Number(event.target.value))}>
-        {[[900, "15 minutes"], [1800, "30 minutes"], [2700, "45 minutes"]].map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-      </select></label>
-      <label>Topic<select value={ready ? topic : ""} required disabled={busy||blocked} onChange={event => { setTopic(event.target.value); setNotice(""); setMessage(""); }}>
-        {!ready && <option value="">{topics.length ? "Choose a topic" : "No ready topics for this selection"}</option>}
-        {topics.map(item => <option key={item.topic} value={item.topic}>{item.topic.replaceAll("-", " ")} · {item.questions} ready</option>)}
-      </select></label>
-      <button className="button" disabled={busy || blocked || !ready}>{busy ? "Creating…" : "Start practice"}</button>
-    </form> : <div className="notice">No topic pools have completed bank import, rights review and owner approval yet.</div>}
-    {message && <p className="error" role="alert">{message}</p>}
+    {exams.length ? <div className="topic-layout">
+      <form className="topic-builder" aria-busy={busy} onSubmit={submit} onChange={() => setPreviewReceipt("")}>
+        <h2>Session settings</h2>
+        <div className="topic-fields">
+          <label>Exam<select value={exam} required disabled={busy || blocked} onChange={event => changeExam(event.target.value)}>
+            {!exam && <option value="">Choose an exam</option>}
+            {exams.map(value => <option key={value} value={value}>{value.toUpperCase()}</option>)}
+          </select></label>
+          <label>Topic<select ref={topicControl} value={ready ? topic : ""} required disabled={busy || blocked} onChange={event => { setTopic(event.target.value); setNotice(""); setMessage(""); }}>
+            {!ready && <option value="">{topics.length ? "Choose a topic" : "No topics for this size"}</option>}
+            {topics.map(item => <option key={item.topic} value={item.topic}>{topicName(item.topic)}{preview ? "" : ` · ${item.questions} ready`}</option>)}
+          </select></label>
+          <label>Questions<select value={count} disabled={busy || blocked} onChange={event => setCount(Number(event.target.value))}>
+            {[10, 20, 30].map(value => <option key={value} value={value}>{value} questions</option>)}
+          </select></label>
+          <label>Time<select value={duration} disabled={busy || blocked} onChange={event => setDuration(Number(event.target.value))}>
+            {[900, 1800, 2700].map(value => <option key={value} value={value}>{value / 60} minutes</option>)}
+          </select></label>
+        </div>
+        <div className="topic-start">
+          <button className="button" disabled={busy || blocked || !ready}>{busy ? "Creating…" : "Start practice"}</button>
+          {preview && <span>Preview only · no timer starts</span>}
+        </div>
+        {previewReceipt && <p className="topic-receipt" role="status">{previewReceipt}</p>}
+        {message && <p className="error" role="alert">{message}</p>}
+      </form>
+      {Example && <Example key={topic} topic={ready ? topic : ""} />}
+      {!preview && <aside className="topic-brief"><h2>Your session</h2>
+        <dl><div><dt>Focus</dt><dd>{ready ? `${exam.toUpperCase()} · ${topicName(topic)}` : "Choose a topic"}</dd></div>
+          <div><dt>Average pace</dt><dd>{Math.round(duration / count)} seconds per question</dd></div></dl>
+      </aside>}
+    </div> : <div className="notice">There are no practice topics available yet.</div>}
+    {availableTopics.length > 1 && <section className="topic-browser" aria-label="Practice catalogue">
+      <div className="topic-browser-bar">
+        <div><h2 id="topic-browse-heading">Browse topics</h2>
+          <p>{preview ? "Example topics across the four exams." : "Choose a topic to use it in your session."}</p></div>
+        <label className="topic-search"><span>Search catalogue</span>
+          <input type="search" value={search} placeholder="Topic or exam" onChange={event => setSearch(event.target.value)} /></label>
+      </div>
+      <ul>{matches.map(item => {
+        const selected = item.exam === exam && item.topic === topic;
+        const tooSmall = item.questions < count;
+        const action = tooSmall ? "Shorter set only" : selected ? "Selected" : "Choose";
+        return <li key={JSON.stringify([item.exam, item.topic])}>
+          <span className="topic-exam-label">{item.exam.toUpperCase()}</span>
+          <span className="topic-list-title">{topicName(item.topic)}</span>
+          {!preview && <span className="topic-reviewed">{item.questions} ready</span>}
+          <button className="topic-choose" type="button" aria-pressed={selected} disabled={busy || blocked || tooSmall}
+            aria-label={`${action} · ${item.exam.toUpperCase()} ${topicName(item.topic)}`}
+            onClick={() => chooseTopic(item)}>{action}</button>
+        </li>;
+      })}</ul>
+      {!matches.length && <p role="status">No topics match “{search}”. Try another topic or exam.</p>}
+    </section>}
+    <section className="topic-notes" aria-label="Session guide">
+      <div><h2>Question selection</h2><p>New questions come first when available; review questions fill the rest.</p></div>
+      <div><h2>Returning to practice</h2><p>Your questions stay the same if you disconnect and reopen your session.</p></div>
+    </section>
+    <Link className="topic-workspace-link" to={preview ? location.pathname.replace(/topic-practice/, "portal") : "/dashboard"}>View your workspace and attempts →</Link>
   </section>;
 }
 
 export function TopicPractice() {
   const [params] = useSearchParams();
   const initialExam = params.get("exam") || "", initialTopic = params.get("topic") || "";
-  return <AssessmentCatalogue kind="topic" Heading={TopicPracticeHeading} View={TopicPracticeView} viewProps={{initialExam,initialTopic}}/>;
+  return <AssessmentCatalogue kind="topic" Heading={TopicPracticeHeading} View={TopicPracticeView} viewProps={{ initialExam, initialTopic }} />;
 }
 
 export function TopicPracticePreview() {
-  const [message, setMessage] = useState(""), [params] = useSearchParams();
-  const catalog = [{ exam: "uceed", topic: "observation", questions: 32 }, { exam: "uceed", topic: "spatial-reasoning", questions: 18 },
-    { exam: "nift", topic: "general-aptitude", questions: 71 }];
+  const [params] = useSearchParams();
   const initialExam = params.get("exam") || "", initialTopic = params.get("topic") || "";
-  return <PortalShell><TopicPracticeView key={JSON.stringify([initialExam, initialTopic])} catalog={catalog}
-    initialExam={initialExam} initialTopic={initialTopic}
-    onStart={async value => setMessage(`${value.count} ${value.topic} questions · ${value.duration / 60} minutes`)} />
-    {message && <p className="wrap" role="status">Preview created: {message}</p>}</PortalShell>;
+  return <PortalShell><TopicPracticeView key={JSON.stringify([initialExam, initialTopic])} preview Example={TopicPracticeExample} catalog={examplePools}
+    initialExam={initialExam} initialTopic={initialTopic} /></PortalShell>;
 }

@@ -83,7 +83,7 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
 
   admitted = true;
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Choose your released paper." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Released papers", level: 1, exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Start or resume", exact: true }).click();
   await expect(page).toHaveURL(stage + "/attempt/" + attempt);
   await expect(page.getByText("Original fictional objective question", { exact: true })).toBeVisible();
