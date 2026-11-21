@@ -33,7 +33,7 @@ export function PortalShell({ children }) {
       <nav aria-label="Student workspace">
         {navigation.map(({to, label, mark, end}) => <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}><i aria-hidden="true">{mark}</i><span>{label}</span></NavLink>)}
       </nav>
-      <NavLink className="portal-account-link" to="/account">Account & sign out</NavLink>
+      {!developmentPreviewRoute && <NavLink className="portal-account-link" to="/account">Account & sign out</NavLink>}
     </aside>
     <div className="portal-content">{children}</div>
   </div>;

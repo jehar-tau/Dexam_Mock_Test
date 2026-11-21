@@ -94,6 +94,8 @@ export function WorkspaceView({
   attemptHref = (id) => "/attempt/" + id,
   startLabel = "Start or resume",
   passLabel = "YOUR PASS",
+  practiceHref = "/dashboard/practice",
+  allIndiaHref = "/dashboard/all-india",
   heading = true,embedded = false,onRefresh,unconfirmed = false,
 }) {
   return (
@@ -136,7 +138,7 @@ export function WorkspaceView({
               <span>YOUR NEXT STEP</span>
               <h2>{data.analytics?.recommendedTopic?.topic ?? "Begin."}</h2>
               {postLaunchPreview&&data.analytics?.recommendedTopic ? (
-                <Link to="/dashboard/practice">Practise the recommended topic →</Link>
+                <Link to={practiceHref}>Practise the recommended topic →</Link>
               ) : (
                 <a href="#your-papers">Choose a released paper →</a>
               )}
@@ -176,7 +178,7 @@ export function WorkspaceView({
                     <span>{exam.exam.toUpperCase()} PERFORMANCE</span>
                     <h2>{exam.averagePercent}% average</h2>
                     <p>Best {exam.bestPercent}% across {exam.attempts} released test{exam.attempts === 1 ? "" : "s"}.</p>
-                    {postLaunchPreview && <Link to={`/dashboard/all-india?exam=${exam.exam}`}>
+                    {postLaunchPreview && <Link to={`${allIndiaHref}?exam=${exam.exam}`}>
                       {exam.exam.toUpperCase()} All India results →
                     </Link>}
                   </article>
@@ -195,7 +197,7 @@ export function WorkspaceView({
                     <p>
                       {topic.correct} correct from {topic.answered} answered
                     </p>
-                    {postLaunchPreview&&<Link to="/dashboard/practice">Practise this topic →</Link>}
+                    {postLaunchPreview&&<Link to={practiceHref}>Practise this topic →</Link>}
                   </article>
                 ))}
               </div>
@@ -262,12 +264,12 @@ const hasAnswer = (answer) =>
   Array.isArray(answer)
     ? answer.length > 0
     : answer !== null && answer !== undefined && answer !== "";
-export function PendingAttemptResult({ title, reviewEndsAt, children }) {
+export function PendingAttemptResult({ title, reviewEndsAt, children, allIndiaHref = "/dashboard/all-india", workspaceHref = "/dashboard" }) {
   const releaseDate = reviewEndsAt && !Number.isNaN(Date.parse(reviewEndsAt))
     ? new Date(reviewEndsAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
     : null;
   return <section className="wrap section sample-result">
-    <Link className="back-link" to="/dashboard/all-india">← All India mocks</Link>
+    <Link className="back-link" to={allIndiaHref}>← All India mocks</Link>
     <span className="eyebrow">{title} / SUBMITTED</span>
     <h1>Your work is saved.<br />Results come <em>after review.</em></h1>
     <div className="notice" role="status">
@@ -276,7 +278,7 @@ export function PendingAttemptResult({ title, reviewEndsAt, children }) {
     </div>
     {children}
     <p>You can continue with other practice while you wait. Return to All India mocks to check the release status.</p>
-    <Link className="button" to="/dashboard">Back to your workspace <Arrow /></Link>
+    <Link className="button" to={workspaceHref}>Back to your workspace <Arrow /></Link>
   </section>;
 }
 
