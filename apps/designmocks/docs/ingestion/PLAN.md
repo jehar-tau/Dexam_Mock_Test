@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: plan written 20 November 2026; stages 1–4 built (stages 3 and 4 on 21 November). This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: plan written 20 November 2026; stages 1–4 built; stage 5 tooling built and first solutions drafted (21 November). This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## What the owner asked for
 
@@ -55,7 +55,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
 | 3 | **Figures** | Figure placements → canonical PNG (embedded pixels, or a page render when the page shows something else), a block crop of every question, an SVG trial with metrics and a comparison board | [x] built 21 Nov 2026 |
 | 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `470 to 480`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
-| 5 | Solutions | Question + verified key → draft worked solution (format below); a draft that does not reach the official answer is held | [ ] |
+| 5 | **Solutions** | Question + verified key → draft worked solution (format below); a draft that does not reach the official answer is held. `solutions.py` gives the drafter a brief, validates every draft and renders a review page with step-by-step overlays | [~] tooling built; UCEED 2026 Section 1: 8 of 14 drafted |
 | 6 | Review | Side-by-side review page: source block, extracted text, figures, key, solution; approve/fix per question with exact hashes | [ ] |
 | 7 | Export | Approved questions → export packets for the existing `bank:prepare-addition` path (new papers) or correction packets (existing records) | [ ] |
 | 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [ ] |
@@ -154,6 +154,7 @@ Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
 - 20 Nov 2026: plan written. Pipeline lives in `apps/designmocks/ingestion/` as Python stages with `unittest` tests run by `npm run test:ingestion`. Work folders and real papers stay outside the repo; the tool refuses to write inside a Git worktree.
 - 20 Nov 2026: owner approved D2 (PNG plus verified SVG), D3 (Claude drafts solutions in a local session, human review), D4 (UCEED 2026 re-ingest first) and D5 (all recommended analysis charts). D1, D6 and D7 stand as proposed until the owner says otherwise.
 - 20 Nov 2026: stage 2 built and evaluated on 18 papers (above). OCR results are cached in `<work>/.cache` by page-render digest; the Swift helper is compiled once into `<work>/.tools`.
+- 21 Nov 2026: stage 5 tooling built; first 8 solutions drafted for UCEED 2026 Section 1. Six visual-counting questions left for a person (above).
 - 21 Nov 2026: stage 4 built and run on all 18 keys (above). Owner to confirm the UCEED 2017 q60 correction (bank B, official key D).
 - 21 Nov 2026: stage 3 built. The canonical PNG handles Word crops (clip paths), transparency masks and page text over blank margins without falling back to a page render. Changed two verification rules (see the figure decision): 99th-percentile edge distance, and text inside figures is flagged rather than disqualifying.
 - 20 Nov 2026: figures default to the embedded image's native bytes; SVG only as a verified addition; solution annotations are overlays and do not depend on vectorising.
@@ -233,6 +234,19 @@ How the scanned keys (UCEED 2017, 2018, 2019; CEED 2021) are read safely:
 - OCR skips lone letters. An empty cell is matched against the letters OCR did read on the same scan; it is filled only on a clear match and labelled `letter-match`. All 53 such keys agree with the bank, or belong to questions the bank lacks.
 - A key whose question label OCR missed gets its number from the grid only when the neighbours agree (left and right in a row, above and below in a column, or a whole column numbered in step). It is never extrapolated beyond known rows.
 - If a cell has ink that no OCR line covers, the key is marked `unreadable` and never kept half-read. This rule caught "A B C or B" where the printed key is "ABC or BC".
+
+## Stage 5 first slice (21 November 2026)
+
+UCEED 2026 Section 1 (14 NAT questions). Claude drafted these in this local session, following decision D3. The files are in `05-solutions/` in the private work folder and are not committed.
+
+- **8 drafted, all reaching the official key:** Q1, Q2, Q4, Q5, Q6, Q12, Q13 and Q14. Six have step-by-step overlays drawn in the figure's own pixel coordinates; the rendered page confirms they sit exactly on the figure.
+- **6 not drafted (Q3, Q7, Q8, Q9, Q10, Q11).** Each needs a count or reconstruction I could not verify. Q3 is triangles in a dense line drawing, Q7 letters hidden in a composition, Q8 tracing pencils in a tangle, Q9 judging which kettles are usable, Q10 assembling digit fragments, and Q11 folding cut rings. A solution that only works backwards from the key would not teach anything, so these stay with a person, or wait for better tools (for example, interactive counting aids built on the stage 3 figures).
+- **Lessons:**
+  - Measuring the figure helps where the eye struggles. Q1's 40 crosses were grouped by shape overlap (groups of 14/13/13, within-group difference 2% against 5% between groups) and then checked by eye.
+  - The validator cannot check prose. Reading the review page caught a wrong shortcut in Q2's "Faster" note, so human review stays mandatory before `verified`.
+  - Two validator rules were relaxed after real cases. A numeric answer inside an official range counts (Q14: 476.2 in 470–480). Missing arithmetic is a warning, because some numeric questions ask "which number" (Q5).
+
+Review page: `python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work render uceed-2026` writes `05-solutions/review.html` (light and dark, step scrubber, held and draft badges).
 
 ## Running stages 1 to 4
 
