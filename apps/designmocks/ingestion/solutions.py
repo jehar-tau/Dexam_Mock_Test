@@ -380,10 +380,9 @@ def solution_result(base, paper_id, question, figures, official, solution_bytes)
             "reviewedBy": receipt["reviewer"] if approved else None}
 
 
-def collect(work, paper_id):
+def collect(work, paper_id, *, write_report=True):
     base, segments, figures, manifest, segment_hash = paper_files(work, paper_id)
     folder = base / STAGE
-    folder.mkdir(exist_ok=True)
     evidence_valid = key_evidence(base, paper_id, manifest, segment_hash)
     results, drafts = {}, {}
     paths = [p for p in folder.glob("q*.json") if QUESTION_KEY.fullmatch(p.stem)]
@@ -402,7 +401,9 @@ def collect(work, paper_id):
               "byStatus": {s: sum(1 for r in results.values() if r["status"] == s) for s in ("draft", "verified", "held")},
               "eligibleForExport": [key for key, result in results.items() if result["eligibleForExport"]],
               "results": results}
-    (folder / "check.json").write_text(json.dumps(report, indent=1) + "\n")
+    if write_report:
+        folder.mkdir(exist_ok=True)
+        (folder / "check.json").write_text(json.dumps(report, indent=1) + "\n")
     return report, base, segments, figures, drafts
 
 

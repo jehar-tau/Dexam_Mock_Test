@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: stages 1–4 built, stage 5 drafts and checks worked solutions, and stage 6 records approval for objective solutions with verified official keys. This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records approval for objective solutions with verified official keys, and stage 7 can dry-run one approved item. This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## What the owner asked for
 
@@ -46,7 +46,6 @@ Each stage reads the previous stage's files from a private work folder **outside
   04-key/        key.json (official answers matched to questions, mismatches)
   05-solutions/  <question>.json (draft worked solutions, status)
   06-review/     <question>.json (human approvals with a fingerprint of the evidence)
-  07-export/     export packets for prepare-question-bank-addition
 ```
 
 | # | Stage | Input → output | Status |
@@ -57,7 +56,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `470 to 480`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
 | 5 | **Solutions** | `solutions.py` provides an objective question, figures, key evidence and a structured draft template. Key disagreements are held, while answers proposed without a readable official key stay drafts | [~] tooling built; UCEED 2026 Section 1: 8 of 14 drafted |
 | 6 | Review | The private solution review page shows the source question, key provenance and solution. An operator can approve a solution with a verified official key for the exact reviewed evidence | [~] objective-solution approval built; full ingestion review still open |
-| 7 | Export | Approved questions → export packets for the existing `bank:prepare-addition` path (new papers) or correction packets (existing records) | [ ] |
+| 7 | Export | Approved objective question and solution → temporary packet for the existing `bank:prepare-addition` dry run | [~] individual additions and corrections checked; persistent export still open |
 | 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [ ] |
 
 Stage 1 is deterministic and needs no model. Stages 2–4 are deterministic with optional local OCR. Stage 5 is the only stage that needs a language model (decision D3).
@@ -121,7 +120,23 @@ python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work a
 python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work check uceed-2026
 ```
 
-`check` lists export-eligible solutions only while their approval matches the draft bytes, question, original key evidence and canonical images. Proposed answers remain reviewable drafts and carry no export eligibility. The future stage 7 exporter must recompute this gate before building any packet containing a solution. It also needs to map the solution to the canonical bank's `explanation` field and preserve the original key in `answer`.
+`check` lists export-eligible solutions only while their approval matches the draft bytes, question, original key evidence and canonical images. Proposed answers remain drafts and carry no export eligibility.
+
+## Stage 7 dry run
+
+From the repository root, use the app's installed Node dependencies to check an approved objective question against a pinned canonical bank. Pass the human-reviewed fingerprint and rights note. A correction also needs the current canonical question's content SHA-256 from the bank review workflow.
+
+```sh
+python3 apps/designmocks/ingestion/export.py uceed-2026 q1 \
+  --work ~/dmocks-ingestion-work \
+  --fingerprint "$REVIEWED_FINGERPRINT" \
+  --expect-source "$REVIEWED_ORIGIN_MAIN_SHA" \
+  --rights-note "$REVIEWED_RIGHTS_NOTE"
+```
+
+For a correction, add `--replace-expect "$CURRENT_QUESTION_SHA256"`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The worked explanation uses the current runtime's plain-text format. The dry run refuses flagged segments, questions that need image bytes outside the reviewed set, and solutions that include SVG overlays.
+
+The command reports whether the existing checks accept the proposed addition or correction. It deletes its temporary packet and media copies when it finishes. Persistent export, publication and student-facing overlay rendering remain subsequent work.
 
 ## Analysis
 
