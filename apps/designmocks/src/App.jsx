@@ -26,7 +26,7 @@ import {
 import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
 import {Purchase} from "./Purchase.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
-import {postLaunchPreview}from "./launch-scope.js";
+import {postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
 import {
   CandidateProfile,
   CandidateProfilePreview,
@@ -1672,12 +1672,12 @@ export default function App() {
           <Route path="/dashboard" element={<Workspace />} />
           <Route path="/onboarding" element={<CandidateProfile />} />
           <Route path="/account/purchases" element={<PurchaseHistory />} />
-          <Route path="/dashboard/mocks" element={postLaunchPreview?<ExamMocks />:<Workspace catalogueOnly/>} />
-          <Route path="/dashboard/all-india" element={postLaunchPreview?<AllIndia />:<DeferredModule module="all-india"/>} />
-          <Route path="/dashboard/practice" element={postLaunchPreview?<TopicPractice />:<DeferredModule module="practice"/>} />
+          <Route path="/dashboard/mocks" element={studentModuleReleased('mocks')?<ExamMocks />:<Workspace catalogueOnly/>} />
+          <Route path="/dashboard/all-india" element={studentModuleReleased('all-india')?<AllIndia />:<DeferredModule module="all-india"/>} />
+          <Route path="/dashboard/practice" element={studentModuleReleased('practice')?<TopicPractice />:<DeferredModule module="practice"/>} />
           <Route path="/dashboard/learn" element={postLaunchPreview?<Learn />:<LearnProgrammes />} />
           <Route path="/dashboard/learn/programme/:slug" element={<LearnProgrammePage />} />
-          <Route path="/dashboard/community" element={postLaunchPreview?<Community />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community" element={studentModuleReleased('community')?<Community />:<DeferredModule module="community"/>} />
           <Route path="/report" element={<BugReport />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/review/drawings" element={postLaunchPreview?<DrawingReviewerWorkspace />:<DeferredModule module="drawings"/>} />

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAuthState } from "./useAuth.js";
 import { portalItems, portalModules } from "./portalModel.mjs";
-import {postLaunchPreview}from'./launch-scope.js';
-import {launchNavigation,deferredModules}from'./launch-scope.mjs';
+import {postLaunchPreview,releasedStudentModuleNames}from'./launch-scope.js';
+import {launchNavigation,deferredModules,studentNavigation}from'./launch-scope.mjs';
 
 export function PortalShell({ children }) {
   const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ export function PortalShell({ children }) {
     { ...launchNavigation[1], to: "/exam-mocks-preview" },
     { ...launchNavigation[2], to: "/learn-preview" },
   ] : null;
-  const navigation = developmentPreviewNavigation ?? (postLaunchPreview ? portalItems : launchNavigation);
+  const navigation = developmentPreviewNavigation ?? (postLaunchPreview ? portalItems : studentNavigation(releasedStudentModuleNames));
   return <div className="portal-shell">
     <button className="portal-menu-button" aria-expanded={open} aria-controls="student-navigation" onClick={() => setOpen(!open)}>{open ? "Close" : "Student menu"}</button>
     <aside className={open ? "portal-sidebar is-open" : "portal-sidebar"} id="student-navigation">
