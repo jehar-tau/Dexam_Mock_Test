@@ -1,13 +1,24 @@
-import React,{useEffect,useState} from "react";
-import {Link, useSearchParams} from "react-router-dom";
-import {platform} from "./platform.js";
-import {PortalShell} from "./PortalShell.jsx";
-import {AssessmentCatalogue} from "./AssessmentCatalogue.jsx";
-import {allIndiaExamSelection, assessmentExams, validatePublicAllIndiaResults} from "./catalogue-data.js";
-import {eventTiming,nextEventBoundary} from "./all-india-timing.js";
+import React, { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { platform } from "./platform.js";
+import { PortalShell } from "./PortalShell.jsx";
+import { AssessmentCatalogue } from "./AssessmentCatalogue.jsx";
+import { allIndiaExamSelection, assessmentExams, validatePublicAllIndiaResults } from "./catalogue-data.js";
+import { eventTiming, nextEventBoundary } from "./all-india-timing.js";
+import "./practice-events.css";
 
-async function rpc(name,args){const {data,error}=await platform.rpc(name,args);if(error)throw error;return data;}
-const when=(value)=>new Date(value).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
+async function rpc(name, args) {
+  const { data, error } = await platform.rpc(name, args);
+  if (error) throw error;
+  return data;
+}
+
+const indianTime = { timeZone: "Asia/Kolkata" };
+const when = value => new Date(value).toLocaleString("en-IN", { ...indianTime, dateStyle: "medium", timeStyle: "short" }) + " IST";
+const stateLabels = {
+  scheduled: "Scheduled", open: "Open for starts", closing: "Starts closed",
+  review: "In review", released: "Released", paused: "Paused",
+};
 
 function eventDetails(event, now) {
   if (eventTiming(event, now).needsRefresh) return "The event window has changed. Refresh All India mocks to check its current status.";
@@ -21,13 +32,58 @@ function eventDetails(event, now) {
   return `Rank ${rank}${cohortSize ? ` of ${cohortSize}` : ""} · ${score}/${total} marks`;
 }
 
-function AllIndiaHeading({headingRef}){return<><span className="eyebrow">ALL INDIA MOCKS</span><h1 ref={headingRef} tabIndex={-1}>One paper. One <em>attempt.</em></h1><p>Every candidate receives the same frozen paper. The exam timer continues through disconnects, and ranks stay hidden until results are released.</p></>;}
-export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelectExam, attemptHref = id => `/attempt/${id}`, heading=true, embedded=false, blocked=false, sharingBlocked=false }) {
+function AllIndiaHeading({ headingRef, preview }) {
+  return <header className="all-india-heading">
+    <span className="all-india-kicker">All India mocks</span>
+    <h1 ref={headingRef} tabIndex={-1}>One paper. One attempt.</h1>
+    <p>{preview ? "Explore a fictional event schedule. Dates, attempts and ranks are examples."
+      : "Check upcoming exam windows, open your existing attempt and find your released result."}</p>
+  </header>;
+}
+
+function EventDate({ event }) {
+  const date = { scheduled: event.startsAt, open: event.lastStartAt ?? event.endsAt,
+    closing: event.endsAt, review: event.reviewEndsAt }[event.state];
+  if (!date) return <span aria-hidden="true" className="all-india-date all-india-date-symbol">
+    <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8">
+      {event.state === "released" ? <><path d="M4 26h24M6 24v-7h5v7m3 0V7h5v17m3 0V12h5v12" /></> : <path d="M10 8v16m12-16v16" />}
+    </svg>
+  </span>;
+  const instant = new Date(date);
+  return <span aria-hidden="true" className="all-india-date">
+    <span>{instant.toLocaleString("en-IN", { ...indianTime, month: "short" })}</span>
+    <strong>{instant.toLocaleString("en-IN", { ...indianTime, day: "2-digit" })}</strong>
+  </span>;
+}
+
+function EventWindow({ event }) {
+  const dates = [["Opens", event.startsAt], ["Last start", event.lastStartAt], ["Attempts close", event.endsAt],
+    ["Review ends", event.reviewEndsAt]].filter(([, value]) => value);
+  if (!dates.length) return null;
+  return <details className="all-india-window"><summary>Window details</summary>
+    <dl>{dates.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{when(value)}</dd></div>)}</dl>
+  </details>;
+}
+
+function EventGuide() {
+  return <aside className="all-india-guide"><h2>How events work</h2>
+    <dl><div><dt>Before the cutoff</dt><dd>Start once per account. Everyone receives the same fixed paper.</dd></div>
+      <div><dt>During your attempt</dt><dd>Your timer keeps running if you disconnect. Reopen your attempt to continue.</dd></div>
+      <div><dt>After review</dt><dd>Your rank appears once results are released. Eligible students can choose to share their result under an alias.</dd></div></dl>
+  </aside>;
+}
+
+export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelectExam, heading = true, embedded = false,
+  blocked = false, sharingBlocked = false, previewStarted, exampleResults, attemptHref = id => `/attempt/${id}` }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
-  const [now, setNow] = useState(() => Date.now());
+  const [stateFilter, setStateFilter] = useState("");
+  const preview = Boolean(exampleResults);
+  const [now, setNow] = useState(() => preview ? Date.parse("2027-01-09T09:15:00+05:30") : Date.now());
   const { selectedExam, visibleEvents } = allIndiaExamSelection(events, requestedExam);
+  const filteredEvents = visibleEvents.filter(event => !stateFilter || event.state === stateFilter);
   useEffect(() => {
+    if (preview) return;
     const boundary = nextEventBoundary(events, now);
     const timer = boundary == null ? null : window.setTimeout(() => setNow(Date.now()), Math.min(2_147_483_647, Math.max(0, boundary - Date.now() + 1)));
     const updateClock = () => setNow(Date.now());
@@ -38,61 +94,76 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
       window.removeEventListener("focus", updateClock);
       document.removeEventListener("visibilitychange", updateClock);
     };
-  }, [events, now]);
-  const start = async (id) => {
-    if(busy||blocked||eventTiming(events.find(event => event.id === id) ?? {}, Date.now()).needsRefresh)return;
+  }, [events, now, preview]);
+  const start = async id => {
+    if (busy || blocked || (!preview && eventTiming(events.find(event => event.id === id) ?? {}, Date.now()).needsRefresh)) return;
     setBusy(id);
     setMessage("");
     try { await onStart(id); }
     catch (error) { setMessage(error.message); }
     finally { setBusy(""); }
   };
-  return <section className={embedded?"catalogue-content":"section portal-module all-india"}>
-    {heading&&<AllIndiaHeading/>}
-    {onSelectExam && <label className="all-india-exam-filter">
-      Exam
-      <select value={selectedExam} onChange={event => onSelectExam(event.target.value)}>
-        <option value="">All exams</option>
-        {assessmentExams.map(exam => <option key={exam} value={exam}>{exam.toUpperCase()}</option>)}
-      </select>
-    </label>}
-    <div className="all-india-list">
-      {visibleEvents.length ? visibleEvents.map((event) => <article key={event.id}>
-        <div>
-          <span className="eyebrow">{event.exam.toUpperCase()} · {eventTiming(event, now).needsRefresh ? "refresh status" : event.state}</span>
-          <h2>{event.title}</h2>
-          <p>{eventDetails(event, now)}</p>
-          {event.state !== "released" && event.uploadGraceSeconds > 0 && (
-            <p>{event.durationSeconds / 60} minutes for the exam, plus {event.uploadGraceSeconds / 60} minutes for drawing uploads.</p>
-          )}
-          {event.result?.sharing && onShare && (
-            <div className="all-india-sharing">
-              <p id={`ranking-sharing-${event.id}`}>
-                When you share, your generated alias, rank and marks may appear on the public site.
-                Your alias for this event is <b>{event.result.sharing.alias}</b>.
-              </p>
-              <button type="button" className="button quiet" disabled={sharingBlocked}
-                aria-describedby={`ranking-sharing-${event.id}`} onClick={() => onShare(event.id)}>
-                {event.result.sharing.shared ? "Stop public sharing" : "Share on public results"}
-              </button>
-            </div>
-          )}
+  return <section className={embedded ? "catalogue-content all-india-content" : "section portal-module all-india"}>
+    {heading && <AllIndiaHeading preview={preview} />}
+    <div className="all-india-layout">
+      <section className="all-india-agenda" aria-labelledby="all-india-agenda-title">
+        <div className="all-india-toolbar"><h2 id="all-india-agenda-title">Event schedule</h2>
+          <div className="all-india-filters">
+          {onSelectExam && <label className="all-india-filter">Exam
+            <select value={selectedExam} onChange={event => onSelectExam(event.target.value)}>
+              <option value="">All exams</option>
+              {assessmentExams.map(exam => <option key={exam} value={exam}>{exam.toUpperCase()}</option>)}
+            </select></label>}
+          <label className="all-india-filter">Status
+            <select value={stateFilter} onChange={event => setStateFilter(event.target.value)}>
+              <option value="">All statuses</option>
+              {Object.entries(stateLabels).map(([state, label]) => <option key={state} value={state}>{label}</option>)}
+            </select></label>
+          </div>
         </div>
-        {event.attemptId ? <Link className="button quiet" to={attemptHref(event.attemptId)}>
-          {event.state === "released" ? "View attempt" : "Open attempt"}
-        </Link> : <button type="button" className="button" disabled={event.state !== "open" || eventTiming(event, now).needsRefresh || Boolean(busy) || blocked}
-          onClick={() => start(event.id)}>
-          {busy === event.id ? "Opening…" : eventTiming(event, now).needsRefresh ? "Refresh event status" : event.state === "open" ? "Start once" : "Unavailable"}
-        </button>}
-      </article>) : <div className="notice" role="status">{selectedExam
-        ? `No ${selectedExam.toUpperCase()} All India mocks are listed yet.`
-        : "No All India mock has been scheduled yet."}</div>}
+        <div className="all-india-events all-india-list">
+          {filteredEvents.length ? filteredEvents.map(event => <article key={event.id} className="all-india-event">
+            <EventDate event={event} />
+            <div className="all-india-event-body">
+              <div className="all-india-event-meta"><span>{event.exam.toUpperCase()}</span>
+                <span className={'all-india-state all-india-state-' + event.state}>{eventTiming(event, now).needsRefresh ? "Refresh status" : stateLabels[event.state]}</span></div>
+              <h3>{event.title}</h3><p>{eventDetails(event, now)}</p>
+              {event.state !== "released" && event.durationSeconds > 0 && <p>
+                {event.durationSeconds / 60} minutes for the exam{event.uploadGraceSeconds > 0 ? `, plus ${event.uploadGraceSeconds / 60} minutes for drawing uploads.` : "."}
+              </p>}
+              {event.state !== "released" && <EventWindow event={event} />}
+              {event.result?.sharing && onShare && <div className="all-india-sharing">
+                <p id={`ranking-sharing-${event.id}`}>When you share, your generated alias, rank and marks may appear on the public site.
+                  Your alias for this event is <b>{event.result.sharing.alias}</b>.</p>
+                <button type="button" className="button quiet" disabled={sharingBlocked}
+                  aria-describedby={`ranking-sharing-${event.id}`} onClick={() => onShare(event.id)}>
+                  {event.result.sharing.shared ? "Stop public sharing" : "Share on public results"}
+                </button>
+              </div>}
+              {event.attemptId ? (preview
+                ? <><Link className="button quiet" to={attemptHref(event.attemptId)}>View attempt</Link><a className="all-india-result-link" href="#all-india-example-ranks">See example rankings →</a></>
+                : <Link className="button quiet" to={attemptHref(event.attemptId)}>
+                  {event.state === "released" ? "View attempt" : "Open attempt"}</Link>)
+                : <button type="button" className={event.state === "open" ? "button" : "all-india-unavailable"}
+                  disabled={event.state !== "open" || eventTiming(event, now).needsRefresh || Boolean(busy) || blocked || previewStarted === event.id}
+                  onClick={() => start(event.id)}>
+                  {previewStarted === event.id ? "Preview started" : busy === event.id ? "Opening…" : eventTiming(event, now).needsRefresh ? "Refresh event status" : event.state === "open" ? "Start once" : "Unavailable"}
+                </button>}
+              {previewStarted === event.id && <p className="all-india-receipt" role="status">Preview attempt created once: {event.id}</p>}
+            </div>
+          </article>) : <p className="all-india-empty" role="status">{stateFilter ? "No events match these filters." : selectedExam
+            ? `No ${selectedExam.toUpperCase()} All India mocks are listed yet.` : "No All India mock has been scheduled yet."}</p>}
+        </div>
+        {message && <p className="error" role="alert">{message}</p>}
+      </section>
+      <div className="all-india-rail"><EventGuide />
+        {exampleResults && <AllIndiaHighlights example={exampleResults.filter(item => !selectedExam || item.exam === selectedExam)} />}
+      </div>
     </div>
-    {message && <p className="error" role="alert">{message}</p>}
   </section>;
 }
 
-export function AllIndia() {
+function useExamFilter() {
   const [params, setParams] = useSearchParams();
   const selectExam = exam => {
     const next = new URLSearchParams(params);
@@ -100,8 +171,12 @@ export function AllIndia() {
     else next.delete("exam");
     setParams(next);
   };
-  return <AssessmentCatalogue kind="allIndia" Heading={AllIndiaHeading} View={AllIndiaView}
-    viewProps={{ requestedExam: params.get("exam"), onSelectExam: selectExam }} />;
+  return { requestedExam: params.get("exam"), onSelectExam: selectExam };
+}
+
+export function AllIndia() {
+  const filter = useExamFilter();
+  return <AssessmentCatalogue kind="allIndia" Heading={AllIndiaHeading} View={AllIndiaView} viewProps={filter} />;
 }
 
 export function AllIndiaHighlights({ example = null }) {
@@ -111,19 +186,17 @@ export function AllIndiaHighlights({ example = null }) {
     let current = true;
     rpc("public_all_india_top_ten").then(validatePublicAllIndiaResults).then(results => {
       if (current) setEvents(results);
-    }).catch(() => {
-      if (current) setEvents([]);
-    });
+    }).catch(() => { if (current) setEvents([]); });
     return () => { current = false; };
   }, [example]);
   const rankings = example ?? events;
   if (!rankings.length) return null;
-  return <section className="wrap section all-india-highlights">
-    <span className="eyebrow">ALL INDIA RESULTS</span>
-    <h2>See where practice <em>leads.</em></h2>
-    {rankings.map(event => <article key={event.eventId}>
-      <h3>{event.exam.toUpperCase()} · {event.title}</h3>
-      <ol>{event.topTen.map((result, index) => <li key={index}>
+  return <section id={example ? "all-india-example-ranks" : undefined} tabIndex={example ? -1 : undefined}
+    className={example ? "all-india-example-ranks" : "wrap section all-india-highlights"}>
+    {example ? <h2>Example rankings</h2> : <><span className="eyebrow">ALL INDIA RESULTS</span>
+      <h2>See where practice <em>leads.</em></h2></>}
+    {rankings.map(event => <article key={event.eventId}><h3>{event.exam.toUpperCase()} · {event.title}</h3>
+      <ol>{event.topTen.map(result => <li key={result.alias}>
         <b>#{result.rank}</b><span>{result.alias}</span><span>{result.score}/{result.total}</span>
       </li>)}</ol>
     </article>)}
@@ -131,21 +204,22 @@ export function AllIndiaHighlights({ example = null }) {
 }
 
 export function AllIndiaPreview() {
-  const [message, setMessage] = useState("");
-  const now = Date.now();
+  const [started, setStarted] = useState("");
+  const filter = useExamFilter();
   const events = [
-    { id: "scheduled", exam: "nid", title: "NID All India Mock 01", state: "scheduled", startsAt: new Date(now + 86400000) },
     { id: "open", exam: "uceed", title: "UCEED All India Mock 01", state: "open",
-      lastStartAt: new Date(now + 9 * 86400000 - 4500000), durationSeconds: 3600, uploadGraceSeconds: 900 },
+      startsAt: "2027-01-08T10:00:00+05:30", lastStartAt: "2027-01-09T09:45:00+05:30",
+      endsAt: "2027-01-09T11:00:00+05:30", reviewEndsAt: "2027-01-12T17:00:00+05:30", durationSeconds: 3600, uploadGraceSeconds: 900 },
+    { id: "scheduled", exam: "nid", title: "NID All India Mock 01", state: "scheduled",
+      startsAt: "2027-01-16T10:00:00+05:30", lastStartAt: "2027-01-17T09:30:00+05:30",
+      endsAt: "2027-01-17T11:00:00+05:30", reviewEndsAt: "2027-01-20T17:00:00+05:30", durationSeconds: 5400 },
     { id: "closing", exam: "ceed", title: "CEED All India Mock 01", state: "closing",
-      endsAt: new Date(now + 600000), durationSeconds: 3600, uploadGraceSeconds: 600 },
-    { id: "released", exam: "nift", title: "Your NIFT cohort", state: "released", attemptId: "preview-result",
+      startsAt: "2027-01-08T09:00:00+05:30", lastStartAt: "2027-01-09T08:50:00+05:30",
+      endsAt: "2027-01-09T10:00:00+05:30", reviewEndsAt: "2027-01-13T17:00:00+05:30", durationSeconds: 3600, uploadGraceSeconds: 600 },
+    { id: "released", exam: "nift", title: "NIFT All India Mock 01", state: "released", attemptId: "preview-result",
       result: { rank: 2, cohortSize: 24, score: 27, total: 30 } },
   ];
-  const results = [{ eventId: "released", exam: "nift", title: "NIFT All India Mock 01",
+  const results = [{ eventId: "released", exam: "nift", title: "Mock 01",
     topTen: [{ rank: 1, alias: "Candidate-A1B2C3", score: 28, total: 30 }, { rank: 2, alias: "Candidate-D4E5F6", score: 27, total: 30 }] }];
-  return <><PortalShell>
-    <AllIndiaView events={events} onStart={async (id) => setMessage(id)} attemptHref={() => "/portal-preview/report"} />
-    {message && <p className="wrap" role="status">Preview attempt created once: {message}</p>}
-  </PortalShell><AllIndiaHighlights example={results} /></>;
+  return <PortalShell><AllIndiaView events={events} {...filter} previewStarted={started} onStart={setStarted} exampleResults={results} attemptHref={() => "/portal-preview/report"} /></PortalShell>;
 }

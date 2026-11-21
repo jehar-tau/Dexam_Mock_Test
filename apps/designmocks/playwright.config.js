@@ -16,6 +16,7 @@ export default defineConfig({
     '**/overview-desk.spec.js',
     '**/all-india-ranking-consent.spec.js',
     '**/all-india-event-boundary.spec.js',
+    '**/practice-events-preview.spec.js',
     '**/learn-programme.spec.js',
     '**/learn-lifecycle.spec.js',
     '**/learn-practice-context.spec.js',

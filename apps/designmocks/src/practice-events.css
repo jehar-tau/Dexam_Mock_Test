@@ -1,0 +1,275 @@
+.portal-module.topic-practice,
+.portal-module.all-india {
+  width: min(72rem, calc(100% - clamp(2rem, 6vw, 5rem)));
+  padding-block: clamp(1.5rem, 3.3vw, 3.25rem);
+}
+
+.topic-heading,
+.all-india-heading {
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.topic-kicker,
+.all-india-kicker {
+  display: block;
+  font-size: .83rem;
+  color: var(--green);
+  font-weight: 650;
+  margin-bottom: .4rem;
+}
+
+.topic-heading h1,
+.all-india-heading h1 {
+  font: 600 clamp(1.7rem, 3vw, 2.35rem)/1.15 Figtree, system-ui, sans-serif;
+  letter-spacing: -.035em;
+  margin: 0 0 .5rem;
+}
+
+.topic-heading p,
+.all-india-heading p {
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 68ch;
+  margin: 0;
+}
+
+.topic-practice h2,
+.all-india h2 {
+  font: 600 1.15rem/1.3 Figtree, system-ui, sans-serif;
+  letter-spacing: -.015em;
+}
+
+.topic-content,
+.all-india-content { margin-top: 1.25rem; }
+
+.topic-layout,
+.all-india-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(.9rem, 1.8vw, 1.45rem);
+}
+
+.topic-builder,
+.topic-example,
+.topic-brief,
+.topic-browser,
+.all-india-agenda,
+.all-india-guide,
+.all-india-example-ranks {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: .8rem;
+  background: var(--surface);
+}
+
+.topic-builder,
+.topic-brief,
+.topic-example-body,
+.all-india-guide,
+.all-india-example-ranks { padding: clamp(1rem, 2vw, 1.4rem); }
+
+.topic-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 1rem;
+  margin-block: 1.25rem;
+}
+
+.topic-fields label,
+.topic-search,
+.all-india-filter {
+  display: grid;
+  gap: .35rem;
+  font-weight: 600;
+  color: var(--muted);
+  font-size: .87rem;
+}
+
+.topic-fields select,
+.topic-search input,
+.all-india-filter select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  border: 1px solid color-mix(in srgb, var(--muted) 65%, var(--line));
+  border-radius: .4rem;
+  padding: .5rem .6rem;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.35 Figtree, system-ui, sans-serif;
+}
+
+.topic-practice :is(button, select, input, a):focus-visible,
+.all-india :is(button, select, a, summary):focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+.topic-start {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .6rem 1rem;
+  padding-top: .95rem;
+  border-top: 1px solid var(--line);
+}
+
+.topic-start span,
+.topic-reviewed,
+.topic-exam-label,
+.all-india-event-meta { font-size: .83rem; color: var(--muted); }
+
+.topic-example-figure {
+  padding: .9rem 1rem .65rem;
+  background: #254735;
+  border-radius: .72rem .72rem 0 0;
+  color: #f4f7ec;
+}
+
+.topic-example-figure > span { font-size: .83rem; font-weight: 600; }
+.topic-diagram { width: 100%; max-width: 23rem; height: auto; margin: .6rem auto 0; }
+.topic-answer-choices { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
+.topic-answer-choices button,
+.topic-choose {
+  min-height: 36px;
+  padding: .35rem .7rem;
+  border: 1px solid color-mix(in srgb, var(--muted) 60%, var(--line));
+  border-radius: .4rem;
+  color: var(--green);
+  background: var(--surface);
+  font: inherit;
+  font-size: .87rem;
+  font-weight: 600;
+}
+.topic-answer-choices [aria-pressed="true"],
+.topic-choose[aria-pressed="true"] { color: var(--on-action); background: var(--action); border-color: var(--action); }
+.topic-answer-feedback,
+.topic-receipt,
+.all-india-event-body p.all-india-receipt {
+  margin: .8rem 0 0;
+  padding: .55rem .7rem;
+  border-inline-start: 3px solid var(--green);
+  background: var(--soft);
+  color: var(--ink);
+  font-size: .9rem;
+  line-height: 1.45;
+}
+
+.topic-brief dl, .all-india-guide dl { margin: .7rem 0 0; }
+.topic-brief dl > div, .all-india-guide dl > div { padding: .7rem 0; border-top: 1px solid var(--line); }
+.topic-brief dl > div:last-child, .all-india-guide dl > div:last-child { padding-bottom: 0; }
+.topic-brief dt, .all-india-guide dt { font-weight: 600; font-size: .95rem; }
+.topic-brief dd, .all-india-guide dd { color: var(--muted); margin: .2rem 0 0; line-height: 1.45; font-size: .92rem; }
+
+.topic-browser { margin-top: 1rem; padding: 1.1rem 1.25rem .4rem; }
+.topic-browser-bar, .all-india-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .6rem 1rem;
+}
+.topic-browser-bar p { margin: .2rem 0 0; font-size: .92rem; }
+.topic-search { width: min(100%, 13rem); }
+.topic-search input { padding-block: .4rem; }
+.topic-browser ul { list-style: none; margin: .85rem 0 0; padding: 0; }
+.topic-browser li {
+  display: flex;
+  align-items: center;
+  gap: .55rem 1rem;
+  padding: .55rem 0;
+  border-top: 1px solid var(--line);
+}
+.topic-exam-label {
+  min-width: 4em;
+  padding: .18rem .35rem;
+  text-align: center;
+  border-radius: .22rem;
+  background: var(--soft);
+  font-size: .75rem;
+  font-weight: 600;
+}
+.topic-list-title { flex: 1; overflow-wrap: anywhere; }
+.topic-choose { margin-left: auto; }
+.topic-notes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+  margin: 1.35rem 0 1rem;
+}
+.topic-notes h2 { font-size: 1rem; }
+.topic-notes p { margin: .2rem 0 0; font-size: .92rem; line-height: 1.5; }
+.topic-workspace-link, .all-india-result-link { color: var(--green); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+
+.all-india-layout { grid-template-columns: minmax(0, 1.85fr) minmax(15rem, 1fr); }
+.all-india-toolbar { padding: .9rem 1.2rem; border-bottom: 1px solid var(--line); }
+.all-india-filters { display: flex; flex-wrap: wrap; gap: .5rem .85rem; }
+.all-india-window { margin-top: .4rem; font-size: .87rem; color: var(--muted); }
+.all-india-window summary { cursor: pointer; color: var(--green); width: fit-content; padding-block: .25rem; }
+.all-india-window dl { margin: .2rem 0 .5rem; padding: .45rem .65rem; border-inline-start: 2px solid var(--line); }
+.all-india-window dl > div { display: flex; flex-wrap: wrap; gap: .1rem .75rem; margin-block: .3rem; }
+.all-india-window dt { min-width: 6.25rem; }
+.all-india-window dd { margin: 0; color: var(--ink); }
+.all-india-filter { display: flex; align-items: center; gap: .5rem; }
+.all-india-filter select { width: auto; }
+.all-india-events.all-india-list { display: block; padding-inline: 1.2rem; margin: 0; }
+.all-india-events article.all-india-event {
+  border: 0;
+  background: transparent;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: .85rem;
+  padding: 1rem 0;
+}
+.all-india-events article.all-india-event + article.all-india-event { border-top: 1px solid var(--line); }
+.all-india-date {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  width: 3rem;
+  min-height: 3.35rem;
+  border: 1px solid var(--line);
+  border-radius: .4rem;
+  background: var(--soft);
+  color: var(--green);
+}
+.all-india-date > span { text-transform: uppercase; font-size: .66rem; letter-spacing: .07em; font-weight: 600; }
+.all-india-date strong { font: 500 1.55rem/1 "Zilla Slab", Georgia, serif; }
+.all-india-event-meta { display: flex; flex-wrap: wrap; gap: .4rem .55rem; align-items: center; font-size: .76rem; font-weight: 600; }
+.all-india-state { display: inline-flex; align-items: center; gap: .35rem; }
+.all-india-state::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: var(--muted); }
+.all-india-state-open::before, .all-india-state-released::before { background: var(--green); }
+.all-india-state-closing::before, .all-india-state-paused::before { background: var(--orange); }
+.all-india-event-body { overflow-wrap: anywhere; }
+.all-india-event h3 { font: 600 1.07rem/1.35 Figtree, system-ui, sans-serif; letter-spacing: -.015em; margin: .22rem 0; }
+.all-india-event p { margin: .15rem 0; line-height: 1.45; font-size: .92rem; }
+.all-india-event .button, .topic-start .button { min-height: 44px; padding: .55rem 1rem; font-size: .93rem; }
+.all-india-event .button, .all-india-result-link { display: inline-flex; margin-top: .6rem; }
+.all-india-unavailable { padding: .3rem 0 0; color: var(--muted); background: none; border: 0; font-size: .83rem; }
+.all-india-empty { margin: 0; padding-block: 1rem; }
+.all-india-rail { display: grid; gap: 1rem; }
+.all-india-guide { background: var(--soft); }
+.all-india-example-ranks h3 { margin: .45rem 0 .75rem; color: var(--muted); font: 400 .9rem/1.5 Figtree, system-ui, sans-serif; letter-spacing: 0; }
+.all-india-example-ranks ol { list-style: none; margin: 0; padding: 0; }
+.all-india-example-ranks li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .45rem; padding: .6rem 0; border-top: 1px solid var(--line); font-size: .83rem; overflow-wrap: anywhere; }
+.all-india-example-ranks li span:last-child { font-variant-numeric: tabular-nums; }
+
+@media (max-width: 1150px) and (min-width: 901px), (max-width: 720px) {
+  .topic-layout, .all-india-layout { grid-template-columns: minmax(0, 1fr); }
+  .topic-diagram { margin-inline: 0; max-width: 22rem; }
+}
+@media (max-width: 530px) {
+  .topic-browser li { flex-wrap: wrap; gap: .4rem .55rem; }
+  .topic-reviewed { flex-basis: 100%; order: 1; }
+  .topic-browser { padding-inline: .85rem; }
+  .topic-fields { gap: .85rem .6rem; }
+  .topic-search { width: 100%; }
+  .topic-notes { grid-template-columns: minmax(0,1fr); }
+  .all-india-events.all-india-list { padding-inline: .8rem; }
+  .all-india-events article.all-india-event { gap: .6rem; }
+  .all-india-date { width: 2.5rem; min-height: 3rem; }
+}
