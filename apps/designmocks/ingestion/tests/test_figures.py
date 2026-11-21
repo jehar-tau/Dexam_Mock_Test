@@ -83,6 +83,11 @@ def paper(path, jpeg):
     text(p2, 470, "Q.6 Which fictional sentence is shortest?", bold=True)
     for index, option in enumerate(["A. One two", "B. Three", "C. Four five six", "D. Seven"]):
         text(p2, 490 + index * 15, option, x=80)
+    text(p2, 600, "Q.7 Which fictional shape is left after the crop?", bold=True)
+    # Word-style crop: the whole image is embedded, a clip path shows only its left half.
+    holder = fitz.open()
+    holder.new_page(width=300, height=150).insert_image(fitz.Rect(0, 0, 300, 150), stream=encoded(flat_shapes(400, 200)))
+    p2.show_pdf_page(fitz.Rect(80, 615, 230, 765), holder, 0, clip=fitz.Rect(0, 0, 150, 150))
     doc.save(path)
     doc.close()
 
@@ -181,6 +186,16 @@ class FiguresTest(unittest.TestCase):
         self.assertEqual([], q["q6"]["figures"])
         self.assertEqual("figure", q["q1"]["figures"][0]["role"])
 
+    def test_a_word_style_crop_keeps_the_embedded_pixels_of_the_visible_part(self):
+        _, q = self.run_stage()
+        canonical = q["q7"]["figures"][0]["canonical"]
+        self.assertEqual("embedded", canonical["source"])
+        self.assertIn("cropped-to-visible-area", canonical["notes"])
+        self.assertEqual([0, 0, 200, 200], canonical["cropPx"])
+        with Image.open(self.path(canonical["file"])) as stored:
+            expected = np.asarray(flat_shapes(400, 200).crop((0, 0, 200, 200)))
+            self.assertTrue(np.array_equal(expected, np.asarray(stored.convert("RGB"))))
+
     def test_every_question_gets_a_block_crop(self):
         _, q = self.run_stage()
         for key, record in q.items():
@@ -200,7 +215,7 @@ class FiguresTest(unittest.TestCase):
 
     def test_refusals_and_deterministic_rerun(self):
         summary, _ = self.run_stage()
-        self.assertEqual({"questions": 6, "figures": 8}, {k: summary[k] for k in ("questions", "figures")})
+        self.assertEqual({"questions": 7, "figures": 9}, {k: summary[k] for k in ("questions", "figures")})
         first = self.path("figures.json").read_bytes()
         with self.assertRaisesRegex(figures.FigureError, "already exists"):
             self.run_stage()

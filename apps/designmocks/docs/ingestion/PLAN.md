@@ -154,7 +154,7 @@ Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
 - 20 Nov 2026: plan written. Pipeline lives in `apps/designmocks/ingestion/` as Python stages with `unittest` tests run by `npm run test:ingestion`. Work folders and real papers stay outside the repo; the tool refuses to write inside a Git worktree.
 - 20 Nov 2026: owner approved D2 (PNG plus verified SVG), D3 (Claude drafts solutions in a local session, human review), D4 (UCEED 2026 re-ingest first) and D5 (all recommended analysis charts). D1, D6 and D7 stand as proposed until the owner says otherwise.
 - 20 Nov 2026: stage 2 built and evaluated on 18 papers (above). OCR results are cached in `<work>/.cache` by page-render digest; the Swift helper is compiled once into `<work>/.tools`.
-- 21 Nov 2026: stage 3 built. Changed two verification rules (see the figure decision): 99th-percentile edge distance, and text inside figures is flagged rather than disqualifying.
+- 21 Nov 2026: stage 3 built. The canonical PNG handles Word crops (clip paths), transparency masks and page text over blank margins without falling back to a page render. Changed two verification rules (see the figure decision): 99th-percentile edge distance, and text inside figures is flagged rather than disqualifying.
 - 20 Nov 2026: figures default to the embedded image's native bytes; SVG only as a verified addition; solution annotations are overlays and do not depend on vectorising.
 
 ## Stage 1 evaluation (20 November 2026)
@@ -204,8 +204,11 @@ Lessons built into the code, each found on a real paper:
 
 All results are in the private work folder; boards are at `03-figures/<key>/fig-N.board.png`.
 
-- **Canonical PNG.** 119 of 120 figures in UCEED 2026 and UCEED 2015 are the embedded image's own pixels, checked by a lossless round trip. One was cropped on the page, so its PNG is a page render at the image's own resolution or 200 dpi, whichever is higher. A one-pixel-tolerant comparison against the page catches Word crops and labels drawn over a picture.
-- **SVG trial.** UCEED 2026: 8 of 47 verified, 33 failed, 6 not eligible (photos and shaded renders). UCEED 2015: 7 of 73 verified. Most failures are hairlines that lose more than 2% of their ink, small grey details merged into a neighbouring colour, and gradients flattened into one grey. The boards show the checks reject the right things.
+- **Canonical PNG.** All 274 figures in UCEED 2026, 2020 and 2015 and CEED 2026 and 2025 hold the embedded image's own pixels, checked by a lossless round trip and against the page with one pixel of tolerance. None needed a page render. Three cases came from the papers:
+  - Word crops (17 in UCEED 2020 alone). The whole image is embedded and a clip path shows part of it; one embedded image was a full desktop screenshot cropped to a font sample. The PNG is the embedded pixels cut to the clip, and it matches the page.
+  - Transparency masks. The colour data alone is black where the mask hides it, so it is composited on white as the page shows it.
+  - Page text over an image's blank margin, often the next question's prompt. This belongs to the page, so it is noted and ignored. Anything drawn over the picture itself still forces a page render.
+- **SVG trial.** 40 of 274 figures verified (UCEED 2026: 8 of 47; 2020: 13 of 62; 2015: 7 of 73; CEED 2026: 6 of 45; 2025: 6 of 47). 45 were not eligible (photos, shaded renders, textures); the rest failed a check. Most failures are hairlines that lose more than 2% of their ink, small grey details merged into a neighbouring colour, and gradients flattened into one grey. The boards show the checks reject the right things.
 - **Caveat from looking at the boards.** A verified trace can still taper hairline gaps and round their ends (UCEED 2026 q29). Each SVG therefore stays `approval: pending` until a person approves its board in stage 6, and the PNG stays primary for questions about fine detail.
 - **Cost.** About 30 seconds per paper, mostly tracing and the OCR of each figure (cached).
 

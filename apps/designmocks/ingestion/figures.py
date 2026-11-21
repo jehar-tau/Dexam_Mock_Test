@@ -90,13 +90,81 @@ def render_clip(page, box, dpi):
 
 def appearance_differs(native, rendered):
     """Share of pixels where the page shows something the native image cannot explain,
-    allowing one pixel of shift. Catches Word crops and labels drawn over a picture."""
+    allowing one pixel of shift. Catches Word crops and labels drawn over a picture.
+
+    Returns (differs over the picture, differs over its blank background). Text that the
+    page prints over an empty margin of the image (the next question, often) belongs to
+    the page, not the figure, so only the first share decides."""
     grey_n = native.convert("L").resize(rendered.size, Image.BILINEAR)
     low = np.asarray(grey_n.filter(ImageFilter.MinFilter(3)), dtype=np.int16)
     high = np.asarray(grey_n.filter(ImageFilter.MaxFilter(3)), dtype=np.int16)
+    blank = np.asarray(grey_n.filter(ImageFilter.MinFilter(9)), dtype=np.int16) > 235
     page = np.asarray(rendered.convert("L"), dtype=np.int16)
     off = (page < low - APPEARANCE_LEVEL) | (page > high + APPEARANCE_LEVEL)
-    return float(off.mean())
+    return float((off & ~blank).mean()), float((off & blank).mean())
+
+
+def placement_xref(page, box):
+    for info in page.get_image_info(xrefs=True):
+        if [round(float(v), 2) for v in info["bbox"]] == list(box):
+            return info.get("xref") or None
+    return None
+
+
+def with_mask(doc, xref):
+    """An image with a transparency mask (smask), composited on white as the page shows it.
+    The colour data alone is often black where the mask hides it."""
+    smask = doc.extract_image(xref).get("smask")
+    if not smask:
+        return None
+    base = fitz.Pixmap(doc, xref)
+    if base.alpha:
+        base = fitz.Pixmap(base, 0)
+    if base.n != 3:
+        base = fitz.Pixmap(fitz.csRGB, base)
+    mask = fitz.Pixmap(doc, smask)
+    if (mask.width, mask.height) != (base.width, base.height):
+        return None
+    rgba = Image.frombytes("RGBA", (base.width, base.height), fitz.Pixmap(base, mask).samples)
+    flat = Image.new("RGB", rgba.size, "white")
+    flat.paste(rgba, mask=rgba.split()[3])
+    return flat
+
+
+def area(rect):
+    return max(rect.width, 0) * max(rect.height, 0)
+
+
+def visible_box(page, box):
+    """The part of an image the page actually shows. Word "crops" a picture with a clip
+    path and keeps the whole image underneath; the clip is the smallest finite clip
+    rectangle that lies mostly inside the image's box."""
+    rect = fitz.Rect(*box)
+    best = None
+    for item in page.get_drawings(extended=True):
+        if item.get("type") != "clip":
+            continue
+        scissor = fitz.Rect(item["scissor"])
+        if scissor.is_empty or scissor.width > 10 * page.rect.width:
+            continue
+        inside = scissor & rect
+        if inside.is_empty or area(inside) < 0.5 * area(scissor):
+            continue
+        if best is None or area(inside) < area(best):
+            best = inside
+    visible = (best or rect) & page.rect
+    return [round(v, 2) for v in visible]
+
+
+def crop_native(native, box, visible):
+    """Cut the embedded pixels to the visible area (axis-aligned placements only)."""
+    x0, y0, x1, y1 = box
+    sx, sy = native.width / (x1 - x0), native.height / (y1 - y0)
+    left = max(0, round((visible[0] - x0) * sx))
+    top = max(0, round((visible[1] - y0) * sy))
+    right = min(native.width, round((visible[2] - x0) * sx))
+    bottom = min(native.height, round((visible[3] - y0) * sy))
+    return native.crop((left, top, right, bottom)), [left, top, right, bottom]
 
 
 def canonical_figure(doc, placement, image_bytes):
@@ -106,21 +174,37 @@ def canonical_figure(doc, placement, image_bytes):
     width_pt = box[2] - box[0]
     native_dpi = placement["nativeWidth"] / width_pt * 72 if width_pt > 0 else 0
     reasons = []
+    differs = None
     if image_bytes is not None:
-        native, note = decode_native(image_bytes)
-        if note:
-            reasons.append(note)
+        xref = placement_xref(page, box)
+        native = with_mask(doc, xref) if xref else None
+        if native is not None:
+            reasons.append("transparency-composited-on-white")
+        else:
+            native, note = decode_native(image_bytes)
+            if note:
+                reasons.append(note)
+        visible = visible_box(page, box)
+        if any(abs(a - b) > 0.5 for a, b in zip(visible, box)):
+            native, cut = crop_native(native, box, visible)
+            reasons.append("cropped-to-visible-area")
+            provenance_extra = {"visibleBox": visible, "cropPx": cut}
+            box = visible
+        else:
+            provenance_extra = {}
         rendered = render_clip(page, box, max(native_dpi, 72))
-        differs = appearance_differs(native, rendered)
+        differs, margin = appearance_differs(native, rendered)
+        if margin > APPEARANCE_SHARE:
+            reasons.append("page-prints-over-blank-margin")
         if differs <= APPEARANCE_SHARE:
-            return native, {"source": "embedded", "pageDifference": round(differs, 4), "notes": reasons}
+            return native, {"source": "embedded", "pageDifference": round(differs, 4), "notes": reasons, **provenance_extra}
         reasons.append("page-shows-something-else")  # cropped on the page, or drawn over
     else:
         reasons.append("not-extractable")
     dpi = max(native_dpi, MIN_RENDER_DPI)
     image = render_clip(page, box, dpi)
     return image, {"source": "page-render", "renderDpi": round(dpi), "notes": reasons,
-                   "pageDifference": round(differs, 4) if image_bytes is not None else None}
+                   "pageDifference": round(differs, 4) if differs is not None else None}
 
 
 def block_image(doc, regions, dpi=BLOCK_DPI, pad=6):
