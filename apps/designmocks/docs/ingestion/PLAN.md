@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records approval for objective solutions with verified official keys, and stage 7 can dry-run one approved item. This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records approval for objective solutions with verified official keys, and stage 7 can dry-run or stage one approved item. This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## Scope
 
@@ -44,7 +44,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `11.5 to 12.5`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
 | 5 | **Solutions** | `solutions.py` provides an objective question, figures, key evidence and a structured draft template. Key disagreements are held, while answers proposed without a readable official key stay drafts | [~] drafting and validation tooling built |
 | 6 | Review | The private solution review page shows the source question, key provenance and solution. An operator can approve a solution with a verified official key for the exact reviewed evidence | [~] objective-solution approval built; full ingestion review still open |
-| 7 | Export | Approved objective question and solution → temporary packet for the existing `bank:prepare-addition` dry run. Preserve step overlays as typed shapes linked to a canonical PNG | [~] individual additions and corrections checked; persistent export still open |
+| 7 | Export | Approved objective question and solution → verified private export directory with bank JSON, PNG media and receipt. Preserve step overlays as typed shapes linked to a canonical PNG | [~] individual additions and corrections can be staged; reviewed Git promotion and media upload still open |
 | 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [~] released answer review can display visual worked solutions; paper analysis still open |
 
 Stage 1 is deterministic. Stages 2–4 are deterministic with optional local OCR. A language model can assist with stage 5 drafting.
@@ -110,7 +110,7 @@ python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work c
 
 `check` lists export-eligible solutions only while their approval matches the draft bytes, question, original key evidence and canonical images. Proposed answers remain drafts and carry no export eligibility.
 
-## Stage 7 dry run
+## Stage 7 dry run and private staging
 
 From the repository root, use the app's installed Node dependencies to check an approved objective question against a pinned canonical bank. Pass the human-reviewed fingerprint and rights note. A correction also needs the current canonical question's content SHA-256 from the bank review workflow.
 
@@ -132,11 +132,28 @@ For an existing visual question whose canonical asset is a whole-question block,
 private media root. If the worked solution annotates a separately extracted figure, it adds
 that exact reviewed PNG as a solution-only asset. The active paper still shows only the
 original question block; the extra figure is used in the released worked-solution view.
-The export stays a dry run and does not write to the canonical bank.
+Without `--output`, the export stays a dry run and does not write to the canonical bank.
+After checking the dry-run result, repeat the same command with `--output` pointing to a
+new private directory outside the repository and every Git worktree. The bank preparer
+creates `dexam-bank-export.json`, verified `media/` PNGs and `receipt.json` there, with
+private file permissions. The command rejects an existing output directory, changed
+approval, changed source commit, incomplete objective answer or changed media bytes.
+An exact no-op returns `mode: no-op` and creates no directory. Staging does not commit
+to Git, upload media or publish a paper; review the receipt and proposed diff first.
+
+```sh
+python3 apps/designmocks/ingestion/export.py uceed-2031 q1 \
+  --work ~/dmocks-ingestion-work \
+  --fingerprint "$REVIEWED_FINGERPRINT" \
+  --expect-source "$REVIEWED_ORIGIN_MAIN_SHA" \
+  --source-classification "$REVIEWED_SOURCE_CLASSIFICATION" \
+  --rights-note "$REVIEWED_RIGHTS_NOTE" \
+  --output ~/dmocks-private/approved-uceed-2031-q1
+```
 
 For visual solutions, the packet carries the full plain-text explanation and typed steps with drawing shapes. Each overlay uses the exact PNG's hash and dimensions. Supported SVG shapes and short text labels are converted to data, with no links, styles or embedded images. A visual correction either reuses a matching existing figure or adds the reviewed extracted PNG as a solution-only asset. The runtime validates the shapes again and freezes the solution in the private explanation snapshot. The unannotated PNG may be signed with the other question media during an active attempt; the worked steps remain in the private explanation and appear only after the existing result release gates open. The text remains readable if the figure fails to load.
 
-The command reports whether the existing checks accept the proposed addition or correction. It deletes its temporary packet and media copies when it finishes. Persistent export and publication remain subsequent work.
+The command reports whether the existing checks accept the proposed addition or correction. It deletes its temporary packet and media copies when it finishes. A staged output persists outside the repository for review; committing the reviewed export, uploading media and publishing a paper remain subsequent work.
 
 ## Analysis
 
@@ -166,7 +183,7 @@ Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
 
 ## Operator review
 
-Run the pipeline locally with a private work folder. Drafting can be done by a human or in a local model session. Every accepted solution still needs an explicit human approval tied to the reviewed inputs. Persistent export and staged publication are outside the dry-run command.
+Run the pipeline locally with a private work folder. Drafting can be done by a human or in a local model session. Every accepted solution still needs an explicit human approval tied to the reviewed inputs. Staged export is available; committing it to the canonical bank and staged publication require a separate review.
 
 ## Validation notes
 

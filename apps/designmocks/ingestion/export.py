@@ -212,7 +212,7 @@ def run_bank_prepare(args, repo):
 
 
 def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, replace_expected=None, source_classification=None,
-            media_root=None,
+            media_root=None, output=None,
             repo=REPO, run_prepare=run_bank_prepare):
     if not QUESTION_KEY.fullmatch(key) or key.startswith("qb") or not DIGEST.fullmatch(fingerprint):
         raise SolutionError("Supply an objective question key and its reviewed SHA-256 fingerprint")
@@ -327,11 +327,14 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
                 "--downloads-dir", str(downloads)]
         if media_root is not None:
             args.extend(["--media-root", str(media_root)])
+        if output is not None:
+            args.extend(["--output", str(output)])
         if replace_expected is not None:
             args.extend(["--replace-expect", replace_expected])
         result = run_prepare(args, repo)
-        if result.get("mode") not in ("dry-run", "no-op") or (
-                result["mode"] == "dry-run" and result.get("review") != "objective-complete"):
+        expected_mode = "staged" if output is not None else "dry-run"
+        if result.get("mode") not in (expected_mode, "no-op") or (
+                result["mode"] == expected_mode and result.get("review") != "objective-complete"):
             raise SolutionError("The bank checks did not accept the objective question")
     return {**result, "externalKey": external_key, "reviewFingerprint": fingerprint,
             "operation": "correction" if replace_expected is not None else "addition"}
@@ -347,6 +350,7 @@ def main(argv=None):
     parser.add_argument("--replace-expect", dest="replace_expected")
     parser.add_argument("--source-classification", choices=SOURCE_CLASSIFICATIONS)
     parser.add_argument("--media-root", help="Existing canonical PNG root for correcting a paper already in the bank")
+    parser.add_argument("--output", help="New private directory for the verified export, media and receipt")
     parser.add_argument("--rights-note", required=True)
     try:
         result = prepare(**vars(parser.parse_args(argv)))
