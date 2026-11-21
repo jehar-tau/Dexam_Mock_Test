@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { PortalShell } from "./PortalShell.jsx";
 import { practicePools, practiceSelection } from "./practice-context.js";
 import { AssessmentCatalogue } from "./AssessmentCatalogue.jsx";
@@ -18,6 +18,7 @@ function TopicPracticeHeading({ headingRef, preview }) {
 }
 
 export function TopicPracticeView({ catalog, onStart, initialExam = "", initialTopic = "", heading = true, embedded = false, blocked = false, preview = false, Example }) {
+  const location = useLocation();
   const topicControl = useRef(null);
   const [initial] = useState(() => practiceSelection(catalog, { exam: initialExam, topic: initialTopic }));
   const [exam, setExam] = useState(initial.exam), [topic, setTopic] = useState(initial.topic);
@@ -129,7 +130,7 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
       <div><h2>Question selection</h2><p>New questions come first when available; review questions fill the rest.</p></div>
       <div><h2>Returning to practice</h2><p>Your questions stay the same if you disconnect and reopen your session.</p></div>
     </section>
-    <Link className="topic-workspace-link" to={preview ? "/portal-preview" : "/dashboard"}>View your workspace and attempts →</Link>
+    <Link className="topic-workspace-link" to={preview ? location.pathname.replace(/topic-practice/, "portal") : "/dashboard"}>View your workspace and attempts →</Link>
   </section>;
 }
 

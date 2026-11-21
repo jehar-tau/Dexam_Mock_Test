@@ -214,7 +214,7 @@ export function WorkspaceView({
           ) : (
             <div className="overview-empty-papers">
               <div><span className="overview-kicker">RELEASE STATUS</span><h3>No papers have been released yet</h3><p>Reviewed papers will appear here when they are published.</p></div>
-              {preview&&<Link className="overview-secondary-link" to="/portal-preview/paper">Try an example paper <Arrow size={17}/></Link>}
+              {preview&&<Link className="overview-secondary-link" to={attemptHref("example-paper")}>Try an example paper <Arrow size={17}/></Link>}
             </div>
           )}
           {!catalogueOnly && <><div className="overview-section-head"><div><span className="overview-kicker">YOUR RECORD</span><h2>Your recent attempts.</h2></div></div>
