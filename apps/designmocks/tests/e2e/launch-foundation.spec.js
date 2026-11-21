@@ -114,6 +114,20 @@ test("fictional portal preview navigation opens dev-only module screens", async 
   expect(providerRequests).toEqual([]);
 });
 
+test("test mode links keep exploration inside sign-in-free previews", async ({ page }) => {
+  await page.goto("/portal-preview");
+  await page.getByText("Open all test areas").click();
+  const areas = page.getByRole("navigation", { name: "Sign-in-free test areas" });
+  await expect(areas.getByRole("link", { name: "Teacher drawing review" })).toHaveAttribute("href", "/drawing-review-preview");
+  await expect(areas.getByRole("link", { name: "Admin question drafting" })).toHaveAttribute("href", "/ai-question-drafting-preview");
+  await page.getByRole("link", { name: "Practise the recommended topic" }).click();
+  await expect(page).toHaveURL(/\/topic-practice-preview$/);
+  await expect(page.getByRole("heading", { name: /Build a topic session/ })).toBeVisible();
+  await page.goto("/portal-preview/pending");
+  await page.getByRole("link", { name: "Back to your workspace" }).click();
+  await expect(page).toHaveURL(/\/portal-preview$/);
+});
+
 test("the reduced dev preview links only to its local overview and exam example", async ({ page }) => {
   const providerRequests = [];
   await page.route(/\.supabase\.co\//, route => {

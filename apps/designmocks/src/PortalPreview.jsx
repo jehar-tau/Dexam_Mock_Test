@@ -48,7 +48,7 @@ function PendingUploadPreview() {
     const timer = setInterval(() => setServerTime(Date.now()), 1000);
     return () => clearInterval(timer);
   }, []);
-  return <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z">
+  return <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" allIndiaHref="/all-india-preview" workspaceHref="/portal-preview">
     <DrawingUploadWindow serverTime={serverTime} invoke={previewDrawingMedia} attempt={{
       id: "preview-all-india-drawing", status: "submitted", resultsPending: true, uploadDeadline,
       questions: [], drawingUploadTasks: [{ id: "drawing", prompt: "Sketch a portable reading light." }],
@@ -73,8 +73,29 @@ export default function PortalPreview() {
         {postLaunchPreview&&<><Link to="/portal-preview/pending" aria-current={pending ? "page" : undefined}>Example pending result</Link>
         <Link to="/portal-preview/pending-upload" aria-current={pendingUpload ? "page" : undefined}>Example drawing upload</Link></>}
       </div>
+      <details className="notice">
+        <summary>Open all test areas</summary>
+        <nav aria-label="Sign-in-free test areas" className="portal-preview-links">
+          <Link to="/">Home</Link>
+          <Link to="/tests">Exam guides</Link>
+          <Link to="/plans">Plans</Link>
+          <Link to="/sample">Free sample paper</Link>
+          <Link to="/portal-preview">Student overview</Link>
+          <Link to="/exam-mocks-preview">Exam-wise mocks</Link>
+          <Link to="/all-india-preview">All India mocks</Link>
+          <Link to="/topic-practice-preview">Topic practice</Link>
+          <Link to="/learn-preview">Learn</Link>
+          <Link to="/community-preview">Community</Link>
+          <Link to="/drawing-uploads-preview">Drawing uploads</Link>
+          <Link to="/drawing-review-preview">Teacher drawing review</Link>
+          <Link to="/question-report-preview">Question reporting</Link>
+          <Link to="/community-moderation-preview">Community moderation</Link>
+          <Link to="/ai-question-drafting-preview">Admin question drafting</Link>
+          <Link to="/operations-health-preview">Operations health</Link>
+        </nav>
+      </details>
     </section>
-    {!postLaunchPreview&&(pending||pendingUpload)?<DeferredModule module="drawings"/>:pendingUpload ? <PendingUploadPreview /> : pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" /> : report ? <section className="wrap section sample-result">
+    {!postLaunchPreview&&(pending||pendingUpload)?<DeferredModule module="drawings"/>:pendingUpload ? <PendingUploadPreview /> : pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" allIndiaHref="/all-india-preview" workspaceHref="/portal-preview" /> : report ? <section className="wrap section sample-result">
       <Link className="back-link" to="/portal-preview">← Your preview workspace</Link>
       <div className="result-title">
         <div>
@@ -94,6 +115,6 @@ export default function PortalPreview() {
       <h2>Small observations. Useful habits.</h2>
       <div className="paper-list">{topics.map(t => <article key={t.name}><span className="eyebrow">{t.name}</span><h3>Try this tomorrow.</h3><p>{t.note}</p></article>)}</div>
       <Link className="button" to="/sample">Try it with your own answers <Arrow /></Link>
-    </section> : <PortalShell><WorkspaceView data={postLaunchPreview?example:{...example,attempts:example.attempts.filter(item=>!item.resultsPending),analytics:{...example.analytics,waitingForResults:0,drawingReviews:{pending:0,released:0}}}} papers={postLaunchPreview?papers:papers.slice(0,1)} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/sample"} /></PortalShell>}
+    </section> : <PortalShell><WorkspaceView data={postLaunchPreview?example:{...example,attempts:example.attempts.filter(item=>!item.resultsPending),analytics:{...example.analytics,waitingForResults:0,drawingReviews:{pending:0,released:0}}}} papers={postLaunchPreview?papers:papers.slice(0,1)} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" practiceHref="/topic-practice-preview" allIndiaHref="/all-india-preview" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/sample"} /></PortalShell>}
   </>;
 }
