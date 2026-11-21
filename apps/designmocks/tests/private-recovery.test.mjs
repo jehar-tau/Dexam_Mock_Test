@@ -70,4 +70,5 @@ test('recovery normalizes only the known PostgreSQL 17 check grouping',()=>{
    {...constraint,definition:restored},
    {...constraint,name:'another_check'},
  ]);
+ assert.deepEqual(normalizeRecoverySchema({}), {});
 });

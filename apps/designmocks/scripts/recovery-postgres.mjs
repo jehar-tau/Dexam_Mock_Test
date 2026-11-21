@@ -64,6 +64,7 @@ export function normalizeRecoverySchema(schema) {
  // other constraint, RLS and privilege changes must still fail the comparison.
  const before = "CHECK ((((char_length(name) >= 1) AND (char_length(name) <= 60)) AND (name = btrim(name))))";
  const after = "CHECK (((char_length(name) >= 1) AND (char_length(name) <= 60) AND (name = btrim(name))))";
+ if (!Array.isArray(schema.constraints)) return schema;
  return {
    ...schema,
    constraints: schema.constraints.map(constraint => (
