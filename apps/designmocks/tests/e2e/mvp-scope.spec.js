@@ -45,7 +45,7 @@ for(const[path,title]of[['/dashboard/all-india','All India mocks'],['/dashboard/
  const menu=page.getByRole('button',{name:'Student menu',exact:true});if(await menu.isVisible())await menu.click();const nav=page.getByRole('navigation',{name:'Student workspace',exact:true});await expect(nav.getByRole('link')).toHaveCount(3);await expect(nav.getByRole('link',{name:'Released papers',exact:true})).toHaveAttribute('href','/dashboard/mocks');await expect(nav.getByRole('link',{name:'Learn',exact:true})).toHaveAttribute('href','/dashboard/learn');expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
 });
 test('the released-paper MVP starts, saves, submits and reviews its objective offering without deferred services',async({page})=>{
- const provider=await fixture(page);await page.goto('/dashboard/mocks');await expect(page.getByRole('heading',{name:'Choose your released paper.',exact:true})).toBeVisible();await page.getByRole('button',{name:'Start or resume',exact:true}).click();await expect(page).toHaveURL('/attempt/'+attempt);
+ const provider=await fixture(page);await page.goto('/dashboard/mocks');await expect(page.getByRole('heading',{name:'Released papers',level:1,exact:true})).toBeVisible();await page.getByRole('button',{name:'Start or resume',exact:true}).click();await expect(page).toHaveURL('/attempt/'+attempt);
  await expect(page.getByRole('group',{name:'Choose one answer',exact:true}).getByText('Choose one answer',{exact:true})).toBeVisible();
  await page.getByRole('button',{name:'B Original second choice',exact:true}).click();await expect(page.getByText('Answers are saved to your account.',{exact:true})).toBeVisible();await page.getByRole('button',{name:'Submit attempt',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).click();
  await expect(page.getByRole('heading',{name:"Paper analysis",exact:true})).toBeVisible();await expect(page.getByText('This report covers the objective paper you submitted.',{exact:false})).toBeVisible();await expect(page.getByText('teacher-reviewed submission.',{exact:false})).toHaveCount(0);await page.getByRole('button',{name:'Open answer review',exact:true}).click();await expect(page.getByText('Original fictional MVP answer explanation.',{exact:true})).toBeVisible();expect(provider.state.answer).toBe('B');expect(provider.calls.filter(([name])=>name==='submit_attempt')).toHaveLength(1);
@@ -56,15 +56,15 @@ test('released papers stays focused while Overview retains progress',async({page
  const provider=await fixture(page,{analytics});
  await page.goto('/dashboard');
  await expect(page.getByRole('heading',{name:'Your papers.'})).toBeVisible();
- await expect(page.getByRole('heading',{name:'Your performance snapshot.'})).toBeVisible();
- await expect(page.getByRole('heading',{name:'Your topic picture.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Performance snapshot',exact:true})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Your topic picture',exact:true})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Your recent attempts.'})).toBeVisible();
  await page.goto('/dashboard/mocks');
  await expect(page.getByRole('heading',{name:'Released papers.'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Original fictional released objective paper'})).toBeVisible();
  await expect(page.getByRole('button',{name:'Start or resume'})).toBeEnabled();
- await expect(page.getByRole('heading',{name:'Your performance snapshot.'})).toHaveCount(0);
- await expect(page.getByRole('heading',{name:'Your topic picture.'})).toHaveCount(0);
+ await expect(page.getByRole('heading',{name:'Performance snapshot',exact:true})).toHaveCount(0);
+ await expect(page.getByRole('heading',{name:'Your topic picture',exact:true})).toHaveCount(0);
  await expect(page.getByRole('heading',{name:'Your recent attempts.'})).toHaveCount(0);
  await expect(page.getByText('COMPLETED ATTEMPTS')).toHaveCount(0);
  expect(provider.unexpected).toEqual([]);
@@ -101,7 +101,7 @@ test('an MSQ shows how to select answers and saves more than one choice', async 
 test('a prepared paper stays out of the active-pass catalogue until an explicit release', async ({ page }) => {
  const provider = await fixture(page, { released: false });
  await page.goto('/dashboard/mocks');
- await expect(page.getByText('No papers have been released yet.', { exact: false })).toBeVisible();
+ await expect(page.getByRole('heading',{name:'No papers have been released yet',exact:true})).toBeVisible();
  await expect(page.getByText('Original fictional released objective paper', { exact: true })).toHaveCount(0);
  await expect(page.getByRole('button', { name: 'Start or resume', exact: true })).toHaveCount(0);
  expect(provider.calls.some(([name]) => ['prepare_mvp_paper', 'start_attempt'].includes(name))).toBe(false);
