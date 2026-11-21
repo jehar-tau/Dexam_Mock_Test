@@ -1,5 +1,14 @@
 # DMocks release execution plan
 
+## Current scope and release status (21 November 2026)
+
+- The owner retains the full student website roadmap.
+- Claude owns Learn, Community, and question-paper ingestion and corrections.
+- Codex owns the rest of the student-facing website, including test mode and identity and payment integration.
+- The admin portal, teacher paper review, and AI drawing evaluation are deferred.
+
+The encrypted staging backup and isolated restore passed privately, covering 2,085 storage objects. Hosted migrations 167–169 are still pending. Public signup and sales remain closed.
+
 ## Active ownership and execution order (14 November 2026)
 
 The owner updated the division of work on 16 November 2026. **Claude develops Learn and Community. The owner pushes those changes. Codex integrates and verifies the owner-pushed changes and develops the rest of DMocks.** The existing Community code on main is the baseline for Claude. Use separate feature worktrees to preserve Claude's in-progress changes. The wider requirements in POST_LAUNCH_ROADMAP.md remain part of the goal; the paid MVP is the first release milestone, not completion of the whole application. Build and test unreleased modules privately without exposing them through the paid MVP profile.
