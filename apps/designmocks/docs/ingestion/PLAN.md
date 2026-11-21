@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: plan written 20 November 2026; stages 1–4 built; stage 5 tooling built and first solutions drafted (21 November). This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: stages 1–4 built, stage 5 drafts and checks worked solutions, and stage 6 records approval for objective solutions with verified official keys. This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## What the owner asked for
 
@@ -45,7 +45,7 @@ Each stage reads the previous stage's files from a private work folder **outside
   03-figures/    <question>/<figure>.png, .svg (if verified), verify.json, board.png
   04-key/        key.json (official answers matched to questions, mismatches)
   05-solutions/  <question>.json (draft worked solutions, status)
-  06-review/     review.json (human decisions per question, exact hashes)
+  06-review/     <question>.json (human approvals with a fingerprint of the evidence)
   07-export/     export packets for prepare-question-bank-addition
 ```
 
@@ -55,8 +55,8 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
 | 3 | **Figures** | Figure placements → canonical PNG (embedded pixels, or a page render when the page shows something else), a block crop of every question, an SVG trial with metrics and a comparison board | [x] built 21 Nov 2026 |
 | 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `470 to 480`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
-| 5 | **Solutions** | Question + verified key → draft worked solution (format below); a draft that does not reach the official answer is held. `solutions.py` gives the drafter a brief, validates every draft and renders a review page with step-by-step overlays | [~] tooling built; UCEED 2026 Section 1: 8 of 14 drafted |
-| 6 | Review | Side-by-side review page: source block, extracted text, figures, key, solution; approve/fix per question with exact hashes | [ ] |
+| 5 | **Solutions** | `solutions.py` provides an objective question, figures, key evidence and a structured draft template. Key disagreements are held, while answers proposed without a readable official key stay drafts | [~] tooling built; UCEED 2026 Section 1: 8 of 14 drafted |
+| 6 | Review | The private solution review page shows the source question, key provenance and solution. An operator can approve a solution with a verified official key for the exact reviewed evidence | [~] objective-solution approval built; full ingestion review still open |
 | 7 | Export | Approved questions → export packets for the existing `bank:prepare-addition` path (new papers) or correction packets (existing records) | [ ] |
 | 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [ ] |
 
@@ -103,13 +103,25 @@ Own wording, modelled on the structure Roughworks uses (studied, not copied):
   "optionCheck": [ { "option": "A", "verdict": "wrong", "why": "Short reason." } ],
   "trap": "The common mistake, if there is one.",
   "fastTrack": "A quicker route under exam time, if there is one.",
-  "overlay": { "viewBox": "0 0 800 400", "steps": { "step-1": "<g>…</g>" } },
+  "overlay": { "figure": "q1-fig-1", "viewBox": "0 0 800 400", "steps": { "step-1": "<g>…</g>" } },
   "meta": { "topic": "", "subtopic": "", "difficulty": "easy|medium|hard", "seconds": 60, "technique": "" },
-  "provenance": { "draftedBy": "", "reviewedBy": "", "status": "draft|verified|held", "reachesKey": true }
+  "provenance": { "draftedBy": "", "status": "draft" }
 }
 ```
 
-Rules: the worked answer must equal the official key, or the solution is `held` and the key is re-checked (both can be wrong; the key is not overruled silently). Steps stay under about 30 words each. MCQ and MSQ solutions check every option. NAT solutions show the arithmetic. Visual questions get an overlay. The bank's existing `explanation` field carries this object once the runtime renders it (stage 8 work in the app).
+Derive the answer from the question and use the verified official key to check it. The validator holds disagreements for human review. When the key is missing or unreadable, use `answer.source: "model-proposed"` for a candidate supported by the reasoning. When the evidence is insufficient, leave the answer blank and set `provenance.status` to `held`. Steps stay under about 30 words each. MCQ and MSQ solutions check every option. NAT solutions show the arithmetic. Add an overlay when it clarifies a visual step.
+
+`solutions.py` works with private files only. Run `brief` for each question, fill its template in `05-solutions/<question>.json`, then run `render` and review the question, key and worked steps together. The answer key retains the source PDF hash, printed value, page and extraction method. When the reasoning and source agree, a human reviewer can copy the fingerprint from the review page and record an approval:
+
+```sh
+python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work brief uceed-2026 q1
+python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work render uceed-2026
+python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work approve uceed-2026 q1 \
+  --reviewer "$REVIEWER_NAME" --fingerprint "$REVIEWED_FINGERPRINT"
+python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work check uceed-2026
+```
+
+`check` lists export-eligible solutions only while their approval matches the draft bytes, question, original key evidence and canonical images. Proposed answers remain reviewable drafts and carry no export eligibility. The future stage 7 exporter must recompute this gate before building any packet containing a solution. It also needs to map the solution to the canonical bank's `explanation` field and preserve the original key in `answer`.
 
 ## Analysis
 

@@ -9,22 +9,31 @@ and kept in the private work folder. This tool does the parts that must be exact
                            the official key, or breaks the format, is held
     render <paper>         05-solutions/review.html: each solution with its step-by-step
                            annotations drawn over the canonical figure, for human review
+    approve <paper> <key>  record a human decision for the exact reviewed inputs
 
 The format is in docs/ingestion/PLAN.md ("Solution format"). Nothing here writes
 into the repository.
 """
 
 import argparse
+from decimal import Decimal
+from functools import cache
+import hashlib
 import html
 import importlib.util
 import json
 import pathlib
 import re
 import sys
+import tempfile
 import xml.etree.ElementTree as ET
+from urllib.parse import quote
 
 SCHEMA = 1
 STAGE = "05-solutions"
+REVIEW_STAGE = "06-review"
+OBJECTIVE = {"MCQ", "MSQ", "NAT"}
+QUESTION_KEY = re.compile(r"q(?:b)?[0-9]+")
 DIFFICULTY = {"easy", "medium", "hard"}
 STATUS = {"draft", "verified", "held"}
 STEP_WORDS_WARN, STEP_WORDS_MAX, MAX_STEPS = 30, 45, 8
@@ -40,6 +49,7 @@ class SolutionError(Exception):
     """A refusal the operator can act on. The message is safe to print."""
 
 
+@cache
 def load(name):
     spec = importlib.util.spec_from_file_location(name, pathlib.Path(__file__).with_name(f"{name}.py"))
     module = importlib.util.module_from_spec(spec)
@@ -48,31 +58,101 @@ def load(name):
 
 
 def paper_files(work, paper_id):
-    base = pathlib.Path(work).expanduser().resolve() / paper_id
-    needed = {"segments": base / "02-segments" / "questions.json", "figures": base / "03-figures" / "figures.json",
-              "key": base / "04-key" / "key.json"}
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", paper_id):
+        raise SolutionError("Use a paper ID such as uceed-2026")
+    base = (pathlib.Path(work).expanduser() / paper_id).resolve()
+    inside_git = load("intake").inside_git_worktree
+    if any(inside_git(path) for path in (base, (base / STAGE).resolve(), (base / REVIEW_STAGE).resolve())):
+        raise SolutionError("Choose a private work folder outside any Git worktree")
+    needed = {"segments": base / "02-segments" / "questions.json", "figures": base / "03-figures" / "figures.json"}
     for name, path in needed.items():
         if not path.is_file():
             raise SolutionError(f"Run the earlier stages first: {path.relative_to(base.parent)} is missing")
-    segments = {q["key"]: q for q in json.loads(needed["segments"].read_text())["questions"]}
-    figures = {q["key"]: q for q in json.loads(needed["figures"].read_text())["questions"]}
-    keys = json.loads(needed["key"].read_text())["keys"]
-    return base, segments, figures, keys
+    segment_bytes = needed["segments"].read_bytes()
+    segment_hash = sha256(segment_bytes)
+    segments = {q["key"]: q for q in json.loads(segment_bytes)["questions"]}
+    figure_manifest = json.loads(needed["figures"].read_text())
+    if figure_manifest.get("segmentsSha256") != segment_hash:
+        raise SolutionError("Run stage 3 again for the current segments")
+    figures = {q["key"]: q for q in figure_manifest["questions"]}
+    key_path = base / "04-key" / "key.json"
+    key_manifest = json.loads(key_path.read_bytes()) if key_path.is_file() else {}
+    return base, segments, figures, key_manifest, segment_hash
+
+
+def sha256(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def key_evidence(base, paper_id, manifest, segment_hash):
+    """Check that the parsed keys still refer to the current segments and a preserved source PDF."""
+    if not manifest:
+        return False
+    source = manifest.get("source", {})
+    name = source.get("name")
+    if not name or pathlib.Path(name).name != name:
+        return False
+    path = base / "04-key" / "source" / name
+    return (manifest.get("paperId") == paper_id and manifest.get("segmentsSha256") == segment_hash
+            and path.is_file() and sha256(path.read_bytes()) == source.get("sha256"))
+
+
+def official_record(manifest, key, question, evidence_valid):
+    record = manifest.get("keys", {}).get(key, {})
+    status = record.get("status", "missing")
+    kind, raw, printed, page = question["type"], record.get("raw"), record.get("printed"), record.get("page")
+    issues = [issue for issue in manifest.get("report", {}).get("issues", []) if issue.get("key") == key]
+    verified = False
+    if (evidence_valid and status == "official-key" and record.get("kind") == kind
+            and not record.get("checks") and not issues and type(page) is int and page > 0
+            and record.get("readBy") in ("text", "ocr", "letter-match")
+            and isinstance(raw, str) and isinstance(printed, str)):
+        ak = load("answer_key")
+        canonical = ak.canonical(raw, kind)
+        verified = canonical is not None and canonical == ak.canonical(printed, kind)
+    return {**record, "raw": raw, "status": status,
+            "source": manifest.get("source"),
+            "segmentsSha256": manifest.get("segmentsSha256"),
+            "issues": issues,
+            "verifiedKey": verified}
+
+
+def option_labels(question):
+    if question["type"] not in ("MCQ", "MSQ"):
+        return []
+    return [option["key"] for option in question["options"]] or list("ABCD")
 
 
 # ---------------------------------------------------------------- brief
 
 
 def brief(work, paper_id, key):
-    base, segments, figures, keys = paper_files(work, paper_id)
+    base, segments, figures, key_manifest, segment_hash = paper_files(work, paper_id)
     if key not in segments:
         raise SolutionError(f"No question {key} in {paper_id}")
     question, record = segments[key], figures.get(key, {})
-    official = keys.get(key, {})
+    if question["type"] not in OBJECTIVE:
+        raise SolutionError("Worked-solution drafts support NAT, MCQ and MSQ questions")
+    official = official_record(key_manifest, key, question, key_evidence(base, paper_id, key_manifest, segment_hash))
+    source = "official-key" if official["verifiedKey"] else "model-proposed"
+    if official["status"] == "dropped" or (official["status"] == "official-key" and not official["verifiedKey"]):
+        raise SolutionError("Resolve the official key evidence before drafting this question")
     return {
         "paperId": paper_id, "key": key, "type": question["type"], "prompt": question["prompt"],
         "options": [{"key": o["key"], "text": o["text"]} for o in question["options"]],
-        "officialKey": {"raw": official.get("raw"), "status": official.get("status", "none")},
+        "officialKey": official,
+        "draftTemplate": {
+            "schema": SCHEMA, "answer": {"source": source, "value": None},
+            "keyIdea": "", "steps": [{"text": ""}],
+            "optionCheck": [{"option": label, "verdict": None, "why": ""} for label in option_labels(question)],
+            "meta": {"topic": "", "difficulty": None, "seconds": None},
+            "provenance": {"status": "draft", "draftedBy": ""},
+        },
+        "draftInstruction": (
+            "Derive the answer from the question and figures, then compare with the official key."
+            if official["verifiedKey"] else
+            "Derive a candidate answer only if the question and figures support it. Leave the answer blank and hold the draft if unsure."
+        ),
         "figures": [{"id": f["id"], "role": f["role"], "file": str(base / "03-figures" / f["canonical"]["file"]),
                      "width": f["canonical"]["width"], "height": f["canonical"]["height"]} for f in record.get("figures", [])],
         "block": str(base / "03-figures" / record["block"]["file"]) if record.get("block") else None,
@@ -109,42 +189,82 @@ def reaches_key(ak, value, official_raw, kind):
     mine, theirs = ak.canonical(value, kind), ak.canonical(official_raw, kind)
     if mine is None or theirs is None:
         return False
-    if mine == theirs or kind != "NAT" or len(mine) != 1 or mine[0][0] != mine[0][1]:
+    if kind in ("MCQ", "MSQ"):
+        return mine == theirs or (len(mine) == 1 and mine[0] in theirs)
+    if mine == theirs or len(mine) != 1 or mine[0][0] != mine[0][1]:
         return mine == theirs
-    point = float(mine[0][0])
-    return any(float(low) <= point <= float(high) for low, high in theirs)
+    point = Decimal(mine[0][0])
+    return any(Decimal(low) <= point <= Decimal(high) for low, high in theirs)
 
 
 def words(text):
     return len(str(text).split())
 
 
+def shape_problems(solution):
+    if not isinstance(solution, dict):
+        return ["solution-must-be-an-object"]
+    errors = []
+    for field, expected in (("answer", dict), ("keyIdea", str), ("steps", list), ("meta", dict), ("provenance", dict)):
+        if not isinstance(solution.get(field), expected):
+            errors.append(f"invalid-{field}")
+    for field in ("trap", "fastTrack"):
+        if field in solution and not isinstance(solution[field], str):
+            errors.append(f"invalid-{field}")
+    steps = solution.get("steps")
+    if isinstance(steps, list) and any(
+        not isinstance(s, dict) or not isinstance(s.get("text"), str) or not isinstance(s.get("overlay", ""), str)
+        for s in steps
+    ):
+        errors.append("invalid-steps")
+    options = solution.get("optionCheck", [])
+    if not isinstance(options, list) or any(
+        not isinstance(c, dict) or any(not isinstance(c.get(field), str) for field in ("option", "verdict", "why"))
+        for c in options
+    ):
+        errors.append("invalid-optionCheck")
+    overlay = solution.get("overlay")
+    if overlay is not None and (not isinstance(overlay, dict) or not isinstance(overlay.get("figure"), str)
+                                or not isinstance(overlay.get("viewBox"), str) or not isinstance(overlay.get("steps"), dict)
+                                or not all(isinstance(v, str) for v in overlay["steps"].values())):
+        errors.append("invalid-overlay")
+    return errors
+
+
 def validate(solution, question, official, figures):
     """Return (errors, warnings, reaches_key). Errors hold the solution."""
     ak = load("answer_key")
-    errors, warnings = [], []
-    required = ["schema", "answer", "keyIdea", "steps", "meta", "provenance"]
-    for field in required:
-        if field not in solution:
-            errors.append(f"missing-{field}")
+    errors, warnings = shape_problems(solution), []
     if errors:
         return errors, warnings, False
-    if solution["schema"] != SCHEMA:
+    if solution.get("schema") != SCHEMA:
         errors.append("unsupported-schema")
     kind = question["type"]
+    if kind not in OBJECTIVE:
+        return errors + ["unsupported-question-type"], warnings, None
     value = solution["answer"].get("value")
+    proposed = ak.canonical(value, kind) if isinstance(value, str) else None
+    if proposed is None:
+        errors.append("answer-value-invalid")
     status = official.get("status")
     reaches = None
-    if status == "official-key":
-        reaches = reaches_key(ak, str(value), official["raw"], kind)
+    source = solution["answer"].get("source")
+    if official.get("verifiedKey"):
+        reaches = proposed is not None and reaches_key(ak, value, official["raw"], kind)
         if not reaches:
             errors.append("does-not-reach-official-key")
-        if solution["answer"].get("source") != "official-key":
+        if source != "official-key":
             errors.append("answer-source-must-be-official-key")
+    elif status == "official-key":
+        errors.append("official-key-evidence-needs-review")
     elif status == "dropped":
-        warnings.append("official-key-dropped")
+        errors.append("official-key-dropped")
     else:
-        errors.append("no-official-key-to-check-against")
+        warnings.append("model-proposed-answer-unverified")
+        if source != "model-proposed":
+            errors.append("answer-source-must-be-model-proposed")
+        if proposed and (len(proposed) != 1 or (kind == "NAT" and proposed[0][0] != proposed[0][1])):
+            errors.append("proposed-answer-must-be-single-candidate")
     if not str(solution["keyIdea"]).strip():
         errors.append("key-idea-empty")
     elif words(solution["keyIdea"]) > 2 * STEP_WORDS_WARN:
@@ -164,15 +284,13 @@ def validate(solution, question, official, figures):
     if kind == "NAT" and not any(re.search(r"\d\s*[-+×x*/÷=]\s*\d|=", s.get("text", "")) for s in steps):
         warnings.append("nat-shows-no-arithmetic")  # some NAT questions ask "which number", not a sum
     if kind in ("MCQ", "MSQ"):
-        letters = [o["key"] for o in question["options"]] or ["A", "B", "C", "D"]
+        letters = option_labels(question)
         check = solution.get("optionCheck") or []
         if sorted(c.get("option") for c in check) != sorted(letters):
             errors.append("option-check-must-cover-every-option")
         correct = sorted(c["option"] for c in check if c.get("verdict") == "correct")
-        if status == "official-key" and reaches:
-            key_sets = [sorted(branch.split(",")) for branch in ak.normalise(official["raw"], kind)[0].split(" or ")]
-            if correct not in key_sets:
-                errors.append("option-verdicts-disagree-with-key")
+        if proposed and ",".join(correct) not in proposed:
+            errors.append("option-verdicts-disagree-with-key" if reaches else "option-verdicts-disagree-with-answer")
         if any(c.get("verdict") not in ("correct", "wrong") or not str(c.get("why", "")).strip() for c in check):
             errors.append("option-check-needs-verdict-and-reason")
     overlay = solution.get("overlay")
@@ -191,63 +309,165 @@ def validate(solution, question, official, figures):
     elif step_refs:
         errors.append("steps-refer-to-an-overlay-that-is-absent")
     meta = solution["meta"]
-    if meta.get("difficulty") not in DIFFICULTY:
+    if meta.get("difficulty") not in tuple(DIFFICULTY):
         errors.append("meta-difficulty")
-    if not isinstance(meta.get("seconds"), int) or not 10 <= meta["seconds"] <= 600:
+    if type(meta.get("seconds")) is not int or not 10 <= meta["seconds"] <= 600:
         errors.append("meta-seconds")
-    if not meta.get("topic"):
+    if not isinstance(meta.get("topic"), str) or not meta["topic"].strip():
         errors.append("meta-topic")
-    if solution["provenance"].get("status") not in STATUS:
+    provenance = solution["provenance"]
+    if provenance.get("status") not in tuple(STATUS):
         errors.append("provenance-status")
-    if solution["provenance"].get("status") == "verified" and not solution["provenance"].get("reviewedBy"):
-        errors.append("verified-needs-a-reviewer")
+    if not isinstance(provenance.get("draftedBy"), str) or not provenance["draftedBy"].strip():
+        errors.append("provenance-drafter-required")
+    if provenance.get("status") == "verified":
+        warnings.append("inline-review-ignored")
     return errors, warnings, reaches
 
 
-def check(work, paper_id):
-    base, segments, figures, keys = paper_files(work, paper_id)
-    folder = base / STAGE
-    figure_index = {f["id"]: f for record in figures.values() for f in record["figures"]}
-    results = {}
-    for path in sorted(folder.glob("q*.json"), key=lambda p: (p.stem.startswith("qb"), int(re.sub(r"\D", "", p.stem)))):
-        key = path.stem
+def review_fingerprint(base, paper_id, question, official, figures, solution_bytes):
+    """Bind a review to the exact solution, key evidence, question and displayed assets."""
+    folder = base / "03-figures"
+    assets = [f["canonical"] for f in figures.get("figures", [])]
+    if figures.get("block"):
+        assets.append(figures["block"])
+    for asset in assets:
+        path = (folder / asset["file"]).resolve()
+        if (not path.is_relative_to(folder.resolve()) or not path.is_file()
+                or sha256(path.read_bytes()) != asset.get("sha256")):
+            raise SolutionError("Figure evidence does not match the stage 3 manifest")
+    evidence = {"paperId": paper_id, "question": question, "officialKey": official, "figures": figures,
+                "solutionSha256": sha256(solution_bytes)}
+    return sha256(json.dumps(evidence, sort_keys=True, ensure_ascii=False).encode())
+
+
+def read_review(base, key):
+    path = base / REVIEW_STAGE / f"{key}.json"
+    try:
+        record = json.loads(path.read_bytes())
+    except (FileNotFoundError, ValueError):
+        return None
+    return record if isinstance(record, dict) else None
+
+
+def solution_result(base, paper_id, question, figures, official, solution_bytes):
+    try:
+        solution = json.loads(solution_bytes)
+    except ValueError:
+        return {"status": "held", "errors": ["not-json"], "warnings": [], "eligibleForExport": False}
+    figure_index = {f["id"]: f for f in figures.get("figures", [])}
+    errors, warnings, reaches = validate(solution, question, official, figure_index)
+    claimed = solution["provenance"].get("status") if not shape_problems(solution) else None
+    fingerprint = None
+    if not errors:
         try:
-            solution = json.loads(path.read_text())
-        except json.JSONDecodeError:
-            results[key] = {"status": "held", "errors": ["not-json"], "warnings": []}
-            continue
+            fingerprint = review_fingerprint(base, paper_id, question, official, figures, solution_bytes)
+        except SolutionError:
+            errors.append("figure-evidence-needs-review")
+    if claimed == "held":
+        errors.append("draft-held-by-author")
+    receipt = read_review(base, question["key"])
+    reviewable = not errors and bool(reaches) and fingerprint is not None
+    approved = (reviewable and receipt is not None and receipt.get("decision") == "approve"
+                and receipt.get("fingerprint") == fingerprint and receipt.get("paperId") == paper_id
+                and receipt.get("key") == question["key"] and isinstance(receipt.get("reviewer"), str)
+                and bool(receipt["reviewer"].strip()))
+    if receipt and not approved:
+        warnings.append("review-no-longer-matches")
+    return {"status": "held" if errors else ("verified" if approved else "draft"), "reachesKey": reaches,
+            "officialKey": official, "errors": errors, "warnings": warnings, "fingerprint": fingerprint,
+            "reviewable": reviewable, "eligibleForExport": approved,
+            "reviewedBy": receipt["reviewer"] if approved else None}
+
+
+def collect(work, paper_id):
+    base, segments, figures, manifest, segment_hash = paper_files(work, paper_id)
+    folder = base / STAGE
+    folder.mkdir(exist_ok=True)
+    evidence_valid = key_evidence(base, paper_id, manifest, segment_hash)
+    results, drafts = {}, {}
+    paths = [p for p in folder.glob("q*.json") if QUESTION_KEY.fullmatch(p.stem)]
+    for path in sorted(paths, key=lambda p: (p.stem.startswith("qb"), int(re.sub(r"\D", "", p.stem)))):
+        key = path.stem
         if key not in segments:
-            results[key] = {"status": "held", "errors": ["no-such-question"], "warnings": []}
+            results[key] = {"status": "held", "errors": ["no-such-question"], "warnings": [], "eligibleForExport": False}
             continue
-        errors, warnings, reaches = validate(solution, segments[key], keys.get(key, {}), figure_index)
-        claimed = solution.get("provenance", {}).get("status")
-        status = "held" if errors else (claimed if claimed in ("draft", "verified") else "draft")
-        results[key] = {"status": status, "reachesKey": reaches, "errors": errors, "warnings": warnings}
+        question = segments[key]
+        official = official_record(manifest, key, question, evidence_valid)
+        drafts[key] = path.read_bytes()
+        results[key] = solution_result(base, paper_id, question, figures.get(key, {}), official, drafts[key])
     part_a = [k for k, q in segments.items() if q["part"] == "A"]
     report = {"paperId": paper_id, "solutions": len(results), "partAQuestions": len(part_a),
               "withoutSolution": [k for k in part_a if k not in results],
               "byStatus": {s: sum(1 for r in results.values() if r["status"] == s) for s in ("draft", "verified", "held")},
+              "eligibleForExport": [key for key, result in results.items() if result["eligibleForExport"]],
               "results": results}
     (folder / "check.json").write_text(json.dumps(report, indent=1) + "\n")
+    return report, base, segments, figures, drafts
+
+
+def check(work, paper_id):
+    report, *_ = collect(work, paper_id)
     return report
+
+
+def approve(work, paper_id, key, reviewer, fingerprint):
+    if not QUESTION_KEY.fullmatch(key) or not reviewer.strip():
+        raise SolutionError("Specify a question key and the human reviewer's name")
+    result = check(work, paper_id)["results"].get(key, {})
+    if not result.get("reviewable"):
+        raise SolutionError("Only a valid solution that agrees with a verified official key can be approved")
+    if fingerprint != result["fingerprint"]:
+        raise SolutionError("The fingerprint changed. Render and review the current evidence before approving")
+    folder = pathlib.Path(work).expanduser().resolve() / paper_id / REVIEW_STAGE
+    folder.mkdir(exist_ok=True)
+    receipt = {"paperId": paper_id, "key": key, "decision": "approve", "reviewer": reviewer.strip(),
+               "fingerprint": fingerprint}
+    with tempfile.NamedTemporaryFile(mode="w", dir=folder, delete=False) as tmp:
+        tmp.write(json.dumps(receipt, indent=2) + "\n")
+    pathlib.Path(tmp.name).replace(folder / f"{key}.json")
+    return receipt
 
 
 # ---------------------------------------------------------------- review page
 
 
 def render(work, paper_id):
-    report = check(work, paper_id)
-    base, segments, figures, keys = paper_files(work, paper_id)
+    report, base, segments, figures, drafts = collect(work, paper_id)
     folder = base / STAGE
-    figure_index = {f["id"]: f for record in figures.values() for f in record["figures"]}
     cards = []
     for key, result in report["results"].items():
-        if "not-json" in result["errors"] or key not in segments:
-            continue
-        solution = json.loads((folder / f"{key}.json").read_text())
-        question = segments[key]
         esc = html.escape
+        problems = "".join(f"<li>{esc(e)}</li>" for e in result["errors"] + result["warnings"])
+        if "not-json" in result["errors"] or key not in segments:
+            cards.append(f'<article class="card held"><h2>{esc(key.upper())}</h2><ul class="problems">{problems}</ul></article>')
+            continue
+        solution = json.loads(drafts[key])
+        if shape_problems(solution):
+            cards.append(f'<article class="card held"><h2>{esc(key.upper())}</h2><ul class="problems">{problems}</ul></article>')
+            continue
+        question = segments[key]
+        record = figures.get(key, {})
+        figure_index = {f["id"]: f for f in record.get("figures", [])}
         figure_html = ""
+        source_block = ""
+        if record.get("block"):
+            source_block = f'<details><summary>Source question</summary><figure class="stage"><img src="../03-figures/{esc(record["block"]["file"])}" alt="Source question crop"></figure></details>'
+        question_options = "".join(f'<li><b>{esc(o["key"])}</b> {esc(o["text"])}</li>' for o in question["options"])
+        official = result["officialKey"]
+        official_details = "Verified official key" if official["verifiedKey"] else f'Key status {esc(official["status"])}'
+        if official["source"] and official.get("page"):
+            name = official["source"]["name"]
+            source_name = esc(name)
+            source_page = esc(str(official["page"]))
+            official_details += (f' · <a href="../04-key/source/{quote(name, safe="")}#page={source_page}">{source_name}, page {source_page}</a>'
+                                f' · printed {esc(str(official.get("printed")))} · key {esc(str(official["raw"]))}')
+        answer_label = "Proposed answer" if solution["answer"].get("source") == "model-proposed" else "Worked answer"
+        review_info = ""
+        if result["eligibleForExport"]:
+            review_info = f'<p>Approved by {esc(result["reviewedBy"])}</p>'
+        elif result["reviewable"]:
+            review_info = f'<p>Review fingerprint <code>{esc(result["fingerprint"])}</code></p>'
         overlay = solution.get("overlay")
         if overlay and overlay.get("figure") in figure_index and not any(e.startswith("overlay") for e in result["errors"]):
             figure = figure_index[overlay["figure"]]
@@ -256,26 +476,30 @@ def render(work, paper_id):
                            f'<svg viewBox="{esc(overlay["viewBox"])}" preserveAspectRatio="none">{layers}</svg></div>'
                            f'<div class="scrub"><button type="button" class="prev">Back</button><span class="count"></span>'
                            f'<button type="button" class="next">Next step</button></div></figure>')
-        else:
-            record = figures.get(key, {})
-            if record.get("block"):
-                figure_html = f'<figure class="stage"><img src="../03-figures/{esc(record["block"]["file"])}" alt=""></figure>'
+        elif not source_block:
+            figure_html = "".join(
+                f'<figure class="stage"><img src="../03-figures/{esc(f["canonical"]["file"])}" alt="Question figure"></figure>'
+                for f in figure_index.values()
+            )
         steps = "".join(f'<li data-step="{esc(s.get("overlay") or "")}">{esc(s["text"])}</li>' for s in solution["steps"])
         options = "".join(f'<li><b>{esc(c["option"])}</b> <span class="{esc(c["verdict"])}">{esc(c["verdict"])}</span> {esc(c["why"])}</li>'
                           for c in solution.get("optionCheck") or [])
         extras = "".join(f'<p><b>{label}</b> {esc(solution[field])}</p>' for field, label in (("trap", "Trap:"), ("fastTrack", "Faster:")) if solution.get(field))
-        problems = "".join(f"<li>{esc(e)}</li>" for e in result["errors"] + result["warnings"])
         meta = solution["meta"]
         cards.append(f'''<article class="card {esc(result["status"])}">
-<header><h2>{esc(key.upper())} <small>{esc(question["type"])} · {esc(meta.get("topic", ""))} · {esc(meta.get("difficulty", ""))} · {esc(str(meta.get("seconds", "")))} s</small></h2>
+<header><h2>{esc(key.upper())} <small>{esc(question["type"])} · {esc(str(meta.get("topic", "")))} · {esc(str(meta.get("difficulty", "")))} · {esc(str(meta.get("seconds", "")))} s</small></h2>
 <span class="badge">{esc(result["status"])}</span></header>
 <p class="prompt">{esc(question["prompt"])}</p>
+{f'<ul>{question_options}</ul>' if question_options else ''}
+{source_block}
 {figure_html}
-<p class="answer">Answer <b>{esc(str(solution["answer"].get("value")))}</b> <small>official key {esc(str(keys.get(key, {}).get("raw")))}</small></p>
+<p class="answer">{answer_label} <b>{esc(str(solution["answer"].get("value")))}</b></p>
+<p><small>{official_details}</small></p>
 <p class="idea">{esc(solution["keyIdea"])}</p>
 <ol class="steps">{steps}</ol>
 {f'<ul class="options">{options}</ul>' if options else ''}
 {extras}
+{review_info}
 {f'<ul class="problems">{problems}</ul>' if problems else ''}
 </article>''')
     page = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -306,13 +530,18 @@ card.querySelector('.prev').onclick=()=>{{at=Math.max(0,at-1);show();}};card.que
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Stage 5: worked solutions (brief, check, render).")
+    parser = argparse.ArgumentParser(description="Private worked-solution drafting and review.")
     sub = parser.add_subparsers(dest="command", required=True)
     one = sub.add_parser("brief")
     one.add_argument("paper_id")
     one.add_argument("key")
     for name in ("check", "render"):
         sub.add_parser(name).add_argument("paper_id")
+    review = sub.add_parser("approve", help="Approve the exact draft and evidence you reviewed")
+    review.add_argument("paper_id")
+    review.add_argument("key")
+    review.add_argument("--reviewer", required=True)
+    review.add_argument("--fingerprint", required=True)
     parser.add_argument("--work", required=True)
     args = parser.parse_args(argv)
     try:
@@ -322,6 +551,8 @@ def main(argv=None):
             report = check(args.work, args.paper_id)
             result = {k: v for k, v in report.items() if k != "results"}
             result["held"] = {k: r["errors"] for k, r in report["results"].items() if r["status"] == "held"}
+        elif args.command == "approve":
+            result = approve(args.work, args.paper_id, args.key, args.reviewer, args.fingerprint)
         else:
             result = render(args.work, args.paper_id)
     except SolutionError as error:

@@ -31,14 +31,26 @@ def build_work(root):
         {"key": "q3", "part": "A", "type": "MCQ", "prompt": "Which fictional city is the capital?", "flags": [],
          "options": [{"key": k, "text": t} for k, t in zip("ABCD", ["Alpha", "Beta", "Gamma", "Delta"])]},
     ]
-    (base / "02-segments/questions.json").write_text(json.dumps({"questions": questions}))
+    segments = base / "02-segments/questions.json"
+    segments.write_text(json.dumps({"questions": questions}))
+    segment_hash = solutions.sha256(segments.read_bytes())
+    figure_hash = solutions.sha256((base / "03-figures/q1/fig-1.png").read_bytes())
     figures = {"questions": [
         {"key": "q1", "block": None, "figures": [{"id": "q1-fig-1", "role": "figure",
-                                                  "canonical": {"file": "q1/fig-1.png", "width": 400, "height": 200}}]},
-        {"key": "q2", "block": None, "figures": []}, {"key": "q3", "block": None, "figures": []}]}
+                                                  "canonical": {"file": "q1/fig-1.png", "width": 400, "height": 200,
+                                                                "sha256": figure_hash}}]},
+        {"key": "q2", "block": None, "figures": []}, {"key": "q3", "block": None, "figures": []}],
+        "segmentsSha256": segment_hash}
     (base / "03-figures/figures.json").write_text(json.dumps(figures))
-    keys = {"keys": {"q1": {"raw": "12", "status": "official-key"}, "q2": {"raw": "A,B", "status": "official-key"},
-                     "q3": {"raw": "C", "status": "official-key"}}}
+    original = base / "04-key/source/fictional-key.pdf"
+    original.parent.mkdir()
+    original.write_bytes(b"Fictional source bytes used to exercise provenance checks")
+    keys = {"paperId": PAPER, "source": {"name": original.name, "sha256": solutions.sha256(original.read_bytes())},
+            "segmentsSha256": segment_hash, "keys": {
+                question["key"]: {"raw": value, "printed": value, "kind": question["type"],
+                                  "status": "official-key", "page": 1, "readBy": "text", "checks": []}
+                for question, value in zip(questions, ("12", "A,B", "C"))
+            }}
     (base / "04-key/key.json").write_text(json.dumps(keys))
     return base
 
@@ -83,9 +95,18 @@ class SolutionsTest(unittest.TestCase):
     def results(self):
         return solutions.check(self.work, PAPER)["results"]
 
+    def change_key(self, key, **changes):
+        path = self.base / "04-key/key.json"
+        manifest = json.loads(path.read_text())
+        manifest["keys"][key].update(changes)
+        path.write_text(json.dumps(manifest))
+
     def test_brief_has_everything_a_drafter_needs(self):
         brief = solutions.brief(self.work, PAPER, "q1")
         self.assertEqual(("NAT", "12"), (brief["type"], brief["officialKey"]["raw"]))
+        self.assertEqual(("12", 1, "text"), tuple(brief["officialKey"][k] for k in ("printed", "page", "readBy")))
+        self.assertTrue(brief["officialKey"]["verifiedKey"])
+        self.assertEqual({"source": "official-key", "value": None}, brief["draftTemplate"]["answer"])
         self.assertEqual(["q1-fig-1"], [f["id"] for f in brief["figures"]])
         self.assertTrue(pathlib.Path(brief["figures"][0]["file"]).exists())
         with self.assertRaisesRegex(solutions.SolutionError, "No question"):
@@ -97,6 +118,7 @@ class SolutionsTest(unittest.TestCase):
         report = solutions.check(self.work, PAPER)
         self.assertEqual({"draft": 2, "verified": 0, "held": 0}, report["byStatus"])
         self.assertTrue(report["results"]["q1"]["reachesKey"])
+        self.assertEqual([], report["eligibleForExport"])
         self.assertEqual(["q3"], report["withoutSolution"])
         self.assertTrue((self.base / "05-solutions/check.json").exists())
 
@@ -113,9 +135,7 @@ class SolutionsTest(unittest.TestCase):
         self.assertEqual("draft", self.results()["q2"]["status"])
 
     def test_nat_ranges_and_missing_arithmetic(self):
-        keys = json.loads((self.base / "04-key/key.json").read_text())
-        keys["keys"]["q1"]["raw"] = "11.5 to 12.5"
-        (self.base / "04-key/key.json").write_text(json.dumps(keys))
+        self.change_key("q1", raw="11.5 to 12.5", printed="11.5 - 12.5")
         self.save("q1", NAT)  # 12 lies inside the accepted range
         self.assertTrue(self.results()["q1"]["reachesKey"])
         outside = copy.deepcopy(NAT)
@@ -142,7 +162,7 @@ class SolutionsTest(unittest.TestCase):
         cases = {
             "step-1-too-long": lambda s: s["steps"][0].__setitem__("text", "word " * 50),
             "meta-difficulty": lambda s: s["meta"].__setitem__("difficulty", "tricky"),
-            "verified-needs-a-reviewer": lambda s: s["provenance"].__setitem__("status", "verified"),
+            "provenance-drafter-required": lambda s: s["provenance"].__setitem__("draftedBy", ""),
             "step-overlay-missing": lambda s: s["steps"][0].__setitem__("overlay", "nowhere"),
             "overlay-viewbox-must-match-figure": lambda s: s["overlay"].__setitem__("viewBox", "0 0 800 400"),
         }
@@ -172,7 +192,98 @@ class SolutionsTest(unittest.TestCase):
         self.assertEqual(2, page.count('class="layer"'))
         self.assertIn("Step 1 of", page.split("<script>")[1].replace("${at+1}", "1"))
         self.assertIn("Plums are purple or red.", page)
+        self.assertIn("fictional-key.pdf#page=1", page)
+        self.assertIn(self.results()["q1"]["fingerprint"], page)
         self.assertNotIn("<script>alert", page)
+
+    def test_human_approval_is_separate_and_bound_to_reviewed_inputs(self):
+        draft = copy.deepcopy(NAT)
+        draft["provenance"].update(status="verified", reviewedBy="Model claimed a reviewer")
+        self.save("q1", draft)
+        review = self.results()["q1"]
+        self.assertEqual("draft", review["status"])
+        self.assertIn("inline-review-ignored", review["warnings"])
+        self.assertFalse(review["eligibleForExport"])
+        with self.assertRaisesRegex(solutions.SolutionError, "fingerprint changed"):
+            solutions.approve(self.work, PAPER, "q1", "Human reviewer", "stale")
+        solutions.approve(self.work, PAPER, "q1", "Human reviewer", review["fingerprint"])
+        report = solutions.check(self.work, PAPER)
+        self.assertEqual(["q1"], report["eligibleForExport"])
+        self.assertEqual("Human reviewer", report["results"]["q1"]["reviewedBy"])
+        draft["steps"][0]["text"] = "This change needs a separate review."
+        self.save("q1", draft)
+        self.assertFalse(self.results()["q1"]["eligibleForExport"])
+        self.assertIn("review-no-longer-matches", self.results()["q1"]["warnings"])
+
+    def test_changed_key_evidence_or_figure_clears_export_eligibility(self):
+        self.save("q1", NAT)
+        review = self.results()["q1"]
+        solutions.approve(self.work, PAPER, "q1", "Human reviewer", review["fingerprint"])
+        self.change_key("q1", printed="12.0")
+        changed = self.results()["q1"]
+        self.assertFalse(changed["eligibleForExport"])
+        self.assertNotEqual(review["fingerprint"], changed["fingerprint"])
+        solutions.approve(self.work, PAPER, "q1", "Human reviewer", changed["fingerprint"])
+        Image.new("RGB", (400, 200), "black").save(self.base / "03-figures/q1/fig-1.png")
+        self.assertIn("figure-evidence-needs-review", self.results()["q1"]["errors"])
+        self.assertFalse(self.results()["q1"]["eligibleForExport"])
+
+    def test_missing_key_supports_proposed_draft_without_promoting_it(self):
+        (self.base / "04-key/key.json").unlink()
+        brief = solutions.brief(self.work, PAPER, "q2")
+        self.assertEqual({"source": "model-proposed", "value": None}, brief["draftTemplate"]["answer"])
+        proposed = copy.deepcopy(MSQ)
+        self.save("q2", proposed)
+        self.assertIn("answer-source-must-be-model-proposed", self.results()["q2"]["errors"])
+        proposed["answer"]["source"] = "model-proposed"
+        self.save("q2", proposed)
+        draft = self.results()["q2"]
+        self.assertEqual(("draft", None, False), (draft["status"], draft["reachesKey"], draft["eligibleForExport"]))
+        with self.assertRaisesRegex(solutions.SolutionError, "verified official key"):
+            solutions.approve(self.work, PAPER, "q2", "Human reviewer", draft["fingerprint"])
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn("Proposed answer", page)
+        proposed["optionCheck"][0]["verdict"] = "wrong"
+        self.save("q2", proposed)
+        self.assertIn("option-verdicts-disagree-with-answer", self.results()["q2"]["errors"])
+
+    def test_untrusted_official_key_and_dropped_question_are_held(self):
+        self.save("q1", NAT)
+        self.change_key("q1", printed="13")
+        self.assertIn("official-key-evidence-needs-review", self.results()["q1"]["errors"])
+        self.change_key("q1", printed="12")
+        self.change_key("q1", checks=["key-section-MCQ-but-question-NAT"])
+        self.assertIn("official-key-evidence-needs-review", self.results()["q1"]["errors"])
+        self.change_key("q1", checks=[])
+        (self.base / "04-key/source/fictional-key.pdf").write_bytes(b"Changed source")
+        self.assertIn("official-key-evidence-needs-review", self.results()["q1"]["errors"])
+        self.change_key("q1", status="dropped")
+        self.assertIn("official-key-dropped", self.results()["q1"]["errors"])
+
+    def test_ambiguous_key_or_changed_segmentation_requires_new_evidence(self):
+        self.save("q1", NAT)
+        path = self.base / "04-key/key.json"
+        manifest = json.loads(path.read_text())
+        manifest["report"] = {"issues": [{"key": "q1", "issue": "printed-twice"}]}
+        path.write_text(json.dumps(manifest))
+        self.assertIn("official-key-evidence-needs-review", self.results()["q1"]["errors"])
+        manifest.pop("report")
+        manifest["segmentsSha256"] = "old-content"
+        path.write_text(json.dumps(manifest))
+        self.assertIn("official-key-evidence-needs-review", self.results()["q1"]["errors"])
+
+    def test_one_alternative_is_accepted_for_verified_choice_key(self):
+        self.change_key("q2", raw="A,B or A,C", printed="AB or AC")
+        self.save("q2", MSQ)
+        self.assertTrue(self.results()["q2"]["reachesKey"])
+        self.assertTrue(self.results()["q2"]["reviewable"])
+
+    def test_review_reports_malformed_draft_without_losing_valid_cards(self):
+        self.save("q1", {"steps": [None]})
+        self.save("q2", MSQ)
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn("invalid-steps", page)
+        self.assertIn("Plums are purple or red.", page)
 
     def test_command_line(self):
         self.save("q1", NAT)
