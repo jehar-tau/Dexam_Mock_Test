@@ -1,4 +1,5 @@
 // Operator-only conversion. Exam facts are versioned; no scoring defaults are inferred.
+import { encodeWorkedExplanation, validateWorkedSolution } from '../src/worked-solution.js';
 function freeze(value){for(const child of Object.values(value))if(child&&typeof child==='object')freeze(child);return Object.freeze(value);}
 export const RULES_2027=freeze({
  uceed:{version:'iitb-2027-v1',exam:'uceed',cycle:2027,source:'https://www.uceed.iitb.ac.in/2027/assets/downloads/docs/UCEED2027_Information_Brochure.pdf',pages:'29–31',durationSeconds:7200,sections:{NAT:{count:14,correct:4,wrong:0},MSQ:{count:15,correct:4,wrong:-1,partial:true},MCQ:{count:28,correct:3,wrong:-0.71}},partB:{durationSeconds:3600,tasks:2,points:50}},
@@ -114,10 +115,18 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
    if(raw&&!key)issue('answer-notation','answer.raw');
   }
  }
+ const solution=question.workedSolution===undefined?null:validateWorkedSolution(question.workedSolution,media);
+ if(question.workedSolution!==undefined){
+  const reviewed=[question.solutionReview?.fingerprint,question.solutionReview?.solutionSha256]
+   .every(digest=>typeof digest==='string'&&/^[0-9a-f]{64}$/.test(digest));
+  if(!solution||!reviewed||question.answer?.status!=='official-key'||typeof question.explanation!=='string'
+    ||!question.explanation.trim()||question.explanation.length>8000)issue('worked-solution-invalid','workedSolution');
+ }
  if(issues.length)return blocked();
  if(!key){issue('section-unmodelled','type');return blocked();}
  key.sourceExternalKey=question.externalKey;
  const marking={correct:scheme.correct,wrong:scheme.wrong,...(scheme.partial?{partial:true}:{})};
- return{issues,runtime:{prompt:question.prompt,options,kind:question.type.toLowerCase(),marking,media,points:scheme.correct,negativePoints:Math.abs(scheme.wrong),topic:question.topic||'unclassified',key,explanation:question.explanation||`Answer key: ${raw}`,context:{version:rule.version,exam:rule.exam,...(rule.programme?{programme:rule.programme}:{}),cycle:rule.cycle,source:rule.source}}};
+ const explanation=solution?encodeWorkedExplanation(question.explanation,solution):question.explanation||`Answer key: ${raw}`;
+ return{issues,runtime:{prompt:question.prompt,options,kind:question.type.toLowerCase(),marking,media,points:scheme.correct,negativePoints:Math.abs(scheme.wrong),topic:question.topic||'unclassified',key,explanation,context:{version:rule.version,exam:rule.exam,...(rule.programme?{programme:rule.programme}:{}),cycle:rule.cycle,source:rule.source}}};
 }
 export function runtimeQuestion(question,options){return inspectRuntimeQuestion(question,options).runtime;}

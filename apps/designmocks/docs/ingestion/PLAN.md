@@ -1,0 +1,185 @@
+# Question-paper ingestion pipeline (UCEED and CEED)
+
+Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records approval for objective solutions with verified official keys, and stage 7 can dry-run one approved item. This file stays the reference until the last stage ships. Update it in the same change as the code.
+
+## Scope
+
+Extract objective questions, choices and figures from PDFs or ordered page photos. Match questions against official answer-key evidence, validate human-reviewed worked solutions and prepare a dry run against the canonical bank. The released attempt report can display worked steps after the existing release gates open.
+
+## Related tools
+
+| Piece | Where | What it does | Gap |
+| --- | --- | --- | --- |
+| Paper ingester | `tools/ingest_official_pdf.py` | PyMuPDF text + page renders, Apple Vision OCR for image-only pages, question markers, options, section/type maps, answer-key PDF parsing, optional local Ollama draft | Writes straight into a local SQLite; one monolith; no tests; figures are not separated from the question |
+| Block cropper | `tools/crop_question_blocks.py` | Crops each question as one exact block from page renders, across page breaks | Whole question is one PNG; figure and options are not separate assets |
+| OCR helper | `tools/ocr_vision.swift` | Apple Vision OCR with line boxes, local and free | macOS only |
+| Vector pilot | `tools/build_visual_reconstruction_pilot.py` | Two NID figures traced to SVG with SSIM/diff comparison boards | Pilot only; NID scans |
+| Answer engine | `tools/answer_engine.py`, `solver_*.py` | Queue of keyless questions solved twice and agreed | Answers only, no worked solution |
+| Canonical bank | `server/data/exports/dexam-bank-export.json` | Canonical question, media and answer metadata | No solutions, no separate figures, no analysis |
+| Bank addition path | `apps/designmocks/scripts/prepare-question-bank-addition.mjs` + `src/question-export-packet.mjs` | Verifies reviewed export packets and stages an addition outside the repo | Accepts PNG assets only |
+| In-app intake | `supabase/functions/question-intake*`, `src/IntakeExtractionQueue.jsx` | Admin uploads an image; an OpenAI model extracts candidates for review | Closed by default (no approved model, cost or data processing) |
+| Attempt insights | `src/attempt-insights.mjs` | Topic and section accuracy after a released attempt | No paper-level analysis, no time or difficulty view |
+
+The file-based stages can be rerun and reviewed independently. Digital PDFs can contain both searchable text and raster figures. Keep original embedded pixels where possible and use local OCR for image-only or incomplete text layers.
+
+## Stages
+
+Each stage reads the previous stage's files from a private work folder **outside the repository** and writes its own. Nothing real is committed: tests use generated fictional papers.
+
+```
+<work>/<paper-id>/
+  01-intake/     paper.json, pages/page-NNN.png, images/<sha>.<ext>, source/<original files>
+  02-segments/   questions.json (boxes, text, options, figure regions per question)
+  03-figures/    <question>/<figure>.png, .svg (if verified), verify.json, board.png
+  04-key/        key.json (official answers matched to questions, mismatches)
+  05-solutions/  <question>.json (draft worked solutions, status)
+  06-review/     <question>.json (human approvals with a fingerprint of the evidence)
+```
+
+| # | Stage | Input → output | Status |
+| --- | --- | --- | --- |
+| 1 | **Intake** | PDF or page photos → hashed source copy, page renders, per-page text with word boxes, embedded-image inventory with native bytes and placement, vector-drawing inventory, a `needsOcr` flag per page | [x] built 20 Nov 2026 |
+| 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
+| 3 | **Figures** | Figure placements → canonical PNG (embedded pixels, or a page render when the page shows something else), a block crop of every question, an SVG trial with metrics and a comparison board | [x] built 21 Nov 2026 |
+| 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `11.5 to 12.5`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
+| 5 | **Solutions** | `solutions.py` provides an objective question, figures, key evidence and a structured draft template. Key disagreements are held, while answers proposed without a readable official key stay drafts | [~] drafting and validation tooling built |
+| 6 | Review | The private solution review page shows the source question, key provenance and solution. An operator can approve a solution with a verified official key for the exact reviewed evidence | [~] objective-solution approval built; full ingestion review still open |
+| 7 | Export | Approved objective question and solution → temporary packet for the existing `bank:prepare-addition` dry run. Preserve step overlays as typed shapes linked to a canonical PNG | [~] individual additions and corrections checked; persistent export still open |
+| 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [~] released answer review can display visual worked solutions; paper analysis still open |
+
+Stage 1 is deterministic. Stages 2–4 are deterministic with optional local OCR. A language model can assist with stage 5 drafting.
+
+## Figure decision
+
+Each figure gets exactly one **canonical asset**, the thing students see, chosen by this order:
+
+1. **Native PDF vector** (drawing paths inside the figure region, no raster): export the paths as SVG directly. Lossless. Rare in these papers.
+2. **Embedded raster** (the normal case): take the image's own bytes from the PDF, decode once and store as PNG (the bank requires PNG). No resampling. Keep the original JPEG bytes and its hash as evidence.
+3. **Scan or photo**: crop from a 300–400 dpi render, deskew, clean the background; same as today's block cropper.
+
+A **vector recreation** (SVG) is added on top, never instead, when the figure is line art or flat colour (cube nets, isometric drawings, patterns, grids, mechanisms, charts) and it passes all of these against the canonical PNG at the source's own pixel size:
+
+| Check | Pass |
+| --- | --- |
+| Ink overlap (IoU of non-background pixels, both images classified with the same palette) | ≥ 0.98 |
+| Edge distance (99th percentile of distances between Canny edges, both directions; the maximum is recorded too) | ≤ 1.5 source pixels |
+| Structural similarity (SSIM, greyscale) | ≥ 0.95 |
+| Flat-fill colour difference (ΔE 2000, region interiors only) | ≤ 3 |
+| Human look at the comparison board (source, SVG, difference) | approved |
+
+As built (21 Nov 2026): the maximum edge distance was replaced by the 99th percentile because JPEG noise puts single stray pixels several pixels away in every figure. The rule that text inside a figure must be real `<text>` was dropped. OCR misses single letters such as option labels and cannot read Devanagari, so it could not enforce the rule; traced letters also pass the pixel checks. Text that OCR does find is recorded, and the SVG is marked `textAsOutlines` for the reviewer.
+
+The SVG must be sanitised: no scripts, no external references, no embedded raster. Photos, shaded renders, textures, hand sketches and anything that fails a check stay as the crop only. Where the answer depends on a fine detail (as in a question about slightly different corner radii) the crop stays primary even if the SVG passes, because a trace can smooth exactly the detail being tested.
+
+Recreation method, cheapest first: potrace (locally installed, operator machine only) on a smooth 4× upscale, one layer per flat colour. A colour counts when it covers at least 1% of the pixels; anti-aliased edge pixels join their nearest colour. Next, a parametric SVG authored by a model or by hand for geometric figures (cube nets, grids), held to the same checks (not built yet). Never a generative image model.
+
+**Solution drawings do not need the figure vectorised.** A solution's annotations (markers, highlights, arrows, labels, step reveals) are an SVG overlay in the canonical image's pixel coordinates, drawn on top of the PNG or SVG. The same annotation coordinates work when the figure remains a crop.
+
+## Solution format
+
+Fictional example:
+
+```json
+{
+  "schema": 1,
+  "answer": { "value": "B", "source": "official-key" },
+  "keyIdea": "One or two sentences: what to notice first.",
+  "steps": [
+    { "text": "A short instruction or observation.", "overlay": "step-1" }
+  ],
+  "optionCheck": [ { "option": "A", "verdict": "wrong", "why": "Short reason." } ],
+  "trap": "The common mistake, if there is one.",
+  "fastTrack": "A quicker route under exam time, if there is one.",
+  "overlay": { "figure": "q1-fig-1", "viewBox": "0 0 800 400", "steps": { "step-1": "<g>…</g>" } },
+  "meta": { "topic": "", "subtopic": "", "difficulty": "easy|medium|hard", "seconds": 60, "technique": "" },
+  "provenance": { "draftedBy": "", "status": "draft" }
+}
+```
+
+Derive the answer from the question and use the verified official key to check it. The validator holds disagreements for human review. When the key is missing or unreadable, use `answer.source: "model-proposed"` for a candidate supported by the reasoning. When the evidence is insufficient, leave the answer blank and set `provenance.status` to `held`. Steps stay under about 30 words each. MCQ and MSQ solutions check every option. NAT solutions show the arithmetic. Add an overlay when it clarifies a visual step.
+
+`solutions.py` works with private files only. Run `brief` for each question, fill its template in `05-solutions/<question>.json`, then run `render` and review the question, key and worked steps together. The answer key retains the source PDF hash, printed value, page and extraction method. When the reasoning and source agree, a human reviewer can copy the fingerprint from the review page and record an approval:
+
+```sh
+python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work brief uceed-2031 q1
+python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work render uceed-2031
+python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work approve uceed-2031 q1 \
+  --reviewer "$REVIEWER_NAME" --fingerprint "$REVIEWED_FINGERPRINT"
+python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work check uceed-2031
+```
+
+`check` lists export-eligible solutions only while their approval matches the draft bytes, question, original key evidence and canonical images. Proposed answers remain drafts and carry no export eligibility.
+
+## Stage 7 dry run
+
+From the repository root, use the app's installed Node dependencies to check an approved objective question against a pinned canonical bank. Pass the human-reviewed fingerprint and rights note. A correction also needs the current canonical question's content SHA-256 from the bank review workflow.
+
+```sh
+python3 apps/designmocks/ingestion/export.py uceed-2031 q1 \
+  --work ~/dmocks-ingestion-work \
+  --fingerprint "$REVIEWED_FINGERPRINT" \
+  --expect-source "$REVIEWED_ORIGIN_MAIN_SHA" \
+  --source-classification "$REVIEWED_SOURCE_CLASSIFICATION" \
+  --rights-note "$REVIEWED_RIGHTS_NOTE"
+```
+
+For a new addition, supply the reviewed classification `owner-authorized` or `official-unlicensed`. The source classification describes the paper and the rights to use it. Official answer-key evidence is verified separately.
+
+For a correction, pass `--replace-expect "$CURRENT_QUESTION_SHA256"` and omit `--source-classification`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
+
+For visual solutions, the packet carries the full plain-text explanation and typed steps with drawing shapes. Each overlay uses the exact PNG's hash and dimensions. Supported SVG shapes and short text labels are converted to data, with no links, styles or embedded images. Visual corrections require the overlay's PNG to match an existing canonical figure. The runtime validates the shapes again and freezes the solution in the private explanation snapshot. The answer review displays the steps and requests the attempt's signed figure only when the existing result release gates are open. The text remains readable if the figure fails to load.
+
+The command reports whether the existing checks accept the proposed addition or correction. It deletes its temporary packet and media copies when it finishes. Persistent export and publication remain subsequent work.
+
+## Analysis
+
+Proposed paper and attempt analysis views.
+
+Paper analysis (from the bank, no student data):
+
+| Chart | Recommendation |
+| --- | --- |
+| Marks by section and response type (NAT/MSQ/MCQ) | keep |
+| Topic share of marks, this paper | keep |
+| Topic trend across years (heat map) | keep — shows what is rising |
+| Difficulty mix by section | keep |
+| Suggested time per question versus marks (where to spend the clock) | keep |
+| Correct-option letter frequency | drop — trivia, invites guessing |
+
+Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
+
+| Chart | Recommendation |
+| --- | --- |
+| Score by section with negative marks shown separately | keep |
+| Accuracy versus attempt rate per topic (four quadrants) | keep |
+| Marks left on the table: easy questions skipped or wrong | keep — most actionable |
+| Time per question against the suggested time | keep, once per-question time is recorded |
+| Trend across a student's mocks | keep, once there are two or more |
+| Percentile or rank against others | later — needs enough attempts to mean anything |
+
+## Operator review
+
+Run the pipeline locally with a private work folder. Drafting can be done by a human or in a local model session. Every accepted solution still needs an explicit human approval tied to the reviewed inputs. Persistent export and staged publication are outside the dry-run command.
+
+## Validation notes
+
+The ingestion test suite generates fictional PDF, photo, figure, key and solution fixtures. Any comparisons with the private question bank stay in the operator work folder.
+
+- Intake flags unexplained page ink for OCR when visible writing is missing from the PDF text layer. Segmentation checks the OCR lines for missing question markers and keeps instructions and evaluation criteria outside question prompts.
+- Canonical images keep embedded pixels where possible, including clipped images and transparency masks. SVG trials can lose fine details even when similarity scores pass. Review the private comparison board before approving a trace.
+- Scanned key rows are matched by table position. A missing question label is inferred only when nearby labels agree. If a cell includes ink that the extraction missed, its key stays unreadable.
+- Matching the official answer confirms the final value. Review the worked reasoning, arithmetic, figures and annotations before signing off. A numeric answer inside the printed accepted range can pass the key comparison.
+
+## Running stages 1 to 4
+
+```bash
+pip3 install -r apps/designmocks/ingestion/requirements.txt   # operator machine only
+brew install potrace                                         # stage 3 SVG trials
+python3 apps/designmocks/ingestion/intake.py --paper /path/to/fictional-paper.pdf --exam uceed --year 2031 --work ~/dmocks-ingestion-work
+python3 apps/designmocks/ingestion/segment.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work
+python3 apps/designmocks/ingestion/figures.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work
+python3 apps/designmocks/ingestion/answer_key.py --paper-id uceed-2031 --key /path/to/fictional-key.pdf --work ~/dmocks-ingestion-work --compare-bank
+npm --prefix apps/designmocks run test:ingestion
+```
+
+Photos instead of a PDF: pass `--photos page1.jpg page2.jpg …` in page order. Output goes to `<work>/<exam>-<year>/01-intake/`. The command prints a one-line JSON summary and refuses a work folder inside any Git repository, an existing intake without `--replace`, encrypted PDFs and files that are not PDFs. Photos are turned upright from their EXIF orientation and re-encoded without EXIF (no location or device data is kept).

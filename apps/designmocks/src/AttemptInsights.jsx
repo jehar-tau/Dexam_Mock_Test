@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { buildAttemptInsights, outcomeLabels, releasedOutcome, responseSummary } from "./attempt-insights.mjs";
 import { answerAlternativesLabel, releasedKeyLabel } from "./answer-key.js";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
+import { WorkedSolution } from "./WorkedSolution.jsx";
+import { readWorkedExplanation, workedFigureIndex } from "./worked-solution.js";
 import "./paper-workspace.css";
 
 const topicName = value => value?.replaceAll("-", " ") || "Unclassified";
@@ -35,7 +37,8 @@ export function AttemptInsights({ questions, practicePath = "/dashboard/practice
   </section>;
 }
 
-export function AnswerReview({questions, figures, initialOutcome = ""}) {
+export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, initialOutcome = ""}) {
+  const { questions } = attempt;
   const [kind, setKind] = useState("");
   const [outcome, setOutcome] = useState(initialOutcome);
   const [selectedId, setSelectedId] = useState("");
@@ -47,6 +50,8 @@ export function AnswerReview({questions, figures, initialOutcome = ""}) {
   const key = releasedKeyLabel(item?.correctKey);
   const answer = Array.isArray(item?.answer) ? item.answer.join(", ") : item?.answer;
   const chosenOptions = [].concat(item?.answer ?? []);
+  const { explanation, solution } = readWorkedExplanation(attempt, item);
+  const figureIndex = solution ? workedFigureIndex(item.media, solution.figure) : -1;
   // Alternatives are combinations. Only label individual choices as correct
   // when the released key supplies a single combination or an MCQ choice.
   const correctOptions = item?.correctKey?.correct ?? [];
@@ -71,7 +76,9 @@ export function AnswerReview({questions, figures, initialOutcome = ""}) {
           </li>)}</ul>}
         <div className="analysis-response"><p><strong>Your answer:</strong> {answer || "Not answered"}</p>
           {key && <p><strong>{answerAlternativesLabel(item.correctKey) ? "Accepted answers" : "Correct answer"}</strong> {key}</p>}</div>
-        {item.explanation && <div className="analysis-explanation"><h4>Explanation</h4><p>{item.explanation}</p></div>}
+        {solution ? <WorkedSolution solution={solution} explanation={explanation} figureUrl={media[item.id]?.[figureIndex]?.url}
+          mediaStatus={mediaStatus} onRetry={onRetry}/>
+          : explanation && <div className="analysis-explanation"><h4>Explanation</h4><p className="worked-solution-text">{explanation}</p></div>}
       </article></>}
     </>}
     {drawings.map(item => <article key={item.id}><h3>{item.prompt}</h3>{item.answer && <p>Your notes: {item.answer}</p>}{item.explanation && <p>{item.explanation}</p>}<DrawingReviewStatus review={item.drawingReview}/></article>)}

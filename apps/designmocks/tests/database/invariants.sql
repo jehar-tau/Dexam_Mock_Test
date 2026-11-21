@@ -159,8 +159,9 @@ insert into dm_private.questions(id,paper_id,ordinal,prompt,options,points,topic
 ('20000000-0000-4000-8000-000000000003','10000000-0000-4000-8000-000000000001',3,'Fictional NAT','[]',4,'Observation','nat','{"correct":4,"wrong":0}',true),
 ('20000000-0000-4000-8000-000000000004','10000000-0000-4000-8000-000000000001',4,'Fictional drawing','[]',20,'Drawing','drawing','{"correct":20,"wrong":0}',true),
 ('20000000-0000-4000-8000-000000000005','10000000-0000-4000-8000-000000000001',5,'Fictional dropped','[{"id":"A","label":"A"},{"id":"B","label":"B"}]',4,'Observation','mcq','{"correct":4,"wrong":-1}',true);
+select set_config('test.worked_solution', E'dmocks:worked-solution-v1\n{"explanation":"Fictional worked explanation","solution":{"version":1}}', true);
 insert into dm_private.answer_keys values
-('20000000-0000-4000-8000-000000000001','{"kind":"mcq","correct":["B"]}','Fictional explanation'),
+('20000000-0000-4000-8000-000000000001','{"kind":"mcq","correct":["B"]}',current_setting('test.worked_solution')),
 ('20000000-0000-4000-8000-000000000002','{"kind":"msq","correct":["A","C"]}','Fictional explanation'),
 ('20000000-0000-4000-8000-000000000003','{"kind":"nat","accepted":[{"range":[3.1,3.2]}]}','Fictional explanation'),
 ('20000000-0000-4000-8000-000000000004','{"kind":"self_review"}','Compare your drawing with the published rubric.'),
@@ -203,12 +204,13 @@ select pg_temp.reject('select public.start_attempt(''10000000-0000-4000-8000-000
 select pg_temp.assert_true(public.my_attempt_history()='[]'::jsonb,'history remains isolated from another student attempt');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 reset role;
-update dm_private.answer_keys set key='{"kind":"mcq","correct":["A"]}' where question_id='20000000-0000-4000-8000-000000000001';
+update dm_private.answer_keys set key='{"kind":"mcq","correct":["A"]}',explanation='A later explanation' where question_id='20000000-0000-4000-8000-000000000001';
 set local role authenticated;
 select pg_temp.assert_true((public.submit_attempt(current_setting('test.attempt_id')::uuid)->>'score')::numeric=9,'MCQ snapshot + partial MSQ + NAT grading');
 select pg_temp.assert_true((public.submit_attempt(current_setting('test.attempt_id')::uuid)->>'total')::numeric=12,'drawing and dropped excluded from objective denominator');
 select pg_temp.assert_true((public.read_attempt(current_setting('test.attempt_id')::uuid)->>'uploadDeadline')::timestamptz=(public.read_attempt(current_setting('test.attempt_id')::uuid)->>'deadline')::timestamptz+interval '15 minutes','drawing upload grace starts from the fixed exam deadline');
 select pg_temp.assert_true((public.read_attempt(current_setting('test.attempt_id')::uuid)->'questions'->0) ? 'correctKey','submitted answer review available');
+select pg_temp.assert_true(public.read_attempt(current_setting('test.attempt_id')::uuid)->'questions'->0->>'explanation'=current_setting('test.worked_solution'),'submitted answer review keeps the original frozen worked solution');
 select pg_temp.reject('select public.save_answer_revision(current_setting(''test.attempt_id'')::uuid,''20000000-0000-4000-8000-000000000001'',''"A"'',2)','submitted answers immutable');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select pg_temp.reject('select public.admin_set_paper_upload_grace(''10000000-0000-4000-8000-000000000001'',600)','upload rules freeze after attempts start');
