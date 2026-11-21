@@ -17,7 +17,7 @@
 .attempt-workspace .attempt-sections .section-rule { flex-basis:100%; color:var(--muted); opacity:1; margin:.25rem 0; }
 .attempt-workspace .attempt-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(260px,320px); gap:clamp(.85rem,2vw,1.6rem); align-items:start; }
 .attempt-layout .question-panel { padding:clamp(1rem,2.4vw,2.25rem); border-radius:12px; min-width:0; }
-.attempt-layout .question-panel h2 { font-size:clamp(1.55rem,2.25vw,2.15rem); line-height:1.2; overflow-wrap:anywhere; }
+.attempt-layout .question-panel h2 { font:600 clamp(1.12rem,1.65vw,1.45rem)/1.4 Figtree,system-ui,sans-serif; letter-spacing:normal; overflow-wrap:anywhere; }
 .attempt-layout .question-meta { margin:0 0 1rem; }
 .attempt-layout .question-panel > p { min-height:0; }
 .attempt-layout .live-choices button { border-radius:8px; min-height:48px; }
@@ -116,7 +116,7 @@
 .attempt-demo-note strong { color:var(--ink); }
 body:has(.attempt-workspace) .header { position:relative; }
 .attempt-workspace .attempt-masthead { padding:clamp(.9rem,1.6vw,1.5rem); border-bottom-width:3px; }
-.attempt-workspace .attempt-masthead h1 { font-size:clamp(1.8rem,3vw,2.65rem); }
+.attempt-workspace .attempt-masthead h1 { font:600 clamp(1.4rem,2.25vw,2rem)/1.2 Figtree,system-ui,sans-serif; letter-spacing:-.02em; }
 .attempt-workspace .attempt-summary { margin-top:.3rem; }
 .attempt-workspace > .back-link, .analysis-workspace > .back-link { margin-block:.3rem .65rem; min-height:2rem; }
 .attempt-workspace .attempt-masthead .eyebrow { margin:0; }
