@@ -49,12 +49,16 @@ export function prepareAddition({ packetPath, expected, ...options }) {
   return prepareAdditions({ ...options, packets: [{ packetPath, expected }] });
 }
 
-export async function prepareAdditions({ packets, expectedSource, replaceExpected, output, mediaRoot, downloadsDir, cwd = process.cwd() }) {
+export async function prepareAdditions({ packets, expectedSource, replaceExpected, replaceExpecteds, output, mediaRoot, downloadsDir, cwd = process.cwd() }) {
   if (!Array.isArray(packets) || packets.length === 0 || !/^[a-f0-9]{40}$/.test(expectedSource || '')) {
     fail('Reviewed packets and a full source commit are required');
   }
   const single = packets.length === 1;
-  if (replaceExpected !== undefined && !single) fail('Prepare a correction with one reviewed packet');
+  if (replaceExpected !== undefined && (!single || replaceExpecteds !== undefined)) fail('Use one exact question version for a single correction');
+  if (replaceExpecteds !== undefined && (!Array.isArray(replaceExpecteds) || replaceExpecteds.length !== packets.length)) {
+    fail('Supply one current question version for every correction packet');
+  }
+  const replacements = replaceExpecteds ?? (replaceExpected === undefined ? null : [replaceExpected]);
   const source = git(cwd, 'rev-parse', '--verify', 'refs/remotes/origin/main^{commit}');
   if (source !== expectedSource) fail('origin/main does not match the expected source commit');
   const raw = execFileSync('git', ['show', `${source}:${SOURCE_PATH}`], { cwd, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
@@ -65,15 +69,16 @@ export async function prepareAdditions({ packets, expectedSource, replaceExpecte
   const additions = [];
   const alreadyPresent = [];
   const byPath = new Map();
-  for (const input of packets) {
+  for (const [packetIndex, input] of packets.entries()) {
     const { packet, payload } = await readPacket(input);
     const key = payload.externalKey;
     if (seen.has(key)) fail('External key appears more than once in the packet batch');
     seen.add(key);
     const index = bank.questions.findIndex(question => question.externalKey === key);
     const previous = bank.questions[index];
-    if (replaceExpected !== undefined) {
-      if (!/^[a-f0-9]{64}$/.test(replaceExpected) || !previous || sha256(stableJson(previous)) !== replaceExpected) {
+    const expectedVersion = replacements?.[packetIndex];
+    if (replacements) {
+      if (!/^[a-f0-9]{64}$/.test(expectedVersion) || !previous || sha256(stableJson(previous)) !== expectedVersion) {
         fail('The correction requires the current question version SHA-256');
       }
       if (stableJson(previous.holds) !== '[]') fail('Resolve canonical holds before preparing a correction');
@@ -86,7 +91,7 @@ export async function prepareAdditions({ packets, expectedSource, replaceExpecte
       alreadyPresent.push(packet);
       continue;
     }
-    if (previous && replaceExpected === undefined) fail('External key already exists in the source bank');
+    if (previous && !replacements) fail('External key already exists in the source bank');
     const one = buildManifest({ schemaVersion: 1, questions: [payload] }, source);
     if (one.eligibleTotal !== 1) fail('Question is not eligible');
     if (!Array.isArray(payload.assets ?? []) || (payload.visualDependency && !payload.assets?.length)) fail('Required figure is missing');
@@ -100,7 +105,7 @@ export async function prepareAdditions({ packets, expectedSource, replaceExpecte
   }
 
   if (!additions.length) {
-    return { mode: 'no-op', sourceCommit: source, ...(single ? {} : { added: 0, alreadyPresent: alreadyPresent.length }) };
+    return { mode: 'no-op', sourceCommit: source, ...(single ? {} : { [replacements ? 'replaced' : 'added']: 0, alreadyPresent: alreadyPresent.length }) };
   }
   for (const question of bank.questions) {
     if (!Array.isArray(question.assets)) continue;
@@ -121,16 +126,27 @@ export async function prepareAdditions({ packets, expectedSource, replaceExpecte
   if (!end) fail('Unsupported source layout');
   const expectedQuestions = bank.questions.slice();
   let proposed;
-  if (replaceExpected !== undefined) {
-    const { previous, payload, index } = additions[0];
-    // Preserve the original bytes around the exact current record.
+  if (replacements) {
+    // Preserve the original bytes around every exact current record. Apply
+    // replacements from the end so earlier source offsets stay unchanged.
     const indentRecord = record => JSON.stringify(record, null, 1).replaceAll('\n', '\n  ');
-    const block = [indentRecord(previous), JSON.stringify(previous)].find(candidate => raw.includes(candidate));
-    if (!block) fail('Cannot locate the exact source record');
-    const location = raw.indexOf(block);
-    if (location < 0 || raw.indexOf(block, location + block.length) >= 0) fail('Cannot locate the exact source record');
-    proposed = raw.slice(0, location) + indentRecord(payload) + raw.slice(location + block.length);
-    expectedQuestions[index] = payload;
+    const patches = additions.map(({ previous, payload, index }) => {
+      const block = [indentRecord(previous), JSON.stringify(previous)].find(candidate => raw.includes(candidate));
+      if (!block) fail('Cannot locate the exact source record');
+      const location = raw.indexOf(block);
+      if (location < 0 || raw.indexOf(block, location + block.length) >= 0) fail('Cannot locate the exact source record');
+      expectedQuestions[index] = payload;
+      return { location, block, replacement: indentRecord(payload) };
+    }).sort((a, b) => b.location - a.location);
+    for (let index = 1; index < patches.length; index++) {
+      if (patches[index].location + patches[index].block.length > patches[index - 1].location) {
+        fail('Source correction records overlap');
+      }
+    }
+    proposed = raw;
+    for (const patch of patches) {
+      proposed = proposed.slice(0, patch.location) + patch.replacement + proposed.slice(patch.location + patch.block.length);
+    }
   } else {
     const payloads = additions.map(({ packet }) => packet.payloadText).join(',\n');
     proposed = raw.slice(0, end.index) + (bank.questions.length ? ',' : '') + '\n' + payloads + '\n' + raw.slice(end.index);
@@ -157,7 +173,7 @@ export async function prepareAdditions({ packets, expectedSource, replaceExpecte
     ...(replaceExpected !== undefined && { replacesContentSha256: replaceExpected }),
     ...(single
       ? { contentSha256: reviews[0].contentSha256, review: reviews[0].review }
-      : { added: additions.length, alreadyPresent: alreadyPresent.length, reviews: counts }),
+      : { [replacements ? 'replaced' : 'added']: additions.length, alreadyPresent: alreadyPresent.length, reviews: counts }),
   };
   if (!output) return summary;
   if (counts['objective-incomplete']) fail('Objective review is incomplete');
@@ -179,7 +195,8 @@ export async function prepareAdditions({ packets, expectedSource, replaceExpecte
     }
     const details = single
       ? { artifactId: reviews[0].artifactId, externalKey: reviews[0].externalKey }
-      : { additions: reviews, existingArtifacts: alreadyPresent.map(({ artifactId, contentSha256, externalKey }) => ({ artifactId, contentSha256, externalKey })) };
+      : { [replacements ? 'corrections' : 'additions']: reviews,
+        existingArtifacts: alreadyPresent.map(({ artifactId, contentSha256, externalKey }) => ({ artifactId, contentSha256, externalKey })) };
     await writeFile(path.join(target, 'receipt.json'), JSON.stringify({ ...summary, ...details }, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
   } catch (error) { if (created) await rm(target, { recursive: true, force: true }); throw error; }
   return summary;
@@ -198,11 +215,16 @@ async function main() {
   const { values } = parseArgs({ options });
   const { packet = [], expect = [] } = values;
   if (!packet.length || packet.length !== expect.length) fail('Supply one reviewed SHA-256 for every packet');
-  const singles = ['expect-source', 'replace-expect', 'output', 'media-root', 'downloads-dir'];
+  const singles = ['expect-source', 'output', 'media-root', 'downloads-dir'];
   if (singles.some(name => values[name]?.length > 1)) fail('Repeat only packet paths and review digests');
+  if (values['replace-expect']?.length && values['replace-expect'].length !== packet.length) {
+    fail('Supply one current question version for every correction packet');
+  }
   const result = await prepareAdditions({
     packets: packet.map((packetPath, index) => ({ packetPath, expected: expect[index] })),
-    expectedSource: values['expect-source']?.[0], replaceExpected: values['replace-expect']?.[0],
+    expectedSource: values['expect-source']?.[0],
+    ...(packet.length === 1 ? { replaceExpected: values['replace-expect']?.[0] }
+      : { replaceExpecteds: values['replace-expect'] }),
     output: values.output?.[0], mediaRoot: values['media-root']?.[0],
     downloadsDir: values['downloads-dir']?.[0], cwd: fileURLToPath(new URL('../../..', import.meta.url)),
   });
