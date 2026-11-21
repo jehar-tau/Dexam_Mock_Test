@@ -36,9 +36,9 @@ test("hosted review connects the student workspace, examples and Learn without a
   await expect(page.getByText(/Welcome, Sample Student/)).toBeVisible();
 
   await workspaceLink(page, "Exam-wise mocks");
-  await expect(page.getByRole("heading", { name: /Pick your paper/ })).toBeVisible();
-  await page.getByRole("button", { name: "Start mock" }).first().click();
-  await expect(page.getByText("Preview: UCEED mock created")).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Exam-wise mocks/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Try a complete paper demo" })).toHaveAttribute("href", "/portal-preview/paper");
+  await expect(page.getByRole("region", { name: "Mock catalogue" })).toContainText("Preview only");
 
   await workspaceLink(page, "All India mocks");
   await page.getByRole("link", { name: "View attempt" }).click();

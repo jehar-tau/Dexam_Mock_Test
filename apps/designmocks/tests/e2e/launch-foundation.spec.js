@@ -79,7 +79,7 @@ test("fictional portal preview navigation opens dev-only module screens", async 
   });
   const destinations = [
     ["Overview", "/portal-preview"],
-    ["Exam-wise mocks", "/exam-mocks-preview", /Pick your paper/],
+    ["Exam-wise mocks", "/exam-mocks-preview", /Inside the exam room/],
     ["All India mocks", "/all-india-preview", /One paper\. One attempt/],
     ["Topic practice", "/topic-practice-preview", /Build a topic session/],
     ["Learn", "/learn-preview", /Notice before you decide/],
@@ -148,7 +148,7 @@ test("the reduced dev preview links only to its local overview and exam example"
   await expect(papers).toHaveAttribute("href", "/exam-mocks-preview");
   await papers.click();
   await expect(page).toHaveURL(reducedPreviewOrigin + "/exam-mocks-preview");
-  await expect(page.getByRole("heading", { name: /Pick your paper/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Exam-wise mocks/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Sign in to continue/ })).toHaveCount(0);
   expect(providerRequests).toEqual([]);
 });
@@ -229,24 +229,38 @@ test("topic practice creates a constrained timed-session preview", async ({
   ).toBeVisible();
 });
 
-test("exam-wise mocks show release and free-attempt states", async ({
-  page,
-}) => {
+test("exam-wise preview explores paper formats and samples without issuing an attempt", async ({ page }) => {
+  const mutations = [];
+  page.on("request", request => {
+    if (request.method() === "POST") mutations.push(request.url());
+  });
   await page.goto("/exam-mocks-preview");
-  await expect(page.getByText("1 free attempt left")).toBeVisible();
-  await expect(page.getByText("NAT 14 · MSQ 15 · MCQ 28")).toBeVisible();
-  await expect(page.getByText("UCEED · 2027 Part A")).toBeVisible();
-  await expect(page.getByText("NIFT · 2027 B.Des. GAT")).toBeVisible();
-  await expect(page.getByText("MCQ 100")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Not released" })).toHaveCount(
-    1,
-  );
-  await page
-    .locator("article")
-    .filter({ hasText: "UCEED" })
-    .getByRole("button", { name: "Start mock" })
-    .click();
-  await expect(page.getByText("Preview: UCEED mock created")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Try a complete paper demo" })).toHaveAttribute("href", "/portal-preview/paper");
+  const exam = name => page.getByRole("radio", { name });
+  await expect(exam(/UCEED/)).toBeChecked();
+  await page.getByText("A hole through folded paper", {exact:true}).click();
+  await page.getByLabel("Your numerical answer").fill("4");
+  await page.getByRole("button", {name:"Check answer"}).click();
+  await expect(page.getByRole("status")).toContainText("Correct.");
+  await exam(/UCEED/).focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(exam(/NID DAT/)).toBeChecked();
+  await page.locator("summary").filter({hasText:"Text & visual prompts"}).click();
+  await expect(page.getByText(/Check your admit card/)).toBeVisible();
+  await page.getByText("A latch for small hands", {exact:true}).click();
+  await page.getByText("Review your sketch", {exact:true}).click();
+  await expect(page.getByText(/Compare your two views/)).toBeVisible();
+  await page.getByText("NIFT", {exact:true}).first().click();
+  await page.getByText("Cutting a fabric length", {exact:true}).click();
+  await page.getByRole("radio", {name:"120",exact:true}).check();
+  await page.getByRole("button", {name:"Check answer"}).click();
+  await expect(page.getByRole("status")).toContainText("120 cm");
+  await page.getByText("CEED", {exact:true}).first().click();
+  await expect(page.getByRole("region", {name:"Mock catalogue"})).toContainText("Released CEED papers");
+  await expect(page.getByRole("button", {name:"Start mock"})).toHaveCount(0);
+  await expect(page.getByText(/free attempt left|mock created/)).toHaveCount(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(mutations).toEqual([]);
 });
 
 test("All India mocks expose one open attempt and privacy-safe released ranks", async ({
