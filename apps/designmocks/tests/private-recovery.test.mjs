@@ -6,7 +6,7 @@ import {Readable} from 'node:stream';
 import os from 'node:os';
 import path from 'node:path';
 import {RECOVERY_PROJECT,createRecoveryBundle,verifyRecoveryBundle} from '../scripts/recovery-bundle.mjs';
-import {recoveryPostgresEnvironment,compareRecoverySnapshots} from '../scripts/recovery-postgres.mjs';
+import {recoveryPostgresEnvironment,compareRecoverySnapshots,normalizeRecoverySchema} from '../scripts/recovery-postgres.mjs';
 import {validateRecoveryCaptureConfiguration,restoreLocalRecoveryObjects,verifyPrivateRecovery} from '../scripts/private-recovery.mjs';
 const token=claims=>'x.'+Buffer.from(JSON.stringify(claims)).toString('base64url')+'.x',owner='10000000-0000-4000-8000-000000002450';
 const config=()=>({url:`https://${RECOVERY_PROJECT}.supabase.co`,key:token({role:'service_role',ref:RECOVERY_PROJECT}),databaseUrl:`postgresql://postgres:fictional%40password@db.${RECOVERY_PROJECT}.supabase.co:5432/postgres`,recoveryKey:randomBytes(32).toString('hex'),releaseSha:'a'.repeat(40)});
@@ -60,4 +60,14 @@ test('a byte or metadata mismatch never becomes accepted restoration',()=>fixtur
 test('restored row/schema differences and identifier reuse remain failures',()=>{
  const expected={schemaSha256:'a'.repeat(64),rows:[{schema:'dm_private',name:'original_attempt',count:1,sha256:'b'.repeat(64)}],buckets:[],sequences:[{schema:'dm_private',name:'original_audit',value:8,start:1,increment:1}]};assert.equal(compareRecoverySnapshots(expected,structuredClone(expected)),true);
  for(const actual of[{...expected,schemaSha256:'c'.repeat(64)},{...expected,rows:[{...expected.rows[0],count:0}]},{...expected,sequences:[{...expected.sequences[0],value:7}]}])assert.throws(()=>compareRecoverySnapshots(expected,actual));
+});
+test('recovery normalizes only the known PostgreSQL 17 check grouping',()=>{
+ const original='CHECK ((((char_length(name) >= 1) AND (char_length(name) <= 60)) AND (name = btrim(name))))';
+ const restored='CHECK (((char_length(name) >= 1) AND (char_length(name) <= 60) AND (name = btrim(name))))';
+ const constraint={schema:'dm_private',table:'community_folders',name:'community_folders_name_check',definition:original};
+ const schema={constraints:[constraint,{...constraint,name:'another_check'}]};
+ assert.deepEqual(normalizeRecoverySchema(schema).constraints,[
+   {...constraint,definition:restored},
+   {...constraint,name:'another_check'},
+ ]);
 });

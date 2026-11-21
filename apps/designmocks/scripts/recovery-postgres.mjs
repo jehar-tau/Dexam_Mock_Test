@@ -58,6 +58,24 @@ export const recoverySchemaQuery=`select jsonb_build_object(
  'views',(select coalesce(jsonb_agg(jsonb_build_object('schema',schemaname,'name',viewname,'definition',definition)order by schemaname,viewname),'[]')from pg_views where schemaname in ${schemas}),
  'defaults',(select coalesce(jsonb_agg(jsonb_build_object('owner',pg_get_userbyid(d.defaclrole),'schema',n.nspname,'kind',d.defaclobjtype,'acl',(select jsonb_agg(jsonb_build_object('grantor',pg_get_userbyid(x.grantor),'grantee',case when x.grantee=0 then'PUBLIC'else pg_get_userbyid(x.grantee)end,'privilege',x.privilege_type,'grantable',x.is_grantable)order by x.grantee::regrole::text,x.privilege_type,x.is_grantable)from aclexplode(d.defaclacl)x))order by pg_get_userbyid(d.defaclrole),n.nspname,d.defaclobjtype),'[]')from pg_default_acl d left join pg_namespace n on n.oid=d.defaclnamespace where n.nspname in ${schemas}or d.defaclnamespace=0))`;
 export const recoveryObjectsQuery=`select coalesce(jsonb_agg(jsonb_build_object('bucket',o.bucket_id,'name',o.name,'owner',coalesce(to_jsonb(o)->>'owner_id',to_jsonb(o)->>'owner'),'contentType',o.metadata->>'mimetype','cacheControl',o.metadata->>'cacheControl','byteSize',(o.metadata->>'size')::bigint,'userMetadata',to_jsonb(o)->'user_metadata','version',to_jsonb(o)->>'version')order by o.bucket_id,o.name),'[]')from storage.objects o`;
+export function normalizeRecoverySchema(schema) {
+ // pg_dump removes one redundant AND grouping from this check when restoring it.
+ // Normalize only the two observed, equivalent PostgreSQL 17 renderings; all
+ // other constraint, RLS and privilege changes must still fail the comparison.
+ const before = "CHECK ((((char_length(name) >= 1) AND (char_length(name) <= 60)) AND (name = btrim(name))))";
+ const after = "CHECK (((char_length(name) >= 1) AND (char_length(name) <= 60) AND (name = btrim(name))))";
+ return {
+   ...schema,
+   constraints: schema.constraints.map(constraint => (
+     constraint.schema === 'dm_private' &&
+     constraint.table === 'community_folders' &&
+     constraint.name === 'community_folders_name_check' &&
+     constraint.definition === before
+       ? {...constraint, definition: after}
+       : constraint
+   )),
+ };
+}
 export const recoveryBucketsQuery=`select coalesce(jsonb_agg(jsonb_build_object('id',id,'name',name,'public',public,'fileSizeLimit',file_size_limit,'allowedMimeTypes',(select jsonb_agg(t order by t)from unnest(allowed_mime_types)t))order by id),'[]')from storage.buckets`;
 export async function checkRecoveryDatabaseSource(connection, {sourceStage = 'mvp', expectedVersions} = {}) {
   assert.ok(['mvp', 'pre-upgrade', 'staging-before-permissions-repair'].includes(sourceStage), 'Unknown recovery source stage');
@@ -94,7 +112,7 @@ export async function checkRecoveryDatabaseSource(connection, {sourceStage = 'mv
 
 export async function captureRecoverySnapshot(connection, {sourceStage = 'mvp', expectedVersions} = {}) {
  const migrationVersions = await checkRecoveryDatabaseSource(connection, {sourceStage, expectedVersions});
- const schema=JSON.parse(await connection.query(recoverySchemaQuery)),relations=JSON.parse(await connection.query(`select coalesce(jsonb_agg(jsonb_build_object('schema',n.nspname,'name',c.relname)order by n.nspname,c.relname),'[]')from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname in ${schemas}and c.relkind in('r','p')`));
+ const schema=normalizeRecoverySchema(JSON.parse(await connection.query(recoverySchemaQuery))),relations=JSON.parse(await connection.query(`select coalesce(jsonb_agg(jsonb_build_object('schema',n.nspname,'name',c.relname)order by n.nspname,c.relname),'[]')from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname in ${schemas}and c.relkind in('r','p')`));
  const rows=[];for(const table of relations){const query=`select jsonb_build_object('schema',${quote(table.schema)},'name',${quote(table.name)},'count',count(*),'sha256',encode(sha256(convert_to(coalesce(string_agg(encode(sha256(convert_to(to_jsonb(t)::text,'UTF8')),'hex'),''order by encode(sha256(convert_to(to_jsonb(t)::text,'UTF8')),'hex')),''),'UTF8')),'hex'))from only ${identifier(table.schema)}.${identifier(table.name)}t`;rows.push(JSON.parse(await connection.query(query)));}
  const buckets=JSON.parse(await connection.query(recoveryBucketsQuery)),objects=JSON.parse(await connection.query(recoveryObjectsQuery));assert.ok(buckets.every(bucket=>bucket.public===false),'Every restored DMocks bucket must remain private');assert.ok(objects.every(object=>buckets.some(bucket=>bucket.id===object.bucket)),'Unbound storage object');
  const version=Number(await connection.query("select current_setting('server_version_num')"));assert.equal(Math.floor(version/10000),17,'Recovery currently requires PostgreSQL 17');
