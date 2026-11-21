@@ -80,6 +80,10 @@ const LearnProgrammes = __DMOCKS_INCLUDE_LEARN__
 const LearnProgrammePage = __DMOCKS_INCLUDE_LEARN__
   ? React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePage }))) : LearnSignIn;
 const Community = React.lazy(() => import("./Community.jsx").then(module => ({ default: module.Community })));
+const CommunityArticles = React.lazy(() => import("./CommunityArticles.jsx").then(module => ({ default: module.CommunityArticles })));
+const CommunityEditor = React.lazy(() => import("./CommunityEditor.jsx").then(module => ({ default: module.CommunityEditor })));
+const CommunityReader = React.lazy(() => import("./CommunityReader.jsx").then(module => ({ default: module.CommunityReader })));
+const CommunitySaved = React.lazy(() => import("./CommunitySaved.jsx").then(module => ({ default: module.CommunitySaved })));
 const AllIndiaHighlights = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaHighlights })));
 const TopicPracticePreview = includeStudentPreview
   ? React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPracticePreview }))) : null;
@@ -1684,6 +1688,10 @@ export default function App() {
           <Route path="/dashboard/learn" element={postLaunchPreview?<Learn />:<LearnProgrammes />} />
           <Route path="/dashboard/learn/programme/:slug" element={<LearnProgrammePage />} />
           <Route path="/dashboard/community" element={studentModuleReleased('community')?<Community />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/articles" element={studentModuleReleased('community')?<CommunityArticles />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/write" element={studentModuleReleased('community')?<CommunityEditor />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/post/:id" element={studentModuleReleased('community')?<CommunityReader />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/saved" element={studentModuleReleased('community')?<CommunitySaved />:<DeferredModule module="community"/>} />
           <Route path="/report" element={<BugReport />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/review/drawings" element={postLaunchPreview?<DrawingReviewerWorkspace />:<DeferredModule module="drawings"/>} />

@@ -48,7 +48,7 @@ export function readCommunityModerationPage(value,filters,prior=null){
  if(prior&&(!sameFilters(prior.filters,wanted)||!prior.nextCursor||value.version!==prior.version||value.snapshotAt!==prior.snapshotAt))throw responseFailure();
  const items=value.items.map(item=>{
   if(!item||!uuid.test(item.id)||item.kind!==wanted.targetType||!uuid.test(item.postId)||
-   !(item.parentId===null||uuid.test(item.parentId))||!exams.has(item.exam)||!text(item.topic,100)||!text(item.body,5000)||
+   !(item.parentId===null||uuid.test(item.parentId))||!exams.has(item.exam)||!text(item.topic,100)||!text(item.body,20000)||
    !(item.kind==="post"?["visible","hidden","locked"]:["visible","hidden"]).includes(item.status)||
    !integer(item.assetCount)||item.assetCount>3||dateMicros(item.createdAt)>snapshot||
    (wanted.exam!==null&&item.exam!==wanted.exam)||(wanted.topic!==null&&item.topic!==wanted.topic)||(wanted.status!==null&&item.status!==wanted.status)||

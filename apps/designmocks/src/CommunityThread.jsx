@@ -5,7 +5,7 @@ import { communityCommentOrder } from "./community-write.js";
 import { CommunityAttachments } from "./CommunityAttachments.jsx";
 
 export function CommunityThread({ thread, busy, pendingPost, pendingReply, pendingTextPost, pendingTextReply, replyFormVersion = 0, loading,
-  onOpen, onMore, onComment, onHelpful, onReport, onAddImages }) {
+  onOpen, onMore, onComment, onHelpful, onReport, onAddImages, onBlock, embedded = false }) {
   const [replyTo,setReplyTo] = useState(null),[pageNotice,setPageNotice]=useState(""),textarea = useRef(null), replyButton = useRef(null), heading = useRef(null),pageFocus=useRef(null);
   const comments = communityCommentOrder(thread.comments), byId = new Map(thread.comments.map(item=>[item.id,item]));
   const [attachmentTarget,setAttachmentTarget]=useState(null),attachmentOpener=useRef(null),attachmentForm=useRef(null),returnAttachmentFocus=useRef(false);
@@ -22,7 +22,7 @@ export function CommunityThread({ thread, busy, pendingPost, pendingReply, pendi
     returnAttachmentFocus.current=!saved||Boolean(attachmentForm.current?.contains(document.activeElement));
     setAttachmentTarget(null);
   }
-  useLayoutEffect(()=>{heading.current?.focus();},[]);
+  useLayoutEffect(()=>{if(!embedded)heading.current?.focus();},[]);
   useLayoutEffect(()=>{setReplyTo(null);},[replyFormVersion,thread.status]);
   useLayoutEffect(()=>{if(replyTo)textarea.current?.focus();},[replyTo?.id]);
   useLayoutEffect(()=>{
@@ -37,14 +37,15 @@ export function CommunityThread({ thread, busy, pendingPost, pendingReply, pendi
     pageFocus.current=null;
   },[thread.comments,loading]);
   function cancelReply() { setReplyTo(null); if(replyButton.current?.isConnected)replyButton.current.focus(); }
-  return <section className="community-thread" aria-label="Discussion thread">
+  return <section className="community-thread" aria-label={embedded?"Comments":"Discussion thread"}>
+    {embedded ? <h2 ref={heading} tabIndex={-1}>Comments</h2> : <>
     <button type="button" className="text-button" onClick={()=>onOpen(null)}>Close discussion</button>
     <button type="button" className="text-button" onClick={()=>onOpen(thread.id)}>Refresh discussion</button>
     <button type="button" className="text-button" disabled={busy} onClick={event=>onReport(thread.id,null,event.currentTarget)}>Report discussion</button>
-    <span className="eyebrow">{thread.exam} · {thread.topic}</span><h2 ref={heading} tabIndex={-1}>{thread.title}</h2><p>{thread.body}</p>
+    <span className="eyebrow">{thread.exam} · {thread.topic}</span><h2 ref={heading} tabIndex={-1}>{thread.title}</h2><p>{thread.body}</p></>}
     {thread.hasEarlier && <div className="notice"><p>Showing this reply and the replies that follow it.</p><button type="button" className="text-button" onClick={()=>onOpen(thread.id)}>Read from beginning</button></div>}
-    <CommunityImages images={thread.media} label="Question attachment" expiresAt={thread.mediaExpiresAt} onUnavailableFocus={()=>heading.current?.focus()} />
-    {thread.canAttach===true && <button type="button" className="text-button" disabled={busy||Boolean(pendingReply)||Boolean(pendingPost)||Boolean(pendingTextReply)||Boolean(pendingTextPost)} onClick={event=>chooseAttachments(thread,"post",event.currentTarget)}>Add discussion images</button>}
+    {!embedded && <CommunityImages images={thread.media} label="Question attachment" expiresAt={thread.mediaExpiresAt} onUnavailableFocus={()=>heading.current?.focus()} />}
+    {thread.canAttach===true && <button type="button" className="text-button" disabled={busy||Boolean(pendingReply)||Boolean(pendingPost)||Boolean(pendingTextReply)||Boolean(pendingTextPost)} onClick={event=>chooseAttachments(thread,"post",event.currentTarget)}>{embedded?"Add article images":"Add discussion images"}</button>}
     {thread.status==="locked" && <p role="status">This discussion is locked. Existing images remain viewable.</p>}
     <form className="community-reply" key={replyFormVersion} onSubmit={async event=>{
       event.preventDefault(); const element=event.currentTarget,form=new FormData(element);
@@ -63,6 +64,7 @@ export function CommunityThread({ thread, busy, pendingPost, pendingReply, pendi
     <ol className="community-comments" id={`community-comments-${thread.id}`}>
       {comments.map(comment=>{
         const parent=comment.parentAvailable===false ? null : byId.get(comment.parentId) ?? comment.parentPreview;
+        if(comment.blocked===true)return <li key={comment.id} style={{marginInlineStart:`${Math.min(comment.depth,2)*.75}rem`}}><article className="community-comment" id={`community-comment-${comment.id}`} tabIndex={-1} aria-label="Comment by an author you blocked"><p className="muted">A reply from an author you blocked.</p></article></li>;
         return <li key={comment.id} style={{marginInlineStart:`${Math.min(comment.depth,2)*.75}rem`}}><article className="community-comment" id={`community-comment-${comment.id}`} tabIndex={-1} aria-label={`Comment by ${comment.author || "Student"}`}>
           {comment.parentId && <p className="community-parent-context">{parent ? `Reply to ${parent.author || "Student"}: ${parent.body.slice(0,160)}` : "Reply to a removed or unavailable comment."}</p>}
           <p>{comment.body}</p><CommunityImages images={comment.media} label="Solution attachment" expiresAt={thread.mediaExpiresAt} onUnavailableFocus={()=>heading.current?.focus()} />
@@ -72,6 +74,7 @@ export function CommunityThread({ thread, busy, pendingPost, pendingReply, pendi
               aria-label={`Reply to comment by ${comment.author || "Student"}`} onClick={event=>{replyButton.current=event.currentTarget;setReplyTo(comment);}}>Reply to comment</button>}
             {!comment.isMine && <button type="button" className="text-button" aria-disabled={busy || Boolean(comment.markedHelpful)} aria-pressed={Boolean(comment.markedHelpful)} onClick={()=>{if(!busy&&!comment.markedHelpful)onHelpful(comment.id);}}>{comment.markedHelpful ? "Marked helpful" : "Mark helpful"}</button>}
             <button type="button" className="text-button" disabled={busy} onClick={event=>onReport(null,comment.id,event.currentTarget)}>Report</button>
+            {onBlock && !comment.isMine && <button type="button" className="text-button" disabled={busy} aria-label={`Block author ${comment.author || "Student"}`} onClick={()=>onBlock(comment.id)}>Block author</button>}
             {comment.canAttach===true && <button type="button" className="text-button" disabled={busy||Boolean(pendingReply)||Boolean(pendingPost)||Boolean(pendingTextReply)||Boolean(pendingTextPost)} onClick={event=>chooseAttachments(comment,"comment",event.currentTarget)}>Add reply images</button>}
           </div>
         </article></li>;

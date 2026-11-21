@@ -18,7 +18,7 @@ test("report targets contain exactly one valid discussion or reply UUID", () => 
 });
 
 test("all established reasons preserve exact target identity and trim optional details", () => {
-  assert.deepEqual(communityReportReasons.map(item => item.value), ["spam", "abuse", "copyright", "answer_leak", "other"]);
+  assert.deepEqual(communityReportReasons.map(item => item.value), ["spam", "abuse", "copyright", "answer_leak", "personal_details", "safety", "other"]);
   for (const { value } of communityReportReasons) {
     assert.deepEqual(communityReportInput(reply, value, "  A fictional note about this exact reply.  "), {
       p_post_id: null, p_comment_id: commentId, p_reason: value, p_details: "A fictional note about this exact reply.",
