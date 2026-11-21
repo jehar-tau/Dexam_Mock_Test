@@ -33,7 +33,7 @@ test("each exam in Overview links to its own All India results, including ranks 
     exam, attempts: 1, averagePercent: 67, bestPercent: 67,
   }));
   const dates = { startsAt: "2026-10-01T00:00:00Z", endsAt: "2026-10-01T01:00:00Z", lastStartAt: "2026-10-01T00:45:00Z",
-    reviewEndsAt: "2026-10-02T00:00:00Z", durationSeconds: 3600, uploadGraceSeconds: 0, qualityHeld: false };
+    reviewEndsAt: new Date(Date.now() + 86400000).toISOString(), durationSeconds: 3600, uploadGraceSeconds: 0, qualityHeld: false };
   state.events = [
     { ...dates, id: "10000000-0000-4000-8000-000000000291", exam: "uceed", title: "Fictional UCEED final", state: "released",
       attemptId: "20000000-0000-4000-8000-000000000291", result: { rank: 14, cohortSize: 48, score: 27, total: 30 } },
