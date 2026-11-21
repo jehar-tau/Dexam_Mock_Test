@@ -146,3 +146,8 @@ body:has(.attempt-workspace) .header { position:relative; }
   .attempt-workspace .attempt-sections button small { font-size:.68rem; }
   .attempt-masthead .eyebrow { font-size:.65rem; }
 }
+.analysis-workspace .analysis-hero h1 { font:600 clamp(1.5rem,2.45vw,2.15rem)/1.2 Figtree,system-ui,sans-serif; letter-spacing:-.025em; }
+.analysis-workspace h2, .analysis-workspace .analysis-item h3 { font:600 clamp(1.1rem,1.65vw,1.45rem)/1.35 Figtree,system-ui,sans-serif; letter-spacing:normal; }
+.analysis-workspace .analysis-stats strong, .analysis-workspace .sample-score > span { font-family:Figtree,system-ui,sans-serif; font-weight:600; font-variant-numeric:tabular-nums; }
+.analysis-workspace .analysis-stats strong { font-size:clamp(1.4rem,2.75vw,2.5rem); }
+.analysis-workspace .sample-score > span { font-size:clamp(2.5rem,4vw,3.75rem); }
