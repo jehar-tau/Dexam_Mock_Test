@@ -48,7 +48,7 @@ test("mixed scopes, repeated or reordered rows and malformed continuations canno
   value=>{value.items.push(makeItem(26));},value=>{value.items[1]=value.items[0];},value=>{value.items.reverse();},
   value=>{value.items[0].createdAt="2026-02-30T00:00:00Z";},value=>{value.items[0].kind="comment";},
   value=>{value.items[0].postId=postId;},value=>{value.items[0].status="removed";},value=>{value.items[0].assetCount=4;},
-  value=>{value.filters.topic="different";},value=>{value.items[0].body="x".repeat(5001);},value=>{value.version=1.5;},value=>{value.nextCursor.extra=true;},
+  value=>{value.filters.topic="different";},value=>{value.items[0].body="x".repeat(20001);},value=>{value.version=1.5;},value=>{value.nextCursor.extra=true;},
   value=>{value.nextCursor.id=postId;},value=>{value.nextCursor.createdAt="2026-01-01T12:00:00.123455+00:00";},
   value=>{value.nextCursor.snapshotAt="2026-01-02T00:00:00.123456Z";},value=>{value.nextCursor.version=8;},
  ]){const value=page();change(value);assert.throws(()=>readCommunityModerationPage(value,filters),/could not be verified/);}

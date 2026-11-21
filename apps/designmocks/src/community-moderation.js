@@ -1,6 +1,6 @@
 const uuid = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 const version = /^[0-9a-f]{64}$/;
-const reasons = new Set(["spam", "abuse", "copyright", "answer_leak", "other"]);
+const reasons = new Set(["spam", "abuse", "copyright", "answer_leak", "personal_details", "safety", "other"]);
 const mimeTypes = new Set(["image/png", "image/jpeg", "image/webp"]);
 const actions = new Set(["hide", "dismiss", "restore", "lock", "unlock"]);
 const isText = (value, maximum) => typeof value === "string" && value.length <= maximum;
@@ -19,7 +19,7 @@ function asset(value) {
 }
 export function validateCommunityReviewContent(value) {
   if (!value || !uuid.test(value.id) || !["post", "comment"].includes(value.kind) ||
-    !(value.title === null || isText(value.title, 160)) || !isText(value.body, 5000) ||
+    !(value.title === null || isText(value.title, 160)) || !isText(value.body, 20000) ||
     !(value.kind === "post" ? ["visible", "hidden", "locked"] : ["visible", "hidden"]).includes(value.status) ||
     !["uceed", "ceed", "nid", "nift"].includes(value.exam) || !isText(value.topic, 5000) ||
     !Array.isArray(value.assets) || value.assets.length > 3) invalid();

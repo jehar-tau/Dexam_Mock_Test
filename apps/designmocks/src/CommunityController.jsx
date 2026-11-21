@@ -8,12 +8,13 @@ import { checkCommunityFiles, communityLinkLifetime, resumeCommunityImages } fro
 import { newCommunityWrite, submitCommunityWrite, mergeCommunityComments, validateCommunityThread } from "./community-write.js";
 import { communityFeedFilters, communityFeedInput, validateCommunityFeed, mergeCommunityFeed } from "./community-feed.js";
 import { communityAttachmentFiles, communityAttachmentPlan } from "./community-attachments.js";
+import { CommunityNav } from "./CommunityFrame.jsx";
 
 function withoutImages(value) {
   return {...value,media:[],comments:value.comments.map(comment=>({...comment,media:[]})),mediaExpiresAt:null};
 }
 
-function CommunitySession({View,headingRef}) {
+function CommunitySession({View,headingRef,loadFeed}) {
   const services=useAccountServices();
   const rpc=(name,input,signal)=>withAccountDeadline(active=>services.rpc(name,input,active),signal);
   const media=async(body,signal)=>{try{return await withAccountDeadline(active=>services.functions.invoke('community-media',{body,signal:active}),signal,body instanceof FormData?60000:20000);}catch(error){return{data:null,error};}};
@@ -73,10 +74,10 @@ function CommunitySession({View,headingRef}) {
     load(scope.current.signal,{intent:++feedEpoch.current,append:true});
   }
   async function refreshFeed(job,signal) {
-    if(job.feedEpoch===feedEpoch.current)await load(signal,{intent:job.feedEpoch});
+    if(loadFeed&&job.feedEpoch===feedEpoch.current)await load(signal,{intent:job.feedEpoch});
   }
   useEffect(()=>{
-    const controller=new AbortController();scope.current=controller;load(controller.signal);
+    const controller=new AbortController();scope.current=controller;if(loadFeed)load(controller.signal);
     return()=>{controller.abort();threadRequest.current?.abort();feedRequest.current?.abort();};
   },[]);
   useEffect(()=>{
@@ -222,7 +223,7 @@ function CommunitySession({View,headingRef}) {
     (job.kind==="post"?setPendingTextPost:setPendingTextReply)(null);
     setMessage("This request may already be saved. Check discussions before posting again.");
   }
-  return <View heading={false} headingRef={headingRef} posts={feed?.posts??[]} feedFilters={feedFilters} feedLoading={feedLoading} feedNotice={feedNotice} feedReady={Boolean(feed)}
+  return <View heading={false} headingRef={headingRef} rpc={rpc} posts={feed?.posts??[]} feedFilters={feedFilters} feedLoading={feedLoading} feedNotice={feedNotice} feedReady={Boolean(feed)}
     feedNextCursor={feed?.nextCursor} onFilter={changeFilters} onMorePosts={moreFeed}
     thread={thread} message={message} busy={busy} threadLoading={threadLoading}
     pendingPost={pendingPost} pendingReply={pendingReply} pendingTextPost={pendingTextPost} pendingTextReply={pendingTextReply}
@@ -267,11 +268,11 @@ function CommunitySession({View,headingRef}) {
     })}
   />;
 }
-export function CommunityController({View,Heading}) {
+export function CommunityController({View,Heading,loadFeed=true}) {
   const {session,loading}=useAuthState();
   const location=useLocation(),heading=useRef(null),scopeKey=(session?.user.id??'signed-out')+':'+location.key,previous=useRef(scopeKey);
   useLayoutEffect(()=>{if(previous.current!==scopeKey&&(document.activeElement===document.body||heading.current?.parentElement.contains(document.activeElement)))heading.current?.focus();previous.current=scopeKey;},[scopeKey]);
   if(loading)return <section className="wrap section"><p role="status">Checking your account…</p></section>;
   if(!session)return <section className="wrap section"><h1>Sign in to the <em>community.</em></h1><Link to="/account">Student sign in</Link></section>;
-  return <PortalShell><section className="wrap section community-page"><Heading headingRef={heading}/><AccountAccessBoundary key={scopeKey} kind="community" actorId={session.user.id} headingRef={heading}><CommunitySession View={View} headingRef={heading}/></AccountAccessBoundary></section></PortalShell>;
+  return <PortalShell><section className="wrap section community-page"><Heading headingRef={heading}/><CommunityNav/><AccountAccessBoundary key={scopeKey} kind="community" actorId={session.user.id} headingRef={heading}><CommunitySession View={View} headingRef={heading} loadFeed={loadFeed}/></AccountAccessBoundary></section></PortalShell>;
 }

@@ -6,7 +6,7 @@ import { CommunityReporting } from "./CommunityReporting.jsx";
 import { communityFeedFilters } from "./community-feed.js";
 import { PortalShell } from "./PortalShell.jsx";
 
-function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
+export function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   if (!job) return null;
   const kind = job.targetType === "post" ? "post" : "reply";
   return <section className="notice community-upload-recovery" aria-label={`Saved ${kind} images`}>
@@ -17,7 +17,7 @@ function PendingImages({ job, busy, onRetry, onSkip, onOpen }) {
   </section>;
 }
 
-function PendingText({ job, busy, onRetry, onStop, onReload }) {
+export function PendingText({ job, busy, onRetry, onStop, onReload }) {
   if (!job) return null;
   const kind=job.kind==="post" ? "post" : "reply";
   return <section className="notice community-upload-recovery" aria-label={`Unconfirmed ${kind} text`}>

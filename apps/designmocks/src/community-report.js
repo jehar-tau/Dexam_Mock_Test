@@ -3,6 +3,8 @@ export const communityReportReasons = Object.freeze([
   ["abuse", "Abuse or harassment"],
   ["copyright", "Copyright or permission concern"],
   ["answer_leak", "Active assessment answer"],
+  ["personal_details", "Shares personal or contact details"],
+  ["safety", "I am worried about someone’s safety"],
   ["other", "Other issue"],
 ].map(([value, label]) => Object.freeze({ value, label })));
 const reasons = new Set(communityReportReasons.map(item => item.value));
