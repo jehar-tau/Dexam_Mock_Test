@@ -22,7 +22,7 @@ function eventDetails(event, now) {
 }
 
 function AllIndiaHeading({headingRef}){return<><span className="eyebrow">ALL INDIA MOCKS</span><h1 ref={headingRef} tabIndex={-1}>One paper. One <em>attempt.</em></h1><p>Every candidate receives the same frozen paper. The exam timer continues through disconnects, and ranks stay hidden until results are released.</p></>;}
-export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelectExam, heading=true, embedded=false, blocked=false, sharingBlocked=false }) {
+export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelectExam, attemptHref = id => `/attempt/${id}`, heading=true, embedded=false, blocked=false, sharingBlocked=false }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
   const [now, setNow] = useState(() => Date.now());
@@ -78,7 +78,7 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
             </div>
           )}
         </div>
-        {event.attemptId ? <Link className="button quiet" to={`/attempt/${event.attemptId}`}>
+        {event.attemptId ? <Link className="button quiet" to={attemptHref(event.attemptId)}>
           {event.state === "released" ? "View attempt" : "Open attempt"}
         </Link> : <button type="button" className="button" disabled={event.state !== "open" || eventTiming(event, now).needsRefresh || Boolean(busy) || blocked}
           onClick={() => start(event.id)}>
@@ -145,7 +145,7 @@ export function AllIndiaPreview() {
   const results = [{ eventId: "released", exam: "nift", title: "NIFT All India Mock 01",
     topTen: [{ rank: 1, alias: "Candidate-A1B2C3", score: 28, total: 30 }, { rank: 2, alias: "Candidate-D4E5F6", score: 27, total: 30 }] }];
   return <><PortalShell>
-    <AllIndiaView events={events} onStart={async (id) => setMessage(id)} />
+    <AllIndiaView events={events} onStart={async (id) => setMessage(id)} attemptHref={() => "/portal-preview/report"} />
     {message && <p className="wrap" role="status">Preview attempt created once: {message}</p>}
   </PortalShell><AllIndiaHighlights example={results} /></>;
 }

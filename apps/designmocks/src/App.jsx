@@ -27,6 +27,7 @@ import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
 import {Purchase} from "./Purchase.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
 import {postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
+import { hostedStudentPreview, studentPreview } from "./student-preview.js";
 import {
   CandidateProfile,
   CandidateProfilePreview,
@@ -58,7 +59,9 @@ import {
   googleLogin,
 } from "./platform.js";
 
-const PortalPreview = import.meta.env.DEV
+const includeStudentPreview = import.meta.env.DEV || __DMOCKS_STAGING_REVIEW_PREVIEW__;
+
+const PortalPreview = includeStudentPreview
   ? React.lazy(() => import("./PortalPreview.jsx"))
   : null;
 const TopicPractice = React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPractice })));
@@ -78,25 +81,25 @@ const LearnProgrammePage = __DMOCKS_INCLUDE_LEARN__
   ? React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePage }))) : LearnSignIn;
 const Community = React.lazy(() => import("./Community.jsx").then(module => ({ default: module.Community })));
 const AllIndiaHighlights = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaHighlights })));
-const TopicPracticePreview = import.meta.env.DEV
+const TopicPracticePreview = includeStudentPreview
   ? React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPracticePreview }))) : null;
-const ExamMocksPreview = import.meta.env.DEV
+const ExamMocksPreview = includeStudentPreview
   ? React.lazy(() => import("./ExamMocks.jsx").then(module => ({ default: module.ExamMocksPreview }))) : null;
-const AllIndiaPreview = import.meta.env.DEV
+const AllIndiaPreview = includeStudentPreview
   ? React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaPreview }))) : null;
-const LearnPreview = import.meta.env.DEV
+const LearnPreview = includeStudentPreview
   ? React.lazy(() => import("./Learn.jsx").then(module => ({ default: module.LearnPreview }))) : null;
-const LearnProgrammePreview = import.meta.env.DEV
+const LearnProgrammePreview = includeStudentPreview
   ? React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePreview }))) : null;
 const MotionGallery = import.meta.env.DEV
   ? React.lazy(() => import("./MotionGallery.jsx")) : null;
-const CommunityPreview = import.meta.env.DEV
+const CommunityPreview = includeStudentPreview
   ? React.lazy(() => import("./Community.jsx").then(module => ({ default: module.CommunityPreview }))) : null;
-const Admin = React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.Admin })));
-const DrawingReviewerWorkspace = React.lazy(() => import("./DrawingReviewerWorkspace.jsx").then(module => ({ default: module.DrawingReviewerWorkspace })));
+const Admin = !__DMOCKS_STAGING_REVIEW_PREVIEW__ ? React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.Admin }))) : null;
+const DrawingReviewerWorkspace = !__DMOCKS_STAGING_REVIEW_PREVIEW__ ? React.lazy(() => import("./DrawingReviewerWorkspace.jsx").then(module => ({ default: module.DrawingReviewerWorkspace }))) : null;
 const IntakeExtractionPreview = import.meta.env.DEV ? React.lazy(() => import("./Admin.jsx").then(module => ({ default: module.IntakeExtractionPreview }))) : null;
-const BugReport = React.lazy(() => import("./BugReport.jsx").then(module => ({ default: module.BugReport })));
-const PurchaseHistory = React.lazy(() => import("./PurchaseHistory.jsx"));
+const BugReport = !__DMOCKS_STAGING_REVIEW_PREVIEW__ ? React.lazy(() => import("./BugReport.jsx").then(module => ({ default: module.BugReport }))) : null;
+const PurchaseHistory = !__DMOCKS_STAGING_REVIEW_PREVIEW__ ? React.lazy(() => import("./PurchaseHistory.jsx")) : null;
 
 function Logo() {
   return (
@@ -214,9 +217,10 @@ function Layout({ children }) {
       </a>
       {(!portalReady || stagingPortalMode) && (
         <div className="preview-strip">
-          {stagingPortalMode ? "PRIVATE STAGING" : testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
+          {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "OWNER REVIEW" : stagingPortalMode ? "PRIVATE STAGING" : testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
           <span>
-            {stagingPortalMode ? "Portal acceptance for approved testers. Checkout is closed." :
+            {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Explore the student experience with fictional examples. Sign-in and checkout are closed." :
+              stagingPortalMode ? "Portal acceptance for approved testers. Checkout is closed." :
               testLoginMode ? "Google sign-in is limited to approved testers. Purchases are closed." : "Explore the sample. Student sign-in and paid checkout are being connected."}
           </span>
         </div>
@@ -241,8 +245,8 @@ function Layout({ children }) {
             <Link to="/#features">What’s inside</Link>
             <Link to="/#how">How it works</Link>
             <NavLink to="/plans">The annual pass</NavLink>
-            <NavLink to="/account" className="sign-in">
-              Student sign in <Arrow size={16} />
+            <NavLink to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "/portal-preview" : "/account"} className="sign-in">
+              {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Student preview" : "Student sign in"} <Arrow size={16} />
             </NavLink>
           </nav>
           <div className="header-controls">
@@ -290,7 +294,9 @@ function Layout({ children }) {
 
             <Link to="/sample">Try the sample</Link>
             <Link to="/plans">One-year pass</Link>
-            <Link to="/account">Student sign in</Link>
+            <Link to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "/portal-preview" : "/account"}>
+              {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Student preview" : "Student sign in"}
+            </Link>
             <Link to={session ? "/report" : "/contact"}>Report a problem</Link>
           </div>
         </div>
@@ -1668,7 +1674,7 @@ export default function App() {
         <Route path="/plans" element={<Plans />} />
         <Route path="/account" element={<Account />} />
         <Route path="/account/callback" element={<Account />} />
-        <Route element={stagingPortalMode ? <StagingPortalGate /> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
+        {!__DMOCKS_STAGING_REVIEW_PREVIEW__ && <Route element={stagingPortalMode ? <StagingPortalGate /> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
           <Route path="/dashboard" element={<Workspace />} />
           <Route path="/onboarding" element={<CandidateProfile />} />
           <Route path="/account/purchases" element={<PurchaseHistory />} />
@@ -1682,64 +1688,21 @@ export default function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/review/drawings" element={postLaunchPreview?<DrawingReviewerWorkspace />:<DeferredModule module="drawings"/>} />
           <Route path="/attempt/:id" element={<Attempt key={location.pathname} />} />
-        </Route>
-        {import.meta.env.DEV && (
-          <Route
-            path="/portal-preview/*"
-            element={
-              <React.Suspense
-                fallback={
-                  <p className="wrap" role="status">
-                    Opening the portal preview…
-                  </p>
-                }
-              >
-                <PortalPreview />
-              </React.Suspense>
-            }
-          />
-        )}
-        {import.meta.env.DEV && (
-          <Route
-            path="/profile-preview"
-            element={<CandidateProfilePreview />}
-          />
-        )}
-        {import.meta.env.DEV && (
-          <Route
-            path="/topic-practice-preview"
-            element={<TopicPracticePreview />}
-          />
-        )}
-        {import.meta.env.DEV && (
+        </Route>}
+        {includeStudentPreview && studentPreview && <>
+          <Route path="/portal-preview/*" element={<PortalPreview />} />
+          <Route path="/profile-preview" element={<CandidateProfilePreview />} />
+          <Route path="/topic-practice-preview" element={<TopicPracticePreview />} />
           <Route path="/exam-mocks-preview" element={<ExamMocksPreview />} />
-        )}
-        {import.meta.env.DEV && (
           <Route path="/all-india-preview" element={<AllIndiaPreview />} />
-        )}
-        {import.meta.env.DEV && (
-          <Route
-            path="/question-report-preview"
-            element={<QuestionReportPreview />}
-          />
-        )}
-        {import.meta.env.DEV && (
+          <Route path="/question-report-preview" element={<QuestionReportPreview />} />
           <Route path="/learn-preview" element={<LearnPreview />} />
-        )}
-        {import.meta.env.DEV && (
           <Route path="/learn-programme-preview/:slug?" element={<LearnProgrammePreview />} />
-        )}
+          <Route path="/community-preview" element={<CommunityPreview />} />
+          <Route path="/drawing-uploads-preview" element={<DrawingUploadsPreview />} />
+        </>}
         {import.meta.env.DEV && (
           <Route path="/motion-preview" element={<MotionGallery />} />
-        )}
-        {import.meta.env.DEV && (
-          <Route path="/community-preview" element={<CommunityPreview />} />
-        )}
-        {import.meta.env.DEV && (
-          <Route
-            path="/drawing-uploads-preview"
-            element={<DrawingUploadsPreview />}
-          />
         )}
         {import.meta.env.DEV && (
           <Route path="/drawing-review-preview" element={<DrawingReviewMediaPreview />} />

@@ -1,10 +1,11 @@
-// Development-only visual preview. No provider calls, sessions or entitlements.
+// Fictional student workspace for local development and hosted staging review. No provider calls, sessions or entitlements.
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { WorkspaceView, PendingAttemptResult } from "./Workspace.jsx";
 import { Arrow } from "./Art.jsx";
 import { PortalShell, DeferredModule } from "./PortalShell.jsx";
 import {postLaunchPreview}from "./launch-scope.js";
+import { hostedStudentPreview } from "./student-preview.js";
 import { DrawingUploadWindow, previewDrawingMedia } from "./DrawingUploads.jsx";
 
 const example = {
@@ -62,6 +63,7 @@ export default function PortalPreview() {
   const report = location.pathname.endsWith("/report");
   const pending = location.pathname.endsWith("/pending");
   const pendingUpload = location.pathname.endsWith("/pending-upload");
+  const expandedPreview = postLaunchPreview || hostedStudentPreview;
   return <>
     <section className="wrap portal-preview-note" aria-label="Preview information">
       <span className="eyebrow">STUDENT PORTAL PREVIEW</span>
@@ -70,7 +72,7 @@ export default function PortalPreview() {
         <Link to="/portal-preview" aria-current={!report ? "page" : undefined}>Your workspace</Link>
         <Link to="/sample">Try the original sample</Link>
         <Link to="/portal-preview/report" aria-current={report ? "page" : undefined}>Example report</Link>
-        {postLaunchPreview&&<><Link to="/portal-preview/pending" aria-current={pending ? "page" : undefined}>Example pending result</Link>
+        {expandedPreview&&<><Link to="/portal-preview/pending" aria-current={pending ? "page" : undefined}>Example pending result</Link>
         <Link to="/portal-preview/pending-upload" aria-current={pendingUpload ? "page" : undefined}>Example drawing upload</Link></>}
       </div>
       <details className="notice">
@@ -81,6 +83,7 @@ export default function PortalPreview() {
           <Link to="/plans">Plans</Link>
           <Link to="/sample">Free sample paper</Link>
           <Link to="/portal-preview">Student overview</Link>
+          {hostedStudentPreview && <Link to="/profile-preview">Student profile</Link>}
           <Link to="/exam-mocks-preview">Exam-wise mocks</Link>
           <Link to="/all-india-preview">All India mocks</Link>
           <Link to="/topic-practice-preview">Topic practice</Link>
@@ -91,7 +94,7 @@ export default function PortalPreview() {
         </nav>
       </details>
     </section>
-    {!postLaunchPreview&&(pending||pendingUpload)?<DeferredModule module="drawings"/>:pendingUpload ? <PendingUploadPreview /> : pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" allIndiaHref="/all-india-preview" workspaceHref="/portal-preview" /> : report ? <section className="wrap section sample-result">
+    {!expandedPreview&&(pending||pendingUpload)?<DeferredModule module="drawings"/>:pendingUpload ? <PendingUploadPreview /> : pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" allIndiaHref="/all-india-preview" workspaceHref="/portal-preview" /> : report ? <section className="wrap section sample-result">
       <Link className="back-link" to="/portal-preview">← Your preview workspace</Link>
       <div className="result-title">
         <div>
@@ -111,6 +114,6 @@ export default function PortalPreview() {
       <h2>Small observations. Useful habits.</h2>
       <div className="paper-list">{topics.map(t => <article key={t.name}><span className="eyebrow">{t.name}</span><h3>Try this tomorrow.</h3><p>{t.note}</p></article>)}</div>
       <Link className="button" to="/sample">Try it with your own answers <Arrow /></Link>
-    </section> : <PortalShell><WorkspaceView data={postLaunchPreview?example:{...example,attempts:example.attempts.filter(item=>!item.resultsPending),analytics:{...example.analytics,waitingForResults:0,drawingReviews:{pending:0,released:0}}}} papers={postLaunchPreview?papers:papers.slice(0,1)} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" practiceHref="/topic-practice-preview" allIndiaHref="/all-india-preview" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/sample"} /></PortalShell>}
+    </section> : <PortalShell><WorkspaceView data={expandedPreview?example:{...example,attempts:example.attempts.filter(item=>!item.resultsPending),analytics:{...example.analytics,waitingForResults:0,drawingReviews:{pending:0,released:0}}}} papers={expandedPreview?papers:papers.slice(0,1)} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" practiceHref="/topic-practice-preview" allIndiaHref="/all-india-preview" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/sample"} /></PortalShell>}
   </>;
 }

@@ -16,6 +16,18 @@ export default defineConfig(({ command, mode }) => {
   if (command === "build" && deployment === "test" && portalEnabled && checkoutEnabled && mode !== "test") {
     throw new Error("The private checkout requires an explicit Test build.");
   }
+  const stagingReview = command === "build" && env.VITE_STAGING_REVIEW_PREVIEW === "true";
+  if (stagingReview) {
+    if (mode !== "staging" || deployment !== "staging" || process.env.NODE_ENV !== "production") {
+      throw new Error("The hosted review preview requires a production-optimized staging build.");
+    }
+    if (portalEnabled || checkoutEnabled || env.VITE_TEST_LOGIN_ENABLED === "true" ||
+        env.VITE_STAGING_PORTAL_ENABLED === "true" || env.VITE_POST_LAUNCH_PREVIEW === "true" ||
+        env.VITE_CANDIDATE_PHONE_VERIFICATION_ENABLED === "true" ||
+        env.VITE_SUPABASE_URL || env.VITE_SUPABASE_ANON_KEY || env.DMOCKS_PUBLISHED_NOTICES_FILE) {
+      throw new Error("Build the hosted review preview without sign-in, backend, checkout or release configuration.");
+    }
+  }
   const compiledNotices = readPublishedNotices(env.DMOCKS_PUBLISHED_NOTICES_FILE, {
     allowFixture: command === "serve" && deployment === "test" && mode !== "production",
   });
@@ -32,7 +44,7 @@ export default defineConfig(({ command, mode }) => {
     termsVersion: env.VITE_TERMS_VERSION,
     noticeVersion: notices?.version,
   });
-  const includeLearnContent = allowReleasedLearn(auth.portalReady) ||
+  const includeLearnContent = stagingReview || allowReleasedLearn(auth.portalReady) ||
     (mode !== "production" && allowPostLaunchPreview(deployment, env.VITE_POST_LAUNCH_PREVIEW === "true"));
 
   // The informational Site is the accepted search surface. Staging, merchant Test,
@@ -50,6 +62,7 @@ export default defineConfig(({ command, mode }) => {
       },
     }],
     define: {
+      __DMOCKS_STAGING_REVIEW_PREVIEW__: JSON.stringify(stagingReview),
       __DMOCKS_PUBLIC_DISCOVERY__: JSON.stringify(publicBuild),
       __DMOCKS_PUBLISHED_NOTICES__: JSON.stringify(notices),
       __DMOCKS_INCLUDE_LEARN__: JSON.stringify(includeLearnContent),

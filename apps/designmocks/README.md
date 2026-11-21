@@ -11,7 +11,7 @@ npm run designmocks:install
 npm run designmocks:dev
 ```
 
-Open http://127.0.0.1:4190/ for the website or http://127.0.0.1:4190/portal-preview for the inside-portal preview. The latter is development-only, explicitly fictional and includes an example report. Its pass, marks and sample account do not grant real access. It is excluded from production builds.
+Open http://127.0.0.1:4190/ for the website or http://127.0.0.1:4190/portal-preview for the inside-portal preview. The latter uses fictional examples and includes an example report. Its pass, marks and sample account do not grant real access. It is excluded from production builds.
 
 From this app directory, use `npm ci`, `npm run dev`, `npm run check` or `npm run build`. Build output is `dist/`. `npm run preview` serves a production build on port 4191. The original root question-bank studio and commands are preserved.
 
@@ -76,6 +76,15 @@ The separate Supabase project is `tiodqzvvujxvxssvjdis` (Mumbai). The restrictiv
 The public Site is https://dmocks.com (Site ID `appgprj_6aeac2a10f708191a6fd4160cec11651`); https://designmocks-studio.snehal1155.chatgpt.site is an alias of that same public Site, not private staging. Never deploy a staging build to that Site identity.
 
 The separate owner-only staging Site is `appgprj_6af767851bc08191913c602fe8bf7e44`, with expected origin https://dmocks-staging.snehal1155.chatgpt.site. Registration reserves the Site; it does not prove deployment or backend acceptance. Its source checkout is separate from this monorepo. Keep checkout closed and preserve owner-only access. Before hosted acceptance, configure the exact Auth callback and approved backend CORS origin, verify tester admission and compare deployed source. The hosted backend currently allows the owner's local origin `http://127.0.0.1:4190`; source config changes do not update that hosted setting.
+
+For the owner’s sign-in-free visual review, use a clean checkout with no local environment files or provider credentials and run:
+
+```bash
+npm ci
+VITE_STAGING_REVIEW_PREVIEW=true npm run build:staging
+```
+
+Publish only `dist/` to the owner-only staging Site above, preserving its access setting and SPA fallback for direct links. Open `/portal-preview` or choose **Student preview** in the site navigation. The review uses fictional student examples and browser-local interactions. It has no provider configuration, sign-in, checkout, paper publication, or staff workspaces. The build requires staging mode and the review pages activate only on the configured staging origin. The Site’s access setting controls who reaches the files.
 
 **A GitHub push does not automatically deploy either Site.** Synchronise only the app's sanitized source/build to the matching Site repository. Never include the repository root, question bank, Git metadata, private evidence or environment secrets in a Site archive. Preserve each Site's separate identity and audience.
 
