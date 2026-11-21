@@ -26,6 +26,7 @@ the detail.
 | 8 | [08-owner-reference-standard.md](08-owner-reference-standard.md) | Before any Exam hard or Mastery tier. The owner's question bank is the difficulty reference; this says what its hardest questions demand. |
 | 9 | [topics/](topics/) | The specification for the topic you are building. One file per topic. |
 | 10 | [10-completion-plan.md](10-completion-plan.md) | When choosing what to build next. Every programme still to build, in order, and what "complete" means. |
+| 11 | [11-spoken-feedback.md](11-spoken-feedback.md) | When changing feedback text or releasing spoken feedback. What is read aloud, how, and how it is switched off. |
 
 ## The one-paragraph version
 

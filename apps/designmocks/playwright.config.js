@@ -14,6 +14,7 @@ export default defineConfig({
     ...mvpFiles.map(file => '**/' + file),
     '**/all-india-ranking-consent.spec.js',
     '**/learn-programme.spec.js',
+    '**/learn-spoken-feedback.spec.js',
     '**/learn-lifecycle.spec.js',
     '**/learn-practice-context.spec.js',
     '**/learning-editor.spec.js',

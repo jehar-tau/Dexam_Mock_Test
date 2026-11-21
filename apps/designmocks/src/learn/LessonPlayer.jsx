@@ -3,6 +3,8 @@ import { answerText, buildQuiz, checkAnswer, emptyResponse, generateQuestion, ha
 import { Figure } from './figures.jsx';
 import { Question } from './Question.jsx';
 import { LearnTool } from './tools.jsx';
+import { LearnAudioProvider, SpokenFeedbackSwitch, useSpokenFeedback } from './LearnAudio.jsx';
+import { learnSpokenFeedback } from '../launch-scope.js';
 import { completeLesson, formatMarks, formatSeconds, practiceResult, quizLength, recordPractice, recordQuiz, recordStep, stepResult } from './programme-model.js';
 
 // A focused, one-idea-per-screen player. Top: close and segmented progress.
@@ -24,20 +26,22 @@ function PlayerFrame({ title, index, count, onClose, timer = null, children, foo
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
-  return <div className="player" role="dialog" aria-label={title}>
+  return <LearnAudioProvider enabled={learnSpokenFeedback}><div className="player" role="dialog" aria-label={title}>
     <header className="player-top">
       <button type="button" className="player-close" aria-label="Leave the lesson" onClick={onClose}>×</button>
       <div className="player-progress" role="progressbar" aria-valuemin={0} aria-valuemax={count} aria-valuenow={index + 1} aria-label={`${title}: screen ${index + 1} of ${count}`}>
         {Array.from({ length: count }, (_, i) => <span key={i} className={i < index ? 'is-done' : i === index ? 'is-current' : ''} />)}
       </div>
+      <SpokenFeedbackSwitch />
       {timer ?? <span className="player-count" aria-hidden="true">{index + 1}/{count}</span>}
     </header>
     <div className="player-body"><div className="player-column">{children}</div></div>
     <footer className="player-actions" ref={footerRef}>{footer}</footer>
-  </div>;
+  </div></LearnAudioProvider>;
 }
 
 function Feedback({ result, onShowWorking }) {
+  useSpokenFeedback(result);
   if (!result) return null;
   return <div className={`feedback${result.correct ? ' is-correct' : ' is-wrong'}`} role="status">
     <strong>{result.correct ? 'Correct' : 'Not quite'}</strong>

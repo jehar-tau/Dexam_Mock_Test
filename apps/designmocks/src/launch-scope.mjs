@@ -8,6 +8,11 @@ export function allowPostLaunchPreview(deployment,optIn){
 // backend function; the theory-lesson catalogue stays in the preview until
 // its migrations are promoted.
 export const releasedModules=Object.freeze({learn:'Learn'});
+// Spoken feedback in Learn stays in the post-launch preview until the owner
+// releases it; it uses only the device's own voice.
+export function allowLearnSpokenFeedback(previewEnabled){
+ return previewEnabled===true;
+}
 export function allowReleasedLearn(portalReady) {
  return portalReady === true && Object.hasOwn(releasedModules, 'learn');
 }
