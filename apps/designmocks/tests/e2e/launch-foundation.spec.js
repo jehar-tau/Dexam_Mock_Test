@@ -116,10 +116,11 @@ test("fictional portal preview navigation opens dev-only module screens", async 
 
 test("test mode links keep exploration inside sign-in-free previews", async ({ page }) => {
   await page.goto("/portal-preview");
-  await page.getByText("Open all test areas").click();
-  const areas = page.getByRole("navigation", { name: "Sign-in-free test areas" });
-  await expect(areas.getByRole("link", { name: "Teacher drawing review" })).toHaveAttribute("href", "/drawing-review-preview");
-  await expect(areas.getByRole("link", { name: "Admin question drafting" })).toHaveAttribute("href", "/ai-question-drafting-preview");
+  await page.getByText("Explore student pages").click();
+  const areas = page.getByRole("navigation", { name: "Sign-in-free student pages" });
+  await expect(areas.getByRole("link", { name: "Exam-wise mocks" })).toHaveAttribute("href", "/exam-mocks-preview");
+  await expect(areas.getByRole("link", { name: "Community" })).toHaveAttribute("href", "/community-preview");
+  await expect(areas.getByRole("link", { name: /Teacher|Admin|moderation|Operations/i })).toHaveCount(0);
   await page.getByRole("link", { name: "Practise the recommended topic" }).click();
   await expect(page).toHaveURL(/\/topic-practice-preview$/);
   await expect(page.getByRole("heading", { name: /Build a topic session/ })).toBeVisible();

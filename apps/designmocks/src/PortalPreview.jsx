@@ -74,8 +74,8 @@ export default function PortalPreview() {
         <Link to="/portal-preview/pending-upload" aria-current={pendingUpload ? "page" : undefined}>Example drawing upload</Link></>}
       </div>
       <details className="notice">
-        <summary>Open all test areas</summary>
-        <nav aria-label="Sign-in-free test areas" className="portal-preview-links">
+        <summary>Explore student pages</summary>
+        <nav aria-label="Sign-in-free student pages" className="portal-preview-links">
           <Link to="/">Home</Link>
           <Link to="/tests">Exam guides</Link>
           <Link to="/plans">Plans</Link>
@@ -87,11 +87,7 @@ export default function PortalPreview() {
           <Link to="/learn-preview">Learn</Link>
           <Link to="/community-preview">Community</Link>
           <Link to="/drawing-uploads-preview">Drawing uploads</Link>
-          <Link to="/drawing-review-preview">Teacher drawing review</Link>
           <Link to="/question-report-preview">Question reporting</Link>
-          <Link to="/community-moderation-preview">Community moderation</Link>
-          <Link to="/ai-question-drafting-preview">Admin question drafting</Link>
-          <Link to="/operations-health-preview">Operations health</Link>
         </nav>
       </details>
     </section>
