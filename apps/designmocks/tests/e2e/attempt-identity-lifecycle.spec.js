@@ -289,7 +289,7 @@ test('a timed out save identity check keeps working locally and ignores the late
  await page.clock.install();const state=await fixture(page);await expect(answer(page)).toBeEnabled();const held=deferred();state.authHold=held;await answer(page).click();await expect.poll(()=>state.heldAuth).toBeGreaterThan(0);await page.clock.fastForward(20001);await expect(page.getByText('Answers saved on this device. Waiting to sync.',{exact:true})).toBeVisible();await expect(privateQuestion(page)).toBeVisible();state.authHold=null;held.resolve();await expect(page.getByRole('status').filter({hasText:'Waiting to verify your exam account'})).toBeVisible();expect(calls(state,'save_answer_revision')).toEqual([]);await page.getByRole('button',{name:'Retry waiting answers',exact:true}).press('Enter');await expect(page.getByText('Answers are saved to your account.',{exact:true})).toBeVisible();expect(calls(state,'save_answer_revision')).toHaveLength(1);
 });
 test('synchronous repeated submission dispatches one mutation',async({page})=>{
- const state=await fixture(page);await expect(answer(page)).toBeEnabled();await page.getByRole('button',{name:'Submit attempt',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).evaluate(node=>{node.click();node.click();});await expect(page.getByRole('heading',{name:/Make this attempt/})).toBeVisible();expect(calls(state,'submit_attempt')).toHaveLength(1);
+ const state=await fixture(page);await expect(answer(page)).toBeEnabled();await page.getByRole('button',{name:'Submit attempt',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).evaluate(node=>{node.click();node.click();});await expect(page.getByRole('heading',{name:"Paper analysis",exact:true})).toBeVisible();expect(calls(state,'submit_attempt')).toHaveLength(1);
 });
 test('a late submitted result cannot replace a new same-route paper scope',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();state.saveHold=deferred();await answer(page).click();await expect.poll(()=>calls(state,'save_answer_revision').length).toBe(1);await page.getByRole('button',{name:'Submit attempt',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).click();await page.evaluate(()=>{history.pushState({...history.state,key:crypto.randomUUID()},'',location.href);dispatchEvent(new PopStateEvent('popstate',{state:history.state}));});state.saveHold.resolve();await expect(answer(page)).toBeEnabled();await expect(page.getByRole('dialog')).toHaveCount(0);expect(calls(state,'submit_attempt')).toEqual([]);
@@ -324,7 +324,7 @@ test('an outage never restores elapsed exam time and reconnect finalizes the fix
  expect(calls(state,'submit_attempt')).toEqual([]);
  state.authStatus=200;
  await page.evaluate(()=>dispatchEvent(new Event('online')));
- await expect(page.getByRole('heading',{name:/Make this attempt/})).toBeVisible();
+ await expect(page.getByRole('heading',{name:"Paper analysis",exact:true})).toBeVisible();
  expect(calls(state,'submit_attempt')).toHaveLength(1);
  expect(calls(state,'save_answer_revision')).toEqual([]);
  expect(await journal(page)).toEqual([]);
@@ -405,7 +405,7 @@ test('a blocked answer save explains how to retry submission without reopening t
 
   state.saveReceipt = undefined;
   await submit.click();
-  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  await expect(page.getByRole('heading', {name:"Paper analysis",exact:true})).toBeVisible();
   expect(calls(state, 'save_answer_revision').map(call => call.input.p_revision)).toEqual(Array(3).fill(saved.revision));
   expect(calls(state, 'submit_attempt')).toHaveLength(1);
   expect(await journal(page)).toEqual([]);
@@ -434,7 +434,7 @@ test('a queued revision cannot follow an acknowledged save after the deadline', 
   state.serverNow = new Date(deadline).toISOString();
   await page.clock.setFixedTime(deadline);
   saveHold.resolve();
-  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  await expect(page.getByRole('heading', {name:"Paper analysis",exact:true})).toBeVisible();
   expect(calls(state, 'save_answer_revision').map(call => call.input.p_answer)).toEqual(['B']);
   expect(calls(state, 'submit_attempt')).toHaveLength(1);
   expect(await journal(page)).toEqual([]);
@@ -457,7 +457,7 @@ test('a failed answer save that crosses the deadline finalizes the server snapsh
   state.serverNow = new Date(deadline).toISOString();
   await page.clock.setFixedTime(deadline);
   state.saveHold.resolve();
-  await expect(page.getByRole('heading', {name:/Make this attempt/})).toBeVisible();
+  await expect(page.getByRole('heading', {name:"Paper analysis",exact:true})).toBeVisible();
   expect(calls(state, 'save_answer_revision')).toHaveLength(1);
   expect(calls(state, 'submit_attempt')).toHaveLength(1);
   expect(await journal(page)).toEqual([]);
