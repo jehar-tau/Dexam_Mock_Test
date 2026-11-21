@@ -105,6 +105,8 @@ class ExportTest(unittest.TestCase):
         return {"mode": "dry-run", "review": "objective-complete"}
 
     def export(self, fingerprint, **kwargs):
+        if "replace_expected" not in kwargs:
+            kwargs.setdefault("source_classification", "official-unlicensed")
         return export.prepare(work=self.work, repo=self.repo, paper_id=PAPER, key="q1", fingerprint=fingerprint,
                               rights_note="Fictional source rights reviewed", expected_source=self.source_commit,
                               run_prepare=self.fake_prepare, **kwargs)
@@ -124,6 +126,14 @@ class ExportTest(unittest.TestCase):
         self.assertFalse(self.packet_path.exists())
         self.assertEqual(before, {path: path.read_bytes() for path in self.base.rglob("*") if path.is_file()})
         self.assertEqual("", self.git("status", "--short"))
+
+    def test_addition_uses_only_explicit_reviewed_source_labels(self):
+        self.fictional_block()
+        fingerprint = self.approve()
+        with self.assertRaisesRegex(solutions.SolutionError, "reviewed source classification"):
+            self.export(fingerprint, source_classification=None)
+        self.export(fingerprint, source_classification="owner-authorized")
+        self.assertEqual(("owner_authorized", "owner-provided"), (self.payload["sourceKind"], self.payload["licence"]))
 
     def fictional_block(self):
         path = self.base / "03-figures/figures.json"
@@ -174,11 +184,14 @@ class ExportTest(unittest.TestCase):
 
     def test_correction_preserves_question_and_passes_exact_target_digest(self):
         current = self.existing()
+        current.update(sourceKind="owner_authorized", licence="owner-provided")
         self.pin_bank([current])
         fingerprint = self.approve()
         version = "a" * 64
         with self.assertRaisesRegex(solutions.SolutionError, "already exists"):
             self.export(fingerprint)
+        with self.assertRaisesRegex(solutions.SolutionError, "retain their existing source classification"):
+            self.export(fingerprint, replace_expected=version, source_classification="official-unlicensed")
         result = self.export(fingerprint, replace_expected=version)
         self.assertEqual("correction", result["operation"])
         self.assertEqual(version, self.args[self.args.index("--replace-expect") + 1])
@@ -223,4 +236,5 @@ class ExportTest(unittest.TestCase):
         with self.assertRaisesRegex(solutions.SolutionError, "did not accept"):
             export.prepare(work=self.work, repo=self.repo, paper_id=PAPER, key="q1", fingerprint=self.approve(),
                            rights_note="Fictional source rights reviewed", expected_source=self.source_commit,
+                           source_classification="official-unlicensed",
                            run_prepare=lambda *_: {"mode": "dry-run", "review": "objective-incomplete"})

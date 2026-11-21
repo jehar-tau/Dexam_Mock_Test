@@ -19,6 +19,10 @@ REPO = pathlib.Path(__file__).resolve().parents[3]
 BANK_PATH = "server/data/exports/dexam-bank-export.json"
 PREPARE = "apps/designmocks/scripts/prepare-question-bank-addition.mjs"
 DIGEST = re.compile(r"[0-9a-f]{64}")
+SOURCE_CLASSIFICATIONS = {
+    "official-unlicensed": ("official", "official-unlicensed"),
+    "owner-authorized": ("owner_authorized", "owner-provided"),
+}
 SHAPES = {"circle", "ellipse", "rect", "line", "polyline", "polygon", "path", "text", "g"}
 ATTRIBUTES = {"cx", "cy", "r", "rx", "ry", "x", "y", "x1", "y1", "x2", "y2", "width", "height",
               "points", "d", "fill", "fill-opacity", "stroke", "stroke-width", "stroke-dasharray",
@@ -159,7 +163,8 @@ def match_correction(current, question, options):
     def clean(text):
         return " ".join(text.split())
 
-    if (current.get("holds") != [] or current.get("sourceKind") != "official"
+    source_labels = (current.get("sourceKind"), current.get("licence"))
+    if (current.get("holds") != [] or source_labels not in SOURCE_CLASSIFICATIONS.values()
             or current.get("type") != question["type"]
             or clean(current.get("prompt") or "") != clean(question["prompt"])
             or [(o["key"], clean(o.get("text") or ""), o.get("asset")) for o in current.get("options", [])]
@@ -197,12 +202,16 @@ def run_bank_prepare(args, repo):
     return json.loads(result.stdout)
 
 
-def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, replace_expected=None,
+def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, replace_expected=None, source_classification=None,
             repo=REPO, run_prepare=run_bank_prepare):
     if not QUESTION_KEY.fullmatch(key) or key.startswith("qb") or not DIGEST.fullmatch(fingerprint):
         raise SolutionError("Supply an objective question key and its reviewed SHA-256 fingerprint")
     if replace_expected is not None and not DIGEST.fullmatch(replace_expected):
         raise SolutionError("A correction needs the current canonical question's full SHA-256")
+    if replace_expected is None and source_classification not in SOURCE_CLASSIFICATIONS:
+        raise SolutionError("Choose the reviewed source classification for a new addition")
+    if replace_expected is not None and source_classification is not None:
+        raise SolutionError("Corrections retain their existing source classification")
     rights_note = rights_note.strip()
     if not 10 <= len(rights_note) <= 1000:
         raise SolutionError("Supply the reviewed source rights note (10 to 1,000 characters)")
@@ -265,12 +274,13 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
             if overlay_figure and overlay_figure["sha256"] != block["sha256"]:
                 assets.append({"role": "figure", "review": "approved", "path": f"ingestion/{external_key}-solution-figure.png",
                                **{field: overlay_figure[field] for field in ("sha256", "width", "height")}})
+        source_kind, licence = SOURCE_CLASSIFICATIONS[source_classification]
         payload = {
             "externalKey": external_key, "type": question["type"], "prompt": question["prompt"], "options": options,
             "assets": assets, "answer": answer, "explanation": explanation, "solutionReview": evidence,
             "topic": solution["meta"]["topic"], "difficulty": solution["meta"]["difficulty"],
             "estimatedSeconds": solution["meta"]["seconds"], "visualDependency": visual,
-            "display": "block" if assets else "text", "sourceKind": "official", "licence": "official-unlicensed",
+            "display": "block" if assets else "text", "sourceKind": source_kind, "licence": licence,
             "holds": [], "provenance": provenance,
         }
     if worked_solution:
@@ -310,6 +320,7 @@ def main(argv=None):
     parser.add_argument("--fingerprint", required=True)
     parser.add_argument("--expect-source", dest="expected_source", required=True)
     parser.add_argument("--replace-expect", dest="replace_expected")
+    parser.add_argument("--source-classification", choices=SOURCE_CLASSIFICATIONS)
     parser.add_argument("--rights-note", required=True)
     try:
         result = prepare(**vars(parser.parse_args(argv)))

@@ -131,10 +131,13 @@ python3 apps/designmocks/ingestion/export.py uceed-2026 q1 \
   --work ~/dmocks-ingestion-work \
   --fingerprint "$REVIEWED_FINGERPRINT" \
   --expect-source "$REVIEWED_ORIGIN_MAIN_SHA" \
+  --source-classification "$REVIEWED_SOURCE_CLASSIFICATION" \
   --rights-note "$REVIEWED_RIGHTS_NOTE"
 ```
 
-For a correction, add `--replace-expect "$CURRENT_QUESTION_SHA256"`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
+For a new addition, supply the reviewed classification `owner-authorized` or `official-unlicensed`. The source classification describes the paper and the rights to use it. Official answer-key evidence is verified separately.
+
+For a correction, pass `--replace-expect "$CURRENT_QUESTION_SHA256"` and omit `--source-classification`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
 
 For visual solutions, the packet carries the full plain-text explanation and typed steps with drawing shapes. Each overlay uses the exact PNG's hash and dimensions. Supported SVG shapes and short text labels are converted to data, with no links, styles or embedded images. Visual corrections require the overlay's PNG to match an existing canonical figure. The runtime validates the shapes again and freezes the solution in the private explanation snapshot. The answer review displays the steps and requests the attempt's signed figure only when the existing result release gates are open. The text remains readable if the figure fails to load.
 
