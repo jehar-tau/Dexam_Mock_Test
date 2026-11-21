@@ -117,6 +117,10 @@
   border-top: 1px solid var(--line);
 }
 
+/* Theme colours switch as a pair so button labels stay readable. */
+.topic-practice .button,
+.all-india .button { transition-property: transform; }
+
 .topic-start span,
 .topic-reviewed,
 .topic-exam-label,
