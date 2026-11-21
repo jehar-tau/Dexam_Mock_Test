@@ -1,0 +1,7 @@
+PyMuPDF>=1.24
+Pillow>=10
+numpy>=1.24
+opencv-python-headless>=4.8
+scikit-image>=0.21
+# Stage 3 also calls the potrace command-line tool (brew install potrace) for SVG trials.
+# Operator machine only: none of this is an app runtime dependency.

@@ -621,7 +621,8 @@ if(postLaunchPreview){
           </button>
         </div>}
         {!attempt.examResultsPending && review && (
-          <AnswerReview key={reviewFilter.revision} initialOutcome={reviewFilter.outcome} questions={attempt.questions} figures={figures}/>
+          <AnswerReview key={reviewFilter.revision} initialOutcome={reviewFilter.outcome} attempt={attempt} figures={figures}
+            media={media} mediaStatus={mediaStatus} onRetry={retryFigures}/>
         )}
         {onRestart && <button type="button" className="button quiet" onClick={onRestart}>Start a fresh sample paper</button>}
       </section>
