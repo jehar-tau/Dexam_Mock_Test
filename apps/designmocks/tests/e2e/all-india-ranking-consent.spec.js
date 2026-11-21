@@ -55,7 +55,7 @@ async function fixture(page, { released = true, sharing = { publicationId, revis
       return [{
         id: eventId, exam: 'uceed', title: accountHasScope ? 'Fictional released UCEED event' : 'Other account private result', state: released ? 'released' : 'review',
         startsAt: '2026-10-01T00:00:00Z', endsAt: '2026-10-01T01:00:00Z', lastStartAt: '2026-10-01T00:45:00Z',
-        reviewEndsAt: '2026-10-02T00:00:00Z', durationSeconds: 3600, uploadGraceSeconds: 0,
+        reviewEndsAt: new Date(Date.now() + 86400000).toISOString(), durationSeconds: 3600, uploadGraceSeconds: 0,
         qualityHeld: false, attemptId: '20000000-0000-4000-8000-000000001901',
         result: released ? { rank: 4, cohortSize: 48, score: 27, total: 30, ...(currentSharing == null ? {} : { sharing: currentSharing }) } : null,
       }];

@@ -4,11 +4,13 @@ import {platform} from "./platform.js";
 import {PortalShell} from "./PortalShell.jsx";
 import {AssessmentCatalogue} from "./AssessmentCatalogue.jsx";
 import {allIndiaExamSelection, assessmentExams, validatePublicAllIndiaResults} from "./catalogue-data.js";
+import {eventTiming,nextEventBoundary} from "./all-india-timing.js";
 
 async function rpc(name,args){const {data,error}=await platform.rpc(name,args);if(error)throw error;return data;}
 const when=(value)=>new Date(value).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
 
-function eventDetails(event) {
+function eventDetails(event, now) {
+  if (eventTiming(event, now).needsRefresh) return "The event window has changed. Refresh All India mocks to check its current status.";
   if (event.state === "paused") return "New starts are paused for question review. Existing attempts keep their original paper and clock.";
   if (event.state === "scheduled") return `Opens ${when(event.startsAt)}`;
   if (event.state === "open") return `Start before ${when(event.lastStartAt ?? event.endsAt)}`;
@@ -23,9 +25,22 @@ function AllIndiaHeading({headingRef}){return<><span className="eyebrow">ALL IND
 export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelectExam, heading=true, embedded=false, blocked=false, sharingBlocked=false }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
+  const [now, setNow] = useState(() => Date.now());
   const { selectedExam, visibleEvents } = allIndiaExamSelection(events, requestedExam);
+  useEffect(() => {
+    const boundary = nextEventBoundary(events, now);
+    const timer = boundary == null ? null : window.setTimeout(() => setNow(Date.now()), Math.min(2_147_483_647, Math.max(0, boundary - Date.now() + 1)));
+    const updateClock = () => setNow(Date.now());
+    window.addEventListener("focus", updateClock);
+    document.addEventListener("visibilitychange", updateClock);
+    return () => {
+      if (timer != null) window.clearTimeout(timer);
+      window.removeEventListener("focus", updateClock);
+      document.removeEventListener("visibilitychange", updateClock);
+    };
+  }, [events, now]);
   const start = async (id) => {
-    if(busy||blocked)return;
+    if(busy||blocked||eventTiming(events.find(event => event.id === id) ?? {}, Date.now()).needsRefresh)return;
     setBusy(id);
     setMessage("");
     try { await onStart(id); }
@@ -44,9 +59,9 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
     <div className="all-india-list">
       {visibleEvents.length ? visibleEvents.map((event) => <article key={event.id}>
         <div>
-          <span className="eyebrow">{event.exam.toUpperCase()} · {event.state}</span>
+          <span className="eyebrow">{event.exam.toUpperCase()} · {eventTiming(event, now).needsRefresh ? "refresh status" : event.state}</span>
           <h2>{event.title}</h2>
-          <p>{eventDetails(event)}</p>
+          <p>{eventDetails(event, now)}</p>
           {event.state !== "released" && event.uploadGraceSeconds > 0 && (
             <p>{event.durationSeconds / 60} minutes for the exam, plus {event.uploadGraceSeconds / 60} minutes for drawing uploads.</p>
           )}
@@ -65,9 +80,9 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
         </div>
         {event.attemptId ? <Link className="button quiet" to={`/attempt/${event.attemptId}`}>
           {event.state === "released" ? "View attempt" : "Open attempt"}
-        </Link> : <button type="button" className="button" disabled={event.state !== "open" || Boolean(busy) || blocked}
+        </Link> : <button type="button" className="button" disabled={event.state !== "open" || eventTiming(event, now).needsRefresh || Boolean(busy) || blocked}
           onClick={() => start(event.id)}>
-          {busy === event.id ? "Opening…" : event.state === "open" ? "Start once" : "Unavailable"}
+          {busy === event.id ? "Opening…" : eventTiming(event, now).needsRefresh ? "Refresh event status" : event.state === "open" ? "Start once" : "Unavailable"}
         </button>}
       </article>) : <div className="notice" role="status">{selectedExam
         ? `No ${selectedExam.toUpperCase()} All India mocks are listed yet.`
