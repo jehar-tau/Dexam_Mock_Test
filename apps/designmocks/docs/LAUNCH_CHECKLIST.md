@@ -1,5 +1,13 @@
 # DMocks release checklist
 
+## Current scope and release status (21 November 2026)
+
+The owner retains the full student website roadmap. Claude owns Learn, Community, and question-paper ingestion and corrections. Codex owns the rest of the student-facing website, including test mode and identity and payment integration. The admin portal, teacher paper review, and AI drawing evaluation are deferred. Use the current scope in the [execution plan](PRODUCT_EXECUTION_PLAN.md#current-scope-and-release-status-21-november-2026) when reading the dated checkpoints below.
+
+- [x] Complete the encrypted staging backup and isolated restore privately, covering 2,085 storage objects.
+- [ ] Apply hosted migrations 167–169. They are still pending.
+- [ ] Open public signup and sales after their respective release gates pass. Both remain closed.
+
 [PRODUCT_EXECUTION_PLAN.md](PRODUCT_EXECUTION_PLAN.md) is authoritative. The informational site and free sample have their own release path. Controlled Razorpay Test integration and student and administrator staging continue in parallel.
 
 ## Public non-payment release
