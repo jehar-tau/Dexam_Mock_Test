@@ -163,6 +163,52 @@ test('stages a reviewed solution figure alongside an existing question block', a
  assert.deepEqual(await readFile(path.join(output, 'media', solutionAsset.path)), solutionBytes);
 });
 
+test('stages exact-version corrections as one paper batch without changing sibling rows', async t => {
+ const first = question('paper-q1', { type: 'NAT', answer: { raw: '1', status: 'official-key' } });
+ const second = question('paper-q2', { type: 'NAT', answer: { raw: '2', status: 'official-key' } });
+ const sibling = question('different-paper');
+ const f = await fixture(t, [first, sibling, second]);
+ const changes = [
+  { ...first, explanation: 'First reviewed solution.', solutionReview: { fingerprint: 'a'.repeat(64) } },
+  { ...second, explanation: 'Second reviewed solution.', solutionReview: { fingerprint: 'b'.repeat(64) } },
+ ];
+ const packets = await Promise.all(changes.map(change => f.packet(change)));
+ const replaceExpecteds = [first, second].map(item => hash(stableJson(item)));
+ const options = { packets, replaceExpecteds, expectedSource: f.expectedSource, cwd: f.repo };
+ const dryRun = await prepareAdditions(options);
+ assert.equal(dryRun.replaced, 2);
+ assert.equal(dryRun.reviews['objective-complete'], 2);
+ const script = fileURLToPath(new URL('../scripts/prepare-question-bank-addition.mjs', import.meta.url));
+ const cliArgs = ['--expect-source', f.expectedSource,
+  ...packets.flatMap(({ packetPath, expected }, index) =>
+   ['--packet', packetPath, '--expect', expected, '--replace-expect', replaceExpecteds[index]])];
+ const cli = args => spawnSync(process.execPath, [script, ...args], {
+  env: { ...process.env, GIT_DIR: path.join(f.repo, '.git'), GIT_WORK_TREE: f.repo }, encoding: 'utf8',
+ });
+ const cliResult = cli(cliArgs);
+ assert.equal(cliResult.status, 0, cliResult.stderr);
+ assert.deepEqual(JSON.parse(cliResult.stdout), dryRun);
+ const missingVersion = cli(cliArgs.slice(0, -2));
+ assert.equal(missingVersion.status, 1);
+ assert.match(missingVersion.stderr, /one current question version/);
+ const output = path.join(f.root, 'batch-correction');
+ const staged = await prepareAdditions({ ...options, output });
+ assert.equal(staged.mode, 'staged');
+ const raw = await readFile(path.join(output, 'dexam-bank-export.json'), 'utf8');
+ assert.deepEqual(JSON.parse(raw).questions, [changes[0], sibling, changes[1]]);
+ assert.equal(raw, JSON.stringify({ ...JSON.parse(f.raw), questions: [changes[0], sibling, changes[1]] }, null, 1) + '\n');
+ assert.equal(JSON.parse(await readFile(path.join(output, 'receipt.json'))).corrections.length, 2);
+ const rejectedOutput = path.join(f.root, 'rejected-batch');
+ await assert.rejects(prepareAdditions({ ...options, replaceExpecteds: [replaceExpecteds[0], '0'.repeat(64)],
+  output: rejectedOutput }),
+  /current question version/);
+ await assert.rejects(stat(rejectedOutput), { code: 'ENOENT' });
+ await assert.rejects(prepareAdditions({ ...options, replaceExpecteds: [replaceExpecteds[0]] }),
+  /one current question version/);
+ await assert.rejects(prepareAdditions({ ...options, replaceExpecteds: undefined }),
+  /already exists/);
+});
+
 test('rejects a correction to a held record even when its source version matches', async t => {
  const held = question('held', { holds: ['review'] });
  const f = await fixture(t, [held]);

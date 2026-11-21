@@ -1,6 +1,7 @@
 """Fictional intake and bank records for the stage 7 dry-run bridge."""
 
 import copy
+import hashlib
 import json
 import pathlib
 import subprocess
@@ -13,7 +14,9 @@ from test_solutions import HERE, NAT, PAPER, build_work
 
 sys.path.insert(0, str(HERE))
 import export
+import export_batch
 import solutions
+from test_solutions import MSQ
 
 
 class ExportTest(unittest.TestCase):
@@ -275,6 +278,80 @@ class ExportTest(unittest.TestCase):
         self.export(self.approve())
         self.assertEqual(["figure", "solution"], [asset["role"] for asset in self.payload["assets"]])
         self.assertEqual(self.payload["workedSolution"]["figure"]["sha256"], self.payload["assets"][1]["sha256"])
+
+    def test_batch_bridge_collects_two_approved_corrections_for_one_bank_check(self):
+        segments_path = self.base / "02-segments/questions.json"
+        segments = json.loads(segments_path.read_text())
+        second = segments["questions"][1]
+        second.update({"number": 2, "regions": [{"page": 3}]})
+        segments_path.write_text(json.dumps(segments))
+        for relative in ("03-figures/figures.json", "04-key/key.json"):
+            path = self.base / relative
+            manifest = json.loads(path.read_text())
+            manifest["segmentsSha256"] = solutions.sha256(segments_path.read_bytes())
+            path.write_text(json.dumps(manifest))
+        (self.base / "05-solutions/q2.json").write_text(json.dumps(MSQ))
+        first_bank = self.existing()
+        second_bank = {
+            "externalKey": f"{PAPER}-q2", "type": "MSQ", "sourceKind": "official",
+            "licence": "official-unlicensed", "prompt": second["prompt"],
+            "options": [{"key": option["key"], "text": option["text"], "asset": None}
+                        for option in second["options"]], "holds": [],
+            "provenance": {"exam": "uceed", "year": 2031, "paperId": PAPER,
+                           "questionNo": "2", "sourceSha256": self.source_hash},
+            "answer": {"raw": "A,B", "status": "official-key"}, "assets": [],
+        }
+        self.pin_bank([first_bank, second_bank])
+        report = solutions.check(self.work, PAPER)["results"]
+        entries = []
+        for key, record in (("q1", first_bank), ("q2", second_bank)):
+            fingerprint = report[key]["fingerprint"]
+            solutions.approve(self.work, PAPER, key, "Fictional reviewer", fingerprint)
+            entries.append({"key": key, "fingerprint": fingerprint,
+                            "replaceExpected": hashlib.sha256(json.dumps(
+                                record, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+                            ).encode()).hexdigest()})
+
+        def verify_batch(args, repo):
+            self.assertEqual(self.repo, repo)
+            self.assertEqual(2, args.count("--packet"))
+            self.assertEqual(2, args.count("--replace-expect"))
+            packets = [json.loads(pathlib.Path(args[index + 1]).read_text())
+                       for index, item in enumerate(args) if item == "--packet"]
+            self.assertEqual([f"{PAPER}-q1", f"{PAPER}-q2"], [packet["externalKey"] for packet in packets])
+            self.assertEqual([entry["replaceExpected"] for entry in entries],
+                             [args[index + 1] for index, item in enumerate(args) if item == "--replace-expect"])
+            self.assertEqual(str(self.work / "batch-output"), args[args.index("--output") + 1])
+            options = {
+                "packets": [{"packetPath": args[index + 1], "expected": args[args.index("--expect", index) + 1]}
+                            for index, item in enumerate(args) if item == "--packet"],
+                "replaceExpecteds": [entry["replaceExpected"] for entry in entries],
+                "expectedSource": self.source_commit, "cwd": str(self.repo),
+                "downloadsDir": args[args.index("--downloads-dir") + 1],
+                "output": args[args.index("--output") + 1],
+            }
+            script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
+            code = ("const {prepareAdditions}=await import(process.argv[1]);"
+                    "let input='';for await(const chunk of process.stdin)input+=chunk;"
+                    "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
+            result = subprocess.run(["node", "--input-type=module", "-e", code, script],
+                                    input=json.dumps(options), text=True, cwd=self.repo,
+                                    capture_output=True, check=True)
+            return json.loads(result.stdout)
+
+        result = export_batch.prepare_batch(work=self.work, paper_id=PAPER, entries=entries,
+                                            expected_source=self.source_commit,
+                                            rights_note="Fictional source rights reviewed",
+                                            output=self.work / "batch-output", repo=self.repo,
+                                            run_prepare=verify_batch)
+        self.assertEqual(("staged", 2), (result["mode"], result["selected"]))
+        staged = json.loads((self.work / "batch-output/dexam-bank-export.json").read_text())
+        self.assertEqual([f"{PAPER}-q1", f"{PAPER}-q2"],
+                         [question["externalKey"] for question in staged["questions"]])
+        with self.assertRaisesRegex(solutions.SolutionError, "distinct reviewed question keys"):
+            export_batch.prepare_batch(work=self.work, paper_id=PAPER, entries=[entries[0], entries[0]],
+                                       expected_source=self.source_commit,
+                                       rights_note="Fictional source rights reviewed", repo=self.repo)
 
     def test_overlay_is_bound_to_the_reviewed_png_and_preserves_each_step(self):
         self.fictional_block()
