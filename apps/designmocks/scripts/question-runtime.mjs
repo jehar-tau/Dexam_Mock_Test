@@ -83,7 +83,8 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  for(const [index,asset]of assets.entries()){
   const stored=asset&&catalogue.get(asset.sha256);
   if(!asset||!/^[a-f0-9]{64}$/.test(asset.sha256)||!stored||stored.path!==`papers/canonical/${asset.sha256}.png`||stored.width!==asset.width||stored.height!==asset.height||!Number.isInteger(stored.byteSize)||stored.byteSize<45||stored.byteSize>10485760){issue('media-unverified','assets',{ordinal:index+1});continue;}
-  media.push({path:stored.path,alt:`Question figure ${index+1}`,sha256:asset.sha256,width:asset.width,height:asset.height});
+  media.push({path:stored.path,alt:`Question figure ${index+1}`,sha256:asset.sha256,width:asset.width,height:asset.height,
+   ...(asset.role==='solution'?{role:'solution'}:{})});
  }
  if(question.type==='DESCRIPTIVE'){
   if(verified&&!rule.partB)issue('section-unmodelled','type');

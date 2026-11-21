@@ -27,7 +27,9 @@ async function attemptFixture(page, runtime) {
   });
   const provider = await stubPortalProvider(page, (name, input) => {
     if (name === "read_attempt") return snapshot();
-    if (name === "attempt-media" && runtime.media.length) return { media: { [questionId]: [{ url: fictionalFigureUrl }] } };
+    if (name === "attempt-media" && runtime.media.length) return {
+      media: { [questionId]: runtime.media.map(() => ({ url: fictionalFigureUrl })) },
+    };
     if (name === "save_answer_revision") {
       state.answer = input.p_answer;
       state.revision = input.p_revision;
@@ -46,9 +48,11 @@ async function attemptFixture(page, runtime) {
 test("released answer review reveals the next annotation through the keyboard", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 820 });
   const figure = { sha256: "a".repeat(64), width: 80, height: 40 };
+  const originalBlock = { sha256: "d".repeat(64), width: 120, height: 80 };
   const runtime = runtimeQuestion({
     externalKey: "fictional-visual-solution", provenance: { exam: "uceed" }, type: "NAT",
-    prompt, explanation, holds: [], options: [], assets: [figure], visualDependency: true,
+    prompt, explanation, holds: [], options: [],
+    assets: [{ ...originalBlock, role: "figure" }, { ...figure, role: "solution" }], visualDependency: true,
     answer: { raw: "2", status: "official-key" },
     solutionReview: { fingerprint: "b".repeat(64), solutionSha256: "c".repeat(64) },
     workedSolution: {
@@ -58,11 +62,15 @@ test("released answer review reveals the next annotation through the keyboard", 
         { text: "Mark the right group.", shapes: [{ tag: "circle", attrs: { cx: "32", cy: "8", r: "4" } }] },
       ],
     },
-  }, { rule: RULES_2027.uceed, mediaCatalog: [{ ...figure, path: `papers/canonical/${figure.sha256}.png`, byteSize: 128 }] });
+  }, { rule: RULES_2027.uceed, mediaCatalog: [originalBlock, figure].map(asset =>
+    ({ ...asset, path: `papers/canonical/${asset.sha256}.png`, byteSize: 128 })) });
   expect(runtime).not.toBeNull();
+  expect(runtime.media.map(item => item.role)).toEqual([undefined, "solution"]);
   const provider = await attemptFixture(page, runtime);
   await page.goto("/attempt/" + attempt);
   await expect(page.getByText(prompt, { exact: true })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Question figure 1", exact: true })).toHaveCount(1);
+  await expect(page.getByRole("img", { name: "Question figure 2", exact: true })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Worked solution", exact: true })).toHaveCount(0);
   await expect(page.getByText("Group the fictional shapes.", { exact: true })).toHaveCount(0);
   await page.getByLabel("Your numerical answer", { exact: true }).fill("2");

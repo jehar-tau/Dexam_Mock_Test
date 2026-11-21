@@ -133,6 +133,36 @@ test('prepares an exact-version correction while preserving siblings and provena
  await assert.rejects(prepareAddition({ ...changedSource, replaceExpected }), /preserve question provenance/);
 });
 
+test('stages a reviewed solution figure alongside an existing question block', async t => {
+ const blockBytes = Buffer.from('89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000d49444154789c6360000000020001e221bc330000000049454e44ae426082','hex');
+ const solutionBytes = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a/ScAAAAASUVORK5CYII=', 'base64');
+ const block = { role: 'figure', path: 'fictional/legacy-block.png', sha256: hash(blockBytes), width: 1, height: 1 };
+ const solutionAsset = { role: 'solution', review: 'approved', path: 'ingestion/fictional-solution.png',
+  sha256: hash(solutionBytes), width: 1, height: 1 };
+ const before = question('fictional-visual-correction', { type: 'NAT', visualDependency: true, assets: [block],
+  answer: { raw: '2', status: 'official-key' } });
+ const f = await fixture(t, [before]);
+ const mediaRoot = path.join(f.root, 'canonical-media'), downloadsDir = path.join(f.root, 'downloads');
+ await mkdir(path.join(mediaRoot, 'fictional'), { recursive: true }); await mkdir(downloadsDir);
+ await writeFile(path.join(mediaRoot, block.path), blockBytes);
+ await writeFile(path.join(downloadsDir, `${solutionAsset.sha256}.png`), solutionBytes);
+ const corrected = { ...before, assets: [block, solutionAsset], explanation: 'Count both fictional shapes.',
+  solutionReview: { fingerprint: 'a'.repeat(64), solutionSha256: 'b'.repeat(64) },
+  workedSolution: { version: 1, figure: { sha256: solutionAsset.sha256, width: 1, height: 1 },
+   keyIdea: 'Group the fictional shapes.', steps: [
+    { text: 'Mark the first shape.', shapes: [{ tag: 'rect', attrs: { x: '0', y: '0', width: '1', height: '1' } }] },
+   ] },
+ };
+ const opts = await f.packet(corrected), output = path.join(f.root, 'reviewed-correction');
+ const result = await prepareAddition({ ...opts, replaceExpected: hash(stableJson(before)),
+  mediaRoot, downloadsDir, output });
+ assert.equal(result.review, 'objective-complete');
+ const staged = JSON.parse(await readFile(path.join(output, 'dexam-bank-export.json'), 'utf8'));
+ assert.deepEqual(staged.questions[0].assets, [block, solutionAsset]);
+ assert.deepEqual(await readFile(path.join(output, 'media', block.path)), blockBytes);
+ assert.deepEqual(await readFile(path.join(output, 'media', solutionAsset.path)), solutionBytes);
+});
+
 test('rejects a correction to a held record even when its source version matches', async t => {
  const held = question('held', { holds: ['review'] });
  const f = await fixture(t, [held]);

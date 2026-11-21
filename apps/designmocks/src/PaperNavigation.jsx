@@ -49,13 +49,16 @@ export function PaperNavigation({questions, index, answered, waiting, flagged, v
 }
 
 export function PaperFigures({question, media, status, broken, onBroken, onRetry}) {
-  return question.media?.map((image, i) => {
+  return question.media?.map((image, i) => ({image, i}))
+    .filter(({image}) => image.role !== "solution")
+    .map(({image, i}, visibleIndex) => {
     const id = question.id + ":" + i;
     const url = media[question.id]?.[i]?.url;
     if (url && !broken[id]) return <figure className="attempt-figure" key={id}>
-      <figcaption>Question figure {i + 1}</figcaption><img src={url} alt={image.alt || "Question figure " + (i + 1)} onError={() => onBroken(id)} />
+      <figcaption>Question figure {visibleIndex + 1}</figcaption><img src={url}
+        alt={image.alt || "Question figure " + (visibleIndex + 1)} onError={() => onBroken(id)} />
     </figure>;
-    return status === "loading" ? <p role="status" key={id}>Loading question figure…</p> : <div key={id}><p role="status">Couldn’t load question figure {i + 1}.</p>
-      <button type="button" className="text-button" onClick={onRetry}>Retry figure {i + 1}</button></div>;
+    return status === "loading" ? <p role="status" key={id}>Loading question figure…</p> : <div key={id}><p role="status">Couldn’t load question figure {visibleIndex + 1}.</p>
+      <button type="button" className="text-button" onClick={onRetry}>Retry figure {visibleIndex + 1}</button></div>;
   });
 }

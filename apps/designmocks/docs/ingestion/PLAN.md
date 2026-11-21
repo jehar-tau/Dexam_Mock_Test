@@ -127,7 +127,14 @@ For a new addition, supply the reviewed classification `owner-authorized` or `of
 
 For a correction, pass `--replace-expect "$CURRENT_QUESTION_SHA256"` and omit `--source-classification`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
 
-For visual solutions, the packet carries the full plain-text explanation and typed steps with drawing shapes. Each overlay uses the exact PNG's hash and dimensions. Supported SVG shapes and short text labels are converted to data, with no links, styles or embedded images. Visual corrections require the overlay's PNG to match an existing canonical figure. The runtime validates the shapes again and freezes the solution in the private explanation snapshot. The answer review displays the steps and requests the attempt's signed figure only when the existing result release gates are open. The text remains readable if the figure fails to load.
+For an existing visual question whose canonical asset is a whole-question block, also pass
+`--media-root /path/to/server/data/media`. The preparer verifies the original block from that
+private media root. If the worked solution annotates a separately extracted figure, it adds
+that exact reviewed PNG as a solution-only asset. The active paper still shows only the
+original question block; the extra figure is used in the released worked-solution view.
+The export stays a dry run and does not write to the canonical bank.
+
+For visual solutions, the packet carries the full plain-text explanation and typed steps with drawing shapes. Each overlay uses the exact PNG's hash and dimensions. Supported SVG shapes and short text labels are converted to data, with no links, styles or embedded images. A visual correction either reuses a matching existing figure or adds the reviewed extracted PNG as a solution-only asset. The runtime validates the shapes again and freezes the solution in the private explanation snapshot. The unannotated PNG may be signed with the other question media during an active attempt; the worked steps remain in the private explanation and appear only after the existing result release gates open. The text remains readable if the figure fails to load.
 
 The command reports whether the existing checks accept the proposed addition or correction. It deletes its temporary packet and media copies when it finishes. Persistent export and publication remain subsequent work.
 
