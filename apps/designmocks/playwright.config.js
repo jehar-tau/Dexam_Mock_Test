@@ -13,6 +13,7 @@ export default defineConfig({
   testMatch: scope === 'full' ? '**/*.spec.js' : [
     ...mvpFiles.map(file => '**/' + file),
     '**/student-release-modules.spec.js',
+    '**/overview-desk.spec.js',
     '**/all-india-ranking-consent.spec.js',
     '**/all-india-event-boundary.spec.js',
     '**/learn-programme.spec.js',

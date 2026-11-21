@@ -30,12 +30,6 @@ const example = {
     { id: "original-sample", title: "Your five-question experience sample", status: "active" },
   ],
 };
-const papers = [
-  { id: "illustrative-uceed", exam: "uceed", title: "See the problem differently.", durationSeconds: 360 },
-  { id: "illustrative-nid", exam: "nid", title: "Notice the little things.", durationSeconds: 360 },
-  { id: "illustrative-nift", exam: "nift", title: "Give your eye a workout.", durationSeconds: 360 },
-  { id: "illustrative-ceed", exam: "ceed", title: "Find another way through.", durationSeconds: 360 },
-];
 const topics = [
   { name: "Observation", score: 9, total: 10, note: "You noticed small differences reliably. Keep a daily sketch of one ordinary object, including three details you would usually overlook." },
   { name: "Spatial thinking", score: 8, total: 10, note: "Rotation was more consistent than folding. Draw a simple box from three viewpoints, then check the hidden edges with a real object." },
@@ -67,9 +61,10 @@ export default function PortalPreview() {
   return <>
     <section className="wrap portal-preview-note" aria-label="Preview information">
       <span className="eyebrow">STUDENT PORTAL PREVIEW</span>
-      <p>Welcome, Sample Student. This is a fictional account for exploring the interface. The pass, papers and marks below are examples.</p>
+      <p>Welcome, Sample Student. This is a fictional account for exploring the interface. The pass, attempts and marks below are examples. No paper is published in this preview.</p>
       <div className="portal-preview-links">
         <Link to="/portal-preview" aria-current={!report ? "page" : undefined}>Your workspace</Link>
+        <Link to="/portal-preview/paper">Try an example paper</Link>
         <Link to="/sample">Try the original sample</Link>
         <Link to="/portal-preview/report" aria-current={report ? "page" : undefined}>Example report</Link>
         {expandedPreview&&<><Link to="/portal-preview/pending" aria-current={pending ? "page" : undefined}>Example pending result</Link>
@@ -114,6 +109,6 @@ export default function PortalPreview() {
       <h2>Small observations. Useful habits.</h2>
       <div className="paper-list">{topics.map(t => <article key={t.name}><span className="eyebrow">{t.name}</span><h3>Try this tomorrow.</h3><p>{t.note}</p></article>)}</div>
       <Link className="button" to="/sample">Try it with your own answers <Arrow /></Link>
-    </section> : <PortalShell><WorkspaceView data={expandedPreview?example:{...example,attempts:example.attempts.filter(item=>!item.resultsPending),analytics:{...example.analytics,waitingForResults:0,drawingReviews:{pending:0,released:0}}}} papers={expandedPreview?papers:papers.slice(0,1)} passLabel="EXAMPLE PASS" startLabel="Try the 5-question sample" practiceHref="/topic-practice-preview" allIndiaHref="/all-india-preview" onStart={() => navigate("/sample")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/sample"} /></PortalShell>}
+    </section> : <PortalShell><WorkspaceView data={expandedPreview?example:{...example,attempts:example.attempts.filter(item=>!item.resultsPending),analytics:{...example.analytics,waitingForResults:0,drawingReviews:{pending:0,released:0}}}} papers={[]} preview passLabel="EXAMPLE PASS" practiceHref="/topic-practice-preview" allIndiaHref="/all-india-preview" examHref="/exam-mocks-preview" onStart={() => navigate("/portal-preview/paper")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/portal-preview/paper"} /></PortalShell>}
   </>;
 }

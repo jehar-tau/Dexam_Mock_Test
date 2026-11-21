@@ -72,7 +72,7 @@ function WorkspaceSession({headingRef,catalogueOnly=false}) {
   return <WorkspaceView heading={false} embedded catalogueOnly={catalogueOnly} data={data} papers={papers} error={error} busy={busy} loading={loading} unconfirmed={unconfirmed} onStart={start}
     onRefresh={()=>{headingRef.current?.focus();void load();}}/>;
 }
-export function WorkspaceHeading({headingRef,catalogueOnly=false}){return<><span className="eyebrow">YOUR PRACTICE SPACE</span><h1 ref={headingRef} tabIndex={-1}>{catalogueOnly?<>Choose your<br/><em>released paper.</em></>:<>Welcome to your<br/> next <em>attempt.</em></>}</h1></>;}
+export function WorkspaceHeading({headingRef,catalogueOnly=false}){return<><span className="eyebrow">STUDENT DESK / OVERVIEW</span><h1 ref={headingRef} tabIndex={-1}>{catalogueOnly?"Released papers":"Welcome to your next attempt."}</h1></>;}
 export function Workspace({catalogueOnly=false}){
   const{session,loading}=useAuthState(),location=useLocation(),heading=useRef(null),scopeKey=(session?.user.id??'signed-out')+':'+location.key,previous=useRef(scopeKey);
   useLayoutEffect(()=>{if(previous.current!==scopeKey&&(document.activeElement===document.body||heading.current?.parentElement.contains(document.activeElement)))heading.current?.focus();previous.current=scopeKey;},[scopeKey]);
@@ -96,10 +96,12 @@ export function WorkspaceView({
   passLabel = "YOUR PASS",
   practiceHref = "/dashboard/practice",
   allIndiaHref = "/dashboard/all-india",
+  examHref = "/dashboard/mocks",
+  preview = false,
   heading = true,embedded = false,onRefresh,unconfirmed = false,catalogueOnly = false,
 }) {
   return (
-    <section className={embedded?"workspace-content":"wrap section workspace"}>
+    <section className={(embedded?"workspace-content":"wrap section workspace")+(catalogueOnly?" workspace-catalogue":" overview-desk")}>
       {heading&&<WorkspaceHeading/>}
       {(loading || (!data && !error)) && (
         <p role="status">Loading your workspace…</p>
@@ -109,41 +111,25 @@ export function WorkspaceView({
           {error}
         </p>
       )}
-      {onRefresh&&<button type="button" className="button quiet" disabled={Boolean(busy)||loading} onClick={onRefresh}>{catalogueOnly?"Refresh papers":"Refresh workspace"}</button>}
+      {onRefresh&&<button type="button" className="button quiet overview-refresh" disabled={Boolean(busy)||loading} onClick={onRefresh}>{catalogueOnly?"Refresh papers":"Refresh workspace"}</button>}
       {data && (
         <>
           {!catalogueOnly && <>
-          <div className="dashboard-stats">
-            <article>
-              <span>{passLabel}</span>
-              <h2>{data.access?.active ? "Active" : "Not active"}</h2>
-              {data.access?.active ? (
-                <p>
-                  Until{" "}
-                  {new Date(data.access.expiresAt).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </p>
-              ) : (
-                <Link to="/plans">View the annual pass →</Link>
-              )}
-            </article>
-            <article>
-              <span>COMPLETED ATTEMPTS</span>
-              <h2>{data.analytics?.completed ?? 0}</h2>
-              <p>Submitted and safely stored.</p>
-            </article>
-            <article>
-              <span>YOUR NEXT STEP</span>
-              <h2>{data.analytics?.recommendedTopic?.topic ?? "Begin."}</h2>
-              {postLaunchPreview&&data.analytics?.recommendedTopic ? (
-                <Link to={practiceHref}>Practise the recommended topic →</Link>
-              ) : (
-                <a href="#your-papers">Choose a released paper →</a>
-              )}
-            </article>
+          <div className="overview-banner">
+            <div><span className="overview-kicker">YOUR NEXT SESSION</span><h2>{data.analytics?.activeAttempt ? "A paper is in progress" : "Ready when you are"}</h2><p>{data.analytics?.activeAttempt ? "Your saved answers are waiting. The original deadline still applies." : "Choose an exam paper or build a focused practice session."}</p></div>
+            <Link className="overview-primary-link" to={data.analytics?.activeAttempt ? attemptHref(data.analytics.activeAttempt.id) : examHref}>{data.analytics?.activeAttempt ? "Resume paper" : "Explore exam papers"}<Arrow size={18}/></Link>
+          </div>
+          <div className="overview-metrics" aria-label="Your progress at a glance">
+            <article><span>COMPLETED PAPERS</span><strong>{data.analytics?.completed ?? 0}</strong><small>Submitted attempts</small></article>
+            <article><span>OBJECTIVE ACCURACY</span><strong>{data.analytics?.objectiveAccuracy == null ? "—" : `${data.analytics.objectiveAccuracy}%`}</strong><small>{data.analytics?.objectiveAccuracy == null ? "After a released result" : `From ${data.analytics.objectiveAnswered} answered questions`}</small></article>
+            <article><span>{passLabel}</span><strong>{data.access?.active ? "Active" : "Not active"}</strong><small>{data.access?.active ? `Until ${new Date(data.access.expiresAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}` : <Link to="/plans">View the annual pass →</Link>}</small></article>
+            <article><span>RESULTS IN REVIEW</span><strong>{data.analytics?.waitingForResults ?? 0}</strong><small>Released after review</small></article>
+          </div>
+          <div className="overview-section-head"><div><span className="overview-kicker">CHOOSE YOUR PATH</span><h2>What would you like to work on?</h2></div></div>
+          <div className="overview-paths">
+            <Link to={examHref}><span className="overview-path-icon">01</span><span><b>Exam-wise mocks</b><small>Choose NID, NIFT, UCEED or CEED and open a released paper.</small></span><Arrow size={18}/></Link>
+            <Link to={allIndiaHref}><span className="overview-path-icon">02</span><span><b>All India mocks</b><small>One common paper, one attempt, results after the review window.</small></span><Arrow size={18}/></Link>
+            <Link to={practiceHref}><span className="overview-path-icon">03</span><span><b>Topic-wise practice</b><small>Build a short session around the skills you want to improve.</small></span><Arrow size={18}/></Link>
           </div>
           </>}
           {data.analytics?.activeAttempt && (
@@ -155,15 +141,14 @@ export function WorkspaceView({
               </Link>
             </div>
           )}
-          {!catalogueOnly && data.analytics?.waitingForResults > 0 && <p className="notice" role="status">
+          {!catalogueOnly && data.analytics?.waitingForResults > 0 && <p className="notice overview-pending" role="status">
             {data.analytics.waitingForResults === 1 ? "1 submitted attempt is awaiting results." :
               `${data.analytics.waitingForResults} submitted attempts are awaiting results.`}
           </p>}
           {!catalogueOnly && (data.analytics?.exams?.length > 0 || data.analytics?.objectiveAccuracy != null || data.analytics?.drawingReviews?.pending > 0 ||
             data.analytics?.drawingReviews?.released > 0) && (
             <>
-              <h2>Your performance snapshot.</h2>
-              <p>{postLaunchPreview?"Exam averages use released whole tests, including drawing marks.":"Averages use your released objective papers."}</p>
+              <div className="overview-section-head"><div><span className="overview-kicker">AFTER RESULTS RELEASE</span><h2>Performance snapshot</h2></div><p>{postLaunchPreview?"Exam averages use released whole tests, including drawing marks.":"Averages use your released objective papers."}</p></div>
               <div className="dashboard-stats analytics-snapshot" aria-label="Performance snapshot">
                 {data.analytics.objectiveAccuracy != null && <article>
                   <span>OBJECTIVE ACCURACY</span>
@@ -190,7 +175,7 @@ export function WorkspaceView({
           )}
           {!catalogueOnly && data.analytics?.topics?.length > 0 && (
             <>
-              <h2>Your topic picture.</h2>
+              <div className="overview-section-head"><div><span className="overview-kicker">SKILLS</span><h2>Your topic picture</h2></div>{data.analytics?.recommendedTopic&&<Link to={practiceHref}>Practise the recommended topic →</Link>}</div>
               <div className="dashboard-stats">
                 {data.analytics.topics.slice(0, 3).map((topic) => (
                   <article key={topic.topic}>
@@ -206,7 +191,7 @@ export function WorkspaceView({
             </>
           )}
           {catalogueOnly && !data.access?.active && <p className="notice">An active pass is needed to start a released paper. <Link to="/plans">View the annual pass →</Link></p>}
-          <h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2>
+          <div className="overview-section-head"><div><span className="overview-kicker">{catalogueOnly?"PAPER CATALOGUE":"EXAM PAPERS"}</span><h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2></div>{!catalogueOnly&&<Link to={examHref}>View exam-wise mocks →</Link>}</div>
           {papers.length ? (
             <div className="paper-list">
               {papers.map((p) => (
@@ -228,12 +213,12 @@ export function WorkspaceView({
               ))}
             </div>
           ) : (
-            <div className="notice">
-              No papers have been released yet. They’ll appear here after the
-              reviewed bank is imported and published.
+            <div className="overview-empty-papers">
+              <div><span className="overview-kicker">RELEASE STATUS</span><h3>No papers have been released yet</h3><p>Reviewed papers will appear here when they are published.</p></div>
+              {preview&&<Link className="overview-secondary-link" to="/portal-preview/paper">Try an example paper <Arrow size={17}/></Link>}
             </div>
           )}
-          {!catalogueOnly && <><h2>Your recent attempts.</h2>
+          {!catalogueOnly && <><div className="overview-section-head"><div><span className="overview-kicker">YOUR RECORD</span><h2>Your recent attempts.</h2></div></div>
           {data.attempts.length ? (
             data.attempts.map((a) => (
               <article className="history-row" key={a.id}>
