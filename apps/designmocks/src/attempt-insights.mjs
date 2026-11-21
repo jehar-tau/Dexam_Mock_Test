@@ -24,3 +24,23 @@ export function buildAttemptInsights(questions = []) {
   const recommended = topics.filter((item) => item.answered > 0).sort((a, b) => a.accuracy - b.accuracy || b.answered - a.answered || a.key.localeCompare(b.key))[0] ?? null;
   return { topics, sections, recommended };
 }
+
+export const outcomeLabels = {
+  correct: "Correct", wrong: "Incorrect", partial: "Partial credit",
+  unanswered: "Unanswered", full_marks: "Full marks awarded", dropped: "Dropped",
+};
+
+export function releasedOutcome(item) {
+  const key = item.outcome === "incorrect" ? "wrong" : item.outcome;
+  return item.kind !== "drawing" && Object.hasOwn(outcomeLabels, key) ? key : null;
+}
+
+// Counts are based on the released grading snapshot. A dropped item has no bearing
+// on coverage or accuracy, but stays available in the question review.
+export function responseSummary(questions) {
+  const items = questions.filter(item => releasedOutcome(item) && item.outcome !== "dropped");
+  const [summary] = summarize(items, () => "all");
+  const counts = Object.fromEntries(Object.keys(outcomeLabels).map(key => [key, 0]));
+  for (const item of items) counts[releasedOutcome(item)]++;
+  return {total: items.length, answered: summary?.answered ?? 0, accuracy: summary?.accuracy ?? null, counts};
+}
