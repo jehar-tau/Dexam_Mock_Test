@@ -97,7 +97,7 @@ class ExportTest(unittest.TestCase):
         self.packet = json.loads(self.packet_path.read_text())
         self.payload = json.loads(self.packet["payloadText"])
         self.assertEqual(self.repo, repo)
-        self.assertNotIn("--output", args)
+        persistent = "--output" in args
         self.assertEqual(args[args.index("--expect") + 1], solutions.sha256(self.packet["payloadText"].encode()))
         self.assertEqual("git-review-required", self.packet["publicationState"])
         downloads = pathlib.Path(args[args.index("--downloads-dir") + 1])
@@ -107,7 +107,7 @@ class ExportTest(unittest.TestCase):
                 self.assertIn("--media-root", args)
                 staged = pathlib.Path(args[args.index("--media-root") + 1]) / asset["path"]
             self.assertEqual(asset["sha256"], solutions.sha256(staged.read_bytes()))
-        return {"mode": "dry-run", "review": "objective-complete"}
+        return {"mode": "staged" if persistent else "dry-run", "review": "objective-complete"}
 
     def export(self, fingerprint, **kwargs):
         if "replace_expected" not in kwargs:
@@ -131,6 +131,28 @@ class ExportTest(unittest.TestCase):
         self.assertFalse(self.packet_path.exists())
         self.assertEqual(before, {path: path.read_bytes() for path in self.base.rglob("*") if path.is_file()})
         self.assertEqual("", self.git("status", "--short"))
+
+    def test_staged_export_passes_the_private_output_directory_to_bank_preparer(self):
+        self.fictional_block()
+        output = self.work / "approved-export"
+        result = self.export(self.approve(), output=output)
+        self.assertEqual("staged", result["mode"])
+        self.assertEqual(str(output), self.args[self.args.index("--output") + 1])
+        self.assertFalse(self.packet_path.exists())
+
+    def test_staged_export_rejects_a_dry_run_result(self):
+        self.fictional_block()
+        fingerprint = self.approve()
+
+        def mismatched(args, repo):
+            self.fake_prepare(args, repo)
+            return {"mode": "dry-run", "review": "objective-complete"}
+
+        with self.assertRaisesRegex(solutions.SolutionError, "bank checks did not accept"):
+            export.prepare(work=self.work, repo=self.repo, paper_id=PAPER, key="q1", fingerprint=fingerprint,
+                           rights_note="Fictional source rights reviewed", expected_source=self.source_commit,
+                           source_classification="official-unlicensed", output=self.work / "approved-export",
+                           run_prepare=mismatched)
 
     def test_addition_uses_only_explicit_reviewed_source_labels(self):
         self.fictional_block()
