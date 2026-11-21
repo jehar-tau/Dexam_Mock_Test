@@ -16,6 +16,27 @@ export const launchNavigation=Object.freeze([
  {to:'/dashboard/mocks',label:'Released papers',mark:'M'},
  {to:'/dashboard/learn',label:'Learn',mark:'L'},
 ]);
+const studentModuleItems=Object.freeze({
+ mocks:{to:'/dashboard/mocks',label:'Exam-wise mocks',mark:'M'},
+ 'all-india':{to:'/dashboard/all-india',label:'All India mocks',mark:'A'},
+ practice:{to:'/dashboard/practice',label:'Topic practice',mark:'P'},
+ community:{to:'/dashboard/community',label:'Community',mark:'C'},
+});
+export function releasedStudentModules(value){
+ if(typeof value!=='string'||!value.trim())return [];
+ const names=value.split(',').map(name=>name.trim());
+ if(names.some(name=>!Object.hasOwn(studentModuleItems,name))||new Set(names).size!==names.length)return [];
+ return names;
+}
+export function studentNavigation(released){
+ const enabled=new Set(released);
+ return Object.freeze([
+  launchNavigation[0],enabled.has('mocks')?studentModuleItems.mocks:launchNavigation[1],
+  ...['all-india','practice'].filter(name=>enabled.has(name)).map(name=>studentModuleItems[name]),
+  launchNavigation[2],
+  ...(enabled.has('community')?[studentModuleItems.community]:[]),
+ ]);
+}
 export const deferredModules=Object.freeze({
  'all-india':'All India mocks',practice:'Topic practice',community:'Community',drawings:'Drawing review',
 });
