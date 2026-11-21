@@ -3,29 +3,30 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAuthState } from "./useAuth.js";
 import { portalItems, portalModules } from "./portalModel.mjs";
 import {postLaunchPreview}from'./launch-scope.js';
+import { hostedStudentPreview, studentPreview } from "./student-preview.js";
 import {launchNavigation,deferredModules}from'./launch-scope.mjs';
 
 export function PortalShell({ children }) {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  const developmentPreviewRoute = import.meta.env.DEV && (
+  const previewRoute = (import.meta.env.DEV || __DMOCKS_STAGING_REVIEW_PREVIEW__) && studentPreview && (
     pathname === "/portal-preview" || pathname.startsWith("/portal-preview/") || pathname.startsWith("/learn-programme-preview") ||
     ["/exam-mocks-preview", "/all-india-preview", "/topic-practice-preview", "/learn-preview", "/community-preview"].includes(pathname)
   );
-  const inDevelopmentPreview = developmentPreviewRoute && postLaunchPreview;
-  const developmentPreviewNavigation = inDevelopmentPreview ? [
+  const expandedPreview = previewRoute && (postLaunchPreview || hostedStudentPreview);
+  const previewNavigation = expandedPreview ? [
     { to: "/portal-preview", label: "Overview", mark: "O", end: true },
     { to: "/exam-mocks-preview", label: "Exam-wise mocks", mark: "M" },
     { to: "/all-india-preview", label: "All India mocks", mark: "A" },
     { to: "/topic-practice-preview", label: "Topic practice", mark: "P" },
     { to: "/learn-preview", label: "Learn", mark: "L" },
     { to: "/community-preview", label: "Community", mark: "C" },
-  ] : developmentPreviewRoute ? [
+  ] : previewRoute ? [
     { ...launchNavigation[0], to: "/portal-preview" },
     { ...launchNavigation[1], to: "/exam-mocks-preview" },
     { ...launchNavigation[2], to: "/learn-preview" },
   ] : null;
-  const navigation = developmentPreviewNavigation ?? (postLaunchPreview ? portalItems : launchNavigation);
+  const navigation = previewNavigation ?? (postLaunchPreview ? portalItems : launchNavigation);
   return <div className="portal-shell">
     <button className="portal-menu-button" aria-expanded={open} aria-controls="student-navigation" onClick={() => setOpen(!open)}>{open ? "Close" : "Student menu"}</button>
     <aside className={open ? "portal-sidebar is-open" : "portal-sidebar"} id="student-navigation">
@@ -33,7 +34,7 @@ export function PortalShell({ children }) {
       <nav aria-label="Student workspace">
         {navigation.map(({to, label, mark, end}) => <NavLink key={to} to={to} end={end} onClick={() => setOpen(false)}><i aria-hidden="true">{mark}</i><span>{label}</span></NavLink>)}
       </nav>
-      {!developmentPreviewRoute && <NavLink className="portal-account-link" to="/account">Account & sign out</NavLink>}
+      {!previewRoute && <NavLink className="portal-account-link" to="/account">Account & sign out</NavLink>}
     </aside>
     <div className="portal-content">{children}</div>
   </div>;

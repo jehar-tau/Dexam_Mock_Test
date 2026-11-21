@@ -4,6 +4,7 @@ import { PortalShell } from '../PortalShell.jsx';
 import { ImageCredits } from './photo-figures.jsx';
 import { StageMotif, TopicMotif } from '../TopicMotion.jsx';
 import { postLaunchPreview } from '../launch-scope.js';
+import { hostedStudentPreview } from '../student-preview.js';
 import { useAuthState } from '../useAuth.js';
 import { learningPracticeLink } from '../practice-context.js';
 import { findProgramme } from './programmes/index.js';
@@ -73,7 +74,7 @@ export function ProgrammeOverview({ programme, progress, open, notice, message, 
       </section>;
     })}
     {/* Topic practice is still deferred on the released site. */}
-    {(import.meta.env.DEV || postLaunchPreview) && <p className="programme-meta"><Link to={practice.to}>{practice.label} →</Link></p>}
+    {(import.meta.env.DEV || postLaunchPreview || (__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview)) && <p className="programme-meta"><Link to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? practice.to.replace('/dashboard/practice', '/topic-practice-preview') : practice.to}>{practice.label} →</Link></p>}
     {notice && <p className="programme-notice">{notice}</p>}
     <ImageCredits credits={programme.credits} />
   </section>;
@@ -133,7 +134,9 @@ export function LearnProgrammePreview() {
     <p><Link to="/learn-preview">← Learn preview</Link></p>
     {!params.get('lesson') && <label className="review-unlock"><input type="checkbox" checked={unlockAll} onChange={e => toggle(e.target.checked)} /> Review mode: unlock every tier (this preview only; students still unlock tiers by passing quizzes)</label>}
     {programme
-      ? <ProgrammeRunner programme={programme} actorId="preview" notice="Development preview. Progress is saved only in this browser." seed={seed} unlockAll={unlockAll} />
+      ? <ProgrammeRunner programme={programme} actorId="preview" notice={hostedStudentPreview
+        ? "Staging review. Progress is saved only in this browser."
+        : "Development preview. Progress is saved only in this browser."} seed={seed} unlockAll={unlockAll} />
       : <p role="alert">No programme with that name.</p>}
   </section></PortalShell>;
 }
