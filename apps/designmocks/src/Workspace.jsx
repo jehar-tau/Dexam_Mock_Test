@@ -33,7 +33,7 @@ function SignInGate() {
     </section>
   );
 }
-function WorkspaceSession({headingRef}) {
+function WorkspaceSession({headingRef,catalogueOnly=false}) {
   const services=useAccountServices(),scope=useRef(null),read=useRef(null),mutationBusy=useRef(false);
   const navigate = useNavigate();
   const [data, setData] = useState(null),
@@ -69,7 +69,7 @@ function WorkspaceSession({headingRef}) {
       mutationBusy.current=false;if(current())setBusy("");
     }
   };
-  return <WorkspaceView heading={false} embedded data={data} papers={papers} error={error} busy={busy} loading={loading} unconfirmed={unconfirmed} onStart={start}
+  return <WorkspaceView heading={false} embedded catalogueOnly={catalogueOnly} data={data} papers={papers} error={error} busy={busy} loading={loading} unconfirmed={unconfirmed} onStart={start}
     onRefresh={()=>{headingRef.current?.focus();void load();}}/>;
 }
 export function WorkspaceHeading({headingRef,catalogueOnly=false}){return<><span className="eyebrow">YOUR PRACTICE SPACE</span><h1 ref={headingRef} tabIndex={-1}>{catalogueOnly?<>Choose your<br/><em>released paper.</em></>:<>Welcome to your<br/> next <em>attempt.</em></>}</h1></>;}
@@ -79,7 +79,7 @@ export function Workspace({catalogueOnly=false}){
   if (!session && !loading) return <SignInGate />;
   if(loading)return<section className="wrap section"><p role="status">Checking your account…</p></section>;
   return (
-    <PortalShell><section className="wrap section workspace"><WorkspaceHeading headingRef={heading} catalogueOnly={catalogueOnly}/><AccountAccessBoundary key={scopeKey} kind="overview" actorId={session.user.id} headingRef={heading}><WorkspaceSession headingRef={heading}/></AccountAccessBoundary></section></PortalShell>
+    <PortalShell><section className="wrap section workspace"><WorkspaceHeading headingRef={heading} catalogueOnly={catalogueOnly}/><AccountAccessBoundary key={scopeKey} kind="overview" actorId={session.user.id} headingRef={heading}><WorkspaceSession headingRef={heading} catalogueOnly={catalogueOnly}/></AccountAccessBoundary></section></PortalShell>
   );
 }
 
@@ -96,7 +96,7 @@ export function WorkspaceView({
   passLabel = "YOUR PASS",
   practiceHref = "/dashboard/practice",
   allIndiaHref = "/dashboard/all-india",
-  heading = true,embedded = false,onRefresh,unconfirmed = false,
+  heading = true,embedded = false,onRefresh,unconfirmed = false,catalogueOnly = false,
 }) {
   return (
     <section className={embedded?"workspace-content":"wrap section workspace"}>
@@ -109,9 +109,10 @@ export function WorkspaceView({
           {error}
         </p>
       )}
-      {onRefresh&&<button type="button" className="button quiet" disabled={Boolean(busy)||loading} onClick={onRefresh}>Refresh workspace</button>}
+      {onRefresh&&<button type="button" className="button quiet" disabled={Boolean(busy)||loading} onClick={onRefresh}>{catalogueOnly?"Refresh papers":"Refresh workspace"}</button>}
       {data && (
         <>
+          {!catalogueOnly && <>
           <div className="dashboard-stats">
             <article>
               <span>{passLabel}</span>
@@ -144,6 +145,7 @@ export function WorkspaceView({
               )}
             </article>
           </div>
+          </>}
           {data.analytics?.activeAttempt && (
             <div className="notice">
               <b>Continue where you left off.</b>{" "}
@@ -153,11 +155,11 @@ export function WorkspaceView({
               </Link>
             </div>
           )}
-          {data.analytics?.waitingForResults > 0 && <p className="notice" role="status">
+          {!catalogueOnly && data.analytics?.waitingForResults > 0 && <p className="notice" role="status">
             {data.analytics.waitingForResults === 1 ? "1 submitted attempt is awaiting results." :
               `${data.analytics.waitingForResults} submitted attempts are awaiting results.`}
           </p>}
-          {(data.analytics?.exams?.length > 0 || data.analytics?.objectiveAccuracy != null || data.analytics?.drawingReviews?.pending > 0 ||
+          {!catalogueOnly && (data.analytics?.exams?.length > 0 || data.analytics?.objectiveAccuracy != null || data.analytics?.drawingReviews?.pending > 0 ||
             data.analytics?.drawingReviews?.released > 0) && (
             <>
               <h2>Your performance snapshot.</h2>
@@ -186,7 +188,7 @@ export function WorkspaceView({
               </div>
             </>
           )}
-          {data.analytics?.topics?.length > 0 && (
+          {!catalogueOnly && data.analytics?.topics?.length > 0 && (
             <>
               <h2>Your topic picture.</h2>
               <div className="dashboard-stats">
@@ -203,7 +205,8 @@ export function WorkspaceView({
               </div>
             </>
           )}
-          <h2 id="your-papers">Your papers.</h2>
+          {catalogueOnly && !data.access?.active && <p className="notice">An active pass is needed to start a released paper. <Link to="/plans">View the annual pass →</Link></p>}
+          <h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2>
           {papers.length ? (
             <div className="paper-list">
               {papers.map((p) => (
@@ -230,7 +233,7 @@ export function WorkspaceView({
               reviewed bank is imported and published.
             </div>
           )}
-          <h2>Your recent attempts.</h2>
+          {!catalogueOnly && <><h2>Your recent attempts.</h2>
           {data.attempts.length ? (
             data.attempts.map((a) => (
               <article className="history-row" key={a.id}>
@@ -254,7 +257,7 @@ export function WorkspaceView({
               <h3>Every practice starts somewhere.</h3>
               <p>Your attempts will appear here.</p>
             </div>
-          )}
+          )}</>}
         </>
       )}
     </section>

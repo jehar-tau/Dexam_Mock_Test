@@ -4,7 +4,7 @@ import{seedPortalSession,stubPortalProvider}from'./portal-fixture.js';
 import{runtimeQuestion,RULES_2027}from'../../scripts/question-runtime.mjs';
 test.use({baseURL:'http://127.0.0.1:4799'});
 const actor={id:'00000000-0000-4000-8000-000000001701',email:'fictional-mvp@example.invalid'},paper='10000000-0000-4000-8000-000000001701',attempt='20000000-0000-4000-8000-000000001701';
-async function fixture(page,{drawing=false,numericAlternatives=false,multipleSelect=false,markings=null,released=true}={}){
+async function fixture(page,{drawing=false,numericAlternatives=false,multipleSelect=false,markings=null,released=true,analytics=null}={}){
  const state={answer:null,revision:0,submitted:false,released};
  const numeric=numericAlternatives?runtimeQuestion({externalKey:'original-numeric-alternatives',provenance:{exam:'uceed'},type:'NAT',prompt:'Original fictional exact-decimal practice question.',holds:[],assets:[],options:[],answer:{raw:'1.000000000000000001 or 1.000000000000000002',status:'reviewed'}},{rule:RULES_2027.uceed}):null;
  const score=()=>numericAlternatives?(numeric.key.accepted.some(value=>value.exact===state.answer)?4:0):-1;
@@ -15,7 +15,7 @@ async function fixture(page,{drawing=false,numericAlternatives=false,multipleSel
   if(name==='finalize_my_expired_attempts')return 0;
   if(name==='my_attempt_history')return[];
   if(name==='my_pass')return{active:true,expiresAt:new Date(Date.now()+86400000).toISOString()};
-  if(name==='my_overview_analytics')return{completed:0,waitingForResults:0,objectiveAccuracy:null,objectiveAnswered:0,topics:[],exams:[],drawingReviews:{pending:0,released:0}};
+  if(name==='my_overview_analytics')return analytics??{completed:0,waitingForResults:0,objectiveAccuracy:null,objectiveAnswered:0,topics:[],exams:[],drawingReviews:{pending:0,released:0}};
   if(name==='available_papers')return state.released?[{id:paper,title:'Original fictional released objective paper',exam:'uceed',durationSeconds:900,qualityHeld:false}]:[];
   if(name==='start_attempt')return attempt;
   if(name==='read_attempt')return snapshot();
@@ -50,6 +50,24 @@ test('the released-paper MVP starts, saves, submits and reviews its objective of
  await page.getByRole('button',{name:'B Original second choice',exact:true}).click();await expect(page.getByText('Answers are saved to your account.',{exact:true})).toBeVisible();await page.getByRole('button',{name:'Submit attempt',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).click();
  await expect(page.getByRole('heading',{name:/Make this attempt/})).toBeVisible();await expect(page.getByText('This report covers the objective paper you submitted.',{exact:false})).toBeVisible();await expect(page.getByText('teacher-reviewed submission.',{exact:false})).toHaveCount(0);await page.getByRole('button',{name:'Open answer review',exact:true}).click();await expect(page.getByText('Original fictional MVP answer explanation.',{exact:true})).toBeVisible();expect(provider.state.answer).toBe('B');expect(provider.calls.filter(([name])=>name==='submit_attempt')).toHaveLength(1);
  expect(provider.calls.some(([name])=>['start_exam_mock','my_exam_mock_session','my_exam_mock_report','drawing-media','community_feed','learning_catalog','prepare_order'].includes(name))).toBe(false);expect(provider.unexpected).toEqual([]);
+});
+test('released papers stays focused while Overview retains progress',async({page})=>{
+ const analytics={completed:3,waitingForResults:0,objectiveAccuracy:75,objectiveAnswered:12,topics:[{topic:'Observation',accuracy:75,correct:9,answered:12}],exams:[],drawingReviews:{pending:0,released:0}};
+ const provider=await fixture(page,{analytics});
+ await page.goto('/dashboard');
+ await expect(page.getByRole('heading',{name:'Your papers.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Your performance snapshot.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Your topic picture.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Your recent attempts.'})).toBeVisible();
+ await page.goto('/dashboard/mocks');
+ await expect(page.getByRole('heading',{name:'Released papers.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Original fictional released objective paper'})).toBeVisible();
+ await expect(page.getByRole('button',{name:'Start or resume'})).toBeEnabled();
+ await expect(page.getByRole('heading',{name:'Your performance snapshot.'})).toHaveCount(0);
+ await expect(page.getByRole('heading',{name:'Your topic picture.'})).toHaveCount(0);
+ await expect(page.getByRole('heading',{name:'Your recent attempts.'})).toHaveCount(0);
+ await expect(page.getByText('COMPLETED ATTEMPTS')).toHaveCount(0);
+ expect(provider.unexpected).toEqual([]);
 });
 test('an MSQ shows how to select answers and saves more than one choice', async ({ page }) => {
  const provider = await fixture(page, { multipleSelect: true });
