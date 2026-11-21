@@ -179,12 +179,21 @@ def approved_assets(record):
     return {(image["sha256"], image["width"], image["height"]): image for image in images}
 
 
-def stage_media(assets, available, figures_dir, downloads):
+def stage_media(assets, available, figures_dir, downloads, existing_assets=(), media_root=None):
     downloads.mkdir(mode=0o700)
+    existing = {(asset["path"], asset["sha256"], asset["width"], asset["height"])
+                for asset in existing_assets}
     for asset in assets:
         identity = (asset["sha256"], asset["width"], asset["height"])
         approved = available.get(identity)
         if not approved:
+            previous = (asset["path"], *identity) in existing
+            if previous and media_root is not None:
+                # The canonical bank preparer verifies these bytes in the
+                # operator's existing media root before writing its output.
+                continue
+            if previous:
+                raise SolutionError("Supply the existing canonical media root for this correction")
             raise SolutionError("The current canonical figures differ from the approved question")
         path = (figures_dir / approved["file"]).resolve()
         if not path.is_relative_to(figures_dir.resolve()) or not path.is_file():
@@ -203,6 +212,7 @@ def run_bank_prepare(args, repo):
 
 
 def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, replace_expected=None, source_classification=None,
+            media_root=None,
             repo=REPO, run_prepare=run_bank_prepare):
     if not QUESTION_KEY.fullmatch(key) or key.startswith("qb") or not DIGEST.fullmatch(fingerprint):
         raise SolutionError("Supply an objective question key and its reviewed SHA-256 fingerprint")
@@ -254,12 +264,23 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
                 or current["provenance"].get("sourceSha256") != source_hash):
             raise SolutionError("The correction needs a canonical record from the same original paper and question")
         match_correction(current, question, options)
-        assets = current.get("assets", [])
+        previous_assets = current.get("assets", [])
+        assets = [asset.copy() for asset in previous_assets if asset.get("role") != "solution"]
         if visual and not assets:
             raise SolutionError("Existing canonical figures are required for a visual correction")
-        if overlay_figure and not any(asset["sha256"] == overlay_figure["sha256"] for asset in assets):
-            raise SolutionError("The correction's overlay must match an existing canonical figure")
+        if overlay_figure:
+            matching = next((asset for asset in previous_assets if
+                             all(asset.get(field) == overlay_figure[field]
+                                 for field in ("sha256", "width", "height"))), None)
+            if matching:
+                if matching.get("role") == "solution":
+                    assets.append(matching.copy())
+            else:
+                assets.append({"role": "solution", "review": "approved",
+                               "path": f"ingestion/{external_key}-solution-{overlay_figure['sha256'][:12]}.png",
+                               **{field: overlay_figure[field] for field in ("sha256", "width", "height")}})
         payload = {**current, "answer": answer, "explanation": explanation, "solutionReview": evidence}
+        payload["assets"] = assets
         payload.pop("workedSolution", None)
     else:
         if current is not None or any(same_position(item, provenance) for item in bank["questions"]):
@@ -272,7 +293,8 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
             assets.append({"role": "figure", "review": "approved", "path": f"ingestion/{external_key}.png",
                            **{field: block[field] for field in ("sha256", "width", "height")}})
             if overlay_figure and overlay_figure["sha256"] != block["sha256"]:
-                assets.append({"role": "figure", "review": "approved", "path": f"ingestion/{external_key}-solution-figure.png",
+                assets.append({"role": "solution", "review": "approved",
+                               "path": f"ingestion/{external_key}-solution-{overlay_figure['sha256'][:12]}.png",
                                **{field: overlay_figure[field] for field in ("sha256", "width", "height")}})
         source_kind, licence = SOURCE_CLASSIFICATIONS[source_classification]
         payload = {
@@ -297,11 +319,14 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
     with tempfile.TemporaryDirectory(prefix="dmocks-ingestion-") as directory:
         temporary = pathlib.Path(directory)
         downloads = temporary / "downloads"
-        stage_media(assets, available, base / "03-figures", downloads)
+        stage_media(assets, available, base / "03-figures", downloads,
+                    existing_assets=current.get("assets", []) if current else (), media_root=media_root)
         packet_path = temporary / "packet.json"
         packet_path.write_text(json.dumps(packet, ensure_ascii=False), encoding="utf-8")
         args = ["--packet", str(packet_path), "--expect", payload_hash, "--expect-source", expected_source,
                 "--downloads-dir", str(downloads)]
+        if media_root is not None:
+            args.extend(["--media-root", str(media_root)])
         if replace_expected is not None:
             args.extend(["--replace-expect", replace_expected])
         result = run_prepare(args, repo)
@@ -321,6 +346,7 @@ def main(argv=None):
     parser.add_argument("--expect-source", dest="expected_source", required=True)
     parser.add_argument("--replace-expect", dest="replace_expected")
     parser.add_argument("--source-classification", choices=SOURCE_CLASSIFICATIONS)
+    parser.add_argument("--media-root", help="Existing canonical PNG root for correcting a paper already in the bank")
     parser.add_argument("--rights-note", required=True)
     try:
         result = prepare(**vars(parser.parse_args(argv)))

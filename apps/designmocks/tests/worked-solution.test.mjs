@@ -33,6 +33,20 @@ test("materializes the worked solution in the released explanation channel only"
   ]) assert.deepEqual(readWorkedExplanation(attempt, runtime), { explanation: "", solution: null });
 });
 
+test("keeps a separately reviewed solution figure in frozen media without showing it as another question figure", () => {
+  const block = { sha256: "d".repeat(64), width: 120, height: 80 };
+  const record = { ...question, assets: [{ ...block, role: "figure" }, { ...figure, role: "solution" }] };
+  const catalogue = [block, figure].map(asset => ({ ...asset,
+    path: `papers/canonical/${asset.sha256}.png`, byteSize: 128 }));
+  const { runtime, issues } = inspectRuntimeQuestion(record, { rule: RULES_2027.uceed, mediaCatalog: catalogue });
+  assert.deepEqual(issues, []);
+  assert.equal(runtime.media.length, 2);
+  assert.equal(runtime.media[0].role, undefined);
+  assert.equal(runtime.media[1].role, "solution");
+  assert.equal(readWorkedExplanation({ status: "active" }, runtime).solution, null);
+  assert.equal(readWorkedExplanation({ status: "submitted" }, runtime).solution.figure.sha256, figure.sha256);
+});
+
 test("blocks raw SVG, event attributes, external paints and mismatched media", () => {
   const changes = [
     { tag: "foreignObject", attrs: {} }, { tag: "use", attrs: {} },

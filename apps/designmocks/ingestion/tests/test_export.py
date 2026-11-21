@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from PIL import Image
 
 from test_solutions import HERE, NAT, PAPER, build_work
 
@@ -101,7 +102,11 @@ class ExportTest(unittest.TestCase):
         self.assertEqual("git-review-required", self.packet["publicationState"])
         downloads = pathlib.Path(args[args.index("--downloads-dir") + 1])
         for asset in self.payload["assets"]:
-            self.assertEqual(asset["sha256"], solutions.sha256((downloads / f'{asset["sha256"]}.png').read_bytes()))
+            staged = downloads / f'{asset["sha256"]}.png'
+            if not staged.exists():
+                self.assertIn("--media-root", args)
+                staged = pathlib.Path(args[args.index("--media-root") + 1]) / asset["path"]
+            self.assertEqual(asset["sha256"], solutions.sha256(staged.read_bytes()))
         return {"mode": "dry-run", "review": "objective-complete"}
 
     def export(self, fingerprint, **kwargs):
@@ -209,8 +214,45 @@ class ExportTest(unittest.TestCase):
         current["prompt"] = self.question["prompt"]
         current["assets"][0]["sha256"] = "c" * 64
         self.pin_bank([current])
-        with self.assertRaisesRegex(solutions.SolutionError, "figures differ"):
+        with self.assertRaisesRegex(solutions.SolutionError, "existing canonical media root"):
             self.export(fingerprint, replace_expected="b" * 64)
+
+    def test_correction_keeps_the_legacy_block_and_adds_a_solution_only_figure(self):
+        legacy = self.base / "legacy-block.png"
+        Image.new("RGB", (400, 200), "black").save(legacy)
+        current = self.existing()
+        current["assets"][0].update(sha256=solutions.sha256(legacy.read_bytes()))
+        self.pin_bank([current])
+        media_root = self.work / "canonical-media"
+        old_media = media_root / current["assets"][0]["path"]
+        old_media.parent.mkdir(parents=True)
+        old_media.write_bytes(legacy.read_bytes())
+        self.draft = copy.deepcopy(NAT)
+        self.save_draft()
+        fingerprint = self.approve()
+        self.export(fingerprint, replace_expected="b" * 64, media_root=media_root)
+        self.assertEqual(current["assets"][0], self.payload["assets"][0])
+        solution_asset = self.payload["assets"][1]
+        self.assertEqual("solution", solution_asset["role"])
+        self.assertEqual(self.payload["workedSolution"]["figure"]["sha256"], solution_asset["sha256"])
+        self.assertEqual(2, len(self.payload["assets"]))
+        self.assertIn("--media-root", self.args)
+
+    def test_new_paper_keeps_its_solution_figure_separate_from_question_media(self):
+        block_path = self.base / "03-figures/q1/block.png"
+        Image.new("RGB", (400, 200), "black").save(block_path)
+        path = self.base / "03-figures/figures.json"
+        figures = json.loads(path.read_text())
+        figures["questions"][0]["block"] = {
+            "file": "q1/block.png", "sha256": solutions.sha256(block_path.read_bytes()),
+            "width": 400, "height": 200,
+        }
+        path.write_text(json.dumps(figures))
+        self.draft = copy.deepcopy(NAT)
+        self.save_draft()
+        self.export(self.approve())
+        self.assertEqual(["figure", "solution"], [asset["role"] for asset in self.payload["assets"]])
+        self.assertEqual(self.payload["workedSolution"]["figure"]["sha256"], self.payload["assets"][1]["sha256"])
 
     def test_overlay_is_bound_to_the_reviewed_png_and_preserves_each_step(self):
         self.fictional_block()
