@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: plan written 20 November 2026; stages 1–3 built (stage 3 on 21 November). This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: plan written 20 November 2026; stages 1–4 built (stages 3 and 4 on 21 November). This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## What the owner asked for
 
@@ -54,7 +54,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 1 | **Intake** | PDF or page photos → hashed source copy, page renders, per-page text with word boxes, embedded-image inventory with native bytes and placement, vector-drawing inventory, a `needsOcr` flag per page | [x] built 20 Nov 2026 |
 | 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
 | 3 | **Figures** | Figure placements → canonical PNG (embedded pixels, or a page render when the page shows something else), a block crop of every question, an SVG trial with metrics and a comparison board | [x] built 21 Nov 2026 |
-| 4 | Answer key | Key PDF → per-question official answer; match by number and section; report missing, extra and malformed keys; compare with the existing canonical record if one exists | [ ] |
+| 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `470 to 480`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
 | 5 | Solutions | Question + verified key → draft worked solution (format below); a draft that does not reach the official answer is held | [ ] |
 | 6 | Review | Side-by-side review page: source block, extracted text, figures, key, solution; approve/fix per question with exact hashes | [ ] |
 | 7 | Export | Approved questions → export packets for the existing `bank:prepare-addition` path (new papers) or correction packets (existing records) | [ ] |
@@ -154,6 +154,7 @@ Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
 - 20 Nov 2026: plan written. Pipeline lives in `apps/designmocks/ingestion/` as Python stages with `unittest` tests run by `npm run test:ingestion`. Work folders and real papers stay outside the repo; the tool refuses to write inside a Git worktree.
 - 20 Nov 2026: owner approved D2 (PNG plus verified SVG), D3 (Claude drafts solutions in a local session, human review), D4 (UCEED 2026 re-ingest first) and D5 (all recommended analysis charts). D1, D6 and D7 stand as proposed until the owner says otherwise.
 - 20 Nov 2026: stage 2 built and evaluated on 18 papers (above). OCR results are cached in `<work>/.cache` by page-render digest; the Swift helper is compiled once into `<work>/.tools`.
+- 21 Nov 2026: stage 4 built and run on all 18 keys (above). Owner to confirm the UCEED 2017 q60 correction (bank B, official key D).
 - 21 Nov 2026: stage 3 built. The canonical PNG handles Word crops (clip paths), transparency masks and page text over blank margins without falling back to a page render. Changed two verification rules (see the figure decision): 99th-percentile edge distance, and text inside figures is flagged rather than disqualifying.
 - 20 Nov 2026: figures default to the embedded image's native bytes; SVG only as a verified addition; solution annotations are overlays and do not depend on vectorising.
 
@@ -212,7 +213,28 @@ All results are in the private work folder; boards are at `03-figures/<key>/fig-
 - **Caveat from looking at the boards.** A verified trace can still taper hairline gaps and round their ends (UCEED 2026 q29). Each SVG therefore stays `approval: pending` until a person approves its board in stage 6, and the PNG stays primary for questions about fine detail.
 - **Cost.** About 30 seconds per paper, mostly tracing and the OCR of each figure (cached).
 
-## Running stages 1 to 3
+## Stage 4 evaluation (21 November 2026)
+
+All 18 official keys on the owner's machine (UCEED 2015–2026, CEED 2021–2026): 1,133 Part A questions.
+
+| Outcome | Count |
+| --- | ---: |
+| Keys read and trusted | 1,107 (830 from the text layer, 224 by OCR, 53 by letter matching) |
+| Officially dropped (no key, recorded as dropped) | 6 |
+| Left for a person (empty cell, unreadable, or a label OCR could not place) | 20, all in the four scanned keys |
+| Trusted keys identical to the bank | 1,100 |
+| Trusted keys that differ from the bank | 1: UCEED 2017 q60. The scanned key shows **D**; the bank has B. Checked by eye. |
+| Bank answers that were not keys at all ("Q36", "Q66", an unparsed range) | 4, now read from the official key |
+| Questions missing from the bank that now have their official key | 9 |
+
+How the scanned keys (UCEED 2017, 2018, 2019; CEED 2021) are read safely:
+
+- Cells are paired by column position under the "Q. No." / "Key" headers, or by row for tables with no header row. This handles headers split over two lines, "Type" columns, keys wrapped over two or three lines, and footers.
+- OCR skips lone letters. An empty cell is matched against the letters OCR did read on the same scan; it is filled only on a clear match and labelled `letter-match`. All 53 such keys agree with the bank, or belong to questions the bank lacks.
+- A key whose question label OCR missed gets its number from the grid only when the neighbours agree (left and right in a row, above and below in a column, or a whole column numbered in step). It is never extrapolated beyond known rows.
+- If a cell has ink that no OCR line covers, the key is marked `unreadable` and never kept half-read. This rule caught "A B C or B" where the printed key is "ABC or BC".
+
+## Running stages 1 to 4
 
 ```bash
 pip3 install -r apps/designmocks/ingestion/requirements.txt   # operator machine only
@@ -220,6 +242,7 @@ brew install potrace                                         # stage 3 SVG trial
 python3 apps/designmocks/ingestion/intake.py --paper /path/to/UCEED_2026_Question_Paper.pdf --exam uceed --year 2026 --work ~/dmocks-ingestion-work
 python3 apps/designmocks/ingestion/segment.py --paper-id uceed-2026 --work ~/dmocks-ingestion-work
 python3 apps/designmocks/ingestion/figures.py --paper-id uceed-2026 --work ~/dmocks-ingestion-work
+python3 apps/designmocks/ingestion/answer_key.py --paper-id uceed-2026 --key /path/to/UCEED2026_Answer_Key.pdf --work ~/dmocks-ingestion-work --compare-bank
 npm --prefix apps/designmocks run test:ingestion
 ```
 
