@@ -108,6 +108,23 @@ def scanned(text_pdf, image_pdf, dpi=200):
     doc.close()
 
 
+def adjacent_column_key(path):
+    doc = fitz.open()
+    page = doc.new_page(width=400, height=400)
+    page.insert_text((80, 40), "FICTIONAL ANSWER KEY", fontsize=12)
+    page.insert_text((80, 65), "Q. No.", fontsize=10)
+    page.insert_text((130, 65), "Answer", fontsize=10)
+    page.insert_text((245, 65), "Q. No.", fontsize=10)
+    page.insert_text((315, 65), "Answer", fontsize=10)
+    for number in range(1, 5):
+        page.insert_text((80, 70 + number * 30), f"{number:02d}", fontsize=10)
+        page.insert_text((130, 70 + number * 30), KEYS[number], fontsize=10)
+        page.insert_text((245, 70 + number * 30), f"{number + 4:02d}", fontsize=10)
+        page.insert_text((315, 70 + number * 30), KEYS[number + 4], fontsize=10)
+    doc.save(path)
+    doc.close()
+
+
 def ocr_from(text_pdf, drop=()):
     """A stand-in for OCR: the text layer's lines as Vision-style rows, minus some lines."""
     rows = []
@@ -215,6 +232,94 @@ class AnswerKeyTest(unittest.TestCase):
         self.assertEqual("dropped", keys["q13"]["status"])
         trusted = {n: r["raw"] for n, r in keys.items() if r["status"] == "official-key"}
         self.assertEqual({n: EXPECTED[n] for n in trusted}, trusted)
+
+    def test_scanned_key_recovers_a_consecutive_run_of_missing_question_labels(self):
+        text_pdf, image_pdf = self.root / "key-text.pdf", self.root / "key-scan.pdf"
+        adjacent_column_key(text_pdf)
+        scanned(text_pdf, image_pdf)
+        _, data = self.run_key(image_pdf, ocr=ocr_from(text_pdf, drop={"02", "03"}))
+        for number in (2, 3):
+            key = data["keys"][f"q{number}"]
+            self.assertEqual(EXPECTED[f"q{number}"], key["raw"])
+            self.assertIn("consecutive-row-run-needs-visual-review", key["notes"])
+
+    def test_consecutive_run_is_not_guessed_when_count_disagrees(self):
+        rows = [
+            {"column": 0, "number": 1, "y": 10, "lines": [1], "inferred": False},
+            {"column": 0, "number": None, "y": 20, "lines": [2], "inferred": False},
+            {"column": 0, "number": None, "y": 30, "lines": [3], "inferred": False},
+            {"column": 0, "number": 5, "y": 40, "lines": [4], "inferred": False},
+        ]
+        ak.infer_numbers(rows, 10)
+        self.assertEqual([1, None, None, 5], [row["number"] for row in rows])
+
+    def test_empty_numeric_cell_requires_matching_cropped_ocr_reads(self):
+        text_pdf, image_pdf = self.root / "key-text.pdf", self.root / "key-scan.pdf"
+        adjacent_column_key(text_pdf)
+        scanned(text_pdf, image_pdf)
+        page_ocr = ocr_from(text_pdf, drop={"08"})
+
+        def agrees(path):
+            return [{"text": "08"}] if pathlib.Path(path).name.startswith("key-cell-") else page_ocr(path)
+
+        _, data = self.run_key(image_pdf, ocr=agrees)
+        self.assertEqual(("08", "crop-ocr"), (data["keys"]["q1"]["raw"], data["keys"]["q1"]["readBy"]))
+        self.assertIn("two-crop-ocr-agreement-needs-visual-review", data["keys"]["q1"]["notes"])
+
+        def disagrees(path):
+            name = pathlib.Path(path).name
+            if name.startswith("key-cell-"):
+                return [{"text": "08" if name.endswith("-70.png") else "09"}]
+            return page_ocr(path)
+
+        _, rejected = self.run_key(image_pdf, ocr=disagrees)
+        self.assertEqual((None, "missing"), (rejected["keys"]["q1"]["raw"], rejected["keys"]["q1"]["status"]))
+
+    def test_wholly_missing_row_requires_matching_label_and_answer_crops(self):
+        text_pdf, image_pdf = self.root / "key-text.pdf", self.root / "key-scan.pdf"
+        adjacent_column_key(text_pdf)
+        scanned(text_pdf, image_pdf)
+        page_ocr = ocr_from(text_pdf, drop={"02", "470 - 480"})
+
+        def agrees(path):
+            name = pathlib.Path(path).name
+            if "-2-label-" in name:
+                return [{"text": "2"}]
+            if "-2-answer-" in name:
+                return [{"text": "470 - 480"}]
+            return page_ocr(path)
+
+        _, data = self.run_key(image_pdf, ocr=agrees)
+        row = data["keys"]["q2"]
+        self.assertEqual(("470 to 480", "crop-ocr"), (row["raw"], row["readBy"]))
+        self.assertIn("whole-row-recovered-by-two-crop-pairs-needs-visual-review", row["notes"])
+
+        def disagrees(path):
+            name = pathlib.Path(path).name
+            if "-2-label-" in name:
+                return [{"text": "2" if name.endswith("-0.png") else "3"}]
+            if "-2-answer-" in name:
+                return [{"text": "470 - 480"}]
+            return page_ocr(path)
+
+        _, rejected = self.run_key(image_pdf, ocr=disagrees)
+        self.assertNotIn("q2", rejected["keys"])
+
+        segment_path = self.work / self.paper / "02-segments/questions.json"
+        segment_data = json.loads(segment_path.read_text())
+        segment_data["questions"][1]["type"] = "MSQ"
+        segment_path.write_text(json.dumps(segment_data))
+
+        def crosses_section(path):
+            name = pathlib.Path(path).name
+            if "-2-label-" in name:
+                return [{"text": "2"}]
+            if "-2-answer-" in name:
+                return [{"text": "A"}]
+            return page_ocr(path)
+
+        _, section_rejected = self.run_key(image_pdf, ocr=crosses_section)
+        self.assertNotIn("q2", section_rejected["keys"])
 
     def test_refusals(self):
         pdf = self.root / "key.pdf"

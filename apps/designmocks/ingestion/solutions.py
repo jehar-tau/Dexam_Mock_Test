@@ -53,7 +53,10 @@ class SolutionError(Exception):
 
 @cache
 def load(name):
-    spec = importlib.util.spec_from_file_location(name, pathlib.Path(__file__).with_name(f"{name}.py"))
+    folder = pathlib.Path(__file__).parent
+    if str(folder) not in sys.path:
+        sys.path.insert(0, str(folder))
+    spec = importlib.util.spec_from_file_location(name, folder / f"{name}.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -100,15 +103,18 @@ def key_evidence(base, paper_id, manifest, segment_hash):
             and path.is_file() and sha256(path.read_bytes()) == source.get("sha256"))
 
 
-def official_record(manifest, key, question, evidence_valid):
+def official_record(manifest, key, question, evidence_valid, base=None):
     record = manifest.get("keys", {}).get(key, {})
     status = record.get("status", "missing")
     kind, raw, printed, page = question["type"], record.get("raw"), record.get("printed"), record.get("page")
     issues = [issue for issue in manifest.get("report", {}).get("issues", []) if issue.get("key") == key]
+    read_by = record.get("readBy")
+    manual_valid = (base is not None and load("key_transcription").valid_review(base, manifest, key, record)
+                    if read_by == "human-transcription" else True)
     verified = False
     if (evidence_valid and status == "official-key" and record.get("kind") == kind
             and not record.get("checks") and not issues and type(page) is int and page > 0
-            and record.get("readBy") in ("text", "ocr", "letter-match")
+            and read_by in ("text", "ocr", "letter-match", "crop-ocr", "human-transcription") and manual_valid
             and isinstance(raw, str) and isinstance(printed, str)):
         ak = load("answer_key")
         canonical = ak.canonical(raw, kind)
@@ -136,7 +142,7 @@ def brief(work, paper_id, key):
     question, record = segments[key], figures.get(key, {})
     if question["type"] not in OBJECTIVE:
         raise SolutionError("Worked-solution drafts support NAT, MCQ and MSQ questions")
-    official = official_record(key_manifest, key, question, key_evidence(base, paper_id, key_manifest, segment_hash))
+    official = official_record(key_manifest, key, question, key_evidence(base, paper_id, key_manifest, segment_hash), base)
     source = "official-key" if official["verifiedKey"] else "model-proposed"
     if official["status"] == "dropped" or (official["status"] == "official-key" and not official["verifiedKey"]):
         raise SolutionError("Resolve the official key evidence before drafting this question")
@@ -465,7 +471,7 @@ def collect(work, paper_id, *, write_report=True):
             results[key] = {"status": "held", "errors": ["no-such-question"], "warnings": [], "eligibleForExport": False}
             continue
         question = segments[key]
-        official = official_record(manifest, key, question, evidence_valid)
+        official = official_record(manifest, key, question, evidence_valid, base)
         drafts[key] = path.read_bytes()
         results[key] = solution_result(
             base, paper_id, question, figures.get(key, {}), official, drafts[key],
@@ -551,7 +557,14 @@ def render(work, paper_id):
             source_block = f'<details><summary>Source question</summary><figure class="stage"><img src="../03-figures/{esc(record["block"]["file"])}" alt="Source question crop"></figure></details>'
         question_options = "".join(f'<li><b>{esc(o["key"])}</b> {esc(o["text"])}</li>' for o in question["options"])
         official = result["officialKey"]
-        official_details = "Verified official key" if official["verifiedKey"] else f'Key status {esc(official["status"])}'
+        inferred_run = "consecutive-row-run-needs-visual-review" in official.get("notes", [])
+        cropped_number = "two-crop-ocr-agreement-needs-visual-review" in official.get("notes", [])
+        recovered_row = "whole-row-recovered-by-two-crop-pairs-needs-visual-review" in official.get("notes", [])
+        official_details = ("Source-linked OCR key; visually review its inferred question number"
+                            if inferred_run else "Source-linked cropped OCR key; visually review its recovered row and answer"
+                            if recovered_row else "Source-linked cropped OCR key; visually review its printed number"
+                            if cropped_number else "Verified official key" if official["verifiedKey"]
+                            else f'Key status {esc(official["status"])}')
         if official["source"] and official.get("page"):
             name = official["source"]["name"]
             source_name = esc(name)

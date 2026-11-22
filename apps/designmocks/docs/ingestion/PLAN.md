@@ -32,6 +32,7 @@ Each stage reads the previous stage's files from a private work folder **outside
   02-segments/   questions.json (boxes, text, options, figure regions per question)
   03-figures/    <question>/<figure>.png, .svg (if verified), verify.json, board.png
   04-key/        key.json (official answers matched to questions, mismatches)
+  04-key-review/generated/   read-only PDF cell crops for unresolved or OCR-recovered keys
   05-solutions/  <question>.json (draft worked solutions, status)
   06-review/     <question>.json (human approvals with a fingerprint of the evidence)
 ```
@@ -41,7 +42,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 1 | **Intake** | PDF or page photos → hashed source copy, page renders, per-page text with word boxes, embedded-image inventory with native bytes and placement, vector-drawing inventory, a `needsOcr` flag per page | [x] built 20 Nov 2026 |
 | 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
 | 3 | **Figures** | Figure placements → canonical PNG (embedded pixels, or a page render when the page shows something else), a block crop of every question, an SVG trial with metrics and a comparison board | [x] built 21 Nov 2026 |
-| 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `11.5 to 12.5`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
+| 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `11.5 to 12.5`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards. Consecutive missed labels are inferred only between printed endpoints. Empty numeric cells require two agreeing cropped OCR reads. A wholly missed row requires two agreeing reads of its label and two of its answer. All recovered cells are marked for visual review | [x] built 21 Nov 2026; missed-cell recovery added 22 Nov 2026 |
 | 5 | **Solutions** | `solutions.py` provides an objective question, figures, key evidence and a structured draft template. Key disagreements are held, while answers proposed without a readable official key start as drafts | [~] drafting and validation tooling built |
 | 6 | Review | The private solution review page shows the source question, key provenance and solution. An operator can approve a solution with a verified official key or record an independent owner adjudication when the key is missing or unreadable | [~] objective-solution approval built; full ingestion review still open |
 | 7 | Export | Approved objective question and solution → verified private export directory with bank JSON, PNG media and receipt. Preserve step overlays as typed shapes linked to a canonical PNG | [~] additions and exact-version corrections can be staged individually or in paper batches. Reviewed Git promotion and media upload remain open |
@@ -311,8 +312,25 @@ The ingestion test suite generates fictional PDF, photo, figure, key and solutio
 
 - Intake flags unexplained page ink for OCR when visible writing is missing from the PDF text layer. Segmentation checks the OCR lines for missing question markers and keeps instructions and evaluation criteria outside question prompts.
 - Canonical images keep embedded pixels where possible, including clipped images and transparency masks. SVG trials can lose fine details even when similarity scores pass. Review the private comparison board before approving a trace.
-- Scanned key rows are matched by table position. A missing question label is inferred only when nearby labels agree. If a cell includes ink that the extraction missed, its key stays unreadable.
+- Scanned key rows are matched by table position. Missed labels or answer cells are recovered only under the guarded OCR checks above. `key_review.py` renders the source PDF crop for every unresolved or recovered cell, with the current extraction status. It verifies the preserved PDF and segmentation hashes before rendering. This page does not approve or change a key. Inspect it before accepting a worked solution.
 - Matching the official answer confirms the final value. Review the worked reasoning, arithmetic, figures and annotations before signing off. A numeric answer inside the printed accepted range can pass the key comparison.
+
+### Manually transcribing an unresolved key cell
+
+For a cell whose printed answer remains unreadable to OCR, write a proposal JSON in the private work folder. Include the current `key.json` source SHA-256, and only keys still marked `missing` or `unreadable`:
+
+```json
+{"schema":1,"paperId":"uceed-2031","sourceSha256":"<source PDF SHA-256>","entries":[
+  {"key":"q1","printed":"12"}
+]}
+```
+
+`key_transcription.py prepare` renders each proposed value alongside its original PDF crop and fingerprints the exact source PDF, segments, extracted key manifest and crop pixels. It does not change the key. After a human checks that packet, `approve` requires its fingerprint and the reviewer's name. Approval records a private receipt and a backup of the extracted key, then updates only those unresolved cells. Worked solutions still need their own human review; this does not publish a paper. A changed PDF, segments, extracted key, crop, packet or receipt invalidates the decision.
+
+```bash
+python3 apps/designmocks/ingestion/key_transcription.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work prepare --decisions ~/dmocks-ingestion-work/uceed-2031/proposed-key-cells.json
+python3 apps/designmocks/ingestion/key_transcription.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work approve --packet /private/path/from/prepare/packet.json --fingerprint "$REVIEWED_FINGERPRINT" --reviewer "$HUMAN_REVIEWER" --compare-bank
+```
 
 ## Running stages 1 to 4
 
@@ -323,6 +341,7 @@ python3 apps/designmocks/ingestion/intake.py --paper /path/to/fictional-paper.pd
 python3 apps/designmocks/ingestion/segment.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work
 python3 apps/designmocks/ingestion/figures.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work
 python3 apps/designmocks/ingestion/answer_key.py --paper-id uceed-2031 --key /path/to/fictional-key.pdf --work ~/dmocks-ingestion-work --compare-bank
+python3 apps/designmocks/ingestion/key_review.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work
 npm --prefix apps/designmocks run test:ingestion
 ```
 
