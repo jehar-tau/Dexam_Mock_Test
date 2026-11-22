@@ -3877,7 +3877,7 @@ svg {
 .overview-section-head h2 { font:700 clamp(1.2rem,2.3vw,1.55rem)/1.2 Figtree,system-ui,sans-serif; letter-spacing:-.025em; margin:.35rem 0 0; }
 .overview-section-head p { margin:0; color:var(--muted); font-size:.81rem; max-width:29rem; }
 .overview-section-head a { font-size:.82rem; font-weight:700; }
-.overview-paths { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; }
+.overview-paths { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; }
 .overview-paths > a { display:flex; align-items:start; gap:.8rem; min-width:0; min-height:8.5rem; padding:1.15rem; border:1px solid var(--line); border-radius:11px; background:var(--surface); color:var(--ink); text-decoration:none; }
 .overview-paths > a:hover { border-color:var(--green); box-shadow:0 5px 18px #16282412; }
 .overview-paths > a > span:nth-child(2) { display:grid; gap:.45rem; flex:1; }
