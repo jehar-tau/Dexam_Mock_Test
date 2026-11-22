@@ -82,6 +82,11 @@ test("released answer review reveals the next annotation through the keyboard", 
   await expect(page.getByRole("navigation", { name: "Review questions", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Review correct questions (1)", exact: true }).press("Enter");
   await expect(page.getByRole("button", { name: "Review question 1, Correct", exact: true })).toBeVisible();
+  await expect(page.locator(".analysis-response")).toContainText("Correct answer");
+  await expect(page.getByRole("heading", { name: "Worked solution", exact: true })).toHaveCount(0);
+  const viewSolution = page.getByRole("button", { name: "View solution", exact: true });
+  await expect(viewSolution).toHaveAttribute("aria-expanded", "false");
+  await viewSolution.press("Enter");
   await expect(page.getByRole("heading", { name: "Worked solution", exact: true })).toBeVisible();
   const overlay = page.locator(".worked-solution-figure svg");
   await expect(overlay.locator("rect")).toHaveCount(1);
@@ -94,6 +99,8 @@ test("released answer review reveals the next annotation through the keyboard", 
   await expect(overlay.locator("circle")).toHaveCount(0);
   await page.getByText("Full explanation", { exact: true }).click();
   await expect(page.getByText(explanation, { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Hide solution", exact: true }).press("Enter");
+  await expect(page.getByRole("heading", { name: "Worked solution", exact: true })).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   expect(provider.unexpected).toEqual([]);
 });
@@ -127,6 +134,8 @@ for (const { type, raw, selected, saved, label } of alternatives) {
     await expect(page.getByRole("group", { name: "Objective result", exact: true })).toContainText(`${runtime.points}/${runtime.points}`);
     await page.getByRole("button", { name: "Open answer review", exact: true }).press("Enter");
     await expect(page.locator(".answer-review article")).toContainText(`Accepted answers ${label}`);
+    await expect(page.getByText(explanation, { exact: true })).toHaveCount(0);
+    await page.getByRole("button", { name: "View solution", exact: true }).click();
     await expect(page.getByText(explanation, { exact: true })).toBeVisible();
     expect(provider.unexpected).toEqual([]);
   });

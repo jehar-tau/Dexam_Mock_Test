@@ -42,6 +42,7 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, ini
   const [kind, setKind] = useState("");
   const [outcome, setOutcome] = useState(initialOutcome);
   const [selectedId, setSelectedId] = useState("");
+  const [solutionOpenFor, setSolutionOpenFor] = useState("");
   const objective = questions.map((item, index) => ({item, index})).filter(({item}) => releasedOutcome(item));
   const drawings = questions.filter(item => item.kind === "drawing");
   const filtered = objective.filter(({item}) => (!kind || item.kind === kind) && (!outcome || releasedOutcome(item) === outcome));
@@ -52,20 +53,21 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, ini
   const chosenOptions = [].concat(item?.answer ?? []);
   const { explanation, solution } = readWorkedExplanation(attempt, item);
   const figureIndex = solution ? workedFigureIndex(item.media, solution.figure) : -1;
+  const solutionOpen = !!item && solutionOpenFor === item.id;
   // Alternatives are combinations. Only label individual choices as correct
   // when the released key supplies a single combination or an MCQ choice.
   const correctOptions = item?.correctKey?.correct ?? [];
   return <div className="analysis-review answer-review">
     {!!objective.length && <><div className="analysis-review-controls">
-      <label>Question type<select value={kind} onChange={e => setKind(e.target.value)}><option value="">All types</option>
+      <label>Question type<select value={kind} onChange={e => { setKind(e.target.value); setSolutionOpenFor(""); }}><option value="">All types</option>
         {[...new Set(objective.map(({item}) => item.kind))].map(value => <option key={value} value={value}>{value.toUpperCase()}</option>)}</select></label>
-      <label>Result<select value={outcome} onChange={e => setOutcome(e.target.value)}><option value="">All results</option>
+      <label>Result<select value={outcome} onChange={e => { setOutcome(e.target.value); setSolutionOpenFor(""); }}><option value="">All results</option>
         {Object.entries(outcomeLabels).filter(([key]) => objective.some(({item}) => releasedOutcome(item) === key)).map(([key, name]) => <option key={key} value={key}>{name}</option>)}</select></label>
       <span>{filtered.length} of {objective.length} questions</span>
     </div>
     {!item && <p role="status">No questions match these filters.</p>}
     {item && <><nav className="analysis-question-map" aria-label="Review questions">{filtered.map(({item: question,index}) =>
-      <button type="button" key={question.id} aria-label={"Review question " + (index+1) + ", " + outcomeLabels[releasedOutcome(question)]} aria-current={question.id === item.id ? "step" : undefined} data-outcome={releasedOutcome(question)} onClick={() => setSelectedId(question.id)}>{index+1}</button>)}</nav>
+      <button type="button" key={question.id} aria-label={"Review question " + (index+1) + ", " + outcomeLabels[releasedOutcome(question)]} aria-current={question.id === item.id ? "step" : undefined} data-outcome={releasedOutcome(question)} onClick={() => { setSelectedId(question.id); setSolutionOpenFor(""); }}>{index+1}</button>)}</nav>
       <article key={item.id} className="analysis-item">
         <header><span className="eyebrow">QUESTION {chosen.index+1} · {item.kind.toUpperCase()} · {topicName(item.topic)}</span><b>{outcomeLabels[releasedOutcome(item)]}</b></header>
         <h3>{item.prompt}</h3>{figures?.(item)}
@@ -76,9 +78,13 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, ini
           </li>)}</ul>}
         <div className="analysis-response"><p><strong>Your answer:</strong> {answer || "Not answered"}</p>
           {key && <p><strong>{answerAlternativesLabel(item.correctKey) ? "Accepted answers" : "Correct answer"}</strong> {key}</p>}</div>
-        {solution ? <WorkedSolution solution={solution} explanation={explanation} figureUrl={media[item.id]?.[figureIndex]?.url}
-          mediaStatus={mediaStatus} onRetry={onRetry}/>
-          : explanation && <div className="analysis-explanation"><h4>Explanation</h4><p className="worked-solution-text">{explanation}</p></div>}
+        {(solution || explanation) && <><button type="button" className="button quiet" aria-expanded={solutionOpen}
+          aria-controls="review-worked-solution" onClick={() => setSolutionOpenFor(solutionOpen ? "" : item.id)}>
+          {solutionOpen ? "Hide solution" : "View solution"}</button>
+          <div id="review-worked-solution" hidden={!solutionOpen}>{solutionOpen && (solution
+            ? <WorkedSolution solution={solution} explanation={explanation} figureUrl={media[item.id]?.[figureIndex]?.url}
+              mediaStatus={mediaStatus} onRetry={onRetry}/>
+            : <div className="analysis-explanation"><h4>Explanation</h4><p className="worked-solution-text">{explanation}</p></div>)}</div></>}
       </article></>}
     </>}
     {drawings.map(item => <article key={item.id}><h3>{item.prompt}</h3>{item.answer && <p>Your notes: {item.answer}</p>}{item.explanation && <p>{item.explanation}</p>}<DrawingReviewStatus review={item.drawingReview}/></article>)}
