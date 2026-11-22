@@ -10,7 +10,7 @@ if(!['mvp','full'].includes(scope))throw new Error('Choose the mvp or full brows
 const fallbackRunner = process.env.DMOCKS_E2E_FALLBACK_RUNNER === '1';
 // The default PR gate covers the student launch and the bank ingestion slice.
 // Claude-owned Learn/Community and deferred reviewer journeys remain in `full`.
-const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','staging-portal.spec.js','staging-review.spec.js','staging-paid-pilot.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','intake-canonical.spec.js','ai-draft-canonical.spec.js'];
+const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','controlled-public-portal.spec.js','staging-portal.spec.js','staging-review.spec.js','staging-paid-pilot.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','intake-canonical.spec.js','ai-draft-canonical.spec.js'];
 export default defineConfig({
   testMatch: scope === 'full' ? '**/*.spec.js' : [
     ...mvpFiles.map(file => '**/' + file),
@@ -79,6 +79,16 @@ export default defineConfig({
       url:"http://127.0.0.1:4799",
       env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"true",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:"fictional-mvp-fixture",DMOCKS_PUBLISHED_NOTICES_FILE:noticeFile},
       reuseExistingServer:false,timeout:60000,
+    },
+    {
+      command: "npm exec -- vite build --mode production --outDir test-results/controlled-public && npm exec -- vite preview --outDir test-results/controlled-public --host 127.0.0.1 --port 4797 --strictPort",
+      url: "http://127.0.0.1:4797",
+      env: { VITE_DEPLOYMENT_ENV: "production", VITE_CONTROLLED_PUBLIC_PORTAL_ENABLED: "true",
+        VITE_PORTAL_ENABLED: "false", VITE_TEST_LOGIN_ENABLED: "false", VITE_STAGING_PORTAL_ENABLED: "false",
+        VITE_CHECKOUT_ENABLED: "false", VITE_PUBLIC_CATALOG_ENABLED: "false",
+        VITE_SUPABASE_URL: `https://${project.project_ref}.supabase.co`,
+        VITE_SUPABASE_ANON_KEY: "sb_publishable_dmocks_controlled_public_fixture" },
+      reuseExistingServer: false, timeout: 60_000,
     },
     {
       command: "npm run dev:e2e",

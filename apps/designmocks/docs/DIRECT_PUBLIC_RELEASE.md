@@ -27,7 +27,7 @@ approval for each public frontend update.
    version if the public check fails.
 
 The owner has given a standing decision for this workflow. Routine frontend
-releases do not need another approval request. The hourly Codex automation is
+releases do not need another approval request. The 15-minute Codex automation is
 a polling fallback; Sites has no configured instant public publish-on-push
 hook. Do not describe a merged PR as live until the Site deployment and live
 checks succeed.
@@ -43,6 +43,20 @@ switches need their own exact-source checks and recovery plan before changing
 the live service. Record any owner decision required for final paper content,
 legal notices, paid services or the actual sales opening.
 
-The current public Site is version 8. It serves the year-wise Papers catalogue
+The current public Site is version 9. It serves the year-wise Papers catalogue
 and the five-question sample. The catalogue is a collection view: its year
 sets are not released timed papers until the fixed-paper acceptance passes.
+
+## Controlled public portal testing
+
+`VITE_CONTROLLED_PUBLIC_PORTAL_ENABLED=true` is a separate production build
+profile for testing the student portal at dmocks.com with approved Google
+testers. It pins the exact public origin and the designated DMocks Test
+Supabase project, keeps checkout closed, and checks the server's
+`can_enter_staging_portal` admission decision before every protected route.
+Revoking a tester removes their access on the next route check or reload.
+This switch does not open public registration or sales. Keep it off in the
+ordinary public build until the hosted Google callback, Data API and media
+origins have passed the exact-domain tester journey; publish a tested build
+with a public browser key only after those checks. A browser flag alone never
+grants server access.

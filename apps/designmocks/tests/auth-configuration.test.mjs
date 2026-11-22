@@ -5,7 +5,7 @@ import { resolveAuthConfiguration, authCallbackMessage } from "../src/authConfig
 const base = { deployment: "staging", url: "https://fixture-project.supabase.co", key: "sb_publishable_fictional_fixture" };
 const productionOrigin = "https://dmocks.com";
 const production = { ...base, deployment: "production", origin: productionOrigin, productionOrigin, portalEnabled: true };
-const closed = { authReady: false, portalReady: false, testLoginMode: false, stagingPortalMode: false, checkoutReady: false };
+const closed = { authReady: false, portalReady: false, testLoginMode: false, stagingPortalMode: false, controlledPublicPortalMode: false, checkoutReady: false };
 test("closed defaults do not instantiate authentication or paid access", () => {
   assert.deepEqual(resolveAuthConfiguration({ deployment: "production" }), closed);
 });
@@ -57,6 +57,18 @@ test("the private staging portal pins the build, browser origin and backend with
   assert.throws(() => resolveAuthConfiguration({ ...base, portalEnabled: true, termsVersion: "fixture" }), /private staging/);
   assert.throws(() => resolveAuthConfiguration({ ...base, url: base.url.toUpperCase(), deployment: "production", portalEnabled: true,
     termsVersion: "fixture", stagingTarget }), /separate Supabase/);
+});
+test("controlled public testing opens only the approved domain and Test project with checkout closed", () => {
+  const input = { ...base, mode: "production", deployment: "production", origin: productionOrigin,
+    productionOrigin, stagingTarget: { url: base.url, origin: "https://private-staging.example" },
+    controlledPublicPortalEnabled: true, checkoutEnabled: false };
+  assert.deepEqual(resolveAuthConfiguration(input), { ...closed, authReady: true, portalReady: true, controlledPublicPortalMode: true });
+  for (const origin of ["https://www.dmocks.com", "http://127.0.0.1:4190", "https://dmocks.com.example.invalid"])
+    assert.deepEqual(resolveAuthConfiguration({ ...input, origin }), closed);
+  for (const patch of [{ mode: "test" }, { deployment: "test" }, { url: "https://other.supabase.co" },
+    { stagingTarget: undefined }, { checkoutEnabled: true }, { portalEnabled: true },
+    { testLoginEnabled: true }, { stagingPortalEnabled: true }, { key: "sb_secret_bad" }])
+    assert.throws(() => resolveAuthConfiguration({ ...input, ...patch }), JSON.stringify(patch));
 });
 const checkoutOrigin = "https://merchant-test.example";
 const checkoutNoticeVersion = "dmocks-notices-v1-" + "a".repeat(64);

@@ -54,6 +54,7 @@ import {
   authReady,
   testLoginMode,
   stagingPortalMode,
+  controlledPublicPortalMode,
   checkoutReady,
   publishedNotices,
   googleLogin,
@@ -220,11 +221,12 @@ function Layout({ children }) {
       <a className="skip" href="#main">
         Skip to content
       </a>
-      {(!portalReady || stagingPortalMode) && (
+      {(!portalReady || stagingPortalMode || controlledPublicPortalMode) && (
         <div className="preview-strip">
-          {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "OWNER REVIEW" : stagingPortalMode ? "PRIVATE STAGING" : testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
+          {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "OWNER REVIEW" : controlledPublicPortalMode ? "CONTROLLED TEST" : stagingPortalMode ? "PRIVATE STAGING" : testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
           <span>
             {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Explore the student experience with fictional examples. Sign-in and checkout are closed." :
+              controlledPublicPortalMode ? "Portal testing is limited to approved Google accounts. Checkout is closed." :
               stagingPortalMode ? "Portal acceptance for approved testers. Checkout is closed." :
               testLoginMode ? "Google sign-in is limited to approved testers. Purchases are closed." : "Explore the sample. Student sign-in and paid checkout are being connected."}
           </span>
@@ -942,7 +944,7 @@ function Plans() {
           </ul>
           {!checkoutReady && (
             <div className="notice">
-              {stagingPortalMode ? "Checkout is closed in staging." : "Paid access is not open in this preview. Explore the free sample while the separate sign-in and checkout are connected."}
+              {controlledPublicPortalMode ? "Checkout is closed during controlled testing." : stagingPortalMode ? "Checkout is closed in staging." : "Paid access is not open in this preview. Explore the free sample while the separate sign-in and checkout are connected."}
             </div>
           )}
           {session && checkoutReady ? <Purchase actorId={session.user.id} headingRef={heading}/> : session ? (
@@ -1073,7 +1075,7 @@ function Account() {
         <p>
             {session
             ? "Your Google account is connected."
-            : stagingPortalMode ? "Sign in with an approved Google account for staging." :
+            : controlledPublicPortalMode ? "Sign in with an approved Google test account." : stagingPortalMode ? "Sign in with an approved Google account for staging." :
               testLoginMode ? "Private Google sign-in check for approved testers." : "Sign in or create your account with Google."}
         </p>
         {loading ? (
@@ -1082,8 +1084,8 @@ function Account() {
           <>
             <p className="signed-in">Signed in as {session.user.email}</p>
             {testLoginMode && <p className="notice">Google sign-in succeeded. This is a private setup check. Public registration and purchases are closed; no paid access has been granted.</p>}
-            {stagingPortalMode && <StagingAccessMessage access={stagingAccess} />}
-            {(testLoginMode || stagingPortalMode) && <button className="button quiet" disabled={busy} onClick={refreshTestSession}>Refresh test session</button>}
+            {(stagingPortalMode || controlledPublicPortalMode) && <StagingAccessMessage access={stagingAccess} />}
+            {(testLoginMode || stagingPortalMode || controlledPublicPortalMode) && <button className="button quiet" disabled={busy} onClick={refreshTestSession}>Refresh test session</button>}
             {sessionStatus && <p role="status">{sessionStatus}</p>}
             {workspaceAvailable && <Button to="/dashboard">{stagingPortalMode ? "Open staging workspace" : "Open your workspace"}</Button>}
             {postLaunchPreview && workspaceAvailable && reviewerAccountId === accountId && <Button to="/review/drawings" quiet>Review drawings</Button>}
@@ -1125,7 +1127,7 @@ function Account() {
                 onClick={login}
               >
                 <GoogleIcon />
-                {busy ? "Opening Google…" : stagingPortalMode ? "Sign in to staging with Google" : testLoginMode ? "Test Google sign-in" : "Continue with Google"}
+                {busy ? "Opening Google…" : stagingPortalMode ? "Sign in to staging with Google" : controlledPublicPortalMode ? "Sign in to test with Google" : testLoginMode ? "Test Google sign-in" : "Continue with Google"}
               </button>
             </>
             {!authReady && (
@@ -1134,7 +1136,7 @@ function Account() {
                 explore the full sample experience now.
               </div>
             )}
-            {stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
+            {controlledPublicPortalMode ? <p className="account-terms">Only approved testers can enter the workspace. Checkout is closed.</p> : stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
               testLoginMode ? <p className="account-terms">Only server-approved test accounts can complete this check. It does not accept draft purchase terms, create an order or unlock a paid pass.</p> : <p className="account-terms">
               {checkoutReady
                 ? "Review the terms and privacy notice before continuing with Google. You can confirm a purchase separately in checkout."
@@ -1682,7 +1684,7 @@ export default function App() {
         <Route path="/plans" element={<Plans />} />
         <Route path="/account" element={<Account />} />
         <Route path="/account/callback" element={<Account />} />
-        {!__DMOCKS_STAGING_REVIEW_PREVIEW__ && <Route element={stagingPortalMode ? <StagingPortalGate /> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
+        {!__DMOCKS_STAGING_REVIEW_PREVIEW__ && <Route element={stagingPortalMode || controlledPublicPortalMode ? <StagingPortalGate /> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
           <Route path="/dashboard" element={<Workspace />} />
           <Route path="/onboarding" element={<CandidateProfile />} />
           <Route path="/account/purchases" element={<PurchaseHistory />} />
