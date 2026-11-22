@@ -85,6 +85,41 @@ test.describe('free year-paper release', () => {
     expect(provider.calls.some(([name]) => name === 'my_pass' || name === 'prepare_order' || name === 'start_attempt')).toBe(false);
     expect(provider.unexpected).toEqual([]);
   });
+  test('failed release read offers an in-page retry before a free paper can start', async ({ page }) => {
+    let reads = 0;
+    const provider = await stubPortalProvider(page, name => {
+      if (name === 'free_year_paper_catalog') return ++reads === 1 ? {code:'PGRST000',message:'Fictional network failure'} : [release];
+      if (name === 'public_all_india_top_ten') return [];
+    });
+    await page.goto('/papers');
+    await expect(page.getByRole('alert')).toContainText('Couldn’t check released papers');
+    await expect(page.getByRole('button', {name:'Refresh papers'})).toBeVisible();
+    await page.getByRole('button', {name:'Refresh papers'}).click();
+    await expect(page.locator('.year-paper-card').filter({hasText:'2026 paper'})).toContainText('Free paper open');
+    expect(reads).toBe(2);
+    expect(provider.unexpected).toEqual([]);
+  });
+  test('a lost start reply locks another start until saved attempts are checked', async ({ page }) => {
+    let starts = 0, created = false;
+    const provider = await stubPortalProvider(page, name => {
+      if (name === 'free_year_paper_catalog') return [release];
+      if (name === 'start_free_year_paper') {starts++;created = true;return {code:'PGRST000',message:'Fictional lost response'};}
+      if (name === 'my_attempt_history') return created ? [{id:attemptId,title:'Fictional saved year paper',status:'active'}] : [];
+      if (name === 'public_all_india_top_ten') return [];
+    });
+    await page.goto('/');
+    await seedPortalSession(page, actor);
+    await page.goto('/papers');
+    const card = page.locator('.year-paper-card').filter({hasText:'2026 paper'});
+    const start = card.getByRole('button', {name:'Start or resume free paper'});
+    await start.click();
+    await expect(page.getByText('This start may already be saved.')).toBeVisible();
+    await expect(start).toBeDisabled();
+    await page.getByRole('button', {name:'Check saved attempts'}).click();
+    await expect(page.getByRole('link', {name:'Fictional saved year paper'})).toHaveAttribute('href','/attempt/'+attemptId);
+    expect(starts).toBe(1);
+    expect(provider.unexpected).toEqual([]);
+  });
 });
 
 test.describe('signed-out public year-paper catalogue', () => {
