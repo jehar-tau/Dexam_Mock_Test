@@ -196892,7 +196892,9 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [],
+   "holds": [
+    "source-question-conflict"
+   ],
    "provenance": {
     "exam": "uceed",
     "year": 2016,
@@ -197648,7 +197650,9 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [],
+   "holds": [
+    "source-question-conflict"
+   ],
    "provenance": {
     "exam": "uceed",
     "year": 2016,
@@ -197711,7 +197715,9 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [],
+   "holds": [
+    "source-question-conflict"
+   ],
    "provenance": {
     "exam": "uceed",
     "year": 2016,
@@ -201325,7 +201331,9 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [],
+   "holds": [
+    "answer-key-conflict"
+   ],
    "provenance": {
     "exam": "uceed",
     "year": 2017,
@@ -204055,7 +204063,9 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [],
+   "holds": [
+    "source-wording-figure-count-conflict"
+   ],
    "provenance": {
     "exam": "uceed",
     "year": 2018,
@@ -231731,7 +231741,9 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [],
+   "holds": [
+    "prompt-contamination"
+   ],
    "provenance": {
     "exam": "uceed",
     "year": 2025,
@@ -232445,7 +232457,9 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [],
+   "holds": [
+    "source-question-conflict"
+   ],
    "provenance": {
     "exam": "uceed",
     "year": 2025,
