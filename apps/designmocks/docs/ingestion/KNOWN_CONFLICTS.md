@@ -1,5 +1,9 @@
 # Question-bank conflicts awaiting review
 
+## UCEED 2025, Part A, question 3
+
+The source paper asks for the common sum in a 4 × 4 magic square using 1 through 16. The tracked bank prompt has an unrelated trailing “2025.” footer. The private Stage 2 segmentation also contains an extra, merged fragment about numbers 2 through 26, absent from the source question block. The keyed answer 34 is consistent with the source's 1-through-16 question, but the student prompt must be repaired from the original page and reviewed before scoring. The export carries `holds: ["prompt-contamination"]` pending an exact-version correction.
+
 ## UCEED 2025, Part A, question 18
 
 The original paper's option C says a car-wheel nut is loosened by turning a spanner **“counter-clockwise clockwise”**. The tracked question repeats this contradictory phrase, while the preserved key includes C (A,C). The direction cannot be both clockwise and counter-clockwise from the same stated viewpoint. The source needs a wording decision before C can be taught or scored. The export carries `holds: ["source-question-conflict"]`; leave the source and answer unchanged until the owner reviews the intended text and key.

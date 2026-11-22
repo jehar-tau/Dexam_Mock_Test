@@ -231739,7 +231739,9 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [],
+   "holds": [
+    "prompt-contamination"
+   ],
    "provenance": {
     "exam": "uceed",
     "year": 2025,
