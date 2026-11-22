@@ -1,17 +1,24 @@
-const closed = Object.freeze({ authReady: false, portalReady: false, testLoginMode: false, stagingPortalMode: false, checkoutReady: false });
+const closed = Object.freeze({ authReady: false, portalReady: false, testLoginMode: false, stagingPortalMode: false, controlledPublicPortalMode: false, checkoutReady: false });
 export const publishedNoticeVersionPattern = /^dmocks-notices-v1-[a-f0-9]{64}$/;
 
 export function resolveAuthConfiguration({
   mode, deployment, origin, stagingTarget, checkoutTarget, productionOrigin,
-  portalEnabled = false, testLoginEnabled = false, stagingPortalEnabled = false, checkoutEnabled = false, url, key, termsVersion, noticeVersion,
+  portalEnabled = false, testLoginEnabled = false, stagingPortalEnabled = false, controlledPublicPortalEnabled = false,
+  checkoutEnabled = false, url, key, termsVersion, noticeVersion,
 }) {
-  if ([portalEnabled, testLoginEnabled, stagingPortalEnabled].filter(Boolean).length > 1)
+  if ([portalEnabled, testLoginEnabled, stagingPortalEnabled, controlledPublicPortalEnabled].filter(Boolean).length > 1)
     throw new Error("Choose one mode for sign-in or portal access.");
+  if (controlledPublicPortalEnabled) {
+    if (mode !== "production" || deployment !== "production" || checkoutEnabled === true ||
+        !stagingTarget?.url || url !== stagingTarget.url || !productionOrigin)
+      throw new Error("Controlled public portal requires the approved origin, designated Test project and closed checkout.");
+    if (origin !== productionOrigin) return closed;
+  }
   if (testLoginEnabled && !["development", "staging", "test"].includes(deployment))
     throw new Error("Controlled login testing cannot be enabled in a production release.");
   if (testLoginEnabled && mode === "production" && deployment === "development")
     throw new Error("Use an explicitly staged build for controlled login; do not ship development login configuration.");
-  if (!portalEnabled && !testLoginEnabled && !stagingPortalEnabled) return closed;
+  if (!portalEnabled && !testLoginEnabled && !stagingPortalEnabled && !controlledPublicPortalEnabled) return closed;
   if (portalEnabled && (deployment === "staging" || mode === "staging"))
     throw new Error("Use private staging portal mode for staging acceptance.");
   if (portalEnabled && deployment === "production") {
@@ -52,9 +59,10 @@ export function resolveAuthConfiguration({
     throw new Error("The released portal requires its published terms version.");
   return {
     authReady: true,
-    portalReady: portalEnabled || stagingPortalEnabled,
+    portalReady: portalEnabled || stagingPortalEnabled || controlledPublicPortalEnabled,
     testLoginMode: testLoginEnabled,
     stagingPortalMode: stagingPortalEnabled,
+    controlledPublicPortalMode: controlledPublicPortalEnabled,
     checkoutReady: portalEnabled && checkoutEnabled === true && typeof noticeVersion === "string" && noticeVersion === termsVersion,
   };
 }

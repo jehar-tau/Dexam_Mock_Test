@@ -10,7 +10,7 @@ const designatedProvider = `https://${project_ref}.supabase.co`;
 // This app must have its own provider project; no Dexam values are imported.
 export const termsVersion = import.meta.env.VITE_TERMS_VERSION;
 export const publishedNotices = __DMOCKS_PUBLISHED_NOTICES__;
-export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkoutReady } = resolveAuthConfiguration({
+export const { authReady, portalReady, testLoginMode, stagingPortalMode, controlledPublicPortalMode, checkoutReady } = resolveAuthConfiguration({
   mode: environment.mode,
   deployment: environment.deployment,
   origin: import.meta.env.SSR ? frontend_origin : window.location.origin,
@@ -21,6 +21,7 @@ export const { authReady, portalReady, testLoginMode, stagingPortalMode, checkou
   checkoutEnabled: import.meta.env.VITE_CHECKOUT_ENABLED === "true",
   testLoginEnabled: import.meta.env.VITE_TEST_LOGIN_ENABLED === "true",
   stagingPortalEnabled: import.meta.env.VITE_STAGING_PORTAL_ENABLED === "true",
+  controlledPublicPortalEnabled: import.meta.env.VITE_CONTROLLED_PUBLIC_PORTAL_ENABLED === "true",
   url,
   key,
   termsVersion,

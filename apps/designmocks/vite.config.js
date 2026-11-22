@@ -23,7 +23,8 @@ export default defineConfig(({ command, mode }) => {
       throw new Error("The hosted review preview requires a production-optimized staging build.");
     }
     if (portalEnabled || checkoutEnabled || env.VITE_TEST_LOGIN_ENABLED === "true" ||
-        env.VITE_STAGING_PORTAL_ENABLED === "true" || env.VITE_POST_LAUNCH_PREVIEW === "true" ||
+        env.VITE_STAGING_PORTAL_ENABLED === "true" || env.VITE_CONTROLLED_PUBLIC_PORTAL_ENABLED === "true" ||
+        env.VITE_POST_LAUNCH_PREVIEW === "true" ||
         env.VITE_CANDIDATE_PHONE_VERIFICATION_ENABLED === "true" ||
         env.VITE_SUPABASE_URL || env.VITE_SUPABASE_ANON_KEY || env.DMOCKS_PUBLISHED_NOTICES_FILE) {
       throw new Error("Build the hosted review preview without sign-in, backend, checkout or release configuration.");
@@ -40,6 +41,7 @@ export default defineConfig(({ command, mode }) => {
     productionOrigin: project.frontend_origin, stagingTarget, checkoutTarget, portalEnabled, checkoutEnabled,
     testLoginEnabled: env.VITE_TEST_LOGIN_ENABLED === "true",
     stagingPortalEnabled: env.VITE_STAGING_PORTAL_ENABLED === "true",
+    controlledPublicPortalEnabled: env.VITE_CONTROLLED_PUBLIC_PORTAL_ENABLED === "true",
     url: env.VITE_SUPABASE_URL,
     key: env.VITE_SUPABASE_ANON_KEY,
     termsVersion: env.VITE_TERMS_VERSION,
