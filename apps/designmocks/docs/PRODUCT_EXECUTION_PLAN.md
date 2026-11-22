@@ -1,12 +1,19 @@
 # DMocks release execution plan
 
-**Current deployment decision (22 November 2026):** After a PR passes its
+**Current deployment decision (23 November 2026):** After a PR passes its
 exact-head checks, merge it, verify main CI, and publish the verified frontend
 directly to dmocks.com. Do not require an owner-only staging promotion or build
 out separate dev/staging/production environments before completing the
 application. This supersedes the earlier staging-first frontend steps below;
 paper release, registration, backend changes and sales retain their own gates.
 See [Direct public release](DIRECT_PUBLIC_RELEASE.md).
+
+Site version 10 is live from main `a8f8b9ccc4ec5a76816e1a94418c0a3faa6cd84a`.
+An allowlisted Google session loaded the protected student pages on dmocks.com;
+the catalogue shows year-wise sets in preparation and no All India event is
+scheduled. Public signup and checkout remain closed. The next portal work
+should build on this live controlled-test baseline and publish accepted code
+through the direct release workflow.
 
 ## Current scope and release status (21 November 2026)
 
@@ -17,9 +24,9 @@ The owner added a **Papers** section to the launch, alongside Overview, exam-wis
 ### Lean student-portal launch order
 
 1. Merge the reviewed ingestion integration and keep the hold-free bank export current. A bank count is not a published-paper count.
-2. Put the current student portal build on private staging. Accept Google sign-in, profile, Overview, exam-wise mocks, topic practice, All India mocks, attempts, reconnect and results with test accounts on the hosted backend.
+2. Continue hosted acceptance of the controlled student portal on dmocks.com: fresh Google callback, profile, Overview, exam-wise mocks, topic practice, All India mocks, attempts, reconnect, results and authenticated media with approved accounts.
 3. Complete Papers: prepare exact source-year groups with the correct historical marking scheme, verified media, reviewed answers and explanations; publish only those which pass a fixed timed attempt and answer-by-answer result. Use the private [year-paper preparation and release flow](YEAR_PAPER_RELEASE.md). The first catalogue UI is not the completion of this step.
-4. Integrate Claude's Learn and Community changes after the owner pushes them, then test their student routes on staging. Claude retains ownership of those modules and question-paper ingestion/corrections.
+4. Integrate Claude's Learn and Community changes after the owner pushes them, then test their student routes on dmocks.com behind controlled admission. Claude retains ownership of those modules and question-paper ingestion/corrections.
 5. Complete a controlled Razorpay Test purchase, webhook, entitlement and refund journey. Publish final notices and open public admission, catalogue and sales through their separate release decisions.
 
 The admin portal, teacher marking and AI drawing evaluation are outside this first website release. Keep their existing code isolated; they remain part of the longer roadmap. Public registration and sales stay closed while staging acceptance is underway.

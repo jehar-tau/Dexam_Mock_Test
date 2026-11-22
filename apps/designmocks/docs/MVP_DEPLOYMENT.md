@@ -1,5 +1,15 @@
 # Frozen paid MVP deployment and controlled Test acceptance
 
+**Current release workflow (23 November 2026):** The owner now directs
+approved PR code to `dmocks.com` after PR and main CI, without an owner-only
+staging frontend promotion. The separate dev/staging/production programme is
+deferred until the application is built. See [Direct public release](DIRECT_PUBLIC_RELEASE.md).
+The dated standalone-project and per-frontend-approval statements below are
+historical. Hosted migrations, Edge Functions, content publication,
+registration, merchant Test/Live and sales retain their own recovery and
+acceptance gates. Public Site version 10 currently runs a controlled,
+server-allowlisted Google tester portal with checkout closed.
+
 Owner rights clarification (8 November): Design Exam Academy confirms ownership or permission for all 2,582 hold-free canonical questions as original/adapted practice material, not verbatim protected official papers. Legacy labels remain as source history and no longer establish the collection-level rights conclusion. The compiler now supports 1,509 objective questions (835 UCEED/674 CEED) before required materialization, verified media and exact-version audited approval. The other 1,073 are outside this MVP: 361 other supported conversions and 712 conversion/context blockers. Never mass-update flags directly. Private NID blueprint drafting/review is authorized bank work, not a new student offering.
 
 This is a reviewable rollout procedure, not a deployment approval. The owner selected `tiodqzvvujxvxssvjdis` as private staging on 10 November; production requires a separate project. Backup/restore and migration dry run are authorized, but hosted promotion still needs its own approval (HANDOFF.md). Public registration, real content publication, checkout, Live sales and merchant credentials remain closed/unconfigured by this source change.
