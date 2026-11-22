@@ -84,6 +84,11 @@ test(`${answerStatus} released answer review reveals the next annotation through
   await expect(page.getByRole("navigation", { name: "Review questions", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Review correct questions (1)", exact: true }).press("Enter");
   await expect(page.getByRole("button", { name: "Review question 1, Correct", exact: true })).toBeVisible();
+  await expect(page.locator(".analysis-response")).toContainText("Correct answer");
+  await expect(page.getByRole("heading", { name: "Worked solution", exact: true })).toHaveCount(0);
+  const viewSolution = page.getByRole("button", { name: "View solution", exact: true });
+  await expect(viewSolution).toHaveAttribute("aria-expanded", "false");
+  await viewSolution.press("Enter");
   await expect(page.getByRole("heading", { name: "Worked solution", exact: true })).toBeVisible();
   const overlay = page.locator(".worked-solution-figure svg");
   await expect(overlay.locator("rect")).toHaveCount(1);
@@ -96,10 +101,55 @@ test(`${answerStatus} released answer review reveals the next annotation through
   await expect(overlay.locator("circle")).toHaveCount(0);
   await page.getByText("Full explanation", { exact: true }).click();
   await expect(page.getByText(explanation, { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Hide solution", exact: true }).press("Enter");
+  await expect(page.getByRole("heading", { name: "Worked solution", exact: true })).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   expect(provider.unexpected).toEqual([]);
 });
 }
+
+test("changing reviewed questions closes the previous worked solution", async ({ page }) => {
+  const otherId = "30000000-0000-4000-8000-000000001682";
+  const otherPrompt = "Second fictional released question.";
+  const otherExplanation = "Second fictional worked explanation.";
+  let submitted = false;
+  const snapshot = () => ({
+    id: attempt, title: "Two fictional questions", status: submitted ? "submitted" : "active",
+    deadline: new Date(Date.now() + 900000).toISOString(), serverNow: new Date().toISOString(),
+    score: submitted ? 0 : null, total: 2,
+    questions: [
+      { id: questionId, ordinal: 1, kind: "mcq", topic: "observation", prompt,
+        options: [{ id: "A", label: "First choice" }], marking: "standard", points: 1, negativePoints: 0,
+        answer: null, answerRevision: 0, media: [],
+        ...(submitted ? { outcome: "incorrect", correctKey: { correct: ["A"] }, explanation } : {}) },
+      { id: otherId, ordinal: 2, kind: "mcq", topic: "observation", prompt: otherPrompt,
+        options: [{ id: "B", label: "Second choice" }], marking: "standard", points: 1, negativePoints: 0,
+        answer: null, answerRevision: 0, media: [],
+        ...(submitted ? { outcome: "incorrect", correctKey: { correct: ["B"] }, explanation: otherExplanation } : {}) },
+    ],
+  });
+  const provider = await stubPortalProvider(page, name => {
+    if (name === "read_attempt") return snapshot();
+    if (name === "submit_attempt") { submitted = true; return snapshot(); }
+  });
+  await page.goto("/");
+  await seedPortalSession(page, student);
+  await page.goto("/attempt/" + attempt);
+  await page.getByRole("button", { name: "Submit attempt", exact: true }).click();
+  await page.getByRole("dialog").getByRole("button", { name: "Submit & view report", exact: true }).click();
+  await page.getByRole("button", { name: "Open answer review", exact: true }).click();
+  await expect(page.getByText(prompt, { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "View solution", exact: true }).click();
+  await expect(page.getByText(explanation, { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Review question 2, Incorrect", exact: true }).click();
+  await expect(page.getByText(otherPrompt, { exact: true })).toBeVisible();
+  await expect(page.getByText(explanation, { exact: true })).toHaveCount(0);
+  await expect(page.getByText(otherExplanation, { exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "View solution", exact: true })).toHaveAttribute("aria-expanded", "false");
+  await page.getByRole("button", { name: "View solution", exact: true }).click();
+  await expect(page.getByText(otherExplanation, { exact: true })).toBeVisible();
+  expect(provider.unexpected).toEqual([]);
+});
 
 const alternatives = [
   { type: "MCQ", raw: "C or A", selected: ["A"], saved: "A", label: "C or A" },
@@ -130,6 +180,8 @@ for (const { type, raw, selected, saved, label } of alternatives) {
     await expect(page.getByRole("group", { name: "Objective result", exact: true })).toContainText(`${runtime.points}/${runtime.points}`);
     await page.getByRole("button", { name: "Open answer review", exact: true }).press("Enter");
     await expect(page.locator(".answer-review article")).toContainText(`Accepted answers ${label}`);
+    await expect(page.getByText(explanation, { exact: true })).toHaveCount(0);
+    await page.getByRole("button", { name: "View solution", exact: true }).click();
     await expect(page.getByText(explanation, { exact: true })).toBeVisible();
     expect(provider.unexpected).toEqual([]);
   });
