@@ -49,13 +49,53 @@ Each stage reads the previous stage's files from a private work folder **outside
 
 Stage 1 is deterministic. Stages 2–4 are deterministic with optional local OCR. A language model can assist with stage 5 drafting.
 
+## Ordered page photos
+
+Pass the photos to Stage 1 in reading order. The intake manifest records that order
+and the SHA-256 of each upright PNG:
+
+```sh
+python3 apps/designmocks/ingestion/intake.py --exam uceed --year 2031 \
+  --work ~/dmocks-ingestion-work --photos page-one.jpg page-two.jpg
+python3 apps/designmocks/ingestion/segment.py --work ~/dmocks-ingestion-work --paper-id uceed-2031
+python3 apps/designmocks/ingestion/figures.py --work ~/dmocks-ingestion-work --paper-id uceed-2031
+```
+
+Review every upright image listed in `01-intake/paper.json`. Record figure boxes in a
+private JSON file. Include one entry for each page in intake order and use an empty
+`figures` array after checking a page with no figures. Use integer pixel coordinates
+from the upright PNG, with the origin at the top left and the right and bottom
+edges excluded. List figures on each page in reading order.
+
+```json
+{"pages":[
+  {"page":1,"renderSha256":"<SHA-256 from the page 1 record>","figures":[]},
+  {"page":2,"renderSha256":"<SHA-256 from the page 2 record>","figures":[[30,90,220,300]]}
+]}
+```
+
+For separately cropped image choices, use objects such as
+`{"box":[30,90,220,300],"role":"option-A"}`. Label the complete set A–D. A
+stem may use `"role":"stem"`. A single crop containing all four choices can
+use a plain box when OCR picks up the four separate choice labels outside the crop.
+
+Rerun Stage 2 with `--replace --photo-layout /path/to/private-layout.json`, then Stage 3
+with `--replace`. Without a layout review, segments carry `photo-layout-unreviewed`
+and the question blocks are available for inspection. Unresolved segmentation flags
+block export. Review the question boundaries, wording, choices and all visible content,
+including figure-only continuation pages. Stage 3 stores the actual pixel rectangles
+and verified page render hashes with the crops. It preserves the upright pixels without
+resizing. A crop or stitched block above the bank image limits requires smaller source
+photos and a fresh intake. The official answer key still goes through Stage 4 as its
+own independently verified PDF.
+
 ## Figure decision
 
 Each figure gets exactly one **canonical asset**, the thing students see, chosen by this order:
 
 1. **Native PDF vector** (drawing paths inside the figure region, no raster): export the paths as SVG directly. Lossless. Rare in these papers.
 2. **Embedded raster** (the normal case): take the image's own bytes from the PDF, decode once and store as PNG (the bank requires PNG). No resampling. Keep the original JPEG bytes and its hash as evidence.
-3. **Scan or photo**: crop from a 300–400 dpi render, deskew, clean the background; same as today's block cropper.
+3. **Scan or photo**: crop from the page render. For photos, use the verified upright PNG and keep its source pixels. The crop evidence identifies the page render and the applied pixel rectangle.
 
 A **vector recreation** (SVG) is added on top, never instead, when the figure is line art or flat colour (cube nets, isometric drawings, patterns, grids, mechanisms, charts) and it passes all of these against the canonical PNG at the source's own pixel size:
 
