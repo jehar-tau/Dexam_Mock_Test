@@ -51,7 +51,8 @@ collection view: its year sets are not released timed papers until the
 fixed-paper acceptance passes. Live Chrome acceptance loaded the protected
 Overview, exam-wise mocks, All India mocks, topic practice and Learn pages
 with an already authenticated allowlisted Google account. A fresh Google
-callback and an authenticated private-media request are still outstanding.
+sign-out, account-choice callback and protected Overview return subsequently
+passed in Chrome. An authenticated private-media request is still outstanding.
 
 ## Controlled public portal testing
 
@@ -63,7 +64,6 @@ Supabase project, keeps checkout closed, and checks the server's
 Revoking a tester removes their access on the next route check or reload.
 This switch does not open public registration or sales. Version 10 has this
 switch enabled with a public browser key and an exact-domain server gate. The
-hosted Google authorization redirect, protected Data API pages, and exact
-media CORS preflight passed; a fresh callback and authenticated own/other
-media checks remain to be accepted. A browser flag alone never grants server
-access.
+hosted Google authorization redirect and callback, protected Data API pages,
+and exact media CORS preflight passed; authenticated own/other media checks
+remain to be accepted. A browser flag alone never grants server access.
