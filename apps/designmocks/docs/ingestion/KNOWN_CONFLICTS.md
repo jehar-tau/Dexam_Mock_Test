@@ -1,5 +1,9 @@
 # Question-bank conflicts awaiting review
 
+## UCEED 2025, Part A, question 18
+
+The original paper's option C says a car-wheel nut is loosened by turning a spanner **“counter-clockwise clockwise”**. The tracked question repeats this contradictory phrase, while the preserved key includes C (A,C). The direction cannot be both clockwise and counter-clockwise from the same stated viewpoint. The source needs a wording decision before C can be taught or scored. The export carries `holds: ["source-question-conflict"]`; leave the source and answer unchanged until the owner reviews the intended text and key.
+
 ## UCEED 2016, Part A, question 62
 
 The source asks for video formats in evolutionary order and the preserved answer key marks **A**. The printed A begins with VHS before U-matic low band. [Sony records U-matic's launch in 1971](https://www.sony.com/en/SonyInfo/CorporateInfo/History/SonyHistory/1-05.html), while [JVC records VHS in 1976](https://eu.jvc.com/about/). The only choice beginning with U-matic low band, B, puts VHS after Digibeta; [Sony records Digital Betacam in 1993](https://www.sony.com/en/SonyInfo/CorporateInfo/History/SonyHistory/2-06.html). Thus neither A nor B is a chronological sequence, and C and D also begin with later formats. The wording does not define another ordering criterion.
