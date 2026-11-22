@@ -2,6 +2,12 @@
 
 This file is the durable handoff between Codex, Claude Code, and future coding-agent sessions. Read it before making changes, then inspect the live repository state because this document may lag behind the working tree.
 
+## Current release checkpoint - 23 November 2026 (supersedes dated deployment notes below)
+
+The owner directed approved PRs to go straight to public `https://dmocks.com` after exact PR and merged-main CI pass. Separate development, staging and production promotion is deferred until the application is built. Follow [Direct public release](apps/designmocks/docs/DIRECT_PUBLIC_RELEASE.md). Keep Claude's Learn, Community and ingestion checkout untouched; Codex owns the other portal work and integrates owner-pushed Claude changes. The owner deferred the admin portal, teacher marking and AI drawing evaluation from the initial website release.
+
+Public Site version 10 is live from main `a8f8b9ccc4ec5a76816e1a94418c0a3faa6cd84a` (main CI `45059742646` passed). It admits only server-allowlisted Google testers into the controlled portal, and keeps checkout and public registration closed. An approved Google session loaded Overview, exam-wise mocks, All India mocks, topic practice and Learn on the public domain. A fresh sign-out, Google account-choice callback, and protected Overview return then passed in Chrome. The live year-wise catalogue lists sets as in preparation; no paper has been released and no All India event is scheduled. This is functional owner testing, not a student sales opening. The exact release receipt is in the operator's private directory, outside Git. Later historical claims about a pending staging frontend, a mandatory separate production project or owner approval for each ordinary frontend update are superseded by this checkpoint. Paper publication, legal notices, merchant Test/Live acceptance, registration and sales still have separate gates; do not silently enable them.
+
 ## Claude takeover checkpoint - 10 November 2026 (read this first)
 
 Claude Code took over the DMocks launch from Codex on 10 November. Everything below is on `main` through exact-head PR runs plus the matching main run; nothing was applied to any hosted environment, no Test window or Live switch was opened, and no credential, OTP, policy or content decision was made on the owner's behalf. Public registration, real paper publication, checkout, Live sales and every model/inference switch remain closed.

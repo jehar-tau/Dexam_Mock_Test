@@ -43,9 +43,16 @@ switches need their own exact-source checks and recovery plan before changing
 the live service. Record any owner decision required for final paper content,
 legal notices, paid services or the actual sales opening.
 
-The current public Site is version 9. It serves the year-wise Papers catalogue
-and the five-question sample. The catalogue is a collection view: its year
-sets are not released timed papers until the fixed-paper acceptance passes.
+The current public Site is version 10, built from main
+`a8f8b9ccc4ec5a76816e1a94418c0a3faa6cd84a` after main CI
+`45059742646` passed. It serves the year-wise Papers catalogue, the
+five-question sample and the controlled student portal. The catalogue is a
+collection view: its year sets are not released timed papers until the
+fixed-paper acceptance passes. Live Chrome acceptance loaded the protected
+Overview, exam-wise mocks, All India mocks, topic practice and Learn pages
+with an already authenticated allowlisted Google account. A fresh Google
+sign-out, account-choice callback and protected Overview return subsequently
+passed in Chrome. An authenticated private-media request is still outstanding.
 
 ## Controlled public portal testing
 
@@ -55,8 +62,8 @@ testers. It pins the exact public origin and the designated DMocks Test
 Supabase project, keeps checkout closed, and checks the server's
 `can_enter_staging_portal` admission decision before every protected route.
 Revoking a tester removes their access on the next route check or reload.
-This switch does not open public registration or sales. Keep it off in the
-ordinary public build until the hosted Google callback, Data API and media
-origins have passed the exact-domain tester journey; publish a tested build
-with a public browser key only after those checks. A browser flag alone never
-grants server access.
+This switch does not open public registration or sales. Version 10 has this
+switch enabled with a public browser key and an exact-domain server gate. The
+hosted Google authorization redirect and callback, protected Data API pages,
+and exact media CORS preflight passed; authenticated own/other media checks
+remain to be accepted. A browser flag alone never grants server access.
