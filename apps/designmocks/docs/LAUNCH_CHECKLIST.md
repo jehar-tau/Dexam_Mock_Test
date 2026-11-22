@@ -2,6 +2,8 @@
 
 ## Current scope and release status (21 November 2026)
 
+- [ ] Release Papers with year-wise UCEED, CEED, NIFT and NID sets. The source-backed catalogue is the first slice; fixed playable attempts, media, results and explanations need end-to-end acceptance before this launch item is complete. Use only hold-free bank records and distinguish sample or multiple sets in the same year.
+
 The owner retains the full student website roadmap. Claude owns Learn, Community, and question-paper ingestion and corrections. Codex owns the rest of the student-facing website, including test mode and identity and payment integration. The admin portal, teacher paper review, and AI drawing evaluation are deferred. Use the current scope in the [execution plan](PRODUCT_EXECUTION_PLAN.md#current-scope-and-release-status-21-november-2026) when reading the dated checkpoints below.
 
 - [x] Complete the encrypted staging backup and isolated restore privately, covering 2,085 storage objects.

@@ -14,6 +14,7 @@ export function allowReleasedLearn(portalReady) {
 export const launchNavigation=Object.freeze([
  {to:'/dashboard',label:'Overview',mark:'O',end:true},
  {to:'/dashboard/mocks',label:'Released papers',mark:'M'},
+ {to:'/papers',label:'Papers',mark:'Y'},
  {to:'/dashboard/learn',label:'Learn',mark:'L'},
 ]);
 const studentModuleItems=Object.freeze({
@@ -31,9 +32,9 @@ export function releasedStudentModules(value){
 export function studentNavigation(released){
  const enabled=new Set(released);
  return Object.freeze([
-  launchNavigation[0],enabled.has('mocks')?studentModuleItems.mocks:launchNavigation[1],
+  launchNavigation[0],enabled.has('mocks')?studentModuleItems.mocks:launchNavigation[1],launchNavigation[2],
   ...['all-india','practice'].filter(name=>enabled.has(name)).map(name=>studentModuleItems[name]),
-  launchNavigation[2],
+  launchNavigation[3],
   ...(enabled.has('community')?[studentModuleItems.community]:[]),
  ]);
 }

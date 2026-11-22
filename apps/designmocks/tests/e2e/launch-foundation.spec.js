@@ -141,7 +141,7 @@ test("the reduced dev preview links only to its local overview and exam example"
   if ((page.viewportSize()?.width ?? 1000) < 900)
     await page.getByRole("button", { name: "Student menu" }).click();
   const navigation = page.getByRole("navigation", { name: "Student workspace" });
-  await expect(navigation.getByRole("link")).toHaveCount(3);
+  await expect(navigation.getByRole("link")).toHaveCount(4);
   await expect(navigation.getByRole("link", { name: "Overview" })).toHaveAttribute("href", "/portal-preview");
   await expect(navigation.getByRole("link", { name: "Learn" })).toHaveAttribute("href", "/learn-preview");
   const papers = navigation.getByRole("link", { name: "Released papers" });

@@ -9,12 +9,12 @@ test('student modules open only from an exact, explicit release list',()=>{
  assert.deepEqual(releasedStudentModules(undefined),[]);
  assert.deepEqual(releasedStudentModules('all-india,practice'),['all-india','practice']);
  for(const invalid of['all-india,unknown','all-india,all-india','all-india,','admin','learn'])assert.deepEqual(releasedStudentModules(invalid),[]);
- assert.deepEqual(studentNavigation([]).map(item=>item.label),['Overview','Released papers','Learn']);
+ assert.deepEqual(studentNavigation([]).map(item=>item.label),['Overview','Released papers','Papers','Learn']);
  assert.deepEqual(studentNavigation(['mocks','all-india','practice','community']).map(item=>item.label),
-  ['Overview','Exam-wise mocks','All India mocks','Topic practice','Learn','Community']);
+  ['Overview','Exam-wise mocks','Papers','All India mocks','Topic practice','Learn','Community']);
 });
 test('the MVP navigation offers owned progress, released papers and Learn',()=>{
- assert.deepEqual(launchNavigation.map(item=>item.to),['/dashboard','/dashboard/mocks','/dashboard/learn']);
+ assert.deepEqual(launchNavigation.map(item=>item.to),['/dashboard','/dashboard/mocks','/papers','/dashboard/learn']);
  assert.deepEqual(Object.keys(deferredModules),['all-india','practice','community','drawings']);
  assert.deepEqual(Object.keys(releasedModules),['learn']);assert.ok(Object.isFrozen(releasedModules));assert.ok(Object.isFrozen(launchNavigation));
 });

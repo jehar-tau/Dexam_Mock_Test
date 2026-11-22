@@ -2,6 +2,20 @@
 
 ## Current scope and release status (21 November 2026)
 
+### Papers added to the student launch scope (22 November 2026)
+
+The owner added a **Papers** section to the launch, alongside Overview, exam-wise mocks, All India mocks and topic practice. It must list year-wise source sets for UCEED, CEED, NIFT and NID from `server/data/exports/dexam-bank-export.json`, using only records with an empty `holds` array. Keep sample papers and multiple papers in the same year distinct. The year-wise catalogue must not label a bank group as a released, playable paper until its content, image bytes, answers, marking and timer have been checked and a fixed attempt works end to end. The first catalogue UI is sourced from the bank and clearly marks unreleased sets as in preparation; the playable-paper path, results and explanations remain required before launch. Keep year-wise Papers separate from scrambled exam-wise mocks. The owner cites [Roughworks Papers](https://roughworks.in/papers) as an interaction reference, not as source content.
+
+### Lean student-portal launch order
+
+1. Merge the reviewed ingestion integration and keep the hold-free bank export current. A bank count is not a published-paper count.
+2. Put the current student portal build on private staging. Accept Google sign-in, profile, Overview, exam-wise mocks, topic practice, All India mocks, attempts, reconnect and results with test accounts on the hosted backend.
+3. Complete Papers: prepare exact source-year groups with the correct historical marking scheme, verified media, reviewed answers and explanations; publish only those which pass a fixed timed attempt and answer-by-answer result. The first catalogue UI is not the completion of this step.
+4. Integrate Claude's Learn and Community changes after the owner pushes them, then test their student routes on staging. Claude retains ownership of those modules and question-paper ingestion/corrections.
+5. Complete a controlled Razorpay Test purchase, webhook, entitlement and refund journey. Publish final notices and open public admission, catalogue and sales through their separate release decisions.
+
+The admin portal, teacher marking and AI drawing evaluation are outside this first website release. Keep their existing code isolated; they remain part of the longer roadmap. Public registration and sales stay closed while staging acceptance is underway.
+
 - The owner retains the full student website roadmap.
 - Claude owns Learn, Community, and question-paper ingestion and corrections.
 - Codex owns the rest of the student-facing website, including test mode and identity and payment integration.

@@ -17,6 +17,7 @@ export function PortalShell({ children }) {
   const previewNavigation = expandedPreview ? [
     { to: "/portal-preview", label: "Overview", mark: "O", end: true },
     { to: "/exam-mocks-preview", label: "Exam-wise mocks", mark: "M" },
+    { to: "/papers", label: "Papers", mark: "Y" },
     { to: "/all-india-preview", label: "All India mocks", mark: "A" },
     { to: "/topic-practice-preview", label: "Topic practice", mark: "P" },
     { to: "/learn-preview", label: "Learn", mark: "L" },
@@ -24,7 +25,8 @@ export function PortalShell({ children }) {
   ] : previewRoute ? [
     { ...launchNavigation[0], to: "/portal-preview" },
     { ...launchNavigation[1], to: "/exam-mocks-preview" },
-    { ...launchNavigation[2], to: "/learn-preview" },
+    { ...launchNavigation[2] },
+    { ...launchNavigation[3], to: "/learn-preview" },
   ] : null;
   const navigation = previewNavigation ?? (postLaunchPreview ? portalItems : studentNavigation(releasedStudentModuleNames));
   return <div className="portal-shell">

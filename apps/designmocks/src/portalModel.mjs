@@ -1,6 +1,7 @@
 export const portalItems = Object.freeze([
   { to: "/dashboard", label: "Overview", mark: "O", end: true, released: true },
   { to: "/dashboard/mocks", label: "Exam-wise mocks", mark: "M", released: false },
+  { to: "/papers", label: "Papers", mark: "Y", released: true },
   { to: "/dashboard/all-india", label: "All India mocks", mark: "A", released: false },
   { to: "/dashboard/practice", label: "Topic practice", mark: "P", released: false },
   { to: "/dashboard/learn", label: "Learn", mark: "L", released: false },

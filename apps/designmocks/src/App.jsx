@@ -66,6 +66,7 @@ const PortalPreview = includeStudentPreview
   : null;
 const TopicPractice = React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPractice })));
 const ExamMocks = React.lazy(() => import("./ExamMocks.jsx").then(module => ({ default: module.ExamMocks })));
+const Papers = React.lazy(() => import("./Papers.jsx"));
 const AllIndia = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndia })));
 function LearnSignIn() {
   return <section className="wrap section">
@@ -246,6 +247,7 @@ function Layout({ children }) {
             id="navigation"
           >
             <NavLink to="/tests">Mock tests</NavLink>
+            <NavLink to="/papers">Papers</NavLink>
             <Link to="/#features">What’s inside</Link>
             <Link to="/#how">How it works</Link>
             <NavLink to="/plans">The annual pass</NavLink>
@@ -297,6 +299,7 @@ function Layout({ children }) {
             <b>MAKE YOUR NEXT MOVE</b>
 
             <Link to="/sample">Try the sample</Link>
+            <Link to="/papers">Year-wise papers</Link>
             <Link to="/plans">One-year pass</Link>
             <Link to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "/portal-preview" : "/account"}>
               {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Student preview" : "Student sign in"}
@@ -1673,6 +1676,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tests" element={<Tests />} />
+        <Route path="/papers" element={<Papers />} />
         <Route path="/practice/visual-hierarchy" element={<SignReadingExercise />} />
         <Route path="/tests/:exam" element={<ExamDetail />} />
         <Route path="/plans" element={<Plans />} />
