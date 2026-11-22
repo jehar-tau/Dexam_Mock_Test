@@ -174,6 +174,26 @@ class SolutionsTest(unittest.TestCase):
         self.save("q2", flipped)
         self.assertIn("option-verdicts-disagree-with-key", self.results()["q2"]["errors"])
 
+    def test_multi_select_requires_the_complete_official_set(self):
+        partial = copy.deepcopy(MSQ)
+        partial["answer"]["value"] = "A"
+        partial["optionCheck"][1]["verdict"] = "wrong"
+        self.save("q2", partial)
+        result = self.results()["q2"]
+        self.assertEqual("held", result["status"])
+        self.assertFalse(result["reachesKey"])
+        self.assertIn("does-not-reach-official-key", result["errors"])
+
+    def test_explicit_alternative_key_accepts_one_complete_branch(self):
+        self.change_key("q2", raw="A or B", printed="A or B")
+        alternative = copy.deepcopy(MSQ)
+        alternative["answer"]["value"] = "A"
+        alternative["optionCheck"][1]["verdict"] = "wrong"
+        self.save("q2", alternative)
+        result = self.results()["q2"]
+        self.assertEqual("draft", result["status"])
+        self.assertTrue(result["reachesKey"])
+
     def test_format_rules(self):
         cases = {
             "step-1-too-long": lambda s: s["steps"][0].__setitem__("text", "word " * 50),
