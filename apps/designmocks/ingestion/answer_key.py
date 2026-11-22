@@ -254,7 +254,7 @@ def header_table(header, body):
         entries.append({"number": row["number"], "printed": " ".join(p["text"] for p in parts), "lines": [p["box"] for p in parts],
                         "cell": [column["left"], row["y"] - 0.45 * spacing, column["right"], row["y"] + 0.45 * spacing],
                         "span": [column["left"], top, column["right"], bottom],
-                        "inferred": row["inferred"]})
+                        "inferred": row["inferred"], "inferredRun": row.get("inferredRun", False)})
     return entries
 
 
@@ -300,6 +300,24 @@ def infer_numbers(rows, spacing):
         if guess is not None and guess not in taken:
             row["number"], row["inferred"] = guess, True
             taken.add(guess)
+
+    # A scan can omit several consecutive question-number cells while reading
+    # their answer cells. A one-row neighbour check cannot recover that run.
+    # Number it only when every intervening row contains key ink and the two
+    # printed endpoint numbers account for exactly that many rows.
+    for column in sorted({row["column"] for row in rows}):
+        ordered = sorted((row for row in rows if row["column"] == column), key=lambda row: row["y"])
+        anchors = [index for index, row in enumerate(ordered) if row["number"] is not None]
+        for start, end in zip(anchors, anchors[1:]):
+            between = ordered[start + 1:end]
+            low, high = ordered[start]["number"], ordered[end]["number"]
+            if (not between or high - low != len(between) + 1
+                    or any(row["number"] is not None or not row["lines"] for row in between)
+                    or any(low + offset in taken for offset in range(1, len(between) + 1))):
+                continue
+            for offset, row in enumerate(between, 1):
+                row["number"], row["inferred"], row["inferredRun"] = low + offset, True, True
+                taken.add(low + offset)
 
 
 LOOSE_LABEL = re.compile(r"^[|\s]*[Q0O]?\s*[.,]?\s*0*(\d{1,3})\s*$", re.I)
@@ -478,7 +496,7 @@ def audit_cells(scan_path, entries):
         scan = opened.convert("L")
     zoom = OCR_DPI / 72
     for entry in entries:
-        if entry["cell"] is None or not entry["printed"].strip() or entry.get("letterMatch"):
+        if entry["cell"] is None or not entry["printed"].strip() or entry.get("letterMatch") or entry.get("cropMatch"):
             continue
         x0, y0, x1, y1 = entry.get("span") or entry["cell"]
         x1 = min(x1, x0 + 160)
@@ -510,7 +528,8 @@ def match_empty_letters(scan_path, entries):
     samples = {}
     for entry in entries:
         letters = re.sub(r"[^A-D]", "", entry["printed"].upper())
-        if entry["cell"] is None or not letters or not re.fullmatch(r"[A-D ,.]+", entry["printed"].upper()):
+        if (entry["cell"] is None or entry.get("cropMatch") or not letters
+                or not re.fullmatch(r"[A-D ,.]+", entry["printed"].upper())):
             continue
         marks = glyphs(scan, entry["cell"])
         if len(marks) == len(letters):
@@ -539,6 +558,95 @@ def match_empty_letters(scan_path, entries):
             entry["letterMatch"] = scores
             filled += 1
     return filled
+
+
+def crop_ocr_text(scan, box, ocr, scratch, name):
+    """Read one isolated cell; callers compare distinct crops before trusting it."""
+    zoom = OCR_DPI / 72
+    crop = scan.crop(tuple(round(v * zoom) for v in box))
+    if crop.width < 8 or crop.height < 8:
+        return None
+    enlarged = crop.resize((crop.width * 4, crop.height * 4))
+    path = scratch / f"key-cell-{name}.png"
+    try:
+        enlarged.save(path)
+        lines = [str(row["text"]).strip() for row in ocr(path) if str(row["text"]).strip()]
+    finally:
+        path.unlink(missing_ok=True)
+    return lines[0] if len(lines) == 1 else None
+
+
+def match_empty_nat_cells(scan_path, entries, questions, ocr, scratch):
+    """Retry an empty numeric key cell in two tighter crops; require exact OCR agreement.
+
+    The full-page scan remains the evidence. Cropping only helps Vision see a small
+    isolated number, and the review page still calls for visual source checking.
+    """
+    from PIL import Image
+    if not scan_path.exists():
+        return 0
+    with Image.open(scan_path) as opened:
+        scan = opened.convert("RGB")
+    filled = 0
+    for entry in entries:
+        question = questions.get(f'q{entry["number"]}')
+        if entry["printed"].strip() or entry["cell"] is None or not question or question["type"] != "NAT":
+            continue
+        x0, y0, x1, y1 = entry.get("span") or entry["cell"]
+        if x1 - x0 < 90 or y1 - y0 < 5:
+            continue
+        readings = []
+        for width in (70, 90):
+            right = min(x1, x0 + width)
+            readings.append(crop_ocr_text(scan, (x0, y0, right, y1), ocr, scratch,
+                                          f'{entry["page"]}-{entry["number"]}-{width}'))
+        if readings[0] and readings[0] == readings[1] and normalise(readings[0], "NAT")[1] == "official-key":
+            entry["printed"], entry["cropMatch"] = readings[0], True
+            filled += 1
+    return filled
+
+
+def match_missing_rows(scan_path, entries, questions, ocr, scratch, page_no):
+    """Recover a wholly missed row only when adjacent labels and two crop pairs agree."""
+    from PIL import Image
+    if not scan_path.exists():
+        return 0
+    with Image.open(scan_path) as opened:
+        scan = opened.convert("RGB")
+    found = 0
+    ordered = sorted((entry for entry in entries if entry["page"] == page_no and entry.get("cell")),
+                     key=lambda entry: entry["number"])
+    occupied = {entry["number"] for entry in ordered}
+    for before, after in zip(ordered, ordered[1:]):
+        number = before["number"] + 1
+        question = questions.get(f"q{number}")
+        previous_question = questions.get(f'q{before["number"]}')
+        next_question = questions.get(f'q{after["number"]}')
+        if (after["number"] != number + 1 or number in occupied or not question
+                or question["type"] not in ("NAT", "MSQ", "MCQ")
+                or not previous_question or not next_question
+                or not (previous_question["type"] == question["type"] == next_question["type"])
+                or abs(before["cell"][0] - after["cell"][0]) > 4):
+            continue
+        x = (before["cell"][0] + after["cell"][0]) / 2
+        y0, y1 = before["span"][3], after["span"][1]
+        if not 8 <= y1 - y0 <= 45 or x < 55 or x + 70 > before["cell"][2]:
+            continue
+        label = [crop_ocr_text(scan, box, ocr, scratch, f"{page_no}-{number}-label-{index}")
+                 for index, box in enumerate(((x - 50, y0, x, y1), (x - 35, y0 + 1, x, y1 - 1)))]
+        if label != [str(number), str(number)]:
+            continue
+        keys = [crop_ocr_text(scan, box, ocr, scratch, f"{page_no}-{number}-answer-{index}")
+                for index, box in enumerate(((x, y0, x + 70, y1), (x + 9, y0 + 1, x + 64, y1 - 1)))]
+        if not keys[0] or keys[0] != keys[1] or normalise(keys[0], question["type"])[1] != "official-key":
+            continue
+        entries.append({"number": number, "printed": keys[0], "lines": [],
+                        "cell": [x, y0, before["cell"][2], y1], "span": [x, y0, before["cell"][2], y1],
+                        "inferred": True, "inferredMissingRow": True, "cropMatch": True,
+                        "kind": before.get("kind"), "page": page_no})
+        occupied.add(number)
+        found += 1
+    return found
 
 
 def default_ocr(work_root):
@@ -593,7 +701,10 @@ def run_key(*, work, paper_id, key_pdf, replace=False, ocr=None, bank_questions=
         for page_no, how in read_by.items():
             if how == "ocr":
                 scan = staging / f"key-page-{page_no}.png"
+                match_missing_rows(scan, entries, questions, ocr or default_ocr(work_root), staging, page_no)
                 letters_by_page[page_no] = match_empty_letters(scan, [e for e in entries if e["page"] == page_no])
+                match_empty_nat_cells(scan, [e for e in entries if e["page"] == page_no], questions,
+                                      ocr or default_ocr(work_root), staging)
                 audit_cells(scan, [e for e in entries if e["page"] == page_no])
         for scratch in staging.glob("key-page-*.png"):
             scratch.unlink()
@@ -625,8 +736,15 @@ def run_key(*, work, paper_id, key_pdf, replace=False, ocr=None, bank_questions=
             if entry.get("letterMatch"):
                 how = "letter-match"
                 notes = notes + [f"letter scores {entry['letterMatch']}"]
+            if entry.get("cropMatch"):
+                how = "crop-ocr"
+                notes = notes + ["two-crop-ocr-agreement-needs-visual-review"]
+            if entry.get("inferredMissingRow"):
+                notes = notes + ["whole-row-recovered-by-two-crop-pairs-needs-visual-review"]
             if entry.get("inferred"):
                 notes = notes + ["question-number-inferred-from-grid"]
+            if entry.get("inferredRun"):
+                notes = notes + ["consecutive-row-run-needs-visual-review"]
             record = {"printed": printed, "raw": raw, "kind": use, "status": status, "page": page_no,
                       "readBy": how, "notes": notes, "checks": checks}
             if bank_questions is not None:
