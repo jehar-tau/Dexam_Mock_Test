@@ -129,6 +129,7 @@ export function WorkspaceView({
             <Link to={examHref}><span className="overview-path-icon">01</span><span><b>Exam-wise mocks</b><small>Choose NID, NIFT, UCEED or CEED and open a released paper.</small></span><Arrow size={18}/></Link>
             <Link to={allIndiaHref}><span className="overview-path-icon">02</span><span><b>All India mocks</b><small>One common paper, one attempt, results after the review window.</small></span><Arrow size={18}/></Link>
             <Link to={practiceHref}><span className="overview-path-icon">03</span><span><b>Topic-wise practice</b><small>Build a short session around the skills you want to improve.</small></span><Arrow size={18}/></Link>
+            <Link to="/papers"><span className="overview-path-icon">04</span><span><b>Year-wise Papers</b><small>Explore past-year sets and take reviewed papers for free as they are released.</small></span><Arrow size={18}/></Link>
           </div>
           </>}
           {data.analytics?.activeAttempt && (

@@ -7,9 +7,13 @@ test('the student desk leads to each mock mode without presenting fictional pape
   await expect(desk.getByRole('link', { name: /Exam-wise mocks/ })).toHaveAttribute('href', '/exam-mocks-preview');
   await expect(desk.getByRole('link', { name: /All India mocks/ })).toHaveAttribute('href', '/all-india-preview');
   await expect(desk.getByRole('link', { name: /Topic-wise practice/ })).toHaveAttribute('href', '/topic-practice-preview');
+  await expect(desk.getByRole('link', { name: /Year-wise Papers/ })).toHaveAttribute('href', '/papers');
   await expect(desk.getByText('No papers have been released yet')).toBeVisible();
   await expect(desk.locator('.paper-list article')).toHaveCount(0);
   await expect(desk.getByRole('link', { name: 'Try an example paper' })).toHaveAttribute('href', '/portal-preview/paper');
   await expect(page.getByText('fictional account for exploring the interface')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize().width);
+  await desk.getByRole('link', { name: /Year-wise Papers/ }).click();
+  await expect(page.getByRole('heading', { name: 'Explore the papers.' })).toBeVisible();
+  await expect(page.getByText('The timed paper is being prepared.').first()).toBeVisible();
 });
