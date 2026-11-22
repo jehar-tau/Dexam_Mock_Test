@@ -71,6 +71,49 @@ test("preflight must verify the current DMocks profile before sending private ro
   }
 });
 
+test("an expanded single-project Test portal needs a separate read-only bank authorization audit", async () => {
+  const origin = `https://${project.project_ref}.supabase.co`;
+  const config = { url: origin, allowOrigin: origin, environment: 'staging',
+    serviceRoleKey: 'sb_secret_fictional_staging', expandedStagingProfile: true,
+    auditDatabaseUrl: 'postgresql://fictional:fictional@localhost/postgres',
+    auditDatabaseCaFile: '/private/fictional-ca.pem' };
+  const fetchImpl = async () => Response.json({ ...health, apiProfileReady: false, paymentMode: 'test' });
+  const verified = { closedSettings: true, restrictedAdmission: true, testCheckoutClosed: true,
+    profileDrift: true, bankServiceOnly: true };
+  let audits = 0, closes = 0;
+  const openDatabase = async (url, options) => {
+    audits++;
+    assert.equal(url, config.auditDatabaseUrl);
+    assert.deepEqual(options, { localOnly: false, databaseCaFile: config.auditDatabaseCaFile });
+    return { query: async sql => {
+      assert.match(sql, /begin_question_bank_import/);
+      assert.match(sql, /has_function_privilege\('anon'/);
+      return JSON.stringify(verified);
+    }, close: async () => { closes++; } };
+  };
+  await openPrivateBankProvider(config, { fetchImpl, openDatabase });
+  assert.deepEqual([audits, closes], [1, 1]);
+  for (const changes of [{ expandedStagingProfile: false }, { environment: 'production' },
+    { url: managedOrigin, allowOrigin: managedOrigin }, { auditDatabaseCaFile: undefined }])
+    await assert.rejects(openPrivateBankProvider({ ...config, ...changes }, { fetchImpl, openDatabase }));
+  assert.deepEqual([audits, closes], [1, 1]);
+  await assert.rejects(openPrivateBankProvider(config, {
+    fetchImpl: async () => Response.json({ ...health, apiProfileReady: false, paymentMode: 'live' }), openDatabase,
+  }));
+  assert.deepEqual([audits, closes], [1, 1]);
+  for (const key of Object.keys(verified)) {
+    const denied = { ...verified, [key]: false };
+    await assert.rejects(openPrivateBankProvider(config, { fetchImpl,
+      openDatabase: async () => ({query: async () => JSON.stringify(denied), close: async () => { closes++; }}),
+    }), /not safe for import/);
+  }
+  assert.equal(closes, 6);
+  await assert.rejects(openPrivateBankProvider(config, {
+    fetchImpl, openDatabase: async () => ({ query: async () => '{}', close: async () => { closes++; } }),
+  }), /not safe for import/);
+  assert.equal(closes, 7);
+});
+
 test("the SDK transport pins origin and headers for both opaque and legacy server keys", async () => {
   for (const [config, bearer] of [[hosted, "Bearer " + hosted.serviceRoleKey], [local("http://127.0.0.1:54321"), null]]) {
     const calls = [];

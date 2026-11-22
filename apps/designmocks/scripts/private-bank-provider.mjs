@@ -8,6 +8,9 @@ export function bankProviderConfiguration(env) {
     url: env.DMOCKS_SUPABASE_URL, serviceRoleKey: env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,
     allowOrigin: env.DMOCKS_BANK_ALLOW_ORIGIN, environment: env.DMOCKS_BANK_ENVIRONMENT,
     productionAck: env.DMOCKS_BANK_PRODUCTION_ACK,
+    expandedStagingProfile: env.DMOCKS_BANK_PROFILE === "expanded-staging",
+    auditDatabaseUrl: env.DMOCKS_BANK_AUDIT_DATABASE_URL,
+    auditDatabaseCaFile: env.DMOCKS_BANK_AUDIT_DATABASE_CA_FILE,
   };
 }
 
@@ -94,12 +97,52 @@ export function openPrivateDMocksTransport(config, {
   return { origin, fetch: fetchFromTarget, rpc };
 }
 
-export async function openPrivateBankProvider(config, options) {
+const expandedStagingSnapshot = `select jsonb_build_object(
+  'closedSettings',exists(select 1 from public.launch_settings where singleton and environment_mode='test' and sales_enabled is false),
+  'restrictedAdmission',exists(select 1 from dm_private.registration_policy where id and mode in('closed','testers')),
+  'testCheckoutClosed',exists(select 1 from dm_private.mvp_test_checkout_control where singleton and enabled is false),
+  'profileDrift',dm_private.mvp_profile_permissions_valid() is false,
+  'bankServiceOnly',coalesce((select bool_and(
+    to_regprocedure(signature) is not null
+    and has_function_privilege('service_role',to_regprocedure(signature),'EXECUTE')
+    and not has_function_privilege('anon',to_regprocedure(signature),'EXECUTE')
+    and not has_function_privilege('authenticated',to_regprocedure(signature),'EXECUTE'))
+    from unnest(array[
+      'public.begin_question_bank_import(text,text,text,integer,integer,integer,integer)',
+      'public.import_question_bank_batch(uuid,jsonb)',
+      'public.finish_question_bank_import(uuid)']) signature),false))`;
+
+async function defaultAuditDatabase(url, options) {
+  const { openRecoveryPostgres } = await import('./recovery-postgres.mjs');
+  return openRecoveryPostgres(url, options);
+}
+
+async function verifyExpandedStagingBankProfile(config, health, openDatabase) {
+  const origin = `https://${project.project_ref}.supabase.co`;
+  if (config.expandedStagingProfile !== true || config.environment !== 'staging' ||
+      config.url !== origin || config.allowOrigin !== origin || health.paymentMode !== 'test' ||
+      !config.auditDatabaseUrl || !config.auditDatabaseCaFile)
+    throw new Error('The approved target must have the current DMocks paid MVP profile');
+  let database;
+  try {
+    database = await openDatabase(config.auditDatabaseUrl, { localOnly: false, databaseCaFile: config.auditDatabaseCaFile });
+    const state = JSON.parse(await database.query(expandedStagingSnapshot));
+    if (['closedSettings', 'restrictedAdmission', 'testCheckoutClosed', 'profileDrift', 'bankServiceOnly']
+      .some(key => state?.[key] !== true))
+      throw new Error('The expanded staging bank profile is not safe for import');
+  } catch {
+    throw new Error('The expanded staging bank profile is not safe for import');
+  } finally { await database?.close(); }
+}
+
+export async function openPrivateBankProvider(config, { openDatabase = defaultAuditDatabase, ...options } = {}) {
   const provider = openPrivateDMocksTransport(config, options);
   // Check the installed application before sending source rows, runtime plans or files.
   const health = await provider.rpc("admin_operational_health");
-  if (health?.scope !== "paid-mvp-v1" || health.monitorVersion !== 1 || health.apiProfileReady !== true) {
+  if (health?.scope !== "paid-mvp-v1" || health.monitorVersion !== 1) {
     throw new Error("The approved target must have the current DMocks paid MVP profile");
   }
+  if (health.apiProfileReady !== true)
+    await verifyExpandedStagingBankProfile(config, health, openDatabase);
   return provider;
 }
