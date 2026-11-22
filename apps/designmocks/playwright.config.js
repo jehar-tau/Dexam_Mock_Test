@@ -67,6 +67,14 @@ export default defineConfig({
       reuseExistingServer:false,timeout:60000,
     },
     {
+      command:"npm exec -- vite build --mode production --outDir test-results/public-catalogue && npm exec -- vite preview --outDir test-results/public-catalogue --host 127.0.0.1 --port 4798 --strictPort",
+      url:"http://127.0.0.1:4798",
+      env:{VITE_DEPLOYMENT_ENV:"test",VITE_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"false",
+        VITE_PUBLIC_CATALOG_ENABLED:"true",VITE_SUPABASE_URL:`https://${project.project_ref}.supabase.co`,
+        VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_public_catalog_fixture"},
+      reuseExistingServer:false,timeout:60000,
+    },
+    {
       command:"npm exec -- vite --host 127.0.0.1 --port 4799 --strictPort",
       url:"http://127.0.0.1:4799",
       env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"true",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:"fictional-mvp-fixture",DMOCKS_PUBLISHED_NOTICES_FILE:noticeFile},

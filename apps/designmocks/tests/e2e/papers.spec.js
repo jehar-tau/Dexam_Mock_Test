@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
 import { seedPortalSession, stubPortalProvider } from './portal-fixture.js';
+import project from '../../supabase/project.json' with { type: 'json' };
 
 for (const exam of ['UCEED', 'CEED', 'NIFT', 'NID']) {
   test(`year-wise Papers shows real ${exam} source sets on desktop and mobile`, async ({ page }) => {
@@ -83,5 +84,23 @@ test.describe('free year-paper release', () => {
     expect(provider.calls.some(([name]) => name === 'start_free_year_paper')).toBe(true);
     expect(provider.calls.some(([name]) => name === 'my_pass' || name === 'prepare_order' || name === 'start_attempt')).toBe(false);
     expect(provider.unexpected).toEqual([]);
+  });
+});
+
+test.describe('signed-out public year-paper catalogue', () => {
+  test.use({ baseURL: 'http://127.0.0.1:4798' });
+  test('reads released papers with an anonymous client while Google sign-in stays closed', async ({ page }) => {
+    const release = {paperId:'10000000-0000-4000-8000-000000003001',exam:'uceed',
+      year:2026,sourcePaperId:'uceed-2026',partLabel:'Part A',questionCount:57,durationSeconds:7200};
+    const provider = await stubPortalProvider(page, name => name === 'free_year_paper_catalog' ? [release] : undefined, project.project_ref);
+    await page.goto('/papers');
+    const card = page.locator('.year-paper-card').filter({ hasText: '2026 paper' });
+    await expect(card).toContainText('Free paper open');
+    await expect(card.getByRole('link', { name: 'Sign in to start free paper' })).toHaveAttribute('href', '/account');
+    expect(provider.calls.map(([name]) => name)).toEqual(['free_year_paper_catalog']);
+    expect(provider.authCalls).toEqual([]);
+    expect(provider.unexpected).toEqual([]);
+    await page.goto('/account');
+    await expect(page.getByText('Google sign-in is being connected for this new app.', {exact:false})).toBeVisible();
   });
 });

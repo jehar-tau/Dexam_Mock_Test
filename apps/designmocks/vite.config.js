@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import { rm } from "node:fs/promises";
 import { join } from "node:path";
 import { resolveAuthConfiguration } from "./src/authConfiguration.mjs";
+import { publicCatalogueConfiguration } from "./src/public-catalogue-config.mjs";
 import { allowPostLaunchPreview, allowReleasedLearn } from "./src/launch-scope.mjs";
 import { readPublishedNotices } from "./scripts/published-notices.mjs";
 import { publicDiscovery } from "./scripts/public-discovery.mjs";
@@ -43,6 +44,12 @@ export default defineConfig(({ command, mode }) => {
     key: env.VITE_SUPABASE_ANON_KEY,
     termsVersion: env.VITE_TERMS_VERSION,
     noticeVersion: notices?.version,
+  });
+  publicCatalogueConfiguration({
+    enabled: env.VITE_PUBLIC_CATALOG_ENABLED === "true", deployment,
+    origin: deployment === 'production' ? project.frontend_origin : stagingTarget.origin,
+    productionOrigin: project.frontend_origin, productionProvider: stagingTarget.url,
+    url: env.VITE_SUPABASE_URL, key: env.VITE_SUPABASE_ANON_KEY,
   });
   const includeLearnContent = stagingReview || allowReleasedLearn(auth.portalReady) ||
     (mode !== "production" && allowPostLaunchPreview(deployment, env.VITE_POST_LAUNCH_PREVIEW === "true"));

@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { environment } from "./environment.js";
 import { resolveAuthConfiguration } from "./authConfiguration.mjs";
+import { publicCatalogueConfiguration } from "./public-catalogue-config.mjs";
 import { project_ref, frontend_origin, staging_frontend_origin } from "../supabase/project.json";
 
 const url = import.meta.env.VITE_SUPABASE_URL;
@@ -35,6 +36,20 @@ export const platform = authReady && !import.meta.env.SSR
       },
     })
   : null;
+// A published free paper may be listed before student admission opens. This
+// client has no persisted session and can call only anon-granted read APIs.
+const publicCatalogueReady = publicCatalogueConfiguration({
+  enabled: import.meta.env.VITE_PUBLIC_CATALOG_ENABLED === "true",
+  deployment: environment.deployment,
+  origin: import.meta.env.SSR ? frontend_origin : window.location.origin,
+  productionOrigin: frontend_origin,
+  productionProvider: designatedProvider,
+  url,
+  key,
+});
+export const cataloguePlatform = platform || (publicCatalogueReady && !import.meta.env.SSR
+  ? createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } })
+  : null);
 export async function googleLogin() {
   if (!platform)
     throw new Error(

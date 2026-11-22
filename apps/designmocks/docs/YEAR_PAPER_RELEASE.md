@@ -2,6 +2,13 @@
 
 Year-wise Papers are free. Students browse the public catalogue and sign in to save a timed attempt; no annual pass is required. This release path does not open public registration or paid checkout.
 
+The public frontend can list released free papers before Google admission opens.
+Set `VITE_PUBLIC_CATALOG_ENABLED=true` only with the designated DMocks Supabase
+URL and a publishable/anon browser key. This enables the anonymous
+`free_year_paper_catalog` read and does not enable sign-in, starts, checkout or
+sales. An unconfigured public build continues to show the source-backed sets
+as in preparation; verify the live catalogue after a paper is registered.
+
 The fixed paper must use every eligible objective question in one `exam + sourcePaperId + year` group from `main:server/data/exports/dexam-bank-export.json`. Questions with a nonempty `holds` list and drawing or descriptive items cannot enter the objective paper. The source bank rows must be current, owner approved, rights confirmed and converted to runtime questions. Referenced figures must exist in the private `paper-media` bucket. A written worked explanation and the historical marking for each objective question are reviewed separately from the general 2027 mock rules.
 
 The [official UCEED 2024](https://www.uceed.iitb.ac.in/2024/assets/downloads/qps/UCEED_2024_Question_Paper.pdf), [2025](https://www.uceed.iitb.ac.in/2025/assets/downloads/qps/UCEED_2025_Question_Paper.pdf) and [2026](https://www.uceed.iitb.ac.in/2026/assets/downloads/qps/UCEED_2026_Question_Paper.pdf) papers each specify **57 Part A questions**. The preparation and release checks enforce that count for those years. On 22 November 2026 the canonical UCEED 2025 export has only 56 hold-free Part A records; Q36 exists in the private ingestion workspace but is absent from the export. That source gap must be reviewed and corrected before a complete 2025 paper can be prepared.
