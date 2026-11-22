@@ -8,6 +8,7 @@ test('the student desk leads to each mock mode without presenting fictional pape
   await expect(desk.getByRole('link', { name: /All India mocks/ })).toHaveAttribute('href', '/all-india-preview');
   await expect(desk.getByRole('link', { name: /Topic-wise practice/ })).toHaveAttribute('href', '/topic-practice-preview');
   await expect(desk.getByRole('link', { name: /Year-wise Papers/ })).toHaveAttribute('href', '/papers');
+  await expect(desk.getByRole('link', { name: 'Practise the recommended topic →', exact: true })).toHaveAttribute('href', '/topic-practice-preview?topic=Visual+hierarchy');
   await expect(desk.getByText('No papers have been released yet')).toBeVisible();
   await expect(desk.locator('.paper-list article')).toHaveCount(0);
   await expect(desk.getByRole('link', { name: 'Try an example paper' })).toHaveAttribute('href', '/portal-preview/paper');

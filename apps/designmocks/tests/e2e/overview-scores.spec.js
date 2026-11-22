@@ -8,7 +8,7 @@ const empty = () => ({ completed: 1, waitingForResults: 1, objectiveAccuracy: nu
   topics: [], exams: [], drawingReviews: { pending: 1, released: 0 } });
 
 async function fixture(page) {
-  const state = { analytics: empty(), attempts: [], events: [] };
+  const state = { analytics: empty(), attempts: [], events: [], pools: [] };
   const provider = await stubPortalProvider(page, procedure => {
     switch (procedure) {
       case "finalize_my_expired_attempts": return 0;
@@ -17,6 +17,7 @@ async function fixture(page) {
       case "my_overview_analytics": return state.analytics;
       case "available_papers": return [];
       case "all_india_event_catalog": return state.events;
+      case "topic_catalog": return state.pools;
     }
   });
   await page.goto("/dashboard");
@@ -108,3 +109,42 @@ test("zero and negative released percentages remain visible without objective an
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize().width);
   expect(state.unexpected).toEqual([]);
 });
+
+for (const scenario of ["unique", "shared", "unavailable"]) {
+  test(`Overview recommendation keeps its topic when the practice pool is ${scenario}`, async ({ page }) => {
+    const state = await fixture(page);
+    // The first ready pool is deliberately different from the recommendation.
+    const topic = "line & space / colour? + figure=2";
+    state.pools = [{ exam: "uceed", topic: "observation", questions: 40 }];
+    if (scenario !== "unavailable") state.pools.push({ exam: "ceed", topic, questions: 20 });
+    if (scenario === "shared") state.pools.push({ exam: "uceed", topic, questions: 30 });
+    state.analytics = { ...empty(), topics: [{ topic, correct: 1, answered: 4, accuracy: 25 }],
+      recommendedTopic: { topic, answered: 4, accuracy: 25 } };
+    await page.reload();
+    const action = page.getByRole("link", { name: "Practise the recommended topic →", exact: true });
+    await expect(action).toHaveAttribute("href", "/dashboard/practice?" + new URLSearchParams({ topic }));
+    await action.focus();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(new RegExp("/dashboard/practice\\?"));
+    expect(new URL(page.url()).searchParams.get("topic")).toBe(topic);
+    const exam = page.getByRole("combobox", { name: "Exam", exact: true });
+    const topicControl = page.getByRole("combobox", { name: "Topic", exact: true });
+    const start = page.getByRole("button", { name: "Start practice", exact: true });
+    if (scenario === "unique") {
+      await expect(exam).toHaveValue("ceed");
+      await expect(topicControl).toHaveValue(topic);
+      await expect(start).toBeEnabled();
+    } else {
+      await expect(exam).toHaveValue("");
+      await expect(topicControl).toHaveValue("");
+      await expect(start).toBeDisabled();
+      await expect(page.getByRole("status")).toContainText(scenario === "shared" ? "available in several exams" : "not ready yet");
+      await exam.selectOption(scenario === "shared" ? "ceed" : "uceed");
+      await expect(topicControl).toHaveValue(scenario === "shared" ? topic : "observation");
+      await expect(start).toBeEnabled();
+    }
+    expect(state.calls.filter(([name]) => name.startsWith("start_"))).toEqual([]);
+    expect(state.unexpected).toEqual([]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize().width);
+  });
+}
