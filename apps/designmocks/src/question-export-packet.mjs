@@ -1,3 +1,5 @@
+import { ownerAdjudicationEvidenceReady } from "../scripts/question-runtime.mjs";
+
 const digestPattern = /^[a-f0-9]{64}$/;
 const uuidPattern = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
 const externalKeyPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -33,6 +35,9 @@ export async function verifyQuestionExportPacket(input, expected = {}) {
       typeof payload.prompt !== "string" || payload.prompt.trim().length < 3 ||
       !["MCQ", "MSQ", "NAT", "DESCRIPTIVE"].includes(payload.type) ||
       !["uceed", "ceed", "nid", "nift"].includes(payload.provenance?.exam)) throw invalid();
+  if (payload.answer?.status === "owner-adjudicated" &&
+      (payload.type === "DESCRIPTIVE" || !["pdf", "photo"].includes(input.sourceType) ||
+       !ownerAdjudicationEvidenceReady(payload))) throw invalid();
 
   const { format, artifactId, externalKey, contentSha256, payloadText, rightsNote, createdAt, sourceType, publicationState } = input;
   return { packet: { format, artifactId, externalKey, contentSha256, payloadText, rightsNote, createdAt, sourceType, publicationState }, payload };

@@ -96,6 +96,19 @@ class ExportTest(unittest.TestCase):
         solutions.approve(self.work, PAPER, "q1", "Fictional reviewer", fingerprint)
         return fingerprint
 
+    def owner_adjudicate(self, *, with_overlay=False):
+        self.fictional_block()
+        if with_overlay:
+            self.draft = copy.deepcopy(NAT)
+        self.draft["answer"]["source"] = "model-proposed"
+        self.save_draft()
+        (self.base / "04-key/key.json").unlink()
+        (self.base / "04-key/source/fictional-key.pdf").unlink()
+        fingerprint = solutions.check(self.work, PAPER)["results"]["q1"]["adjudicationFingerprint"]
+        solutions.adjudicate(self.work, PAPER, "q1", "Fictional owner", fingerprint, "12.0",
+                             "Four groups of three make twelve.")
+        return fingerprint
+
     def existing(self):
         figure = json.loads((self.base / "03-figures/figures.json").read_text())["questions"][0]["figures"][0]["canonical"]
         return {
@@ -141,10 +154,10 @@ class ExportTest(unittest.TestCase):
     def export(self, fingerprint, **kwargs):
         if "replace_expected" not in kwargs:
             kwargs.setdefault("source_classification", "official-unlicensed")
-        kwargs.setdefault("run_prepare", self.fake_prepare)
+        run_prepare = kwargs.pop("run_prepare", self.fake_prepare)
         return export.prepare(work=self.work, repo=self.repo, paper_id=PAPER, key="q1", fingerprint=fingerprint,
                               rights_note="Fictional source rights reviewed", expected_source=self.source_commit,
-                              **kwargs)
+                              run_prepare=run_prepare, **kwargs)
 
     def test_addition_uses_key_evidence_and_discards_temporary_packet(self):
         self.fictional_block()
@@ -260,6 +273,58 @@ class ExportTest(unittest.TestCase):
             self.export(fingerprint, output=output)
         self.assertIsNone(self.payload)
         self.assertFalse(output.exists())
+
+    def test_owner_adjudication_prepares_new_addition_without_private_review_notes(self):
+        fingerprint = self.owner_adjudicate()
+        result = self.export(fingerprint, owner_adjudicated=True)
+        self.assertEqual(("dry-run", "addition"), (result["mode"], result["operation"]))
+        self.assertEqual({"raw": "12", "status": "owner-adjudicated"}, self.payload["answer"])
+        self.assertEqual({"fingerprint": fingerprint, "solutionSha256": solutions.sha256(
+            (self.base / "05-solutions/q1.json").read_bytes()), "decision": "owner-adjudicated"},
+            self.payload["solutionReview"])
+        self.assertNotIn("answerKeySource", self.payload["provenance"])
+        self.assertNotIn("Fictional owner", self.packet["payloadText"])
+        self.assertNotIn("Four groups of three make twelve", self.packet["payloadText"])
+
+    def test_owner_adjudication_stages_through_canonical_preparer(self):
+        fingerprint = self.owner_adjudicate(with_overlay=True)
+        output = self.work / "adjudicated-output"
+
+        def canonical(args, repo):
+            self.fake_prepare(args, repo)
+            options = {"packets": [{"packetPath": str(self.packet_path),
+                                    "expected": self.packet["contentSha256"]}],
+                       "expectedSource": self.source_commit, "cwd": str(self.repo),
+                       "downloadsDir": args[args.index("--downloads-dir") + 1], "output": str(output)}
+            script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
+            code = ("const {prepareAdditions}=await import(process.argv[1]);"
+                    "let input='';for await(const chunk of process.stdin)input+=chunk;"
+                    "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
+            result = subprocess.run(["node", "--input-type=module", "-e", code, script],
+                                    input=json.dumps(options), text=True, cwd=self.repo,
+                                    capture_output=True, check=True)
+            return json.loads(result.stdout)
+
+        result = self.export(fingerprint, owner_adjudicated=True, output=output, run_prepare=canonical)
+        self.assertEqual(("staged", "objective-complete"), (result["mode"], result["review"]))
+        staged = json.loads((output / "dexam-bank-export.json").read_text())
+        self.assertEqual("owner-adjudicated", staged["questions"][0]["answer"]["status"])
+        self.assertEqual(2, len(staged["questions"][0]["workedSolution"]["steps"]))
+        self.assertTrue((output / "receipt.json").is_file())
+
+    def test_owner_adjudication_export_rejects_stale_evidence_and_corrections(self):
+        fingerprint = self.owner_adjudicate()
+        with self.assertRaisesRegex(export.SolutionError, "new additions"):
+            self.export(fingerprint, owner_adjudicated=True, replace_expected="a" * 64)
+        original = self.original.read_bytes()
+        self.original.write_bytes(b"Changed fictional source")
+        with self.assertRaisesRegex(export.SolutionError, "current owner adjudication"):
+            self.export(fingerprint, owner_adjudicated=True)
+        self.original.write_bytes(original)
+        self.draft["keyIdea"] += " Check each row."
+        self.save_draft()
+        with self.assertRaisesRegex(export.SolutionError, "current owner adjudication"):
+            self.export(fingerprint, owner_adjudicated=True)
 
     def test_staged_export_passes_the_private_output_directory_to_bank_preparer(self):
         self.fictional_block()

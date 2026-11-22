@@ -133,6 +133,23 @@ test('prepares an exact-version correction while preserving siblings and provena
  await assert.rejects(prepareAddition({ ...changedSource, replaceExpected }), /preserve question provenance/);
 });
 
+test('stages an owner-adjudicated addition but refuses a direct correction packet', async t => {
+ const prior = question('existing', { type: 'NAT', answer: { raw: '1', status: 'official-key' } });
+ const f = await fixture(t, [prior]);
+ const reviewed = key => question(key, { type: 'NAT',
+  answer: { raw: '2', status: 'owner-adjudicated' }, explanation: 'Count the two fictional groups.',
+  solutionReview: { decision: 'owner-adjudicated', fingerprint: 'a'.repeat(64), solutionSha256: 'b'.repeat(64) } });
+ const addition = await f.packet(reviewed('new'));
+ const packet = JSON.parse(await readFile(addition.packetPath, 'utf8'));
+ await writeFile(addition.packetPath, JSON.stringify({ ...packet, sourceType: 'pdf' }));
+ assert.equal((await prepareAddition(addition)).review, 'objective-complete');
+ const replacement = await f.packet(reviewed('existing'));
+ const original = JSON.parse(await readFile(replacement.packetPath, 'utf8'));
+ await writeFile(replacement.packetPath, JSON.stringify({ ...original, sourceType: 'pdf' }));
+ await assert.rejects(prepareAddition({ ...replacement, replaceExpected: hash(stableJson(prior)) }),
+  /only be prepared as new additions/);
+});
+
 test('stages a reviewed solution figure alongside an existing question block', async t => {
  const blockBytes = Buffer.from('89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c4890000000d49444154789c6360000000020001e221bc330000000049454e44ae426082','hex');
  const solutionBytes = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a/ScAAAAASUVORK5CYII=', 'base64');

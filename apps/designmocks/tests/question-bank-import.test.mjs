@@ -35,6 +35,15 @@ test("empty holds never bypass objective scoring requirements", () => {
   assert.equal(objectiveReady(question({ type: "DESCRIPTIVE", options: [], answer: null })), false);
 });
 
+test("owner-adjudicated questions need exact review evidence before import readiness", () => {
+  const reviewed = question({ answer: { raw: "A", status: "owner-adjudicated" },
+    explanation: "The fictional first choice is correct.",
+    solutionReview: { decision: "owner-adjudicated", fingerprint: "a".repeat(64), solutionSha256: "b".repeat(64) } });
+  assert.equal(objectiveReady(reviewed), true);
+  assert.equal(objectiveReady({ ...reviewed, solutionReview: { fingerprint: "a".repeat(64) } }), false);
+  assert.equal(objectiveReady({ ...reviewed, provenance: { exam: "uceed", answerKeySource: "key.pdf" } }), false);
+});
+
 test("runtime conversion is deterministic and excludes unresolved media", () => {
   assert.deepEqual(runtimeQuestion(question(), {rule:RULES_2027.uceed}).key, { kind: "mcq", correct: ["A"], sourceExternalKey: "fixture-q1" });
   assert.equal(runtimeQuestion(question({ visualDependency: true, assets: [{ path: "missing.png" }] }),{rule:RULES_2027.uceed}), null);

@@ -438,6 +438,7 @@ def solution_result(base, paper_id, question, figures, official, solution_bytes,
         status = "verified" if approved else "owner-adjudicated"
     return {"status": status, "reachesKey": reaches,
             "officialKey": official, "errors": errors, "warnings": warnings, "fingerprint": fingerprint,
+            "segmentsSha256": segment_hash,
             "reviewable": reviewable, "eligibleForExport": approved,
             "adjudicationFingerprint": keyless_fingerprint,
             "ownerAdjudication": receipt if adjudicated else None,
