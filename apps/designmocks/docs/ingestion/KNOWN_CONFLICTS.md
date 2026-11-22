@@ -1,5 +1,9 @@
 # Question-bank conflicts awaiting review
 
+## UCEED 2018, Part A, question 25
+
+The wording, source figure, and counted answer need reconciliation. The export carries `holds: ["source-wording-figure-count-conflict"]` until the original page, figure, and key are reviewed together. Keep this question out of student attempts while the conflict is unresolved.
+
 ## UCEED 2025, Part A, question 3
 
 The source paper asks for the common sum in a 4 × 4 magic square using 1 through 16. The tracked bank prompt has an unrelated trailing “2025.” footer. The private Stage 2 segmentation also contains an extra, merged fragment about numbers 2 through 26, absent from the source question block. The keyed answer 34 is consistent with the source's 1-through-16 question, but the student prompt must be repaired from the original page and reviewed before scoring. The export carries `holds: ["prompt-contamination"]` pending an exact-version correction.
