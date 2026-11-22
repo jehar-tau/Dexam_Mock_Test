@@ -312,6 +312,32 @@ class ExportTest(unittest.TestCase):
         self.assertEqual(2, len(staged["questions"][0]["workedSolution"]["steps"]))
         self.assertTrue((output / "receipt.json").is_file())
 
+    def test_ordered_photo_owner_adjudication_stages_with_original_source_digest(self):
+        photos = self.use_ordered_photos()
+        fingerprint = self.owner_adjudicate(with_overlay=True)
+        output = self.work / "photo-adjudicated-output"
+
+        def canonical(args, repo):
+            self.fake_prepare(args, repo)
+            return self.run_fixture_preparer({
+                "packets": [{"packetPath": str(self.packet_path), "expected": self.packet["contentSha256"]}],
+                "expectedSource": self.source_commit, "cwd": str(self.repo),
+                "downloadsDir": args[args.index("--downloads-dir") + 1],
+                "output": str(output),
+            })
+
+        result = self.export(fingerprint, owner_adjudicated=True, output=output, run_prepare=canonical)
+        self.assertEqual(("staged", "objective-complete"), (result["mode"], result["review"]))
+        staged = json.loads((output / "dexam-bank-export.json").read_text())["questions"][0]
+        source_digest = hashlib.sha256(b"dmocks-paper-photos-v1\n" + b"\n".join(
+            hashlib.sha256(photo.read_bytes()).hexdigest().encode() for photo in photos
+        )).hexdigest()
+        self.assertEqual(source_digest, staged["provenance"]["sourceSha256"])
+        self.assertEqual("photo", self.packet["sourceType"])
+        self.assertEqual("owner-adjudicated", staged["answer"]["status"])
+        self.assertNotIn("answerKeySource", staged["provenance"])
+        self.assertNotIn("Fictional owner", self.packet["payloadText"])
+
     def test_owner_adjudication_export_rejects_stale_evidence_and_corrections(self):
         fingerprint = self.owner_adjudicate()
         with self.assertRaisesRegex(export.SolutionError, "new additions"):
