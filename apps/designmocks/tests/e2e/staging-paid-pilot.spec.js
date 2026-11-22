@@ -101,6 +101,8 @@ test("the private paid-paper pilot opens a released paper with checkout closed",
   await page.getByRole("button", { name: "Submit attempt", exact: true }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Submit & view report", exact: true }).click();
   await page.getByRole("button", { name: "Open answer review", exact: true }).click();
+  await expect(page.getByText("Fictional answer explanation.")).toHaveCount(0);
+  await page.getByRole("button", { name: "View solution", exact: true }).click();
   await expect(page.getByText("Fictional answer explanation.")).toBeVisible();
   expect(provider.calls.filter(([name]) => name === "submit_attempt")).toHaveLength(1);
   expect(provider.calls.filter(([name]) => name === "start_attempt")).toHaveLength(1);

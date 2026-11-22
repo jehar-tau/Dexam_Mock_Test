@@ -39,6 +39,8 @@ test("mixed paper has working figures, status navigation, offline recovery and a
   await page.getByRole("combobox",{name:"Question type",exact:true}).selectOption("nat");
   await expect(page.getByText("No questions match these filters.")).toBeVisible();
   await page.getByRole("combobox",{name:"Result",exact:true}).selectOption("correct");
+  await expect(page.getByText("Their sum is nine.")).toHaveCount(0);
+  await page.getByRole("button",{name:"View solution",exact:true}).click();
   await expect(page.locator(".analysis-item")).toContainText("Their sum is nine.");
   await page.addScriptTag({path:fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js",import.meta.url))});
   expect(await page.evaluate(async()=>(await window.axe.run(".analysis-workspace",{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21aa"]}})).violations.map(item=>[item.id,item.nodes.map(node=>node.target)]))).toEqual([]);
