@@ -77,6 +77,9 @@ export async function prepareAdditions({ packets, expectedSource, replaceExpecte
     const index = bank.questions.findIndex(question => question.externalKey === key);
     const previous = bank.questions[index];
     const expectedVersion = replacements?.[packetIndex];
+    if (replacements && payload.answer?.status === 'owner-adjudicated') {
+      fail('Owner-adjudicated answers may only be prepared as new additions');
+    }
     if (replacements) {
       if (!/^[a-f0-9]{64}$/.test(expectedVersion) || !previous || sha256(stableJson(previous)) !== expectedVersion) {
         fail('The correction requires the current question version SHA-256');

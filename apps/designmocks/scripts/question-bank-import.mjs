@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { bankProviderConfiguration, openPrivateBankProvider } from "./private-bank-provider.mjs";
+import { ownerAdjudicationEvidenceReady } from "./question-runtime.mjs";
 
 export const SOURCE_PATH = "server/data/exports/dexam-bank-export.json";
 
@@ -17,6 +18,7 @@ export function sha256(value) { return createHash("sha256").update(value).digest
 export function objectiveReady(question) {
   if (!["MCQ", "MSQ", "NAT"].includes(question.type)) return false;
   if (!question.answer || question.answer.status === "pending" || !String(question.answer.raw ?? "").trim()) return false;
+  if (question.answer.status === "owner-adjudicated" && !ownerAdjudicationEvidenceReady(question)) return false;
   if (["MCQ", "MSQ"].includes(question.type)) {
     if (!Array.isArray(question.options) || question.options.length < 2) return false;
     if (new Set(question.options.map((option) => option?.key)).size !== question.options.length) return false;

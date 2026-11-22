@@ -43,3 +43,20 @@ test("checks the UTF-8 byte limit before hashing a packet", async () => {
   assert.ok(oversized.length < 512 * 1024);
   await assert.rejects(verifyQuestionExportPacket(makePacket(oversized)), /verify this export packet/);
 });
+
+test("owner-adjudicated objective packets carry a private-review digest without official-key claims", async () => {
+  const reviewed = { ...payload, type: "NAT", provenance: { exam: "uceed" },
+    answer: { raw: "12", status: "owner-adjudicated" }, explanation: "Count three groups of four.",
+    solutionReview: { decision: "owner-adjudicated", fingerprint: "a".repeat(64),
+      solutionSha256: "b".repeat(64) } };
+  const packet = makePacket(JSON.stringify(reviewed));
+  assert.equal((await verifyQuestionExportPacket(packet)).payload.answer.raw, "12");
+  for (const changed of [
+    { ...reviewed, answer: { ...reviewed.answer, source: { name: "fictional-key.pdf" } } },
+    { ...reviewed, provenance: { exam: "uceed", answerKeySource: "fictional-key.pdf" } },
+    { ...reviewed, solutionReview: { ...reviewed.solutionReview, fingerprint: "bad" } },
+    { ...reviewed, solutionReview: { ...reviewed.solutionReview, reviewer: "Private owner" } },
+    { ...reviewed, reasoning: "Private review note" },
+  ]) await assert.rejects(verifyQuestionExportPacket(makePacket(JSON.stringify(changed))), /verify this export packet/);
+  await assert.rejects(verifyQuestionExportPacket({ ...packet, sourceType: "manual" }), /verify this export packet/);
+});
