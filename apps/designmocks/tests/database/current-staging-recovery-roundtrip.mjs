@@ -7,6 +7,7 @@ import {capturePrivateRecovery, STAGING_RECOVERY_LEDGER_VERSION} from '../../scr
 import {RECOVERY_PROJECT, verifyRecoveryBundle} from '../../scripts/recovery-bundle.mjs';
 import {captureRecoverySnapshot, compareRecoverySnapshots, openRecoveryPostgres} from '../../scripts/recovery-postgres.mjs';
 import {quote, recoveryActor, recoverySeed} from './fixtures/recovery-state.mjs';
+import {withoutFreeYearPapers} from './fixtures/historic-paid-profile.mjs';
 
 const migrationDirectory = new URL('../../supabase/migrations/', import.meta.url);
 const launchDirectory = new URL('../../supabase/launch/', import.meta.url);
@@ -49,7 +50,7 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
     await sql(await readFile(new URL('bootstrap.sql', import.meta.url), 'utf8'), source);
     await sql('create schema supabase_migrations; create table supabase_migrations.schema_migrations(version text primary key);', source);
     for (const file of installed) await apply(file, source);
-    await sql(await readFile(new URL('paid-mvp.sql', launchDirectory), 'utf8'), source);
+    await sql(withoutFreeYearPapers(await readFile(new URL('paid-mvp.sql', launchDirectory), 'utf8')), source);
     const seed = await sql(recoverySeed().source, source);
     const state = JSON.parse(seed.split('\n').findLast(line => line.startsWith('{') && line.includes('"auditMax"')));
     await sql(`update dm_private.registration_policy set mode='testers' where id;
@@ -163,7 +164,7 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
     await sql(await readFile(new URL('private-staging-api.sql', launchDirectory), 'utf8'), target);
     await sql(await readFile(new URL('private-staging-portal-grants.sql', launchDirectory), 'utf8'), target);
     assert.equal(await sql('select dm_private.mvp_profile_permissions_valid()', target), 'f');
-    const paidProfile = await readFile(new URL('paid-mvp.sql', launchDirectory), 'utf8');
+    const paidProfile = withoutFreeYearPapers(await readFile(new URL('paid-mvp.sql', launchDirectory), 'utf8'));
     await sql(`begin;
 ${paidProfile}
 commit;`, target);
