@@ -15,9 +15,12 @@ must still approve (stage 6). See docs/ingestion/PLAN.md, "Figure decision".
 """
 
 import argparse
+from contextlib import nullcontext
+from functools import lru_cache
 import hashlib
 import io
 import json
+import math
 import pathlib
 import re
 import shutil
@@ -214,14 +217,65 @@ def block_image(doc, regions, dpi=BLOCK_DPI, pad=6):
         x0, y0, x1, y1 = region["box"]
         rect = fitz.Rect(x0 - pad, y0 - pad, x1 + pad, y1 + pad) & page.rect
         parts.append(render_clip(page, rect, dpi))
+    return stitch_crops(parts)
+
+
+def stitch_crops(parts, *, bounded=False):
     gap = 24
     width = max(part.width for part in parts)
-    block = Image.new("RGB", (width, sum(part.height for part in parts) + gap * (len(parts) - 1)), "white")
+    height = sum(part.height for part in parts) + gap * (len(parts) - 1)
+    if bounded and max(width, height) > MAX_SIDE:
+        raise FigureError("The photo question block exceeds 8192 px. Use smaller source photos and rerun intake")
+    block = Image.new("RGB", (width, height), "white")
     top = 0
     for part in parts:
         block.paste(part, (0, top))
         top += part.height + gap
     return block
+
+
+def photo_cropper(intake_dir, pages):
+    page_map = {page["page"]: page for page in pages}
+    pages_root = intake_dir.resolve() / "pages"
+
+    @lru_cache(maxsize=1)
+    def upright(page_no):
+        page = page_map[page_no]
+        path = (intake_dir / page["render"]).resolve()
+        try:
+            if path.parent != pages_root:
+                raise FigureError(f"Page {page_no} has an invalid photo render path")
+            data = path.read_bytes()
+            if sha256(data) != page["renderSha256"]:
+                raise FigureError(f"Page {page_no} photo render does not match intake")
+            with Image.open(io.BytesIO(data)) as image:
+                if (image.format != "PNG" or image.mode != "RGB"
+                        or image.size != (page["renderWidth"], page["renderHeight"])):
+                    raise FigureError(f"Page {page_no} has an invalid upright photo render")
+                return image.copy()
+        except OSError as error:
+            raise FigureError(f"Cannot read the upright photo render for page {page_no}") from error
+
+    def crop(region):
+        page_no = region.get("page")
+        if type(page_no) is not int or page_no not in page_map or region.get("units") != "px":
+            raise FigureError("A photo crop must reference an intake page in pixel coordinates")
+        if region.get("renderSha256") != page_map[page_no]["renderSha256"]:
+            raise FigureError(f"Page {page_no} crop was reviewed against a different photo render")
+        image = upright(page_no)
+        box = region.get("box")
+        if (not isinstance(box, list) or len(box) != 4
+                or any(type(value) not in (int, float) or not math.isfinite(value) for value in box)
+                or not (0 <= box[0] < box[2] <= image.width and 0 <= box[1] < box[3] <= image.height)):
+            raise FigureError(f"Page {page_no} has an invalid photo crop box")
+        x0, y0, x1, y1 = box
+        applied = [math.floor(x0), math.floor(y0), math.ceil(x1), math.ceil(y1)]
+        if max(applied[2] - applied[0], applied[3] - applied[1]) > MAX_SIDE:
+            raise FigureError(f"Page {page_no} crop exceeds the bank's 8192 px limit")
+        evidence = {"page": page_no, "box": applied, "units": "px", "renderSha256": region["renderSha256"]}
+        return image.crop(applied), evidence
+
+    return crop
 
 
 # ---------------------------------------------------------------- vector trial
@@ -433,8 +487,9 @@ def run_figures(*, work, paper_id, replace=False, ocr=None, potrace=None):
     manifest_path, segments_path = paper_dir / "01-intake" / "paper.json", paper_dir / "02-segments" / "questions.json"
     if not segments_path.is_file():
         raise FigureError(f"Run stages 1 and 2 first: {paper_id}/02-segments/questions.json is missing")
-    manifest, segments = json.loads(manifest_path.read_text()), json.loads(segments_path.read_text())
-    if segments.get("intakeSha256") != sha256(manifest_path.read_bytes()):
+    manifest_bytes, segment_bytes = manifest_path.read_bytes(), segments_path.read_bytes()
+    manifest, segments = json.loads(manifest_bytes), json.loads(segment_bytes)
+    if segments.get("intakeSha256") != sha256(manifest_bytes):
         raise FigureError("Stage 2 output is older than the intake; rerun segmentation first")
     potrace = potrace or shutil.which("potrace")
     target = paper_dir / STAGE
@@ -448,22 +503,39 @@ def run_figures(*, work, paper_id, replace=False, ocr=None, potrace=None):
     totals = {"questions": 0, "figures": 0, "embedded": 0, "pageRender": 0,
               "svgVerified": 0, "svgFailed": 0, "notEligible": 0}
     records = []
+    intake_dir = manifest_path.parent
+    is_photo = manifest["source"]["kind"] == "photos"
+    crop_photo = photo_cropper(intake_dir, manifest["pages"]) if is_photo else None
     try:
-        with fitz.open(paper_dir / "01-intake" / "source" / manifest["source"]["files"][0]["name"]) as doc:
+        source = nullcontext() if is_photo else fitz.open(intake_dir / "source" / manifest["source"]["files"][0]["name"])
+        with source as doc:
             for question in segments["questions"]:
                 folder = staging / question["key"]
                 folder.mkdir()
-                block = block_image(doc, question["regions"]) if question["regions"] else None
+                regions = question["regions"]
+                block_evidence = {"dpi": BLOCK_DPI}
+                if crop_photo and regions:
+                    crops, evidence = zip(*(crop_photo(region) for region in regions))
+                    block = stitch_crops(crops, bounded=True)
+                    block_evidence = {"source": "photo-render", "regions": list(evidence)}
+                else:
+                    block = block_image(doc, regions) if regions else None
                 record = {"key": question["key"], "block": None, "figures": []}
                 if block is not None:
                     data = png_bytes(block)
+                    if crop_photo:
+                        check_png(data, block)
                     (folder / "block.png").write_bytes(data)
                     record["block"] = {"file": f"{question['key']}/block.png", "sha256": sha256(data),
-                                       "width": block.width, "height": block.height, "dpi": BLOCK_DPI}
+                                       "width": block.width, "height": block.height, **block_evidence}
                 for number, placement in enumerate(question["figures"], 1):
-                    stored = images.get(placement["sha256"]) if placement["sha256"] else None
-                    raw = (paper_dir / "01-intake" / stored["file"]).read_bytes() if stored else None
-                    image, provenance = canonical_figure(doc, placement, raw)
+                    if crop_photo:
+                        image, evidence = crop_photo(placement)
+                        provenance = {"source": "photo-render", "crop": evidence}
+                    else:
+                        stored = images.get(placement["sha256"]) if placement["sha256"] else None
+                        raw = (intake_dir / stored["file"]).read_bytes() if stored else None
+                        image, provenance = canonical_figure(doc, placement, raw)
                     data = png_bytes(image)
                     check_png(data, image)
                     with Image.open(io.BytesIO(data)) as reopened:  # PNG must hold exactly these pixels
@@ -473,7 +545,7 @@ def run_figures(*, work, paper_id, replace=False, ocr=None, potrace=None):
                     (folder / f"{name}.png").write_bytes(data)
                     figure = {
                         "id": f"{question['key']}-{name}", "page": placement["page"], "box": placement["box"],
-                        "role": None, "canonical": {"file": f"{question['key']}/{name}.png", "sha256": sha256(data),
+                        "role": placement.get("role") if crop_photo else None, "canonical": {"file": f"{question['key']}/{name}.png", "sha256": sha256(data),
                                                     "width": image.width, "height": image.height,
                                                     "embeddedSha256": placement["sha256"], **provenance},
                     }
@@ -500,11 +572,12 @@ def run_figures(*, work, paper_id, replace=False, ocr=None, potrace=None):
                     totals[{"verified": "svgVerified", "failed": "svgFailed"}.get(report["status"], "notEligible")] += 1
                     figure["vector"] = report
                     record["figures"].append(figure)
-                assign_roles(question, record["figures"])
+                if not crop_photo:
+                    assign_roles(question, record["figures"])
                 records.append(record)
                 totals["questions"] += 1
         result = {"schema": SCHEMA, "stage": STAGE, "paperId": paper_id,
-                  "segmentsSha256": sha256(segments_path.read_bytes()), "totals": totals, "questions": records}
+                  "segmentsSha256": sha256(segment_bytes), "totals": totals, "questions": records}
         (staging / "figures.json").write_text(json.dumps(result, indent=1) + "\n")
         if target.exists():
             shutil.rmtree(target)

@@ -47,6 +47,41 @@ def read_bank(repo, expected_source):
         raise SolutionError("The pinned canonical bank could not be read") from error
 
 
+def ordered_photo_digest(intake_folder, manifest):
+    files = manifest["source"]["files"]
+    pages = manifest.get("pages", [])
+    count = len(files)
+    if (not count or manifest.get("document", {}).get("pageCount") != count or len(pages) != count
+            or any(page.get("page") != number or page.get("kind") != "photo"
+                   for number, page in enumerate(pages, 1))):
+        raise SolutionError("The original page photos do not match the reviewed page order")
+
+    source_root = intake_folder / "source"
+    if intake_folder.is_symlink() or source_root.is_symlink():
+        raise SolutionError("The original page photo directory must be inside the reviewed intake")
+    digest_file = load("intake").sha256_file
+    seen = set()
+    digests = []
+    for original in files:
+        name = original.get("name")
+        digest = original.get("sha256")
+        size = original.get("bytes")
+        if (not isinstance(name, str) or not name or name in {".", ".."}
+                or pathlib.Path(name).name != name or name in seen
+                or not isinstance(digest, str) or not DIGEST.fullmatch(digest)
+                or type(size) is not int or size <= 0):
+            raise SolutionError("The original page photo list does not match the reviewed intake")
+        path = source_root / name
+        if (path.is_symlink() or not path.is_file() or path.stat().st_size != size
+                or digest_file(path) != digest):
+            raise SolutionError("An original page photo does not match the reviewed intake")
+        seen.add(name)
+        digests.append(digest)
+
+    # Fixed-width, newline-delimited digests preserve order without storing filenames in provenance.
+    return sha256(("dmocks-paper-photos-v1\n" + "\n".join(digests)).encode("ascii"))
+
+
 def paper_evidence(base, paper_id, approval):
     segments_bytes = (base / "02-segments/questions.json").read_bytes()
     if sha256(segments_bytes) != approval["officialKey"]["segmentsSha256"]:
@@ -54,21 +89,26 @@ def paper_evidence(base, paper_id, approval):
     intake_folder = base / "01-intake"
     manifest_path = intake_folder / "paper.json"
     if not manifest_path.is_file():
-        raise SolutionError("Run intake for the original paper PDF before preparing export")
+        raise SolutionError("Run intake for the original paper before preparing export")
     manifest_bytes = manifest_path.read_bytes()
     if sha256(manifest_bytes) != json.loads(segments_bytes).get("intakeSha256"):
         raise SolutionError("The original paper manifest does not match the reviewed segments")
     manifest = json.loads(manifest_bytes)
     source = manifest["source"]
-    if manifest.get("paperId") != paper_id or source["kind"] != "pdf" or len(source["files"]) != 1:
-        raise SolutionError("This dry run supports one original paper PDF")
+    if manifest.get("paperId") != paper_id:
+        raise SolutionError("The original paper manifest does not match the reviewed paper")
+    if source["kind"] == "photos":
+        digest = ordered_photo_digest(intake_folder, manifest)
+        return manifest["exam"], manifest["year"], digest, "photo", len(source["files"])
+    if source["kind"] != "pdf" or len(source["files"]) != 1:
+        raise SolutionError("Use one original paper PDF or ordered original page photos")
     original = source["files"][0]
     source_root = (intake_folder / "source").resolve()
     path = (source_root / original["name"]).resolve()
     if (path.parent != source_root or not path.is_file()
             or load("intake").sha256_file(path) != original["sha256"]):
         raise SolutionError("The original paper PDF does not match the reviewed intake")
-    return manifest["exam"], manifest["year"], original["sha256"]
+    return manifest["exam"], manifest["year"], original["sha256"], "pdf", None
 
 
 def worked_explanation(draft):
@@ -230,7 +270,7 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
     review = report["results"].get(key, {})
     if not review.get("eligibleForExport") or review.get("fingerprint") != fingerprint:
         raise SolutionError("A current human approval for the exact export fingerprint is required")
-    exam, year, source_hash = paper_evidence(base, paper_id, review)
+    exam, year, source_hash, source_type, photo_count = paper_evidence(base, paper_id, review)
     question = questions[key]
     image_record = figures.get(key, {})
     number = str(question.get("printedNumber") or question.get("number") or "")
@@ -239,7 +279,7 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
     if not 3 <= len(question["prompt"].strip()) <= 8000:
         raise SolutionError("Review the question wording before preparing export")
     page = (question.get("regions") or [{}])[0].get("page")
-    if type(page) is not int or page < 1:
+    if type(page) is not int or page < 1 or (photo_count is not None and page > photo_count):
         raise SolutionError("The reviewed question needs a source page")
 
     solution = json.loads(drafts[key])
@@ -313,7 +353,7 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
     packet = {
         "format": "dmocks-question-export-v1", "artifactId": str(uuid.uuid4()), "externalKey": external_key,
         "contentSha256": payload_hash, "payloadText": payload_text, "rightsNote": rights_note,
-        "createdAt": datetime.now(timezone.utc).isoformat(), "sourceType": "pdf",
+        "createdAt": datetime.now(timezone.utc).isoformat(), "sourceType": source_type,
         "publicationState": "git-review-required",
     }
     with tempfile.TemporaryDirectory(prefix="dmocks-ingestion-") as directory:

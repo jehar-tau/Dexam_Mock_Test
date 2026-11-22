@@ -49,13 +49,53 @@ Each stage reads the previous stage's files from a private work folder **outside
 
 Stage 1 is deterministic. Stages 2–4 are deterministic with optional local OCR. A language model can assist with stage 5 drafting.
 
+## Ordered page photos
+
+Pass the photos to Stage 1 in reading order. The intake manifest records that order
+and the SHA-256 of each upright PNG:
+
+```sh
+python3 apps/designmocks/ingestion/intake.py --exam uceed --year 2031 \
+  --work ~/dmocks-ingestion-work --photos page-one.jpg page-two.jpg
+python3 apps/designmocks/ingestion/segment.py --work ~/dmocks-ingestion-work --paper-id uceed-2031
+python3 apps/designmocks/ingestion/figures.py --work ~/dmocks-ingestion-work --paper-id uceed-2031
+```
+
+Review every upright image listed in `01-intake/paper.json`. Record figure boxes in a
+private JSON file. Include one entry for each page in intake order and use an empty
+`figures` array after checking a page with no figures. Use integer pixel coordinates
+from the upright PNG, with the origin at the top left and the right and bottom
+edges excluded. List figures on each page in reading order.
+
+```json
+{"pages":[
+  {"page":1,"renderSha256":"<SHA-256 from the page 1 record>","figures":[]},
+  {"page":2,"renderSha256":"<SHA-256 from the page 2 record>","figures":[[30,90,220,300]]}
+]}
+```
+
+For separately cropped image choices, use objects such as
+`{"box":[30,90,220,300],"role":"option-A"}`. Label the complete set A–D. A
+stem may use `"role":"stem"`. A single crop containing all four choices can
+use a plain box when OCR picks up the four separate choice labels outside the crop.
+
+Rerun Stage 2 with `--replace --photo-layout /path/to/private-layout.json`, then Stage 3
+with `--replace`. Without a layout review, segments carry `photo-layout-unreviewed`
+and the question blocks are available for inspection. Unresolved segmentation flags
+block export. Review the question boundaries, wording, choices and all visible content,
+including figure-only continuation pages. Stage 3 stores the actual pixel rectangles
+and verified page render hashes with the crops. It preserves the upright pixels without
+resizing. A crop or stitched block above the bank image limits requires smaller source
+photos and a fresh intake. The official answer key still goes through Stage 4 as its
+own independently verified PDF.
+
 ## Figure decision
 
 Each figure gets exactly one **canonical asset**, the thing students see, chosen by this order:
 
 1. **Native PDF vector** (drawing paths inside the figure region, no raster): export the paths as SVG directly. Lossless. Rare in these papers.
 2. **Embedded raster** (the normal case): take the image's own bytes from the PDF, decode once and store as PNG (the bank requires PNG). No resampling. Keep the original JPEG bytes and its hash as evidence.
-3. **Scan or photo**: crop from a 300–400 dpi render, deskew, clean the background; same as today's block cropper.
+3. **Scan or photo**: crop from the page render. For photos, use the verified upright PNG and keep its source pixels. The crop evidence identifies the page render and the applied pixel rectangle.
 
 A **vector recreation** (SVG) is added on top, never instead, when the figure is line art or flat colour (cube nets, isometric drawings, patterns, grids, mechanisms, charts) and it passes all of these against the canonical PNG at the source's own pixel size:
 
@@ -125,7 +165,9 @@ python3 apps/designmocks/ingestion/export.py uceed-2031 q1 \
 
 For a new addition, supply the reviewed classification `owner-authorized` or `official-unlicensed`. The source classification describes the paper and the rights to use it. Official answer-key evidence is verified separately.
 
-For a correction, pass `--replace-expect "$CURRENT_QUESTION_SHA256"` and omit `--source-classification`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
+Stage 7 accepts a PDF or ordered page photos from the reviewed intake. For photos it checks the filename, byte length and SHA-256 of every original, including pages outside the selected question. The packet records the source type as `photo`. The bank provenance SHA-256 hashes the ASCII prefix `dmocks-paper-photos-v1` and the original SHA-256 hex digests in page order, with a newline between each item and no trailing newline. PDF provenance continues to use the original PDF's SHA-256.
+
+For a correction, pass `--replace-expect "$CURRENT_QUESTION_SHA256"` and omit `--source-classification`. The correction path requires the same paper, exact original source digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
 
 For an existing visual question whose canonical asset is a whole-question block, also pass
 `--media-root /path/to/server/data/media`. The preparer verifies the original block from that
@@ -154,7 +196,7 @@ python3 apps/designmocks/ingestion/export.py uceed-2031 q1 \
 For a paper already in the canonical bank, stage two to 100 **approved corrections**
 together with `export_batch.py`. Put only the selected review keys, their current Stage 6
 fingerprints, and each exact current bank question content SHA-256 in a private JSON
-manifest. Every item must retain the same original paper PDF, question number, prompt,
+manifest. Every item must retain the same original paper source digest, question number, prompt,
 choices and source classification. The command reads each approval again and sends all
 packets to one canonical bank check against the same pinned `origin/main` commit.
 
