@@ -538,15 +538,35 @@ def render(work, paper_id):
     report, base, segments, figures, drafts = collect(work, paper_id)
     folder = base / STAGE
     cards = []
-    for key, result in report["results"].items():
+    part_a = [key for key, question in segments.items() if question["part"] == "A"]
+    index = "".join(
+        f'<li class="{html.escape(report["results"].get(key, {}).get("status", "missing"))}">'
+        f'<a href="#{html.escape(key)}">{html.escape(key.upper())} '
+        f'<span>{html.escape(report["results"].get(key, {}).get("status", "missing"))}</span></a></li>'
+        for key in part_a
+    )
+    for key in [*part_a, *(key for key in report["results"] if key not in part_a)]:
+        result = report["results"].get(key)
         esc = html.escape
+        if result is None:
+            question = segments[key]
+            record = figures.get(key, {})
+            source_block = (
+                f'<figure class="stage"><img src="../03-figures/{esc(record["block"]["file"])}" '
+                f'alt="Source question crop"></figure>' if record.get("block") else ""
+            )
+            cards.append(f'<article id="{esc(key)}" class="card missing"><header><h2>{esc(key.upper())} '
+                         f'<small>{esc(question["type"])}</small></h2><span class="badge">missing</span></header>'
+                         f'<p class="prompt">{esc(question["prompt"])}</p>{source_block}'
+                         '<p>Worked solution not drafted yet.</p></article>')
+            continue
         problems = "".join(f"<li>{esc(e)}</li>" for e in result["errors"] + result["warnings"])
         if "not-json" in result["errors"] or key not in segments:
-            cards.append(f'<article class="card held"><h2>{esc(key.upper())}</h2><ul class="problems">{problems}</ul></article>')
+            cards.append(f'<article id="{esc(key)}" class="card held"><h2>{esc(key.upper())}</h2><ul class="problems">{problems}</ul></article>')
             continue
         solution = json.loads(drafts[key])
         if shape_problems(solution):
-            cards.append(f'<article class="card held"><h2>{esc(key.upper())}</h2><ul class="problems">{problems}</ul></article>')
+            cards.append(f'<article id="{esc(key)}" class="card held"><h2>{esc(key.upper())}</h2><ul class="problems">{problems}</ul></article>')
             continue
         question = segments[key]
         record = figures.get(key, {})
@@ -571,7 +591,14 @@ def render(work, paper_id):
             source_page = esc(str(official["page"]))
             official_details += (f' · <a href="../04-key/source/{quote(name, safe="")}#page={source_page}">{source_name}, page {source_page}</a>'
                                 f' · printed {esc(str(official.get("printed")))} · key {esc(str(official["raw"]))}')
-        answer_label = "Proposed answer" if solution["answer"].get("source") in PROPOSAL_SOURCES else "Worked answer"
+        answer_value = solution["answer"].get("value")
+        answer_label = ("Answer under review" if result["status"] == "held" else
+                        "Proposed answer" if solution["answer"].get("source") in PROPOSAL_SOURCES else "Worked answer")
+        answer_html = (f'<p class="answer">{answer_label} <b>{esc(str(answer_value))}</b></p>'
+                       if answer_value is not None else '<p class="answer">Answer unresolved</p>')
+        hold_reason = solution["provenance"].get("holdReason") or solution["provenance"].get("method")
+        hold_info = (f'<p class="problems"><b>Why held:</b> {esc(str(hold_reason))}</p>'
+                     if result["status"] == "held" and hold_reason else "")
         review_info = ""
         if result["eligibleForExport"]:
             review_info = f'<p>Approved by {esc(result["reviewedBy"])}</p>'
@@ -605,19 +632,20 @@ def render(work, paper_id):
         if result["status"] == "held" and solution.get("reviewNote"):
             extras += f'<p class="review-note"><b>Review hold:</b> {esc(solution["reviewNote"])}</p>'
         meta = solution["meta"]
-        cards.append(f'''<article class="card {esc(result["status"])}">
+        cards.append(f'''<article id="{esc(key)}" class="card {esc(result["status"])}">
 <header><h2>{esc(key.upper())} <small>{esc(question["type"])} · {esc(str(meta.get("topic", "")))} · {esc(str(meta.get("difficulty", "")))} · {esc(str(meta.get("seconds", "")))} s</small></h2>
 <span class="badge">{esc(result["status"])}</span></header>
 <p class="prompt">{esc(question["prompt"])}</p>
 {f'<ul>{question_options}</ul>' if question_options else ''}
 {source_block}
 {figure_html}
-<p class="answer">{answer_label} <b>{esc(str(solution["answer"].get("value")))}</b></p>
+{answer_html}
 <p><small>{official_details}</small></p>
 <p class="idea">{esc(solution["keyIdea"])}</p>
 <ol class="steps">{steps}</ol>
 {f'<ul class="options">{options}</ul>' if options else ''}
 {extras}
+{hold_info}
 {review_info}
 {f'<ul class="problems">{problems}</ul>' if problems else ''}
 </article>''')
@@ -635,8 +663,14 @@ main{{max-width:860px;margin:0 auto;padding:24px 16px}} h1{{font-size:24px;margi
 .frame svg{{position:absolute;inset:0;width:100%;height:100%}} .layer{{opacity:0;transition:opacity .25s}} .layer.on{{opacity:1}}
 .scrub{{display:flex;gap:10px;align-items:center;margin-top:8px}} button{{font:inherit;padding:4px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}}
 .steps li.on{{font-weight:600}} .correct{{color:var(--forest)}} .wrong{{color:#c0392b}} .problems{{color:#c0392b;font-size:14px}}
+.card code{{overflow-wrap:anywhere}}
+.question-index{{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:6px;list-style:none;padding:0;margin:18px 0}}
+.question-index a{{display:flex;justify-content:space-between;gap:6px;padding:6px 8px;border:1px solid var(--line);border-radius:7px;color:var(--ink);text-decoration:none;font-size:13px}}
+.question-index span{{color:var(--muted);font-size:11px}} .question-index a:focus-visible{{outline:3px solid var(--orange);outline-offset:2px}}
+.question-index .held a{{border-color:#c0392b}} .question-index .verified a{{border-color:var(--forest)}}
 </style></head><body><main><h1>{html.escape(paper_id.upper())} solutions</h1>
 <p>{report["solutions"]} drafted · {report["byStatus"]["draft"]} draft · {report["byStatus"]["verified"]} verified · {report["byStatus"]["held"]} held · {report["byStatus"]["owner-adjudicated"]} owner-adjudicated · {len(report["withoutSolution"])} Part A questions without a solution yet. Private review copy.</p>
+<nav aria-label="Question review status"><ol class="question-index">{index}</ol></nav>
 {"".join(cards)}</main><script>
 document.querySelectorAll('.card').forEach(card=>{{const layers=[...card.querySelectorAll('.layer')];const items=[...card.querySelectorAll('.steps li')];
 const names=items.map(li=>li.dataset.step);let at=0;const count=card.querySelector('.count');if(!count)return;
