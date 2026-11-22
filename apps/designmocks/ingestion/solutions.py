@@ -9,6 +9,7 @@ and kept in the private work folder. This tool does the parts that must be exact
                            the official key, or breaks the format, is held
     render <paper>         05-solutions/review.html: each solution with its step-by-step
                            annotations drawn over the canonical figure, for human review
+    index                  private work/index.html: paper-level review progress and links
     approve <paper> <key>  record a human decision for the exact reviewed inputs
     adjudicate <paper> <key>  privately record an independent owner decision for a keyless draft
 
@@ -633,6 +634,59 @@ card.querySelector('.prev').onclick=()=>{{at=Math.max(0,at-1);show();}};card.que
     return {**{k: v for k, v in report.items() if k != "results"}, "page": str(folder / "review.html")}
 
 
+def render_index(work):
+    """Render a private whole-workspace index; never publish questions or keys."""
+    root = pathlib.Path(work).expanduser().resolve()
+    if not root.is_dir():
+        raise SolutionError("Private work folder does not exist")
+    rows, totals = [], {"papers": 0, "partA": 0, "draft": 0, "verified": 0, "held": 0,
+                        "owner-adjudicated": 0, "missing": 0}
+    for base in sorted(root.iterdir(), key=lambda path: path.name, reverse=True):
+        if not base.is_dir() or not re.fullmatch(r"[a-z0-9][a-z0-9-]{1,80}", base.name):
+            continue
+        if not (base / "02-segments/questions.json").is_file():
+            continue
+        try:
+            report, *_ = collect(root, base.name, write_report=False)
+            if report["solutions"]:
+                render(root, base.name)
+        except (SolutionError, ValueError, KeyError) as error:
+            rows.append(f'<tr><th scope="row">{html.escape(base.name)}</th><td colspan="6">'
+                        f'Source review needed: {html.escape(str(error))}</td></tr>')
+            continue
+        totals["papers"] += 1
+        totals["partA"] += report["partAQuestions"]
+        for name in ("draft", "verified", "held", "owner-adjudicated"):
+            totals[name] += report["byStatus"][name]
+        totals["missing"] += len(report["withoutSolution"])
+        paper = html.escape(base.name)
+        link = (f'<a href="{quote(base.name, safe="")}/05-solutions/review.html">Review solutions</a>'
+                if report["solutions"] else "Not started")
+        priorities = (f' · <a href="{quote(base.name, safe="")}/05-solutions/REVIEW_PRIORITIES.md">Priorities</a>'
+                      if (base / STAGE / "REVIEW_PRIORITIES.md").is_file() else "")
+        rows.append(f'<tr><th scope="row">{paper}</th><td>{report["partAQuestions"]}</td>'
+                    f'<td>{report["byStatus"]["draft"]}</td><td>{report["byStatus"]["held"]}</td>'
+                    f'<td>{report["byStatus"]["verified"]}</td><td>{report["byStatus"]["owner-adjudicated"]}</td>'
+                    f'<td>{link}{priorities}</td></tr>')
+    page = '''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Private paper review</title><style>
+body{margin:0;background:#f7f3ea;color:#1f2a24;font:16px/1.5 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:24px 16px}
+h1{font-size:28px}p{max-width:70ch}.wrap{overflow-x:auto;border:1px solid #ddd5c4;border-radius:12px;background:#fffdf8}
+table{border-collapse:collapse;width:100%;min-width:680px;text-align:left}th,td{padding:11px 13px;border-bottom:1px solid #e9e2d5}thead{background:#e8eee6}
+a{color:#1f6043}a:focus-visible{outline:3px solid #d9772b;outline-offset:2px}.metrics{display:flex;gap:10px;flex-wrap:wrap}
+.metrics span{background:#e8eee6;border-radius:8px;padding:5px 9px}small{color:#58665b}
+</style></head><body><main><h1>Paper and solution review</h1>
+<p>Private local workspace. Drafts need exact human review before export. Held solutions and missing solutions cannot enter the bank.</p>
+<div class="metrics">''' + ''.join(f'<span>{label}: <b>{totals[key]}</b></span>' for key, label in (
+        ("papers", "Papers"), ("partA", "Part A questions"), ("draft", "Drafts"),
+        ("held", "Held"), ("verified", "Verified"), ("missing", "Without a solution"))) + '''</div>
+<div class="wrap"><table><thead><tr><th scope="col">Paper</th><th scope="col">Part A</th><th scope="col">Draft</th><th scope="col">Held</th><th scope="col">Verified</th><th scope="col">Adjudicated</th><th scope="col">Review</th></tr></thead><tbody>''' + ''.join(rows) + '''</tbody></table></div>
+<p><small>Counts come from current source, key and solution evidence each time this index is rebuilt.</small></p></main></body></html>'''
+    output = root / "index.html"
+    output.write_text(page, encoding="utf-8")
+    return {"page": str(output), **totals}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Private worked-solution drafting and review.")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -641,6 +695,7 @@ def main(argv=None):
     one.add_argument("key")
     for name in ("check", "render"):
         sub.add_parser(name).add_argument("paper_id")
+    sub.add_parser("index", help="Render a private whole-workspace review index")
     review = sub.add_parser("approve", help="Approve the exact draft and evidence you reviewed")
     review.add_argument("paper_id")
     review.add_argument("key")
@@ -658,6 +713,8 @@ def main(argv=None):
     try:
         if args.command == "brief":
             result = brief(args.work, args.paper_id, args.key)
+        elif args.command == "index":
+            result = render_index(args.work)
         elif args.command == "check":
             report = check(args.work, args.paper_id)
             result = {k: v for k, v in report.items() if k != "results"}

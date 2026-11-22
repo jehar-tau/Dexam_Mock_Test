@@ -410,6 +410,24 @@ class SolutionsTest(unittest.TestCase):
             self.assertEqual(0, solutions.main(["--work", str(self.work), "check", PAPER]))
         self.assertEqual({"draft": 1, "verified": 0, "held": 0, "owner-adjudicated": 0}, json.loads(out.getvalue())["byStatus"])
 
+    def test_private_index_rebuilds_review_and_shows_current_counts(self):
+        self.save("q1", NAT)
+        index = solutions.render_index(self.work)
+        page = pathlib.Path(index["page"]).read_text()
+        self.assertEqual((1, 3, 1, 2), tuple(index[k] for k in ("papers", "partA", "draft", "missing")))
+        self.assertIn(f'{PAPER}/05-solutions/review.html', page)
+        self.assertTrue((self.base / "05-solutions/review.html").exists())
+        self.assertNotIn("How many fictional squares", page)
+        self.save("q2", MSQ)
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(0, solutions.main(["--work", str(self.work), "index"]))
+        self.assertEqual((2, 1), tuple(json.loads(out.getvalue())[k] for k in ("draft", "missing")))
+
+    def test_private_index_requires_an_existing_work_folder(self):
+        with self.assertRaisesRegex(solutions.SolutionError, "does not exist"):
+            solutions.render_index(self.work / "missing")
+
 
 if __name__ == "__main__":
     unittest.main()
