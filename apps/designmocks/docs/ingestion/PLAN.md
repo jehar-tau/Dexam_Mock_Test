@@ -98,6 +98,8 @@ Fictional example:
 
 Derive the answer from the question and use the verified official key to check it. The validator holds disagreements for human review. When the key is missing or unreadable, use `answer.source: "model-proposed"` for a candidate supported by the reasoning. When the evidence is insufficient, leave the answer blank and set `provenance.status` to `held`. Steps stay under about 30 words each. MCQ and MSQ solutions check every option. NAT solutions show the arithmetic. Add an overlay when it clarifies a visual step.
 
+If the source wording conflicts with the preserved figure or other source evidence, set `provenance.status` to `held` and add a plain-text `reviewNote` naming the discrepancy. The private review page shows the note beside the source question. A held draft cannot be approved or exported until the discrepancy is resolved and the changed draft is reviewed again.
+
 `solutions.py` works with private files only. Run `brief` for each question, fill its template in `05-solutions/<question>.json`, then run `render` and review the question, key and worked steps together. The answer key retains the source PDF hash, printed value, page and extraction method. When the reasoning and source agree, a human reviewer can copy the fingerprint from the review page and record an approval:
 
 ```sh

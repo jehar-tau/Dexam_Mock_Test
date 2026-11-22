@@ -208,7 +208,7 @@ def shape_problems(solution):
     for field, expected in (("answer", dict), ("keyIdea", str), ("steps", list), ("meta", dict), ("provenance", dict)):
         if not isinstance(solution.get(field), expected):
             errors.append(f"invalid-{field}")
-    for field in ("trap", "fastTrack"):
+    for field in ("trap", "fastTrack", "reviewNote"):
         if field in solution and not isinstance(solution[field], str):
             errors.append(f"invalid-{field}")
     steps = solution.get("steps")
@@ -486,6 +486,8 @@ def render(work, paper_id):
         options = "".join(f'<li><b>{esc(c["option"])}</b> <span class="{esc(c["verdict"])}">{esc(c["verdict"])}</span> {esc(c["why"])}</li>'
                           for c in solution.get("optionCheck") or [])
         extras = "".join(f'<p><b>{label}</b> {esc(solution[field])}</p>' for field, label in (("trap", "Trap:"), ("fastTrack", "Faster:")) if solution.get(field))
+        if result["status"] == "held" and solution.get("reviewNote"):
+            extras += f'<p class="review-note"><b>Review hold:</b> {esc(solution["reviewNote"])}</p>'
         meta = solution["meta"]
         cards.append(f'''<article class="card {esc(result["status"])}">
 <header><h2>{esc(key.upper())} <small>{esc(question["type"])} · {esc(str(meta.get("topic", "")))} · {esc(str(meta.get("difficulty", "")))} · {esc(str(meta.get("seconds", "")))} s</small></h2>

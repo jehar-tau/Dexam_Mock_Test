@@ -196,6 +196,25 @@ class SolutionsTest(unittest.TestCase):
         self.assertIn(self.results()["q1"]["fingerprint"], page)
         self.assertNotIn("<script>alert", page)
 
+    def test_source_discrepancy_hold_is_visible_and_cannot_be_approved(self):
+        draft = copy.deepcopy(MSQ)
+        draft["provenance"]["status"] = "held"
+        draft["reviewNote"] = "Source says 30 objects; figure shows 25. <script>alert(1)</script>"
+        self.save("q2", draft)
+        result = self.results()["q2"]
+        self.assertEqual("held", result["status"])
+        self.assertFalse(result["eligibleForExport"])
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn("Review hold:", page)
+        self.assertIn("Source says 30 objects; figure shows 25.", page)
+        self.assertNotIn("<script>alert(1)</script>", page)
+        with self.assertRaisesRegex(solutions.SolutionError, "Only a valid solution"):
+            solutions.approve(self.work, PAPER, "q2", "Human reviewer", "not-reviewable")
+
+        draft["reviewNote"] = ["Invalid review note"]
+        self.save("q2", draft)
+        self.assertIn("invalid-reviewNote", self.results()["q2"]["errors"])
+
     def test_human_approval_is_separate_and_bound_to_reviewed_inputs(self):
         draft = copy.deepcopy(NAT)
         draft["provenance"].update(status="verified", reviewedBy="Model claimed a reviewer")
