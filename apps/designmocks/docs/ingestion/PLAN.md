@@ -109,6 +109,7 @@ python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work c
 ```
 
 `check` lists export-eligible solutions only while their approval matches the draft bytes, question, original key evidence and canonical images. Proposed answers remain drafts and carry no export eligibility.
+`render` also lists every Part A question in a status index. Missing questions have a source-question card, while drafted, held and approved questions link to their worked-solution cards. This makes a whole paper's remaining review work visible without treating an undrafted question as a solution.
 
 ## Stage 7 dry run and private staging
 
