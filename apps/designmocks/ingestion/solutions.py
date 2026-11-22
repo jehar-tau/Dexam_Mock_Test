@@ -458,8 +458,10 @@ def render(work, paper_id):
         official = result["officialKey"]
         inferred_run = "consecutive-row-run-needs-visual-review" in official.get("notes", [])
         cropped_number = "two-crop-ocr-agreement-needs-visual-review" in official.get("notes", [])
+        recovered_row = "whole-row-recovered-by-two-crop-pairs-needs-visual-review" in official.get("notes", [])
         official_details = ("Source-linked OCR key; visually review its inferred question number"
-                            if inferred_run else "Source-linked cropped OCR key; visually review its printed number"
+                            if inferred_run else "Source-linked cropped OCR key; visually review its recovered row and answer"
+                            if recovered_row else "Source-linked cropped OCR key; visually review its printed number"
                             if cropped_number else "Verified official key" if official["verifiedKey"]
                             else f'Key status {esc(official["status"])}')
         if official["source"] and official.get("page"):

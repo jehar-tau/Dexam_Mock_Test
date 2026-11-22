@@ -113,12 +113,12 @@ def adjacent_column_key(path):
     page = doc.new_page(width=400, height=400)
     page.insert_text((80, 40), "FICTIONAL ANSWER KEY", fontsize=12)
     page.insert_text((80, 65), "Q. No.", fontsize=10)
-    page.insert_text((150, 65), "Answer", fontsize=10)
+    page.insert_text((130, 65), "Answer", fontsize=10)
     page.insert_text((245, 65), "Q. No.", fontsize=10)
     page.insert_text((315, 65), "Answer", fontsize=10)
     for number in range(1, 5):
         page.insert_text((80, 70 + number * 30), f"{number:02d}", fontsize=10)
-        page.insert_text((150, 70 + number * 30), KEYS[number], fontsize=10)
+        page.insert_text((130, 70 + number * 30), KEYS[number], fontsize=10)
         page.insert_text((245, 70 + number * 30), f"{number + 4:02d}", fontsize=10)
         page.insert_text((315, 70 + number * 30), KEYS[number + 4], fontsize=10)
     doc.save(path)
@@ -274,6 +274,52 @@ class AnswerKeyTest(unittest.TestCase):
 
         _, rejected = self.run_key(image_pdf, ocr=disagrees)
         self.assertEqual((None, "missing"), (rejected["keys"]["q1"]["raw"], rejected["keys"]["q1"]["status"]))
+
+    def test_wholly_missing_row_requires_matching_label_and_answer_crops(self):
+        text_pdf, image_pdf = self.root / "key-text.pdf", self.root / "key-scan.pdf"
+        adjacent_column_key(text_pdf)
+        scanned(text_pdf, image_pdf)
+        page_ocr = ocr_from(text_pdf, drop={"02", "470 - 480"})
+
+        def agrees(path):
+            name = pathlib.Path(path).name
+            if "-2-label-" in name:
+                return [{"text": "2"}]
+            if "-2-answer-" in name:
+                return [{"text": "470 - 480"}]
+            return page_ocr(path)
+
+        _, data = self.run_key(image_pdf, ocr=agrees)
+        row = data["keys"]["q2"]
+        self.assertEqual(("470 to 480", "crop-ocr"), (row["raw"], row["readBy"]))
+        self.assertIn("whole-row-recovered-by-two-crop-pairs-needs-visual-review", row["notes"])
+
+        def disagrees(path):
+            name = pathlib.Path(path).name
+            if "-2-label-" in name:
+                return [{"text": "2" if name.endswith("-0.png") else "3"}]
+            if "-2-answer-" in name:
+                return [{"text": "470 - 480"}]
+            return page_ocr(path)
+
+        _, rejected = self.run_key(image_pdf, ocr=disagrees)
+        self.assertNotIn("q2", rejected["keys"])
+
+        segment_path = self.work / self.paper / "02-segments/questions.json"
+        segment_data = json.loads(segment_path.read_text())
+        segment_data["questions"][1]["type"] = "MSQ"
+        segment_path.write_text(json.dumps(segment_data))
+
+        def crosses_section(path):
+            name = pathlib.Path(path).name
+            if "-2-label-" in name:
+                return [{"text": "2"}]
+            if "-2-answer-" in name:
+                return [{"text": "A"}]
+            return page_ocr(path)
+
+        _, section_rejected = self.run_key(image_pdf, ocr=crosses_section)
+        self.assertNotIn("q2", section_rejected["keys"])
 
     def test_refusals(self):
         pdf = self.root / "key.pdf"
