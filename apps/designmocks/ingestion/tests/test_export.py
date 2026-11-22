@@ -285,6 +285,18 @@ class ExportTest(unittest.TestCase):
         self.assertNotIn("Fictional owner", self.packet["payloadText"])
         self.assertNotIn("Four groups of three make twelve", self.packet["payloadText"])
 
+    def test_ordered_photo_paper_can_stage_an_owner_adjudicated_addition(self):
+        photos = self.use_ordered_photos()
+        fingerprint = self.owner_adjudicate()
+        result = self.export(fingerprint, owner_adjudicated=True)
+        self.assertEqual(("dry-run", "addition"), (result["mode"], result["operation"]))
+        self.assertEqual("photo", self.packet["sourceType"])
+        self.assertEqual("owner-adjudicated", self.payload["answer"]["status"])
+        self.assertEqual(2, self.payload["provenance"]["page"])
+        self.assertEqual(hashlib.sha256(b"dmocks-paper-photos-v1\n" + b"\n".join(
+            hashlib.sha256(photo.read_bytes()).hexdigest().encode() for photo in photos
+        )).hexdigest(), self.payload["provenance"]["sourceSha256"])
+
     def test_owner_adjudication_stages_through_canonical_preparer(self):
         fingerprint = self.owner_adjudicate(with_overlay=True)
         output = self.work / "adjudicated-output"
