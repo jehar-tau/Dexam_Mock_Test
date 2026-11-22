@@ -615,7 +615,7 @@ if(expandedAttemptScope){
         }} />
         </>}
         <ExamSessionReport report={examReport} />
-        <ExamPartTransition session={examSession} busy={busy} onStart={startPartB}/>
+        {examSession?.partAAttemptId === attempt.id && <ExamPartTransition session={examSession} busy={busy} onStart={startPartB}/>}
         {!attempt.examResultsPending && <div className="review-toggle analysis-review-heading">
           <h2 ref={reviewHeading} tabIndex={-1}>Question review</h2>
           <button

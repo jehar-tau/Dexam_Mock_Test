@@ -80,7 +80,11 @@ test("an admitted tester can reopen saved pending and drawing attempts without o
     if (procedure === "my_overview_analytics") return { completed: 2, waitingForResults: 1,
       objectiveAccuracy: null, objectiveAnswered: 0, topics: [], exams: [],
       drawingReviews: { pending: 0, released: 1 } };
-    if (procedure === "my_exam_mock_session" || procedure === "my_exam_mock_report") return null;
+    if (procedure === "my_exam_mock_session") return input.p_attempt_id === drawingId ? {
+      exam: "ceed", partAAttemptId: "00000000-0000-4000-8000-000000000097",
+      partBAttemptId: drawingId, partBState: "started", partBOpensAt: now,
+    } : null;
+    if (procedure === "my_exam_mock_report") return null;
     if (procedure === "read_attempt") return input.p_id === drawingId ? {
       id: drawingId, title: "Original fictional drawing result", status: "submitted", deadline: now,
       serverNow: now, resultsPending: false, scoreKind: "drawing", score: 20, total: 100,
@@ -99,6 +103,7 @@ test("an admitted tester can reopen saved pending and drawing attempts without o
   await page.getByRole("link", { name: "Original fictional drawing result" }).click();
   await expect(page.getByRole("heading", { name: "Paper analysis" })).toBeVisible();
   await expect(page.getByRole("group", { name: "Drawing result" })).toContainText("20/100");
+  await expect(page.getByRole("link", { name: "Continue Part B" })).toHaveCount(0);
   await page.goto("/dashboard");
   await page.getByRole("link", { name: "Original fictional pending result" }).click();
   await expect(page.getByRole("heading", { name: /Results come after review/ })).toBeVisible();
