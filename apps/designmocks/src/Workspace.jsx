@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Art, Arrow } from "./Art.jsx";
 import {postLaunchPreview} from "./launch-scope.js";
+import { controlledPublicPortalMode } from "./platform.js";
 import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
 import { withAccountDeadline } from "./account-request.js";
 import { loadOverview, overviewStartId } from "./overview-data.js";
@@ -16,6 +17,10 @@ import { createAttemptAnswerJournal, pruneDeviceAnswers } from "./attempt-answer
 import { AttemptInsights, AnswerReview } from "./AttemptInsights.jsx";
 import { ExamPartTransition, ExamSessionReport } from "./ExamPartTransition.jsx";
 import { PaperFigures, PaperNavigation, paperSections } from "./PaperNavigation.jsx";
+
+// Owner testing may reopen an existing pending or drawing attempt. The
+// server-owned tester gate and read_attempt authorization still decide access.
+const expandedAttemptScope = postLaunchPreview || controlledPublicPortalMode;
 
 function SignInGate() {
   return (
@@ -342,7 +347,7 @@ export function AttemptSession({actorId, services, id, workspaceHref = "/dashboa
         .then(({ data, receivedAt }) => {
           if (!alive || !current()) return;
           if(!data||data.id!==id||!["active","submitted"].includes(data.status)||!Array.isArray(data.questions)||!Number.isFinite(Date.parse(data.serverNow))||!Number.isFinite(Date.parse(data.deadline)))throw new Error("Unconfirmed paper response.");
-          if(!postLaunchPreview&&(data.resultsPending||data.examResultsPending||data.drawingUploadTasks?.length||data.questions.some(item=>!["mcq","msq","nat"].includes(item.kind))))throw new Error("This paper is outside the initial release.");
+          if(!expandedAttemptScope&&(data.resultsPending||data.examResultsPending||data.drawingUploadTasks?.length||data.questions.some(item=>!["mcq","msq","nat"].includes(item.kind))))throw new Error("This paper is outside the initial release.");
           const serverTime = Date.parse(data.serverNow);
           const deadline = Date.parse(data.deadline);
           const clientTime = Date.now();
@@ -383,7 +388,7 @@ export function AttemptSession({actorId, services, id, workspaceHref = "/dashboa
           } else {
             queue.discard();
           }
-if(postLaunchPreview){
+if(expandedAttemptScope){
           rpc("my_exam_mock_session", { p_attempt_id: id }, request.signal).then((value) => alive && current() && setExamSession(value)).catch(() => {});
           rpc("my_exam_mock_report", { p_attempt_id: id }, request.signal).then((value) => alive && current() && setExamReport(value)).catch(() => {});
 }
@@ -520,7 +525,7 @@ if(postLaunchPreview){
       if (!current() || answerSync.current !== queue) return;
       queue.discard();
       setAttempt(result);
-if(postLaunchPreview){
+if(expandedAttemptScope){
       rpc("my_exam_mock_session",{p_attempt_id:id}).then(value=>{if(current())setExamSession(value);}).catch(()=>{});
       rpc("my_exam_mock_report",{p_attempt_id:id}).then(value=>{if(current())setExamReport(value);}).catch(()=>{});
 }
@@ -586,7 +591,7 @@ if(postLaunchPreview){
                 "Your drawing marks include released teacher reviews. Missing submissions receive zero marks."}
             </p> : <p>
               {demo ? "Sample marks follow the original paper’s answer key." : "Objective answers are marked with the paper’s reviewed key."}
-              {!demo && (postLaunchPreview?" Drawing is excluded from this score and remains a separate teacher-reviewed submission.":" This report covers the objective paper you submitted.")}
+              {!demo && (expandedAttemptScope?" Drawing is excluded from this score and remains a separate teacher-reviewed submission.":" This report covers the objective paper you submitted.")}
             </p>}
           </div>
           <div className="sample-score" role="group" aria-label={cohort ? "All India result" : attempt.scoreKind === "drawing" ? "Drawing result" : "Objective result"}>
