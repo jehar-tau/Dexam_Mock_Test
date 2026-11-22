@@ -102,6 +102,18 @@ If the source wording conflicts with the preserved figure or other source eviden
 
 `solutions.py` works with private files only. Run `brief` for each question, fill its template in `05-solutions/<question>.json`, then run `render` and review the question, key and worked steps together. The answer key retains the source PDF hash, printed value, page and extraction method. When the reasoning and source agree, a human reviewer can copy the fingerprint from the review page and record an approval:
 
+For a model or separate drafting session, `solution_batch.py` prepares up to 100 missing objective questions at once. Its private packet includes the source wording, choices and local figure paths, but omits the official answer key. `--text-only` skips visual questions for a text-only model. Give that packet to the drafting model and save its JSON response privately. `ingest` requires every requested key, rejects changed source/key evidence and existing drafts, and marks answers that fail the key or format check as **held**. It never creates a human approval or exports a question.
+
+```sh
+python3 apps/designmocks/ingestion/solution_batch.py --work ~/dmocks-ingestion-work \
+  queue uceed-2031 --limit 20 --text-only
+python3 apps/designmocks/ingestion/solution_batch.py --work ~/dmocks-ingestion-work \
+  ingest uceed-2031 --packet /private/path/to/batch.json \
+  --responses /private/path/to/model-responses.json --drafter local-model-name
+```
+
+For a NAT question, the response format is `{"paperId":"uceed-2031","batchId":"<packet batchId>","answers":[{"key":"q1","answer":"12","keyIdea":"Count rows of squares.","steps":[{"text":"3 × 4 = 12 squares."}],"optionCheck":[],"meta":{"topic":"counting","difficulty":"easy","seconds":60}}]}`. Include one `optionCheck` for every printed MCQ/MSQ option. The model must derive the answer itself: the importer compares it with the independently preserved official key after drafting. Review every generated explanation and any source figure before approval.
+
 ```sh
 python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work brief uceed-2031 q1
 python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work render uceed-2031

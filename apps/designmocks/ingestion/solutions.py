@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Stage 5 of the question-paper ingestion pipeline: worked solutions.
 
-Solutions are drafted by Claude in a local session (owner decision D3, 20 Nov 2026)
-and kept in the private work folder. This tool does the parts that must be exact:
+Solutions are drafted by a model or operator and kept in the private work folder.
+This tool does the parts that must be exact:
 
     brief  <paper> <key>   everything a drafter needs: prompt, options, figures, official key
     check  <paper>         validate every 05-solutions/<key>.json; a draft that does not reach
