@@ -46,7 +46,7 @@ test('built search documents contain one canonical, real public text, and no per
     } else assert.equal(schema, null);
   }
   assert.equal(titles.size, indexedPaths.length);
-  for (const path of ['account', 'account/callback', 'sample/result', 'admin', 'dashboard', 'contact', 'terms', 'privacy', 'refunds', 'tests/nid', 'tests/nift', 'tests/ceed', '404']) {
+  for (const path of ['account', 'account/callback', 'sample/result', 'admin', 'dashboard', 'papers', 'contact', 'terms', 'privacy', 'refunds', 'tests/nid', 'tests/nift', 'tests/ceed', '404']) {
     const html = await read(path + '.html');
     assert.match(html, /name="robots" content="noindex, nofollow"/);
     assert.doesNotMatch(html, /rel="canonical"|property="og:url"|application\/ld\+json/);
