@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records approval for objective solutions with verified official keys, and stage 7 can dry-run or stage approved items individually or as one batch of corrections. This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records official-key approvals and private owner adjudications for keyless objective solutions, and stage 7 can dry-run or stage approved items individually or as one batch of corrections. This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## Scope
 
@@ -42,8 +42,8 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
 | 3 | **Figures** | Figure placements → canonical PNG (embedded pixels, or a page render when the page shows something else), a block crop of every question, an SVG trial with metrics and a comparison board | [x] built 21 Nov 2026 |
 | 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `11.5 to 12.5`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
-| 5 | **Solutions** | `solutions.py` provides an objective question, figures, key evidence and a structured draft template. Key disagreements are held, while answers proposed without a readable official key stay drafts | [~] drafting and validation tooling built |
-| 6 | Review | The private solution review page shows the source question, key provenance and solution. An operator can approve a solution with a verified official key for the exact reviewed evidence | [~] objective-solution approval built; full ingestion review still open |
+| 5 | **Solutions** | `solutions.py` provides an objective question, figures, key evidence and a structured draft template. Key disagreements are held, while answers proposed without a readable official key start as drafts | [~] drafting and validation tooling built |
+| 6 | Review | The private solution review page shows the source question, key provenance and solution. An operator can approve a solution with a verified official key or record an independent owner adjudication when the key is missing or unreadable | [~] objective-solution approval built; full ingestion review still open |
 | 7 | Export | Approved objective question and solution → verified private export directory with bank JSON, PNG media and receipt. Preserve step overlays as typed shapes linked to a canonical PNG | [~] individual additions and corrections, plus a paper batch of exact-version corrections, can be staged; reviewed Git promotion and media upload still open |
 | 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [~] released answer review can display visual worked solutions; paper analysis still open |
 
@@ -136,7 +136,7 @@ Fictional example:
 }
 ```
 
-Derive the answer from the question and use the verified official key to check it. The validator holds disagreements for human review. When the key is missing or unreadable, use `answer.source: "model-proposed"` for a candidate supported by the reasoning. When the evidence is insufficient, leave the answer blank and set `provenance.status` to `held`. Steps stay under about 30 words each. MCQ and MSQ solutions check every option. NAT solutions show the arithmetic. Add an overlay when it clarifies a visual step.
+Derive the answer from the question and use the verified official key to check it. The validator holds disagreements for human review. When the key is missing or unreadable, use `answer.source: "model-proposed"` for a model draft or `"human-proposed"` for a human draft supported by the reasoning. When the evidence is insufficient, leave the answer blank and set `provenance.status` to `held`. Steps stay under about 30 words each. MCQ and MSQ solutions check every option. NAT solutions show the arithmetic. Add an overlay when it clarifies a visual step.
 
 `solutions.py` works with private files only. Run `brief` for each question, fill its template in `05-solutions/<question>.json`, then run `render` and review the question, key and worked steps together. The answer key retains the source PDF hash, printed value, page and extraction method. When the reasoning and source agree, a human reviewer can copy the fingerprint from the review page and record an approval:
 
@@ -148,7 +148,23 @@ python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work a
 python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work check uceed-2031
 ```
 
-`check` lists export-eligible solutions only while their approval matches the draft bytes, question, original key evidence and canonical images. Proposed answers remain drafts and carry no export eligibility.
+`check` lists export-eligible solutions only while their approval matches the draft bytes, question, original key evidence and canonical images. Keyless drafts use the private review path below.
+
+### Missing or unreadable official keys
+
+The owner or a delegated human reviewer solves the question independently using the original paper and figures before opening the draft review. The existing `brief` command shows the question and source figures without the worked draft. Save the independent reasoning in a private UTF-8 text file. Open the rendered review, compare the answer and worked reasoning with the independent solve, and copy the adjudication fingerprint. If the answer or reasoning differs, resolve the discrepancy and review the resulting draft. Leave ambiguous questions held.
+
+```sh
+python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work adjudicate uceed-2031 q1 \
+  --reviewer "$OWNER_REVIEWER_NAME" --fingerprint "$ADJUDICATION_FINGERPRINT" \
+  --independent-answer "$INDEPENDENT_ANSWER" --reasoning ~/dmocks-private/owner-reasoning.txt
+```
+
+Adjudication requires an intact original PDF or ordered photo set, the current segmentation, a source block and any canonical figures, and a valid draft for a question with no unresolved segmentation flags. If a key PDF has been supplied, its preserved bytes and the relevant key record must support the missing or unreadable status. Resolve orphaned key files or conflicting key evidence before proceeding. Leave officially dropped questions held.
+
+The operator command records the reviewer's name, answer, reasoning and fingerprint in the private Stage 6 receipt. Keep the work folder writable only by trusted operators and run the command only after human review. The tool checks the recorded answer and evidence hashes. Independence and the quality of the reasoning require human judgment.
+
+A matching receipt appears as **owner-adjudicated** in `check` and the review page. Changed evidence requires a new review. Stage 7 accepts official-key approvals only. Owner adjudications stay in the private work folder until a separate export and release path can carry their provenance and require release review.
 
 ## Stage 7 dry run and private staging
 

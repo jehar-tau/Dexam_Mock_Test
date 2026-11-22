@@ -10,6 +10,7 @@ and kept in the private work folder. This tool does the parts that must be exact
     render <paper>         05-solutions/review.html: each solution with its step-by-step
                            annotations drawn over the canonical figure, for human review
     approve <paper> <key>  record a human decision for the exact reviewed inputs
+    adjudicate <paper> <key>  privately record an independent owner decision for a keyless draft
 
 The format is in docs/ingestion/PLAN.md ("Solution format"). Nothing here writes
 into the repository.
@@ -33,6 +34,7 @@ SCHEMA = 1
 STAGE = "05-solutions"
 REVIEW_STAGE = "06-review"
 OBJECTIVE = {"MCQ", "MSQ", "NAT"}
+PROPOSAL_SOURCES = ("model-proposed", "human-proposed")
 QUESTION_KEY = re.compile(r"q(?:b)?[0-9]+")
 DIFFICULTY = {"easy", "medium", "hard"}
 STATUS = {"draft", "verified", "held"}
@@ -70,14 +72,15 @@ def paper_files(work, paper_id):
             raise SolutionError(f"Run the earlier stages first: {path.relative_to(base.parent)} is missing")
     segment_bytes = needed["segments"].read_bytes()
     segment_hash = sha256(segment_bytes)
-    segments = {q["key"]: q for q in json.loads(segment_bytes)["questions"]}
+    segment_manifest = json.loads(segment_bytes)
+    segments = {q["key"]: q for q in segment_manifest["questions"]}
     figure_manifest = json.loads(needed["figures"].read_text())
     if figure_manifest.get("segmentsSha256") != segment_hash:
         raise SolutionError("Run stage 3 again for the current segments")
     figures = {q["key"]: q for q in figure_manifest["questions"]}
     key_path = base / "04-key" / "key.json"
     key_manifest = json.loads(key_path.read_bytes()) if key_path.is_file() else {}
-    return base, segments, figures, key_manifest, segment_hash
+    return base, segments, figures, key_manifest, segment_hash, segment_manifest.get("intakeSha256")
 
 
 def sha256(data):
@@ -127,7 +130,7 @@ def option_labels(question):
 
 
 def brief(work, paper_id, key):
-    base, segments, figures, key_manifest, segment_hash = paper_files(work, paper_id)
+    base, segments, figures, key_manifest, segment_hash, _ = paper_files(work, paper_id)
     if key not in segments:
         raise SolutionError(f"No question {key} in {paper_id}")
     question, record = segments[key], figures.get(key, {})
@@ -260,9 +263,9 @@ def validate(solution, question, official, figures):
     elif status == "dropped":
         errors.append("official-key-dropped")
     else:
-        warnings.append("model-proposed-answer-unverified")
-        if source != "model-proposed":
-            errors.append("answer-source-must-be-model-proposed")
+        warnings.append("proposed-answer-unverified")
+        if source not in PROPOSAL_SOURCES:
+            errors.append("answer-source-must-be-model-or-human-proposed")
         if proposed and (len(proposed) != 1 or (kind == "NAT" and proposed[0][0] != proposed[0][1])):
             errors.append("proposed-answer-must-be-single-candidate")
     if not str(solution["keyIdea"]).strip():
@@ -341,6 +344,47 @@ def review_fingerprint(base, paper_id, question, official, figures, solution_byt
     return sha256(json.dumps(evidence, sort_keys=True, ensure_ascii=False).encode())
 
 
+def source_matches(base, paper_id, intake_hash):
+    """Check the original PDF or ordered photo set linked to the current segmentation."""
+    folder = base / "01-intake"
+    try:
+        manifest_bytes = (folder / "paper.json").read_bytes()
+        if sha256(manifest_bytes) != intake_hash:
+            return False
+        manifest = json.loads(manifest_bytes)
+        if manifest["paperId"] != paper_id or manifest["stage"] != "01-intake":
+            return False
+        source = manifest["source"]
+        files = source["files"]
+        if source["kind"] not in ("pdf", "photos") or not files or (source["kind"] == "pdf" and len(files) != 1):
+            return False
+        originals = (folder / "source").resolve()
+        if not originals.is_relative_to(base):
+            return False
+        for item in files:
+            path = (originals / item["name"]).resolve()
+            if path.parent != originals or load("intake").sha256_file(path) != item["sha256"]:
+                return False
+    except (OSError, ValueError, KeyError, TypeError):
+        return False
+    return True
+
+
+def adjudication_fingerprint(fingerprint, question, figures, official, source_verified, segment_hash, key_evidence_usable):
+    if (not fingerprint or question["flags"] or not figures.get("block") or not key_evidence_usable
+            or official.get("checks") or official["issues"] or official["raw"] is not None or not source_verified()):
+        return None
+    return sha256(f"owner-adjudication-v1:{segment_hash}:{fingerprint}".encode())
+
+
+def independent_agreement(question, solution, reviewer, value, reasoning):
+    canonical = load("answer_key").canonical
+    return (isinstance(reviewer, str) and bool(reviewer.strip())
+            and reviewer.strip().casefold() != solution["provenance"]["draftedBy"].strip().casefold()
+            and isinstance(value, str) and isinstance(reasoning, str) and bool(reasoning.strip())
+            and canonical(value, question["type"]) == canonical(solution["answer"]["value"], question["type"]))
+
+
 def read_review(base, key):
     path = base / REVIEW_STAGE / f"{key}.json"
     try:
@@ -350,7 +394,8 @@ def read_review(base, key):
     return record if isinstance(record, dict) else None
 
 
-def solution_result(base, paper_id, question, figures, official, solution_bytes):
+def solution_result(base, paper_id, question, figures, official, solution_bytes,
+                    *, source_verified, segment_hash, key_evidence_usable):
     try:
         solution = json.loads(solution_bytes)
     except ValueError:
@@ -372,18 +417,45 @@ def solution_result(base, paper_id, question, figures, official, solution_bytes)
                 and receipt.get("fingerprint") == fingerprint and receipt.get("paperId") == paper_id
                 and receipt.get("key") == question["key"] and isinstance(receipt.get("reviewer"), str)
                 and bool(receipt["reviewer"].strip()))
-    if receipt and not approved:
+    keyless_fingerprint = None
+    if not errors and official["status"] in ("missing", "unreadable"):
+        keyless_fingerprint = adjudication_fingerprint(
+            fingerprint, question, figures, official, source_verified, segment_hash, key_evidence_usable)
+        if not keyless_fingerprint:
+            warnings.append("owner-adjudication-needs-source-evidence")
+    adjudicated = (keyless_fingerprint is not None and receipt is not None
+                   and receipt.get("decision") == "owner-adjudicated"
+                   and receipt.get("fingerprint") == keyless_fingerprint and receipt.get("paperId") == paper_id
+                   and receipt.get("key") == question["key"]
+                   and independent_agreement(question, solution, receipt.get("reviewer"),
+                                             receipt.get("independentAnswer"), receipt.get("reasoning")))
+    if adjudicated:
+        warnings.remove("proposed-answer-unverified")
+    if receipt and not (approved or adjudicated):
         warnings.append("review-no-longer-matches")
-    return {"status": "held" if errors else ("verified" if approved else "draft"), "reachesKey": reaches,
+    status = "held" if errors else "draft"
+    if approved or adjudicated:
+        status = "verified" if approved else "owner-adjudicated"
+    return {"status": status, "reachesKey": reaches,
             "officialKey": official, "errors": errors, "warnings": warnings, "fingerprint": fingerprint,
             "reviewable": reviewable, "eligibleForExport": approved,
-            "reviewedBy": receipt["reviewer"] if approved else None}
+            "adjudicationFingerprint": keyless_fingerprint,
+            "ownerAdjudication": receipt if adjudicated else None,
+            "reviewedBy": receipt["reviewer"] if approved or adjudicated else None}
 
 
 def collect(work, paper_id, *, write_report=True):
-    base, segments, figures, manifest, segment_hash = paper_files(work, paper_id)
+    base, segments, figures, manifest, segment_hash, intake_hash = paper_files(work, paper_id)
     folder = base / STAGE
     evidence_valid = key_evidence(base, paper_id, manifest, segment_hash)
+    # A present key manifest must match its PDF. Orphan key files require review.
+    key_stage = base / "04-key"
+    no_key = not (key_stage / "key.json").exists() and not any((key_stage / "source").glob("*"))
+
+    @cache
+    def source_verified():
+        return source_matches(base, paper_id, intake_hash)
+
     results, drafts = {}, {}
     paths = [p for p in folder.glob("q*.json") if QUESTION_KEY.fullmatch(p.stem)]
     for path in sorted(paths, key=lambda p: (p.stem.startswith("qb"), int(re.sub(r"\D", "", p.stem)))):
@@ -394,11 +466,14 @@ def collect(work, paper_id, *, write_report=True):
         question = segments[key]
         official = official_record(manifest, key, question, evidence_valid)
         drafts[key] = path.read_bytes()
-        results[key] = solution_result(base, paper_id, question, figures.get(key, {}), official, drafts[key])
+        results[key] = solution_result(
+            base, paper_id, question, figures.get(key, {}), official, drafts[key],
+            source_verified=source_verified, segment_hash=segment_hash, key_evidence_usable=evidence_valid or no_key)
     part_a = [k for k, q in segments.items() if q["part"] == "A"]
     report = {"paperId": paper_id, "solutions": len(results), "partAQuestions": len(part_a),
               "withoutSolution": [k for k in part_a if k not in results],
-              "byStatus": {s: sum(1 for r in results.values() if r["status"] == s) for s in ("draft", "verified", "held")},
+              "byStatus": {s: sum(1 for r in results.values() if r["status"] == s) for s in ("draft", "verified", "held", "owner-adjudicated")},
+              "ownerAdjudicated": [key for key, result in results.items() if result["status"] == "owner-adjudicated"],
               "eligibleForExport": [key for key, result in results.items() if result["eligibleForExport"]],
               "results": results}
     if write_report:
@@ -420,10 +495,29 @@ def approve(work, paper_id, key, reviewer, fingerprint):
         raise SolutionError("Only a valid solution that agrees with a verified official key can be approved")
     if fingerprint != result["fingerprint"]:
         raise SolutionError("The fingerprint changed. Render and review the current evidence before approving")
-    folder = pathlib.Path(work).expanduser().resolve() / paper_id / REVIEW_STAGE
-    folder.mkdir(exist_ok=True)
     receipt = {"paperId": paper_id, "key": key, "decision": "approve", "reviewer": reviewer.strip(),
                "fingerprint": fingerprint}
+    return write_review((pathlib.Path(work).expanduser() / paper_id).resolve(), key, receipt)
+
+
+def adjudicate(work, paper_id, key, reviewer, fingerprint, independent_answer, reasoning):
+    report, base, segments, _, drafts = collect(work, paper_id, write_report=False)
+    result = report["results"].get(key, {})
+    current = result.get("adjudicationFingerprint")
+    if current is None:
+        raise SolutionError("Owner adjudication requires a valid keyless draft and intact source evidence")
+    if fingerprint != current:
+        raise SolutionError("The fingerprint changed. Render and review the current evidence before adjudicating")
+    if not independent_agreement(segments[key], json.loads(drafts[key]), reviewer, independent_answer, reasoning):
+        raise SolutionError("A different human reviewer must supply an independent answer agreeing with the draft and written reasoning")
+    receipt = {"paperId": paper_id, "key": key, "decision": "owner-adjudicated", "reviewer": reviewer.strip(),
+               "fingerprint": fingerprint, "independentAnswer": independent_answer.strip(), "reasoning": reasoning.strip()}
+    return write_review(base, key, receipt)
+
+
+def write_review(base, key, receipt):
+    folder = base / REVIEW_STAGE
+    folder.mkdir(mode=0o700, exist_ok=True)
     with tempfile.NamedTemporaryFile(mode="w", dir=folder, delete=False) as tmp:
         tmp.write(json.dumps(receipt, indent=2) + "\n")
     pathlib.Path(tmp.name).replace(folder / f"{key}.json")
@@ -463,12 +557,20 @@ def render(work, paper_id):
             source_page = esc(str(official["page"]))
             official_details += (f' · <a href="../04-key/source/{quote(name, safe="")}#page={source_page}">{source_name}, page {source_page}</a>'
                                 f' · printed {esc(str(official.get("printed")))} · key {esc(str(official["raw"]))}')
-        answer_label = "Proposed answer" if solution["answer"].get("source") == "model-proposed" else "Worked answer"
+        answer_label = "Proposed answer" if solution["answer"].get("source") in PROPOSAL_SOURCES else "Worked answer"
         review_info = ""
         if result["eligibleForExport"]:
             review_info = f'<p>Approved by {esc(result["reviewedBy"])}</p>'
         elif result["reviewable"]:
             review_info = f'<p>Review fingerprint <code>{esc(result["fingerprint"])}</code></p>'
+        elif result["ownerAdjudication"]:
+            decision = result["ownerAdjudication"]
+            review_info = (f'<p>Owner-adjudicated by {esc(decision["reviewer"])} · private review only</p>'
+                           f'<p>Independent answer {esc(decision["independentAnswer"])}</p>'
+                           f'<p>{esc(decision["reasoning"])}</p>'
+                           f'<p>Adjudication fingerprint <code>{esc(decision["fingerprint"])}</code></p>')
+        elif result["adjudicationFingerprint"]:
+            review_info = f'<p>Adjudication fingerprint <code>{esc(result["adjudicationFingerprint"])}</code></p>'
         overlay = solution.get("overlay")
         if overlay and overlay.get("figure") in figure_index and not any(e.startswith("overlay") for e in result["errors"]):
             figure = figure_index[overlay["figure"]]
@@ -477,8 +579,8 @@ def render(work, paper_id):
                            f'<svg viewBox="{esc(overlay["viewBox"])}" preserveAspectRatio="none">{layers}</svg></div>'
                            f'<div class="scrub"><button type="button" class="prev">Back</button><span class="count"></span>'
                            f'<button type="button" class="next">Next step</button></div></figure>')
-        elif not source_block:
-            figure_html = "".join(
+        if result.get("adjudicationFingerprint") or (not figure_html and not source_block):
+            figure_html += "".join(
                 f'<figure class="stage"><img src="../03-figures/{esc(f["canonical"]["file"])}" alt="Question figure"></figure>'
                 for f in figure_index.values()
             )
@@ -518,7 +620,7 @@ main{{max-width:860px;margin:0 auto;padding:24px 16px}} h1{{font-size:24px;margi
 .scrub{{display:flex;gap:10px;align-items:center;margin-top:8px}} button{{font:inherit;padding:4px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}}
 .steps li.on{{font-weight:600}} .correct{{color:var(--forest)}} .wrong{{color:#c0392b}} .problems{{color:#c0392b;font-size:14px}}
 </style></head><body><main><h1>{html.escape(paper_id.upper())} solutions</h1>
-<p>{report["solutions"]} drafted · {report["byStatus"]["draft"]} draft · {report["byStatus"]["verified"]} verified · {report["byStatus"]["held"]} held · {len(report["withoutSolution"])} Part A questions without a solution yet. Private review copy.</p>
+<p>{report["solutions"]} drafted · {report["byStatus"]["draft"]} draft · {report["byStatus"]["verified"]} verified · {report["byStatus"]["held"]} held · {report["byStatus"]["owner-adjudicated"]} owner-adjudicated · {len(report["withoutSolution"])} Part A questions without a solution yet. Private review copy.</p>
 {"".join(cards)}</main><script>
 document.querySelectorAll('.card').forEach(card=>{{const layers=[...card.querySelectorAll('.layer')];const items=[...card.querySelectorAll('.steps li')];
 const names=items.map(li=>li.dataset.step);let at=0;const count=card.querySelector('.count');if(!count)return;
@@ -543,6 +645,13 @@ def main(argv=None):
     review.add_argument("key")
     review.add_argument("--reviewer", required=True)
     review.add_argument("--fingerprint", required=True)
+    owner = sub.add_parser("adjudicate", help="Privately adjudicate a keyless solution after independently solving it")
+    owner.add_argument("paper_id")
+    owner.add_argument("key")
+    owner.add_argument("--reviewer", required=True)
+    owner.add_argument("--fingerprint", required=True)
+    owner.add_argument("--independent-answer", required=True)
+    owner.add_argument("--reasoning", required=True, help="Private text file containing the owner's independently worked reasoning")
     parser.add_argument("--work", required=True)
     args = parser.parse_args(argv)
     try:
@@ -554,6 +663,14 @@ def main(argv=None):
             result["held"] = {k: r["errors"] for k, r in report["results"].items() if r["status"] == "held"}
         elif args.command == "approve":
             result = approve(args.work, args.paper_id, args.key, args.reviewer, args.fingerprint)
+        elif args.command == "adjudicate":
+            try:
+                reasoning = pathlib.Path(args.reasoning).read_text(encoding="utf-8")
+            except (OSError, UnicodeError) as error:
+                raise SolutionError("Read the owner's reasoning from a UTF-8 text file") from error
+            result = adjudicate(args.work, args.paper_id, args.key, args.reviewer, args.fingerprint,
+                                args.independent_answer, reasoning)
+            result = {k: v for k, v in result.items() if k not in ("reasoning", "independentAnswer")}
         else:
             result = render(args.work, args.paper_id)
     except SolutionError as error:
