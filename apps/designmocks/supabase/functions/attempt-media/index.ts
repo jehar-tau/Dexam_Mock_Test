@@ -1,12 +1,14 @@
 import { stagingEdgeDenied } from "../_shared/staging-edge-admission.mjs";
+import { controlledMediaOrigin } from "../_shared/controlled-media-origin.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 // Private bank images are signed only after ownership is checked by read_attempt.
 Deno.serve(async (request) => {
   const requestedOrigin = request.headers.get("origin");
   const portalOrigin = Deno.env.get("PUBLIC_APP_ORIGIN");
   const checkoutOrigin = Deno.env.get("DMOCKS_CHECKOUT_ORIGIN");
-  const origin = requestedOrigin && (requestedOrigin === portalOrigin || requestedOrigin === checkoutOrigin)
-    ? requestedOrigin : null;
+  const origin = controlledMediaOrigin({ requestedOrigin, portalOrigin, checkoutOrigin,
+    configuredPublicOrigin: Deno.env.get("DMOCKS_CONTROLLED_PUBLIC_ORIGIN"),
+    stagingTesterRequired: Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER") });
   const headers = {
     "Access-Control-Allow-Origin": origin ?? "https://invalid.invalid",
     "Access-Control-Allow-Headers":

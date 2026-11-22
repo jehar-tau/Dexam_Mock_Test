@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 
 const origin = "https://staging.example.invalid";
 const checkout = "https://checkout.example.invalid";
+const controlled = "https://dmocks.com";
 const provider = "http://127.0.0.1:1";
 const actor = "00000000-0000-4000-8000-000000000190";
 const mediaPath = "papers/fixture.png";
@@ -32,6 +33,7 @@ Deno.test("private media checks staging admission before handling a request and 
   const environment = {
     PUBLIC_APP_ORIGIN: origin,
     DMOCKS_CHECKOUT_ORIGIN: checkout,
+    DMOCKS_CONTROLLED_PUBLIC_ORIGIN: controlled,
     SUPABASE_URL: provider,
     SUPABASE_ANON_KEY: "fictional-public",
     SUPABASE_SERVICE_ROLE_KEY: "fictional-service",
@@ -82,13 +84,22 @@ Deno.test("private media checks staging admission before handling a request and 
         };
         await import(`../../supabase/functions/${endpoint}/index.ts`);
         assert.ok(handler);
-        for (const [from, status] of [[origin, 204], [checkout, endpoint === "attempt-media" ? 204 : 403], [checkout + ".invalid", 403]]) {
+        for (const [from, status] of [[origin, 204], [checkout, endpoint === "attempt-media" ? 204 : 403],
+          [controlled, ["attempt-media", "drawing-media"].includes(endpoint) ? 204 : 403],
+          ["https://www.dmocks.com", 403], [checkout + ".invalid", 403]]) {
           const response = await handler(new Request(origin, {method: "OPTIONS", headers: {origin: from}}));
           assert.equal(response.status, status);
           assert.equal(response.headers.get("access-control-allow-origin") === from, status === 204);
           await response.body?.cancel();
         }
-        const admittedOrigins = endpoint === "attempt-media" ? [origin, checkout] : [origin];
+        if (["attempt-media", "drawing-media"].includes(endpoint)) {
+          Deno.env.set("DMOCKS_EDGE_REQUIRE_STAGING_TESTER", "false");
+          const unguarded = await handler(new Request(controlled, { method: "OPTIONS", headers: { origin: controlled } }));
+          assert.equal(unguarded.status, 403);
+          await unguarded.body?.cancel();
+          Deno.env.set("DMOCKS_EDGE_REQUIRE_STAGING_TESTER", "true");
+        }
+        const admittedOrigins = endpoint === "attempt-media" ? [origin, checkout, controlled] : [origin];
         const emptyRequest = () => handler(new Request(origin, {
           method: "POST", headers: {origin, authorization: "Bearer fictional-tester", "content-type": "application/json"},
           body: "{}",
@@ -108,6 +119,14 @@ Deno.test("private media checks staging admission before handling a request and 
           assert.equal(denied.headers.get("access-control-allow-origin"), origin);
           assert.deepEqual(await denied.json(), {error: "Private staging requires an approved Google tester"});
           assert.deepEqual(calls, ["/auth/v1/user", "/rest/v1/rpc/can_enter_staging_portal"]);
+          assert.equal(decisions.length, 0);
+          decisions.push(false);
+          const controlledDenied = await handler(new Request(controlled, {method: "POST",
+            headers: {origin: controlled, authorization: "Bearer fictional-tester", "content-type": "application/json"},
+            body: "{}",
+          }));
+          assert.equal(controlledDenied.status, 403);
+          assert.equal(controlledDenied.headers.get("access-control-allow-origin"), controlled);
           assert.equal(decisions.length, 0);
           return;
         }
