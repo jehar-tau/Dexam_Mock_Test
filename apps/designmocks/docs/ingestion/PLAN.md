@@ -224,6 +224,23 @@ The ingestion test suite generates fictional PDF, photo, figure, key and solutio
 - Scanned key rows are matched by table position. Missed labels or answer cells are recovered only under the guarded OCR checks above. `key_review.py` renders the source PDF crop for every unresolved or recovered cell, with the current extraction status. It verifies the preserved PDF and segmentation hashes before rendering. This page does not approve or change a key. Inspect it before accepting a worked solution.
 - Matching the official answer confirms the final value. Review the worked reasoning, arithmetic, figures and annotations before signing off. A numeric answer inside the printed accepted range can pass the key comparison.
 
+### Manually transcribing an unresolved key cell
+
+For a cell whose printed answer remains unreadable to OCR, write a proposal JSON in the private work folder. Include the current `key.json` source SHA-256, and only keys still marked `missing` or `unreadable`:
+
+```json
+{"schema":1,"paperId":"uceed-2031","sourceSha256":"<source PDF SHA-256>","entries":[
+  {"key":"q1","printed":"12"}
+]}
+```
+
+`key_transcription.py prepare` renders each proposed value alongside its original PDF crop and fingerprints the exact source PDF, segments, extracted key manifest and crop pixels. It does not change the key. After a human checks that packet, `approve` requires its fingerprint and the reviewer's name. Approval records a private receipt and a backup of the extracted key, then updates only those unresolved cells. Worked solutions still need their own human review; this does not publish a paper. A changed PDF, segments, extracted key, crop, packet or receipt invalidates the decision.
+
+```bash
+python3 apps/designmocks/ingestion/key_transcription.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work prepare --decisions ~/dmocks-ingestion-work/uceed-2031/proposed-key-cells.json
+python3 apps/designmocks/ingestion/key_transcription.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work approve --packet /private/path/from/prepare/packet.json --fingerprint "$REVIEWED_FINGERPRINT" --reviewer "$HUMAN_REVIEWER" --compare-bank
+```
+
 ## Running stages 1 to 4
 
 ```bash
