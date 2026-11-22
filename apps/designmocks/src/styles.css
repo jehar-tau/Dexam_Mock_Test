@@ -119,6 +119,11 @@ em {
   outline: 3px solid var(--orange);
   outline-offset: 5px;
 }
+/* The route focus target is a landmark, not a control. Keep the keyboard
+   outlines on links and buttons without framing the whole page in browser blue. */
+#main:focus {
+  outline: none;
+}
 svg {
   display: block;
   flex-shrink: 0;
