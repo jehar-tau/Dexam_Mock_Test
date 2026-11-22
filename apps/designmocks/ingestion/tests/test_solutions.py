@@ -204,6 +204,11 @@ class SolutionsTest(unittest.TestCase):
         self.save("q2", MSQ)
         summary = solutions.render(self.work, PAPER)
         page = pathlib.Path(summary["page"]).read_text()
+        self.assertIn('aria-label="Question review status"', page)
+        self.assertIn('<a href="#q1">Q1 <span>draft</span></a>', page)
+        self.assertIn('<a href="#q3">Q3 <span>missing</span></a>', page)
+        self.assertIn('<article id="q3" class="card missing">', page)
+        self.assertIn("Worked solution not drafted yet.", page)
         self.assertIn('src="../03-figures/q1/fig-1.png"', page)
         self.assertEqual(2, page.count('class="layer"'))
         self.assertIn("Step 1 of", page.split("<script>")[1].replace("${at+1}", "1"))
@@ -250,6 +255,19 @@ class SolutionsTest(unittest.TestCase):
         draft["reviewNote"] = ["Invalid review note"]
         self.save("q2", draft)
         self.assertIn("invalid-reviewNote", self.results()["q2"]["errors"])
+
+    def test_review_queue_escapes_missing_question_text(self):
+        path = self.base / "02-segments/questions.json"
+        manifest = json.loads(path.read_text())
+        manifest["questions"][2]["prompt"] = '<script>alert("unsafe")</script>'
+        path.write_text(json.dumps(manifest))
+        figures = self.base / "03-figures/figures.json"
+        figure_manifest = json.loads(figures.read_text())
+        figure_manifest["segmentsSha256"] = solutions.sha256(path.read_bytes())
+        figures.write_text(json.dumps(figure_manifest))
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn('&lt;script&gt;alert(&quot;unsafe&quot;)&lt;/script&gt;', page)
+        self.assertNotIn('<script>alert("unsafe")</script>', page)
 
     def test_human_approval_is_separate_and_bound_to_reviewed_inputs(self):
         draft = copy.deepcopy(NAT)
