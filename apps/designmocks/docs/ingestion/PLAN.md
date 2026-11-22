@@ -32,6 +32,7 @@ Each stage reads the previous stage's files from a private work folder **outside
   02-segments/   questions.json (boxes, text, options, figure regions per question)
   03-figures/    <question>/<figure>.png, .svg (if verified), verify.json, board.png
   04-key/        key.json (official answers matched to questions, mismatches)
+  04-key-review/generated/   read-only PDF cell crops for unresolved or OCR-recovered keys
   05-solutions/  <question>.json (draft worked solutions, status)
   06-review/     <question>.json (human approvals with a fingerprint of the evidence)
 ```
@@ -311,7 +312,7 @@ The ingestion test suite generates fictional PDF, photo, figure, key and solutio
 
 - Intake flags unexplained page ink for OCR when visible writing is missing from the PDF text layer. Segmentation checks the OCR lines for missing question markers and keeps instructions and evaluation criteria outside question prompts.
 - Canonical images keep embedded pixels where possible, including clipped images and transparency masks. SVG trials can lose fine details even when similarity scores pass. Review the private comparison board before approving a trace.
-- Scanned key rows are matched by table position. A missing question label is inferred only when nearby labels agree. If a cell includes ink that the extraction missed, its key stays unreadable.
+- Scanned key rows are matched by table position. Missed labels or answer cells are recovered only under the guarded OCR checks above. `key_review.py` renders the source PDF crop for every unresolved or recovered cell, with the current extraction status. It verifies the preserved PDF and segmentation hashes before rendering. This page does not approve or change a key. Inspect it before accepting a worked solution.
 - Matching the official answer confirms the final value. Review the worked reasoning, arithmetic, figures and annotations before signing off. A numeric answer inside the printed accepted range can pass the key comparison.
 
 ## Running stages 1 to 4
@@ -323,6 +324,7 @@ python3 apps/designmocks/ingestion/intake.py --paper /path/to/fictional-paper.pd
 python3 apps/designmocks/ingestion/segment.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work
 python3 apps/designmocks/ingestion/figures.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work
 python3 apps/designmocks/ingestion/answer_key.py --paper-id uceed-2031 --key /path/to/fictional-key.pdf --work ~/dmocks-ingestion-work --compare-bank
+python3 apps/designmocks/ingestion/key_review.py --paper-id uceed-2031 --work ~/dmocks-ingestion-work
 npm --prefix apps/designmocks run test:ingestion
 ```
 

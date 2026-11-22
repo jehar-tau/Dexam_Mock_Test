@@ -746,7 +746,8 @@ def run_key(*, work, paper_id, key_pdf, replace=False, ocr=None, bank_questions=
             if entry.get("inferredRun"):
                 notes = notes + ["consecutive-row-run-needs-visual-review"]
             record = {"printed": printed, "raw": raw, "kind": use, "status": status, "page": page_no,
-                      "readBy": how, "notes": notes, "checks": checks}
+                      "readBy": how, "notes": notes, "checks": checks,
+                      "cell": entry.get("cell"), "span": entry.get("span") or entry.get("cell")}
             if bank_questions is not None:
                 record["bank"] = compare_bank(bank_questions.get(name), raw, use, status)
             keys[name] = record
