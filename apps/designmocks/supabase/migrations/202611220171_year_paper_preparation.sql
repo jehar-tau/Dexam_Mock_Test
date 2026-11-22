@@ -70,7 +70,7 @@ alter table dm_private.year_paper_preparations enable row level security;
 revoke all on dm_private.year_paper_preparations from public,anon,authenticated,service_role;
 
 create function public.prepare_free_year_paper(p_plan jsonb) returns jsonb
-language plpgsql security definer set search_path=pg_catalog,dm_private,public as $$
+language plpgsql security definer set search_path=pg_catalog,dm_private,extensions,public as $$
 declare
   v_plan_sha text;v_previous dm_private.year_paper_preparations;v_paper uuid;v_question uuid;
   v_exam text;v_year integer;v_source text;v_part text;v_title text;v_duration integer;v_marking_reference text;
@@ -93,7 +93,7 @@ begin
     or v_count not between 1 and 200 then raise exception 'Invalid year-paper plan';end if;
   if v_exam='uceed' and v_year between 2024 and 2026 and v_count<>57 then
     raise exception 'The full 57-question UCEED Part A is required';end if;
-  v_plan_sha:=encode(public.digest(convert_to(p_plan::text,'UTF8'),'sha256'),'hex');
+  v_plan_sha:=encode(digest(convert_to(p_plan::text,'UTF8'),'sha256'),'hex');
   perform pg_advisory_xact_lock(hashtextextended('year-paper-plan:'||v_plan_sha,0));
   select * into v_previous from dm_private.year_paper_preparations where plan_sha256=v_plan_sha;
   if v_previous.paper_id is not null then
