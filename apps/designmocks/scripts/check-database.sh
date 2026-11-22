@@ -55,6 +55,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/learn-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/attempt-identity-lifecycle.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/payment-event-bindings.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/payment-refunds.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/admin-payment-reviews.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/purchase-history.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/purchase-support-reports.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/drawing-reviewer-access.sql
@@ -84,6 +85,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-service-operatio
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-practice-blueprints.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-question-bindings.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f supabase/launch/paid-mvp.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/admin-payment-reviews.sql
 psql "$test_db_url" -X -qAt -v ON_ERROR_STOP=1 -f supabase/audit/staging-rpc-inventory.sql > "$rpc_inventory/paid.json"
 node tests/database/staging-rpc-comparison.mjs "$rpc_inventory/source.json" "$rpc_inventory/paid.json"
 node tests/database/staging-portal-grants.mjs
