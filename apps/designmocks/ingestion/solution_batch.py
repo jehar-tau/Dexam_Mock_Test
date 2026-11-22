@@ -33,12 +33,19 @@ def packet_entry(brief):
     }
 
 
-def queue(work, paper_id, limit=20, text_only=False):
+def queue(work, paper_id, limit=20, text_only=False, keys=None):
     if not 1 <= limit <= 100:
         raise BatchError("Batch size must be between 1 and 100")
+    selected = set(keys or [])
+    if any(not isinstance(key, str) or not solutions.QUESTION_KEY.fullmatch(key) for key in selected):
+        raise BatchError("Select valid question keys")
+    if len(selected) > limit:
+        raise BatchError("Selected questions exceed the batch size")
     base, questions, *_ = solutions.paper_files(work, paper_id)
     entries = []
     for key, question in questions.items():
+        if selected and key not in selected:
+            continue
         if (question.get("part") != "A" or question.get("type") not in solutions.OBJECTIVE
                 or question.get("flags") or not solutions.QUESTION_KEY.fullmatch(key)):
             continue
@@ -54,6 +61,8 @@ def queue(work, paper_id, limit=20, text_only=False):
         entries.append(item)
         if len(entries) == limit:
             break
+    if selected and {item["key"] for item in entries} != selected:
+        raise BatchError("Selected questions are unavailable, held, already drafted, or excluded by the filter")
     if not entries:
         return {"paperId": paper_id, "queued": 0, "packet": None}
     content = {"schema": 1, "paperId": paper_id, "instructions": (
@@ -177,6 +186,7 @@ def main(argv=None):
     make.add_argument("paper_id")
     make.add_argument("--limit", type=int, default=20)
     make.add_argument("--text-only", action="store_true")
+    make.add_argument("--keys", nargs="+", help="Queue these exact question keys for focused review")
     take = sub.add_parser("ingest")
     take.add_argument("paper_id")
     take.add_argument("--packet", required=True)
@@ -184,7 +194,7 @@ def main(argv=None):
     take.add_argument("--drafter", required=True)
     args = parser.parse_args(argv)
     try:
-        result = (queue(args.work, args.paper_id, args.limit, args.text_only) if args.command == "queue"
+        result = (queue(args.work, args.paper_id, args.limit, args.text_only, args.keys) if args.command == "queue"
                   else ingest(args.work, args.paper_id, args.packet, args.responses, args.drafter))
     except (BatchError, solutions.SolutionError) as error:
         print(json.dumps({"error": str(error)}), file=sys.stderr)

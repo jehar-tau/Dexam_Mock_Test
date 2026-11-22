@@ -45,6 +45,15 @@ class SolutionBatchTest(unittest.TestCase):
         visual = solution_batch.queue(self.work, PAPER, limit=1)
         self.assertEqual("q1", json.loads(pathlib.Path(visual["packet"]).read_text())["questions"][0]["key"])
 
+    def test_queue_can_select_exact_review_keys(self):
+        result = solution_batch.queue(self.work, PAPER, limit=2, keys=["q2"])
+        packet = json.loads(pathlib.Path(result["packet"]).read_text())
+        self.assertEqual(["q2"], [item["key"] for item in packet["questions"]])
+        with self.assertRaisesRegex(solution_batch.BatchError, "unavailable"):
+            solution_batch.queue(self.work, PAPER, keys=["q99"])
+        with self.assertRaisesRegex(solution_batch.BatchError, "exceed"):
+            solution_batch.queue(self.work, PAPER, limit=1, keys=["q1", "q2"])
+
     def test_import_creates_private_draft_without_approval(self):
         path, packet = self.make_packet()
         result = solution_batch.ingest(self.work, PAPER, path, self.response_file(packet), "local-test-model")
