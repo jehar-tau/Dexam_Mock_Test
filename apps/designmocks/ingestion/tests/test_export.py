@@ -15,6 +15,7 @@ from test_solutions import HERE, NAT, PAPER, build_work
 sys.path.insert(0, str(HERE))
 import export
 import export_batch
+import intake
 import solutions
 from test_solutions import MSQ
 
@@ -37,11 +38,22 @@ class ExportTest(unittest.TestCase):
         self.original.parent.mkdir(parents=True)
         self.original.write_bytes(b"Fictional question paper")
         self.source_hash = solutions.sha256(self.original.read_bytes())
-        intake_path.write_text(json.dumps({"paperId": PAPER, "exam": "uceed", "year": 2031,
+        intake_path.write_text(json.dumps({"paperId": PAPER, "stage": "01-intake", "exam": "uceed", "year": 2031,
                                            "source": {"kind": "pdf", "files": [
                                                {"name": self.original.name, "sha256": self.source_hash}
                                            ]}}))
 
+        self.bind_intake()
+        self.draft = copy.deepcopy(NAT)
+        self.draft.pop("overlay")
+        for step in self.draft["steps"]:
+            step.pop("overlay")
+        self.save_draft()
+        self.pin_bank([])
+        self.payload = None
+
+    def bind_intake(self):
+        intake_path = self.base / "01-intake/paper.json"
         segments_path = self.base / "02-segments/questions.json"
         segments = json.loads(segments_path.read_text())
         self.question = segments["questions"][0]
@@ -53,13 +65,16 @@ class ExportTest(unittest.TestCase):
             manifest = json.loads(path.read_text())
             manifest["segmentsSha256"] = solutions.sha256(segments_path.read_bytes())
             path.write_text(json.dumps(manifest))
-        self.draft = copy.deepcopy(NAT)
-        self.draft.pop("overlay")
-        for step in self.draft["steps"]:
-            step.pop("overlay")
-        self.save_draft()
-        self.pin_bank([])
-        self.payload = None
+
+    def use_ordered_photos(self):
+        photos = [self.work / name for name in ("z-first.jpg", "a-second.jpg")]
+        for photo, color in zip(photos, ("white", "black")):
+            Image.new("RGB", (20, 20), color).save(photo)
+        intake.run_intake(exam="uceed", year=2031, work=self.work, paper_id=PAPER,
+                          photos=photos, replace=True)
+        self.bind_intake()
+        self.fictional_block()
+        return photos
 
     def git(self, *args):
         return subprocess.check_output(["git", *args], cwd=self.repo, text=True).strip()
@@ -79,6 +94,19 @@ class ExportTest(unittest.TestCase):
     def approve(self):
         fingerprint = solutions.check(self.work, PAPER)["results"]["q1"]["fingerprint"]
         solutions.approve(self.work, PAPER, "q1", "Fictional reviewer", fingerprint)
+        return fingerprint
+
+    def owner_adjudicate(self, *, with_overlay=False):
+        self.fictional_block()
+        if with_overlay:
+            self.draft = copy.deepcopy(NAT)
+        self.draft["answer"]["source"] = "model-proposed"
+        self.save_draft()
+        (self.base / "04-key/key.json").unlink()
+        (self.base / "04-key/source/fictional-key.pdf").unlink()
+        fingerprint = solutions.check(self.work, PAPER)["results"]["q1"]["adjudicationFingerprint"]
+        solutions.adjudicate(self.work, PAPER, "q1", "Fictional owner", fingerprint, "12.0",
+                             "Four groups of three make twelve.")
         return fingerprint
 
     def existing(self):
@@ -112,12 +140,24 @@ class ExportTest(unittest.TestCase):
             self.assertEqual(asset["sha256"], solutions.sha256(staged.read_bytes()))
         return {"mode": "staged" if persistent else "dry-run", "review": "objective-complete"}
 
+    def run_fixture_preparer(self, options):
+        script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
+        code = ("const {prepareAdditions}=await import(process.argv[1]);"
+                "let input='';for await(const chunk of process.stdin)input+=chunk;"
+                "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
+        result = subprocess.run(["node", "--input-type=module", "-e", code, script],
+                                input=json.dumps(options), text=True, cwd=self.repo,
+                                capture_output=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        return json.loads(result.stdout)
+
     def export(self, fingerprint, **kwargs):
         if "replace_expected" not in kwargs:
             kwargs.setdefault("source_classification", "official-unlicensed")
+        run_prepare = kwargs.pop("run_prepare", self.fake_prepare)
         return export.prepare(work=self.work, repo=self.repo, paper_id=PAPER, key="q1", fingerprint=fingerprint,
                               rights_note="Fictional source rights reviewed", expected_source=self.source_commit,
-                              run_prepare=self.fake_prepare, **kwargs)
+                              run_prepare=run_prepare, **kwargs)
 
     def test_addition_uses_key_evidence_and_discards_temporary_packet(self):
         self.fictional_block()
@@ -128,12 +168,174 @@ class ExportTest(unittest.TestCase):
         self.assertEqual("12", self.payload["answer"]["raw"])
         self.assertEqual("fictional-key.pdf", self.payload["answer"]["source"]["name"])
         self.assertEqual(2, self.payload["provenance"]["page"])
+        self.assertEqual(self.source_hash, self.payload["provenance"]["sourceSha256"])
+        self.assertEqual("pdf", self.packet["sourceType"])
         self.assertIn("3 × 4 = 12", self.payload["explanation"])
         self.assertEqual("block", self.payload["display"])
         self.assertEqual(fingerprint, self.payload["solutionReview"]["fingerprint"])
         self.assertFalse(self.packet_path.exists())
         self.assertEqual(before, {path: path.read_bytes() for path in self.base.rglob("*") if path.is_file()})
         self.assertEqual("", self.git("status", "--short"))
+
+    def test_photo_addition_uses_ordered_originals_and_invalidates_reordered_approval(self):
+        photos = self.use_ordered_photos()
+        fingerprint = self.approve()
+        self.export(fingerprint)
+        digest = self.payload["provenance"]["sourceSha256"]
+        expected = hashlib.sha256(b"dmocks-paper-photos-v1\n" + b"\n".join(
+            hashlib.sha256(photo.read_bytes()).hexdigest().encode() for photo in photos
+        )).hexdigest()
+        self.assertEqual(expected, digest)
+        self.assertEqual("photo", self.packet["sourceType"])
+        self.assertEqual(2, self.payload["provenance"]["page"])
+
+        intake.run_intake(exam="uceed", year=2031, work=self.work, paper_id=PAPER,
+                          photos=list(reversed(photos)), replace=True)
+        self.bind_intake()
+        with self.assertRaisesRegex(solutions.SolutionError, "current human approval"):
+            self.export(fingerprint)
+        self.export(self.approve())
+        self.assertNotEqual(digest, self.payload["provenance"]["sourceSha256"])
+
+    def test_canonical_preparer_stages_a_reviewed_photo_packet(self):
+        self.use_ordered_photos()
+        output = self.work / "photo-export"
+
+        def verify(args, repo):
+            self.fake_prepare(args, repo)
+            return self.run_fixture_preparer({
+                "packets": [{"packetPath": str(self.packet_path), "expected": self.packet["contentSha256"]}],
+                "expectedSource": self.source_commit, "cwd": str(self.repo),
+                "downloadsDir": args[args.index("--downloads-dir") + 1],
+                "output": str(output),
+            })
+
+        result = self.export(self.approve(), output=output, run_prepare=verify)
+        self.assertEqual("staged", result["mode"])
+        staged = json.loads((output / "dexam-bank-export.json").read_text())
+        self.assertEqual(self.payload["provenance"], staged["questions"][0]["provenance"])
+
+    def test_photo_export_checks_unreferenced_original_size_digest_and_path(self):
+        photos = self.use_ordered_photos()
+        original = self.base / "01-intake/source" / photos[0].name
+        data = original.read_bytes()
+        fingerprint = self.approve()
+        with self.subTest("same-size content mutation"):
+            original.write_bytes(data[:-1] + bytes([data[-1] ^ 1]))
+            with self.assertRaisesRegex(solutions.SolutionError, "original page photo does not match"):
+                self.export(fingerprint)
+        with self.subTest("wrong recorded size with matching digest"):
+            original.write_bytes(data)
+            intake_path = self.base / "01-intake/paper.json"
+            manifest = json.loads(intake_path.read_text())
+            manifest["source"]["files"][0]["bytes"] += 1
+            intake_path.write_text(json.dumps(manifest))
+            self.bind_intake()
+            with self.assertRaisesRegex(solutions.SolutionError, "original page photo does not match"):
+                self.export(self.approve())
+            manifest["source"]["files"][0]["bytes"] -= 1
+            intake_path.write_text(json.dumps(manifest))
+            self.bind_intake()
+        with self.subTest("source symlink with matching bytes"):
+            original.unlink()
+            original.symlink_to(photos[0])
+            with self.assertRaisesRegex(solutions.SolutionError, "original page photo does not match"):
+                self.export(self.approve())
+
+    def test_photo_correction_requires_exact_canonical_source_digest(self):
+        self.use_ordered_photos()
+        current = self.existing()
+        fingerprint = self.approve()
+        self.export(fingerprint)
+        photo_digest = self.payload["provenance"]["sourceSha256"]
+        self.pin_bank([current])
+        with self.assertRaisesRegex(solutions.SolutionError, "same original paper and question"):
+            self.export(fingerprint, replace_expected="b" * 64)
+
+        current["provenance"]["sourceSha256"] = photo_digest
+        self.pin_bank([current])
+        result = self.export(fingerprint, replace_expected="b" * 64)
+        self.assertEqual("correction", result["operation"])
+        self.assertEqual(current["provenance"], self.payload["provenance"])
+        self.assertEqual("photo", self.packet["sourceType"])
+    def test_owner_adjudication_stays_private(self):
+        self.fictional_block()
+        self.draft["answer"]["source"] = "model-proposed"
+        self.save_draft()
+        (self.base / "04-key/key.json").unlink()
+        (self.base / "04-key/source/fictional-key.pdf").unlink()
+        proposed = solutions.check(self.work, PAPER)["results"]["q1"]
+        fingerprint = proposed["adjudicationFingerprint"]
+        solutions.adjudicate(self.work, PAPER, "q1", "Owner", fingerprint, "12", "There are four groups of three.")
+        output = self.work / "keyless-export"
+        with self.assertRaisesRegex(export.SolutionError, "current human approval"):
+            self.export(fingerprint, output=output)
+        self.assertIsNone(self.payload)
+        self.assertFalse(output.exists())
+
+    def test_owner_adjudication_prepares_new_addition_without_private_review_notes(self):
+        fingerprint = self.owner_adjudicate()
+        result = self.export(fingerprint, owner_adjudicated=True)
+        self.assertEqual(("dry-run", "addition"), (result["mode"], result["operation"]))
+        self.assertEqual({"raw": "12", "status": "owner-adjudicated"}, self.payload["answer"])
+        self.assertEqual({"fingerprint": fingerprint, "solutionSha256": solutions.sha256(
+            (self.base / "05-solutions/q1.json").read_bytes()), "decision": "owner-adjudicated"},
+            self.payload["solutionReview"])
+        self.assertNotIn("answerKeySource", self.payload["provenance"])
+        self.assertNotIn("Fictional owner", self.packet["payloadText"])
+        self.assertNotIn("Four groups of three make twelve", self.packet["payloadText"])
+
+    def test_ordered_photo_paper_can_stage_an_owner_adjudicated_addition(self):
+        photos = self.use_ordered_photos()
+        fingerprint = self.owner_adjudicate()
+        result = self.export(fingerprint, owner_adjudicated=True)
+        self.assertEqual(("dry-run", "addition"), (result["mode"], result["operation"]))
+        self.assertEqual("photo", self.packet["sourceType"])
+        self.assertEqual("owner-adjudicated", self.payload["answer"]["status"])
+        self.assertEqual(2, self.payload["provenance"]["page"])
+        self.assertEqual(hashlib.sha256(b"dmocks-paper-photos-v1\n" + b"\n".join(
+            hashlib.sha256(photo.read_bytes()).hexdigest().encode() for photo in photos
+        )).hexdigest(), self.payload["provenance"]["sourceSha256"])
+
+    def test_owner_adjudication_stages_through_canonical_preparer(self):
+        fingerprint = self.owner_adjudicate(with_overlay=True)
+        output = self.work / "adjudicated-output"
+
+        def canonical(args, repo):
+            self.fake_prepare(args, repo)
+            options = {"packets": [{"packetPath": str(self.packet_path),
+                                    "expected": self.packet["contentSha256"]}],
+                       "expectedSource": self.source_commit, "cwd": str(self.repo),
+                       "downloadsDir": args[args.index("--downloads-dir") + 1], "output": str(output)}
+            script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
+            code = ("const {prepareAdditions}=await import(process.argv[1]);"
+                    "let input='';for await(const chunk of process.stdin)input+=chunk;"
+                    "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
+            result = subprocess.run(["node", "--input-type=module", "-e", code, script],
+                                    input=json.dumps(options), text=True, cwd=self.repo,
+                                    capture_output=True, check=True)
+            return json.loads(result.stdout)
+
+        result = self.export(fingerprint, owner_adjudicated=True, output=output, run_prepare=canonical)
+        self.assertEqual(("staged", "objective-complete"), (result["mode"], result["review"]))
+        staged = json.loads((output / "dexam-bank-export.json").read_text())
+        self.assertEqual("owner-adjudicated", staged["questions"][0]["answer"]["status"])
+        self.assertEqual(2, len(staged["questions"][0]["workedSolution"]["steps"]))
+        self.assertTrue((output / "receipt.json").is_file())
+
+    def test_owner_adjudication_export_rejects_stale_evidence_and_corrections(self):
+        fingerprint = self.owner_adjudicate()
+        with self.assertRaisesRegex(export.SolutionError, "new additions"):
+            self.export(fingerprint, owner_adjudicated=True, replace_expected="a" * 64)
+        original = self.original.read_bytes()
+        self.original.write_bytes(b"Changed fictional source")
+        with self.assertRaisesRegex(export.SolutionError, "current owner adjudication"):
+            self.export(fingerprint, owner_adjudicated=True)
+        self.original.write_bytes(original)
+        self.draft["keyIdea"] += " Check each row."
+        self.save_draft()
+        with self.assertRaisesRegex(export.SolutionError, "current owner adjudication"):
+            self.export(fingerprint, owner_adjudicated=True)
 
     def test_staged_export_passes_the_private_output_directory_to_bank_preparer(self):
         self.fictional_block()
@@ -279,7 +481,7 @@ class ExportTest(unittest.TestCase):
         self.assertEqual(["figure", "solution"], [asset["role"] for asset in self.payload["assets"]])
         self.assertEqual(self.payload["workedSolution"]["figure"]["sha256"], self.payload["assets"][1]["sha256"])
 
-    def test_batch_bridge_collects_two_approved_corrections_for_one_bank_check(self):
+    def second_question(self):
         segments_path = self.base / "02-segments/questions.json"
         segments = json.loads(segments_path.read_text())
         second = segments["questions"][1]
@@ -291,6 +493,79 @@ class ExportTest(unittest.TestCase):
             manifest["segmentsSha256"] = solutions.sha256(segments_path.read_bytes())
             path.write_text(json.dumps(manifest))
         (self.base / "05-solutions/q2.json").write_text(json.dumps(MSQ))
+        return second
+
+    def run_canonical_batch(self, args, repo):
+        self.assertEqual(self.repo, repo)
+        options = {
+            "packets": [{"packetPath": args[index + 1], "expected": args[args.index("--expect", index) + 1]}
+                        for index, item in enumerate(args) if item == "--packet"],
+            "expectedSource": args[args.index("--expect-source") + 1], "cwd": str(repo),
+            "downloadsDir": args[args.index("--downloads-dir") + 1],
+        }
+        versions = [args[index + 1] for index, item in enumerate(args) if item == "--replace-expect"]
+        if versions:
+            options["replaceExpecteds"] = versions
+        if "--output" in args:
+            options["output"] = args[args.index("--output") + 1]
+        script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
+        code = ("const {prepareAdditions}=await import(process.argv[1]);"
+                "let input='';for await(const chunk of process.stdin)input+=chunk;"
+                "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
+        result = subprocess.run(["node", "--input-type=module", "-e", code, script],
+                                input=json.dumps(options), text=True, cwd=repo,
+                                capture_output=True, check=True)
+        return json.loads(result.stdout)
+
+    def addition_entries(self):
+        self.fictional_block()
+        self.second_question()
+        report = solutions.check(self.work, PAPER)["results"]
+        entries = []
+        for key in ("q1", "q2"):
+            fingerprint = report[key]["fingerprint"]
+            solutions.approve(self.work, PAPER, key, "Fictional reviewer", fingerprint)
+            entries.append({"key": key, "fingerprint": fingerprint})
+        return entries
+
+    def addition_batch(self, entries, **kwargs):
+        return export_batch.prepare_batch(
+            work=self.work, paper_id=PAPER, entries=entries,
+            expected_source=self.source_commit, rights_note="Fictional source rights reviewed",
+            source_classification="owner-authorized", repo=self.repo, **kwargs,
+        )
+
+    def test_batch_stages_two_new_approved_additions_with_verified_media(self):
+        entries = self.addition_entries()
+        output = self.work / "batch-output"
+        result = self.addition_batch(entries, output=output, run_prepare=self.run_canonical_batch)
+        self.assertEqual(("staged", 2, 2), (result["mode"], result["added"], result["selected"]))
+        self.assertEqual(self.source_commit, result["sourceCommit"])
+        staged = json.loads((output / "dexam-bank-export.json").read_text())["questions"]
+        self.assertEqual([f"{PAPER}-q1", f"{PAPER}-q2"], [question["externalKey"] for question in staged])
+        self.assertEqual([entry["fingerprint"] for entry in entries],
+                         [question["solutionReview"]["fingerprint"] for question in staged])
+        self.assertTrue(all(question["licence"] == "owner-provided" for question in staged))
+        figure = staged[0]["assets"][0]
+        self.assertEqual(figure["sha256"], solutions.sha256((output / "media" / figure["path"]).read_bytes()))
+        receipt = json.loads((output / "receipt.json").read_text())
+        self.assertEqual(["objective-complete"] * 2, [item["review"] for item in receipt["additions"]])
+        self.assertEqual("", self.git("status", "--short"))
+
+    def test_batch_rejects_changed_second_approval_without_staging_first_addition(self):
+        entries = self.addition_entries()
+        draft_path = self.base / "05-solutions/q2.json"
+        modified = copy.deepcopy(MSQ)
+        modified["steps"][0]["text"] += " This was changed after review."
+        draft_path.write_text(json.dumps(modified))
+        output = self.work / "batch-output"
+        with self.assertRaisesRegex(solutions.SolutionError, "current human approval"):
+            self.addition_batch(entries, output=output, run_prepare=self.run_canonical_batch)
+        self.assertFalse(output.exists())
+        self.assertEqual("", self.git("status", "--short"))
+
+    def test_batch_bridge_collects_two_approved_corrections_for_one_bank_check(self):
+        second = self.second_question()
         first_bank = self.existing()
         second_bank = {
             "externalKey": f"{PAPER}-q2", "type": "MSQ", "sourceKind": "official",
@@ -322,22 +597,7 @@ class ExportTest(unittest.TestCase):
             self.assertEqual([entry["replaceExpected"] for entry in entries],
                              [args[index + 1] for index, item in enumerate(args) if item == "--replace-expect"])
             self.assertEqual(str(self.work / "batch-output"), args[args.index("--output") + 1])
-            options = {
-                "packets": [{"packetPath": args[index + 1], "expected": args[args.index("--expect", index) + 1]}
-                            for index, item in enumerate(args) if item == "--packet"],
-                "replaceExpecteds": [entry["replaceExpected"] for entry in entries],
-                "expectedSource": self.source_commit, "cwd": str(self.repo),
-                "downloadsDir": args[args.index("--downloads-dir") + 1],
-                "output": args[args.index("--output") + 1],
-            }
-            script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
-            code = ("const {prepareAdditions}=await import(process.argv[1]);"
-                    "let input='';for await(const chunk of process.stdin)input+=chunk;"
-                    "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
-            result = subprocess.run(["node", "--input-type=module", "-e", code, script],
-                                    input=json.dumps(options), text=True, cwd=self.repo,
-                                    capture_output=True, check=True)
-            return json.loads(result.stdout)
+            return self.run_canonical_batch(args, repo)
 
         result = export_batch.prepare_batch(work=self.work, paper_id=PAPER, entries=entries,
                                             expected_source=self.source_commit,

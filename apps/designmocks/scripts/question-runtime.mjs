@@ -66,6 +66,21 @@ function choiceKey(type,raw,ids,allowAlternatives){
 }
 // Structured issues contain locations and stable codes, never source text/keys.
 // The legacy materializer and the correction queue use this same evaluation.
+export function ownerAdjudicationEvidenceReady(question){
+ const answer=question?.answer,review=question?.solutionReview;
+ const exactKeys=(value,keys)=>value&&typeof value==='object'&&!Array.isArray(value)
+  &&Object.keys(value).sort().join(',')===keys.slice().sort().join(',');
+ return answer?.status==='owner-adjudicated'
+  &&exactKeys(answer,['raw','status'])&&typeof answer.raw==='string'&&answer.raw.trim().length>0
+  &&exactKeys(review,['decision','fingerprint','solutionSha256'])
+  &&review.decision==='owner-adjudicated'
+  &&[review.fingerprint,review.solutionSha256].every(value=>typeof value==='string'&&/^[0-9a-f]{64}$/.test(value))
+  &&question.provenance&&typeof question.provenance==='object'
+  &&!Object.hasOwn(question.provenance,'answerKeySource')
+  &&typeof question.explanation==='string'&&question.explanation.trim().length>0
+  &&!Object.hasOwn(question,'ownerAdjudication')&&!Object.hasOwn(question,'reviewer')
+  &&!Object.hasOwn(question,'independentAnswer')&&!Object.hasOwn(question,'reasoning');
+}
 export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  const issues=[];
  const issue=(code,field,extra={})=>issues.push({code,field,...extra});
@@ -95,6 +110,7 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  const scheme=verified?rule.sections?.[question.type]:null;
  if(verified&&!scheme)issue('section-unmodelled','type');
  if(question.answer?.status==='pending')issue('answer-pending','answer.status');
+ if(question.answer?.status==='owner-adjudicated'&&!ownerAdjudicationEvidenceReady(question))issue('answer-adjudication','answer');
  const raw=String(question.answer?.raw??'').trim();
  if(!raw)issue('answer-missing','answer.raw');
  let key,options=[];
@@ -120,7 +136,7 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  if(question.workedSolution!==undefined){
   const reviewed=[question.solutionReview?.fingerprint,question.solutionReview?.solutionSha256]
    .every(digest=>typeof digest==='string'&&/^[0-9a-f]{64}$/.test(digest));
-  if(!solution||!reviewed||question.answer?.status!=='official-key'||typeof question.explanation!=='string'
+  if(!solution||!reviewed||!['official-key','owner-adjudicated'].includes(question.answer?.status)||typeof question.explanation!=='string'
     ||!question.explanation.trim()||question.explanation.length>8000)issue('worked-solution-invalid','workedSolution');
  }
  if(issues.length)return blocked();

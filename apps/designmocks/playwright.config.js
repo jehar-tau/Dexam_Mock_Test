@@ -8,7 +8,9 @@ const fixtureNotices = readPublishedNotices(noticeFile, { allowFixture: true });
 const scope=process.env.DMOCKS_E2E_SCOPE??'mvp';
 if(!['mvp','full'].includes(scope))throw new Error('Choose the mvp or full browser scope.');
 const fallbackRunner = process.env.DMOCKS_E2E_FALLBACK_RUNNER === '1';
-const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','staging-portal.spec.js','staging-review.spec.js','staging-paid-pilot.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','admin-access-lifecycle.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','drawing-reviewer.spec.js','drawing-reviewer-lifecycle.spec.js','drawing-inspection.spec.js','drawing-upload-validation.spec.js','intake-canonical.spec.js','ai-draft-canonical.spec.js'];
+// The default PR gate covers the student launch and the bank ingestion slice.
+// Claude-owned Learn/Community and deferred reviewer journeys remain in `full`.
+const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','staging-portal.spec.js','staging-review.spec.js','staging-paid-pilot.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','intake-canonical.spec.js','ai-draft-canonical.spec.js'];
 export default defineConfig({
   testMatch: scope === 'full' ? '**/*.spec.js' : [
     ...mvpFiles.map(file => '**/' + file),
@@ -17,13 +19,6 @@ export default defineConfig({
     '**/all-india-ranking-consent.spec.js',
     '**/all-india-event-boundary.spec.js',
     '**/practice-events-preview.spec.js',
-    '**/learn-programme.spec.js',
-    '**/learn-lifecycle.spec.js',
-    '**/learn-practice-context.spec.js',
-    '**/learning-editor.spec.js',
-    '**/community-images.spec.js',
-    '**/community-followup-images.spec.js',
-    '**/community-articles.spec.js',
   ],
   testDir: "./tests/e2e",
   fullyParallel: true,

@@ -19,7 +19,7 @@ spec.loader.exec_module(solutions)
 PAPER = "uceed-2031"
 
 
-def build_work(root):
+def build_work(root, *, keyless_evidence=False):
     base = root / PAPER
     for stage in ("02-segments", "03-figures/q1", "04-key", "05-solutions"):
         (base / stage).mkdir(parents=True)
@@ -31,12 +31,28 @@ def build_work(root):
         {"key": "q3", "part": "A", "type": "MCQ", "prompt": "Which fictional city is the capital?", "flags": [],
          "options": [{"key": k, "text": t} for k, t in zip("ABCD", ["Alpha", "Beta", "Gamma", "Delta"])]},
     ]
+    segment_manifest = {"questions": questions}
+    if keyless_evidence:
+        paper = base / "01-intake/source/fictional-paper.pdf"
+        paper.parent.mkdir(parents=True)
+        paper.write_bytes(b"Fictional question paper source")
+        intake = base / "01-intake/paper.json"
+        intake.write_text(json.dumps({"paperId": PAPER, "stage": "01-intake", "source": {
+            "kind": "pdf", "files": [{"name": paper.name, "sha256": solutions.sha256(paper.read_bytes())}],
+        }}))
+        segment_manifest["intakeSha256"] = solutions.sha256(intake.read_bytes())
     segments = base / "02-segments/questions.json"
-    segments.write_text(json.dumps({"questions": questions}))
+    segments.write_text(json.dumps(segment_manifest))
     segment_hash = solutions.sha256(segments.read_bytes())
     figure_hash = solutions.sha256((base / "03-figures/q1/fig-1.png").read_bytes())
+    block_source = None
+    if keyless_evidence:
+        block = base / "03-figures/q1/block.png"
+        Image.new("RGB", (800, 400), "white").save(block)
+        block_source = {"file": "q1/block.png", "width": 800, "height": 400,
+                        "sha256": solutions.sha256(block.read_bytes())}
     figures = {"questions": [
-        {"key": "q1", "block": None, "figures": [{"id": "q1-fig-1", "role": "figure",
+        {"key": "q1", "block": block_source, "figures": [{"id": "q1-fig-1", "role": "figure",
                                                   "canonical": {"file": "q1/fig-1.png", "width": 400, "height": 200,
                                                                 "sha256": figure_hash}}]},
         {"key": "q2", "block": None, "figures": []}, {"key": "q3", "block": None, "figures": []}],
@@ -84,7 +100,7 @@ class SolutionsTest(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.work = pathlib.Path(self.temp.name)
-        self.base = build_work(self.work)
+        self.base = build_work(self.work, keyless_evidence=True)
 
     def tearDown(self):
         self.temp.cleanup()
@@ -116,7 +132,7 @@ class SolutionsTest(unittest.TestCase):
         self.save("q1", NAT)
         self.save("q2", MSQ)
         report = solutions.check(self.work, PAPER)
-        self.assertEqual({"draft": 2, "verified": 0, "held": 0}, report["byStatus"])
+        self.assertEqual({"draft": 2, "verified": 0, "held": 0, "owner-adjudicated": 0}, report["byStatus"])
         self.assertTrue(report["results"]["q1"]["reachesKey"])
         self.assertEqual([], report["eligibleForExport"])
         self.assertEqual(["q3"], report["withoutSolution"])
@@ -196,6 +212,45 @@ class SolutionsTest(unittest.TestCase):
         self.assertIn(self.results()["q1"]["fingerprint"], page)
         self.assertNotIn("<script>alert", page)
 
+    def test_inferred_key_number_is_clearly_marked_for_visual_review(self):
+        self.save("q1", NAT)
+        self.change_key("q1", notes=["question-number-inferred-from-grid",
+                                     "consecutive-row-run-needs-visual-review"])
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn("Source-linked OCR key; visually review its inferred question number", page)
+        self.assertNotIn("Verified official key", page)
+
+    def test_cropped_key_number_is_clearly_marked_for_visual_review(self):
+        self.save("q1", NAT)
+        self.change_key("q1", readBy="crop-ocr", notes=["two-crop-ocr-agreement-needs-visual-review"])
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn("Source-linked cropped OCR key; visually review its printed number", page)
+
+    def test_wholly_recovered_key_row_is_clearly_marked_for_visual_review(self):
+        self.save("q1", NAT)
+        self.change_key("q1", readBy="crop-ocr", notes=["two-crop-ocr-agreement-needs-visual-review",
+                                                     "whole-row-recovered-by-two-crop-pairs-needs-visual-review"])
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn("Source-linked cropped OCR key; visually review its recovered row and answer", page)
+    def test_source_discrepancy_hold_is_visible_and_cannot_be_approved(self):
+        draft = copy.deepcopy(MSQ)
+        draft["provenance"]["status"] = "held"
+        draft["reviewNote"] = "Source says 30 objects; figure shows 25. <script>alert(1)</script>"
+        self.save("q2", draft)
+        result = self.results()["q2"]
+        self.assertEqual("held", result["status"])
+        self.assertFalse(result["eligibleForExport"])
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn("Review hold:", page)
+        self.assertIn("Source says 30 objects; figure shows 25.", page)
+        self.assertNotIn("<script>alert(1)</script>", page)
+        with self.assertRaisesRegex(solutions.SolutionError, "Only a valid solution"):
+            solutions.approve(self.work, PAPER, "q2", "Human reviewer", "not-reviewable")
+
+        draft["reviewNote"] = ["Invalid review note"]
+        self.save("q2", draft)
+        self.assertIn("invalid-reviewNote", self.results()["q2"]["errors"])
+
     def test_human_approval_is_separate_and_bound_to_reviewed_inputs(self):
         draft = copy.deepcopy(NAT)
         draft["provenance"].update(status="verified", reviewedBy="Model claimed a reviewer")
@@ -234,7 +289,7 @@ class SolutionsTest(unittest.TestCase):
         self.assertEqual({"source": "model-proposed", "value": None}, brief["draftTemplate"]["answer"])
         proposed = copy.deepcopy(MSQ)
         self.save("q2", proposed)
-        self.assertIn("answer-source-must-be-model-proposed", self.results()["q2"]["errors"])
+        self.assertIn("answer-source-must-be-model-or-human-proposed", self.results()["q2"]["errors"])
         proposed["answer"]["source"] = "model-proposed"
         self.save("q2", proposed)
         draft = self.results()["q2"]
@@ -246,6 +301,88 @@ class SolutionsTest(unittest.TestCase):
         proposed["optionCheck"][0]["verdict"] = "wrong"
         self.save("q2", proposed)
         self.assertIn("option-verdicts-disagree-with-answer", self.results()["q2"]["errors"])
+
+    def keyless_draft(self):
+        draft = copy.deepcopy(NAT)
+        draft["answer"]["source"] = "model-proposed"
+        self.save("q1", draft)
+        return draft
+
+    def adjudicate(self, fingerprint, *, reviewer="Owner", answer="12.0", reasoning="Four columns of three give 12."):
+        return solutions.adjudicate(self.work, PAPER, "q1", reviewer, fingerprint, answer, reasoning)
+
+    def test_private_adjudication_requires_independent_reasoning_and_agreement(self):
+        (self.base / "04-key/key.json").unlink()
+        (self.base / "04-key/source/fictional-key.pdf").unlink()
+        draft = self.keyless_draft()
+        draft["answer"]["source"] = "human-proposed"
+        self.save("q1", draft)
+        before = self.results()["q1"]
+        self.assertEqual("draft", before["status"])
+        fingerprint = before["adjudicationFingerprint"]
+        self.assertTrue(fingerprint)
+        for args in ({"reviewer": " CLAUDE-LOCAL-SESSION "}, {"answer": "13"}, {"reasoning": " "}):
+            with self.subTest(args=args), self.assertRaisesRegex(solutions.SolutionError, "different human"):
+                self.adjudicate(fingerprint, **args)
+        self.assertFalse((self.base / "06-review/q1.json").exists())
+
+        notes = self.work / "owner-notes.txt"
+        notes.write_text("Four columns of three give 12.")
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(0, solutions.main([
+                "--work", str(self.work), "adjudicate", PAPER, "q1", "--reviewer", "Owner",
+                "--fingerprint", fingerprint, "--independent-answer", "12.0", "--reasoning", str(notes),
+            ]))
+        report = solutions.check(self.work, PAPER)
+        self.assertEqual(["q1"], report["ownerAdjudicated"])
+        self.assertEqual([], report["eligibleForExport"])
+        self.assertEqual("owner-adjudicated", report["results"]["q1"]["status"])
+        self.assertIsNone(report["results"]["q1"]["reachesKey"])
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        for phrase in (fingerprint, "Owner-adjudicated by Owner", notes.read_text(), "private review only"):
+            self.assertIn(phrase, page)
+
+    def test_keyless_receipt_is_bound_to_current_evidence(self):
+        draft = self.keyless_draft()
+        self.change_key("q1", status="unreadable", raw=None, printed="?")
+        before = self.results()["q1"]["adjudicationFingerprint"]
+        receipt = self.adjudicate(before)
+        path = self.base / "06-review/q1.json"
+        path.write_text(json.dumps({**receipt, "independentAnswer": "13"}))
+        self.assertIsNone(self.results()["q1"]["ownerAdjudication"])
+        self.adjudicate(before)
+        draft["keyIdea"] += " Count by column too."
+        self.save("q1", draft)
+        changed = self.results()["q1"]
+        self.assertIn("review-no-longer-matches", changed["warnings"])
+        with self.assertRaisesRegex(solutions.SolutionError, "fingerprint changed"):
+            self.adjudicate(before)
+        self.adjudicate(changed["adjudicationFingerprint"])
+
+        sources = ("01-intake/source/fictional-paper.pdf", "04-key/source/fictional-key.pdf", "03-figures/q1/fig-1.png")
+        for name in sources:
+            with self.subTest(source=name):
+                source = self.base / name
+                original = source.read_bytes()
+                source.write_bytes(b"Altered evidence")
+                result = self.results()["q1"]
+                self.assertIsNone(result["adjudicationFingerprint"])
+                self.assertIsNone(result["ownerAdjudication"])
+                self.assertFalse(result["eligibleForExport"])
+                source.write_bytes(original)
+        self.change_key("q1", status="official-key", raw="12", printed="12")
+        result = self.results()["q1"]
+        self.assertIn("answer-source-must-be-official-key", result["errors"])
+        self.assertFalse(result["eligibleForExport"])
+
+    def test_unresolved_key_evidence_cannot_be_adjudicated(self):
+        self.keyless_draft()
+        for changes in ({"status": "dropped"}, {"status": "unreadable", "raw": "12"},
+                        {"status": "unreadable", "raw": None, "checks": ["section-mismatch"]}):
+            self.change_key("q1", **changes)
+            self.assertIsNone(self.results()["q1"]["adjudicationFingerprint"])
+        (self.base / "04-key/key.json").unlink()
+        self.assertIsNone(self.results()["q1"]["adjudicationFingerprint"])
 
     def test_untrusted_official_key_and_dropped_question_are_held(self):
         self.save("q1", NAT)
@@ -290,7 +427,7 @@ class SolutionsTest(unittest.TestCase):
         out = io.StringIO()
         with contextlib.redirect_stdout(out):
             self.assertEqual(0, solutions.main(["--work", str(self.work), "check", PAPER]))
-        self.assertEqual({"draft": 1, "verified": 0, "held": 0}, json.loads(out.getvalue())["byStatus"])
+        self.assertEqual({"draft": 1, "verified": 0, "held": 0, "owner-adjudicated": 0}, json.loads(out.getvalue())["byStatus"])
 
 
 if __name__ == "__main__":

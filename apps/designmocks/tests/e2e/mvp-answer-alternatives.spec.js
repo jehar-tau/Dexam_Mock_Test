@@ -45,7 +45,8 @@ async function attemptFixture(page, runtime) {
   return { state, ...provider };
 }
 
-test("released answer review reveals the next annotation through the keyboard", async ({ page }) => {
+for (const answerStatus of ["official-key", "owner-adjudicated"]) {
+test(`${answerStatus} released answer review reveals the next annotation through the keyboard`, async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 820 });
   const figure = { sha256: "a".repeat(64), width: 80, height: 40 };
   const originalBlock = { sha256: "d".repeat(64), width: 120, height: 80 };
@@ -53,8 +54,9 @@ test("released answer review reveals the next annotation through the keyboard", 
     externalKey: "fictional-visual-solution", provenance: { exam: "uceed" }, type: "NAT",
     prompt, explanation, holds: [], options: [],
     assets: [{ ...originalBlock, role: "figure" }, { ...figure, role: "solution" }], visualDependency: true,
-    answer: { raw: "2", status: "official-key" },
-    solutionReview: { fingerprint: "b".repeat(64), solutionSha256: "c".repeat(64) },
+    answer: { raw: "2", status: answerStatus },
+    solutionReview: { fingerprint: "b".repeat(64), solutionSha256: "c".repeat(64),
+      ...(answerStatus === "owner-adjudicated" ? { decision: "owner-adjudicated" } : {}) },
     workedSolution: {
       version: 1, figure, keyIdea: "Group the fictional shapes.",
       steps: [
@@ -97,6 +99,7 @@ test("released answer review reveals the next annotation through the keyboard", 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   expect(provider.unexpected).toEqual([]);
 });
+}
 
 const alternatives = [
   { type: "MCQ", raw: "C or A", selected: ["A"], saved: "A", label: "C or A" },

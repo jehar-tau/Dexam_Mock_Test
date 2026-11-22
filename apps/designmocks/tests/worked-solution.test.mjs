@@ -74,11 +74,26 @@ test("legacy explanation and malformed envelope have predictable fallbacks", () 
     { explanation: "", solution: null });
 });
 
-test("requires canonical official-key and review metadata before freezing overlays", () => {
+test("rejects unreviewed proposed answers before freezing overlays", () => {
   for (const record of [
     { ...question, solutionReview: undefined },
     { ...question, answer: { raw: "2", status: "model-proposed" } },
   ]) {
     assert.equal(inspectRuntimeQuestion(record, { rule: RULES_2027.uceed, mediaCatalog }).runtime, null);
   }
+});
+
+test("owner-adjudicated worked steps require the exact private-review provenance shape", () => {
+  const reviewed = { ...question, answer: { raw: "2", status: "owner-adjudicated" },
+    solutionReview: { ...question.solutionReview, decision: "owner-adjudicated" } };
+  const valid = inspectRuntimeQuestion(reviewed, { rule: RULES_2027.uceed, mediaCatalog });
+  assert.deepEqual(valid.issues, []);
+  assert.equal(readWorkedExplanation({ status: "submitted" }, valid.runtime).solution.steps.length, 2);
+  for (const changed of [
+    { ...reviewed, answer: { ...reviewed.answer, source: { name: "key.pdf" } } },
+    { ...reviewed, provenance: { exam: "uceed", answerKeySource: "key.pdf" } },
+    { ...reviewed, solutionReview: { ...reviewed.solutionReview, decision: "approve" } },
+    { ...reviewed, explanation: "" },
+  ]) assert.ok(inspectRuntimeQuestion(changed, { rule: RULES_2027.uceed, mediaCatalog })
+    .issues.some(issue => issue.code === "answer-adjudication"));
 });
