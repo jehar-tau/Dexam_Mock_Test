@@ -20,9 +20,11 @@ revoke all on dm_private.year_paper_releases from public,anon,authenticated,serv
 
 -- The review receipt identifies the exact fixed paper, its bank versions,
 -- marking, figures, keys and explanations. Any subsequent edit closes release.
+-- pgcrypto is installed in extensions on hosted Supabase and public in the
+-- disposable local database, so resolve digest through both schemas.
 create function dm_private.year_paper_manifest(p_paper_id uuid) returns text
-language sql stable security definer set search_path=pg_catalog,dm_private,public as $$
-  select encode(public.digest(convert_to(jsonb_build_object(
+language sql stable security definer set search_path=pg_catalog,dm_private,extensions,public as $$
+  select encode(digest(convert_to(jsonb_build_object(
     'id',p.id,'title',p.title,'exam',p.exam,'durationSeconds',p.duration_seconds,
     'questions',(select coalesce(jsonb_agg(jsonb_build_object(
       'id',q.id,'ordinal',q.ordinal,'prompt',q.prompt,'options',q.options,

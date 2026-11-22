@@ -299,6 +299,8 @@ If rolling back, first restore the prior authenticated grants. Then reset `pgrst
 
 Rehearse `supabase/launch/private-staging-portal-grants.sql` on the isolated restore after installing and verifying the Data API hook. It grants the reviewed browser and caller-scoped Edge RPCs to authenticated users. It requires Test mode, tester-only registration and closed sales and merchant Test checkout. It preserves existing function definitions and service grants. Keep the public ranking route and superseded unversioned moderation and bank review writes closed.
 
+Apply the current companion after `202611160170_community_articles.sql`. It adds the sixteen article, drafts, likes, folders, saves and block APIs for admitted authenticated testers; anonymous access stays closed. The historical 90-version recovery rehearsal uses the earlier grant set because those functions did not exist in that backup.
+
 Capture the effective grant inventory before and after rehearsal. Verify admitted student and staff access, a returning excluded tester, a removed tester with a valid session, anonymous denial and direct Storage denial. Compare the hosted prior inventory again before the approved change. The staging grants intentionally invalidate the paid MVP permissions check. For the separate merchant Test journey, restore the reviewed paid MVP profile before verifying checkout readiness. If rolling back from a different prior inventory, restore its exact grants before removing the Data API hook.
 
 ### Verify the private Storage boundary
