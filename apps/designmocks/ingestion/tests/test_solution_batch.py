@@ -80,6 +80,16 @@ class SolutionBatchTest(unittest.TestCase):
         self.assertIn("does-not-reach-official-key", draft["reviewNote"])
         self.assertFalse(solution_batch.solutions.check(self.work, PAPER)["results"]["q2"]["eligibleForExport"])
 
+    def test_dry_run_reports_key_disagreement_without_writing(self):
+        path, packet = self.make_packet()
+        result = solution_batch.ingest(self.work, PAPER, path, self.response_file(packet, "C"),
+                                       "local-test-model", dry_run=True)
+        self.assertEqual((0, 1, False), (result["imported"], result["inspected"], result["written"]))
+        self.assertEqual("held", result["review"][0]["status"])
+        self.assertEqual("mismatch", result["review"][0]["keyCheck"])
+        self.assertIn("does-not-reach-official-key", result["review"][0]["issues"])
+        self.assertFalse((self.base / "05-solutions/q2.json").exists())
+
     def test_changed_key_or_tampered_packet_is_rejected_without_writing(self):
         path, packet = self.make_packet()
         response = self.response_file(packet)

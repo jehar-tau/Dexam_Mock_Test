@@ -128,7 +128,7 @@ def draft_from_response(item, current, response, drafter):
     return draft, errors
 
 
-def ingest(work, paper_id, packet_file, responses_file, drafter):
+def ingest(work, paper_id, packet_file, responses_file, drafter, dry_run=False):
     if not isinstance(drafter, str) or not drafter.strip():
         raise BatchError("Name the model or drafter")
     base, *_ = solutions.paper_files(work, paper_id)
@@ -170,12 +170,23 @@ def ingest(work, paper_id, packet_file, responses_file, drafter):
         if target.exists() or (base / solutions.REVIEW_STAGE / f"{key}.json").exists():
             raise BatchError(f"Draft or review already exists for {key}; inspect it before creating another")
         draft, errors = draft_from_response(item, current, indexed[key], drafter.strip())
-        prepared.append((target, draft, errors))
-    for target, draft, _ in prepared:
-        atomic_json(target, draft)
-    return {"paperId": paper_id, "imported": len(prepared),
-            "draft": sum(not e for _, _, e in prepared), "held": sum(bool(e) for _, _, e in prepared),
-            "keys": [target.stem for target, _, _ in prepared]}
+        key_check = "unverified"
+        official = current["officialKey"]
+        if official.get("verifiedKey"):
+            value = indexed[key].get("answer")
+            key_check = "match" if (isinstance(value, str) and solutions.reaches_key(
+                solutions.load("answer_key"), value, official["raw"], current["type"])) else "mismatch"
+        prepared.append((target, draft, errors, key_check))
+    if not dry_run:
+        for target, draft, _, _ in prepared:
+            atomic_json(target, draft)
+    return {"paperId": paper_id, "imported": 0 if dry_run else len(prepared),
+            "inspected": len(prepared), "written": not dry_run,
+            "draft": sum(not e for _, _, e, _ in prepared), "held": sum(bool(e) for _, _, e, _ in prepared),
+            "keys": [target.stem for target, _, _, _ in prepared],
+            "review": [{"key": target.stem, "status": draft["provenance"]["status"],
+                        "keyCheck": key_check, "issues": errors}
+                       for target, draft, errors, key_check in prepared]}
 
 
 def main(argv=None):
@@ -192,10 +203,11 @@ def main(argv=None):
     take.add_argument("--packet", required=True)
     take.add_argument("--responses", required=True)
     take.add_argument("--drafter", required=True)
+    take.add_argument("--dry-run", action="store_true", help="Check all responses without writing drafts")
     args = parser.parse_args(argv)
     try:
         result = (queue(args.work, args.paper_id, args.limit, args.text_only, args.keys) if args.command == "queue"
-                  else ingest(args.work, args.paper_id, args.packet, args.responses, args.drafter))
+                  else ingest(args.work, args.paper_id, args.packet, args.responses, args.drafter, args.dry_run))
     except (BatchError, solutions.SolutionError) as error:
         print(json.dumps({"error": str(error)}), file=sys.stderr)
         return 1

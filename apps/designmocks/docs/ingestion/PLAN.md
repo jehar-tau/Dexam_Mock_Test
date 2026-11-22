@@ -124,6 +124,8 @@ python3 apps/designmocks/ingestion/solution_batch.py --work ~/dmocks-ingestion-w
 
 For a NAT question, the response format is `{"paperId":"uceed-2031","batchId":"<packet batchId>","answers":[{"key":"q1","answer":"12","keyIdea":"Count rows of squares.","steps":[{"text":"3 × 4 = 12 squares."}],"optionCheck":[],"meta":{"topic":"counting","difficulty":"easy","seconds":60}}]}`. Include one `optionCheck` for every printed MCQ/MSQ option. The model must derive the answer itself: the importer compares it with the independently preserved official key after drafting. Review every generated explanation and any source figure before approval.
 
+Run `ingest` with `--dry-run` first to inspect each response's draft/held status, key match or mismatch, and validation issues without writing a solution. A matching answer still needs explanation and figure review; the validator cannot prove the reasoning is sound.
+
 ```sh
 python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work brief uceed-2031 q1
 python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work render uceed-2031
