@@ -19,7 +19,9 @@ def load(name):
     return module
 
 
-intake, segment, figures = (load(name) for name in ("intake", "segment", "figures"))
+intake, segment, figures, solutions = (
+    load(name) for name in ("intake", "segment", "figures", "solutions")
+)
 PAPER_ID = "uceed-2031"
 
 
@@ -100,6 +102,16 @@ class PhotoPipelineTest(unittest.TestCase):
         self.assertFalse(segments["photoLayout"]["reviewed"])
         self.assertTrue(all("photo-layout-unreviewed" in question["flags"] for question in segments["questions"]))
         self.assertEqual([], self.run_figures()["questions"][0]["figures"])
+
+    def test_reviewed_photo_figure_reaches_the_solution_brief(self):
+        self.run_segment()
+        self.run_figures()
+        brief = solutions.brief(self.work, PAPER_ID, "q1")
+        self.assertEqual([], brief["flags"])
+        self.assertEqual("model-proposed", brief["draftTemplate"]["answer"]["source"])
+        self.assertEqual(["q1-fig-1"], [figure["id"] for figure in brief["figures"]])
+        self.assertEqual((100, 80), (brief["figures"][0]["width"], brief["figures"][0]["height"]))
+        self.assertTrue(Path(brief["figures"][0]["file"]).is_file())
 
     def test_layout_refuses_wrong_render_and_a_crop_crossing_a_question_boundary(self):
         self.layout["pages"][1]["renderSha256"] = "0" * 64
