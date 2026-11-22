@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
+import { seedPortalSession, stubPortalProvider } from './portal-fixture.js';
 
 for (const exam of ['UCEED', 'CEED', 'NIFT', 'NID']) {
   test(`year-wise Papers shows real ${exam} source sets on desktop and mobile`, async ({ page }) => {
@@ -35,4 +36,52 @@ test('Papers tabs work by keyboard, reflow at 320px and pass accessibility check
     runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] },
   })).violations.map(item => item.id));
   expect(violations).toEqual([]);
+});
+
+test.describe('free year-paper release', () => {
+  test.use({ baseURL: 'http://127.0.0.1:4599' });
+  const actor = { id: '00000000-0000-4000-8000-000000003001', email: 'fictional-year@example.invalid' };
+  const paperId = '10000000-0000-4000-8000-000000003001';
+  const attemptId = '20000000-0000-4000-8000-000000003001';
+  const release = { paperId, exam: 'uceed', year: 2026, sourcePaperId: 'uceed-2026', partLabel: 'Part A', questionCount: 57, durationSeconds: 7200 };
+  test('released fixed paper is free to browse and requests sign-in', async ({ page }) => {
+    const provider = await stubPortalProvider(page, name => name === 'free_year_paper_catalog' ? [release] :
+      name === 'public_all_india_top_ten' ? [] : undefined);
+    await page.goto('/papers');
+    const card = page.locator('.year-paper-card').filter({ hasText: '2026 paper' });
+    await expect(card).toContainText('Free paper open');
+    await expect(card.getByRole('link', { name: 'Sign in to start free paper' })).toHaveAttribute('href', '/account');
+    await page.setViewportSize({ width: 320, height: 850 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+    await page.addScriptTag({ path: fileURLToPath(new URL('../../node_modules/axe-core/axe.min.js', import.meta.url)) });
+    expect((await page.evaluate(async () => (await window.axe.run('.year-papers', {
+      runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] },
+    })).violations.map(item => item.id)))).toEqual([]);
+    expect(provider.calls.filter(([name]) => name === 'free_year_paper_catalog')).toHaveLength(1);
+    expect(provider.unexpected).toEqual([]);
+  });
+  test('signed-in free year paper starts without a pass on desktop and mobile', async ({ page }) => {
+    const provider = await stubPortalProvider(page, name => {
+      if (name === 'free_year_paper_catalog') return [release];
+      if (name === 'start_free_year_paper') return attemptId;
+      if (name === 'public_all_india_top_ten') return [];
+      if (name === 'my_exam_mock_session' || name === 'my_exam_mock_report') return null;
+      if (name === 'read_attempt') return { id: attemptId, title: 'Fictional 2026 Part A paper', status: 'active',
+        deadline: new Date(Date.now() + 7200000).toISOString(), serverNow: new Date().toISOString(), score: null, total: null,
+        questions: [{ id: '30000000-0000-4000-8000-000000003001', ordinal: 1, kind: 'mcq', topic: 'Observation',
+          prompt: 'Fictional year-paper question', options: [{ id: 'A', label: 'First' }, { id: 'B', label: 'Second' }],
+          marking: { correct: 3, wrong: -1 }, points: 3, negativePoints: 1, answer: null, media: [] }] };
+    });
+    await page.goto('/');
+    await seedPortalSession(page, actor);
+    await page.goto('/papers');
+    const card = page.locator('.year-paper-card').filter({ hasText: '2026 paper' });
+    await card.getByRole('button', { name: 'Start or resume free paper' }).focus();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL('/attempt/' + attemptId);
+    await expect(page.getByText('Fictional year-paper question')).toBeVisible();
+    expect(provider.calls.some(([name]) => name === 'start_free_year_paper')).toBe(true);
+    expect(provider.calls.some(([name]) => name === 'my_pass' || name === 'prepare_order' || name === 'start_attempt')).toBe(false);
+    expect(provider.unexpected).toEqual([]);
+  });
 });

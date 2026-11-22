@@ -282,7 +282,8 @@ create or replace function dm_private.mvp_profile_permissions_valid()returns boo
 language sql volatile security definer set search_path=pg_catalog,dm_private as $$
  select not exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public'and p.prokind='f'
   and not exists(select 1 from pg_depend d where d.classid='pg_proc'::regclass and d.objid=p.oid and d.deptype='e')
-  and(has_function_privilege('anon',p.oid,'EXECUTE')or has_function_privilege('authenticated',p.oid,'EXECUTE')is distinct from exists(select 1 from dm_private.mvp_rpc_allowlist a where to_regprocedure(a.signature)=p.oid)))
+  and((has_function_privilege('anon',p.oid,'EXECUTE') is distinct from (p.oid='public.free_year_paper_catalog()'::regprocedure))
+   or has_function_privilege('authenticated',p.oid,'EXECUTE')is distinct from exists(select 1 from dm_private.mvp_rpc_allowlist a where to_regprocedure(a.signature)=p.oid)))
  and not exists(select 1 from dm_private.mvp_rpc_allowlist where to_regprocedure(signature)is null)
 $$;
 
@@ -394,6 +395,7 @@ insert into dm_private.mvp_rpc_allowlist(signature,category)values
  ('public.cancel_my_privacy_request(uuid)','student'),
  ('public.export_my_account_data()','student'),
  ('public.finalize_my_expired_attempts()','student'),
+ ('public.free_year_paper_catalog()','student'),
  ('public.is_dmocks_admin()','staff'),
  ('public.my_attempt_history()','student'),
  ('public.my_bug_report_page(jsonb,integer)','student'),
@@ -409,6 +411,7 @@ insert into dm_private.mvp_rpc_allowlist(signature,category)values
  ('public.save_answer_revision(uuid,uuid,jsonb,bigint)','student'),
  ('public.save_candidate_profile(text,text,integer,text,text[])','student'),
  ('public.start_attempt(uuid)','student'),
+ ('public.start_free_year_paper(uuid)','student'),
  ('public.submit_attempt(uuid)','student'),
  ('public.submit_bug_report(text,text,text,uuid)','student'),
  ('public.submit_bug_report(text,text,text,uuid,uuid)','student');
@@ -589,6 +592,7 @@ do $$declare f record;a record;begin
   if to_regprocedure(a.signature)is null then raise exception 'MVP RPC manifest does not match this schema';end if;
   execute 'grant execute on function '||a.signature||' to authenticated';
  end loop;
+ grant execute on function public.free_year_paper_catalog() to anon;
 end$$;
 revoke all on function dm_private.mvp_lock_paper(uuid),dm_private.mvp_paper_manifest(uuid),dm_private.mvp_release_is_current(uuid),dm_private.mvp_profile_permissions_valid(),dm_private.mvp_test_checkout_setup_ready(),dm_private.mvp_test_checkout_allowed()from public,anon,authenticated,service_role;
 revoke all on function dm_private.require_mvp_operator_identity(),dm_private.mvp_lock_checkout_gates(boolean),dm_private.mvp_live_gates_approved()

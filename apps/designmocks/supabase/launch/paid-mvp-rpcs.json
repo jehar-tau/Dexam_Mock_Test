@@ -124,6 +124,10 @@
     "category": "student"
   },
   {
+    "signature": "public.free_year_paper_catalog()",
+    "category": "student"
+  },
+  {
     "signature": "public.is_dmocks_admin()",
     "category": "staff"
   },
@@ -181,6 +185,10 @@
   },
   {
     "signature": "public.start_attempt(uuid)",
+    "category": "student"
+  },
+  {
+    "signature": "public.start_free_year_paper(uuid)",
     "category": "student"
   },
   {
