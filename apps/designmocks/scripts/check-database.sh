@@ -89,6 +89,7 @@ node tests/database/staging-rpc-comparison.mjs "$rpc_inventory/source.json" "$rp
 node tests/database/staging-portal-grants.mjs
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/mvp-paper-preparation.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/free-year-papers.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/year-paper-preparation.sql
 node tests/database/nid-write-revocation.mjs
 node tests/database/staff-write-concurrency.mjs
 node tests/database/bank-target-reconciliation.mjs

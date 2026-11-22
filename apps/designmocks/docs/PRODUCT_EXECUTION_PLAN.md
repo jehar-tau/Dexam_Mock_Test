@@ -10,7 +10,7 @@ The owner added a **Papers** section to the launch, alongside Overview, exam-wis
 
 1. Merge the reviewed ingestion integration and keep the hold-free bank export current. A bank count is not a published-paper count.
 2. Put the current student portal build on private staging. Accept Google sign-in, profile, Overview, exam-wise mocks, topic practice, All India mocks, attempts, reconnect and results with test accounts on the hosted backend.
-3. Complete Papers: prepare exact source-year groups with the correct historical marking scheme, verified media, reviewed answers and explanations; publish only those which pass a fixed timed attempt and answer-by-answer result. The first catalogue UI is not the completion of this step.
+3. Complete Papers: prepare exact source-year groups with the correct historical marking scheme, verified media, reviewed answers and explanations; publish only those which pass a fixed timed attempt and answer-by-answer result. Use the private [year-paper preparation and release flow](YEAR_PAPER_RELEASE.md). The first catalogue UI is not the completion of this step.
 4. Integrate Claude's Learn and Community changes after the owner pushes them, then test their student routes on staging. Claude retains ownership of those modules and question-paper ingestion/corrections.
 5. Complete a controlled Razorpay Test purchase, webhook, entitlement and refund journey. Publish final notices and open public admission, catalogue and sales through their separate release decisions.
 
