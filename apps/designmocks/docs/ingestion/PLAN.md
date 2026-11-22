@@ -143,6 +143,30 @@ If the source wording conflicts with the preserved figure or other source eviden
 
 `solutions.py` works with private files only. Run `brief` for each question, fill its template in `05-solutions/<question>.json`, then run `render` and review the question, key and worked steps together. The answer key retains the source PDF hash, printed value, page and extraction method. When the reasoning and source agree, a human reviewer can copy the fingerprint from the review page and record an approval:
 
+For a model or separate drafting session, `solution_batch.py` prepares up to 100 missing objective questions at once. Its private packet includes the source wording, choices and local figure paths, but omits the official answer key. `--text-only` skips visual questions for a text-only model. Give that packet to the drafting model and save its JSON response privately. `ingest` requires every requested key, rejects changed source/key evidence and existing drafts, and marks answers that fail the key or format check as **held**. It never creates a human approval or exports a question.
+
+For a local model, first install and start Ollama on this Mac and pull `qwen3-vl:4b-instruct`. The `qwen3-vl:4b` default is the thinking variant and can exhaust a short response limit before writing a final answer. `draft_ollama.py` accepts only an already installed, explicitly tagged model through `127.0.0.1:11434`, sends the key-blind question and its preserved PNG figures, and writes private response JSON. It checkpoints each question so an interrupted batch can resume. The command does not import, approve or publish a solution. Inspect its response and then run the separate `ingest` command. Use small batches first; a model can give plausible but wrong explanations, including when it happens to match the answer key.
+Use `queue ... --keys q41 q43` to isolate exact questions when a broad batch contains hard or ambiguous items. The queue rejects missing, held, already drafted, or filtered keys instead of silently substituting others.
+
+```sh
+/usr/bin/python3 apps/designmocks/ingestion/solution_batch.py --work ~/dmocks-ingestion-work \
+  queue uceed-2031 --limit 2
+/usr/bin/python3 apps/designmocks/ingestion/draft_ollama.py --work ~/dmocks-ingestion-work \
+  --paper-id uceed-2031 --packet /private/path/to/batch.json
+```
+
+```sh
+python3 apps/designmocks/ingestion/solution_batch.py --work ~/dmocks-ingestion-work \
+  queue uceed-2031 --limit 20 --text-only
+python3 apps/designmocks/ingestion/solution_batch.py --work ~/dmocks-ingestion-work \
+  ingest uceed-2031 --packet /private/path/to/batch.json \
+  --responses /private/path/to/model-responses.json --drafter local-model-name
+```
+
+For a NAT question, the response format is `{"paperId":"uceed-2031","batchId":"<packet batchId>","answers":[{"key":"q1","answer":"12","keyIdea":"Count rows of squares.","steps":[{"text":"3 × 4 = 12 squares."}],"optionCheck":[],"meta":{"topic":"counting","difficulty":"easy","seconds":60}}]}`. Include one `optionCheck` for every printed MCQ/MSQ option. The model must derive the answer itself: the importer compares it with the independently preserved official key after drafting. Review every generated explanation and any source figure before approval.
+
+Run `ingest` with `--dry-run` first to inspect each response's draft/held status, key match or mismatch, and validation issues without writing a solution. A matching answer still needs explanation and figure review; the validator cannot prove the reasoning is sound.
+
 ```sh
 python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work brief uceed-2031 q1
 python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work render uceed-2031
