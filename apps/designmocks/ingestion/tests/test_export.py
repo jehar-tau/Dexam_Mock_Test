@@ -38,7 +38,7 @@ class ExportTest(unittest.TestCase):
         self.original.parent.mkdir(parents=True)
         self.original.write_bytes(b"Fictional question paper")
         self.source_hash = solutions.sha256(self.original.read_bytes())
-        intake_path.write_text(json.dumps({"paperId": PAPER, "exam": "uceed", "year": 2031,
+        intake_path.write_text(json.dumps({"paperId": PAPER, "stage": "01-intake", "exam": "uceed", "year": 2031,
                                            "source": {"kind": "pdf", "files": [
                                                {"name": self.original.name, "sha256": self.source_hash}
                                            ]}}))
@@ -245,6 +245,20 @@ class ExportTest(unittest.TestCase):
         self.assertEqual("correction", result["operation"])
         self.assertEqual(current["provenance"], self.payload["provenance"])
         self.assertEqual("photo", self.packet["sourceType"])
+    def test_owner_adjudication_stays_private(self):
+        self.fictional_block()
+        self.draft["answer"]["source"] = "model-proposed"
+        self.save_draft()
+        (self.base / "04-key/key.json").unlink()
+        (self.base / "04-key/source/fictional-key.pdf").unlink()
+        proposed = solutions.check(self.work, PAPER)["results"]["q1"]
+        fingerprint = proposed["adjudicationFingerprint"]
+        solutions.adjudicate(self.work, PAPER, "q1", "Owner", fingerprint, "12", "There are four groups of three.")
+        output = self.work / "keyless-export"
+        with self.assertRaisesRegex(export.SolutionError, "current human approval"):
+            self.export(fingerprint, output=output)
+        self.assertIsNone(self.payload)
+        self.assertFalse(output.exists())
 
     def test_staged_export_passes_the_private_output_directory_to_bank_preparer(self):
         self.fictional_block()
