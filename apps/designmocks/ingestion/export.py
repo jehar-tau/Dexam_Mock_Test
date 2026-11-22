@@ -47,9 +47,10 @@ def read_bank(repo, expected_source):
         raise SolutionError("The pinned canonical bank could not be read") from error
 
 
-def paper_evidence(base, paper_id, approval):
+def paper_evidence(base, paper_id, approval, *, expected_segments_hash=None):
     segments_bytes = (base / "02-segments/questions.json").read_bytes()
-    if sha256(segments_bytes) != approval["officialKey"]["segmentsSha256"]:
+    expected = expected_segments_hash or approval["officialKey"]["segmentsSha256"]
+    if sha256(segments_bytes) != expected:
         raise SolutionError("The paper segments changed. Review the current inputs")
     intake_folder = base / "01-intake"
     manifest_path = intake_folder / "paper.json"
@@ -153,6 +154,21 @@ def objective_answer(official):
     }
 
 
+def adjudicated_answer(review, question):
+    receipt = review["ownerAdjudication"]
+    canonical = load("answer_key").canonical(receipt["independentAnswer"], question["type"])
+    if not canonical or len(canonical) != 1:
+        raise SolutionError("The independent answer is not a single reviewed value")
+    if question["type"] == "NAT":
+        low, high = canonical[0]
+        if low != high:
+            raise SolutionError("An owner-adjudicated numeric answer must be one value")
+        raw = low[:-1] if low.endswith(".") else low
+    else:
+        raw = canonical[0]
+    return {"raw": raw, "status": "owner-adjudicated"}
+
+
 def same_position(payload, provenance):
     candidate = payload.get("provenance", {})
     return all(str(candidate.get(field)) == str(provenance[field])
@@ -212,7 +228,7 @@ def run_bank_prepare(args, repo):
 
 
 def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, replace_expected=None, source_classification=None,
-            media_root=None, output=None,
+            media_root=None, output=None, owner_adjudicated=False,
             repo=REPO, run_prepare=run_bank_prepare):
     if not QUESTION_KEY.fullmatch(key) or key.startswith("qb") or not DIGEST.fullmatch(fingerprint):
         raise SolutionError("Supply an objective question key and its reviewed SHA-256 fingerprint")
@@ -222,15 +238,24 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
         raise SolutionError("Choose the reviewed source classification for a new addition")
     if replace_expected is not None and source_classification is not None:
         raise SolutionError("Corrections retain their existing source classification")
+    if owner_adjudicated and replace_expected is not None:
+        raise SolutionError("Owner-adjudicated answers can only be prepared as new additions")
     rights_note = rights_note.strip()
     if not 10 <= len(rights_note) <= 1000:
         raise SolutionError("Supply the reviewed source rights note (10 to 1,000 characters)")
 
     report, base, questions, figures, drafts = collect(work, paper_id, write_report=False)
     review = report["results"].get(key, {})
-    if not review.get("eligibleForExport") or review.get("fingerprint") != fingerprint:
+    if owner_adjudicated:
+        if (review.get("status") != "owner-adjudicated" or not review.get("ownerAdjudication")
+                or review.get("adjudicationFingerprint") != fingerprint):
+            raise SolutionError("A current owner adjudication for the exact export fingerprint is required")
+    elif not review.get("eligibleForExport") or review.get("fingerprint") != fingerprint:
         raise SolutionError("A current human approval for the exact export fingerprint is required")
-    exam, year, source_hash = paper_evidence(base, paper_id, review)
+    exam, year, source_hash = paper_evidence(
+        base, paper_id, review,
+        expected_segments_hash=review["segmentsSha256"] if owner_adjudicated else None,
+    )
     question = questions[key]
     image_record = figures.get(key, {})
     number = str(question.get("printedNumber") or question.get("number") or "")
@@ -249,15 +274,17 @@ def prepare(*, work, paper_id, key, fingerprint, expected_source, rights_note, r
     external_key = f"{paper_id}-{key}"
     provenance = {
         "exam": exam, "year": year, "paperId": paper_id, "questionNo": number, "page": page,
-        "sourceSha256": source_hash, "extraction": "paper-ingestion", "answerKeySource": review["officialKey"]["source"]["name"],
+        "sourceSha256": source_hash, "extraction": "paper-ingestion",
+        **({} if owner_adjudicated else {"answerKeySource": review["officialKey"]["source"]["name"]}),
     }
     bank = read_bank(repo, expected_source)
     current = next((item for item in bank["questions"] if item["externalKey"] == external_key), None)
     visual = bool(question.get("figures") or question.get("vectorDrawings") or question.get("optionsInFigure")
                   or image_record.get("figures") or any(not o["text"].strip() for o in options))
     available = approved_assets(image_record)
-    answer = objective_answer(review["officialKey"])
-    evidence = {"fingerprint": fingerprint, "solutionSha256": sha256(drafts[key])}
+    answer = adjudicated_answer(review, question) if owner_adjudicated else objective_answer(review["officialKey"])
+    evidence = {"fingerprint": fingerprint, "solutionSha256": sha256(drafts[key]),
+                **({"decision": "owner-adjudicated"} if owner_adjudicated else {})}
 
     if replace_expected is not None:
         if (current is None or not same_position(current, provenance)
@@ -349,6 +376,8 @@ def main(argv=None):
     parser.add_argument("--expect-source", dest="expected_source", required=True)
     parser.add_argument("--replace-expect", dest="replace_expected")
     parser.add_argument("--source-classification", choices=SOURCE_CLASSIFICATIONS)
+    parser.add_argument("--owner-adjudicated", action="store_true",
+                        help="Prepare a privately owner-adjudicated keyless addition for Git review")
     parser.add_argument("--media-root", help="Existing canonical PNG root for correcting a paper already in the bank")
     parser.add_argument("--output", help="New private directory for the verified export, media and receipt")
     parser.add_argument("--rights-note", required=True)

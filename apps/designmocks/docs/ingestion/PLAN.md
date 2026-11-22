@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records official-key approvals and private owner adjudications for keyless objective solutions, and stage 7 can dry-run or stage approved items individually or as one batch of corrections. This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records official-key approvals and private owner adjudications for keyless objective solutions, and stage 7 can dry-run or privately stage approved additions and corrections. Owner-adjudicated questions can only be staged as new additions. This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## Scope
 
@@ -124,7 +124,7 @@ Adjudication requires an intact original PDF or ordered photo set, the current s
 
 The operator command records the reviewer's name, answer, reasoning and fingerprint in the private Stage 6 receipt. Keep the work folder writable only by trusted operators and run the command only after human review. The tool checks the recorded answer and evidence hashes. Independence and the quality of the reasoning require human judgment.
 
-A matching receipt appears as **owner-adjudicated** in `check` and the review page. Changed evidence requires a new review. Stage 7 accepts official-key approvals only. Owner adjudications stay in the private work folder until a separate export and release path can carry their provenance and require release review.
+A matching receipt appears as **owner-adjudicated** in `check` and the review page. Changed evidence requires a new review. Stage 7 has a separate, explicit addition path for this decision; it cannot replace an existing official answer. The staged bank record carries the normalized answer, decision and review fingerprints, while the reviewer's identity and private reasoning stay in Stage 6.
 
 ## Stage 7 dry run and private staging
 
@@ -140,6 +140,17 @@ python3 apps/designmocks/ingestion/export.py uceed-2031 q1 \
 ```
 
 For a new addition, supply the reviewed classification `owner-authorized` or `official-unlicensed`. The source classification describes the paper and the rights to use it. Official answer-key evidence is verified separately.
+
+For an owner-adjudicated question without a readable official key, use its **adjudication fingerprint** from the private review page and add `--owner-adjudicated`. This works only after the owner has recorded an independent answer and written reasoning with `solutions.py adjudicate`. Run it first without `--output`, inspect the dry run, then repeat with a new private output folder. It cannot be used with `--replace-expect` or to bypass a held question. The preparer checks the answer and figures and stages a Git-review-required record; it does not publish the answer or open a student paper.
+
+```sh
+python3 apps/designmocks/ingestion/export.py uceed-2031 q1 \
+  --work ~/dmocks-ingestion-work \
+  --owner-adjudicated --fingerprint "$ADJUDICATION_FINGERPRINT" \
+  --expect-source "$REVIEWED_ORIGIN_MAIN_SHA" \
+  --source-classification "$REVIEWED_SOURCE_CLASSIFICATION" \
+  --rights-note "$REVIEWED_RIGHTS_NOTE"
+```
 
 For a correction, pass `--replace-expect "$CURRENT_QUESTION_SHA256"` and omit `--source-classification`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
 
