@@ -18,11 +18,34 @@ const testerEmail = 'restore-approved@example.invalid';
 const figurePath = 'papers/original-staging-recovery.png';
 const figure = Buffer.from('Fictional private staging recovery fixture.');
 
+// The archived 90-version staging baseline predates Community articles.
+// Rehearse its portal companion without RPCs added by migration 170.
+function historicalPortalGrants(current) {
+  const later = [
+    'community_articles(text, text, jsonb, integer)', 'community_blocked()',
+    'community_drafts()', 'community_folders()', 'community_saved(uuid, jsonb, integer)',
+    'create_community_article(text, text, text, text, uuid, uuid)',
+    'delete_community_draft(uuid)', 'delete_community_folder(uuid)',
+    'export_my_community_library()', 'remove_community_block(text)',
+    'remove_community_save(uuid, uuid)',
+    'save_community_draft(uuid, text, text, text, text)',
+    'save_community_folder(uuid, text)', 'set_community_block(uuid, uuid)',
+    'set_community_like(uuid, boolean)', 'set_community_saves(uuid, uuid[])',
+  ];
+  for (const signature of later) {
+    const line = `  public.${signature},\n`;
+    assert.equal(current.split(line).length, 2, 'Expected one later Community staging grant');
+    current = current.replace(line, '');
+  }
+  return current;
+}
+
 export async function verifyCurrentStagingRecovery({client, sql, restoreArchive, url}) {
   const installed = (await readdir(migrationDirectory)).filter(file => /^\d{12}_.*\.sql$/.test(file) && file < storageMigration).sort();
   const versions = installed.map(file => file.split('_')[0]);
   assert.equal(versions.length, 90);
   assert.equal(versions.at(-1), '202611100166');
+  const portalGrants = historicalPortalGrants(await readFile(new URL('private-staging-portal-grants.sql', launchDirectory), 'utf8'));
   const directory = await mkdtemp(join(tmpdir(), 'dmocks-current-staging-recovery-'));
   const suffix = randomUUID().replaceAll('-', '');
   const source = 'dmocks_stage_source_' + suffix;
@@ -121,7 +144,7 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
     await apply(answerCorrectionMigration, target);
     await sql("revoke execute on function " + answerCorrectionSignature + " from authenticated", target);
     await sql(await readFile(new URL('private-staging-api.sql', launchDirectory), 'utf8'), target);
-    await sql(await readFile(new URL('private-staging-portal-grants.sql', launchDirectory), 'utf8'), target);
+    await sql(portalGrants, target);
     assert.equal(await sql(`select exists (select from pg_policies where schemaname='storage' and tablename='objects'
         and policyname='dmocks_private_objects_require_server' and permissive='RESTRICTIVE')
       and has_function_privilege('authenticated','public.admin_prepare_bank_answer_correction(text,text,text,text)','execute')
@@ -162,7 +185,7 @@ export async function verifyCurrentStagingRecovery({client, sql, restoreArchive,
         and policyname = 'dmocks_private_objects_require_server' and permissive = 'RESTRICTIVE');`, target), 't');
     await verifyPriorInventory();
     await sql(await readFile(new URL('private-staging-api.sql', launchDirectory), 'utf8'), target);
-    await sql(await readFile(new URL('private-staging-portal-grants.sql', launchDirectory), 'utf8'), target);
+    await sql(portalGrants, target);
     assert.equal(await sql('select dm_private.mvp_profile_permissions_valid()', target), 'f');
     const paidProfile = withoutFreeYearPapers(await readFile(new URL('paid-mvp.sql', launchDirectory), 'utf8'));
     await sql(`begin;

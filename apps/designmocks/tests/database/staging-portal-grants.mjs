@@ -52,9 +52,25 @@ try {
   for (const key of ["missingFunctions", "extraFunctions", "missingGrants", "changedDefinitions"]) {
     assert.deepEqual(delta[key], []);
   }
-  assert.equal(delta.extraGrants.length, 65);
+  assert.equal(delta.extraGrants.length, 81);
   assert.ok(delta.extraGrants.every(grant => grant.role === "authenticated"));
   for (const signature of [
+    "public.create_community_article(text, text, text, text, uuid, uuid)",
+    "public.community_articles(text, text, jsonb, integer)",
+    "public.set_community_like(uuid, boolean)",
+    "public.community_folders()",
+    "public.save_community_folder(uuid, text)",
+    "public.delete_community_folder(uuid)",
+    "public.set_community_saves(uuid, uuid[])",
+    "public.remove_community_save(uuid, uuid)",
+    "public.community_saved(uuid, jsonb, integer)",
+    "public.community_drafts()",
+    "public.save_community_draft(uuid, text, text, text, text)",
+    "public.delete_community_draft(uuid)",
+    "public.set_community_block(uuid, uuid)",
+    "public.community_blocked()",
+    "public.remove_community_block(text)",
+    "public.export_my_community_library()",
     "public.community_feed(text, text, jsonb, integer)",
     "public.admin_question_intake_assets()",
     "public.admin_prepare_bank_answer_correction(text, text, text, text)",
@@ -64,6 +80,9 @@ try {
     "public.admin_learning_lessons()",
   ]) {
     assert.ok(delta.extraGrants.some(grant => grant.signature === signature));
+    const entry = restored.functions.find(row => row.signature === signature);
+    assert.equal(entry.anon, false, signature);
+    assert.equal(entry.authenticated, true, signature);
   }
   for (const signature of [
     "public.public_all_india_top_ten()",
