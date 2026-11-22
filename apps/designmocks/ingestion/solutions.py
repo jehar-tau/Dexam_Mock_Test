@@ -456,7 +456,10 @@ def render(work, paper_id):
             source_block = f'<details><summary>Source question</summary><figure class="stage"><img src="../03-figures/{esc(record["block"]["file"])}" alt="Source question crop"></figure></details>'
         question_options = "".join(f'<li><b>{esc(o["key"])}</b> {esc(o["text"])}</li>' for o in question["options"])
         official = result["officialKey"]
-        official_details = "Verified official key" if official["verifiedKey"] else f'Key status {esc(official["status"])}'
+        inferred_run = "consecutive-row-run-needs-visual-review" in official.get("notes", [])
+        official_details = ("Source-linked OCR key; visually review its inferred question number"
+                            if inferred_run else "Verified official key" if official["verifiedKey"]
+                            else f'Key status {esc(official["status"])}')
         if official["source"] and official.get("page"):
             name = official["source"]["name"]
             source_name = esc(name)

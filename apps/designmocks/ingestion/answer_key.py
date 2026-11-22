@@ -254,7 +254,7 @@ def header_table(header, body):
         entries.append({"number": row["number"], "printed": " ".join(p["text"] for p in parts), "lines": [p["box"] for p in parts],
                         "cell": [column["left"], row["y"] - 0.45 * spacing, column["right"], row["y"] + 0.45 * spacing],
                         "span": [column["left"], top, column["right"], bottom],
-                        "inferred": row["inferred"]})
+                        "inferred": row["inferred"], "inferredRun": row.get("inferredRun", False)})
     return entries
 
 
@@ -300,6 +300,24 @@ def infer_numbers(rows, spacing):
         if guess is not None and guess not in taken:
             row["number"], row["inferred"] = guess, True
             taken.add(guess)
+
+    # A scan can omit several consecutive question-number cells while reading
+    # their answer cells. A one-row neighbour check cannot recover that run.
+    # Number it only when every intervening row contains key ink and the two
+    # printed endpoint numbers account for exactly that many rows.
+    for column in sorted({row["column"] for row in rows}):
+        ordered = sorted((row for row in rows if row["column"] == column), key=lambda row: row["y"])
+        anchors = [index for index, row in enumerate(ordered) if row["number"] is not None]
+        for start, end in zip(anchors, anchors[1:]):
+            between = ordered[start + 1:end]
+            low, high = ordered[start]["number"], ordered[end]["number"]
+            if (not between or high - low != len(between) + 1
+                    or any(row["number"] is not None or not row["lines"] for row in between)
+                    or any(low + offset in taken for offset in range(1, len(between) + 1))):
+                continue
+            for offset, row in enumerate(between, 1):
+                row["number"], row["inferred"], row["inferredRun"] = low + offset, True, True
+                taken.add(low + offset)
 
 
 LOOSE_LABEL = re.compile(r"^[|\s]*[Q0O]?\s*[.,]?\s*0*(\d{1,3})\s*$", re.I)
@@ -627,6 +645,8 @@ def run_key(*, work, paper_id, key_pdf, replace=False, ocr=None, bank_questions=
                 notes = notes + [f"letter scores {entry['letterMatch']}"]
             if entry.get("inferred"):
                 notes = notes + ["question-number-inferred-from-grid"]
+            if entry.get("inferredRun"):
+                notes = notes + ["consecutive-row-run-needs-visual-review"]
             record = {"printed": printed, "raw": raw, "kind": use, "status": status, "page": page_no,
                       "readBy": how, "notes": notes, "checks": checks}
             if bank_questions is not None:

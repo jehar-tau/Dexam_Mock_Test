@@ -108,6 +108,23 @@ def scanned(text_pdf, image_pdf, dpi=200):
     doc.close()
 
 
+def adjacent_column_key(path):
+    doc = fitz.open()
+    page = doc.new_page(width=400, height=400)
+    page.insert_text((80, 40), "FICTIONAL ANSWER KEY", fontsize=12)
+    page.insert_text((80, 65), "Q. No.", fontsize=10)
+    page.insert_text((150, 65), "Answer", fontsize=10)
+    page.insert_text((245, 65), "Q. No.", fontsize=10)
+    page.insert_text((315, 65), "Answer", fontsize=10)
+    for number in range(1, 5):
+        page.insert_text((80, 70 + number * 30), f"{number:02d}", fontsize=10)
+        page.insert_text((150, 70 + number * 30), KEYS[number], fontsize=10)
+        page.insert_text((245, 70 + number * 30), f"{number + 4:02d}", fontsize=10)
+        page.insert_text((315, 70 + number * 30), KEYS[number + 4], fontsize=10)
+    doc.save(path)
+    doc.close()
+
+
 def ocr_from(text_pdf, drop=()):
     """A stand-in for OCR: the text layer's lines as Vision-style rows, minus some lines."""
     rows = []
@@ -215,6 +232,26 @@ class AnswerKeyTest(unittest.TestCase):
         self.assertEqual("dropped", keys["q13"]["status"])
         trusted = {n: r["raw"] for n, r in keys.items() if r["status"] == "official-key"}
         self.assertEqual({n: EXPECTED[n] for n in trusted}, trusted)
+
+    def test_scanned_key_recovers_a_consecutive_run_of_missing_question_labels(self):
+        text_pdf, image_pdf = self.root / "key-text.pdf", self.root / "key-scan.pdf"
+        adjacent_column_key(text_pdf)
+        scanned(text_pdf, image_pdf)
+        _, data = self.run_key(image_pdf, ocr=ocr_from(text_pdf, drop={"02", "03"}))
+        for number in (2, 3):
+            key = data["keys"][f"q{number}"]
+            self.assertEqual(EXPECTED[f"q{number}"], key["raw"])
+            self.assertIn("consecutive-row-run-needs-visual-review", key["notes"])
+
+    def test_consecutive_run_is_not_guessed_when_count_disagrees(self):
+        rows = [
+            {"column": 0, "number": 1, "y": 10, "lines": [1], "inferred": False},
+            {"column": 0, "number": None, "y": 20, "lines": [2], "inferred": False},
+            {"column": 0, "number": None, "y": 30, "lines": [3], "inferred": False},
+            {"column": 0, "number": 5, "y": 40, "lines": [4], "inferred": False},
+        ]
+        ak.infer_numbers(rows, 10)
+        self.assertEqual([1, None, None, 5], [row["number"] for row in rows])
 
     def test_refusals(self):
         pdf = self.root / "key.pdf"
