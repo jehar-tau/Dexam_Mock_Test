@@ -19,6 +19,7 @@ export default defineConfig({
     '**/all-india-ranking-consent.spec.js',
     '**/all-india-event-boundary.spec.js',
     '**/practice-events-preview.spec.js',
+    '**/papers.spec.js',
   ],
   testDir: "./tests/e2e",
   fullyParallel: true,
