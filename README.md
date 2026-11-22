@@ -1,7 +1,5 @@
 # Dexam Mock Test
 
-For new DesignMocks app-only work, use the public [designmocks code repository](https://github.com/jehar-tau/designmocks) so standard GitHub-hosted CI does not consume this private repository's included Actions minutes. This repository remains private for canonical question-bank material, rollout records, and integration checks. The public repository has a new history and excludes those private files; changes are not synchronized automatically.
-
 ## DesignMocks website and student portal
 
 The independent **DesignMocks** website is in [`apps/designmocks`](apps/designmocks). It includes the Discovery landing pages, original timed sample, student workspace/attempt UI, Google/Supabase integration and server-side Razorpay order/webhook code. Sign-in acceptance, merchant setup and real-bank release are still launch work; checkout remains closed.
