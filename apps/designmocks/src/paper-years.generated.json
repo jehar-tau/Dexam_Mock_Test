@@ -14,10 +14,10 @@
     "exam": "uceed",
     "year": 2025,
     "paperId": "uceed-2025",
-    "questionCount": 58,
-    "objectiveCount": 56,
+    "questionCount": 56,
+    "objectiveCount": 54,
     "drawingCount": 2,
-    "keyedCount": 56
+    "keyedCount": 54
   },
   {
     "id": "uceed:uceed-2024",
@@ -84,30 +84,30 @@
     "exam": "uceed",
     "year": 2018,
     "paperId": "uceed-2018",
-    "questionCount": 84,
-    "objectiveCount": 84,
-    "drawingCount": 0,
-    "keyedCount": 84
-  },
-  {
-    "id": "uceed:uceed-2017",
-    "exam": "uceed",
-    "year": 2017,
-    "paperId": "uceed-2017",
     "questionCount": 83,
     "objectiveCount": 83,
     "drawingCount": 0,
     "keyedCount": 83
   },
   {
+    "id": "uceed:uceed-2017",
+    "exam": "uceed",
+    "year": 2017,
+    "paperId": "uceed-2017",
+    "questionCount": 82,
+    "objectiveCount": 82,
+    "drawingCount": 0,
+    "keyedCount": 82
+  },
+  {
     "id": "uceed:uceed-2016",
     "exam": "uceed",
     "year": 2016,
     "paperId": "uceed-2016",
-    "questionCount": 78,
-    "objectiveCount": 78,
+    "questionCount": 75,
+    "objectiveCount": 75,
     "drawingCount": 0,
-    "keyedCount": 78
+    "keyedCount": 75
   },
   {
     "id": "uceed:uceed-2015",
