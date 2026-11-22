@@ -7,6 +7,7 @@ export const publicPages = new Map([
   ['/tests', {title: 'Design entrance mock tests and practice availability | DMocks', description: 'Check which design entrance practice is available now, see the first planned mock, or start the free sample test.'}],
   ['/tests/uceed', {title: 'UCEED Part A practice mock and free sample | DMocks', description: 'Explore the planned DMocks UCEED Part A practice mock, check access information and try the separate free experience sample.'}],
   ['/plans', {title: 'Design mock-test annual pass and access | DMocks', description: 'Check the DMocks annual pass price, what it covers and current access. Try the free sample before deciding.'}],
+  ['/papers', {title: 'Year-wise design entrance papers | DMocks', description: 'Explore UCEED, CEED, NIFT and NID question sets by year. Timed papers open after their questions, figures and solutions are reviewed.', index: false, shell: true}],
   ['/contact', {title: 'Contact DMocks for practice and account support', description: 'Find help with DMocks practice, account access and purchase questions.', index: false, shell: true}],
   ['/tests/ceed', {title: 'CEED practice availability | DMocks', description: 'Check the status of CEED practice on DMocks and find the official exam information.', index: false}],
   ['/tests/nid', {title: 'NID DAT practice availability | DMocks', description: 'Check the status of NID DAT practice on DMocks and find the official exam information.', index: false}],
