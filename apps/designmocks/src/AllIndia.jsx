@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { platform } from "./platform.js";
 import { PortalShell } from "./PortalShell.jsx";
@@ -77,11 +77,22 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
   blocked = false, sharingBlocked = false, previewStarted, exampleResults, attemptHref = id => `/attempt/${id}` }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
+  const [readyId, setReadyId] = useState("");
+  const readyDialog = useRef(null);
+  const readyOpener = useRef(null);
+  const starting = useRef(false);
   const [stateFilter, setStateFilter] = useState("");
   const preview = Boolean(exampleResults);
   const [now, setNow] = useState(() => preview ? Date.parse("2027-01-09T09:15:00+05:30") : Date.now());
   const { selectedExam, visibleEvents } = allIndiaExamSelection(events, requestedExam);
   const filteredEvents = visibleEvents.filter(event => !stateFilter || event.state === stateFilter);
+  const readyEvent = events.find(event => event.id === readyId);
+  useEffect(() => {
+    if (!readyEvent || !readyDialog.current) return;
+    const dialog = readyDialog.current;
+    dialog.showModal();
+    return () => { if (dialog.open) dialog.close(); };
+  }, [readyEvent]);
   useEffect(() => {
     if (preview) return;
     const boundary = nextEventBoundary(events, now);
@@ -96,12 +107,25 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
     };
   }, [events, now, preview]);
   const start = async id => {
-    if (busy || blocked || (!preview && eventTiming(events.find(event => event.id === id) ?? {}, Date.now()).needsRefresh)) return;
+    const event = events.find(item => item.id === id);
+    if (starting.current || busy || blocked || !event || event.state !== "open" || event.attemptId) return;
+    if (!preview && eventTiming(event, Date.now()).needsRefresh) {
+      setReadyId("");
+      setNow(Date.now());
+      setMessage("The start cutoff has passed. Refresh All India mocks to check the event status.");
+      return;
+    }
+    starting.current = true;
+    setReadyId("");
     setBusy(id);
     setMessage("");
     try { await onStart(id); }
     catch (error) { setMessage(error.message); }
-    finally { setBusy(""); }
+    finally { starting.current = false; setBusy(""); }
+  };
+  const closeReady = () => {
+    setReadyId("");
+    window.requestAnimationFrame(() => { if (readyOpener.current?.isConnected && !readyOpener.current.disabled) readyOpener.current.focus(); });
   };
   return <section className={embedded ? "catalogue-content all-india-content" : "section portal-module all-india"}>
     {heading && <AllIndiaHeading preview={preview} />}
@@ -146,7 +170,7 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
                   {event.state === "released" ? "View attempt" : "Open attempt"}</Link>)
                 : <button type="button" className={event.state === "open" ? "button" : "all-india-unavailable"}
                   disabled={event.state !== "open" || eventTiming(event, now).needsRefresh || Boolean(busy) || blocked || previewStarted === event.id}
-                  onClick={() => start(event.id)}>
+                  onClick={click => { readyOpener.current = click.currentTarget; setMessage(""); setReadyId(event.id); }}>
                   {previewStarted === event.id ? "Preview started" : busy === event.id ? "Opening…" : eventTiming(event, now).needsRefresh ? "Refresh event status" : event.state === "open" ? "Start once" : "Unavailable"}
                 </button>}
               {previewStarted === event.id && <p className="all-india-receipt" role="status">Preview attempt created once: {event.id}</p>}
@@ -160,6 +184,18 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
         {exampleResults && <AllIndiaHighlights example={exampleResults.filter(item => !selectedExam || item.exam === selectedExam)} />}
       </div>
     </div>
+    {readyEvent && <dialog ref={readyDialog} className="all-india-start-dialog" aria-labelledby="all-india-start-title"
+      onCancel={cancel => { cancel.preventDefault(); closeReady(); }}>
+      <h2 id="all-india-start-title">Ready to begin {readyEvent.title}?</h2>
+      <p>You have one attempt for this event. The exam timer starts when you begin and keeps running if you disconnect.</p>
+      <p>{readyEvent.durationSeconds / 60} minutes for the exam{readyEvent.uploadGraceSeconds > 0
+        ? `, plus ${readyEvent.uploadGraceSeconds / 60} minutes for drawing uploads.` : "."}</p>
+      <div className="all-india-start-actions">
+        <button type="button" className="button quiet" onClick={closeReady}>Cancel</button>
+        <button type="button" className="button" disabled={Boolean(busy) || blocked || (!preview && eventTiming(readyEvent, now).needsRefresh)}
+          onClick={() => start(readyEvent.id)}>Begin timed attempt</button>
+      </div>
+    </dialog>}
   </section>;
 }
 

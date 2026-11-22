@@ -255,6 +255,23 @@
 .all-india-event .button, .all-india-result-link { display: inline-flex; margin-top: .6rem; }
 .all-india-unavailable { padding: .3rem 0 0; color: var(--muted); background: none; border: 0; font-size: .83rem; }
 .all-india-empty { margin: 0; padding-block: 1rem; }
+.all-india-start-dialog {
+  width: min(30rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: .8rem;
+  padding: clamp(1rem, 4vw, 1.5rem);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1rem 3rem #0004;
+}
+.all-india-start-dialog::backdrop { background: #10221c99; }
+.all-india-start-dialog h2 { margin: 0 0 .75rem; }
+.all-india-start-dialog p { line-height: 1.5; }
+.all-india-start-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .6rem; margin-top: 1.2rem; }
+.all-india-start-actions .button { min-height: 44px; }
+.all-india-start-dialog button:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
 .all-india-rail { display: grid; gap: 1rem; }
 .all-india-guide { background: var(--soft); }
 .all-india-example-ranks h3 { margin: .45rem 0 .75rem; color: var(--muted); font: 400 .9rem/1.5 Figtree, system-ui, sans-serif; letter-spacing: 0; }
