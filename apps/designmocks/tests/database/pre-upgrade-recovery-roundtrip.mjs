@@ -8,6 +8,7 @@ import {RECOVERY_PROJECT, verifyRecoveryBundle} from '../../scripts/recovery-bun
 import {captureRecoverySnapshot, checkRecoveryDatabaseSource, compareRecoverySnapshots, openRecoveryPostgres} from '../../scripts/recovery-postgres.mjs';
 import {quote, recoveryActor} from './fixtures/recovery-state.mjs';
 import {preUpgradeVersions, preUpgradeMediaPath, preUpgradePng, preUpgradeProtectedState, registerPreUpgradeMedia, seedPreUpgradeRecovery} from './fixtures/pre-upgrade-recovery.mjs';
+import {withoutFreeYearPapers} from './fixtures/historic-paid-profile.mjs';
 
 export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url}) {
   const migrations = new URL('../../supabase/migrations/', import.meta.url);
@@ -114,11 +115,14 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
     await assert.rejects(readAttempt(state.other, state.completed, target));
 
     const profile = await readFile(new URL('../../supabase/launch/paid-mvp.sql', import.meta.url), 'utf8');
+    // The historical 47/48/49-RPC companions predate free year papers. Rebuild
+    // them from the reviewed current profile without referring to later RPCs.
+    const legacyProfile = withoutFreeYearPapers(profile);
     const purchaseHistorySignature = 'public.my_purchase_page(timestamp with time zone,uuid)';
     const purchaseSupportSignature = 'public.submit_bug_report(text,text,text,uuid,uuid)';
     const purchaseHistoryEntry = ` ('${purchaseHistorySignature}','student'),\n`;
     const purchaseSupportEntry = `,\n ('${purchaseSupportSignature}','student');`;
-    const withoutSupport = profile.split(purchaseSupportEntry);
+    const withoutSupport = legacyProfile.split(purchaseSupportEntry);
     assert.equal(withoutSupport.length, 2, 'Expected exactly one purchase support entry in the current paid profile');
     const historyProfile = withoutSupport.join(';');
     const withoutHistory = historyProfile.split(purchaseHistoryEntry);
@@ -172,9 +176,9 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
       }
     }
     await installPaidProfile(profile);
-    assert.equal(await checkPurchaseProfile(purchaseHistorySignature, 49, true), 't', 'purchase history remains enabled');
-    assert.equal(await checkPurchaseProfile(purchaseSupportSignature, 49, true), 't',
-      'the reviewed 49-RPC companion grants purchase support only to authenticated callers');
+    assert.equal(await checkPurchaseProfile(purchaseHistorySignature, 51, true), 't', 'purchase history remains enabled');
+    assert.equal(await checkPurchaseProfile(purchaseSupportSignature, 51, true), 't',
+      'the reviewed 51-RPC companion grants purchase support only to authenticated callers');
     const replay = await sql(recoveryActor(state.owner, `select public.submit_bug_report(${reportArguments}, null)`), target);
     assert.ok(replay.split('\n').includes(existingReport), 'new overload replays a pre-migration four-argument receipt');
     const upgraded = await connect(target);

@@ -153,19 +153,7 @@ async function main(){
   console.log(JSON.stringify({stagingBeforePermissionsRepairRestored: true, permissionsRepairRehearsed: true, hostedWritesPerformed: false}));
   console.log(JSON.stringify({passed:true,actualPostgres17ArchiveRestored:true,exactSchemaRlsGrantsRowsAndSequences:true,originalQuestions:57,frozenItems:114,paidPassAndEventPreserved:true,purchaseSupportLinkPreserved:true,answerRevisionAndOriginalDeadlinePreserved:true,foreignAndAnonymousDenied:true,privateBytesVerified:true,storage:'mock-catalogue-only',registrationAndSalesClosed:true,hostedWritesPerformed:false}));
  }finally{
-  // Keep the CI diagnostic limited to a cleanup stage; the fixture may also be
-  // used with private recovery data, whose database errors must stay hidden.
-  for (const [stage, operation] of [
-    ['close', () => connection?.close()],
-    ['drop-stage', () => stagingCreated && sql('drop database '+stagingTarget+' with(force);','postgres')],
-    ['drop-original', () => created && sql('drop database '+target+' with(force);','postgres')],
-    ['remove-files', () => rm(workspace,{recursive:true,force:true})],
-  ]) {
-    try { await operation(); } catch (error) {
-      console.error('RECOVERY_CLEANUP_FAILED',stage,error?.code ?? error?.name ?? 'unknown');
-      throw error;
-    }
-  }
+  await connection?.close();if(stagingCreated)await sql('drop database '+stagingTarget+' with(force);','postgres');if(created)await sql('drop database '+target+' with(force);','postgres');await rm(workspace,{recursive:true,force:true});
  }
 }
 main().catch(()=>{console.error('RECOVERY_ROUNDTRIP_FAILED');process.exitCode=1;});
