@@ -44,6 +44,10 @@
     "category": "staff"
   },
   {
+    "signature": "public.admin_payment_review_page(timestamp with time zone,uuid)",
+    "category": "staff"
+  },
+  {
     "signature": "public.admin_privacy_request_page(jsonb,integer)",
     "category": "staff"
   },

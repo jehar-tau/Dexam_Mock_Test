@@ -14,8 +14,8 @@ select pg_temp.mvp_assert(not exists(
   where has_function_privilege(role,signature,'EXECUTE')
     and (role<>'service_role' or signature not in ('public.public_all_india_top_ten()','public.all_india_event_catalog()'))
 ),'public ranking and consent endpoints remain closed in the paid profile');
-select pg_temp.mvp_assert((select count(*)=51 and count(*) filter(where category='student')=25
-  and count(*) filter(where category='staff')=26 from dm_private.mvp_rpc_allowlist),'explicit student/staff permission manifest');
+select pg_temp.mvp_assert((select count(*)=52 and count(*) filter(where category='student')=25
+  and count(*) filter(where category='staff')=27 from dm_private.mvp_rpc_allowlist),'explicit student/staff permission manifest');
 select pg_temp.mvp_assert(
   has_function_privilege('authenticated','public.submit_bug_report(text,text,text,uuid,uuid)','EXECUTE')
   and not has_function_privilege('anon','public.submit_bug_report(text,text,text,uuid,uuid)','EXECUTE')

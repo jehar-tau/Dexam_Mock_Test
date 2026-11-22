@@ -1,3 +1,4 @@
+import { AdminPayments } from './AdminPayments.jsx';
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuthState } from "./useAuth.js";
@@ -337,6 +338,7 @@ function AdminDesk({ session }) {
       )}
           <h2>Operational health</h2>
           <OperationalHealth health={health} onRefresh={load} />
+          <AdminPayments />
           <h2>Launch readiness</h2>
           <LaunchReadiness readiness={readiness} onSetGate={async(gate,approved,evidence)=>{try{await rpc("admin_set_launch_gate",{p_gate:gate,p_approved:approved,p_evidence:evidence});await load()}catch(e){reportError(e)}}}/>
           {postLaunchPreview&&<><h2>PDF and photo question intake</h2>

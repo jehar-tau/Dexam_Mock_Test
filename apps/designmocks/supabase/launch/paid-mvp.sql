@@ -375,6 +375,7 @@ insert into dm_private.mvp_rpc_allowlist(signature,category)values
  ('public.admin_nid_practice_blueprints(integer,integer)','staff'),
  ('public.admin_nid_question_binding(text,text,uuid)','staff'),
  ('public.admin_operational_health()','staff'),
+ ('public.admin_payment_review_page(timestamp with time zone,uuid)','staff'),
  ('public.admin_privacy_request_page(jsonb,integer)','staff'),
  ('public.admin_release_mvp_paper(uuid,text,text)','staff'),
  ('public.admin_reply_bug_report(uuid,integer,text,text,uuid)','staff'),
