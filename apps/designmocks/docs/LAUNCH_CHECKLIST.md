@@ -1,5 +1,11 @@
 # DMocks release checklist
 
+**Current public status (22 November 2026):** DMocks Site version 8 is live at
+dmocks.com with the Papers collection view and free sample. No year-wise timed
+paper is released there yet. The owner selected direct public frontend release
+after green PR and main CI; see [Direct public release](DIRECT_PUBLIC_RELEASE.md).
+Earlier version-6 and staging-first entries below are historical checkpoints.
+
 ## Current scope and release status (21 November 2026)
 
 - [ ] Release Papers with year-wise UCEED, CEED, NIFT and NID sets. The source-backed catalogue is the first slice; fixed playable attempts, media, results and explanations need end-to-end acceptance before this launch item is complete. Use only hold-free bank records and distinguish sample or multiple sets in the same year.

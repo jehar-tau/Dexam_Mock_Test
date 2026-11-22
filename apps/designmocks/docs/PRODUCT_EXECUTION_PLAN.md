@@ -1,5 +1,13 @@
 # DMocks release execution plan
 
+**Current deployment decision (22 November 2026):** After a PR passes its
+exact-head checks, merge it, verify main CI, and publish the verified frontend
+directly to dmocks.com. Do not require an owner-only staging promotion or build
+out separate dev/staging/production environments before completing the
+application. This supersedes the earlier staging-first frontend steps below;
+paper release, registration, backend changes and sales retain their own gates.
+See [Direct public release](DIRECT_PUBLIC_RELEASE.md).
+
 ## Current scope and release status (21 November 2026)
 
 ### Papers added to the student launch scope (22 November 2026)
