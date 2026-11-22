@@ -104,6 +104,8 @@ export function WorkspaceView({
   preview = false,
   heading = true,embedded = false,onRefresh,unconfirmed = false,catalogueOnly = false,
 }) {
+  const recommendedPractice = new URL(practiceHref, "https://designmocks.invalid");
+  if (data?.analytics?.recommendedTopic) recommendedPractice.searchParams.set("topic", data.analytics.recommendedTopic.topic);
   return (
     <section className={(embedded?"workspace-content":"wrap section workspace")+(catalogueOnly?" workspace-catalogue":" overview-desk")}>
       {heading&&<WorkspaceHeading/>}
@@ -180,7 +182,7 @@ export function WorkspaceView({
           )}
           {!catalogueOnly && data.analytics?.topics?.length > 0 && (
             <>
-              <div className="overview-section-head"><div><span className="overview-kicker">SKILLS</span><h2>Your topic picture</h2></div>{data.analytics?.recommendedTopic&&<Link to={practiceHref}>Practise the recommended topic →</Link>}</div>
+              <div className="overview-section-head"><div><span className="overview-kicker">SKILLS</span><h2>Your topic picture</h2></div>{data.analytics?.recommendedTopic&&<Link to={recommendedPractice.pathname + recommendedPractice.search + recommendedPractice.hash}>Practise the recommended topic →</Link>}</div>
               <div className="dashboard-stats">
                 {data.analytics.topics.slice(0, 3).map((topic) => (
                   <article key={topic.topic}>
