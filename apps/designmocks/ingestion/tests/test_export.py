@@ -279,7 +279,7 @@ class ExportTest(unittest.TestCase):
         self.assertEqual(["figure", "solution"], [asset["role"] for asset in self.payload["assets"]])
         self.assertEqual(self.payload["workedSolution"]["figure"]["sha256"], self.payload["assets"][1]["sha256"])
 
-    def test_batch_bridge_collects_two_approved_corrections_for_one_bank_check(self):
+    def second_question(self):
         segments_path = self.base / "02-segments/questions.json"
         segments = json.loads(segments_path.read_text())
         second = segments["questions"][1]
@@ -291,6 +291,79 @@ class ExportTest(unittest.TestCase):
             manifest["segmentsSha256"] = solutions.sha256(segments_path.read_bytes())
             path.write_text(json.dumps(manifest))
         (self.base / "05-solutions/q2.json").write_text(json.dumps(MSQ))
+        return second
+
+    def run_canonical_batch(self, args, repo):
+        self.assertEqual(self.repo, repo)
+        options = {
+            "packets": [{"packetPath": args[index + 1], "expected": args[args.index("--expect", index) + 1]}
+                        for index, item in enumerate(args) if item == "--packet"],
+            "expectedSource": args[args.index("--expect-source") + 1], "cwd": str(repo),
+            "downloadsDir": args[args.index("--downloads-dir") + 1],
+        }
+        versions = [args[index + 1] for index, item in enumerate(args) if item == "--replace-expect"]
+        if versions:
+            options["replaceExpecteds"] = versions
+        if "--output" in args:
+            options["output"] = args[args.index("--output") + 1]
+        script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
+        code = ("const {prepareAdditions}=await import(process.argv[1]);"
+                "let input='';for await(const chunk of process.stdin)input+=chunk;"
+                "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
+        result = subprocess.run(["node", "--input-type=module", "-e", code, script],
+                                input=json.dumps(options), text=True, cwd=repo,
+                                capture_output=True, check=True)
+        return json.loads(result.stdout)
+
+    def addition_entries(self):
+        self.fictional_block()
+        self.second_question()
+        report = solutions.check(self.work, PAPER)["results"]
+        entries = []
+        for key in ("q1", "q2"):
+            fingerprint = report[key]["fingerprint"]
+            solutions.approve(self.work, PAPER, key, "Fictional reviewer", fingerprint)
+            entries.append({"key": key, "fingerprint": fingerprint})
+        return entries
+
+    def addition_batch(self, entries, **kwargs):
+        return export_batch.prepare_batch(
+            work=self.work, paper_id=PAPER, entries=entries,
+            expected_source=self.source_commit, rights_note="Fictional source rights reviewed",
+            source_classification="owner-authorized", repo=self.repo, **kwargs,
+        )
+
+    def test_batch_stages_two_new_approved_additions_with_verified_media(self):
+        entries = self.addition_entries()
+        output = self.work / "batch-output"
+        result = self.addition_batch(entries, output=output, run_prepare=self.run_canonical_batch)
+        self.assertEqual(("staged", 2, 2), (result["mode"], result["added"], result["selected"]))
+        self.assertEqual(self.source_commit, result["sourceCommit"])
+        staged = json.loads((output / "dexam-bank-export.json").read_text())["questions"]
+        self.assertEqual([f"{PAPER}-q1", f"{PAPER}-q2"], [question["externalKey"] for question in staged])
+        self.assertEqual([entry["fingerprint"] for entry in entries],
+                         [question["solutionReview"]["fingerprint"] for question in staged])
+        self.assertTrue(all(question["licence"] == "owner-provided" for question in staged))
+        figure = staged[0]["assets"][0]
+        self.assertEqual(figure["sha256"], solutions.sha256((output / "media" / figure["path"]).read_bytes()))
+        receipt = json.loads((output / "receipt.json").read_text())
+        self.assertEqual(["objective-complete"] * 2, [item["review"] for item in receipt["additions"]])
+        self.assertEqual("", self.git("status", "--short"))
+
+    def test_batch_rejects_changed_second_approval_without_staging_first_addition(self):
+        entries = self.addition_entries()
+        draft_path = self.base / "05-solutions/q2.json"
+        modified = copy.deepcopy(MSQ)
+        modified["steps"][0]["text"] += " This was changed after review."
+        draft_path.write_text(json.dumps(modified))
+        output = self.work / "batch-output"
+        with self.assertRaisesRegex(solutions.SolutionError, "current human approval"):
+            self.addition_batch(entries, output=output, run_prepare=self.run_canonical_batch)
+        self.assertFalse(output.exists())
+        self.assertEqual("", self.git("status", "--short"))
+
+    def test_batch_bridge_collects_two_approved_corrections_for_one_bank_check(self):
+        second = self.second_question()
         first_bank = self.existing()
         second_bank = {
             "externalKey": f"{PAPER}-q2", "type": "MSQ", "sourceKind": "official",
@@ -322,22 +395,7 @@ class ExportTest(unittest.TestCase):
             self.assertEqual([entry["replaceExpected"] for entry in entries],
                              [args[index + 1] for index, item in enumerate(args) if item == "--replace-expect"])
             self.assertEqual(str(self.work / "batch-output"), args[args.index("--output") + 1])
-            options = {
-                "packets": [{"packetPath": args[index + 1], "expected": args[args.index("--expect", index) + 1]}
-                            for index, item in enumerate(args) if item == "--packet"],
-                "replaceExpecteds": [entry["replaceExpected"] for entry in entries],
-                "expectedSource": self.source_commit, "cwd": str(self.repo),
-                "downloadsDir": args[args.index("--downloads-dir") + 1],
-                "output": args[args.index("--output") + 1],
-            }
-            script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
-            code = ("const {prepareAdditions}=await import(process.argv[1]);"
-                    "let input='';for await(const chunk of process.stdin)input+=chunk;"
-                    "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
-            result = subprocess.run(["node", "--input-type=module", "-e", code, script],
-                                    input=json.dumps(options), text=True, cwd=self.repo,
-                                    capture_output=True, check=True)
-            return json.loads(result.stdout)
+            return self.run_canonical_batch(args, repo)
 
         result = export_batch.prepare_batch(work=self.work, paper_id=PAPER, entries=entries,
                                             expected_source=self.source_commit,
