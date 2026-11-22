@@ -165,7 +165,9 @@ python3 apps/designmocks/ingestion/export.py uceed-2031 q1 \
 
 For a new addition, supply the reviewed classification `owner-authorized` or `official-unlicensed`. The source classification describes the paper and the rights to use it. Official answer-key evidence is verified separately.
 
-For a correction, pass `--replace-expect "$CURRENT_QUESTION_SHA256"` and omit `--source-classification`. The correction path requires the same paper, original PDF digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
+Stage 7 accepts a PDF or ordered page photos from the reviewed intake. For photos it checks the filename, byte length and SHA-256 of every original, including pages outside the selected question. The packet records the source type as `photo`. The bank provenance SHA-256 hashes the ASCII prefix `dmocks-paper-photos-v1` and the original SHA-256 hex digests in page order, with a newline between each item and no trailing newline. PDF provenance continues to use the original PDF's SHA-256.
+
+For a correction, pass `--replace-expect "$CURRENT_QUESTION_SHA256"` and omit `--source-classification`. The correction path requires the same paper, exact original source digest, question number, type, prompt, choices and canonical image bytes. It preserves the existing record's identity, provenance, rights labels and media path. The replacement key retains its official notation and source evidence. The dry run refuses flagged segments and questions that need image bytes outside the reviewed set.
 
 For an existing visual question whose canonical asset is a whole-question block, also pass
 `--media-root /path/to/server/data/media`. The preparer verifies the original block from that
@@ -194,7 +196,7 @@ python3 apps/designmocks/ingestion/export.py uceed-2031 q1 \
 For a paper already in the canonical bank, stage two to 100 **approved corrections**
 together with `export_batch.py`. Put only the selected review keys, their current Stage 6
 fingerprints, and each exact current bank question content SHA-256 in a private JSON
-manifest. Every item must retain the same original paper PDF, question number, prompt,
+manifest. Every item must retain the same original paper source digest, question number, prompt,
 choices and source classification. The command reads each approval again and sends all
 packets to one canonical bank check against the same pinned `origin/main` commit.
 

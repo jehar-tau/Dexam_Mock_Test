@@ -15,6 +15,7 @@ from test_solutions import HERE, NAT, PAPER, build_work
 sys.path.insert(0, str(HERE))
 import export
 import export_batch
+import intake
 import solutions
 from test_solutions import MSQ
 
@@ -42,6 +43,17 @@ class ExportTest(unittest.TestCase):
                                                {"name": self.original.name, "sha256": self.source_hash}
                                            ]}}))
 
+        self.bind_intake()
+        self.draft = copy.deepcopy(NAT)
+        self.draft.pop("overlay")
+        for step in self.draft["steps"]:
+            step.pop("overlay")
+        self.save_draft()
+        self.pin_bank([])
+        self.payload = None
+
+    def bind_intake(self):
+        intake_path = self.base / "01-intake/paper.json"
         segments_path = self.base / "02-segments/questions.json"
         segments = json.loads(segments_path.read_text())
         self.question = segments["questions"][0]
@@ -53,13 +65,16 @@ class ExportTest(unittest.TestCase):
             manifest = json.loads(path.read_text())
             manifest["segmentsSha256"] = solutions.sha256(segments_path.read_bytes())
             path.write_text(json.dumps(manifest))
-        self.draft = copy.deepcopy(NAT)
-        self.draft.pop("overlay")
-        for step in self.draft["steps"]:
-            step.pop("overlay")
-        self.save_draft()
-        self.pin_bank([])
-        self.payload = None
+
+    def use_ordered_photos(self):
+        photos = [self.work / name for name in ("z-first.jpg", "a-second.jpg")]
+        for photo, color in zip(photos, ("white", "black")):
+            Image.new("RGB", (20, 20), color).save(photo)
+        intake.run_intake(exam="uceed", year=2031, work=self.work, paper_id=PAPER,
+                          photos=photos, replace=True)
+        self.bind_intake()
+        self.fictional_block()
+        return photos
 
     def git(self, *args):
         return subprocess.check_output(["git", *args], cwd=self.repo, text=True).strip()
@@ -112,12 +127,24 @@ class ExportTest(unittest.TestCase):
             self.assertEqual(asset["sha256"], solutions.sha256(staged.read_bytes()))
         return {"mode": "staged" if persistent else "dry-run", "review": "objective-complete"}
 
+    def run_fixture_preparer(self, options):
+        script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
+        code = ("const {prepareAdditions}=await import(process.argv[1]);"
+                "let input='';for await(const chunk of process.stdin)input+=chunk;"
+                "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
+        result = subprocess.run(["node", "--input-type=module", "-e", code, script],
+                                input=json.dumps(options), text=True, cwd=self.repo,
+                                capture_output=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        return json.loads(result.stdout)
+
     def export(self, fingerprint, **kwargs):
         if "replace_expected" not in kwargs:
             kwargs.setdefault("source_classification", "official-unlicensed")
+        kwargs.setdefault("run_prepare", self.fake_prepare)
         return export.prepare(work=self.work, repo=self.repo, paper_id=PAPER, key="q1", fingerprint=fingerprint,
                               rights_note="Fictional source rights reviewed", expected_source=self.source_commit,
-                              run_prepare=self.fake_prepare, **kwargs)
+                              **kwargs)
 
     def test_addition_uses_key_evidence_and_discards_temporary_packet(self):
         self.fictional_block()
@@ -128,12 +155,96 @@ class ExportTest(unittest.TestCase):
         self.assertEqual("12", self.payload["answer"]["raw"])
         self.assertEqual("fictional-key.pdf", self.payload["answer"]["source"]["name"])
         self.assertEqual(2, self.payload["provenance"]["page"])
+        self.assertEqual(self.source_hash, self.payload["provenance"]["sourceSha256"])
+        self.assertEqual("pdf", self.packet["sourceType"])
         self.assertIn("3 × 4 = 12", self.payload["explanation"])
         self.assertEqual("block", self.payload["display"])
         self.assertEqual(fingerprint, self.payload["solutionReview"]["fingerprint"])
         self.assertFalse(self.packet_path.exists())
         self.assertEqual(before, {path: path.read_bytes() for path in self.base.rglob("*") if path.is_file()})
         self.assertEqual("", self.git("status", "--short"))
+
+    def test_photo_addition_uses_ordered_originals_and_invalidates_reordered_approval(self):
+        photos = self.use_ordered_photos()
+        fingerprint = self.approve()
+        self.export(fingerprint)
+        digest = self.payload["provenance"]["sourceSha256"]
+        expected = hashlib.sha256(b"dmocks-paper-photos-v1\n" + b"\n".join(
+            hashlib.sha256(photo.read_bytes()).hexdigest().encode() for photo in photos
+        )).hexdigest()
+        self.assertEqual(expected, digest)
+        self.assertEqual("photo", self.packet["sourceType"])
+        self.assertEqual(2, self.payload["provenance"]["page"])
+
+        intake.run_intake(exam="uceed", year=2031, work=self.work, paper_id=PAPER,
+                          photos=list(reversed(photos)), replace=True)
+        self.bind_intake()
+        with self.assertRaisesRegex(solutions.SolutionError, "current human approval"):
+            self.export(fingerprint)
+        self.export(self.approve())
+        self.assertNotEqual(digest, self.payload["provenance"]["sourceSha256"])
+
+    def test_canonical_preparer_stages_a_reviewed_photo_packet(self):
+        self.use_ordered_photos()
+        output = self.work / "photo-export"
+
+        def verify(args, repo):
+            self.fake_prepare(args, repo)
+            return self.run_fixture_preparer({
+                "packets": [{"packetPath": str(self.packet_path), "expected": self.packet["contentSha256"]}],
+                "expectedSource": self.source_commit, "cwd": str(self.repo),
+                "downloadsDir": args[args.index("--downloads-dir") + 1],
+                "output": str(output),
+            })
+
+        result = self.export(self.approve(), output=output, run_prepare=verify)
+        self.assertEqual("staged", result["mode"])
+        staged = json.loads((output / "dexam-bank-export.json").read_text())
+        self.assertEqual(self.payload["provenance"], staged["questions"][0]["provenance"])
+
+    def test_photo_export_checks_unreferenced_original_size_digest_and_path(self):
+        photos = self.use_ordered_photos()
+        original = self.base / "01-intake/source" / photos[0].name
+        data = original.read_bytes()
+        fingerprint = self.approve()
+        with self.subTest("same-size content mutation"):
+            original.write_bytes(data[:-1] + bytes([data[-1] ^ 1]))
+            with self.assertRaisesRegex(solutions.SolutionError, "original page photo does not match"):
+                self.export(fingerprint)
+        with self.subTest("wrong recorded size with matching digest"):
+            original.write_bytes(data)
+            intake_path = self.base / "01-intake/paper.json"
+            manifest = json.loads(intake_path.read_text())
+            manifest["source"]["files"][0]["bytes"] += 1
+            intake_path.write_text(json.dumps(manifest))
+            self.bind_intake()
+            with self.assertRaisesRegex(solutions.SolutionError, "original page photo does not match"):
+                self.export(self.approve())
+            manifest["source"]["files"][0]["bytes"] -= 1
+            intake_path.write_text(json.dumps(manifest))
+            self.bind_intake()
+        with self.subTest("source symlink with matching bytes"):
+            original.unlink()
+            original.symlink_to(photos[0])
+            with self.assertRaisesRegex(solutions.SolutionError, "original page photo does not match"):
+                self.export(self.approve())
+
+    def test_photo_correction_requires_exact_canonical_source_digest(self):
+        self.use_ordered_photos()
+        current = self.existing()
+        fingerprint = self.approve()
+        self.export(fingerprint)
+        photo_digest = self.payload["provenance"]["sourceSha256"]
+        self.pin_bank([current])
+        with self.assertRaisesRegex(solutions.SolutionError, "same original paper and question"):
+            self.export(fingerprint, replace_expected="b" * 64)
+
+        current["provenance"]["sourceSha256"] = photo_digest
+        self.pin_bank([current])
+        result = self.export(fingerprint, replace_expected="b" * 64)
+        self.assertEqual("correction", result["operation"])
+        self.assertEqual(current["provenance"], self.payload["provenance"])
+        self.assertEqual("photo", self.packet["sourceType"])
 
     def test_staged_export_passes_the_private_output_directory_to_bank_preparer(self):
         self.fictional_block()
@@ -330,14 +441,7 @@ class ExportTest(unittest.TestCase):
                 "downloadsDir": args[args.index("--downloads-dir") + 1],
                 "output": args[args.index("--output") + 1],
             }
-            script = (HERE.parent / "scripts/prepare-question-bank-addition.mjs").as_uri()
-            code = ("const {prepareAdditions}=await import(process.argv[1]);"
-                    "let input='';for await(const chunk of process.stdin)input+=chunk;"
-                    "console.log(JSON.stringify(await prepareAdditions(JSON.parse(input))))")
-            result = subprocess.run(["node", "--input-type=module", "-e", code, script],
-                                    input=json.dumps(options), text=True, cwd=self.repo,
-                                    capture_output=True, check=True)
-            return json.loads(result.stdout)
+            return self.run_fixture_preparer(options)
 
         result = export_batch.prepare_batch(work=self.work, paper_id=PAPER, entries=entries,
                                             expected_source=self.source_commit,
