@@ -105,7 +105,7 @@ def official_record(manifest, key, question, evidence_valid):
     verified = False
     if (evidence_valid and status == "official-key" and record.get("kind") == kind
             and not record.get("checks") and not issues and type(page) is int and page > 0
-            and record.get("readBy") in ("text", "ocr", "letter-match")
+            and record.get("readBy") in ("text", "ocr", "letter-match", "crop-ocr")
             and isinstance(raw, str) and isinstance(printed, str)):
         ak = load("answer_key")
         canonical = ak.canonical(raw, kind)
@@ -457,8 +457,10 @@ def render(work, paper_id):
         question_options = "".join(f'<li><b>{esc(o["key"])}</b> {esc(o["text"])}</li>' for o in question["options"])
         official = result["officialKey"]
         inferred_run = "consecutive-row-run-needs-visual-review" in official.get("notes", [])
+        cropped_number = "two-crop-ocr-agreement-needs-visual-review" in official.get("notes", [])
         official_details = ("Source-linked OCR key; visually review its inferred question number"
-                            if inferred_run else "Verified official key" if official["verifiedKey"]
+                            if inferred_run else "Source-linked cropped OCR key; visually review its printed number"
+                            if cropped_number else "Verified official key" if official["verifiedKey"]
                             else f'Key status {esc(official["status"])}')
         if official["source"] and official.get("page"):
             name = official["source"]["name"]

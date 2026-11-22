@@ -253,6 +253,28 @@ class AnswerKeyTest(unittest.TestCase):
         ak.infer_numbers(rows, 10)
         self.assertEqual([1, None, None, 5], [row["number"] for row in rows])
 
+    def test_empty_numeric_cell_requires_matching_cropped_ocr_reads(self):
+        text_pdf, image_pdf = self.root / "key-text.pdf", self.root / "key-scan.pdf"
+        adjacent_column_key(text_pdf)
+        scanned(text_pdf, image_pdf)
+        page_ocr = ocr_from(text_pdf, drop={"08"})
+
+        def agrees(path):
+            return [{"text": "08"}] if pathlib.Path(path).name.startswith("key-cell-") else page_ocr(path)
+
+        _, data = self.run_key(image_pdf, ocr=agrees)
+        self.assertEqual(("08", "crop-ocr"), (data["keys"]["q1"]["raw"], data["keys"]["q1"]["readBy"]))
+        self.assertIn("two-crop-ocr-agreement-needs-visual-review", data["keys"]["q1"]["notes"])
+
+        def disagrees(path):
+            name = pathlib.Path(path).name
+            if name.startswith("key-cell-"):
+                return [{"text": "08" if name.endswith("-70.png") else "09"}]
+            return page_ocr(path)
+
+        _, rejected = self.run_key(image_pdf, ocr=disagrees)
+        self.assertEqual((None, "missing"), (rejected["keys"]["q1"]["raw"], rejected["keys"]["q1"]["status"]))
+
     def test_refusals(self):
         pdf = self.root / "key.pdf"
         header_key(pdf)

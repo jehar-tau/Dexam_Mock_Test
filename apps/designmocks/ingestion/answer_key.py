@@ -496,7 +496,7 @@ def audit_cells(scan_path, entries):
         scan = opened.convert("L")
     zoom = OCR_DPI / 72
     for entry in entries:
-        if entry["cell"] is None or not entry["printed"].strip() or entry.get("letterMatch"):
+        if entry["cell"] is None or not entry["printed"].strip() or entry.get("letterMatch") or entry.get("cropMatch"):
             continue
         x0, y0, x1, y1 = entry.get("span") or entry["cell"]
         x1 = min(x1, x0 + 160)
@@ -559,6 +559,44 @@ def match_empty_letters(scan_path, entries):
     return filled
 
 
+def match_empty_nat_cells(scan_path, entries, questions, ocr, scratch):
+    """Retry an empty numeric key cell in two tighter crops; require exact OCR agreement.
+
+    The full-page scan remains the evidence. Cropping only helps Vision see a small
+    isolated number, and the review page still calls for visual source checking.
+    """
+    from PIL import Image
+    if not scan_path.exists():
+        return 0
+    with Image.open(scan_path) as opened:
+        scan = opened.convert("RGB")
+    zoom = OCR_DPI / 72
+    filled = 0
+    for entry in entries:
+        question = questions.get(f'q{entry["number"]}')
+        if entry["printed"].strip() or entry["cell"] is None or not question or question["type"] != "NAT":
+            continue
+        x0, y0, x1, y1 = entry.get("span") or entry["cell"]
+        if x1 - x0 < 90 or y1 - y0 < 5:
+            continue
+        readings = []
+        for width in (70, 90):
+            right = min(x1, x0 + width)
+            crop = scan.crop(tuple(round(v * zoom) for v in (x0, y0, right, y1)))
+            enlarged = crop.resize((crop.width * 4, crop.height * 4))
+            path = scratch / f'key-cell-{entry["page"]}-{entry["number"]}-{width}.png'
+            try:
+                enlarged.save(path)
+                lines = [str(row["text"]).strip() for row in ocr(path) if str(row["text"]).strip()]
+            finally:
+                path.unlink(missing_ok=True)
+            readings.append(lines[0] if len(lines) == 1 else None)
+        if readings[0] and readings[0] == readings[1] and normalise(readings[0], "NAT")[1] == "official-key":
+            entry["printed"], entry["cropMatch"] = readings[0], True
+            filled += 1
+    return filled
+
+
 def default_ocr(work_root):
     import importlib.util
     spec = importlib.util.spec_from_file_location("segment", pathlib.Path(__file__).with_name("segment.py"))
@@ -612,6 +650,8 @@ def run_key(*, work, paper_id, key_pdf, replace=False, ocr=None, bank_questions=
             if how == "ocr":
                 scan = staging / f"key-page-{page_no}.png"
                 letters_by_page[page_no] = match_empty_letters(scan, [e for e in entries if e["page"] == page_no])
+                match_empty_nat_cells(scan, [e for e in entries if e["page"] == page_no], questions,
+                                      ocr or default_ocr(work_root), staging)
                 audit_cells(scan, [e for e in entries if e["page"] == page_no])
         for scratch in staging.glob("key-page-*.png"):
             scratch.unlink()
@@ -643,6 +683,9 @@ def run_key(*, work, paper_id, key_pdf, replace=False, ocr=None, bank_questions=
             if entry.get("letterMatch"):
                 how = "letter-match"
                 notes = notes + [f"letter scores {entry['letterMatch']}"]
+            if entry.get("cropMatch"):
+                how = "crop-ocr"
+                notes = notes + ["two-crop-ocr-agreement-needs-visual-review"]
             if entry.get("inferred"):
                 notes = notes + ["question-number-inferred-from-grid"]
             if entry.get("inferredRun"):

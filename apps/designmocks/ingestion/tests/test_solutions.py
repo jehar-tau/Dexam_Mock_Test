@@ -204,6 +204,12 @@ class SolutionsTest(unittest.TestCase):
         self.assertIn("Source-linked OCR key; visually review its inferred question number", page)
         self.assertNotIn("Verified official key", page)
 
+    def test_cropped_key_number_is_clearly_marked_for_visual_review(self):
+        self.save("q1", NAT)
+        self.change_key("q1", readBy="crop-ocr", notes=["two-crop-ocr-agreement-needs-visual-review"])
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn("Source-linked cropped OCR key; visually review its printed number", page)
+
     def test_human_approval_is_separate_and_bound_to_reviewed_inputs(self):
         draft = copy.deepcopy(NAT)
         draft["provenance"].update(status="verified", reviewedBy="Model claimed a reviewer")
