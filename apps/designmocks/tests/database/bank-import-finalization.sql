@@ -19,7 +19,14 @@ reset role;
 select pg_temp.bank_assert((select count(*)=1 and min(external_key)='finalize-retired' from finalized_row_updates),'finalization only touches changed active states');
 select pg_temp.bank_assert((select count(*)=2 from dm_private.bank_questions where active),'only current-run members stay active');
 select pg_temp.bank_assert((select status='completed' and imported_count=eligible_total and completed_at is not null from dm_private.bank_import_runs where id=current_setting('test.finalize_run')::uuid),'complete import recorded exactly');
-select pg_temp.bank_assert(not has_function_privilege('anon','public.finish_question_bank_import(uuid)','EXECUTE') and not has_function_privilege('authenticated','public.finish_question_bank_import(uuid)','EXECUTE'),'finalization stays service-role only');
+select pg_temp.bank_assert((select bool_and(
+  has_function_privilege('service_role',signature,'EXECUTE')
+  and not has_function_privilege('anon',signature,'EXECUTE')
+  and not has_function_privilege('authenticated',signature,'EXECUTE'))
+  from unnest(array[
+    'public.begin_question_bank_import(text,text,text,integer,integer,integer,integer)',
+    'public.import_question_bank_batch(uuid,jsonb)',
+    'public.finish_question_bank_import(uuid)']) signature),'all bank import steps stay service-role only');
 set local role service_role;
 select public.finish_question_bank_import(current_setting('test.finalize_run')::uuid);
 select set_config('test.incomplete_run',public.begin_question_bank_import(repeat('d',40),'server/data/exports/dexam-bank-export.json',repeat('e',64),1,2,2,0)::text,true);

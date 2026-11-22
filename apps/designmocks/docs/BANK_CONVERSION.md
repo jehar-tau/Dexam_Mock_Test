@@ -2,6 +2,28 @@
 
 The canonical input remains `main:server/data/exports/dexam-bank-export.json`. Only an explicitly empty `holds` array is eligible. The owner's collection-level permission is recorded; raw source labels and per-version review history are preserved.
 
+## Expanded single-project bank import preflight (22 November 2026)
+
+The owner temporarily uses one DMocks backend for portal development and
+direct public frontend releases. Its wider tester portal grants intentionally
+make the narrow paid-MVP permission profile report false. The canonical bank
+importer still refuses by default. For this designated DMocks project only, an
+operator may set `DMOCKS_BANK_PROFILE=expanded-staging` with the private
+`DMOCKS_BANK_AUDIT_DATABASE_URL` and
+`DMOCKS_BANK_AUDIT_DATABASE_CA_FILE`. Before sending a bank row, the importer
+checks the current Test-mode health response and opens a separate read-only
+database transaction to verify closed sales, restricted admission, a closed
+merchant Test window, the expected expanded-profile drift and service-role-only
+bank import APIs. A missing or changed condition aborts the import. This does
+not enable public registration, checkout or a paper release. The ordinary
+strict paid-MVP profile remains required for other targets and Live mode.
+
+The private 22 November audit found 2,575 eligible rows in current main and
+2,581 active on the hosted target; six newly held records still needed
+retirement. The existing importer refused before mutation because the current
+profile was expanded. Reconcile the exact current source again after any new
+question-bank change, then run the guarded import and verify its completed run.
+
 ## Administrator preview
 
 The bank inspector shows the intended exam/section, response type, marking and clock alongside the complete private question, answers and figures. An unconverted record is explicitly labelled **proposed**. Previewing does not publish a paper, start an attempt, create an upload or materialize a question.
