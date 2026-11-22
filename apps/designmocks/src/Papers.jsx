@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import catalogue from './paper-years.generated.json';
 import { paperLabel } from './paper-years.mjs';
 import { releasedYearPaperMap } from './free-year-papers.mjs';
-import { platform } from './platform.js';
+import { platform, cataloguePlatform } from './platform.js';
 import { useAuthState } from './useAuth.js';
 import { AccountAccessBoundary, useAccountServices } from './AccountAccess.jsx';
 import { withAccountDeadline } from './account-request.js';
@@ -77,9 +77,9 @@ export default function Papers() {
   const { session } = useAuthState(), heading = useRef(null);
   const [releases, setReleases] = useState([]), [releasesUnavailable, setReleasesUnavailable] = useState(false);
   useEffect(() => {
-    if (!platform) return;
+    if (!cataloguePlatform) return;
     const controller = new AbortController();
-    platform.rpc('free_year_paper_catalog').abortSignal(controller.signal).then(({data,error}) => {
+    cataloguePlatform.rpc('free_year_paper_catalog').abortSignal(controller.signal).then(({data,error}) => {
       if (controller.signal.aborted) return;
       try { if (error) throw error; releasedYearPaperMap(data,catalogue); setReleases(data); }
       catch { setReleases([]);setReleasesUnavailable(true); }
