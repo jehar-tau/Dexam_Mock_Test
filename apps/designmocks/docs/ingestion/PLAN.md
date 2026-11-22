@@ -104,6 +104,15 @@ If the source wording conflicts with the preserved figure or other source eviden
 
 For a model or separate drafting session, `solution_batch.py` prepares up to 100 missing objective questions at once. Its private packet includes the source wording, choices and local figure paths, but omits the official answer key. `--text-only` skips visual questions for a text-only model. Give that packet to the drafting model and save its JSON response privately. `ingest` requires every requested key, rejects changed source/key evidence and existing drafts, and marks answers that fail the key or format check as **held**. It never creates a human approval or exports a question.
 
+For a local model, first install and start Ollama on this Mac and pull `qwen3-vl:4b`. `draft_ollama.py` accepts only an already installed, explicitly tagged model through `127.0.0.1:11434`, sends the key-blind question and its preserved PNG figures, and writes private response JSON. It checkpoints each question so an interrupted batch can resume. The command does not import, approve or publish a solution. Inspect its response and then run the separate `ingest` command. Use small batches first; a model can give plausible but wrong explanations, including when it happens to match the answer key.
+
+```sh
+/usr/bin/python3 apps/designmocks/ingestion/solution_batch.py --work ~/dmocks-ingestion-work \
+  queue uceed-2031 --limit 2
+/usr/bin/python3 apps/designmocks/ingestion/draft_ollama.py --work ~/dmocks-ingestion-work \
+  --paper-id uceed-2031 --packet /private/path/to/batch.json
+```
+
 ```sh
 python3 apps/designmocks/ingestion/solution_batch.py --work ~/dmocks-ingestion-work \
   queue uceed-2031 --limit 20 --text-only
