@@ -19,7 +19,7 @@ import solutions
 
 
 API = "http://127.0.0.1:11434"
-MODEL = "qwen3-vl:4b"
+MODEL = "qwen3-vl:4b-instruct"
 MAX_IMAGE_BYTES = 10 * 1024 * 1024
 SYSTEM = (
     "You draft concise, independently reasoned design-exam worked solutions. "
@@ -82,7 +82,7 @@ def draft_question(base, item, model, opener=None):
         images = [image_data(base, item["sourceBlock"])]
     question = {"type": item["type"], "prompt": item["prompt"], "options": item["options"]}
     payload = {"model": model, "stream": False, "think": False, "format": "json",
-               "options": {"temperature": 0.2, "num_predict": 3072, "num_ctx": 8192},
+               "options": {"temperature": 0.2, "num_predict": 1100, "num_ctx": 4096},
                "messages": [{"role": "system", "content": SYSTEM},
                             {"role": "user", "content": json.dumps(question, ensure_ascii=False), "images": images}]}
     answer = local_json("/api/chat", payload, opener=opener)

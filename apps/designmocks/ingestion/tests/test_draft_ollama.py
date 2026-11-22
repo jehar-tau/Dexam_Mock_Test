@@ -37,7 +37,7 @@ class LocalOpener:
     def open(self, request, timeout):
         self.calls.append((request.full_url, request.data))
         if request.full_url.endswith("/api/tags"):
-            return Response({"models": [{"name": "qwen3-vl:4b"}]})
+            return Response({"models": [{"name": "qwen3-vl:4b-instruct"}]})
         if request.full_url.endswith("/api/chat"):
             answer = {"answer": "A,B", "keyIdea": MSQ["keyIdea"], "steps": MSQ["steps"],
                       "optionCheck": MSQ["optionCheck"], "meta": MSQ["meta"]}
@@ -69,7 +69,7 @@ class DraftOllamaTest(unittest.TestCase):
         self.assertNotIn("officialKey", json.dumps(chat))
         self.assertNotIn("A,B", json.dumps(chat))
         self.assertEqual([], chat["messages"][1]["images"])
-        imported = solution_batch.ingest(self.work, PAPER, self.packet_path, output, "qwen3-vl:4b")
+        imported = solution_batch.ingest(self.work, PAPER, self.packet_path, output, "qwen3-vl:4b-instruct")
         self.assertEqual((1, 0), (imported["draft"], imported["held"]))
 
     def test_cloud_or_uninstalled_model_is_rejected_before_question_transfer(self):
@@ -86,7 +86,7 @@ class DraftOllamaTest(unittest.TestCase):
         first = solution_batch.private_packet(self.base, visual_packet)["questions"][0]
         self.assertEqual("q1", first["key"])
         opener = LocalOpener()
-        draft_ollama.draft_question(self.base, first, "qwen3-vl:4b", opener=opener)
+        draft_ollama.draft_question(self.base, first, "qwen3-vl:4b-instruct", opener=opener)
         chat = json.loads(opener.calls[0][1])
         self.assertEqual("http://127.0.0.1:11434/api/chat", opener.calls[0][0])
         self.assertEqual(1, len(chat["messages"][1]["images"]))
@@ -97,6 +97,20 @@ class DraftOllamaTest(unittest.TestCase):
         request = urllib.request.Request("http://127.0.0.1:11434/api/chat")
         with self.assertRaisesRegex(draft_ollama.LocalModelError, "redirect"):
             handler.redirect_request(request, None, 302, "Found", {}, "https://example.org/")
+
+    def test_model_that_only_thinks_cannot_write_a_draft(self):
+        first = solution_batch.private_packet(self.base, self.packet_path)["questions"][0]
+
+        class NoFinalAnswer(LocalOpener):
+            def open(self, request, timeout):
+                if request.full_url.endswith("/api/chat"):
+                    return Response({"message": {"content": "", "thinking": "unfinished"},
+                                     "done_reason": "length"})
+                return super().open(request, timeout)
+
+        with self.assertRaisesRegex(draft_ollama.LocalModelError, "no final answer"):
+            draft_ollama.draft_question(self.base, first, "qwen3-vl:4b-instruct", opener=NoFinalAnswer())
+        self.assertFalse((self.base / "05-solutions/q2.json").exists())
 
 
 if __name__ == "__main__":
