@@ -269,6 +269,18 @@ class SolutionsTest(unittest.TestCase):
         self.assertIn('&lt;script&gt;alert(&quot;unsafe&quot;)&lt;/script&gt;', page)
         self.assertNotIn('<script>alert("unsafe")</script>', page)
 
+    def test_held_solution_shows_uncertainty_without_inventing_an_answer(self):
+        held = copy.deepcopy(NAT)
+        held["answer"]["value"] = None
+        held["provenance"]["status"] = "held"
+        held["provenance"]["holdReason"] = "The source figure does not establish the count."
+        self.save("q1", held)
+        page = pathlib.Path(solutions.render(self.work, PAPER)["page"]).read_text()
+        self.assertIn('<a href="#q1">Q1 <span>held</span></a>', page)
+        self.assertIn("Answer unresolved", page)
+        self.assertIn("Why held:</b> The source figure does not establish the count.", page)
+        self.assertNotIn("Worked answer <b>None</b>", page)
+
     def test_human_approval_is_separate_and_bound_to_reviewed_inputs(self):
         draft = copy.deepcopy(NAT)
         draft["provenance"].update(status="verified", reviewedBy="Model claimed a reviewer")

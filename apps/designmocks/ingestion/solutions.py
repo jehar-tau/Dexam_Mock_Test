@@ -591,7 +591,14 @@ def render(work, paper_id):
             source_page = esc(str(official["page"]))
             official_details += (f' · <a href="../04-key/source/{quote(name, safe="")}#page={source_page}">{source_name}, page {source_page}</a>'
                                 f' · printed {esc(str(official.get("printed")))} · key {esc(str(official["raw"]))}')
-        answer_label = "Proposed answer" if solution["answer"].get("source") in PROPOSAL_SOURCES else "Worked answer"
+        answer_value = solution["answer"].get("value")
+        answer_label = ("Answer under review" if result["status"] == "held" else
+                        "Proposed answer" if solution["answer"].get("source") in PROPOSAL_SOURCES else "Worked answer")
+        answer_html = (f'<p class="answer">{answer_label} <b>{esc(str(answer_value))}</b></p>'
+                       if answer_value is not None else '<p class="answer">Answer unresolved</p>')
+        hold_reason = solution["provenance"].get("holdReason") or solution["provenance"].get("method")
+        hold_info = (f'<p class="problems"><b>Why held:</b> {esc(str(hold_reason))}</p>'
+                     if result["status"] == "held" and hold_reason else "")
         review_info = ""
         if result["eligibleForExport"]:
             review_info = f'<p>Approved by {esc(result["reviewedBy"])}</p>'
@@ -632,12 +639,13 @@ def render(work, paper_id):
 {f'<ul>{question_options}</ul>' if question_options else ''}
 {source_block}
 {figure_html}
-<p class="answer">{answer_label} <b>{esc(str(solution["answer"].get("value")))}</b></p>
+{answer_html}
 <p><small>{official_details}</small></p>
 <p class="idea">{esc(solution["keyIdea"])}</p>
 <ol class="steps">{steps}</ol>
 {f'<ul class="options">{options}</ul>' if options else ''}
 {extras}
+{hold_info}
 {review_info}
 {f'<ul class="problems">{problems}</ul>' if problems else ''}
 </article>''')
