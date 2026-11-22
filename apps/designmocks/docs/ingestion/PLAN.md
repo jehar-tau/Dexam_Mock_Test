@@ -1,6 +1,6 @@
 # Question-paper ingestion pipeline (UCEED and CEED)
 
-Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records official-key approvals and private owner adjudications for keyless objective solutions, and stage 7 can dry-run or privately stage approved additions and corrections. Owner-adjudicated questions can only be staged as new additions. This file stays the reference until the last stage ships. Update it in the same change as the code.
+Status: stages 1–4 built, stage 5 drafts and checks worked solutions, stage 6 records official-key approvals and private owner adjudications for keyless objective solutions, and stage 7 can dry-run or stage approved additions and corrections individually or in separate paper batches. Owner-adjudicated questions can only be staged as new additions. This file stays the reference until the last stage ships. Update it in the same change as the code.
 
 ## Scope
 
@@ -44,7 +44,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `11.5 to 12.5`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
 | 5 | **Solutions** | `solutions.py` provides an objective question, figures, key evidence and a structured draft template. Key disagreements are held, while answers proposed without a readable official key start as drafts | [~] drafting and validation tooling built |
 | 6 | Review | The private solution review page shows the source question, key provenance and solution. An operator can approve a solution with a verified official key or record an independent owner adjudication when the key is missing or unreadable | [~] objective-solution approval built; full ingestion review still open |
-| 7 | Export | Approved objective question and solution → verified private export directory with bank JSON, PNG media and receipt. Preserve step overlays as typed shapes linked to a canonical PNG | [~] individual additions and corrections, plus a paper batch of exact-version corrections, can be staged; reviewed Git promotion and media upload still open |
+| 7 | Export | Approved objective question and solution → verified private export directory with bank JSON, PNG media and receipt. Preserve step overlays as typed shapes linked to a canonical PNG | [~] additions and exact-version corrections can be staged individually or in paper batches. Reviewed Git promotion and media upload remain open |
 | 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [~] released answer review can display visual worked solutions; paper analysis still open |
 
 Stage 1 is deterministic. Stages 2–4 are deterministic with optional local OCR. A language model can assist with stage 5 drafting.
@@ -220,7 +220,28 @@ python3 apps/designmocks/ingestion/export.py uceed-2031 q1 \
   --output ~/dmocks-private/approved-uceed-2031-q1
 ```
 
-For a paper already in the canonical bank, stage two to 100 **approved corrections**
+Stage two to 100 **approved new additions** from one paper with `export_batch.py`.
+List the selected objective questions and their exact Stage 6 fingerprints in a private
+JSON manifest. All additions share the reviewed source classification and rights note.
+
+```json
+{"questions":[
+  {"key":"q1","fingerprint":"<64-character reviewed fingerprint>"},
+  {"key":"q2","fingerprint":"<64-character reviewed fingerprint>"}
+]}
+```
+
+```sh
+python3 apps/designmocks/ingestion/export_batch.py uceed-2031 \
+  --work ~/dmocks-ingestion-work \
+  --manifest ~/dmocks-private/uceed-2031-approved-additions.json \
+  --expect-source "$REVIEWED_ORIGIN_MAIN_SHA" \
+  --source-classification "$REVIEWED_SOURCE_CLASSIFICATION" \
+  --rights-note "$REVIEWED_RIGHTS_NOTE" \
+  --output ~/dmocks-private/approved-uceed-2031-additions
+```
+
+For questions already in the canonical bank, stage two to 100 **approved corrections**
 together with `export_batch.py`. Put only the selected review keys, their current Stage 6
 fingerprints, and each exact current bank question content SHA-256 in a private JSON
 manifest. Every item must retain the same original paper source digest, question number, prompt,
@@ -244,10 +265,11 @@ python3 apps/designmocks/ingestion/export_batch.py uceed-2031 \
   --output ~/dmocks-private/approved-uceed-2031-batch
 ```
 
-Omit `--output` for a dry run. A stale bank version, held record, missing media, changed
-approval or incomplete objective review rejects the entire staged batch; no partial
-directory is retained. New additions can still be batched by the lower-level
-`bank:prepare-addition` command, while `export_batch.py` is specifically for corrections.
+Omit `--output` for a dry run. Both batch paths recheck every selected question against
+its Stage 6 approval, verify its media and use one pinned `origin/main` commit. A stale
+bank version, held or flagged question, missing or changed media, missing or changed
+approval, or incomplete objective review rejects the entire batch. Failed staging
+leaves no partial directory.
 
 For visual solutions, the packet carries the full plain-text explanation and typed steps with drawing shapes. Each overlay uses the exact PNG's hash and dimensions. Supported SVG shapes and short text labels are converted to data, with no links, styles or embedded images. A visual correction either reuses a matching existing figure or adds the reviewed extracted PNG as a solution-only asset. The runtime validates the shapes again and freezes the solution in the private explanation snapshot. The unannotated PNG may be signed with the other question media during an active attempt; the worked steps remain in the private explanation and appear only after the existing result release gates open. The text remains readable if the figure fails to load.
 
