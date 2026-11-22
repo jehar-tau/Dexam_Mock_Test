@@ -40,6 +40,12 @@ export default defineConfig({
       reuseExistingServer:false,timeout:60000,
     },
     {
+      command:"npm exec -- vite --host 127.0.0.1 --port 4789 --strictPort",
+      url:"http://127.0.0.1:4789",
+      env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_RELEASED_STUDENT_MODULES:"mocks,community",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"false",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:"fictional-portal-fixture"},
+      reuseExistingServer:false,timeout:60000,
+    },
+    {
       command:"npm exec -- vite --host 127.0.0.1 --port 4999 --strictPort",
       url:"http://127.0.0.1:4999",
       env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"true",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:fixtureNotices.version,VITE_CANDIDATE_PHONE_VERIFICATION_ENABLED:"true",DMOCKS_PUBLISHED_NOTICES_FILE:noticeFile},
