@@ -326,3 +326,14 @@ The owner asked for a parallel bank: for each UCEED 2026 question, an original q
 - **Keys** use status `constructed`. `solutions.py` checks a constructed key exactly like an official one; the answer source must say `constructed`.
 - Each question has a text draft and a visual version that re-draws the figure and animates it (the gears turn, patterns rotate, tiles are counted).
 - Open in the review page by choosing UCEED-2026-PARALLEL in the Paper menu.
+
+## Mechanism questions (gears, belts, pulleys): owner standard, 23 Nov 2026
+
+Every gear question's visual solution must show the physics, not arrows drawn on a still picture:
+
+- Turn the input **slowly** (8–9 s, linear timing). Everything linked to it moves **at the same moment**, at its true speed ratio. Meshing gears turn opposite ways; an open belt keeps the direction; a crossed belt reverses it; parts on one axle turn together.
+- Belts and ropes visibly **move**: dashes travel along each run (motion type `flow`), so it is obvious whether a belt is open or crossed and which way it runs.
+- End on the **output**: the load on the rope rises or falls by the right amount, and its direction is labelled.
+- Steps change what is highlighted (the input, the meshes, the belts, the output); each step replays the whole machine and hides the previous step's layer.
+
+`ingestion/mechanism.py` does the physics and drawing: give it the parts (centre, radius, teeth, belt radius), the links and the driver; it solves every direction and speed (and refuses a mechanism that would jam), draws the overlay and returns the motions. For a scanned figure, measure the centres and radii and redraw it; for an original question, the same model draws the question figure. Used by UCEED 2026 Q19 (redrawn from the paper, with the worm thread moving) and the parallel Q19.

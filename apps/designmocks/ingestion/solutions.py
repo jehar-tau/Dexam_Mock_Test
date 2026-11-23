@@ -43,8 +43,10 @@ MOTIONS = {
     "fade": {"from": float, "to": float},
     "pulse": {},                                        # brief emphasis
     "stagger": {},                                      # reveal children one by one (counting)
+    "flow": {"distance": float},                        # dashes travel along lines (a moving belt or rope)
 }
-MAX_MOTION_MS = 4000
+EASINGS = ("linear", "ease")                            # linear for machines, so linked parts keep their ratio
+MAX_MOTION_MS = 10000
 SAFE_VALUE = re.compile(r"^[-#%.,()0-9A-Za-z \t]*$")
 
 
@@ -287,6 +289,8 @@ def motion_problems(steps, overlay):
                 problems.append(f"step-{index}-motion-duration")
             if not isinstance(motion.get("delay", 0), (int, float)) or not 0 <= motion.get("delay", 0) <= MAX_MOTION_MS:
                 problems.append(f"step-{index}-motion-delay")
+            if motion.get("easing", "ease") not in EASINGS:
+                problems.append(f"step-{index}-motion-easing")
             for field, expected in MOTIONS[kind].items():
                 if kind == "move" and "path" in motion:
                     break

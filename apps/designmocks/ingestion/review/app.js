@@ -249,13 +249,18 @@ function runMotions(svg, steps, upto, play) {
     for (const motion of step.motion || []) {
       const node = svg.querySelector(`#${CSS.escape(motion.target)}`);
       if (!node) continue;
-      const timing = { duration: motion.duration ?? 900, delay: motion.delay ?? 0, easing: "cubic-bezier(.4,0,.2,1)", fill: "both" };
+      const timing = { duration: motion.duration ?? 900, delay: motion.delay ?? 0, fill: "both",
+        easing: motion.easing === "linear" ? "linear" : "cubic-bezier(.4,0,.2,1)" };
       const animations = [];
       if (motion.type === "draw") {
         for (const shape of node.matches("path,line,polyline,polygon,circle,ellipse,rect") ? [node] : node.querySelectorAll("path,line,polyline,polygon,circle,ellipse,rect")) {
           const length = shape.getTotalLength ? shape.getTotalLength() : 0;
           shape.style.strokeDasharray = `${length}`;
           animations.push(shape.animate([{ strokeDashoffset: length }, { strokeDashoffset: 0 }], timing));
+        }
+      } else if (motion.type === "flow") {  // dashes travel along a belt or rope; the sign of distance is the direction
+        for (const shape of node.matches("path,line,polyline") ? [node] : node.querySelectorAll("path,line,polyline")) {
+          animations.push(shape.animate([{ strokeDashoffset: 0 }, { strokeDashoffset: -motion.distance }], timing));
         }
       } else if (motion.type === "stagger") {  // reveal parts one by one, as you would count them
         const parts = [...node.children];
