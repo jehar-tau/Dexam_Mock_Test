@@ -282,11 +282,11 @@ function stepPlayer(q, solution, upto, pending, last) {
     : el("p", { class: "step-caption", "aria-live": "polite" }, upto >= 0 ? steps[upto].text : "");
   return el("div", { class: "player" },
     el("div", { class: "controls" },
-      el("button", { type: "button", "aria-label": state.playing ? "Pause" : "Play the steps", onclick: () => (state.playing ? stopPlaying() : play(q, steps)) }, state.playing ? "❚❚ Pause" : "▶ Play"),
-      el("button", { type: "button", "aria-label": "Previous step", disabled: last <= 0, onclick: () => go(last - 1, false) }, "‹"),
-      el("input", { type: "range", min: "1", max: String(steps.length), value: String(last + 1), "aria-label": "Step", oninput: event => go(Number(event.target.value) - 1, false) }),
-      el("button", { type: "button", "aria-label": "Next step", disabled: last >= steps.length - 1, onclick: () => go(last + 1, true) }, "›"),
-      el("span", { class: "muted" }, `Step ${last + 1} of ${steps.length}`)),
+      // Three buttons, no progress bar: previous, play/pause in one, next. The count says where you are.
+      el("button", { type: "button", "aria-label": "Previous step", disabled: last <= 0, onclick: () => go(last - 1, false) }, "‹ Previous"),
+      el("button", { type: "button", class: "primary", "aria-label": state.playing ? "Pause" : "Play the steps", onclick: () => { if (state.playing) { stopPlaying(); state.animate = false; render(); } else play(q, steps); } }, state.playing ? "❚❚ Pause" : "▶ Play"),
+      el("button", { type: "button", "aria-label": "Next step", disabled: last >= steps.length - 1, onclick: () => go(last + 1, true) }, "Next ›"),
+      el("span", { class: "muted step-count", "aria-live": "polite" }, `Step ${last + 1} of ${steps.length}`)),
     caption);
 }
 

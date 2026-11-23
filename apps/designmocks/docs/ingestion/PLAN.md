@@ -256,7 +256,7 @@ Review page: `python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-in
 The owner asked for every solution to be shown visually, with animation where it helps, modelled on Roughworks but better, and for this to apply to every future paper.
 
 **What Roughworks does.** Studied 23 November 2026 on the public UCEED 2026 pages Q1, Q2, Q18 and Q38; only structure was recorded, never their wording or drawings.
-- **Steps.** Each solution has one figure with a 3–4 step scrubber and a Play button that only advances the steps. Each step has its own caption of 30–45 words and a label inside the figure ("After fold 1").
+- **Steps.** Each solution has one figure and three controls: Previous, a single Play/Pause button and Next, with a "Step 2 of 5" count. There is no progress bar (owner decision, 23 Nov 2026). Each step has its own caption of 30–45 words and a label inside the figure ("After fold 1").
 - **Drawing.** Counting and geometry draw layers over the original image. Folding and rotation are redrawn as simplified vector figures with colour-coded crease lines. Colours are theme variables.
 - **Close.** A final step eliminates the wrong options.
 - **No motion.** Steps toggle discretely: a fold never flips, a disc never turns, nothing moves between states (no SMIL, CSS animation or transitions in any figure checked).
@@ -280,7 +280,7 @@ The owner asked for every solution to be shown visually, with animation where it
 2. Prefer a rearrangement or motion that makes the answer visible over algebra. Q2: the grey caps turn a quarter-turn into their white twins, leaving half-triangles, so π never appears.
 3. One idea per step and 3–6 steps. Put `ask` on the step that holds the key insight, not on every step.
 4. Write the visual version as `qN.visual.json` **beside** the draft. Never write over another agent's file; reuse its option checks with credit in `provenance.method`.
-5. Check it in the review page (Play, scrub, predict, reduced motion) before marking it ready for review.
+5. Check it in the review page (Previous, Play/Pause, Next, predict, reduced motion) before marking it ready for review.
 
 The review page in `ingestion/review/` holds the reference player. When stage 8 brings solutions into the app, the same engine (`activeSolution`, `applyFocus`, `runMotions`, `stepPlayer` in `app.js`) moves into a shared module rather than being rewritten.
 
