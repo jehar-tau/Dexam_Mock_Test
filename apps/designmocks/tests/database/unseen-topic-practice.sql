@@ -5,6 +5,7 @@
 \set no_pass '00000000-0000-4000-8000-000000000354'
 \set incomplete '00000000-0000-4000-8000-000000000355'
 begin;
+\ir fixtures/release-bank-year.sql
 create function pg_temp.practice_assert(ok boolean,label text) returns void language plpgsql as $$
 begin if ok is distinct from true then raise exception 'FAIL: %',label;end if;end $$;
 create function pg_temp.practice_reject(statement text,expected text) returns void language plpgsql as $$
@@ -35,6 +36,13 @@ with paid as(insert into dm_private.orders(user_id,plan_id,amount,currency,mode,
  select id,'annual',119300,'INR','test','paid' from auth.users where id in(:'first',:'second',:'legacy',:'incomplete')returning id,user_id)
 insert into dm_private.passes(user_id,order_id,mode,starts_at,expires_at)select user_id,id,'test',now(),now()+interval '1 year'from paid;
 select pg_temp.practice_seed(1,35);
+select pg_temp.practice_assert(not dm_private.released_year_topic_question('unseen-fixture-1'),
+  'unreleased bank rows cannot feed topic practice');
+select pg_temp.practice_assert(not has_function_privilege('authenticated',
+  'dm_private.released_year_topic_question(text)','EXECUTE'),
+  'students cannot call private year-paper eligibility directly');
+select pg_temp.release_bank_year(array(select 'unseen-fixture-'||n from generate_series(1,35)n),
+  'uceed',2023,'unseen-uceed-2023');
 insert into dm_private.bank_questions(external_key,content_sha256,exam,question_type,topic,licence,objective_ready,owner_approved,rights_confirmed,active,payload,runtime_payload,source_commit)
 select 'excluded-'||label,md5(label)||md5(label),case when label='exam' then 'ceed' else 'uceed' end,'MCQ',
  case when label='topic' then 'other-topic' else 'observation' end,'owned',label not in('drawing','runtime'),label<>'approval',label<>'rights',label<>'retired',
@@ -105,6 +113,8 @@ select set_config('test.practice_deadline',(select deadline::text from dm_privat
 select set_config('test.practice_snapshot',(select jsonb_agg(jsonb_build_object('id',question_id,'prompt',prompt,'key',key,'points',points)order by ordinal)::text
  from dm_private.attempt_items where attempt_id=current_setting('test.practice_first')::uuid),true);
 select pg_temp.practice_seed(36,40);
+select pg_temp.release_bank_year(array(select 'unseen-fixture-'||n from generate_series(36,40)n),
+  'uceed',2022,'unseen-uceed-2022');
 set local role authenticated;
 select set_config('request.jwt.claim.sub',:'first',true);
 select set_config('test.practice_partial',public.start_topic_practice('observation','uceed',10,1800)::text,true);
@@ -139,6 +149,8 @@ select pg_temp.practice_assert((select count(*)filter(where split_part(key->>'so
  from dm_private.attempt_items where attempt_id=current_setting('test.practice_legacy')::uuid),'legacy snapshots without a source key do not invent a prior delivery identity');
 update dm_private.bank_questions set active=false,runtime_payload=jsonb_set(runtime_payload,'{prompt}','"Revised fictional wording"')
  where external_key='unseen-fixture-26';
+select pg_temp.practice_assert(not dm_private.released_year_topic_question('unseen-fixture-1'),
+  'editing one source revokes its entire released year-paper practice pool');
 select pg_temp.practice_assert((select deadline::text=current_setting('test.practice_deadline')from dm_private.attempts where id=current_setting('test.practice_first')::uuid)
  and(select jsonb_agg(jsonb_build_object('id',question_id,'prompt',prompt,'key',key,'points',points)order by ordinal)::text=current_setting('test.practice_snapshot')
  from dm_private.attempt_items where attempt_id=current_setting('test.practice_first')::uuid),'later bank edits do not change an existing snapshot or its clock');

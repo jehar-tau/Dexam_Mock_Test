@@ -7,6 +7,7 @@
 \set question '20000000-0000-4000-8000-000000000201'
 \set event '40000000-0000-4000-8000-000000000201'
 begin;
+\ir fixtures/release-bank-year.sql
 create function pg_temp.quality_assert(ok boolean,label text) returns void language plpgsql as $$
 begin if ok is distinct from true then raise exception 'FAIL: %',label;end if;end $$;
 create function pg_temp.quality_reject(statement text,expected_error text,expected_code text default null) returns void language plpgsql as $$
@@ -199,6 +200,10 @@ update dm_private.bank_questions set runtime_payload=(select to_jsonb(o)-'versio
 select dm_private.bank_review_version(q) as corrected_approval_version from dm_private.bank_questions q where external_key='quality-fixture-1' \gset
 set local role authenticated;
 select public.admin_review_bank_question('quality-fixture-1',true,true,'Corrected original content and use rights reviewed.',:'corrected_approval_version');
+reset role;
+select pg_temp.release_bank_year(array(select 'quality-fixture-'||n from generate_series(1,10)n),
+  'uceed',2023,'quality-uceed-2023');
+set local role authenticated;
 select set_config('request.jwt.claim.sub',(select user_id::text from quality_people where n=11),true);
 select public.start_topic_practice('quality-topic','uceed',10,900) as corrected_attempt \gset
 reset role;

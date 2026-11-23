@@ -1,6 +1,7 @@
 -- Fictional source and runtime fixtures only. All changes roll back.
 \set ON_ERROR_STOP on
 begin;
+\ir fixtures/release-bank-year.sql
 
 create function pg_temp.alt_assert(ok boolean, label text) returns void language plpgsql as $$
 begin
@@ -155,6 +156,8 @@ reset role;
 select pg_temp.alt_assert((select count(*)=12 from dm_private.bank_questions
   where topic='verified-alternative-fixture' and owner_approved and rights_confirmed and reviewed_at is not null),
   'identical materialization replay preserves approval');
+select pg_temp.release_bank_year(array(select external_key from dm_private.bank_questions
+  where topic='verified-alternative-fixture' and exam='uceed'),'uceed',2023,'alternatives-uceed-2023');
 
 set local role authenticated;
 select set_config('request.jwt.claim.role','authenticated',true);

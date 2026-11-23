@@ -1,6 +1,7 @@
 -- Fictional accounts and bank only. Every change rolls back.
 \set ON_ERROR_STOP on
 begin;
+\ir fixtures/release-bank-year.sql
 create function pg_temp.current_moderate(kind text,id uuid,action text,note text) returns jsonb language sql as $$
  select public.admin_moderate_community(kind,id,action,note,public.admin_review_community_content(kind,id)->>'reviewVersion',gen_random_uuid())
 $$;
@@ -79,6 +80,9 @@ select set_config('request.jwt.claim.role','authenticated',true);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
 select pg_temp.assert_true(jsonb_array_length(public.admin_bank_questions(25,0))=10,'admin sees imported bank queue');
 select public.admin_review_bank_question('fixture-bank-q'||g,true,true,'Fictional rights confirmation') from generate_series(1,10) g;
+reset role;
+select pg_temp.release_bank_year(array(select 'fixture-bank-q'||g from generate_series(1,10)g),'uceed',2023,'invariant-uceed-2023');
+set local role authenticated;
 select pg_temp.assert_true((public.topic_catalog()->0->>'questions')::integer=10,'approved topic catalogue count');
 select set_config('test.all_india_event',public.admin_create_all_india_event('uceed','Fictional All India Mock',now()+interval '1 hour',10,900)::text,true);
 select public.save_candidate_profile('Fictional Free Student','+919222222222',2028,'Pune',array['uceed']);
