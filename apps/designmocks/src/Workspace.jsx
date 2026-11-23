@@ -5,7 +5,7 @@ import {postLaunchPreview} from "./launch-scope.js";
 import { controlledPublicPortalMode } from "./platform.js";
 import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
 import { withAccountDeadline } from "./account-request.js";
-import { loadOverview, overviewStartId } from "./overview-data.js";
+import { attemptRecordFilter, loadOverview, overviewStartId } from "./overview-data.js";
 import { useAuthState } from "./useAuth.js";
 import { PortalShell } from "./PortalShell.jsx";
 import { QuestionReport } from "./QuestionReport.jsx";
@@ -104,8 +104,17 @@ export function WorkspaceView({
   preview = false,
   heading = true,embedded = false,onRefresh,unconfirmed = false,catalogueOnly = false,
 }) {
+  const [recordFilter, setRecordFilter] = useState("all");
   const recommendedPractice = new URL(practiceHref, "https://designmocks.invalid");
   if (data?.analytics?.recommendedTopic) recommendedPractice.searchParams.set("topic", data.analytics.recommendedTopic.topic);
+  const record = data?.attempts ?? [];
+  const visibleRecord = attemptRecordFilter(record, recordFilter);
+  const recordFilters = [
+    ["all", "All", record.length],
+    ["active", "In progress", attemptRecordFilter(record, "active").length],
+    ["pending", "Awaiting results", attemptRecordFilter(record, "pending").length],
+    ["ready", "Results ready", attemptRecordFilter(record, "ready").length],
+  ];
   return (
     <section className={(embedded?"workspace-content":"wrap section workspace")+(catalogueOnly?" workspace-catalogue":" overview-desk")}>
       {heading&&<WorkspaceHeading/>}
@@ -225,15 +234,20 @@ export function WorkspaceView({
               {preview&&<Link className="overview-secondary-link" to={attemptHref("example-paper")}>Try an example paper <Arrow size={17}/></Link>}
             </div>
           )}
-          {!catalogueOnly && <><div className="overview-section-head"><div><span className="overview-kicker">YOUR RECORD</span><h2>Your recent attempts.</h2></div></div>
-          {data.attempts.length ? (
-            data.attempts.map((a) => (
+          {!catalogueOnly && <><div className="overview-section-head"><div><span className="overview-kicker">YOUR RECORD</span><h2>Your attempts.</h2></div></div>
+          {record.length > 0 && <div className="overview-record-filters" role="group" aria-label="Filter your attempts">
+            {recordFilters.map(([key,label,count]) => <button key={key} type="button" aria-pressed={recordFilter===key}
+              onClick={() => setRecordFilter(key)}>{label} <span>{count}</span></button>)}
+          </div>}
+          {visibleRecord.length ? (
+            visibleRecord.map((a) => (
               <article className="history-row" key={a.id}>
                 <Link to={attemptHref(a.id)}>
                   {a.title}
                   <Arrow size={17} />
                 </Link>
                 <span>
+                  {a.startedAt && `Started ${new Date(a.startedAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})} · `}
                   {a.status === "active" ? "Continue / submit" : a.resultsPending ? "View status" : "View report"}
                 </span>
                 <span>
@@ -243,7 +257,7 @@ export function WorkspaceView({
                 </span>
               </article>
             ))
-          ) : (
+          ) : record.length ? <p role="status" className="overview-record-empty">No attempts match this filter.</p> : (
             <div className="empty-state">
               <Art kind="space" />
               <h3>Every practice starts somewhere.</h3>

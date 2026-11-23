@@ -95,6 +95,35 @@ test("Overview displays released whole-test percentages after cohort and combine
   expect(state.calls.filter(([name]) => name.startsWith("start_"))).toEqual([]);
 });
 
+test("Overview filters owned attempts by progress and shows their start dates on desktop and mobile", async ({ page }) => {
+  const state = await fixture(page);
+  state.attempts = [
+    {id:"20000000-0000-4000-8000-000000000391",title:"Fictional active paper",status:"active",startedAt:"2026-11-21T09:00:00Z",resultsPending:false,score:null,total:null},
+    {id:"20000000-0000-4000-8000-000000000392",title:"Fictional pending paper",status:"submitted",startedAt:"2026-11-20T09:00:00Z",resultsPending:true,score:null,total:null},
+    {id:"20000000-0000-4000-8000-000000000393",title:"Fictional released paper",status:"submitted",startedAt:"2026-11-19T09:00:00Z",resultsPending:false,score:7,total:10},
+  ];
+  await page.reload();
+  const filters = page.getByRole("group", {name:"Filter your attempts"});
+  await expect(filters.getByRole("button", {name:"All 3"})).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("Started 21 Nov 2026 · Continue / submit")).toBeVisible();
+  await filters.getByRole("button", {name:"Awaiting results 1"}).click();
+  await expect(page.getByRole("link", {name:"Fictional pending paper"})).toBeVisible();
+  await expect(page.getByRole("link", {name:"Fictional active paper"})).toHaveCount(0);
+  await filters.getByRole("button", {name:"Results ready 1"}).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("link", {name:"Fictional released paper"})).toHaveAttribute("href", "/attempt/20000000-0000-4000-8000-000000000393");
+  await expect(page.getByText("7 / 10", {exact:true})).toBeVisible();
+  await filters.getByRole("button", {name:"In progress 1"}).click();
+  await expect(page.getByRole("link", {name:"Fictional active paper"})).toBeVisible();
+  await page.setViewportSize({width:320,height:850});
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await page.addScriptTag({path:fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js",import.meta.url))});
+  expect((await page.evaluate(async () => (await window.axe.run(".overview-desk", {
+    runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21aa"]},
+  })).violations.map(item=>item.id)))).toEqual([]);
+  expect(state.unexpected).toEqual([]);
+});
+
 test("zero and negative released percentages remain visible without objective answers or drawing reviews", async ({ page }) => {
   const state = await fixture(page);
   state.analytics = { ...empty(), waitingForResults: 0, drawingReviews: { pending: 0, released: 0 },
