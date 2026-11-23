@@ -35,6 +35,8 @@ test("fictional event filters, a single preview start and example results stay l
   await expect(open.getByText("Last start", { exact: true })).toBeVisible();
   await status.selectOption("");
   await page.getByRole("button", { name: "Start once" }).press("Enter");
+  await expect(page.getByRole("dialog", { name: "Ready to begin UCEED All India Mock 01?" })).toBeVisible();
+  await page.getByRole("dialog").getByRole("button", { name: "Begin timed attempt" }).press("Enter");
   await expect(page.getByRole("button", { name: "Preview started" })).toBeDisabled();
   await page.getByRole("combobox", { name: "Exam" }).selectOption("nift");
   await expect(page.getByRole("heading", { name: "UCEED All India Mock 01" })).toHaveCount(0);
@@ -45,6 +47,33 @@ test("fictional event filters, a single preview start and example results stay l
   await page.getByRole("combobox", { name: "Exam" }).selectOption("uceed");
   await expect(page.getByRole("button", { name: "Preview started" })).toBeDisabled();
   await expect(page.getByRole("heading", { name: "Example rankings" })).toHaveCount(0);
+  expect(writes).toEqual([]);
+});
+
+test("All India readiness can be cancelled with Escape and restores keyboard focus", async ({ page }) => {
+  const writes = [];
+  page.on("request", request => { if (request.method() === "POST") writes.push(request.url()); });
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.goto("/all-india-preview");
+  const opener = page.getByRole("button", { name: "Start once", exact: true });
+  await opener.focus();
+  await opener.press("Enter");
+  const dialog = page.getByRole("dialog", { name: "Ready to begin UCEED All India Mock 01?" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText("one attempt");
+  await expect(dialog).toContainText("keeps running if you disconnect");
+  await expect(dialog).toContainText("15 minutes for drawing uploads");
+  await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
+  expect(await page.evaluate(async () => (await window.axe.run("dialog[open]", {
+    runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] },
+  })).violations.map(item => item.id))).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(opener).toBeFocused();
+  await opener.click();
+  await dialog.getByRole("button", { name: "Cancel" }).click();
+  await expect(dialog).toHaveCount(0);
   expect(writes).toEqual([]);
 });
 

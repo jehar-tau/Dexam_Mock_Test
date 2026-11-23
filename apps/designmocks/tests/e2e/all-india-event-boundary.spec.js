@@ -31,6 +31,12 @@ for (const [device, viewport] of [
     await page.goto('/dashboard/all-india');
     const start = page.getByRole('button', { name: 'Start once', exact: true });
     await expect(start).toBeEnabled();
+    await start.click();
+    const ready = page.getByRole('dialog', { name: 'Ready to begin Fictional timed event?' });
+    await expect(ready).toBeVisible();
+    expect(starts).toBe(0);
+    await expect(ready.getByRole('button', { name: 'Begin timed attempt' })).toBeDisabled({ timeout: 8000 });
+    await ready.getByRole('button', { name: 'Cancel' }).click();
     await expect(page.getByRole('button', { name: 'Refresh event status', exact: true })).toBeDisabled({ timeout: 8000 });
     await expect(page.getByText('The event window has changed. Refresh All India mocks to check its current status.')).toBeVisible();
     expect(starts).toBe(0);

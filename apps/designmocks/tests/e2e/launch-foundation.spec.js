@@ -272,6 +272,7 @@ test("All India mocks expose one open attempt and privacy-safe released ranks", 
   await expect(page.getByText(/plus 15 minutes for drawing uploads/)).toBeVisible();
   await expect(page.getByText("Rank 2 of 24 · 27/30 marks")).toBeVisible();
   await page.getByRole("button", { name: "Start once" }).click();
+  await page.getByRole("dialog").getByRole("button", { name: "Begin timed attempt" }).click();
   await expect(
     page.getByText("Preview attempt created once: open"),
   ).toBeVisible();
