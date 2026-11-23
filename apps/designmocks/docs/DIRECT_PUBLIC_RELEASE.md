@@ -13,7 +13,7 @@ approval for each public frontend update.
 1. Work in a feature branch or isolated worktree. Keep Claude's Learn and
    Community checkout untouched. Run relevant unit, accessibility, desktop and
    mobile browser checks locally.
-2. Open a PR. Wait for its exact-head GitHub checks to pass. The repository
+2. Open a PR. Once it is reviewed and approved, wait for its exact-head GitHub checks to pass. The owner's standing authorization covers the merge and public release without another permission request. The repository
    does not currently enforce required checks, so do **not** use
    `gh pr merge --auto`: it may merge while checks are pending.
 3. Merge the reviewed PR, then wait for the resulting main commit's checks to
@@ -43,9 +43,9 @@ switches need their own exact-source checks and recovery plan before changing
 the live service. Record any owner decision required for final paper content,
 legal notices, paid services or the actual sales opening.
 
-The current public Site is version 10, built from main
-`a8f8b9ccc4ec5a76816e1a94418c0a3faa6cd84a` after main CI
-`45059742646` passed. It serves the year-wise Papers catalogue, the
+The current public Site is version 17, built from main
+`658ce62472747aab73c1c5746815135055c78009` after main CI
+`45134349052` passed. It serves the year-wise Papers catalogue, the
 five-question sample and the controlled student portal. The catalogue is a
 collection view: its year sets are not released timed papers until the
 fixed-paper acceptance passes. Live Chrome acceptance loaded the protected
@@ -62,7 +62,7 @@ testers. It pins the exact public origin and the designated DMocks Test
 Supabase project, keeps checkout closed, and checks the server's
 `can_enter_staging_portal` admission decision before every protected route.
 Revoking a tester removes their access on the next route check or reload.
-This switch does not open public registration or sales. Version 10 has this
+This switch does not open public registration or sales. Version 17 has this
 switch enabled with a public browser key and an exact-domain server gate. The
 hosted Google authorization redirect and callback, protected Data API pages,
 and exact media CORS preflight passed; authenticated own/other media checks
