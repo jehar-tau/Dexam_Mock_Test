@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AssessmentCatalogue } from './AssessmentCatalogue.jsx';
 import { ExamStudyArt } from './ExamStudyArt.jsx';
@@ -86,7 +86,7 @@ function PaperCatalogue({ guide, paper, preview, busy, blocked, onStart, message
       <p>{paper.questionCount} questions per paper · {Math.round(paper.durationSeconds / 60)} min</p>
       {paper.sectionCounts && <p>{['nat','msq','mcq'].filter(key => paper.sectionCounts[key]).map(key => `${key.toUpperCase()} ${paper.sectionCounts[key]}`).join(' · ')}</p>}
       <p>{freeLeft ? `${freeLeft} free attempt${freeLeft === 1 ? '' : 's'} left` : 'Annual pass'}</p>
-      <button type="button" className="exam-action" disabled={busy || blocked} onClick={() => onStart(paper.exam)}>{busy ? 'Creating…' : 'Start mock'}</button>
+      <button type="button" className="exam-action" disabled={busy || blocked} onClick={event => onStart(paper.exam, event.currentTarget)}>{busy ? 'Creating…' : 'Start mock'}</button>
     </> : <div className="exam-release-state">
       <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round">
         <path d="M5 9h9l3 3h10v14H5z"/><path d="M8 8V5h13l4 4v3M10 17h12m-12 4h8"/>
@@ -102,15 +102,33 @@ export function ExamMocksView({ catalog = [], onStart, heading = true, embedded 
   const [selected, setSelected] = useState(() => initialCatalogueExam(catalog));
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
+  const [reviewing, setReviewing] = useState(false);
+  const dialogRef = useRef(null);
+  const openerRef = useRef(null);
+  const starting = useRef(false);
   const guide = examGuides[selected];
   const paper = catalog.find(item => item.exam === selected);
+  useEffect(() => {
+    if (!reviewing || !dialogRef.current) return;
+    const dialog = dialogRef.current;
+    dialog.showModal();
+    return () => { if (dialog.open) dialog.close(); };
+  }, [reviewing]);
+  function closeReview() {
+    setReviewing(false);
+    window.requestAnimationFrame(() => {
+      if (openerRef.current?.isConnected && !openerRef.current.disabled) openerRef.current.focus();
+    });
+  }
   async function start(exam) {
-    if (preview || busy || blocked || !paper?.ready || !paper.enabled) return;
+    if (starting.current || preview || busy || blocked || !paper?.ready || !paper.enabled) return;
+    starting.current = true;
+    setReviewing(false);
     setBusy(true);
     setMessage('');
     try { await onStart(exam); }
     catch (error) { setMessage(error.message); }
-    finally { setBusy(false); }
+    finally { starting.current = false; setBusy(false); }
   }
   return <section className={embedded ? 'exam-desk' : 'section portal-module exam-mocks exam-desk'}>
     {heading && <ExamMocksHeading preview={preview}/>}
@@ -128,13 +146,25 @@ export function ExamMocksView({ catalog = [], onStart, heading = true, embedded 
       <h2 className="exam-current-heading">{guide.title}<span>{guide.programme}</span></h2>
       <div className="exam-guide-grid">
         <div className="exam-practice-column">
-          <PaperCatalogue guide={guide} paper={paper} preview={preview} busy={busy} blocked={blocked} onStart={start} message={message}/>
+          <PaperCatalogue guide={guide} paper={paper} preview={preview} busy={busy} blocked={blocked} onStart={(_exam, opener) => { openerRef.current = opener; setMessage(''); setReviewing(true); }} message={message}/>
           <OriginalSample guide={guide}/>
         </div>
         <FormatGuide guide={guide}/>
       </div>
       <details className="exam-attempt-note"><summary>How are mock papers assembled?</summary><p>For a released exam-wise mock, the generator draws from the eligible, reviewed questions for each section. Starting an attempt fixes its questions and starts the timer. The paper and clock stay the same when you return.</p></details>
     </section>
+    {reviewing && paper && <dialog ref={dialogRef} className="exam-start-dialog" aria-labelledby="exam-start-title"
+      onCancel={event => { event.preventDefault(); closeReview(); }}>
+      <h2 id="exam-start-title">Ready to begin {guide.title} {paper.sectionLabel || 'practice paper'}?</h2>
+      <p>{paper.questionCount} questions · {Math.round(paper.durationSeconds / 60)} minutes</p>
+      <p>Beginning fixes your questions and starts the timer. The clock keeps running when you leave; return to the same saved attempt.</p>
+      {paper.freeAttemptLimit > paper.freeAttemptsUsed && <p>{paper.freeAttemptLimit - paper.freeAttemptsUsed} free attempt{paper.freeAttemptLimit - paper.freeAttemptsUsed === 1 ? '' : 's'} remaining. Beginning uses one.</p>}
+      <div className="exam-start-actions">
+        <button type="button" className="button quiet" autoFocus onClick={closeReview}>Cancel</button>
+        <button type="button" className="exam-action" disabled={busy || blocked || !paper.ready || !paper.enabled}
+          onClick={() => start(paper.exam)}>Begin timed mock</button>
+      </div>
+    </dialog>}
   </section>;
 }
 
