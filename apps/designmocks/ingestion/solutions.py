@@ -308,13 +308,6 @@ def motion_problems(steps, overlay):
             problems.append(f"step-{index}-hide")
         if "ask" in step and not (isinstance(step["ask"], str) and 1 <= words(step["ask"]) <= STEP_WORDS_WARN):
             problems.append(f"step-{index}-ask")
-        if "askChoices" in step:  # tappable answers for the prediction (coach treatment)
-            choices = step["askChoices"]
-            if "ask" not in step or not (isinstance(choices, list) and 2 <= len(choices) <= 5
-                                         and all(isinstance(c, str) and 0 < len(c) <= 40 for c in choices) and len(set(choices)) == len(choices)):
-                problems.append(f"step-{index}-ask-choices")
-            elif "askAnswer" in step and step["askAnswer"] not in choices:
-                problems.append(f"step-{index}-ask-answer")
     return problems
 
 

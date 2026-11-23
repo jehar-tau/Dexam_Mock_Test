@@ -2,9 +2,7 @@
 import { checkAnswer, describeKey } from "/answer-check.mjs";
 
 const $ = selector => document.querySelector(selector);
-const state = { paper: null, index: 0, zoom: 1, view: null, step: -1, attempts: {}, variant: null, animate: false, asked: new Set(), playing: null, lastFocus: null,
-  treatment: "slider", ctx: null, coach: null, hotspot: null, observer: null };
-const TREATMENTS = { slider: "Slider", story: "Scroll story", hotspots: "Hotspots", coach: "Coach" };
+const state = { paper: null, index: 0, zoom: 1, view: null, step: -1, attempts: {}, variant: null, animate: false, asked: new Set(), playing: null, lastFocus: null };
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const SVG_NS = "http://www.w3.org/2000/svg";
 const OVERLAY_TAGS = new Set(["g", "circle", "ellipse", "rect", "line", "polyline", "polygon", "path", "text", "tspan"]);
@@ -122,18 +120,31 @@ function renderViewer(q, revealSolution) {
     const cam = el("div", { class: "cam" });
     cam.append(...stage.childNodes);
     stage.append(cam);
+    const svg = document.createElementNS(SVG_NS, "svg");
+    svg.setAttribute("class", "overlay");
+    svg.setAttribute("viewBox", overlay.viewBox);
+    svg.setAttribute("preserveAspectRatio", "none");
     const steps = solution.steps || [];
     const last = state.step < 0 ? steps.length - 1 : state.step;
-    state.ctx = { q, solution, current, cam, stage };
-    if (state.treatment === "slider") {
-      const gated = last >= 0 && steps[last]?.ask && !state.asked.has(`${q.key}:${last}`);
-      const upto = gated ? last - 1 : last;  // a step that asks for a prediction waits for "Show me"
-      queueMicrotask(() => { paint(state.ctx, upto, state.animate && !reducedMotion()); state.animate = false; });
-      player = stepPlayer(q, solution, upto, gated ? steps[last] : null, last);
-    } else {
-      const upto = state.step;
-      queueMicrotask(() => { paint(state.ctx, upto, false); if (state.treatment === "hotspots") placeHotspots(state.ctx); });
+    const gated = last >= 0 && steps[last]?.ask && !state.asked.has(`${q.key}:${last}`);
+    const upto = gated ? last - 1 : last;  // a step that asks for a prediction waits for "Show me"
+    const shown = new Set(), hidden = new Set();
+    steps.slice(0, upto + 1).forEach(step => { if (step.overlay) shown.add(step.overlay); (step.hide || []).forEach(name => hidden.add(name)); });
+    const [, , vw0, vh0] = overlay.viewBox.split(/\s+/).map(Number);
+    for (const [name, fragment] of Object.entries(overlay.steps || {})) {
+      if (!shown.has(name) || hidden.has(name)) continue;
+      const group = safeOverlay(fragment);
+      if (!group) continue;
+      const pieces = (overlay.pieces || []).filter(piece => piece.layer === name);
+      if (pieces.length) group.prepend(...figurePieces(q, pieces, figureUrl(current.src), vw0, vh0));
+      group.dataset.layer = name;
+      svg.append(group);
     }
+    cam.append(svg);
+    const [, , vw, vh] = overlay.viewBox.split(/\s+/).map(Number);
+    const focus = upto >= 0 ? steps[upto]?.focus : null;
+    queueMicrotask(() => { applyFocus(cam, focus, vw, vh); runMotions(svg, steps, upto, state.animate && !reducedMotion()); state.animate = false; });
+    player = stepPlayer(q, solution, upto, gated ? steps[last] : null, last);
   }
   const tools = el("div", { class: "tools", role: "toolbar", "aria-label": "Figure" },
     options.map(v => el("button", { type: "button", "aria-pressed": String(v.id === current.id), onclick: () => { state.view = v.id; state.zoom = null; render(); } }, v.label)),
@@ -155,154 +166,6 @@ function renderViewer(q, revealSolution) {
 }
 
 // ------------------------------------------------------------------ visual solutions
-
-// Draw the figure's overlay as it stands after step `upto` (-1: nothing yet), animating that step if asked.
-function paint(ctx, upto, animate) {
-  if (!ctx) return;
-  const { q, solution, current, cam } = ctx;
-  const overlay = solution.overlay;
-  const steps = solution.steps || [];
-  cam.querySelector("svg.overlay")?.remove();
-  const svg = document.createElementNS(SVG_NS, "svg");
-  svg.setAttribute("class", "overlay");
-  svg.setAttribute("viewBox", overlay.viewBox);
-  svg.setAttribute("preserveAspectRatio", "none");
-  const shown = new Set(), hidden = new Set();
-  steps.slice(0, upto + 1).forEach(step => { if (step.overlay) shown.add(step.overlay); (step.hide || []).forEach(name => hidden.add(name)); });
-  const [, , vw, vh] = overlay.viewBox.split(/\s+/).map(Number);
-  for (const [name, fragment] of Object.entries(overlay.steps || {})) {
-    if (!shown.has(name) || hidden.has(name)) continue;
-    const group = safeOverlay(fragment);
-    if (!group) continue;
-    const pieces = (overlay.pieces || []).filter(piece => piece.layer === name);
-    if (pieces.length) group.prepend(...figurePieces(q, pieces, figureUrl(current.src), vw, vh));
-    group.dataset.layer = name;
-    svg.append(group);
-  }
-  cam.append(svg);
-  applyFocus(cam, upto >= 0 ? steps[upto]?.focus : null, vw, vh);
-  runMotions(svg, steps, upto, animate && !reducedMotion());
-}
-
-function showStep(index, animate = true) {
-  state.step = index;
-  paint(state.ctx, index, animate);
-}
-
-// ---- Treatment: scroll story. The figure stays pinned; each card plays its step as it reaches the middle.
-function storyCards(q, solution) {
-  const steps = solution.steps || [];
-  const cards = el("ol", { class: "story-cards", "aria-label": "Steps" },
-    el("li", { class: "story-card intro", "data-step": "-1" }, el("p", { class: "idea" }, solution.keyIdea), el("p", { class: "muted" }, "Scroll to work through the solution.")),
-    steps.map((step, i) => el("li", { class: "story-card", "data-step": String(i) },
-      el("span", { class: "story-num", "aria-hidden": "true" }, String(i + 1)),
-      step.ask ? el("p", { class: "story-ask" }, el("strong", {}, "Predict first: "), step.ask) : null,
-      el("p", {}, step.text))));
-  queueMicrotask(() => {
-    state.observer?.disconnect();
-    state.observer = new IntersectionObserver(entries => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        const index = Number(entry.target.dataset.step);
-        cards.querySelectorAll(".story-card").forEach(card => card.classList.toggle("on", card === entry.target));
-        if (index !== state.step) showStep(index, index > state.step);
-      }
-    }, { rootMargin: "-45% 0px -45% 0px" });
-    cards.querySelectorAll(".story-card").forEach(card => state.observer.observe(card));
-  });
-  return cards;
-}
-
-// ---- Treatment: hotspots. Numbered markers where each step happens; tap to play it.
-function placeHotspots(ctx) {
-  const { solution, stage, cam } = ctx;
-  const steps = solution.steps || [];
-  const [, , vw, vh] = solution.overlay.viewBox.split(/\s+/).map(Number);
-  stage.querySelector(".hotspots")?.remove();
-  // Measure each step's layer once, in a hidden copy of the overlay.
-  const probe = document.createElementNS(SVG_NS, "svg");
-  probe.setAttribute("viewBox", solution.overlay.viewBox);
-  probe.setAttribute("class", "overlay");
-  probe.style.visibility = "hidden";
-  cam.append(probe);
-  const spots = steps.map((step, i) => {
-    if (step.focus) return [step.focus[0] + step.focus[2] / 2, step.focus[1] + step.focus[3] / 2];
-    if (step.overlay && solution.overlay.steps?.[step.overlay]) {
-      const group = safeOverlay(solution.overlay.steps[step.overlay]);
-      if (group) { probe.append(group); try { const b = group.getBBox(); if (b.width || b.height) return [b.x + b.width / 2, b.y + b.height / 2]; } catch { /* not measurable */ } }
-    }
-    return null;
-  });
-  probe.remove();
-  let fallback = 0;
-  const placed = spots.map(spot => spot || [vw * (0.9 - 0.08 * fallback++), vh * 0.9]);
-  placed.forEach((p, i) => placed.slice(0, i).forEach(o => {  // keep markers apart
-    if (Math.hypot((p[0] - o[0]) / vw, (p[1] - o[1]) / vh) < 0.07) { p[0] += vw * 0.06; p[1] -= vh * 0.04; }
-  }));
-  const layer = el("div", { class: "hotspots" });
-  placed.forEach(([x, y], i) => {
-    layer.append(el("button", { type: "button", class: `hotspot${state.hotspot === i ? " on" : ""}${state.step >= i ? " seen" : ""}`,
-      style: `left:${(x / vw) * 100}%;top:${(y / vh) * 100}%`, "aria-label": `Step ${i + 1}`,
-      onclick: () => openHotspot(i) }, String(i + 1)));
-  });
-  if (state.hotspot != null) {
-    const [x, y] = placed[state.hotspot];
-    const step = steps[state.hotspot];
-    const right = x / vw < 0.6;
-    layer.append(el("div", { class: `callout ${right ? "right" : "left"}`, role: "dialog", "aria-label": `Step ${state.hotspot + 1}`,
-      style: `${right ? "left" : "right"}:${right ? (x / vw) * 100 : 100 - (x / vw) * 100}%;top:${(y / vh) * 100}%` },
-      step.ask ? el("p", { class: "story-ask" }, el("strong", {}, "Predict first: "), step.ask) : null,
-      el("p", {}, step.text),
-      el("div", { class: "callout-actions" },
-        state.hotspot < steps.length - 1 ? el("button", { type: "button", class: "primary", onclick: () => openHotspot(state.hotspot + 1) }, "Next step") : el("span", { class: "muted" }, "Last step"),
-        el("button", { type: "button", onclick: () => { state.hotspot = null; placeHotspots(ctx); } }, "Close"))));
-  }
-  stage.append(layer);
-}
-
-function openHotspot(i) {
-  state.hotspot = i;
-  showStep(i, true);
-  placeHotspots(state.ctx);
-}
-
-// ---- Treatment: coach. The explanation arrives as tutor messages; predictions are tappable choices.
-function coachPanel(q, solution) {
-  const steps = solution.steps || [];
-  if (!state.coach || state.coach.key !== q.key || state.coach.solution !== solution) {
-    state.coach = { key: q.key, solution, next: 0, log: [{ who: "coach", text: solution.keyIdea }] };
-  }
-  const c = state.coach;
-  const log = el("ol", { class: "chat", "aria-live": "polite" }, c.log.map(m => el("li", { class: `msg ${m.who}${m.tone ? " " + m.tone : ""}` }, m.text)));
-  const say = (who, text, tone) => c.log.push({ who, text, tone });
-  const advance = () => { say("coach", steps[c.next].text); showStep(c.next, true); c.next += 1; rerenderCoach(); };
-  let controls;
-  if (c.next >= steps.length) {
-    controls = el("div", { class: "chat-controls" }, el("span", { class: "muted" }, `Answer: ${solution.answer?.value}`),
-      el("button", { type: "button", onclick: () => { state.coach = null; showStep(-1, false); rerenderCoach(); } }, "Start again"));
-  } else if (steps[c.next].ask && !c.asked) {
-    const step = steps[c.next];
-    const choices = step.askChoices || ["I have a guess", "Not sure"];
-    controls = el("div", { class: "chat-controls" },
-      el("p", { class: "msg coach ask" }, step.ask),
-      el("div", { class: "choices" }, choices.map(choice => el("button", { type: "button", onclick: () => {
-        say("me", choice);
-        if (step.askAnswer) say("coach", choice === step.askAnswer ? "Yes. Watch it happen." : `Not quite: it's ${step.askAnswer}. Watch.`, choice === step.askAnswer ? "good" : "bad");
-        c.asked = true; advance(); c.asked = false;
-      } }, choice))));
-  } else {
-    controls = el("div", { class: "chat-controls" }, el("button", { type: "button", class: "primary", onclick: advance }, c.next === 0 ? "Show me how" : "Continue"));
-  }
-  return el("section", { class: "coach", "aria-label": "Coach" }, el("h2", {}, "Coach"), log, controls);
-}
-
-function rerenderCoach() {
-  const q = state.paper.questions[state.index];
-  const solution = activeSolution(q);
-  const old = document.querySelector("section.coach");
-  if (old && solution) old.replaceWith(coachPanel(q, solution));
-  document.querySelector("section.coach .chat-controls")?.scrollIntoView({ block: "nearest", behavior: reducedMotion() ? "auto" : "smooth" });
-}
 
 // Cut a piece out of the canonical figure (circle, ring or polygon) so a step can move or turn it.
 // The image is always this page's own figure URL, never anything from the solution file.
@@ -491,7 +354,7 @@ function keyPanel(q) {
     key.checks?.length ? [el("dt", {}, "Checks"), el("dd", {}, el("span", { class: "chip bad" }, key.checks.join(", ")))] : null));
 }
 
-function solutionPanel(q, treatment = "slider") {
+function solutionPanel(q) {
   const s = activeSolution(q);
   if (!s) return el("section", { class: "panel" }, el("h2", {}, "Worked solution"), el("p", { class: "muted" }, "No solution drafted yet."));
   const check = (s === q.visual ? q.visualCheck : q.solutionCheck) || {};
@@ -505,7 +368,7 @@ function solutionPanel(q, treatment = "slider") {
     versions,
     el("p", {}, "Answer ", el("strong", {}, String(s.answer?.value ?? "—"))),
     el("p", { class: "idea" }, s.keyIdea),
-    treatment !== "slider" && s.overlay ? null : el("ol", { class: "steps" }, steps.map((step, i) => el("li", { class: state.step === i ? "on" : null, tabindex: "0",
+    el("ol", { class: "steps" }, steps.map((step, i) => el("li", { class: state.step === i ? "on" : null, tabindex: "0",
       onclick: () => { stopPlaying(); state.step = i; state.animate = true; render(); },
       onkeydown: event => { if (event.key === "Enter") { stopPlaying(); state.step = i; state.animate = true; render(); } } }, step.text))),
     s.optionCheck?.length ? el("ul", {}, s.optionCheck.map(c => el("li", {}, el("strong", {}, c.option), " ",
@@ -523,17 +386,11 @@ function render() {
   const revealed = !tryFirst || Boolean(attempt) || state.revealed === q.key;
   const main = $("#question");
   const flags = q.flags.map(flag => el("span", { class: "chip warn" }, flag));
-  const sol = revealed ? activeSolution(q) : null;
-  const visual = Boolean(sol?.overlay);
-  const viewer = renderViewer(q, revealed);
-  const t = visual ? state.treatment : "slider";
-  const figureBlock = t === "story" ? el("div", { class: "story" }, el("div", { class: "story-figure" }, viewer), storyCards(q, sol))
-    : t === "coach" ? el("div", {}, viewer, coachPanel(q, sol)) : viewer;
   main.replaceChildren(...[
     el("div", { class: "head" }, el("h1", {}, q.part === "A" ? `Q${q.number}` : `Part B · Q${q.number}`),
       el("span", { class: "chip" }, q.type || "type unknown"), q.ocr ? el("span", { class: "chip" }, "text read by OCR") : null, flags),
     el("p", { class: "prompt" }, q.prompt || el("span", { class: "muted" }, "(No text: the question is in the figure.)")),
-    figureBlock,
+    renderViewer(q, revealed),
     renderAnswerInput(q, attempt, revealed),
     q.type === "NAT" || q.type === "MCQ" || q.type === "MSQ" ? el("div", { class: "actions" },
       el("button", { type: "button", class: "primary", onclick: () => submit(q) }, "Check my answer"),
@@ -543,7 +400,7 @@ function render() {
       correct: "Correct.", partial: "Partly right: every option you chose is correct, but you missed some.", wrong: "Not right.",
       "no-key": "No official key to check against.", "not-a-number": "Enter a number.", unanswered: "Choose an option first." }[attempt.result] || attempt.result) : null,
     revealed ? keyPanel(q) : null,
-    revealed ? solutionPanel(q, t) : el("p", { class: "muted" }, "Answer first, or choose “Show answer and solution”. Turn off “Try first” to see everything at once."),
+    revealed ? solutionPanel(q) : el("p", { class: "muted" }, "Answer first, or choose “Show answer and solution”. Turn off “Try first” to see everything at once."),
     el("div", { class: "nav" },
       el("button", { type: "button", disabled: state.index === 0, onclick: () => go(state.index - 1) }, "← Previous"),
       el("button", { type: "button", disabled: state.index === state.paper.questions.length - 1, onclick: () => go(state.index + 1) }, "Next →")),
@@ -574,10 +431,7 @@ function go(index) {
   state.lastFocus = null;
   const next = state.paper.questions[Math.max(0, Math.min(state.paper.questions.length - 1, index))];
   const solution = next.visual || next.solution;
-  state.step = solution?.overlay ? (state.treatment === "slider" ? 0 : -1) : -1;
-  state.coach = null;
-  state.hotspot = null;
-  state.observer?.disconnect();
+  state.step = solution?.overlay ? 0 : -1;
   state.revealed = null;
   const q = state.paper.questions[state.index];
   history.replaceState(null, "", `#${q.key}`);
@@ -608,12 +462,6 @@ async function start() {
   select.value = papers.some(p => p.id === remembered) ? remembered : (papers.find(p => p.id === "uceed-2026") || papers[0]).id;
   select.addEventListener("change", () => { history.replaceState(null, "", location.pathname); loadPaper(select.value); });
   $("#try-first").addEventListener("change", render);
-  const picker = $("#treatment");
-  const fromUrl = new URLSearchParams(location.search).get("t");
-  state.treatment = TREATMENTS[fromUrl] ? fromUrl : (TREATMENTS[recall("ingestion-review:treatment", "")] ? recall("ingestion-review:treatment", "") : "story");
-  for (const [value, label] of Object.entries(TREATMENTS)) picker.append(el("option", { value }, label));
-  picker.value = state.treatment;
-  picker.addEventListener("change", () => { state.treatment = picker.value; store("ingestion-review:treatment", picker.value); go(state.index); });
   window.addEventListener("hashchange", () => {
     const at = state.paper?.questions.findIndex(q => q.key === location.hash.slice(1)) ?? -1;
     if (at >= 0 && at !== state.index) go(at);
