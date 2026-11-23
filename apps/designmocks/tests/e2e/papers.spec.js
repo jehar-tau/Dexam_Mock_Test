@@ -4,20 +4,22 @@ import { seedPortalSession, stubPortalProvider } from './portal-fixture.js';
 import project from '../../supabase/project.json' with { type: 'json' };
 
 for (const exam of ['UCEED', 'CEED', 'NIFT', 'NID']) {
-  test(`year-wise Papers shows real ${exam} source sets on desktop and mobile`, async ({ page }) => {
+  test(`year-wise Papers shows only reviewed ${exam} releases on desktop and mobile`, async ({ page }) => {
     await page.goto('/papers');
     await expect(page.getByRole('heading', { name: 'Explore the papers.' })).toBeVisible();
     await page.getByRole('button', { name: new RegExp(`^${exam}\\b`) }).click();
     await expect(page.getByRole('heading', { name: exam, exact: true })).toBeVisible();
-    await expect(page.locator('.year-paper-card').first()).toBeVisible();
-    await expect(page.locator('.year-paper-card').first()).toContainText('In preparation');
-    await expect(page.locator('.year-paper-card').first()).toContainText('questions in this set');
+    await expect(page.locator('.year-paper-card')).toHaveCount(0);
+    await expect(page.getByText(`No ${exam} paper released yet`)).toBeVisible();
     await expect(page.getByRole('button', { name: /Start paper|Take paper/ })).toHaveCount(0);
   });
 }
 
-test('same-year CEED papers remain separate and an unreleased paper cannot start', async ({ page }) => {
-  await page.goto('/papers');
+test('same-year CEED releases remain separate', async ({ page }) => {
+  const releases = [1,2].map((number) => ({paperId:`10000000-0000-4000-8000-00000000300${number}`,
+    exam:'ceed',year:2016,sourcePaperId:`ceed-2016-paper-${number}`,partLabel:'Part A',questionCount:10,durationSeconds:3600}));
+  await stubPortalProvider(page, name => name === 'free_year_paper_catalog' ? releases : undefined);
+  await page.goto('http://127.0.0.1:4599/papers');
   await page.getByRole('button', { name: /^CEED\b/ }).click();
   await expect(page.getByRole('heading', { name: '2016 · Paper 1' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '2016 · Paper 2' })).toBeVisible();

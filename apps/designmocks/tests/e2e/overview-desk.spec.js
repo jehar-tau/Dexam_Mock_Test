@@ -16,5 +16,5 @@ test('the student desk leads to each mock mode without presenting fictional pape
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize().width);
   await desk.getByRole('link', { name: /Year-wise Papers/ }).click();
   await expect(page.getByRole('heading', { name: 'Explore the papers.' })).toBeVisible();
-  await expect(page.getByText('The timed paper is being prepared.').first()).toBeVisible();
+  await expect(page.getByText('No UCEED paper released yet')).toBeVisible();
 });

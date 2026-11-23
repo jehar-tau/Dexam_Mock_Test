@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import catalogue from './paper-years.generated.json';
 import { paperLabel } from './paper-years.mjs';
-import { loadReleasedYearPapers, releasedYearPaperMap } from './free-year-papers.mjs';
+import { loadReleasedYearPapers, releasedYearPaperMap, releasedYearPaperGroups } from './free-year-papers.mjs';
 import { platform, cataloguePlatform } from './platform.js';
 import { useAuthState } from './useAuth.js';
 import { AccountAccessBoundary, useAccountServices } from './AccountAccess.jsx';
@@ -15,7 +14,7 @@ import './papers.css';
 const examNames = { uceed: 'UCEED', ceed: 'CEED', nift: 'NIFT', nid: 'NID' };
 const exams = Object.keys(examNames);
 
-export function PapersView({ papers = catalogue, releases = [], signedIn = false, onStart,
+export function PapersView({ releases = [], signedIn = false, onStart,
   busy = '', startError = '', releasesUnavailable = false, releasesLoading = false,
   onRefresh, authChecking = false, startUncertain = false, onCheckAttempts,
   checkingAttempts = false, savedAttempts = [], recoveryError = '', headingRef,
@@ -23,7 +22,8 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
   const [selected, setSelected] = useState('uceed');
   const [readyId, setReadyId] = useState('');
   const readyDialog = useRef(null), readyOpener = useRef(null), starting = useRef(false);
-  const released = releasedYearPaperMap(releases, papers);
+  const released = releasedYearPaperMap(releases);
+  const papers = releasedYearPaperGroups(releases);
   const readyPart = [...released.values()].flat().find(part => part.paperId === readyId);
   const readyPaper = readyPart && papers.find(paper => released.get(paper.id)?.some(part => part.paperId === readyId));
   const visible = papers.filter(paper => paper.exam === selected);
@@ -51,7 +51,7 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
   return <section className="wrap section year-papers">
     <span className="eyebrow">PAPERS / YEAR BY YEAR</span>
     <h1 ref={headingRef} tabIndex={-1}>Explore the <em>papers.</em></h1>
-    <p className="year-papers-intro">Browse our year-wise question sets. Reviewed papers are free to take. Timed starts open as their questions, figures and worked answers are verified.</p>
+    <p className="year-papers-intro">Take a complete, reviewed past-year paper for free. Each paper appears here after its questions, figures, answer key and solutions are checked.</p>
     {authChecking && <p role="status">Checking your account…</p>}
     {releasesLoading && <p role="status">Checking released papers…</p>}
     {releasesUnavailable && <p role="alert" className="error">Couldn’t check released papers. Refresh the catalogue before starting one.</p>}
@@ -68,14 +68,13 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
     <div className="year-papers-tabs" role="group" aria-label="Choose an exam">
       {exams.map(exam => <button type="button" key={exam} aria-pressed={selected === exam} onClick={() => { closeReady(); setSelected(exam); }}>{examNames[exam]}<span>{papers.filter(paper => paper.exam === exam).length}</span></button>)}
     </div>
-    <div className="year-papers-summary"><div><span>SELECTED EXAM</span><h2>{examNames[selected]}</h2></div><p>{visible.length} sets · {questionCount} questions in our collection</p></div>
+    <div className="year-papers-summary"><div><span>SELECTED EXAM</span><h2>{examNames[selected]}</h2></div><p>{visible.length} released paper{visible.length === 1 ? '' : 's'} · {questionCount} questions</p></div>
     <div className="year-papers-grid">
       {visible.map(paper => <article className="year-paper-card" key={paper.id}>
-        <div className="year-paper-card-top"><span>{paper.year}</span><span className="year-paper-state">{released.has(paper.id) ? 'Free paper open' : releasesLoading ? 'Checking release' : 'In preparation'}</span></div>
+        <div className="year-paper-card-top"><span>{paper.year}</span><span className="year-paper-state">Free paper open</span></div>
         <h3>{paperLabel(paper)}</h3>
-        <p>{paper.questionCount} questions in this set</p>
-        <div className="year-paper-types">{paper.objectiveCount > 0 && <span>{paper.objectiveCount} objective</span>}{paper.drawingCount > 0 && <span>{paper.drawingCount} drawing or descriptive</span>}</div>
-        {released.has(paper.id) ? released.get(paper.id).map(part =>
+        <p>{paper.questionCount} questions in this paper</p>
+        {released.get(paper.id).map(part =>
           <div className="year-paper-release" key={part.paperId}>
             <p><strong>{part.partLabel}</strong> · {part.questionCount} questions · {Math.round(part.durationSeconds / 60)} min</p>
             {attemptsByPaper.get(part.paperId)?.active && <p className="year-paper-own-attempt"><span>In progress</span>
@@ -88,10 +87,10 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
               onClick={event => { readyOpener.current = event.currentTarget; setReadyId(part.paperId); }}>{busy === part.paperId ? 'Opening…' : 'Start or resume free paper'}</button>
               : signedIn ? null : authChecking ? <span role="status">Checking account…</span>
                 : <Link className="button" to="/account">Sign in to start free paper</Link>}
-          </div>) : <p className="year-paper-note">{releasesLoading ? 'Checking whether this timed paper is open.' : 'The timed paper is being prepared.'}</p>}
+          </div>)}
       </article>)}
     </div>
-    {visible.length === 0 && <p>No year-wise source sets are available for this exam yet.</p>}
+    {visible.length === 0 && !releasesLoading && !releasesUnavailable && <div className="year-papers-empty" role="status"><h3>No {examNames[selected]} paper released yet</h3><p>Complete papers will appear here after review. You can try the free sample meanwhile.</p></div>}
     <p className="year-papers-footer">Want to try the exam room now? <Link to="/sample">Take the free sample</Link>.</p>
     {readyPart && readyPaper && <dialog ref={readyDialog} className="year-paper-start-dialog" aria-labelledby="year-paper-start-title"
       onCancel={event => { event.preventDefault(); closeReady(); }}>
@@ -180,7 +179,7 @@ export default function Papers() {
     if (!cataloguePlatform) return;
     const controller = new AbortController();
     setReleasesLoading(true);setReleasesUnavailable(false);
-    loadReleasedYearPapers(cataloguePlatform,catalogue,controller.signal).then(data => {
+    loadReleasedYearPapers(cataloguePlatform,controller.signal).then(data => {
       if (!controller.signal.aborted) {setReleases(data);setReleasesUnavailable(false);}
     }).catch(() => {if (!controller.signal.aborted) {setReleases([]);setReleasesUnavailable(true);}})
       .finally(() => {if (!controller.signal.aborted) setReleasesLoading(false);});
