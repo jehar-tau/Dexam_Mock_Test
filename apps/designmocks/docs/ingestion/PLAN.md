@@ -154,6 +154,7 @@ Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
 - 20 Nov 2026: plan written. Pipeline lives in `apps/designmocks/ingestion/` as Python stages with `unittest` tests run by `npm run test:ingestion`. Work folders and real papers stay outside the repo; the tool refuses to write inside a Git worktree.
 - 20 Nov 2026: owner approved D2 (PNG plus verified SVG), D3 (Claude drafts solutions in a local session, human review), D4 (UCEED 2026 re-ingest first) and D5 (all recommended analysis charts). D1, D6 and D7 stand as proposed until the owner says otherwise.
 - 20 Nov 2026: stage 2 built and evaluated on 18 papers (above). OCR results are cached in `<work>/.cache` by page-render digest; the Swift helper is compiled once into `<work>/.tools`.
+- 23 Nov 2026: 37 of 57 UCEED 2026 questions have visual versions: hand-built (Q1, Q2, Q4, Q10, Q18, Q19, Q38, Q40), option tours (Q15, Q21, Q26, Q31, Q39, Q50) and automatic upgrades of annotation layers (23 others). Still without one: Q6, Q29, Q37, Q48, Q53, Q54, Q55, Q56 (plus Q7 and Q52, which have no draft). Q36 and Q41 deserve hand-built motion.
 - 23 Nov 2026: visual solution standard adopted for every paper (above). Pilots: Q1, Q2, Q4 (Claude) and Q38 (visual version beside Codex's draft). 15 UCEED 2026 figure questions still have no visual layer at all.
 - 23 Nov 2026: UCEED 2026 has 55 of 57 Part A drafts (Claude 8, Codex 47). Nine Codex drafts that a Claude session overwrote were restored; see above. Next: the owner reviews drafts in the local review page.
 - 21 Nov 2026: stage 5 tooling built; first 8 solutions drafted for UCEED 2026 Section 1. Six visual-counting questions left for a person (above).
@@ -271,6 +272,7 @@ The owner asked for every solution to be shown visually, with animation where it
 | Proof, not assertion | Where possible the last step lays the result on the options (Q38: the folded quarter slides onto B and matches mark for mark) | The learner sees why an option is right |
 | Colour with meaning | Colour-code by origin (Q38 marks by starting quarter) or by role (orange = focus, blue = compare, green = result) | Lets the eye track one thing through every step |
 | Reduced motion | Motion finishes instantly and zoom stops gliding when the system asks for reduced motion | Accessibility |
+| Figure pieces | `overlay.pieces`: a circle, ring or polygon cut from the canonical figure (optionally covering its old place), moved with its id and turned with `<id>-turn` | Real printed pieces can be reassembled: Q40's rings spell HOME, Q10's eight triangles read 745 |
 | Safe by construction | Declarative motion only, never scripts; overlay elements and attributes on an allow-list; ids `[a-z][a-z0-9-]*`; a moving element must be a `<g id>` without its own `transform` | Drafts come from models and must never run code |
 
 **Authoring rules for any agent.**

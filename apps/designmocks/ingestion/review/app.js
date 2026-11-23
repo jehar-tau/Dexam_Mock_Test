@@ -130,10 +130,15 @@ function renderViewer(q, revealSolution) {
     const upto = gated ? last - 1 : last;  // a step that asks for a prediction waits for "Show me"
     const shown = new Set(), hidden = new Set();
     steps.slice(0, upto + 1).forEach(step => { if (step.overlay) shown.add(step.overlay); (step.hide || []).forEach(name => hidden.add(name)); });
+    const [, , vw0, vh0] = overlay.viewBox.split(/\s+/).map(Number);
     for (const [name, fragment] of Object.entries(overlay.steps || {})) {
       if (!shown.has(name) || hidden.has(name)) continue;
       const group = safeOverlay(fragment);
-      if (group) { group.dataset.layer = name; svg.append(group); }
+      if (!group) continue;
+      const pieces = (overlay.pieces || []).filter(piece => piece.layer === name);
+      if (pieces.length) group.prepend(...figurePieces(q, pieces, figureUrl(current.src), vw0, vh0));
+      group.dataset.layer = name;
+      svg.append(group);
     }
     cam.append(svg);
     const [, , vw, vh] = overlay.viewBox.split(/\s+/).map(Number);
@@ -161,6 +166,33 @@ function renderViewer(q, revealSolution) {
 }
 
 // ------------------------------------------------------------------ visual solutions
+
+// Cut a piece out of the canonical figure (circle, ring or polygon) so a step can move or turn it.
+// The image is always this page's own figure URL, never anything from the solution file.
+function figurePieces(q, pieces, href, vw, vh) {
+  const make = (tag, attrs) => { const node = document.createElementNS(SVG_NS, tag); for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, String(v)); return node; };
+  const outline = piece => piece.shape === "circle" ? make("circle", { cx: piece.cx, cy: piece.cy, r: piece.r })
+    : piece.shape === "ring" ? make("path", { d: `M${piece.cx - piece.r1},${piece.cy} a${piece.r1},${piece.r1} 0 1 0 ${2 * piece.r1},0 a${piece.r1},${piece.r1} 0 1 0 ${-2 * piece.r1},0 Z M${piece.cx - piece.r2},${piece.cy} a${piece.r2},${piece.r2} 0 1 0 ${2 * piece.r2},0 a${piece.r2},${piece.r2} 0 1 0 ${-2 * piece.r2},0 Z`, "fill-rule": "evenodd", "clip-rule": "evenodd" })
+    : make("polygon", { points: piece.points.map(p => p.join(",")).join(" ") });
+  const out = [];
+  const defs = make("defs", {});
+  out.push(defs);
+  for (const piece of pieces) {
+    if (!/^[a-z][a-z0-9-]{0,40}$/.test(piece.id)) continue;
+    const clipId = `clip-${q.key}-${piece.id}`;
+    const clip = make("clipPath", { id: clipId });
+    clip.append(outline(piece));
+    defs.append(clip);
+    if (piece.cover) { const cover = outline(piece); cover.setAttribute("fill", "#ffffff"); cover.setAttribute("stroke", "#ffffff"); cover.setAttribute("stroke-width", "3"); out.push(cover); }
+    const outer = make("g", { id: piece.id });
+    const turn = make("g", { id: `${piece.id}-turn` });
+    const image = make("image", { href, x: 0, y: 0, width: vw, height: vh, "clip-path": `url(#${clipId})`, preserveAspectRatio: "none" });
+    turn.append(image);
+    outer.append(turn);
+    out.push(outer);
+  }
+  return out;
+}
 
 function activeSolution(q) {
   if (state.variant === "draft" || !q.visual) return q.solution;

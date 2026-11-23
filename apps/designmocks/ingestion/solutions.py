@@ -223,7 +223,42 @@ def overlay_ids(overlay):
     ids = set()
     for fragment in (overlay or {}).get("steps", {}).values():
         ids.update(re.findall(r'\bid="([^"]+)"', fragment))
+    for piece in (overlay or {}).get("pieces", []):
+        if isinstance(piece, dict) and isinstance(piece.get("id"), str):
+            ids.update({piece["id"], f"{piece['id']}-turn"})  # move the piece, turn its inner group
     return ids
+
+
+def piece_problems(overlay, width, height):
+    """Figure pieces: a circle, ring or polygon cut from the canonical figure, shown with a layer,
+    optionally covering its original place, so it can be moved or turned like a drawn layer."""
+    problems = []
+    seen = set()
+    layers = set((overlay or {}).get("steps", {}))
+    num = lambda v: isinstance(v, (int, float))
+    for index, piece in enumerate((overlay or {}).get("pieces") or [], 1):
+        if not isinstance(piece, dict) or not ID.match(str(piece.get("id", ""))) or piece["id"] in seen:
+            problems.append(f"piece-{index}-id")
+            continue
+        seen.add(piece["id"])
+        if piece.get("layer") not in layers:
+            problems.append(f"piece-{index}-layer")
+        shape = piece.get("shape")
+        if shape == "circle":
+            ok = all(num(piece.get(k)) for k in ("cx", "cy", "r")) and piece["r"] > 0
+        elif shape == "ring":
+            ok = all(num(piece.get(k)) for k in ("cx", "cy", "r1", "r2")) and 0 <= piece["r2"] < piece["r1"]
+        elif shape == "polygon":
+            points = piece.get("points")
+            ok = isinstance(points, list) and 3 <= len(points) <= 64 and all(
+                isinstance(p, list) and len(p) == 2 and all(num(v) for v in p) for p in points)
+        else:
+            ok = False
+        if not ok:
+            problems.append(f"piece-{index}-shape")
+        if "cover" in piece and not isinstance(piece["cover"], bool):
+            problems.append(f"piece-{index}-cover")
+    return problems
 
 
 def motion_problems(steps, overlay):
@@ -234,6 +269,7 @@ def motion_problems(steps, overlay):
     width = height = None
     if overlay and re.fullmatch(r"0 0 \d+ \d+", str(overlay.get("viewBox", ""))):
         width, height = (int(v) for v in overlay["viewBox"].split()[2:])
+    problems.extend(piece_problems(overlay, width, height))
     for index, step in enumerate(steps, 1):
         for motion in step.get("motion") or []:
             kind = motion.get("type")
