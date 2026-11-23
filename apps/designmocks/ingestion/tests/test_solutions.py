@@ -185,7 +185,7 @@ class SolutionsTest(unittest.TestCase):
         broken["steps"][0]["focus"] = [0, 0, 900, 100]                       # outside the figure
         broken["steps"][0]["motion"][0] = {"target": "nowhere", "type": "draw"}
         broken["steps"][1]["motion"][0]["axis"] = "z"
-        broken["steps"][1]["motion"][1]["duration"] = 9000
+        broken["steps"][1]["motion"][1]["duration"] = 12000  # over the 10 s limit
         broken["steps"][1]["motion"][2]["type"] = "explode"
         broken["steps"][1]["hide"] = ["missing-layer"]
         broken["overlay"]["steps"]["total"] = '<text id="moving" transform="rotate(5)" x="1" y="1">12</text>'
