@@ -9,6 +9,7 @@ assert.equal(env.PGDATABASE, "designmocks_ci", "A disposable bootstrap database 
 const student = randomUUID();
 const sourcePrefix = "mixed-attempt-" + student;
 const topic = sourcePrefix;
+const yearPaper = randomUUID();
 
 function session() {
   const name = "mixed-attempt-" + randomUUID();
@@ -89,7 +90,6 @@ try {
     cross join lateral (select '${sourcePrefix}-'||kind||'-'||n as external_key) fixture;
     commit;`);
   // Only a complete reviewed year paper may feed the topic pool.
-  const yearPaper = randomUUID();
   await sql(`begin;
     update dm_private.bank_questions set payload=jsonb_set(payload,'{provenance}',
       '{"exam":"uceed","paperId":"mixed-start-2023","year":2023}'::jsonb)
@@ -149,6 +149,11 @@ try {
   }
 } finally {
   await sql(`begin;
+    delete from dm_private.year_paper_releases where paper_id='${yearPaper}';
+    delete from dm_private.answer_keys where question_id in
+      (select id from dm_private.questions where paper_id='${yearPaper}');
+    delete from dm_private.questions where paper_id='${yearPaper}';
+    delete from dm_private.papers where id='${yearPaper}';
     delete from dm_private.attempt_items where attempt_id in (select id from dm_private.attempts where user_id='${student}');
     delete from dm_private.attempts where user_id='${student}';
     delete from dm_private.answer_keys where question_id in (select q.id from dm_private.questions q join dm_private.papers p on p.id=q.paper_id where p.owner_user_id='${student}');
