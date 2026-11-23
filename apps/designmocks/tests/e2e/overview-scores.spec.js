@@ -59,7 +59,7 @@ test("each exam in Overview links to its own All India results, including ranks 
   await expect(page.getByText(/Rank 14 of 48/)).toHaveCount(0);
 
   await exam.selectOption("nid");
-  await expect(page.getByText("No NID All India mocks are listed yet.", { exact: true })).toBeVisible();
+  await expect(page.getByText("No NID All India mock is scheduled yet. Fresh questions will appear here after review.", { exact: true })).toBeVisible();
   await exam.selectOption("");
   await expect(page.getByRole("heading", { name: "Fictional UCEED final" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Fictional NIFT review" })).toBeVisible();

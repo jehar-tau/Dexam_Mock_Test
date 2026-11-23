@@ -256,7 +256,7 @@ test("exam-wise preview explores paper formats and samples without issuing an at
   await page.getByRole("button", {name:"Check answer"}).click();
   await expect(page.getByRole("status")).toContainText("120 cm");
   await page.getByText("CEED", {exact:true}).first().click();
-  await expect(page.getByRole("region", {name:"Mock catalogue"})).toContainText("Released CEED papers");
+  await expect(page.getByRole("region", {name:"Mock catalogue"})).toContainText("Released CEED mocks");
   await expect(page.getByRole("button", {name:"Start mock"})).toHaveCount(0);
   await expect(page.getByText(/free attempt left|mock created/)).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
