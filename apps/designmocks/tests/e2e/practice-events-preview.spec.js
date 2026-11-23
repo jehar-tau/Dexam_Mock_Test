@@ -16,9 +16,10 @@ test("topic browser configures an example, gives feedback and respects session s
   await expect(page.getByRole("status")).toContainText("A half turn is 180°");
   await page.getByRole("combobox", { name: "Questions" }).selectOption("20");
   await expect(choose).toBeDisabled();
+  await expect(page.getByRole("combobox", { name: "Topic", exact: true })).toHaveValue("spatial-reasoning");
   await expect(page.getByRole("button", { name: "Start practice", exact: true })).toBeDisabled();
   await page.getByRole("searchbox").fill("no such topic");
-  await expect(page.getByRole("status")).toContainText("No topics match");
+  await expect(page.getByRole("status").filter({ hasText: "No topics match" })).toBeVisible();
 });
 
 test("fictional event filters, a single preview start and example results stay local", async ({ page }) => {
@@ -53,6 +54,11 @@ for (const [route, scope] of [["/topic-practice-preview", ".topic-practice"], ["
     await page.setViewportSize({ width: 320, height: 800 });
     await page.goto(route);
     await expect(page.locator(scope)).toBeVisible();
+    if (route === "/topic-practice-preview") {
+      await page.getByRole("combobox", { name: "Topic", exact: true }).selectOption("spatial-reasoning");
+      await page.getByRole("combobox", { name: "Questions", exact: true }).selectOption("20");
+      await expect(page.getByRole("button", { name: "Use 10 questions", exact: true })).toBeVisible();
+    }
     await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
     for (let theme = 0; theme < 2; theme++) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
@@ -64,3 +70,26 @@ for (const [route, scope] of [["/topic-practice-preview", ".topic-practice"], ["
     }
   });
 }
+
+test("short-topic recovery preserves the topic and time without starting implicitly", async ({ page }) => {
+  const writes = [];
+  page.on("request", request => { if (request.method() === "POST") writes.push(request.url()); });
+  await page.goto("/topic-practice-preview?exam=nift&topic=proportion");
+  const questions = page.getByRole("combobox", { name: "Questions", exact: true });
+  const topic = page.getByRole("combobox", { name: "Topic", exact: true });
+  const start = page.getByRole("button", { name: "Start practice", exact: true });
+  await page.getByRole("combobox", { name: "Time", exact: true }).selectOption("2700");
+  await questions.selectOption("30");
+  await expect(topic).toHaveValue("proportion");
+  await expect(start).toBeDisabled();
+  await expect(page.getByRole("status").filter({ hasText: "supports up to 20 questions" })).toBeVisible();
+  await page.getByRole("button", { name: "Use 20 questions", exact: true }).press("Enter");
+  await expect(page.getByRole("combobox", { name: "Time", exact: true })).toHaveValue("2700");
+  await expect(questions).toHaveValue("20");
+  await expect(page.getByText(/Preview created/)).toHaveCount(0);
+  await questions.selectOption("30");
+  await questions.selectOption("10");
+  await expect(topic).toHaveValue("proportion");
+  await expect(start).toBeEnabled();
+  expect(writes).toEqual([]);
+});
