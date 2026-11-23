@@ -234,7 +234,7 @@ export function WorkspaceView({
               {preview&&<Link className="overview-secondary-link" to={attemptHref("example-paper")}>Try an example paper <Arrow size={17}/></Link>}
             </div>
           )}
-          {!catalogueOnly && <><div className="overview-section-head"><div><span className="overview-kicker">YOUR RECORD</span><h2>Your attempts.</h2></div></div>
+          {!catalogueOnly && <><div className="overview-section-head"><div><span className="overview-kicker">YOUR RECORD</span><h2>Your recent attempts.</h2></div></div>
           {record.length > 0 && <div className="overview-record-filters" role="group" aria-label="Filter your attempts">
             {recordFilters.map(([key,label,count]) => <button key={key} type="button" aria-pressed={recordFilter===key}
               onClick={() => setRecordFilter(key)}>{label} <span>{count}</span></button>)}
