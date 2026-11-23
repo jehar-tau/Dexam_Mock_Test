@@ -79,10 +79,47 @@ test.describe('free year-paper release', () => {
     const card = page.locator('.year-paper-card').filter({ hasText: '2026 paper' });
     await card.getByRole('button', { name: 'Start or resume free paper' }).focus();
     await page.keyboard.press('Enter');
+    const dialog = page.getByRole('dialog', { name: 'Ready to open UCEED 2026 Part A?' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText('57 questions · 120 minutes');
+    expect(provider.calls.filter(([name]) => name === 'start_free_year_paper')).toHaveLength(0);
+    await dialog.getByRole('button', { name: 'Start or resume timed paper' }).click();
     await expect(page).toHaveURL('/attempt/' + attemptId);
     await expect(page.getByText('Fictional year-paper question')).toBeVisible();
     expect(provider.calls.some(([name]) => name === 'start_free_year_paper')).toBe(true);
     expect(provider.calls.some(([name]) => name === 'my_pass' || name === 'prepare_order' || name === 'start_attempt')).toBe(false);
+    expect(provider.unexpected).toEqual([]);
+  });
+  test('cancel and Escape preserve the free paper clock and return focus to its starter', async ({ page }) => {
+    const provider = await stubPortalProvider(page, name => {
+      if (name === 'free_year_paper_catalog') return [release];
+      if (name === 'public_all_india_top_ten') return [];
+    });
+    await page.goto('/');
+    await seedPortalSession(page, actor);
+    await page.goto('/papers');
+    const start = page.locator('.year-paper-card').filter({hasText:'2026 paper'})
+      .getByRole('button', {name:'Start or resume free paper'});
+    await start.click();
+    const dialog = page.getByRole('dialog', {name:'Ready to open UCEED 2026 Part A?'});
+    await expect(dialog).toContainText('original deadline');
+    await dialog.getByRole('button', {name:'Cancel'}).click();
+    await expect(dialog).toHaveCount(0);
+    await expect(start).toBeFocused();
+    await start.focus();
+    await page.keyboard.press('Enter');
+    await expect(dialog).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(dialog).toHaveCount(0);
+    await expect(start).toBeFocused();
+    expect(provider.calls.filter(([name]) => name === 'start_free_year_paper')).toHaveLength(0);
+    await page.setViewportSize({width:320,height:850});
+    await start.click();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+    await page.addScriptTag({path:fileURLToPath(new URL('../../node_modules/axe-core/axe.min.js', import.meta.url))});
+    expect((await page.evaluate(async () => (await window.axe.run('.year-paper-start-dialog', {
+      runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']},
+    })).violations.map(item => item.id)))).toEqual([]);
     expect(provider.unexpected).toEqual([]);
   });
   test('failed release read offers an in-page retry before a free paper can start', async ({ page }) => {
@@ -113,6 +150,8 @@ test.describe('free year-paper release', () => {
     const card = page.locator('.year-paper-card').filter({hasText:'2026 paper'});
     const start = card.getByRole('button', {name:'Start or resume free paper'});
     await start.click();
+    await page.getByRole('dialog', {name:'Ready to open UCEED 2026 Part A?'})
+      .getByRole('button', {name:'Start or resume timed paper'}).click();
     await expect(page.getByText('This start may already be saved.')).toBeVisible();
     await expect(start).toBeDisabled();
     await page.getByRole('button', {name:'Check saved attempts'}).click();

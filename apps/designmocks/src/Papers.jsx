@@ -19,9 +19,33 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
   onRefresh, authChecking = false, startUncertain = false, onCheckAttempts,
   checkingAttempts = false, savedAttempts = [], recoveryError = '', headingRef }) {
   const [selected, setSelected] = useState('uceed');
+  const [readyId, setReadyId] = useState('');
+  const readyDialog = useRef(null), readyOpener = useRef(null), starting = useRef(false);
   const released = releasedYearPaperMap(releases, papers);
+  const readyPart = [...released.values()].flat().find(part => part.paperId === readyId);
+  const readyPaper = readyPart && papers.find(paper => released.get(paper.id)?.some(part => part.paperId === readyId));
   const visible = papers.filter(paper => paper.exam === selected);
   const questionCount = visible.reduce((total, paper) => total + paper.questionCount, 0);
+  useEffect(() => {
+    if (!readyPart || !readyDialog.current) return;
+    const dialog = readyDialog.current;
+    if (!dialog.open) dialog.showModal();
+    return () => { if (dialog.open) dialog.close(); };
+  }, [readyId]);
+  function closeReady() {
+    setReadyId('');
+    window.requestAnimationFrame(() => {
+      if (readyOpener.current?.isConnected && !readyOpener.current.disabled) readyOpener.current.focus();
+    });
+  }
+  async function confirmReady() {
+    if (starting.current || !readyPart || !onStart || busy || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts) return;
+    starting.current = true;
+    const paperId = readyPart.paperId;
+    setReadyId('');
+    try { await onStart(paperId); }
+    finally { starting.current = false; }
+  }
   return <section className="wrap section year-papers">
     <span className="eyebrow">PAPERS / YEAR BY YEAR</span>
     <h1 ref={headingRef} tabIndex={-1}>Explore the <em>papers.</em></h1>
@@ -37,7 +61,7 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
     {recoveryError && <p role="alert" className="error">{recoveryError}</p>}
     {savedAttempts.length > 0 && <section aria-label="Saved active attempts"><h2>Your saved active attempts</h2><ul>{savedAttempts.map(item => <li key={item.id}><Link to={`/attempt/${item.id}`}>{item.title}</Link></li>)}</ul></section>}
     <div className="year-papers-tabs" role="group" aria-label="Choose an exam">
-      {exams.map(exam => <button type="button" key={exam} aria-pressed={selected === exam} onClick={() => setSelected(exam)}>{examNames[exam]}<span>{papers.filter(paper => paper.exam === exam).length}</span></button>)}
+      {exams.map(exam => <button type="button" key={exam} aria-pressed={selected === exam} onClick={() => { closeReady(); setSelected(exam); }}>{examNames[exam]}<span>{papers.filter(paper => paper.exam === exam).length}</span></button>)}
     </div>
     <div className="year-papers-summary"><div><span>SELECTED EXAM</span><h2>{examNames[selected]}</h2></div><p>{visible.length} sets · {questionCount} questions in our collection</p></div>
     <div className="year-papers-grid">
@@ -50,7 +74,7 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
           <div className="year-paper-release" key={part.paperId}>
             <p><strong>{part.partLabel}</strong> · {part.questionCount} questions · {Math.round(part.durationSeconds / 60)} min</p>
             {signedIn ? <button type="button" className="button" disabled={!onStart || Boolean(busy) || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts}
-              onClick={() => onStart(part.paperId)}>{busy === part.paperId ? 'Opening…' : 'Start or resume free paper'}</button>
+              onClick={event => { readyOpener.current = event.currentTarget; setReadyId(part.paperId); }}>{busy === part.paperId ? 'Opening…' : 'Start or resume free paper'}</button>
               : authChecking ? <span role="status">Checking account…</span>
                 : <Link className="button" to="/account">Sign in to start free paper</Link>}
           </div>) : <p className="year-paper-note">{releasesLoading ? 'Checking whether this timed paper is open.' : 'The timed paper is being prepared.'}</p>}
@@ -58,6 +82,17 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
     </div>
     {visible.length === 0 && <p>No year-wise source sets are available for this exam yet.</p>}
     <p className="year-papers-footer">Want to try the exam room now? <Link to="/sample">Take the free sample</Link>.</p>
+    {readyPart && readyPaper && <dialog ref={readyDialog} className="year-paper-start-dialog" aria-labelledby="year-paper-start-title"
+      onCancel={event => { event.preventDefault(); closeReady(); }}>
+      <h2 id="year-paper-start-title">Ready to open {examNames[readyPaper.exam]} {readyPaper.year} {readyPart.partLabel}?</h2>
+      <p>{readyPart.questionCount} questions · {Math.round(readyPart.durationSeconds / 60)} minutes</p>
+      <p>If this is your first start, the timer begins when you confirm. If you have already started this paper, you will resume the same saved attempt with its original deadline. The clock keeps running while you are away.</p>
+      <div className="year-paper-start-actions">
+        <button type="button" className="button quiet" autoFocus onClick={closeReady}>Cancel</button>
+        <button type="button" className="button" disabled={Boolean(busy) || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts}
+          onClick={confirmReady}>Start or resume timed paper</button>
+      </div>
+    </dialog>}
   </section>;
 }
 
