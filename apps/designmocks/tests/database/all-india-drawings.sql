@@ -51,21 +51,37 @@ set local role authenticated;
 select set_config('request.jwt.claim.role','authenticated',true);
 select set_config('request.jwt.claim.sub',md5('cohort-candidate-1')::uuid::text,true);
 select pg_temp.cohort_reject(
-  'select public.admin_create_all_india_event(''uceed'',''Fictional cohort'',now()+interval ''1 hour'',1,900,1,600)',
+  'select public.admin_create_all_india_event(''uceed'',''Fictional cohort'',now()+interval ''1 hour'',10,900,0,600)',
   'Admin access required');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000093',true);
 select pg_temp.cohort_reject(
-  'select public.admin_create_all_india_event(''uceed'',''Fictional cohort'',now()+interval ''1 hour'',1,900,2,600)',
-  'Not enough reviewed questions');
-select set_config('test.cohort_event',
-  public.admin_create_all_india_event('uceed','Fictional cohort',now()+interval '1 hour',1,900,1,600)::text,true);
+  'select public.admin_create_all_india_event(''uceed'',''Fictional cohort'',now()+interval ''1 hour'',10,900,1,600)',
+  'Only objective All India events are available');
 reset role;
-select set_config('test.cohort_paper',
-  (select paper_id::text from dm_private.all_india_events where id=current_setting('test.cohort_event')::uuid),true);
+-- Existing drawing grading remains covered by a historical fixed-paper fixture;
+-- new event creation intentionally offers objective questions only.
+insert into dm_private.papers(title,exam,duration_seconds,published,reviewed,rights_confirmed,source_kind,upload_grace_seconds)
+  values('Fictional historical cohort','uceed',900,false,true,true,'all_india',600)
+  returning id as cohort_paper \gset
+insert into dm_private.questions(paper_id,ordinal,prompt,options,kind,marking,media,points,negative_points,topic,reviewed)
+  select :'cohort_paper',case when external_key='cohort-objective' then 1 else 2 end,
+    runtime_payload->>'prompt',runtime_payload->'options',runtime_payload->>'kind',runtime_payload->'marking',
+    runtime_payload->'media',(runtime_payload->>'points')::numeric,(runtime_payload->>'negativePoints')::numeric,
+    topic,true from dm_private.bank_questions where external_key in('cohort-objective','cohort-drawing');
+insert into dm_private.answer_keys(question_id,key,explanation)
+  select q.id,b.runtime_payload->'key',b.runtime_payload->>'explanation'
+  from dm_private.questions q join dm_private.bank_questions b on b.runtime_payload->>'prompt'=q.prompt
+  where q.paper_id=:'cohort_paper';
+insert into dm_private.all_india_events(exam,title,paper_id,starts_at,ends_at,review_ends_at,created_by)
+  values('uceed','Fictional historical cohort',:'cohort_paper',now()+interval '1 hour',
+    now()+interval '10 days 1 hour',now()+interval '20 days 1 hour','00000000-0000-4000-8000-000000000093')
+  returning id as cohort_event \gset
+select set_config('test.cohort_event',:'cohort_event',true);
+select set_config('test.cohort_paper',:'cohort_paper',true);
 select set_config('test.cohort_objective',
-  (select id::text from dm_private.questions where paper_id=current_setting('test.cohort_paper')::uuid and kind='mcq'),true);
+  (select id::text from dm_private.questions where paper_id=:'cohort_paper' and kind='mcq'),true);
 select set_config('test.cohort_drawing',
-  (select id::text from dm_private.questions where paper_id=current_setting('test.cohort_paper')::uuid and kind='drawing'),true);
+  (select id::text from dm_private.questions where paper_id=:'cohort_paper' and kind='drawing'),true);
 select pg_temp.cohort_assert((select count(*)=2 and count(*) filter(where kind='drawing' and ordinal=2)=1
   from dm_private.questions where paper_id=current_setting('test.cohort_paper')::uuid),'one identical paper with a frozen drawing section');
 set local role authenticated;
@@ -75,16 +91,30 @@ reset role;
 update dm_private.all_india_events set starts_at=now()-interval '1 day',ends_at=now()+interval '9 days',review_ends_at=now()+interval '19 days'
   where id=current_setting('test.cohort_event')::uuid;
 
+-- Historical drawing cohort snapshots are inserted as a test fixture. New All
+-- India admissions now require reviewed parallel objective questions.
+insert into dm_private.attempts(id,user_id,paper_id,started_at,deadline)
+  select md5('cohort-attempt-'||n)::uuid,md5('cohort-candidate-'||n)::uuid,
+    current_setting('test.cohort_paper')::uuid,now(),now()+interval '15 minutes'
+    from generate_series(1,12)n;
+insert into dm_private.all_india_attempts(event_id,user_id,attempt_id)
+  select current_setting('test.cohort_event')::uuid,
+    md5('cohort-candidate-'||n)::uuid,md5('cohort-attempt-'||n)::uuid
+    from generate_series(1,12)n;
+insert into dm_private.attempt_items(attempt_id,question_id,ordinal,prompt,options,kind,marking,media,points,negative_points,topic,key,explanation)
+  select a.id,q.id,q.ordinal,q.prompt,q.options,q.kind,q.marking,q.media,q.points,q.negative_points,q.topic,k.key,k.explanation
+  from dm_private.attempts a join dm_private.questions q on q.paper_id=a.paper_id
+  join dm_private.answer_keys k on k.question_id=q.id
+  where a.paper_id=current_setting('test.cohort_paper')::uuid;
+select set_config('test.cohort_attempt',md5('cohort-attempt-1')::uuid::text,true);
 set local role authenticated;
 do $$
-declare attempt_id uuid;
 begin
   for candidate in 1..12 loop
     perform set_config('request.jwt.claim.sub',md5('cohort-candidate-'||candidate)::uuid::text,true);
-    attempt_id:=public.start_all_india_attempt(current_setting('test.cohort_event')::uuid);
-    perform public.save_answer_revision(attempt_id,current_setting('test.cohort_objective')::uuid,
+    perform public.save_answer_revision(md5('cohort-attempt-'||candidate)::uuid,
+      current_setting('test.cohort_objective')::uuid,
       to_jsonb(case when candidate=1 then 'B'::text else 'A'::text end),1);
-    if candidate=1 then perform set_config('test.cohort_attempt',attempt_id::text,true); end if;
   end loop;
 end $$;
 select set_config('request.jwt.claim.sub',md5('cohort-candidate-1')::uuid::text,true);
@@ -119,8 +149,8 @@ update dm_private.all_india_events set starts_at=now()-interval '10 days'+interv
 set local role authenticated;
 select set_config('request.jwt.claim.role','authenticated',true);
 select set_config('request.jwt.claim.sub',md5('cohort-candidate-13')::uuid::text,true);
-select pg_temp.cohort_assert(public.all_india_event_catalog()->0->>'state'='closing','new starts close before a candidate would receive reduced time');
-select pg_temp.cohort_reject('select public.start_all_india_attempt(current_setting(''test.cohort_event'')::uuid)','no full attempt window');
+select pg_temp.cohort_assert(public.all_india_event_catalog()->0->>'state'='paused','legacy drawing cohort admits no new students');
+select pg_temp.cohort_reject('select public.start_all_india_attempt(current_setting(''test.cohort_event'')::uuid)','paused for fresh-question review');
 reset role;
 update dm_private.all_india_events set starts_at=now()-interval '21 days',ends_at=now()-interval '11 days',review_ends_at=now()-interval '1 day';
 update dm_private.attempts set started_at=now()-interval '11 days 35 minutes',deadline=now()-interval '11 days 20 minutes',

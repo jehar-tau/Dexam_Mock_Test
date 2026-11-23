@@ -104,7 +104,7 @@ select set_config('request.jwt.claim.sub',(select user_id::text from quality_peo
 select pg_temp.quality_assert(public.available_papers()->0->>'qualityHeld'='true','catalogue exposes a held paper');
 select pg_temp.quality_assert(public.all_india_event_catalog()->0->>'state'='paused','All India admissions pause without replacing any question');
 select pg_temp.quality_reject(format('select public.start_attempt(%L)',:'paper'),'New starts are paused');
-select pg_temp.quality_reject(format('select public.start_all_india_attempt(%L)',:'event'),'New starts are paused');
+select pg_temp.quality_reject(format('select public.start_all_india_attempt(%L)',:'event'),'paused for fresh-question review');
 select pg_temp.quality_reject('select public.start_topic_practice(''quality-topic'',''uceed'',10,900)','Not enough reviewed questions');
 select set_config('request.jwt.claim.sub',(select user_id::text from quality_people where n=1),true);
 select pg_temp.quality_assert(public.start_attempt(:'paper')=(select attempt_id from quality_people where n=1),'an existing attempt resumes despite a new hold');
