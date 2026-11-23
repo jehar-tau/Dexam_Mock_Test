@@ -9,6 +9,7 @@ assert.equal(env.PGDATABASE, "designmocks_ci", "A disposable bootstrap database 
 const student = randomUUID();
 const sourcePrefix = "mixed-attempt-" + student;
 const topic = sourcePrefix;
+const yearPaper = randomUUID();
 
 function session() {
   const name = "mixed-attempt-" + randomUUID();
@@ -88,6 +89,25 @@ try {
     cross join lateral generate_series(1,total) n
     cross join lateral (select '${sourcePrefix}-'||kind||'-'||n as external_key) fixture;
     commit;`);
+  // Only a complete reviewed year paper may feed the topic pool.
+  await sql(`begin;
+    update dm_private.bank_questions set payload=jsonb_set(payload,'{provenance}',
+      '{"exam":"uceed","paperId":"mixed-start-2023","year":2023}'::jsonb)
+      where topic='${topic}';
+    insert into dm_private.papers(id,title,exam,duration_seconds,published,reviewed,rights_confirmed,source_kind)
+      values('${yearPaper}','Fictional UCEED 2023','uceed',3600,true,true,true,'year');
+    insert into dm_private.questions(id,paper_id,ordinal,prompt,options,kind,marking,media,points,negative_points,topic,reviewed)
+    select md5('${yearPaper}'||external_key)::uuid,'${yearPaper}',row_number()over(order by external_key),
+      runtime_payload->>'prompt',runtime_payload->'options',runtime_payload->>'kind',runtime_payload->'marking',
+      runtime_payload->'media',(runtime_payload->>'points')::numeric,(runtime_payload->>'negativePoints')::numeric,
+      topic,true from dm_private.bank_questions where topic='${topic}';
+    insert into dm_private.answer_keys(question_id,key,explanation)
+    select md5('${yearPaper}'||external_key)::uuid,runtime_payload->'key',runtime_payload->>'explanation'
+      from dm_private.bank_questions where topic='${topic}';
+    insert into dm_private.year_paper_releases(paper_id,exam,paper_year,source_paper_id,part_label,question_count,review_sha256)
+      values('${yearPaper}','uceed',2023,'mixed-start-2023','Part A',57,dm_private.year_paper_manifest('${yearPaper}'));
+    select dm_private.year_paper_ready('${yearPaper}');
+    commit;`);
   await sql(`${start}
     select public.start_topic_practice('${topic}','uceed',10,900);
     select public.start_topic_practice('${topic}','uceed',10,900);
@@ -129,6 +149,11 @@ try {
   }
 } finally {
   await sql(`begin;
+    delete from dm_private.year_paper_releases where paper_id='${yearPaper}';
+    delete from dm_private.answer_keys where question_id in
+      (select id from dm_private.questions where paper_id='${yearPaper}');
+    delete from dm_private.questions where paper_id='${yearPaper}';
+    delete from dm_private.papers where id='${yearPaper}';
     delete from dm_private.attempt_items where attempt_id in (select id from dm_private.attempts where user_id='${student}');
     delete from dm_private.attempts where user_id='${student}';
     delete from dm_private.answer_keys where question_id in (select q.id from dm_private.questions q join dm_private.papers p on p.id=q.paper_id where p.owner_user_id='${student}');
