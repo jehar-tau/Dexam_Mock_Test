@@ -70,6 +70,17 @@ kbd { font-size: 12px; border: 1px solid var(--line); border-radius: 4px; paddin
 @media (max-width: 760px) {
   .layout { grid-template-columns: 1fr; }
   .list { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--line); }
-  .list .grid { grid-template-columns: repeat(8, 1fr); }
+  .list .grid { grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); }
   .question { padding: 16px; }
 }
+.viewer .stage { overflow: hidden; }
+.viewer .cam { position: relative; transform-origin: 0 0; will-change: transform; }
+.player { border-top: 1px solid var(--line); padding: 10px 12px; }
+.player .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.player input[type=range] { flex: 1 1 160px; accent-color: var(--forest); }
+.step-caption { margin: 8px 0 0; font-size: 16px; min-height: 3em; }
+.ask { margin-top: 8px; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--orange) 14%, transparent); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.ask p { margin: 0; }
+.versions { display: flex; gap: 6px; margin: 6px 0 10px; }
+.versions button[aria-pressed="true"] { background: var(--chip); border-color: var(--forest); }
+@media (prefers-reduced-motion: reduce) { .viewer .cam { transition: none !important; } }

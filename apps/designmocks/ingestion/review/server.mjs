@@ -53,6 +53,7 @@ export async function loadPaper(work, paperId) {
   const questions = [];
   for (const question of segments.questions) {
     const solution = await readJson(path.join(base, "05-solutions", `${question.key}.json`));
+    const visual = await readJson(path.join(base, "05-solutions", `${question.key}.visual.json`));
     const record = figureByKey[question.key];
     questions.push({
       key: question.key, part: question.part, number: question.number, type: question.type,
@@ -69,6 +70,8 @@ export async function loadPaper(work, paperId) {
       officialKey: key?.keys?.[question.key] || null,
       solution,
       solutionCheck: check?.results?.[question.key] || null,
+      visual,
+      visualCheck: check?.results?.[`${question.key}.visual`] || null,
     });
   }
   return { paperId, exam: segments.exam, year: segments.year, keySource: key?.source?.name || null,

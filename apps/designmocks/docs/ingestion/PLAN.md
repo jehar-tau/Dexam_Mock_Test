@@ -55,7 +55,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
 | 3 | **Figures** | Figure placements → canonical PNG (embedded pixels, or a page render when the page shows something else), a block crop of every question, an SVG trial with metrics and a comparison board | [x] built 21 Nov 2026 |
 | 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `470 to 480`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
-| 5 | **Solutions** | Question + verified key → draft worked solution (format below); a draft that does not reach the official answer is held. `solutions.py` gives the drafter a brief, validates every draft and renders a review page with step-by-step overlays | [~] UCEED 2026: 55 of 57 Part A drafted (Claude 8, Codex 47), all reaching the key; none reviewed |
+| 5 | **Solutions** | 5a: question + verified key → worked solution (format below), held unless it reaches the key. 5b: a **visual solution** beside it (`qN.visual.json`) for every question with a figure, following the visual solution standard below. `solutions.py` briefs, validates both and reports figure questions still without a visual | [~] UCEED 2026: 55 of 57 drafts (Claude 8, Codex 47); 4 visual pilots (Q1, Q2, Q4, Q38); none reviewed |
 | 6 | Review | Side-by-side review page: source block, extracted text, figures, key, solution; approve/fix per question with exact hashes | [ ] |
 | 7 | Export | Approved questions → export packets for the existing `bank:prepare-addition` path (new papers) or correction packets (existing records) | [ ] |
 | 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [ ] |
@@ -154,6 +154,7 @@ Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
 - 20 Nov 2026: plan written. Pipeline lives in `apps/designmocks/ingestion/` as Python stages with `unittest` tests run by `npm run test:ingestion`. Work folders and real papers stay outside the repo; the tool refuses to write inside a Git worktree.
 - 20 Nov 2026: owner approved D2 (PNG plus verified SVG), D3 (Claude drafts solutions in a local session, human review), D4 (UCEED 2026 re-ingest first) and D5 (all recommended analysis charts). D1, D6 and D7 stand as proposed until the owner says otherwise.
 - 20 Nov 2026: stage 2 built and evaluated on 18 papers (above). OCR results are cached in `<work>/.cache` by page-render digest; the Swift helper is compiled once into `<work>/.tools`.
+- 23 Nov 2026: visual solution standard adopted for every paper (above). Pilots: Q1, Q2, Q4 (Claude) and Q38 (visual version beside Codex's draft). 15 UCEED 2026 figure questions still have no visual layer at all.
 - 23 Nov 2026: UCEED 2026 has 55 of 57 Part A drafts (Claude 8, Codex 47). Nine Codex drafts that a Claude session overwrote were restored; see above. Next: the owner reviews drafts in the local review page.
 - 21 Nov 2026: stage 5 tooling built; first 8 solutions drafted for UCEED 2026 Section 1. Six visual-counting questions left for a person (above).
 - 21 Nov 2026: stage 4 built and run on all 18 keys (above). Owner to confirm the UCEED 2017 q60 correction (bank B, official key D).
@@ -249,7 +250,39 @@ UCEED 2026 Section 1 (14 NAT questions). Claude drafted these in this local sess
 
 Review page: `python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work render uceed-2026` writes `05-solutions/review.html` (light and dark, step scrubber, held and draft badges).
 
-## UCEED 2026 drafts after both agents (23 November 2026)
+## Visual solution standard (from 23 November 2026)
+
+The owner asked for every solution to be shown visually, with animation where it helps, modelled on Roughworks but better, and for this to apply to every future paper.
+
+**What Roughworks does.** Studied 23 November 2026 on the public UCEED 2026 pages Q1, Q2, Q18 and Q38; only structure was recorded, never their wording or drawings.
+- **Steps.** Each solution has one figure with a 3–4 step scrubber and a Play button that only advances the steps. Each step has its own caption of 30–45 words and a label inside the figure ("After fold 1").
+- **Drawing.** Counting and geometry draw layers over the original image. Folding and rotation are redrawn as simplified vector figures with colour-coded crease lines. Colours are theme variables.
+- **Close.** A final step eliminates the wrong options.
+- **No motion.** Steps toggle discretely: a fold never flips, a disc never turns, nothing moves between states (no SMIL, CSS animation or transitions in any figure checked).
+
+**What we do better.** Each item is built into the review page and checked by `solutions.py`:
+
+| Feature | Field | Why |
+| --- | --- | --- |
+| Real motion between states | `step.motion`: `fold` (flip over a crease), `rotate`, `move` (offset or path), `draw` (stroke draws on), `fade`, `pulse`, `stagger` (reveal parts one by one, for counting) | The exam tests mental motion. Watching the fold or the turn teaches it; a before/after pair does not |
+| Zoom to the detail | `step.focus: [x, y, w, h]` in figure pixels; the camera glides between regions | Dense figures (40 crosses, small fold marks) are unreadable at page size |
+| Predict first | `step.ask`: a short question; the step waits for “Show me” | Active recall: the learner commits to an answer before seeing it |
+| Layers that come and go | `step.overlay` adds a layer; `step.hide` removes earlier ones | Lets one figure tell the whole story without clutter |
+| Proof, not assertion | Where possible the last step lays the result on the options (Q38: the folded quarter slides onto B and matches mark for mark) | The learner sees why an option is right |
+| Colour with meaning | Colour-code by origin (Q38 marks by starting quarter) or by role (orange = focus, blue = compare, green = result) | Lets the eye track one thing through every step |
+| Reduced motion | Motion finishes instantly and zoom stops gliding when the system asks for reduced motion | Accessibility |
+| Safe by construction | Declarative motion only, never scripts; overlay elements and attributes on an allow-list; ids `[a-z][a-z0-9-]*`; a moving element must be a `<g id>` without its own `transform` | Drafts come from models and must never run code |
+
+**Authoring rules for any agent.**
+1. Measure coordinates from the canonical figure (connected components, crease intersections); never estimate them by eye.
+2. Prefer a rearrangement or motion that makes the answer visible over algebra. Q2: the grey caps turn a quarter-turn into their white twins, leaving half-triangles, so π never appears.
+3. One idea per step and 3–6 steps. Put `ask` on the step that holds the key insight, not on every step.
+4. Write the visual version as `qN.visual.json` **beside** the draft. Never write over another agent's file; reuse its option checks with credit in `provenance.method`.
+5. Check it in the review page (Play, scrub, predict, reduced motion) before marking it ready for review.
+
+The review page in `ingestion/review/` holds the reference player. When stage 8 brings solutions into the app, the same engine (`activeSolution`, `applyFocus`, `runMotions`, `stepPlayer` in `app.js`) moves into a shared module rather than being rewritten.
+
+
 
 Codex also drafted solutions in the same private folder on 21–22 November. The folder now holds 55 of the 57 Part A questions, all passing `solutions.py check` and reaching the official key:
 

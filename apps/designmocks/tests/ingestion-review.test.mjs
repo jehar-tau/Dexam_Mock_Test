@@ -47,7 +47,8 @@ async function fictionalWork() {
   await writeFile(path.join(base, "04-key/key.json"), JSON.stringify({ source: { name: "fictional-key.pdf" }, report: {}, keys: {
     q1: { raw: "12", printed: "12", status: "official-key", readBy: "text", bank: "not-in-bank" } } }));
   await writeFile(path.join(base, "05-solutions/q1.json"), JSON.stringify({ schema: 1, answer: { value: "12" }, keyIdea: "Count rows.", steps: [{ text: "3 × 4 = 12." }] }));
-  await writeFile(path.join(base, "05-solutions/check.json"), JSON.stringify({ byStatus: { draft: 1 }, results: { q1: { status: "draft", errors: [], warnings: [] } } }));
+  await writeFile(path.join(base, "05-solutions/q1.visual.json"), JSON.stringify({ schema: 1, answer: { value: "12" }, keyIdea: "Watch the rows fill.", steps: [{ text: "3 × 4 = 12.", overlay: "rows", motion: [{ target: "rows", type: "draw" }] }] }));
+  await writeFile(path.join(base, "05-solutions/check.json"), JSON.stringify({ byStatus: { draft: 2 }, results: { q1: { status: "draft", errors: [], warnings: [] }, "q1.visual": { status: "draft", errors: [], warnings: [] } } }));
   await writeFile(path.join(work, "secret.txt"), "not a figure");
   await mkdir(path.join(work, "not-a-paper"));
   return work;
@@ -63,6 +64,9 @@ test("every stage's output is merged into one record per question", async () => 
     assert.equal(q1.officialKey.raw, "12");
     assert.equal(q1.solution.answer.value, "12");
     assert.equal(q1.solutionCheck.status, "draft");
+    assert.equal(q1.visual.keyIdea, "Watch the rows fill.");  // a visual version is kept beside the draft
+    assert.equal(q1.visualCheck.status, "draft");
+    assert.equal(q2.visual, null);
     assert.deepEqual(q1.figures[0].vector, { status: "failed", reasons: ["inkIou"] });
     assert.equal(q2.officialKey, null);
     assert.equal(q2.solution, null);

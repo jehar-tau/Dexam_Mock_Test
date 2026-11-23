@@ -32,7 +32,19 @@ SVG_NS = "http://www.w3.org/2000/svg"
 OVERLAY_TAGS = {"g", "circle", "ellipse", "rect", "line", "polyline", "polygon", "path", "text", "tspan"}
 OVERLAY_ATTRS = {"cx", "cy", "r", "rx", "ry", "x", "y", "x1", "y1", "x2", "y2", "width", "height", "points", "d",
                  "fill", "fill-opacity", "stroke", "stroke-width", "stroke-dasharray", "stroke-linecap",
-                 "stroke-linejoin", "opacity", "font-size", "font-weight", "text-anchor", "transform"}
+                 "stroke-linejoin", "opacity", "font-size", "font-weight", "text-anchor", "transform", "id"}
+ID = re.compile(r"^[a-z][a-z0-9-]{0,40}$")
+# Visual solutions (PLAN.md, "Visual solution standard"): declarative motion only, never scripts.
+MOTIONS = {
+    "fold": {"axis": ("x", "y"), "at": float},          # flip a layer over a crease (x: vertical crease, y: horizontal)
+    "rotate": {"angle": float, "cx": float, "cy": float},
+    "move": {"dx": float, "dy": float},                  # or "path": [[x, y], ...] relative offsets
+    "draw": {},                                         # stroke draws on
+    "fade": {"from": float, "to": float},
+    "pulse": {},                                        # brief emphasis
+    "stagger": {},                                      # reveal children one by one (counting)
+}
+MAX_MOTION_MS = 4000
 SAFE_VALUE = re.compile(r"^[-#%.,()0-9A-Za-z \t]*$")
 
 
@@ -98,7 +110,7 @@ def overlay_problems(fragment):
             local = name.split("}")[-1]
             if local not in OVERLAY_ATTRS:
                 problems.append(f"overlay-attribute-{local}")
-            elif not SAFE_VALUE.match(value) or "url" in value.lower():
+            elif not SAFE_VALUE.match(value) or "url" in value.lower() or (local == "id" and not ID.match(value)):
                 problems.append(f"overlay-value-{local}")
     return sorted(set(problems))
 
@@ -190,6 +202,9 @@ def validate(solution, question, official, figures):
             errors.append("step-overlay-missing")
     elif step_refs:
         errors.append("steps-refer-to-an-overlay-that-is-absent")
+    errors.extend(motion_problems(steps, overlay))
+    if question.get("figures_present") and not overlay:
+        warnings.append("no-visual-solution")
     meta = solution["meta"]
     if meta.get("difficulty") not in DIFFICULTY:
         errors.append("meta-difficulty")
@@ -204,28 +219,88 @@ def validate(solution, question, official, figures):
     return errors, warnings, reaches
 
 
+def overlay_ids(overlay):
+    ids = set()
+    for fragment in (overlay or {}).get("steps", {}).values():
+        ids.update(re.findall(r'\bid="([^"]+)"', fragment))
+    return ids
+
+
+def motion_problems(steps, overlay):
+    """Visual-solution fields on steps: motion, focus (zoom to a region), hide, ask (predict first)."""
+    problems = []
+    ids = overlay_ids(overlay)
+    layers = set((overlay or {}).get("steps", {}))
+    width = height = None
+    if overlay and re.fullmatch(r"0 0 \d+ \d+", str(overlay.get("viewBox", ""))):
+        width, height = (int(v) for v in overlay["viewBox"].split()[2:])
+    for index, step in enumerate(steps, 1):
+        for motion in step.get("motion") or []:
+            kind = motion.get("type")
+            if kind not in MOTIONS:
+                problems.append(f"step-{index}-motion-type")
+                continue
+            if motion.get("target") not in ids:
+                problems.append(f"step-{index}-motion-target")
+            elif any(re.search(rf'<[^>]*\bid="{re.escape(motion["target"])}"[^>]*\btransform=|<[^>]*\btransform="[^"]*"[^>]*\bid="{re.escape(motion["target"])}"', f)
+                     for f in (overlay or {}).get("steps", {}).values()):
+                problems.append(f"step-{index}-motion-target-has-transform")  # the animation would replace it; wrap in a <g id>
+            duration = motion.get("duration", 900)
+            if not isinstance(duration, (int, float)) or not 150 <= duration <= MAX_MOTION_MS:
+                problems.append(f"step-{index}-motion-duration")
+            if not isinstance(motion.get("delay", 0), (int, float)) or not 0 <= motion.get("delay", 0) <= MAX_MOTION_MS:
+                problems.append(f"step-{index}-motion-delay")
+            for field, expected in MOTIONS[kind].items():
+                if kind == "move" and "path" in motion:
+                    break
+                value = motion.get(field)
+                if isinstance(expected, tuple):
+                    if value not in expected:
+                        problems.append(f"step-{index}-motion-{field}")
+                elif field not in ("from", "to", "cx", "cy") or value is not None:
+                    if not isinstance(value, (int, float)):
+                        problems.append(f"step-{index}-motion-{field}")
+            if kind == "move" and "path" in motion and not (isinstance(motion["path"], list) and 1 <= len(motion["path"]) <= 12
+                                                         and all(isinstance(p, list) and len(p) == 2 and all(isinstance(v, (int, float)) for v in p) for p in motion["path"])):
+                problems.append(f"step-{index}-motion-path")
+        if "focus" in step:
+            box = step["focus"]
+            if not (isinstance(box, list) and len(box) == 4 and all(isinstance(v, (int, float)) for v in box) and box[2] > 0 and box[3] > 0
+                    and (width is None or (box[0] >= 0 and box[1] >= 0 and box[0] + box[2] <= width + 1 and box[1] + box[3] <= height + 1))):
+                problems.append(f"step-{index}-focus")
+        if any(name not in layers for name in step.get("hide") or []):
+            problems.append(f"step-{index}-hide")
+        if "ask" in step and not (isinstance(step["ask"], str) and 1 <= words(step["ask"]) <= STEP_WORDS_WARN):
+            problems.append(f"step-{index}-ask")
+    return problems
+
+
 def check(work, paper_id):
     base, segments, figures, keys = paper_files(work, paper_id)
     folder = base / STAGE
     figure_index = {f["id"]: f for record in figures.values() for f in record["figures"]}
     results = {}
-    for path in sorted(folder.glob("q*.json"), key=lambda p: (p.stem.startswith("qb"), int(re.sub(r"\D", "", p.stem)))):
-        key = path.stem
+    for path in sorted(folder.glob("q*.json"), key=lambda p: (p.stem.startswith("qb"), int(re.sub(r"\D", "", p.stem.split(".")[0])), p.stem)):
+        # q38.json is the draft; q38.visual.json is a visual version kept beside it (never over it).
+        name = path.stem
+        key = name.split(".")[0]
         try:
             solution = json.loads(path.read_text())
         except json.JSONDecodeError:
-            results[key] = {"status": "held", "errors": ["not-json"], "warnings": []}
+            results[name] = {"status": "held", "errors": ["not-json"], "warnings": []}
             continue
-        if key not in segments:
-            results[key] = {"status": "held", "errors": ["no-such-question"], "warnings": []}
+        if key not in segments or name not in (key, f"{key}.visual"):
+            results[name] = {"status": "held", "errors": ["no-such-question"], "warnings": []}
             continue
-        errors, warnings, reaches = validate(solution, segments[key], keys.get(key, {}), figure_index)
+        question = dict(segments[key], figures_present=bool(figures.get(key, {}).get("figures")))
+        errors, warnings, reaches = validate(solution, question, keys.get(key, {}), figure_index)
         claimed = solution.get("provenance", {}).get("status")
         status = "held" if errors else (claimed if claimed in ("draft", "verified") else "draft")
-        results[key] = {"status": status, "reachesKey": reaches, "errors": errors, "warnings": warnings}
+        results[name] = {"status": status, "reachesKey": reaches, "errors": errors, "warnings": warnings}
     part_a = [k for k, q in segments.items() if q["part"] == "A"]
     report = {"paperId": paper_id, "solutions": len(results), "partAQuestions": len(part_a),
               "withoutSolution": [k for k in part_a if k not in results],
+              "visualVersions": sorted((n for n in results if n.endswith(".visual")), key=lambda n: int(re.sub(r"\D", "", n))),
               "byStatus": {s: sum(1 for r in results.values() if r["status"] == s) for s in ("draft", "verified", "held")},
               "results": results}
     (folder / "check.json").write_text(json.dumps(report, indent=1) + "\n")

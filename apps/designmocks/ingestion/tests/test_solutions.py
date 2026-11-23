@@ -152,6 +152,45 @@ class SolutionsTest(unittest.TestCase):
             self.save("q1", solution)
             self.assertIn(error, self.results()["q1"]["errors"], error)
 
+    def test_visual_solution_fields(self):
+        visual = copy.deepcopy(NAT)
+        visual["overlay"]["steps"]["rows"] = '<g id="row-box"><rect x="10" y="10" width="380" height="60" fill="none" stroke="#d9772b"/></g>'
+        visual["steps"][0].update({"focus": [0, 0, 200, 100], "ask": "How many rows do you see?",
+                                   "motion": [{"target": "row-box", "type": "draw", "duration": 800}]})
+        visual["steps"][1]["motion"] = [{"target": "row-box", "type": "fold", "axis": "y", "at": 40, "duration": 1200},
+                                        {"target": "row-box", "type": "move", "path": [[10, 0], [20, 5]], "duration": 900},
+                                        {"target": "row-box", "type": "rotate", "angle": -90, "cx": 200, "cy": 100}]
+        visual["steps"][1]["hide"] = ["rows"]
+        (self.base / "05-solutions" / "q1.visual.json").write_text(json.dumps(visual))
+        self.save("q1", NAT)
+        report = solutions.check(self.work, PAPER)
+        self.assertEqual("draft", report["results"]["q1.visual"]["status"], report["results"]["q1.visual"])
+        self.assertEqual(["q1.visual"], report["visualVersions"])
+        self.assertNotIn("q1.visual", report["withoutSolution"])
+        broken = copy.deepcopy(visual)
+        broken["steps"][0]["focus"] = [0, 0, 900, 100]                       # outside the figure
+        broken["steps"][0]["motion"][0] = {"target": "nowhere", "type": "draw"}
+        broken["steps"][1]["motion"][0]["axis"] = "z"
+        broken["steps"][1]["motion"][1]["duration"] = 9000
+        broken["steps"][1]["motion"][2]["type"] = "explode"
+        broken["steps"][1]["hide"] = ["missing-layer"]
+        broken["overlay"]["steps"]["total"] = '<text id="moving" transform="rotate(5)" x="1" y="1">12</text>'
+        broken["steps"][1]["motion"].append({"target": "moving", "type": "pulse"})
+        (self.base / "05-solutions" / "q1.visual.json").write_text(json.dumps(broken))
+        errors = solutions.check(self.work, PAPER)["results"]["q1.visual"]["errors"]
+        for error in ["step-1-focus", "step-1-motion-target", "step-2-motion-axis", "step-2-motion-duration",
+                      "step-2-motion-type", "step-2-hide", "step-2-motion-target-has-transform"]:
+            self.assertIn(error, errors)
+        self.assertIn("overlay-value-id", solutions.overlay_problems('<g id="Bad Id"></g>'))
+
+    def test_figure_questions_without_a_visual_are_flagged(self):
+        plain = copy.deepcopy(NAT)
+        del plain["overlay"]
+        for step in plain["steps"]:
+            step.pop("overlay")
+        self.save("q1", plain)
+        self.assertIn("no-visual-solution", self.results()["q1"]["warnings"])
+
     def test_overlays_can_only_draw(self):
         for fragment, problem in [
             ('<script>alert(1)</script>', "overlay-element-script"),

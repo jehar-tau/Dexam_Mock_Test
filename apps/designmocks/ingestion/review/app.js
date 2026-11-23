@@ -2,12 +2,13 @@
 import { checkAnswer, describeKey } from "/answer-check.mjs";
 
 const $ = selector => document.querySelector(selector);
-const state = { paper: null, index: 0, zoom: 1, view: null, step: -1, attempts: {} };
+const state = { paper: null, index: 0, zoom: 1, view: null, step: -1, attempts: {}, variant: null, animate: false, asked: new Set(), playing: null, lastFocus: null };
+const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const SVG_NS = "http://www.w3.org/2000/svg";
 const OVERLAY_TAGS = new Set(["g", "circle", "ellipse", "rect", "line", "polyline", "polygon", "path", "text", "tspan"]);
 const OVERLAY_ATTRS = new Set(["cx", "cy", "r", "rx", "ry", "x", "y", "x1", "y1", "x2", "y2", "width", "height", "points", "d",
   "fill", "fill-opacity", "stroke", "stroke-width", "stroke-dasharray", "stroke-linecap", "stroke-linejoin", "opacity",
-  "font-size", "font-weight", "text-anchor", "transform"]);
+  "font-size", "font-weight", "text-anchor", "transform", "id"]);
 
 function store(name, value) {
   try { localStorage.setItem(name, JSON.stringify(value)); } catch { /* private window: keep in memory only */ }
@@ -37,7 +38,7 @@ function safeOverlay(fragment) {
     if (!OVERLAY_TAGS.has(tag)) return null;
     const node = document.createElementNS(SVG_NS, tag);
     for (const { name, value } of source.attributes) {
-      if (OVERLAY_ATTRS.has(name) && !/url|javascript/i.test(value)) node.setAttribute(name, value);
+      if (OVERLAY_ATTRS.has(name) && !/url|javascript/i.test(value) && (name !== "id" || /^[a-z][a-z0-9-]{0,40}$/.test(value))) node.setAttribute(name, value);
     }
     for (const child of source.childNodes) {
       if (child.nodeType === Node.TEXT_NODE) node.append(child.textContent);
@@ -100,6 +101,8 @@ function views(q) {
 function renderViewer(q, revealSolution) {
   const options = views(q);
   if (!options.length) return null;
+  const wanted = revealSolution ? activeSolution(q)?.overlay?.figure : null;
+  if (state.view == null && wanted) state.view = wanted;
   const current = options.find(v => v.id === state.view) || options[0];
   state.view = current.id;
   if (state.zoom == null) {  // start at actual size, or smaller if the image is wider than the column
@@ -110,20 +113,33 @@ function renderViewer(q, revealSolution) {
   const stage = el("div", { class: `stage${state.zoom >= 2 && !current.vector ? " pixels" : ""}` });
   stage.style.width = `${Math.round(current.width * state.zoom)}px`;
   stage.append(el("img", { src: figureUrl(current.src), alt: `${current.label} for ${q.key.toUpperCase()}`, width: current.width, height: current.height }));
-  const overlay = q.solution?.overlay;
-  if (revealSolution && overlay && current.figure && overlay.figure === current.figure.id) {
+  const solution = revealSolution ? activeSolution(q) : null;
+  const overlay = solution?.overlay;
+  let player = null;
+  if (overlay && current.figure && overlay.figure === current.figure.id) {
+    const cam = el("div", { class: "cam" });
+    cam.append(...stage.childNodes);
+    stage.append(cam);
     const svg = document.createElementNS(SVG_NS, "svg");
     svg.setAttribute("class", "overlay");
     svg.setAttribute("viewBox", overlay.viewBox);
     svg.setAttribute("preserveAspectRatio", "none");
-    const names = (q.solution.steps || []).map(s => s.overlay).filter(Boolean);
-    const shown = state.step < 0 ? names : (q.solution.steps || []).slice(0, state.step + 1).map(s => s.overlay).filter(Boolean);
+    const steps = solution.steps || [];
+    const last = state.step < 0 ? steps.length - 1 : state.step;
+    const gated = last >= 0 && steps[last]?.ask && !state.asked.has(`${q.key}:${last}`);
+    const upto = gated ? last - 1 : last;  // a step that asks for a prediction waits for "Show me"
+    const shown = new Set(), hidden = new Set();
+    steps.slice(0, upto + 1).forEach(step => { if (step.overlay) shown.add(step.overlay); (step.hide || []).forEach(name => hidden.add(name)); });
     for (const [name, fragment] of Object.entries(overlay.steps || {})) {
-      if (!shown.includes(name)) continue;
+      if (!shown.has(name) || hidden.has(name)) continue;
       const group = safeOverlay(fragment);
-      if (group) svg.append(group);
+      if (group) { group.dataset.layer = name; svg.append(group); }
     }
-    stage.append(svg);
+    cam.append(svg);
+    const [, , vw, vh] = overlay.viewBox.split(/\s+/).map(Number);
+    const focus = upto >= 0 ? steps[upto]?.focus : null;
+    queueMicrotask(() => { applyFocus(cam, focus, vw, vh); runMotions(svg, steps, upto, state.animate && !reducedMotion()); state.animate = false; });
+    player = stepPlayer(q, solution, upto, gated ? steps[last] : null, last);
   }
   const tools = el("div", { class: "tools", role: "toolbar", "aria-label": "Figure" },
     options.map(v => el("button", { type: "button", "aria-pressed": String(v.id === current.id), onclick: () => { state.view = v.id; state.zoom = null; render(); } }, v.label)),
@@ -141,7 +157,125 @@ function renderViewer(q, revealSolution) {
     else if (figure.vector?.status) notes.push(`SVG ${figure.vector.status}${figure.vector.reasons?.length ? `: ${figure.vector.reasons.join(", ")}` : ""}`);
     if (figure.notes.length) notes.push(figure.notes.join(", "));
   } else notes.push(`The question as printed, ${current.width} × ${current.height} px`);
-  return el("section", { class: "viewer", "aria-label": "Figure viewer" }, tools, el("div", { class: "scroll" }, stage), el("p", { class: "caption" }, notes.join(" · ")));
+  return el("section", { class: "viewer", "aria-label": "Figure viewer" }, tools, el("div", { class: "scroll" }, stage), player, el("p", { class: "caption" }, notes.join(" · ")));
+}
+
+// ------------------------------------------------------------------ visual solutions
+
+function activeSolution(q) {
+  if (state.variant === "draft" || !q.visual) return q.solution;
+  return q.visual;
+}
+
+// Zoom the figure and its overlay together onto a region (the step's "focus"), smoothly from the last one.
+function applyFocus(cam, focus, vw, vh) {
+  const target = focus ? (() => {
+    const [x, y, w, h] = focus;
+    const scale = Math.min(vw / w, vh / h);
+    return `translate(${-x * scale / vw * 100}%, ${-y * scale / vh * 100}%) scale(${scale})`;
+  })() : "none";
+  cam.style.transition = "none";
+  cam.style.transform = state.lastFocus || "none";
+  requestAnimationFrame(() => {
+    cam.style.transition = reducedMotion() ? "none" : "transform 700ms cubic-bezier(.4,0,.2,1)";
+    cam.style.transform = target;
+    state.lastFocus = target;
+  });
+}
+
+function keyframes(node, motion) {
+  const at = motion.at ?? 0;
+  switch (motion.type) {
+    case "fold": {  // flip over a crease: the layer squashes to the line and reappears mirrored
+      const axis = motion.axis === "x" ? "X" : "Y";
+      node.style.transformOrigin = motion.axis === "x" ? `${at}px 0px` : `0px ${at}px`;
+      return [{ transform: `scale${axis}(1)` }, { transform: `scale${axis}(0.04)`, offset: 0.5, opacity: 0.75 }, { transform: `scale${axis}(-1)` }];
+    }
+    case "rotate":
+      node.style.transformOrigin = `${motion.cx ?? 0}px ${motion.cy ?? 0}px`;
+      return [{ transform: "rotate(0deg)" }, { transform: `rotate(${motion.angle}deg)` }];
+    case "move": {
+      const points = motion.path || [[motion.dx, motion.dy]];
+      return [{ transform: "translate(0px, 0px)" }, ...points.map(([dx, dy]) => ({ transform: `translate(${dx}px, ${dy}px)` }))];
+    }
+    case "fade":
+      return [{ opacity: motion.from ?? 0 }, { opacity: motion.to ?? 1 }];
+    case "pulse":
+      node.style.transformBox = "fill-box";
+      node.style.transformOrigin = "center";
+      return [{ transform: "scale(1)" }, { transform: "scale(1.18)", offset: 0.4 }, { transform: "scale(1)" }];
+    default:
+      return null;
+  }
+}
+
+// Play the current step's motions; earlier steps' motions are shown at their end state.
+function runMotions(svg, steps, upto, play) {
+  steps.slice(0, upto + 1).forEach((step, index) => {
+    for (const motion of step.motion || []) {
+      const node = svg.querySelector(`#${CSS.escape(motion.target)}`);
+      if (!node) continue;
+      const timing = { duration: motion.duration ?? 900, delay: motion.delay ?? 0, easing: "cubic-bezier(.4,0,.2,1)", fill: "both" };
+      const animations = [];
+      if (motion.type === "draw") {
+        for (const shape of node.matches("path,line,polyline,polygon,circle,ellipse,rect") ? [node] : node.querySelectorAll("path,line,polyline,polygon,circle,ellipse,rect")) {
+          const length = shape.getTotalLength ? shape.getTotalLength() : 0;
+          shape.style.strokeDasharray = `${length}`;
+          animations.push(shape.animate([{ strokeDashoffset: length }, { strokeDashoffset: 0 }], timing));
+        }
+      } else if (motion.type === "stagger") {  // reveal parts one by one, as you would count them
+        const parts = [...node.children];
+        parts.forEach((part, n) => animations.push(part.animate([{ opacity: 0, transform: "scale(.6)" }, { opacity: 1, transform: "scale(1)" }],
+          { ...timing, duration: Math.max(120, timing.duration / Math.max(parts.length, 1)), delay: timing.delay + n * timing.duration / Math.max(parts.length, 1) })));
+        parts.forEach(part => { part.style.transformBox = "fill-box"; part.style.transformOrigin = "center"; });
+      } else {
+        node.style.transformBox = node.style.transformBox || "view-box";
+        const frames = keyframes(node, motion);
+        if (frames) animations.push(node.animate(frames, timing));
+      }
+      if (!(play && index === upto)) animations.forEach(animation => animation.finish());
+    }
+  });
+}
+
+function stepPlayer(q, solution, upto, pending, last) {
+  const steps = solution.steps || [];
+  if (!steps.length) return null;
+  const go = (index, animate) => { stopPlaying(); state.step = Math.max(0, Math.min(steps.length - 1, index)); state.animate = animate; render(); };
+  const caption = pending
+    ? el("div", { class: "ask" }, el("p", {}, el("strong", {}, "Predict first: "), pending.ask),
+        el("button", { type: "button", class: "primary", onclick: () => { state.asked.add(`${q.key}:${last}`); state.animate = true; render(); } }, "Show me"))
+    : el("p", { class: "step-caption", "aria-live": "polite" }, upto >= 0 ? steps[upto].text : "");
+  return el("div", { class: "player" },
+    el("div", { class: "controls" },
+      el("button", { type: "button", "aria-label": state.playing ? "Pause" : "Play the steps", onclick: () => (state.playing ? stopPlaying() : play(q, steps)) }, state.playing ? "❚❚ Pause" : "▶ Play"),
+      el("button", { type: "button", "aria-label": "Previous step", disabled: last <= 0, onclick: () => go(last - 1, false) }, "‹"),
+      el("input", { type: "range", min: "1", max: String(steps.length), value: String(last + 1), "aria-label": "Step", oninput: event => go(Number(event.target.value) - 1, false) }),
+      el("button", { type: "button", "aria-label": "Next step", disabled: last >= steps.length - 1, onclick: () => go(last + 1, true) }, "›"),
+      el("span", { class: "muted" }, `Step ${last + 1} of ${steps.length}`)),
+    caption);
+}
+
+function play(q, steps) {
+  stopPlaying();
+  if (state.step < 0 || state.step >= steps.length - 1) state.step = -1;
+  const advance = () => {
+    if (state.step >= steps.length - 1) { stopPlaying(); render(); return; }
+    state.step += 1;
+    state.asked.add(`${q.key}:${state.step}`);  // playing answers its own prompts
+    state.animate = true;
+    render();
+    const step = steps[state.step];
+    const motionTime = Math.max(0, ...(step.motion || []).map(m => (m.delay ?? 0) + (m.duration ?? 900)));
+    state.playing = setTimeout(advance, motionTime + 1400 + step.text.split(/\s+/).length * 120);
+  };
+  state.playing = setTimeout(advance, 0);
+  render();
+}
+
+function stopPlaying() {
+  if (state.playing) clearTimeout(state.playing);
+  state.playing = null;
 }
 
 function zoom(value) { state.zoom = Math.min(6, Math.max(0.2, Math.round(value * 100) / 100)); render(); }
@@ -187,23 +321,22 @@ function keyPanel(q) {
 }
 
 function solutionPanel(q) {
-  const s = q.solution;
+  const s = activeSolution(q);
   if (!s) return el("section", { class: "panel" }, el("h2", {}, "Worked solution"), el("p", { class: "muted" }, "No solution drafted yet."));
-  const check = q.solutionCheck || {};
+  const check = (s === q.visual ? q.visualCheck : q.solutionCheck) || {};
+  const versions = q.visual && q.solution ? el("div", { class: "versions", role: "group", "aria-label": "Solution version" },
+    el("button", { type: "button", "aria-pressed": String(s === q.visual), onclick: () => { state.variant = "visual"; state.step = 0; render(); } }, `Visual (${q.visual.provenance?.draftedBy || "?"})`),
+    el("button", { type: "button", "aria-pressed": String(s === q.solution), onclick: () => { state.variant = "draft"; state.step = -1; render(); } }, `Draft (${q.solution.provenance?.draftedBy || "?"})`)) : null;
   const steps = s.steps || [];
   return el("section", { class: "panel" },
     el("h2", {}, "Worked solution ", el("span", { class: `chip ${check.status === "held" ? "bad" : check.status === "verified" ? "good" : "warn"}` }, check.status || "unchecked"),
       " ", el("span", { class: "chip" }, `${s.meta?.topic || ""} · ${s.meta?.difficulty || ""} · ${s.meta?.seconds || "?"} s`)),
+    versions,
     el("p", {}, "Answer ", el("strong", {}, String(s.answer?.value ?? "—"))),
     el("p", { class: "idea" }, s.keyIdea),
     el("ol", { class: "steps" }, steps.map((step, i) => el("li", { class: state.step === i ? "on" : null, tabindex: "0",
-      onclick: () => { state.step = state.step === i ? -1 : i; render(); },
-      onkeydown: event => { if (event.key === "Enter") { state.step = state.step === i ? -1 : i; render(); } } }, step.text))),
-    steps.some(st => st.overlay) ? el("div", { class: "actions" },
-      el("button", { type: "button", onclick: () => { state.step = Math.max(0, state.step - 1); render(); } }, "Previous step"),
-      el("span", { class: "muted" }, state.step < 0 ? "All steps shown" : `Step ${state.step + 1} of ${steps.length}`),
-      el("button", { type: "button", onclick: () => { state.step = Math.min(steps.length - 1, state.step + 1); render(); } }, "Next step"),
-      el("button", { type: "button", onclick: () => { state.step = -1; render(); } }, "Show all")) : null,
+      onclick: () => { stopPlaying(); state.step = i; state.animate = true; render(); },
+      onkeydown: event => { if (event.key === "Enter") { stopPlaying(); state.step = i; state.animate = true; render(); } } }, step.text))),
     s.optionCheck?.length ? el("ul", {}, s.optionCheck.map(c => el("li", {}, el("strong", {}, c.option), " ",
       el("span", { class: `verdict-${c.verdict}` }, c.verdict), " — ", c.why))) : null,
     s.trap ? el("p", {}, el("strong", {}, "Trap: "), s.trap) : null,
@@ -257,9 +390,14 @@ function submit(q) {
 
 function go(index) {
   state.index = Math.max(0, Math.min(state.paper.questions.length - 1, index));
+  stopPlaying();
   state.view = null;
   state.zoom = null;
-  state.step = -1;
+  state.variant = null;
+  state.lastFocus = null;
+  const next = state.paper.questions[Math.max(0, Math.min(state.paper.questions.length - 1, index))];
+  const solution = next.visual || next.solution;
+  state.step = solution?.overlay ? 0 : -1;
   state.revealed = null;
   const q = state.paper.questions[state.index];
   history.replaceState(null, "", `#${q.key}`);
