@@ -17,8 +17,8 @@ async function fixture(page,options={}){
   const question={id:questionId,ordinal:1,kind:state.drawing?'drawing':'mcq',topic:'observation',prompt:who===second.id?'Original fictional second account question':'Original fictional first account question',options:[{id:'A',label:'Fictional first choice'},{id:'B',label:'Fictional second choice'}],marking:{correct:3,wrong:-1},points:3,negativePoints:1,media:state.readMedia?[{path:'fictional-figure.png',alt:'Fictional figure'}]:[],answer:state.readAnswer?.answer ?? null,answerRevision:state.readAnswer?.revision ?? 0};
   if(name==='read_attempt'){
    const held=state.readHold;if(held){state.heldReads++;await held.promise;}
-   data={id:attemptId,title:'Original fictional timed paper',status:state.submitted?'submitted':'active',serverNow:state.serverNow??new Date().toISOString(),deadline:state.deadline,questions:state.submitted?[]:[question],score:0,total:3,examResultsPending:!!state.partBReady,resultsPending:!!state.submitted&&!state.partBReady,uploadDeadline:state.submitted?new Date(Date.now()+600000).toISOString():null,drawingUploadTasks:state.submitted?[{id:questionId,prompt:'Original fictional drawing task'}]:[]};
-  }else if(name==='my_exam_mock_session')data=state.partBReady?{exam:'uceed',partAAttemptId:attemptId,partBState:'ready',partBTaskCount:2,partBDurationSeconds:3600,partBOpensAt:new Date(Date.now()-1000).toISOString()}:null;
+   data={id:attemptId,title:'Original fictional timed paper',status:state.submitted?'submitted':'active',serverNow:state.serverNow??new Date().toISOString(),deadline:state.deadline,questions:state.submitted?[]:[question],score:0,total:3,examResultsPending:!!(state.partBReady||state.partBUnavailable),resultsPending:!!state.submitted&&!(state.partBReady||state.partBUnavailable),uploadDeadline:state.submitted?new Date(Date.now()+600000).toISOString():null,drawingUploadTasks:state.submitted?[{id:questionId,prompt:'Original fictional drawing task'}]:[]};
+  }else if(name==='my_exam_mock_session')data=(state.partBReady||state.partBUnavailable)?{exam:'uceed',partAAttemptId:attemptId,partBState:state.partBUnavailable?'unavailable':'ready',partBTaskCount:2,partBDurationSeconds:3600,partBOpensAt:new Date(Date.now()-1000).toISOString()}:null;
   else if(name==='my_exam_mock_report')data=null;
   else if(name==='save_answer_revision'){const held=state.saveHold;if(held)await held.promise;data=state.saveReceipt===undefined?{accepted:true,answer:input.p_answer,revision:input.p_revision}:state.saveReceipt;}
   else if(name==='submit_attempt'){status=state.submitStatus;data=status===200?{id:attemptId,title:'Original fictional timed paper',status:'submitted',serverNow:state.serverNow??new Date().toISOString(),deadline:state.deadline,questions:[{...question,outcome:'incorrect',explanation:'Original fictional explanation'}],score:0,total:3}:{code:'P0001',message:'SECRET_FICTIONAL_PROVIDER_DETAIL'};}
@@ -293,6 +293,13 @@ test('synchronous repeated submission dispatches one mutation',async({page})=>{
 });
 test('a late submitted result cannot replace a new same-route paper scope',async({page})=>{
  const state=await fixture(page);await expect(answer(page)).toBeEnabled();state.saveHold=deferred();await answer(page).click();await expect.poll(()=>calls(state,'save_answer_revision').length).toBe(1);await page.getByRole('button',{name:'Submit attempt',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:'Submit & view report',exact:true}).click();await page.evaluate(()=>{history.pushState({...history.state,key:crypto.randomUUID()},'',location.href);dispatchEvent(new PopStateEvent('popstate',{state:history.state}));});state.saveHold.resolve();await expect(answer(page)).toBeEnabled();await expect(page.getByRole('dialog')).toHaveCount(0);expect(calls(state,'submit_attempt')).toEqual([]);
+});
+test('a historical Part A with unavailable Part B stays readable without a start action',async({page})=>{
+ const state=await fixture(page,{submitted:true,partBUnavailable:true});
+ await expect(page.getByRole('heading',{name:'Your Part A is locked.'})).toBeVisible();
+ await expect(page.getByLabel('Exam Part B')).toContainText('Part B is unavailable for this session.');
+ await expect(page.getByRole('button',{name:'Open Part B',exact:true})).toHaveCount(0);
+ expect(calls(state,'start_exam_mock_part_b')).toEqual([]);
 });
 test('Part B start verifies identity before using an earlier account session',async({page})=>{
  const state=await fixture(page,{submitted:true,partBReady:true});await expect(page.getByRole('button',{name:'Open Part B',exact:true})).toBeEnabled();await seedPortalSession(page,second);await page.getByRole('button',{name:'Open Part B',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Attempt access');expect(calls(state,'start_exam_mock_part_b')).toEqual([]);await expect(page).toHaveURL('/attempt/'+attemptId);
