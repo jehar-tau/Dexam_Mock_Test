@@ -42,7 +42,7 @@ async function fixture(page) {
 
 test("the topic builder starts the selected fresh/review mix and reconnects to the same frozen practice", async ({ page }) => {
   const state = await fixture(page);
-  await expect(page.getByText(/New questions come first when available; review questions fill the rest/)).toBeVisible();
+  await expect(page.getByText(/Questions come from released year-wise papers. Unseen questions come first/)).toBeVisible();
   await page.getByRole("combobox", { name: "Questions", exact: true }).selectOption("20");
   await page.getByRole("combobox", { name: "Time", exact: true }).selectOption("1800");
   await expect(page.getByRole("combobox", { name: "Topic", exact: true }).locator("option")).toHaveCount(1);

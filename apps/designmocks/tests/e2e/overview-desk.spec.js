@@ -4,6 +4,7 @@ test('the student desk leads to each mock mode without presenting fictional pape
   await page.goto('/portal-preview');
   const desk = page.locator('.overview-desk');
   await expect(desk.getByRole('heading', { name: 'What would you like to work on?' })).toBeVisible();
+  await expect(desk.getByRole('link', { name: 'Explore year-wise Papers' })).toHaveAttribute('href', '/papers');
   await expect(desk.getByRole('link', { name: /Exam-wise mocks/ })).toHaveAttribute('href', '/exam-mocks-preview');
   await expect(desk.getByRole('link', { name: /All India mocks/ })).toHaveAttribute('href', '/all-india-preview');
   await expect(desk.getByRole('link', { name: /Topic-wise practice/ })).toHaveAttribute('href', '/topic-practice-preview');

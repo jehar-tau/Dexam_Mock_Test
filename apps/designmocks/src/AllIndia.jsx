@@ -176,7 +176,7 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
               {previewStarted === event.id && <p className="all-india-receipt" role="status">Preview attempt created once: {event.id}</p>}
             </div>
           </article>) : <p className="all-india-empty" role="status">{stateFilter ? "No events match these filters." : selectedExam
-            ? `No ${selectedExam.toUpperCase()} All India mocks are listed yet.` : "No All India mock has been scheduled yet."}</p>}
+            ? `No ${selectedExam.toUpperCase()} All India mock is scheduled yet. Fresh questions will appear here after review.` : "No All India mock is scheduled yet. Fresh, reviewed questions will form one common paper for everyone."}</p>}
         </div>
         {message && <p className="error" role="alert">{message}</p>}
       </section>
