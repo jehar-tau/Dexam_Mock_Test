@@ -55,7 +55,7 @@ Each stage reads the previous stage's files from a private work folder **outside
 | 2 | **Segmentation** | Page text and boxes → one record per question: number, section, type, prompt text, options, figure placements, page regions, flags. OCR (Apple Vision helper) merged in where the text layer is broken | [x] built 20 Nov 2026 |
 | 3 | **Figures** | Figure placements → canonical PNG (embedded pixels, or a page render when the page shows something else), a block crop of every question, an SVG trial with metrics and a comparison board | [x] built 21 Nov 2026 |
 | 4 | **Answer key** | Key PDF → per-question official key in the bank's notation (`A`, `A,B,D`, `B,C or B,C,D`, `470 to 480`, dropped), matched to stage 2 questions and compared with the bank; scanned keys read by OCR with safeguards | [x] built 21 Nov 2026 |
-| 5 | **Solutions** | Question + verified key → draft worked solution (format below); a draft that does not reach the official answer is held. `solutions.py` gives the drafter a brief, validates every draft and renders a review page with step-by-step overlays | [~] tooling built; UCEED 2026 Section 1: 8 of 14 drafted |
+| 5 | **Solutions** | Question + verified key → draft worked solution (format below); a draft that does not reach the official answer is held. `solutions.py` gives the drafter a brief, validates every draft and renders a review page with step-by-step overlays | [~] UCEED 2026: 55 of 57 Part A drafted (Claude 8, Codex 47), all reaching the key; none reviewed |
 | 6 | Review | Side-by-side review page: source block, extracted text, figures, key, solution; approve/fix per question with exact hashes | [ ] |
 | 7 | Export | Approved questions → export packets for the existing `bank:prepare-addition` path (new papers) or correction packets (existing records) | [ ] |
 | 8 | Analysis | Bank + attempts → paper analysis and attempt analysis views in the app | [ ] |
@@ -154,6 +154,7 @@ Attempt analysis (after a released mock; extends `attempt-insights.mjs`):
 - 20 Nov 2026: plan written. Pipeline lives in `apps/designmocks/ingestion/` as Python stages with `unittest` tests run by `npm run test:ingestion`. Work folders and real papers stay outside the repo; the tool refuses to write inside a Git worktree.
 - 20 Nov 2026: owner approved D2 (PNG plus verified SVG), D3 (Claude drafts solutions in a local session, human review), D4 (UCEED 2026 re-ingest first) and D5 (all recommended analysis charts). D1, D6 and D7 stand as proposed until the owner says otherwise.
 - 20 Nov 2026: stage 2 built and evaluated on 18 papers (above). OCR results are cached in `<work>/.cache` by page-render digest; the Swift helper is compiled once into `<work>/.tools`.
+- 23 Nov 2026: UCEED 2026 has 55 of 57 Part A drafts (Claude 8, Codex 47). Nine Codex drafts that a Claude session overwrote were restored; see above. Next: the owner reviews drafts in the local review page.
 - 21 Nov 2026: stage 5 tooling built; first 8 solutions drafted for UCEED 2026 Section 1. Six visual-counting questions left for a person (above).
 - 21 Nov 2026: stage 4 built and run on all 18 keys (above). Owner to confirm the UCEED 2017 q60 correction (bank B, official key D).
 - 21 Nov 2026: stage 3 built. The canonical PNG handles Word crops (clip paths), transparency masks and page text over blank margins without falling back to a page render. Changed two verification rules (see the figure decision): 99th-percentile edge distance, and text inside figures is flagged rather than disqualifying.
@@ -248,7 +249,17 @@ UCEED 2026 Section 1 (14 NAT questions). Claude drafted these in this local sess
 
 Review page: `python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work render uceed-2026` writes `05-solutions/review.html` (light and dark, step scrubber, held and draft badges).
 
-## Trying the output question by question (local review page)
+## UCEED 2026 drafts after both agents (23 November 2026)
+
+Codex also drafted solutions in the same private folder on 21–22 November. The folder now holds 55 of the 57 Part A questions, all passing `solutions.py check` and reaching the official key:
+
+- **Claude, 8:** Q1, Q2, Q4, Q5, Q6, Q12, Q13, Q14.
+- **Codex, 47:** including Q3 and Q8–Q11, which Claude had left for a person.
+- **Missing:** Q7 and Q52, both overlapping silhouettes to count. Codex's `05-solutions/REVIEW_PRIORITIES.md` also flags the Q21 painting attributions for the owner.
+
+Rule for both agents, learned the hard way: **never write a draft over an existing one.** On 23 November a Claude session overwrote nine Codex drafts (Q20, Q22, Q23, Q30, Q35, Q46, Q55, Q56, Q57). They were restored the same day from the review page Codex had rendered. The text, steps and option checks are exact; Codex's original provenance fields were lost, and each restored file records this. The overwriting versions are kept in `05-solutions/superseded/`. A second opinion on an existing draft belongs beside it, not in place of it.
+
+
 
 Added 23 November 2026 at the owner's request. Run `npm --prefix apps/designmocks run ingestion:review`, then open http://127.0.0.1:6796/.
 

@@ -26,7 +26,10 @@ import subprocess
 import sys
 import tempfile
 
-import fitz
+try:
+    import fitz  # PyMuPDF: needed to read key PDFs, not to compare notations
+except ImportError:  # pragma: no cover - reported when a PDF is read
+    fitz = None
 
 SCHEMA = 1
 STAGE = "04-key"
@@ -558,6 +561,8 @@ def run_key(*, work, paper_id, key_pdf, replace=False, ocr=None, bank_questions=
     key_pdf = pathlib.Path(key_pdf)
     if not key_pdf.is_file() or key_pdf.stat().st_size > MAX_KEY_BYTES:
         raise KeyError_("Choose a readable answer-key PDF of at most 20 MB")
+    if fitz is None:
+        raise KeyError_("PyMuPDF is required: pip install -r apps/designmocks/ingestion/requirements.txt")
     with open(key_pdf, "rb") as handle:
         if handle.read(5) != b"%PDF-":
             raise KeyError_("The answer key is not a PDF file")
