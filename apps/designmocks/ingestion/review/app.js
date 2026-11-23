@@ -175,6 +175,7 @@ function figurePieces(q, pieces, href, vw, vh) {
     : piece.shape === "ring" ? make("path", { d: `M${piece.cx - piece.r1},${piece.cy} a${piece.r1},${piece.r1} 0 1 0 ${2 * piece.r1},0 a${piece.r1},${piece.r1} 0 1 0 ${-2 * piece.r1},0 Z M${piece.cx - piece.r2},${piece.cy} a${piece.r2},${piece.r2} 0 1 0 ${2 * piece.r2},0 a${piece.r2},${piece.r2} 0 1 0 ${-2 * piece.r2},0 Z`, "fill-rule": "evenodd", "clip-rule": "evenodd" })
     : make("polygon", { points: piece.points.map(p => p.join(",")).join(" ") });
   const out = [];
+  const covers = [];  // every cover goes under every piece, so a piece can land where another one left
   const defs = make("defs", {});
   out.push(defs);
   for (const piece of pieces) {
@@ -183,7 +184,7 @@ function figurePieces(q, pieces, href, vw, vh) {
     const clip = make("clipPath", { id: clipId });
     clip.append(outline(piece));
     defs.append(clip);
-    if (piece.cover) { const cover = outline(piece); cover.setAttribute("fill", "#ffffff"); cover.setAttribute("stroke", "#ffffff"); cover.setAttribute("stroke-width", "3"); out.push(cover); }
+    if (piece.cover) { const cover = outline(piece); cover.setAttribute("fill", "#ffffff"); cover.setAttribute("stroke", "#ffffff"); cover.setAttribute("stroke-width", "3"); covers.push(cover); }
     const outer = make("g", { id: piece.id });
     const turn = make("g", { id: `${piece.id}-turn` });
     const image = make("image", { href, x: 0, y: 0, width: vw, height: vh, "clip-path": `url(#${clipId})`, preserveAspectRatio: "none" });
@@ -191,6 +192,7 @@ function figurePieces(q, pieces, href, vw, vh) {
     outer.append(turn);
     out.push(outer);
   }
+  out.splice(1, 0, ...covers);
   return out;
 }
 
