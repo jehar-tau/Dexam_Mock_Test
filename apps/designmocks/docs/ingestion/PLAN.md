@@ -290,7 +290,7 @@ Codex also drafted solutions in the same private folder on 21–22 November. The
 
 - **Claude, 8:** Q1, Q2, Q4, Q5, Q6, Q12, Q13, Q14.
 - **Codex, 47:** including Q3 and Q8–Q11, which Claude had left for a person.
-- **Missing:** Q7 and Q52, both overlapping silhouettes to count. Codex's `05-solutions/REVIEW_PRIORITIES.md` also flags the Q21 painting attributions for the owner.
+- **Q7 and Q52 (added 23 Nov 2026):** at the owner's request, counted using the Roughworks worked solutions as a factual reference (our own wording): Q7 = 31 letters by part, Q52 = 27 instruments by family. Both have numbered-marker visuals. Codex's `05-solutions/REVIEW_PRIORITIES.md` also flags the Q21 painting attributions for the owner.
 
 Rule for both agents, learned the hard way: **never write a draft over an existing one.** On 23 November a Claude session overwrote nine Codex drafts (Q20, Q22, Q23, Q30, Q35, Q46, Q55, Q56, Q57). They were restored the same day from the review page Codex had rendered. The text, steps and option checks are exact; Codex's original provenance fields were lost, and each restored file records this. The overwriting versions are kept in `05-solutions/superseded/`. A second opinion on an existing draft belongs beside it, not in place of it.
 
@@ -315,3 +315,5 @@ npm --prefix apps/designmocks run test:ingestion
 ```
 
 Photos instead of a PDF: pass `--photos page1.jpg page2.jpg …` in page order. Output goes to `<work>/<exam>-<year>/01-intake/`. The command prints a one-line JSON summary and refuses a work folder inside any Git repository, an existing intake without `--replace`, encrypted PDFs and files that are not PDFs. Photos are turned upright from their EXIF orientation and re-encoded without EXIF (no location or device data is kept).
+
+- 23 Nov 2026: owner asked that Q7 and Q52 take Roughworks' solutions as direct reference. Drafts and stagger-marker visuals added (47/47 figure questions now have visuals). Release plan regenerated; digest 0bdcb075….
