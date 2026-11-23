@@ -176,9 +176,9 @@ export async function verifyPreUpgradeRecovery({client, sql, restoreArchive, url
       }
     }
     await installPaidProfile(profile);
-    assert.equal(await checkPurchaseProfile(purchaseHistorySignature, 51, true), 't', 'purchase history remains enabled');
-    assert.equal(await checkPurchaseProfile(purchaseSupportSignature, 51, true), 't',
-      'the reviewed 51-RPC companion grants purchase support only to authenticated callers');
+    assert.equal(await checkPurchaseProfile(purchaseHistorySignature, 52, true), 't', 'purchase history remains enabled');
+    assert.equal(await checkPurchaseProfile(purchaseSupportSignature, 52, true), 't',
+      'the reviewed 52-RPC companion grants purchase support only to authenticated callers');
     const replay = await sql(recoveryActor(state.owner, `select public.submit_bug_report(${reportArguments}, null)`), target);
     assert.ok(replay.split('\n').includes(existingReport), 'new overload replays a pre-migration four-argument receipt');
     const upgraded = await connect(target);

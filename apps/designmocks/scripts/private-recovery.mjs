@@ -9,6 +9,7 @@ import {createRecoveryBundle,verifyRecoveryBundle,RECOVERY_PROJECT} from './reco
 import {
   openRecoveryPostgres, captureRecoverySnapshot, checkRecoveryDatabaseSource,
   recoverySchemaQuery, recoveryBucketsQuery, recoveryObjectsQuery, recoveryPostgresEnvironment,
+  normalizeRecoverySchema,
 } from './recovery-postgres.mjs';
 import {openPrivateDMocksTransport} from './private-bank-provider.mjs';
 import {stableJson} from './question-bank-import.mjs';
@@ -112,7 +113,7 @@ export async function capturePrivateRecovery(config, {
         try {
           await checkRecoveryDatabaseSource(current, sourceCheck);
           if (sourceStage === 'staging-before-permissions-repair') {
-            const schema = JSON.parse(await current.query(recoverySchemaQuery));
+            const schema = normalizeRecoverySchema(JSON.parse(await current.query(recoverySchemaQuery)));
             assert.equal(hash(schema), snapshot.schemaSha256, 'Staging schema or grants changed during capture');
           }
           const buckets = JSON.parse(await current.query(recoveryBucketsQuery));

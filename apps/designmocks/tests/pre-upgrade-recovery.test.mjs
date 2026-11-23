@@ -36,7 +36,7 @@ async function fixture(run) {
   }
 }
 
-function source({versions = historicalVersions, freshVersions = versions, withProfile = false, ledgerPresent = true, closedStaging = false, freshSchema = {}, objects = []} = {}) {
+function source({versions = historicalVersions, freshVersions = versions, withProfile = false, ledgerPresent = true, closedStaging = false, initialSchema = {}, freshSchema = initialSchema, objects = []} = {}) {
   const calls = {connections: 0, exports: 0, closed: 0};
   const connectionFactory = async () => {
     const fresh = ++calls.connections > 1;
@@ -47,7 +47,7 @@ function source({versions = historicalVersions, freshVersions = versions, withPr
         if (statement.includes('mvp_profile_permissions_valid()')) return withProfile ? 't' : 'f';
         if (statement.includes("to_regclass('supabase_migrations.schema_migrations')")) return ledgerPresent ? 't' : 'f';
         if (statement.includes('jsonb_agg(version order by version)')) return JSON.stringify(fresh ? freshVersions : versions);
-        if (statement === recoverySchemaQuery) return JSON.stringify(fresh ? freshSchema : {});
+        if (statement === recoverySchemaQuery) return JSON.stringify(fresh ? freshSchema : initialSchema);
         if (statement === recoveryObjectsQuery) return JSON.stringify(objects);
         if (statement === recoveryBucketsQuery) return JSON.stringify(objects.length ? [{id: 'paper-media', public: false}] : []);
         if (statement.includes("c.relkind in('r','p')") || statement.includes('from pg_sequences')
@@ -157,6 +157,18 @@ test('a closed staging snapshot records drifted permissions without certifying t
   assert.match(verified.source.approvedLedgerSha256, /^[a-f0-9]{64}$/);
   assert.deepEqual(verified.snapshot.migrationVersions, sourceVersions);
   assert.deepEqual(calls, {connections: 2, exports: 1, closed: 2});
+}));
+
+test('staging consistency check accepts the known equivalent restored constraint rendering', () => stagingFixture(async config => {
+  const constraint = definition => ({schema: 'dm_private', table: 'community_folders',
+    name: 'community_folders_name_check', definition});
+  const before = 'CHECK ((((char_length(name) >= 1) AND (char_length(name) <= 60)) AND (name = btrim(name))))';
+  const after = 'CHECK (((char_length(name) >= 1) AND (char_length(name) <= 60) AND (name = btrim(name))))';
+  const {options} = source({closedStaging: true, versions: sourceVersions,
+    initialSchema: {constraints: [constraint(before)]},
+    freshSchema: {constraints: [constraint(after)]}});
+  const result = await capturePrivateRecovery(config, options);
+  assert.equal(result.sourceStage, 'staging-before-permissions-repair');
 }));
 
 test('staging capture rejects ambiguous modes, incomplete ledgers, and unreviewed server state', () => stagingFixture(async (config, ledger) => {

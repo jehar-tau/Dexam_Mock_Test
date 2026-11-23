@@ -9,6 +9,7 @@ import { AccountAccessBoundary, useAccountServices } from './AccountAccess.jsx';
 import { withAccountDeadline } from './account-request.js';
 import { overviewStartId } from './overview-data.js';
 import { catalogueStartFailure, savedCatalogueAttempts } from './catalogue-data.js';
+import { ownedYearPaperAttempts } from './year-paper-attempts.mjs';
 import './papers.css';
 
 const examNames = { uceed: 'UCEED', ceed: 'CEED', nift: 'NIFT', nid: 'NID' };
@@ -17,7 +18,8 @@ const exams = Object.keys(examNames);
 export function PapersView({ papers = catalogue, releases = [], signedIn = false, onStart,
   busy = '', startError = '', releasesUnavailable = false, releasesLoading = false,
   onRefresh, authChecking = false, startUncertain = false, onCheckAttempts,
-  checkingAttempts = false, savedAttempts = [], recoveryError = '', headingRef }) {
+  checkingAttempts = false, savedAttempts = [], recoveryError = '', headingRef,
+  attemptsByPaper = new Map(), attemptsLoading = false, attemptsError = '', onRefreshAttempts }) {
   const [selected, setSelected] = useState('uceed');
   const [readyId, setReadyId] = useState('');
   const readyDialog = useRef(null), readyOpener = useRef(null), starting = useRef(false);
@@ -59,6 +61,9 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
       <button type="button" className="button quiet" disabled={checkingAttempts} onClick={onCheckAttempts}>{checkingAttempts ? 'Checking…' : 'Check saved attempts'}</button>
       <Link to="/dashboard">View all attempts →</Link></div>}
     {recoveryError && <p role="alert" className="error">{recoveryError}</p>}
+    {attemptsLoading && <p role="status">Checking your saved papers…</p>}
+    {attemptsError && <div className="notice" role="status"><p>Couldn’t check your saved papers. You can still open a released paper.</p>
+      {onRefreshAttempts && <button type="button" className="button quiet" onClick={onRefreshAttempts}>Retry saved papers</button>}</div>}
     {savedAttempts.length > 0 && <section aria-label="Saved active attempts"><h2>Your saved active attempts</h2><ul>{savedAttempts.map(item => <li key={item.id}><Link to={`/attempt/${item.id}`}>{item.title}</Link></li>)}</ul></section>}
     <div className="year-papers-tabs" role="group" aria-label="Choose an exam">
       {exams.map(exam => <button type="button" key={exam} aria-pressed={selected === exam} onClick={() => { closeReady(); setSelected(exam); }}>{examNames[exam]}<span>{papers.filter(paper => paper.exam === exam).length}</span></button>)}
@@ -73,9 +78,15 @@ export function PapersView({ papers = catalogue, releases = [], signedIn = false
         {released.has(paper.id) ? released.get(paper.id).map(part =>
           <div className="year-paper-release" key={part.paperId}>
             <p><strong>{part.partLabel}</strong> · {part.questionCount} questions · {Math.round(part.durationSeconds / 60)} min</p>
-            {signedIn ? <button type="button" className="button" disabled={!onStart || Boolean(busy) || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts}
+            {attemptsByPaper.get(part.paperId)?.active && <p className="year-paper-own-attempt"><span>In progress</span>
+              <Link to={`/attempt/${attemptsByPaper.get(part.paperId).active.id}`}>Continue saved attempt →</Link></p>}
+            {attemptsByPaper.get(part.paperId)?.submitted && <p className="year-paper-own-attempt"><span>{attemptsByPaper.get(part.paperId).submitted.resultsPending
+              ? 'Result under review' : `Latest result ${attemptsByPaper.get(part.paperId).submitted.score} / ${attemptsByPaper.get(part.paperId).submitted.total}`}</span>
+              <Link to={`/attempt/${attemptsByPaper.get(part.paperId).submitted.id}`}>{attemptsByPaper.get(part.paperId).submitted.resultsPending
+                ? 'View result status →' : 'Review latest attempt →'}</Link></p>}
+            {signedIn && !attemptsByPaper.get(part.paperId)?.active ? <button type="button" className="button" disabled={!onStart || Boolean(busy) || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts}
               onClick={event => { readyOpener.current = event.currentTarget; setReadyId(part.paperId); }}>{busy === part.paperId ? 'Opening…' : 'Start or resume free paper'}</button>
-              : authChecking ? <span role="status">Checking account…</span>
+              : signedIn ? null : authChecking ? <span role="status">Checking account…</span>
                 : <Link className="button" to="/account">Sign in to start free paper</Link>}
           </div>) : <p className="year-paper-note">{releasesLoading ? 'Checking whether this timed paper is open.' : 'The timed paper is being prepared.'}</p>}
       </article>)}
@@ -101,9 +112,26 @@ function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefr
   const [busy, setBusy] = useState(''), [startError, setStartError] = useState('');
   const [startUncertain, setStartUncertain] = useState(false), [checkingAttempts, setCheckingAttempts] = useState(false);
   const [savedAttempts, setSavedAttempts] = useState([]), [recoveryError, setRecoveryError] = useState('');
+  const [attemptsByPaper, setAttemptsByPaper] = useState(new Map()), [attemptsLoading, setAttemptsLoading] = useState(true);
+  const [attemptsError, setAttemptsError] = useState(''), [attemptRefresh, setAttemptRefresh] = useState(0);
   const current = () => Boolean(active.current && !active.current.signal.aborted && services.isCurrent());
   useEffect(() => { const controller = new AbortController(); active.current = controller;
     return () => {controller.abort();active.current = null;}; }, []);
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = AbortSignal.any([active.current.signal, controller.signal]);
+    setAttemptsLoading(true);setAttemptsError('');
+    withAccountDeadline(async request => {
+      const finalized = await services.rpc('finalize_my_expired_attempts', undefined, request);
+      if (!Number.isSafeInteger(finalized) || finalized < 0) throw new Error('Invalid attempt finalization');
+      const attempts = ownedYearPaperAttempts(await services.rpc('my_year_paper_attempts', undefined, request));
+      await services.checkIdentity(request);
+      return attempts;
+    }, signal).then(value => { if (current() && !controller.signal.aborted) setAttemptsByPaper(value); })
+      .catch(() => { if (current() && !controller.signal.aborted) setAttemptsError('Couldn’t check your saved papers.'); })
+      .finally(() => { if (current() && !controller.signal.aborted) setAttemptsLoading(false); });
+    return () => controller.abort();
+  }, [attemptRefresh]);
   async function start(paperId) {
     if (mutationBusy.current || !current() || releasesUnavailable || releasesLoading || startUncertain) return;
     mutationBusy.current = true;
@@ -139,7 +167,9 @@ function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefr
   return <PapersView releases={releases} signedIn onStart={start} busy={busy}
     startError={startError} releasesUnavailable={releasesUnavailable} releasesLoading={releasesLoading}
     onRefresh={onRefresh} startUncertain={startUncertain} onCheckAttempts={checkAttempts}
-    checkingAttempts={checkingAttempts} savedAttempts={savedAttempts} recoveryError={recoveryError} headingRef={headingRef}/>;
+    checkingAttempts={checkingAttempts} savedAttempts={savedAttempts} recoveryError={recoveryError} headingRef={headingRef}
+    attemptsByPaper={attemptsByPaper} attemptsLoading={attemptsLoading} attemptsError={attemptsError}
+    onRefreshAttempts={() => setAttemptRefresh(value => value + 1)}/>;
 }
 
 export default function Papers() {

@@ -22,6 +22,10 @@
 .year-paper-card .year-paper-note { margin-top:1rem; color:var(--muted); font-size:.85rem; }
 .year-paper-release { margin-top:1rem; border-top:1px solid var(--line); padding-top:.8rem; }
 .year-paper-release .button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; margin-top:.35rem; text-decoration:none; text-align:center; }
+.year-paper-own-attempt { display:flex; flex-wrap:wrap; align-items:center; gap:.4rem .7rem; margin:.5rem 0; font-size:.85rem; }
+.year-paper-own-attempt span { font-weight:700; color:var(--green); }
+.year-paper-own-attempt a { color:var(--green); text-decoration:underline; text-underline-offset:.15rem; }
+.year-paper-own-attempt a:focus-visible { outline:3px solid var(--orange); outline-offset:3px; }
 .year-papers-footer { margin:1.8rem 0 0; }
 .year-papers-footer a { color:var(--green); text-decoration:underline; }
 .year-paper-start-dialog { width:min(34rem,calc(100% - 2rem)); max-height:calc(100dvh - 2rem); overflow:auto; box-sizing:border-box; padding:clamp(1rem,4vw,2rem); border:1px solid var(--line); border-radius:1rem; background:var(--surface); color:var(--ink); }

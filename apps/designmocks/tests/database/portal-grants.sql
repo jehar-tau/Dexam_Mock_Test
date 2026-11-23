@@ -33,6 +33,7 @@ begin
   'public.admin_resolve_reported_question(text,text,text,bigint,text)',
   'public.admin_review_bank_question(text,boolean,boolean,text,text)',
   'public.my_candidate_profile()',
+  'public.my_year_paper_attempts()',
   'public.can_enter_staging_portal()',
   'public.topic_catalog()',
   'public.exam_mock_catalog()',
