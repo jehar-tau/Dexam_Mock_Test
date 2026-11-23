@@ -112,6 +112,20 @@ class SolutionsTest(unittest.TestCase):
         self.save("q2", notation)
         self.assertEqual("draft", self.results()["q2"]["status"])
 
+    def test_original_questions_are_checked_against_their_constructed_key(self):
+        keys = json.loads((self.base / "04-key/key.json").read_text())
+        keys["keys"]["q1"] = {"raw": "12", "status": "constructed"}
+        (self.base / "04-key/key.json").write_text(json.dumps(keys))
+        self.save("q1", NAT)  # still says official-key
+        self.assertIn("answer-source-must-be-constructed", self.results()["q1"]["errors"])
+        made = copy.deepcopy(NAT)
+        made["answer"]["source"] = "constructed"
+        self.save("q1", made)
+        self.assertEqual("draft", self.results()["q1"]["status"])
+        made["answer"]["value"] = "13"
+        self.save("q1", made)
+        self.assertIn("does-not-reach-official-key", self.results()["q1"]["errors"])
+
     def test_nat_ranges_and_missing_arithmetic(self):
         keys = json.loads((self.base / "04-key/key.json").read_text())
         keys["keys"]["q1"]["raw"] = "11.5 to 12.5"

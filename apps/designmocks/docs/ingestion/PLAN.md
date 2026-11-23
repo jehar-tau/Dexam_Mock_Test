@@ -317,3 +317,12 @@ npm --prefix apps/designmocks run test:ingestion
 Photos instead of a PDF: pass `--photos page1.jpg page2.jpg …` in page order. Output goes to `<work>/<exam>-<year>/01-intake/`. The command prints a one-line JSON summary and refuses a work folder inside any Git repository, an existing intake without `--replace`, encrypted PDFs and files that are not PDFs. Photos are turned upright from their EXIF orientation and re-encoded without EXIF (no location or device data is kept).
 
 - 23 Nov 2026: owner asked that Q7 and Q52 take Roughworks' solutions as direct reference. Drafts and stagger-marker visuals added (47/47 figure questions now have visuals). Release plan regenerated; digest 0bdcb075….
+
+## Parallel question bank (started 23 Nov 2026)
+
+The owner asked for a parallel bank: for each UCEED 2026 question, an original question of the same kind, with full solutions. First three samples, for the owner to judge before the rest: Q1 (count a shape, rotations count as the same), Q18 (rotational symmetry) and Q19 (gears, open and crossed belts, weight).
+
+- **Figures are drawn by code (SVG), not AI image generation.** The same model that draws the figure computes the answer, so the key is exact. AI-generated images cannot guarantee a count or a gear direction. Generator and output are private: `~/dmocks-ingestion-work/uceed-2026-parallel/` (tools/gen.py).
+- **Keys** use status `constructed`. `solutions.py` checks a constructed key exactly like an official one; the answer source must say `constructed`.
+- Each question has a text draft and a visual version that re-draws the figure and animates it (the gears turn, patterns rotate, tiles are counted).
+- Open in the review page by choosing UCEED-2026-PARALLEL in the Paper menu.

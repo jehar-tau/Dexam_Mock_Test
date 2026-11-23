@@ -147,12 +147,13 @@ def validate(solution, question, official, figures):
     value = solution["answer"].get("value")
     status = official.get("status")
     reaches = None
-    if status == "official-key":
+    # "constructed": an original question whose answer is computed by the code that drew its figure.
+    if status in ("official-key", "constructed"):
         reaches = reaches_key(ak, str(value), official["raw"], kind)
         if not reaches:
             errors.append("does-not-reach-official-key")
-        if solution["answer"].get("source") != "official-key":
-            errors.append("answer-source-must-be-official-key")
+        if solution["answer"].get("source") != status:
+            errors.append(f"answer-source-must-be-{status}")
     elif status == "dropped":
         warnings.append("official-key-dropped")
     else:
@@ -181,7 +182,7 @@ def validate(solution, question, official, figures):
         if sorted(c.get("option") for c in check) != sorted(letters):
             errors.append("option-check-must-cover-every-option")
         correct = sorted(c["option"] for c in check if c.get("verdict") == "correct")
-        if status == "official-key" and reaches:
+        if status in ("official-key", "constructed") and reaches:
             key_sets = [sorted(branch.split(",")) for branch in ak.normalise(official["raw"], kind)[0].split(" or ")]
             if correct not in key_sets:
                 errors.append("option-verdicts-disagree-with-key")
