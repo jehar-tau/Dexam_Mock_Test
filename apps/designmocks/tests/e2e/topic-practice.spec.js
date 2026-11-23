@@ -86,3 +86,20 @@ test("paid access, active-attempt and readiness failures remain retryable before
   expect(state.calls.some(([name]) => ["prepare_order", "submit_attempt", "save_answer_revision"].includes(name))).toBe(false);
   expect(state.unexpected).toEqual([]);
 });
+
+test("selected short topics recover explicitly before sending a correctly sized start", async ({ page }) => {
+  const state = await fixture(page);
+  await page.getByRole("combobox", { name: "Topic", exact: true }).selectOption("spatial-reasoning");
+  await page.getByRole("combobox", { name: "Time", exact: true }).selectOption("1800");
+  await page.getByRole("combobox", { name: "Questions", exact: true }).selectOption("30");
+  await expect(page.getByRole("combobox", { name: "Topic", exact: true })).toHaveValue("spatial-reasoning");
+  await expect(page.getByRole("button", { name: "Start practice", exact: true })).toBeDisabled();
+  await expect(page.getByRole("status").filter({ hasText: "supports up to 10 questions" })).toBeVisible();
+  expect(state.calls.filter(([name]) => name === "start_topic_practice")).toHaveLength(0);
+  await page.getByRole("button", { name: "Use 10 questions", exact: true }).press("Enter");
+  expect(state.calls.filter(([name]) => name === "start_topic_practice")).toHaveLength(0);
+  await page.getByRole("button", { name: "Start practice", exact: true }).press("Enter");
+  await expect(page).toHaveURL(new RegExp("/attempt/" + attemptId + "$"));
+  expect(state.calls).toContainEqual(["start_topic_practice", { p_exam: "uceed", p_topic: "spatial-reasoning", p_count: 10, p_duration_seconds: 1800 }]);
+  expect(state.unexpected).toEqual([]);
+});

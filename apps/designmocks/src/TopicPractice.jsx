@@ -30,10 +30,12 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
   const exams = useMemo(() => [...new Set(practicePools(catalog).map(item => item.exam))], [catalog]);
   const pools = useMemo(() => practicePools(catalog, count), [catalog, count]);
   const topics = useMemo(() => pools.filter(item => item.exam === exam), [pools, exam]);
-  const ready = topics.some(item => item.topic === topic);
-  useEffect(() => { if (topic && !ready) setTopic(""); }, [ready, topic]);
-
   const availableTopics = useMemo(() => practicePools(catalog), [catalog]);
+  const selectedPool = availableTopics.find(item => item.exam === exam && item.topic === topic);
+  const ready = Boolean(selectedPool && selectedPool.questions >= count);
+  const shorterCount = selectedPool && [30, 20, 10].find(value => value <= selectedPool.questions);
+  const topicOptions = selectedPool && !ready ? [selectedPool, ...topics] : topics;
+  useEffect(() => { if (topic && !selectedPool) setTopic(""); }, [selectedPool, topic]);
   const words = search.trim().toLowerCase().split(/\s+/);
   const matches = availableTopics.filter(item => {
     const label = `${item.exam} ${topicName(item.topic)}`.toLowerCase();
@@ -80,9 +82,9 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
             {!exam && <option value="">Choose an exam</option>}
             {exams.map(value => <option key={value} value={value}>{value.toUpperCase()}</option>)}
           </select></label>
-          <label>Topic<select ref={topicControl} value={ready ? topic : ""} required disabled={busy || blocked} onChange={event => { setTopic(event.target.value); setNotice(""); setMessage(""); }}>
-            {!ready && <option value="">{topics.length ? "Choose a topic" : "No topics for this size"}</option>}
-            {topics.map(item => <option key={item.topic} value={item.topic}>{topicName(item.topic)}{preview ? "" : ` · ${item.questions} ready`}</option>)}
+          <label>Topic<select ref={topicControl} value={selectedPool ? topic : ""} required disabled={busy || blocked} onChange={event => { setTopic(event.target.value); setNotice(""); setMessage(""); }}>
+            {!selectedPool && <option value="">{topics.length ? "Choose a topic" : "No topics for this size"}</option>}
+            {topicOptions.map(item => <option key={item.topic} value={item.topic}>{topicName(item.topic)}{preview ? "" : ` · ${item.questions} ready`}</option>)}
           </select></label>
           <label>Questions<select value={count} disabled={busy || blocked} onChange={event => setCount(Number(event.target.value))}>
             {[10, 20, 30].map(value => <option key={value} value={value}>{value} questions</option>)}
@@ -91,6 +93,11 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
             {[900, 1800, 2700].map(value => <option key={value} value={value}>{value / 60} minutes</option>)}
           </select></label>
         </div>
+        {selectedPool && !ready && <div className="notice" role="status">
+          <p>{topicName(topic)} supports up to {shorterCount} questions. Choose a shorter session to keep this topic.</p>
+          <button className="button quiet" type="button" disabled={busy || blocked}
+            onClick={() => { setCount(shorterCount); setMessage(""); }}>Use {shorterCount} questions</button>
+        </div>}
         <div className="topic-start">
           <button className="button" disabled={busy || blocked || !ready}>{busy ? "Creating…" : "Start practice"}</button>
           {preview && <span>Preview only · no timer starts</span>}
@@ -98,9 +105,9 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
         {previewReceipt && <p className="topic-receipt" role="status">{previewReceipt}</p>}
         {message && <p className="error" role="alert">{message}</p>}
       </form>
-      {Example && <Example key={topic} topic={ready ? topic : ""} />}
+      {Example && <Example key={topic} topic={selectedPool ? topic : ""} />}
       {!preview && <aside className="topic-brief"><h2>Your session</h2>
-        <dl><div><dt>Focus</dt><dd>{ready ? `${exam.toUpperCase()} · ${topicName(topic)}` : "Choose a topic"}</dd></div>
+        <dl><div><dt>Focus</dt><dd>{selectedPool ? `${exam.toUpperCase()} · ${topicName(topic)}` : "Choose a topic"}</dd></div>
           <div><dt>Average pace</dt><dd>{Math.round(duration / count)} seconds per question</dd></div></dl>
       </aside>}
     </div> : <div className="notice">There are no practice topics available yet.</div>}
