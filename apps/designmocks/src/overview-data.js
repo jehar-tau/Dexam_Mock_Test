@@ -8,11 +8,17 @@ const exam=value=>['uceed','ceed','nid','nift'].includes(value);
 const percent=value=>number(value)&&value>=0&&value<=100;
 const reject=()=>{throw new Error('The saved workspace response could not be verified.');};
 export function overviewStartId(value){if(!uuid(value))reject();return value;}
+export function attemptRecordFilter(attempts, filter){
+ if(filter==='active')return attempts.filter(item=>item.status==='active');
+ if(filter==='pending')return attempts.filter(item=>item.status==='submitted'&&item.resultsPending);
+ if(filter==='ready')return attempts.filter(item=>item.status==='submitted'&&!item.resultsPending);
+ return attempts;
+}
 export function overviewSnapshot(history,access,analytics,papers){
  if(!Array.isArray(history)||!object(access)||typeof access.active!=='boolean'||(access.active?!instant(access.expiresAt):access.expiresAt!==null&&!instant(access.expiresAt))||!object(analytics)||!Array.isArray(papers))reject();
  const attempts=history.map(item=>{
-  if(!object(item)||!uuid(item.id)||!text(item.title)||!['active','submitted'].includes(item.status)||typeof item.resultsPending!=='boolean'||(item.score!==null&&!number(item.score))||(item.total!==null&&(!number(item.total)||item.total<0))||(item.cohortRank!=null&&(!count(item.cohortRank)||item.cohortRank===0))||item.resultsPending&&(item.score!==null||item.cohortRank!=null))reject();
-  return{id:item.id,title:item.title,status:item.status,resultsPending:item.resultsPending,score:item.score,total:item.total,cohortRank:item.cohortRank??null};
+  if(!object(item)||!uuid(item.id)||!text(item.title)||!['active','submitted'].includes(item.status)||typeof item.resultsPending!=='boolean'||(item.startedAt!=null&&!instant(item.startedAt))||(item.score!==null&&!number(item.score))||(item.total!==null&&(!number(item.total)||item.total<0))||(item.cohortRank!=null&&(!count(item.cohortRank)||item.cohortRank===0))||item.resultsPending&&(item.score!==null||item.cohortRank!=null))reject();
+  return{id:item.id,title:item.title,status:item.status,startedAt:item.startedAt??null,resultsPending:item.resultsPending,score:item.score,total:item.total,cohortRank:item.cohortRank??null};
  });
  if(new Set(attempts.map(item=>item.id)).size!==attempts.length||!count(analytics.completed)||!count(analytics.waitingForResults)||analytics.waitingForResults>analytics.completed||!count(analytics.objectiveAnswered)||(analytics.objectiveAccuracy!==null&&!percent(analytics.objectiveAccuracy))||!Array.isArray(analytics.topics)||!Array.isArray(analytics.exams)||!object(analytics.drawingReviews)||!count(analytics.drawingReviews.pending)||!count(analytics.drawingReviews.released))reject();
  const topics=analytics.topics.map(item=>{if(!object(item)||!text(item.topic)||!count(item.answered)||item.answered===0||!count(item.correct)||item.correct>item.answered||!percent(item.accuracy))reject();return{topic:item.topic,answered:item.answered,correct:item.correct,accuracy:item.accuracy};});
