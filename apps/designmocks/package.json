@@ -24,6 +24,7 @@
     "test:hosted-setup": "node scripts/check-hosted-setup.mjs",
     "test:bank-readiness": "python3 -m unittest discover -s tests -p \"*_test.py\"",
     "test:ingestion": "python3 -m unittest discover -s ingestion/tests -p \"test_*.py\"",
+    "ingestion:review": "node ingestion/review/server.mjs",
     "bank:manifest": "node scripts/question-bank-import.mjs --ref origin/main",
     "bank:import": "node scripts/question-bank-import.mjs --ref origin/main --apply",
     "media:manifest": "node scripts/private-bank-media.mjs --ref origin/main",

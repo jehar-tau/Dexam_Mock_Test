@@ -248,6 +248,14 @@ UCEED 2026 Section 1 (14 NAT questions). Claude drafted these in this local sess
 
 Review page: `python3 apps/designmocks/ingestion/solutions.py --work ~/dmocks-ingestion-work render uceed-2026` writes `05-solutions/review.html` (light and dark, step scrubber, held and draft badges).
 
+## Trying the output question by question (local review page)
+
+Added 23 November 2026 at the owner's request. Run `npm --prefix apps/designmocks run ingestion:review`, then open http://127.0.0.1:6796/.
+
+- **Contents.** For each question the page shows the text, the figure (original pixels, verified SVG if any, or the whole printed question) with enlarge, shrink, actual size and fit controls, the options, the answer-key match (as printed, how it was read, and whether it agrees with the bank), and the drafted solution with its step-by-step overlay. Navigate with the number grid, Previous/Next or the arrow keys.
+- **Try first** (on by default). The answer and solution stay hidden until you check an answer or choose to reveal them. Multi-select answers can score as partly right. Attempts are kept only in this browser.
+- **Development-only.** The page lives in `apps/designmocks/ingestion/review/`, outside `src/` and `public/`, so no Vite build includes it; the preview-isolation check fails if its marker ever appears in `dist`. The server listens on 127.0.0.1 only, rejects other Host headers and anything but GET, and serves only stage 3 images. It reads the private work folder at run time and refuses one inside a Git repository. Set `DMOCKS_INGESTION_WORK` and `DMOCKS_INGESTION_REVIEW_PORT` to change the folder or port; ports 4190 and 4399–4999 are refused.
+
 ## Running stages 1 to 4
 
 ```bash

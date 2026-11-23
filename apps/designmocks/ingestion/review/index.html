@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ingestion review</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="brand"><strong>Ingestion review</strong> <span class="local">INGESTION REVIEW · LOCAL ONLY</span></div>
+    <label class="paper-pick">Paper <select id="paper" aria-label="Paper"></select></label>
+    <label class="try"><input type="checkbox" id="try-first" checked> Try first</label>
+    <span id="score" class="score" aria-live="polite"></span>
+  </header>
+  <div class="layout">
+    <nav id="list" class="list" aria-label="Questions"></nav>
+    <main id="question" class="question" tabindex="-1"><p class="muted">Loading the private ingestion output…</p></main>
+  </div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
