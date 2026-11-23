@@ -95,6 +95,7 @@ for (const name of [
   "my_pass",
   "available_papers",
   "my_attempt_history",
+  "my_year_paper_attempts",
   ...(backendStage !== "foundation" ? [
     "is_dmocks_admin", "my_bug_reports", "admin_bug_report_page", "admin_question_drafts", "export_my_account_data", "request_account_deletion", "my_privacy_requests", "admin_privacy_request_page",
     "admin_bank_questions", "my_candidate_profile", "topic_catalog", "exam_mock_catalog",
