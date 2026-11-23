@@ -8,22 +8,52 @@ application. This supersedes the earlier staging-first frontend steps below;
 paper release, registration, backend changes and sales retain their own gates.
 See [Direct public release](DIRECT_PUBLIC_RELEASE.md).
 
-Site version 10 is live from main `a8f8b9ccc4ec5a76816e1a94418c0a3faa6cd84a`.
+Site version 17 is live from main `658ce62472747aab73c1c5746815135055c78009`.
 An allowlisted Google session loaded the protected student pages on dmocks.com;
 the catalogue shows year-wise sets in preparation and no All India event is
 scheduled. Public signup and checkout remain closed. The next portal work
 should build on this live controlled-test baseline and publish accepted code
 through the direct release workflow.
 
+### Paper-first content decision (23 November 2026)
+
+The owner is retiring the old export as the source of **student-facing paper
+counts and selection**. Claude owns the new paper-by-paper ingestion and
+parallel-question generation. Codex owns the portal and server release paths.
+The old records remain private for audit and migration; do not delete them or
+silently use them to fill student tests.
+
+1. A complete, reviewed UCEED, CEED, NIFT or NID year paper becomes one free,
+   fixed, timed Papers offering. Test its full question sequence, figures,
+   marking and answer-by-answer solutions before release. The Papers catalogue
+   lists only these released offerings, newest year first.
+2. After that paper passes end-to-end review, its questions may enter the
+   matching topic-practice pool. Its appearance in Papers alone must not make
+   it eligible for practice before that release and review gate.
+3. Claude's separately reviewed parallel questions form fresh All India mock
+   papers first. Every student gets the same fixed event paper. After its
+   attempt window and result release, those questions may enter exam-wise
+   mocks. Year-paper questions do not fill All India or exam-wise mocks by
+   default.
+
+The existing practice and mock SQL still draws from the earlier shared bank
+pool. Replace those selectors with explicit content-lifecycle eligibility
+before opening those products to students. The current fixed-year-paper
+release supports reviewed objective parts; complete descriptive/Part B paper
+runtime and solution review still require work. Claude's next ingestion PR
+must expose stable source-paper and question IDs, exam/year/part, topics,
+media, keys, explanations and review status so Codex can bind them without
+falling back to the old export.
+
 ## Current scope and release status (21 November 2026)
 
 ### Papers added to the student launch scope (22 November 2026)
 
-The owner added a **Papers** section to the launch, alongside Overview, exam-wise mocks, All India mocks and topic practice. It must list year-wise source sets for UCEED, CEED, NIFT and NID from `server/data/exports/dexam-bank-export.json`, using only records with an empty `holds` array. Keep sample papers and multiple papers in the same year distinct. The owner chose free year-wise Papers; a student signs in to save a timed attempt but does not need a paid pass. The year-wise catalogue must not label a bank group as a released, playable paper until its content, image bytes, answers, marking and timer have been checked and a fixed attempt works end to end. The first catalogue UI is sourced from the bank and clearly marks unreleased sets as in preparation; the playable-paper path, results and explanations remain required before launch. Keep year-wise Papers separate from scrambled exam-wise mocks. The owner cites [Roughworks Papers](https://roughworks.in/papers) as an interaction reference, not as source content.
+The owner added a **Papers** section to the launch, alongside Overview, exam-wise mocks, All India mocks and topic practice. It lists only released complete year-wise papers for UCEED, CEED, NIFT and NID, including distinct papers from the same year. A student signs in to save a timed attempt but does not need a paid pass. The release gate checks content, image bytes, answers, marking, solutions and timer end to end. Keep Papers separate from generated All India and exam-wise mocks. The owner cites [Roughworks Papers](https://roughworks.in/papers) as an interaction reference, not as source content.
 
 ### Lean student-portal launch order
 
-1. Merge the reviewed ingestion integration and keep the hold-free bank export current. A bank count is not a published-paper count.
+1. Integrate Claude's reviewed paper ingestion and make released whole papers, rather than the old export, the only student-facing Papers source. A source-bank count is not a published-paper count.
 2. Continue hosted acceptance of the controlled student portal on dmocks.com: fresh Google callback, profile, Overview, exam-wise mocks, topic practice, All India mocks, attempts, reconnect, results and authenticated media with approved accounts.
 3. Complete Papers: prepare exact source-year groups with the correct historical marking scheme, verified media, reviewed answers and explanations; publish only those which pass a fixed timed attempt and answer-by-answer result. Use the private [year-paper preparation and release flow](YEAR_PAPER_RELEASE.md). The first catalogue UI is not the completion of this step.
 4. Integrate Claude's Learn and Community changes after the owner pushes them, then test their student routes on dmocks.com behind controlled admission. Claude retains ownership of those modules and question-paper ingestion/corrections.

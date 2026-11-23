@@ -11,6 +11,9 @@
 .year-papers-summary h2 { margin:.2rem 0 0; font:600 1.7rem Figtree,sans-serif; }
 .year-papers-summary p { margin:0; color:var(--muted); }
 .year-papers-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; }
+.year-papers-empty { grid-column:1/-1; padding:1.5rem; border:1px dashed var(--line); border-radius:.8rem; background:var(--surface); }
+.year-papers-empty h3 { margin:0 0 .45rem; font:600 1.2rem Zilla Slab,serif; }
+.year-papers-empty p { margin:0; color:var(--muted); line-height:1.5; }
 .year-paper-card { padding:1.1rem 1.2rem; border:1px solid var(--line); border-radius:.8rem; background:var(--surface); }
 .year-paper-card-top { display:flex; justify-content:space-between; gap:.6rem; align-items:center; color:var(--muted); font-size:.85rem; }
 .year-paper-card-top>span:first-child { font-weight:700; color:var(--green); }
