@@ -484,8 +484,9 @@ function AdminDesk({ session }) {
               <article key={m.exam}>
                 <b>{m.exam.toUpperCase()}</b>
                 <p>
-                  {m.reviewedQuestions} reviewed runtime questions available.
+                  {m.reviewedQuestions} reviewed questions from All India events with released results.
                 </p>
+                {["uceed", "ceed"].includes(m.exam) && <p>Release is paused until eligible Part B drawing tasks are available.</p>}
                 {m.sectionLabel && <p><b>{m.structureVersion} · {m.sectionLabel}</b><br />{Object.entries(m.sectionCounts).map(([kind,count]) => `${kind.toUpperCase()} ${count}`).join(" · ")} · fixed server manifest</p>}
                 <form
                   className="admin-reply"
