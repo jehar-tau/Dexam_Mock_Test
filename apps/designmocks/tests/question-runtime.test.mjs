@@ -55,6 +55,14 @@ test('numeric keys preserve exact decimal text and explicit ranges without inven
  assert.deepEqual(nat('1.95–2.05').key.accepted,[{range:['1.95','2.05']}]);
  for(const raw of ['1.000000000000000002 to 1.000000000000000001','2 to 1','1/2','1,2','2 units','Infinity',''])assert.equal(nat(raw),null);
 });
+test('owner-approved CEED printed tolerances accept the stated range and reject invented bounds',()=>{
+ const nat=raw=>convert(fixture({type:'NAT',options:[],answer:{raw,status:'verified'},provenance:{exam:'ceed'}}));
+ assert.deepEqual(nat('94.2 (92.9 - 94.6)').key.accepted,[{range:['92.9','94.6']}]);
+ assert.deepEqual(nat('2.25 (2.24-2.26)').key.accepted,[{range:['2.24','2.26']}]);
+ for(const raw of ['94.2 (94.3-94.6)','94.2 (94.6-92.9)','94.2 (92.9-)','94.2 (92.9-94.6) or 95'])
+  assert.equal(nat(raw),null);
+ assert.equal(numericKey('94.2 (92.9 - 94.6)'),null,'unverified numeric contexts stay unchanged');
+});
 test('numeric keys preserve each exact source literal in explicit or alternatives',()=>{
  const nat=raw=>convert(fixture({type:'NAT',options:[],answer:{raw,status:'verified'}}));
  assert.deepEqual(nat('1.000000000000000001 or 1.000000000000000002').key.accepted,[{exact:'1.000000000000000001'},{exact:'1.000000000000000002'}]);
