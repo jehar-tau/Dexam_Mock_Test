@@ -474,9 +474,9 @@
     "exam": "nid",
     "year": 2023,
     "paperId": "nid-mdes-sample-2023",
-    "questionCount": 37,
+    "questionCount": 40,
     "objectiveCount": 37,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 37
   },
   {

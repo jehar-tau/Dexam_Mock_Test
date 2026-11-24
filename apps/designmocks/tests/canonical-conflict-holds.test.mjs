@@ -51,9 +51,12 @@ test('NID B.Des and M.Des DAT Prelims samples (NIDA2023-26) come from NID\'s own
   const paper = id => bank.questions.filter(question => question.provenance?.paperId === id);
   const bdes = paper('nid-bdes-sample-2023'), mdes = paper('nid-mdes-sample-2023');
   assert.equal(bdes.length, 31);
-  assert.equal(mdes.length, 37);
+  assert.equal(mdes.length, 40);
   assert.deepEqual(bdes.filter(q => q.type === 'DESCRIPTIVE').map(q => q.provenance.questionNo), ['28', '29', '30', '31']);
-  assert.equal(mdes.some(q => q.type === 'DESCRIPTIVE'), false);
+  const partB = mdes.filter(q => q.type === 'DESCRIPTIVE');
+  assert.deepEqual(partB.map(q => [q.provenance.questionNo, q.taskMarks, q.sourceKind, q.licence]),
+    [['38', 8, 'original', 'dexam-original'], ['39', 10, 'original', 'dexam-original'], ['40', 12, 'original', 'dexam-original']]);
+  for (const q of partB) assert.match(q.prompt, /Part B written by DMocks/);
   for (const q of [...bdes, ...mdes]) assert.notEqual(q.answer?.status, 'official-key');
   assert.deepEqual([...bdes, ...mdes].filter(q => q.holds.length), []);
   const b15 = bdes.find(q => q.provenance.questionNo === '15'), m37 = mdes.find(q => q.provenance.questionNo === '37');
