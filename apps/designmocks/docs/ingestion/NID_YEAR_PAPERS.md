@@ -24,6 +24,28 @@ Owner request, 24 Nov 2026: "next can we work on the nid papers that we have". T
 
 All of these papers are kept privately, outside the repository. The DAT mocks and the task collection are authored content and are not covered here.
 
+## Official NID papers online (found 24 Nov 2026)
+
+NID removes old sample papers from admissions.nid.edu each cycle; only NIDA2027 is live now. The Internet Archive keeps earlier copies. File sizes are from the archive index; a "same size as local" means we likely have it already.
+
+| Cycle | B.Des | M.Des |
+|---|---|---|
+| 2013 | `images/Sample-Test-Paper.pdf` (2.88 MB) | |
+| 2015 | `downloads/Sample-Test-Paper-For-B.Des.pdf` (2.90 MB) | `downloads/Sample-Test-Paper-For-M.Des.pdf` (2.13 MB) |
+| 2016–17 | `NID_SampleTestPaper.pdf` (5.19 MB; local copy is 7.58 MB, compare) | `MDesTestPaper.pdf` (local) |
+| 2018 | `nida2018/NID_SampleTestPaperBDes.pdf` (local) | `nida2018/NID_SampleTestPaperMDes.pdf` (local), `NID_SampleTestPaperMDes.pdf` (local) |
+| 2019 | `NIDA2019/download/NID_DATPrelimsTestPaper2018_BDes.pdf` (local) | same, MDes (local) |
+| 2020 | `NIDA2020/download/NID_DATPrelimsTestPaper2019_BDes.pdf` (local) | same, MDes (local) |
+| 2021 | `NIDA2021/download/SamplePaper_DATPrelims_BDes.pdf` (0.78 MB) | MDes (0.77 MB) |
+| 2022 | NIDA2022 BDes (1.61 MB) | MDes (1.03 MB) |
+| 2023 | NIDA2023 BDes (0.72 MB) | MDes (0.42 MB) |
+| 2024 | NIDA2024 BDes (0.77 MB) | MDes (0.50 MB) |
+| 2025 | NIDA2025 BDes (0.77 MB, maybe same as 2024) | MDes (0.50 MB, maybe same as 2024) |
+| 2026 | NIDA2026 BDes (0.72 MB) | MDes (0.41 MB) |
+| 2027 | live, 2.45 MB (same size as local `SamplePaper_DATPrelims_BDes.pdf`) | live, 0.41 MB (same size as local) |
+
+Not downloaded yet: owner approval needed. Third-party "previous year papers" (Careers360, Silica, Toprankers, Shiksha, AglaSem, Getmyuni) are memory-based reconstructions by coaching institutes, not NID's; keep to NID's own papers.
+
 ## Gates the product already has
 
 - `prepare-free-year-paper.mjs` accepts `nid`, but it takes only hold-free objective records, and DESCRIPTIVE items are left out.
@@ -42,7 +64,7 @@ All of these papers are kept privately, outside the repository. The DAT mocks an
 
 ## Progress
 
-- [ ] nid-bdes-2019 (pilot). Stage 1–2 done 24 Nov 2026: all 26 questions found (22 objective, 4 subjective). The source is NID's "B.Des./GDPD DAT Prelims Sample Test Paper". Printed marks: Q1–14 1 mark, Q15–22 2 marks; Part II 70 marks; no duration or negative marking printed. All 22 objective questions solved: 13 agree with the bank, 1 disagrees (Q8), 6 bank records were broken or missing, and 2 look flawed (Q16: no option fits the rule exactly; Q18: the exact count is 22, which is not an option). Owner decision needed on Q8, Q16 and Q18.
+- [ ] nid-bdes-2019 (pilot). Stage 1–2 done 24 Nov 2026: all 26 questions found (22 objective, 4 subjective). The source is NID's "B.Des./GDPD DAT Prelims Sample Test Paper". Printed marks: Q1–14 1 mark, Q15–22 2 marks; Part II 70 marks; no duration or negative marking printed. All 22 objective questions solved: 13 agree with the bank, 1 disagrees (Q8), 6 bank records were broken or missing, and 2 look flawed (Q16: no option fits the rule exactly; Q18: the exact count is 22, which is not an option). Owner decision needed on Q16 and Q18. Bank rebuilt from NID's PDF in draft PR #340 (26 records; Q8 corrected to the Pole star).
 - [ ] nid-bdes-2018
 - [ ] nid-bdes-2016
 - [ ] nid-bdes-2017 (scan only)
