@@ -78,9 +78,9 @@ Also to check: the bank's nid-bdes-sample-2024 and -2025 both come from one PDF 
 - [ ] nid-bdes-2019 (pilot). Stage 1–2 done 24 Nov 2026: all 26 questions found (22 objective, 4 subjective). The source is NID's "B.Des./GDPD DAT Prelims Sample Test Paper". Printed marks: Q1–14 1 mark, Q15–22 2 marks; Part II 70 marks; no duration or negative marking printed. All 22 objective questions solved: 13 agree with the bank, 1 disagrees (Q8), 6 bank records were broken or missing, and 2 look flawed (Q16: no option fits the rule exactly; Q18: the exact count is 22, which is not an option). Owner decision needed on Q16 and Q18. Bank rebuilt from NID's PDF in draft PR #340 (26 records; Q8 corrected to the Pole star).
 - [x] nid-bdes-2018: rebuilt from NID's booklet D with NID's final answer key in draft PR #344 (64 MCQ + 3 drawing tasks)
 - [x] nid-mdes-2018 (new): NID's booklet A with NID's final answer key in draft PR #344 (59 MCQ + 3 tasks)
-- [ ] nid-bdes-2016
-- [ ] nid-bdes-2017 (scan only)
-- [ ] nid-bdes-2020 (scan only)
+- [x] nid-bdes-2016: NID's booklet series P (88 MCQ + 3 tasks) with NID's final key, draft PR #347
+- [x] nid-bdes-2017: NID's booklet B/DB/81/XVI/I (75 MCQ + 4 tasks) with NID's final key, draft PR #347
+- [x] nid-bdes-2020: NID's booklet XIX-XX (21 MCQ + 6 tasks), solved by us, draft PR #347
 - [ ] samples 2024/2025 B.Des and M.Des
 - [ ] Unscored drawing tasks in year papers (product spec for Codex)
 
@@ -106,6 +106,8 @@ Still to ingest:
 Product gaps for NID year papers (Codex):
 - Allow "X or Y" answers for NID (the runtime allows them only under the UCEED and CEED rules).
 - NID final keys give partial credit for second-best options (B.Des 2018 Q32–39; M.Des 2018 Q19, 52, 54, 56, 58, 59). The bank keeps only the full-mark answer.
+
+The VDDS reprints the bank first used are watermarked scans of NID's own booklets. The 2016 and 2017 reprints include photos of NID's final answer keys (with NID's seal), which are now the source of those answers. NID_SampleTestPaper2016.pdf holds the 2016 B.Des paper twice (series P, then series A with the questions shuffled).
 
 ## Notes
 

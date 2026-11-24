@@ -37,7 +37,8 @@ OCR_CACHE = "ocr-vision-v1"
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[3]
 OCR_SOURCE = REPO_ROOT / "tools" / "ocr_vision.swift"
 
-MARKER_RE = re.compile(r"^\s*(?:Q\s*\.?\s*(\d{1,3})\b\s*[.):\-]?|(\d{1,3})\s*[.)])(?:\s+|$)", re.I)
+# "Q21.What" (no space after the dot) also opens a question when a capital letter follows.
+MARKER_RE = re.compile(r"^\s*(?:Q\s*\.?\s*(\d{1,3})\b\s*[.):\-]?(?:\s+|$|(?<=[.):\-])(?=[A-Z\"“‘']))|(\d{1,3})\s*[.)](?:\s+|$))", re.I)
 # A number alone on its line: what is left when a text layer drops the "Q." of "Q.55".
 LONE_RE = re.compile(r"^\s*(\d{1,3})\s*$")
 OPTION_RE = re.compile(r"^\s*(?:\(([A-D])\)|([A-D])[.)])\s+(\S.*)$")
