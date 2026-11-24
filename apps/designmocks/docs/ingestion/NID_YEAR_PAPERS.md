@@ -76,12 +76,26 @@ Also to check: the bank's nid-bdes-sample-2024 and -2025 both come from one PDF 
 ## Progress
 
 - [ ] nid-bdes-2019 (pilot). Stage 1–2 done 24 Nov 2026: all 26 questions found (22 objective, 4 subjective). The source is NID's "B.Des./GDPD DAT Prelims Sample Test Paper". Printed marks: Q1–14 1 mark, Q15–22 2 marks; Part II 70 marks; no duration or negative marking printed. All 22 objective questions solved: 13 agree with the bank, 1 disagrees (Q8), 6 bank records were broken or missing, and 2 look flawed (Q16: no option fits the rule exactly; Q18: the exact count is 22, which is not an option). Owner decision needed on Q16 and Q18. Bank rebuilt from NID's PDF in draft PR #340 (26 records; Q8 corrected to the Pole star).
-- [ ] nid-bdes-2018
+- [x] nid-bdes-2018: rebuilt from NID's booklet D with NID's final answer key in draft PR #344 (64 MCQ + 3 drawing tasks)
+- [x] nid-mdes-2018 (new): NID's booklet A with NID's final answer key in draft PR #344 (59 MCQ + 3 tasks)
 - [ ] nid-bdes-2016
 - [ ] nid-bdes-2017 (scan only)
 - [ ] nid-bdes-2020 (scan only)
 - [ ] samples 2024/2025 B.Des and M.Des
 - [ ] Unscored drawing tasks in year papers (product spec for Codex)
+
+## Second archive sweep (24 Nov 2026)
+
+Found and downloaded NID's real January 2018 exams with official keys (B.Des series D, X + keys D, L, T, X; M.Des series A, H, P, W + keys), NID's final keys after objections, M.Des 2017 with its answer key, a 75-question B.Des sample, and GDPD test papers from 2002-03, 2005-06, 2007, 2009, 2010 and 2011. See `nid-sources/README.md` in the private work folder.
+
+Still to ingest:
+- [ ] M.Des 2017 with answer key (scan)
+- [ ] B.Des sample, 75 MCQ (B/DB/81/XVI/I)
+- [ ] GDPD tests 2002–2011 (scans, mostly subjective)
+
+Product gaps for NID year papers (Codex):
+- Allow "X or Y" answers for NID (the runtime allows them only under the UCEED and CEED rules).
+- NID final keys give partial credit for second-best options (B.Des 2018 Q32–39; M.Des 2018 Q19, 52, 54, 56, 58, 59). The bank keeps only the full-mark answer.
 
 ## Notes
 
