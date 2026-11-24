@@ -193544,7 +193544,7 @@
   {
    "externalKey": "uceed-2016-q4",
    "type": "NAT",
-   "prompt": "What is the maximum number of equilateral triangles of side 3 cm that can be fitted in a large equilateral triangle with length 11.2 cm? Page 3 of 31",
+   "prompt": "What is the maximum number of equilateral triangles of side 3 cm that can be fitted in a large equilateral triangle with length 11.2 cm?",
    "options": [],
    "assets": [
     {
@@ -193754,7 +193754,7 @@
   {
    "externalKey": "uceed-2016-q9",
    "type": "NAT",
-   "prompt": "It is 12 o’clock, and the hour and minute hands are aligned exactly one over the other. Both\nhands move continuously. After how many minutes will they meet again?\n\n\n2016 | 17 January 2016",
+   "prompt": "It is 12 o’clock, and the hour and minute hands are aligned exactly one over the other. Both\nhands move continuously. After how many minutes will they meet again?",
    "options": [],
    "assets": [
     {
@@ -193964,7 +193964,7 @@
   {
    "externalKey": "uceed-2016-q14",
    "type": "NAT",
-   "prompt": "How many tree trunks are there in the given figure?\n\n\n\n\n2016 | 17 January 2016",
+   "prompt": "How many tree trunks are there in the given figure?",
    "options": [],
    "assets": [
     {
@@ -194048,7 +194048,7 @@
   {
    "externalKey": "uceed-2016-q16",
    "type": "NAT",
-   "prompt": "Count the number of people in this picture who are wearing spectacles.\n\n\n\n2016 | 17 January 2016",
+   "prompt": "Count the number of people in this picture who are wearing spectacles.",
    "options": [],
    "assets": [
     {
@@ -194216,7 +194216,7 @@
   {
    "externalKey": "uceed-2016-q20",
    "type": "NAT",
-   "prompt": "Two friends, one on a bike and the other in a car, arrive together at a parking lot. The chance\nthat the one in the car will find a parking space is 0.1, and the one on the bike not finding a\nparking space is 0.1. What is the probability that only one of them finds a parking space?\n\n\n2016 | 17 January 2016\n\nSection B: Multiple Selection Questions\nThis section contains a total of 20 Multiple Select Questions (MSQ). Each question may have one or\nmore than one correct choice(s) out of the four given choices. A candidate gets 5 marks only if ALL\nthe correct answers and NO wrong answers are selected for each question. There is NEGATIVE\nmarking for this section. Each incorrectly answered question will receive −0.5 (minus 0.5) marks.\nQuestions not attempted will be given zero marks. Questions from 21 to 40 belong to this section.",
+   "prompt": "Two friends, one on a bike and the other in a car, arrive together at a parking lot. The chance\nthat the one in the car will find a parking space is 0.1, and the one on the bike not finding a\nparking space is 0.1. What is the probability that only one of them finds a parking space?",
    "options": [],
    "assets": [
     {
@@ -194340,7 +194340,7 @@
     },
     {
      "key": "D",
-     "text": "The author argues that parentheses may offer the possibility of greater rigor and accuracy for our meaning, but they do so at the cost of a critical quality of language, which is its wonderful ambiguity. 2016 | 17 January 2016",
+     "text": "The author argues that parentheses may offer the possibility of greater rigor and accuracy for our meaning, but they do so at the cost of a critical quality of language, which is its wonderful ambiguity.",
      "asset": null
     }
    ],
@@ -194447,7 +194447,7 @@
   {
    "externalKey": "uceed-2016-q24",
    "type": "MSQ",
-   "prompt": "In a wildlife rescue and rehabilitation centre in the Northeast of India, there are six orphaned\ncreatures—ages 1.5 months to 6 months—who are currently receiving care, and await release\ninto the wild in due course. They are an elephant, a rhinoceros, a wild buffalo, a clouded\nleopard, a swamp deer, and a hog badger. They were found in four different kinds of perilous\nsituations, including a flooded ditch, attacks by poachers that killed the mother, a river in spate,\nand dangerous proximity to human habitat. After a few weeks in the rescue centre, each\ncreature demonstrated one characteristic trait that stood out above all others: one was\nmischievous, another aggressive, a third shy, the fourth retiring, one fretful and the last one\nfrisky.\n\nThree creatures were actively injured.\n\nThe wild buffalo, who was found in a flooded ditch, is aggressive.\nThe creatures found in the river in spate are the mischievous and the fretful ones.\nOne of the two found in the flooded ditch is actively injured, while two of the uninjured, but\nseverely stressed were found in the river in spate and as a victim of attack by poachers,\nrespectively.\n\n2016 | 17 January 2016\n\nThe shy creature was rescued from close to human habitat.\nThe swamp deer is fretful, and is actively injured.\nThe rhinoceres was found in a flooded ditch, and the clouded leopard was a victim of attack\nby poachers.\nThe elephant is mischievous and severely stressed.\n\nWhich of the following assertions is/are true?",
+   "prompt": "In a wildlife rescue and rehabilitation centre in the Northeast of India, there are six orphaned\ncreatures—ages 1.5 months to 6 months—who are currently receiving care, and await release\ninto the wild in due course. They are an elephant, a rhinoceros, a wild buffalo, a clouded\nleopard, a swamp deer, and a hog badger. They were found in four different kinds of perilous\nsituations, including a flooded ditch, attacks by poachers that killed the mother, a river in spate,\nand dangerous proximity to human habitat. After a few weeks in the rescue centre, each\ncreature demonstrated one characteristic trait that stood out above all others: one was\nmischievous, another aggressive, a third shy, the fourth retiring, one fretful and the last one\nfrisky.\n\nThree creatures were actively injured.\n\nThe wild buffalo, who was found in a flooded ditch, is aggressive.\nThe creatures found in the river in spate are the mischievous and the fretful ones.\nOne of the two found in the flooded ditch is actively injured, while two of the uninjured, but\nseverely stressed were found in the river in spate and as a victim of attack by poachers,\nrespectively.\n\nThe shy creature was rescued from close to human habitat.\nThe swamp deer is fretful, and is actively injured.\nThe rhinoceres was found in a flooded ditch, and the clouded leopard was a victim of attack\nby poachers.\nThe elephant is mischievous and severely stressed.\n\nWhich of the following assertions is/are true?",
    "options": [
     {
      "key": "A",
@@ -194636,7 +194636,7 @@
   {
    "externalKey": "uceed-2016-q27",
    "type": "MSQ",
-   "prompt": "Identify which of the options given below can be folded to make the 3D object shown in the box.\n\n\n2016 | 17 January 2016",
+   "prompt": "Identify which of the options given below can be folded to make the 3D object shown in the box.",
    "options": [
     {
      "key": "A",
@@ -194825,7 +194825,7 @@
   {
    "externalKey": "uceed-2016-q30",
    "type": "MSQ",
-   "prompt": "Select the artwork(s) which is/are attributed to Leonardo Da Vinci:\n\n\n2016 | 17 January 2016",
+   "prompt": "Select the artwork(s) which is/are attributed to Leonardo Da Vinci:",
    "options": [
     {
      "key": "A",
@@ -195077,7 +195077,7 @@
   {
    "externalKey": "uceed-2016-q34",
    "type": "MSQ",
-   "prompt": "Shown in the image are schematic diagrams of folding chair structures. If the black dots indicate\na hinged joint, identify the structure(s) that will work as a folding chair.\n\n\n2016 | 17 January 2016",
+   "prompt": "Shown in the image are schematic diagrams of folding chair structures. If the black dots indicate\na hinged joint, identify the structure(s) that will work as a folding chair.",
    "options": [
     {
      "key": "A",
@@ -195222,7 +195222,7 @@
     },
     {
      "key": "D",
-     "text": "Figure 3 depicts low life expectancy. 2016 | 17 January 2016",
+     "text": "Figure 3 depicts low life expectancy.",
      "asset": null
     }
    ],
@@ -195392,7 +195392,7 @@
   {
    "externalKey": "uceed-2016-q39",
    "type": "MSQ",
-   "prompt": "Given below is a structure made of coloured straws. Which of the views shown in the options\nbelong(s) to the object in the box?\n\n\n2016 | 17 January 2016",
+   "prompt": "Given below is a structure made of coloured straws. Which of the views shown in the options\nbelong(s) to the object in the box?",
    "options": [
     {
      "key": "A",
@@ -195455,7 +195455,7 @@
   {
    "externalKey": "uceed-2016-q40",
    "type": "MSQ",
-   "prompt": "Holes have been drilled through a cube of size 10 x 10 x 10 units, as shown in the figure below.\nThe number near each hole indicates its depth in units. All holes, except A, B, C, D and P, have\nbeen sealed on the surface after drilling. If water is poured through hole P, from which of the\nholes A, B, C, D will it find its way out?\n\n\n\n\n\n\n\n\n\n\n\n2016 | 17 January 2016\n\nSection C: Multiple Choice Questions\nThis section contains a total of 40 Multiple Choice Questions (MCQ). Each question has four choices\nout of which ONLY ONE is the correct answer. There is NEGATIVE marking for this section. Each\ncorrect answer will be awarded 3 marks and each wrong answer will receive −1 (minus 1) mark.\nQuestions not attempted will be given zero marks. Questions from 41 to 80 belong to this section.",
+   "prompt": "Holes have been drilled through a cube of size 10 x 10 x 10 units, as shown in the figure below.\nThe number near each hole indicates its depth in units. All holes, except A, B, C, D and P, have\nbeen sealed on the surface after drilling. If water is poured through hole P, from which of the\nholes A, B, C, D will it find its way out?",
    "options": [
     {
      "key": "A",
@@ -195581,7 +195581,7 @@
   {
    "externalKey": "uceed-2016-q42",
    "type": "MCQ",
-   "prompt": "A polygonal shape moves through a series of numbered tiles as shown in the figure. The shape\ntransforms itself at every tile according to rules given below. There can be one or more\ntransformations on any given tile. Choose the resultant polygon from the options below.\ni.\nAt even numbers one side gets added to the shape.\nii.\nAt odd numbers two sides get removed from the shape.\niii.\nIf the number is divisible by 2, one side gets added to the shape.\niv.\nIf the number is divisible by 3, one side is removed from the shape.\nv.\nOn reaching the first prime number the colour of the shape changes to yellow.\nvi.\nOn reaching a second prime number the colour of the shape changes to orange.\n\n\n\n\n\n\n2016 | 17 January 2016",
+   "prompt": "A polygonal shape moves through a series of numbered tiles as shown in the figure. The shape\ntransforms itself at every tile according to rules given below. There can be one or more\ntransformations on any given tile. Choose the resultant polygon from the options below.\ni.\nAt even numbers one side gets added to the shape.\nii.\nAt odd numbers two sides get removed from the shape.\niii.\nIf the number is divisible by 2, one side gets added to the shape.\niv.\nIf the number is divisible by 3, one side is removed from the shape.\nv.\nOn reaching the first prime number the colour of the shape changes to yellow.\nvi.\nOn reaching a second prime number the colour of the shape changes to orange.",
    "options": [
     {
      "key": "A",
@@ -195770,7 +195770,7 @@
   {
    "externalKey": "uceed-2016-q45",
    "type": "MCQ",
-   "prompt": "A circular palette with three pigment colours of the same quantity are mixed in the sequence\nshown below. Choose the correct resultant colour from the options.\n\n\n\n\n\n\n2016 | 17 January 2016",
+   "prompt": "A circular palette with three pigment colours of the same quantity are mixed in the sequence\nshown below. Choose the correct resultant colour from the options.",
    "options": [
     {
      "key": "A",
@@ -195978,7 +195978,7 @@
     },
     {
      "key": "D",
-     "text": "Keyboard and Piano. 2016 | 17 January 2016",
+     "text": "Keyboard and Piano.",
      "asset": null
     }
    ],
@@ -196157,7 +196157,7 @@
     },
     {
      "key": "B",
-     "text": "amused, uninterested, enervating, depreciated, flouted, foundered, fortuitous, interned, luxuriant, simple. 2016 | 17 January 2016",
+     "text": "amused, uninterested, enervating, depreciated, flouted, foundered, fortuitous, interned, luxuriant, simple.",
      "asset": null
     },
     {
@@ -196274,7 +196274,7 @@
   {
    "externalKey": "uceed-2016-q53",
    "type": "MCQ",
-   "prompt": "Which of the options given below will correctly complete the series?\n\n\n\n2016 | 17 January 2016",
+   "prompt": "Which of the options given below will correctly complete the series?",
    "options": [
     {
      "key": "A",
@@ -196400,7 +196400,7 @@
   {
    "externalKey": "uceed-2016-q55",
    "type": "MCQ",
-   "prompt": "Identify the option that can be assembled to form Figure 1.\n\n\n\n\n2016 | 17 January 2016",
+   "prompt": "Identify the option that can be assembled to form Figure 1.",
    "options": [
     {
      "key": "A",
@@ -196545,7 +196545,7 @@
     },
     {
      "key": "D",
-     "text": "turning point, new territory, discard bad with good, misfit 2016 | 17 January 2016",
+     "text": "turning point, new territory, discard bad with good, misfit",
      "asset": null
     }
    ],
@@ -196734,7 +196734,7 @@
     },
     {
      "key": "D",
-     "text": "4, 2, 5, 1, 6, 8, 3, 7 2016 | 17 January 2016",
+     "text": "4, 2, 5, 1, 6, 8, 3, 7",
      "asset": null
     }
    ],
@@ -196904,7 +196904,7 @@
   {
    "externalKey": "uceed-2016-q63",
    "type": "MCQ",
-   "prompt": "Black & white photographs of the bin shown in Picture 1 were shot using red, yellow, and green\ncolour filters. An additional black & white photograph was shot without any filter. From the\ngiven options, identify the photograph shot using red filter.\n\n\n\n\n2016 | 17 January 2016",
+   "prompt": "Black & white photographs of the bin shown in Picture 1 were shot using red, yellow, and green\ncolour filters. An additional black & white photograph was shot without any filter. From the\ngiven options, identify the photograph shot using red filter.",
    "options": [
     {
      "key": "A",
@@ -197093,7 +197093,7 @@
   {
    "externalKey": "uceed-2016-q66",
    "type": "MCQ",
-   "prompt": "Given below are top views of a straight path along which a man moves in different ways. The\ndots represent the positions where his feet touch the ground. Choose the correct option that\nrepresents a dog running fast:\n\n\n2016 | 17 January 2016",
+   "prompt": "Given below are top views of a straight path along which a man moves in different ways. The\ndots represent the positions where his feet touch the ground. Choose the correct option that\nrepresents a dog running fast:",
    "options": [
     {
      "key": "A",
@@ -197219,7 +197219,7 @@
   {
    "externalKey": "uceed-2016-q68",
    "type": "MCQ",
-   "prompt": "Read the text given below and answer the question that follows.\n\nThis (presence of benefits) together with (four) reasons\nIs what the Tathāgata himself explained\nIn (the sūtra) requested by Subāhu\nFor the benefit of those inclined toward the lesser (paths).\n\nIf a person with a helpful intention\nThinks, “I shall merely relieve\nThe headaches of (a few) beings,”\n(And this thought) is (already) endowed with boundless merit,\n\nThen it is needless to mention that\nWishing to dispel the boundless misery of every single being,\nAnd wishing for each of them\nTo accomplish boundless qualities (also carries boundless merit).\n\nDo even fathers and mothers\nHave such a benefiting intention?\nDo the gods and sages\nOr even Brahma have it?\n\n\n2016 | 17 January 2016\n\nWhich philosophical tradition does this text belong to?",
+   "prompt": "Read the text given below and answer the question that follows.\n\nThis (presence of benefits) together with (four) reasons\nIs what the Tathāgata himself explained\nIn (the sūtra) requested by Subāhu\nFor the benefit of those inclined toward the lesser (paths).\n\nIf a person with a helpful intention\nThinks, “I shall merely relieve\nThe headaches of (a few) beings,”\n(And this thought) is (already) endowed with boundless merit,\n\nThen it is needless to mention that\nWishing to dispel the boundless misery of every single being,\nAnd wishing for each of them\nTo accomplish boundless qualities (also carries boundless merit).\n\nDo even fathers and mothers\nHave such a benefiting intention?\nDo the gods and sages\nOr even Brahma have it?\n\nWhich philosophical tradition does this text belong to?",
    "options": [
     {
      "key": "A",
@@ -197427,7 +197427,7 @@
     },
     {
      "key": "D",
-     "text": "5 2016 | 17 January 2016",
+     "text": "5",
      "asset": null
     }
    ],
@@ -197597,7 +197597,7 @@
   {
    "externalKey": "uceed-2016-q74",
    "type": "MCQ",
-   "prompt": "The circles in the image contain letters from F to V for purposes of identification of points.\nDirections are encoded in the statements below in such a way that NE stands for North-East,\nNNE for North-North-East, and so on. If all the following statements are true, select the correct\nrepresentation of these statements from the given options.\n\n\nM is in NNE of G and L is in SSW of N\n\nP is in NW of K and U is in SSE of O\n\nV is in ESE of P and F is in NNW of S\n\nH is in SW of V and O is in NNE of J\n\nI is in SSE of N and Q is in SE of M\n\n2016 | 17 January 2016",
+   "prompt": "The circles in the image contain letters from F to V for purposes of identification of points.\nDirections are encoded in the statements below in such a way that NE stands for North-East,\nNNE for North-North-East, and so on. If all the following statements are true, select the correct\nrepresentation of these statements from the given options.\n\n\nM is in NNE of G and L is in SSW of N\n\nP is in NW of K and U is in SSE of O\n\nV is in ESE of P and F is in NNW of S\n\nH is in SW of V and O is in NNE of J\n\nI is in SSE of N and Q is in SE of M",
    "options": [
     {
      "key": "A",
@@ -197742,7 +197742,7 @@
     },
     {
      "key": "D",
-     "text": "w-iv, v-ii, x-iv, s-i. 2016 | 17 January 2016",
+     "text": "w-iv, v-ii, x-iv, s-i.",
      "asset": null
     }
    ],
@@ -197931,7 +197931,7 @@
     },
     {
      "key": "D",
-     "text": "Anorexia 2016 | 17 January 2016",
+     "text": "Anorexia",
      "asset": null
     }
    ],

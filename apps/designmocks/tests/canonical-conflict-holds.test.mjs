@@ -35,3 +35,13 @@ test('UCEED 2025 Q36 is restored and Q3 is released with a clean prompt', () => 
   const imported = new Set(buildManifest(bank).records.map(record => record.externalKey));
   for (const n of [3, 18, 36]) assert.equal(imported.has(`uceed-2025-q${n}`), true);
 });
+
+test('UCEED 2016 prompts and options carry no page footers or section instructions', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const footer = /17 January 2016|Page \d+ of \d+|This section contains a total of/;
+  for (const question of bank.questions.filter(item => item.externalKey.startsWith('uceed-2016-'))) {
+    for (const text of [question.prompt, ...question.options.map(option => option.text || '')]) {
+      assert.equal(footer.test(text), false, `${question.externalKey}: ${text.slice(-60)}`);
+    }
+  }
+});
