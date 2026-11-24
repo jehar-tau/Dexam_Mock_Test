@@ -9,6 +9,7 @@ export const RULES_2027=freeze({
 const number='[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)';
 const numeric=new RegExp(`^${number}$`);
 const range=new RegExp(`^(${number})\\s*(?:to|–|-)\\s*(${number})$`,'i');
+const statedTolerance=new RegExp(`^(${number})\\s*\\(\\s*(${number})\\s*(?:to|–|-)\\s*(${number})\\s*\\)$`,'i');
 const maxAlternativeNotationLength=200;
 const alternativeSeparator=/\s+or\s+/i;
 function decimalAtMost(left,right){
@@ -34,6 +35,12 @@ export function numericKey(raw,{allowRangeAlternatives=false}={}){
  // Preserve decimal precision for PostgreSQL numeric. Never invent a tolerance.
  const single=singleNumericAnswer(raw);
  if(single)return{kind:'nat',accepted:[single]};
+ if(allowRangeAlternatives){
+  const stated=raw.match(statedTolerance);
+  if(stated&&stated.slice(1).every(value=>Number.isFinite(Number(value)))
+   &&decimalAtMost(stated[2],stated[1])&&decimalAtMost(stated[1],stated[3]))
+   return{kind:'nat',accepted:[{range:[stated[2],stated[3]]}]};
+ }
  const branches=raw.split(alternativeSeparator);
  if(branches.length<2||new Set(branches).size!==branches.length)return null;
  const accepted=branches.map(singleNumericAnswer);

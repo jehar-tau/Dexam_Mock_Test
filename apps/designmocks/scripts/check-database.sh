@@ -31,6 +31,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bank-import-finaliza
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/canonical-media.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-runtime.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-answer-alternatives.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-full-marks-runtime.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-exam-sections.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-nift.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/launch-readiness.sql

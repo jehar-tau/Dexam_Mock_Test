@@ -25,3 +25,11 @@ From `apps/designmocks`:
 The operator config uses `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_PAPER_ALLOW_ORIGIN`, `DMOCKS_PAPER_ENVIRONMENT`, and for production `DMOCKS_PAPER_PRODUCTION_ACK`. Use the separate `PREPARE_FREE_YEAR_PAPER_ON_ORIGIN` and `RELEASE_FREE_YEAR_PAPER_ON_ORIGIN` acknowledgements for their respective production commands. Do not place credentials or real plans in the repository or chat.
 
 The `/papers` catalogue remains in preparation until step 4 succeeds. The existing attempt room then freezes the timer and answers, and shows worked explanations only after submission. The paid mock catalogue stays separate.
+
+The owner confirmed on 24 November 2026 that CEED 2021 Q7 and Q8 accept the
+entire ranges explicitly printed in parentheses in their keys. The verified
+IIT objective converter preserves those exact decimal bounds. A canonical
+`FULL MARKS` key awards every candidate the question's historical marks,
+including an unanswered attempt; the server accepts this key only when the
+current hold-free source explicitly says `FULL MARKS`. These conversion rules
+do not substitute for the per-paper manifest and figure review.
