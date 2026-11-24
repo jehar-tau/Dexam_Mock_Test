@@ -1,4 +1,5 @@
 import { stagingEdgeDenied } from "../_shared/staging-edge-admission.mjs";
+import { controlledMediaOrigin } from "../_shared/controlled-media-origin.mjs";
 import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { validateRaster } from "../_shared/validate-raster.ts";
 import { drawingRequestBody } from "../_shared/drawing-request.mjs";
@@ -8,10 +9,14 @@ import { signedCommunityModeration, signedCommunityReview } from "../_shared/com
 
 let uploadBusy = false;
 Deno.serve(async request => {
-  const origin = Deno.env.get("PUBLIC_APP_ORIGIN");
+  const origin = controlledMediaOrigin({
+    requestedOrigin: request.headers.get("origin"), portalOrigin: Deno.env.get("PUBLIC_APP_ORIGIN"),
+    checkoutOrigin: null, configuredPublicOrigin: Deno.env.get("DMOCKS_CONTROLLED_PUBLIC_ORIGIN"),
+    stagingTesterRequired: Deno.env.get("DMOCKS_EDGE_REQUIRE_STAGING_TESTER"),
+  });
   const headers = { "Access-Control-Allow-Origin": origin ?? "https://invalid.invalid", "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info", "Access-Control-Allow-Methods": "POST, OPTIONS", "Content-Type": "application/json", "Cache-Control": "no-store", Vary: "Origin" };
   const respond = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers });
-  if (!origin || request.headers.get("origin") !== origin) return respond({ error: "Origin not allowed" }, 403);
+  if (!origin) return respond({ error: "Origin not allowed" }, 403);
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers });
   if (request.method !== "POST") return respond({ error: "Method not allowed" }, 405);
   const url = Deno.env.get("SUPABASE_URL"), anon = Deno.env.get("SUPABASE_ANON_KEY"), service = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");

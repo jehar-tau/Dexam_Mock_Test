@@ -62,4 +62,18 @@ test('NID B.Des and M.Des DAT Prelims samples (NIDA2023-26) come from NID\'s own
   const b15 = bdes.find(q => q.provenance.questionNo === '15'), m37 = mdes.find(q => q.provenance.questionNo === '37');
   assert.deepEqual([b15.answer.raw, b15.options[0].text, m37.answer.raw, m37.options[3].text], ['A', '1, 2 & 3 only', 'D', '1:3']);
   for (const q of [b15, m37]) assert.match(q.prompt, /Corrected by DMocks/);
+test('NID B.Des 2019 is rebuilt from NID\'s own sample paper with all 26 questions', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const paper = bank.questions.filter(question => question.provenance?.paperId === 'nid-bdes-2019');
+  assert.deepEqual(paper.map(question => question.provenance.questionNo), Array.from({ length: 26 }, (_, index) => String(index + 1)));
+  assert.equal(new Set(paper.map(question => question.provenance.sourceSha256)).size, 1);
+  const byNo = new Map(paper.map(question => [Number(question.provenance.questionNo), question]));
+  for (const n of [1, 5, 7, 8, 9, 20, 22]) assert.equal(byNo.get(n).type, 'MCQ');
+  assert.deepEqual([1, 5, 7, 8, 9, 20, 22].map(n => byNo.get(n).answer.raw), ['D', 'D', 'C', 'C', 'B', 'B', 'C']);
+  for (const n of [16, 18]) assert.deepEqual(byNo.get(n).holds, []);
+  assert.deepEqual([16, 18].map(n => byNo.get(n).answer.raw), ['A', 'B']);
+  assert.equal(byNo.get(18).options[1].text, '22');
+  for (const n of [16, 18]) assert.match(byNo.get(n).prompt, /Corrected by DMocks/);
+  assert.deepEqual([23, 24, 25, 26].map(n => byNo.get(n).type), Array(4).fill('DESCRIPTIVE'));
+  assert.equal(paper.some(question => question.answer?.status === 'official-key'), false);
 });

@@ -33,3 +33,11 @@ checkout, current grant drift and service-only bank RPCs before preparation.
 These variables do not bypass the exact paper origin or environment checks.
 
 The `/papers` catalogue remains in preparation until step 4 succeeds. The existing attempt room then freezes the timer and answers, and shows worked explanations only after submission. The paid mock catalogue stays separate.
+
+The owner confirmed on 24 November 2026 that CEED 2021 Q7 and Q8 accept the
+entire ranges explicitly printed in parentheses in their keys. The verified
+IIT objective converter preserves those exact decimal bounds. A canonical
+`FULL MARKS` key awards every candidate the question's historical marks,
+including an unanswered attempt; the server accepts this key only when the
+current hold-free source explicitly says `FULL MARKS`. These conversion rules
+do not substitute for the per-paper manifest and figure review.
