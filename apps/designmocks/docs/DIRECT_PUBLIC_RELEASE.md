@@ -56,16 +56,20 @@ switches need their own exact-source checks and recovery plan before changing
 the live service. Record any owner decision required for final paper content,
 legal notices, paid services or the actual sales opening.
 
-The current public Site is version 18, built from main
-`4118e08ca208918fba4044e870abce3fd012c938` after main CI
-`45201758426` passed. It serves the year-wise Papers catalogue, the
+The current public Site is version 20, built from main
+`1f1dad0eb97c1758721abb0ea2a636b0637e3f68` after main CI
+`45347342448` passed. It serves the year-wise Papers catalogue, the
 five-question sample and the controlled student portal. The catalogue is a
 collection view: its year sets are not released timed papers until the
-fixed-paper acceptance passes. Live Chrome acceptance loaded the protected
+fixed-paper acceptance passes. Earlier controlled Chrome acceptance loaded the protected
 Overview, exam-wise mocks, All India mocks, topic practice and Learn pages
 with an already authenticated allowlisted Google account. A fresh Google
 sign-out, account-choice callback and protected Overview return subsequently
-passed in Chrome. An authenticated private-media request is still outstanding.
+passed in Chrome. Version 20 live checks confirmed the signed-out mock gate,
+the zero-released-paper catalogue, matching All India and exam-wise frontend
+assets, and 404 responses for checkout and local preview routes. An
+authenticated private-media request is still outstanding. The private
+operator receipt records the exact version, archive and deployment IDs.
 
 ## Controlled public portal testing
 
@@ -75,7 +79,7 @@ testers. It pins the exact public origin and the designated DMocks Test
 Supabase project, keeps checkout closed, and checks the server's
 `can_enter_staging_portal` admission decision before every protected route.
 Revoking a tester removes their access on the next route check or reload.
-This switch does not open public registration or sales. Version 18 has this
+This switch does not open public registration or sales. Version 20 has this
 switch enabled with a public browser key and an exact-domain server gate. The
 hosted Google authorization redirect and callback, protected Data API pages,
 and exact media CORS preflight passed; authenticated own/other media checks

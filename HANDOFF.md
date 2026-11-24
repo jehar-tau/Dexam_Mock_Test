@@ -16,10 +16,14 @@ student journey, demonstrate the behavior through the corresponding UI before
 promoting it. This gate applies to merged but not yet deployed changes too.
 See [the current workflow](apps/designmocks/docs/DIRECT_PUBLIC_RELEASE.md).
 
-At this checkpoint, public Site version 18 is live. PR #330 has been merged
-to source but its All India migration has not been applied to the hosted
-project. PRs #331 and #332 are open and not deployed. Public registration,
-checkout, sales and unreleased paper starts remain closed.
+At this checkpoint, public Site version 20 is live from main
+`1f1dad0eb97c1758721abb0ea2a636b0637e3f68` after main CI
+`45347342448` passed. The owner visually approved the All India to exam-wise
+preview before PR #334 merged and the Site update. Claude's year-paper
+decisions in PR #335 are also on main; no timed year paper has been released.
+Migration 174 is merged source but unapplied to the hosted database. PR #332
+contains migration 175 and remains open, with exact-head CI green. Public
+registration, checkout, sales and unreleased paper starts remain closed.
 
 ## Current release checkpoint - 23 November 2026 (supersedes dated deployment notes below)
 

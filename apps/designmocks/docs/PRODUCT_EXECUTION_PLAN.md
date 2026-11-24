@@ -12,12 +12,13 @@ application. This supersedes the earlier staging-first frontend steps below;
 paper release, registration, backend changes and sales retain their own gates.
 See [Visual review and direct public release](DIRECT_PUBLIC_RELEASE.md).
 
-Site version 18 is live from main `4118e08ca208918fba4044e870abce3fd012c938`.
-An allowlisted Google session loaded the protected student pages on dmocks.com;
-the catalogue shows year-wise sets in preparation and no All India event is
-scheduled. Public signup and checkout remain closed. The next portal work
-should build on this live controlled-test baseline and publish accepted code
-through the direct release workflow.
+Site version 20 is live from main `1f1dad0eb97c1758721abb0ea2a636b0637e3f68`
+after main CI `45347342448` passed. The owner visually approved the All India
+to exam-wise preview before PR #334 merged. Claude's year-paper decisions in
+PR #335 are included, but no timed year paper or All India event has been
+released. Public signup and checkout remain closed. Migrations 174 and 175
+have not been applied to the hosted backend; PR #332 remains open. Continue
+from this controlled-test baseline through the direct release workflow.
 
 ### Paper-first content decision (23 November 2026)
 
