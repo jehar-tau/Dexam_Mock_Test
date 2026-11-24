@@ -45,3 +45,16 @@ test('UCEED 2016 prompts and options carry no page footers or section instructio
     }
   }
 });
+
+test('NID B.Des papers NID never published are DMocks reconstructions, labelled as such', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const recalled = bank.questions.filter(question => /^nid-bdes-recalled-20\d\d$/.test(question.provenance?.paperId ?? ''));
+  const count = id => recalled.filter(q => q.provenance.paperId === id).length;
+  assert.deepEqual([count('nid-bdes-recalled-2023'), count('nid-bdes-recalled-2024'), count('nid-bdes-recalled-2026')], [4, 14, 6]);
+  for (const q of recalled) {
+    assert.equal(q.sourceKind, 'original');
+    assert.equal(q.licence, 'dexam-original');
+    assert.match(q.prompt, /Reconstructed by DMocks from candidates' recollections/);
+    if (q.type !== 'DESCRIPTIVE') assert.equal(q.answer.status, 'independently-solved');
+  }
+});
