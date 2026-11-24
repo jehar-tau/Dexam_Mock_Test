@@ -110,7 +110,7 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
         <dl><div><dt>Focus</dt><dd>{selectedPool ? `${exam.toUpperCase()} · ${topicName(topic)}` : "Choose a topic"}</dd></div>
           <div><dt>Average pace</dt><dd>{Math.round(duration / count)} seconds per question</dd></div></dl>
       </aside>}
-    </div> : <div className="notice">There are no practice topics available yet.</div>}
+    </div> : <div className="notice" role="status">No practice topics are released yet. Topics will appear after a complete year-wise paper has been reviewed and released. <Link to="/papers">Explore Papers →</Link></div>}
     {availableTopics.length > 1 && <section className="topic-browser" aria-label="Practice catalogue">
       <div className="topic-browser-bar">
         <div><h2 id="topic-browse-heading">Browse topics</h2>
@@ -134,7 +134,7 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
       {!matches.length && <p role="status">No topics match “{search}”. Try another topic or exam.</p>}
     </section>}
     <section className="topic-notes" aria-label="Session guide">
-      <div><h2>Question selection</h2><p>New questions come first when available; review questions fill the rest.</p></div>
+      <div><h2>Question selection</h2><p>Questions come from released year-wise papers. Unseen questions come first when available; previously attempted questions fill the rest.</p></div>
       <div><h2>Returning to practice</h2><p>Your questions stay the same if you disconnect and reopen your session.</p></div>
     </section>
     <Link className="topic-workspace-link" to={preview ? location.pathname.replace(/topic-practice/, "portal") : "/dashboard"}>View your workspace and attempts →</Link>

@@ -131,8 +131,8 @@ export function WorkspaceView({
         <>
           {!catalogueOnly && <>
           <div className="overview-banner">
-            <div><span className="overview-kicker">YOUR NEXT SESSION</span><h2>{data.analytics?.activeAttempt ? "A paper is in progress" : "Ready when you are"}</h2><p>{data.analytics?.activeAttempt ? "Your saved answers are waiting. The original deadline still applies." : "Choose an exam paper or build a focused practice session."}</p></div>
-            <Link className="overview-primary-link" to={data.analytics?.activeAttempt ? attemptHref(data.analytics.activeAttempt.id) : examHref}>{data.analytics?.activeAttempt ? "Resume paper" : "Explore exam papers"}<Arrow size={18}/></Link>
+            <div><span className="overview-kicker">YOUR NEXT SESSION</span><h2>{data.analytics?.activeAttempt ? "A paper is in progress" : "Ready when you are"}</h2><p>{data.analytics?.activeAttempt ? "Your saved answers are waiting. The original deadline still applies." : "Browse complete year-wise papers as they are released, or try the free sample."}</p></div>
+            <Link className="overview-primary-link" to={data.analytics?.activeAttempt ? attemptHref(data.analytics.activeAttempt.id) : "/papers"}>{data.analytics?.activeAttempt ? "Resume paper" : "Explore year-wise Papers"}<Arrow size={18}/></Link>
           </div>
           <div className="overview-metrics" aria-label="Your progress at a glance">
             <article><span>COMPLETED PAPERS</span><strong>{data.analytics?.completed ?? 0}</strong><small>Submitted attempts</small></article>

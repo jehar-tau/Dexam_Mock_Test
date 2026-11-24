@@ -10,7 +10,7 @@ function ExamMocksHeading({ headingRef, preview }) {
   return <header className="exam-desk-head">
     <h1 ref={headingRef} tabIndex={-1}>Exam-wise mocks</h1>
     {preview && <span className="exam-preview-label">Student preview</span>}
-    <p>Take a paper, review your answers and explore the format for your exam.</p>
+    <p>Take a released mock, review your answers and explore the format for your exam.</p>
   </header>;
 }
 
@@ -91,8 +91,8 @@ function PaperCatalogue({ guide, paper, preview, busy, blocked, onStart, message
       <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round">
         <path d="M5 9h9l3 3h10v14H5z"/><path d="M8 8V5h13l4 4v3M10 17h12m-12 4h8"/>
       </svg>
-      <div><h4>{preview ? 'Preview only' : 'No paper available'}</h4>
-        <p>{preview ? `Released ${guide.title} papers and start options appear in your signed-in catalogue.` : `A start option will appear here when a ${guide.title} paper is ready.`}</p></div>
+      <div><h4>{preview ? 'Preview only' : 'No mock released yet'}</h4>
+        <p>{preview ? `Released ${guide.title} mocks and start options appear in your signed-in catalogue.` : `Fresh ${guide.title} mock questions enter this catalogue after their All India event ends and results are released.`}</p></div>
     </div>}
     {message && <p className="error" role="alert">{message}</p>}
   </section>;
@@ -151,7 +151,7 @@ export function ExamMocksView({ catalog = [], onStart, heading = true, embedded 
         </div>
         <FormatGuide guide={guide}/>
       </div>
-      <details className="exam-attempt-note"><summary>How are mock papers assembled?</summary><p>For a released exam-wise mock, the generator draws from the eligible, reviewed questions for each section. Starting an attempt fixes its questions and starts the timer. The paper and clock stay the same when you return.</p></details>
+      <details className="exam-attempt-note"><summary>How are mock papers assembled?</summary><p>Fresh, reviewed parallel questions appear first in an All India event. After its results are released, eligible questions can enter exam-wise mocks. Starting an exam-wise attempt fixes its questions and starts the timer. The paper and clock stay the same when you return.</p></details>
     </section>
     {reviewing && paper && <dialog ref={dialogRef} className="exam-start-dialog" aria-labelledby="exam-start-title"
       onCancel={event => { event.preventDefault(); closeReview(); }}>
