@@ -45,3 +45,15 @@ test('UCEED 2016 prompts and options carry no page footers or section instructio
     }
   }
 });
+
+test('NID B.Des and M.Des DAT Prelims samples (NIDA2023-26) come from NID\'s own papers', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const paper = id => bank.questions.filter(question => question.provenance?.paperId === id);
+  const bdes = paper('nid-bdes-sample-2023'), mdes = paper('nid-mdes-sample-2023');
+  assert.equal(bdes.length, 31);
+  assert.equal(mdes.length, 37);
+  assert.deepEqual(bdes.filter(q => q.type === 'DESCRIPTIVE').map(q => q.provenance.questionNo), ['28', '29', '30', '31']);
+  assert.equal(mdes.some(q => q.type === 'DESCRIPTIVE'), false);
+  for (const q of [...bdes, ...mdes]) assert.notEqual(q.answer?.status, 'official-key');
+  assert.deepEqual([...bdes, ...mdes].filter(q => q.holds.length).map(q => q.externalKey), ['nid-bdes-sample-2023-q15', 'nid-mdes-sample-2023-q37']);
+});

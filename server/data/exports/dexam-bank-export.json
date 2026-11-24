@@ -65064,6 +65064,1685 @@
    }
   },
   {
+   "externalKey": "nid-bdes-sample-2023-q1",
+   "type": "MCQ",
+   "prompt": "Name the corridor that connects the Darbar Sahib Gurdwara in the Narowal district of Pakistan with the Dera Baba Nanak shrine in the Gurdaspur district in India’s Punjab province, which allows devotees from India to visit the Darbar Sahib Gurdwara in Pakistan without a Pakistan visa.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Sardarpur",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Nanakpur",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Kartarpur",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Darbarpur",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "1",
+    "page": 2,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q2",
+   "type": "MCQ",
+   "prompt": "How many hours difference is there between India IST and Greenwich meantime?",
+   "options": [
+    {
+     "key": "A",
+     "text": "+4:30 hours",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "+5:30 hours",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "-5:30 hours",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "-4:30 hours",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "2",
+    "page": 2,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q3",
+   "type": "MCQ",
+   "prompt": "What is the abbreviation of UPI?",
+   "options": [
+    {
+     "key": "A",
+     "text": "United Payment Identification",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "United Payment Interaction",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Unlimited Payment Interaction",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Unified Payment Interface",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "3",
+    "page": 2,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q4",
+   "type": "MCQ",
+   "prompt": "Which is the correct Logo of the Olympics?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q4.png",
+     "sha256": "b644c233294ba48815deaae02913f034cb91a7e390f5fd40390016589f711bf5",
+     "width": 1205,
+     "height": 649,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "4",
+    "page": 2,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q5",
+   "type": "MCQ",
+   "prompt": "Which of the following is the unit of measurement of noise pollution?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Pascal",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Decibel",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Hertz",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "5",
+    "page": 2,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q6",
+   "type": "MCQ",
+   "prompt": "Penguins are a group of aquatic flightless birds. They live almost exclusively in",
+   "options": [
+    {
+     "key": "A",
+     "text": "Southern hemisphere",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Northern hemisphere",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "None of the above",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Both A & B are correct",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "6",
+    "page": 2,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q7",
+   "type": "MCQ",
+   "prompt": "Which woman director wrote and directed “Manto” - 2018 Indian biographical drama film about the prominent Urdu author Saadat Hasan Manto?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Meera Nair",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Deepa Mehta",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nandita Das",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Zoya Akhtar",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "7",
+    "page": 3,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q8",
+   "type": "MCQ",
+   "prompt": "Which company does not belong to investment by Elon Musk?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Tesla",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Deep Ocean",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "SpaceX",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The Boring Company",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "8",
+    "page": 3,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q9",
+   "type": "MCQ",
+   "prompt": "Which is the most recent Union territory?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Andaman and Nicobar Islands",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Chandigarh",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Lakshadweep",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Ladakh",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "9",
+    "page": 3,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q10",
+   "type": "MCQ",
+   "prompt": "Which metals are used in the 10 rupees Indian coin in its outer & inner rings?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Nickel Brass inner ring & Nickel Silver outer ring",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Nickel Brass outer ring & Nickel Silver inner ring",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Only Nickel Brass in both rings",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Only Nickel Silver in both rings",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "materials",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "10",
+    "page": 3,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q11",
+   "type": "MCQ",
+   "prompt": "If BUT=PUT and MAT=CAT then COP=?",
+   "options": [
+    {
+     "key": "A",
+     "text": "ROB",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "TAP",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "MOB",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "11",
+    "page": 3,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q12",
+   "type": "MCQ",
+   "prompt": "Which box is next in the Sequence?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q12.png",
+     "sha256": "49418fefb78628a78afa2ad3867bb16afb5dd2b82368243a2f7294d549bf96a2",
+     "width": 1144,
+     "height": 530,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "pattern-recognition",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "12",
+    "page": 3,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q13",
+   "type": "MCQ",
+   "prompt": "Which of the following words have all letters that have the same mirror image?",
+   "options": [
+    {
+     "key": "A",
+     "text": "TEAM",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "TOUR",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "THAT",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "THIS",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "13",
+    "page": 3,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q14",
+   "type": "MCQ",
+   "prompt": "Which piece fits correctly from the template below without flipping?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q14.png",
+     "sha256": "bae2087b08a6e483343770c9f5392f9912a4bddf9669b354aece20e3b7dd452f",
+     "width": 1113,
+     "height": 760,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "14",
+    "page": 4,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q15",
+   "type": "MCQ",
+   "prompt": "Choose the box that is similar to the box formed by folding the given sheet of paper along the edge lines.",
+   "options": [
+    {
+     "key": "A",
+     "text": "1 & 3 only",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2 & 4 only",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "3 & 4 only",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1 & 4 only",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q15.png",
+     "sha256": "ecf5e108faedff1649355982286ef33c4db344e5d66ebc5b1f8b5f5e297328d2",
+     "width": 1283,
+     "height": 659,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": null,
+    "status": "pending"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [
+    "owner-flagged"
+   ],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "15",
+    "page": 4,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q16",
+   "type": "MCQ",
+   "prompt": "In the following figure, the circle represents artists, the triangle represents sculptors, and the rectangle represents girls. The number in the shape is the number of persons of that particular category. How many girls are artists but NOT sculptors?",
+   "options": [
+    {
+     "key": "A",
+     "text": "17",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "19",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "40",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "22",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q16.png",
+     "sha256": "17bdff2d2e682bf14261188cdee46c6454b35bd3a9e0feb5dbb73aa1b4935a6c",
+     "width": 1281,
+     "height": 347,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "16",
+    "page": 5,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q17",
+   "type": "MCQ",
+   "prompt": "If you remove 18 alternating colour squares from a chessboard, how many squares of alternating colours remain on the board?",
+   "options": [
+    {
+     "key": "A",
+     "text": "44",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "47",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "39",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "46",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "17",
+    "page": 5,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q18",
+   "type": "MCQ",
+   "prompt": "In which direction does the dark Gear rotate?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Clockwise",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Counterclockwise",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "No rotation",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All of the above",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q18.png",
+     "sha256": "3173fdfdd71a2ce3dd6ca4af74f22ae37b33e150ef1f1457aa8a5113c2fb5fae",
+     "width": 1212,
+     "height": 261,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "18",
+    "page": 5,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q19",
+   "type": "MCQ",
+   "prompt": "Which net when folded along with the dotted line, will give the shape of the 3D solid given below?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q19.png",
+     "sha256": "bcb0905a4096185130724a9bcb294dc5aca57dc2ff007e1fe2ba554e5dfe2568",
+     "width": 1253,
+     "height": 543,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "19",
+    "page": 5,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q20",
+   "type": "MCQ",
+   "prompt": "In a study circle, eight friends Rahul, Aarushi, Aditi, Nitin, Divya, Dev, Rohit and Nisha are seated around a circular table, facing the centre of the table, but not necessarily in this order. What is the order in which they are seated? Aditi is third to the left of Divya. Aarushi is an immediate neighbour of Divya. There are two people between Aditi and Nisha. Dev is sitting opposite Nisha. Nitin and Rohit are neighbours. Nitin and Rahul are sitting opposite each other. Who is sitting on the immediate right of Aditi?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Dev",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Rohit",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nitin",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rahul",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "20",
+    "page": 5,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q21",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nEveryone can - and does - design. We all design when we plan for something new to happen, whether that might be a new version of a recipe, a new arrangement of the living room furniture, or a new layout of a personal webpage. The evidence from different cultures around the world, and from designs created by children as well as by adults, suggests that everyone is capable of designing. So design thinking is something inherent within human cognition; it is a key part of what makes us human.\nWe human beings have a long history of design thinking, as evidenced in the artefacts of previous civilisations and in the continuing traditions of vernacular design and traditional craftwork. Everything that we have around us has been designed. Anything that isn’t a simple, untouched piece of nature has been designed by someone. The quality of that design effort therefore profoundly affects our quality of life. The ability of designers to produce effective, efficient, imaginative and stimulating designs is therefore important to all of us.\nTo design things is normal for human beings, and ‘design’ has not always been regarded as something needing special abilities. Design ability used to be somehow a collective shared ability, and it is only in fairly recent times that the ability to design has become regarded as a kind of exceptional talent. In traditional, craft-based societies the conception, or ‘designing’, of artefacts is not really separate from making them; that is to say, there is usually no prior activity of drawing or modelling before the activity of making the artefact. For example, a potter will make a pot directly with the clay, and without first making any sketches or drawings of the pot. In modern, industrial societies, however, the activities of designing and of making artefacts are usually quite separate. The process of making something does not normally start before the process of designing it is complete.\n(Source: Nigel Cross book “Thinking Design”)\n\nThe author implies that design is not -",
+   "options": [
+    {
+     "key": "A",
+     "text": "An outcome in every culture",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Specialised activity",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "An everyday activity",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "An ancient activity",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "21",
+    "page": 6,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q22",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nEveryone can - and does - design. We all design when we plan for something new to happen, whether that might be a new version of a recipe, a new arrangement of the living room furniture, or a new layout of a personal webpage. The evidence from different cultures around the world, and from designs created by children as well as by adults, suggests that everyone is capable of designing. So design thinking is something inherent within human cognition; it is a key part of what makes us human.\nWe human beings have a long history of design thinking, as evidenced in the artefacts of previous civilisations and in the continuing traditions of vernacular design and traditional craftwork. Everything that we have around us has been designed. Anything that isn’t a simple, untouched piece of nature has been designed by someone. The quality of that design effort therefore profoundly affects our quality of life. The ability of designers to produce effective, efficient, imaginative and stimulating designs is therefore important to all of us.\nTo design things is normal for human beings, and ‘design’ has not always been regarded as something needing special abilities. Design ability used to be somehow a collective shared ability, and it is only in fairly recent times that the ability to design has become regarded as a kind of exceptional talent. In traditional, craft-based societies the conception, or ‘designing’, of artefacts is not really separate from making them; that is to say, there is usually no prior activity of drawing or modelling before the activity of making the artefact. For example, a potter will make a pot directly with the clay, and without first making any sketches or drawings of the pot. In modern, industrial societies, however, the activities of designing and of making artefacts are usually quite separate. The process of making something does not normally start before the process of designing it is complete.\n(Source: Nigel Cross book “Thinking Design”)\n\nWhich statement is false?",
+   "options": [
+    {
+     "key": "A",
+     "text": "The importance of design can be determined by the fact that design has been an activity through the ages.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The importance of design can be determined by the fact that designers do it.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The importance of design can be determined by the fact that all things are designed.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The importance of design can be determined by the fact that it affects our quality of life.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "22",
+    "page": 6,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q23",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nEveryone can - and does - design. We all design when we plan for something new to happen, whether that might be a new version of a recipe, a new arrangement of the living room furniture, or a new layout of a personal webpage. The evidence from different cultures around the world, and from designs created by children as well as by adults, suggests that everyone is capable of designing. So design thinking is something inherent within human cognition; it is a key part of what makes us human.\nWe human beings have a long history of design thinking, as evidenced in the artefacts of previous civilisations and in the continuing traditions of vernacular design and traditional craftwork. Everything that we have around us has been designed. Anything that isn’t a simple, untouched piece of nature has been designed by someone. The quality of that design effort therefore profoundly affects our quality of life. The ability of designers to produce effective, efficient, imaginative and stimulating designs is therefore important to all of us.\nTo design things is normal for human beings, and ‘design’ has not always been regarded as something needing special abilities. Design ability used to be somehow a collective shared ability, and it is only in fairly recent times that the ability to design has become regarded as a kind of exceptional talent. In traditional, craft-based societies the conception, or ‘designing’, of artefacts is not really separate from making them; that is to say, there is usually no prior activity of drawing or modelling before the activity of making the artefact. For example, a potter will make a pot directly with the clay, and without first making any sketches or drawings of the pot. In modern, industrial societies, however, the activities of designing and of making artefacts are usually quite separate. The process of making something does not normally start before the process of designing it is complete.\n(Source: Nigel Cross book “Thinking Design”)\n\nAs a bottomline, the abilities of designers are eventually essential -",
+   "options": [
+    {
+     "key": "A",
+     "text": "for the process of making",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "to create artefacts",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "to affect quality of life",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "23",
+    "page": 6,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q24",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nEveryone can - and does - design. We all design when we plan for something new to happen, whether that might be a new version of a recipe, a new arrangement of the living room furniture, or a new layout of a personal webpage. The evidence from different cultures around the world, and from designs created by children as well as by adults, suggests that everyone is capable of designing. So design thinking is something inherent within human cognition; it is a key part of what makes us human.\nWe human beings have a long history of design thinking, as evidenced in the artefacts of previous civilisations and in the continuing traditions of vernacular design and traditional craftwork. Everything that we have around us has been designed. Anything that isn’t a simple, untouched piece of nature has been designed by someone. The quality of that design effort therefore profoundly affects our quality of life. The ability of designers to produce effective, efficient, imaginative and stimulating designs is therefore important to all of us.\nTo design things is normal for human beings, and ‘design’ has not always been regarded as something needing special abilities. Design ability used to be somehow a collective shared ability, and it is only in fairly recent times that the ability to design has become regarded as a kind of exceptional talent. In traditional, craft-based societies the conception, or ‘designing’, of artefacts is not really separate from making them; that is to say, there is usually no prior activity of drawing or modelling before the activity of making the artefact. For example, a potter will make a pot directly with the clay, and without first making any sketches or drawings of the pot. In modern, industrial societies, however, the activities of designing and of making artefacts are usually quite separate. The process of making something does not normally start before the process of designing it is complete.\n(Source: Nigel Cross book “Thinking Design”)\n\nThe process of designing is separate from the process of making, in",
+   "options": [
+    {
+     "key": "A",
+     "text": "Modern societies",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Vernacular societies",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Craft-based societies",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "24",
+    "page": 7,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q25",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nEveryone can - and does - design. We all design when we plan for something new to happen, whether that might be a new version of a recipe, a new arrangement of the living room furniture, or a new layout of a personal webpage. The evidence from different cultures around the world, and from designs created by children as well as by adults, suggests that everyone is capable of designing. So design thinking is something inherent within human cognition; it is a key part of what makes us human.\nWe human beings have a long history of design thinking, as evidenced in the artefacts of previous civilisations and in the continuing traditions of vernacular design and traditional craftwork. Everything that we have around us has been designed. Anything that isn’t a simple, untouched piece of nature has been designed by someone. The quality of that design effort therefore profoundly affects our quality of life. The ability of designers to produce effective, efficient, imaginative and stimulating designs is therefore important to all of us.\nTo design things is normal for human beings, and ‘design’ has not always been regarded as something needing special abilities. Design ability used to be somehow a collective shared ability, and it is only in fairly recent times that the ability to design has become regarded as a kind of exceptional talent. In traditional, craft-based societies the conception, or ‘designing’, of artefacts is not really separate from making them; that is to say, there is usually no prior activity of drawing or modelling before the activity of making the artefact. For example, a potter will make a pot directly with the clay, and without first making any sketches or drawings of the pot. In modern, industrial societies, however, the activities of designing and of making artefacts are usually quite separate. The process of making something does not normally start before the process of designing it is complete.\n(Source: Nigel Cross book “Thinking Design”)\n\nThe passage is discussing -",
+   "options": [
+    {
+     "key": "A",
+     "text": "Design as a way of life for humans",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Design as collective shared abilities",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Design surrounds us",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "25",
+    "page": 7,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q26",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nEveryone can - and does - design. We all design when we plan for something new to happen, whether that might be a new version of a recipe, a new arrangement of the living room furniture, or a new layout of a personal webpage. The evidence from different cultures around the world, and from designs created by children as well as by adults, suggests that everyone is capable of designing. So design thinking is something inherent within human cognition; it is a key part of what makes us human.\nWe human beings have a long history of design thinking, as evidenced in the artefacts of previous civilisations and in the continuing traditions of vernacular design and traditional craftwork. Everything that we have around us has been designed. Anything that isn’t a simple, untouched piece of nature has been designed by someone. The quality of that design effort therefore profoundly affects our quality of life. The ability of designers to produce effective, efficient, imaginative and stimulating designs is therefore important to all of us.\nTo design things is normal for human beings, and ‘design’ has not always been regarded as something needing special abilities. Design ability used to be somehow a collective shared ability, and it is only in fairly recent times that the ability to design has become regarded as a kind of exceptional talent. In traditional, craft-based societies the conception, or ‘designing’, of artefacts is not really separate from making them; that is to say, there is usually no prior activity of drawing or modelling before the activity of making the artefact. For example, a potter will make a pot directly with the clay, and without first making any sketches or drawings of the pot. In modern, industrial societies, however, the activities of designing and of making artefacts are usually quite separate. The process of making something does not normally start before the process of designing it is complete.\n(Source: Nigel Cross book “Thinking Design”)\n\nWhat is not designed by human beings.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Nature",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Living rooms",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Webpage",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Recipe",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "26",
+    "page": 7,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q27",
+   "type": "MCQ",
+   "prompt": "Match the visuals with its creator/architecture style.",
+   "options": [
+    {
+     "key": "A",
+     "text": "1-S, 2-G, 3-N, 4-J",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1-N, 2-S, 3-J, 4-G",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1-S, 2-G, 3-J, 4-N",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1-J, 2-S, 3-G, 4-N",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q27.png",
+     "sha256": "92a391dfbbf7a79f59c99e633ee91d44acef0271eb40e82b3d93f27c1f347851",
+     "width": 1055,
+     "height": 1286,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-history",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "27",
+    "page": 7,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q28",
+   "type": "DESCRIPTIVE",
+   "prompt": "Modify the below given water tap considering the requirements for different users as mentioned below:\na) A six year old child\nb) An artist\nc) A visually impaired person\nDraw the modified water tap for each of the users and write 3 points as to why you consider the modified idea of water tap suitable for them.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q28.png",
+     "sha256": "c19362970086f3d844cc0c9332ad1b900115976a703c395566063b320105ec2f",
+     "width": 1333,
+     "height": 1748,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-product",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "28",
+    "page": 13,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q29",
+   "type": "DESCRIPTIVE",
+   "prompt": "A fisherman and a kingfisher bird are having a heated argument by the bank of the river. In this context, develop and write a story of which the last line is already given to you. Also give a title to the story.\nA. Title of the story, and the story, ending with the line: The kingfisher said, “After all, you are a human.”\nB. Visualise & draw the story scenario (based on Q 29) with the conversation in the three frames given.",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-story",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "29",
+    "page": 15,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q30",
+   "type": "DESCRIPTIVE",
+   "prompt": "Draw a complete proportionate sketch of a bicycle referring to the parts given below.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q30.png",
+     "sha256": "0c904a24eff64b3fd911b83ec874a59a194fa936f54c268861625cba05fcb880",
+     "width": 990,
+     "height": 778,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-skill",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "30",
+    "page": 17,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-q31",
+   "type": "DESCRIPTIVE",
+   "prompt": "Your friend has come to visit you. He is looking at you from the window outside your room as shown in the image given below. Visualize and draw what he is seeing from his point of view.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q31.png",
+     "sha256": "67bbb96df0c85a2e8c229403f09d438feab277e4d5d9eea600b97a2934fa0a18",
+     "width": 1315,
+     "height": 1123,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-scene",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "31",
+    "page": 18,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
    "externalKey": "nid-bdes-sample-2024-q1",
    "type": "MCQ",
    "prompt": "Which one of the wall clocks below has the most functional design?\n(",
@@ -68492,6 +70171,2087 @@
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "verified"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q1",
+   "type": "MCQ",
+   "prompt": "Golden Ratio is a special number that approximately equals to which of the following?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1:6.181",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1:1.618",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "11:6.81",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1:61.81",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "1",
+    "page": 2,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q2",
+   "type": "MCQ",
+   "prompt": "Which of the following is Rose gold made of?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Copper and Gold",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bronze and Gold",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Copper and Bronze",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Borax and Gold",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "materials",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "2",
+    "page": 2,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q3",
+   "type": "MCQ",
+   "prompt": "Which of the following tribes inhabit Andaman Island?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Garo and Khasi",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bodo and Karbi",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Sentinelese and Jarawa",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bhil and Koli",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "3",
+    "page": 2,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q4",
+   "type": "MCQ",
+   "prompt": "Which of the following is the largest organ in the human body?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Liver",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Lungs",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Skin",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Brain",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "4",
+    "page": 2,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q5",
+   "type": "MCQ",
+   "prompt": "Who is known as father of the Indian Space Program?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Avul Pakir Jainulabdeen Abdul Kalam",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Homi Jehangir Bhabha",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Vikram Ambalal Sarabhai",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Satish Dhawan",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "5",
+    "page": 2,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q6",
+   "type": "MCQ",
+   "prompt": "World’s biggest river island is situated in which of the following rivers?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Amazon",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Brahmaputra",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nile",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Yellow",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "6",
+    "page": 2,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q7",
+   "type": "MCQ",
+   "prompt": "Polycarbonate material is used in",
+   "options": [
+    {
+     "key": "A",
+     "text": "Auto parts.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Safety helmets.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Bullet-proof glass.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "materials",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "7",
+    "page": 2,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q8",
+   "type": "MCQ",
+   "prompt": "What is the popular book ‘The Discovery of India’ about?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Cartography & Navigation",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Science & Technology",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Innovation & Research",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "History & Culture",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "8",
+    "page": 2,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q9",
+   "type": "MCQ",
+   "prompt": "Which of the following has been associated with the famous dictum ‘Form follows Function’?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Louis Kahn",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Louis Sullivan",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Christopher Alexander",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Louis Philip",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-history",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "9",
+    "page": 3,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q10",
+   "type": "MCQ",
+   "prompt": "During the year gone by, which of the following water bodies was blocked by a giant ship that got stuck in it?",
+   "options": [
+    {
+     "key": "A",
+     "text": "The Panama canal",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The Palk straits",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The Suez canal",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The Straits of Gibraltar",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "10",
+    "page": 3,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q11",
+   "type": "MCQ",
+   "prompt": "One rabbit saw six elephants while going towards river. Every elephant saw two monkeys going towards the river. Every monkey holds one tortoise in its hands. How many animals are going towards the river?",
+   "options": [
+    {
+     "key": "A",
+     "text": "14",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "11",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "5",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "11",
+    "page": 3,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q12",
+   "type": "MCQ",
+   "prompt": "Out of the given 5 images, find out the odd one.",
+   "options": [
+    {
+     "key": "A",
+     "text": "3",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "5",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q12.png",
+     "sha256": "22a473eb5a31fb4b2f603bd68e04d2f122018350d10e902d6285e474d7aab6f0",
+     "width": 1224,
+     "height": 427,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "pattern-recognition",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "12",
+    "page": 3,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q13",
+   "type": "MCQ",
+   "prompt": "Which of the following options will complete the given pattern?",
+   "options": [
+    {
+     "key": "A",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q13.png",
+     "sha256": "4a6a3fdcca45ac07cbf790a2a84a63b073e096e4cf14188afb0a1a96b34fe068",
+     "width": 1445,
+     "height": 711,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "pattern-recognition",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "13",
+    "page": 3,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q14",
+   "type": "MCQ",
+   "prompt": "How many identical cubes will it require to make the structure shown in the image below?",
+   "options": [
+    {
+     "key": "A",
+     "text": "20",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "10",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "22",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "12",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q14.png",
+     "sha256": "bf604a598066e01226356112133b9b5a2d241d6492df77163d6e2dd3af39df45",
+     "width": 1236,
+     "height": 307,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "14",
+    "page": 4,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q15",
+   "type": "MCQ",
+   "prompt": "How many triangles are there in the below figure?",
+   "options": [
+    {
+     "key": "A",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "16",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "28",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "36",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q15.png",
+     "sha256": "07fc06882380063a1d2b0f629acfc7ce4d6d9ecb6b74c01a9a74f1a9c405ea27",
+     "width": 969,
+     "height": 286,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "15",
+    "page": 4,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q16",
+   "type": "MCQ",
+   "prompt": "Objects are given below with their respective shadows. Identify the combination which is incorrect.",
+   "options": [
+    {
+     "key": "A",
+     "text": "1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q16.png",
+     "sha256": "5fea473d8fa8d6553f6a1110b0afd73cf1227f79efc05535519834723441c9f2",
+     "width": 1223,
+     "height": 539,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "16",
+    "page": 4,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q17",
+   "type": "MCQ",
+   "prompt": "A projector is projecting light on a metal grill and the shadow of the grill is falling on a projection screen. A person is sitting on the other side of the grill looking at its shadow on the screen. Choose from the shadow options given below which shadow will be visible to him.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q17.png",
+     "sha256": "836b7eec04398c97b5691ee69ec3ee7ef9b39e29dca5f546376f9bb44b6bc6b0",
+     "width": 1334,
+     "height": 695,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "17",
+    "page": 4,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q18",
+   "type": "MCQ",
+   "prompt": "Among the given options, which figure can be formed by folding the Fig.01?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q18.png",
+     "sha256": "0632722ef3602024ecdc640ae6c80da22cedf3948d20cf671008fc18e555765f",
+     "width": 1057,
+     "height": 387,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "18",
+    "page": 5,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q19",
+   "type": "MCQ",
+   "prompt": "If Country P is 50% larger than Country Q, then Q is how much % smaller than P?",
+   "options": [
+    {
+     "key": "A",
+     "text": "50%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "100%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "33.33%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "20%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "19",
+    "page": 5,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q20",
+   "type": "MCQ",
+   "prompt": "Identify the right conclusion from the given statements.\n(a) All stones are gems\n(b) Some gems are diamonds\nTherefore:\n(i) Some diamonds are stones\n(ii) All diamonds are stones",
+   "options": [
+    {
+     "key": "A",
+     "text": "Conclusion (i) is right",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Conclusion (ii) is right",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Both conclusions (i) & (ii) are right",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of them is right",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "20",
+    "page": 5,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q21",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nWhite and pure colors produce what are called tints – whitish colors, such as pink, lavender, peach. Such tints appear to have both pure color and are white in their make–up. When black and pure colors are combined, shades are produced, such as brown, olive, maroon. These, as well, appear to have both black and pure color in their composition. Black and white similarly produce gray, another unique and intermediate type of sensation. Finally, a combination of all three primaries—pure color, white, black—produces what is called a tone, such as tan. The tone, incidentally, becomes the most neutral of all color forms.\n\nAccording to the author, the most neutral colors are:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Hue",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Tint",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Tone",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Shade",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "colour-theory",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "21",
+    "page": 5,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q22",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nWhite and pure colors produce what are called tints – whitish colors, such as pink, lavender, peach. Such tints appear to have both pure color and are white in their make–up. When black and pure colors are combined, shades are produced, such as brown, olive, maroon. These, as well, appear to have both black and pure color in their composition. Black and white similarly produce gray, another unique and intermediate type of sensation. Finally, a combination of all three primaries—pure color, white, black—produces what is called a tone, such as tan. The tone, incidentally, becomes the most neutral of all color forms.\n\nAccording to the author, which of the following sets of colours are tints?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Red, Blue and Yellow",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Peach, Pink and Green",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Pink, Lavender and Peach",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Lavender, Pink and Red",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "colour-theory",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "22",
+    "page": 6,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q23",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nThe globalization of national economies over the past generation has led to a growing concentration of income, wealth and power. In a world where financial muscle has become rapidly more important, global economic power is now exercised by large, metropolitan world cities, where the world’s money and capital markets are located.\nNot only this. Production supply-chains now straddle the earth. Any cutting-edge industrial product, such as a smartphone, now involves inputs from dozens of far flung sites across the earth (involving mining, shipping, warehousing, processing, manufacture, packaging, stocking…)… Little wonder then, that “the shadows of consumption” fall right across the earth as well. In this way, the growing centralization of economic decisions has brought about far greater distances between places…The city lives virtually unmindful of the fact that it treats the countryside as a mere hinterland for resources and a dump for its industrial wastes.\n…we first need to imagine a desirable world. The self-reliant village… has perhaps always been a myth. But a self-reliant region is certainly possible to conceive. The relationship between the city and the countryside would need to be radically renegotiated… Both resources and markets need to be located much closer to the point of actual production than is the norm in a globalized world. In a viable arrangement, such a group of villages would trade actively with each other to supply themselves with goods and services they do not produce themselves. It is entirely possible to imagine an ecological society which has cities and villages, both with industry and services, along with agriculture, fisheries, pastoralism and forest-work in the countryside. However, its technological basis is very different from the one dominant today. It relies on “ecologically sound technology”, as the biologist Barry Commoner once put it… This technology is designed for small scale production, more for local and regional use and consumption, instead of for sale in distant markets.\n(Source: Shrivastava, Aseem and Elango Rangasamy. “Regionalization and Localization of Economies”. Alternative Futures: India Unshackled. Kothari, Ashish and K J Joy. New Delhi: Authors Upfront. 287-293.)\n\nThe reason cited for the spread of “shadows of consumption” across the world is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Shipping of industrial products",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Production supply-chains beyond national boundaries",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Manufacture of cutting-edge products",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Processing of high-end industrial products",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "23",
+    "page": 7,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q24",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nThe globalization of national economies over the past generation has led to a growing concentration of income, wealth and power. In a world where financial muscle has become rapidly more important, global economic power is now exercised by large, metropolitan world cities, where the world’s money and capital markets are located.\nNot only this. Production supply-chains now straddle the earth. Any cutting-edge industrial product, such as a smartphone, now involves inputs from dozens of far flung sites across the earth (involving mining, shipping, warehousing, processing, manufacture, packaging, stocking…)… Little wonder then, that “the shadows of consumption” fall right across the earth as well. In this way, the growing centralization of economic decisions has brought about far greater distances between places…The city lives virtually unmindful of the fact that it treats the countryside as a mere hinterland for resources and a dump for its industrial wastes.\n…we first need to imagine a desirable world. The self-reliant village… has perhaps always been a myth. But a self-reliant region is certainly possible to conceive. The relationship between the city and the countryside would need to be radically renegotiated… Both resources and markets need to be located much closer to the point of actual production than is the norm in a globalized world. In a viable arrangement, such a group of villages would trade actively with each other to supply themselves with goods and services they do not produce themselves. It is entirely possible to imagine an ecological society which has cities and villages, both with industry and services, along with agriculture, fisheries, pastoralism and forest-work in the countryside. However, its technological basis is very different from the one dominant today. It relies on “ecologically sound technology”, as the biologist Barry Commoner once put it… This technology is designed for small scale production, more for local and regional use and consumption, instead of for sale in distant markets.\n(Source: Shrivastava, Aseem and Elango Rangasamy. “Regionalization and Localization of Economies”. Alternative Futures: India Unshackled. Kothari, Ashish and K J Joy. New Delhi: Authors Upfront. 287-293.)\n\nToday, the concentration of world’s wealth is due to:",
+   "options": [
+    {
+     "key": "A",
+     "text": "National production supply chains",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "National economies being globalized",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "National financial power concentration",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "National wealth yielding power",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "24",
+    "page": 7,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q25",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nThe globalization of national economies over the past generation has led to a growing concentration of income, wealth and power. In a world where financial muscle has become rapidly more important, global economic power is now exercised by large, metropolitan world cities, where the world’s money and capital markets are located.\nNot only this. Production supply-chains now straddle the earth. Any cutting-edge industrial product, such as a smartphone, now involves inputs from dozens of far flung sites across the earth (involving mining, shipping, warehousing, processing, manufacture, packaging, stocking…)… Little wonder then, that “the shadows of consumption” fall right across the earth as well. In this way, the growing centralization of economic decisions has brought about far greater distances between places…The city lives virtually unmindful of the fact that it treats the countryside as a mere hinterland for resources and a dump for its industrial wastes.\n…we first need to imagine a desirable world. The self-reliant village… has perhaps always been a myth. But a self-reliant region is certainly possible to conceive. The relationship between the city and the countryside would need to be radically renegotiated… Both resources and markets need to be located much closer to the point of actual production than is the norm in a globalized world. In a viable arrangement, such a group of villages would trade actively with each other to supply themselves with goods and services they do not produce themselves. It is entirely possible to imagine an ecological society which has cities and villages, both with industry and services, along with agriculture, fisheries, pastoralism and forest-work in the countryside. However, its technological basis is very different from the one dominant today. It relies on “ecologically sound technology”, as the biologist Barry Commoner once put it… This technology is designed for small scale production, more for local and regional use and consumption, instead of for sale in distant markets.\n(Source: Shrivastava, Aseem and Elango Rangasamy. “Regionalization and Localization of Economies”. Alternative Futures: India Unshackled. Kothari, Ashish and K J Joy. New Delhi: Authors Upfront. 287-293.)\n\nThe “ecologically sound technology” is applicable to",
+   "options": [
+    {
+     "key": "A",
+     "text": "Export markets and small-scale productions",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Regional markets and large-scale production",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Domestic markets and large-scale productions",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Regional markets and small-scale production",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "25",
+    "page": 7,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q26",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nThe globalization of national economies over the past generation has led to a growing concentration of income, wealth and power. In a world where financial muscle has become rapidly more important, global economic power is now exercised by large, metropolitan world cities, where the world’s money and capital markets are located.\nNot only this. Production supply-chains now straddle the earth. Any cutting-edge industrial product, such as a smartphone, now involves inputs from dozens of far flung sites across the earth (involving mining, shipping, warehousing, processing, manufacture, packaging, stocking…)… Little wonder then, that “the shadows of consumption” fall right across the earth as well. In this way, the growing centralization of economic decisions has brought about far greater distances between places…The city lives virtually unmindful of the fact that it treats the countryside as a mere hinterland for resources and a dump for its industrial wastes.\n…we first need to imagine a desirable world. The self-reliant village… has perhaps always been a myth. But a self-reliant region is certainly possible to conceive. The relationship between the city and the countryside would need to be radically renegotiated… Both resources and markets need to be located much closer to the point of actual production than is the norm in a globalized world. In a viable arrangement, such a group of villages would trade actively with each other to supply themselves with goods and services they do not produce themselves. It is entirely possible to imagine an ecological society which has cities and villages, both with industry and services, along with agriculture, fisheries, pastoralism and forest-work in the countryside. However, its technological basis is very different from the one dominant today. It relies on “ecologically sound technology”, as the biologist Barry Commoner once put it… This technology is designed for small scale production, more for local and regional use and consumption, instead of for sale in distant markets.\n(Source: Shrivastava, Aseem and Elango Rangasamy. “Regionalization and Localization of Economies”. Alternative Futures: India Unshackled. Kothari, Ashish and K J Joy. New Delhi: Authors Upfront. 287-293.)\n\nThe authors suggest redefined relationship of city and villages by:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Having decentralized economy",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Having self-reliant villages",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Having self-reliant region",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Having villages as hinterlands",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "26",
+    "page": 7,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q27",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nThe globalization of national economies over the past generation has led to a growing concentration of income, wealth and power. In a world where financial muscle has become rapidly more important, global economic power is now exercised by large, metropolitan world cities, where the world’s money and capital markets are located.\nNot only this. Production supply-chains now straddle the earth. Any cutting-edge industrial product, such as a smartphone, now involves inputs from dozens of far flung sites across the earth (involving mining, shipping, warehousing, processing, manufacture, packaging, stocking…)… Little wonder then, that “the shadows of consumption” fall right across the earth as well. In this way, the growing centralization of economic decisions has brought about far greater distances between places…The city lives virtually unmindful of the fact that it treats the countryside as a mere hinterland for resources and a dump for its industrial wastes.\n…we first need to imagine a desirable world. The self-reliant village… has perhaps always been a myth. But a self-reliant region is certainly possible to conceive. The relationship between the city and the countryside would need to be radically renegotiated… Both resources and markets need to be located much closer to the point of actual production than is the norm in a globalized world. In a viable arrangement, such a group of villages would trade actively with each other to supply themselves with goods and services they do not produce themselves. It is entirely possible to imagine an ecological society which has cities and villages, both with industry and services, along with agriculture, fisheries, pastoralism and forest-work in the countryside. However, its technological basis is very different from the one dominant today. It relies on “ecologically sound technology”, as the biologist Barry Commoner once put it… This technology is designed for small scale production, more for local and regional use and consumption, instead of for sale in distant markets.\n(Source: Shrivastava, Aseem and Elango Rangasamy. “Regionalization and Localization of Economies”. Alternative Futures: India Unshackled. Kothari, Ashish and K J Joy. New Delhi: Authors Upfront. 287-293.)\n\nThe proximity of resources and markets to sites of production will lead to:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Economically stable cities and villages",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Economically stable villages",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Economically and ecologically stable regions",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Economically stable regions",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "27",
+    "page": 7,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q28",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nDesign is, by definition, a service experience. All design activities are animated through dynamic relationships between those being served - clients… customers, and consumers or end users - and those in service, including the designers. Design ideally is about service on behalf of the other - not merely about changing someone’s behaviour for their own good or convincing them to buy products and services. This is not always obvious when observing the behaviour of many of today’s designers: neither is it adequately dealt with in the contemporary writings on design. When the primary focus for design is on consumer or customer behaviour rather than client needs and desires it is less clear what service relationship, if any, is in place. It is also unclear, in this case, what the path of accountability and responsibility is between the designer’s decision and consequences in stakeholders’ lives.\nThe presence of a binding service relationship in design contributes to a clear distinction between the tradition of design and the traditions of art or science. Science and art essentially are cultures of inquiry and action that are, in the best sense, self-serving. Scientists ideally are seen as motivated by their own curiosity and pursue their passions for knowing, in order to satisfy their curiosity objectively. Their gift is a subsequent knowledge that may be of use, somehow, at some point in human affairs. Artists, on the one hand, express their passions, feelings, understandings, and critique of the world out of their own need for self-expression. Their gift is that these insights are shared with audience who can then make what they will of these personal glimpses into the human condition. Designers, on the other hand, are not self-serving, but other-serving.\nBeing in service does not mean being a servant, or subservient. It does not mean acting as a mere facilitator on behalf of someone else’s needs. Nor does service exclude self-expression. It just means that self-expression is not dominant in a design relationship, as it is in traditions of science and art.\nThe success of the design process can best be determined when those being served experience the surprise of self-recognition. This comes when that which emerges from a design process meets and exceeds the client’s original expression of that which they (usually only dimly) perceived as desirable in the beginning. This original expression of what is desired is known as the client’s desiderata. The designer’s role is to midwife that desiderata which could not have been imagined fully from the beginning by either client or designer, and to provide end results in the form of an expected unexpected outcome.\n(Source: Nelson, Harold G and Erik Stolterman. The Design Way - Intentional Change in an Unpredictable World. London: The MIT Press, 2012.)\n\nThe nature of Science, Art and Design has been articulated by the author as:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Other serving – Self-expression – Self-serving",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Self-serving – Other serving – Self-expression",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Self-expression – Self-serving – Other serving",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Self-serving – Self-expression – Other serving",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "28",
+    "page": 8,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q29",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nDesign is, by definition, a service experience. All design activities are animated through dynamic relationships between those being served - clients… customers, and consumers or end users - and those in service, including the designers. Design ideally is about service on behalf of the other - not merely about changing someone’s behaviour for their own good or convincing them to buy products and services. This is not always obvious when observing the behaviour of many of today’s designers: neither is it adequately dealt with in the contemporary writings on design. When the primary focus for design is on consumer or customer behaviour rather than client needs and desires it is less clear what service relationship, if any, is in place. It is also unclear, in this case, what the path of accountability and responsibility is between the designer’s decision and consequences in stakeholders’ lives.\nThe presence of a binding service relationship in design contributes to a clear distinction between the tradition of design and the traditions of art or science. Science and art essentially are cultures of inquiry and action that are, in the best sense, self-serving. Scientists ideally are seen as motivated by their own curiosity and pursue their passions for knowing, in order to satisfy their curiosity objectively. Their gift is a subsequent knowledge that may be of use, somehow, at some point in human affairs. Artists, on the one hand, express their passions, feelings, understandings, and critique of the world out of their own need for self-expression. Their gift is that these insights are shared with audience who can then make what they will of these personal glimpses into the human condition. Designers, on the other hand, are not self-serving, but other-serving.\nBeing in service does not mean being a servant, or subservient. It does not mean acting as a mere facilitator on behalf of someone else’s needs. Nor does service exclude self-expression. It just means that self-expression is not dominant in a design relationship, as it is in traditions of science and art.\nThe success of the design process can best be determined when those being served experience the surprise of self-recognition. This comes when that which emerges from a design process meets and exceeds the client’s original expression of that which they (usually only dimly) perceived as desirable in the beginning. This original expression of what is desired is known as the client’s desiderata. The designer’s role is to midwife that desiderata which could not have been imagined fully from the beginning by either client or designer, and to provide end results in the form of an expected unexpected outcome.\n(Source: Nelson, Harold G and Erik Stolterman. The Design Way - Intentional Change in an Unpredictable World. London: The MIT Press, 2012.)\n\nDesign is primarily about:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Altering consumer behaviour",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Changing customer services",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Offering services",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Convincing customers to buy",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "29",
+    "page": 8,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q30",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nDesign is, by definition, a service experience. All design activities are animated through dynamic relationships between those being served - clients… customers, and consumers or end users - and those in service, including the designers. Design ideally is about service on behalf of the other - not merely about changing someone’s behaviour for their own good or convincing them to buy products and services. This is not always obvious when observing the behaviour of many of today’s designers: neither is it adequately dealt with in the contemporary writings on design. When the primary focus for design is on consumer or customer behaviour rather than client needs and desires it is less clear what service relationship, if any, is in place. It is also unclear, in this case, what the path of accountability and responsibility is between the designer’s decision and consequences in stakeholders’ lives.\nThe presence of a binding service relationship in design contributes to a clear distinction between the tradition of design and the traditions of art or science. Science and art essentially are cultures of inquiry and action that are, in the best sense, self-serving. Scientists ideally are seen as motivated by their own curiosity and pursue their passions for knowing, in order to satisfy their curiosity objectively. Their gift is a subsequent knowledge that may be of use, somehow, at some point in human affairs. Artists, on the one hand, express their passions, feelings, understandings, and critique of the world out of their own need for self-expression. Their gift is that these insights are shared with audience who can then make what they will of these personal glimpses into the human condition. Designers, on the other hand, are not self-serving, but other-serving.\nBeing in service does not mean being a servant, or subservient. It does not mean acting as a mere facilitator on behalf of someone else’s needs. Nor does service exclude self-expression. It just means that self-expression is not dominant in a design relationship, as it is in traditions of science and art.\nThe success of the design process can best be determined when those being served experience the surprise of self-recognition. This comes when that which emerges from a design process meets and exceeds the client’s original expression of that which they (usually only dimly) perceived as desirable in the beginning. This original expression of what is desired is known as the client’s desiderata. The designer’s role is to midwife that desiderata which could not have been imagined fully from the beginning by either client or designer, and to provide end results in the form of an expected unexpected outcome.\n(Source: Nelson, Harold G and Erik Stolterman. The Design Way - Intentional Change in an Unpredictable World. London: The MIT Press, 2012.)\n\nThe designer’s “being in service” implies:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Other serving with no self-expression",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Being subservient with self-expression",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Offering scope for self-recognition",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Other serving and subservient",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "30",
+    "page": 9,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q31",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nDesign is, by definition, a service experience. All design activities are animated through dynamic relationships between those being served - clients… customers, and consumers or end users - and those in service, including the designers. Design ideally is about service on behalf of the other - not merely about changing someone’s behaviour for their own good or convincing them to buy products and services. This is not always obvious when observing the behaviour of many of today’s designers: neither is it adequately dealt with in the contemporary writings on design. When the primary focus for design is on consumer or customer behaviour rather than client needs and desires it is less clear what service relationship, if any, is in place. It is also unclear, in this case, what the path of accountability and responsibility is between the designer’s decision and consequences in stakeholders’ lives.\nThe presence of a binding service relationship in design contributes to a clear distinction between the tradition of design and the traditions of art or science. Science and art essentially are cultures of inquiry and action that are, in the best sense, self-serving. Scientists ideally are seen as motivated by their own curiosity and pursue their passions for knowing, in order to satisfy their curiosity objectively. Their gift is a subsequent knowledge that may be of use, somehow, at some point in human affairs. Artists, on the one hand, express their passions, feelings, understandings, and critique of the world out of their own need for self-expression. Their gift is that these insights are shared with audience who can then make what they will of these personal glimpses into the human condition. Designers, on the other hand, are not self-serving, but other-serving.\nBeing in service does not mean being a servant, or subservient. It does not mean acting as a mere facilitator on behalf of someone else’s needs. Nor does service exclude self-expression. It just means that self-expression is not dominant in a design relationship, as it is in traditions of science and art.\nThe success of the design process can best be determined when those being served experience the surprise of self-recognition. This comes when that which emerges from a design process meets and exceeds the client’s original expression of that which they (usually only dimly) perceived as desirable in the beginning. This original expression of what is desired is known as the client’s desiderata. The designer’s role is to midwife that desiderata which could not have been imagined fully from the beginning by either client or designer, and to provide end results in the form of an expected unexpected outcome.\n(Source: Nelson, Harold G and Erik Stolterman. The Design Way - Intentional Change in an Unpredictable World. London: The MIT Press, 2012.)\n\nThe nature of client’s desiderata is :",
+   "options": [
+    {
+     "key": "A",
+     "text": "Clear to the client and the designer in the beginning",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Clear to the client but unclear to the designer in the beginning",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Unclear to the client but clear to the designer in the beginning",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Unclear to the client and unclear to the designer in the beginning",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "31",
+    "page": 9,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q32",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nDesign is, by definition, a service experience. All design activities are animated through dynamic relationships between those being served - clients… customers, and consumers or end users - and those in service, including the designers. Design ideally is about service on behalf of the other - not merely about changing someone’s behaviour for their own good or convincing them to buy products and services. This is not always obvious when observing the behaviour of many of today’s designers: neither is it adequately dealt with in the contemporary writings on design. When the primary focus for design is on consumer or customer behaviour rather than client needs and desires it is less clear what service relationship, if any, is in place. It is also unclear, in this case, what the path of accountability and responsibility is between the designer’s decision and consequences in stakeholders’ lives.\nThe presence of a binding service relationship in design contributes to a clear distinction between the tradition of design and the traditions of art or science. Science and art essentially are cultures of inquiry and action that are, in the best sense, self-serving. Scientists ideally are seen as motivated by their own curiosity and pursue their passions for knowing, in order to satisfy their curiosity objectively. Their gift is a subsequent knowledge that may be of use, somehow, at some point in human affairs. Artists, on the one hand, express their passions, feelings, understandings, and critique of the world out of their own need for self-expression. Their gift is that these insights are shared with audience who can then make what they will of these personal glimpses into the human condition. Designers, on the other hand, are not self-serving, but other-serving.\nBeing in service does not mean being a servant, or subservient. It does not mean acting as a mere facilitator on behalf of someone else’s needs. Nor does service exclude self-expression. It just means that self-expression is not dominant in a design relationship, as it is in traditions of science and art.\nThe success of the design process can best be determined when those being served experience the surprise of self-recognition. This comes when that which emerges from a design process meets and exceeds the client’s original expression of that which they (usually only dimly) perceived as desirable in the beginning. This original expression of what is desired is known as the client’s desiderata. The designer’s role is to midwife that desiderata which could not have been imagined fully from the beginning by either client or designer, and to provide end results in the form of an expected unexpected outcome.\n(Source: Nelson, Harold G and Erik Stolterman. The Design Way - Intentional Change in an Unpredictable World. London: The MIT Press, 2012.)\n\nThe author is skeptical about the accountability of the designer when:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Designer works with idea of service",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Designer works towards clients’ needs",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Designer focuses on altering consumer behaviour",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Designer works for a market",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "32",
+    "page": 9,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q33",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nYour watch always tells you – and anyone else who sees it – considerably more than the time. It is impossible, in fact, to design a watch that tells only time. Even the most ordinary watch speaks volumes not only through the customary numbers, hands, and graphic symbols on its face but also by means of every visual aspect of its form-including its shape, color, and texture. In the same way that people embellish their words with a universally understood “body language” of gestures and postures, products also say much more than the words and numbers of their labels suggest.\n\nAccording to the author besides telling the time, watches also convey which of the following about the wearer?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Aesthetic taste",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Style choice",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Aspirations",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "33",
+    "page": 9,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q34",
+   "type": "MCQ",
+   "prompt": "Read the following paragraph to answer the question.\n\nYour watch always tells you – and anyone else who sees it – considerably more than the time. It is impossible, in fact, to design a watch that tells only time. Even the most ordinary watch speaks volumes not only through the customary numbers, hands, and graphic symbols on its face but also by means of every visual aspect of its form-including its shape, color, and texture. In the same way that people embellish their words with a universally understood “body language” of gestures and postures, products also say much more than the words and numbers of their labels suggest.\n\nWhich of the following statements is correct?",
+   "options": [
+    {
+     "key": "A",
+     "text": "The watch speaks colours.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The watch says something about the user.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Watches show only time.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of the above.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "34",
+    "page": 9,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q35",
+   "type": "MCQ",
+   "prompt": "F is the father of Q. F has only two children. Q is the brother of R. R is the daughter of P. K is the granddaughter of P. S is the father of K. How is S related to Q?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Brother",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Son",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Brother-in-law",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Son-in-law",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "35",
+    "page": 10,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q36",
+   "type": "MCQ",
+   "prompt": "Analyse and Identify the type of symmetry and match the following.\n(1) Translational Symmetry\n(2) Rotational Symmetry\n(3) Mirror Symmetry\n(4) Grid reflection Symmetry",
+   "options": [
+    {
+     "key": "A",
+     "text": "P-1, Q-3, R-2, S-4",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "P-3, Q-1, R-4, S-2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "P-1, Q-4, R-3, S-2",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "P-2, Q-4, R-1, S-3",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q36.png",
+     "sha256": "bbad0d87b41ecb80d46de75fa5c9f80e787baabccfc1062be5cbfedee4eea8f6",
+     "width": 1077,
+     "height": 1074,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "pattern-recognition",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "36",
+    "page": 10,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2023-q37",
+   "type": "MCQ",
+   "prompt": "Given is a shaded pattern of triangles embedded within a hexagon. Which of the following correctly identifies the relative proportion between the ‘shaded part and the hexagon’?",
+   "options": [
+    {
+     "key": "A",
+     "text": "3:1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1:1",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1:2",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2:3",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q37.png",
+     "sha256": "101e0d0f2041da50ee0ff3c6321555e7aa03ca8a474a07ef8ae2cc5e38392f0d",
+     "width": 1247,
+     "height": 464,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": null,
+    "status": "pending"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [
+    "owner-flagged"
+   ],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionNo": "37",
+    "page": 10,
+    "sourceSha256": "dc335df7e7a92ea6147a3a63fb344d140aa349c50ca51e56f6102f2d519a7415",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
    }
   },
   {
