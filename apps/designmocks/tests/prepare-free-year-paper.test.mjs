@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {validateFreeYearPaperPlan} from '../scripts/prepare-free-year-paper.mjs';
+import {freeYearPaperProviderConfiguration,validateFreeYearPaperPlan} from '../scripts/prepare-free-year-paper.mjs';
 
 const canonical={records:[{exam:'uceed',type:'MCQ',externalKey:'uceed-fixture-q1',contentSha256:'a'.repeat(64),
   payload:{holds:[],provenance:{year:2023,paperId:'uceed-fixture'}}},
@@ -34,4 +34,20 @@ test('private plan rejects stale, partial, duplicate, and unexplained content',(
   const incomplete2025Source={records:canonical.records.map(record=>({...record,
     payload:{...record.payload,provenance:{...record.payload.provenance,year:2025}}}))};
   assert.throws(()=>validateFreeYearPaperPlan(incomplete2025,incomplete2025Source),/plan does not match/);
+});
+
+test('private paper preparation carries the audited expanded Test profile without changing its paper origin gate',()=>{
+  const env={DMOCKS_SUPABASE_URL:'https://fictional.supabase.co',
+    DMOCKS_SUPABASE_SERVICE_ROLE_KEY:'server-only-fixture',
+    DMOCKS_PAPER_ALLOW_ORIGIN:'https://fictional.supabase.co',
+    DMOCKS_PAPER_ENVIRONMENT:'staging',DMOCKS_BANK_PROFILE:'expanded-staging',
+    DMOCKS_BANK_AUDIT_DATABASE_URL:'postgresql://fictional.invalid/postgres',
+    DMOCKS_BANK_AUDIT_DATABASE_CA_FILE:'/private/fictional-ca.pem'};
+  const config=freeYearPaperProviderConfiguration(env);
+  assert.equal(config.expandedStagingProfile,true);
+  assert.equal(config.auditDatabaseUrl,env.DMOCKS_BANK_AUDIT_DATABASE_URL);
+  assert.equal(config.auditDatabaseCaFile,env.DMOCKS_BANK_AUDIT_DATABASE_CA_FILE);
+  assert.equal(config.allowOrigin,env.DMOCKS_PAPER_ALLOW_ORIGIN);
+  assert.equal(config.environment,'staging');
+  assert.equal(freeYearPaperProviderConfiguration({...env,DMOCKS_BANK_PROFILE:'disabled'}).expandedStagingProfile,false);
 });

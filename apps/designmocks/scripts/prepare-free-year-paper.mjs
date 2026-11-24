@@ -2,7 +2,7 @@ import {readFile, stat} from 'node:fs/promises';
 import {parseArgs} from 'node:util';
 import {pathToFileURL} from 'node:url';
 import {loadFromGit, sha256, stableJson} from './question-bank-import.mjs';
-import {openPrivateBankProvider} from './private-bank-provider.mjs';
+import {bankProviderConfiguration,openPrivateBankProvider} from './private-bank-provider.mjs';
 
 const digest = /^[a-f0-9]{64}$/;
 const uuid = /^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/;
@@ -44,6 +44,15 @@ export function validateFreeYearPaperPlan(plan,canonical) {
     sourcePaperId:plan.sourcePaperId,partLabel:plan.partLabel,questionCount:source.length};
 }
 
+export function freeYearPaperProviderConfiguration(env) {
+  const bank=bankProviderConfiguration(env);
+  return {url:env.DMOCKS_SUPABASE_URL,serviceRoleKey:env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,
+    allowOrigin:env.DMOCKS_PAPER_ALLOW_ORIGIN,environment:env.DMOCKS_PAPER_ENVIRONMENT,
+    productionAck:env.DMOCKS_PAPER_PRODUCTION_ACK,
+    expandedStagingProfile:bank.expandedStagingProfile,
+    auditDatabaseUrl:bank.auditDatabaseUrl,auditDatabaseCaFile:bank.auditDatabaseCaFile};
+}
+
 async function main() {
   const {values}=parseArgs({options:{plan:{type:'string'},expect:{type:'string'},apply:{type:'boolean'},digest:{type:'boolean'},
     release:{type:'boolean'},'review-manifest':{type:'string'}}});
@@ -60,11 +69,7 @@ async function main() {
   if (values.digest) {console.log(JSON.stringify({mode:'review-digest',...summary}));return;}
   if (summary.planSha256!==values.expect) throw new Error('The plan changed after its review SHA-256 was recorded');
   if (!values.apply && !values.release) {console.log(JSON.stringify({mode:'dry-run',...summary}));return;}
-  const env=process.env;
-  const provider=await openPrivateBankProvider({url:env.DMOCKS_SUPABASE_URL,
-    serviceRoleKey:env.DMOCKS_SUPABASE_SERVICE_ROLE_KEY,
-    allowOrigin:env.DMOCKS_PAPER_ALLOW_ORIGIN,environment:env.DMOCKS_PAPER_ENVIRONMENT,
-    productionAck:env.DMOCKS_PAPER_PRODUCTION_ACK},
+  const provider=await openPrivateBankProvider(freeYearPaperProviderConfiguration(process.env),
   {acknowledgement:values.release?'RELEASE_FREE_YEAR_PAPER_ON':'PREPARE_FREE_YEAR_PAPER_ON'});
   const receipt=await provider.rpc('prepare_free_year_paper',{p_plan:plan});
   if (!uuid.test(receipt?.paperId??'') || !digest.test(receipt?.manifestSha256??'')
