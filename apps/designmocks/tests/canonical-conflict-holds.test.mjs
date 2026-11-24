@@ -45,3 +45,16 @@ test('UCEED 2016 prompts and options carry no page footers or section instructio
     }
   }
 });
+
+test('NID B.Des 2019 is rebuilt from NID\'s own sample paper with all 26 questions', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const paper = bank.questions.filter(question => question.provenance?.paperId === 'nid-bdes-2019');
+  assert.deepEqual(paper.map(question => question.provenance.questionNo), Array.from({ length: 26 }, (_, index) => String(index + 1)));
+  assert.equal(new Set(paper.map(question => question.provenance.sourceSha256)).size, 1);
+  const byNo = new Map(paper.map(question => [Number(question.provenance.questionNo), question]));
+  for (const n of [1, 5, 7, 8, 9, 20, 22]) assert.equal(byNo.get(n).type, 'MCQ');
+  assert.deepEqual([1, 5, 7, 8, 9, 20, 22].map(n => byNo.get(n).answer.raw), ['D', 'D', 'C', 'C', 'B', 'B', 'C']);
+  for (const n of [16, 18]) assert.deepEqual(byNo.get(n).holds, ['owner-flagged']);
+  assert.deepEqual([23, 24, 25, 26].map(n => byNo.get(n).type), Array(4).fill('DESCRIPTIVE'));
+  assert.equal(paper.some(question => question.answer?.status === 'official-key'), false);
+});
