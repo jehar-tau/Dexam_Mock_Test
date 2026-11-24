@@ -46,6 +46,20 @@ test('UCEED 2016 prompts and options carry no page footers or section instructio
   }
 });
 
+test('NID B.Des 2016, 2017 and 2020 are rebuilt from NID\'s own booklets', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const paper = id => bank.questions.filter(question => question.provenance?.paperId === id);
+  const [p16, p17, p20] = ['nid-bdes-2016', 'nid-bdes-2017', 'nid-bdes-2020'].map(paper);
+  assert.deepEqual([p16.length, p17.length, p20.length], [91, 79, 27]);
+  const objective = list => list.filter(q => q.type !== 'DESCRIPTIVE');
+  assert.deepEqual([objective(p16).length, objective(p17).length, objective(p20).length], [88, 75, 21]);
+  for (const q of [...objective(p16), ...objective(p17)]) assert.equal(q.answer.status, 'official-key');
+  for (const q of objective(p20)) assert.equal(q.answer.status, 'independently-solved');
+  const raw = (list, n) => list.find(q => q.provenance.questionNo === String(n)).answer.raw;
+  assert.deepEqual([raw(p16, 55), raw(p16, 61), raw(p17, 1), raw(p17, 37), raw(p20, 4), raw(p20, 19)], ['B or C', 'A or D', 'B or D', 'FULL MARKS', 'D', 'A']);
+  for (const q of [...p16, ...p17, ...p20]) assert.equal(q.assets.length, 1);
+});
+
 test('NID B.Des papers NID never published are DMocks reconstructions, labelled as such', () => {
   const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
   const recalled = bank.questions.filter(question => /^nid-bdes-recalled-20\d\d$/.test(question.provenance?.paperId ?? ''));

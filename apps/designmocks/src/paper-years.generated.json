@@ -514,10 +514,10 @@
     "exam": "nid",
     "year": 2020,
     "paperId": "nid-bdes-2020",
-    "questionCount": 23,
-    "objectiveCount": 17,
+    "questionCount": 27,
+    "objectiveCount": 21,
     "drawingCount": 6,
-    "keyedCount": 17
+    "keyedCount": 21
   },
   {
     "id": "nid:nid-bdes-2019",
@@ -554,19 +554,19 @@
     "exam": "nid",
     "year": 2017,
     "paperId": "nid-bdes-2017",
-    "questionCount": 60,
-    "objectiveCount": 56,
+    "questionCount": 79,
+    "objectiveCount": 75,
     "drawingCount": 4,
-    "keyedCount": 56
+    "keyedCount": 75
   },
   {
     "id": "nid:nid-bdes-2016",
     "exam": "nid",
     "year": 2016,
     "paperId": "nid-bdes-2016",
-    "questionCount": 69,
-    "objectiveCount": 68,
-    "drawingCount": 1,
-    "keyedCount": 68
+    "questionCount": 91,
+    "objectiveCount": 88,
+    "drawingCount": 3,
+    "keyedCount": 88
   }
 ]
