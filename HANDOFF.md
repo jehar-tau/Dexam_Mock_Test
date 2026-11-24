@@ -23,7 +23,10 @@ preview before PR #334 merged and the Site update. Claude's year-paper
 decisions in PR #335 are also on main; no timed year paper has been released.
 Migration 174 is merged source but unapplied to the hosted database. PR #332
 contains migration 175 and remains open, with exact-head CI green. Public
-registration, checkout, sales and unreleased paper starts remain closed.
+registration, checkout, sales and unreleased paper starts remain closed. An
+allowlisted account reopened an owned released attempt on Site version 20;
+its question figure rendered from the private signed `paper-media` path.
+Cross-account media denial remains unverified.
 
 ## Current release checkpoint - 23 November 2026 (supersedes dated deployment notes below)
 

@@ -68,7 +68,9 @@ sign-out, account-choice callback and protected Overview return subsequently
 passed in Chrome. Version 20 live checks confirmed the signed-out mock gate,
 the zero-released-paper catalogue, matching All India and exam-wise frontend
 assets, and 404 responses for checkout and local preview routes. An
-authenticated private-media request is still outstanding. The private
+allowlisted account also opened its owned released attempt and rendered a
+question figure from the private signed `paper-media` route. Cross-account
+media denial remains to be accepted. The private
 operator receipt records the exact version, archive and deployment IDs.
 
 ## Controlled public portal testing
@@ -82,5 +84,6 @@ Revoking a tester removes their access on the next route check or reload.
 This switch does not open public registration or sales. Version 20 has this
 switch enabled with a public browser key and an exact-domain server gate. The
 hosted Google authorization redirect and callback, protected Data API pages,
-and exact media CORS preflight passed; authenticated own/other media checks
-remain to be accepted. A browser flag alone never grants server access.
+and exact media CORS preflight passed. An owned signed figure loaded in Chrome;
+cross-account media denial remains to be accepted. A browser flag alone never
+grants server access.
