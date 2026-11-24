@@ -6,9 +6,13 @@ The wording, source figure, and counted answer need reconciliation. The export c
 
 ## UCEED 2025, Part A, question 3
 
+**Resolved 24 Nov 2026 (owner):** the trailing “2025.” footer is removed from the bank prompt (the merged 2–26 fragment exists only in the private segmentation, not in the bank). Released with the official key 34.
+
 The source paper asks for the common sum in a 4 × 4 magic square using 1 through 16. The tracked bank prompt has an unrelated trailing “2025.” footer. The private Stage 2 segmentation also contains an extra, merged fragment about numbers 2 through 26, absent from the source question block. The keyed answer 34 is consistent with the source's 1-through-16 question, but the student prompt must be repaired from the original page and reviewed before scoring. The export carries `holds: ["prompt-contamination"]` pending an exact-version correction.
 
 ## UCEED 2025, Part A, question 18
+
+**Resolved 24 Nov 2026 (owner):** option C is contradictory as printed, so the question is released with full marks for every candidate; see `YEAR_PAPER_OWNER_DECISIONS.md`.
 
 The original paper's option C says a car-wheel nut is loosened by turning a spanner **“counter-clockwise clockwise”**. The tracked question repeats this contradictory phrase, while the preserved key includes C (A,C). The direction cannot be both clockwise and counter-clockwise from the same stated viewpoint. The source needs a wording decision before C can be taught or scored. The export carries `holds: ["source-question-conflict"]`; leave the source and answer unchanged until the owner reviews the intended text and key.
 
