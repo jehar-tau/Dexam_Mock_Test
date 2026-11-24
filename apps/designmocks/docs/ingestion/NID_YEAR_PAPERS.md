@@ -42,7 +42,7 @@ All of these papers are kept privately, outside the repository. The DAT mocks an
 
 ## Progress
 
-- [ ] nid-bdes-2019 (pilot). Stage 1–2 done 24 Nov 2026: all 26 questions found (22 objective, 4 subjective).
+- [ ] nid-bdes-2019 (pilot). Stage 1–2 done 24 Nov 2026: all 26 questions found (22 objective, 4 subjective). The source is NID's "B.Des./GDPD DAT Prelims Sample Test Paper". Printed marks: Q1–14 1 mark, Q15–22 2 marks; Part II 70 marks; no duration or negative marking printed. All 22 objective questions solved: 13 agree with the bank, 1 disagrees (Q8), 6 bank records were broken or missing, and 2 look flawed (Q16: no option fits the rule exactly; Q18: the exact count is 22, which is not an option). Owner decision needed on Q8, Q16 and Q18.
 - [ ] nid-bdes-2018
 - [ ] nid-bdes-2016
 - [ ] nid-bdes-2017 (scan only)
