@@ -46,6 +46,24 @@ test('UCEED 2016 prompts and options carry no page footers or section instructio
   }
 });
 
+test('NID B.Des and M.Des DAT Prelims samples (NIDA2023-26) come from NID\'s own papers', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const paper = id => bank.questions.filter(question => question.provenance?.paperId === id);
+  const bdes = paper('nid-bdes-sample-2023'), mdes = paper('nid-mdes-sample-2023');
+  assert.equal(bdes.length, 31);
+  assert.equal(mdes.length, 40);
+  assert.deepEqual(bdes.filter(q => q.type === 'DESCRIPTIVE').map(q => q.provenance.questionNo), ['28', '29', '30', '31']);
+  const partB = mdes.filter(q => q.type === 'DESCRIPTIVE');
+  assert.deepEqual(partB.map(q => [q.provenance.questionNo, q.taskMarks, q.sourceKind, q.licence]),
+    [['38', 8, 'original', 'dexam-original'], ['39', 10, 'original', 'dexam-original'], ['40', 12, 'original', 'dexam-original']]);
+  for (const q of partB) assert.match(q.prompt, /Part B written by DMocks/);
+  for (const q of [...bdes, ...mdes]) assert.notEqual(q.answer?.status, 'official-key');
+  assert.deepEqual([...bdes, ...mdes].filter(q => q.holds.length), []);
+  const b15 = bdes.find(q => q.provenance.questionNo === '15'), m37 = mdes.find(q => q.provenance.questionNo === '37');
+  assert.deepEqual([b15.answer.raw, b15.options[0].text, m37.answer.raw, m37.options[3].text], ['A', '1, 2 & 3 only', 'D', '1:3']);
+  for (const q of [b15, m37]) assert.match(q.prompt, /Corrected by DMocks/);
+});
+
 test('NID B.Des 2019 is rebuilt from NID\'s own sample paper with all 26 questions', () => {
   const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
   const paper = bank.questions.filter(question => question.provenance?.paperId === 'nid-bdes-2019');

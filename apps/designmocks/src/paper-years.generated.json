@@ -460,6 +460,26 @@
     "keyedCount": 15
   },
   {
+    "id": "nid:nid-bdes-sample-2023",
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionCount": 31,
+    "objectiveCount": 27,
+    "drawingCount": 4,
+    "keyedCount": 27
+  },
+  {
+    "id": "nid:nid-mdes-sample-2023",
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionCount": 40,
+    "objectiveCount": 37,
+    "drawingCount": 3,
+    "keyedCount": 37
+  },
+  {
     "id": "nid:nid-bdes-2020",
     "exam": "nid",
     "year": 2020,
