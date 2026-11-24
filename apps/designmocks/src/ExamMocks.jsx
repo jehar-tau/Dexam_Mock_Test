@@ -76,7 +76,7 @@ function OriginalSample({ guide }) {
   </details>;
 }
 
-function PaperCatalogue({ guide, paper, preview, busy, blocked, onStart, message }) {
+function PaperCatalogue({ guide, paper, preview, previewDemoHref, busy, blocked, onStart, message }) {
   const ready = paper?.enabled && paper.ready;
   const freeLeft = ready ? Math.max(0, paper.freeAttemptLimit - paper.freeAttemptsUsed) : 0;
   return <section className="exam-desk-card exam-catalogue" aria-label="Mock catalogue">
@@ -87,18 +87,23 @@ function PaperCatalogue({ guide, paper, preview, busy, blocked, onStart, message
       {paper.sectionCounts && <p>{['nat','msq','mcq'].filter(key => paper.sectionCounts[key]).map(key => `${key.toUpperCase()} ${paper.sectionCounts[key]}`).join(' · ')}</p>}
       <p>{freeLeft ? `${freeLeft} free attempt${freeLeft === 1 ? '' : 's'} left` : 'Annual pass'}</p>
       <button type="button" className="exam-action" disabled={busy || blocked} onClick={event => onStart(paper.exam, event.currentTarget)}>{busy ? 'Creating…' : 'Start mock'}</button>
-    </> : <div className="exam-release-state">
+    </> : preview && ready ? <div className="exam-preview-ready">
+      <h4>Example after results: {guide.title} {paper.sectionLabel}</h4>
+      <p>{paper.questionCount} questions · {Math.round(paper.durationSeconds / 60)} min</p>
+      <p>In this fictional example, the All India result is released and its reviewed questions can now enter an exam-wise mock. No NIFT mock is published here.</p>
+      {previewDemoHref && <Link className="exam-action" to={previewDemoHref}>Try the paper room demo</Link>}
+    </div> : <div className="exam-release-state">
       <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round">
         <path d="M5 9h9l3 3h10v14H5z"/><path d="M8 8V5h13l4 4v3M10 17h12m-12 4h8"/>
       </svg>
-      <div><h4>{preview ? 'Preview only' : 'No mock released yet'}</h4>
-        <p>{preview ? `Released ${guide.title} mocks and start options appear in your signed-in catalogue.` : `Fresh ${guide.title} mock questions enter this catalogue after their All India event ends and results are released.`}</p></div>
+      <div><h4>{preview ? 'Not yet available' : 'No mock released yet'}</h4>
+        <p>{preview ? paper?.previewReason || `Fresh ${guide.title} questions need a completed All India result before this mock can open.` : `Fresh ${guide.title} mock questions enter this catalogue after their All India event ends and results are released.`}</p></div>
     </div>}
     {message && <p className="error" role="alert">{message}</p>}
   </section>;
 }
 
-export function ExamMocksView({ catalog = [], onStart, heading = true, embedded = false, blocked = false, preview = false }) {
+export function ExamMocksView({ catalog = [], onStart, heading = true, embedded = false, blocked = false, preview = false, previewDemoHref }) {
   const [selected, setSelected] = useState(() => initialCatalogueExam(catalog));
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
@@ -146,7 +151,7 @@ export function ExamMocksView({ catalog = [], onStart, heading = true, embedded 
       <h2 className="exam-current-heading">{guide.title}<span>{guide.programme}</span></h2>
       <div className="exam-guide-grid">
         <div className="exam-practice-column">
-          <PaperCatalogue guide={guide} paper={paper} preview={preview} busy={busy} blocked={blocked} onStart={(_exam, opener) => { openerRef.current = opener; setMessage(''); setReviewing(true); }} message={message}/>
+          <PaperCatalogue guide={guide} paper={paper} preview={preview} previewDemoHref={previewDemoHref} busy={busy} blocked={blocked} onStart={(_exam, opener) => { openerRef.current = opener; setMessage(''); setReviewing(true); }} message={message}/>
           <OriginalSample guide={guide}/>
         </div>
         <FormatGuide guide={guide}/>
@@ -173,5 +178,11 @@ export function ExamMocks() {
 }
 
 export function ExamMocksPreview() {
-  return <PortalShell><ExamMocksView preview/></PortalShell>;
+  const exampleCatalog = [
+    { exam: 'uceed', enabled: false, ready: false, previewReason: 'A full UCEED exam-wise mock waits for fresh Part B tasks. Its objective Part A alone does not open the full mock.' },
+    { exam: 'nid', enabled: false, ready: false, previewReason: 'No NID exam-wise mock is released. Its fresh questions and paper structure still need review.' },
+    { exam: 'nift', enabled: true, ready: true, questionCount: 100, durationSeconds: 7200, sectionLabel: 'B.Des. GAT', freeAttemptLimit: 0, freeAttemptsUsed: 0 },
+    { exam: 'ceed', enabled: false, ready: false, previewReason: 'A full CEED exam-wise mock waits for fresh Part B tasks. Its objective Part A alone does not open the full mock.' },
+  ];
+  return <PortalShell><ExamMocksView catalog={exampleCatalog} preview previewDemoHref="/portal-preview/paper"/></PortalShell>;
 }

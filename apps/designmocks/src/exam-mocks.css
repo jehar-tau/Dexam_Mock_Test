@@ -60,6 +60,7 @@ details[open] > summary .exam-expand { transform:rotate(225deg); }
 .exam-options label { display:flex; align-items:center; gap:.3rem; padding:.5rem; }
 .exam-options input { margin:0; accent-color:var(--green); }
 .exam-action { font:600 .925rem Figtree,sans-serif; color:var(--on-action); background:var(--action); border:0; border-radius:.4rem; min-height:44px; padding:.6rem 1.1rem; }
+.exam-preview-ready .exam-action { display:inline-flex; align-items:center; margin-top:.35rem; text-decoration:none; }
 .exam-attempt-note { margin-top:.85rem; padding:.75rem .1rem; border-top:1px solid var(--line); color:var(--muted); font-size:.925rem; }
 .exam-attempt-note p { max-width:70ch; }
 @media (min-width:901px) and (max-width:1190px) {

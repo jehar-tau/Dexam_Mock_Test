@@ -69,12 +69,12 @@ function EventGuide() {
   return <aside className="all-india-guide"><h2>How events work</h2>
     <dl><div><dt>Before the cutoff</dt><dd>Start once per account. Everyone receives the same fixed paper.</dd></div>
       <div><dt>During your attempt</dt><dd>Your timer keeps running if you disconnect. Reopen your attempt to continue.</dd></div>
-      <div><dt>After review</dt><dd>Your rank appears once results are released. Eligible students can choose to share their result under an alias.</dd></div></dl>
+      <div><dt>After review</dt><dd>Your rank appears once results are released. Eligible students can choose to share their result under an alias. Reviewed questions may then enter exam-wise mocks.</dd></div></dl>
   </aside>;
 }
 
 export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelectExam, heading = true, embedded = false,
-  blocked = false, sharingBlocked = false, previewStarted, exampleResults, attemptHref = id => `/attempt/${id}` }) {
+  blocked = false, sharingBlocked = false, previewStarted, exampleResults, previewMockHref, attemptHref = id => `/attempt/${id}` }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
   const [readyId, setReadyId] = useState("");
@@ -165,7 +165,8 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
                 </button>
               </div>}
               {event.attemptId ? (preview
-                ? <><Link className="button quiet" to={attemptHref(event.attemptId)}>View attempt</Link><a className="all-india-result-link" href="#all-india-example-ranks">See example rankings →</a></>
+                ? <><Link className="button quiet" to={attemptHref(event.attemptId)}>View attempt</Link><a className="all-india-result-link" href="#all-india-example-ranks">See example rankings →</a>
+                  {event.state === "released" && previewMockHref && <Link className="all-india-result-link" to={previewMockHref}>See exam-wise mock example →</Link>}</>
                 : <Link className="button quiet" to={attemptHref(event.attemptId)}>
                   {event.state === "released" ? "View attempt" : "Open attempt"}</Link>)
                 : <button type="button" className={event.state === "open" ? "button" : "all-india-unavailable"}
@@ -243,19 +244,19 @@ export function AllIndiaPreview() {
   const [started, setStarted] = useState("");
   const filter = useExamFilter();
   const events = [
-    { id: "open", exam: "uceed", title: "UCEED All India Mock 01", state: "open",
-      startsAt: "2027-01-08T10:00:00+05:30", lastStartAt: "2027-01-09T09:45:00+05:30",
-      endsAt: "2027-01-09T11:00:00+05:30", reviewEndsAt: "2027-01-12T17:00:00+05:30", durationSeconds: 3600, uploadGraceSeconds: 900 },
-    { id: "scheduled", exam: "nid", title: "NID All India Mock 01", state: "scheduled",
-      startsAt: "2027-01-16T10:00:00+05:30", lastStartAt: "2027-01-17T09:30:00+05:30",
-      endsAt: "2027-01-17T11:00:00+05:30", reviewEndsAt: "2027-01-20T17:00:00+05:30", durationSeconds: 5400 },
-    { id: "closing", exam: "ceed", title: "CEED All India Mock 01", state: "closing",
-      startsAt: "2027-01-08T09:00:00+05:30", lastStartAt: "2027-01-09T08:50:00+05:30",
-      endsAt: "2027-01-09T10:00:00+05:30", reviewEndsAt: "2027-01-13T17:00:00+05:30", durationSeconds: 3600, uploadGraceSeconds: 600 },
-    { id: "released", exam: "nift", title: "NIFT All India Mock 01", state: "released", attemptId: "preview-result",
-      result: { rank: 2, cohortSize: 24, score: 27, total: 30 } },
+    { id: "open", exam: "uceed", title: "UCEED Part A All India Mock 01", state: "open",
+      startsAt: "2027-01-01T10:00:00+05:30", lastStartAt: "2027-01-11T08:00:00+05:30",
+      endsAt: "2027-01-11T10:00:00+05:30", reviewEndsAt: "2027-01-21T10:00:00+05:30", durationSeconds: 7200, uploadGraceSeconds: 0 },
+    { id: "scheduled", exam: "nift", title: "NIFT GAT All India Mock 02", state: "scheduled",
+      startsAt: "2027-01-16T10:00:00+05:30", lastStartAt: "2027-01-26T08:00:00+05:30",
+      endsAt: "2027-01-26T10:00:00+05:30", reviewEndsAt: "2027-02-05T10:00:00+05:30", durationSeconds: 7200, uploadGraceSeconds: 0 },
+    { id: "closing", exam: "ceed", title: "CEED Part A All India Mock 01", state: "closing",
+      startsAt: "2026-12-30T10:00:00+05:30", lastStartAt: "2027-01-09T09:00:00+05:30",
+      endsAt: "2027-01-09T10:00:00+05:30", reviewEndsAt: "2027-01-19T10:00:00+05:30", durationSeconds: 3600, uploadGraceSeconds: 0 },
+    { id: "released", exam: "nift", title: "NIFT GAT All India Mock 01", state: "released", attemptId: "preview-result",
+      result: { rank: 2, cohortSize: 24, score: 78, total: 100 } },
   ];
-  const results = [{ eventId: "released", exam: "nift", title: "Mock 01",
-    topTen: [{ rank: 1, alias: "Candidate-A1B2C3", score: 28, total: 30 }, { rank: 2, alias: "Candidate-D4E5F6", score: 27, total: 30 }] }];
-  return <PortalShell><AllIndiaView events={events} {...filter} previewStarted={started} onStart={setStarted} exampleResults={results} attemptHref={() => "/portal-preview/report"} /></PortalShell>;
+  const results = [{ eventId: "released", exam: "nift", title: "GAT Mock 01",
+    topTen: [{ rank: 1, alias: "Candidate-A1B2C3", score: 86, total: 100 }, { rank: 2, alias: "Candidate-D4E5F6", score: 78, total: 100 }] }];
+  return <PortalShell><AllIndiaView events={events} {...filter} previewStarted={started} onStart={setStarted} exampleResults={results} previewMockHref="/exam-mocks-preview" attemptHref={() => "/portal-preview/report"} /></PortalShell>;
 }
