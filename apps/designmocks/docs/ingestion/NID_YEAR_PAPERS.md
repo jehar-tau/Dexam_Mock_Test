@@ -52,8 +52,8 @@ New papers to ingest:
 - [ ] M.Des DAT 2014-15 (scan, subjective)
 - [ ] B.Des Prelims sample, NIDA2021–22 (scan, 26 pp)
 - [ ] M.Des Prelims sample, NIDA2021–22 (scan, 10 pp)
-- [ ] B.Des Prelims sample, NIDA2023–26 (text, 22 pp)
-- [ ] M.Des Prelims sample, NIDA2023–26 (text, 12 pp)
+- [x] B.Des Prelims sample, NIDA2023–26 (text, 22 pp): draft PR #342 as `nid-bdes-sample-2023`, 27 MCQ + 4 drawing tasks; Q15 held (no correct option)
+- [x] M.Des Prelims sample, NIDA2023–26 (text, 12 pp): draft PR #342 as `nid-mdes-sample-2023`, 37 MCQ; Q37 held (exact ratio 1:3 is not an option)
 
 Also to check: the bank's nid-bdes-sample-2024 and -2025 both come from one PDF (the NIDA2027 sample), and so do the two M.Des samples; the year labels are probably wrong. Third-party "previous year papers" (Careers360, Silica, Toprankers, Shiksha, AglaSem, Getmyuni) are memory-based reconstructions by coaching institutes, not NID's; keep to NID's own papers.
 
@@ -82,6 +82,10 @@ Also to check: the bank's nid-bdes-sample-2024 and -2025 both come from one PDF 
 - [ ] nid-bdes-2020 (scan only)
 - [ ] samples 2024/2025 B.Des and M.Des
 - [ ] Unscored drawing tasks in year papers (product spec for Codex)
+
+## Notes
+
+- 24 Nov 2026: the disk was full (60+ worktrees of about 800 MB each). Claude removed only its own two merged worktrees. Others should prune theirs.
 
 ## Decisions log
 
