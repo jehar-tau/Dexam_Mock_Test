@@ -237,7 +237,9 @@ test("exam-wise preview explores paper formats and samples without issuing an at
   await page.goto("/exam-mocks-preview");
   await expect(page.getByRole("link", { name: "Try a complete paper demo" })).toHaveAttribute("href", "/portal-preview/paper");
   const exam = name => page.getByRole("radio", { name });
-  await expect(exam(/UCEED/)).toBeChecked();
+  await expect(exam(/NIFT/)).toBeChecked();
+  await expect(page.getByRole("region", {name:"Mock catalogue"})).toContainText("Example after results");
+  await page.locator('.exam-choice.exam-uceed').click();
   await page.getByText("A hole through folded paper", {exact:true}).click();
   await page.getByLabel("Your numerical answer").fill("4");
   await page.getByRole("button", {name:"Check answer"}).click();
@@ -256,7 +258,7 @@ test("exam-wise preview explores paper formats and samples without issuing an at
   await page.getByRole("button", {name:"Check answer"}).click();
   await expect(page.getByRole("status")).toContainText("120 cm");
   await page.getByText("CEED", {exact:true}).first().click();
-  await expect(page.getByRole("region", {name:"Mock catalogue"})).toContainText("Released CEED mocks");
+  await expect(page.getByRole("region", {name:"Mock catalogue"})).toContainText("fresh Part B tasks");
   await expect(page.getByRole("button", {name:"Start mock"})).toHaveCount(0);
   await expect(page.getByText(/free attempt left|mock created/)).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -267,10 +269,10 @@ test("All India mocks expose one open attempt and privacy-safe released ranks", 
   page,
 }) => {
   await page.goto("/all-india-preview");
-  await expect(page.getByText("NID All India Mock 01")).toBeVisible();
+  await expect(page.getByText("NIFT GAT All India Mock 02")).toBeVisible();
   await expect(page.getByText(/Starts closed. The attempt window ends/)).toBeVisible();
-  await expect(page.getByText(/plus 15 minutes for drawing uploads/)).toBeVisible();
-  await expect(page.getByText("Rank 2 of 24 · 27/30 marks")).toBeVisible();
+  await expect(page.getByText(/plus 15 minutes for drawing uploads/)).toHaveCount(0);
+  await expect(page.getByText("Rank 2 of 24 · 78/100 marks")).toBeVisible();
   await page.getByRole("button", { name: "Start once" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Begin timed attempt" }).click();
   await expect(
