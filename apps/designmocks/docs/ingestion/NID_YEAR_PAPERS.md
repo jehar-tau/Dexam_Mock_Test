@@ -93,6 +93,16 @@ Still to ingest:
 - [ ] B.Des sample, 75 MCQ (B/DB/81/XVI/I)
 - [ ] GDPD tests 2002–2011 (scans, mostly subjective)
 
+## Other websites (24 Nov 2026)
+
+85 PDFs from Toprankers/Creative Edge, Careers360, EduCharcha, CollegeDekho and Silica (private work folder `nid-sources/web/`). Most are re-uploads of NID papers we hold; the useful new material is candidates' recollections of the years NID did not publish.
+
+- [x] DMocks reconstructions from recollections (draft PR #346): `nid-bdes-recalled-2023` (Part B, 4 tasks), `nid-bdes-recalled-2024` (11 MCQ + 3 tasks), `nid-bdes-recalled-2026` (6 tasks; that paper had no objective part). Our wording, labelled as reconstructions.
+- [ ] Reconstructions still possible: B.Des 2020–2022 Part B and 2025 Part A; M.Des 2021–2023 discipline papers.
+- [ ] Check the Silica 2016/2017 B.Des and M.Des scans against NID's originals.
+- Finding: the "NIDA2023–26" samples are NID's real January 2022 papers. The `-sample-2023` ids may be relabelled to 2022.
+- Finding: M.Des Prelims is CDAT plus a discipline paper (19 disciplines), so the generic Part B added to the M.Des sample in PR #342 does not match the real format. The owner should decide whether to keep it or replace it with discipline tasks.
+
 Product gaps for NID year papers (Codex):
 - Allow "X or Y" answers for NID (the runtime allows them only under the UCEED and CEED rules).
 - NID final keys give partial credit for second-best options (B.Des 2018 Q32–39; M.Des 2018 Q19, 52, 54, 56, 58, 59). The bank keeps only the full-mark answer.
