@@ -46,6 +46,21 @@ test('UCEED 2016 prompts and options carry no page footers or section instructio
   }
 });
 
+test('NID 2018 B.Des and M.Des come from NID\'s booklets with NID\'s final answer keys', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const paper = id => bank.questions.filter(question => question.provenance?.paperId === id);
+  const bdes = paper('nid-bdes-2018'), mdes = paper('nid-mdes-2018');
+  assert.equal(bdes.length, 67);
+  assert.equal(mdes.length, 62);
+  const objective = [...bdes, ...mdes].filter(q => q.type !== 'DESCRIPTIVE');
+  assert.equal(objective.length, 64 + 59);
+  for (const q of objective) assert.equal(q.answer.status, 'official-key');
+  const raw = (list, n) => list.find(q => q.provenance.questionNo === String(n)).answer.raw;
+  assert.deepEqual([raw(bdes, 10), raw(bdes, 28), raw(bdes, 48), raw(bdes, 59), raw(bdes, 60)], ['B or C', 'C', 'B or D', 'FULL MARKS', 'D']);
+  assert.deepEqual([raw(mdes, 1), raw(mdes, 15), raw(mdes, 37), raw(mdes, 52)], ['A or D', 'A or C', 'C or D', 'A']);
+  assert.equal([...bdes, ...mdes].some(q => q.holds.length), false);
+});
+
 test('NID B.Des and M.Des DAT Prelims samples (NIDA2023-26) come from NID\'s own papers', () => {
   const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
   const paper = id => bank.questions.filter(question => question.provenance?.paperId === id);
