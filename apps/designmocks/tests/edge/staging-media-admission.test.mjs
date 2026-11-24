@@ -17,6 +17,7 @@ const endpoints = [
   ["bank-review-media", { externalKey: "fixture", reviewVersion: "fixture" }, "admin_bank_review_media_paths"],
   ["reported-question-media", { targetKey: "fixture", revision: 1 }, "admin_reported_question_media_paths"],
 ];
+const publicMediaEndpoints = new Set(endpoints.map(([name]) => name));
 const emptyRequestErrors = {
   "community-media": "Invalid community target",
   "attempt-media": "Invalid attempt",
@@ -85,21 +86,21 @@ Deno.test("private media checks staging admission before handling a request and 
         await import(`../../supabase/functions/${endpoint}/index.ts`);
         assert.ok(handler);
         for (const [from, status] of [[origin, 204], [checkout, endpoint === "attempt-media" ? 204 : 403],
-          [controlled, ["attempt-media", "drawing-media"].includes(endpoint) ? 204 : 403],
+          [controlled, publicMediaEndpoints.has(endpoint) ? 204 : 403],
           ["https://www.dmocks.com", 403], [checkout + ".invalid", 403]]) {
           const response = await handler(new Request(origin, {method: "OPTIONS", headers: {origin: from}}));
           assert.equal(response.status, status);
           assert.equal(response.headers.get("access-control-allow-origin") === from, status === 204);
           await response.body?.cancel();
         }
-        if (["attempt-media", "drawing-media"].includes(endpoint)) {
+        if (publicMediaEndpoints.has(endpoint)) {
           Deno.env.set("DMOCKS_EDGE_REQUIRE_STAGING_TESTER", "false");
           const unguarded = await handler(new Request(controlled, { method: "OPTIONS", headers: { origin: controlled } }));
           assert.equal(unguarded.status, 403);
           await unguarded.body?.cancel();
           Deno.env.set("DMOCKS_EDGE_REQUIRE_STAGING_TESTER", "true");
         }
-        const admittedOrigins = endpoint === "attempt-media" ? [origin, checkout, controlled] : [origin];
+        const admittedOrigins = endpoint === "attempt-media" ? [origin, checkout, controlled] : [origin, controlled];
         const emptyRequest = () => handler(new Request(origin, {
           method: "POST", headers: {origin, authorization: "Bearer fictional-tester", "content-type": "application/json"},
           body: "{}",
