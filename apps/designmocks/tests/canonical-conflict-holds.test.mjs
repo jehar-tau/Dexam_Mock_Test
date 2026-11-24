@@ -54,7 +54,10 @@ test('NID B.Des 2019 is rebuilt from NID\'s own sample paper with all 26 questio
   const byNo = new Map(paper.map(question => [Number(question.provenance.questionNo), question]));
   for (const n of [1, 5, 7, 8, 9, 20, 22]) assert.equal(byNo.get(n).type, 'MCQ');
   assert.deepEqual([1, 5, 7, 8, 9, 20, 22].map(n => byNo.get(n).answer.raw), ['D', 'D', 'C', 'C', 'B', 'B', 'C']);
-  for (const n of [16, 18]) assert.deepEqual(byNo.get(n).holds, ['owner-flagged']);
+  for (const n of [16, 18]) assert.deepEqual(byNo.get(n).holds, []);
+  assert.deepEqual([16, 18].map(n => byNo.get(n).answer.raw), ['A', 'B']);
+  assert.equal(byNo.get(18).options[1].text, '22');
+  for (const n of [16, 18]) assert.match(byNo.get(n).prompt, /Corrected by DMocks/);
   assert.deepEqual([23, 24, 25, 26].map(n => byNo.get(n).type), Array(4).fill('DESCRIPTIVE'));
   assert.equal(paper.some(question => question.answer?.status === 'official-key'), false);
 });

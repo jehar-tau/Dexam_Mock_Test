@@ -62231,7 +62231,7 @@
   {
    "externalKey": "nid-bdes-2019-q16",
    "type": "MCQ",
-   "prompt": "Four figures “R”, “S”, “T” and “U” are given below. If figure “R” represents “ASC12”, figure “S” represents “DES23”, figure “T” represents “ASC34” and figure “U” represents “DES45”, then which of the following figures will represent “DES12”?",
+   "prompt": "Four figures “R”, “S”, “T” and “U” are given below. If figure “R” represents “ASC12”, figure “S” represents “DES23”, figure “T” represents “ASC34” and figure “U” represents “DES45”, then which of the following figures will represent “DES12”?\n\n(Corrected by DMocks: in NID's original, no option followed the code exactly, so the two marked cells in option A have been swapped.)",
    "options": [
     {
      "key": "A",
@@ -62257,16 +62257,16 @@
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q16.png",
-     "sha256": "2aa645d74b29e511fc23ece721e1943544ed82bb2f3376c6bf37e7be8d500bc5",
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q16-corrected.png",
+     "sha256": "d92eefa5a787dc6ecf8602586c97ac07a93d373773d350f6019a69a9a258f1ee",
      "width": 1288,
      "height": 1209,
      "review": "approved"
     }
    ],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "A",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "pattern-recognition",
@@ -62278,9 +62278,7 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [
-    "owner-flagged"
-   ],
+   "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2019,
@@ -62359,7 +62357,7 @@
   {
    "externalKey": "nid-bdes-2019-q18",
    "type": "MCQ",
-   "prompt": "How many rectangles are there in the image given below?",
+   "prompt": "How many rectangles are there in the image given below?\n\n(Corrected by DMocks: NID's original options were 15, 21, 17 and 19, but the figure has 22 rectangles, so option B now reads 22.)",
    "options": [
     {
      "key": "A",
@@ -62368,7 +62366,7 @@
     },
     {
      "key": "B",
-     "text": "21",
+     "text": "22",
      "asset": null
     },
     {
@@ -62385,16 +62383,16 @@
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q18.png",
-     "sha256": "fb33f4b34c32073fd1002eff460e4af98dbc4f31f0c548c2bef377e7b4cbbcbd",
-     "width": 775,
-     "height": 855,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q18-corrected.png",
+     "sha256": "2803a7d26b174b38c3d86f374a36e0c9e70c5a9eec8be725a8fca6713da920bb",
+     "width": 776,
+     "height": 773,
      "review": "approved"
     }
    ],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "B",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
@@ -62406,9 +62404,7 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [
-    "owner-flagged"
-   ],
+   "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2019,

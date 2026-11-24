@@ -474,10 +474,10 @@
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
-    "questionCount": 24,
-    "objectiveCount": 20,
+    "questionCount": 26,
+    "objectiveCount": 22,
     "drawingCount": 4,
-    "keyedCount": 20
+    "keyedCount": 22
   },
   {
     "id": "nid:nid-bdes-2018",
