@@ -65849,11 +65849,11 @@
   {
    "externalKey": "nid-bdes-sample-2023-q15",
    "type": "MCQ",
-   "prompt": "Choose the box that is similar to the box formed by folding the given sheet of paper along the edge lines.",
+   "prompt": "Choose the box that is similar to the box formed by folding the given sheet of paper along the edge lines.\n\n(Corrected by DMocks: in NID's original, every option named only two boxes, but boxes 1, 2 and 3 can all be formed, so option A now reads “1, 2 & 3 only”.)",
    "options": [
     {
      "key": "A",
-     "text": "1 & 3 only",
+     "text": "1, 2 & 3 only",
      "asset": null
     },
     {
@@ -65875,16 +65875,16 @@
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q15.png",
-     "sha256": "ecf5e108faedff1649355982286ef33c4db344e5d66ebc5b1f8b5f5e297328d2",
-     "width": 1283,
-     "height": 659,
+     "path": "nid-bdes-sample-2023/nid-pdf/nid-bdes-sample-2023-q15-corrected.png",
+     "sha256": "631669ede2552859025d8ee0527ba0d563fcb0d5ab30b9785aa9c7e0136e51e9",
+     "width": 1279,
+     "height": 554,
      "review": "approved"
     }
    ],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "A",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "spatial-reasoning",
@@ -65896,9 +65896,7 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [
-    "owner-flagged"
-   ],
+   "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2023,
@@ -72192,7 +72190,7 @@
   {
    "externalKey": "nid-mdes-sample-2023-q37",
    "type": "MCQ",
-   "prompt": "Given is a shaded pattern of triangles embedded within a hexagon. Which of the following correctly identifies the relative proportion between the ‘shaded part and the hexagon’?",
+   "prompt": "Given is a shaded pattern of triangles embedded within a hexagon. Which of the following correctly identifies the relative proportion between the ‘shaded part and the hexagon’?\n\n(Corrected by DMocks: NID's original options were 3:1, 1:1, 1:2 and 2:3, but the shaded part is exactly one third of the hexagon, so option D now reads 1:3.)",
    "options": [
     {
      "key": "A",
@@ -72211,23 +72209,23 @@
     },
     {
      "key": "D",
-     "text": "2:3",
+     "text": "1:3",
      "asset": null
     }
    ],
    "assets": [
     {
      "role": "figure",
-     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q37.png",
-     "sha256": "101e0d0f2041da50ee0ff3c6321555e7aa03ca8a474a07ef8ae2cc5e38392f0d",
-     "width": 1247,
-     "height": 464,
+     "path": "nid-mdes-sample-2023/nid-pdf/nid-mdes-sample-2023-q37-corrected.png",
+     "sha256": "e3a7b9f9d32692c3ed6779b52a39907b13d77a432a745c7997ea6c4efe244122",
+     "width": 293,
+     "height": 317,
      "review": "approved"
     }
    ],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "D",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
@@ -72239,9 +72237,7 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [
-    "owner-flagged"
-   ],
+   "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2023,

@@ -464,20 +464,20 @@
     "exam": "nid",
     "year": 2023,
     "paperId": "nid-bdes-sample-2023",
-    "questionCount": 30,
-    "objectiveCount": 26,
+    "questionCount": 31,
+    "objectiveCount": 27,
     "drawingCount": 4,
-    "keyedCount": 26
+    "keyedCount": 27
   },
   {
     "id": "nid:nid-mdes-sample-2023",
     "exam": "nid",
     "year": 2023,
     "paperId": "nid-mdes-sample-2023",
-    "questionCount": 36,
-    "objectiveCount": 36,
+    "questionCount": 37,
+    "objectiveCount": 37,
     "drawingCount": 0,
-    "keyedCount": 36
+    "keyedCount": 37
   },
   {
     "id": "nid:nid-bdes-2020",
