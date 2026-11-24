@@ -104,10 +104,10 @@
     "exam": "uceed",
     "year": 2016,
     "paperId": "uceed-2016",
-    "questionCount": 75,
-    "objectiveCount": 75,
+    "questionCount": 80,
+    "objectiveCount": 80,
     "drawingCount": 0,
-    "keyedCount": 75
+    "keyedCount": 80
   },
   {
     "id": "uceed:uceed-2015",

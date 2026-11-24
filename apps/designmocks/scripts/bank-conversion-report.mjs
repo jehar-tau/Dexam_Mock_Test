@@ -39,7 +39,8 @@ function correctionCode(issue, question) {
  const raw = question.answer?.raw;
  if (typeof raw !== 'string') return issue.code;
  const answer = raw.trim();
- if (/^(?:full marks|dropped)(?:\s*\([^()]+\))?$/i.test(answer)) return 'answer-scoring-disposition';
+ // A plain FULL MARKS is an owner decision the runtime grades; dropped or annotated dispositions still need review.
+ if (!/^full marks$/i.test(answer) && /^(?:full marks|dropped)(?:\s*\([^()]+\))?$/i.test(answer)) return 'answer-scoring-disposition';
  if (/^q\s*\d+$/i.test(answer)) return 'answer-reference';
  if (question.type === 'NAT' && /^[+-]?[\d.]+\s*\([+\-\d.\s~–]+\)$/.test(answer)) {
   return 'answer-annotated-numeric';

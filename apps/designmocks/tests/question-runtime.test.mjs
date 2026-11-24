@@ -93,3 +93,9 @@ test('runtime operator refuses foreign projects and browser credentials before n
  await assert.rejects(()=>runtimeOperator({...config,serviceRoleKey:key({role:'service_role',ref:'b'.repeat(20)})}),/different provider project/);
  await assert.rejects(()=>runtimeOperator({...config,serviceRoleKey:key({role:'anon',ref})}),/server-only/);
 });
+test('an owner full-marks decision grades every candidate as correct, and other notations stay rejected',()=>{
+ for(const type of['MCQ','MSQ'])assert.deepEqual(convert(fixture({type,answer:{raw:'FULL MARKS',status:'verified'}})).key,{kind:'full_marks',sourceExternalKey:'original-fixture'});
+ const nat=convert(fixture({type:'NAT',options:[],answer:{raw:'full marks',status:'verified'}}));
+ assert.deepEqual(nat.key,{kind:'full_marks',sourceExternalKey:'original-fixture'});
+ assert.equal(convert(fixture({answer:{raw:'DROPPED',status:'verified'}})),null);
+});

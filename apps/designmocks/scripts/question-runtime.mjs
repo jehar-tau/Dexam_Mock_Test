@@ -114,8 +114,11 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  const raw=String(question.answer?.raw??'').trim();
  if(!raw)issue('answer-missing','answer.raw');
  let key,options=[];
+ // An owner decision (dropped item, an animation the printed paper cannot show, or no correct printed option)
+ // awards every candidate full marks; score_response already grades {kind:'full_marks'}.
+ const fullMarks=raw.toUpperCase()==='FULL MARKS';
  if(question.type==='NAT'){
-  key=numericKey(raw,{allowRangeAlternatives:allowAlternatives});
+  key=fullMarks?{kind:'full_marks'}:numericKey(raw,{allowRangeAlternatives:allowAlternatives});
   if(raw&&!key)issue('answer-notation','answer.raw');
  }else if(['MCQ','MSQ'].includes(question.type)){
   const source=Array.isArray(question.options)?question.options:[];
@@ -128,7 +131,7 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
   else if(!assets.length&&source.some(o=>!o?.text?.trim()))issue('option-text-missing','options');
   if(labelsValid){
    options=source.map(o=>({id:o.key,label:typeof o.text==='string'&&o.text.trim()||o.key}));
-   key=choiceKey(question.type,raw,options.map(o=>o.id),allowAlternatives);
+   key=fullMarks?{kind:'full_marks'}:choiceKey(question.type,raw,options.map(o=>o.id),allowAlternatives);
    if(raw&&!key)issue('answer-notation','answer.raw');
   }
  }
