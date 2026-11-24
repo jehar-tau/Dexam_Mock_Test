@@ -64208,6 +64208,990 @@
    }
   },
   {
+   "externalKey": "nid-bdes-recalled-2023-q1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Picture a busy courtyard of a village home: people cooking, a child playing, a goat tied near the door and pots stacked by the wall. A rat slips in at the bottom right corner and looks up at the whole scene. Draw the courtyard as the rat sees it from the floor. Do not use colour.\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2023. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-scene",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-recalled-2023",
+    "questionNo": "1",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2023-q2",
+   "type": "DESCRIPTIVE",
+   "prompt": "A short story uses a bucket and a dog. It begins: “In the backyard of a house, a girl is sitting…” and ends: “…at last, the bucket is filled with water.”\nA. Write the story in 150–200 words. (6 marks)\nB. Show the story in three drawn frames. (9 marks)\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2023. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-story",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-recalled-2023",
+    "questionNo": "2",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2023-q3",
+   "type": "DESCRIPTIVE",
+   "prompt": "A park has a clear “Do not litter” sign, yet people keep dropping wrappers right under it. Draw three creative solutions to this problem, one in each frame, and explain each in two or three lines.\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2023. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-communication",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-recalled-2023",
+    "questionNo": "3",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2023-q4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Make a picture instruction manual, using drawings and short word labels in frames, for each of these:\n1. Sharpening a pencil with a sharpener\n2. Combing your hair\n3. Cutting your nails\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2023. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-communication",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-recalled-2023",
+    "questionNo": "4",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q1",
+   "type": "MCQ",
+   "prompt": "How many wings does a dragonfly have?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "8",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "1",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q2",
+   "type": "MCQ",
+   "prompt": "You travel from Delhi to Bhopal and then from Bhopal to Ahmedabad. In which direction do you travel on the second leg?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "West",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "East",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "South",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "North",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "2",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q3",
+   "type": "MCQ",
+   "prompt": "The eye senses light and dark with rods and colour with cones. Which part of the eye controls how much light enters it?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "Pupil",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Retina",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Eyelashes",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Iris",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "3",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q4",
+   "type": "MCQ",
+   "prompt": "Demography is the statistical study of\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "populations",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the census",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "families",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "individual people",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "4",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q5",
+   "type": "MCQ",
+   "prompt": "Match each craft with the state it is best known from.\n1. Dhokra metal casting   2. Madhubani painting   3. Papier-mâché   4. Bidri work\nP. Karnataka   Q. Jammu & Kashmir   R. Bihar   S. Chhattisgarh\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "1-S, 2-R, 3-Q, 4-P",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1-R, 2-S, 3-P, 4-Q",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1-Q, 2-R, 3-S, 4-P",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1-S, 2-Q, 3-R, 4-P",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "indian-culture",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "5",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q6",
+   "type": "MCQ",
+   "prompt": "Which of these statements are correct?\n1. Water boils at the same temperature everywhere.\n2. The boiling point of water depends on air pressure.\n3. There is less oxygen in the air at high altitudes.\n4. A vehicle's air–fuel mixture stays the same at every altitude.\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "1 and 4",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2 and 3",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1 and 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2 and 4",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "6",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q7",
+   "type": "MCQ",
+   "prompt": "Flowers that open at night are most often\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "green",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "purple",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "white",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "yellow",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "7",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q8",
+   "type": "MCQ",
+   "prompt": "What does diversity in a society mainly refer to?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "People sharing the same opinions and beliefs",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Differences in cultural, social and individual characteristics",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "One standard way of living for everyone",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The absence of differences between people",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "8",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q9",
+   "type": "MCQ",
+   "prompt": "Which statement best describes how rights and duties are related?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rights exist without any duties",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Rights and duties depend on and complete each other",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Duties are optional but rights are not",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rights matter more than duties",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "9",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q10",
+   "type": "MCQ",
+   "prompt": "Which set of colours is an analogous colour scheme?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "Red, Green, Blue",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Blue, Orange, Yellow",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Red, Orange, Yellow",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Purple, Yellow, Green",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "colour-theory",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "10",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q11",
+   "type": "MCQ",
+   "prompt": "Five friends sit in a row for a photograph. S is to the left of R and to the right of B. M is to the right of R, and E sits between R and M. Who sits immediately to the right of E?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "S",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "M",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "B",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "R",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "11",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q12",
+   "type": "DESCRIPTIVE",
+   "prompt": "A sheet of paper is folded twice and then cut, as shown to you in two steps, and a small pattern is printed on it. Repeat the pattern so that it covers the whole sheet, then draw the sheet opened out: mark the fold lines with dotted lines and shade the parts that were cut away.\n(In the exam the two folding steps and the pattern were printed; practise with any pattern and a fold-and-cut of your choice.)\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "12",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q13",
+   "type": "DESCRIPTIVE",
+   "prompt": "A. Design a product that helps a person carry 20 litres of water along steep mountain paths. Draw it clearly. (12 marks)\nB. Explain, with small sketches, how a person would use it. (8 marks)\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-product",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "13",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2024-q14",
+   "type": "DESCRIPTIVE",
+   "prompt": "Draw the three key steps for each of these processes:\n1. Potatoes to chips\n2. Beeswax to a candle\n3. Raw mango to pickle\n4. Seashells or beads to jewellery\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-communication",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionNo": "14",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2026-q1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Read the story. A guru is carried along a road in a palanquin with his followers. A simple man blocks the path and will not move until the guru steps down to meet him. He asks the guru the way to heaven. The guru tells him to raise one hand to the sky and stand in that spot, and the procession moves on. Twelve years later the guru passes the same place: the man is still standing there, hand raised, his beard long and his clothes in rags. As his soul begins to rise, the guru holds the man's feet and both are lifted towards the sky.\nDraw three illustrations that show the key moments of this story.\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2026. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-story",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2026,
+    "paperId": "nid-bdes-recalled-2026",
+    "questionNo": "1",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2026-q2",
+   "type": "DESCRIPTIVE",
+   "prompt": "You are given a rigid plastic object about one foot across (in the exam its shape was printed). Choose any simple hollow plastic form and show, in three drawings, three different useful things it could do around a home.\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2026. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-product",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2026,
+    "paperId": "nid-bdes-recalled-2026",
+    "questionNo": "2",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2026-q3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Solar power cuts air pollution, but solar panels and batteries depend on scarce minerals such as lithium.\nA. Write your opinion on this in a short paragraph. (5 marks)\nB. Design three social media posts that show both the benefits and the challenges of solar power. (15 marks)\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2026. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-communication",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2026,
+    "paperId": "nid-bdes-recalled-2026",
+    "questionNo": "3",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2026-q4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Children on school buses get hurt when the bus brakes suddenly. Design three solutions, other than seat belts, for the bus seats that would protect young children. Sketch each solution and label how it works.\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2026. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-product",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2026,
+    "paperId": "nid-bdes-recalled-2026",
+    "questionNo": "4",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2026-q5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Redesign a water bottle for each of these users:\n1. A patient in a hospital bed\n2. A restaurant\n3. A family get-together\nDraw each design on its own with no background, show the features that suit that user, and write a short note on each.\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2026. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-product",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2026,
+    "paperId": "nid-bdes-recalled-2026",
+    "questionNo": "5",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-recalled-2026-q6",
+   "type": "DESCRIPTIVE",
+   "prompt": "Draw a human hand, up to the wrist, holding or combining with an object so that together they make a meaningful image (for example, a hand with wings can mean freedom). Use one of: a hammer, a plant or a rope. Give your image a title and explain its meaning in no more than 200 words.\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2026. NID did not publish this paper; the wording is ours.)",
+   "options": [],
+   "assets": [],
+   "answer": null,
+   "explanation": null,
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "dexam-original",
+   "sourceKind": "original",
+   "display": "text",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2026,
+    "paperId": "nid-bdes-recalled-2026",
+    "questionNo": "6",
+    "page": null,
+    "sourceSha256": null,
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
    "externalKey": "nid-bdes-dat-mock-01-q1",
    "type": "DESCRIPTIVE",
    "prompt": "Visual storytelling\nAn old tailor in a small town receives a torn school uniform the night before a girl's first day at a new school.\nDraw THREE frames that tell this story: (a) the moment the uniform arrives, (b) the night of work, showing that time has passed, (c) the next morning.\nUse light and shade to show the time of day. Do not write dialogue inside the frames.\n(15 marks)",

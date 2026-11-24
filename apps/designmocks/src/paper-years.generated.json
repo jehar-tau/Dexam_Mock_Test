@@ -390,6 +390,16 @@
     "keyedCount": 0
   },
   {
+    "id": "nid:nid-bdes-recalled-2026",
+    "exam": "nid",
+    "year": 2026,
+    "paperId": "nid-bdes-recalled-2026",
+    "questionCount": 6,
+    "objectiveCount": 0,
+    "drawingCount": 6,
+    "keyedCount": 0
+  },
+  {
     "id": "nid:nid-mdes-dat-mock-01",
     "exam": "nid",
     "year": 2026,
@@ -440,6 +450,16 @@
     "keyedCount": 18
   },
   {
+    "id": "nid:nid-bdes-recalled-2024",
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-recalled-2024",
+    "questionCount": 14,
+    "objectiveCount": 11,
+    "drawingCount": 3,
+    "keyedCount": 11
+  },
+  {
     "id": "nid:nid-bdes-sample-2024",
     "exam": "nid",
     "year": 2024,
@@ -458,6 +478,16 @@
     "objectiveCount": 15,
     "drawingCount": 0,
     "keyedCount": 15
+  },
+  {
+    "id": "nid:nid-bdes-recalled-2023",
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-recalled-2023",
+    "questionCount": 4,
+    "objectiveCount": 0,
+    "drawingCount": 4,
+    "keyedCount": 0
   },
   {
     "id": "nid:nid-bdes-sample-2023",
