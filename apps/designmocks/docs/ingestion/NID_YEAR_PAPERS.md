@@ -113,6 +113,10 @@ The VDDS reprints the bank first used are watermarked scans of NID's own booklet
 
 - 24 Nov 2026: the disk was full (60+ worktrees of about 800 MB each). Claude removed only its own two merged worktrees. Others should prune theirs.
 
+## Merged (24 Nov 2026)
+
+Owner approved and merged PRs #340, #342, #344, #346 and #347 (main 5d86916). 285 NID figures await upload (list: `NID_MEDIA_UPLOAD.tsv` in the private work folder).
+
 ## Decisions log
 
 - 24 Nov 2026: owner decisions 1–4 above. Pilot paper: B.Des 2019, the smallest paper that has NID's own PDF.
