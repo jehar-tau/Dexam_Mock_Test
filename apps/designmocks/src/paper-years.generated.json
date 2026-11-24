@@ -484,10 +484,20 @@
     "exam": "nid",
     "year": 2018,
     "paperId": "nid-bdes-2018",
-    "questionCount": 49,
-    "objectiveCount": 48,
-    "drawingCount": 1,
-    "keyedCount": 48
+    "questionCount": 67,
+    "objectiveCount": 64,
+    "drawingCount": 3,
+    "keyedCount": 64
+  },
+  {
+    "id": "nid:nid-mdes-2018",
+    "exam": "nid",
+    "year": 2018,
+    "paperId": "nid-mdes-2018",
+    "questionCount": 62,
+    "objectiveCount": 59,
+    "drawingCount": 3,
+    "keyedCount": 59
   },
   {
     "id": "nid:nid-bdes-2017",
