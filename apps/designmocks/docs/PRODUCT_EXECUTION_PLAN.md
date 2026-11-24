@@ -1,14 +1,18 @@
 # DMocks release execution plan
 
-**Current deployment decision (23 November 2026):** After a PR passes its
-exact-head checks, merge it, verify main CI, and publish the verified frontend
-directly to dmocks.com. Do not require an owner-only staging promotion or build
+**Current deployment decision (24 November 2026):** Show each small
+student-facing slice to the owner in a working, no-login desktop/mobile
+preview first. The owner is a UX designer and reviews the interface and
+journey rather than code. Incorporate visual feedback before merging or
+publishing. After visual approval and exact-head PR checks, merge it, verify
+main CI, and publish the verified frontend directly to dmocks.com. Do not
+require an owner-only staging promotion or build
 out separate dev/staging/production environments before completing the
 application. This supersedes the earlier staging-first frontend steps below;
 paper release, registration, backend changes and sales retain their own gates.
-See [Direct public release](DIRECT_PUBLIC_RELEASE.md).
+See [Visual review and direct public release](DIRECT_PUBLIC_RELEASE.md).
 
-Site version 17 is live from main `658ce62472747aab73c1c5746815135055c78009`.
+Site version 18 is live from main `4118e08ca208918fba4044e870abce3fd012c938`.
 An allowlisted Google session loaded the protected student pages on dmocks.com;
 the catalogue shows year-wise sets in preparation and no All India event is
 scheduled. Public signup and checkout remain closed. The next portal work
