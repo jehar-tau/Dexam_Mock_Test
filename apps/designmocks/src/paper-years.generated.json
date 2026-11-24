@@ -490,6 +490,26 @@
     "keyedCount": 0
   },
   {
+    "id": "nid:nid-bdes-sample-2023",
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionCount": 31,
+    "objectiveCount": 27,
+    "drawingCount": 4,
+    "keyedCount": 27
+  },
+  {
+    "id": "nid:nid-mdes-sample-2023",
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-mdes-sample-2023",
+    "questionCount": 40,
+    "objectiveCount": 37,
+    "drawingCount": 3,
+    "keyedCount": 37
+  },
+  {
     "id": "nid:nid-bdes-2020",
     "exam": "nid",
     "year": 2020,
@@ -504,20 +524,30 @@
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
-    "questionCount": 19,
-    "objectiveCount": 13,
-    "drawingCount": 6,
-    "keyedCount": 13
+    "questionCount": 26,
+    "objectiveCount": 22,
+    "drawingCount": 4,
+    "keyedCount": 22
   },
   {
     "id": "nid:nid-bdes-2018",
     "exam": "nid",
     "year": 2018,
     "paperId": "nid-bdes-2018",
-    "questionCount": 49,
-    "objectiveCount": 48,
-    "drawingCount": 1,
-    "keyedCount": 48
+    "questionCount": 67,
+    "objectiveCount": 64,
+    "drawingCount": 3,
+    "keyedCount": 64
+  },
+  {
+    "id": "nid:nid-mdes-2018",
+    "exam": "nid",
+    "year": 2018,
+    "paperId": "nid-mdes-2018",
+    "questionCount": 62,
+    "objectiveCount": 59,
+    "drawingCount": 3,
+    "keyedCount": 59
   },
   {
     "id": "nid:nid-bdes-2017",

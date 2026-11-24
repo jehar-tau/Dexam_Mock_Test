@@ -58,3 +58,52 @@ test('NID B.Des papers NID never published are DMocks reconstructions, labelled 
     if (q.type !== 'DESCRIPTIVE') assert.equal(q.answer.status, 'independently-solved');
   }
 });
+
+test('NID 2018 B.Des and M.Des come from NID\'s booklets with NID\'s final answer keys', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const paper = id => bank.questions.filter(question => question.provenance?.paperId === id);
+  const bdes = paper('nid-bdes-2018'), mdes = paper('nid-mdes-2018');
+  assert.equal(bdes.length, 67);
+  assert.equal(mdes.length, 62);
+  const objective = [...bdes, ...mdes].filter(q => q.type !== 'DESCRIPTIVE');
+  assert.equal(objective.length, 64 + 59);
+  for (const q of objective) assert.equal(q.answer.status, 'official-key');
+  const raw = (list, n) => list.find(q => q.provenance.questionNo === String(n)).answer.raw;
+  assert.deepEqual([raw(bdes, 10), raw(bdes, 28), raw(bdes, 48), raw(bdes, 59), raw(bdes, 60)], ['B or C', 'C', 'B or D', 'FULL MARKS', 'D']);
+  assert.deepEqual([raw(mdes, 1), raw(mdes, 15), raw(mdes, 37), raw(mdes, 52)], ['A or D', 'A or C', 'C or D', 'A']);
+  assert.equal([...bdes, ...mdes].some(q => q.holds.length), false);
+});
+
+test('NID B.Des and M.Des DAT Prelims samples (NIDA2023-26) come from NID\'s own papers', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const paper = id => bank.questions.filter(question => question.provenance?.paperId === id);
+  const bdes = paper('nid-bdes-sample-2023'), mdes = paper('nid-mdes-sample-2023');
+  assert.equal(bdes.length, 31);
+  assert.equal(mdes.length, 40);
+  assert.deepEqual(bdes.filter(q => q.type === 'DESCRIPTIVE').map(q => q.provenance.questionNo), ['28', '29', '30', '31']);
+  const partB = mdes.filter(q => q.type === 'DESCRIPTIVE');
+  assert.deepEqual(partB.map(q => [q.provenance.questionNo, q.taskMarks, q.sourceKind, q.licence]),
+    [['38', 8, 'original', 'dexam-original'], ['39', 10, 'original', 'dexam-original'], ['40', 12, 'original', 'dexam-original']]);
+  for (const q of partB) assert.match(q.prompt, /Part B written by DMocks/);
+  for (const q of [...bdes, ...mdes]) assert.notEqual(q.answer?.status, 'official-key');
+  assert.deepEqual([...bdes, ...mdes].filter(q => q.holds.length), []);
+  const b15 = bdes.find(q => q.provenance.questionNo === '15'), m37 = mdes.find(q => q.provenance.questionNo === '37');
+  assert.deepEqual([b15.answer.raw, b15.options[0].text, m37.answer.raw, m37.options[3].text], ['A', '1, 2 & 3 only', 'D', '1:3']);
+  for (const q of [b15, m37]) assert.match(q.prompt, /Corrected by DMocks/);
+});
+
+test('NID B.Des 2019 is rebuilt from NID\'s own sample paper with all 26 questions', () => {
+  const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
+  const paper = bank.questions.filter(question => question.provenance?.paperId === 'nid-bdes-2019');
+  assert.deepEqual(paper.map(question => question.provenance.questionNo), Array.from({ length: 26 }, (_, index) => String(index + 1)));
+  assert.equal(new Set(paper.map(question => question.provenance.sourceSha256)).size, 1);
+  const byNo = new Map(paper.map(question => [Number(question.provenance.questionNo), question]));
+  for (const n of [1, 5, 7, 8, 9, 20, 22]) assert.equal(byNo.get(n).type, 'MCQ');
+  assert.deepEqual([1, 5, 7, 8, 9, 20, 22].map(n => byNo.get(n).answer.raw), ['D', 'D', 'C', 'C', 'B', 'B', 'C']);
+  for (const n of [16, 18]) assert.deepEqual(byNo.get(n).holds, []);
+  assert.deepEqual([16, 18].map(n => byNo.get(n).answer.raw), ['A', 'B']);
+  assert.equal(byNo.get(18).options[1].text, '22');
+  for (const n of [16, 18]) assert.match(byNo.get(n).prompt, /Corrected by DMocks/);
+  assert.deepEqual([23, 24, 25, 26].map(n => byNo.get(n).type), Array(4).fill('DESCRIPTIVE'));
+  assert.equal(paper.some(question => question.answer?.status === 'official-key'), false);
+});
