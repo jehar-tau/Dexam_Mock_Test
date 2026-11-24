@@ -74,7 +74,7 @@ function EventGuide() {
 }
 
 export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelectExam, heading = true, embedded = false,
-  blocked = false, sharingBlocked = false, previewStarted, exampleResults, attemptHref = id => `/attempt/${id}` }) {
+  blocked = false, sharingBlocked = false, previewStarted, exampleResults, previewMockHref, attemptHref = id => `/attempt/${id}` }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
   const [readyId, setReadyId] = useState("");
@@ -166,7 +166,7 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
               </div>}
               {event.attemptId ? (preview
                 ? <><Link className="button quiet" to={attemptHref(event.attemptId)}>View attempt</Link><a className="all-india-result-link" href="#all-india-example-ranks">See example rankings →</a>
-                  {event.state === "released" && <Link className="all-india-result-link" to="/exam-mocks-preview">See exam-wise mock example →</Link>}</>
+                  {event.state === "released" && previewMockHref && <Link className="all-india-result-link" to={previewMockHref}>See exam-wise mock example →</Link>}</>
                 : <Link className="button quiet" to={attemptHref(event.attemptId)}>
                   {event.state === "released" ? "View attempt" : "Open attempt"}</Link>)
                 : <button type="button" className={event.state === "open" ? "button" : "all-india-unavailable"}
@@ -258,5 +258,5 @@ export function AllIndiaPreview() {
   ];
   const results = [{ eventId: "released", exam: "nift", title: "GAT Mock 01",
     topTen: [{ rank: 1, alias: "Candidate-A1B2C3", score: 86, total: 100 }, { rank: 2, alias: "Candidate-D4E5F6", score: 78, total: 100 }] }];
-  return <PortalShell><AllIndiaView events={events} {...filter} previewStarted={started} onStart={setStarted} exampleResults={results} attemptHref={() => "/portal-preview/report"} /></PortalShell>;
+  return <PortalShell><AllIndiaView events={events} {...filter} previewStarted={started} onStart={setStarted} exampleResults={results} previewMockHref="/exam-mocks-preview" attemptHref={() => "/portal-preview/report"} /></PortalShell>;
 }
