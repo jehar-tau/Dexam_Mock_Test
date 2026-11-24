@@ -35,3 +35,10 @@ Part B (sketching) instructions had leaked into seven Part A records, and the tr
 - Option D: CEED 2026 Q44 and UCEED 2022 Q68.
 
 No other record in these papers contains Part B text.
+
+## UCEED 2025 completed (24 November 2026)
+
+- **Q36 added.** It was missing from the bank. It is a figure-series MCQ, and the official key is C. The figure is `uceed-2025/blocks/uceed-2025-q36.png` in the private media root (SHA-256 `c33845f4…53990`). It must be uploaded to the private paper-media bucket before release.
+- **Q3 released.** Its prompt's trailing page footer was removed, and the official key is 34.
+- **Q18 gets full marks for every candidate.** Option C reads "counter-clockwise clockwise" in the original paper, so it cannot be taught or scored.
+- **Footers removed.** Trailing "2025." page footers were taken off the option text of Q18, Q23, Q28, Q35, Q38, Q43 and Q46.

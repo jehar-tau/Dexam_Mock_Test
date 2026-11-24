@@ -231705,7 +231705,7 @@
   {
    "externalKey": "uceed-2025-q3",
    "type": "NAT",
-   "prompt": "In the 3 × 3 square on the left, the numbers from 1 to 9 have been filled so that the sum in\neach row / column / diagonal adds up to 15. If the same exercise is to be carried out for the 4 × 4\nsquare, using the numbers from 1 to 16, what will be the sum of the numbers in each row / column /\ndiagonal?\n\n\n\n2025.",
+   "prompt": "In the 3 × 3 square on the left, the numbers from 1 to 9 have been filled so that the sum in\neach row / column / diagonal adds up to 15. If the same exercise is to be carried out for the 4 × 4\nsquare, using the numbers from 1 to 16, what will be the sum of the numbers in each row / column /\ndiagonal?",
    "options": [],
    "assets": [
     {
@@ -231731,9 +231731,7 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [
-    "prompt-contamination"
-   ],
+   "holds": [],
    "provenance": {
     "exam": "uceed",
     "year": 2025,
@@ -232419,7 +232417,7 @@
     },
     {
      "key": "D",
-     "text": "The earth as seen from the North Pole rotates clockwise about its axis. 2025.",
+     "text": "The earth as seen from the North Pole rotates clockwise about its axis.",
      "asset": null
     }
    ],
@@ -232434,7 +232432,7 @@
     }
    ],
    "answer": {
-    "raw": "AC",
+    "raw": "FULL MARKS",
     "status": "official-key"
    },
    "explanation": null,
@@ -232447,9 +232445,7 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [
-    "source-question-conflict"
-   ],
+   "holds": [],
    "provenance": {
     "exam": "uceed",
     "year": 2025,
@@ -232736,7 +232732,7 @@
     },
     {
      "key": "D",
-     "text": "Both dressed in a manner that expressed their ideology 2025.",
+     "text": "Both dressed in a manner that expressed their ideology",
      "asset": null
     }
    ],
@@ -233051,7 +233047,7 @@
     },
     {
      "key": "D",
-     "text": "focal length of the lens. 2025.",
+     "text": "focal length of the lens.",
      "asset": null
     }
    ],
@@ -233492,7 +233488,7 @@
     },
     {
      "key": "D",
-     "text": "NOON SAGAS 2025.",
+     "text": "NOON SAGAS",
      "asset": null
     }
    ],
@@ -233527,6 +233523,69 @@
     "paperId": "uceed-2025",
     "questionNo": "35",
     "page": 17,
+    "sourceSha256": "b73fa91f2ecef26fad9f4b6c32529412ff1c272f730e161e6723a16640978005",
+    "extraction": "workstation",
+    "answerKeySource": "UCEED2025_Answer_Key.pdf",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2025-q36",
+   "type": "MCQ",
+   "prompt": "Which option will replace the question mark?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2025/blocks/uceed-2025-q36.png",
+     "sha256": "c33845f43b1d418bc54bca1b138bfc1b215bc4080d573db7cb1dcf2ede153990",
+     "width": 917,
+     "height": 367,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2025,
+    "paperId": "uceed-2025",
+    "questionNo": "36",
+    "page": 18,
     "sourceSha256": "b73fa91f2ecef26fad9f4b6c32529412ff1c272f730e161e6723a16640978005",
     "extraction": "workstation",
     "answerKeySource": "UCEED2025_Answer_Key.pdf",
@@ -233618,7 +233677,7 @@
     },
     {
      "key": "D",
-     "text": "9 2025.",
+     "text": "9",
      "asset": null
     }
    ],
@@ -233933,7 +233992,7 @@
     },
     {
      "key": "D",
-     "text": "Drilling 2025.",
+     "text": "Drilling",
      "asset": null
     }
    ],
@@ -234122,7 +234181,7 @@
     },
     {
      "key": "D",
-     "text": "Mango-2, Chikoo-3, Guava-1, Jackfruit-4 2025.",
+     "text": "Mango-2, Chikoo-3, Guava-1, Jackfruit-4",
      "asset": null
     }
    ],
