@@ -2,6 +2,25 @@
 
 This file is the durable handoff between Codex, Claude Code, and future coding-agent sessions. Read it before making changes, then inspect the live repository state because this document may lag behind the working tree.
 
+## Visual review gate - 24 November 2026 (supersedes prior automatic public release wording)
+
+The owner is a user experience designer who evaluates the working UI, not code.
+Build in small student-facing slices, show each one in a no-login working
+preview at desktop and mobile widths, and incorporate the owner's visual
+feedback. Do not merge or publish a student-facing slice until the owner has
+approved its visible flow. A PR and passing tests are engineering evidence,
+not the owner's review. Once approved, wait for exact PR and merged-main CI,
+then publish directly to `https://dmocks.com`; no separate staging-promotion
+approval is needed for that same slice. For backend changes that affect the
+student journey, demonstrate the behavior through the corresponding UI before
+promoting it. This gate applies to merged but not yet deployed changes too.
+See [the current workflow](apps/designmocks/docs/DIRECT_PUBLIC_RELEASE.md).
+
+At this checkpoint, public Site version 18 is live. PR #330 has been merged
+to source but its All India migration has not been applied to the hosted
+project. PRs #331 and #332 are open and not deployed. Public registration,
+checkout, sales and unreleased paper starts remain closed.
+
 ## Current release checkpoint - 23 November 2026 (supersedes dated deployment notes below)
 
 The owner directed approved PRs to go straight to public `https://dmocks.com` after exact PR and merged-main CI pass. Separate development, staging and production promotion is deferred until the application is built. Follow [Direct public release](apps/designmocks/docs/DIRECT_PUBLIC_RELEASE.md). Keep Claude's Learn, Community and ingestion checkout untouched; Codex owns the other portal work and integrates owner-pushed Claude changes. The owner deferred the admin portal, teacher marking and AI drawing evaluation from the initial website release.
