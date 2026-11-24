@@ -61357,36 +61357,46 @@
   },
   {
    "externalKey": "nid-bdes-2019-q1",
-   "type": "NAT",
-   "prompt": "(Image-only question - see page image.)",
+   "type": "MCQ",
+   "prompt": "The icon below is associated with:",
    "options": [
     {
      "key": "A",
-     "text": "Women (B) Gay",
+     "text": "Women",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Gay",
      "asset": null
     },
     {
      "key": "C",
-     "text": "Labour (D) Transgender",
+     "text": "Labour",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Transgender",
      "asset": null
     }
    ],
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q1.png",
-     "sha256": "e479a43b5d0fb4f486067c8ef02b12b646a2f22a45a5e370eab12762cb63ce35",
-     "width": 908,
-     "height": 391,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q1.png",
+     "sha256": "5256898e79f257bb204eb9198c000aa8395d3552d9a095759fcb873b37ebb778",
+     "width": 958,
+     "height": 368,
      "review": "approved"
     }
    ],
    "answer": {
-    "raw": "3",
-    "status": "matched-source"
+    "raw": "D",
+    "status": "independently-solved"
    },
    "explanation": null,
-   "topic": "visual-reasoning",
+   "topic": "general-knowledge",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -61402,7 +61412,7 @@
     "paperId": "nid-bdes-2019",
     "questionNo": "1",
     "page": 2,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -61411,11 +61421,11 @@
   {
    "externalKey": "nid-bdes-2019-q2",
    "type": "MCQ",
-   "prompt": "Match the following line strokes with the related tools with which they were created, depicted in\nsequence from left to right.\ner",
+   "prompt": "Match the following line strokes with the related tools with which they were created, depicted in sequence from left to right.",
    "options": [
     {
      "key": "A",
-     "text": "Pen, Flat brush, Calligraphy pen. Round brush",
+     "text": "Pen, Flat brush, Calligraphy pen, Round brush",
      "asset": null
     },
     {
@@ -61437,19 +61447,19 @@
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q2.png",
-     "sha256": "cddf2c18a71398d4e1e070a4a1f4da8c2b6b5fb90fab4a85243d6427f9a09677",
-     "width": 1277,
-     "height": 471,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q2.png",
+     "sha256": "5ff374084c61803a61048dd98935fb5fd08613f51c9d3d5812f1c23b2313fc6a",
+     "width": 1326,
+     "height": 435,
      "review": "approved"
     }
    ],
    "answer": {
     "raw": "D",
-    "status": "official-key"
+    "status": "independently-solved"
    },
    "explanation": null,
-   "topic": "analytical-reasoning",
+   "topic": "design-awareness",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -61465,7 +61475,7 @@
     "paperId": "nid-bdes-2019",
     "questionNo": "2",
     "page": 2,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -61478,38 +61488,38 @@
    "options": [
     {
      "key": "A",
-     "text": "",
+     "text": "Kalamkari",
      "asset": null
     },
     {
      "key": "B",
-     "text": "",
+     "text": "Tie and dye (Bandhani)",
      "asset": null
     },
     {
      "key": "C",
-     "text": "",
+     "text": "Ikkat",
      "asset": null
     },
     {
      "key": "D",
-     "text": "",
+     "text": "Block print",
      "asset": null
     }
    ],
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q3.png",
-     "sha256": "58cfcac30677aec1c8d31a75617c616f8c55b5647ec5643585655e0968ddff65",
-     "width": 1056,
-     "height": 426,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q3.png",
+     "sha256": "d1cfa904a818fff19c0118a694dcc0f6428fb5895ccd00d3e528920754b39bfb",
+     "width": 1098,
+     "height": 403,
      "review": "approved"
     }
    ],
    "answer": {
     "raw": "C",
-    "status": "official-key"
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "indian-culture",
@@ -61528,7 +61538,7 @@
     "paperId": "nid-bdes-2019",
     "questionNo": "3",
     "page": 2,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -61537,80 +61547,36 @@
   {
    "externalKey": "nid-bdes-2019-q4",
    "type": "MCQ",
-   "prompt": "• Which of the following DOES NOT belong with the rest?",
+   "prompt": "Which of the following DOES NOT belong with the rest?",
    "options": [
     {
      "key": "A",
-     "text": "",
+     "text": "Wool",
      "asset": null
     },
     {
      "key": "B",
-     "text": "",
+     "text": "Cotton",
      "asset": null
     },
     {
      "key": "C",
-     "text": "",
+     "text": "Jute",
      "asset": null
     },
     {
      "key": "D",
-     "text": "",
+     "text": "Coir",
      "asset": null
     }
    ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q4.png",
-     "sha256": "02226e21985d97af2ab755274289914d2a2bf0bb645863be16d15525c07c97a3",
-     "width": 862,
-     "height": 206,
-     "review": "approved"
-    }
-   ],
-   "answer": {
-    "raw": "A",
-    "status": "official-key"
-   },
-   "explanation": null,
-   "topic": "general-aptitude",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": true,
-   "licence": "official-unlicensed",
-   "sourceKind": "official",
-   "display": "block",
-   "taskMarks": null,
-   "holds": [
-    "owner-flagged"
-   ],
-   "provenance": {
-    "exam": "nid",
-    "year": 2019,
-    "paperId": "nid-bdes-2019",
-    "questionNo": "4",
-    "page": 2,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-2019-q5",
-   "type": "NAT",
-   "prompt": "D\n6 C\n7\n8 C",
-   "options": [],
    "assets": [],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "A",
+    "status": "independently-solved"
    },
    "explanation": null,
-   "topic": "general-aptitude",
+   "topic": "materials",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -61619,71 +61585,113 @@
    "sourceKind": "official",
    "display": "text",
    "taskMarks": null,
-   "holds": [
-    "not-a-question",
-    "owner-flagged"
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "4",
+    "page": 2,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-q5",
+   "type": "MCQ",
+   "prompt": "Which of these dance forms is NOT a classical dance form?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Bharatnatyam",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Manipuri",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Odissi",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bihu",
+     "asset": null
+    }
    ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "indian-culture",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
     "questionNo": "5",
-    "page": 18,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "page": 3,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
-    "verification": "excluded"
+    "verification": "review"
    }
   },
   {
    "externalKey": "nid-bdes-2019-q6",
    "type": "MCQ",
-   "prompt": "Annapuma Devi was a famous player of which instrument?",
+   "prompt": "Annapurna Devi was a famous player of which instrument?",
    "options": [
     {
      "key": "A",
-     "text": "",
+     "text": "Sitar",
      "asset": null
     },
     {
      "key": "B",
-     "text": "",
+     "text": "Sarod",
      "asset": null
     },
     {
      "key": "C",
-     "text": "",
+     "text": "Surbahar",
      "asset": null
     },
     {
      "key": "D",
-     "text": "",
+     "text": "Sarangi",
      "asset": null
     }
    ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q6.png",
-     "sha256": "d32f3cb144b4036334081982a6476244a16fbf42b6ab98cf85aadd115d5547d5",
-     "width": 841,
-     "height": 134,
-     "review": "approved"
-    }
-   ],
+   "assets": [],
    "answer": {
     "raw": "C",
-    "status": "official-key"
+    "status": "independently-solved"
    },
    "explanation": null,
-   "topic": "general-aptitude",
+   "topic": "indian-culture",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
-   "visualDependency": true,
+   "visualDependency": false,
    "licence": "official-unlicensed",
    "sourceKind": "official",
-   "display": "block",
+   "display": "text",
    "taskMarks": null,
    "holds": [],
    "provenance": {
@@ -61692,7 +61700,7 @@
     "paperId": "nid-bdes-2019",
     "questionNo": "6",
     "page": 3,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -61700,40 +61708,44 @@
   },
   {
    "externalKey": "nid-bdes-2019-q7",
-   "type": "DESCRIPTIVE",
+   "type": "MCQ",
    "prompt": "What is the inspiration for the design of the front portion of the Japanese bullet train?",
    "options": [
     {
      "key": "A",
-     "text": "Cheetah (B) Eagle",
+     "text": "Cheetah",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Eagle",
      "asset": null
     },
     {
      "key": "C",
-     "text": "Kingfisher D) Dolphin",
+     "text": "Kingfisher",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Dolphin",
      "asset": null
     }
    ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q7.png",
-     "sha256": "3a5688267eb92b2d341ebc6ced55fbe590d91c9952ff2aa69230923ba89506b9",
-     "width": 1121,
-     "height": 135,
-     "review": "approved"
-    }
-   ],
-   "answer": null,
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
    "explanation": null,
-   "topic": "drawing-creative",
+   "topic": "design-awareness",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
-   "visualDependency": true,
+   "visualDependency": false,
    "licence": "official-unlicensed",
    "sourceKind": "official",
-   "display": "block",
+   "display": "text",
    "taskMarks": null,
    "holds": [],
    "provenance": {
@@ -61742,7 +61754,7 @@
     "paperId": "nid-bdes-2019",
     "questionNo": "7",
     "page": 3,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -61751,16 +61763,11 @@
   {
    "externalKey": "nid-bdes-2019-q8",
    "type": "MCQ",
-   "prompt": "During ancient times, people used to navigate with the help of.",
+   "prompt": "During ancient times, people used to navigate with the help of ……………….",
    "options": [
     {
      "key": "A",
      "text": "The planet Venus",
-     "asset": null
-    },
-    {
-     "key": "A",
-     "text": "Raja Ravi Verma (B) Raja Rammohan Roy (C) Rabindranath Tagore (D) Ramkinkar Baij",
      "asset": null
     },
     {
@@ -61770,59 +61777,22 @@
     },
     {
      "key": "C",
-     "text": "The Pole star (D) Birds Which of the following Indian personalities is NOT known as an artist?",
+     "text": "The Pole star",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Birds",
      "asset": null
     }
    ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q8.png",
-     "sha256": "f61289341ce03721180701c142aec26d41b5398e1378969f35d6c962bce3dc13",
-     "width": 1129,
-     "height": 300,
-     "review": "approved"
-    }
-   ],
-   "answer": {
-    "raw": "B",
-    "status": "official-key"
-   },
-   "explanation": null,
-   "topic": "numerical-reasoning",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": true,
-   "licence": "official-unlicensed",
-   "sourceKind": "official",
-   "display": "block",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2019,
-    "paperId": "nid-bdes-2019",
-    "questionNo": "8",
-    "page": 3,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-2019-q9",
-   "type": "NAT",
-   "prompt": "B\n10 A\n11 C\n12 C\n13\n14 B\nD\nB\n***2 marks\nA\n21\nmandanto",
-   "options": [],
    "assets": [],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "C",
+    "status": "independently-solved"
    },
    "explanation": null,
-   "topic": "general-aptitude",
+   "topic": "general-knowledge",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -61831,20 +61801,71 @@
    "sourceKind": "official",
    "display": "text",
    "taskMarks": null,
-   "holds": [
-    "not-a-question",
-    "owner-flagged"
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "8",
+    "page": 3,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-q9",
+   "type": "MCQ",
+   "prompt": "Which of the following Indian personalities is NOT known as an artist?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Raja Ravi Verma",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Raja Rammohan Roy",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rabindranath Tagore",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Ramkinkar Baij",
+     "asset": null
+    }
    ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
     "questionNo": "9",
-    "page": 18,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "page": 3,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
-    "verification": "excluded"
+    "verification": "review"
    }
   },
   {
@@ -61854,137 +61875,32 @@
    "options": [
     {
      "key": "A",
-     "text": "",
+     "text": "Rajiv Gandhi Khel Ratna Award",
      "asset": null
     },
     {
      "key": "B",
-     "text": "",
+     "text": "Dronacharya Award",
      "asset": null
     },
     {
      "key": "C",
-     "text": "",
+     "text": "Dhyan Chand Award",
      "asset": null
     },
     {
      "key": "D",
-     "text": "",
+     "text": "Maharaja Ranjit Singh Award",
      "asset": null
     }
    ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q10.png",
-     "sha256": "f817c4bd34162da672eae0fdeb319a32d08c682aece89b493e88b95469003de4",
-     "width": 1129,
-     "height": 138,
-     "review": "approved"
-    }
-   ],
+   "assets": [],
    "answer": {
     "raw": "A",
-    "status": "official-key"
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "general-knowledge",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": true,
-   "licence": "official-unlicensed",
-   "sourceKind": "official",
-   "display": "block",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2019,
-    "paperId": "nid-bdes-2019",
-    "questionNo": "10",
-    "page": 3,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-2019-q11",
-   "type": "MCQ",
-   "prompt": "Which diagram shown below can best depict the relationship between the following 4 words -\nBoys/Girls/Sister/Sibling, where each of the categories are represented by circles/eclipses.",
-   "options": [
-    {
-     "key": "A",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "",
-     "asset": null
-    }
-   ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q11.png",
-     "sha256": "e9b4fd50c8e42c22c873bb2665c4ed696bcf5839df9916ddb96437f900857e4d",
-     "width": 1392,
-     "height": 706,
-     "review": "approved"
-    }
-   ],
-   "answer": {
-    "raw": "C",
-    "status": "official-key"
-   },
-   "explanation": null,
-   "topic": "spatial-reasoning",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": true,
-   "licence": "official-unlicensed",
-   "sourceKind": "official",
-   "display": "block",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2019,
-    "paperId": "nid-bdes-2019",
-    "questionNo": "11",
-    "page": 3,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-2019-q12",
-   "type": "MCQ",
-   "prompt": "The weight of a mother and her child together is 70 kg. The weight of the father and the child together is\n90 kg. The weight of the father and the mother together is 120 kg. What is the combined weight of the\nfamily?\n(A) 100 kg (B) 150 kg",
-   "options": [],
-   "assets": [],
-   "answer": {
-    "raw": "C",
-    "status": "official-key"
-   },
-   "explanation": null,
-   "topic": "general-aptitude",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -61993,89 +61909,23 @@
    "sourceKind": "official",
    "display": "text",
    "taskMarks": null,
-   "holds": [
-    "owner-flagged",
-    "structured-options-missing"
-   ],
-   "provenance": {
-    "exam": "nid",
-    "year": 2019,
-    "paperId": "nid-bdes-2019",
-    "questionNo": "12",
-    "page": 3,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-2019-q13",
-   "type": "MCQ",
-   "prompt": "Based on the graphical representation (Figure X) of the physical characteristics of the 4 rectangles - P,\nQ, R & S based on the four characteristics of tall, thin, short and fat, which of the following depiction\nof rectangles is correct?\nTALL\nP\nFAT, THIN\n+\nSHORT,\nFigure X\nR",
-   "options": [
-    {
-     "key": "A",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "",
-     "asset": null
-    }
-   ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q13.png",
-     "sha256": "fbe802f0a8f877539d9e1fbcce9a860c929db90400e5061eb3b548d1ca255e29",
-     "width": 1406,
-     "height": 1686,
-     "review": "approved"
-    }
-   ],
-   "answer": {
-    "raw": "A",
-    "status": "official-key"
-   },
-   "explanation": null,
-   "topic": "spatial-reasoning",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": true,
-   "licence": "official-unlicensed",
-   "sourceKind": "official",
-   "display": "block",
-   "taskMarks": null,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
-    "questionNo": "13",
-    "page": 4,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "questionNo": "10",
+    "page": 3,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
    }
   },
   {
-   "externalKey": "nid-bdes-2019-q14",
+   "externalKey": "nid-bdes-2019-q11",
    "type": "MCQ",
-   "prompt": "If the following profile is rotated along the given axis by 360 degrees,\nB\nwhich of the following 3-dimensional form would be created?\n(",
+   "prompt": "Which diagram shown below can best depict the relationship between the following 4 words – Boys/Girls/Sister/Sibling, where each of the categories are represented by circles/ellipses.",
    "options": [
     {
      "key": "A",
@@ -62101,81 +61951,16 @@
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q14.png",
-     "sha256": "de24c35836df5d28447037c26a3301aab33f0ec9b8a0eeb75fd1e7d45554d85d",
-     "width": 998,
-     "height": 136,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q11.png",
+     "sha256": "798fac02dcbec303ed9725dd136482ca7a75cc55f7d2a3c9adc57a3e43a43597",
+     "width": 1317,
+     "height": 659,
      "review": "approved"
     }
    ],
    "answer": {
-    "raw": "B",
-    "status": "official-key"
-   },
-   "explanation": null,
-   "topic": "spatial-reasoning",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": true,
-   "licence": "official-unlicensed",
-   "sourceKind": "official",
-   "display": "block",
-   "taskMarks": null,
-   "holds": [
-    "owner-flagged"
-   ],
-   "provenance": {
-    "exam": "nid",
-    "year": 2019,
-    "paperId": "nid-bdes-2019",
-    "questionNo": "14",
-    "page": 5,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-2019-q15",
-   "type": "MCQ",
-   "prompt": "In the object given below, four different orientations are shown. Identify the pattern on the face with\nthe \"question mark(?)\"",
-   "options": [
-    {
-     "key": "A",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "",
-     "asset": null
-    }
-   ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q15.png",
-     "sha256": "407e07e896f9f91309a8926e9b3b49ee3a67b0e347e06ab979c2f19296ba0fd4",
-     "width": 1421,
-     "height": 1917,
-     "review": "approved"
-    }
-   ],
-   "answer": {
-    "raw": "D",
-    "status": "official-key"
+    "raw": "C",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "analytical-reasoning",
@@ -62192,18 +61977,72 @@
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
-    "questionNo": "15",
-    "page": 5,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "questionNo": "11",
+    "page": 3,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
    }
   },
   {
-   "externalKey": "nid-bdes-2019-q17",
+   "externalKey": "nid-bdes-2019-q12",
    "type": "MCQ",
-   "prompt": "Observe the images below and indicate which two images are equal in surface area?\n1 2 3",
+   "prompt": "The weight of a mother and her child together is 70 kg. The weight of the father and the child together is 90 kg. The weight of the father and the mother together is 120 kg. What is the combined weight of the family?",
+   "options": [
+    {
+     "key": "A",
+     "text": "100 kg",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "150 kg",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "140 kg",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "200 kg",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "12",
+    "page": 3,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-q13",
+   "type": "MCQ",
+   "prompt": "Based on the graphical representation (Figure X) of the physical characteristics of the 4 rectangles – P, Q, R & S based on the four characteristics of tall, thin, short and fat, which of the following depiction of rectangles is correct?",
    "options": [
     {
      "key": "A",
@@ -62229,19 +62068,271 @@
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q17.png",
-     "sha256": "431babb28fa4aba6a331447e2272047ab823ca867c478b905b8a2c5be4fdd65c",
-     "width": 1267,
-     "height": 527,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q13.png",
+     "sha256": "8a45e2c6de9e19b551f707f9e321329c19ae67c421cf969d1c989f26320a080c",
+     "width": 1378,
+     "height": 1481,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "13",
+    "page": 4,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-q14",
+   "type": "MCQ",
+   "prompt": "If the following profile is rotated along the given axis by 360 degrees, which of the following 3-dimensional form would be created?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q14.png",
+     "sha256": "9c7cd03ec4e2477f56870cd5a36604ad338391f07812b262b13ed9fffd05b11f",
+     "width": 1313,
+     "height": 1161,
      "review": "approved"
     }
    ],
    "answer": {
     "raw": "B",
-    "status": "official-key"
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "14",
+    "page": 5,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-q15",
+   "type": "MCQ",
+   "prompt": "In the object given below, four different orientations are shown. Identify the pattern on the face with the “question mark(?)”.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q15.png",
+     "sha256": "b08ee3b37a5e1ce5e89b0ac619056a0527e3811f272a29de0d834983b49c1fcc",
+     "width": 1418,
+     "height": 634,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "15",
+    "page": 5,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-q16",
+   "type": "MCQ",
+   "prompt": "Four figures “R”, “S”, “T” and “U” are given below. If figure “R” represents “ASC12”, figure “S” represents “DES23”, figure “T” represents “ASC34” and figure “U” represents “DES45”, then which of the following figures will represent “DES12”?\n\n(Corrected by DMocks: in NID's original, no option followed the code exactly, so the two marked cells in option A have been swapped.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q16-corrected.png",
+     "sha256": "6fb2e98be2ae75ffd2bf3f7ee48e38504db83a2d92dc7aa48c0cbc76a61fd852",
+     "width": 1379,
+     "height": 1209,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "pattern-recognition",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "16",
+    "page": 6,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-q17",
+   "type": "MCQ",
+   "prompt": "Observe the images below and indicate which two images are equal in surface area?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1 and 2",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2 and 3",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1 and 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3 and 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q17.png",
+     "sha256": "55d137b6499d4b002b00a0be3f25377479afd693c881e26c5d56084bd4fb9e31",
+     "width": 1330,
+     "height": 499,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -62257,7 +62348,7 @@
     "paperId": "nid-bdes-2019",
     "questionNo": "17",
     "page": 6,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -62266,7 +62357,133 @@
   {
    "externalKey": "nid-bdes-2019-q18",
    "type": "MCQ",
-   "prompt": "How many rectangles are there in the image given below?",
+   "prompt": "How many rectangles are there in the image given below?\n\n(Corrected by DMocks: NID's original options were 15, 21, 17 and 19, but the figure has 22 rectangles, so option B now reads 22.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "15",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "22",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "17",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "19",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q18-corrected.png",
+     "sha256": "daf4c234dbb228973d115feff1f8b7b5d54ca7d47f68538b9f09661dcf66ff97",
+     "width": 868,
+     "height": 773,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "18",
+    "page": 7,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-q19",
+   "type": "MCQ",
+   "prompt": "Identify the set of shapes which can lead to the following pattern using repetition and combination as a technique.",
+   "options": [
+    {
+     "key": "A",
+     "text": "(iii) (iv) (v) (vi)",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "(i) (iii) (v) (vi)",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(i) (ii) (iii) (v)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "(ii) (iv) (v) (vi)",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q19.png",
+     "sha256": "1f31916a7282c9c4e1ddd32b7ecb70d0e99e495bc262d7226cdb0efdc10fbf2f",
+     "width": 1399,
+     "height": 926,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "pattern-recognition",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "19",
+    "page": 7,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-q20",
+   "type": "MCQ",
+   "prompt": "Which of the papers sets when folded along the intermediate borders can form the cube as given in the image below?",
    "options": [
     {
      "key": "A",
@@ -62292,16 +62509,16 @@
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q18.png",
-     "sha256": "9011b4bc55eeaef68fe8bd7096ef7fa3cdd2dec2b27920563ee256565f64fbd8",
-     "width": 777,
-     "height": 890,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q20.png",
+     "sha256": "eb186c16e157001dbddc342e87920a99a2728a3a4677b6a83ee4701815639340",
+     "width": 1404,
+     "height": 783,
      "review": "approved"
     }
    ],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "B",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "spatial-reasoning",
@@ -62318,72 +62535,9 @@
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
-    "questionNo": "18",
-    "page": 7,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-2019-q19",
-   "type": "MCQ",
-   "prompt": "Identify the set of shapes wlich can lead to the following pattern using repetition and combination as a\ntechnique.\n+\n(mii) (iv) (v) _ (vi)\n(li)",
-   "options": [
-    {
-     "key": "A",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "",
-     "asset": null
-    }
-   ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q19.png",
-     "sha256": "9cfde3c8e49b9205c39e89fc4ef1553751f5810ffa0f09e7555b40b5db4481fe",
-     "width": 1436,
-     "height": 1760,
-     "review": "approved"
-    }
-   ],
-   "answer": {
-    "raw": "B",
-    "status": "official-key"
-   },
-   "explanation": null,
-   "topic": "visual-reasoning",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": true,
-   "licence": "official-unlicensed",
-   "sourceKind": "official",
-   "display": "block",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2019,
-    "paperId": "nid-bdes-2019",
-    "questionNo": "19",
-    "page": 7,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "questionNo": "20",
+    "page": 8,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -62392,7 +62546,7 @@
   {
    "externalKey": "nid-bdes-2019-q21",
    "type": "MCQ",
-   "prompt": "Observe the image given.\nPlease imagine the following process -\n411. Rotate disc \"m\" 90 degrees clockwise around the center \"®\"\n412. Rotate disc \"n\" 180 degrees counter-clockwise around the center *a\"\n413. Rotate disc \"p\" 180 degrees clockwise around the center \"o\"\nWhat will the resultant figure look like?\n(",
+   "prompt": "Observe the image given. Please imagine the following process –\n1. Rotate disc “m” 90 degrees clockwise around the center “o”\n2. Rotate disc “n” 180 degrees counter-clockwise around the center “o”\n3. Rotate disc “p” 180 degrees clockwise around the center “o”\nWhat will the resultant figure look like?",
    "options": [
     {
      "key": "A",
@@ -62418,19 +62572,19 @@
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q21.png",
-     "sha256": "7b5b3c583f566849d52fb4cfee11decfb8312ecaf6eb44e8517f320e31917f3f",
-     "width": 1305,
-     "height": 972,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q21.png",
+     "sha256": "29da22a5407f29f8549c782e7bf5c4d3ead0fd3032e7ae594fd2fefed3e0809e",
+     "width": 1349,
+     "height": 893,
      "review": "approved"
     }
    ],
    "answer": {
     "raw": "A",
-    "status": "official-key"
+    "status": "independently-solved"
    },
    "explanation": null,
-   "topic": "visual-reasoning",
+   "topic": "spatial-reasoning",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -62446,7 +62600,7 @@
     "paperId": "nid-bdes-2019",
     "questionNo": "21",
     "page": 8,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -62454,33 +62608,46 @@
   },
   {
    "externalKey": "nid-bdes-2019-q22",
-   "type": "DESCRIPTIVE",
-   "prompt": "Which of the following figures can be drawn, if you have to draw it without lifting your pencil and\nwithout drawing over the line(s) you have already drawn",
+   "type": "MCQ",
+   "prompt": "Which of the following figures can be drawn, if you have to draw it without lifting your pencil and without drawing over the line(s) you have already drawn.",
    "options": [
     {
      "key": "A",
-     "text": "(B) Spase for Rough Werk.. \" a a4 aao4.•cei..o...",
+     "text": "",
      "asset": null
     },
     {
      "key": "B",
-     "text": "Des./GDPD DAT Prelims Sample Test Paper Part-lI This will lead to disqualification.",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
      "asset": null
     }
    ],
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q22.png",
-     "sha256": "322d22057434fba270d8c5056dc6ef9ec2a3f12489e1f9e7be47ab64b6242a7f",
-     "width": 1407,
-     "height": 1039,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q22.png",
+     "sha256": "b94576378f72d53560da68a2097ac22c0014d7f9dedc2d6769a9b7cc864b2bd4",
+     "width": 1330,
+     "height": 840,
      "review": "approved"
     }
    ],
-   "answer": null,
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
    "explanation": null,
-   "topic": "drawing-creative",
+   "topic": "visual-reasoning",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -62496,7 +62663,7 @@
     "paperId": "nid-bdes-2019",
     "questionNo": "22",
     "page": 9,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -62505,15 +62672,15 @@
   {
    "externalKey": "nid-bdes-2019-q23",
    "type": "DESCRIPTIVE",
-   "prompt": "Observe the image of the scene as given below. A person tries to enter the room by a ladder from\noutside the window and sees the scene inside the room. Visualise and draw the scene from the person's\npoint of view. No colour to be used (15 marks)",
+   "prompt": "Observe the image of the scene as given below. A person tries to enter the room by a ladder from outside the window and sees the scene inside the room. Visualise and draw the scene from the person’s point of view. No colour to be used.",
    "options": [],
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q23.png",
-     "sha256": "61676cd6aa66a2839ede27972b6ad4642466f7709d723a9ca2bef5a2b99c3f08",
-     "width": 1356,
-     "height": 1701,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q23.png",
+     "sha256": "bfbf31de93b9bca215788b8df3d963149d21ab312f1c5716483d489830f57824",
+     "width": 1398,
+     "height": 1657,
      "review": "approved"
     }
    ],
@@ -62527,15 +62694,15 @@
    "licence": "official-unlicensed",
    "sourceKind": "official",
    "display": "block",
-   "taskMarks": null,
+   "taskMarks": 15.0,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
     "questionNo": "23",
-    "page": 12,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "page": 13,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -62544,37 +62711,28 @@
   {
    "externalKey": "nid-bdes-2019-q24",
    "type": "DESCRIPTIVE",
-   "prompt": "Imagine and draw a real life situation which represents \"All that is gold does not glitter\" in a\nmeaningful way. Use the space given to draw and explain your interpretation in 5 lines.\nNo colour to be used.\n(20 marks)",
+   "prompt": "Imagine and draw a real life situation which represents “All that is gold does not glitter” in a meaningful way. Use the space given to draw and explain your interpretation in 5 lines. No colour to be used.",
    "options": [],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q24.png",
-     "sha256": "41d6754e0d42555f441f865bf94f3854d2ea8453e5e267b9d528e20bb73110e3",
-     "width": 1436,
-     "height": 1831,
-     "review": "approved"
-    }
-   ],
+   "assets": [],
    "answer": null,
    "explanation": null,
    "topic": "drawing-creative",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
-   "visualDependency": true,
+   "visualDependency": false,
    "licence": "official-unlicensed",
    "sourceKind": "official",
-   "display": "block",
-   "taskMarks": null,
+   "display": "text",
+   "taskMarks": 20.0,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
     "questionNo": "24",
-    "page": 13,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "page": 14,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -62583,15 +62741,15 @@
   {
    "externalKey": "nid-bdes-2019-q25",
    "type": "DESCRIPTIVE",
-   "prompt": "To commemorate the 150th birth anniversary of Mahatma Gandhi, the Government of India has invited\nideas to design a CIRCULAR postage stamp (Rs 20) from young minds. Depict your idea for the stamp\nin the given format. (you need to use colours). (15 marks)",
+   "prompt": "To commemorate the 150th birth anniversary of Mahatma Gandhi, the Government of India has invited ideas to design a CIRCULAR postage stamp (Rs.20) from young minds. Depict your idea for the stamp in the given format. (you need to use colours).",
    "options": [],
    "assets": [
     {
      "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q25.png",
-     "sha256": "0af6edc4a027c6ea3610b9538631edf273351466a2f372cc3e8bdcf45ab07762",
-     "width": 1357,
-     "height": 1444,
+     "path": "nid-bdes-2019/nid-pdf/nid-bdes-2019-q25.png",
+     "sha256": "d033130ce6d1fb37d7dd897394f26d86dde297606dc711c961b4baf1516131d9",
+     "width": 1390,
+     "height": 1515,
      "review": "approved"
     }
    ],
@@ -62605,15 +62763,15 @@
    "licence": "official-unlicensed",
    "sourceKind": "official",
    "display": "block",
-   "taskMarks": null,
+   "taskMarks": 15.0,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
     "questionNo": "25",
-    "page": 14,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "page": 15,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
@@ -62622,48 +62780,28 @@
   {
    "externalKey": "nid-bdes-2019-q26",
    "type": "DESCRIPTIVE",
-   "prompt": "Visualise & draw the following as instructed. Do not use colour.\nDraw a person sitting at a dining table with a plate, stainless steel spoon and fork laid out in front of\nhim/her. (8 marks)",
-   "options": [
-    {
-     "key": "B",
-     "text": "An ant is sitting on the tip of a spoon handle. Draw the view of the table from the point of view of an ant. (6 marks)",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "Visualise and draw a stainless steel spoon and fork tied into a knot at their handles. (6 marks) Spuse for Rough Work Answers of Questions part A Question No Answer 1 D 2 D 3 4 A",
-     "asset": null
-    }
-   ],
-   "assets": [
-    {
-     "role": "figure",
-     "path": "nid-bdes-2019/blocks/nid-bdes-2019-q26.png",
-     "sha256": "3cdf19262ff2b99ac0f6198334b06b52419da9f2b025a115d8ed107d3352a91b",
-     "width": 1430,
-     "height": 1781,
-     "review": "approved"
-    }
-   ],
+   "prompt": "Visualise & draw the following as instructed. Do not use colour.\nA. Draw a person sitting at a dining table with a plate, stainless steel spoon and fork laid out in front of him/her. (8 marks)\nB. An ant is sitting on the tip of a spoon handle. Draw the view of the table from the point of view of an ant. (6 marks)\nC. Visualise and draw a stainless steel spoon and fork tied into a knot at their handles. (6 marks)",
+   "options": [],
+   "assets": [],
    "answer": null,
    "explanation": null,
-   "topic": "drawing-creative",
+   "topic": "drawing-skill",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
-   "visualDependency": true,
+   "visualDependency": false,
    "licence": "official-unlicensed",
    "sourceKind": "official",
-   "display": "block",
-   "taskMarks": null,
+   "display": "text",
+   "taskMarks": 20.0,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
     "questionNo": "26",
-    "page": 15,
-    "sourceSha256": "34ce6e0cd7e65ca149737e701508b7869142a5f9cbc56d617915821df8e06b97",
+    "page": 16,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
