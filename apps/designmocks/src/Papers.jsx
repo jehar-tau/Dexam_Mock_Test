@@ -13,6 +13,7 @@ import './papers.css';
 
 const examNames = { uceed: 'UCEED', ceed: 'CEED', nift: 'NIFT', nid: 'NID' };
 const exams = Object.keys(examNames);
+const catalogueRefreshMs = 10000;
 
 export function PapersView({ releases = [], signedIn = false, onStart,
   busy = '', startError = '', releasesUnavailable = false, releasesLoading = false,
@@ -178,12 +179,31 @@ export default function Papers() {
   useEffect(() => {
     if (!cataloguePlatform) return;
     const controller = new AbortController();
-    setReleasesLoading(true);setReleasesUnavailable(false);
-    loadReleasedYearPapers(cataloguePlatform,controller.signal).then(data => {
-      if (!controller.signal.aborted) {setReleases(data);setReleasesUnavailable(false);}
-    }).catch(() => {if (!controller.signal.aborted) {setReleases([]);setReleasesUnavailable(true);}})
-      .finally(() => {if (!controller.signal.aborted) setReleasesLoading(false);});
-    return () => controller.abort();
+    let inFlight = false;
+    const load = async (showLoading = false) => {
+      if (controller.signal.aborted || inFlight || document.visibilityState === 'hidden') return;
+      inFlight = true;
+      if (showLoading) setReleasesLoading(true);
+      try {
+        const data = await loadReleasedYearPapers(cataloguePlatform,controller.signal);
+        if (!controller.signal.aborted) {setReleases(data);setReleasesUnavailable(false);}
+      } catch {
+        // Keep the last known cards visible while disabling new starts until
+        // the catalogue can be checked again.
+        if (!controller.signal.aborted) setReleasesUnavailable(true);
+      } finally {
+        inFlight = false;
+        if (!controller.signal.aborted && showLoading) setReleasesLoading(false);
+      }
+    };
+    void load(true);
+    const onVisible = () => {if (document.visibilityState === 'visible') void load();};
+    const onFocus = () => {void load();};
+    document.addEventListener('visibilitychange',onVisible);
+    window.addEventListener('focus',onFocus);
+    const timer = window.setInterval(() => {void load();},catalogueRefreshMs);
+    return () => {controller.abort();window.clearInterval(timer);
+      document.removeEventListener('visibilitychange',onVisible);window.removeEventListener('focus',onFocus);};
   }, [refresh]);
   const onRefresh = cataloguePlatform ? () => setRefresh(value => value + 1) : undefined;
   if (authChecking || !session || !platform) return <PapersView releases={releases} releasesUnavailable={releasesUnavailable}

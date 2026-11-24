@@ -220,6 +220,23 @@ test.describe('free year-paper release', () => {
 
 test.describe('signed-out public year-paper catalogue', () => {
   test.use({ baseURL: 'http://127.0.0.1:4798' });
+  test('an already open Papers tab shows a newly released paper when refocused', async ({ page }) => {
+    const first = {paperId:'10000000-0000-4000-8000-000000003011',exam:'uceed',
+      year:2026,sourcePaperId:'uceed-2026',partLabel:'Part A',questionCount:57,durationSeconds:7200};
+    const added = {paperId:'10000000-0000-4000-8000-000000003012',exam:'ceed',
+      year:2025,sourcePaperId:'ceed-2025',partLabel:'Part A',questionCount:42,durationSeconds:3600};
+    let releases = [first];
+    const provider = await stubPortalProvider(page, name => name === 'free_year_paper_catalog' ? releases : undefined, project.project_ref);
+    await page.goto('/papers');
+    await expect(page.getByRole('button', {name:'UCEED 1',exact:true})).toBeVisible();
+    releases = [first,added];
+    await page.evaluate(() => window.dispatchEvent(new Event('focus')));
+    await expect(page.getByRole('button', {name:'CEED 1',exact:true})).toBeVisible();
+    await page.getByRole('button', {name:'CEED 1',exact:true}).click();
+    await expect(page.getByRole('heading', {name:'2025 paper'})).toBeVisible();
+    expect(provider.calls.filter(([name]) => name === 'free_year_paper_catalog')).toHaveLength(2);
+    expect(provider.unexpected).toEqual([]);
+  });
   test('reads released papers with an anonymous client while Google sign-in stays closed', async ({ page }) => {
     const release = {paperId:'10000000-0000-4000-8000-000000003001',exam:'uceed',
       year:2026,sourcePaperId:'uceed-2026',partLabel:'Part A',questionCount:57,durationSeconds:7200};
