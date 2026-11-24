@@ -38,6 +38,7 @@
     "runtime:manifest": "node scripts/materialize-bank-runtime.mjs --ref origin/main",
     "runtime:apply": "node scripts/materialize-bank-runtime.mjs --ref origin/main --apply",
     "runtime:nid": "node scripts/materialize-nid-practice.mjs --ref origin/main",
+    "runtime:nid-year": "node scripts/materialize-nid-year-paper.mjs",
     "paper:prepare": "node scripts/prepare-mvp-paper.mjs",
     "papers:prepare-free": "node scripts/prepare-free-year-paper.mjs",
     "drawing:advise": "node scripts/drawing-ai-advice.mjs",
