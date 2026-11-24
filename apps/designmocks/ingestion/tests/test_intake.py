@@ -191,7 +191,7 @@ class IntakeTest(unittest.TestCase):
         doc.close()
         with self.assertRaisesRegex(intake.IntakeError, "password"):
             self.run_pdf(pdf=locked)
-        for exam, year, paper_id in [("nid", 2031, None), ("uceed", 31, None), ("uceed", 2031, "../escape")]:
+        for exam, year, paper_id in [("notanexam", 2031, None), ("uceed", 31, None), ("uceed", 2031, "../escape")]:
             with self.assertRaises(intake.IntakeError):
                 self.run_pdf(exam=exam, year=year, paper_id=paper_id)
         with self.assertRaises(intake.IntakeError):

@@ -38,7 +38,7 @@ except ImportError:  # pragma: no cover - reported at runtime
 
 SCHEMA = 1
 STAGE = "01-intake"
-EXAMS = {"uceed", "ceed"}
+EXAMS = {"uceed", "ceed", "nid"}
 MAX_SOURCE_BYTES = 100 * 1024 * 1024
 MAX_PAGES = 80
 MAX_PHOTO_PIXELS = 60_000_000
@@ -399,7 +399,7 @@ def summarise(pages, images):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="Stage 1: take in a UCEED/CEED question paper.")
+    parser = argparse.ArgumentParser(description="Stage 1: take in a UCEED, CEED or NID question paper.")
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument("--paper", help="Question-paper PDF")
     source.add_argument("--photos", nargs="+", help="Page photos in page order")
