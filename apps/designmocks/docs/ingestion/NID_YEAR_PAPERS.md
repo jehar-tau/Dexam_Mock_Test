@@ -44,7 +44,18 @@ NID removes old sample papers from admissions.nid.edu each cycle; only NIDA2027 
 | 2026 | NIDA2026 BDes (0.72 MB) | MDes (0.41 MB) |
 | 2027 | live, 2.45 MB (same size as local `SamplePaper_DATPrelims_BDes.pdf`) | live, 0.41 MB (same size as local) |
 
-Not downloaded yet: owner approval needed. Third-party "previous year papers" (Careers360, Silica, Toprankers, Shiksha, AglaSem, Getmyuni) are memory-based reconstructions by coaching institutes, not NID's; keep to NID's own papers.
+Downloaded 24 Nov 2026 with owner approval into the private work folder (`nid-sources/`, see its README). The 15 files are **7 distinct papers**: NID reused one sample across several cycles (NIDA2021 = NIDA2022; NIDA2023 = 2024 = 2025 = 2026 apart from metadata).
+
+New papers to ingest:
+- [ ] B.Des (GDPD) DAT 2012-13 (scan, mostly subjective)
+- [ ] B.Des (GDPD) DAT 2014-15 (scan)
+- [ ] M.Des DAT 2014-15 (scan, subjective)
+- [ ] B.Des Prelims sample, NIDA2021–22 (scan, 26 pp)
+- [ ] M.Des Prelims sample, NIDA2021–22 (scan, 10 pp)
+- [ ] B.Des Prelims sample, NIDA2023–26 (text, 22 pp)
+- [ ] M.Des Prelims sample, NIDA2023–26 (text, 12 pp)
+
+Also to check: the bank's nid-bdes-sample-2024 and -2025 both come from one PDF (the NIDA2027 sample), and so do the two M.Des samples; the year labels are probably wrong. Third-party "previous year papers" (Careers360, Silica, Toprankers, Shiksha, AglaSem, Getmyuni) are memory-based reconstructions by coaching institutes, not NID's; keep to NID's own papers.
 
 ## Gates the product already has
 
