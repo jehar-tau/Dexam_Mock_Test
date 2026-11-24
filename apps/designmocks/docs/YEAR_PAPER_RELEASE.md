@@ -24,4 +24,12 @@ From `apps/designmocks`:
 
 The operator config uses `DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_PAPER_ALLOW_ORIGIN`, `DMOCKS_PAPER_ENVIRONMENT`, and for production `DMOCKS_PAPER_PRODUCTION_ACK`. Use the separate `PREPARE_FREE_YEAR_PAPER_ON_ORIGIN` and `RELEASE_FREE_YEAR_PAPER_ON_ORIGIN` acknowledgements for their respective production commands. Do not place credentials or real plans in the repository or chat.
 
+On the designated private Test project while its operational health reports
+`apiProfileReady: false`, the paper command also needs the existing expanded
+staging bank audit: `DMOCKS_BANK_PROFILE=expanded-staging`,
+`DMOCKS_BANK_AUDIT_DATABASE_URL` and `DMOCKS_BANK_AUDIT_DATABASE_CA_FILE`.
+The server checks closed Test settings, restricted admission, disabled Test
+checkout, current grant drift and service-only bank RPCs before preparation.
+These variables do not bypass the exact paper origin or environment checks.
+
 The `/papers` catalogue remains in preparation until step 4 succeeds. The existing attempt room then freezes the timer and answers, and shows worked explanations only after submission. The paid mock catalogue stays separate.
