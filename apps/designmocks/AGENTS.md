@@ -8,6 +8,10 @@ Keep real sign-in and sales fail-closed until the separate provider project and 
 
 Run relevant unit, build, browser, keyboard, reflow and accessibility checks. Preserve unused image/reference work outside public assets. Document launch prerequisites and unresolved owner decisions honestly.
 
+## Student-visible delivery priority (owner feedback, 25 November 2026)
+
+The owner is dissatisfied with the pace and with background PRs that leave the portal unchanged or disabled. For the Papers launch, measure progress by complete papers students can open at dmocks.com/papers and by working question, figure, marking, and explanation flows. Publish accepted UI changes after CI and verify the live route. Report the exact visible count and paper-specific blockers; do not count a PR, import, preparation, or hidden paper as a student release. Preserve Claude's bank records, plans, keys, explanations, marking, and figures exactly; stop and report a content validation failure instead of editing it. The owner's 25 November instruction batch-approves the named 18 CEED/UCEED year papers for release after their required checks.
+
 The owner is a UX designer who judges the working interface, not code diffs.
 For each small student-facing slice, provide a no-login working preview with
 desktop and mobile views, collect visual feedback, and obtain approval of the

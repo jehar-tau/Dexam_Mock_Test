@@ -31,6 +31,8 @@ test('full question crops may supply option labels; unresolved text-only options
 test('choice parsing rejects extra text, duplicates and unknown options instead of silently discarding them',()=>{
  for(const raw of ['A,Z','A,A','Answer A','A!'])assert.equal(convert(fixture({type:'MSQ',answer:{raw,status:'verified'}})),null);
  for(const raw of ['AC','A,C','A C','A;C'])assert.deepEqual(convert(fixture({type:'MSQ',answer:{raw,status:'verified'}})).key.correct,['A','C']);
+ assert.deepEqual(convert(fixture({type:'MSQ',answer:{raw:'B. D',status:'official-key'}})).key.correct,['B','D']);
+ assert.equal(convert(fixture({type:'MSQ',answer:{raw:'B. D.',status:'official-key'}})),null);
  assert.equal(convert(fixture({options:[{key:'A',text:'A'},{key:'B',text:'B'}]})),null);
 });
 test('verified IIT choice keys preserve explicit single-option alternatives and complete MSQ sets',()=>{
@@ -59,6 +61,7 @@ test('owner-approved CEED printed tolerances accept the stated range and reject 
  const nat=raw=>convert(fixture({type:'NAT',options:[],answer:{raw,status:'verified'},provenance:{exam:'ceed'}}));
  assert.deepEqual(nat('94.2 (92.9 - 94.6)').key.accepted,[{range:['92.9','94.6']}]);
  assert.deepEqual(nat('2.25 (2.24-2.26)').key.accepted,[{range:['2.24','2.26']}]);
+ assert.deepEqual(nat('16.12 (15.00~16.50)').key.accepted,[{range:['15.00','16.50']}]);
  for(const raw of ['94.2 (94.3-94.6)','94.2 (94.6-92.9)','94.2 (92.9-)','94.2 (92.9-94.6) or 95'])
   assert.equal(nat(raw),null);
  assert.equal(numericKey('94.2 (92.9 - 94.6)'),null,'unverified numeric contexts stay unchanged');
