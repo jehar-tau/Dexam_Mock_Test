@@ -69368,8 +69368,8 @@
     }
    ],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "A",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
@@ -70544,8 +70544,8 @@
     }
    ],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "A",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "design-awareness",
@@ -70620,7 +70620,9 @@
    "sourceKind": "official",
    "display": "block",
    "taskMarks": null,
-   "holds": [],
+   "holds": [
+    "awaiting-owner-review"
+   ],
    "provenance": {
     "exam": "nid",
     "year": 2025,
@@ -71183,8 +71185,8 @@
     }
    ],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "C",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "design-awareness",
@@ -71211,30 +71213,9 @@
   },
   {
    "externalKey": "nid-bdes-sample-2025-q21",
-   "type": "MCQ",
+   "type": "DESCRIPTIVE",
    "prompt": "Rajiv and Sudip are neighbours and share the same wall. Rajiv has a big neem tree in his yard\nwhich provides shade to a portion of Sudip’s garden. Whenever the tree sheds leaves, Sudip\nfeels the burden of having to clear his garden as well. Due to this Sudip has argued with Rajiv to\ncut down the tree so that he does not have to clear the fallen leaves anymore. Rajiv refuses to\ndo so.\nHow can you resolve this issue through 4 distinct ideas? Provide your ideas through illustration\nsupported by text in the given space.\n(20 marks)\n1)\n__________________________________________________________________________\n__________________________________________________________________________\n2)\n__________________________________________________________________________\n__________________________________________________________________________\n\n3)\n__________________________________________________________________________\n__________________________________________________________________________\n4)\n__________________________________________________________________________\n__________________________________________________________________________",
-   "options": [
-    {
-     "key": "A",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "",
-     "asset": null
-    }
-   ],
+   "options": [],
    "assets": [
     {
      "role": "figure",
@@ -71245,12 +71226,9 @@
      "review": "approved"
     }
    ],
-   "answer": {
-    "raw": null,
-    "status": "pending"
-   },
+   "answer": null,
    "explanation": null,
-   "topic": "numerical-reasoning",
+   "topic": "drawing-communication",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -71313,30 +71291,9 @@
   },
   {
    "externalKey": "nid-bdes-sample-2025-q23",
-   "type": "MCQ",
+   "type": "DESCRIPTIVE",
    "prompt": "Below is the image of a sink near the train washroom.\n(10 marks)\n\nList down 5 different categories of user groups. The user groups can be categorized by age groups,\nphysical abilities etc.\nDescribe the challenges that they will face while using the sink in the moving train.",
-   "options": [
-    {
-     "key": "A",
-     "text": "User group 01______________________________________________________________ Challenge faced by them______________________________________________________ __________________________________________________________________________ __________________________________________________________________________",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "User group 02______________________________________________________________ Challenge faced by them______________________________________________________ __________________________________________________________________________ __________________________________________________________________________",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "User group 03______________________________________________________________ Challenge faced by them______________________________________________________ __________________________________________________________________________ __________________________________________________________________________",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "User group 04______________________________________________________________ Challenge faced by them______________________________________________________ __________________________________________________________________________ __________________________________________________________________________ (E) User group 05______________________________________________________________ Challenge faced by them______________________________________________________ __________________________________________________________________________ __________________________________________________________________________",
-     "asset": null
-    }
-   ],
+   "options": [],
    "assets": [
     {
      "role": "figure",
@@ -71347,12 +71304,9 @@
      "review": "approved"
     }
    ],
-   "answer": {
-    "raw": null,
-    "status": "pending"
-   },
+   "answer": null,
    "explanation": null,
-   "topic": "spatial-reasoning",
+   "topic": "drawing-communication",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
@@ -79144,8 +79098,8 @@
     }
    ],
    "answer": {
-    "raw": null,
-    "status": "pending"
+    "raw": "A",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
