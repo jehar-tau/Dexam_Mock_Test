@@ -4,9 +4,9 @@
     "exam": "uceed",
     "year": 2026,
     "paperId": "uceed-2026",
-    "questionCount": 59,
+    "questionCount": 57,
     "objectiveCount": 57,
-    "drawingCount": 2,
+    "drawingCount": 0,
     "keyedCount": 57
   },
   {
@@ -14,9 +14,9 @@
     "exam": "uceed",
     "year": 2025,
     "paperId": "uceed-2025",
-    "questionCount": 59,
+    "questionCount": 57,
     "objectiveCount": 57,
-    "drawingCount": 2,
+    "drawingCount": 0,
     "keyedCount": 57
   },
   {
@@ -24,9 +24,9 @@
     "exam": "uceed",
     "year": 2024,
     "paperId": "uceed-2024",
-    "questionCount": 59,
+    "questionCount": 57,
     "objectiveCount": 57,
-    "drawingCount": 2,
+    "drawingCount": 0,
     "keyedCount": 57
   },
   {
@@ -34,9 +34,9 @@
     "exam": "uceed",
     "year": 2023,
     "paperId": "uceed-2023",
-    "questionCount": 69,
+    "questionCount": 68,
     "objectiveCount": 68,
-    "drawingCount": 1,
+    "drawingCount": 0,
     "keyedCount": 68
   },
   {
@@ -44,9 +44,9 @@
     "exam": "uceed",
     "year": 2022,
     "paperId": "uceed-2022",
-    "questionCount": 65,
+    "questionCount": 64,
     "objectiveCount": 64,
-    "drawingCount": 1,
+    "drawingCount": 0,
     "keyedCount": 64
   },
   {
@@ -54,9 +54,9 @@
     "exam": "uceed",
     "year": 2021,
     "paperId": "uceed-2021",
-    "questionCount": 65,
+    "questionCount": 64,
     "objectiveCount": 64,
-    "drawingCount": 1,
+    "drawingCount": 0,
     "keyedCount": 64
   },
   {
@@ -64,9 +64,9 @@
     "exam": "uceed",
     "year": 2020,
     "paperId": "uceed-2020",
-    "questionCount": 67,
+    "questionCount": 66,
     "objectiveCount": 66,
-    "drawingCount": 1,
+    "drawingCount": 0,
     "keyedCount": 66
   },
   {
@@ -124,9 +124,9 @@
     "exam": "ceed",
     "year": 2026,
     "paperId": "ceed-2026",
-    "questionCount": 46,
+    "questionCount": 41,
     "objectiveCount": 41,
-    "drawingCount": 5,
+    "drawingCount": 0,
     "keyedCount": 41
   },
   {
@@ -134,9 +134,9 @@
     "exam": "ceed",
     "year": 2025,
     "paperId": "ceed-2025",
-    "questionCount": 47,
+    "questionCount": 42,
     "objectiveCount": 42,
-    "drawingCount": 5,
+    "drawingCount": 0,
     "keyedCount": 42
   },
   {
@@ -144,9 +144,9 @@
     "exam": "ceed",
     "year": 2024,
     "paperId": "ceed-2024",
-    "questionCount": 45,
+    "questionCount": 41,
     "objectiveCount": 41,
-    "drawingCount": 4,
+    "drawingCount": 0,
     "keyedCount": 41
   },
   {
@@ -154,9 +154,9 @@
     "exam": "ceed",
     "year": 2023,
     "paperId": "ceed-2023",
-    "questionCount": 44,
+    "questionCount": 39,
     "objectiveCount": 39,
-    "drawingCount": 5,
+    "drawingCount": 0,
     "keyedCount": 39
   },
   {
@@ -164,9 +164,9 @@
     "exam": "ceed",
     "year": 2022,
     "paperId": "ceed-2022",
-    "questionCount": 42,
+    "questionCount": 38,
     "objectiveCount": 38,
-    "drawingCount": 4,
+    "drawingCount": 0,
     "keyedCount": 38
   },
   {
@@ -174,329 +174,29 @@
     "exam": "ceed",
     "year": 2021,
     "paperId": "ceed-2021",
-    "questionCount": 40,
+    "questionCount": 36,
     "objectiveCount": 36,
-    "drawingCount": 4,
+    "drawingCount": 0,
     "keyedCount": 36
-  },
-  {
-    "id": "ceed:ceed-2020",
-    "exam": "ceed",
-    "year": 2020,
-    "paperId": "ceed-2020",
-    "questionCount": 42,
-    "objectiveCount": 39,
-    "drawingCount": 3,
-    "keyedCount": 39
-  },
-  {
-    "id": "ceed:ceed-2019",
-    "exam": "ceed",
-    "year": 2019,
-    "paperId": "ceed-2019",
-    "questionCount": 50,
-    "objectiveCount": 42,
-    "drawingCount": 8,
-    "keyedCount": 42
-  },
-  {
-    "id": "ceed:ceed-2018",
-    "exam": "ceed",
-    "year": 2018,
-    "paperId": "ceed-2018",
-    "questionCount": 48,
-    "objectiveCount": 40,
-    "drawingCount": 8,
-    "keyedCount": 40
-  },
-  {
-    "id": "ceed:ceed-2017",
-    "exam": "ceed",
-    "year": 2017,
-    "paperId": "ceed-2017",
-    "questionCount": 51,
-    "objectiveCount": 43,
-    "drawingCount": 8,
-    "keyedCount": 43
-  },
-  {
-    "id": "ceed:ceed-2016-paper1",
-    "exam": "ceed",
-    "year": 2016,
-    "paperId": "ceed-2016-paper1",
-    "questionCount": 55,
-    "objectiveCount": 49,
-    "drawingCount": 6,
-    "keyedCount": 49
-  },
-  {
-    "id": "ceed:ceed-2016-paper2",
-    "exam": "ceed",
-    "year": 2016,
-    "paperId": "ceed-2016-paper2",
-    "questionCount": 56,
-    "objectiveCount": 49,
-    "drawingCount": 7,
-    "keyedCount": 49
-  },
-  {
-    "id": "ceed:ceed-2015",
-    "exam": "ceed",
-    "year": 2015,
-    "paperId": "ceed-2015",
-    "questionCount": 55,
-    "objectiveCount": 47,
-    "drawingCount": 8,
-    "keyedCount": 47
-  },
-  {
-    "id": "ceed:ceed-2014",
-    "exam": "ceed",
-    "year": 2014,
-    "paperId": "ceed-2014",
-    "questionCount": 54,
-    "objectiveCount": 49,
-    "drawingCount": 5,
-    "keyedCount": 49
-  },
-  {
-    "id": "ceed:ceed-2013",
-    "exam": "ceed",
-    "year": 2013,
-    "paperId": "ceed-2013",
-    "questionCount": 52,
-    "objectiveCount": 47,
-    "drawingCount": 5,
-    "keyedCount": 47
-  },
-  {
-    "id": "ceed:ceed-2012",
-    "exam": "ceed",
-    "year": 2012,
-    "paperId": "ceed-2012",
-    "questionCount": 42,
-    "objectiveCount": 40,
-    "drawingCount": 2,
-    "keyedCount": 40
-  },
-  {
-    "id": "ceed:ceed-2011",
-    "exam": "ceed",
-    "year": 2011,
-    "paperId": "ceed-2011",
-    "questionCount": 5,
-    "objectiveCount": 0,
-    "drawingCount": 5,
-    "keyedCount": 0
-  },
-  {
-    "id": "ceed:ceed-2010",
-    "exam": "ceed",
-    "year": 2010,
-    "paperId": "ceed-2010",
-    "questionCount": 8,
-    "objectiveCount": 1,
-    "drawingCount": 7,
-    "keyedCount": 1
-  },
-  {
-    "id": "nift:nift-2014-bdes-cat",
-    "exam": "nift",
-    "year": 2014,
-    "paperId": "nift-2014-bdes-cat",
-    "questionCount": 2,
-    "objectiveCount": 0,
-    "drawingCount": 2,
-    "keyedCount": 0
-  },
-  {
-    "id": "nift:nift-2014-bdes-written",
-    "exam": "nift",
-    "year": 2014,
-    "paperId": "nift-2014-bdes-written",
-    "questionCount": 75,
-    "objectiveCount": 75,
-    "drawingCount": 0,
-    "keyedCount": 75
-  },
-  {
-    "id": "nift:nift-2014-mdes-cat",
-    "exam": "nift",
-    "year": 2014,
-    "paperId": "nift-2014-mdes-cat",
-    "questionCount": 2,
-    "objectiveCount": 0,
-    "drawingCount": 2,
-    "keyedCount": 0
-  },
-  {
-    "id": "nift:nift-2012-written-set4",
-    "exam": "nift",
-    "year": 2012,
-    "paperId": "nift-2012-written-set4",
-    "questionCount": 32,
-    "objectiveCount": 32,
-    "drawingCount": 0,
-    "keyedCount": 32
-  },
-  {
-    "id": "nid:nid-bdes-dat-mock-01",
-    "exam": "nid",
-    "year": 2026,
-    "paperId": "nid-bdes-dat-mock-01",
-    "questionCount": 6,
-    "objectiveCount": 0,
-    "drawingCount": 6,
-    "keyedCount": 0
-  },
-  {
-    "id": "nid:nid-bdes-dat-mock-02",
-    "exam": "nid",
-    "year": 2026,
-    "paperId": "nid-bdes-dat-mock-02",
-    "questionCount": 6,
-    "objectiveCount": 0,
-    "drawingCount": 6,
-    "keyedCount": 0
-  },
-  {
-    "id": "nid:nid-bdes-dat-mock-03",
-    "exam": "nid",
-    "year": 2026,
-    "paperId": "nid-bdes-dat-mock-03",
-    "questionCount": 6,
-    "objectiveCount": 0,
-    "drawingCount": 6,
-    "keyedCount": 0
-  },
-  {
-    "id": "nid:nid-bdes-dat-mock-04",
-    "exam": "nid",
-    "year": 2026,
-    "paperId": "nid-bdes-dat-mock-04",
-    "questionCount": 6,
-    "objectiveCount": 0,
-    "drawingCount": 6,
-    "keyedCount": 0
-  },
-  {
-    "id": "nid:nid-bdes-dat-mock-05",
-    "exam": "nid",
-    "year": 2026,
-    "paperId": "nid-bdes-dat-mock-05",
-    "questionCount": 6,
-    "objectiveCount": 0,
-    "drawingCount": 6,
-    "keyedCount": 0
-  },
-  {
-    "id": "nid:nid-bdes-recalled-2026",
-    "exam": "nid",
-    "year": 2026,
-    "paperId": "nid-bdes-recalled-2026",
-    "questionCount": 6,
-    "objectiveCount": 0,
-    "drawingCount": 6,
-    "keyedCount": 0
-  },
-  {
-    "id": "nid:nid-mdes-dat-mock-01",
-    "exam": "nid",
-    "year": 2026,
-    "paperId": "nid-mdes-dat-mock-01",
-    "questionCount": 6,
-    "objectiveCount": 0,
-    "drawingCount": 6,
-    "keyedCount": 0
-  },
-  {
-    "id": "nid:nid-mdes-dat-mock-02",
-    "exam": "nid",
-    "year": 2026,
-    "paperId": "nid-mdes-dat-mock-02",
-    "questionCount": 6,
-    "objectiveCount": 0,
-    "drawingCount": 6,
-    "keyedCount": 0
-  },
-  {
-    "id": "nid:nid-mdes-dat-mock-03",
-    "exam": "nid",
-    "year": 2026,
-    "paperId": "nid-mdes-dat-mock-03",
-    "questionCount": 6,
-    "objectiveCount": 0,
-    "drawingCount": 6,
-    "keyedCount": 0
-  },
-  {
-    "id": "nid:nid-bdes-sample-2025",
-    "exam": "nid",
-    "year": 2025,
-    "paperId": "nid-bdes-sample-2025",
-    "questionCount": 23,
-    "objectiveCount": 21,
-    "drawingCount": 2,
-    "keyedCount": 21
-  },
-  {
-    "id": "nid:nid-mdes-sample-2025",
-    "exam": "nid",
-    "year": 2025,
-    "paperId": "nid-mdes-sample-2025",
-    "questionCount": 18,
-    "objectiveCount": 18,
-    "drawingCount": 0,
-    "keyedCount": 18
   },
   {
     "id": "nid:nid-bdes-recalled-2024",
     "exam": "nid",
     "year": 2024,
     "paperId": "nid-bdes-recalled-2024",
-    "questionCount": 14,
+    "questionCount": 11,
     "objectiveCount": 11,
-    "drawingCount": 3,
-    "keyedCount": 11
-  },
-  {
-    "id": "nid:nid-bdes-sample-2024",
-    "exam": "nid",
-    "year": 2024,
-    "paperId": "nid-bdes-sample-2024",
-    "questionCount": 23,
-    "objectiveCount": 19,
-    "drawingCount": 4,
-    "keyedCount": 19
-  },
-  {
-    "id": "nid:nid-mdes-sample-2024",
-    "exam": "nid",
-    "year": 2024,
-    "paperId": "nid-mdes-sample-2024",
-    "questionCount": 15,
-    "objectiveCount": 15,
     "drawingCount": 0,
-    "keyedCount": 15
-  },
-  {
-    "id": "nid:nid-bdes-recalled-2023",
-    "exam": "nid",
-    "year": 2023,
-    "paperId": "nid-bdes-recalled-2023",
-    "questionCount": 4,
-    "objectiveCount": 0,
-    "drawingCount": 4,
-    "keyedCount": 0
+    "keyedCount": 11
   },
   {
     "id": "nid:nid-bdes-sample-2023",
     "exam": "nid",
     "year": 2023,
     "paperId": "nid-bdes-sample-2023",
-    "questionCount": 31,
+    "questionCount": 27,
     "objectiveCount": 27,
-    "drawingCount": 4,
+    "drawingCount": 0,
     "keyedCount": 27
   },
   {
@@ -504,9 +204,9 @@
     "exam": "nid",
     "year": 2023,
     "paperId": "nid-mdes-sample-2023",
-    "questionCount": 40,
+    "questionCount": 37,
     "objectiveCount": 37,
-    "drawingCount": 3,
+    "drawingCount": 0,
     "keyedCount": 37
   },
   {
@@ -514,9 +214,9 @@
     "exam": "nid",
     "year": 2020,
     "paperId": "nid-bdes-2020",
-    "questionCount": 27,
+    "questionCount": 21,
     "objectiveCount": 21,
-    "drawingCount": 6,
+    "drawingCount": 0,
     "keyedCount": 21
   },
   {
@@ -524,9 +224,9 @@
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
-    "questionCount": 26,
+    "questionCount": 22,
     "objectiveCount": 22,
-    "drawingCount": 4,
+    "drawingCount": 0,
     "keyedCount": 22
   },
   {
@@ -534,9 +234,9 @@
     "exam": "nid",
     "year": 2018,
     "paperId": "nid-bdes-2018",
-    "questionCount": 67,
+    "questionCount": 64,
     "objectiveCount": 64,
-    "drawingCount": 3,
+    "drawingCount": 0,
     "keyedCount": 64
   },
   {
@@ -544,9 +244,9 @@
     "exam": "nid",
     "year": 2018,
     "paperId": "nid-mdes-2018",
-    "questionCount": 62,
+    "questionCount": 59,
     "objectiveCount": 59,
-    "drawingCount": 3,
+    "drawingCount": 0,
     "keyedCount": 59
   },
   {
@@ -554,9 +254,9 @@
     "exam": "nid",
     "year": 2017,
     "paperId": "nid-bdes-2017",
-    "questionCount": 79,
+    "questionCount": 75,
     "objectiveCount": 75,
-    "drawingCount": 4,
+    "drawingCount": 0,
     "keyedCount": 75
   },
   {
@@ -564,9 +264,9 @@
     "exam": "nid",
     "year": 2016,
     "paperId": "nid-bdes-2016",
-    "questionCount": 91,
+    "questionCount": 88,
     "objectiveCount": 88,
-    "drawingCount": 3,
+    "drawingCount": 0,
     "keyedCount": 88
   }
 ]
