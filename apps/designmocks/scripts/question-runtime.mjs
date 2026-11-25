@@ -9,7 +9,7 @@ export const RULES_2027=freeze({
 const number='[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)';
 const numeric=new RegExp(`^${number}$`);
 const range=new RegExp(`^(${number})\\s*(?:to|–|-)\\s*(${number})$`,'i');
-const statedTolerance=new RegExp(`^(${number})\\s*\\(\\s*(${number})\\s*(?:to|–|-)\\s*(${number})\\s*\\)$`,'i');
+const statedTolerance=new RegExp(`^(${number})\\s*\\(\\s*(${number})\\s*(?:to|–|-|~)\\s*(${number})\\s*\\)$`,'i');
 const maxAlternativeNotationLength=200;
 const alternativeSeparator=/\s+or\s+/i;
 function decimalAtMost(left,right){
@@ -62,7 +62,10 @@ function selectedOptionIds(type,raw,ids){
 }
 function choiceKey(type,raw,ids,allowAlternatives){
  const kind=type.toLowerCase();
- const selected=selectedOptionIds(type,raw,ids);
+ // Some printed MSQ keys use "B. D" for the two labelled options. Accept
+ // only that complete notation, not a dotted fragment inside an alternative.
+ const dotted=type==='MSQ'&&/^[A-Za-z](?:\.\s+[A-Za-z])+$/.test(raw);
+ const selected=selectedOptionIds(type,dotted?raw.replaceAll(/\.\s+/g,','):raw,ids);
  if(selected)return{kind,correct:selected};
  if(!allowAlternatives||raw.length>maxAlternativeNotationLength)return null;
  const branches=raw.split(alternativeSeparator);

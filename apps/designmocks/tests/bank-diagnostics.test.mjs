@@ -69,7 +69,7 @@ test('the correction queue distinguishes source scoring decisions, references an
   ['MCQ', 'DROPPED (+3 marks awarded to all)', 'answer-scoring-disposition'],
   ['MSQ', 'FULL MARKS (bonus)', 'answer-scoring-disposition'],
   ['MCQ', 'Q 17', 'answer-reference'],
-  ['NAT', '2.2 (2.1~2.3)', 'answer-annotated-numeric'],
+  ['NAT', '2.2 (2.3~2.4)', 'answer-annotated-numeric'],
   ['NAT', '2.2 (metres)', 'answer-notation'],
  ];
  const questions = cases.map(([type, raw], index) => fixture({
