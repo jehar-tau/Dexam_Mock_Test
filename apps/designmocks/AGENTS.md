@@ -20,3 +20,7 @@ do not replace this review. After the approved slice passes exact PR and
 merged-main checks, publish it directly to the public site without a separate
 staging-promotion request. See docs/DIRECT_PUBLIC_RELEASE.md. Keep signup,
 checkout, sales and unreleased paper starts closed until their own gates pass.
+
+## Curated question source (owner decision, 25 November 2026)
+
+The owner directed removal of the legacy question bank. The canonical export and active bank should contain only exact questions referenced by Claude's ingested, worked-solution year-paper plans. The current curated set is 1,497 questions across 27 plans; the other 3,202 legacy export records are to be retired. Do not refill Papers, topic practice, exam mocks, or All India mocks from that legacy pool. When Claude adds another solved paper, verify its plan against exact new source records before adding them to the curated export. Keep private plans and media outside Git.
