@@ -20,7 +20,7 @@ Update this file in the same PR as each slice. Status: `[ ]` not started,
 
 | # | Slice | Owner | Status |
 |---|-------|-------|--------|
-| 1 | Papers catalogue: exam summary, compact year list, saved-progress states, start dialog; `/papers-preview` review route | Claude | `[~]` |
+| 1 | Papers catalogue: exam summary, compact year list, saved-progress states, start dialog; `/papers-preview` review route | Claude | `[~]` approved, merging |
 | 2 | Attempt room for year papers: real figure sizing, section tabs by historical part, timer and autosave states, submit confirmation | Claude | `[ ]` |
 | 3 | Answer-by-answer analysis: section and topic breakdown, time per question, worked explanation on every question, attempt history per paper | Claude | `[ ]` |
 | 4 | Overview: continue-paper card, latest result, next suggested paper or topic, built only from released papers | Claude | `[ ]` |
@@ -66,6 +66,9 @@ live result to report back.
 - 26 Nov 2026: The Papers catalogue follows Roughworks' interaction pattern
   (exam summary beside a compact year list) using DMocks' own palette and
   copy. No Roughworks content is used.
+- 26 Nov 2026: Owner approved the visible Papers slice 1 (desktop, dark mode,
+  phone and start dialog) from the /papers-preview screenshots. Next: PR,
+  exact-head CI, merge, merged-main CI, then Codex task 3 publishes it.
 - 26 Nov 2026: Card headings keep the full paper name for screen readers and
   tests ("UCEED 2026 paper"). The visible title is the year, plus a subtitle
   only when it tells papers apart (Paper 1/2, sample, B.Des./M.Des.).
