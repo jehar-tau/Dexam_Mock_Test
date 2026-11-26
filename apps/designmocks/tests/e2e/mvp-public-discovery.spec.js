@@ -16,14 +16,14 @@ test("a student can practise independently from the catalogue without an account
   await expect(page.getByRole("button", { name: "Begin the sample" })).toBeVisible();
 });
 
-test("the referenced UCEED paper format is distinct from the free sample and an unreleased CEED paper", async ({ page }) => {
+test("exam guides keep the official format link and point to that exam's free papers", async ({ page }) => {
   await page.goto("/tests/uceed/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("UCEED Part A practice");
-  await expect(page.getByText("first planned paid DMocks paper", { exact: false })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Browse free UCEED papers" })).toHaveAttribute("href", "/papers/uceed");
   await expect(page.getByRole("link", { name: "UCEED 2027 paper format and sample interface" }))
     .toHaveAttribute("href", "https://www.uceed.iitb.ac.in/2027/question-paper.html");
   await page.goto("/tests/ceed");
-  await expect(page.getByText("This exam is coming later and is outside the initial annual-pass offer.")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Browse free CEED papers" })).toHaveAttribute("href", "/papers/ceed");
   await expect(page.getByText("first planned paid DMocks paper", { exact: false })).toHaveCount(0);
 });
 

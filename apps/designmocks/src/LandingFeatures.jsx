@@ -122,9 +122,9 @@ export function PublicPracticeOptions() {
       to: "/practice/visual-hierarchy", link: "Compare the museum signs", motif: "learn", tone: "lime",
     },
     {
-      title: "UCEED Part A practice",
-      copy: "UCEED Part A Practice Mock 01 is the first planned paid paper. While checkout is closed, use the UCEED guide to find IIT Bombay’s exam format and past papers.",
-      to: "/tests/uceed", link: "Read the UCEED Part A guide", motif: "practice", tone: "orange",
+      title: "Free past-year papers",
+      copy: "Take complete UCEED, CEED, NID and NIFT papers with their original timer and marking, then open a worked solution for every question.",
+      to: "/papers", link: "Browse free papers", motif: "practice", tone: "orange",
     },
   ];
   return (
