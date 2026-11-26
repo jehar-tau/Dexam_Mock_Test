@@ -260,6 +260,16 @@
     "keyedCount": 100
   },
   {
+    "id": "nift:nift-2019-bdes-gat",
+    "exam": "nift",
+    "year": 2019,
+    "paperId": "nift-2019-bdes-gat",
+    "questionCount": 150,
+    "objectiveCount": 150,
+    "drawingCount": 0,
+    "keyedCount": 150
+  },
+  {
     "id": "nift:nift-2018-bdes-gat",
     "exam": "nift",
     "year": 2018,
