@@ -100,10 +100,16 @@ async function open(page) {
   await expect(panel(page).getByRole('combobox', { name: 'Reviewed blueprint', exact: true }).locator('option').filter({ hasText: 'Original fictional NID practice' })).toHaveCount(1);
 }
 async function choose(page, section = '1') {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await panel(page).getByRole('combobox', { name: 'Reviewed blueprint', exact: true }).selectOption(blueprintId);
   await expect(panel(page).getByRole('combobox', { name: 'Practice section', exact: true })).toBeEnabled();
   await panel(page).getByRole('combobox', { name: 'Practice section', exact: true }).selectOption(section);
-  await panel(page).getByRole('textbox', { name: 'Question fit review', exact: true }).fill(note); await panel(page).getByRole('checkbox').check();
+  await panel(page).getByRole('textbox', { name: 'Question fit review', exact: true }).fill(note);
+  const confirmation = panel(page).getByRole('checkbox', { name: /^I inspected this question/ });
+  await expect(confirmation).toBeVisible();
+  await confirmation.scrollIntoViewIfNeeded();
+  await confirmation.check();
+  await expect(confirmation).toBeChecked();
 }
 async function figures(page) { await review(page).getByRole('button', { name: 'Open private figures', exact: true }).click(); await expect(review(page).getByRole('img', { name: 'Question figure 1', exact: true })).toBeVisible(); }
 async function saved(page) { await expect(bank(page).getByText('Practice binding saved. Run the guarded conversion, then review the exact question version.', { exact: true })).toBeVisible(); await expect(review(page)).toHaveCount(0); }
