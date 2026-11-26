@@ -18,10 +18,10 @@ const testerEmail = 'restore-approved@example.invalid';
 const figurePath = 'papers/original-staging-recovery.png';
 const figure = Buffer.from('Fictional private staging recovery fixture.');
 
-// The archived 90-version staging baseline predates Community articles.
-// Rehearse its portal companion without RPCs added by migration 170.
+// Rehearse the 90-version staging companion with only RPCs present in that archive.
 function historicalPortalGrants(current) {
   const later = [
+    'approve_year_paper_revision(text,text)',
     'community_articles(text, text, jsonb, integer)', 'community_blocked()',
     'community_drafts()', 'community_folders()', 'community_saved(uuid, jsonb, integer)',
     'create_community_article(text, text, text, text, uuid, uuid)',
@@ -34,7 +34,7 @@ function historicalPortalGrants(current) {
   ];
   for (const signature of later) {
     const line = `  public.${signature},\n`;
-    assert.equal(current.split(line).length, 2, 'Expected one later Community staging grant');
+    assert.equal(current.split(line).length, 2, 'Expected one later staging grant');
     current = current.replace(line, '');
   }
   return current;
