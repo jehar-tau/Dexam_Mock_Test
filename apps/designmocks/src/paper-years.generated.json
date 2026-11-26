@@ -180,14 +180,14 @@
     "keyedCount": 36
   },
   {
-    "id": "nid:nid-bdes-recalled-2024",
+    "id": "nid:nid-bdes-sample-2024",
     "exam": "nid",
     "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionCount": 11,
-    "objectiveCount": 11,
+    "paperId": "nid-bdes-sample-2024",
+    "questionCount": 19,
+    "objectiveCount": 19,
     "drawingCount": 0,
-    "keyedCount": 11
+    "keyedCount": 19
   },
   {
     "id": "nid:nid-bdes-sample-2023",
