@@ -93854,6 +93854,5406 @@
     "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2023",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q1",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAs cricket fever sweeps the nation, restaurants and cinemas are bracing for a\nsurge in revenues and full houses this Sunday when India takes on Australia in\nthe cricket World Cup final. Eateries are pulling out all the stops to make the\nmost of the high-stakes event, with special menus, discounts, and games planned\nalongside the match. A restaurant in Delhi is already fielding calls from eager\nfans trying to book a spot in advance. \"Everybody at the restaurant is excited\nbecause India is in the final. We are putting up massive LED screen at many\npoints in the unit, which will make it a lovely destination to enjoy the match in a\nAnother restaurant in Gurugram's Cyberhub is offering a 15 per cent discount\nto customers who come in wearing the Indian cricket jersey to the screening and\nwill also have a dhol waala on the spot. The sponsors created excitement not\nonly for consumers but also for the team. We witnessed a massive jump in\nfootfall during all the World Cup matches and needless to say that all India\nmatches were housefull.\nWe are expecting a 100 per cent rise in footfall over usual Sundays, and\nqueries have already started pouring in since last Friday. A rise of 100 per cent in\nrevenue on the night of the World Cup final is also expected\nEateries in Mumbai are organising \"Powerplay at the Dining Table\"\n, where\npatrons can predict team India's runs during key overs and savour victory with\nexclusive dishes.\nEmbrace the sporting spirit as you cover the cost of your wagered item if\nluck doesn't swing your way.\nThe restaurant is also offering exclusive desserts for the occasion: 'The King\nKohli', a tart shell field with caramelised white chocolate ganache, and roasted\nmacadamia nuts, topped with a coffee mousse, and an almond and cocoa\nsponge, vanilla bean mascarpone cream, and 64 per cent manjari dark chocolate\nmousse, all encased in a red glaze.\nCafe C is offering exclusive match-day deals of 3+1 on soft drinks. \"We\naren't sold out, but we are getting reservations at a high speed for the screening\non Sunday. We are expecting a 30-40 per cent increase in revenue on the day.\"\nA cinema chain, too, is hoping to recreate a stadium-like atmosphere for fans\nby screening the final match at its cinemas in more than 45 cities. \"Since the\nsecond semifinal between Australia and South Africa was held on November\n2016, we opened advances for the finals only late Thursday night; over 45 per\ncent advance tickets have already been sold out our theatres,\" says the executive\ndirector.\n\"This will be a grand festival taking the thrill of the World Cup to newer\nheights. Fans can enjoy the unlimited refills of popcorn and soft drink while\ncheering for India,\" adds the director.\n\nChoose the correct statement from the following:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Eateries are pulling out all the stops to prepare themselves for surge in revenues and full houses owing to World Cup final.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A restaurant is fielding eager calls for cricket match tickets.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Another restaurant is offering 3+1 offer on cricket match tickets.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A cinema chain is preparing to host the final match.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "1",
+    "page": 3,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q2",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAs cricket fever sweeps the nation, restaurants and cinemas are bracing for a\nsurge in revenues and full houses this Sunday when India takes on Australia in\nthe cricket World Cup final. Eateries are pulling out all the stops to make the\nmost of the high-stakes event, with special menus, discounts, and games planned\nalongside the match. A restaurant in Delhi is already fielding calls from eager\nfans trying to book a spot in advance. \"Everybody at the restaurant is excited\nbecause India is in the final. We are putting up massive LED screen at many\npoints in the unit, which will make it a lovely destination to enjoy the match in a\nAnother restaurant in Gurugram's Cyberhub is offering a 15 per cent discount\nto customers who come in wearing the Indian cricket jersey to the screening and\nwill also have a dhol waala on the spot. The sponsors created excitement not\nonly for consumers but also for the team. We witnessed a massive jump in\nfootfall during all the World Cup matches and needless to say that all India\nmatches were housefull.\nWe are expecting a 100 per cent rise in footfall over usual Sundays, and\nqueries have already started pouring in since last Friday. A rise of 100 per cent in\nrevenue on the night of the World Cup final is also expected\nEateries in Mumbai are organising \"Powerplay at the Dining Table\"\n, where\npatrons can predict team India's runs during key overs and savour victory with\nexclusive dishes.\nEmbrace the sporting spirit as you cover the cost of your wagered item if\nluck doesn't swing your way.\nThe restaurant is also offering exclusive desserts for the occasion: 'The King\nKohli', a tart shell field with caramelised white chocolate ganache, and roasted\nmacadamia nuts, topped with a coffee mousse, and an almond and cocoa\nsponge, vanilla bean mascarpone cream, and 64 per cent manjari dark chocolate\nmousse, all encased in a red glaze.\nCafe C is offering exclusive match-day deals of 3+1 on soft drinks. \"We\naren't sold out, but we are getting reservations at a high speed for the screening\non Sunday. We are expecting a 30-40 per cent increase in revenue on the day.\"\nA cinema chain, too, is hoping to recreate a stadium-like atmosphere for fans\nby screening the final match at its cinemas in more than 45 cities. \"Since the\nsecond semifinal between Australia and South Africa was held on November\n2016, we opened advances for the finals only late Thursday night; over 45 per\ncent advance tickets have already been sold out our theatres,\" says the executive\ndirector.\n\"This will be a grand festival taking the thrill of the World Cup to newer\nheights. Fans can enjoy the unlimited refills of popcorn and soft drink while\ncheering for India,\" adds the director.\n\nChoose the correct option that means the same as :\n\"Pulling out all the stops\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "keep separately",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "no holds barred",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "to pull something or somebody in a particular way",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "sell by date",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "2",
+    "page": 4,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q3",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAs cricket fever sweeps the nation, restaurants and cinemas are bracing for a\nsurge in revenues and full houses this Sunday when India takes on Australia in\nthe cricket World Cup final. Eateries are pulling out all the stops to make the\nmost of the high-stakes event, with special menus, discounts, and games planned\nalongside the match. A restaurant in Delhi is already fielding calls from eager\nfans trying to book a spot in advance. \"Everybody at the restaurant is excited\nbecause India is in the final. We are putting up massive LED screen at many\npoints in the unit, which will make it a lovely destination to enjoy the match in a\nAnother restaurant in Gurugram's Cyberhub is offering a 15 per cent discount\nto customers who come in wearing the Indian cricket jersey to the screening and\nwill also have a dhol waala on the spot. The sponsors created excitement not\nonly for consumers but also for the team. We witnessed a massive jump in\nfootfall during all the World Cup matches and needless to say that all India\nmatches were housefull.\nWe are expecting a 100 per cent rise in footfall over usual Sundays, and\nqueries have already started pouring in since last Friday. A rise of 100 per cent in\nrevenue on the night of the World Cup final is also expected\nEateries in Mumbai are organising \"Powerplay at the Dining Table\"\n, where\npatrons can predict team India's runs during key overs and savour victory with\nexclusive dishes.\nEmbrace the sporting spirit as you cover the cost of your wagered item if\nluck doesn't swing your way.\nThe restaurant is also offering exclusive desserts for the occasion: 'The King\nKohli', a tart shell field with caramelised white chocolate ganache, and roasted\nmacadamia nuts, topped with a coffee mousse, and an almond and cocoa\nsponge, vanilla bean mascarpone cream, and 64 per cent manjari dark chocolate\nmousse, all encased in a red glaze.\nCafe C is offering exclusive match-day deals of 3+1 on soft drinks. \"We\naren't sold out, but we are getting reservations at a high speed for the screening\non Sunday. We are expecting a 30-40 per cent increase in revenue on the day.\"\nA cinema chain, too, is hoping to recreate a stadium-like atmosphere for fans\nby screening the final match at its cinemas in more than 45 cities. \"Since the\nsecond semifinal between Australia and South Africa was held on November\n2016, we opened advances for the finals only late Thursday night; over 45 per\ncent advance tickets have already been sold out our theatres,\" says the executive\ndirector.\n\"This will be a grand festival taking the thrill of the World Cup to newer\nheights. Fans can enjoy the unlimited refills of popcorn and soft drink while\ncheering for India,\" adds the director.\n\nChoose the word that means:\n\"Sound of the steps made by somebody walking\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "patrons",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Powerplay",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "macadamia",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "footfall",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "3",
+    "page": 4,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q4",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAs cricket fever sweeps the nation, restaurants and cinemas are bracing for a\nsurge in revenues and full houses this Sunday when India takes on Australia in\nthe cricket World Cup final. Eateries are pulling out all the stops to make the\nmost of the high-stakes event, with special menus, discounts, and games planned\nalongside the match. A restaurant in Delhi is already fielding calls from eager\nfans trying to book a spot in advance. \"Everybody at the restaurant is excited\nbecause India is in the final. We are putting up massive LED screen at many\npoints in the unit, which will make it a lovely destination to enjoy the match in a\nAnother restaurant in Gurugram's Cyberhub is offering a 15 per cent discount\nto customers who come in wearing the Indian cricket jersey to the screening and\nwill also have a dhol waala on the spot. The sponsors created excitement not\nonly for consumers but also for the team. We witnessed a massive jump in\nfootfall during all the World Cup matches and needless to say that all India\nmatches were housefull.\nWe are expecting a 100 per cent rise in footfall over usual Sundays, and\nqueries have already started pouring in since last Friday. A rise of 100 per cent in\nrevenue on the night of the World Cup final is also expected\nEateries in Mumbai are organising \"Powerplay at the Dining Table\"\n, where\npatrons can predict team India's runs during key overs and savour victory with\nexclusive dishes.\nEmbrace the sporting spirit as you cover the cost of your wagered item if\nluck doesn't swing your way.\nThe restaurant is also offering exclusive desserts for the occasion: 'The King\nKohli', a tart shell field with caramelised white chocolate ganache, and roasted\nmacadamia nuts, topped with a coffee mousse, and an almond and cocoa\nsponge, vanilla bean mascarpone cream, and 64 per cent manjari dark chocolate\nmousse, all encased in a red glaze.\nCafe C is offering exclusive match-day deals of 3+1 on soft drinks. \"We\naren't sold out, but we are getting reservations at a high speed for the screening\non Sunday. We are expecting a 30-40 per cent increase in revenue on the day.\"\nA cinema chain, too, is hoping to recreate a stadium-like atmosphere for fans\nby screening the final match at its cinemas in more than 45 cities. \"Since the\nsecond semifinal between Australia and South Africa was held on November\n2016, we opened advances for the finals only late Thursday night; over 45 per\ncent advance tickets have already been sold out our theatres,\" says the executive\ndirector.\n\"This will be a grand festival taking the thrill of the World Cup to newer\nheights. Fans can enjoy the unlimited refills of popcorn and soft drink while\ncheering for India,\" adds the director.\n\nChoose the word that means the same as :\n'to relish something'",
+   "options": [
+    {
+     "key": "A",
+     "text": "savour",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "sporting",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "embrace",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "desserts",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "4",
+    "page": 5,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q5",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAs cricket fever sweeps the nation, restaurants and cinemas are bracing for a\nsurge in revenues and full houses this Sunday when India takes on Australia in\nthe cricket World Cup final. Eateries are pulling out all the stops to make the\nmost of the high-stakes event, with special menus, discounts, and games planned\nalongside the match. A restaurant in Delhi is already fielding calls from eager\nfans trying to book a spot in advance. \"Everybody at the restaurant is excited\nbecause India is in the final. We are putting up massive LED screen at many\npoints in the unit, which will make it a lovely destination to enjoy the match in a\nAnother restaurant in Gurugram's Cyberhub is offering a 15 per cent discount\nto customers who come in wearing the Indian cricket jersey to the screening and\nwill also have a dhol waala on the spot. The sponsors created excitement not\nonly for consumers but also for the team. We witnessed a massive jump in\nfootfall during all the World Cup matches and needless to say that all India\nmatches were housefull.\nWe are expecting a 100 per cent rise in footfall over usual Sundays, and\nqueries have already started pouring in since last Friday. A rise of 100 per cent in\nrevenue on the night of the World Cup final is also expected\nEateries in Mumbai are organising \"Powerplay at the Dining Table\"\n, where\npatrons can predict team India's runs during key overs and savour victory with\nexclusive dishes.\nEmbrace the sporting spirit as you cover the cost of your wagered item if\nluck doesn't swing your way.\nThe restaurant is also offering exclusive desserts for the occasion: 'The King\nKohli', a tart shell field with caramelised white chocolate ganache, and roasted\nmacadamia nuts, topped with a coffee mousse, and an almond and cocoa\nsponge, vanilla bean mascarpone cream, and 64 per cent manjari dark chocolate\nmousse, all encased in a red glaze.\nCafe C is offering exclusive match-day deals of 3+1 on soft drinks. \"We\naren't sold out, but we are getting reservations at a high speed for the screening\non Sunday. We are expecting a 30-40 per cent increase in revenue on the day.\"\nA cinema chain, too, is hoping to recreate a stadium-like atmosphere for fans\nby screening the final match at its cinemas in more than 45 cities. \"Since the\nsecond semifinal between Australia and South Africa was held on November\n2016, we opened advances for the finals only late Thursday night; over 45 per\ncent advance tickets have already been sold out our theatres,\" says the executive\ndirector.\n\"This will be a grand festival taking the thrill of the World Cup to newer\nheights. Fans can enjoy the unlimited refills of popcorn and soft drink while\ncheering for India,\" adds the director.\n\nIdentify the odd one out",
+   "options": [
+    {
+     "key": "A",
+     "text": "mascarpone",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "sponsor",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "ganache",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "cocoa",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "5",
+    "page": 5,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q6",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAssam, lying between 89° 42' E and 96° E longitudes and 24° 8' N and 28° 2'N\nlatitudes, occupies the central location in north-east India. With its western border\ndirectly connected to West Bengal, the State is also regarded as the gateway to the\nnorth-eastern States. During the epic period, the State was known as Pragjyotisha.\nIt meant, 'the land of eastern astronomy'. Subsequently, the State came to be\nknown as Kamarupa as testified to by the Allahabad Pillar Inscription of King\nSamudragupta. This name remained in vogue till about the 12th century CE. From\nthe 13th century CE the State came to be ruled by the Ahoms. According to some\nscholars, the State owes its present name to them. However, going by another\ninterpretation, the State may have drawn its current name from the Sanskrit word\nasoma, which means 'peerless' or 'unparalleled'. The Ahoms remained in power for\nabout six hundred years. Thereafter, the State passed into the hands of the\nBurmese. However, the British seized it from them through the Treaty of Yandaboo\nsigned in 1826 CE. Finally, the State was incorporated into the Indian Union.\nThe present State of Assam, covering an area of 78,438 square kilometers, mainly\nconsists of two extensive river valleys: the valley formed by the River\nBrahmaputra and its tributaries in the north; and the valley formed by the River\nBarak and its tributaries in the south. Between these two valleys run the long range\nof hills (Karbi, North Cachar and Barail), which account for much of the State's\ngreenery and wildlife. It is because of this unique topographical feature that the\nState is also known as the 'Land of Red River and Blue Hills'.\n\nAssam is regarded as the gateway to north - eastern states as -",
+   "options": [
+    {
+     "key": "A",
+     "text": "it occupies the central location is North - East India.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "its western border is directly connected to West - Bengal",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "during the epic period it was known as Pragiyotisha.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "it is a unique state in the whole of India.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "6",
+    "page": 11,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q7",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAssam, lying between 89° 42' E and 96° E longitudes and 24° 8' N and 28° 2'N\nlatitudes, occupies the central location in north-east India. With its western border\ndirectly connected to West Bengal, the State is also regarded as the gateway to the\nnorth-eastern States. During the epic period, the State was known as Pragjyotisha.\nIt meant, 'the land of eastern astronomy'. Subsequently, the State came to be\nknown as Kamarupa as testified to by the Allahabad Pillar Inscription of King\nSamudragupta. This name remained in vogue till about the 12th century CE. From\nthe 13th century CE the State came to be ruled by the Ahoms. According to some\nscholars, the State owes its present name to them. However, going by another\ninterpretation, the State may have drawn its current name from the Sanskrit word\nasoma, which means 'peerless' or 'unparalleled'. The Ahoms remained in power for\nabout six hundred years. Thereafter, the State passed into the hands of the\nBurmese. However, the British seized it from them through the Treaty of Yandaboo\nsigned in 1826 CE. Finally, the State was incorporated into the Indian Union.\nThe present State of Assam, covering an area of 78,438 square kilometers, mainly\nconsists of two extensive river valleys: the valley formed by the River\nBrahmaputra and its tributaries in the north; and the valley formed by the River\nBarak and its tributaries in the south. Between these two valleys run the long range\nof hills (Karbi, North Cachar and Barail), which account for much of the State's\ngreenery and wildlife. It is because of this unique topographical feature that the\nState is also known as the 'Land of Red River and Blue Hills'.\n\nThe testimony that Assam was known as Kamarupa comes from -",
+   "options": [
+    {
+     "key": "A",
+     "text": "Pragjyotisha",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Allahabad Pillar Inscription",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "12th Century CE",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Ahoms",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "7",
+    "page": 11,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q8",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAssam, lying between 89° 42' E and 96° E longitudes and 24° 8' N and 28° 2'N\nlatitudes, occupies the central location in north-east India. With its western border\ndirectly connected to West Bengal, the State is also regarded as the gateway to the\nnorth-eastern States. During the epic period, the State was known as Pragjyotisha.\nIt meant, 'the land of eastern astronomy'. Subsequently, the State came to be\nknown as Kamarupa as testified to by the Allahabad Pillar Inscription of King\nSamudragupta. This name remained in vogue till about the 12th century CE. From\nthe 13th century CE the State came to be ruled by the Ahoms. According to some\nscholars, the State owes its present name to them. However, going by another\ninterpretation, the State may have drawn its current name from the Sanskrit word\nasoma, which means 'peerless' or 'unparalleled'. The Ahoms remained in power for\nabout six hundred years. Thereafter, the State passed into the hands of the\nBurmese. However, the British seized it from them through the Treaty of Yandaboo\nsigned in 1826 CE. Finally, the State was incorporated into the Indian Union.\nThe present State of Assam, covering an area of 78,438 square kilometers, mainly\nconsists of two extensive river valleys: the valley formed by the River\nBrahmaputra and its tributaries in the north; and the valley formed by the River\nBarak and its tributaries in the south. Between these two valleys run the long range\nof hills (Karbi, North Cachar and Barail), which account for much of the State's\ngreenery and wildlife. It is because of this unique topographical feature that the\nState is also known as the 'Land of Red River and Blue Hills'.\n\nAssam owes its present name to -",
+   "options": [
+    {
+     "key": "A",
+     "text": "King Samudragupta Q.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Epic Period",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Ahoms",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Scholars",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "8",
+    "page": 12,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q9",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAssam, lying between 89° 42' E and 96° E longitudes and 24° 8' N and 28° 2'N\nlatitudes, occupies the central location in north-east India. With its western border\ndirectly connected to West Bengal, the State is also regarded as the gateway to the\nnorth-eastern States. During the epic period, the State was known as Pragjyotisha.\nIt meant, 'the land of eastern astronomy'. Subsequently, the State came to be\nknown as Kamarupa as testified to by the Allahabad Pillar Inscription of King\nSamudragupta. This name remained in vogue till about the 12th century CE. From\nthe 13th century CE the State came to be ruled by the Ahoms. According to some\nscholars, the State owes its present name to them. However, going by another\ninterpretation, the State may have drawn its current name from the Sanskrit word\nasoma, which means 'peerless' or 'unparalleled'. The Ahoms remained in power for\nabout six hundred years. Thereafter, the State passed into the hands of the\nBurmese. However, the British seized it from them through the Treaty of Yandaboo\nsigned in 1826 CE. Finally, the State was incorporated into the Indian Union.\nThe present State of Assam, covering an area of 78,438 square kilometers, mainly\nconsists of two extensive river valleys: the valley formed by the River\nBrahmaputra and its tributaries in the north; and the valley formed by the River\nBarak and its tributaries in the south. Between these two valleys run the long range\nof hills (Karbi, North Cachar and Barail), which account for much of the State's\ngreenery and wildlife. It is because of this unique topographical feature that the\nState is also known as the 'Land of Red River and Blue Hills'.\n\nA Sanskrit word for 'peerless' is -",
+   "options": [
+    {
+     "key": "A",
+     "text": "Pragiyotisha",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Kamarupa",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Ahom",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Asoma",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "9",
+    "page": 12,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q10",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAssam, lying between 89° 42' E and 96° E longitudes and 24° 8' N and 28° 2'N\nlatitudes, occupies the central location in north-east India. With its western border\ndirectly connected to West Bengal, the State is also regarded as the gateway to the\nnorth-eastern States. During the epic period, the State was known as Pragjyotisha.\nIt meant, 'the land of eastern astronomy'. Subsequently, the State came to be\nknown as Kamarupa as testified to by the Allahabad Pillar Inscription of King\nSamudragupta. This name remained in vogue till about the 12th century CE. From\nthe 13th century CE the State came to be ruled by the Ahoms. According to some\nscholars, the State owes its present name to them. However, going by another\ninterpretation, the State may have drawn its current name from the Sanskrit word\nasoma, which means 'peerless' or 'unparalleled'. The Ahoms remained in power for\nabout six hundred years. Thereafter, the State passed into the hands of the\nBurmese. However, the British seized it from them through the Treaty of Yandaboo\nsigned in 1826 CE. Finally, the State was incorporated into the Indian Union.\nThe present State of Assam, covering an area of 78,438 square kilometers, mainly\nconsists of two extensive river valleys: the valley formed by the River\nBrahmaputra and its tributaries in the north; and the valley formed by the River\nBarak and its tributaries in the south. Between these two valleys run the long range\nof hills (Karbi, North Cachar and Barail), which account for much of the State's\ngreenery and wildlife. It is because of this unique topographical feature that the\nState is also known as the 'Land of Red River and Blue Hills'.\n\nThe treaty of Yandaboo resulted in",
+   "options": [
+    {
+     "key": "A",
+     "text": "British taking over West Bengal from the Burmese",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Indian Union taking over Assam from the British",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Indian Union taking over Assam from the Burmese",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "British taking over Assam from the Burmese",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "10",
+    "page": 13,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q11",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nAssam, lying between 89° 42' E and 96° E longitudes and 24° 8' N and 28° 2'N\nlatitudes, occupies the central location in north-east India. With its western border\ndirectly connected to West Bengal, the State is also regarded as the gateway to the\nnorth-eastern States. During the epic period, the State was known as Pragjyotisha.\nIt meant, 'the land of eastern astronomy'. Subsequently, the State came to be\nknown as Kamarupa as testified to by the Allahabad Pillar Inscription of King\nSamudragupta. This name remained in vogue till about the 12th century CE. From\nthe 13th century CE the State came to be ruled by the Ahoms. According to some\nscholars, the State owes its present name to them. However, going by another\ninterpretation, the State may have drawn its current name from the Sanskrit word\nasoma, which means 'peerless' or 'unparalleled'. The Ahoms remained in power for\nabout six hundred years. Thereafter, the State passed into the hands of the\nBurmese. However, the British seized it from them through the Treaty of Yandaboo\nsigned in 1826 CE. Finally, the State was incorporated into the Indian Union.\nThe present State of Assam, covering an area of 78,438 square kilometers, mainly\nconsists of two extensive river valleys: the valley formed by the River\nBrahmaputra and its tributaries in the north; and the valley formed by the River\nBarak and its tributaries in the south. Between these two valleys run the long range\nof hills (Karbi, North Cachar and Barail), which account for much of the State's\ngreenery and wildlife. It is because of this unique topographical feature that the\nState is also known as the 'Land of Red River and Blue Hills'.\n\nFind one word from the passage for the given group of words 'a stream that flows into a larger river or a lake'.",
+   "options": [
+    {
+     "key": "A",
+     "text": "longitude",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "incorporate",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "valley",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "tributary",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "11",
+    "page": 13,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q12",
+   "type": "MCQ",
+   "prompt": "The study of worms and insects is called",
+   "options": [
+    {
+     "key": "A",
+     "text": "taxidermy",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "entomology",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "ornithology",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "paleontology",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "12",
+    "page": 18,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q13",
+   "type": "MCQ",
+   "prompt": "Fill in the blank with the correct word.\n__________ broke out when the news was announced.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Pandamonium",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Pandemonium",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Pandamoneum",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Pandemoneum",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "13",
+    "page": 19,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q14",
+   "type": "MCQ",
+   "prompt": "Fill in the blank with the correct word.\nHer __________ is very endearing.",
+   "options": [
+    {
+     "key": "A",
+     "text": "panashe",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "panache",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "panach",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "panash",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "14",
+    "page": 20,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q15",
+   "type": "MCQ",
+   "prompt": "Fill in the blank:\nThis misinformation would have gone around _______ who knows how long.",
+   "options": [
+    {
+     "key": "A",
+     "text": "since",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "for",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "by",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "from",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "15",
+    "page": 21,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q16",
+   "type": "MCQ",
+   "prompt": "Fill in the blank:\nI _______ like you to do as I tell you.",
+   "options": [
+    {
+     "key": "A",
+     "text": "shall",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "should",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "will",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "could",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "16",
+    "page": 22,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q17",
+   "type": "MCQ",
+   "prompt": "Fill in the blank:\n_______ Mr. Verma wait any longer?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Need",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Does",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Had",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Might",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "17",
+    "page": 23,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q18",
+   "type": "MCQ",
+   "prompt": "Choose the appropriate phrase to replace the underlined part:\nYou have come here with a view to insult me. (underlined: \"to insult me\")",
+   "options": [
+    {
+     "key": "A",
+     "text": "for insulting me",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "of insulting me",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "on insulting me",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "to insulting me",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "18",
+    "page": 24,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q19",
+   "type": "MCQ",
+   "prompt": "Choose the correct spelling.",
+   "options": [
+    {
+     "key": "A",
+     "text": "RESCISSION",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "RISCESSION",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "RESCESSION",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "RESCISSEON",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "19",
+    "page": 25,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q20",
+   "type": "MCQ",
+   "prompt": "Choose the correct spelling:",
+   "options": [
+    {
+     "key": "A",
+     "text": "MONUMENTALLY",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "MONUMANTALLY",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "MONUMENTALY",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "MONUMANTALY",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "20",
+    "page": 26,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q21",
+   "type": "MCQ",
+   "prompt": "Choose the correct spelling :",
+   "options": [
+    {
+     "key": "A",
+     "text": "MONSTROCIETY",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "MONSTROSITY",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "MONSTROSIETY",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "MONSTROCITY",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "21",
+    "page": 27,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q22",
+   "type": "MCQ",
+   "prompt": "Choose the correct spelling :",
+   "options": [
+    {
+     "key": "A",
+     "text": "CONSPICOUS",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "CONSPICEOUS",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "CONSPICUOUS",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "CONSPICIOUS",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "22",
+    "page": 28,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q23",
+   "type": "MCQ",
+   "prompt": "Change into Indirect Speech -\nHe said, \"My God! I am ruined.\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "He exclaimed sadly that he was ruined.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "He exclaimed that he has ruined.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "He explained sadly that he had been ruined.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "He exclaimed sadly that he ruined.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "23",
+    "page": 29,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q24",
+   "type": "MCQ",
+   "prompt": "Change into Direct Speech -\nHe exclaimed that the scene was very lovely.",
+   "options": [
+    {
+     "key": "A",
+     "text": "He said, \"How lovely the scene was!\"",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "He said, \"The scene was lovely\".",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "He said, \"How lovely the scene is !\"",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "He said, \"How was lovely scene\".",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "24",
+    "page": 30,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q25",
+   "type": "MCQ",
+   "prompt": "Change into Direct Speech :\nAnjana asked Nitin if he could solve that sum.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Anjana asked Nitin, \"Can you solve this sum.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Anjana asked Nitin, \"You can solve this sum.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Anjana said to Nitin, \"Can you solve this sum?\"",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Anjana said Nitin, \"Can you solve this sum.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "25",
+    "page": 31,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q26",
+   "type": "MCQ",
+   "prompt": "Change into Passive Voice:\nDon't touch this switch.",
+   "options": [
+    {
+     "key": "A",
+     "text": "This switch does not be touched.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "This switch don't be touched.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "This switch need not be touched.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "This switch must not be touched.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "26",
+    "page": 32,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q27",
+   "type": "MCQ",
+   "prompt": "Change into Passive Voice :\nThe farmer prepared the field.",
+   "options": [
+    {
+     "key": "A",
+     "text": "The field was being prepared by the farmer.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The field was prepared by the farmer.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The field were prepared by the farmer:",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The field were being prepared by the farmer.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "27",
+    "page": 33,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q28",
+   "type": "MCQ",
+   "prompt": "Change into Passive Voice:\nTiny houses dot the landscape.",
+   "options": [
+    {
+     "key": "A",
+     "text": "The landscape is being dotted by tiny houses.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The landscape has dotted by tiny houses.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The landscape is dotted by tiny houses.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The landscape has been dotted by tiny houses.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "28",
+    "page": 34,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q29",
+   "type": "MCQ",
+   "prompt": "Choose the appropriate idiom to fill in the blank -\nPoverty among the public is the __________ of all the crimes.",
+   "options": [
+    {
+     "key": "A",
+     "text": "rank and file",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "pins and needles",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "part and parcel",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "root and branch",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "29",
+    "page": 35,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q30",
+   "type": "MCQ",
+   "prompt": "Choose the appropriate idiom to fill in the blank -\nThe __________ of the paragraph must be reflected in a good precis.",
+   "options": [
+    {
+     "key": "A",
+     "text": "sum and substance",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "thick and thin",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "to and fro",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "tooth and nail",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "30",
+    "page": 36,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q31",
+   "type": "MCQ",
+   "prompt": "Choose the appropriate idiom to fill in the blank -\nI will abide by you in all __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Warp and woof",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "weal and woe",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Whips and spur",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "willy nilly",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "31",
+    "page": 37,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q32",
+   "type": "MCQ",
+   "prompt": "Select the correct option which is the most opposite in meaning to the underlined\nword :\n\"Everybody was astonished when he used such a profane language.\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "sacred",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "pure",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "profound",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "high",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "32",
+    "page": 38,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q33",
+   "type": "MCQ",
+   "prompt": "Select the correct option which is the most opposite in meaning to the underlined\nword :\n\"His writings have been much eulogised by Indian scholars\".",
+   "options": [
+    {
+     "key": "A",
+     "text": "laud",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "extol",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "ballyhoo",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "disparaged",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "33",
+    "page": 39,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q34",
+   "type": "MCQ",
+   "prompt": "Select the word which is most opposite in meaning to the underlined word :\n\"My uncle is very wealthy, but rather parsimonious in his habit.\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "extravagant",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "generous",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "careless",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "strict",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "34",
+    "page": 40,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q35",
+   "type": "MCQ",
+   "prompt": "Choose the word similar in meaning to the given word :\n'TEETOTAL'",
+   "options": [
+    {
+     "key": "A",
+     "text": "PSYCHIC",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "ABSOLUTE",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "APPRISE",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "CRAFT",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "35",
+    "page": 41,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q36",
+   "type": "MCQ",
+   "prompt": "Choose the word similar in meaning to the given word :\n'SPECK'",
+   "options": [
+    {
+     "key": "A",
+     "text": "STAMP",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "MACULA",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "GHOST",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "NAME",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "36",
+    "page": 42,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q37",
+   "type": "MCQ",
+   "prompt": "Of the four alternatives, choose the one which best expresses the meaning of the\ngiven word.\n\"Colossal\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "famous",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "vigorous",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "energetic",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "enormous",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "37",
+    "page": 43,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q38",
+   "type": "MCQ",
+   "prompt": "Give one word for the given expression :\nOne who is incharge of a museum.",
+   "options": [
+    {
+     "key": "A",
+     "text": "supervision",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "curator",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "collector",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "caretaker",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "38",
+    "page": 44,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q39",
+   "type": "MCQ",
+   "prompt": "Choose one word for the given group of words -\n'Extremely ugly in a strange way that is often frightening or funny'.",
+   "options": [
+    {
+     "key": "A",
+     "text": "ostentatious",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "eerie",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "grotesque",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "scary",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "39",
+    "page": 45,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q40",
+   "type": "MCQ",
+   "prompt": "Choose one word for the given group of words -\n'bad or criminal behaviour, usually of young people'.",
+   "options": [
+    {
+     "key": "A",
+     "text": "criminality",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "delinquency",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "homicide",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "felony",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "40",
+    "page": 46,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q41",
+   "type": "MCQ",
+   "prompt": "A shopkeeper bought 25 chairs from a manufacturer for ₹37,500 and sold them at\na profit equal to selling price of 5 chairs. The selling price of one chair, is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "1875",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹ 1500",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹ 1250",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹ 1200",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "41",
+    "page": 48,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q42",
+   "type": "MCQ",
+   "prompt": "A sum of money borrowed on simple interest amounts to ₹720 after 2 years and ₹1020 after a further period of 5 years. The borrowed sum of money is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹ 500",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹ 520",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹ 600",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹ 640",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "42",
+    "page": 49,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q43",
+   "type": "MCQ",
+   "prompt": "If 20% of A = 15% of B = (1/4) C, then A : B : C is",
+   "options": [
+    {
+     "key": "A",
+     "text": "4:3:5",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "15:20:12",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "12:20:15",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "5:3:4",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "43",
+    "page": 50,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q44",
+   "type": "MCQ",
+   "prompt": "7.038 + 27.3 + 1.0079 + 3.035 + 0.8 + 14 =",
+   "options": [
+    {
+     "key": "A",
+     "text": "52.2059",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "53.1809",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "52.3529",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "54.0539",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "44",
+    "page": 51,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q45",
+   "type": "MCQ",
+   "prompt": "The average of all the numbers between 8 and 33, and which are divisible by 5 is :",
+   "options": [
+    {
+     "key": "A",
+     "text": "18",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "16",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "20",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "25",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "45",
+    "page": 52,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q46",
+   "type": "MCQ",
+   "prompt": "In an election between two candidates, 30% of the voters voted for candidate A whereas 60% of the remaining voters voted for candidate B. The rest of the voters did not cast their vote. If the difference between those who voted for candidate A and those who did not vote is 2500, how many voters were there on the voters list?",
+   "options": [
+    {
+     "key": "A",
+     "text": "125000",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "130000",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "132000",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "135000",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "46",
+    "page": 53,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q47",
+   "type": "MCQ",
+   "prompt": "Three numbers are in the ratio 3/4 : 5/6 : 1/2 and the difference between the greatest and the smallest numbers is 12. What is the difference between the squares of the largest and the smallest numbers?",
+   "options": [
+    {
+     "key": "A",
+     "text": "144",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "576",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "64",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "16",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "47",
+    "page": 54,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q48",
+   "type": "MCQ",
+   "prompt": "68% of a number is more than its 52% by 64. What is 75% of this number?",
+   "options": [
+    {
+     "key": "A",
+     "text": "270",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "291",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "300",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "312",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "48",
+    "page": 55,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q49",
+   "type": "MCQ",
+   "prompt": "In a class of 40 students, the average marks scored by 10 students is 22, whereas\nthe average marks scored by the remaining students is 62. The average marks\nscored by all the students of the class, is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "50",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "51",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "52",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "53",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "49",
+    "page": 56,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q50",
+   "type": "MCQ",
+   "prompt": "Two identical cups have milk in them up to 2/3 and 4/5 of their volumes, respectively. Water is poured to fill the cups. Then the mixtures of the two cups are mixed. What is the ratio of water to milk in the new mixture?",
+   "options": [
+    {
+     "key": "A",
+     "text": "11:4",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1:4",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4:1",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "4:11",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "50",
+    "page": 57,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q51",
+   "type": "MCQ",
+   "prompt": "A and B invested in a business in the ratio 3:2. If 5% of the total profit goes to\ncharity and the share of B in the remaining profit is ₹1425, then the total profit is",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹ 3150",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹ 3900",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹ 3750",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹ 3650",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "51",
+    "page": 58,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q52",
+   "type": "MCQ",
+   "prompt": "A retailer bought shirts at the rate of ₹200 per shirt and marked them at ₹300\neach. He allowed some discount and earned a profit of 35% on the cost price. What\nis the percentage of discount?",
+   "options": [
+    {
+     "key": "A",
+     "text": "9%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "10%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "14%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "16%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "52",
+    "page": 59,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q53",
+   "type": "MCQ",
+   "prompt": "If 50% of (x+2y) = 40% of (x+5y), then what percentage of x is y?",
+   "options": [
+    {
+     "key": "A",
+     "text": "33⅓%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "25%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "15%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "10%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "53",
+    "page": 60,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q54",
+   "type": "MCQ",
+   "prompt": "A can do a piece of work in 20 days, while A and B together can do it in 12 days\nand A, B and C all together can do it in 10 days. In how many days will the work\nbe done if they work for a day in the pattern (A, A and B, A and C, A, .....)?",
+   "options": [
+    {
+     "key": "A",
+     "text": "12 days",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "15 days",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "16 days",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "18 days",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "54",
+    "page": 61,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q55",
+   "type": "MCQ",
+   "prompt": "Profit earned by selling an item for ₹2650 is 20% more than the loss incurred by\nselling the same item for ₹2375. At what price should the item be sold to earn\n20% profit?",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹ 3000",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "In3100",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹ 3125",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹ 3140",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "55",
+    "page": 62,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q56",
+   "type": "MCQ",
+   "prompt": "If 13¹⁰⁰ is divided by 14, the remainder is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "7",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "9",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "56",
+    "page": 63,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q57",
+   "type": "MCQ",
+   "prompt": "If the difference between the simple interest received from two different sources\non ₹1000 for 3 years is ₹90, then the difference between their rates of interest is :",
+   "options": [
+    {
+     "key": "A",
+     "text": "2%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "2.5%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3.5%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "57",
+    "page": 64,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q58",
+   "type": "MCQ",
+   "prompt": "What is the smallest number which leaves no remainder when divided by numbers\n1,2,3, ......, 9?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1820",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2520",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "3280",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "4020",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "58",
+    "page": 65,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q59",
+   "type": "MCQ",
+   "prompt": "If K = 5 + 2√6, then (K − 1)/√K is equal to:",
+   "options": [
+    {
+     "key": "A",
+     "text": "1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2√2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "3√2",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "59",
+    "page": 66,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q60",
+   "type": "MCQ",
+   "prompt": "6.3̅ × 0.0̅6̅ =\n(A bar marks repeating digits.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "0.3̅2̅",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "0.3̅8̅",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "0.32̅",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "0.38̅",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "60",
+    "page": 67,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q61",
+   "type": "MCQ",
+   "prompt": "A solid cube has been painted red, blue and black on pairs of opposite faces. It is\nthen cut into 64 cubical blocks of equal size. How many cubes have two faces\npainted red and black and all other faces unpainted?",
+   "options": [
+    {
+     "key": "A",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "8",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "16",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "61",
+    "page": 69,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q62",
+   "type": "MCQ",
+   "prompt": "A. B. C, D. E, F and G are playing cards sitting around a circular table. D is not\nneighbour of C or E and A is neighbour of B and C. G, who is second to the left of\nD. is the neighbour of E and F. Which of the following options shows the correct\norder?",
+   "options": [
+    {
+     "key": "A",
+     "text": "DAB",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "GCE",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "BCA",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "GFD",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "62",
+    "page": 70,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q63",
+   "type": "MCQ",
+   "prompt": "Introducing a man, Meera said that he is the brother of the daughter of the wife of\nmy husband. How is the man related to Meera?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Son",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Husband",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Brother",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Nephew",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "63",
+    "page": 71,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q64",
+   "type": "MCQ",
+   "prompt": "If ÷ means +, − means ÷, × means − and + means ×, then\n[(36 × 4) − 8 × 4] / [4 + 8 × 2 + 16 ÷ 1] = ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "8",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "16",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "0",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "64",
+    "page": 72,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q65",
+   "type": "MCQ",
+   "prompt": "How many such 5s are there in the following number sequence each of which is\nimmediately preceded by 2 or 3, but not immediately followed by 7 or 8?\n4595359458256725485359510",
+   "options": [
+    {
+     "key": "A",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "5",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "65",
+    "page": 73,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q66",
+   "type": "MCQ",
+   "prompt": "A boy rode his bieycle northwards, then turned left and rode 1 km and again turned\nleft and rode 2 km. He found himself exactly one km west of his starting point.\nHow far did he ride northwards initially?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1 km",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2 km",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "3 km",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "5 km",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "66",
+    "page": 74,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q67",
+   "type": "MCQ",
+   "prompt": "Find the missing term in the following number series:\n0, 3, 12, 27, 48, 75,-?, 147",
+   "options": [
+    {
+     "key": "A",
+     "text": "105",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "116",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "108",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "128",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "67",
+    "page": 75,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q68",
+   "type": "MCQ",
+   "prompt": "If 453945 is code for DECIDE, then 8978 is code for which word?",
+   "options": [
+    {
+     "key": "A",
+     "text": "BHEF",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "CDEH",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "GHEE",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "HIGH",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "68",
+    "page": 76,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q69",
+   "type": "MCQ",
+   "prompt": "Given below is a statement followed by two assumptions numbered I and II. Consider the statement and decide which of the assumptions is/are implicit in the statement.\nStatement: His recent investment in the shares of company A is only a gamble.\nAssumptions:\nI. He may incur loss on his investment.\nII. He may gain from his investment.",
+   "options": [
+    {
+     "key": "A",
+     "text": "If only assumption I is implicit.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "If only assumption II is implicit.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "If either I or II is implicit.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "If neither I nor II is implicit.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "69",
+    "page": 77,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q70",
+   "type": "MCQ",
+   "prompt": "Given below is a statement, followed by two arguments numbered I and II. You have to decide which of the arguments is/are a 'strong' argument.\nStatement: Should students take part in politics?\nArguments:\nI. Yes, it inculcates in them qualities of leadership.\nII. No, they should study and build up their career.",
+   "options": [
+    {
+     "key": "A",
+     "text": "If only argument I is strong.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "If only argument II is strong.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "If either I or II is strong.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "If neither I nor II is strong.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "70",
+    "page": 79,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q71",
+   "type": "MCQ",
+   "prompt": "How many days will there be from 26th January 2004 to 15th May 2004 (both days\nincluded)?",
+   "options": [
+    {
+     "key": "A",
+     "text": "110",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "111",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "112",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "113",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "71",
+    "page": 80,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q72",
+   "type": "MCQ",
+   "prompt": "A class of boys stands in a single line. One boy is nineteenth in order from both the\nends. How many boys are there in the class?",
+   "options": [
+    {
+     "key": "A",
+     "text": "27",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "37",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "38",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "39",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "72",
+    "page": 81,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q73",
+   "type": "MCQ",
+   "prompt": "Given below are two statements labelled as Assertion (A) and Reason (R). Choose\nthe correct option as per the codes provided below:\nAssertion (A): In winter, a glass tumbler breaks when hot water is poured into it.\nReason (R): The outer surface of glass expands when hot water is poured into it.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Both (A) and (R) are true and (R) is the correct explanation of (A).",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Both (A) and (R) are true but (R) is not the correct explanation of (A).",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(A) is true but (R) is false.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "(A) is false but (R) is true.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "73",
+    "page": 82,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q74",
+   "type": "MCQ",
+   "prompt": "738 429 156 273 894\nWhich of the following will be the last digit of the second highest number after the\npositions of the digits in each number are reversed?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "74",
+    "page": 83,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q75",
+   "type": "MCQ",
+   "prompt": "In the question below are given three statements followed by three conclusions numbered I, II and III. You have to take the given statements to be true even if they seem to be at variance from the commonly known facts. Read all the conclusions and then decide which of the given conclusions logically follows from the given statements.\nStatements: Some blades are hammers. Some hammers are knives. Some knives are axes.\nConclusions:\nI. Some axes are hammers.\nII. Some knives are blades.\nIII. Some axes are blades.",
+   "options": [
+    {
+     "key": "A",
+     "text": "None follows",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only I follows",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Only II follows",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Only III follows",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "75",
+    "page": 85,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q76",
+   "type": "MCQ",
+   "prompt": "Which of the following countries is NOT a part of Group of Twenty (G20)?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Argentina",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Mexico",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Peru",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Saudi Arabia",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "76",
+    "page": 87,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q77",
+   "type": "MCQ",
+   "prompt": "Who amongst the following is NOT one of the Ramon Magsaysay Awardees 2023?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rakshand, Korvi",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Lemos, Eugenio",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Ballon, Roberto",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Coronel-Ferrer, Miriam",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "77",
+    "page": 88,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q78",
+   "type": "MCQ",
+   "prompt": "Who amongst the following has been awarded with Arjuna Award 2022 for Para\nSwimming?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Swapnil Sanjay Patil",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Sarita",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Tarun Dhillon",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Jerlin Anika J.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "78",
+    "page": 89,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q79",
+   "type": "MCQ",
+   "prompt": "Place the following kingdoms after Mauryan Empire in chronological order:\nA. Shakas\nB. Indo-Greeks\nC. Kushanas\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "B, C, A",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "С, В, А",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "С, А. В",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "B, A, C",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "79",
+    "page": 90,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q80",
+   "type": "MCQ",
+   "prompt": "Statement A : Mahatma Gandhi returned to India in January 1918.\nStatement B : He had come from South Africa where he had successfully fought\nthe racist regime with a method of mass agitation, called Satyagraha.\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Statements A and B are correct.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Statements A and B are incorrect.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Statement A is correct, but Statement B is incorrect.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Statement A is incorrect, but Statement B is correct.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "80",
+    "page": 91,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q81",
+   "type": "MCQ",
+   "prompt": "In which year Alexander Cunningham published a set of Ashokan inscriptions?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1784",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1810",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1956",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1877",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "81",
+    "page": 92,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q82",
+   "type": "MCQ",
+   "prompt": "LIST 1 (Years)\nA. 1801\nB.\n1858\nC.\n1856\nD. |1857\nLIST II (incidents occurred)\nI. Nawab Wajid Ali Shah deposed\nRani Jhansi killed in Battle\nIII. Mutiny starts in Meerut\nIV. Subsidiary Alliance introduced by Wellesley in Awadh\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "A-II, B-IV, C-I, D-III",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A-IV, B-II, C-I, D-III",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A-IV, B-II, C-III, D-I",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A-II, B-IV, C-III, D-I",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "82",
+    "page": 93,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q83",
+   "type": "MCQ",
+   "prompt": "Which one of the following has not been written by Kalidasa?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Kumarsambhava",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Uttarramcharita",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Raghuvansa",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Mughaduta",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "83",
+    "page": 95,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q84",
+   "type": "MCQ",
+   "prompt": "The ancient rock-cut caves of Karla and Bhaja are situated here. Identify the place:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Nashik",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Khandala",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Solapur",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Aurangabad",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "84",
+    "page": 96,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q85",
+   "type": "MCQ",
+   "prompt": "Which crop needs well drained fertile soils, moderate temperatures and lots of\nsunshine?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rice",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Wheat",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Millets",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Maize",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "85",
+    "page": 97,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q86",
+   "type": "MCQ",
+   "prompt": "The largest salt water lake in India lies in Odisha is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Pulicat",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Chilika",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Loktak",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Barapani",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "86",
+    "page": 98,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q87",
+   "type": "MCQ",
+   "prompt": "The remains of the dead plants and animals trapped in the layers of rocks are\ncalled",
+   "options": [
+    {
+     "key": "A",
+     "text": "Fossils",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Sediments",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Ore",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Minerals",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "87",
+    "page": 99,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q88",
+   "type": "MCQ",
+   "prompt": "Typhoid and tuberculosis are:",
+   "options": [
+    {
+     "key": "A",
+     "text": "viral diseases",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "bacterial diseases",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "fungal infections",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "lifestyle diseases",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "88",
+    "page": 100,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q89",
+   "type": "MCQ",
+   "prompt": "Which law of motion is applied when, a high jump athlete is made to fall either on\na cushioned bed or on a sand bed?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Second law of motion",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "First law of motion",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Third law of motion lal",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Both Second law of motion and First law of motion",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "89",
+    "page": 101,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q90",
+   "type": "MCQ",
+   "prompt": "Common cold and influenza are caused by:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Viruses",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bacteria",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Protozoans",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Fungi",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "90",
+    "page": 102,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q91",
+   "type": "MCQ",
+   "prompt": "\"Autosum\" button is available on",
+   "options": [
+    {
+     "key": "A",
+     "text": "MS Word file",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "MS Power Point file",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Excel Work Sheet",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Any PDF file",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "91",
+    "page": 103,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q92",
+   "type": "MCQ",
+   "prompt": "Consider the following statements:\nA. Sorting of data can be done in MS Excel.\nB. Duplicates in data cannot be removed in MS Excel.\nWhich of the above statements is/are true?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only A is correct.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only B is correct.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Both A and B are correct.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Neither A nor B is correct.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "92",
+    "page": 104,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q93",
+   "type": "MCQ",
+   "prompt": "In India, High Courts were first established in 1862 in which of the following three\nPresidency cities?\nA. Hyderabad\nB. Calcutta\nC. Bombay\nD. Madras\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "A, B and C only",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A, C and D only",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "B, C and D only",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A, B and D only",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "93",
+    "page": 105,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q94",
+   "type": "MCQ",
+   "prompt": "A. Legal dispute between the Union and the States can be resolved only by the\nSupreme Court of India.\nB. Legal dispute between the States themselves can be resolved by the High\nCourts.\nWhich of the above statements is/are correct?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only A is correct.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only B is correct.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Both A and B are correct.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Neither A nor B is correct.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "94",
+    "page": 106,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q95",
+   "type": "MCQ",
+   "prompt": "Consider the following statements:\nA. The term judicial review is mentioned in the Constitution of India.\nB. High Court in India do not have the power to issue writs of Habeas Corpus.\nWhich of the above statements is/are correct?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only A is correct.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only B is correct.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Both A and B are correct.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Neither A nor B is correct.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "95",
+    "page": 108,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q96",
+   "type": "MCQ",
+   "prompt": "The provision of Directive Principles of State Policy of the Constitution of India is\ninspired by the constitution of which of the following countries?",
+   "options": [
+    {
+     "key": "A",
+     "text": "British Constitution",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Irish Constitution",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "French Constitution",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Canadian Constitution",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "96",
+    "page": 109,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q97",
+   "type": "MCQ",
+   "prompt": "'The Gold Standard' which was the prevailing system from around 1870 to 1914,\nwas the epitome of which of the following?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Managed Floating Exchange Rate System",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Flexible Exchange Rate System",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Autonomous Transactions",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Fixed Exchange rate System",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "97",
+    "page": 110,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q98",
+   "type": "MCQ",
+   "prompt": "What do you understand by Infant mortality rate?",
+   "options": [
+    {
+     "key": "A",
+     "text": "It is the death of children below 2 years of age.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "It is the death of children below 1 year of age.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "It is the death of children below 6 months of age.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "It is the death of children of 3 months of age.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "98",
+    "page": 111,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q99",
+   "type": "MCQ",
+   "prompt": "Which of the following are components of Capital Account?\nA. External Borrowings\nB. Transfer Payments\nC. External Assistance\nD. Investments\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "A, B and C only",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A, C and D only",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "B. C and D only",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A, B and D only",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "99",
+    "page": 112,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2024-bdes-gat-q100",
+   "type": "MCQ",
+   "prompt": "Variables differ on the basis of specific criterion, which are broadly classified into which of the following two types?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Continuous and discrete",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Chronological and Spatial",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "tandard deviation and mean deviation",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Mode and Range",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2024,
+    "paperId": "nift-2024-bdes-gat",
+    "questionNo": "100",
+    "page": 113,
+    "sourceSha256": "f4a20136b0cc87cac2fe9639a015ba83cec4635ad4d13f539b6eef32f96f449a",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
+    "verification": "review"
+   }
   }
  ]
 }
