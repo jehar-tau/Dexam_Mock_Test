@@ -1652,6 +1652,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/tests" element={<Tests />} />
         <Route path="/papers" element={<Papers />} />
+        <Route path="/papers/:exam" element={<Papers />} />
         <Route path="/practice/visual-hierarchy" element={<SignReadingExercise />} />
         <Route path="/tests/:exam" element={<ExamDetail />} />
         <Route path="/plans" element={<Plans />} />

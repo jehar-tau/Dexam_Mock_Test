@@ -45,7 +45,7 @@ export function HomeFreePapers() {
           const mine = groups?.filter(group => group.exam === id) ?? [];
           const years = mine.map(group => group.year);
           return <li key={id}>
-            <Link to={`/papers?exam=${id}`}>
+            <Link to={`/papers/${id}`}>
               <span className="home-papers-exam">{name}</span>
               <span className="home-papers-level">{level}</span>
               <strong>{groups ? (mine.length ? `${mine.length} paper${mine.length === 1 ? "" : "s"}` : "Coming soon") : "Past papers"}</strong>
