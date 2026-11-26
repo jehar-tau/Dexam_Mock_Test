@@ -16,10 +16,10 @@ export function PortalShell({ children }) {
   const expandedPreview = previewRoute && (postLaunchPreview || hostedStudentPreview);
   const previewNavigation = expandedPreview ? [
     { to: "/portal-preview", label: "Overview", mark: "O", end: true },
-    { to: "/exam-mocks-preview", label: "Exam-wise mocks", mark: "M" },
-    { to: "/papers", label: "Papers", mark: "Y" },
-    { to: "/all-india-preview", label: "All India mocks", mark: "A" },
+    { to: "/papers-preview", label: "Papers", mark: "Y" },
     { to: "/topic-practice-preview", label: "Topic practice", mark: "P" },
+    { to: "/all-india-preview", label: "All India mocks", mark: "A" },
+    { to: "/exam-mocks-preview", label: "Exam-wise mocks", mark: "M" },
     { to: "/learn-preview", label: "Learn", mark: "L" },
     { to: "/community-preview", label: "Community", mark: "C" },
   ] : previewRoute ? [

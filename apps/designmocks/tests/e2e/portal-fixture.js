@@ -52,7 +52,9 @@ export async function stubPortalProvider(page, respond, projectRef = fixtureProj
     }
     const input = request.postDataJSON() ?? {};
     calls.push([procedure, input]);
-    const result = respond(procedure, input);
+    let result = respond(procedure, input);
+    // The Overview reads free year-paper progress; most fixtures predate it.
+    if (result === undefined && ['free_year_paper_catalog', 'my_year_paper_attempts'].includes(procedure)) result = [];
     if (result === undefined) {
       unexpected.push(path);
       return route.abort();

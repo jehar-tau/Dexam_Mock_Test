@@ -20,10 +20,10 @@ Update this file in the same PR as each slice. Status: `[ ]` not started,
 
 | # | Slice | Owner | Status |
 |---|-------|-------|--------|
-| 1 | Papers catalogue: exam summary, compact year list, saved-progress states, start dialog; `/papers-preview` review route | Claude | `[~]` approved, merging |
-| 2 | Focused exam room: no site chrome during an attempt, one sticky bar (paper, question number, timer with under-5-min and last-minute states, theme, Questions jump), pinned phone actions | Claude | `[~]` |
-| 3 | Answer-by-answer review: outcome badge with exact marks, green/red option states, previous/next stepping, prominent Open answer review. Still to do: time per question, marks by section, attempt history per paper | Claude | `[~]` |
-| 4 | Overview: continue-paper card, latest result, next suggested paper or topic, built only from released papers | Claude | `[ ]` |
+| 1 | Papers catalogue: exam summary, compact year list, saved-progress states, start dialog; `/papers-preview` review route | Claude | merged #354; awaiting Site publish (Codex task 3) |
+| 2 | Focused exam room: no site chrome during an attempt, one sticky bar (paper, question number, timer with under-5-min and last-minute states, theme, Questions jump), pinned phone actions | Claude | merged #355; awaiting Site publish |
+| 3 | Answer-by-answer review: outcome badge with exact marks, green/red option states, previous/next stepping, prominent Open answer review. Still to do: time per question, marks by section, attempt history per paper | Claude | first part merged #355 |
+| 4 | Overview: "Your past-year papers" (attempted count, in progress, latest results, up next), next-session card points at a real paper, paths and sidebar lead with Papers and mark unreleased modules "Opens later" | Claude | `[~]` |
 | 5 | Topic practice built only from released year-paper questions (10/20/30 questions, 15/30/45 min); check the selector against the curated lifecycle first | Claude UI, Codex server check | `[ ]` |
 | 6 | All India: fixed event per exam from reviewed parallel questions; one attempt, fixed window, reconnect-safe timer, result and rank release | Claude content and UI, Codex event binding | `[ ]` |
 | 7 | Exam-wise mocks from the same parallel questions after each All India event closes | Claude UI, Codex release | `[ ]` |
@@ -53,13 +53,16 @@ live result to report back.
    `202611250177_nid_historical_year_runtime` to the DMocks Test project.
    Live result: dmocks.com/papers still shows NID 0, because a migration
    releases no paper. Report the hosted migration version list.
-3. **Publish Papers slice 1 after the owner approves it.** Source: this branch's
-   PR once merged. Checks: merged-main CI, production package/verify,
+3. **Publish the merged student slices.** Source: main at or after `6e4286d`
+   (#354 Papers catalogue, #355 exam room and answer review). Checks: merged-main CI, production package/verify,
    preview-isolation check (the build must not contain `/papers-preview`).
    Live result: dmocks.com/papers shows the new exam summary and year list on
    desktop and mobile with the same 17 papers, and the start dialog shows
    questions and minutes; signed-in testers see their In progress / Latest
-   result / Result under review states.
+   result / Result under review states. Open a paper as a tester: the site
+   header and footer disappear, the timer bar stays pinned, and after
+   submitting, Open answer review shows marks per question with Previous /
+   Next stepping.
 
 ## Decisions log
 
@@ -69,6 +72,11 @@ live result to report back.
 - 26 Nov 2026: Owner approved the visible Papers slice 1 (desktop, dark mode,
   phone and start dialog) from the /papers-preview screenshots. Next: PR,
   exact-head CI, merge, merged-main CI, then Codex task 3 publishes it.
+- 26 Nov 2026: Owner approved slices 2 and 3 ("Approve, keep going"); #355
+  merged as 6e4286d after exact-head CI passed.
+- 26 Nov 2026: Overview loads year-paper progress only after its main read,
+  because that read finalizes expired attempts first. A failed progress read
+  shows a retry and never hides the rest of the desk.
 - 26 Nov 2026: Review marks are shown only where the released outcome fixes
   them (correct, wrong, unanswered, full marks). Partial credit shows no number
   because historical MSQ partial rules differ by year.

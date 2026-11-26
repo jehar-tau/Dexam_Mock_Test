@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { paperLabel, paperLevel, paperSubtitle } from './paper-years.mjs';
 import { loadReleasedYearPapers, releasedYearPaperMap, releasedYearPaperGroups } from './free-year-papers.mjs';
 import { platform, cataloguePlatform } from './platform.js';
@@ -154,7 +154,7 @@ export function PapersView({ releases = [], signedIn = false, onStart,
   </section>;
 }
 
-function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefresh, headingRef }) {
+function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefresh, headingRef, initialExam }) {
   const services = useAccountServices(), navigate = useNavigate(), active = useRef(null), mutationBusy = useRef(false);
   const [busy, setBusy] = useState(''), [startError, setStartError] = useState('');
   const [startUncertain, setStartUncertain] = useState(false), [checkingAttempts, setCheckingAttempts] = useState(false);
@@ -216,11 +216,13 @@ function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefr
     onRefresh={onRefresh} startUncertain={startUncertain} onCheckAttempts={checkAttempts}
     checkingAttempts={checkingAttempts} savedAttempts={savedAttempts} recoveryError={recoveryError} headingRef={headingRef}
     attemptsByPaper={attemptsByPaper} attemptsLoading={attemptsLoading} attemptsError={attemptsError}
-    onRefreshAttempts={() => setAttemptRefresh(value => value + 1)}/>;
+    onRefreshAttempts={() => setAttemptRefresh(value => value + 1)} initialExam={initialExam}/>;
 }
 
 export default function Papers() {
   const { session, loading: authChecking } = useAuthState(), heading = useRef(null);
+  const requestedExam = new URLSearchParams(useLocation().search).get('exam');
+  const initialExam = exams.includes(requestedExam) ? requestedExam : 'uceed';
   const [releases, setReleases] = useState([]), [releasesUnavailable, setReleasesUnavailable] = useState(false);
   const [releasesLoading, setReleasesLoading] = useState(Boolean(cataloguePlatform)), [refresh, setRefresh] = useState(0);
   useEffect(() => {
@@ -254,9 +256,9 @@ export default function Papers() {
   }, [refresh]);
   const onRefresh = cataloguePlatform ? () => setRefresh(value => value + 1) : undefined;
   if (authChecking || !session || !platform) return <PapersView releases={releases} releasesUnavailable={releasesUnavailable}
-    releasesLoading={releasesLoading} onRefresh={onRefresh} authChecking={authChecking}/>;
+    releasesLoading={releasesLoading} onRefresh={onRefresh} authChecking={authChecking} initialExam={initialExam}/>;
   return <AccountAccessBoundary key={session.user.id} actorId={session.user.id} headingRef={heading} kind="catalogue">
     <SignedInPapers releases={releases} releasesUnavailable={releasesUnavailable} releasesLoading={releasesLoading}
-      onRefresh={onRefresh} headingRef={heading}/>
+      onRefresh={onRefresh} headingRef={heading} initialExam={initialExam}/>
   </AccountAccessBoundary>;
 }

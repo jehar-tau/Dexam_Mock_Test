@@ -7,6 +7,10 @@ import { PortalShell, DeferredModule } from "./PortalShell.jsx";
 import {postLaunchPreview}from "./launch-scope.js";
 import { hostedStudentPreview } from "./student-preview.js";
 import { DrawingUploadWindow, previewDrawingMedia } from "./DrawingUploads.jsx";
+import { previewReleases, previewProgress, previewAttemptHref } from "./PapersPreview.jsx";
+import { overviewPaperProgress } from "./overview-papers.mjs";
+
+const previewYearPapers = { progress: overviewPaperProgress(previewReleases, previewProgress), attemptHref: previewAttemptHref, papersHref: "/papers-preview" };
 
 const example = {
   access: { active: true, expiresAt: "2027-11-05T00:00:00+05:30" },
@@ -90,6 +94,6 @@ export default function PortalPreview() {
         </nav>
       </details>
     </section>
-    {!expandedPreview&&(pending||pendingUpload)?<DeferredModule module="drawings"/>:pendingUpload ? <PendingUploadPreview /> : pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" allIndiaHref="/all-india-preview" workspaceHref="/portal-preview" /> : <PortalShell><WorkspaceView data={expandedPreview?example:{...example,attempts:example.attempts.filter(item=>!item.resultsPending),analytics:{...example.analytics,waitingForResults:0,drawingReviews:{pending:0,released:0}}}} papers={[]} preview passLabel="EXAMPLE PASS" practiceHref="/topic-practice-preview" allIndiaHref="/all-india-preview" examHref="/exam-mocks-preview" onStart={() => navigate("/portal-preview/paper")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/portal-preview/paper"} /></PortalShell>}
+    {!expandedPreview&&(pending||pendingUpload)?<DeferredModule module="drawings"/>:pendingUpload ? <PendingUploadPreview /> : pending ? <PendingAttemptResult title="Fictional All India mock" reviewEndsAt="2026-12-01T12:30:00Z" allIndiaHref="/all-india-preview" workspaceHref="/portal-preview" /> : <PortalShell><WorkspaceView data={expandedPreview?example:{...example,attempts:example.attempts.filter(item=>!item.resultsPending),analytics:{...example.analytics,waitingForResults:0,drawingReviews:{pending:0,released:0}}}} papers={[]} preview yearPapers={previewYearPapers} passLabel="EXAMPLE PASS" practiceHref="/topic-practice-preview" allIndiaHref="/all-india-preview" examHref="/exam-mocks-preview" onStart={() => navigate("/portal-preview/paper")} attemptHref={id => id === "example-result" ? "/portal-preview/report" : id === "example-pending" ? "/portal-preview/pending" : "/portal-preview/paper"} /></PortalShell>}
   </>;
 }
