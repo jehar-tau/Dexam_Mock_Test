@@ -168463,6 +168463,1014 @@
     "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q1",
+   "type": "MCQ",
+   "prompt": "If the word CREATIVE is coded as DSFBUJWF, then how is INNOVATE written in that code?\n\n(Corrected by DMocks: option (A) was printed as 'JOPPWBUF', but shifting each letter of INNOVATE by one gives 'JOOPWBUF', so (A) now reads JOOPWBUF.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "JOOPWBUF",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "JOPPWBUV",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "JOPPWBUW",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "JOPPWBUX",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "1",
+    "page": 2,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q2",
+   "type": "MCQ",
+   "prompt": "Pick the odd name out from the given list of names.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Shimla",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Mussoorie",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Mount Abu",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Darjeeling",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "2",
+    "page": 2,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q3",
+   "type": "MCQ",
+   "prompt": "An expert argues that a new policy will reduce crime rates. Which of the following questions should you ask?",
+   "options": [
+    {
+     "key": "A",
+     "text": "What is the educational qualification of the expert?",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "What evidence supports the claim that the policy will reduce crime?",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "How much money will the policy cost taxpayers?",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All of the above",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "critical-thinking",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "3",
+    "page": 2,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q4",
+   "type": "MCQ",
+   "prompt": "A school introduces electronics as a compulsory activity in high school. What aspects should you consider about this rule?",
+   "options": [
+    {
+     "key": "A",
+     "text": "The availability of qualified teachers to teach electronics.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The relevance of teaching electronics for all students.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The potential impact on other subjects.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All of the above",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "critical-thinking",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "4",
+    "page": 2,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q5",
+   "type": "MCQ",
+   "prompt": "One morning, Riya and Sita were talking face to face. If Riya's shadow was exactly to the left of Sita, which direction was Riya facing?",
+   "options": [
+    {
+     "key": "A",
+     "text": "North",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "South",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "East",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "West",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "5",
+    "page": 2,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q6",
+   "type": "MCQ",
+   "prompt": "Which word does not match with the others?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Cinematography",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Editing",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Sound design",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Painting",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "6",
+    "page": 2,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q7",
+   "type": "MCQ",
+   "prompt": "Who was responsible for the White Revolution in India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Dr Verghese Kurien",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Dr Ravi Mathai",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Dr CJ Andrews",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Dr S Swaminathan",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "7",
+    "page": 2,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q8",
+   "type": "MCQ",
+   "prompt": "Which of the following stoves has better control mapping?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Both",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "None",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2025/nid-pdf/nid-mdes-sample-2025-q8.png",
+     "sha256": "85b393db6a573787d1e59127e60bd902343e03883f11d4407ec90b6480639dda",
+     "width": 1238,
+     "height": 765,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "8",
+    "page": 3,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q9",
+   "type": "MCQ",
+   "prompt": "See the images and identify which is not symmetrical.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2025/nid-pdf/nid-mdes-sample-2025-q9.png",
+     "sha256": "d62bc575618293faaac472de95af2380243a9b46a87892d40bbd64d84ed512fe",
+     "width": 1425,
+     "height": 370,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "9",
+    "page": 3,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q10",
+   "type": "MCQ",
+   "prompt": "Which is the correct sequence in the chronological emergence of the materials mentioned, the first one denoting the earliest and the last one the latest to emerge?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Paper-Terracotta-Glass-Metal-Leather",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Terracotta-Leather-Metal-Glass-Paper",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Metal-Glass-Paper-Terracotta-Leather",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Leather-Terracotta-Metal-Paper-Glass",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "materials",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "10",
+    "page": 3,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q11",
+   "type": "MCQ",
+   "prompt": "Which of the following dishes is natively Indian?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Tamale",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Litti",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Sambusa",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Sambal",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "11",
+    "page": 3,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q12",
+   "type": "MCQ",
+   "prompt": "In a flood-prone area, people have to rush out of their homes when water gets in and reach the nearest safe area for rescue. At times they carry their necessary items along with them. To protect their items, a rescue bag is provided to them. Suggest the best suitable material for this bag from the following list.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Canvas",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Microfiber",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Wool",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Polyurethane",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "materials",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "12",
+    "page": 4,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q13",
+   "type": "MCQ",
+   "prompt": "A rubber stamp uses which type of printing process?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Screen printing",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Offset printing",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Relief printing",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Intaglio printing",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "13",
+    "page": 4,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q14",
+   "type": "MCQ",
+   "prompt": "Which statement defines circular design?",
+   "options": [
+    {
+     "key": "A",
+     "text": "A design approach which enables people of all backgrounds and abilities.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A design approach which enhances the creative abilities of the people involved in the cycle of manufacturing.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A design approach which focuses on creating more production cycles in a year.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A design approach which ensures sustainable manufacturing and disposal of the product.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "14",
+    "page": 4,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q15",
+   "type": "MCQ",
+   "prompt": "What is the comfortable seat height of a standard dining chair with respect to the human figure?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Around Knee area",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Below the Knee area",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Above the knee area",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of the above",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "ergonomics",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "15",
+    "page": 4,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q16",
+   "type": "MCQ",
+   "prompt": "Which design principle does the image represent best?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Contrast",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Variety",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Emphasis",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Movement",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2025/nid-pdf/nid-mdes-sample-2025-q16.png",
+     "sha256": "5e7bab8a7bb4d7acff314ad5b741e80ad5068543b7c91098cafbe00c655ba237",
+     "width": 1017,
+     "height": 658,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "16",
+    "page": 4,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q17",
+   "type": "MCQ",
+   "prompt": "Research suggests that learning music from an early age has positive effects on child development. Based on this statement, what assumptions can we reasonably make?\n(1) Learning music early helps improve cognitive abilities.\n(2) If you start music at a young age, you will become good at it later.\n(3) It is easier to learn music when you are young.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only assumption 1 is implied",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only assumption 2 is implied",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Only assumption 3 is implied",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All of them are implied",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "critical-thinking",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "17",
+    "page": 5,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2025-q18",
+   "type": "MCQ",
+   "prompt": "A triadic colour scheme is any three colours located 120 degrees from each other on the colour wheel. Using the colour wheel shown, which of the following is a triadic scheme?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Yellow + Yellow-Green + Green",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Violet + Yellow + Orange",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Blue Violet + Red-Orange + Yellow-Green",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Green + Orange + Blue Violet",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2025/nid-pdf/nid-mdes-sample-2025-q18.png",
+     "sha256": "608feeb8b35f528d4e40d7707439e853a46fcf34d5d03a4bffff58201799aafb",
+     "width": 1417,
+     "height": 1073,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "colour-theory",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionNo": "18",
+    "page": 5,
+    "sourceSha256": "7df0b897bafcd12a00d2fdea86cbe286f63dc9b898098f6b0268de9817125fcb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
   }
  ]
 }
