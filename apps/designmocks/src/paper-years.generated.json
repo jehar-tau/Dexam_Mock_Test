@@ -180,6 +180,16 @@
     "keyedCount": 36
   },
   {
+    "id": "nift:nift-2023-bdes-gat",
+    "exam": "nift",
+    "year": 2023,
+    "paperId": "nift-2023-bdes-gat",
+    "questionCount": 100,
+    "objectiveCount": 100,
+    "drawingCount": 0,
+    "keyedCount": 100
+  },
+  {
     "id": "nid:nid-bdes-sample-2024",
     "exam": "nid",
     "year": 2024,
