@@ -51,3 +51,14 @@ including explicit `X or Y` options, and does not invent partial credit for
 second-best options. Descriptive tasks remain outside this objective runtime.
 The NID paper still needs the separate owner-reviewed release steps above;
 runtime materialization alone never lists it to students.
+
+## Refreshing CEED and UCEED diagram editions on Test
+
+The private revision command binds one approved complete plan to its canonical source on `origin/main`, the existing paper and question IDs, and verified local figure bytes. Use the pinned Test project's server environment, privileged session-pooler connection, and read-only media root. Keep the plan and all credential values on the operator machine.
+
+1. Upload only that revision's approved new diagram crops to their immutable private `papers/canonical/<sha256>.png` paths. Verify each authenticated readback against the source digest, dimensions and byte size. Media registration happens in the final database transaction.
+2. Run `npm run papers:revise-free -- --plan <private-file> --expect <approved-plan-sha>`. Inspect the paper ID, crop count, and revision digest. Repeat with `--stage` to save the version for review.
+3. Run `npm run papers:revise-free -- --rehearse <revision-digest>`. The server performs the complete update inside a rolled-back transaction and records the exact resulting paper manifest. Students continue to use the current edition throughout this review.
+4. With the owner's content approval for this paper, record it through the normal signed-in reviewer account with `approve_year_paper_revision(p_digest,p_manifest)`. Both arguments must identify the rehearsed revision.
+5. Run `npm run papers:revise-free -- --publish <revision-digest> --review-manifest <verified-manifest>`. It compares the current base, registers the new verified media, switches the scoped source and runtime, and checks the new release manifest before commit. Only this paper's objective records are involved.
+6. Open the paper on the student site. Check a diagram, text-only questions, post-submission marks and worked solutions. Previous attempts continue to read their original item snapshots, keys and media paths. Record the paper ID, plan and manifest digests, publication time, and student-view result in the private release receipt.

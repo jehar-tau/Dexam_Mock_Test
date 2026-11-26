@@ -33,6 +33,7 @@ $$;
 -- Use exact signatures. In particular, keep legacy unversioned moderation
 -- and bank review writes, public ranking publication and service RPCs closed.
 grant execute on function
+  public.approve_year_paper_revision(text,text),
   public.add_community_comment(uuid, uuid, text, uuid),
   public.admin_ai_draft_requests(),
   public.admin_all_india_events(),
