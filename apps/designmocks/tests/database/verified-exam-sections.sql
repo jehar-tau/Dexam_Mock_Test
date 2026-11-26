@@ -158,7 +158,7 @@ select pg_temp.section_assert((public.read_attempt(current_setting('test.part_b_
   and public.read_attempt(current_setting('test.part_b_attempt')::uuid)->'score'='null'::jsonb
   and public.read_attempt(current_setting('test.part_b_attempt')::uuid)->'total'='null'::jsonb
   and not exists(select 1 from jsonb_array_elements(public.read_attempt(current_setting('test.part_b_attempt')::uuid)->'questions')value
-    where value?'correctKey' or value->'drawingReview'->>'status'='released'
+    where value ?| array['correctKey','awarded'] or value->'drawingReview'->>'status'='released'
       or value->'drawingReview'?|array['score','criteria','comments','releasedAt']),
   'Part B feedback and scalar marks stay sealed until every submitted review is released');
 select pg_temp.section_assert((select bool_and(value->'score'='null'::jsonb and value->'total'='null'::jsonb)
