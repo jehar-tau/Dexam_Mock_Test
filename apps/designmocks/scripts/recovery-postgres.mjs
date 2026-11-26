@@ -79,7 +79,7 @@ export function normalizeRecoverySchema(schema) {
 }
 export const recoveryBucketsQuery=`select coalesce(jsonb_agg(jsonb_build_object('id',id,'name',name,'public',public,'fileSizeLimit',file_size_limit,'allowedMimeTypes',(select jsonb_agg(t order by t)from unnest(allowed_mime_types)t))order by id),'[]')from storage.buckets`;
 export async function checkRecoveryDatabaseSource(connection, {sourceStage = 'mvp', expectedVersions} = {}) {
-  assert.ok(['mvp', 'pre-upgrade', 'staging-before-permissions-repair'].includes(sourceStage), 'Unknown recovery source stage');
+  assert.ok(['mvp', 'pre-upgrade', 'staging-before-permissions-repair', 'free-portal-test'].includes(sourceStage), 'Unknown recovery source stage');
   if (sourceStage === 'pre-upgrade') {
     assert.ok(Array.isArray(expectedVersions) && expectedVersions.length > 0, 'A complete reviewed migration ledger is required');
     const withoutProfile = await connection.query(`select not exists (
@@ -90,6 +90,16 @@ export async function checkRecoveryDatabaseSource(connection, {sourceStage = 'mv
       where n.nspname = 'dm_private' and left(p.proname, 4) = 'mvp_'
     )`);
     assert.equal(withoutProfile, 't', 'Pre-upgrade recovery requires a database before the MVP profile');
+  } else if (sourceStage === 'free-portal-test') {
+    assert.ok(Array.isArray(expectedVersions) && expectedVersions.length > 0, 'A complete reviewed migration ledger is required');
+    const freePortal = await connection.query(`select
+      exists (select 1 from public.launch_settings where singleton and environment_mode = 'test' and sales_enabled is false)
+      and exists (select 1 from dm_private.registration_policy where id and mode in ('closed', 'testers', 'open'))
+      and exists (select 1 from dm_private.mvp_test_checkout_control where singleton and enabled is false)
+      and has_function_privilege('anon', 'public.free_year_paper_catalog()', 'execute')
+      and not has_function_privilege('anon', 'public.start_free_year_paper(uuid)', 'execute')
+      and has_function_privilege('authenticated', 'public.start_free_year_paper(uuid)', 'execute')`);
+    assert.equal(freePortal, 't', 'Free portal recovery requires the Test project, sales and checkout closed, and student-only paper starts');
   } else if (sourceStage === 'staging-before-permissions-repair') {
     assert.ok(Array.isArray(expectedVersions) && expectedVersions.length > 0, 'A complete reviewed migration ledger is required');
     const closedStaging = await connection.query(`select
