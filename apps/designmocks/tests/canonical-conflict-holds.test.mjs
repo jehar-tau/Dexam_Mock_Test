@@ -6,12 +6,12 @@ import { buildManifest } from '../scripts/question-bank-import.mjs';
 const bank = JSON.parse(fs.readFileSync(new URL('../../../server/data/exports/dexam-bank-export.json', import.meta.url), 'utf8'));
 
 test('the canonical export contains only the solved Claude paper set', () => {
-  assert.equal(bank.questions.length, 2545);
-  assert.equal(new Set(bank.questions.map(question => question.externalKey)).size, 2545);
-  assert.equal(new Set(bank.questions.map(question => question.provenance.paperId)).size, 37);
+  assert.equal(bank.questions.length, 2660);
+  assert.equal(new Set(bank.questions.map(question => question.externalKey)).size, 2660);
+  assert.equal(new Set(bank.questions.map(question => question.provenance.paperId)).size, 38);
   assert.deepEqual(new Set(bank.questions.map(question => question.provenance.exam)), new Set(['ceed', 'uceed', 'nid', 'nift']));
   assert.ok(bank.questions.every(question => Array.isArray(question.holds) && question.holds.length === 0));
-  assert.equal(buildManifest(bank).eligibleTotal, 2545);
+  assert.equal(buildManifest(bank).eligibleTotal, 2660);
   for (const removed of ['uceed-2017-q60', 'uceed-2018-q25', 'ceed-2010-q1-1']) {
     assert.equal(bank.questions.some(question => question.externalKey === removed), false);
   }
