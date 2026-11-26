@@ -4,6 +4,8 @@
 \set legacy '00000000-0000-4000-8000-000000000353'
 \set no_pass '00000000-0000-4000-8000-000000000354'
 \set incomplete '00000000-0000-4000-8000-000000000355'
+\set fresh '00000000-0000-4000-8000-000000000356'
+\set peer '00000000-0000-4000-8000-000000000357'
 begin;
 \ir fixtures/release-bank-year.sql
 create function pg_temp.practice_assert(ok boolean,label text) returns void language plpgsql as $$
@@ -17,7 +19,7 @@ create function pg_temp.practice_runtime(p_key text,n integer) returns jsonb lan
   'options',case when n%3=2 then '[]'::jsonb else '[{"id":"A","label":"First"},{"id":"B","label":"Second"},{"id":"C","label":"Third"},{"id":"D","label":"Fourth"}]'::jsonb end,
   'marking',case n%3 when 0 then '{"correct":3,"wrong":-0.71}'::jsonb when 1 then '{"correct":4,"wrong":-1,"partial":true}'::jsonb else '{"correct":4,"wrong":0}'::jsonb end,
   'points',case when n%3=0 then 3 else 4 end,'negativePoints',case n%3 when 0 then 0.71 when 1 then 1 else 0 end,
-  'media','[]'::jsonb,'explanation','Fictional original explanation.',
+  'media','[]'::jsonb,'explanation','Key for item '||n,
   'key',jsonb_build_object('kind',case n%3 when 0 then 'mcq' when 1 then 'msq' else 'nat' end,'sourceExternalKey',p_key)||
     case n%3 when 0 then '{"correct":["A"]}'::jsonb when 1 then '{"correct":["A","B"]}'::jsonb else '{"accepted":[{"exact":"1"}]}'::jsonb end,
   'context','{"version":"iitb-2027-v1","exam":"uceed","cycle":2027}'::jsonb)
@@ -86,6 +88,38 @@ select set_config('request.jwt.claim.sub',:'no_pass',true);
 select pg_temp.practice_assert(public.start_topic_practice('observation','uceed',10,900) is not null,'free practice starts without a pass once the profile is complete');
 select set_config('request.jwt.claim.sub',:'incomplete',true);
 select pg_temp.practice_reject('select public.start_topic_practice(''observation'',''uceed'',10,900)','Complete your verified profile first');
+-- Exercise the real save path for a new Google account with no SMS proof.
+reset role;
+insert into auth.users(id,email,email_confirmed_at,raw_app_meta_data) values
+  (:'fresh','new@example.invalid',now(),'{"provider":"google"}'),
+  (:'peer','peer@example.invalid',now(),'{"provider":"google"}');
+update dm_private.registration_policy set mode='open' where id;
+update dm_private.exam_mock_blueprints set enabled=true where exam='uceed';
+set local role authenticated;
+select set_config('request.jwt.claim.sub',:'fresh',true);
+select pg_temp.practice_reject(
+  $sql$select public.save_candidate_profile('New Student','bad-phone',2027,'Mumbai',array['uceed'])$sql$,
+  'Invalid candidate profile');
+select pg_temp.practice_reject($sql$select public.start_topic_practice('observation','uceed',10,900)$sql$,'Complete your verified profile first');
+select public.save_candidate_profile('New Student','+919800000356',2027,'Mumbai',array['uceed']);
+select public.start_topic_practice('observation','uceed',10,900) as saved_attempt \gset
+select pg_temp.practice_assert(jsonb_array_length(public.read_attempt(:'saved_attempt')->'questions')=10,
+  'admitted Google student saves a profile and starts free practice without SMS');
+select pg_temp.practice_assert(public.my_candidate_profile() @> '{"phoneVerified":false,"completed":false}',
+  'free practice does not claim verification or complete onboarding');
+select pg_temp.practice_reject($sql$select public.start_exam_mock('uceed')$sql$,'Complete your verified profile first');
+select set_config('request.jwt.claim.sub',:'peer',true);
+select pg_temp.practice_reject($sql$select public.start_topic_practice('observation','uceed',10,900)$sql$,'Complete your verified profile first');
+select pg_temp.practice_reject(format('select public.read_attempt(%L)',:'saved_attempt'),'Attempt not found');
+reset role;
+update dm_private.registration_policy set mode='testers' where id;
+set local role authenticated;
+select set_config('request.jwt.claim.sub',:'fresh',true);
+select pg_temp.practice_reject($sql$select public.start_topic_practice('observation','uceed',10,900)$sql$,'Complete your verified profile first');
+reset role;
+select pg_temp.practice_assert(not exists(select 1 from dm_private.candidate_phone_challenges where actor_id=:'fresh'),
+  'saving a profile and starting free practice require no SMS challenge');
+set local role authenticated;
 select set_config('request.jwt.claim.sub',:'first',true);
 select pg_temp.practice_assert((select(value->>'questions')::integer=35 from jsonb_array_elements(public.topic_catalog())value
  where value->>'topic'='observation'and value->>'exam'='uceed'),'catalog counts match the eligible objective pool');
@@ -138,6 +172,11 @@ do $$begin
  perform public.submit_attempt(current_setting('test.practice_partial')::uuid);
  perform public.submit_attempt(current_setting('test.practice_repeat')::uuid);
 end $$;
+select pg_temp.practice_assert((select count(*)=10 and bool_and(
+  item->>'explanation'='Key for item '||
+    substring(item->>'prompt' from '[0-9]+$')||' for fictional source.')
+  from jsonb_array_elements(public.read_attempt(current_setting('test.practice_first')::uuid)->'questions') item),
+  'submitted practice returns each released paper solution for its matching question');
 select set_config('test.practice_thirty',public.start_topic_practice('observation','uceed',30,900)::text,true);
 select pg_temp.practice_assert(jsonb_array_length(public.read_attempt(current_setting('test.practice_thirty')::uuid)->'questions')=30,'thirty-question configuration remains supported');
 select set_config('request.jwt.claim.sub',:'legacy',true);
