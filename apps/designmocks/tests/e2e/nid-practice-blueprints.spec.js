@@ -79,13 +79,18 @@ async function fillReview(page) {
 const deferred = () => { let release; const promise = new Promise(resolve => { release = resolve; }); return { promise, release }; };
 
 test("author mixed practice, review one revision, then preserve that decision when editing a new revision", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   const state = await fixture(page, { count: 0 });
   await region(page).getByRole("button", { name: "New NID practice blueprint", exact: true }).press("Enter");
   for (const label of ["Practice duration in minutes", "Section 1 question count", "Section 1 marks per question"]) await expect(editor(page).getByLabel(label, { exact: true })).toHaveValue("");
   await fillObjective(page);
   const form = editor(page);
   await form.getByRole("button", { name: "Add practice section", exact: true }).click();
-  for (const [label, value] of [["Section 2 label", "Visual communication"], ["Section 2 question count", "2"], ["Section 2 marks per question", "30"], ["Section 2 wrong-answer penalty", "0"]]) await form.getByLabel(label, { exact: true }).fill(value);
+  const sectionLabel = form.getByLabel("Section 2 label", { exact: true });
+  await expect(sectionLabel).toBeEditable();
+  await sectionLabel.scrollIntoViewIfNeeded();
+  await sectionLabel.fill("Visual communication");
+  for (const [label, value] of [["Section 2 question count", "2"], ["Section 2 marks per question", "30"], ["Section 2 wrong-answer penalty", "0"]]) await form.getByLabel(label, { exact: true }).fill(value);
   await form.getByRole("combobox", { name: "Section 2 response", exact: true }).selectOption("drawing");
   await form.getByRole("combobox", { name: "Completed-page upload time", exact: true }).selectOption("15");
   for (let position = 1; position <= 2; position++) {
