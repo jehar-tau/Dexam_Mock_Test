@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { paperLabel, paperLevel, paperSubtitle } from './paper-years.mjs';
 import { loadReleasedYearPapers, releasedYearPaperMap, releasedYearPaperGroups } from './free-year-papers.mjs';
 import { platform, cataloguePlatform } from './platform.js';
@@ -221,7 +221,8 @@ function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefr
 
 export default function Papers() {
   const { session, loading: authChecking } = useAuthState(), heading = useRef(null);
-  const requestedExam = new URLSearchParams(useLocation().search).get('exam');
+  const { exam: pathExam } = useParams();
+  const requestedExam = pathExam ?? new URLSearchParams(useLocation().search).get('exam');
   const initialExam = exams.includes(requestedExam) ? requestedExam : 'uceed';
   const [releases, setReleases] = useState([]), [releasesUnavailable, setReleasesUnavailable] = useState(false);
   const [releasesLoading, setReleasesLoading] = useState(Boolean(cataloguePlatform)), [refresh, setRefresh] = useState(0);
