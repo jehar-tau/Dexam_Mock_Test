@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Arrow } from "./Art.jsx";
 import { Motif, Reveal } from "./Motion.jsx";
-import { postLaunchPreview } from "./launch-scope.js";
+import { postLaunchPreview, studentModuleReleased } from "./launch-scope.js";
 import { releasedModules } from "./launch-scope.mjs";
 import { portalReady } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
@@ -44,7 +44,7 @@ export const features = [
     tone: "orange",
     eyebrow: "TOPIC PRACTICE",
     title: "Twenty minutes. One topic.",
-    copy: "Pick a topic and build a 10, 20 or 30-question session with a timer to match. For the days a full mock is too much.",
+    copy: "Pick a topic and build a free 10, 20 or 30-question session from released past papers, with a timer to match. For the days a full paper is too much.",
     points: ["Choose the topic", "Choose the length"],
     to: "/dashboard/practice",
     link: "Open Topic practice",
@@ -164,7 +164,8 @@ export function FeatureShowcase() {
       </div>
       <div className="feature-grid">
         {features.map((feature) => {
-          const soon = Boolean(feature.module) && !(releasedModules[feature.module] && portalReady) && !(postLaunchPreview && portalReady);
+          const soon = Boolean(feature.module) && !(releasedModules[feature.module] && portalReady) && !(postLaunchPreview && portalReady)
+            && !(feature.module === "practice" && studentModuleReleased("practice") && !postLaunchPreview);
           const needsSignIn = feature.to.startsWith("/dashboard") && !session;
           return (
             <Reveal
