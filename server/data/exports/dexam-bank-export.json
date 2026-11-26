@@ -139475,6 +139475,5406 @@
     "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q1",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nOpera refers to a dramatic art form, originating in Europe, in which the emotional content is conveyed to the audience as much through music both vocal and instrumental; as it is through the lyrics. By contrast, in musical theatre an actor's dramatic performance is primary, and the music plays a lesser role. The drama in opera is presented using the primary elements of theatre such as scenery, costumes and acting. However, the words of the opera, or libretto are sung rather than spoken. The singers are accompanied by a musical ensemble ranging from a small instrumental ensemble to a full symphonic orchestra.\n\nIt is pointed out in the passage that opera",
+   "options": [
+    {
+     "key": "A",
+     "text": "has developed under the influence of musical theatre.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "is a drama sung with the accompaniment of an orchestra.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "is often performed in Europe.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "is the most complex of all the performing arts.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "1",
+    "page": 1,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q2",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nOpera refers to a dramatic art form, originating in Europe, in which the emotional content is conveyed to the audience as much through music both vocal and instrumental; as it is through the lyrics. By contrast, in musical theatre an actor's dramatic performance is primary, and the music plays a lesser role. The drama in opera is presented using the primary elements of theatre such as scenery, costumes and acting. However, the words of the opera, or libretto are sung rather than spoken. The singers are accompanied by a musical ensemble ranging from a small instrumental ensemble to a full symphonic orchestra.\n\nWe can understand from the passage that",
+   "options": [
+    {
+     "key": "A",
+     "text": "drama in opera is more important than the music.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "people are captivated more by opera than musical theatre.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "orchestras in operas can vary considerably in size.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "musical theatre relies above all on music.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "2",
+    "page": 1,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q3",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nOpera refers to a dramatic art form, originating in Europe, in which the emotional content is conveyed to the audience as much through music both vocal and instrumental; as it is through the lyrics. By contrast, in musical theatre an actor's dramatic performance is primary, and the music plays a lesser role. The drama in opera is presented using the primary elements of theatre such as scenery, costumes and acting. However, the words of the opera, or libretto are sung rather than spoken. The singers are accompanied by a musical ensemble ranging from a small instrumental ensemble to a full symphonic orchestra.\n\nIt is stated in the passage that",
+   "options": [
+    {
+     "key": "A",
+     "text": "an opera requires an orchestra.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "many people find musical theatre more captivating than opera.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "music in musical theatre is not as important as it is in opera.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "opera doesn't have any properties in common",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "3",
+    "page": 1,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q4",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nOpera refers to a dramatic art form, originating in Europe, in which the emotional content is conveyed to the audience as much through music both vocal and instrumental; as it is through the lyrics. By contrast, in musical theatre an actor's dramatic performance is primary, and the music plays a lesser role. The drama in opera is presented using the primary elements of theatre such as scenery, costumes and acting. However, the words of the opera, or libretto are sung rather than spoken. The singers are accompanied by a musical ensemble ranging from a small instrumental ensemble to a full symphonic orchestra.\n\nA good opera performance requires",
+   "options": [
+    {
+     "key": "A",
+     "text": "dramatic skills.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "singing skills.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "musical instrumental skills.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "4",
+    "page": 1,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q5",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nDolphins are regarded as the friendliest creatures in the sea and stories of them helping drowning sailors have been common since Roman times. The more we learn about dolphins, the more we realize that their Paper PDF (Feb 14, 2026) (Shift 1) society is more complex than people previously imagined. They look after other dolphins when they are ill, care for pregnant mothers and protect the weakest in the community, as we do. Some scientists have suggested that dolphins have a language but it is much more probable that they communicate with each other without needing words. Could any of these mammals be more intelligent than man? Certainly the most common argument in favour of man's superiority over them, that we can kill them more easily than they can kill us, is the least satisfactory. On the contrary, the more we discover about these remarkable creatures, the less we appear superior when we destroy them.\n\nIt is clear from the passage that dolphins",
+   "options": [
+    {
+     "key": "A",
+     "text": "are proven to be less intelligent than once thought.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "have a reputation for being friendly to humans.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "are the most powerful creatures that live in the oceans.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "are capable of learning a language and",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "5",
+    "page": 1,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q6",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nDolphins are regarded as the friendliest creatures in the sea and stories of them helping drowning sailors have been common since Roman times. The more we learn about dolphins, the more we realize that their Paper PDF (Feb 14, 2026) (Shift 1) society is more complex than people previously imagined. They look after other dolphins when they are ill, care for pregnant mothers and protect the weakest in the community, as we do. Some scientists have suggested that dolphins have a language but it is much more probable that they communicate with each other without needing words. Could any of these mammals be more intelligent than man? Certainly the most common argument in favour of man's superiority over them, that we can kill them more easily than they can kill us, is the least satisfactory. On the contrary, the more we discover about these remarkable creatures, the less we appear superior when we destroy them.\n\nThe fact that the writer of the passage thinks that we can kill dolphins more easily than they can kill us",
+   "options": [
+    {
+     "key": "A",
+     "text": "means that they are less adapted to their environment than humans are to theirs.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "proves that dolphins are not the most intelligent species at sea.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "does not mean that we are superior to them.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "proves that the linguistic skills of dolphins are",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "6",
+    "page": 1,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q7",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nDolphins are regarded as the friendliest creatures in the sea and stories of them helping drowning sailors have been common since Roman times. The more we learn about dolphins, the more we realize that their Paper PDF (Feb 14, 2026) (Shift 1) society is more complex than people previously imagined. They look after other dolphins when they are ill, care for pregnant mothers and protect the weakest in the community, as we do. Some scientists have suggested that dolphins have a language but it is much more probable that they communicate with each other without needing words. Could any of these mammals be more intelligent than man? Certainly the most common argument in favour of man's superiority over them, that we can kill them more easily than they can kill us, is the least satisfactory. On the contrary, the more we discover about these remarkable creatures, the less we appear superior when we destroy them.\n\nOne can infer from the passage that",
+   "options": [
+    {
+     "key": "A",
+     "text": "dolphins are quite abundant in some areas of the world.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "communication is the most fascinating aspect of the dolphins.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "the ability to think is unique to dolphins amongst all mammals.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "dolphins have some social traits that are similar",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "7",
+    "page": 1,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q8",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nDolphins are regarded as the friendliest creatures in the sea and stories of them helping drowning sailors have been common since Roman times. The more we learn about dolphins, the more we realize that their Paper PDF (Feb 14, 2026) (Shift 1) society is more complex than people previously imagined. They look after other dolphins when they are ill, care for pregnant mothers and protect the weakest in the community, as we do. Some scientists have suggested that dolphins have a language but it is much more probable that they communicate with each other without needing words. Could any of these mammals be more intelligent than man? Certainly the most common argument in favour of man's superiority over them, that we can kill them more easily than they can kill us, is the least satisfactory. On the contrary, the more we discover about these remarkable creatures, the less we appear superior when we destroy them.\n\nIf a dolphin gets sick, the other dolphins",
+   "options": [
+    {
+     "key": "A",
+     "text": "take care of the sick one.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "move on to keep away.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "simply keep looking at the sick member.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "8",
+    "page": 1,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q9",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nNaval architects never claim that a ship is unsinkable, but the sinking of the passenger-and-car ferry Estonia in the Baltic surely should never have happened. It was well designed and carefully maintained. It carried the proper number of lifeboats. It had been thoroughly inspected on the day of its fatal voyage. Yet hours later, the Estonia rolled over and sank on a cold, stormy night. It went down so quickly that most of those on board, caught in their dark, flooding cabins, had no chance to save themselves. Of those who managed to scramble overboard, only 139 survived. The rest died of hypothermia before the rescuers could pluck them from the cold sea. The final death toll was 912 souls. However, there were an unpleasant number of questions about why the Estonia sank and why so many survivors were men in the prime of their lives, while most of the dead were women, children and the elderly.\n\nOne can understand from the passage that",
+   "options": [
+    {
+     "key": "A",
+     "text": "most victims were trapped inside the ship as they were in their cabins.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the lifesaving equipment did not work well and lifeboats could not be lowered.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "design faults and incompetent crew contributed to the sinking of the Estonia ferry.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "naval architects claimed that the Estonia was",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "9",
+    "page": 2,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q10",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nNaval architects never claim that a ship is unsinkable, but the sinking of the passenger-and-car ferry Estonia in the Baltic surely should never have happened. It was well designed and carefully maintained. It carried the proper number of lifeboats. It had been thoroughly inspected on the day of its fatal voyage. Yet hours later, the Estonia rolled over and sank on a cold, stormy night. It went down so quickly that most of those on board, caught in their dark, flooding cabins, had no chance to save themselves. Of those who managed to scramble overboard, only 139 survived. The rest died of hypothermia before the rescuers could pluck them from the cold sea. The final death toll was 912 souls. However, there were an unpleasant number of questions about why the Estonia sank and why so many survivors were men in the prime of their lives, while most of the dead were women, children and the elderly.\n\nIt is clear from the passage that the of the accident",
+   "options": [
+    {
+     "key": "A",
+     "text": "were immune to hypothermia.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "were mostly young men.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "told the investigatorsn nothing aboout the accident",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "10",
+    "page": 2,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q11",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nNaval architects never claim that a ship is unsinkable, but the sinking of the passenger-and-car ferry Estonia in the Baltic surely should never have happened. It was well designed and carefully maintained. It carried the proper number of lifeboats. It had been thoroughly inspected on the day of its fatal voyage. Yet hours later, the Estonia rolled over and sank on a cold, stormy night. It went down so quickly that most of those on board, caught in their dark, flooding cabins, had no chance to save themselves. Of those who managed to scramble overboard, only 139 survived. The rest died of hypothermia before the rescuers could pluck them from the cold sea. The final death toll was 912 souls. However, there were an unpleasant number of questions about why the Estonia sank and why so many survivors were men in the prime of their lives, while most of the dead were women, children and the elderly.\n\nAccording to the passage, when the Estonia sank,",
+   "options": [
+    {
+     "key": "A",
+     "text": "there were only 139 passengers on board..",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "few of the passengers were asleep.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "there were enough lifeboats for the number of people on board.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "faster reaction by the crew could have increased",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "11",
+    "page": 2,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q12",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nNaval architects never claim that a ship is unsinkable, but the sinking of the passenger-and-car ferry Estonia in the Baltic surely should never have happened. It was well designed and carefully maintained. It carried the proper number of lifeboats. It had been thoroughly inspected on the day of its fatal voyage. Yet hours later, the Estonia rolled over and sank on a cold, stormy night. It went down so quickly that most of those on board, caught in their dark, flooding cabins, had no chance to save themselves. Of those who managed to scramble overboard, only 139 survived. The rest died of hypothermia before the rescuers could pluck them from the cold sea. The final death toll was 912 souls. However, there were an unpleasant number of questions about why the Estonia sank and why so many survivors were men in the prime of their lives, while most of the dead were women, children and the elderly.\n\nEstonia appears to be a",
+   "options": [
+    {
+     "key": "A",
+     "text": "naval ship.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "naval submarine.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "cargo ship.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "passenger ferry.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "12",
+    "page": 2,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q13",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nErosion of America's farmland by wind and water has been a problem since settlers first put the prairies and grasslands under the plough in the nineteenth century. By the 1930s, more than 282 million acres of farmland were damaged by erosion. After 40 years of conservation efforts, now soil erosion has again accelerated due to new demands placed on the land by heavy crop production. In the years ahead, soil erosion and the pollution problems it causes are likely to replace petroleum scarcity as the nation's most critical natural resource problem.\n\nAs we understand from the passage, today, soil erosion in America",
+   "options": [
+    {
+     "key": "A",
+     "text": "causes humans to place new demands on the land.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "happened so slowly that it took forty years to get noticed.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "is the most critical problem that the nation faces.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "is worse than it was in the nineteenth century.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "13",
+    "page": 2,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q14",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nErosion of America's farmland by wind and water has been a problem since settlers first put the prairies and grasslands under the plough in the nineteenth century. By the 1930s, more than 282 million acres of farmland were damaged by erosion. After 40 years of conservation efforts, now soil erosion has again accelerated due to new demands placed on the land by heavy crop production. In the years ahead, soil erosion and the pollution problems it causes are likely to replace petroleum scarcity as the nation's most critical natural resource problem.\n\nThe author points out in the passage that soil erosion in America",
+   "options": [
+    {
+     "key": "A",
+     "text": "has damaged 282 million acres ever since settlers first put the prairies and grasslands under the plough.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "could become a more serious problem in the future.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "has been so severe that it has forced people to abandon their settlements.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "was on the decline before 1930s.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "14",
+    "page": 2,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q15",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nErosion of America's farmland by wind and water has been a problem since settlers first put the prairies and grasslands under the plough in the nineteenth century. By the 1930s, more than 282 million acres of farmland were damaged by erosion. After 40 years of conservation efforts, now soil erosion has again accelerated due to new demands placed on the land by heavy crop production. In the years ahead, soil erosion and the pollution problems it causes are likely to replace petroleum scarcity as the nation's most critical natural resource problem.\n\nIt is pointed out in the passage that in America",
+   "options": [
+    {
+     "key": "A",
+     "text": "petroleum is causing heavy soil erosion and pollution problems.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "soil erosion has been hastened due to the overuse of farming lands.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "heavy crop production is necessary to meet the demands and to prevent a disaster.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "water is undoubtedly the largest cause of",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "15",
+    "page": 2,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q16",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nErosion of America's farmland by wind and water has been a problem since settlers first put the prairies and grasslands under the plough in the nineteenth century. By the 1930s, more than 282 million acres of farmland were damaged by erosion. After 40 years of conservation efforts, now soil erosion has again accelerated due to new demands placed on the land by heavy crop production. In the years ahead, soil erosion and the pollution problems it causes are likely to replace petroleum scarcity as the nation's most critical natural resource problem.\n\nFrom the passage, it appears that the profession of early settlers in America was",
+   "options": [
+    {
+     "key": "A",
+     "text": "mining.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "conservation work.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "agriculture.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "16",
+    "page": 2,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q17",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe Gandharva Music and Art Fair-better known to its participants and to history simply as \"Gandharva\" should have been a colossal failure. Just a month prior to its August 15, 1969 opening, the fair's organizers were informed by the council of Gandharva Music and Art, Allahabad that permission to hold the festival was withdrawn. Amazingly, not only was a new site found, but word spread to the public of the fair's new location. At the new site, fences that were supposed to facilitate ticket collection never materialized, and all attempts at gathering tickets were abandoned. Crowd estimates of 30,000 kept rising, by the end of the three days, some estimated the crowd at 500,000. Then, on opening night, it began to rain. Off and on, throughout all three days, huge summer storms rolled over the gathering. In spite of these problems, most people think of Gandharva not only as a fond memory but as the defining moment for an entire generation.\n\nWhich of the following would be closest in meaning to the word colossal as used in this passage?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Definite",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Surprising",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Massive",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Disastrous",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "17",
+    "page": 3,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q18",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe Gandharva Music and Art Fair-better known to its participants and to history simply as \"Gandharva\" should have been a colossal failure. Just a month prior to its August 15, 1969 opening, the fair's organizers were informed by the council of Gandharva Music and Art, Allahabad that permission to hold the festival was withdrawn. Amazingly, not only was a new site found, but word spread to the public of the fair's new location. At the new site, fences that were supposed to facilitate ticket collection never materialized, and all attempts at gathering tickets were abandoned. Crowd estimates of 30,000 kept rising, by the end of the three days, some estimated the crowd at 500,000. Then, on opening night, it began to rain. Off and on, throughout all three days, huge summer storms rolled over the gathering. In spite of these problems, most people think of Gandharva not only as a fond memory but as the defining moment for an entire generation.\n\nWhich of the following is implied in the passage, about The Gandharva Music and Art Fair held in August 1969?",
+   "options": [
+    {
+     "key": "A",
+     "text": "It was a colossal failure.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "It was the defining moment for an entire generation.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Ticket sales never materialized as per expectations.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "18",
+    "page": 3,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q19",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe Gandharva Music and Art Fair-better known to its participants and to history simply as \"Gandharva\" should have been a colossal failure. Just a month prior to its August 15, 1969 opening, the fair's organizers were informed by the council of Gandharva Music and Art, Allahabad that permission to hold the festival was withdrawn. Amazingly, not only was a new site found, but word spread to the public of the fair's new location. At the new site, fences that were supposed to facilitate ticket collection never materialized, and all attempts at gathering tickets were abandoned. Crowd estimates of 30,000 kept rising, by the end of the three days, some estimated the crowd at 500,000. Then, on opening night, it began to rain. Off and on, throughout all three days, huge summer storms rolled over the gathering. In spite of these problems, most people think of Gandharva not only as a fond memory but as the defining moment for an entire generation.\n\nIn what context is the word \"amazingly\" used in the passage?",
+   "options": [
+    {
+     "key": "A",
+     "text": "The fair drew such an unexpectedly enormous crowd.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The event was moved and word sent out in a very short time.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Despite pressure by Allahabad officials, the fair was held successfully.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The stormy weather was so unfavourable.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "19",
+    "page": 3,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q20",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe Gandharva Music and Art Fair-better known to its participants and to history simply as \"Gandharva\" should have been a colossal failure. Just a month prior to its August 15, 1969 opening, the fair's organizers were informed by the council of Gandharva Music and Art, Allahabad that permission to hold the festival was withdrawn. Amazingly, not only was a new site found, but word spread to the public of the fair's new location. At the new site, fences that were supposed to facilitate ticket collection never materialized, and all attempts at gathering tickets were abandoned. Crowd estimates of 30,000 kept rising, by the end of the three days, some estimated the crowd at 500,000. Then, on opening night, it began to rain. Off and on, throughout all three days, huge summer storms rolled over the gathering. In spite of these problems, most people think of Gandharva not only as a fond memory but as the defining moment for an entire generation.\n\nAs per the passage, most people think of Gandharva as a fond memory because the",
+   "options": [
+    {
+     "key": "A",
+     "text": "event was held for the first time in August, 1969.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "crowds that thronged the venue were larger than anticipated.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "performers at the fair were popular amongst the youth.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "20",
+    "page": 3,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q21",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nEverybody earns the living in his own ways to support himself as well as the family. If you are employed and bored with what you do, take a look at the weirdest jobs below to know that you are luckier than many people. Those who are not well educated or have strange hobbies take up the following jobs to make ends meet: (a) Fire-Observer: Sounds interesting! This job requires the candidate to sit and watch for any upcoming fires in forests. You sit on a tower and warn the authorities about any impending dangers. It's quite a lonely job. So, if there are any loners out there who seek complete loneliness they can try their hands at this weird job. (b) Ice-Cream Taster: A sweet job! But it takes more than just tasting the ice-creams to get your pay in this job. There can be no compromise about the quality of the ice-cream, so one has to keep all the taste-buds on his tongue alive and active. This requires you to follow a strict diet, not eating anything too spicy or hot. You cannot smoke, drink, or even use strong perfumes! (c) Sports Mascot: Getting dressed in an often silly-looking costume, entertaining thousands of screaming fans and shadow-punching umpires are all in a day's work for the sports mascot. The term, mascot, or in this case, the sports mascot is used to describe a person, animal or object that is thought to bring luck. Sporting entities are usually the home for these \"luck\" bringers, but mascots can also be found in other areas of society, such as military units and charity organizations. The next time you sit at your desk considering a job change, sneak a peek at this list of weird jobs that give a complete twist to your career.\n\nA word close in meaning to 'weird' is___________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "bored",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "luckier",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "strange",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "well educated",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "21",
+    "page": 3,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q22",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nEverybody earns the living in his own ways to support himself as well as the family. If you are employed and bored with what you do, take a look at the weirdest jobs below to know that you are luckier than many people. Those who are not well educated or have strange hobbies take up the following jobs to make ends meet: (a) Fire-Observer: Sounds interesting! This job requires the candidate to sit and watch for any upcoming fires in forests. You sit on a tower and warn the authorities about any impending dangers. It's quite a lonely job. So, if there are any loners out there who seek complete loneliness they can try their hands at this weird job. (b) Ice-Cream Taster: A sweet job! But it takes more than just tasting the ice-creams to get your pay in this job. There can be no compromise about the quality of the ice-cream, so one has to keep all the taste-buds on his tongue alive and active. This requires you to follow a strict diet, not eating anything too spicy or hot. You cannot smoke, drink, or even use strong perfumes! (c) Sports Mascot: Getting dressed in an often silly-looking costume, entertaining thousands of screaming fans and shadow-punching umpires are all in a day's work for the sports mascot. The term, mascot, or in this case, the sports mascot is used to describe a person, animal or object that is thought to bring luck. Sporting entities are usually the home for these \"luck\" bringers, but mascots can also be found in other areas of society, such as military units and charity organizations. The next time you sit at your desk considering a job change, sneak a peek at this list of weird jobs that give a complete twist to your career.\n\nA fire observer",
+   "options": [
+    {
+     "key": "A",
+     "text": "works alone.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "works with lots of people.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "has to hate loneliness.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "is a lonely person.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "22",
+    "page": 3,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q23",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nEverybody earns the living in his own ways to support himself as well as the family. If you are employed and bored with what you do, take a look at the weirdest jobs below to know that you are luckier than many people. Those who are not well educated or have strange hobbies take up the following jobs to make ends meet: (a) Fire-Observer: Sounds interesting! This job requires the candidate to sit and watch for any upcoming fires in forests. You sit on a tower and warn the authorities about any impending dangers. It's quite a lonely job. So, if there are any loners out there who seek complete loneliness they can try their hands at this weird job. (b) Ice-Cream Taster: A sweet job! But it takes more than just tasting the ice-creams to get your pay in this job. There can be no compromise about the quality of the ice-cream, so one has to keep all the taste-buds on his tongue alive and active. This requires you to follow a strict diet, not eating anything too spicy or hot. You cannot smoke, drink, or even use strong perfumes! (c) Sports Mascot: Getting dressed in an often silly-looking costume, entertaining thousands of screaming fans and shadow-punching umpires are all in a day's work for the sports mascot. The term, mascot, or in this case, the sports mascot is used to describe a person, animal or object that is thought to bring luck. Sporting entities are usually the home for these \"luck\" bringers, but mascots can also be found in other areas of society, such as military units and charity organizations. The next time you sit at your desk considering a job change, sneak a peek at this list of weird jobs that give a complete twist to your career.\n\nA mascot is a/an __________ symbol.",
+   "options": [
+    {
+     "key": "A",
+     "text": "bad luck",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "good luck",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "melancholic",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "elegant",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "23",
+    "page": 3,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q24",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nEverybody earns the living in his own ways to support himself as well as the family. If you are employed and bored with what you do, take a look at the weirdest jobs below to know that you are luckier than many people. Those who are not well educated or have strange hobbies take up the following jobs to make ends meet: (a) Fire-Observer: Sounds interesting! This job requires the candidate to sit and watch for any upcoming fires in forests. You sit on a tower and warn the authorities about any impending dangers. It's quite a lonely job. So, if there are any loners out there who seek complete loneliness they can try their hands at this weird job. (b) Ice-Cream Taster: A sweet job! But it takes more than just tasting the ice-creams to get your pay in this job. There can be no compromise about the quality of the ice-cream, so one has to keep all the taste-buds on his tongue alive and active. This requires you to follow a strict diet, not eating anything too spicy or hot. You cannot smoke, drink, or even use strong perfumes! (c) Sports Mascot: Getting dressed in an often silly-looking costume, entertaining thousands of screaming fans and shadow-punching umpires are all in a day's work for the sports mascot. The term, mascot, or in this case, the sports mascot is used to describe a person, animal or object that is thought to bring luck. Sporting entities are usually the home for these \"luck\" bringers, but mascots can also be found in other areas of society, such as military units and charity organizations. The next time you sit at your desk considering a job change, sneak a peek at this list of weird jobs that give a complete twist to your career.\n\nAn ice-cream taster",
+   "options": [
+    {
+     "key": "A",
+     "text": "eats whatever he wants.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "drinks alcohol.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "has a strict diet.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "is a heavy smoker.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "24",
+    "page": 3,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q25",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nEverybody earns the living in his own ways to support himself as well as the family. If you are employed and bored with what you do, take a look at the weirdest jobs below to know that you are luckier than many people. Those who are not well educated or have strange hobbies take up the following jobs to make ends meet: (a) Fire-Observer: Sounds interesting! This job requires the candidate to sit and watch for any upcoming fires in forests. You sit on a tower and warn the authorities about any impending dangers. It's quite a lonely job. So, if there are any loners out there who seek complete loneliness they can try their hands at this weird job. (b) Ice-Cream Taster: A sweet job! But it takes more than just tasting the ice-creams to get your pay in this job. There can be no compromise about the quality of the ice-cream, so one has to keep all the taste-buds on his tongue alive and active. This requires you to follow a strict diet, not eating anything too spicy or hot. You cannot smoke, drink, or even use strong perfumes! (c) Sports Mascot: Getting dressed in an often silly-looking costume, entertaining thousands of screaming fans and shadow-punching umpires are all in a day's work for the sports mascot. The term, mascot, or in this case, the sports mascot is used to describe a person, animal or object that is thought to bring luck. Sporting entities are usually the home for these \"luck\" bringers, but mascots can also be found in other areas of society, such as military units and charity organizations. The next time you sit at your desk considering a job change, sneak a peek at this list of weird jobs that give a complete twist to your career.\n\nGetting dressed in an often silly-looking costume probably means to",
+   "options": [
+    {
+     "key": "A",
+     "text": "dress elegantly.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "dress casually.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "be naked.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "dress ridiculously.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "25",
+    "page": 3,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q26",
+   "type": "MCQ",
+   "prompt": "Bunch",
+   "options": [
+    {
+     "key": "A",
+     "text": "Bunches",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bunch",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Bunchs",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bunchies",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "26",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q27",
+   "type": "MCQ",
+   "prompt": "Shelf",
+   "options": [
+    {
+     "key": "A",
+     "text": "Shelf",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Shelves",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Shelfes",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Shelfies",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "27",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q28",
+   "type": "MCQ",
+   "prompt": "He _______from fever since last night.",
+   "options": [
+    {
+     "key": "A",
+     "text": "has been suffering",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "has suffered",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "is suffering",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "was suffering",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "28",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q29",
+   "type": "MCQ",
+   "prompt": "I shall get a job before the week_________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "will end",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "ends",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "had ended",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "is ending",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "29",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q30",
+   "type": "MCQ",
+   "prompt": "The servant had finished his work when I ________ him.",
+   "options": [
+    {
+     "key": "A",
+     "text": "had called",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "has called",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "have called",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "called",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "30",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q31",
+   "type": "MCQ",
+   "prompt": "Contrary",
+   "options": [
+    {
+     "key": "A",
+     "text": "Adverse",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Kind",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Harmonious",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Consistent",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "31",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q32",
+   "type": "MCQ",
+   "prompt": "Desolate",
+   "options": [
+    {
+     "key": "A",
+     "text": "Bright",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Lonely",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Inhabited",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Intact",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "32",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q33",
+   "type": "MCQ",
+   "prompt": "Despise",
+   "options": [
+    {
+     "key": "A",
+     "text": "Adore",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Cherish",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Hate",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Praise",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "33",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q34",
+   "type": "MCQ",
+   "prompt": "Eccentric",
+   "options": [
+    {
+     "key": "A",
+     "text": "Regular",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Ordinary",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Standard",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Erratic",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "34",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q35",
+   "type": "MCQ",
+   "prompt": "Abate",
+   "options": [
+    {
+     "key": "A",
+     "text": "Advance",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Recede",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Diminish",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Slacken",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "35",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q36",
+   "type": "MCQ",
+   "prompt": "Bizarre",
+   "options": [
+    {
+     "key": "A",
+     "text": "Peculiar",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Common",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Weird",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Curious",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "36",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q37",
+   "type": "MCQ",
+   "prompt": "Zest",
+   "options": [
+    {
+     "key": "A",
+     "text": "Passion",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Relish",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Gusto",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Dullness",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "37",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q38",
+   "type": "MCQ",
+   "prompt": "Dainty",
+   "options": [
+    {
+     "key": "A",
+     "text": "Exquisite",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Lacy",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Crude",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Petite",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "38",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q39",
+   "type": "MCQ",
+   "prompt": "Choose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Acknowledgement",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Acknowledgemant",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Acknawledgement",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Acknowladgemit",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "39",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q40",
+   "type": "MCQ",
+   "prompt": "Choose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Publesher",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Publisher",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Publishar",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Pablisher",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "40",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q41",
+   "type": "MCQ",
+   "prompt": "Choose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Anouncement",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Annoncement",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Announcement",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Announcment",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "41",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q42",
+   "type": "MCQ",
+   "prompt": "Pay through one's nose",
+   "options": [
+    {
+     "key": "A",
+     "text": "To pay heavily",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "To criticize someone",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "To get ahead secretly",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "To be under suspicion",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "42",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q43",
+   "type": "MCQ",
+   "prompt": "To turn over a new leaf",
+   "options": [
+    {
+     "key": "A",
+     "text": "To want something that is not possible",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "To change for the better",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "To do all possible efforts",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "To put an end to something before it develops",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "43",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q44",
+   "type": "MCQ",
+   "prompt": "To see the light of the day",
+   "options": [
+    {
+     "key": "A",
+     "text": "To be in control of the situation",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "To gain an advantage on",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "To be made available",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "To change for a better",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "44",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q45",
+   "type": "MCQ",
+   "prompt": "A sentence has been divided into four parts and one part has an error. Identify that part.\nPost COVID-19, (a) / the Government of India (b) / made the test and treatment (c) / free under the Ayushman Bharat Scheme. (d)",
+   "options": [
+    {
+     "key": "A",
+     "text": "Post COVID-19,",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the Government of India",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "made the test and treatment",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "free under the Ayushman Bharat Scheme.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "45",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q46",
+   "type": "MCQ",
+   "prompt": "A sentence has been divided into four parts and one part has an error. Identify that part.\nI am so glad that (a) / my husband spoke in on my behalf (b) / because I felt awful (c) / that I couldn't make it to the event. (d)",
+   "options": [
+    {
+     "key": "A",
+     "text": "I am so glad that",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "my husband spoke in on my behalf",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "because I felt awful",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "that I couldn't make it to the event.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "46",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q47",
+   "type": "MCQ",
+   "prompt": "A sentence has been divided into four parts and one part has an error. Identify that part.\nWe thought our company (a) / was going to expand this year, (b) / but the company actually has (c) / less people now than it did two years ago. (d)",
+   "options": [
+    {
+     "key": "A",
+     "text": "We thought our company",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "was going to expand this year,",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "but the company actually has",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "less people now than it did two years ago.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "47",
+    "page": 4,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q48",
+   "type": "MCQ",
+   "prompt": "One who is able to use the right and left hands equally well",
+   "options": [
+    {
+     "key": "A",
+     "text": "Disingenuous",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Multi-tasker",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Ambidextrous",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Equipoised",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "48",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q49",
+   "type": "MCQ",
+   "prompt": "The study of the origin of humankind",
+   "options": [
+    {
+     "key": "A",
+     "text": "Anthropogeny",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Archaeology",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Anthropology",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Psephology",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "49",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q50",
+   "type": "MCQ",
+   "prompt": "A person who is lacking in or hostile or indifferent to cultural values",
+   "options": [
+    {
+     "key": "A",
+     "text": "Iconoclast",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Cannibal",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Iconoclast",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Philistine",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "50",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q51",
+   "type": "MCQ",
+   "prompt": "What is the unit digit in the expansion of (89628)402?",
+   "options": [
+    {
+     "key": "A",
+     "text": "8",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "51",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q52",
+   "type": "MCQ",
+   "prompt": "Find the sum of all possible values of x, if 25849x4 is divisible by 4.",
+   "options": [
+    {
+     "key": "A",
+     "text": "8",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "20",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "24",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "52",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q53",
+   "type": "MCQ",
+   "prompt": "What is the remainder if 2⁹³ is divided by 9?",
+   "options": [
+    {
+     "key": "A",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "7",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "8",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "53",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q54",
+   "type": "MCQ",
+   "prompt": "If 3a / (1 + 1/(1 + a/(1 − a))) = 2, then find the value of a.",
+   "options": [
+    {
+     "key": "A",
+     "text": "4/5",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2/3",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "8/5",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3/5",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "54",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q55",
+   "type": "MCQ",
+   "prompt": "The number of unskilled workers in a factory is six times the number of skilled workers. Which of the following cannot be the total number of workers in the factory?",
+   "options": [
+    {
+     "key": "A",
+     "text": "35",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "40",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "70",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "84",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "55",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q56",
+   "type": "MCQ",
+   "prompt": "Average of eleven observations is 30. Average of first five observations is 25 and last five is 28. Find the 6th term.",
+   "options": [
+    {
+     "key": "A",
+     "text": "65",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "60",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "75",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "78",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "56",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q57",
+   "type": "MCQ",
+   "prompt": "Virat obtained 18% marks in an examination and he failed by 60 marks. If passing marks are 33%, then total marks are_________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "350",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "400",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "450",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "500",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "57",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q58",
+   "type": "MCQ",
+   "prompt": "The simple interest on 200 for 7 months at 5 paisa per rupee per month is__________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹70",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹7",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹35",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹30.50",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "58",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q59",
+   "type": "MCQ",
+   "prompt": "The difference between Compound Interest and Simple Interest on a sum of 50,000 for 2 years at 6.5% p.a. is_________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹201.125",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹210.25",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹211.25",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹225.125",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "59",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q60",
+   "type": "MCQ",
+   "prompt": "Rahul travels first 50 km at 10 kmph, next 40 km at 20 kmph and then next 60 km at 15 kmph. Find his average speed for the whole journey. 2",
+   "options": [
+    {
+     "key": "A",
+     "text": "15 kmph",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "16 2/3 kmph",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "11 5/9 kmph",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "13 7/11 kmph",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "60",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q61",
+   "type": "MCQ",
+   "prompt": "The ratio of average temperature between Jaipur and Delhi is 9 :7 and that between Jaipur and Mumbai is 11 : 8. Find the ratio of average temperature between Delhi and Mumbai.",
+   "options": [
+    {
+     "key": "A",
+     "text": "7:9",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "77:72",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "9:8",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "11:8",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "61",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q62",
+   "type": "MCQ",
+   "prompt": "The ratio of three numbers is 3:4:7 and their product is 18144. The numbers are________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "9, 12 and 21",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "15, 20 and 25",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "18, 24 and 42",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "62",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q63",
+   "type": "MCQ",
+   "prompt": "What is the single discount that is equivalent to two successive discounts of 12% and 20%? 2 2",
+   "options": [
+    {
+     "key": "A",
+     "text": "29 2/5 %",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "70 2/5 %",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "70 3/5 %",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "29 3/5 %",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "63",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q64",
+   "type": "MCQ",
+   "prompt": "A shopkeeper buys a mobile phone for Rs.12,500 and sells it for Rs.13,350. Find his profit percent.",
+   "options": [
+    {
+     "key": "A",
+     "text": "6%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "6.3%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "6.5%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "6.8%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "64",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q65",
+   "type": "MCQ",
+   "prompt": "How many minutes will a motor-car travelling at 45 km/hr take to cover a distance of 15 km?",
+   "options": [
+    {
+     "key": "A",
+     "text": "15 mins",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "20 mins",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "10 mins",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "30 mins",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "65",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q66",
+   "type": "MCQ",
+   "prompt": "If the speed of a 100 metre long train is 144 km/hr, then in how much time will this train cross a standing pole?",
+   "options": [
+    {
+     "key": "A",
+     "text": "2 sec",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1.5 sec",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "2.5 sec",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3.5 sec",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "66",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q67",
+   "type": "MCQ",
+   "prompt": "How many zeroes are there in the LCM of 150, 70 and 2500?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "4",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "67",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q68",
+   "type": "MCQ",
+   "prompt": "The HCF of 80, 120 and 200 = 10 + ‘?’.",
+   "options": [
+    {
+     "key": "A",
+     "text": "10",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "40",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "30",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "20",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "68",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q69",
+   "type": "MCQ",
+   "prompt": "Find the greatest number of four digits, which is exactly divisible by 18, 24 and 45.",
+   "options": [
+    {
+     "key": "A",
+     "text": "9580",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "9640",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "9720",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "9860",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "69",
+    "page": 5,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q70",
+   "type": "MCQ",
+   "prompt": "Satish can do a job in 15 days and Kapil works twice as fast as Satish. Then in how many days can Satish and Kapil together complete the job?",
+   "options": [
+    {
+     "key": "A",
+     "text": "4.5 days",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "5 days",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "5.5 days",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "6 days",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "70",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q71",
+   "type": "MCQ",
+   "prompt": "2, 7, 17, 32, 52, '2'",
+   "options": [
+    {
+     "key": "A",
+     "text": "77",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "64",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "72",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "81",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "71",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q72",
+   "type": "MCQ",
+   "prompt": "AZ, GT, MN, '?', YB",
+   "options": [
+    {
+     "key": "A",
+     "text": "KF",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "RX",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "SH",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "TS",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "72",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q73",
+   "type": "MCQ",
+   "prompt": "Find the odd one out.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Seven",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Two",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Three",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Five",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "73",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q74",
+   "type": "MCQ",
+   "prompt": "Find the odd one out.",
+   "options": [
+    {
+     "key": "A",
+     "text": "a",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "d",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "p",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "u",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "74",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q75",
+   "type": "MCQ",
+   "prompt": "In a certain code, BEGK is related to ADFJ in the same way as PSVY is related to________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "LOQT",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "ROUX",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "OTUZ",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "ORUX",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "75",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q76",
+   "type": "MCQ",
+   "prompt": "Pointing towards a person in the photograph, Amy said \"He is the only son of the father of my sister's brother.\" How is that person related to Amy?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Mother",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Father",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Maternal uncle",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "76",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q77",
+   "type": "MCQ",
+   "prompt": "What is the minimum number of colours required to paint all the sides of a cube such that no two adjacent faces may have the same colour?",
+   "options": [
+    {
+     "key": "A",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "5",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "6",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "77",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q78",
+   "type": "MCQ",
+   "prompt": "A, B, C, D and E are five cities. Each pair of cities has a path connecting them. How many paths are there in all?",
+   "options": [
+    {
+     "key": "A",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "10",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "5",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "78",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q79",
+   "type": "MCQ",
+   "prompt": "Vishal travels 8 km towards East, then turns left and travels another 5 km, and then he turns 270° anticlockwise. Which direction is he facing now?",
+   "options": [
+    {
+     "key": "A",
+     "text": "West",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "East",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "North",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "South",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "79",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q80",
+   "type": "MCQ",
+   "prompt": "Who among the following plays cricket and is interested in painting?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Arun",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bharat",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Chandu",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Arun and Chandu",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "80",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q81",
+   "type": "MCQ",
+   "prompt": "Who among the following is a singer?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Dharma",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Arun",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Chandu",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bharat",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "81",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q82",
+   "type": "MCQ",
+   "prompt": "Which pair shows the correct relationship of the game and hobby of Dharma?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Cricket and Singing",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Cricket and Painting",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Hockey and Singing",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Hockey and Dancing",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "82",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q83",
+   "type": "MCQ",
+   "prompt": "Assertion (A): Indian Constitution is the largest written constitution in the world. Reason (R): India follows bi-cameral system of Legislative House.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Both (A) and (R) are true and (R) is the correct explanation of (A).",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Both (A) and (R) are true but (R) is not the correct explanation of (A).",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(A) is true but (R) is false.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "(A) is false but (R) is true.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "83",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q84",
+   "type": "MCQ",
+   "prompt": "Assertion (A): Carrying fountain pen while flying in an aeroplane may be a risky proposition. Reason (R): Due to low pressure, the ink of a fountain pen may leak or overflow.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Both (A) and (R) are true and (R) is the correct explanation of (A).",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Both (A) and (R) are true but (R) is not the correct explanation of (A).",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(A) is true but (R) is false.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "(A) is false but (R) is true.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "84",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q85",
+   "type": "MCQ",
+   "prompt": "Assertion (A): The states in eastern part of India produce more rice than those in western part. Reason (R): The states in eastern part receive more rainfall than those in western part of India.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Both (A) and (R) are true and (R) is the correct explanation of (A).",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Both (A) and (R) are true but (R) is not the correct explanation of (A).",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(A) is true but (R) is false.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "(A) is false but (R) is true.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "85",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q86",
+   "type": "MCQ",
+   "prompt": "Which state will host the 4th edition of Khelo India Youth Games (KIYG) in the year 2021?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Uttarakhand",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Haryana",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Assam",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "86",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q87",
+   "type": "MCQ",
+   "prompt": "Who has/have won the 2020 Nobel Prize in Physiology or Medicine for discovering the Hepatitis C Virus?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Michael Houghton",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Harvey J Alter",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Charles M Rice",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "87",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q88",
+   "type": "MCQ",
+   "prompt": "Joe Biden of Democratic Party won the 2020 United States (US) Presidential election to become President_________ of the United States.",
+   "options": [
+    {
+     "key": "A",
+     "text": "44th",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "45th",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "46 th",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "47th",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "88",
+    "page": 6,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q89",
+   "type": "MCQ",
+   "prompt": "Which Bollywood actress is recently seen in advertisements of the Kalyan Jewellers \"Muhurat' Wedding Jewellery along with Amitabh Bachchan?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Katrina Kaif",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Karishma Kapoor",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Sonam Kapoor",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Disha Patani",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "89",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q90",
+   "type": "MCQ",
+   "prompt": "Urban Ladder' is a well-know online company dealing with___________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Fashion garments and accessories",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Furniture-Home Decor",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Fashion jewellery and accessories",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "90",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q91",
+   "type": "MCQ",
+   "prompt": "Which former Indian cricketer has paired with Arvind Fashion to bring out the label \"True Blue\", a range of summer suits, t-shirts, chinos etc.?",
+   "options": [
+    {
+     "key": "A",
+     "text": "MS Dhoni",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Virender Sehwag",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rahul Dravid",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Sachin Tendulkar",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "91",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q92",
+   "type": "MCQ",
+   "prompt": "Who among the following was popularly known as \"Tiger of Mysore\"?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Haider Ali",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Tipu Sultan",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Krishnadevarya",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Achyuta Deva Raya",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "92",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q93",
+   "type": "MCQ",
+   "prompt": "Who is/was the first Indian to win the Nobel Prize?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rabindranath Tagore",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "C. V. Raman",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Amartya Sen",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Mahatma Gandhi",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "93",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q94",
+   "type": "MCQ",
+   "prompt": "India celebrates birthday of____ on 12 January every year as the \"National Youth Day’’",
+   "options": [
+    {
+     "key": "A",
+     "text": "Swami Vivekanand",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Chandra Shekhar Azad",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Subhas Chandra Bose",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bhagat Singh",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "94",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q95",
+   "type": "MCQ",
+   "prompt": "The famous monument \"Leaning Tower of Pisa\" is located at__________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "France",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "USA",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Japan",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Italy",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "95",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q96",
+   "type": "MCQ",
+   "prompt": "Which of the following is not a function of the RBI?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Issue of currency",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Conducting monetary policy",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Accepting deposits from the public",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Lender of last resort for the banks",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "96",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q97",
+   "type": "MCQ",
+   "prompt": "Durand Cup is associated with which national sports/games?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Football",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Badminton",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Cricket",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Golf",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "97",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q98",
+   "type": "MCQ",
+   "prompt": "Which of the following is not a common property of plastics ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Non-reactive",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Light in weight",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Durable",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Good conductor of electricity",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "98",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q99",
+   "type": "MCQ",
+   "prompt": "Based on their origin, resources can be abiotic and biotic, and biotic resources are__________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "derived from non-living things.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "made by human beings.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "derived from living things.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "99",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2021-bdes-gat-q100",
+   "type": "MCQ",
+   "prompt": "Parliament of India consists of_____.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rajya Sabha, Lok Sabha and State Assemblies",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "President, Prime Minister and Speaker",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "President, Rajya Sabha and Lok Sabha",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Prime Minister, Cabinet Ministers and",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2021,
+    "paperId": "nift-2021-bdes-gat",
+    "questionNo": "100",
+    "page": 7,
+    "sourceSha256": "04260e9d0b8302e40ee3b39aa7d36caf800b37d59028073ef8d992bb43aa5d5c",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2021)",
+    "verification": "review"
+   }
   }
  ]
 }
