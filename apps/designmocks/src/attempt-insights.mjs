@@ -17,10 +17,32 @@ function summarize(items, keyOf) {
   return [...groups.values()].map((group) => ({ ...group, accuracy: group.answered ? Math.round(group.correct * 100 / group.answered) : null }));
 }
 
+// Marks a released question earned: the server's awarded value when present,
+// otherwise only what the outcome and the question's marking fix exactly.
+export function knownMarks(item) {
+  if (Number.isFinite(item?.awarded)) return item.awarded;
+  const outcome = releasedOutcome(item), marking = item?.marking ?? {};
+  if (outcome === "correct" || outcome === "full_marks") return Number.isFinite(marking.correct) ? marking.correct : Number.isFinite(item.points) ? item.points : null;
+  if (outcome === "wrong") return Number.isFinite(marking.wrong) ? marking.wrong : null;
+  if (outcome === "unanswered" || outcome === "dropped") return 0;
+  return null;
+}
+
+function addMarks(rows, items, keyOf) {
+  return rows.map(row => {
+    const group = items.filter(item => keyOf(item) === row.key);
+    const values = group.map(knownMarks);
+    const available = group.reduce((sum, item) => sum + (Number.isFinite(item.marking?.correct) ? item.marking.correct : Number.isFinite(item.points) ? item.points : 0), 0);
+    return { ...row, marks: values.every(value => value !== null) ? values.reduce((a, b) => a + b, 0) : null,
+      marksExcludingPartial: values.reduce((a, b) => a + (b ?? 0), 0), partialPending: values.filter(value => value === null).length, available };
+  });
+}
+
 export function buildAttemptInsights(questions = []) {
   const objective = questions.filter((item) => item.kind !== "drawing" && releasedOutcomes.has(item.outcome));
   const topics = summarize(objective, (item) => item.topic || "unclassified").sort((a, b) => b.total - a.total || a.key.localeCompare(b.key));
-  const sections = summarize(objective, (item) => String(item.kind || "other").toUpperCase()).sort((a, b) => a.key.localeCompare(b.key));
+  const sectionKey = (item) => String(item.kind || "other").toUpperCase();
+  const sections = addMarks(summarize(objective, sectionKey).sort((a, b) => a.key.localeCompare(b.key)), objective, sectionKey);
   const recommended = topics.filter((item) => item.answered > 0).sort((a, b) => a.accuracy - b.accuracy || b.answered - a.answered || a.key.localeCompare(b.key))[0] ?? null;
   return { topics, sections, recommended };
 }
@@ -48,6 +70,7 @@ export function responseSummary(questions) {
 const signed = value => value > 0 ? "+" + value : value < 0 ? "−" + Math.abs(value) : "0";
 // Marks are shown only where the released outcome fixes them exactly.
 export function reviewMarks(item) {
+  if (Number.isFinite(item?.awarded) && releasedOutcome(item)) return signed(item.awarded);
   const outcome = releasedOutcome(item), marking = item?.marking ?? {};
   if (outcome === "correct" || outcome === "full_marks") {
     const value = Number.isFinite(marking.correct) ? marking.correct : item.points;

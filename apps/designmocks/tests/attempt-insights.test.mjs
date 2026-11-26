@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildAttemptInsights, reviewMarks } from "../src/attempt-insights.mjs";
+import { buildAttemptInsights, reviewMarks, knownMarks } from "../src/attempt-insights.mjs";
 
 test("released attempt insights exclude drawings and dropped questions",()=>{
   const value=buildAttemptInsights([
@@ -10,7 +10,7 @@ test("released attempt insights exclude drawings and dropped questions",()=>{
     {kind:"msq",topic:"ignored",answer:["A"],outcome:"dropped"},
     {kind:"drawing",topic:"drawing",answer:"notes",outcome:null},
   ]);
-  assert.deepEqual(value.sections,[
+  assert.deepEqual(value.sections.map(({key,total,answered,correct,accuracy})=>({key,total,answered,correct,accuracy})),[
     {key:"MCQ",total:2,answered:2,correct:1,accuracy:50},
     {key:"NAT",total:1,answered:0,correct:0,accuracy:null},
   ]);
@@ -95,4 +95,23 @@ test("review marks come only from the released outcome and the question's own ma
   assert.equal(reviewMarks({ kind: "mcq", outcome: "full_marks", points: 3 }), "+3");
   assert.equal(reviewMarks({ kind: "mcq", outcome: "wrong" }), null);
   assert.equal(reviewMarks({ kind: "drawing", outcome: "correct", marking }), null);
+});
+
+test("section marks add exact marks and flag partial credit until the server sends it", () => {
+  const m = { correct: 4, wrong: -1 };
+  const questions = [
+    { kind: "mcq", outcome: "correct", answer: "A", marking: m },
+    { kind: "mcq", outcome: "incorrect", answer: "B", marking: m },
+    { kind: "mcq", outcome: "unanswered", answer: null, marking: m },
+    { kind: "msq", outcome: "correct", answer: ["A"], marking: { correct: 4, wrong: -1, partial: true } },
+    { kind: "msq", outcome: "partial", answer: ["A"], marking: { correct: 4, wrong: -1, partial: true } },
+  ];
+  const { sections } = buildAttemptInsights(questions);
+  const mcq = sections.find(row => row.key === "MCQ"), msq = sections.find(row => row.key === "MSQ");
+  assert.deepEqual([mcq.marks, mcq.available, mcq.partialPending], [3, 12, 0]);
+  assert.deepEqual([msq.marks, msq.marksExcludingPartial, msq.partialPending], [null, 4, 1]);
+  const withServer = buildAttemptInsights(questions.map((q, i) => i === 4 ? { ...q, awarded: 2 } : q)).sections.find(row => row.key === "MSQ");
+  assert.equal(withServer.marks, 6);
+  assert.equal(knownMarks({ kind: "msq", outcome: "partial", awarded: 1.5 }), 1.5);
+  assert.equal(reviewMarks({ kind: "msq", outcome: "partial", awarded: 2 }), "+2");
 });

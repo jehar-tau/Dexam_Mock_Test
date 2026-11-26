@@ -275,3 +275,6 @@ body:has(.attempt-workspace) footer { display:none; }
 @keyframes worked-draw { to { stroke-dashoffset: 0; } }
 @media (prefers-reduced-motion: reduce) { .worked-solution-figure svg .worked-draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; } }
 .analysis-explanation .solution-key p, .worked-solution > p:first-of-type { color: #f4f3e8; }
+.analysis-marks b { font-variant-numeric: tabular-nums; }
+.analysis-marks small { color: var(--muted); }
+.analysis-note { margin: .6rem 0 0; color: var(--muted); font-size: .82rem; }
