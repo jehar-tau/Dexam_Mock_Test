@@ -27,3 +27,16 @@ export function paperLabel(paper) {
   const numbered = suffix.match(/paper-?(\d+)/);
   return numbered ? `${paper.year} · Paper ${numbered[1]}` : `${paper.year} paper`;
 }
+
+// Visible card title when the year is already shown large beside it.
+export function paperLevel(paper) {
+  return /-bdes-/.test(paper.paperId) ? 'B.Des. ' : /-mdes-/.test(paper.paperId) ? 'M.Des. ' : '';
+}
+
+export function paperSubtitle(paper) {
+  const level = paperLevel(paper);
+  const rest = paperLabel(paper).slice(String(paper.year).length).replace(/^\s*·\s*/, '').trim();
+  const label = rest === 'paper' ? 'question paper' : rest;
+  const text = level + label;
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}

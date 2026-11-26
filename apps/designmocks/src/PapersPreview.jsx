@@ -1,0 +1,41 @@
+// Sign-in-free review route for the Papers catalogue. Development and hosted
+// review builds only. Paper years, question counts and timings mirror the
+// public catalogue on 26 November 2026; the student, attempts and scores are fictional.
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { PapersView } from "./Papers.jsx";
+
+const id = n => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
+const rows = [
+  ["uceed", 2026, 57, 120, "Part A"], ["uceed", 2025, 57, 120, "Part A"], ["uceed", 2024, 57, 120, "Part A"],
+  ["uceed", 2023, 68, 150, "Part A"], ["uceed", 2022, 64, 150, "Part A"], ["uceed", 2021, 64, 150, "Part A"],
+  ["uceed", 2020, 66, 150, "Part A"], ["uceed", 2019, 79, 180, "Full paper"], ["uceed", 2018, 83, 180, "Full paper"],
+  ["uceed", 2017, 82, 180, "Full paper"], ["uceed", 2015, 99, 180, "Full paper"],
+  ["ceed", 2026, 41, 60, "Part A"], ["ceed", 2025, 42, 60, "Part A"], ["ceed", 2024, 41, 60, "Part A"],
+  ["ceed", 2023, 39, 60, "Part A"], ["ceed", 2022, 38, 60, "Part A"], ["ceed", 2021, 36, 60, "Part A"],
+];
+export const previewReleases = rows.map(([exam, year, questionCount, minutes, partLabel], index) => ({
+  exam, year, sourcePaperId: `${exam}-${year}`, paperId: id(index + 1), questionCount,
+  durationSeconds: minutes * 60, partLabel,
+}));
+const progress = new Map([
+  [id(2), { active: { id: id(102), resultsPending: false, score: null, total: null }, submitted: null }],
+  [id(3), { active: null, submitted: { id: id(103), resultsPending: false, score: 142, total: 300 } }],
+  [id(4), { active: null, submitted: { id: id(104), resultsPending: true, score: null, total: null } }],
+  [id(13), { active: null, submitted: { id: id(113), resultsPending: false, score: 61, total: 100 } }],
+]);
+const attemptHref = attemptId => attemptId === id(103) || attemptId === id(113) ? "/portal-preview/report"
+  : attemptId === id(104) ? "/portal-preview/pending" : "/portal-preview/paper";
+
+export default function PapersPreview() {
+  const navigate = useNavigate();
+  return <>
+    <section className="wrap portal-preview-note" aria-label="Preview information">
+      <span className="eyebrow">PAPERS PREVIEW</span>
+      <p>Papers, years, question counts and timings match the public catalogue. The signed-in student, saved progress and scores are fictional. Starting a paper here opens the original six-question demo room, not a real year paper.</p>
+    </section>
+    <PapersView releases={previewReleases} signedIn attemptsByPaper={progress}
+      attemptHref={attemptHref} attemptsHref="/portal-preview"
+      onStart={async () => navigate("/portal-preview/paper")} />
+  </>;
+}

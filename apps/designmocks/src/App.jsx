@@ -65,6 +65,9 @@ const includeStudentPreview = import.meta.env.DEV || __DMOCKS_STAGING_REVIEW_PRE
 const PortalPreview = includeStudentPreview
   ? React.lazy(() => import("./PortalPreview.jsx"))
   : null;
+const PapersPreview = includeStudentPreview
+  ? React.lazy(() => import("./PapersPreview.jsx"))
+  : null;
 const TopicPractice = React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPractice })));
 const ExamMocks = React.lazy(() => import("./ExamMocks.jsx").then(module => ({ default: module.ExamMocks })));
 const Papers = React.lazy(() => import("./Papers.jsx"));
@@ -1705,6 +1708,7 @@ export default function App() {
         </Route>}
         {includeStudentPreview && studentPreview && <>
           <Route path="/portal-preview/*" element={<PortalPreview />} />
+          <Route path="/papers-preview" element={<PapersPreview />} />
           <Route path="/profile-preview" element={<CandidateProfilePreview />} />
           <Route path="/topic-practice-preview" element={<TopicPracticePreview />} />
           <Route path="/exam-mocks-preview" element={<ExamMocksPreview />} />
