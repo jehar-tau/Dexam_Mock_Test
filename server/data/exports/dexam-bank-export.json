@@ -30654,67 +30654,717 @@
    }
   },
   {
-   "externalKey": "nid-bdes-recalled-2024-q1",
+   "externalKey": "nid-bdes-sample-2024-q1",
    "type": "MCQ",
-   "prompt": "How many wings does a dragonfly have?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "prompt": "Which one of the wall clocks below has the most functional design?\n(",
    "options": [
     {
      "key": "A",
-     "text": "2",
+     "text": "",
      "asset": null
     },
     {
      "key": "B",
-     "text": "4",
+     "text": "",
      "asset": null
     },
     {
      "key": "C",
-     "text": "6",
+     "text": "",
      "asset": null
     },
     {
      "key": "D",
-     "text": "8",
+     "text": "",
      "asset": null
     }
    ],
-   "assets": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q1.png",
+     "sha256": "4c8121671612f1715091c28ed2e834a7f9d72004d0ea3c72b70b48a5c08aa73b",
+     "width": 1226,
+     "height": 385,
+     "review": "approved"
+    }
+   ],
    "answer": {
-    "raw": "B",
-    "status": "independently-solved"
+    "raw": "A",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
    },
    "explanation": null,
-   "topic": "general-knowledge",
+   "topic": "design-awareness",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
    "taskMarks": null,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
+    "paperId": "nid-bdes-sample-2024",
     "questionNo": "1",
-    "page": null,
-    "sourceSha256": null,
+    "page": 21,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
    }
   },
   {
-   "externalKey": "nid-bdes-recalled-2024-q2",
+   "externalKey": "nid-bdes-sample-2024-q2",
    "type": "MCQ",
-   "prompt": "You travel from Delhi to Bhopal and then from Bhopal to Ahmedabad. In which direction do you travel on the second leg?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "prompt": "How many wings does a dragonfly have?",
    "options": [
     {
      "key": "A",
-     "text": "West",
+     "text": "8",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q2.png",
+     "sha256": "e533433eea3162162cab1f067baa23116b3098a6e53b02edd46aeb7786a78a49",
+     "width": 957,
+     "height": 115,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "observation",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "2",
+    "page": 21,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q3",
+   "type": "MCQ",
+   "prompt": "Which of the following statements is correct?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Glass is biodegradable",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Glass and plastic are not biodegradable",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Plastic is biodegradable",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Glass and plastic are biodegradable",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q3.png",
+     "sha256": "33f158d9dc235362977a62df5f31e54f2bc2e05db29543ee4bfefee263f518e2",
+     "width": 1313,
+     "height": 173,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "materials",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "3",
+    "page": 21,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q4",
+   "type": "MCQ",
+   "prompt": "Demography is the statistical study of which one of the following?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Human Populations",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Human Settlements",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Human Societies",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Human Life",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q4.png",
+     "sha256": "2f7a6827980282874d4f791cbabb3fda9a4138d22eab623bf6f54320f06c54a8",
+     "width": 1050,
+     "height": 173,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "4",
+    "page": 21,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q5",
+   "type": "MCQ",
+   "prompt": "Night-time flowering plants are typically_________ in colour, but have a pleasing smell, as\ninsects do not see at night time but get attracted to their smell. Identify the correct colour.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Purple",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Red",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "White",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Yellow",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q5.png",
+     "sha256": "6f56def836f874543462ba822ace9d4b09b0ad5d127e63c475a638ab7eba975a",
+     "width": 1253,
+     "height": 162,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "5",
+    "page": 21,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q6",
+   "type": "MCQ",
+   "prompt": "Which of the following relationships best describes the interactions in a typical food chain?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Territorial",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Symbiotic",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Reproductive",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Predator-prey",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q6.png",
+     "sha256": "cfa03df5503bb1bb68e514f0366e753c659d4e5f4a02db1f663769a3cc71c412",
+     "width": 1258,
+     "height": 162,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "6",
+    "page": 21,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q7",
+   "type": "MCQ",
+   "prompt": "Human eye understands lightness and darkness by using rods and distinguishes colors by use of\ncones. Which part of the eye helps control the amount of light entering it?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Cornea",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Pupil",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Retina",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Optic nerve",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q7.png",
+     "sha256": "ba9948f788e0117b42dddbfbcfd84b9fa0326d17e91e7eb4f25795d90b582765",
+     "width": 1319,
+     "height": 162,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "7",
+    "page": 21,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q8",
+   "type": "MCQ",
+   "prompt": "Five pencils (V, W, X, Y, Z) are arranged on the floor as shown in the image. Which of them are in\nthe same plane?",
+   "options": [
+    {
+     "key": "A",
+     "text": "V and Z",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "V and Y",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "W and V",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Z and W",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q8.png",
+     "sha256": "3000825f46e4ad40f348410b597f0a8b80c648b8d6b17e1e68084ddc8e2fc6ea",
+     "width": 1330,
+     "height": 797,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "8",
+    "page": 21,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q9",
+   "type": "MCQ",
+   "prompt": "Which of the options below replaces the question marks as the logical next hexagon in the\nsequence?\n(",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q9.png",
+     "sha256": "a4483daab2b2082deab9b383264d12ac41dace1d3ff3509efb7fd0de05b32e69",
+     "width": 1249,
+     "height": 607,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "9",
+    "page": 22,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q10",
+   "type": "MCQ",
+   "prompt": "Which of the following heavenly bodies are of a similar nature?\n(i) Sun\n(ii) Alpha Century\n(iii) Moon\n(iv) Earth\n(v) Halley's Comet",
+   "options": [
+    {
+     "key": "A",
+     "text": "i and iii",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "i and ii",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "iii and v",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "i, iii and iv",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q10.png",
+     "sha256": "9e048809feab5c5ceabf9cf65c4cdcd2143e41c83a8583611ff7ad2ad0f71221",
+     "width": 1117,
+     "height": 244,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "10",
+    "page": 22,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q11",
+   "type": "MCQ",
+   "prompt": "“Yellow-Green /Yellow/ Yellow-Orange” show a distinct relationship. Which of the options below\nshows a similar relationship?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Red-Orange/ Red/ Magenta",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Yellow-Green/ Violet/Yellow-Orange",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Blue/ Violet/ Magenta",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Green/ Red/ Magenta",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q11.png",
+     "sha256": "c60e36a0676a155c08fc0a32107bfef4cf68f0e220dadbd14e5e7e31e37a2fdb",
+     "width": 1337,
+     "height": 231,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "11",
+    "page": 22,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q12",
+   "type": "MCQ",
+   "prompt": "You are positioned in Delhi. If you travel to Bhopal and then to Ahmedabad, what will be your\ndirection of travel from Bhopal towards Ahmedabad?",
+   "options": [
+    {
+     "key": "A",
+     "text": "North",
      "asset": null
     },
     {
@@ -30724,213 +31374,250 @@
     },
     {
      "key": "C",
+     "text": "West",
+     "asset": null
+    },
+    {
+     "key": "D",
      "text": "South",
      "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q12.png",
+     "sha256": "64cad03d29034c3389ab7a4f7476645c6dedb257dbac291e2ff71aaef6821d22",
+     "width": 1295,
+     "height": 168,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "12",
+    "page": 23,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q13",
+   "type": "MCQ",
+   "prompt": "Can the cut wooden logs shown in the first sketch (Fig. 1) be fixed together without any changes\nto make the structure in the second image (Fig. 2)?\nFig. 1\nFig. 2",
+   "options": [
+    {
+     "key": "A",
+     "text": "Yes",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "No",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Maybe Yes",
+     "asset": null
     },
     {
      "key": "D",
-     "text": "North",
+     "text": "Maybe No Question Numbers 14 to 19 consist of 02 Marks each",
      "asset": null
     }
    ],
-   "assets": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q13.png",
+     "sha256": "d741c256702a29bd0d8439c114b6c758c37342bfa43d6c7e7da55863f6e61b1b",
+     "width": 1405,
+     "height": 851,
+     "review": "approved"
+    }
+   ],
    "answer": {
     "raw": "A",
     "status": "independently-solved"
    },
    "explanation": null,
-   "topic": "general-knowledge",
+   "topic": "visual-reasoning",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
    "taskMarks": null,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "2",
-    "page": null,
-    "sourceSha256": null,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "13",
+    "page": 23,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
    }
   },
   {
-   "externalKey": "nid-bdes-recalled-2024-q3",
+   "externalKey": "nid-bdes-sample-2024-q14",
    "type": "MCQ",
-   "prompt": "The eye senses light and dark with rods and colour with cones. Which part of the eye controls how much light enters it?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "prompt": "Find the correct number that replaces ‘Question mark’ (?) to complete this equation.",
    "options": [
     {
      "key": "A",
-     "text": "Pupil",
+     "text": "1",
      "asset": null
     },
     {
      "key": "B",
-     "text": "Retina",
+     "text": "2",
      "asset": null
     },
     {
      "key": "C",
-     "text": "Eyelashes",
+     "text": "3",
      "asset": null
     },
     {
      "key": "D",
-     "text": "Iris",
+     "text": "5",
      "asset": null
     }
    ],
-   "assets": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q14.png",
+     "sha256": "6f21a6a3afd38484bee4d3f835be6de482ccd3cead3158509e1ef8e577c60414",
+     "width": 1230,
+     "height": 384,
+     "review": "approved"
+    }
+   ],
    "answer": {
-    "raw": "D",
+    "raw": "C",
     "status": "independently-solved"
    },
    "explanation": null,
-   "topic": "general-knowledge",
+   "topic": "numerical-reasoning",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
    "taskMarks": null,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "3",
-    "page": null,
-    "sourceSha256": null,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "14",
+    "page": 23,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
    }
   },
   {
-   "externalKey": "nid-bdes-recalled-2024-q4",
+   "externalKey": "nid-bdes-sample-2024-q15",
    "type": "MCQ",
-   "prompt": "Demography is the statistical study of\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "prompt": "Identify the correct alternative which replaces the question mark in the square given below?\n(",
    "options": [
     {
      "key": "A",
-     "text": "populations",
+     "text": "",
      "asset": null
     },
     {
      "key": "B",
-     "text": "the census",
+     "text": "",
      "asset": null
     },
     {
      "key": "C",
-     "text": "families",
+     "text": "",
      "asset": null
     },
     {
      "key": "D",
-     "text": "individual people",
+     "text": "",
      "asset": null
     }
    ],
-   "assets": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q15.png",
+     "sha256": "4a48b6c7ad6900bd106400af65fc9185a241f9114de40547497210077174e512",
+     "width": 1276,
+     "height": 946,
+     "review": "approved"
+    }
+   ],
    "answer": {
-    "raw": "A",
+    "raw": "C",
     "status": "independently-solved"
    },
    "explanation": null,
-   "topic": "general-knowledge",
+   "topic": "general-aptitude",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
    "taskMarks": null,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "4",
-    "page": null,
-    "sourceSha256": null,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "15",
+    "page": 23,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
    }
   },
   {
-   "externalKey": "nid-bdes-recalled-2024-q5",
+   "externalKey": "nid-bdes-sample-2024-q16",
    "type": "MCQ",
-   "prompt": "Match each craft with the state it is best known from.\n1. Dhokra metal casting   2. Madhubani painting   3. Papier-mâché   4. Bidri work\nP. Karnataka   Q. Jammu & Kashmir   R. Bihar   S. Chhattisgarh\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
+   "prompt": "It takes longer to cook food at high altitudes (hills/mountains) than places at low altitudes (e.g.,\nnear seashores). People living at higher altitudes have more hemoglobin than people from low\naltitudes. Vehicles at Chennai need to be tuned when brought to Shimla. Which of the\nstatements given below are correct?\n1. The boiling point of water does not change at all locations.\n2. Boiling of water depends on pressure.\n3. Oxygen is low at high altitudes.\n4. The air fuel mixture of any vehicle remains the same at all locations.",
    "options": [
     {
      "key": "A",
-     "text": "1-S, 2-R, 3-Q, 4-P",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "1-R, 2-S, 3-P, 4-Q",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "1-Q, 2-R, 3-S, 4-P",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "1-S, 2-Q, 3-R, 4-P",
-     "asset": null
-    }
-   ],
-   "assets": [],
-   "answer": {
-    "raw": "A",
-    "status": "independently-solved"
-   },
-   "explanation": null,
-   "topic": "indian-culture",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "5",
-    "page": null,
-    "sourceSha256": null,
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-recalled-2024-q6",
-   "type": "MCQ",
-   "prompt": "Which of these statements are correct?\n1. Water boils at the same temperature everywhere.\n2. The boiling point of water depends on air pressure.\n3. There is less oxygen in the air at high altitudes.\n4. A vehicle's air–fuel mixture stays the same at every altitude.\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
-   "options": [
-    {
-     "key": "A",
-     "text": "1 and 4",
+     "text": "1 and 3",
      "asset": null
     },
     {
@@ -30940,7 +31627,7 @@
     },
     {
      "key": "C",
-     "text": "1 and 3",
+     "text": "1 and 4",
      "asset": null
     },
     {
@@ -30949,299 +31636,231 @@
      "asset": null
     }
    ],
-   "assets": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q16.png",
+     "sha256": "396f9dc83484c021719fd066abf5f82c93bb3ecbc958a0a7daa520edc87b7f01",
+     "width": 1316,
+     "height": 450,
+     "review": "approved"
+    }
+   ],
    "answer": {
     "raw": "B",
-    "status": "independently-solved"
-   },
-   "explanation": null,
-   "topic": "general-knowledge",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "6",
-    "page": null,
-    "sourceSha256": null,
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-recalled-2024-q7",
-   "type": "MCQ",
-   "prompt": "Flowers that open at night are most often\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
-   "options": [
-    {
-     "key": "A",
-     "text": "green",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "purple",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "white",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "yellow",
-     "asset": null
-    }
-   ],
-   "assets": [],
-   "answer": {
-    "raw": "C",
-    "status": "independently-solved"
-   },
-   "explanation": null,
-   "topic": "general-knowledge",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "7",
-    "page": null,
-    "sourceSha256": null,
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-recalled-2024-q8",
-   "type": "MCQ",
-   "prompt": "What does diversity in a society mainly refer to?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
-   "options": [
-    {
-     "key": "A",
-     "text": "People sharing the same opinions and beliefs",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "Differences in cultural, social and individual characteristics",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "One standard way of living for everyone",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "The absence of differences between people",
-     "asset": null
-    }
-   ],
-   "assets": [],
-   "answer": {
-    "raw": "B",
-    "status": "independently-solved"
-   },
-   "explanation": null,
-   "topic": "general-knowledge",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "8",
-    "page": null,
-    "sourceSha256": null,
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-recalled-2024-q9",
-   "type": "MCQ",
-   "prompt": "Which statement best describes how rights and duties are related?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
-   "options": [
-    {
-     "key": "A",
-     "text": "Rights exist without any duties",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "Rights and duties depend on and complete each other",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "Duties are optional but rights are not",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "Rights matter more than duties",
-     "asset": null
-    }
-   ],
-   "assets": [],
-   "answer": {
-    "raw": "B",
-    "status": "independently-solved"
-   },
-   "explanation": null,
-   "topic": "general-knowledge",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "9",
-    "page": null,
-    "sourceSha256": null,
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-recalled-2024-q10",
-   "type": "MCQ",
-   "prompt": "Which set of colours is an analogous colour scheme?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
-   "options": [
-    {
-     "key": "A",
-     "text": "Red, Green, Blue",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "Blue, Orange, Yellow",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "Red, Orange, Yellow",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "Purple, Yellow, Green",
-     "asset": null
-    }
-   ],
-   "assets": [],
-   "answer": {
-    "raw": "C",
-    "status": "independently-solved"
-   },
-   "explanation": null,
-   "topic": "colour-theory",
-   "subtopic": null,
-   "difficulty": "unassessed",
-   "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
-   "taskMarks": null,
-   "holds": [],
-   "provenance": {
-    "exam": "nid",
-    "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "10",
-    "page": null,
-    "sourceSha256": null,
-    "extraction": "workstation",
-    "answerKeySource": null,
-    "verification": "review"
-   }
-  },
-  {
-   "externalKey": "nid-bdes-recalled-2024-q11",
-   "type": "MCQ",
-   "prompt": "Five friends sit in a row for a photograph. S is to the left of R and to the right of B. M is to the right of R, and E sits between R and M. Who sits immediately to the right of E?\n\n(Reconstructed by DMocks from candidates' recollections of the NID B.Des DAT Prelims 2024. NID did not publish this paper; the wording is ours.)",
-   "options": [
-    {
-     "key": "A",
-     "text": "S",
-     "asset": null
-    },
-    {
-     "key": "B",
-     "text": "M",
-     "asset": null
-    },
-    {
-     "key": "C",
-     "text": "B",
-     "asset": null
-    },
-    {
-     "key": "D",
-     "text": "R",
-     "asset": null
-    }
-   ],
-   "assets": [],
-   "answer": {
-    "raw": "B",
-    "status": "independently-solved"
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
    },
    "explanation": null,
    "topic": "analytical-reasoning",
    "subtopic": null,
    "difficulty": "unassessed",
    "estimatedSeconds": null,
-   "visualDependency": false,
-   "licence": "dexam-original",
-   "sourceKind": "original",
-   "display": "text",
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
    "taskMarks": null,
    "holds": [],
    "provenance": {
     "exam": "nid",
     "year": 2024,
-    "paperId": "nid-bdes-recalled-2024",
-    "questionNo": "11",
-    "page": null,
-    "sourceSha256": null,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "16",
+    "page": 24,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q17",
+   "type": "MCQ",
+   "prompt": "In the context of citizenship, which of the following best describes the relationship between\nrights and duties?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rights and duties are entirely unrelated and do not impact each other.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Rights and duties are synonymous terms with the same meaning.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rights and duties are interrelated, as rights come with responsibilities and obligations.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rights are always more important than duties in any society.",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q17.png",
+     "sha256": "7e3d14485ece7aaf65ebd53d0d52f31bed6db860c501310c4b7a7a438d15f498",
+     "width": 1267,
+     "height": 308,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "17",
+    "page": 24,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q18",
+   "type": "MCQ",
+   "prompt": "In the context of a group or community, what do \"homogeneity\" and \"diversity\" refer to?\nIdentify the suitable option.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Homogeneity refers to a group's ability for change, while diversity signifies ability to confirm.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Homogeneity indicates a group's similarity in terms of characteristics, while diversity represents variations in characteristics.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Homogeneity and diversity are unrelated concepts in group dynamics.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Homogeneity refers to a group's openness to new ideas, while diversity refers to resistance to change.",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q18.png",
+     "sha256": "b1abd50eedb526f5c6213ddf29c0400abfc32aa8404489c50fff0c3d76fd0092",
+     "width": 1326,
+     "height": 423,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "18",
+    "page": 24,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2024-q19",
+   "type": "MCQ",
+   "prompt": "Match the crafts given in column A to the state/UT names in Column B and identify the correct\noption.\nColumn A\nColumn B\nDokra\nJammu & Kashmir\nPapier Mache\nBihar\nMadhubani painting\nChhattisgarh\nBidri work\nKarnataka",
+   "options": [
+    {
+     "key": "A",
+     "text": "Dokra - Jammu & Kashmir, Papier Mache - Bihar, Madhubani painting - Chhattisgarh, Bidri work – Karnataka",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Papier Mache - Jammu & Kashmir, Madhubani painting - Bihar, Bidri work – Karnataka, Dokra – Chhattisgarh",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Madhubani painting - Karnataka, Bidri work – Chhattisgarh, Dokra - Bihar, Papier Mache - Jammu & Kashmir",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bidri work - Jammu & Kashmir, Dokra - Karnataka, Papier Mache - Bihar, Madhubani painting - Chhattisgarh",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2024/blocks/nid-bdes-sample-2024-q19.png",
+     "sha256": "0ea65f4f84ecf45dc41592a4b1db0fe2a09c06d40883de42866c4d59c433d543",
+     "width": 1333,
+     "height": 912,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved",
+    "verification": "second-pass-reproduced"
+   },
+   "explanation": null,
+   "topic": "indian-culture",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-bdes-sample-2024",
+    "questionNo": "19",
+    "page": 25,
+    "sourceSha256": "6c41f6423f962e38a803676c733e8c8768dad16edbfdc944b96e755acd283cec",
     "extraction": "workstation",
     "answerKeySource": null,
     "verification": "review"
