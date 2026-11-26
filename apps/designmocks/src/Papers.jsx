@@ -9,6 +9,7 @@ import { withAccountDeadline } from './account-request.js';
 import { overviewStartId } from './overview-data.js';
 import { catalogueStartFailure, savedCatalogueAttempts } from './catalogue-data.js';
 import { ownedYearPaperAttempts } from './year-paper-attempts.mjs';
+import { rememberReturn } from './return-path.js';
 import './papers.css';
 
 const examNames = { uceed: 'UCEED', ceed: 'CEED', nift: 'NIFT', nid: 'NID' };
@@ -122,7 +123,7 @@ export function PapersView({ releases = [], signedIn = false, onStart,
                   {signedIn && !own?.active ? <button type="button" className={own?.submitted ? 'button quiet' : 'button'} aria-describedby={`paper-${paper.id}`} disabled={!onStart || Boolean(busy) || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts}
                     onClick={event => { readyOpener.current = event.currentTarget; setReadyId(part.paperId); }}>{busy === part.paperId ? 'Opening…' : 'Start or resume free paper'}</button>
                     : signedIn ? null : authChecking ? <span role="status">Checking account…</span>
-                      : <Link className="button" to="/account">Sign in to start free paper</Link>}
+                      : <Link className="button" to="/account" onClick={() => rememberReturn(`/papers/${selected}`)}>Sign in to start free paper</Link>}
                 </div>
               </div>;
             })}

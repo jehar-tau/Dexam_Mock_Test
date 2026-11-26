@@ -26,6 +26,7 @@ import {
 import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
 import { Theme } from "./ThemeToggle.jsx";
 import { HomeFreePapers } from "./HomeFreePapers.jsx";
+import { takeReturn } from "./return-path.js";
 import {Purchase} from "./Purchase.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
 import {postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
@@ -978,6 +979,14 @@ function Account() {
   const callbackFailure = callbackStarted && !loading && !session
     ? "Google sign-in could not be completed. Please try again."
     : "";
+  const navigate = useNavigate();
+  // After a fresh Google sign-in, return to the page the student came from.
+  useEffect(() => {
+    if (!callbackStarted || loading || !session) return;
+    if ((stagingPortalMode || controlledPublicPortalMode) && stagingAccess !== "allowed") return;
+    const to = takeReturn();
+    if (to) navigate(to, { replace: true });
+  }, [callbackStarted, loading, session, stagingAccess]);
   const login = async () => {
     if (checkoutReady && !noticeReviewed) return;
     setBusy(true);
@@ -1058,9 +1067,10 @@ function Account() {
             <p className="signed-in">Signed in as {session.user.email}</p>
             {testLoginMode && <p className="notice">Google sign-in succeeded. This is a private setup check. Public registration and purchases are closed; no paid access has been granted.</p>}
             {(stagingPortalMode || controlledPublicPortalMode) && <StagingAccessMessage access={stagingAccess} />}
-            {(testLoginMode || stagingPortalMode || controlledPublicPortalMode) && <button className="button quiet" disabled={busy} onClick={refreshTestSession}>Refresh test session</button>}
+            {(testLoginMode || stagingPortalMode) && <button className="button quiet" disabled={busy} onClick={refreshTestSession}>Refresh test session</button>}
             {sessionStatus && <p role="status">{sessionStatus}</p>}
-            {workspaceAvailable && <Button to="/dashboard">{stagingPortalMode ? "Open staging workspace" : "Open your workspace"}</Button>}
+            {workspaceAvailable && controlledPublicPortalMode && <Button to="/papers">Browse free papers</Button>}
+            {workspaceAvailable && <Button to="/dashboard" quiet={controlledPublicPortalMode}>{stagingPortalMode ? "Open staging workspace" : "Open your workspace"}</Button>}
             {postLaunchPreview && workspaceAvailable && reviewerAccountId === accountId && <Button to="/review/drawings" quiet>Review drawings</Button>}
             {workspaceAvailable && <Button to="/onboarding" quiet>
               Complete your profile
