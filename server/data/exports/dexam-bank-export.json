@@ -181915,6 +181915,1137 @@
     "answerKeySource": "CEED2020ans.pdf",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "ceed-2017-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Industrial Design You are provided with a base (chassis) of 100 cm x 75 cm as indicated below. It has:  an inbuilt motor and battery-charger system  capacity to carry maximum load of 200 kg (apart from its own weight)  a maximum speed limit of 5km/hr You are free to add other parts and accessories to it in order to make it a complete and stable product. A. Using this platform, imagine and sketch 3 ideas for its use in a hospital environment. B. Further, develop any one idea as a concept for actual implementation and:  List down 10 critical factors you will consider in your design.  Sketch and explain your concept for its functional details, features and usage.  Suggest/indicate the materials and processes to manufacture the product.  Write a brief note explaining the concept and list the design decisions taken. Evaluation criteria: Critical thinking, identification of user needs and understanding of the context; problem solving and appropriateness of the solution; ability to explain details and features, sketching, presentation and articulation; knowledge of materials and processes. Answer ANY ONE question out of 1, 2, 3, 4, and 5. (50 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2017/blocks/ceed-2017-b1.png",
+     "sha256": "a86c77026dfc46dd0daa3e1f57c0ec8f69ff26f50a6e39dc0cf06e1fb473d1fd",
+     "width": 1583,
+     "height": 1642,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Critical thinking, user needs and context — 12.5\n• Problem solving and appropriateness of the solution — 12.5\n• Explaining details and features through sketches and presentation — 12.5\n• Knowledge of materials and processes — 12.5",
+   "topic": "drawing-creative",
+   "subtopic": "industrial design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2017,
+    "paperId": "ceed-2017",
+    "questionNo": "B1",
+    "page": 25,
+    "sourceSha256": "82131e1794184ebf6b0c153a23aa3d7960cba203f2e21fed459cf7b4fea95b41",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2017-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Communication Design Shaaradapur is an Indian village. It has a multi-lingual, low-literate population. There is a lack of awareness on maintaining health and hygiene. This results in an outbreak of malaria. Malaria is a mosquito-borne disease and its symptoms include fever, headache, vomiting and fatigue. If left untreated, malaria can be life threatening. So it is important that timely diagnosis and treatment are done under a trained medical practitioner at the government hospital in the village. Malaria can be prevented with mosquito control measures like draining stagnant water and spraying insecticides. Mosquito bites could also be avoided by using mosquito nets and insect repellents.  Design a poster for villagers with the above information on malaria to be displayed prominently at a public place. This poster has to be specific to this village and should communicate (a) the seriousness, (b) the symptoms, (c) the actions to be taken and (d) the prevention of malaria.  Select an ideal location in the village for this poster and (a) Sketch to illustrate how it will be displayed at the location (b) Write 5 sentences justifying your selection of the location, size and strategy in the way it is displayed. Evaluation Criteria: Ability to understand the design brief, clarity of thought, articulation, creativity and presentation. Answer ANY ONE question out of 1, 2, 3, 4, and 5. (50 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2017/blocks/ceed-2017-b2.png",
+     "sha256": "d8ff457e1ccc5f006287270da0ecb4903013cb6a88bd1ca03bb37eac00dd4a2e",
+     "width": 1608,
+     "height": 1155,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Understanding the design brief — 10\n• Clarity of thought — 10\n• Articulation — 10\n• Creativity — 10\n• Presentation — 10",
+   "topic": "drawing-creative",
+   "subtopic": "communication design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2017,
+    "paperId": "ceed-2017",
+    "questionNo": "B2",
+    "page": 26,
+    "sourceSha256": "82131e1794184ebf6b0c153a23aa3d7960cba203f2e21fed459cf7b4fea95b41",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2017-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Animation Design An animation film for 5 to 12 year old children is in pre-production stage. The film is based on a 10 year old girl Priya and her cat. This is a shot breakdown of a sequence from the film. Shot 1 - It was such a bright and beautiful day that 10 year old Priya decided to play with her cat in the garden. Shot 2 - All of a sudden, the cat’s attention is diverted by a little bird singing on a tree. Shot 3 - The cat quickly climbed up the tree and walked stealthily on the branch on which the bird is perched. Shot 4 - Priya anxiously watched from below. Shot 5 - As the cat approached the bird, the branch broke and the bird flew away. Shot 6 - Shocked, Priya quickly ran to catch the falling cat. Shot 7 - Priya tripped and fell. Shot 8 - Terrified, she looked up to see that the falling cat thankfully landed on its feet. Shot 9 - Priya picked up the cat and scolded her. Shot 10 - She then gave the cat a warm hug. The cat meowed back to her with a big smile. Part 1 Illustrate (create a storyboard of) the above shots as a series of picture frames. You may use more than one frame per shot if you want to. Approximate shape of the frame is shown below. Evaluation criteria: Communication of the narrative through sequential pictures, shot composition and perspective. Part 2 Model Sheets – Design the characters Priya, the cat and the bird. Your drawings should depict the character so that it is a good reference for animation. It should also contain possible attitudes and expressions as may be needed by the film. Evaluation criteria: Illustration skills and design of details in the character (keeping in mind that this will be used for animation). Your style can be realistic or stylised. Answer ANY ONE question out of 1, 2, 3, 4, and 5. (50 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2017/blocks/ceed-2017-b3.png",
+     "sha256": "1275fa27c5f0bad5b68f8dc6c749cac8c5721b7aa0ca68c3a9331e04bee3d270",
+     "width": 1601,
+     "height": 2251,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Storyboard: narrative through sequential pictures, shot composition and perspective — 25\n• Model sheets: illustration skills and character details for animation — 25",
+   "topic": "drawing-creative",
+   "subtopic": "animation design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2017,
+    "paperId": "ceed-2017",
+    "questionNo": "B3",
+    "page": 27,
+    "sourceSha256": "82131e1794184ebf6b0c153a23aa3d7960cba203f2e21fed459cf7b4fea95b41",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2017-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Interaction Design Every day, around 500 people visit the city Regional Transport Office (RTO) for getting a driving licence. Some of these people are illiterate. The RTO is short on staff and struggles to cater to all these people. To get a licence the user needs to fill a form, take an objective-type test, and submit copies of age proof, address proof, a phone number, finger prints and a photograph. After verification of this, the user is issued a learner’s licence. If the user has had a learner’s licence for a month, he/she may apply for a permanent licence. In that case, the user is given a choice of a date for a driving test, after which the licence is issued. The RTO has decided to put up an interactive public information system in the lobby of its office to ease the process. The primary target audiences for this system are: 1. Individuals who come to issue a learner’s driving licence (typically 18–20 years old) and 2. Individuals who come to issue a permanent driving licence (typically 18–20 years old). Based on this information, write in about 20 words the needs of different types of users and information that the system should provide. State the assumptions you are making about the availability of technology and information.  Draw a sketch of the lobby to illustrate the physical location of the system and how users would interact with it.  Present two scenarios (1) submission of application and (2) getting a licence to illustrate the details of the graphical interface and information flow. Each scenario should highlight specific problems the users might face and show how the system would solve these. Evaluation criteria: Ability to understand the needs of users, originality, the logic and flow in the interface, usability and appropriateness of information, presentation. Answer ANY ONE question out of 1, 2, 3, 4, and 5. (50 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2017/blocks/ceed-2017-b4.png",
+     "sha256": "7ac64abbbf98ac68354268d1cedd4efb88a423ba3a7597338e54552158f84adc",
+     "width": 1601,
+     "height": 1484,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Understanding the users' needs — 10\n• Originality — 10\n• Logic and flow of the interface — 10\n• Usability and appropriateness of information — 10\n• Presentation — 10",
+   "topic": "drawing-creative",
+   "subtopic": "interaction design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2017,
+    "paperId": "ceed-2017",
+    "questionNo": "B4",
+    "page": 28,
+    "sourceSha256": "82131e1794184ebf6b0c153a23aa3d7960cba203f2e21fed459cf7b4fea95b41",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2017-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Mobility and Vehicle Design A company is planning to introduce an electric two-wheeler taxi in the city of Banaras (Varanasi) for local commuters and pilgrims. Design an electric two wheeler taxi by identifying at least five distinct and essential factors that will make it relevant for the city of Banaras in terms of function and aesthetics. Present your design proposal as follows:  Identify at least five distinct factors essential in designing such a solution.  Draw a neat side elevation sketch of the proposed vehicle.  Draw a neat freehand perspective sketch showing the overall form and its features.  Indicate suitable materials used in manufacturing of the vehicle body. Evaluation criteria: User-centric design considerations, form, feasibility and effectiveness of design solution, quality of sketch, originality and appropriateness of materials.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2017/blocks/ceed-2017-b5.png",
+     "sha256": "5b820bd72876c74b7e3eed08413600da23c26c48d726e324b46d835a9f3575c0",
+     "width": 1600,
+     "height": 906,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• User-centric design considerations — 10\n• Form — 10\n• Feasibility and effectiveness of the solution — 10\n• Quality of sketch — 10\n• Originality and appropriateness of materials — 10",
+   "topic": "drawing-creative",
+   "subtopic": "mobility and vehicle design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2017,
+    "paperId": "ceed-2017",
+    "questionNo": "B5",
+    "page": 29,
+    "sourceSha256": "82131e1794184ebf6b0c153a23aa3d7960cba203f2e21fed459cf7b4fea95b41",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2017-b6",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching question. Attempt ANY ONE of A or B. (20 marks)  Do not use any colours.  Use only pencils.  Do not use any drawing instruments such as ruler, compass, set-square etc. A. Illustrate in perspective a still life composition with a plastic water bottle, a transparent half empty glass of water with a metal spoon inside it, a kitchen knife placed next to a half-eaten apple on a grey ceramic plate. Evaluation criteria: Realistic drawing, proportions, quality of surface texture, shading, perspective and composition. OR B. Illustrate this scene. A dog chases a fruit seller carrying a basket full of bananas. A kid on a tricycle watches. Evaluation criteria: Drawing, perspective, proportions and composition. Figures may be realistic or stylised.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2017/blocks/ceed-2017-b6.png",
+     "sha256": "98a60812f371cef07efd07a249ec6348ec9cbbae7c7cb5abb15321d95e840083",
+     "width": 1598,
+     "height": 993,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Choose option A or B. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Drawing quality and proportions — 5\n• Perspective — 5\n• Composition — 5\n• Shading and surface texture — 5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2017,
+    "paperId": "ceed-2017",
+    "questionNo": "B6",
+    "page": 30,
+    "sourceSha256": "82131e1794184ebf6b0c153a23aa3d7960cba203f2e21fed459cf7b4fea95b41",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2017-b7",
+   "type": "DESCRIPTIVE",
+   "prompt": "Creativity (20 marks) A helmet is used to prevent head injury in risky situations. Helmets are used in many sports as well as while driving a bike. Describe five DIFFERENT creative ways you can use a helmet other than as a headgear. Sketch your ideas and write a one-line note to describe each idea. Evaluation Criteria: Originality, imagination and presentation.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2017/blocks/ceed-2017-b7.png",
+     "sha256": "69b9c5288a55efe6e9661d703ab1ff18a04e8e018645defcd2e386027de5f3f1",
+     "width": 1589,
+     "height": 364,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality — 6.5\n• Imagination — 6.5\n• Presentation — 7",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2017,
+    "paperId": "ceed-2017",
+    "questionNo": "B7",
+    "page": 30,
+    "sourceSha256": "82131e1794184ebf6b0c153a23aa3d7960cba203f2e21fed459cf7b4fea95b41",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2017-b8",
+   "type": "DESCRIPTIVE",
+   "prompt": "Stories (10 marks) Construct two different stories using the following three terms: Orphan, Mango, Cycle shop. Each story should not be longer than three sentences. Evaluation Criteria: Originality and creativity of plots, ability to tell the story in only three sentences.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2017/blocks/ceed-2017-b8.png",
+     "sha256": "c769c0fe6332f3afb959946ef902f7e8435bda31c9d27d58695bc93c7e3c9338",
+     "width": 1611,
+     "height": 312,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 10 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality and creativity of the plots — 5\n• Telling each story in three sentences — 5",
+   "topic": "drawing-creative",
+   "subtopic": "stories",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2017,
+    "paperId": "ceed-2017",
+    "questionNo": "B8",
+    "page": 30,
+    "sourceSha256": "82131e1794184ebf6b0c153a23aa3d7960cba203f2e21fed459cf7b4fea95b41",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2018-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Industrial Design Mr. Chatterjee a right-handed person, recently met with an accident and had to get his right hand amputated. He lives alone and therefore finds it difficult to perform everyday activities. Every morning a standard 500 ml milk pouch is delivered to his residence. One of the challenges he faces is to cut open the pouch and pour the milk into a utensil to heat the milk. Design a product that can aid him to perform the following operations with ease:  Lifting and supporting the pouch  Cutting the pouch  Pouring the milk without spilling  Discarding the empty pouch Present your design proposal with: A. Neat free hand sketches showing the overall form and its features B. Sketches illustrating the usage scenario C. Indicators of materials and processes used in manufacturing D. A brief note articulating your design decisions (max 100 words) Evaluation criteria: User centric design considerations, feasibility and overall effectiveness of your design solution, appropriateness of materials to be used in the manufacturing, originality of concepts, attention to details, design sensitivity and aesthetics, quality of presentation. Answer ANY ONE question out of 1, 2, 3, 4, and 5. (50 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2018/blocks/ceed-2018-b1.png",
+     "sha256": "d8a563726e08f88ffd70b12aec4d6345bb0b17a6a3e23f145ed0d0f4facfa82c",
+     "width": 1612,
+     "height": 1209,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• User-centric design considerations — 8.5\n• Feasibility and effectiveness of the solution — 8.5\n• Appropriate materials — 8.5\n• Originality of concepts — 8.5\n• Attention to detail, design sensitivity and aesthetics — 8.5\n• Quality of presentation — 7.5",
+   "topic": "drawing-creative",
+   "subtopic": "industrial design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2018,
+    "paperId": "ceed-2018",
+    "questionNo": "B1",
+    "page": 23,
+    "sourceSha256": "46f383d38f68bb03786bbc727bfbcfc8bc3eaf366b744b0f1b2a7fd982c1cb68",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2018-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Communication Design An optical illusion (also called visual illusion) can use colour, light and patterns to create images that can deceive our brains. Information gathered by the eye is processed by the brain, creating a perception that does not match the actual image. Akihito Yujumari is an established artist and author and is releasing his 25th book which documents the greatest optical illusions of the world. He has commissioned you to design the cover for his book. Following are the details of the book:  Title of the book: The Art of Optical Illusion  Author: Akihito Yujumari  Paperback: 312 pages  Publisher: Square Book Publishers  Language: English  ISBN-13: 93-34567898765 (with barcode)  Book dimensions: 22.9 x 2.2 x 25.4 cm You are required to do the following: A. Design the front cover for the book that includes the author name and the title of the book. B. Design a spine for the book that includes the title of the book, the name of the author and the publisher’s logo and name. C. Design a back cover for the book that includes the ISBN number with the barcode and the following paragraph about book: “This intriguing collection contains more than 275 optical illusions that appear to change before your eyes. Akihito Yujumari has carefully selected every type of optical illusion, which intrigues the mind and delights the eye, along with notes about the science behind each illusion.” Evaluation criteria: Ability to understand the design brief, originality and creativity of ideas, clarity of thought, neatness and effectiveness of presentation, design sensitivity and attention to details. Answer ANY ONE question out of 1, 2, 3, 4, and 5. (50 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2018/blocks/ceed-2018-b2.png",
+     "sha256": "49237a6c094daf366d2fba68ca690d78a278a3503f95bfe1ab0b7311a52438ec",
+     "width": 1617,
+     "height": 1590,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Understanding the design brief — 10\n• Originality and creativity of ideas — 10\n• Clarity of thought — 10\n• Neatness and effectiveness of presentation — 10\n• Design sensitivity and attention to detail — 10",
+   "topic": "drawing-creative",
+   "subtopic": "communication design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2018,
+    "paperId": "ceed-2018",
+    "questionNo": "B2",
+    "page": 24,
+    "sourceSha256": "46f383d38f68bb03786bbc727bfbcfc8bc3eaf366b744b0f1b2a7fd982c1cb68",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2018-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Animation Design An animation film for children is in the pre-production stage. The film is based on the relationship between a crow and a man. Given below is one scene from the film: The man is about to have breakfast in the garden. On the table are a cup of tea and a plate of biscuits. There is a crow on a tree nearby eyeing the biscuits. Meanwhile, the man gets a phone call. He gets up and starts walking back and forth while talking on the phone. Seeing his chance, the crow swoops down and lands on the table. The man notices the crow about to go for the biscuits and shoos him away. He finishes his call and sits down for breakfast. The man looks up at the crow cawing insistently and feels sorry for the crow. He throws a biscuit in the air. The crow flies and catches the biscuit midair. The crow and the man are happy! Part 1 Illustrate (create a storyboard of) the above shots as a series of picture frames (at least 10 frames). You may use more than one frame per shot if you want to. Approximate shape of the frame is shown below. Evaluation criteria: Communication of the narrative through sequential pictures, shot composition (long shot, close up, top angle, low angle etc) and perspective. Part 2 Design an image for the poster of the film showing the two characters - the man and the crow. Your drawings should depict the character so that it is a good reference for animation. Evaluation criteria: Illustration skills, the attitude and the expressions and design of details in the characters (keeping in mind that this will be used for animation). Your style can be realistic or stylised. Answer ANY ONE question out of 1, 2, 3, 4, and 5. (50 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2018/blocks/ceed-2018-b3.png",
+     "sha256": "794fb8533677ac3e49ba072fad9839217d6bd0f7d0294ecdbb3ff046012181e0",
+     "width": 1616,
+     "height": 2086,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Storyboard: narrative through sequential pictures, shot composition and perspective — 25\n• Poster: illustration skills, attitude, expressions and character details — 25",
+   "topic": "drawing-creative",
+   "subtopic": "animation design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2018,
+    "paperId": "ceed-2018",
+    "questionNo": "B3",
+    "page": 25,
+    "sourceSha256": "46f383d38f68bb03786bbc727bfbcfc8bc3eaf366b744b0f1b2a7fd982c1cb68",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2018-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Interaction Design ASHA workers are local women in the villages who are trained as health educators and monitors. One key function that they do is monitor and maintain the health record of pregnant women in the village. Currently they maintain records using booklets. Now that every ASHA worker has a smart phone of her own and most villages have mobile networks, the ministry of health has decided to create a smart phone application to maintain the records. This is expected to reduce the errors in digitising data, improve the speed with which the data reaches the government, and enable better monitoring of health outcomes. Consider the following scenario: 1. Amruta is an ASHA worker. She knows that Parvati has been pregnant since 6 months. She visits Parvati’s home and opens the smartphone application. Parvati has already been registered in the database on Amruta’s phone. Amruta retrieves Parvati’s records. 2. The records include demographic information about Parvati such as name, age, existing children etc. as well as the earlier recorded pregnancy information such as the date of last menstrual period (LMP), the age of the foetus, the expected date of delivery, and data over the last six months for weight, blood sugar and blood pressure. 3. The ASHA worker then measures Parvati’s current weight, blood sugar and blood pressure and enters this data in the application. 4. The application informs Amruta that Parvati’s weight gain is not enough and her blood pressure is high. The ASHA worker then advises Parvati to visit the nearest Public Health Office at the earliest for consultation. Do the following: A. Add a step of your choice to the above scenario. B. Draw the information architecture of an application that will support the scenario. (Information architecture shows how the information is structured and how the screens are interconnected in the application). Indicate where each of the above steps (1, 2, 3 and 4) happen in your information architecture. C. Design FOUR screens of the application in detail. Show the layout of the screens and detail out design elements such as the widgets and the information graphics used. D. Design icons for the application itself, and for depicting age of foetus, weight, blood sugar and blood pressure in the application. Draw each icon in size 5 cm by 5 cm. Evaluation criteria: Originality, usability and appropriateness of the solution, the logic and flow in the architecture, ability to understand the needs and constraints of the users, quality of the presentation. Answer ANY ONE question out of 1, 2, 3, 4, and 5. (50 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2018/blocks/ceed-2018-b4.png",
+     "sha256": "082cd5e354b80527b49dc440b8e50380e8d426977ab0959894fa06bcb281fcf4",
+     "width": 1616,
+     "height": 1965,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality — 10\n• Usability and appropriateness of the solution — 10\n• Logic and flow of the architecture — 10\n• Understanding the users' needs and constraints — 10\n• Quality of presentation — 10",
+   "topic": "drawing-creative",
+   "subtopic": "interaction design ash",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2018,
+    "paperId": "ceed-2018",
+    "questionNo": "B4",
+    "page": 26,
+    "sourceSha256": "46f383d38f68bb03786bbc727bfbcfc8bc3eaf366b744b0f1b2a7fd982c1cb68",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2018-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Mobility and Vehicle Design A roadside bookseller wants to buy a new 2-wheeler that can also serve as a book display kiosk. He wants to use it as a kiosk during the day, but in the evenings or on the weekends, he wants to take his family members out for trips. Design a new 2-wheeler solution that can enable him to perform the following functions:  Travel from home to his workplace or crowded market  Set up the kiosk for selling 100 books  Store the books back and fold the kiosk back safely and securely  Go out with family on the weekend You are expected to think about the context, the target user (his needs and expectations) and the purpose of the vehicle. Your observations and insights should lead to development of unique concepts. You may choose one concept over others, develop the final rendering and detail the key features of the final concept. Present your design proposal as follows: A. Identify with sketches at least five distinct factors essential in designing such a solution. B. Draw a neat side elevation sketch of the proposed vehicle. C. Draw a neat freehand perspective sketch showing the overall form and its features. D. Highlight the design detailing and indicate suitable materials wherever necessary. Evaluation criteria: Design insights leading to novel ideas, concept exploration through good quality design sketches, presentation of the final concept through rendering, detailing and indication of appropriate materials used.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2018/blocks/ceed-2018-b5.png",
+     "sha256": "a5535903eeae2b62ee4c3df1b5cc74a68e9fd374610f12346008030fd1ca7e6b",
+     "width": 1602,
+     "height": 1404,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Design insights leading to novel ideas — 12.5\n• Concept exploration through design sketches — 12.5\n• Final concept rendering — 12.5\n• Detailing and choice of materials — 12.5",
+   "topic": "drawing-creative",
+   "subtopic": "mobility and vehicle design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2018,
+    "paperId": "ceed-2018",
+    "questionNo": "B5",
+    "page": 27,
+    "sourceSha256": "46f383d38f68bb03786bbc727bfbcfc8bc3eaf366b744b0f1b2a7fd982c1cb68",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2018-b6",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching A room of 10 ft × 10 ft dimensions has a table of 5 ft × 4 ft kept in the centre. On the table there is a match box, a watermelon cut into 2 halves and a glass of water. A person with an axe enters the room and switches on the light. With a harsh blow of the axe he breaks the table into two and leaves the room with his axe, leaving the light on. Choose a point of view and draw a freehand perspective drawing of this scene after the person has left. You may use any medium of your choice. Evaluation criteria: Perspective, light, shade and shadow, textures, quality of lines, scale and proportion in the composition.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2018/blocks/ceed-2018-b6.png",
+     "sha256": "866acbaf36f44d7175915a6ec18fd97bb64e52e22ee53e11a9322e6d49fbd8d1",
+     "width": 1615,
+     "height": 738,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Perspective — 4\n• Light, shade and shadow — 4\n• Textures — 4\n• Quality of lines — 4\n• Scale and proportion in the composition — 4",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2018,
+    "paperId": "ceed-2018",
+    "questionNo": "B6",
+    "page": 28,
+    "sourceSha256": "46f383d38f68bb03786bbc727bfbcfc8bc3eaf366b744b0f1b2a7fd982c1cb68",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2018-b7",
+   "type": "DESCRIPTIVE",
+   "prompt": "Creativity Imagine you are provided with a tyre, a plastic bottle, a cricket bat and a bucket. Illustrate five DIFFERENT creative ideas to use these objects in a combination at your home or a public place. You are required to use all the objects in each idea. You may use the objects more than once, change their scales, and proportions. Evaluation criteria: Originality and diversity of your ideas and clarity of your sketches.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2018/blocks/ceed-2018-b7.png",
+     "sha256": "5d46da70eb84483323b662661a97c3d95d0aea3b4c0e469a0b2c681cd3fb34a6",
+     "width": 1590,
+     "height": 419,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality of ideas — 6.5\n• Diversity of ideas — 6.5\n• Clarity of sketches — 7",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2018,
+    "paperId": "ceed-2018",
+    "questionNo": "B7",
+    "page": 28,
+    "sourceSha256": "46f383d38f68bb03786bbc727bfbcfc8bc3eaf366b744b0f1b2a7fd982c1cb68",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2018-b8",
+   "type": "DESCRIPTIVE",
+   "prompt": "Visualization The image given below shows a word written in a particular font. Visualize and draw the letter “d” (lower-case letter d) from the same font. The height of the letter should be 15 cm. Evaluation criteria: Consistency with the existing letters and quality of rendering.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2018/blocks/ceed-2018-b8.png",
+     "sha256": "e08bb76cca66e3aca02624b500d689536cfe9690c534e5e068bbd11467794839",
+     "width": 1673,
+     "height": 968,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 10 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Consistency with the existing letters — 5\n• Quality of rendering — 5",
+   "topic": "drawing-creative",
+   "subtopic": "visualization",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2018,
+    "paperId": "ceed-2018",
+    "questionNo": "B8",
+    "page": 29,
+    "sourceSha256": "46f383d38f68bb03786bbc727bfbcfc8bc3eaf366b744b0f1b2a7fd982c1cb68",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2019-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Industrial Design During the monsoon season, drying of washed clothes at home takes a long time. The interior of the house is usually very damp. It is observed that people tend to spread the wet clothes on a chair or other furniture below a ceiling fan, to dry them. Such temporary arrangements help them cope with the problem. A leading fan manufacturing company sees a business opportunity. The company approaches you to design a product for drying clothes. The manufacturer proposes to sell this product (which is to be used during monsoons) along with a fan. The manufacturer wants the following objectives to be met in the design: a) The product uses a fan for drying clothes. b) The fan must be integrated with the product during its use in rainy season and must be usable as a “normal fan” during other seasons. c) The product should be foldable and compact for storage. Design the product as per the objectives listed above. 1. Present three ideas of design alternatives through rough sketches. (10 marks) Evaluation Criteria: Quality of creative ideas and neatness of sketches. 2. List ten critical factors (key words only) you will consider for designing. (10 marks) Evaluation Criteria: Understanding of the situation and product use. 3. Select one of your ideas and develop it into a final product. Make a neat sketch of the same. Indicate all the parts, material and features on this sketch. (20 marks) Evaluation Criteria: Sketching quality, details, product features and usability issues. Answer ANY ONE question out of the question numbers 1, 2, 3, 4, and 5. (40 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2019/blocks/ceed-2019-b1.png",
+     "sha256": "03c5768136b88eb97398764828872bdc37dbc1528bde7821d29aaa729411da71",
+     "width": 1605,
+     "height": 1362,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 40 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed):\n• Part 1: three design ideas as rough sketches – quality of ideas and neatness — 10\n• Part 2: ten critical design factors – understanding of the situation and use — 10\n• Part 3: final product sketch with parts, materials and features – sketching, details, usability — 20",
+   "topic": "drawing-creative",
+   "subtopic": "industrial design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 40.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2019,
+    "paperId": "ceed-2019",
+    "questionNo": "B1",
+    "page": 21,
+    "sourceSha256": "00f39e7a3c8ad409b8839702d86b8b4edd053a1dd5fa608a412c0674e7e451d4",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2019-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Communication Design Cricket is a popular sport in India. The 12th Cricket World Cup tournament is to be held in England and Wales in 2019. India has already been a champion twice. To win the tournament for a third time, the team needs the support and wishes of a billion Indians. Design a visual campaign for the Indian cricket team to gather support and encouragement from Indians. As part of the campaign, design a 30 feet x 20 feet hoarding to be placed at prominent locations in various cities and towns. Task: 1. Through sketches present three completely different concepts/ideas. (10 marks) Evaluation criteria: Originality and diversity of ideas, creativity, understanding of scale and proportion. 2. Design three slogans for the campaign in English or in any Indian language (with a mention of the language used). (10 marks) Evaluation criteria: Clarity of message and literary creativity. 3. Make a detailed design of one hoarding with slogan. (20 marks) Evaluation criteria: Visualisation, quality of lines, composition, colour combinations and detailing. Answer ANY ONE question out of the question numbers 1, 2, 3, 4, and 5. (40 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2019/blocks/ceed-2019-b2.png",
+     "sha256": "4df055d01516e9e87820ede3b2bfba1469667680cc1b06e4fc849d83e8f7ce12",
+     "width": 1618,
+     "height": 1077,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 40 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed):\n• Part 1: three different campaign concepts – originality, diversity, scale and proportion — 10\n• Part 2: three slogans – clarity of message and literary creativity — 10\n• Part 3: detailed hoarding design – visualisation, lines, composition, colour, detailing — 20",
+   "topic": "drawing-creative",
+   "subtopic": "communication design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 40.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2019,
+    "paperId": "ceed-2019",
+    "questionNo": "B2",
+    "page": 22,
+    "sourceSha256": "00f39e7a3c8ad409b8839702d86b8b4edd053a1dd5fa608a412c0674e7e451d4",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2019-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Animation Design An animation film for children is in the pre-production stage. The film is based on the relationship that develops between a baby and a dog as the baby grows up and the dog gets old. Given below is one scene from the film. The scene begins with a shot of a dog observing a baby. The baby is hungry and crying. Suddenly the baby sees something and stops. On a table, is the baby’s milk bottle (and other stuff). Baby crawls towards the table followed by the curious dog. The baby reaches out and manages to grab a corner of the table cloth and starts pulling. The dog’s expression changes to one of alarm, as he sees the stuff on the table moving towards the edge. He leaps forward and grabs the end of the baby’s diaper. Just as the bottle and the other items start toppling over the edge, he pulls the baby away from danger. The baby is safe, but everything falls on the poor dog. The mother’s scream is heard, “Tommy!! BAD DOG!!” and the dog is seen sheepishly peeping out from under the table cloth, with all the mess around him. Part 1 (30 marks) Illustrate (create storyboard of) the above shots as a series of picture frames (at least 10 frames). You may use more than one frame per shot if you want to. Approximate shape of the frame is shown below. Note: The image of the frame did not appear on screen during the examination. Therefore, frames of any proportion will be considered for evaluation. Evaluation Criteria: Communication of the narrative through the sequential pictures, shot composition (long shot, close up, top angle, low angle, etc.) and perspective. Part 2 (10 marks) Design an image for the poster of the film showing the two characters – the baby and the dog. Your drawings should depict the character and the essence of the film so that it is a good reference for animation and an inspiring image for the animation team. Evaluation criteria: Illustration skills, the attitude and the expressions, and design of the details in the characters (keeping in mind that this will be used for animation). Your style can be realistic or stylised. Answer ANY ONE question out of the question numbers 1, 2, 3, 4, and 5. (40 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2019/blocks/ceed-2019-b3.png",
+     "sha256": "1324a01792e4d509f50fe107222b89049f92e577d127368ccdf0c18dfffe2537",
+     "width": 1616,
+     "height": 1989,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 40 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed):\n• Part 1: storyboard of at least 10 frames – narrative, shot composition and perspective — 30\n• Part 2: film poster with the baby and the dog – illustration, attitude, expressions, details — 10",
+   "topic": "drawing-creative",
+   "subtopic": "animation design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 40.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2019,
+    "paperId": "ceed-2019",
+    "questionNo": "B3",
+    "page": 23,
+    "sourceSha256": "00f39e7a3c8ad409b8839702d86b8b4edd053a1dd5fa608a412c0674e7e451d4",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2019-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Interaction Design A bicycle manufacturing company has developed a device that will help cyclists find routes and navigate. The device has a colour-display screen (not a touch screen), 7 physical buttons, a speaker, a microphone, a global positioning system (GPS), and a wireless internet connection. The device is water-proof and the display is bright enough to be readable in bright sunlight. The battery of the device gets charged as the cyclist rides the bicycle. Design a version of this device to be mounted on bicycles for 12 year old children. Your task is to do the following:  Create a storyboard in 5 steps showing the user interface that enables the user to specify a new destination that he/she has not been to previously. (10 marks) Evaluation criteria: Appropriateness of the user interface, integration of the hardware and the software and appropriate use of media.  Present a detailed screenshot showing the information design that helps the user to navigate while riding the bicycle. (10 marks) Evaluation criteria: Originality, appropriateness of the information design and appropriate use of media.  Illustrate the shape, size, and position of the screen, the 7 buttons, the speaker, the microphone, and the place where the device will be mounted on the bicycle. (10 marks) Evaluation criteria: Form, originality and rendering quality.  Illustrate a scenario in which the device is used for purposes other than the one mentioned above. (10 marks) Evaluation criteria: Originality, ability to understand the needs and constraints of the users. Answer ANY ONE question out of the question numbers 1, 2, 3, 4, and 5. (40 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2019/blocks/ceed-2019-b4.png",
+     "sha256": "1138ac5568e6edd24e0f8a92a07cf1550eb1d1db9e3291a1515e4d8b3c47d3ba",
+     "width": 1599,
+     "height": 1319,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 40 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed):\n• Part 1: five-step interface storyboard – interface, hardware–software integration, media — 10\n• Part 2: navigation screenshot – originality, information design, media — 10\n• Part 3: device form, buttons and mounting – form, originality, rendering — 10\n• Part 4: another use scenario – originality, understanding of user needs — 10",
+   "topic": "drawing-creative",
+   "subtopic": "interaction design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 40.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2019,
+    "paperId": "ceed-2019",
+    "questionNo": "B4",
+    "page": 24,
+    "sourceSha256": "00f39e7a3c8ad409b8839702d86b8b4edd053a1dd5fa608a412c0674e7e451d4",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2019-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Mobility and Vehicle Design There are many local innovative transportation solutions that mostly operate in rural India. These vehicles are flexible to carry large number of people, smaller machine equipments, agro-machinery and even livestock like cattle, goat, etc. These transport systems are neither safe nor comfortable but are indispensible in rural scenarios. At times, these are the only modes of transportation available. You are expected to think about the context, the target users (needs and expectations), and the purpose of the vehicle, along with aesthetic and safety considerations. Your observations and insights should lead to the development of original solutions. You are free to choose one concept over others, develop the final rendering and detail the key features of the final concept. Task: Design a context sensitive, safe, workable and pleasing 4-wheeler vehicle for hilly regions that fulfils the following criteria: a) Carrying capacity of at least 6 passengers, including the driver. b) Has a convertible space that can be used to carry at least 1 cattle/small machine/milk cans/fuel drums and a tool kit. If no goods are transported, the space can also be used to take passengers. c) Provides protection with respect to weather conditions (such as sunshades). d) Has provisions for easy maintenance. Present your design proposal as follows:  Create concept explorations through four good quality design sketches that represent unique design insights. (10 Marks) Evaluation criteria: Context-sensitivity, identification of problems and challenges, ability to showcase unique design insights, ability to sketch and creation of exploratory concepts.  Draw a neat freehand perspective sketch of the proposed vehicle concept showing the overall form and its features. (10 marks) Evaluation criteria: Ability to sketch an automobile in perspective and detail out the final concept.  Draw a neat rendering of the side elevation of the final concept. (10 marks) Evaluation criteria: Scale, proportion, neatness of the sketch and ability to make a rendering  Draw an interior sketch highlighting design details and material finishes. (10 marks) Evaluation criteria: Ability to communicate details through sketch and rendering of material finishes.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2019/blocks/ceed-2019-b5.png",
+     "sha256": "4aff4c4edfa4b8e16c6142adff2068c427646c8f7c5c28a306ffaf85a484feb4",
+     "width": 1613,
+     "height": 2048,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 40 marks. Optional task: answer ANY ONE of questions 1–5. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed):\n• Part 1: four concept exploration sketches – context, problems, insights, sketching — 10\n• Part 2: perspective sketch of the final vehicle – form and features — 10\n• Part 3: rendered side elevation – scale, proportion, neatness, rendering — 10\n• Part 4: interior sketch – design details and material finishes — 10",
+   "topic": "drawing-creative",
+   "subtopic": "mobility and vehicle design",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 40.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2019,
+    "paperId": "ceed-2019",
+    "questionNo": "B5",
+    "page": 25,
+    "sourceSha256": "00f39e7a3c8ad409b8839702d86b8b4edd053a1dd5fa608a412c0674e7e451d4",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2019-b6",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (20 marks) Draw a perspective view of a kitchen interior with a stove, kitchen utensils (such as pressure cooker, cooking pans, sauce pans etc.), dining utensils (such as ceramic plates, cups, glasses etc.), a wash basin, storage racks with stored cooking ingredients (such as spices in small plastic bottles), fresh cut vegetables kept beside the stove and at least two kitchen gadgets. Make a freehand perspective drawing of this setup, showing all the elements listed above, as seen from the point of view of a 5 ½ feet tall person. Evaluation criteria: a) Quality of composition. b) Observation and drawing skills. c) Sense of perspective. d) Scale and relative proportions. e) Use of light, shade and surface finish. Note:  Use only pencils.  Do not use any drawing instrument such as a ruler, compass, set-square etc.  Do not use any kind of colour.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2019/blocks/ceed-2019-b6.png",
+     "sha256": "10ec645a0652677c606e48b0af5c207bf4ea59bfc48209e68f03ebe4031c9fe8",
+     "width": 1612,
+     "height": 1153,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Quality of composition — 4\n• Observation and drawing skills — 4\n• Sense of perspective — 4\n• Scale and relative proportions — 4\n• Light, shade and surface finish — 4",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2019,
+    "paperId": "ceed-2019",
+    "questionNo": "B6",
+    "page": 26,
+    "sourceSha256": "00f39e7a3c8ad409b8839702d86b8b4edd053a1dd5fa608a412c0674e7e451d4",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2019-b7",
+   "type": "DESCRIPTIVE",
+   "prompt": "Creativity (20 marks) Imagination is the power of the mind. Some visual elements can come together to create a bigger picture. Observe the visual elements that you see in the boxes provided in your answer booklet. Complete the visual elements based on your imagination. It may be a character, a product, a landscape, etc. Using the given elements complete the first four frames to reflect what you imagined. Choose ANY THREE ELEMENTS given in the first four frames, and complete the fifth frame. Sketch only within the boundaries of the boxes. Evaluation criteria: Originality and diversity of your ideas, clarity and neatness of your sketches. (4 marks for each frame)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2019/blocks/ceed-2019-b7.png",
+     "sha256": "9615b9f109fba6ea3b99dae114c4400b8fac8dea4e2c5495df9d32d440da321d",
+     "width": 1612,
+     "height": 1818,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality and diversity of ideas — 10\n• Clarity and neatness of sketches — 10",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2019,
+    "paperId": "ceed-2019",
+    "questionNo": "B7",
+    "page": 27,
+    "sourceSha256": "00f39e7a3c8ad409b8839702d86b8b4edd053a1dd5fa608a412c0674e7e451d4",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2019-b8",
+   "type": "DESCRIPTIVE",
+   "prompt": "Visualization (20 marks) Shown below is a part of a “S shaped motif”. Dotted lines indicate the incomplete part of the motif. Visualize the remaining motif and draw the complete motif with a height of 15 cm. DO NOT draw the dotted lines. Evaluation criteria:  Faithful reproduction of the given part of the motif in the required size. (5 Marks)  Consistency with the existing visual language, harmony, and balance in the imagined part of the motif. (10 Marks)  Rendering quality of the final form. (5 Marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2019/blocks/ceed-2019-b8.png",
+     "sha256": "045f80afdbe64216411177119622071ac5f1bb7756ca7e93dfb70f7e9ecef9c1",
+     "width": 1615,
+     "height": 2045,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed):\n• Faithful reproduction of the given part at the required size — 5\n• Consistency with the visual language, harmony and balance — 10\n• Rendering quality of the final form — 5",
+   "topic": "drawing-creative",
+   "subtopic": "visualization",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2019,
+    "paperId": "ceed-2019",
+    "questionNo": "B8",
+    "page": 28,
+    "sourceSha256": "00f39e7a3c8ad409b8839702d86b8b4edd053a1dd5fa608a412c0674e7e451d4",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2020-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (20 marks = 10+10) Gouri is a fisherwoman from Versova, Mumbai. She sells fish at the same spot everyday on a dusty pavement along the main road. She gets upset and angry when someone takes her spot. She doesn’t like it when customers bargain with her. . Given the character design of Gouri as above, sketch the following: 1) Gouri sitting at her spot and impatiently waiting for customers. She uses a towel to chase away the flies; she hates them sitting on the fish. (10 marks) 2) Gouri very angry at the customer (Do not draw the customer) (10 marks) Additional Instructions: • Make a line drawing using only pencils. Do not use any kind of colour. • Do not draw the environments. • Do not use any drawing instrument or straight-edges such as a ruler, compass, setsquare etc. Evaluation criteria: 1. Ability to keep the character consistent 2. Expression and body gesture of the character 3. Final line quality and finish of the drawing",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2020/blocks/ceed-2020-b1.png",
+     "sha256": "38fce81b188db917cd8f053f2a37201dda8514630aa3cb0958f99258ed094b10",
+     "width": 1597,
+     "height": 1933,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Keeping the character consistent — 6.5\n• Expression and body gesture — 6.5\n• Final line quality and finish — 7",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2020,
+    "paperId": "ceed-2020",
+    "questionNo": "B1",
+    "page": 22,
+    "sourceSha256": "9039b9996bccc51ee2b5f3cb644392d22ed77685aa266d92885c0e7f869f34fb",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2020-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Creativity (20 marks = 2x10) Using the visual elements given in the ten boxes create recognizable objects and give a title to each. Use only BLACK pencil/pen. Draw only within the boundaries of the boxes. Evaluation criteria: Originality and diversity of ideas, clarity and neatness of sketches",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2020/blocks/ceed-2020-b2.png",
+     "sha256": "f97fed673b5b095fc600c637b97189f5541af23457b85107055f8e0eb9ef958a",
+     "width": 1603,
+     "height": 1141,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality of ideas — 6.5\n• Diversity of ideas — 6.5\n• Clarity and neatness of sketches — 7",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2020,
+    "paperId": "ceed-2020",
+    "questionNo": "B2",
+    "page": 23,
+    "sourceSha256": "9039b9996bccc51ee2b5f3cb644392d22ed77685aa266d92885c0e7f869f34fb",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2020-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Visual Sensitivity (20 marks = 4x5) Create 2D graphic icons for each of the images given below. All icons should belong to the same design language/style. Use only BLACK colour. Evaluation criteria: 1. Consistency 2. Composition 3. 2D form",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2020/blocks/ceed-2020-b3.png",
+     "sha256": "1c03a335c25a796d469824cef44e60e7c8734c4b247159a78acab8113bd500be",
+     "width": 1582,
+     "height": 1110,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Consistency — 6.5\n• Composition — 6.5\n• 2D form — 7",
+   "topic": "drawing-creative",
+   "subtopic": "visual sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2020,
+    "paperId": "ceed-2020",
+    "questionNo": "B3",
+    "page": 23,
+    "sourceSha256": "9039b9996bccc51ee2b5f3cb644392d22ed77685aa266d92885c0e7f869f34fb",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2020-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Form (20 marks) Visualize a form for a mixer-grinder body matching the design language of the given Jar. Sketch and render the body with the jar. Use the same perspective as that of the given Jar. Evaluation Criteria: 1. Originality in the form of the body and its proportion 2. Consistency with the form of the jar. 3. Details like buttons, knobs and indicators. 4. Surface shading 5. Quality of line /strokes",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2020/blocks/ceed-2020-b4.png",
+     "sha256": "3fd37c1413e1f663cb0fb472d0b54ddd060e69556493d02932c05a3eba6e6daf",
+     "width": 1588,
+     "height": 1285,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality of the form and its proportion — 4\n• Consistency with the form of the jar — 4\n• Details: buttons, knobs and indicators — 4\n• Surface shading — 4\n• Quality of lines and strokes — 4",
+   "topic": "drawing-creative",
+   "subtopic": "form",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2020,
+    "paperId": "ceed-2020",
+    "questionNo": "B4",
+    "page": 24,
+    "sourceSha256": "9039b9996bccc51ee2b5f3cb644392d22ed77685aa266d92885c0e7f869f34fb",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2020-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Problem identification (20 marks) Shown below is the picture of a tooth brush. According to you what are the 6 most important problems that users might face while using such a toothbrush? Illustrate and annotate these problems in the space provided and describe each problem in one sentence. Do not suggest solutions. Evaluation Criteria: 1. Quality and diversity of your observation 2. Analytical skills 3. Communication",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2020/blocks/ceed-2020-b5.png",
+     "sha256": "b1fed0bd54385fe2e38782a4af78ed34e5d135fa1a3dee7cb03a91a8ee8f1f21",
+     "width": 1605,
+     "height": 989,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Quality and diversity of observation — 6.5\n• Analytical skills — 6.5\n• Communication — 7",
+   "topic": "drawing-creative",
+   "subtopic": "problem identification",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2020,
+    "paperId": "ceed-2020",
+    "questionNo": "B5",
+    "page": 24,
+    "sourceSha256": "9039b9996bccc51ee2b5f3cb644392d22ed77685aa266d92885c0e7f869f34fb",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
   }
  ]
 }
