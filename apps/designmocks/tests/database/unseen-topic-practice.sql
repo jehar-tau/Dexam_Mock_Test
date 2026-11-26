@@ -83,7 +83,7 @@ select set_config('request.jwt.claim.role','authenticated',true);
 select set_config('request.jwt.claim.sub','',true);
 select pg_temp.practice_reject('select public.start_topic_practice(''observation'',''uceed'',10,900)','Sign in required');
 select set_config('request.jwt.claim.sub',:'no_pass',true);
-select pg_temp.practice_reject('select public.start_topic_practice(''observation'',''uceed'',10,900)','An active pass is required');
+select pg_temp.practice_assert(public.start_topic_practice('observation','uceed',10,900) is not null,'free practice starts without a pass once the profile is complete');
 select set_config('request.jwt.claim.sub',:'incomplete',true);
 select pg_temp.practice_reject('select public.start_topic_practice(''observation'',''uceed'',10,900)','Complete your verified profile first');
 select set_config('request.jwt.claim.sub',:'first',true);
