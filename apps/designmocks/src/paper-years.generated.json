@@ -224,9 +224,9 @@
     "exam": "nift",
     "year": 2026,
     "paperId": "nift-2026-bdes-gat",
-    "questionCount": 98,
+    "questionCount": 101,
     "objectiveCount": 98,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 98
   },
   {
@@ -254,9 +254,9 @@
     "exam": "nift",
     "year": 2024,
     "paperId": "nift-2024-bdes-gat",
-    "questionCount": 100,
+    "questionCount": 103,
     "objectiveCount": 100,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 100
   },
   {
@@ -264,9 +264,9 @@
     "exam": "nift",
     "year": 2024,
     "paperId": "nift-2024-mdes-gat",
-    "questionCount": 115,
+    "questionCount": 118,
     "objectiveCount": 115,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 115
   },
   {
@@ -274,9 +274,9 @@
     "exam": "nift",
     "year": 2023,
     "paperId": "nift-2023-bdes-gat",
-    "questionCount": 100,
+    "questionCount": 103,
     "objectiveCount": 100,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 100
   },
   {
@@ -284,9 +284,9 @@
     "exam": "nift",
     "year": 2023,
     "paperId": "nift-2023-mdes-gat",
-    "questionCount": 120,
+    "questionCount": 123,
     "objectiveCount": 120,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 120
   },
   {
@@ -304,9 +304,9 @@
     "exam": "nift",
     "year": 2020,
     "paperId": "nift-2020-bdes-gat",
-    "questionCount": 100,
+    "questionCount": 103,
     "objectiveCount": 100,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 100
   },
   {
@@ -314,9 +314,9 @@
     "exam": "nift",
     "year": 2019,
     "paperId": "nift-2019-bdes-gat",
-    "questionCount": 150,
+    "questionCount": 153,
     "objectiveCount": 150,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 150
   },
   {
@@ -334,9 +334,9 @@
     "exam": "nift",
     "year": 2017,
     "paperId": "nift-2017-bdes-gat",
-    "questionCount": 100,
+    "questionCount": 103,
     "objectiveCount": 100,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 100
   },
   {
@@ -344,9 +344,9 @@
     "exam": "nift",
     "year": 2016,
     "paperId": "nift-2016-bdes-gat",
-    "questionCount": 100,
+    "questionCount": 103,
     "objectiveCount": 100,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 100
   },
   {
