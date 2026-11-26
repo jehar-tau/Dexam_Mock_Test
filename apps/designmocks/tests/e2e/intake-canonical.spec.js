@@ -158,6 +158,7 @@ test("the verified administrator can inspect a private source photo and a revoke
 });
 
 test("PDF/photo uploads, private source download, corrected figures and rights export use the actual admin route", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   const state = await fixture(page);
   for (const [name, mimeType, buffer] of [["fictional-source.pdf", "application/pdf", pdf], ["fictional-photo.png", "image/png", png]]) {
     await page.getByLabel("Private source file").setInputFiles({ name, mimeType, buffer });
@@ -182,7 +183,11 @@ test("PDF/photo uploads, private source download, corrected figures and rights e
   await candidate.getByRole("combobox", { name: "Exam", exact: true }).selectOption("uceed");
   await candidate.getByLabel("Verified answer").fill("E");
   await candidate.getByLabel("Does the question require figures?").selectOption("false");
-  await candidate.getByRole("checkbox").check();
+  const sourceConfirmation = candidate.getByRole("checkbox", { name: /I checked the wording/ });
+  await expect(sourceConfirmation).toBeVisible();
+  await sourceConfirmation.scrollIntoViewIfNeeded();
+  await sourceConfirmation.check();
+  await expect(sourceConfirmation).toBeChecked();
   await candidate.getByRole("button", { name: "Send to human review" }).click();
   await expect(candidate.getByRole("alert")).toHaveText("Single-choice answer must match an option key");
   await candidate.getByLabel("Verified answer").fill("B");
