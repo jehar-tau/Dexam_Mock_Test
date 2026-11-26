@@ -20,7 +20,7 @@ test('generated public metadata matches the canonical export without prompts, an
   assert.deepEqual(generated, yearPaperCatalogue(bank.questions));
   assert.ok(generated.some(paper => paper.exam === 'uceed'));
   assert.ok(generated.some(paper => paper.exam === 'ceed'));
-  assert.equal(generated.some(paper => paper.exam === 'nift'), false);
+  assert.ok(generated.some(paper => paper.exam === 'nift'));
   assert.ok(generated.some(paper => paper.exam === 'nid'));
   for (const paper of generated) {
     assert.equal(paper.keyedCount <= paper.questionCount, true);
