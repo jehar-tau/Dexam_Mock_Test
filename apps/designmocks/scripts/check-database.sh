@@ -33,6 +33,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-runtime.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-answer-alternatives.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-full-marks-runtime.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-historical-year-runtime.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nid-historical-year-review.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-exam-sections.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-nift.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/launch-readiness.sql
