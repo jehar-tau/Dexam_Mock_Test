@@ -35,28 +35,32 @@ begin
   if (select count(*) from dm_private.attempts where user_id=student and status='active' and deadline>now())>=3 then
     raise exception 'Finish an active attempt before starting another';
   end if;
-  if (with ready_keys as materialized (select external_key from dm_private.ready_year_topic_keys())
-    select count(*) from dm_private.bank_questions b
-    join ready_keys ready on ready.external_key=b.external_key where b.active and owner_approved and rights_confirmed
-    and runtime_payload->>'kind' in('mcq','msq','nat') and payload->'holds'='[]'::jsonb
-    and topic=p_topic and exam=p_exam)<p_count then
-    raise exception 'Not enough reviewed questions for this practice';
-  end if;
   insert into dm_private.papers(title,exam,duration_seconds,published,reviewed,rights_confirmed,owner_user_id,source_kind)
     values(initcap(replace(p_topic,'-',' '))||' practice',p_exam,p_duration_seconds,false,true,true,student,'topic')
     returning id into paper;
   -- Delivery history stays private and is scoped to the caller, including earlier active attempts.
   -- Legacy snapshots without an explicit source identity cannot establish that a bank row was seen.
   for question in
-    with ready_keys as materialized (select external_key from dm_private.ready_year_topic_keys()),
+    with ready_papers as materialized (
+      select r.paper_id,r.released_at from dm_private.year_paper_releases r
+      where r.exam=p_exam and dm_private.year_paper_ready(r.paper_id)
+    ),
+    released_solutions as (
+      select distinct on (k.key->>'sourceExternalKey')
+        k.key->>'sourceExternalKey' as external_key,k.explanation
+      from ready_papers r
+      join dm_private.questions q on q.paper_id=r.paper_id and q.topic=p_topic
+      join dm_private.answer_keys k on k.question_id=q.id
+      order by k.key->>'sourceExternalKey',r.released_at desc,r.paper_id,q.ordinal
+    ),
     delivered as materialized (
       select distinct i.key->>'sourceExternalKey' as external_key
       from dm_private.attempts a join dm_private.attempt_items i on i.attempt_id=a.id
       where a.user_id=student and jsonb_typeof(i.key->'sourceExternalKey')='string'
         and nullif(i.key->>'sourceExternalKey','') is not null
     )
-    select b.* from dm_private.bank_questions b
-    join ready_keys ready on ready.external_key=b.external_key
+    select b.runtime_payload,b.topic,s.explanation from dm_private.bank_questions b
+    join released_solutions s on s.external_key=b.external_key
     left join delivered d on d.external_key=b.external_key
     where b.active and b.owner_approved and b.rights_confirmed and b.runtime_payload->>'kind' in('mcq','msq','nat')
       and b.payload->'holds'='[]'::jsonb
@@ -70,7 +74,7 @@ begin
         (question.runtime_payload->>'points')::numeric,(question.runtime_payload->>'negativePoints')::numeric,question.topic,true)
       returning id into question_id;
     insert into dm_private.answer_keys(question_id,key,explanation)
-      values(question_id,question.runtime_payload->'key',question.runtime_payload->>'explanation');
+      values(question_id,question.runtime_payload->'key',question.explanation);
   end loop;
   if ordinal<>p_count then raise exception 'Not enough reviewed questions for this practice'; end if;
   insert into dm_private.attempts(user_id,paper_id,deadline)

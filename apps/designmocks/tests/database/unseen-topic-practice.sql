@@ -19,7 +19,7 @@ create function pg_temp.practice_runtime(p_key text,n integer) returns jsonb lan
   'options',case when n%3=2 then '[]'::jsonb else '[{"id":"A","label":"First"},{"id":"B","label":"Second"},{"id":"C","label":"Third"},{"id":"D","label":"Fourth"}]'::jsonb end,
   'marking',case n%3 when 0 then '{"correct":3,"wrong":-0.71}'::jsonb when 1 then '{"correct":4,"wrong":-1,"partial":true}'::jsonb else '{"correct":4,"wrong":0}'::jsonb end,
   'points',case when n%3=0 then 3 else 4 end,'negativePoints',case n%3 when 0 then 0.71 when 1 then 1 else 0 end,
-  'media','[]'::jsonb,'explanation','Fictional original explanation.',
+  'media','[]'::jsonb,'explanation','Worked solution for fictional question '||n||'.',
   'key',jsonb_build_object('kind',case n%3 when 0 then 'mcq' when 1 then 'msq' else 'nat' end,'sourceExternalKey',p_key)||
     case n%3 when 0 then '{"correct":["A"]}'::jsonb when 1 then '{"correct":["A","B"]}'::jsonb else '{"accepted":[{"exact":"1"}]}'::jsonb end,
   'context','{"version":"iitb-2027-v1","exam":"uceed","cycle":2027}'::jsonb)
@@ -45,6 +45,10 @@ select pg_temp.practice_assert(not has_function_privilege('authenticated',
   'students cannot call private year-paper eligibility directly');
 select pg_temp.release_bank_year(array(select 'unseen-fixture-'||n from generate_series(1,35)n),
   'uceed',2023,'unseen-uceed-2023');
+-- Imported bank answers may offer just a letter. The released paper carries
+-- the reviewed solution for each question.
+update dm_private.bank_questions set runtime_payload=jsonb_set(runtime_payload,'{explanation}','"A"'::jsonb)
+where external_key in (select 'unseen-fixture-'||n from generate_series(1,35)n);
 insert into dm_private.bank_questions(external_key,content_sha256,exam,question_type,topic,licence,objective_ready,owner_approved,rights_confirmed,active,payload,runtime_payload,source_commit)
 select 'excluded-'||label,md5(label)||md5(label),case when label='exam' then 'ceed' else 'uceed' end,'MCQ',
  case when label='topic' then 'other-topic' else 'observation' end,'owned',label not in('drawing','runtime'),label<>'approval',label<>'rights',label<>'retired',
@@ -172,6 +176,11 @@ do $$begin
  perform public.submit_attempt(current_setting('test.practice_partial')::uuid);
  perform public.submit_attempt(current_setting('test.practice_repeat')::uuid);
 end $$;
+select pg_temp.practice_assert((select count(*)=10 and bool_and(
+  item->>'explanation'='Worked solution for fictional question '||
+    substring(item->>'prompt' from '[0-9]+$')||'.')
+  from jsonb_array_elements(public.read_attempt(current_setting('test.practice_first')::uuid)->'questions') item),
+  'submitted practice returns each released paper solution for its matching question');
 select set_config('test.practice_thirty',public.start_topic_practice('observation','uceed',30,900)::text,true);
 select pg_temp.practice_assert(jsonb_array_length(public.read_attempt(current_setting('test.practice_thirty')::uuid)->'questions')=30,'thirty-question configuration remains supported');
 select set_config('request.jwt.claim.sub',:'legacy',true);
