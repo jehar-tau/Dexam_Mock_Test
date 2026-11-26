@@ -17,6 +17,7 @@ async function fixture(page,{identity=null,holdHistory=false,holdIdentity=false}
   else if(name==='available_papers')data=[{id:paperId,exam:'uceed',title:'Original fictional released paper',durationSeconds:900,qualityHeld:false}];
   else if(name==='my_attempt_history'){data=[{id:attemptId,title:actor===first.id?title:'Original fictional second-account saved paper',status:'submitted',resultsPending:false,score:1,total:3}];const held=state.historyHold;if(held){state.heldHistory++;await held.promise;}}
   else if(name==='start_attempt'){state.starts.push({actor,input});data=state.startFailure??state.startValue;status=state.startFailure?400:200;const held=state.startHold;if(held)await held.promise;}
+  else if(name==='free_year_paper_catalog'||name==='my_year_paper_attempts')data=[];
   else if(name==='read_attempt'){status=403;data={code:'42501',message:'Fictional fixture stops after navigation.'};}
   else throw new Error('Unexpected fictional Overview RPC: '+name);
   await route.fulfill({headers,status,json:data}).catch(()=>{});if(name==='start_attempt')state.finishedStarts++;
@@ -25,6 +26,7 @@ async function fixture(page,{identity=null,holdHistory=false,holdIdentity=false}
  await seedPortalSession(page,first);
  await page.goto('/dashboard');
  await expect(page.getByRole('heading',{name:/Welcome to your/})).toBeVisible({timeout:15000});
+ if(!identity&&!holdHistory&&!holdIdentity)await expect(page.locator('.overview-year-papers')).toContainText('released papers attempted');
  return state;
 }
 const start=page=>page.locator('.paper-list article').getByRole('button');

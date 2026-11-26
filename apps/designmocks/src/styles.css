@@ -4416,3 +4416,27 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .community-folder-choices input{width:1.2rem;height:1.2rem;flex:none}
 @media (max-width:760px){.community-saved-layout{grid-template-columns:minmax(0,1fr)}.community-toolbar{align-items:stretch}}
 .community-reader .community-thread h2,.community-drafts h2,.community-saved h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+
+/* Overview: free year-paper progress (slice 4, 26 Nov 2026). */
+.overview-year-papers { margin-top:.5rem; }
+.overview-paper-meter { display:flex; align-items:center; gap:1rem; margin:0 0 .9rem; }
+.overview-paper-meter p { margin:0; white-space:nowrap; color:var(--muted); }
+.overview-paper-meter p b { color:var(--ink); font-size:1.15rem; }
+.overview-paper-meter div { flex:1; height:8px; border-radius:99px; background:var(--soft); overflow:hidden; }
+.overview-paper-meter i { display:block; height:100%; border-radius:inherit; background:var(--green); }
+.overview-paper-columns { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; }
+.overview-paper-card { display:flex; flex-direction:column; gap:.6rem; min-width:0; padding:1.1rem 1.15rem; border:1px solid var(--line); border-radius:11px; background:var(--surface); }
+.overview-paper-card[data-kind="next"] { background:var(--soft); border-color:color-mix(in srgb,var(--green) 35%,var(--line)); }
+.overview-paper-card > p { margin:0; color:var(--muted); line-height:1.5; font-size:.92rem; }
+.overview-paper-card h3 { margin:0; font:600 1.25rem/1.25 Figtree,sans-serif; }
+.overview-paper-card .button { align-self:flex-start; margin-top:auto; min-height:44px; text-decoration:none; }
+.overview-paper-card ul { margin:0; padding:0; list-style:none; display:grid; gap:.65rem; }
+.overview-paper-card li { display:grid; gap:.15rem; padding-bottom:.65rem; border-bottom:1px solid var(--line); }
+.overview-paper-card li:last-child { padding-bottom:0; border-bottom:0; }
+.overview-paper-card li b { font-size:.95rem; }
+.overview-paper-card li span { color:var(--muted); font-size:.88rem; font-variant-numeric:tabular-nums; }
+.overview-paper-card li a { color:var(--green); font-weight:600; font-size:.88rem; text-decoration:underline; text-underline-offset:.15rem; }
+.overview-paper-card[data-kind="active"] .overview-kicker { color:var(--orange); }
+.overview-path-later { justify-self:start; padding:.15rem .5rem; border-radius:99px; background:var(--soft); color:var(--muted); font-size:.72rem; font-style:normal; font-weight:700; letter-spacing:.04em; }
+@media(max-width:900px){ .overview-paper-columns { grid-template-columns:1fr; } }
+@media(max-width:560px){ .overview-paper-meter { flex-direction:column; align-items:stretch; gap:.45rem; } .overview-paper-meter div { flex:none; width:100%; } .overview-paper-card .button { align-self:stretch; justify-content:center; } }

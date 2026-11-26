@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { portalItems, portalModules } from "../src/portalModel.mjs";
 
 test("student navigation has unique routes and the required launch areas", () => {
-  assert.deepEqual(portalItems.map((item) => item.label), ["Overview", "Exam-wise mocks", "Papers", "All India mocks", "Topic practice", "Learn", "Community"]);
+  assert.deepEqual(portalItems.map((item) => item.label), ["Overview", "Papers", "Topic practice", "All India mocks", "Exam-wise mocks", "Learn", "Community"]);
   assert.equal(new Set(portalItems.map((item) => item.to)).size, portalItems.length);
   assert.equal(portalItems.filter((item) => item.released).length, 2);
 });

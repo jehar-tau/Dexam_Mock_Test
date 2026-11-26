@@ -2,7 +2,10 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Theme } from "./ThemeToggle.jsx";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Art, Arrow } from "./Art.jsx";
-import {postLaunchPreview} from "./launch-scope.js";
+import {postLaunchPreview, studentModuleReleased} from "./launch-scope.js";
+import { OverviewPapers, paperName } from "./OverviewPapers.jsx";
+import { overviewPaperProgress } from "./overview-papers.mjs";
+import { ownedYearPaperAttempts } from "./year-paper-attempts.mjs";
 import { controlledPublicPortalMode } from "./platform.js";
 import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
 import { withAccountDeadline } from "./account-request.js";
@@ -51,7 +54,7 @@ function WorkspaceSession({headingRef,catalogueOnly=false}) {
     read.current?.abort();const request=new AbortController();read.current=request;const signal=AbortSignal.any([scope.current.signal,request.signal]);
     const active=()=>current()&&!request.signal.aborted&&read.current===request;
     setData(null);setPapers([]);setError("");setLoading(true);
-    try{const value=await withAccountDeadline(active=>loadOverview(services,active),signal);if(active()){setData(value.data);setPapers(value.papers);setUnconfirmed(false);}}
+    try{const value=await withAccountDeadline(active=>loadOverview(services,active),signal);if(active()){setData(value.data);setPapers(value.papers);setUnconfirmed(false);setYearRefresh(count=>count+1);}}
     catch{if(active())setError("Couldn’t load your workspace. Refresh it to try again.");}
     finally{if(active())setLoading(false);}
   }
@@ -59,6 +62,22 @@ function WorkspaceSession({headingRef,catalogueOnly=false}) {
     const controller=new AbortController();scope.current=controller;void load();
     return()=>{controller.abort();read.current?.abort();};
   }, []);
+  // Free year-paper progress loads separately so a failure never hides the rest of the desk.
+  const [yearPapers,setYearPapers]=useState({loading:true,progress:null,error:""}),[yearRefresh,setYearRefresh]=useState(0);
+  useEffect(()=>{
+    // Waits for the Overview read, which finalizes expired attempts first.
+    if(catalogueOnly||yearRefresh===0)return;
+    const controller=new AbortController(),signal=AbortSignal.any([scope.current.signal,controller.signal]);
+    setYearPapers({loading:true,progress:null,error:""});
+    withAccountDeadline(async request=>{
+      const [releases,attempts]=await Promise.all([services.rpc("free_year_paper_catalog",undefined,request),services.rpc("my_year_paper_attempts",undefined,request)]);
+      const progress=overviewPaperProgress(releases,ownedYearPaperAttempts(attempts));
+      await services.checkIdentity(request);
+      return progress;
+    },signal).then(progress=>{if(current()&&!controller.signal.aborted)setYearPapers({loading:false,progress,error:""});})
+      .catch(()=>{if(current()&&!controller.signal.aborted)setYearPapers({loading:false,progress:null,error:"Couldn’t check your year-wise papers."});});
+    return()=>controller.abort();
+  },[yearRefresh]);
   const start = async (id) => {
     const paper=papers.find(item=>item.id===id);
     if(!current()||mutationBusy.current||loading||unconfirmed||!data?.access.active||!paper||paper.qualityHeld)return;
@@ -75,6 +94,7 @@ function WorkspaceSession({headingRef,catalogueOnly=false}) {
     }
   };
   return <WorkspaceView heading={false} embedded catalogueOnly={catalogueOnly} data={data} papers={papers} error={error} busy={busy} loading={loading} unconfirmed={unconfirmed} onStart={start}
+    yearPapers={catalogueOnly?null:{...yearPapers,onRetry:()=>setYearRefresh(value=>value+1)}}
     onRefresh={()=>{headingRef.current?.focus();void load();}}/>;
 }
 export function WorkspaceHeading({headingRef,catalogueOnly=false}){return<><span className="eyebrow">STUDENT DESK / OVERVIEW</span><h1 ref={headingRef} tabIndex={-1}>{catalogueOnly?"Released papers":"Welcome to your next attempt."}</h1></>;}
@@ -104,7 +124,13 @@ export function WorkspaceView({
   examHref = "/dashboard/mocks",
   preview = false,
   heading = true,embedded = false,onRefresh,unconfirmed = false,catalogueOnly = false,
+  yearPapers = null,
 }) {
+  const nextPaper = yearPapers?.progress?.next;
+  const papersHref = yearPapers?.papersHref ?? "/papers";
+  const resumeYearPaper = yearPapers?.progress?.inProgress?.[0];
+  const active = data?.analytics?.activeAttempt ?? (resumeYearPaper ? { id: resumeYearPaper.attempt.id, title: paperName(resumeYearPaper) } : null);
+  const activeHref = id => data?.analytics?.activeAttempt ? attemptHref(id) : (yearPapers?.attemptHref ?? attemptHref)(id);
   const [recordFilter, setRecordFilter] = useState("all");
   const recommendedPractice = new URL(practiceHref, "https://designmocks.invalid");
   if (data?.analytics?.recommendedTopic) recommendedPractice.searchParams.set("topic", data.analytics.recommendedTopic.topic);
@@ -132,8 +158,8 @@ export function WorkspaceView({
         <>
           {!catalogueOnly && <>
           <div className="overview-banner">
-            <div><span className="overview-kicker">YOUR NEXT SESSION</span><h2>{data.analytics?.activeAttempt ? "A paper is in progress" : "Ready when you are"}</h2><p>{data.analytics?.activeAttempt ? "Your saved answers are waiting. The original deadline still applies." : "Browse complete year-wise papers as they are released, or try the free sample."}</p></div>
-            <Link className="overview-primary-link" to={data.analytics?.activeAttempt ? attemptHref(data.analytics.activeAttempt.id) : "/papers"}>{data.analytics?.activeAttempt ? "Resume paper" : "Explore year-wise Papers"}<Arrow size={18}/></Link>
+            <div><span className="overview-kicker">YOUR NEXT SESSION</span><h2>{active ? "A paper is in progress" : nextPaper ? `Try ${paperName(nextPaper)}` : "Ready when you are"}</h2><p>{active ? `${active.title}: your saved answers are waiting. The original deadline still applies.` : nextPaper ? `${nextPaper.questionCount} questions · ${nextPaper.minutes} minutes · free, with the answer key and explanations after you submit.` : "Browse complete year-wise papers as they are released, or try the free sample."}</p></div>
+            <Link className="overview-primary-link" to={active ? activeHref(active.id) : nextPaper ? `${papersHref}?exam=${nextPaper.exam}` : "/papers"}>{active ? "Resume paper" : nextPaper ? "Open in Papers" : "Explore year-wise Papers"}<Arrow size={18}/></Link>
           </div>
           <div className="overview-metrics" aria-label="Your progress at a glance">
             <article><span>COMPLETED PAPERS</span><strong>{data.analytics?.completed ?? 0}</strong><small>Submitted attempts</small></article>
@@ -141,12 +167,13 @@ export function WorkspaceView({
             <article><span>{passLabel}</span><strong>{data.access?.active ? "Active" : "Not active"}</strong><small>{data.access?.active ? `Until ${new Date(data.access.expiresAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}` : <Link to="/plans">View the annual pass →</Link>}</small></article>
             <article><span>RESULTS IN REVIEW</span><strong>{data.analytics?.waitingForResults ?? 0}</strong><small>Released after review</small></article>
           </div>
+          {yearPapers && <OverviewPapers {...yearPapers} attemptHref={yearPapers.attemptHref ?? attemptHref} />}
           <div className="overview-section-head"><div><span className="overview-kicker">CHOOSE YOUR PATH</span><h2>What would you like to work on?</h2></div></div>
           <div className="overview-paths">
-            <Link to={examHref}><span className="overview-path-icon">01</span><span><b>Exam-wise mocks</b><small>Choose NID, NIFT, UCEED or CEED and open a released paper.</small></span><Arrow size={18}/></Link>
-            <Link to={allIndiaHref}><span className="overview-path-icon">02</span><span><b>All India mocks</b><small>One common paper, one attempt, results after the review window.</small></span><Arrow size={18}/></Link>
-            <Link to={practiceHref}><span className="overview-path-icon">03</span><span><b>Topic-wise practice</b><small>Build a short session around the skills you want to improve.</small></span><Arrow size={18}/></Link>
-            <Link to="/papers"><span className="overview-path-icon">04</span><span><b>Year-wise Papers</b><small>Explore past-year sets and take reviewed papers for free as they are released.</small></span><Arrow size={18}/></Link>
+            <Link to={papersHref}><span className="overview-path-icon">01</span><span><b>Year-wise Papers</b><small>Take complete past-year papers for free, with the answer key and explanations.</small></span><Arrow size={18}/></Link>
+            <Link to={practiceHref}><span className="overview-path-icon">02</span><span><b>Topic-wise practice</b><small>Build a short session around the skills you want to improve.</small>{!studentModuleReleased("practice")&&<em className="overview-path-later">Opens later</em>}</span><Arrow size={18}/></Link>
+            <Link to={allIndiaHref}><span className="overview-path-icon">03</span><span><b>All India mocks</b><small>One common paper, one attempt, results after the review window.</small>{!studentModuleReleased("all-india")&&<em className="overview-path-later">Opens later</em>}</span><Arrow size={18}/></Link>
+            <Link to={examHref}><span className="overview-path-icon">04</span><span><b>Exam-wise mocks</b><small>Fresh papers per exam, opened after each All India event closes.</small>{!studentModuleReleased("mocks")&&<em className="overview-path-later">Opens later</em>}</span><Arrow size={18}/></Link>
           </div>
           </>}
           {data.analytics?.activeAttempt && (
@@ -208,7 +235,7 @@ export function WorkspaceView({
             </>
           )}
           {catalogueOnly && !data.access?.active && <p className="notice">An active pass is needed to start a released paper. <Link to="/plans">View the annual pass →</Link></p>}
-          <div className="overview-section-head"><div><span className="overview-kicker">{catalogueOnly?"PAPER CATALOGUE":"EXAM PAPERS"}</span><h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2></div>{!catalogueOnly&&<Link to={examHref}>View exam-wise mocks →</Link>}</div>
+          <div className="overview-section-head"><div><span className="overview-kicker">{catalogueOnly?"PAPER CATALOGUE":"EXAM-WISE MOCKS"}</span><h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2></div>{!catalogueOnly&&<Link to={examHref}>View exam-wise mocks →</Link>}</div>
           {papers.length ? (
             <div className="paper-list">
               {papers.map((p) => (
@@ -231,7 +258,7 @@ export function WorkspaceView({
             </div>
           ) : (
             <div className="overview-empty-papers">
-              <div><span className="overview-kicker">RELEASE STATUS</span><h3>No papers have been released yet</h3><p>Reviewed papers will appear here when they are published.</p></div>
+              <div><span className="overview-kicker">RELEASE STATUS</span><h3>{catalogueOnly?"No papers have been released yet":"No exam-wise mock has been released yet"}</h3><p>{catalogueOnly?"Reviewed papers will appear here when they are published.":"Free year-wise papers are open now. Exam-wise mocks appear here when they are published."}</p></div>
               {preview&&<Link className="overview-secondary-link" to={attemptHref("example-paper")}>Try an example paper <Arrow size={17}/></Link>}
             </div>
           )}
