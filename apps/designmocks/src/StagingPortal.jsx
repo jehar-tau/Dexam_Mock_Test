@@ -25,9 +25,9 @@ export function useStagingPortalAccess(session, path = "account") {
 }
 
 export function StagingAccessMessage({ access }) {
-  const label = controlledPublicPortalMode ? "test access" : "staging access";
+  const label = controlledPublicPortalMode ? "account access" : "staging access";
   if (access === "checking") return <p role="status">Checking {label}…</p>;
-  if (access === "denied") return <p className="notice" role="status">{controlledPublicPortalMode ? "Test access" : "Staging access"} is closed for this account.</p>;
+  if (access === "denied") return <p className="notice" role="status">{controlledPublicPortalMode ? "Sign-up is not open for this account yet." : "Staging access is closed for this account."}</p>;
   if (access === "unavailable") return <p className="notice" role="alert">Couldn’t verify {label}. Refresh your session and try again.</p>;
   return null;
 }
@@ -38,10 +38,10 @@ export function StagingPortalGate() {
   const access = useStagingPortalAccess(session, pathname);
   if (!loading && access === "allowed") return <Outlet />;
   return <section className="wrap page-intro">
-    <span className="eyebrow">{controlledPublicPortalMode ? "CONTROLLED TEST" : "PRIVATE STAGING"}</span>
-    <h1>{controlledPublicPortalMode ? "Test" : "Staging"} <em>workspace.</em></h1>
+    <span className="eyebrow">{controlledPublicPortalMode ? "FREE STUDENT ACCOUNT" : "PRIVATE STAGING"}</span>
+    <h1>{controlledPublicPortalMode ? "Your" : "Staging"} <em>workspace.</em></h1>
     {loading || access === "checking" ? <StagingAccessMessage access="checking" /> : <>
-      {access === "signed-out" ? <p>Sign in with an approved Google test account.</p> : <StagingAccessMessage access={access} />}
+      {access === "signed-out" ? <p>{controlledPublicPortalMode ? "Sign in with Google to open your free workspace." : "Sign in with an approved Google test account."}</p> : <StagingAccessMessage access={access} />}
       <Link className="button" to="/account">Go to account</Link>
     </>}
   </section>;

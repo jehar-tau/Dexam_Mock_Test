@@ -193,10 +193,10 @@ function Layout({ children }) {
       </a>
       {(!portalReady || stagingPortalMode || controlledPublicPortalMode) && (
         <div className="preview-strip">
-          {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "OWNER REVIEW" : controlledPublicPortalMode ? "CONTROLLED TEST" : stagingPortalMode ? "PRIVATE STAGING" : testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
+          {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "OWNER REVIEW" : controlledPublicPortalMode ? "FREE PAPERS" : stagingPortalMode ? "PRIVATE STAGING" : testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
           <span>
             {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Explore the student experience with fictional examples. Sign-in and checkout are closed." :
-              controlledPublicPortalMode ? "Portal testing is limited to approved Google accounts. Checkout is closed." :
+              controlledPublicPortalMode ? "Sign in with Google to take free past papers. The annual pass is not on sale yet." :
               stagingPortalMode ? "Portal acceptance for approved testers. Checkout is closed." :
               testLoginMode ? "Google sign-in is limited to approved testers. Purchases are closed." : "Explore the sample. Student sign-in and paid checkout are being connected."}
           </span>
@@ -1048,7 +1048,7 @@ function Account() {
         <p>
             {session
             ? "Your Google account is connected."
-            : controlledPublicPortalMode ? "Sign in with an approved Google test account." : stagingPortalMode ? "Sign in with an approved Google account for staging." :
+            : controlledPublicPortalMode ? "Sign in or create your free account with Google." : stagingPortalMode ? "Sign in with an approved Google account for staging." :
               testLoginMode ? "Private Google sign-in check for approved testers." : "Sign in or create your account with Google."}
         </p>
         {loading ? (
@@ -1109,7 +1109,7 @@ function Account() {
                 explore the full sample experience now.
               </div>
             )}
-            {controlledPublicPortalMode ? <p className="account-terms">Only approved testers can enter the workspace. Checkout is closed.</p> : stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
+            {controlledPublicPortalMode ? <p className="account-terms">Free papers need a Google account. The annual pass is not on sale yet.</p> : stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
               testLoginMode ? <p className="account-terms">Only server-approved test accounts can complete this check. It does not accept draft purchase terms, create an order or unlock a paid pass.</p> : <p className="account-terms">
               {checkoutReady
                 ? "Review the terms and privacy notice before continuing with Google. You can confirm a purchase separately in checkout."

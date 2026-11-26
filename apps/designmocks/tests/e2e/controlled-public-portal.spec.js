@@ -30,12 +30,12 @@ test("the controlled public build opens only approved Google tester access and n
   }, project.project_ref);
 
   await page.goto("/dashboard");
-  await expect(page.getByRole("heading", { name: "Test workspace." })).toBeVisible();
-  await expect(page.getByText("Sign in with an approved Google test account.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Your workspace." })).toBeVisible();
+  await expect(page.getByText("Sign in with Google to open your free workspace.")).toBeVisible();
   expect(calls).toEqual([]);
 
   await page.goto("/account");
-  await expect(page.getByText("Portal testing is limited to approved Google accounts. Checkout is closed.")).toBeVisible();
+  await expect(page.getByText("Sign in with Google to take free past papers. The annual pass is not on sale yet.")).toBeVisible();
   await expect(page.getByRole("button", { name: "Sign in to test with Google" })).toBeEnabled();
   await expect(page.getByRole("checkbox")).toHaveCount(0);
   await seedPortalSession(page, tester, project.project_ref);
@@ -46,7 +46,7 @@ test("the controlled public build opens only approved Google tester access and n
 
   admitted = false;
   await page.reload();
-  await expect(page.getByText("Test access is closed for this account.")).toBeVisible();
+  await expect(page.getByText("Sign-up is not open for this account yet.")).toBeVisible();
   await expect(page.getByRole("heading", { name: /Welcome to your next attempt/ })).toHaveCount(0);
   await page.goto("/plans");
   await expect(page.getByText("Checkout is closed during controlled testing.")).toBeVisible();
@@ -60,7 +60,7 @@ test("a copied controlled public build is inert on another host", async ({ page 
   await expect(page.getByRole("button", { name: "Continue with Google" })).toBeDisabled();
   await seedPortalSession(page, tester, project.project_ref);
   await page.goto("https://www.dmocks.com/dashboard");
-  await expect(page.getByRole("heading", { name: "Test workspace." })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Your workspace." })).toHaveCount(0);
   expect(calls).toEqual([]);
 });
 
