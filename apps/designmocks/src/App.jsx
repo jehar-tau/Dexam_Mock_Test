@@ -25,6 +25,7 @@ import {
 } from "./sample.mjs";
 import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
 import { Theme } from "./ThemeToggle.jsx";
+import { HomeFreePapers } from "./HomeFreePapers.jsx";
 import {Purchase} from "./Purchase.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
 import {postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
@@ -386,7 +387,7 @@ function ExamCard({ exam, index = 0 }) {
           <span>{exam.level}</span>
         </div>
         <p>{exam.description}</p>
-        <span className="eyebrow">{exam.id === "uceed" ? "First planned paid paper" : "Outside the initial pass"}</span>
+        <span className="eyebrow">Free past-year papers</span>
         <Link className="text-link" to={"/tests/" + exam.id}>
           Explore {exam.name} <Arrow />
         </Link>
@@ -762,24 +763,27 @@ function Home() {
             <br /> <em>count.</em>
           </h1>
           <p>
-            Practise for design entrance exams with five free visual questions. Take the six-minute sample, then review each answer.
+            Take complete UCEED, CEED, NID and NIFT past papers for free, timed like the real exam, with a worked solution for every question.
           </p>
           <div className="hero-actions">
-            {portalReady && <JoinLink />}
-            <Link to="/sample" className={portalReady ? "sample-link" : "button join-button"}>
+            <Link to="/papers" className="button join-button">
+              Browse free papers <Arrow size={17} />
+            </Link>
+            <Link to="/sample" className="sample-link">
               Try 5 sample questions <Arrow size={17} />
             </Link>
           </div>
           <div className="hero-proof">
             <span>
               <i />
-              Free sample. No sign-in.
+              Free papers with full solutions
             </span>
-            <span>Made for design aspirants</span>
+            <span>Sample needs no sign-in</span>
           </div>
         </div>
         <HeroQuestion />
       </section>
+      <HomeFreePapers />
       {portalReady || postLaunchPreview ? <PortalHomeSections /> : <PublicHomeSections />}
       <section className="wrap final-cta">
         <Spark size={44} />

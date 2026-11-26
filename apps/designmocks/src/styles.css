@@ -4440,3 +4440,27 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .overview-path-later { justify-self:start; padding:.15rem .5rem; border-radius:99px; background:var(--soft); color:var(--muted); font-size:.72rem; font-style:normal; font-weight:700; letter-spacing:.04em; }
 @media(max-width:900px){ .overview-paper-columns { grid-template-columns:1fr; } }
 @media(max-width:560px){ .overview-paper-meter { flex-direction:column; align-items:stretch; gap:.45rem; } .overview-paper-meter div { flex:none; width:100%; } .overview-paper-card .button { align-self:stretch; justify-content:center; } }
+
+/* Home: free past-year papers band (27 Nov launch). */
+.home-papers { background: #1f3d30; color: #f4f3e8; padding: clamp(2.5rem, 6vw, 4.5rem) 0; }
+:root[data-theme="dark"] .home-papers { background: #0d1d18; border-block: 1px solid var(--line); }
+.home-papers-inner { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+.home-papers .eyebrow { color: #dceba1; }
+.home-papers h2 { margin: .6rem 0 1rem; font: 600 clamp(2rem, 4.2vw, 3.4rem)/1.05 Figtree, sans-serif; letter-spacing: -.045em; color: #fff; }
+.home-papers h2 em { font-style: normal; color: #dceba1; }
+.home-papers-copy > p { max-width: 54ch; color: #d6dfd0; line-height: 1.65; margin: 0 0 1rem; }
+.home-papers-copy ul { margin: 0 0 1.5rem; padding: 0; list-style: none; display: grid; gap: .5rem; }
+.home-papers-copy li { display: flex; gap: .6rem; align-items: baseline; color: #eef2e8; }
+.home-papers-copy li::before { content: ""; flex: 0 0 .5rem; height: .5rem; border-radius: 50%; background: #ef633d; transform: translateY(-.1rem); }
+.home-papers .home-papers-cta { background: #dceba1; border-color: #dceba1; color: #162824; }
+.home-papers-exams { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.home-papers-exams a { position: relative; display: grid; gap: .2rem; min-height: 9.5rem; padding: 1.1rem 1.2rem; border-radius: 14px; background: #ffffff10; border: 1px solid #ffffff26; color: inherit; text-decoration: none; transition: background .2s, border-color .2s; }
+.home-papers-exams a:hover { background: #ffffff1c; border-color: #dceba1; }
+.home-papers-exams a:focus-visible { outline: 3px solid #ef633d; outline-offset: 3px; }
+.home-papers-exam { font: 700 1.5rem Figtree, sans-serif; letter-spacing: -.02em; color: #fff; }
+.home-papers-level { color: #c9d4c2; font-size: .85rem; }
+.home-papers-exams strong { margin-top: auto; font-size: 1.05rem; color: #dceba1; }
+.home-papers-exams small { color: #c9d4c2; font-variant-numeric: tabular-nums; }
+.home-papers-exams a > svg { position: absolute; top: 1.1rem; right: 1.1rem; color: #dceba1; }
+@media (max-width: 860px) { .home-papers-inner { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .home-papers-exams a { min-height: 8rem; padding: .9rem; } .home-papers-exam { font-size: 1.25rem; } }
