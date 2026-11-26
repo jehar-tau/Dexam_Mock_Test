@@ -99254,6 +99254,5496 @@
     "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 5 Feb 2024",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q1",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe colour of animals is by no means a matter of chance; it depends on many\nconsiderations, but in the majority of cases the choice tends to protect the animal from\ndanger by rendering it less conspicuous. Perhaps, it may be said that if colouring is mainly\nprotective, there ought to be but few brightly coloured animals. There are, however, not a\nfew cases in which vivid colours are themselves protective. The kingfisher, though so\nbrightly coloured, is by no means easy to spot. The blue harmonizes with the water, and the\nbird looks almost like a flash of sunlight as it darts along the stream.\nDesert animals are generally the colour of the desert. Thus, neither the sparse trees nor\nthe feeble undergrowth such as twigs and small branches provide even the slightest\nprotection from their foes. Hence, a modification, requiring their colour blending with that of\ntheir surroundings, is absolutely necessary. Without exception, the upper plumage of every\nbird and also the skin of all snakes and lizards, is of one uniform sand colour.\nThe next point is the colour of mature caterpillars, some of which are brown. This\nprobably makes the caterpillar even more conspicuous among the green leaves than would\notherwise be the case. Let us see, then, whether the habits of the insect can protect it.\nWhat would you do if you were a big caterpillar? Why, like most other defenceless\ncreatures, you would feed by night, and lie concealed by day. So do these caterpillars. When\nthe morning light comes, they creep down the stem of the food plant, and lie concealed\namong the thick foliag ,dry sticks and leaves, near the ground, and it is obvious that under\nsuch circumstances the brown colour really serves as protection.\n\nChoose the most appropriate meaning of the word 'conspicuous'\n, used twice in the passage.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Immobile",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Sluggish",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Noticeable",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Invisible",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "1",
+    "page": 2,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q2",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe colour of animals is by no means a matter of chance; it depends on many\nconsiderations, but in the majority of cases the choice tends to protect the animal from\ndanger by rendering it less conspicuous. Perhaps, it may be said that if colouring is mainly\nprotective, there ought to be but few brightly coloured animals. There are, however, not a\nfew cases in which vivid colours are themselves protective. The kingfisher, though so\nbrightly coloured, is by no means easy to spot. The blue harmonizes with the water, and the\nbird looks almost like a flash of sunlight as it darts along the stream.\nDesert animals are generally the colour of the desert. Thus, neither the sparse trees nor\nthe feeble undergrowth such as twigs and small branches provide even the slightest\nprotection from their foes. Hence, a modification, requiring their colour blending with that of\ntheir surroundings, is absolutely necessary. Without exception, the upper plumage of every\nbird and also the skin of all snakes and lizards, is of one uniform sand colour.\nThe next point is the colour of mature caterpillars, some of which are brown. This\nprobably makes the caterpillar even more conspicuous among the green leaves than would\notherwise be the case. Let us see, then, whether the habits of the insect can protect it.\nWhat would you do if you were a big caterpillar? Why, like most other defenceless\ncreatures, you would feed by night, and lie concealed by day. So do these caterpillars. When\nthe morning light comes, they creep down the stem of the food plant, and lie concealed\namong the thick foliag ,dry sticks and leaves, near the ground, and it is obvious that under\nsuch circumstances the brown colour really serves as protection.\n\nIdentify the incorrect statement from the passage:",
+   "options": [
+    {
+     "key": "A",
+     "text": "The kingfisher is a brightly coloured bird.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The kingfisher has a green coloured ring around the neck.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "It is by no means easy to see the kingfisher.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The kingfisher looks like a flash of sunlight when it darts along the stream.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "2",
+    "page": 2,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q3",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe colour of animals is by no means a matter of chance; it depends on many\nconsiderations, but in the majority of cases the choice tends to protect the animal from\ndanger by rendering it less conspicuous. Perhaps, it may be said that if colouring is mainly\nprotective, there ought to be but few brightly coloured animals. There are, however, not a\nfew cases in which vivid colours are themselves protective. The kingfisher, though so\nbrightly coloured, is by no means easy to spot. The blue harmonizes with the water, and the\nbird looks almost like a flash of sunlight as it darts along the stream.\nDesert animals are generally the colour of the desert. Thus, neither the sparse trees nor\nthe feeble undergrowth such as twigs and small branches provide even the slightest\nprotection from their foes. Hence, a modification, requiring their colour blending with that of\ntheir surroundings, is absolutely necessary. Without exception, the upper plumage of every\nbird and also the skin of all snakes and lizards, is of one uniform sand colour.\nThe next point is the colour of mature caterpillars, some of which are brown. This\nprobably makes the caterpillar even more conspicuous among the green leaves than would\notherwise be the case. Let us see, then, whether the habits of the insect can protect it.\nWhat would you do if you were a big caterpillar? Why, like most other defenceless\ncreatures, you would feed by night, and lie concealed by day. So do these caterpillars. When\nthe morning light comes, they creep down the stem of the food plant, and lie concealed\namong the thick foliag ,dry sticks and leaves, near the ground, and it is obvious that under\nsuch circumstances the brown colour really serves as protection.\n\nAfter reading the passage carefully, select the correct answer to the following question.\nWhy is' colour blending' important for the desert animals?",
+   "options": [
+    {
+     "key": "A",
+     "text": "As food and water are scarce in the desert.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "As the sparse trees or feeble undergrowth offer little natural protection.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "As the colour of the desert changes during daytime.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "As the kingfishers are quick to dart into bushes.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "3",
+    "page": 3,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q4",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe colour of animals is by no means a matter of chance; it depends on many\nconsiderations, but in the majority of cases the choice tends to protect the animal from\ndanger by rendering it less conspicuous. Perhaps, it may be said that if colouring is mainly\nprotective, there ought to be but few brightly coloured animals. There are, however, not a\nfew cases in which vivid colours are themselves protective. The kingfisher, though so\nbrightly coloured, is by no means easy to spot. The blue harmonizes with the water, and the\nbird looks almost like a flash of sunlight as it darts along the stream.\nDesert animals are generally the colour of the desert. Thus, neither the sparse trees nor\nthe feeble undergrowth such as twigs and small branches provide even the slightest\nprotection from their foes. Hence, a modification, requiring their colour blending with that of\ntheir surroundings, is absolutely necessary. Without exception, the upper plumage of every\nbird and also the skin of all snakes and lizards, is of one uniform sand colour.\nThe next point is the colour of mature caterpillars, some of which are brown. This\nprobably makes the caterpillar even more conspicuous among the green leaves than would\notherwise be the case. Let us see, then, whether the habits of the insect can protect it.\nWhat would you do if you were a big caterpillar? Why, like most other defenceless\ncreatures, you would feed by night, and lie concealed by day. So do these caterpillars. When\nthe morning light comes, they creep down the stem of the food plant, and lie concealed\namong the thick foliag ,dry sticks and leaves, near the ground, and it is obvious that under\nsuch circumstances the brown colour really serves as protection.\n\nAfter reading the passage carefully identify the incorrect statement.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Caterpillars feed by night.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Some of the caterpillars are brown and some are grey.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Caterpillars hide themselves under thick foliage in the daytime.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The colour brown makes the caterpillar stand out in its natural habitat.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "4",
+    "page": 3,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q5",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe colour of animals is by no means a matter of chance; it depends on many\nconsiderations, but in the majority of cases the choice tends to protect the animal from\ndanger by rendering it less conspicuous. Perhaps, it may be said that if colouring is mainly\nprotective, there ought to be but few brightly coloured animals. There are, however, not a\nfew cases in which vivid colours are themselves protective. The kingfisher, though so\nbrightly coloured, is by no means easy to spot. The blue harmonizes with the water, and the\nbird looks almost like a flash of sunlight as it darts along the stream.\nDesert animals are generally the colour of the desert. Thus, neither the sparse trees nor\nthe feeble undergrowth such as twigs and small branches provide even the slightest\nprotection from their foes. Hence, a modification, requiring their colour blending with that of\ntheir surroundings, is absolutely necessary. Without exception, the upper plumage of every\nbird and also the skin of all snakes and lizards, is of one uniform sand colour.\nThe next point is the colour of mature caterpillars, some of which are brown. This\nprobably makes the caterpillar even more conspicuous among the green leaves than would\notherwise be the case. Let us see, then, whether the habits of the insect can protect it.\nWhat would you do if you were a big caterpillar? Why, like most other defenceless\ncreatures, you would feed by night, and lie concealed by day. So do these caterpillars. When\nthe morning light comes, they creep down the stem of the food plant, and lie concealed\namong the thick foliag ,dry sticks and leaves, near the ground, and it is obvious that under\nsuch circumstances the brown colour really serves as protection.\n\nWhat is the primary subject of the passage?",
+   "options": [
+    {
+     "key": "A",
+     "text": "The conservation of wildlife.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The planting of more trees and vegetation.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "That the colouration of a bird or an animal is irrelevant.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "That the colour of birds and animals is mostly adapted to match the background of their environment.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "5",
+    "page": 3,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q6",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe fashion industry has seen a rise in alternative leather options, from fish skin to\npineapple leaves to cork leather. High-end fashion brands like John Galliano, Prada, and\nChristian Dior have dabbled in fish skin options for their products; the practice itself has\nroots dating back centuries to multiple indigenous groups across the globe. Brands like\nNanushka and Hugo Boss, meanwhile, have sought to use leather alternatives that are\ncompletely vegan.\nSustainable fashion aims to reduce pollution and waste in the manufacturing process\nwhile addressing overproduction and cutting down on COz emissions. Sustainability is a\ncomplex concept, and faux leather only plays one part in the machine of sustainable fashion.\nWhile brands like Allbirds and Sojo have been transparent in addressing their environmental\nimpacts, other brands have participated in greenwashing, promoting products as eco-friendly\nto consumers without actually improving their practices.\nVegan leather made from plastic materials like PVC and PU can still be harmful to the\nenvironment. But when made from natural materials, plant-based leathers make for great\neco-friendly options. Additionally, vegan leather's lifespan is much shorter than real leather,\nso consider how often you'll be replacing this product when you do purchase it. Real leather\ndoes lead to high carbon emissions, but there are ways of making this kind of purchase a\nsustainable one. Taking good care of the product over time is essential. You can also aim to\npurchase your next leather good as a meat by-product with vegetable tanning, or from a\nproducer that works with small farms.\nBoth forms of leather have ways to go in terms of sustainability, but by making an\ninformed decision on your next leather purchase, whether it's vegan or not, you can\ncontribute to their environmental impact.\n\nAccording to the passage, which of the following high-end fashion brands have not dabbled\nin using fish skin options as leather alternative?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Nanushka",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "John Galliano",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Prada",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Christian Dior",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "6",
+    "page": 7,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q7",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe fashion industry has seen a rise in alternative leather options, from fish skin to\npineapple leaves to cork leather. High-end fashion brands like John Galliano, Prada, and\nChristian Dior have dabbled in fish skin options for their products; the practice itself has\nroots dating back centuries to multiple indigenous groups across the globe. Brands like\nNanushka and Hugo Boss, meanwhile, have sought to use leather alternatives that are\ncompletely vegan.\nSustainable fashion aims to reduce pollution and waste in the manufacturing process\nwhile addressing overproduction and cutting down on COz emissions. Sustainability is a\ncomplex concept, and faux leather only plays one part in the machine of sustainable fashion.\nWhile brands like Allbirds and Sojo have been transparent in addressing their environmental\nimpacts, other brands have participated in greenwashing, promoting products as eco-friendly\nto consumers without actually improving their practices.\nVegan leather made from plastic materials like PVC and PU can still be harmful to the\nenvironment. But when made from natural materials, plant-based leathers make for great\neco-friendly options. Additionally, vegan leather's lifespan is much shorter than real leather,\nso consider how often you'll be replacing this product when you do purchase it. Real leather\ndoes lead to high carbon emissions, but there are ways of making this kind of purchase a\nsustainable one. Taking good care of the product over time is essential. You can also aim to\npurchase your next leather good as a meat by-product with vegetable tanning, or from a\nproducer that works with small farms.\nBoth forms of leather have ways to go in terms of sustainability, but by making an\ninformed decision on your next leather purchase, whether it's vegan or not, you can\ncontribute to their environmental impact.\n\nWhat is the central argument of the passage?",
+   "options": [
+    {
+     "key": "A",
+     "text": "The passage addresses the complexities of sustainability, and advocates the use of leather alternatives. The passage argues that the use of real leather gives rise to animal cruelty, and calls for a worldwide ban.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The passage provides a nuanced perspective on the role of leather in sustainable fashion. It unpacks the environmental impact of different leather alternatives and argues that one must make an informed decision by considering the stage of production and materials used, while purchasing an item.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The passage advocates the use of vegan leather and leather alternatives as they last for a long time and do not need to be replaced. This affects the profit margins of companies and slows down growth.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The passage focuses on the misleading practices that run rampant, in the sustainable fashion industry and advocates the need for complete transparency in addressing the environment.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "7",
+    "page": 7,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q8",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe fashion industry has seen a rise in alternative leather options, from fish skin to\npineapple leaves to cork leather. High-end fashion brands like John Galliano, Prada, and\nChristian Dior have dabbled in fish skin options for their products; the practice itself has\nroots dating back centuries to multiple indigenous groups across the globe. Brands like\nNanushka and Hugo Boss, meanwhile, have sought to use leather alternatives that are\ncompletely vegan.\nSustainable fashion aims to reduce pollution and waste in the manufacturing process\nwhile addressing overproduction and cutting down on COz emissions. Sustainability is a\ncomplex concept, and faux leather only plays one part in the machine of sustainable fashion.\nWhile brands like Allbirds and Sojo have been transparent in addressing their environmental\nimpacts, other brands have participated in greenwashing, promoting products as eco-friendly\nto consumers without actually improving their practices.\nVegan leather made from plastic materials like PVC and PU can still be harmful to the\nenvironment. But when made from natural materials, plant-based leathers make for great\neco-friendly options. Additionally, vegan leather's lifespan is much shorter than real leather,\nso consider how often you'll be replacing this product when you do purchase it. Real leather\ndoes lead to high carbon emissions, but there are ways of making this kind of purchase a\nsustainable one. Taking good care of the product over time is essential. You can also aim to\npurchase your next leather good as a meat by-product with vegetable tanning, or from a\nproducer that works with small farms.\nBoth forms of leather have ways to go in terms of sustainability, but by making an\ninformed decision on your next leather purchase, whether it's vegan or not, you can\ncontribute to their environmental impact.\n\nIn the context of the passage, choose the option that includes all the statements that\nenumerate the ways in which we can make real leather a sustainable choice.\nA. Purchase real leather which has a longer life span when compared to farm leather.\nB. Purchase leather goods as a meat by-product with vegetable tanning.\nC. Purchase leather goods from producers who work with large farms.\nD. Mix real leather with plant based leathers.\nE. Taking good care of leather products over time is essential to prolong their lives.\nChoose the correct answer from the options given below.",
+   "options": [
+    {
+     "key": "A",
+     "text": "A, C and D only",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "B, C and D only",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A, B and E only",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A, B and C only",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "8",
+    "page": 8,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q9",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe fashion industry has seen a rise in alternative leather options, from fish skin to\npineapple leaves to cork leather. High-end fashion brands like John Galliano, Prada, and\nChristian Dior have dabbled in fish skin options for their products; the practice itself has\nroots dating back centuries to multiple indigenous groups across the globe. Brands like\nNanushka and Hugo Boss, meanwhile, have sought to use leather alternatives that are\ncompletely vegan.\nSustainable fashion aims to reduce pollution and waste in the manufacturing process\nwhile addressing overproduction and cutting down on COz emissions. Sustainability is a\ncomplex concept, and faux leather only plays one part in the machine of sustainable fashion.\nWhile brands like Allbirds and Sojo have been transparent in addressing their environmental\nimpacts, other brands have participated in greenwashing, promoting products as eco-friendly\nto consumers without actually improving their practices.\nVegan leather made from plastic materials like PVC and PU can still be harmful to the\nenvironment. But when made from natural materials, plant-based leathers make for great\neco-friendly options. Additionally, vegan leather's lifespan is much shorter than real leather,\nso consider how often you'll be replacing this product when you do purchase it. Real leather\ndoes lead to high carbon emissions, but there are ways of making this kind of purchase a\nsustainable one. Taking good care of the product over time is essential. You can also aim to\npurchase your next leather good as a meat by-product with vegetable tanning, or from a\nproducer that works with small farms.\nBoth forms of leather have ways to go in terms of sustainability, but by making an\ninformed decision on your next leather purchase, whether it's vegan or not, you can\ncontribute to their environmental impact.\n\nChoose the most appropriate term that refers to the practice of advertising products as eco-friendly without actually adopting concrete measures to improve business practices.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Sustainability",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Greenwashing",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Transparency",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Alternatives",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "9",
+    "page": 8,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q10",
+   "type": "MCQ",
+   "prompt": "Read the following passage and answer the questions given below:\nThe fashion industry has seen a rise in alternative leather options, from fish skin to\npineapple leaves to cork leather. High-end fashion brands like John Galliano, Prada, and\nChristian Dior have dabbled in fish skin options for their products; the practice itself has\nroots dating back centuries to multiple indigenous groups across the globe. Brands like\nNanushka and Hugo Boss, meanwhile, have sought to use leather alternatives that are\ncompletely vegan.\nSustainable fashion aims to reduce pollution and waste in the manufacturing process\nwhile addressing overproduction and cutting down on COz emissions. Sustainability is a\ncomplex concept, and faux leather only plays one part in the machine of sustainable fashion.\nWhile brands like Allbirds and Sojo have been transparent in addressing their environmental\nimpacts, other brands have participated in greenwashing, promoting products as eco-friendly\nto consumers without actually improving their practices.\nVegan leather made from plastic materials like PVC and PU can still be harmful to the\nenvironment. But when made from natural materials, plant-based leathers make for great\neco-friendly options. Additionally, vegan leather's lifespan is much shorter than real leather,\nso consider how often you'll be replacing this product when you do purchase it. Real leather\ndoes lead to high carbon emissions, but there are ways of making this kind of purchase a\nsustainable one. Taking good care of the product over time is essential. You can also aim to\npurchase your next leather good as a meat by-product with vegetable tanning, or from a\nproducer that works with small farms.\nBoth forms of leather have ways to go in terms of sustainability, but by making an\ninformed decision on your next leather purchase, whether it's vegan or not, you can\ncontribute to their environmental impact.\n\nChoose the most appropriate title for the given passage.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Indigenous Practices and Techniques: The Path to Sustainability",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The Pitfalls of the Sustainable Fashion Industry",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Real Leather: The Future of the Fashion Industry",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Making a Sustainable Choice: The Case of Leather and its Alternatives",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "10",
+    "page": 9,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q11",
+   "type": "MCQ",
+   "prompt": "From the following sentences, choose the most appropriate option to change the given\nsentence from Active Voice to its Passive Voice form. If none of the provided options is\ncorrect, choose option no. 4.\nIt is time to write the D.O. letter.",
+   "options": [
+    {
+     "key": "A",
+     "text": "The D.O. letter is to be written on time.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "It is time for the D.O. letter to be written.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Tell him that it is the time for the D.O. letter to be written",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of the above",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "11",
+    "page": 12,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q12",
+   "type": "MCQ",
+   "prompt": "Choose the appropriate Passive Voice form of the given sentence from the options given\nbelow.\nWhat are you reading these days?",
+   "options": [
+    {
+     "key": "A",
+     "text": "What do you read these days?",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "What is being read by you these days?",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "These days what will you read?",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "What had you read those days?",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "12",
+    "page": 13,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q13",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to change the given sentence from Passive Voice to\nActive Voice:\nMilk has been ordered by me fifty-seven times from Quick Mart this year.",
+   "options": [
+    {
+     "key": "A",
+     "text": "I ordered fifty-seven packets of milk from Quick Mart this year.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "I had ordered milk fifty-seven times this year from Quick Mart.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "I ordered milk over fifty-seven times throughout the year from Quick Mart.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "I have ordered milk fifty-seven times from Quick Mart this year.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "13",
+    "page": 14,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q14",
+   "type": "MCQ",
+   "prompt": "Convert the following sentence from Direct Speech to Indirect Speech by choosing the\ncorrect option.\nZuigi said, \"May I have some fries?\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "Zuigi wanted to have some fries.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Zuigi asked if he might have some fries.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Zuigi asked to be given some fries.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Zuigi asked if he may have some fries.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "14",
+    "page": 15,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q15",
+   "type": "MCQ",
+   "prompt": "Convert the following sentence from Indirect Speech to Direct Speech by choosing the\ncorrect option.\nThe girl exclaimed that it was a lovely house.",
+   "options": [
+    {
+     "key": "A",
+     "text": "\"What a lovely house!\" he exclaimed.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The girl said, \"What a lovely house it is!\"",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The girl said, \"What a lovely house!\"",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "\"Isn't it a lovely house?\" the girl said.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "15",
+    "page": 15,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q16",
+   "type": "MCQ",
+   "prompt": "Convert the following sentence from Indirect Speech to Direct Speech by choosing the\ncorrect option.\nShe ordered me to go and shut the door.",
+   "options": [
+    {
+     "key": "A",
+     "text": "\"Go and shut the door,\" she said.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "\"Let the door be shut\" *, she ordered.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "She shouted, \"Go shut the door\".",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "She said, \"Please go shut the door\".",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "16",
+    "page": 16,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q17",
+   "type": "MCQ",
+   "prompt": "Fill in the blanks with suitable articles.\n___ Ganga is considered holy by ___ Hindus.",
+   "options": [
+    {
+     "key": "A",
+     "text": "The, the",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A, a",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The, a",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A, the",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "17",
+    "page": 17,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q18",
+   "type": "MCQ",
+   "prompt": "From the given options, choose the most appropriate pair of prepositions for the following sentence:\nHe pined ______ in the memory ______ his departed daughter.",
+   "options": [
+    {
+     "key": "A",
+     "text": "from, in",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "on, from",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "away, of",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "with, to",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "18",
+    "page": 18,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q19",
+   "type": "MCQ",
+   "prompt": "Fill in the blank in the given sentence using the most appropriate modal from the options given below.\n\"It's going to be grander than the Great Gatsby's Party. Oh, I insist, you ______ come.\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "Would",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "must",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "might",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "need",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "19",
+    "page": 18,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q20",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to rearrange the jumbled parts of the given sentence in\nproper sequence to make a meaningful sentence.\nA. in the number of approved insurance claims\nB. the CEO of a big insurance firm\nC. we witnessed an increase\nD. after an armed vigilante shot",
+   "options": [
+    {
+     "key": "A",
+     "text": "A - C-B - D",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "D - B - C-A",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "D-A- B - C",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "C -D - B - A",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "20",
+    "page": 19,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q21",
+   "type": "MCQ",
+   "prompt": "By choosing the most appropriate option, rearrange the jumbled part of the sentence in\nproper sequence to make a meaningful sentence.\nA. as a magic plant\nB. to keep them healthy\nC. the natives of Masaba regarded the fern\nD. because of its ability\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "C-D - B- A",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A - C-D - B",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "B - D - C- A",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "C-A -D - B",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "21",
+    "page": 20,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q22",
+   "type": "MCQ",
+   "prompt": "Rearrange the following phrases to form a grammatically correct and coherent sentence:\nA. remains to be seen\nB. older people inherently face fewer brain challenges in their everyday life\nC. or if it is simply that\nD. whether this is due to brain changes with age",
+   "options": [
+    {
+     "key": "A",
+     "text": "A -B- C- D",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "B-A- C - D",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "D - C - B- A",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "B - C-A- D",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "22",
+    "page": 21,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q23",
+   "type": "MCQ",
+   "prompt": "Choose the option with the correct spelling:",
+   "options": [
+    {
+     "key": "A",
+     "text": "embarras",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "embarrass",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "embarass",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "embrasse",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "23",
+    "page": 22,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q24",
+   "type": "MCQ",
+   "prompt": "Choose the option with the correct spelling:",
+   "options": [
+    {
+     "key": "A",
+     "text": "infilltrate",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "infulltrate",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "infiltrate",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "infiltrat",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "24",
+    "page": 22,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q25",
+   "type": "MCQ",
+   "prompt": "Identify the error in the underlined part of the given sentence and choose the most appropriate answer from the options provided that rectifies the error:\nHardly had they reached the auditorium than the concert started. (underlined: \"than the concert started\")",
+   "options": [
+    {
+     "key": "A",
+     "text": "when the concert started.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "and the concert started.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "therefore the concert started.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "hence the concert started.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "25",
+    "page": 23,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q26",
+   "type": "MCQ",
+   "prompt": "Which of the following options correctly describes the word 'carpool'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "a group of people who arrange to make a journey in a single car.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "vehicular accident leading to the killing of a large number of people.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "an accident in which multiple cars are pooled together in a pile-up .",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the action of stealing a car.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "26",
+    "page": 24,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q27",
+   "type": "MCQ",
+   "prompt": "Choose the appropriate synonym for 'wicked' from the list of words given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Virtuous",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "vicious",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "wilt",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Wither",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "27",
+    "page": 25,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q28",
+   "type": "MCQ",
+   "prompt": "lumber : Yes Is Ouestion Mandatorv : N\nChoose the most appropriate antonym of the word 'exalt' from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "deprecate",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "elevate",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "glorify",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "rusticate",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "28",
+    "page": 25,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q29",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate antonym for'yearn' from the words listed below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "condition",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "be confined",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "connect",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "be content",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "29",
+    "page": 26,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q30",
+   "type": "MCQ",
+   "prompt": "Fill in the blank by choosing the correct idiom from the options given below:\nThere is a kind of ______ in the fact that the country responsible for the worst ecological disaster of this century is the one suffering the most from its effects.",
+   "options": [
+    {
+     "key": "A",
+     "text": "poetic justice",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "poetic license",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Point blank",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "politically correct",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "30",
+    "page": 26,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q31",
+   "type": "MCQ",
+   "prompt": "Choose the correct meaning of the underlined idiom.\nAt Christmas, even the elderly paint the town red.",
+   "options": [
+    {
+     "key": "A",
+     "text": "indulge in rioting",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "paint the house red",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "spill red wine",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "have a lively time",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "31",
+    "page": 27,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q32",
+   "type": "MCQ",
+   "prompt": "Select the correct meaning of the idiom, 'hand to mouth', from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "height of a person",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the action of eating food",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "to live in poverty and have only enough for basic needs",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "measurement of Body Mass Index",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "32",
+    "page": 28,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q33",
+   "type": "MCQ",
+   "prompt": "LIST-I\nA. sui generis\nB. suo moto\nC. lingua franca\nD. ab initio\nLIST-II\nI. from the very beginning\nII. one of a kind\nII. common languag\nspoken by peopl\nIV. on one's own\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "A-III, B-II, C-IV, D-I",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A-IV, B-II, C-III, D-I",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A-II, B-IV, C-III, D-I",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A-IV, B-III, C-II, D-I",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "33",
+    "page": 28,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q34",
+   "type": "MCQ",
+   "prompt": "Match the foreign words in List-I with their meaning in List-II:\nLIST-I\nA. bona fide\nB. faux pas\nC.\naficionado\nD. de facto\nLIST-II\nI. an enthusiastic adherent\nII. in fact\nIII. genuine\nIV. gaffe\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "A-I, B-II, C-III, D-IV",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A-IV, B-III, C-II, D-I",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A-III, B-IV, C-I, D-II",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A-II, B-III, C-IV, D-I",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "34",
+    "page": 30,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q35",
+   "type": "MCQ",
+   "prompt": "The term *\"Vox Populi\" signifies what and from which language has the term been taken into\nEnglish?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Common thought; German",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "a Spanish Brand; Spanish",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Common thought; Greek",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Voice of the people; Latin",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "35",
+    "page": 31,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q36",
+   "type": "MCQ",
+   "prompt": "Arrange the following parts of a formal letter in the correct order:\nA. subscription\nB. subject\nC. salutation\nD. date\nE. address of addressee\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "E -D - B - C- A",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A - C - D - E - B",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "D - E -A-B - C",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "B - A -D -C - E",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "36",
+    "page": 31,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q37",
+   "type": "MCQ",
+   "prompt": "Fill in the blank with the most appropriate answer:\nA letter was sent to the Principal of a school seeking permission for organising a blood donation camp within the school premises. The date and programme schedule, along with the details of the professionals who would assist during the camp, have been mentioned. This type of letter is ______.",
+   "options": [
+    {
+     "key": "A",
+     "text": "an informal letter",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "a social letter",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "a formal letter",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "a commissary letter",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "37",
+    "page": 32,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q38",
+   "type": "MCQ",
+   "prompt": "Which of the following subscriptions is NOT appropriate for an informal letter to a very\nclose friend?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Yours affectionately",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Yours truly",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "With warm wishes",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Your obediently",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "38",
+    "page": 33,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q39",
+   "type": "MCQ",
+   "prompt": "Choose the option which correctly translates the given sentence from Hindi to English (the Hindi sentence is shown in the figure).",
+   "options": [
+    {
+     "key": "A",
+     "text": "The siblings equally divided their father's property.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Brother and sister got equal rights to the father's property.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The father's property was divided equally among his children before his death.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The father's property is yet to be divided awaiting his death.",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q39.png",
+     "sha256": "1fc9e25e0fd421c1346753e78966a5b4e754904d19229193417074ad85f370b5",
+     "width": 734,
+     "height": 53,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "39",
+    "page": 34,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q40",
+   "type": "MCQ",
+   "prompt": "Choose the option which correctly translates the given sentence from Hindi to English (the Hindi sentence is shown in the figure).",
+   "options": [
+    {
+     "key": "A",
+     "text": "All the furniture has been replaced by the new owner.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "All the furniture will be replaced by the new owner.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The new owner is bent on replacing all the furniture.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The furniture has been replaced by the previous owner.",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q40.png",
+     "sha256": "4fa693000e9bb04167b19ce92bd120422099ca3e7408164e37079a77aca3a4d1",
+     "width": 734,
+     "height": 51,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "40",
+    "page": 35,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q41",
+   "type": "MCQ",
+   "prompt": "Preeti invested in a startup of kids ethnic-wear. The cost of making an ethnic-wear depends on three items - fabric, tailoring and designing. The cost of these items are in the ratio 5:3:1 respectively. If the cost of tailoring for each piece is ₹150, find the cost of a single piece of ethnic-wear.",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹750",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹900",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹450",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹600",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "41",
+    "page": 36,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q42",
+   "type": "MCQ",
+   "prompt": "A dishonest milk-vendor has a vessel filled with 50 L of milk. From it he takes out 5 L of milk and replaces it with the same quantity of water. This process is repeated 2 more times. How much pure milk is now contained in the vessel?",
+   "options": [
+    {
+     "key": "A",
+     "text": "35 L",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "36.45 L",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "40 L",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "41.35 L",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "42",
+    "page": 36,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q43",
+   "type": "MCQ",
+   "prompt": "Geeta and Rahul are working in a boutique. Their combined monthly salary amounts to ₹30,000. Geeta spends 80% of her salary and Rahul spends 70% of his salary. If their savings are equal in amount, what is the salary of Geeta?",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹18,000",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹12,000",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹15,000",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹24,000",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "43",
+    "page": 37,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q44",
+   "type": "MCQ",
+   "prompt": "A fashion house is having a clearance sale on trousers. During the first week 40% discount is offered; a subsequent discount of 20% is offered in the second week; and finally in the third week, another 10% discount is offered on the original price in order to clear the stock. Amit bought a trouser on the last day of the sale for ₹342. How much would it have cost before the sale?",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹1140",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹900",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹1200",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹850",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "44",
+    "page": 38,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q45",
+   "type": "MCQ",
+   "prompt": "The compound interest on ₹5,000 at 10% per annum for how many years is ₹1655?",
+   "options": [
+    {
+     "key": "A",
+     "text": "2.5",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "3.5",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "45",
+    "page": 39,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q46",
+   "type": "MCQ",
+   "prompt": "At what rate of simple (annual) interest does a sum of money double itself in 12 years ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "8.8%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7.5%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "8.3%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "7.9%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "46",
+    "page": 39,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q47",
+   "type": "MCQ",
+   "prompt": "Monika, a fashion designer, buys 5 scarfs and 2 bags for ₹3700. Her friend Asha buys 3 scarfs and one bag of the same kind for ₹2000. What is the total cost of 3 bags?",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹3300",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹1850",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹2550",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹1100",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "47",
+    "page": 40,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q48",
+   "type": "MCQ",
+   "prompt": "In an x-y axis graph, which linear equation would plot as shown in the figure?",
+   "options": [
+    {
+     "key": "A",
+     "text": "y = x + 3",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "x + y = 6",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "x = y + 12",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "x + 3y = 9",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q48.png",
+     "sha256": "c8bc3bad9356a8c97384083a893f0959377225f0e349160641179c7d6c981f3e",
+     "width": 442,
+     "height": 175,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "48",
+    "page": 41,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q49",
+   "type": "MCQ",
+   "prompt": "The intersection point on the y-axis of the line 5x + 8y = 3 is",
+   "options": [
+    {
+     "key": "A",
+     "text": "(0, 3/8)",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "(0, 8/3)",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(3/8, 0)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "(8/3, 0)",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "49",
+    "page": 41,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q50",
+   "type": "MCQ",
+   "prompt": "Two vertices of a triangle are (5, -3) and (0, 4). If the centroid of the triangle is (2, 3) then\nthe third vertex is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "(3, 2)",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "(2.5, 1.5)",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(3.5, 2)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "(1, 8)",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "50",
+    "page": 42,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q51",
+   "type": "MCQ",
+   "prompt": "A circular design of radius 14 cm has 12 equal sectors as shown in figure (X). The area of the shaded region is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "924 cm²",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "462 cm²",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "308 cm²",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "231 cm²",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q51.png",
+     "sha256": "c876939bcf4d5e8c49e0bafda9f3c998b4f5103d55ca3acf7f0b1b24c09b8071",
+     "width": 760,
+     "height": 219,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "51",
+    "page": 43,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q52",
+   "type": "MCQ",
+   "prompt": "27 cubes having side 2 cm are joined together to form a bigger cube. The surface area of the\nresulting cube is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "216 cm²",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "108 cm²",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "64 cm²",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "512 cm²",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "52",
+    "page": 44,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q53",
+   "type": "MCQ",
+   "prompt": "Find the median class of the following data:\nMarks obtained (C.I): 0-10, 10-20, 20-30, 30-40, 40-50, 50-60\nFrequency: 8, 10, 12, 22, 30, 18",
+   "options": [
+    {
+     "key": "A",
+     "text": "20-30",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "30-40",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "40-50",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "50-60",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "53",
+    "page": 45,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q54",
+   "type": "MCQ",
+   "prompt": "A card is drawn from a well-shuffled pack of cards. The probability of getting a black card or a queen is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "15/26",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4/13",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "7/13",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1/26",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "54",
+    "page": 46,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q55",
+   "type": "MCQ",
+   "prompt": "From among 150 members in a club, one President and one Vice-president are to be appointed. In how many ways can this be done?",
+   "options": [
+    {
+     "key": "A",
+     "text": "11250",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "11175",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "22350",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "22500",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "55",
+    "page": 47,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q56",
+   "type": "MCQ",
+   "prompt": "In how many different ways can the letters of the word DESIGNING be arranged?",
+   "options": [
+    {
+     "key": "A",
+     "text": "45360",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "90720",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "15120",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "22680",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "56",
+    "page": 47,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q57",
+   "type": "MCQ",
+   "prompt": "An employee wishes to reach his office, which is 27 km away, in 48 min. He covers one-third of the distance in 12 min. What must his speed be so that he is able to cover the remaining distance in time?",
+   "options": [
+    {
+     "key": "A",
+     "text": "10 km/h",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "15 km/h",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "30 km/h",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "20 km/h",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "57",
+    "page": 48,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q58",
+   "type": "MCQ",
+   "prompt": "A person travelled a distance of 60 km in 8 hours. He travelled partly on foot at 4 km/h and partly on bicycle at 12 km/h. The distance travelled on foot is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "18 km",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "20 km",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "22 km",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "25 km",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "58",
+    "page": 49,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q59",
+   "type": "MCQ",
+   "prompt": "If in one day, 4 women and 7 boys working together can do five times as much work as a\nwoman and a boy can do in a day. Then, the ratio of working capacity of a woman to a boy\nis:",
+   "options": [
+    {
+     "key": "A",
+     "text": "1:2",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3:1",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1:3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2:1",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "59",
+    "page": 49,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q60",
+   "type": "MCQ",
+   "prompt": "A and B together can knit a sweater in 10 days and A alone can knit it in 15 days. In how\nmany days can B alone knit a sweater?",
+   "options": [
+    {
+     "key": "A",
+     "text": "25 days",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "30 days",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "20 days",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "27.5 days",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "60",
+    "page": 50,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q61",
+   "type": "MCQ",
+   "prompt": "Choose one of the alternatives in which the given figure can be embedded.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q61.png",
+     "sha256": "18b09eb5523d90c2921c85f7be239df46dfcafa14a04309ed7cf786e0830b54c",
+     "width": 649,
+     "height": 604,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "61",
+    "page": 51,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q62",
+   "type": "MCQ",
+   "prompt": "Choose the figure from the options which is embedded in the pattern given.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q62.png",
+     "sha256": "dd50569f8dddaaef0a5abf990d91c0f6f71ed49ecb626769cac20567a4146b5a",
+     "width": 713,
+     "height": 596,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "62",
+    "page": 52,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q63",
+   "type": "MCQ",
+   "prompt": "An accomplished fashion designer, Shreya, specializes in magnificent wedding outfits and\naccessories. She started a design outlet 3 years ago but her business is unexpectedly moving\nslow. Through a business consultant, she came to know that people generally consider her\nstore for visiting on special occasions rather than on regular basis. What measures should\nshe incorporate to scale up her business?\nA. Display her latest designs at upcoming bridal exhibition.\nB. Shifting the store to some other place.\nC. Increase online availability of the in-store collection.\nD. Make special discount coupons available on her wedding collections.\nE. Advertise her wide range of collection in the local newspapers.\nChoose the most appropriate answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "D and E only",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A and C only",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "C and E only",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "B only",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "63",
+    "page": 54,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q64",
+   "type": "MCQ",
+   "prompt": "Identify the pattern in the sequence and choose the figure from the options which follows the given sequence.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q64.png",
+     "sha256": "3d9428d6c6b62f1679aa97c3a26e746e4941a10ee56c7a7bdbabbd4e2266cda8",
+     "width": 800,
+     "height": 577,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "64",
+    "page": 55,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q65",
+   "type": "MCQ",
+   "prompt": "Identify the next figure in the series out of the given alternatives, which will continue the figure series.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q65.png",
+     "sha256": "c6d9607f6b317f9a4914775c4a8fe9d53900f6a32795473927ae0557ccc076b9",
+     "width": 750,
+     "height": 691,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "65",
+    "page": 57,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q66",
+   "type": "MCQ",
+   "prompt": "Five shows P, Q, R, S and T are to be staged in a fashion week from Monday to Friday and\nonly one show will be staged on each day. P or R should not be staged in the beginning or\nend of the week. R should be staged immediately before Q. S should be staged immediately\nafter P. One show is staged between S and T.\nWhich of the following is the correct sequence of staging from Monday to Friday?",
+   "options": [
+    {
+     "key": "A",
+     "text": "TPS RQ",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "S PTR Q",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "SRQPT",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "TRPS Q",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "66",
+    "page": 58,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q67",
+   "type": "MCQ",
+   "prompt": "Five persons - A, B, C, D and E scored different marks in an examination. If B scored more\nmarks than D and E only, while C has not scored the highest marks, then who among the\nfollowing has scored the second highest marks?",
+   "options": [
+    {
+     "key": "A",
+     "text": "C",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "B",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "D",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "67",
+    "page": 59,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q68",
+   "type": "MCQ",
+   "prompt": "Six friends - A, B, C, D, E and F are sitting across the edges of a hexagonal-shaped table\nfacing the centre, such that 'F' is a neighbour of 'B' and 'E', 'C' is not between 'A' and 'D',\n'D' and 'E' are sitting opposite to each other, and 'A' is to the immediate right of 'D'.\nWho would sit to the immediate left of E?",
+   "options": [
+    {
+     "key": "A",
+     "text": "D",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "C",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "F",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "68",
+    "page": 60,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q69",
+   "type": "MCQ",
+   "prompt": "Six children P, Q, R, S, T and Z are sitting in two rows, three in each, such that a child in one row is exactly facing a child in the other row. S is not at the end of any row. T is to the left of S, and S is facing Q. Also, Q is to the right of Z, and Z is facing P.\nWhich of the following are in the same row?",
+   "options": [
+    {
+     "key": "A",
+     "text": "ZQT",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "ZQR and PST",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "QRP and TSZ",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "TSQ",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "69",
+    "page": 60,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q70",
+   "type": "MCQ",
+   "prompt": "Pointing towards a girl in the picture, Rashi (a girl) said, \"She is the only sister of the son of\nmy brother's grandfather\". How is Rashi related to the girl in the picture?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Aunt",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Cousin",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Mother",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Niece",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "70",
+    "page": 61,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q71",
+   "type": "MCQ",
+   "prompt": "C is the daughter of A; A and B are brothers; F is the father of B and D is the daughter of F. Which of the following statements is/are true?\nA. D is the paternal aunt of C.\nB. B and C are cousins.\nC. C and D are sisters.\nD. A and D are brothers.\nE. B is the paternal uncle of C.\nChoose the most appropriate answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "B only",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A and E only",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A and C only",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "D only",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "71",
+    "page": 62,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q72",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate water image of the given object (X) from the alternatives.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q72.png",
+     "sha256": "c18aee6e32ae4d10660267724dc7a217b1a150e210415752c0530614ea10e04d",
+     "width": 730,
+     "height": 559,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "72",
+    "page": 63,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q73",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate mirror image of the given figure (X) from the four alternatives. The mirror is represented by MM'.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2025-bdes-gat/blocks/nift-2025-bdes-gat-q73.png",
+     "sha256": "4189e468672cc96f9d881d4671572687a9e5b89f112e95a8025b28f3744e5a28",
+     "width": 795,
+     "height": 927,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "73",
+    "page": 64,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q74",
+   "type": "MCQ",
+   "prompt": "Choose the missing term in the following alpha-numeric series:\n2U3, 6O9, 10I15, 14E21, ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "15C27",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "18C27",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "15A27",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "18A27",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "74",
+    "page": 66,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q75",
+   "type": "MCQ",
+   "prompt": "Choose the missing term in the alpha-numeric series:\nZ3Y, X5V, T9Q, ?, F23A",
+   "options": [
+    {
+     "key": "A",
+     "text": "N13I",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "N15J",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "O19K",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "O13H",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "75",
+    "page": 67,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q76",
+   "type": "MCQ",
+   "prompt": "Vasco Da Gama's discovery of the sea route via the Cape of Good Hope in the 15th Century\nenhanced India's trade with",
+   "options": [
+    {
+     "key": "A",
+     "text": "America",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "China",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "England",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Russia",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "76",
+    "page": 68,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q77",
+   "type": "MCQ",
+   "prompt": "The' Pochampally Ikat' saree is related to which state of India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Telangana",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Maharashtra",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Tamil Nadu",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Andhra Pradesh",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "77",
+    "page": 69,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q78",
+   "type": "MCQ",
+   "prompt": "Upper Subansiri district, which shares its border with Tibet in the north, is located in",
+   "options": [
+    {
+     "key": "A",
+     "text": "Meghalaya",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Central Arunachal",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Manipur",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Mizoram",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "78",
+    "page": 69,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q79",
+   "type": "MCQ",
+   "prompt": "Malmal is the Indian name for which fabric?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Silk",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Cotton",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Wool",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Nylon",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "79",
+    "page": 70,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q80",
+   "type": "MCQ",
+   "prompt": "A decorative pin or brooch used to hold the ends of a garment at the shoulder by the Greeks and the Romans is called -",
+   "options": [
+    {
+     "key": "A",
+     "text": "Fibula",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Chiton",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Haik",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Mauli",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "80",
+    "page": 71,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q81",
+   "type": "MCQ",
+   "prompt": "In 1733, the 'Flying Shuttle Loom' was invented by:",
+   "options": [
+    {
+     "key": "A",
+     "text": "John Kay",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Elias Howe",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Sir William Perkin",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "John Tobias",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "81",
+    "page": 72,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q82",
+   "type": "MCQ",
+   "prompt": "Which one is a protein fibre among the below-mentioned fibres?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Jute",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Cotton",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rayon",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Silk",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "82",
+    "page": 72,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q83",
+   "type": "MCQ",
+   "prompt": "What type of lines adds softness and roundness to a garment?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Diagonal",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Curved",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Vertical",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Horizontal",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "83",
+    "page": 73,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q84",
+   "type": "MCQ",
+   "prompt": "one of the following is an elastomeric fibre?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Acrylic",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Modacrylic",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nylon",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Spandex",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "84",
+    "page": 73,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q85",
+   "type": "MCQ",
+   "prompt": "Ozone layer protects us from which of the following rays?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Ultraviolet rays",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Infrared rays",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Radio rays",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "X-ray",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "85",
+    "page": 74,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q86",
+   "type": "MCQ",
+   "prompt": "The \"The Hay Wain\", which depicts a rural scenery has been painted by which one of the\nfollowing:",
+   "options": [
+    {
+     "key": "A",
+     "text": "John Constable",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "John Eric",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Denmark",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Leonardo da Vinci",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "86",
+    "page": 75,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q87",
+   "type": "MCQ",
+   "prompt": "Which one among the following is the largest freshwater lake in India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Pichola lake",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Lonar lake",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Chilka lake",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Wullar lake",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "87",
+    "page": 75,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q88",
+   "type": "MCQ",
+   "prompt": "\"Statue of Unity\" is located on the banks of which river?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Tapti river",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Narmada river",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Luni river",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Chenab river",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "88",
+    "page": 76,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q89",
+   "type": "MCQ",
+   "prompt": "Which of the following is a cottage industry?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Handicraft",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Automobile",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Sugar",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Cement",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "89",
+    "page": 77,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q90",
+   "type": "MCQ",
+   "prompt": "Which of the following is NOT a natural fibre?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rayon-Cuprammonium",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bast Fibres",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nut Husk Fibres",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Animal Secretion",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "90",
+    "page": 77,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q91",
+   "type": "MCQ",
+   "prompt": "India's First Fashion Forecasting Initiative is",
+   "options": [
+    {
+     "key": "A",
+     "text": "Visionnext",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "VisioNxt",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Fashionext",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Fashionforcast",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "91",
+    "page": 78,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q92",
+   "type": "MCQ",
+   "prompt": "The 10th National Handloom Day was celebrated on",
+   "options": [
+    {
+     "key": "A",
+     "text": "17th October, 2023",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7th November, 2023",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "7th August, 2024",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "27th August, 2024",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "92",
+    "page": 79,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q93",
+   "type": "MCQ",
+   "prompt": "The term used for silver and gold metal embroidery is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Kashida",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Chikankari",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Phulkari",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Zardozi",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "93",
+    "page": 79,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q94",
+   "type": "MCQ",
+   "prompt": "Which colours are tints and shade of one colour?",
+   "options": [
+    {
+     "key": "A",
+     "text": "dichromatic colours",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "biochromatic colours",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "monochromatic colours",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "monolithic colours",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "94",
+    "page": 80,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q95",
+   "type": "MCQ",
+   "prompt": "Match List I with List II\nLIST-I\nTypes of Indian Embroidery\nA. Kashida\nB. Kantha\nC. Kasuti\nD. Phulkari\nLIST-II\nStates\nI. Punjab\nII. Kashmir\nIII. Karnataka\nIV. Bengal\nChoose the correct answer from the options given below :",
+   "options": [
+    {
+     "key": "A",
+     "text": "A-I, B-III, C-II, D-IV",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A-IV, B-I, C-III, D-II",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A-II, B-IV, C-III, D-I",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A-II, B-III, C-IV, D-I",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "95",
+    "page": 81,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q96",
+   "type": "MCQ",
+   "prompt": "Who is the author of the novel \"The Color Purple\"?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Langston Hughes",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Philip K. Dick",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Alice Walker",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Emily Bronte",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "96",
+    "page": 82,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q97",
+   "type": "MCQ",
+   "prompt": "Who is the author of the novel \"Pride and Prejudice\"?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Jane Austen",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Emily Bronte",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Charles Dicken",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Mary Shelly",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "97",
+    "page": 83,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q98",
+   "type": "MCQ",
+   "prompt": "The Governor of a State is appointed by the",
+   "options": [
+    {
+     "key": "A",
+     "text": "President",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Vice President",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Chief Justice",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Chief Minister",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "98",
+    "page": 83,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q99",
+   "type": "MCQ",
+   "prompt": "How many Rajya Sabha members are nominated by the President of India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "18",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "20",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "15",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "99",
+    "page": 84,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2025-bdes-gat-q100",
+   "type": "MCQ",
+   "prompt": "The 25th Indian State to achieve statehood was",
+   "options": [
+    {
+     "key": "A",
+     "text": "Sikkim",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Arunachal Pradesh",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Mizoram",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Goa",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-bdes-gat",
+    "questionNo": "100",
+    "page": 85,
+    "sourceSha256": "bcfb445135af6fe6d0a19374144f14c970078ca641f118c2afb76780a31d8d87",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NTA B.Des GAT answer key, 9 Feb 2025",
+    "verification": "review"
+   }
   }
  ]
 }
