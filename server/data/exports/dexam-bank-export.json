@@ -163027,6 +163027,4227 @@
     "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q1",
+   "type": "MCQ",
+   "prompt": "Which one of the following associations is incorrect?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Sania Mirza - Table Tennis",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Saina Nehwal - Badminton",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Mary Kom - Boxing",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Sakshi Malik - Wrestling",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q1.png",
+     "sha256": "339934e0f16542a4ea7c570094bc3737ebcc912167a73a3d11f132810741bed3",
+     "width": 1409,
+     "height": 144,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "1",
+    "page": 1,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q2",
+   "type": "MCQ",
+   "prompt": "The following grouping of the English letters: ((A, J, K), (B, C, D, E, G, P, T, V), (F, H, L, M. N, S, X), (I, Y), (O), (Q, U, W), (R), (Z)} has been done on the basis of differences and similarity in:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Frequency of use",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Pronunciation",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Visual similarity",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q2.png",
+     "sha256": "13a8c53dd8eac668851b3713ed23489f378eb895616c45b200d09ecdffd43e16",
+     "width": 1409,
+     "height": 221,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "2",
+    "page": 1,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q3",
+   "type": "MCQ",
+   "prompt": "Perspective drawings are classified according to their number of:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Station points",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Picture planes",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Vanishing points",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Ground lines",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q3.png",
+     "sha256": "1c10688db3f8e6d50e690e90e38f9191ec270bb0ab8df0b35ae74a78321b32a0",
+     "width": 1409,
+     "height": 146,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "3",
+    "page": 1,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q4",
+   "type": "MCQ",
+   "prompt": "The following symbol represents:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Chemical Weapon",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Biological hazard",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Environmental hazard",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Radioactive hazard",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q4.png",
+     "sha256": "71ea71d20b9cd08f0687e913957c39b33e1f18b04429b1eed77529de1e57f44e",
+     "width": 1414,
+     "height": 219,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "4",
+    "page": 1,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q5",
+   "type": "MCQ",
+   "prompt": "Who has not served as both the Vice-President and President of India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Sarvepalli Radhakrishnan",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Shankar Dayal Sharma",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Kocheril Raman Narayanan",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A. P. J. Abdul Kalam",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q5.png",
+     "sha256": "ce141b827aca0a275478764c45b06fef42e584aabf4786f25e968f99a01d8d33",
+     "width": 1409,
+     "height": 143,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "5",
+    "page": 1,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q6",
+   "type": "MCQ",
+   "prompt": "What is the word 'Podiatry' related to?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Study of Insects which are nocturnally active.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Study of Medical and Surgical treatment of foot/ankle/lower extremity.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Study of Medical and Surgical treatment of liver and the spleen.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Study of medical care of infants, children and adolescents.",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q6.png",
+     "sha256": "7233b6a63fecbda4c1507117d3d40c73fa3d87492dee3a114b4dabb8a0d50205",
+     "width": 1409,
+     "height": 236,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "6",
+    "page": 1,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q7",
+   "type": "MCQ",
+   "prompt": "From the given sets of symbols of currencies used in various countries, choose the set with all correct symbols.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q7.png",
+     "sha256": "63b0ba2a33673a1050cd4320e3291545fa2d9150b94f487df0c2d4f65c98f25d",
+     "width": 1409,
+     "height": 490,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "7",
+    "page": 1,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q8",
+   "type": "MCQ",
+   "prompt": "Which shape of mirror is used in the headlight and rear view mirror of cars respectively?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Convex & Concave",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Concave & Convex",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Concave & Plane",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Plane & Convex",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q8.png",
+     "sha256": "509978e04dc95796821543b03bf30d4b3dae8f5a8ff2ec7a0d0b387648ca0c02",
+     "width": 1409,
+     "height": 145,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "8",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q9",
+   "type": "MCQ",
+   "prompt": "Which of the following was the main reason for Mahatma Gandhi to propose Khadi?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Promote Handloom",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Freedom",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Tradition",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Self reliance",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q9.png",
+     "sha256": "cfbe5337d7e918d8f34cdfdd68af7ce11988c3af3fc65102e21c714fdd90ea97",
+     "width": 1409,
+     "height": 151,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "9",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q10",
+   "type": "MCQ",
+   "prompt": "Complete the series: abba, bbaa, baab, ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "abba",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "baab",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "aabb",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "abab",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q10.png",
+     "sha256": "b05178a4fd29f09832dd4ea0699a750d06cb112bf9a527353dc2f1912b101465",
+     "width": 1409,
+     "height": 151,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "10",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q11",
+   "type": "MCQ",
+   "prompt": "Pashtu is the language of:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Algerians",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Persians",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Afghans",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Arabians",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q11.png",
+     "sha256": "2dcf5d8f3a07bbc39d17bcdf551a784617c79cbe72c4565b93948efbde39919f",
+     "width": 1409,
+     "height": 150,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B or C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "11",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q12",
+   "type": "MCQ",
+   "prompt": "Select the odd one out:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Hieroglyph",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Aztec",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Inca",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Maya",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q12.png",
+     "sha256": "57d12d8f987c530285cfb9e66d4d46d801375ce548ca8eed7b5d859b2799cf3f",
+     "width": 1412,
+     "height": 148,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "12",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q13",
+   "type": "MCQ",
+   "prompt": "Which of the following is the correct information about the first planned city of India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Chandigarh - 1950 - Louis Kahn",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Chandigarh - 1930 - Le Corbusier",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Chandigarh - 1950 - Le Corbusier",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Chandigarh - 1947 - Charles Correa",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q13.png",
+     "sha256": "e4dedefe3a112f72d242762e791c93f0964211b8d9f056ea670a2dedc75be994",
+     "width": 1409,
+     "height": 151,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "13",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q14",
+   "type": "MCQ",
+   "prompt": "What is the minimum number of colours required to fill the spaces in the figure below without any two adjacent spaces having the same colour?",
+   "options": [
+    {
+     "key": "A",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "5",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q14.png",
+     "sha256": "6b72756e5052185217e0f3990c76a26f7cd98cc0625d7528bc9aaf8768fa2490",
+     "width": 1414,
+     "height": 429,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "14",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q15",
+   "type": "MCQ",
+   "prompt": "Seismic waves travel fastest in:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Soil",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Molten rock",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Water",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Flexible rock",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q15.png",
+     "sha256": "42babeef2003b890d305c0e3f6fa2df646dfc9b957c57ced4e82857cc528df4a",
+     "width": 1409,
+     "height": 146,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "15",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q16",
+   "type": "MCQ",
+   "prompt": "What is the practice of using a network of remote servers hosted on the internet to store, manage and process data, rather than a local server or a personal computer called?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Personal Computing",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Random Processing",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Cloud Computing",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Hard Disk Access",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q16.png",
+     "sha256": "dd0f825d7cf16e83ec6cb675a34ffc16a2698389adffcc4ab054fcee4aca84cc",
+     "width": 1409,
+     "height": 192,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "16",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q17",
+   "type": "MCQ",
+   "prompt": "How is slow-motion obtained in movies?",
+   "options": [
+    {
+     "key": "A",
+     "text": "By filming at normal speed and projecting at slow speed",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "By filming at slow speed and projecting at normal speed",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "By filming at faster speed and projecting at normal speed",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "By filming at normal speed and projecting at faster speed",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q17.png",
+     "sha256": "87ac32a9b3fcad2310d6f6f5fa2742b3196615cc910ce7ad66e894fc2377671c",
+     "width": 1409,
+     "height": 225,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "17",
+    "page": 2,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q18",
+   "type": "MCQ",
+   "prompt": "Based on the figure, which letter represents teachers who are married and live in a joint family? (Rectangle: married people; circle: people who live in a joint family; triangle: school teachers.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "R",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Q",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "S",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "P",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q18.png",
+     "sha256": "1461aac5828cd5fcebda1d0ea7885c72e8c0dcc51cf0faa09b84f6d5eb725953",
+     "width": 1409,
+     "height": 442,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "18",
+    "page": 3,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q19",
+   "type": "MCQ",
+   "prompt": "Which country is not a member of the SAARC?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Burma",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bhutan",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nepal",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Maldives",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q19.png",
+     "sha256": "51decc0ad6788a9ebcbcd525fcc6f046dbe11b741e79c684125c128089220464",
+     "width": 1409,
+     "height": 124,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "19",
+    "page": 3,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q20",
+   "type": "MCQ",
+   "prompt": "Which of the following conveys the meaning of a metaphor?",
+   "options": [
+    {
+     "key": "A",
+     "text": "A fundamental mode of communicating meaning in which relationship between two things is suggested.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "To communicate the meaning of an unknown by transposing it into the terms of the known.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "My love is like a red, red rose.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All of the above.",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q20.png",
+     "sha256": "60c5a6264d9fed172e5bbda4aa74f5e8255e107bb89a0850eb96ca7da28ae199",
+     "width": 1406,
+     "height": 263,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "20",
+    "page": 3,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q21",
+   "type": "MCQ",
+   "prompt": "Which of the following reaction happens, when glucose is added to water?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Exothermic",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Geothermic",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Endothermic",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Ectothermic",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q21.png",
+     "sha256": "f1e25e143154805ca4929934b6b3849a4a6f6e60ee5c8158dbdf1aaa6521be2e",
+     "width": 1409,
+     "height": 131,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "21",
+    "page": 3,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q22",
+   "type": "MCQ",
+   "prompt": "Select the fifth step to complete the series.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q22.png",
+     "sha256": "8d38df658772512c23feb7813e28f61f8ef85da3992f55ec915a073f378cb6ae",
+     "width": 1414,
+     "height": 628,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "22",
+    "page": 3,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q23",
+   "type": "MCQ",
+   "prompt": "The phrase Gross National Happiness (GNH) is a measurement of the collective happiness of a nation. In which country did this concept originate?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Myanmar",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Cambodia",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Bhutan",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Thailand",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q23.png",
+     "sha256": "bde7fa38713f8683308a061b0cba71b46d78161ebc2f109ec20876d059979ba0",
+     "width": 1409,
+     "height": 156,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "23",
+    "page": 3,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q24",
+   "type": "MCQ",
+   "prompt": "Megabyte is smaller than Gigabyte. What is larger than Terabyte (TB)?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Yottabyte (YB)",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Zettabyte (ZB)",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Petabyte (PB)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Exabyte (EB)",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q24.png",
+     "sha256": "2005514eee653d9aab94ad08dc0b9f983cbb323892ea78f3c8c60d1f0e92494a",
+     "width": 1409,
+     "height": 134,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "24",
+    "page": 3,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q25",
+   "type": "MCQ",
+   "prompt": "Match the images of leaves with names of the plants that have closest resemblance to the images given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "(1) = Tamarind (2) = Neem (3) = Coriander (4) = Mint",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "(1) = Coriander (2) = Tamarind (3) = Neem (4) = Mint",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(1) = Mint (2) = Neem (3) = Coriander (4) = Tamarind",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "(1) = Coriander (2) = Mint (3) = Neem (4) = Tamarind",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q25.png",
+     "sha256": "c725b2a181927db551b41c6efeb4cf5c7b808078931a3d453e254c751cf25921",
+     "width": 1409,
+     "height": 684,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "25",
+    "page": 4,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q26",
+   "type": "MCQ",
+   "prompt": "Select the letter after the letter in the word SELDOM which is in the same position in the word as it is in the alphabet.",
+   "options": [
+    {
+     "key": "A",
+     "text": "D",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "E",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "P",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "O",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q26.png",
+     "sha256": "aa988e295bcca87f98d8adba4ce641a8b365668f65fc8ce86d7663407cfdd946",
+     "width": 1414,
+     "height": 237,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "26",
+    "page": 4,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q27",
+   "type": "MCQ",
+   "prompt": "Mr Ravi enters a square office building through the east facing entry door located in the middle of the building and takes the staircase in the central lobby to reach the top floor. He walks south for 15 meters to reach his office. The office complex has one staircase in the central lobby and four lifts (on four corners) connecting all floors. An outer corridor connects all lifts and connects with the entry on ground floor. If Mr. Ravi wants to use the lift instead of staircase, to come out through the entry door, what is the approximate walking distance he has to traverse if the floor space of office building is 900 square meters (30 m x 30 m) ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "30 meters",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "45 meters",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "60 meters",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q27.png",
+     "sha256": "516375aa43680193ffc31b7ec698227ed1d1a99883bb5b72cf99fa0ffcfad985",
+     "width": 1409,
+     "height": 422,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "27",
+    "page": 4,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q28",
+   "type": "MCQ",
+   "prompt": "Which one of the four responses is close to the meaning of the following quote by Tao Te Ching: \"Thirty spokes share the wheel's hub; It is the center hole that makes it useful. Shape clay into a vessel; It is the space within that makes it useful. Cut doors and windows for a room; It is the holes which make it useful. Therefore benefit comes from what is there; Usefulness from what is not there.\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "Usefulness is nothing",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Nothingness has uses",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "All wheels have 30 spokes",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Objects without emptiness are useless",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q28.png",
+     "sha256": "96c23cdf4368c19e543c3ab27e314cffe8c53c8232544dde3d2449cdc7d61f70",
+     "width": 1409,
+     "height": 417,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "28",
+    "page": 4,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q29",
+   "type": "MCQ",
+   "prompt": "Read the passage in the image. Which of the following does not fit with the rest?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q29.png",
+     "sha256": "64d86480079cdc1d15504a9dee034137fe2e9d260ddbe2a97ed26f59bd75c415",
+     "width": 1414,
+     "height": 1297,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "29",
+    "page": 5,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q30",
+   "type": "MCQ",
+   "prompt": "How many surfaces are there in the given three dimensional figure? The surface that is not visible in the figure is flat.",
+   "options": [
+    {
+     "key": "A",
+     "text": "10",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "14",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "16",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q30.png",
+     "sha256": "b7678419c2e1e1042f84def8a8a98d6c42fb55e126f093e7fa7a26172106a258",
+     "width": 1409,
+     "height": 310,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "30",
+    "page": 5,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q31",
+   "type": "MCQ",
+   "prompt": "Which sentence best describes the image below? FUNNY FUNNY WORDS WORDS",
+   "options": [
+    {
+     "key": "A",
+     "text": "Two funny four words",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Two funny forwards",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Funny two words four",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Funny words WORDS WORDS",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q31.png",
+     "sha256": "48d68c97965a826e196b2deae101602b60b6455537dd3a8f46c26e378850db34",
+     "width": 1409,
+     "height": 255,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "31",
+    "page": 5,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q32",
+   "type": "MCQ",
+   "prompt": "When a square piece of paper is folded twice and cut as shown below, which one of the given options indicates the correct figure when it is unfolded (opened)? R",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q32.png",
+     "sha256": "8216a185bc70f70080e4bce04276c2e7daa521fca0cb0094d16853a9c7caa824",
+     "width": 1414,
+     "height": 993,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "32",
+    "page": 6,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q33",
+   "type": "MCQ",
+   "prompt": "What phenomena of physics does this limerick refer to?: \"There was a young lady named Bright, Whose speed was far faster than light; She started one day in a relative way, And returned on the previous night.\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "Brownian Motion",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Theory of Relativity",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Doppler Effect",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Tyndall Effect",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q33.png",
+     "sha256": "6c04e3a87bd896ab28b16bd89a16c4eb16ac9a88122f3eb37bd40675c4a29b01",
+     "width": 1409,
+     "height": 237,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "33",
+    "page": 6,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q34",
+   "type": "MCQ",
+   "prompt": "Select the most appropriate sequence of keywords to describe the three frames below.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Void - Tactile - Dense",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Tactile - Dense - Void",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Dense - Void - Tactile",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q34.png",
+     "sha256": "abc9f78ccf6bf64043369517376281f84fcf1fad8d6338172de3d098d5967fc1",
+     "width": 1409,
+     "height": 641,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "34",
+    "page": 6,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q35",
+   "type": "MCQ",
+   "prompt": "Choose the option which represents the mirror image of the alpha-numeric sequence 17U9K8J0T1H.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q35.png",
+     "sha256": "6f5a17532b3785e70cfaadd92e0c54e56b38786247c68c0b20a97a2aaaf087f2",
+     "width": 1409,
+     "height": 348,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "35",
+    "page": 7,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q36",
+   "type": "MCQ",
+   "prompt": "How many surfaces are there in the given three dimensional figure? The surface that is not visible in the figure is flat.",
+   "options": [
+    {
+     "key": "A",
+     "text": "14",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "16",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "18",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "20",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q36.png",
+     "sha256": "c490ec13330286a0224e9b18e1d810599d3f46d924b6223025e2901af4b4f2aa",
+     "width": 1409,
+     "height": 304,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "36",
+    "page": 7,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q37",
+   "type": "MCQ",
+   "prompt": "How many surfaces are there in the given three dimensional figure? The surface that is not visible in the figure is flat.",
+   "options": [
+    {
+     "key": "A",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "14",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "16",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "18",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q37.png",
+     "sha256": "6e30143bb0f8074a74565cc8b0cf343bc81593847479ac93826757947d947c62",
+     "width": 1414,
+     "height": 388,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "37",
+    "page": 7,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q38",
+   "type": "MCQ",
+   "prompt": "Study the images given above to answer the question.\n\nFor the phrase 'Cut to Cut' which of the corresponding images will be appropriate?",
+   "options": [
+    {
+     "key": "A",
+     "text": "P",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Q",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "R",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "S",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q38.png",
+     "sha256": "37946ce469bebd6cdd2c1d51f9eea35d3d5cac2ba465be59c11fdcf4cb29aec7",
+     "width": 1422,
+     "height": 995,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "38",
+    "page": 8,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q39",
+   "type": "MCQ",
+   "prompt": "Study the images given above to answer the question.\n\nFor the phrase 'Cut it Out' which of the corresponding images will be appropriate?",
+   "options": [
+    {
+     "key": "A",
+     "text": "P",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Q",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "R",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "S",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q39.png",
+     "sha256": "ef9832159a8730d90be757a4aa6c9a0a75639104d35a5e14cece6dccd4b03cc1",
+     "width": 1422,
+     "height": 991,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "39",
+    "page": 8,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q40",
+   "type": "MCQ",
+   "prompt": "Study the images given above to answer the question.\n\nFor the phrase 'Cut above the rest' which of the corresponding images will be appropriate?",
+   "options": [
+    {
+     "key": "A",
+     "text": "P",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Q",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "R",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "S",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q40.png",
+     "sha256": "96220e3e49eadb76d717c4c74be2de2f5e0246b09bfcabebae189ed84523ac19",
+     "width": 1422,
+     "height": 992,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "40",
+    "page": 8,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q41",
+   "type": "MCQ",
+   "prompt": "Study the images given above to answer the question.\n\nFor the given phrase 'Cut to the chase', which of the corresponding images will be appropriate?",
+   "options": [
+    {
+     "key": "A",
+     "text": "P",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Q",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "R",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "S",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q41.png",
+     "sha256": "1038a5a7d591e4a941a7a39d6d06adeed798b94f04dd15bd8dc6469120ebb621",
+     "width": 1422,
+     "height": 1075,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "41",
+    "page": 8,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q42",
+   "type": "MCQ",
+   "prompt": "Study the images given above to answer the question.\n\nWhich image can be associated with the word 'Emotive'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q42.png",
+     "sha256": "bf4bf69e896c545be7be8361607ea545a1aa13bcc0da35b5ac7cdb9f6a62a3ca",
+     "width": 1422,
+     "height": 626,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "42",
+    "page": 8,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q43",
+   "type": "MCQ",
+   "prompt": "Study the images given above to answer the question.\n\nWhich image can be associated with the word 'Comfortable'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q43.png",
+     "sha256": "580a834687b030e4f14adf8d205eb6bd566244f299da98bd843067580c404cd4",
+     "width": 1422,
+     "height": 631,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "43",
+    "page": 8,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q44",
+   "type": "MCQ",
+   "prompt": "Study the images given above to answer the question.\n\nWhich image can be associated with the word 'Useless'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q44.png",
+     "sha256": "140235c6e6c8f599c2a80902127b32977b81906e81ab3039226daa111855ae1f",
+     "width": 1422,
+     "height": 635,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "44",
+    "page": 8,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q45",
+   "type": "MCQ",
+   "prompt": "Study the images given above to answer the question.\n\nWhich image can be associated with the word 'Literal'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q45.png",
+     "sha256": "443fe721553aa141c69bb7e3fa8f9b8177bac400f0ce77fd4e23be5d1b28a8a0",
+     "width": 1422,
+     "height": 945,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "45",
+    "page": 8,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q46",
+   "type": "MCQ",
+   "prompt": "For the given passage, choose the most logical continuation and mark the appropriate choice as the correct answer. \"Why have public expenditures in India failed to deliver basic services to the majority of poor citizens. When political representatives taking decisions over public resource allocation depend upon the support of the poor to win office? India is unique in the developing world not only in sustaining democratic elections to multiple tiers of government over an extended period of time, but also in extensive participation in the political process by its poor and disadvantaged citizens, which by several accounts have been increasing over time.\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q46.png",
+     "sha256": "7e491bb3c463aaba030f9ef0536c67141a73a8c6888bb41ab26173e5f5a6e957",
+     "width": 1409,
+     "height": 657,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "46",
+    "page": 9,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q47",
+   "type": "MCQ",
+   "prompt": "Choose the missing shape in the given sequence.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q47.png",
+     "sha256": "de673bc440f39ddd31446540385840657f90cc80383e0a6417de7ce48ef94c9e",
+     "width": 1414,
+     "height": 500,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "47",
+    "page": 9,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q48",
+   "type": "MCQ",
+   "prompt": "\"Mangalgiri has always been a weaving centre and boasts of a community hall with the donations of the master-weavers. The weavers use the hall to discuss their problems and the master-weavers join in to discuss wage parities and increments. Perhaps the only satisfactory aspect of the wage structure is that men and women weavers are paid equally. Processes such as spinning or stretching of the yarn are done by others and paid for separately. However, there are no weekly holidays, no compensation for overtime or accidents, no leave facility or any medical benefits. If a weaver falls sick and needs cash, the master-weaver advances it against the weavers' wages. The master-weaver has often been termed the \"middleman\" \", who supplies the yarn and markets the finished product. Observers have often suggested that the way to improve the standard of life of the craftsperson is to eliminate the middleman in the production process. But for the weaving community, the master-weaver the so called middleman- is part and parcel of the production process.\" Select the phrase that reflect the middleman in favourable light",
+   "options": [
+    {
+     "key": "A",
+     "text": "Supplies the yarn",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Markets the finished product",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Part and parcel of the production process",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Men and women paid equally",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q48.png",
+     "sha256": "a32ffef5a737f8233b58e441c7cebf5cf315155f594ce65721ceda49d961dff5",
+     "width": 1409,
+     "height": 617,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "48",
+    "page": 9,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q49",
+   "type": "MCQ",
+   "prompt": "Study the figure and follow the steps. Step 1: Move it 90 degrees anticlockwise. Step 2: Move it 180 degrees clockwise. Step 3: Flip it about a horizontal axis. The resulting figure will be:",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q49.png",
+     "sha256": "260d02d2c361a28474f1a0cfbb9b4d35cdb17d2e607c15ee74664e1af67f0299",
+     "width": 1409,
+     "height": 899,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "49",
+    "page": 10,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q50",
+   "type": "MCQ",
+   "prompt": "If 30% of X = Y, then Y% of 30 is the same as:",
+   "options": [
+    {
+     "key": "A",
+     "text": "8% of X",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7% of X",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "9% of X",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "10% of X",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q50.png",
+     "sha256": "b17bbbef768dab3b19aa825c13d40039bd8b7aba56ee6c7ee2808b6e29eb9ac2",
+     "width": 1414,
+     "height": 128,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "50",
+    "page": 10,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q51",
+   "type": "MCQ",
+   "prompt": "A heavy smoker for many years decided to stop smoking altogether. \"I will finish the 27 cigarettes I have left,\" he said to himself \"and never smoke another one.\" It was his practice to smoke exactly two-thirds of each cigarette. He soon discovered that with some tape or glue he could stick the remaining one third portion of each cigarette to make a new cigarette. With 27 cigarettes at hand, how many cigarettes can he smoke before he gives up smoking altogether?",
+   "options": [
+    {
+     "key": "A",
+     "text": "40",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "42",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "37",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "52",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q51.png",
+     "sha256": "9c90099e5ca44781150d2aebefb3c8f111b16d7b39576b96907c9b226bd00b2e",
+     "width": 1409,
+     "height": 272,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "51",
+    "page": 10,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q52",
+   "type": "MCQ",
+   "prompt": "Which of the following three figures will form a complete square?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1, 3,4",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3, 4, 5",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "2, 3,4",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1, 3, 5",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q52.png",
+     "sha256": "676f6afa229f18ce79a220e8fdd9b76d9fc7021bb9dc7b0f660b46453b5041d3",
+     "width": 1409,
+     "height": 443,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "52",
+    "page": 10,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q53",
+   "type": "MCQ",
+   "prompt": "Today is 08 January 2017 is a Sunday. The 65th day from today will be:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Monday",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Tuesday",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Sunday",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Wednesday",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q53.png",
+     "sha256": "22c8c09d5d2bb653d6a253b5197cc83c835234c51db2299fe870c68de0babc27",
+     "width": 1409,
+     "height": 134,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "53",
+    "page": 10,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q54",
+   "type": "MCQ",
+   "prompt": "For the given passage, choose the most logical continuation and mark the appropriate choice as the correct answer: \"Poor citizens have little clout with politicians. In some countries the citizenry has only a weak hold on politicians. Even if there is a well-functioning electoral system, poor people may not be able to influence politicians about public services. They may not be well informed about the quality of public services(and politicians know this); they may vote along ethnic or caste lines, placing less weight on public services when evaluating politicians; or they may not believe the candidates who promise better public services - for example, because their term in office is too short to deliver on the promise.\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "And they may not instead for candidates who provide a promise of a government which is free of corruption",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "And they may not vote instead for candidates who provide ready cash, personal favours, and jobs",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "And they may vote instead for candidates who provide ready cash, personal favours, and jobs",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "And therefore they may not participate in the process of voting at all",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q54.png",
+     "sha256": "e7276ec73d1b7d257eec006b1c1fba119ff4cf09b4ec4e12ae1b71d1c7d9bc67",
+     "width": 1409,
+     "height": 613,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "54",
+    "page": 11,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q55",
+   "type": "MCQ",
+   "prompt": "Arvind and Rahul were standing together facing the same direction. Rahul then turned right and walked away 60 meters, and Arvind turned in the opposite direction and walked 60 meters. Both turned right again and walked another 30 meters. If you draw a straight line from Rahul to Arvind what is the distance between the two?",
+   "options": [
+    {
+     "key": "A",
+     "text": "120",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "144",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "134",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "130",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q55.png",
+     "sha256": "77b42cd8deedef7475c789fd5a3d5992d5479c04e683345ac976dcea0c7f7ef4",
+     "width": 1409,
+     "height": 239,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "55",
+    "page": 11,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q56",
+   "type": "MCQ",
+   "prompt": "Replace the '?' in box R of the series M–R with the most suitable symbol from the options given.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q56.png",
+     "sha256": "0956ebcdb95cfb1b61c1f416a3f186de8fe549d69a417b76b40cd422fe2413f5",
+     "width": 1414,
+     "height": 843,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "56",
+    "page": 11,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q57",
+   "type": "MCQ",
+   "prompt": "The average of P, Q and R is 45. P is as much more than the average as Q is less than the average. Find the value of R.",
+   "options": [
+    {
+     "key": "A",
+     "text": "45",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "25",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "30",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "70",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q57.png",
+     "sha256": "5eeb53df4c49ae9d7d1fc19699bcfc8fa850026a374893b8a8aa873119418c86",
+     "width": 1409,
+     "height": 172,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "57",
+    "page": 11,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q58",
+   "type": "MCQ",
+   "prompt": "Read the following passage and choose the correct answer: \"Reading is explained as the primary process of the associative learning by Anderson and Dearborn. A physiological process, primarily involves visual perception, but associative learning must occur if reading is to be more than mere word-calling\" as stated by Barbe(1965). Reading comprehension is a complex intellectual process involving a number of abilities. The two major abilities involve word meaning and verbal reasoning. Without these there would be no reading comprehension; without reading comprehension, there would be no reading as stated by Rubin(1992). There are many different views of reading. According to Herber (1970), reading is defined as a thinking process which includes decoding of symbols, interpreting the meaning of symbols, and applying the ideas derived from the symbols Some restrict reading to only the decoding process. From this point of view, reading is simply a matter of associating symbols with sounds. The second aspect of reading is interpreting the meaning of symbols. The reader should not only associate sound with symbol, but also meaning with the symbol, drawing on ideas he has developed in relationship to the symbol. If the symbol is a word he associates it with an experience that he has already had Many people successfully decode words but fail to find meaning in what they read. People are expected to derive meanings from what they read. Associating meaning with successfully decoded symbols does not complete the total act of reading. There is another factor known as application. This factor helps people to use what they have read. Reading cannot be narrowly defined when associated with instruction in the content areas, as stated by Herber (1970). The definition established earlier includes the need for development of ideas from reading and, the application of those ideas. As a person reads he gathers specific information in which he attempts to organize in some fashion so as to identify relationships among them.\" The total act of reading is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "associating meaning with successfully decoded symbols",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the need for development of ideas and, the application of those ideas",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Response A & Response B both are true.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Response A & Response B both are false",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q58.png",
+     "sha256": "dac39897a4b207356cc17aea73b41f5fb6c4267a4539c034761864d2b11bce82",
+     "width": 1414,
+     "height": 1114,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "58",
+    "page": 12,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q59",
+   "type": "MCQ",
+   "prompt": "Arun creates a growing pattern using matchsticks as shown. If the arrangement continues in the same way, how many matchsticks will Arun need to make Shape 6, Shape 8 and Shape 10?",
+   "options": [
+    {
+     "key": "A",
+     "text": "7, 8, 9",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "13, 17,21",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "15, 19,22",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "12, 14, 16",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q59.png",
+     "sha256": "2bd9ac53686b12a7c6979e41cf039da37a9250f9524a3845f96ac0c7468cb1c7",
+     "width": 1409,
+     "height": 750,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "59",
+    "page": 12,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q60",
+   "type": "MCQ",
+   "prompt": "Study the series of images below and find out how many footballs will balance a teddy bear.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Two",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Three",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Four",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Five",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q60.png",
+     "sha256": "5a879ffc544648b5fbdf1ff0c2602bfc6ed7a01d1cb0a6fabb0adf00ff1dc1f8",
+     "width": 1409,
+     "height": 934,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "60",
+    "page": 13,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q61",
+   "type": "MCQ",
+   "prompt": "\"Some chimpanzees and gorillas have learned tens of nouns, a few adjectives, and a few verbs, expressed as signs or symbols. They have sometimes put these symbols together in new ways, like \"water bird\" to refer to a duck. But they have never been able to say anything as sophisticated as \"please give me the yellow fruit that is in the bag\". That requires syntax. Chimpanzees and gorillas do not have it.\" What does the author imply in the above passage?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Chimpanzees and Gorillas do not know how to communicate",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Chimpanzees and Gorillas do not have the ability to make complex meaningful sentences.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Chimpanzees and Gorillas are not intelligent beings.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Language acquisition is ability that Chimpanzees and Gorillas do not possess.",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q61.png",
+     "sha256": "754a276697d5d7fdfe4f50738c2506f196c7cb93278ec255fb7099abffe4f538",
+     "width": 1414,
+     "height": 927,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B or D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "61",
+    "page": 13,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q62",
+   "type": "MCQ",
+   "prompt": "Which option would result from the folding of figure X into a box?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q62.png",
+     "sha256": "09a294b8a4e2cfd5e49e02d6e9ed4336de9c918f1ac6c933ef29d59fa2cbcf66",
+     "width": 1414,
+     "height": 1120,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "62",
+    "page": 14,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q63",
+   "type": "MCQ",
+   "prompt": "How many squares can you create in this grid by connecting any 4 dots? The corners of a square must lie upon a grid dot.",
+   "options": [
+    {
+     "key": "A",
+     "text": "11",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "15",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "13",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "9",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q63.png",
+     "sha256": "630a883a60bd31c50128691dbf394fd2eff93be4d3f29274a3811422d3197a0a",
+     "width": 1409,
+     "height": 626,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "63",
+    "page": 14,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q64",
+   "type": "MCQ",
+   "prompt": "How many straight lines are needed to separate each star from all the others?",
+   "options": [
+    {
+     "key": "A",
+     "text": "9",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "13",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "11",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "15",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q64.png",
+     "sha256": "e624124b6dda2b135815b7e64b1772027444af643d4e91ea5ca2951daf0c330c",
+     "width": 1409,
+     "height": 651,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "64",
+    "page": 15,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q65",
+   "type": "MCQ",
+   "prompt": "Select the most appropriate match in relation to the sequence of images below (from left to right).",
+   "options": [
+    {
+     "key": "A",
+     "text": "Architecture, Technical, Function, Dematerialization",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Male, Geometry, Female, Dance",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Statue, Toy, Machine, Geometry",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q65.png",
+     "sha256": "92a85ffd28217dd0a2ee8f0b61c874bdb9d45c9357747cec11b99f2c3a012961",
+     "width": 1414,
+     "height": 1210,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "65",
+    "page": 15,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q66",
+   "type": "MCQ",
+   "prompt": "Select the most appropriate match in relation to the images below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "J= Deception, K = Impact, L=Growth, M= Entropy",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "J= Deception, K= Growth, L= Entropy, M= Impact",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "J- Growth, K= Entropy, L= Deception, M= Impact",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "J-Entropy, K = Impact, L= Deception, M = Clarity",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q66.png",
+     "sha256": "5c10a2217836534cacffa1ef03372a9f896ec8675d1869d1ac19c56c2ac24313",
+     "width": 1409,
+     "height": 725,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "66",
+    "page": 16,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2017-q67",
+   "type": "MCQ",
+   "prompt": "There are twelve separate shapes given. Which combinations of shapes will make two identical circles?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Circle 1: d+k+j+m+f+g, Circle 2: b+h+atitetc",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Circle 1: c+a+j+m+f+g, Circle 2: b+k+htite+d",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Circle 1: i+a+j+m+h+b, Circle 2: g+f+k+cte+d",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Circle 1: cth+j+m+fti, Circle 2: b+k+gtate+d",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2017/nid-pdf/nid-mdes-2017-q67.png",
+     "sha256": "bba5dd031f76b4cb2853392d6c2f403511630719f9294b492fbf1d43ef589727",
+     "width": 1414,
+     "height": 995,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "official-key"
+   },
+   "explanation": null,
+   "topic": "general-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionNo": "67",
+    "page": 16,
+    "sourceSha256": "69984b73949ca9a3cbe47200e133f70e16cd1929fab83f4468a55046baa93613",
+    "extraction": "workstation",
+    "answerKeySource": "NID_MDes_2017_answer_key",
+    "verification": "review"
+   }
   }
  ]
 }
