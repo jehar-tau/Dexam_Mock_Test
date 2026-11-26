@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { buildAttemptInsights, outcomeLabels, releasedOutcome, responseSummary } from "./attempt-insights.mjs";
+import { buildAttemptInsights, outcomeLabels, releasedOutcome, responseSummary, reviewMarks } from "./attempt-insights.mjs";
 import { answerAlternativesLabel, releasedKeyLabel } from "./answer-key.js";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 import { WorkedSolution } from "./WorkedSolution.jsx";
@@ -48,6 +48,7 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, ini
   const filtered = objective.filter(({item}) => (!kind || item.kind === kind) && (!outcome || releasedOutcome(item) === outcome));
   const chosen = filtered.find(({item}) => item.id === selectedId) ?? filtered[0];
   const item = chosen?.item;
+  const position = chosen ? filtered.indexOf(chosen) : -1;
   const key = releasedKeyLabel(item?.correctKey);
   const answer = Array.isArray(item?.answer) ? item.answer.join(", ") : item?.answer;
   const chosenOptions = [].concat(item?.answer ?? []);
@@ -68,10 +69,12 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, ini
     {!item && <p role="status">No questions match these filters.</p>}
     {item && <><nav className="analysis-question-map" aria-label="Review questions">{filtered.map(({item: question,index}) =>
       <button type="button" key={question.id} aria-label={"Review question " + (index+1) + ", " + outcomeLabels[releasedOutcome(question)]} aria-current={question.id === item.id ? "step" : undefined} data-outcome={releasedOutcome(question)} onClick={() => { setSelectedId(question.id); setSolutionOpenFor(""); }}>{index+1}</button>)}</nav>
-      <article key={item.id} className="analysis-item">
-        <header><span className="eyebrow">QUESTION {chosen.index+1} · {item.kind.toUpperCase()} · {topicName(item.topic)}</span><b>{outcomeLabels[releasedOutcome(item)]}</b></header>
+      <article key={item.id} className="analysis-item" data-result={releasedOutcome(item)}>
+        <header><span className="eyebrow">QUESTION {chosen.index+1} · {item.kind.toUpperCase()} · {topicName(item.topic)}</span>
+          <b className="analysis-outcome-badge" data-outcome={releasedOutcome(item)}>{outcomeLabels[releasedOutcome(item)]}{reviewMarks(item) && <span>· {reviewMarks(item)} marks</span>}</b></header>
         <h3>{item.prompt}</h3>{figures?.(item)}
-        {item.options?.length > 0 && <ul className="analysis-options">{item.options.map(option => <li key={option.id} data-correct={correctOptions.includes(option.id) || undefined}>
+        {item.options?.length > 0 && <ul className="analysis-options">{item.options.map(option => <li key={option.id} data-correct={correctOptions.includes(option.id) || undefined}
+            data-chosen={chosenOptions.includes(option.id) || undefined}>
             <div><b>{option.id}</b>{option.label}</div>
             {chosenOptions.includes(option.id) && <small>Your choice</small>}
             {correctOptions.includes(option.id) && <small>Correct choice</small>}
@@ -85,6 +88,13 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, ini
             ? <WorkedSolution solution={solution} explanation={explanation} figureUrl={media[item.id]?.[figureIndex]?.url}
               mediaStatus={mediaStatus} onRetry={onRetry}/>
             : <div className="analysis-explanation"><h4>Explanation</h4><p className="worked-solution-text">{explanation}</p></div>)}</div></>}
+        <nav className="analysis-step" aria-label="Step through answers">
+          <button type="button" className="text-button" disabled={position <= 0}
+            onClick={() => { setSelectedId(filtered[position - 1].item.id); setSolutionOpenFor(""); }}>← Previous question</button>
+          <span>{position + 1} of {filtered.length}</span>
+          <button type="button" className="text-button" disabled={position >= filtered.length - 1}
+            onClick={() => { setSelectedId(filtered[position + 1].item.id); setSolutionOpenFor(""); }}>Next question →</button>
+        </nav>
       </article></>}
     </>}
     {drawings.map(item => <article key={item.id}><h3>{item.prompt}</h3>{item.answer && <p>Your notes: {item.answer}</p>}{item.explanation && <p>{item.explanation}</p>}<DrawingReviewStatus review={item.drawingReview}/></article>)}

@@ -21,8 +21,8 @@ Update this file in the same PR as each slice. Status: `[ ]` not started,
 | # | Slice | Owner | Status |
 |---|-------|-------|--------|
 | 1 | Papers catalogue: exam summary, compact year list, saved-progress states, start dialog; `/papers-preview` review route | Claude | `[~]` approved, merging |
-| 2 | Attempt room for year papers: real figure sizing, section tabs by historical part, timer and autosave states, submit confirmation | Claude | `[ ]` |
-| 3 | Answer-by-answer analysis: section and topic breakdown, time per question, worked explanation on every question, attempt history per paper | Claude | `[ ]` |
+| 2 | Focused exam room: no site chrome during an attempt, one sticky bar (paper, question number, timer with under-5-min and last-minute states, theme, Questions jump), pinned phone actions | Claude | `[~]` |
+| 3 | Answer-by-answer review: outcome badge with exact marks, green/red option states, previous/next stepping, prominent Open answer review. Still to do: time per question, marks by section, attempt history per paper | Claude | `[~]` |
 | 4 | Overview: continue-paper card, latest result, next suggested paper or topic, built only from released papers | Claude | `[ ]` |
 | 5 | Topic practice built only from released year-paper questions (10/20/30 questions, 15/30/45 min); check the selector against the curated lifecycle first | Claude UI, Codex server check | `[ ]` |
 | 6 | All India: fixed event per exam from reviewed parallel questions; one attempt, fixed window, reconnect-safe timer, result and rank release | Claude content and UI, Codex event binding | `[ ]` |
@@ -69,6 +69,11 @@ live result to report back.
 - 26 Nov 2026: Owner approved the visible Papers slice 1 (desktop, dark mode,
   phone and start dialog) from the /papers-preview screenshots. Next: PR,
   exact-head CI, merge, merged-main CI, then Codex task 3 publishes it.
+- 26 Nov 2026: Review marks are shown only where the released outcome fixes
+  them (correct, wrong, unanswered, full marks). Partial credit shows no number
+  because historical MSQ partial rules differ by year.
+- 26 Nov 2026: The review and solution panels stay closed until opened, as
+  existing tests require; the Open answer review control is now a button.
 - 26 Nov 2026: Card headings keep the full paper name for screen readers and
   tests ("UCEED 2026 paper"). The visible title is the year, plus a subtitle
   only when it tells papers apart (Paper 1/2, sample, B.Des./M.Des.).

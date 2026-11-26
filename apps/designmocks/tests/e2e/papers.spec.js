@@ -267,3 +267,18 @@ test('sign-in-free Papers preview shows saved progress states and opens the demo
   await expect(page).toHaveURL('/portal-preview/paper');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
+
+test('the exam room hides site chrome and keeps the clock, theme and navigator in reach', async ({ page }) => {
+  await page.goto('/portal-preview/paper');
+  const bar = page.locator('.attempt-bar');
+  await expect(bar.getByRole('heading', { level: 1, name: 'Visual design paper' })).toBeVisible();
+  await expect(bar.getByRole('timer', { name: 'Time remaining' })).toBeVisible();
+  await expect(page.locator('header.header')).toBeHidden();
+  await expect(page.locator('footer')).toBeHidden();
+  await bar.getByRole('switch', { name: 'Dark mode' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  const box = await bar.boundingBox();
+  await page.mouse.wheel(0, 900);
+  await expect.poll(async () => (await bar.boundingBox()).y).toBeLessThanOrEqual(Math.max(0, box.y));
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
