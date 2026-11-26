@@ -77,6 +77,25 @@ live result to report back.
    Do not open the practice module or change the pass rule until the owner
    decides (below).
 
+5. **Release the remaining 12 papers to reach the 29-paper portal.** Source of
+   truth: `~/dmocks-ingestion-work/PORTAL_SOURCE_OF_TRUTH.md` (29 papers, 1,705
+   questions; it lists each plan path and planSha256). Main `4950b88` holds
+   exactly those 1,705 questions. On 26 Nov Claude ran `--digest` on all 29
+   plans against origin/main: every planSha256, question count and duration
+   matched. Already live: 17 (UCEED 2015, 2017–2026; CEED 2021–2026).
+   Remaining: the 9 NID papers, the 2 NIFT B.Des GAT papers (2023, 2024) and
+   UCEED 2016. Steps per paper: media upload (`NID_MEDIA_UPLOAD.tsv`,
+   `NIFT_MEDIA_UPLOAD.tsv`), hash and size check, `papers:prepare-free --plan
+   <file> --expect <planSha256>` dry-run, then apply and release under the
+   runbook. Checks: NID needs migration `202611250177` on the Test backend
+   (runtime #348 is merged); NIFT has no proven year-paper release yet, so
+   stop and report if the dry-run rejects it. UCEED 2016: this morning's
+   handoff held it for source keys Q6/Q36/Q66 and media Q20/Q40; confirm
+   those are resolved before releasing it. Expected live result:
+   dmocks.com/papers shows UCEED 12, CEED 6, NID 9, NIFT 2 (29), each
+   opening as a timed paper with figures, then marks and explanations after
+   submit. Tell the owner each paper's name and link as it goes live.
+
 ## Owner decisions open
 
 - **Topic practice access.** `start_topic_practice` requires an active paid
