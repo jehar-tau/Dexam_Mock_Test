@@ -117,10 +117,12 @@ test("a topic-only link asks for its exam and never substitutes a different topi
   await expect(topicSelect(page)).toHaveValue("observation");
   await expect(startButton(page)).toBeEnabled();
   await page.getByRole("combobox", { name: "Questions", exact: true }).selectOption("30");
-  await expect(topicSelect(page)).toHaveValue("");
+  await expect(topicSelect(page)).toHaveValue("observation");
   await expect(startButton(page)).toBeDisabled();
+  await expect(page.getByRole("status").filter({ hasText: "supports up to 20 questions" })).toBeVisible();
   await page.getByRole("combobox", { name: "Questions", exact: true }).selectOption("10");
-  await expect(topicSelect(page)).toHaveValue("");
+  await expect(topicSelect(page)).toHaveValue("observation");
+  await expect(startButton(page)).toBeEnabled();
   await topicSelect(page).selectOption("visual-hierarchy");
   await expect(startButton(page)).toBeEnabled();
   expect(starts(state)).toEqual([]);
