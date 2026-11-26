@@ -169471,6 +169471,852 @@
     "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q1",
+   "type": "MCQ",
+   "prompt": "Which design principle best describes the image?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Emphasis",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Closure",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Proportion",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Scale",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2024/nid-pdf/nid-mdes-sample-2024-q1.png",
+     "sha256": "6c5cdbf8d297797d6871aff593dc0accf3ecf6d9d8b27bb68213ee19ef1450d0",
+     "width": 996,
+     "height": 738,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "1",
+    "page": 2,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q2",
+   "type": "MCQ",
+   "prompt": "What does UI-UX stand for in design?",
+   "options": [
+    {
+     "key": "A",
+     "text": "User Inside-Under Xebec",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Universal Interest-Uni Xenon",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Facebook-Twitter",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "User Interface-User Experience",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "2",
+    "page": 2,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q3",
+   "type": "MCQ",
+   "prompt": "Which are the key tenets of Universal Design?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Accessibility, Usability, and Inclusivity",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Producibility, Compatibility, and Longevity",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Communication, Aesthetics, and Serviceability",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Affordability, Recyclability, and Transparency",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "3",
+    "page": 2,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q4",
+   "type": "MCQ",
+   "prompt": "What is the significance of the iterative design process?",
+   "options": [
+    {
+     "key": "A",
+     "text": "It allows for ideating and testing design ideas quickly",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "It makes design solutions functionally viable and cost effective",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "It helps enhance the user experience of design",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All of the above",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "4",
+    "page": 2,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q5",
+   "type": "MCQ",
+   "prompt": "The image shows a work by the American sculptor Alexander Calder. Identify a design principle applied in it.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Symmetrical Balance",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Asymmetrical Balance",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Radial Balance",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Crystallographic Balance",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2024/nid-pdf/nid-mdes-sample-2024-q5.png",
+     "sha256": "44efcd7788be906c67499c75fe9bc3ce3492016cd5a735679ba9b980f8483021",
+     "width": 1344,
+     "height": 866,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "5",
+    "page": 3,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q6",
+   "type": "MCQ",
+   "prompt": "The United Nations Development Programme helps countries achieve the Sustainable Development Goals. How many Sustainable Development Goals are there?",
+   "options": [
+    {
+     "key": "A",
+     "text": "15",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "17",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "19",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "22",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "6",
+    "page": 3,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q7",
+   "type": "MCQ",
+   "prompt": "Which country will host the G20 summit in 2024?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Japan",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Indonesia",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Brazil",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "China",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "7",
+    "page": 3,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q8",
+   "type": "MCQ",
+   "prompt": "Identify the brand from the logo provided.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Lamborghini",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "TATA",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Tesla",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Toyota",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2024/nid-pdf/nid-mdes-sample-2024-q8.png",
+     "sha256": "1a584adbd1a81b289ed077b2789c404bdd0ff271cae78fba3107ed45622abe6f",
+     "width": 1083,
+     "height": 340,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "8",
+    "page": 3,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q9",
+   "type": "MCQ",
+   "prompt": "Which of the following is a weaving technique?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Warp and Weft",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Layered Cut",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Flemish Bond",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Inlay Work",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "materials",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "9",
+    "page": 4,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q10",
+   "type": "MCQ",
+   "prompt": "How many layers is a Tetra Pak carton made of?",
+   "options": [
+    {
+     "key": "A",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "8",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "7",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "materials",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "10",
+    "page": 4,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q11",
+   "type": "MCQ",
+   "prompt": "Read the statements:\n(i) Many corporate houses are conducting yoga classes for their employees.\n(ii) There is an increasing awareness about mental and physical health in society, particularly among middle-aged people.\nWhich of the following is the most accurate inference?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Statement II is the effect and statement I is its cause.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Statement I is the effect and statement II is its cause.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Statements I and II are different independent causes.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Statements I and II are effects of independent causes.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "critical-thinking",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "11",
+    "page": 4,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q12",
+   "type": "MCQ",
+   "prompt": "If a kangaroo in its native natural habitat were to look up at the sky on a clear night, which of the following is it likely to see?",
+   "options": [
+    {
+     "key": "A",
+     "text": "The northern pole star",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The southern pole star",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Both (A) and (B)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Neither (A) nor (B)",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "12",
+    "page": 4,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q13",
+   "type": "MCQ",
+   "prompt": "Find the number of distinct trapeziums in the figure (a trapezium is a quadrilateral in which at least one pair of opposite sides is parallel).",
+   "options": [
+    {
+     "key": "A",
+     "text": "11",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "13",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "14",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2024/nid-pdf/nid-mdes-sample-2024-q13.png",
+     "sha256": "bbd89f05aeabe1ec0ed98647c41a07e9dfe798db4aace02c6aeea3f8ab230aef",
+     "width": 1277,
+     "height": 336,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "13",
+    "page": 5,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q14",
+   "type": "MCQ",
+   "prompt": "I am in a room with a mirrored floor, facing a wall that has a poster with some text on it. I look down at the mirrored floor and see the words 'total flop' as the image of the poster. Which of the following must be printed on the poster for its image in the mirrored floor to read 'total flop'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "totgl flod",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "fofal tloq",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "fofgl tlob",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "total floq",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "14",
+    "page": 5,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2024-q15",
+   "type": "MCQ",
+   "prompt": "In a series of numbers, the first term is 5, and each subsequent term is obtained by multiplying the previous term by −2. What is the 10th term in this series?",
+   "options": [
+    {
+     "key": "A",
+     "text": "−1280",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1280",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "−2560",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2560",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2024,
+    "paperId": "nid-mdes-sample-2024",
+    "questionNo": "15",
+    "page": 5,
+    "sourceSha256": "16a655bf9ed6a1bbb5e870b04d1d8a6c267e9fade786b96dd43247c28d3d9824",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
   }
  ]
 }
