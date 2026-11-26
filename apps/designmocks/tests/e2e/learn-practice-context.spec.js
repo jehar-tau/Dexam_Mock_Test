@@ -177,7 +177,14 @@ test("learning remains readable while contextual starts retain pass and verified
   for (const message of ["An active pass is required", "Complete your verified profile first"]) {
     state.error = message;
     await startButton(page).click();
-    await expect(page.getByRole("alert")).toHaveText(message);
+    const alert = page.getByRole("alert");
+    if (message === "Complete your verified profile first") {
+      await expect(alert).toHaveText(message + " Complete your profile →");
+      await expect(alert.getByRole("link", { name: "Complete your profile →" })).toHaveAttribute("href", "/onboarding");
+    } else {
+      await expect(alert).toHaveText(message);
+      await expect(alert.getByRole("link")).toHaveCount(0);
+    }
     await expect(startButton(page)).toBeEnabled();
     await expect(page).toHaveURL(/\/dashboard\/practice\?exam=ceed&topic=observation$/);
   }
