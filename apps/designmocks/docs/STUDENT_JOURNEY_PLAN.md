@@ -24,7 +24,7 @@ Update this file in the same PR as each slice. Status: `[ ]` not started,
 | 2 | Focused exam room: no site chrome during an attempt, one sticky bar (paper, question number, timer with under-5-min and last-minute states, theme, Questions jump), pinned phone actions | Claude | merged #355; awaiting Site publish |
 | 3 | Answer-by-answer review: outcome badge with exact marks, green/red option states, previous/next stepping, prominent Open answer review. Still to do: time per question, marks by section, attempt history per paper | Claude | first part merged #355 |
 | 4 | Overview: "Your past-year papers" (attempted count, in progress, latest results, up next), next-session card points at a real paper, paths and sidebar lead with Papers and mark unreleased modules "Opens later" | Claude | `[~]` |
-| 5 | Topic practice built only from released year-paper questions (10/20/30 questions, 15/30/45 min); check the selector against the curated lifecycle first | Claude UI, Codex server check | `[ ]` |
+| 5 | Topic practice from released year-paper questions: topic cards grouped by exam (selected exam first) with released question counts, sticky session builder with questions/time/pace summary; `/topic-practice-preview/released` shows the real counts. Server already limits the pool to released papers (migration 173). Still closed to students: module flag and pass rule (owner decision) | Claude UI, Codex hosted check | `[~]` |
 | 6 | All India: fixed event per exam from reviewed parallel questions; one attempt, fixed window, reconnect-safe timer, result and rank release | Claude content and UI, Codex event binding | `[ ]` |
 | 7 | Exam-wise mocks from the same parallel questions after each All India event closes | Claude UI, Codex release | `[ ]` |
 | 8 | Learn released free to read; Community kept closed until its journey passes hosted checks | Claude | `[ ]` |
@@ -64,7 +64,37 @@ live result to report back.
    submitting, Open answer review shows marks per question with Previous /
    Next stepping.
 
+4. **Check topic practice on the Test backend (read-only).** As a signed-in
+   tester, call `topic_catalog()`. Expected: only UCEED and CEED rows, with
+   counts matching the curated bank for the 17 released papers. Topics with
+   10+ questions: UCEED spatial-reasoning 224, visual-reasoning 146,
+   analytical-reasoning 96, numerical-reasoning 83, general-aptitude 70,
+   materials 47, pattern-recognition 23, design-awareness 16,
+   general-knowledge 14, indian-culture 14, language 14, observation 13,
+   colour-theory 10; CEED spatial-reasoning 91, visual-reasoning 40,
+   materials 33, general-aptitude 19, numerical-reasoning 18,
+   analytical-reasoning 10. No UCEED 2016 or NID rows. Report any difference.
+   Do not open the practice module or change the pass rule until the owner
+   decides (below).
+
+## Owner decisions open
+
+- **Topic practice access.** `start_topic_practice` requires an active paid
+  pass, and sales are closed, so no student can start practice today even
+  after the module flag opens. Choose: keep practice pass-only (it opens with
+  sales), or make practice from free released papers free like Papers (needs
+  a small Codex migration and a release flag change).
+
 ## Decisions log
+
+- 26 Nov 2026: Owner approved slice 4 (Overview); #356 merged as 735aa7c.
+- 26 Nov 2026: The 17 released papers give 1,013 practice questions: UCEED
+  13 topics with 10+ questions (770), CEED 6 (211). Topics under 10
+  questions are hidden because the smallest session is 10.
+- 26 Nov 2026: `learn-practice-context.spec.js:111` (full browser scope only,
+  not in CI) fails with the same topic-state logic as main; it predates this
+  work. `paper-first-empty-states.spec.js` had a syntax error on main and is
+  fixed here.
 
 - 26 Nov 2026: The Papers catalogue follows Roughworks' interaction pattern
   (exam summary beside a compact year list) using DMocks' own palette and

@@ -1677,6 +1677,7 @@ export default function App() {
           <Route path="/papers-preview" element={<PapersPreview />} />
           <Route path="/profile-preview" element={<CandidateProfilePreview />} />
           <Route path="/topic-practice-preview" element={<TopicPracticePreview />} />
+          <Route path="/topic-practice-preview/released" element={<TopicPracticePreview />} />
           <Route path="/exam-mocks-preview" element={<ExamMocksPreview />} />
           <Route path="/all-india-preview" element={<AllIndiaPreview />} />
           <Route path="/question-report-preview" element={<QuestionReportPreview />} />
