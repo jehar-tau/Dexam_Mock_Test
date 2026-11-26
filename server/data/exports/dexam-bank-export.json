@@ -157645,6 +157645,5388 @@
     "answerKeySource": "Toprankers (Creative Edge) answer key, NIFT 2019",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q1",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate Synonym of the word 'conspicuous' from those given:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Expensive",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Noticeable",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Belittling",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Superficial",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "1",
+    "page": 1,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q2",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate Synonym of the word 'allay' from those given:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Arouse",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Assuage",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Assault",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Agreeable",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "2",
+    "page": 1,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q3",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate antonym of the underlined word:\nThe designer was 'lax' about the training of the team.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Soft",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Lenient",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Casual",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Strict",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "3",
+    "page": 2,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q4",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate Antonym of the word 'vindictive' from those given:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Insane",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Forgiving",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Inflexible",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Agreeable",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "4",
+    "page": 2,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q5",
+   "type": "MCQ",
+   "prompt": "Fill in the blanks with the most appropriate pair of words:\nThere was an ________ between the tailor and the designer on account of the ________ of the costume.",
+   "options": [
+    {
+     "key": "A",
+     "text": "attraction, alteration",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "alteration, altercation",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "alternative, altercation",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "altercation, alteration",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "5",
+    "page": 3,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q6",
+   "type": "MCQ",
+   "prompt": "Which pair contains words that can be classified as homophones? Choose the most appropriate answer from the options given:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Cell - Sell",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Ball - Bell",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Fan - Fun",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Fall - Full",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "6",
+    "page": 3,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q7",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate word for the following from the options given: A pattern of chain-stitch embroidery.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Desi work",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Badla work",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Aar work",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Zari work",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "7",
+    "page": 4,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q8",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate word for the following from the options given: The study of human beings, especially of their origin, development, customs, and beliefs.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Anthropology",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Philately",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Physiology",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Pathology",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "8",
+    "page": 4,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q9",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option which best expresses the meaning of the following idiom/phrase: While Seema hosted the marriage feast, her father chose to foot the bill.",
+   "options": [
+    {
+     "key": "A",
+     "text": "arrange the decoration",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "arrange the guest list",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "arrange to bear the expenses",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "arrange to entertain the guests",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "9",
+    "page": 5,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q10",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate meaning of the underlined idiom:\nWhen the trainee asked a question about the reliability of the data, the trainer 'flew off the handle'.",
+   "options": [
+    {
+     "key": "A",
+     "text": "flew away from there",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "threw away a handle",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "opened the handle and ran away",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "lost his temper",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "10",
+    "page": 5,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q11",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option from those given to fill the blank with a word that matches the relation in the first pair. Trend : Popularity :: Innovation :",
+   "options": [
+    {
+     "key": "A",
+     "text": "Experience",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Novelty",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Technology",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Inspiration",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "11",
+    "page": 6,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q12",
+   "type": "MCQ",
+   "prompt": "Choose the meaning of the underlined word:\nThe fashion designer's latest 'bewitching' collection captured the fleeting spirit of the season.",
+   "options": [
+    {
+     "key": "A",
+     "text": "boastful",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "ephemeral",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "malodorous",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "mesmerising",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "12",
+    "page": 6,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q13",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option from those given to transform the following sentence from the Active Voice to the Passive Voice: One should keep one's promises.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Promises should keep by one.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Promises should kept by one.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Promises should be kept.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Promises by one should be kept by one.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "13",
+    "page": 7,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q14",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to transform the sentence to the Passive Voice:\nNowadays, designers commonly dye fabrics and garments in large machines.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Nowadays, fabric and garments dyed commonly in large machines.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Nowadays, the fabrics and garments are dyeing in large machines by the designers.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nowadays, fabrics and garments are commonly dyed by the designers in large machines.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Nowadays, fabrics and garments were commonly dyed in large machines.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "14",
+    "page": 7,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q15",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to transform the following sentence from Indirect to Direct Speech: He proposed that they should wait for the award.",
+   "options": [
+    {
+     "key": "A",
+     "text": "He said, \"Let me wait for the award.\"",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "He said, \"Let them all wait for the award.\"",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "He said, \"Let each one wait for the award.\"",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "He said, \"Let us wait for the award.\"",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "15",
+    "page": 8,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q16",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option from those given to transform the following sentence from Direct to Indirect Speech. \"Don't work too hard\", I said to Joe.",
+   "options": [
+    {
+     "key": "A",
+     "text": "I told Joe not to work too hard.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "I asked Joe to work not for too hard.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "I told Joe please do not work too hard.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "I requested Joe to stop working too hard.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "16",
+    "page": 8,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q17",
+   "type": "MCQ",
+   "prompt": "Fill in the blank:\n________ the richness of the tradition of debate and argument make much difference to academia?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Do",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Has",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Does",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Have",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "17",
+    "page": 9,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q18",
+   "type": "MCQ",
+   "prompt": "Fill in the blank:\nThroughout human history, the sun ________ worshipped as a symbol of life and power.",
+   "options": [
+    {
+     "key": "A",
+     "text": "will be",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "has been",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "used to",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "have been",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "18",
+    "page": 9,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q19",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate pair of words to fill in the blanks:\nForecasting is the collective activity of specialists ________ analyze the information ________ identify what they consider the potential key trends.",
+   "options": [
+    {
+     "key": "A",
+     "text": "that, whom",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "who, but",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "whom, so",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "who, and",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "19",
+    "page": 10,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q20",
+   "type": "MCQ",
+   "prompt": "Fill in the blank:\nMake haste, ________ you will miss the fashion show.",
+   "options": [
+    {
+     "key": "A",
+     "text": "either",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "so",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "else",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "on",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "20",
+    "page": 10,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q21",
+   "type": "MCQ",
+   "prompt": "Identify the error in the underlined part and choose the option that rectifies it:\nWhen he heard the inspiring speech of the fashion designer, he 'was carried along' by the former's enthusiasm.",
+   "options": [
+    {
+     "key": "A",
+     "text": "got carried away",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "got carried down",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "got carried off",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "got carried forward",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "21",
+    "page": 11,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q22",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to replace the underlined phrase:\nI went to 'a store of clothes' yesterday.",
+   "options": [
+    {
+     "key": "A",
+     "text": "a clothing store",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "stores of clothing",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "stores cloth",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "cloths of stores",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "22",
+    "page": 11,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q23",
+   "type": "MCQ",
+   "prompt": "Match List-I with List-II.\nList-I: A. One should always keep away from; B. The workers have been laid off; C. She has taken up; D. It is unfair to look down upon\nList-II: I. for want of raw material; II. modelling as a career; III. selfish people because they can cause harm; IV. the weak students in the class",
+   "options": [
+    {
+     "key": "A",
+     "text": "A-IV, B-I, C-III, D-II",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A-II, B-I, C-IV, D-III",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A-III, B-I, C-II, D-IV",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A-I, B-III, C-II, D-IV",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "23",
+    "page": 12,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q24",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate improvement for the underlined part:\nFashion designers should 'avoid to make' outlandish dresses and designs.",
+   "options": [
+    {
+     "key": "A",
+     "text": "avoid making",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "avoid to have made",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "avoiding to make",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "must avoid for making",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "24",
+    "page": 13,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q25",
+   "type": "MCQ",
+   "prompt": "Fill in the blank:\nIf you want to feel the pulse of modern fashion, then Marc Jacobs is ________ the best designer to turn to. Although his career has had its fair share of fashion missteps, no other designer has so consistently influenced the broader clothing market in the modern era.",
+   "options": [
+    {
+     "key": "A",
+     "text": "frequently",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "invariably",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "variably",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "infrequently",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "25",
+    "page": 13,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q26",
+   "type": "MCQ",
+   "prompt": "Choose the option with the correct spelling:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Flemboyent",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Flambooyant",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Flamboyant",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Flemboyant",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "26",
+    "page": 14,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q27",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to rearrange the jumbled parts of the given sentence in proper sequence to make it a meaningful sentence (Use of capital letter in the beginning, and punctuation have been omitted):\nA. the world of fashion\nB. can often prove exacting\nC. because the aesthetics of design\nD. is highly subjective and personal\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "C, D, A, B",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A, B, D, C",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A, D, B, C",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "C, B, D, A",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "27",
+    "page": 14,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q28",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to rearrange the jumbled parts of the given sentence in proper sequence to make it a meaningful sentence (Use of capital letter in the beginning and punctuation have been omitted):\nA. or reproduction of a designer's look\nB. is called a knock-off\nC. usually using relatively cheaper material and lower production cost\nD. a close resemblance\nE. by another designer\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "B, D, E, A, C",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "D, A, E, C, B",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "D, B, A, C, E",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "C, E, A, B, D",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "28",
+    "page": 15,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q29",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to rearrange the jumbled parts of the given sentence in the proper sequence to make it a meaningful sentence (Use of capital letter in the beginning and punctuation have been omitted):\nA. the designer often has some specific\nB. to the pattern maker and sample sewer in\nC. at the next stage of the design process\nD. design details in his mind that need to be conveyed\nE. order to create the sample or prototype garment\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "C, D, B, A, E",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "B, E, A, D, C",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A, D, B, E, C",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "D, B, E, C, A",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "29",
+    "page": 16,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q30",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to complete the paragraph:\nModesty is a universal phenomenon. It can be defined as proper behaviour acceptable to a society in terms of dressing, speaking, and etiquette. Failure to follow these norms is considered shameful behaviour. Different people and cultures have different standards of modesty, ________",
+   "options": [
+    {
+     "key": "A",
+     "text": "this proves that modesty is not inborn.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "many more examples can be put forward.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "and this is reflected in the way they dress themselves.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "even before the invention of clothes.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "30",
+    "page": 17,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q31",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option to complete the paragraph:\nGlobalization is the process whereby nations' economies become intertwined and interdependent. Although the textile, apparel, home fashions and retailing industries have been an integral part of the process of globalization for decades, the end of the twentieth century and the beginning of the twenty-first century have ushered an increased attention to how ________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "the industries would be denying the feel of fashion in the era.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the industries would be asking for financial support in this matter.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "the industries would create a different segment for growth.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the industries would adopt to and reflect the evolving global economy.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "31",
+    "page": 18,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q32",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate option from those given to complete the paragraph: There are two types of wool-based fabrics - woolen fabric and worsted fabric. Woolen fabrics are made up of carded yarns, where the yarn is fuzzy and bulky with uneven diameter and varying lengths. Worsted fabrics are made of combed yarns",
+   "options": [
+    {
+     "key": "A",
+     "text": "that help the fabric to not hold creases.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "unless they provide better insulation.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "which are smoother with an even diameter.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "usually used for making fine table linen.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "32",
+    "page": 19,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q33",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\n\nFur: Real, fake, or nothing?\nSince man first put on clothes people have worn fur, first and foremost because it's very warm. Over the centuries, fur became exclusive and by the sixteenth century it was seen as a luxury textile. At that time, it was worn on the inside as a lining for coats, with only a little trim visible. In the early twentieth century, wearing fur on the outside of coats became fashionable. But more visibility meant more controversy and negative opinion. These days nothing in fashion divides opinions more strongly than fur.\nThe fur industry has hit back at animal rights campaigners, stating that real fur is much more environmentally friendly than fake fur. It believes that manufacturing fake fur involves dangerous chemicals that damage the environment, and that real fur is natural and biodegradable. It has also stated that younger women, inspired by celebrities, have begun to wear real fur again. Most major fashion houses support this renewal in fur by featuring it in a few pieces each autumn/winter collection.\nIt is impossible to predict whether the trend of using fur in fashion will continue. Some say fake fur will overtake the real version. Others say fur is here to stay. What is certain is that wearing fur will always be a decision that divides people.\n\nWhat does the writer of the passage suggest about the future of fur in fashion?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Real fur will completely disappear.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Fake fur will replace real fur.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The debate over fur will continue to divide opinions.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Real fur will dominate the fashion industry again.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "33",
+    "page": 21,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q34",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\n\nFur: Real, fake, or nothing?\nSince man first put on clothes people have worn fur, first and foremost because it's very warm. Over the centuries, fur became exclusive and by the sixteenth century it was seen as a luxury textile. At that time, it was worn on the inside as a lining for coats, with only a little trim visible. In the early twentieth century, wearing fur on the outside of coats became fashionable. But more visibility meant more controversy and negative opinion. These days nothing in fashion divides opinions more strongly than fur.\nThe fur industry has hit back at animal rights campaigners, stating that real fur is much more environmentally friendly than fake fur. It believes that manufacturing fake fur involves dangerous chemicals that damage the environment, and that real fur is natural and biodegradable. It has also stated that younger women, inspired by celebrities, have begun to wear real fur again. Most major fashion houses support this renewal in fur by featuring it in a few pieces each autumn/winter collection.\nIt is impossible to predict whether the trend of using fur in fashion will continue. Some say fake fur will overtake the real version. Others say fur is here to stay. What is certain is that wearing fur will always be a decision that divides people.\n\nAccording to the passage, why did people originally wear fur?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Because it was warm.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Because it was a symbol of luxury.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Because it was fashionable.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Because it was environment friendly.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "34",
+    "page": 21,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q35",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\n\nFur: Real, fake, or nothing?\nSince man first put on clothes people have worn fur, first and foremost because it's very warm. Over the centuries, fur became exclusive and by the sixteenth century it was seen as a luxury textile. At that time, it was worn on the inside as a lining for coats, with only a little trim visible. In the early twentieth century, wearing fur on the outside of coats became fashionable. But more visibility meant more controversy and negative opinion. These days nothing in fashion divides opinions more strongly than fur.\nThe fur industry has hit back at animal rights campaigners, stating that real fur is much more environmentally friendly than fake fur. It believes that manufacturing fake fur involves dangerous chemicals that damage the environment, and that real fur is natural and biodegradable. It has also stated that younger women, inspired by celebrities, have begun to wear real fur again. Most major fashion houses support this renewal in fur by featuring it in a few pieces each autumn/winter collection.\nIt is impossible to predict whether the trend of using fur in fashion will continue. Some say fake fur will overtake the real version. Others say fur is here to stay. What is certain is that wearing fur will always be a decision that divides people.\n\nWhat change occurred in the 16th Century regarding the use of fur?",
+   "options": [
+    {
+     "key": "A",
+     "text": "It became a luxury textile worn for display.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "It was associated with men's clothing only.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "It was banned by royal decree.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "It was no longer used as coat lining.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "35",
+    "page": 22,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q36",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\n\nFur: Real, fake, or nothing?\nSince man first put on clothes people have worn fur, first and foremost because it's very warm. Over the centuries, fur became exclusive and by the sixteenth century it was seen as a luxury textile. At that time, it was worn on the inside as a lining for coats, with only a little trim visible. In the early twentieth century, wearing fur on the outside of coats became fashionable. But more visibility meant more controversy and negative opinion. These days nothing in fashion divides opinions more strongly than fur.\nThe fur industry has hit back at animal rights campaigners, stating that real fur is much more environmentally friendly than fake fur. It believes that manufacturing fake fur involves dangerous chemicals that damage the environment, and that real fur is natural and biodegradable. It has also stated that younger women, inspired by celebrities, have begun to wear real fur again. Most major fashion houses support this renewal in fur by featuring it in a few pieces each autumn/winter collection.\nIt is impossible to predict whether the trend of using fur in fashion will continue. Some say fake fur will overtake the real version. Others say fur is here to stay. What is certain is that wearing fur will always be a decision that divides people.\n\nIn the line, \"The fur industry has hit back at animal rights campaigners, stating that real fur is much more environmentally friendly than fake fur.\" The phrase \"hit back\" means:",
+   "options": [
+    {
+     "key": "A",
+     "text": "physically attacked",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "launched a new advertisement company",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "responded strongly or defended itself",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "agreed with critics",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "36",
+    "page": 22,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q37",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\n\nFur: Real, fake, or nothing?\nSince man first put on clothes people have worn fur, first and foremost because it's very warm. Over the centuries, fur became exclusive and by the sixteenth century it was seen as a luxury textile. At that time, it was worn on the inside as a lining for coats, with only a little trim visible. In the early twentieth century, wearing fur on the outside of coats became fashionable. But more visibility meant more controversy and negative opinion. These days nothing in fashion divides opinions more strongly than fur.\nThe fur industry has hit back at animal rights campaigners, stating that real fur is much more environmentally friendly than fake fur. It believes that manufacturing fake fur involves dangerous chemicals that damage the environment, and that real fur is natural and biodegradable. It has also stated that younger women, inspired by celebrities, have begun to wear real fur again. Most major fashion houses support this renewal in fur by featuring it in a few pieces each autumn/winter collection.\nIt is impossible to predict whether the trend of using fur in fashion will continue. Some say fake fur will overtake the real version. Others say fur is here to stay. What is certain is that wearing fur will always be a decision that divides people.\n\nYoung women started wearing real fur again since they",
+   "options": [
+    {
+     "key": "A",
+     "text": "wanted to appear more fashionable.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "were inspired by celebrities and icons.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "had no choice left to protect them from the biting cold.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "were supporting the cause of animal rights activists.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "37",
+    "page": 23,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q38",
+   "type": "MCQ",
+   "prompt": "Identify the most appropriate sequence of steps for précis writing from the options given:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Reading, Revision, and Writing",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Reading, Learning, and Writing",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Reading, Writing, and Revision",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Reading, Recollecting, and Revision",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "38",
+    "page": 23,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q39",
+   "type": "MCQ",
+   "prompt": "Identify the correct order of parts in an official Email format:\nA. Subject\nB. Body\nC. Greetings\nD. Signature\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "C, A, B, D",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A, C, B, D",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "B, A, C, D",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "B, C, A, D",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "39",
+    "page": 24,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q40",
+   "type": "MCQ",
+   "prompt": "Rearrange the following sentences into a coherent and meaningful paragraph:\nA. The students compared different poster layouts.\nB. Their final design used bold headlines and minimal text.\nC. The students were given proper guidelines for the layouts.\nD. A rough design was shown to the teacher.\nE. The teacher asked his students to prepare a poster for a fashion campaign.\nChoose the correct answer from the options given below:",
+   "options": [
+    {
+     "key": "A",
+     "text": "E, C, A, D, B",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "E, D, C, B, A",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "D, E, A, C, B",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "E, C, D, B, A",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "english",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "40",
+    "page": 25,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q41",
+   "type": "MCQ",
+   "prompt": "The cost of manufacturing a car depends upon three items: cost of material, labour and overheads. In a year, the cost of these items were in the ratio 4:3:2. Next year the cost of material increased by 10%, cost of labour increased by 8% but cost of overheads reduced by 5%. If same number of cars were produced in each year, then the percentage increase in the price of the car, would be:",
+   "options": [
+    {
+     "key": "A",
+     "text": "6%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "9%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "10%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "41",
+    "page": 26,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q42",
+   "type": "MCQ",
+   "prompt": "There are 48 students in a college union and the ratio of the number of boys to the number of girls is 5:3. The number of girls to be included in this union, so that the ratio of the number of boys to number of girls become 6:5, is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "17",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "42",
+    "page": 27,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q43",
+   "type": "MCQ",
+   "prompt": "Vinay saves 10% of his income. If his income increases by 16%, and his saving increases by 10%, then by what percentage does his expenditure increase?",
+   "options": [
+    {
+     "key": "A",
+     "text": "4%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "16 2/3%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "16 3/4%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "6%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "43",
+    "page": 28,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q44",
+   "type": "MCQ",
+   "prompt": "An item is marked for sale at ₹ 7,200. A dealer allows a discount of 10% and yet makes a profit of 8%. What would have been his gain percentage if no discount was allowed?",
+   "options": [
+    {
+     "key": "A",
+     "text": "24%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "16%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "18%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "20%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "44",
+    "page": 29,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q45",
+   "type": "MCQ",
+   "prompt": "A sum of money invested at a certain rate of simple interest amounts to ₹ 7400 in 6 years and to ₹ 8200 in 8 years. The rate of interest per annum is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "7.5%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "8%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "9%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "10%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "45",
+    "page": 30,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q46",
+   "type": "MCQ",
+   "prompt": "The average of 11 consecutive even numbers written in ascending order is 30. What is the average of the 3rd and the 10th number?",
+   "options": [
+    {
+     "key": "A",
+     "text": "29",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "30",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "31",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "33",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "46",
+    "page": 31,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q47",
+   "type": "MCQ",
+   "prompt": "A car covers a distance of 75 km at a speed of 60 km/hr. It covers the next 5 km at a speed of 12 km/hr and the last 40 km at a speed of 36 km/hr. The average speed of the car during the entire journey (in km/hr) is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "43.2",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "44.5",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "41.8",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "42.25",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "47",
+    "page": 32,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q48",
+   "type": "MCQ",
+   "prompt": "Two trains 'A' and 'B' started running at the same time. Train 'A' takes 3 hours more than train 'B' to cover 540 km. But if train 'A' doubles its speed, it covers 540 km in 1 1/2 hours less than train 'B'. What is the speed (in km/h) of train 'B'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "60",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "90",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "80",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "70",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "48",
+    "page": 33,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q49",
+   "type": "MCQ",
+   "prompt": "Two pipes 'A' and 'B' can fill a water tank in 30 minutes and 20 minutes, respectively. Initially pipe 'A' was opened and after 5 minutes, pipe 'B' was also opened. Find the total time (in minutes) taken by the pipes to fill the tank.",
+   "options": [
+    {
+     "key": "A",
+     "text": "10",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "14",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "15",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "49",
+    "page": 34,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q50",
+   "type": "MCQ",
+   "prompt": "Four years ago, the ages of Rekha and her mother were in the ratio 1:6. Five years hence, the ratio will become 1:3. How old will the mother be after 10 years from now?",
+   "options": [
+    {
+     "key": "A",
+     "text": "39 years",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "54 years",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "49 years",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "50 years",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "50",
+    "page": 35,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q51",
+   "type": "MCQ",
+   "prompt": "The length of a hall is 22 m and the width is 18 m. If the sum of the areas of the floor and the roof is equal to the total area of the four walls, then what is the volume of the hall?",
+   "options": [
+    {
+     "key": "A",
+     "text": "3850.8 m³",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3875.5 m³",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "3935.2 m³",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3920.4 m³",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "51",
+    "page": 36,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q52",
+   "type": "MCQ",
+   "prompt": "Inside a rectangular park of dimensions 100 m × 80 m, walking paths 3 m wide are to be constructed as shown in the figure. Find the cost of constructing the paths at the rate of ₹ 120/m².",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹ 1,82,580",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹ 1,84,260",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹ 1,84,680",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹ 1,85,400",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q52.png",
+     "sha256": "6418395d17e368688926f1e5cb08a6667ae3b133a14d2ebbf79511f7b0bff25f",
+     "width": 945,
+     "height": 576,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "52",
+    "page": 37,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q53",
+   "type": "MCQ",
+   "prompt": "The co-ordinates of midpoints of the sides AB, BC, and CA of a triangle ABC are (3, 6), (5, 3), and (8, 5) respectively. The co-ordinates of vertex A are:",
+   "options": [
+    {
+     "key": "A",
+     "text": "(10, 2)",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "(0, 4)",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(6, 8)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "(7, 9)",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "53",
+    "page": 38,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q54",
+   "type": "MCQ",
+   "prompt": "If a + b + c = −10 and ab + bc + ac = 10, then the value of the expression a³ + b³ + c³ − 3abc is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "−700",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "−1100",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "900",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1300",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "54",
+    "page": 39,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q55",
+   "type": "MCQ",
+   "prompt": "Three numbers are in the ratio 4:5:7 and their LCM is 5040. Their HCF is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "28",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "32",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "35",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "36",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "55",
+    "page": 40,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q56",
+   "type": "MCQ",
+   "prompt": "Study the data and answer the question.\n\nIn a manufacturing firm there are a total of 150 employees of levels 'A', 'B' and 'C'. Pie-chart I shows the share of all employees at each level: A 8%, B 12%, C 80%. Pie-chart II shows the share of the female employees at each level: A 10%, B 20%, C 70%. 40% of the employees are female.\n\nBy what percentage is the number of female employees of levels 'A' and 'B' taken together greater than the number of male employees of levels 'A' and 'B' taken together?",
+   "options": [
+    {
+     "key": "A",
+     "text": "40%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "44%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "48%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "50%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "56",
+    "page": 42,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q57",
+   "type": "MCQ",
+   "prompt": "Study the data and answer the question.\n\nIn a manufacturing firm there are a total of 150 employees of levels 'A', 'B' and 'C'. Pie-chart I shows the share of all employees at each level: A 8%, B 12%, C 80%. Pie-chart II shows the share of the female employees at each level: A 10%, B 20%, C 70%. 40% of the employees are female.\n\nThe ratio of the number of female employees of levels 'B' and 'C' taken together to the number of male employees of levels 'B' and 'C' taken together, is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "2:3",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "9:14",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "7:13",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "5:9",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "57",
+    "page": 43,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q58",
+   "type": "MCQ",
+   "prompt": "Find the median income per day:\nIncome (₹) per day: 1000, 1500, 800, 2000, 1800, 2500\nNo. of persons: 24, 21, 16, 20, 11, 30",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹ 1500",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹ 1400",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹ 800",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹ 1650",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "58",
+    "page": 44,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q59",
+   "type": "MCQ",
+   "prompt": "In how many different ways can the letter of the word 'EMBROIDERY' be arranged so that all vowels are always positioned together?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1,20,960",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "8,640",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4,320",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "30,240",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "59",
+    "page": 45,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q60",
+   "type": "MCQ",
+   "prompt": "How many five letter words with or without meaning, containing 2 vowels and 3 consonants can be formed using the letters of the word 'OPTICAL'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1440",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "864",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "288",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "576",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "quantitative-aptitude",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "60",
+    "page": 46,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q61",
+   "type": "MCQ",
+   "prompt": "A statement is given below followed by two courses of action numbered I and II. Assume everything in the statement to be true and on the basis of the information given in the statement, decide which of the suggested courses of action logically follow the statement.\nStatement: The condition of all the major roads in the city 'X' has deteriorated due to continuous rain during the last twenty days.\nCourses of Action:\nI. The city 'X' civic authority should immediately make arrangements for repairs of the damaged roads.\nII. Motorists should be alerted at various places by putting up sign boards about the bad patches of the roads to enable them to plan their journey accordingly.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only I follows",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only II follows",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Both I and II follow",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Neither I nor II follows",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "61",
+    "page": 47,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q62",
+   "type": "MCQ",
+   "prompt": "A company has to recruit an Engineer from among the candidates A, B, C and D. The criteria are:\n(i) B.Tech or a higher degree in the relevant field with minimum 60% marks.\n(ii) Age not more than 30 years.\n(iii) Experience more than 2 years.\nCandidates: A: B.Tech, 30 years, 2 years' experience, 73%. B: M.Tech, 31 years, 5 years, 67%. C: B.Tech, 29 years, 3 years, 70%. D: M.Tech, 28 years, 3 years, 55%.\nWhich candidate is eligible for selection?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Candidate A",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Candidate B",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Candidate C",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Candidate D",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "62",
+    "page": 49,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q63",
+   "type": "MCQ",
+   "prompt": "Assume the statements to be true even if they seem to be at variance from the commonly known facts. Then decide which of the given conclusions follows from the given statements.\nStatements: All models are fashion designers. All youtubers are models.\nConclusions:\nI. All youtubers are fashion designers.\nII. Some models are youtubers.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only conclusion I follows",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only conclusion II follows",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Neither conclusion I nor II follows",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Both conclusions I and II follow",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "63",
+    "page": 51,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q64",
+   "type": "MCQ",
+   "prompt": "In a row of boys, Aman is fifteenth from the left end and Dhanush is eighteenth from the right end. If in this row Aman is eleventh from the right end, then what is the position of Dhanush from the left end?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Seventh",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Eighth",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Ninth",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Tenth",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "64",
+    "page": 53,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q65",
+   "type": "MCQ",
+   "prompt": "In the alpha-numeric series, which option replaces the question mark (?):\nAZ2, CX4, EV8, GT16, ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "HS32",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "JT20",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "IR32",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "JR32",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "65",
+    "page": 54,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q66",
+   "type": "MCQ",
+   "prompt": "Ravi is standing at Lal Chowk facing towards East. He turns 90° towards his right and walks 'x' km to reach Shiv Mandir. Then he turns 90° towards his left and walks 3 km to reach Ganesh Chowk. The shortest distance between Lal Chowk and Ganesh Chowk is 5 km. What is the distance between Lal Chowk and Shiv Mandir?",
+   "options": [
+    {
+     "key": "A",
+     "text": "3 km",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4 km",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "5 km",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "25 km",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "66",
+    "page": 55,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q67",
+   "type": "MCQ",
+   "prompt": "Three figures (X), (Y) and (Z) show a sequence of folding a piece of paper. The shaded portion of figure (Z) shows how the folded paper has been cut. Select the option that most closely resembles the unfolded form of figure (Z).",
+   "options": [
+    {
+     "key": "A",
+     "text": "Figure 1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Figure 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Figure 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Figure 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q67.png",
+     "sha256": "f2ee35f7c74fb092c3b213633eee4ff0f6c253d6ac39f3348224bab68d1865d8",
+     "width": 945,
+     "height": 1141,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "67",
+    "page": 56,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q68",
+   "type": "MCQ",
+   "prompt": "Identify the missing figure (?) in the figure matrix.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Figure 1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Figure 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Figure 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Figure 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q68.png",
+     "sha256": "08108c6cab7a436f5851f04fd8c2315f2cbfd72b485899005d09bcf6d0529f9e",
+     "width": 945,
+     "height": 854,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "68",
+    "page": 58,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q69",
+   "type": "MCQ",
+   "prompt": "Choose the figure that completes the pattern.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Figure 1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Figure 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Figure 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Figure 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q69.png",
+     "sha256": "1c5ee6a3daf3bda6c64a9d4d7c09fbf4e6efd3fe44f9ddb6e6d70655d951cfd0",
+     "width": 945,
+     "height": 945,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "69",
+    "page": 60,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q70",
+   "type": "MCQ",
+   "prompt": "Choose the figure that continues the sequence.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Figure 1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Figure 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Figure 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Figure 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q70.png",
+     "sha256": "5457ed9eafbc4c4358e4d34cc3d506e6aa1c0bea00c93520d916e51884020c37",
+     "width": 945,
+     "height": 971,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "70",
+    "page": 62,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q71",
+   "type": "MCQ",
+   "prompt": "Choose the figure that continues the pattern/series.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Figure 1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Figure 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Figure 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Figure 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q71.png",
+     "sha256": "882fee0903bb5e2c0954e81ed3be68cc2a2835d5ae9abb62e6e12d912f3d92b6",
+     "width": 945,
+     "height": 873,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "71",
+    "page": 64,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q72",
+   "type": "MCQ",
+   "prompt": "Choose the most appropriate mirror image of the figure along MM'.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Figure 1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Figure 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Figure 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Figure 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q72.png",
+     "sha256": "ad549e42083d6a92c53cf84d83e8c3f3fea6f9cec32095870502c0dfb453d62c",
+     "width": 945,
+     "height": 1135,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "72",
+    "page": 66,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q73",
+   "type": "MCQ",
+   "prompt": "Which option is the most appropriate water image of the figure along MM'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Figure 1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Figure 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Figure 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Figure 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q73.png",
+     "sha256": "0db97eda1293c497e0d5cbe15590b4375801490eb92d2adaff289dcbe9aa4ba9",
+     "width": 945,
+     "height": 902,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "73",
+    "page": 68,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q74",
+   "type": "MCQ",
+   "prompt": "Choose the option in which the given figure (X) is embedded.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Figure 1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Figure 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Figure 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Figure 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q74.png",
+     "sha256": "c866a6522fbe8c338ae5d38249edcb62aa62887bf0986a9ed4ded032a2e6bba6",
+     "width": 945,
+     "height": 1086,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "74",
+    "page": 70,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q75",
+   "type": "MCQ",
+   "prompt": "Among the four options, which one can be formed from the cut-out pieces given?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Figure 1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Figure 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Figure 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Figure 4",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nift-2026-bdes-gat/blocks/nift-2026-bdes-gat-q75.png",
+     "sha256": "feaa74b7b9264bd18070750f8b556b7948b6f1d25e01c15b046757dda15fd5cf",
+     "width": 945,
+     "height": 872,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "75",
+    "page": 72,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q76",
+   "type": "MCQ",
+   "prompt": "'Thousand Pillar Temple' is located in which state of India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Kerala",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "West Bengal",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Telangana",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Karnataka",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "76",
+    "page": 74,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q77",
+   "type": "MCQ",
+   "prompt": "The most popular theme of Basohli painters was the:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rasmanjari of Bhanu Dutta",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Playing Chaugan at Bijapur",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Noah's Ark",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Princess of the House of Timur",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "77",
+    "page": 75,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q78",
+   "type": "MCQ",
+   "prompt": "The painting 'Falcon Perched on a Bird Rest' (1615) was painted by which artist?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Shah Abbas",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Ustad Mansur",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Hazi Madni",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Dara Shikoh",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "78",
+    "page": 76,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q79",
+   "type": "MCQ",
+   "prompt": "Match List-I (Embroidery) with List-II (State).\nList-I: A. Phulkari; B. Chikankari; C. Gota; D. Kasuti\nList-II: I. Punjab; II. Uttar Pradesh; III. Rajasthan; IV. Karnataka",
+   "options": [
+    {
+     "key": "A",
+     "text": "A-I, B-II, C-III, D-IV",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A-I, B-II, C-IV, D-III",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A-II, B-I, C-III, D-IV",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A-IV, B-II, C-III, D-I",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "79",
+    "page": 77,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q80",
+   "type": "MCQ",
+   "prompt": "Which of the following Purans speaks of five white tones?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Markandeya",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Varaha",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Vishnudharmottara",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Skanda",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "80",
+    "page": 78,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q81",
+   "type": "MCQ",
+   "prompt": "The arm guard which was a part of Indian Armour Ensemble has now become which jewellery item that is worn on the upper arm?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Churamani",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Char-aina",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Zirah bakhtar",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bajubandh",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "81",
+    "page": 79,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q82",
+   "type": "MCQ",
+   "prompt": "Government of India had launched the Eco Mark scheme administered by the Central Pollution Control Board (CPCB) in partnership with the Bureau of Indian Standards (BIS), what is the logo of Eco Mark?",
+   "options": [
+    {
+     "key": "A",
+     "text": "An earthen pot",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A green star",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A green circle",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Two leaves/a twig",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "82",
+    "page": 80,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q83",
+   "type": "MCQ",
+   "prompt": "The famous 'Pochampally' embroidery is related to which of the following state of India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Tamil Nadu",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Telangana",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "West Bengal",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Gujarat",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "83",
+    "page": 81,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q84",
+   "type": "MCQ",
+   "prompt": "A fashion technologist wants to speed up the dyeing of cotton. According to diffusion principles, what step will most effectively increase dye penetration?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Lowering the temperature to reduce dye movement",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Increasing temperature to enhance molecular diffusion",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Using ice water to lock colour",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Decreasing dye concentration",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "84",
+    "page": 82,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q85",
+   "type": "MCQ",
+   "prompt": "A sports wear company wants to manufacture a jacket that maintains body temperature in cold climates using phase - change materials (PCMs). Which scientific property makes PCMs ideal for this?",
+   "options": [
+    {
+     "key": "A",
+     "text": "They reflect UV radiation",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "They absorb and release heat during solid-liquid transitions",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "They increase elasticity of fibres",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "They reduce air permeability",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "85",
+    "page": 83,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q86",
+   "type": "MCQ",
+   "prompt": "Which state has the most number of jute mills in India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "West Bengal",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Uttar Pradesh",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Andhra Pradesh",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bihar",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "86",
+    "page": 84,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q87",
+   "type": "MCQ",
+   "prompt": "Which Indian city is famously known as the 'Manchester of India' because of its textile manufacturing industry during the colonial period?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Odisha",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Ahmedabad",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Bombay",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Calcutta",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "87",
+    "page": 85,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q88",
+   "type": "MCQ",
+   "prompt": "The ratio of the length to the height (width) of the National Flag of India should be:",
+   "options": [
+    {
+     "key": "A",
+     "text": "2:1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3:2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "16:4",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "7:6",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "88",
+    "page": 86,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q89",
+   "type": "MCQ",
+   "prompt": "NITI' Aayog is a premier policy think tank established by the Government of India in the year 2015. The full form of NITI is",
+   "options": [
+    {
+     "key": "A",
+     "text": "Nation Institute for Transforming India",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "New Institute for Transforming India",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "National Institution for Transforming India",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Nodal Institute for Transforming India",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "89",
+    "page": 87,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q90",
+   "type": "MCQ",
+   "prompt": "Which initiative in India is NOT a part of Leveraging Technology and Innovation?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Skill India Digital Hub",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "National Apprenticeship Portal",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Bharat Skills",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Jan Shikshan Sansthan Scheme",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "90",
+    "page": 88,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q91",
+   "type": "MCQ",
+   "prompt": "Who launched the 'VisioNxt Fashion Forecasting Initiative' of NIFT, a bilingual web portal and the India - Specific Fashion Trend Book 'Paridhi 24x25'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Shri Pabitra Margherita",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Shri Giriraj Singh",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Smt. Rachna Shah",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Smt. Protima Sen",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "91",
+    "page": 89,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q93",
+   "type": "MCQ",
+   "prompt": "In the year 1986, who made a painting named 'Fairy Tales from Purvapalli' in which water and oil colours on acrylic sheet were used?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Jamini Roy",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Krishna Reddy",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Debi Prasad Roy",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "K.G. Subramanyan",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "93",
+    "page": 91,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q94",
+   "type": "MCQ",
+   "prompt": "What is the architectural design of Ram Mandir which is built at Ayodhya, Uttar Pradesh?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Dravidian style",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Nagara style",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Vesara style",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Indo-Persian style",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "94",
+    "page": 92,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q95",
+   "type": "MCQ",
+   "prompt": "Which state celebrates the famous festival \"Khuado Kut\"?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Gujarat",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "West Bengal",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Tripura",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Mizoram",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "95",
+    "page": 93,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q96",
+   "type": "MCQ",
+   "prompt": "Xuansang, a Chinese pilgrim during the 7th century wrote that their (Indian) garments are made of Kiau-She-Ye and cotton. He used the term Kiau-She-Ye for",
+   "options": [
+    {
+     "key": "A",
+     "text": "Fine cotton",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Jute",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Silk",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The shining hemp",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "96",
+    "page": 94,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q98",
+   "type": "MCQ",
+   "prompt": "Choose the correct design/shape of the Bharat Ratna Medal:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Ashoka leaf shaped",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Banyan leaf shaped",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Peepal leaf shaped",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Mango leaf shaped",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "98",
+    "page": 96,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q99",
+   "type": "MCQ",
+   "prompt": "Match List-I (State) with List-II (Folk Dance).\nList-I: A. Assam; B. Tamil Nadu; C. Kerala; D. Maharashtra\nList-II: I. Lavni; II. Kathakali; III. Bharatnatyam; IV. Bihu",
+   "options": [
+    {
+     "key": "A",
+     "text": "A-I, B-IV, C-II, D-III",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A-IV, B-III, C-II, D-I",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A-IV, B-III, C-I, D-II",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A-III, B-IV, C-II, D-I",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "99",
+    "page": 97,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2026-bdes-gat-q100",
+   "type": "MCQ",
+   "prompt": "Which of the following is a Government initiative to develop technology to treat waste in-order to recycle, generate energy, and extract resources of value?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Swachh Bharat",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Waste to Wealth",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Waste free India",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Garbage Management Scheme",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2026,
+    "paperId": "nift-2026-bdes-gat",
+    "questionNo": "100",
+    "page": 98,
+    "sourceSha256": "9d67c5d0ca45a933d14e9a23b94c41d300166aa2eae5c2fea0c634ab93921bfe",
+    "extraction": "workstation",
+    "answerKeySource": "No published key: every answer solved by DMocks (the source is a candidate response sheet)",
+    "verification": "review"
+   }
   }
  ]
 }
