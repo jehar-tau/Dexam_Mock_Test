@@ -140,7 +140,7 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
           {preview && <span>Preview only · no timer starts</span>}
         </div>
         {previewReceipt && <p className="topic-receipt" role="status">{previewReceipt}</p>}
-        {message && <p className="error" role="alert">{message}</p>}
+        {message && <p className="error" role="alert">{message}{message === "Complete your verified profile first" && <> <Link to="/onboarding">Complete your profile →</Link></>}</p>}
       </form>
       {Example && <Example key={topic} topic={selectedPool ? topic : ""} />}
       </div>
