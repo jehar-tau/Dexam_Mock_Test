@@ -282,3 +282,27 @@ test('the exam room hides site chrome and keeps the clock, theme and navigator i
   await expect.poll(async () => (await bar.boundingBox()).y).toBeLessThanOrEqual(Math.max(0, box.y));
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
+
+test('the answer review shows a structured, step-by-step animated solution', async ({ page }) => {
+  await page.goto('/portal-preview/report');
+  await page.getByRole('button', { name: 'Open answer review' }).click();
+  await page.getByRole('button', { name: 'View solution', exact: true }).click();
+  const solution = page.locator('.worked-solution');
+  await expect(solution.getByRole('heading', { name: 'Worked solution' })).toBeVisible();
+  await expect(solution.getByText('Step 1 of 3', { exact: true })).toBeVisible();
+  await expect(solution.locator('svg g')).toHaveCount(1);
+  await expect(solution.getByRole('heading', { name: 'Common trap' })).toBeVisible();
+  await expect(solution.getByRole('heading', { name: 'Faster method' })).toBeVisible();
+  await solution.getByRole('button', { name: /The bottom row has four tiles/ }).click();
+  await expect(solution.getByText('Step 3 of 3', { exact: true })).toBeVisible();
+  await expect(solution.locator('svg > g')).toHaveCount(3);
+  await solution.getByRole('button', { name: 'Replay steps' }).click();
+  await expect(solution.getByRole('button', { name: 'Pause' })).toBeVisible();
+  await expect(solution.getByText('Step 2 of 3', { exact: true })).toBeVisible({ timeout: 6000 });
+  await page.getByRole('button', { name: 'Review question 3, Partial credit' }).click();
+  await page.getByRole('button', { name: 'View solution', exact: true }).click();
+  const options = page.getByRole('region', { name: 'Option by option' });
+  await expect(options.locator('li[data-verdict="correct"]')).toHaveCount(2);
+  await expect(options.locator('li[data-verdict="wrong"]')).toHaveCount(2);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});

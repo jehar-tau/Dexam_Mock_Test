@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { buildAttemptInsights, outcomeLabels, releasedOutcome, responseSummary, reviewMarks } from "./attempt-insights.mjs";
 import { answerAlternativesLabel, releasedKeyLabel } from "./answer-key.js";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
-import { WorkedSolution } from "./WorkedSolution.jsx";
+import { SolutionPanel } from "./WorkedSolution.jsx";
 import { readWorkedExplanation, workedFigureIndex } from "./worked-solution.js";
 import "./paper-workspace.css";
 
@@ -84,10 +84,9 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, ini
         {(solution || explanation) && <><button type="button" className="button quiet" aria-expanded={solutionOpen}
           aria-controls="review-worked-solution" onClick={() => setSolutionOpenFor(solutionOpen ? "" : item.id)}>
           {solutionOpen ? "Hide solution" : "View solution"}</button>
-          <div id="review-worked-solution" hidden={!solutionOpen}>{solutionOpen && (solution
-            ? <WorkedSolution solution={solution} explanation={explanation} figureUrl={media[item.id]?.[figureIndex]?.url}
-              mediaStatus={mediaStatus} onRetry={onRetry}/>
-            : <div className="analysis-explanation"><h4>Explanation</h4><p className="worked-solution-text">{explanation}</p></div>)}</div></>}
+          <div id="review-worked-solution" hidden={!solutionOpen}>{solutionOpen &&
+            <SolutionPanel solution={solution} explanation={explanation} figureUrl={solution ? media[item.id]?.[figureIndex]?.url : undefined}
+              mediaStatus={mediaStatus} onRetry={onRetry}/>}</div></>}
         <nav className="analysis-step" aria-label="Step through answers">
           <button type="button" className="text-button" disabled={position <= 0}
             onClick={() => { setSelectedId(filtered[position - 1].item.id); setSolutionOpenFor(""); }}>← Previous question</button>
