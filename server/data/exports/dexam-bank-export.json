@@ -134075,6 +134075,5406 @@
     "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q1",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nA leading Indian industrialist in an article on ways to strengthen India's economy has drawn attention to the problems of inflation and industrial sickness among other things. One of the main reasons for industrial sickness in our country has been the fact that business and industrial managers have not been able to look beyond the immediate future. They have been too preoccupied with their attempts to report favourable results for the current year-higher profits and larger dividends to the share-holders. The planning horizon has hardly ever exceeded five years. Investments have been inadequate for new plants and towards diversification and expansions. Modernisation and asset creation has seriously lagged behind. In business, growth is needed for survival; one has to grow if one does not want to be wiped out. This is particularly true today with liberalisation of imports and increasing competition. Moreover, growth and higher productivity create employment and higher employment creates larger markets both for industrial and consumer products. It was Henry Ford who brought home the need for the creation of a larger and a more stable middle class, that is, a larger number of people who can afford more and more of goods and services. Even after forty years of independence, our industrialists have not been able to shed the petty shopkeeper's mentality and our highly educated management has tagged along merrily and without concern.\n\nWhich of the following shortcomings of Indian industrialists has been highlighted by the author?",
+   "options": [
+    {
+     "key": "A",
+     "text": "They invest unreasonable high amount on diversification and expansion.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "They are more concerned about immediate net gains than for developmental activities.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "They are reluctant to maintain the shopkeeper's mentality.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "They are less concerned for payments of dividends to shareholders.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "1",
+    "page": 1,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q2",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nA leading Indian industrialist in an article on ways to strengthen India's economy has drawn attention to the problems of inflation and industrial sickness among other things. One of the main reasons for industrial sickness in our country has been the fact that business and industrial managers have not been able to look beyond the immediate future. They have been too preoccupied with their attempts to report favourable results for the current year-higher profits and larger dividends to the share-holders. The planning horizon has hardly ever exceeded five years. Investments have been inadequate for new plants and towards diversification and expansions. Modernisation and asset creation has seriously lagged behind. In business, growth is needed for survival; one has to grow if one does not want to be wiped out. This is particularly true today with liberalisation of imports and increasing competition. Moreover, growth and higher productivity create employment and higher employment creates larger markets both for industrial and consumer products. It was Henry Ford who brought home the need for the creation of a larger and a more stable middle class, that is, a larger number of people who can afford more and more of goods and services. Even after forty years of independence, our industrialists have not been able to shed the petty shopkeeper's mentality and our highly educated management has tagged along merrily and without concern.\n\nThe leading industrialist attributes industrial sickness mainly to",
+   "options": [
+    {
+     "key": "A",
+     "text": "lack of foresight among managers.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "lacunae in five-year plans.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "preoccupations of managers with matters unrelated to business.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "higher profits and larger dividends to shareholders.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "2",
+    "page": 1,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q3",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nA leading Indian industrialist in an article on ways to strengthen India's economy has drawn attention to the problems of inflation and industrial sickness among other things. One of the main reasons for industrial sickness in our country has been the fact that business and industrial managers have not been able to look beyond the immediate future. They have been too preoccupied with their attempts to report favourable results for the current year-higher profits and larger dividends to the share-holders. The planning horizon has hardly ever exceeded five years. Investments have been inadequate for new plants and towards diversification and expansions. Modernisation and asset creation has seriously lagged behind. In business, growth is needed for survival; one has to grow if one does not want to be wiped out. This is particularly true today with liberalisation of imports and increasing competition. Moreover, growth and higher productivity create employment and higher employment creates larger markets both for industrial and consumer products. It was Henry Ford who brought home the need for the creation of a larger and a more stable middle class, that is, a larger number of people who can afford more and more of goods and services. Even after forty years of independence, our industrialists have not been able to shed the petty shopkeeper's mentality and our highly educated management has tagged along merrily and without concern.\n\nAccording to the passage, growth and increasing productivity lead to",
+   "options": [
+    {
+     "key": "A",
+     "text": "imposition of restrictions on imports.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "encouragement to export of excess consumer goods.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "employment and thus provides outlet to industrial and consumer products.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "disproportionate surplus of commodities.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "3",
+    "page": 1,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q4",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nA leading Indian industrialist in an article on ways to strengthen India's economy has drawn attention to the problems of inflation and industrial sickness among other things. One of the main reasons for industrial sickness in our country has been the fact that business and industrial managers have not been able to look beyond the immediate future. They have been too preoccupied with their attempts to report favourable results for the current year-higher profits and larger dividends to the share-holders. The planning horizon has hardly ever exceeded five years. Investments have been inadequate for new plants and towards diversification and expansions. Modernisation and asset creation has seriously lagged behind. In business, growth is needed for survival; one has to grow if one does not want to be wiped out. This is particularly true today with liberalisation of imports and increasing competition. Moreover, growth and higher productivity create employment and higher employment creates larger markets both for industrial and consumer products. It was Henry Ford who brought home the need for the creation of a larger and a more stable middle class, that is, a larger number of people who can afford more and more of goods and services. Even after forty years of independence, our industrialists have not been able to shed the petty shopkeeper's mentality and our highly educated management has tagged along merrily and without concern.\n\nWhy did Henry Ford stress for a more stable middle class?",
+   "options": [
+    {
+     "key": "A",
+     "text": "They are mostly service oriented",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "They do not have shopkeeper mentality",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "They are quite dynamic",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "They can afford to buy more and more expensive goods",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "4",
+    "page": 2,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q5",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nA leading Indian industrialist in an article on ways to strengthen India's economy has drawn attention to the problems of inflation and industrial sickness among other things. One of the main reasons for industrial sickness in our country has been the fact that business and industrial managers have not been able to look beyond the immediate future. They have been too preoccupied with their attempts to report favourable results for the current year-higher profits and larger dividends to the share-holders. The planning horizon has hardly ever exceeded five years. Investments have been inadequate for new plants and towards diversification and expansions. Modernisation and asset creation has seriously lagged behind. In business, growth is needed for survival; one has to grow if one does not want to be wiped out. This is particularly true today with liberalisation of imports and increasing competition. Moreover, growth and higher productivity create employment and higher employment creates larger markets both for industrial and consumer products. It was Henry Ford who brought home the need for the creation of a larger and a more stable middle class, that is, a larger number of people who can afford more and more of goods and services. Even after forty years of independence, our industrialists have not been able to shed the petty shopkeeper's mentality and our highly educated management has tagged along merrily and without concern.\n\nAccording to the passage, the net gains pursued by managers are at the cost of",
+   "options": [
+    {
+     "key": "A",
+     "text": "higher profits and large dividends to shareholders.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "availability of markets for industrial and consumer products.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "diversification, modernization and asset creation.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "liberalisation of imports and increasing competition.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "5",
+    "page": 2,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q6",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nIt is strange that, according to his position in life, an extravagant man is admired or despised. A successful businessman does nothing to increase his popularity by being careful with his money. He is expected to display his success, to have a smart car, an expensive life, and to be lavish with his hospitality. If he is not so, he is considered mean, and his reputation in business may even suffer in consequence. The paradox remains that if he had not been careful with his money in the first place, he would never have achieved his present wealth. Among the low-income group, a different set of values exists. The young clerk, who gifts his wife a new dress when he hasn't paid his house rent, is condemned as extravagant. Carefulness with money to the point of meanness is applauded as a virtue. Nothing in his life is considered worthy than paying his bills. The ideal wife of such a man separates her housekeeping money into joyless little piles- so much for rent, for food, for the children's shoes; she is able to face the milkman with equanimity every month, satisfied with her economising ways, and never knows the guilt of buying something she can't really afford. As for myself, I fall into neither of these categories. If I have money to spare, I can be extravagant, but when, as is usually the case, I am hard up, then I am the meanest man imaginable.\n\nIn the opinion of the writer, a successful businessman",
+   "options": [
+    {
+     "key": "A",
+     "text": "should not bother about popularity.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "is expected to have expensive tastes.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "is more popular if he appears to be doing nothing.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "must be extravagant before achieving success.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "6",
+    "page": 2,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q7",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nIt is strange that, according to his position in life, an extravagant man is admired or despised. A successful businessman does nothing to increase his popularity by being careful with his money. He is expected to display his success, to have a smart car, an expensive life, and to be lavish with his hospitality. If he is not so, he is considered mean, and his reputation in business may even suffer in consequence. The paradox remains that if he had not been careful with his money in the first place, he would never have achieved his present wealth. Among the low-income group, a different set of values exists. The young clerk, who gifts his wife a new dress when he hasn't paid his house rent, is condemned as extravagant. Carefulness with money to the point of meanness is applauded as a virtue. Nothing in his life is considered worthy than paying his bills. The ideal wife of such a man separates her housekeeping money into joyless little piles- so much for rent, for food, for the children's shoes; she is able to face the milkman with equanimity every month, satisfied with her economising ways, and never knows the guilt of buying something she can't really afford. As for myself, I fall into neither of these categories. If I have money to spare, I can be extravagant, but when, as is usually the case, I am hard up, then I am the meanest man imaginable.\n\nAccording to the passage, it seems that low paid people should",
+   "options": [
+    {
+     "key": "A",
+     "text": "feel guilty if they overspend.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "borrow money to meet their essential needs.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "not keep their creditors waiting.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "not pay their bills promptly.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "7",
+    "page": 2,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q8",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nIt is strange that, according to his position in life, an extravagant man is admired or despised. A successful businessman does nothing to increase his popularity by being careful with his money. He is expected to display his success, to have a smart car, an expensive life, and to be lavish with his hospitality. If he is not so, he is considered mean, and his reputation in business may even suffer in consequence. The paradox remains that if he had not been careful with his money in the first place, he would never have achieved his present wealth. Among the low-income group, a different set of values exists. The young clerk, who gifts his wife a new dress when he hasn't paid his house rent, is condemned as extravagant. Carefulness with money to the point of meanness is applauded as a virtue. Nothing in his life is considered worthy than paying his bills. The ideal wife of such a man separates her housekeeping money into joyless little piles- so much for rent, for food, for the children's shoes; she is able to face the milkman with equanimity every month, satisfied with her economising ways, and never knows the guilt of buying something she can't really afford. As for myself, I fall into neither of these categories. If I have money to spare, I can be extravagant, but when, as is usually the case, I am hard up, then I am the meanest man imaginable.\n\nHow does the housewife, described by the writer, feel when she saves money?",
+   "options": [
+    {
+     "key": "A",
+     "text": "She wishes she could sometimes be extravagant.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "She is still troubled by a sense of guilt.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "She wishes life were less burdensome.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "She is content to be so thrifty.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "8",
+    "page": 3,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q9",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nIt is strange that, according to his position in life, an extravagant man is admired or despised. A successful businessman does nothing to increase his popularity by being careful with his money. He is expected to display his success, to have a smart car, an expensive life, and to be lavish with his hospitality. If he is not so, he is considered mean, and his reputation in business may even suffer in consequence. The paradox remains that if he had not been careful with his money in the first place, he would never have achieved his present wealth. Among the low-income group, a different set of values exists. The young clerk, who gifts his wife a new dress when he hasn't paid his house rent, is condemned as extravagant. Carefulness with money to the point of meanness is applauded as a virtue. Nothing in his life is considered worthy than paying his bills. The ideal wife of such a man separates her housekeeping money into joyless little piles- so much for rent, for food, for the children's shoes; she is able to face the milkman with equanimity every month, satisfied with her economising ways, and never knows the guilt of buying something she can't really afford. As for myself, I fall into neither of these categories. If I have money to spare, I can be extravagant, but when, as is usually the case, I am hard up, then I am the meanest man imaginable.\n\nThe statement \"she is able to face the milkman with equanimity\" implies that",
+   "options": [
+    {
+     "key": "A",
+     "text": "she is not upset as she has been paying the milkman his dues regularly.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "she loses her nerve at the sight at the milkman who always demands his dues.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "she manages to keep cool as she has to pay the milkman only a month's dues.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "she remains composed and confident as she knows that she can handle the milkman",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "9",
+    "page": 3,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q10",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nIt is strange that, according to his position in life, an extravagant man is admired or despised. A successful businessman does nothing to increase his popularity by being careful with his money. He is expected to display his success, to have a smart car, an expensive life, and to be lavish with his hospitality. If he is not so, he is considered mean, and his reputation in business may even suffer in consequence. The paradox remains that if he had not been careful with his money in the first place, he would never have achieved his present wealth. Among the low-income group, a different set of values exists. The young clerk, who gifts his wife a new dress when he hasn't paid his house rent, is condemned as extravagant. Carefulness with money to the point of meanness is applauded as a virtue. Nothing in his life is considered worthy than paying his bills. The ideal wife of such a man separates her housekeeping money into joyless little piles- so much for rent, for food, for the children's shoes; she is able to face the milkman with equanimity every month, satisfied with her economising ways, and never knows the guilt of buying something she can't really afford. As for myself, I fall into neither of these categories. If I have money to spare, I can be extravagant, but when, as is usually the case, I am hard up, then I am the meanest man imaginable.\n\nAs far as money is concerned, we get the impression that the writer",
+   "options": [
+    {
+     "key": "A",
+     "text": "doesn’t often have any money to save.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "would like to be considered extravagant.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "is never inclined to be extravagant.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "is incapable of saving anything.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "10",
+    "page": 3,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q11",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe Supervisor would have to change his attitude towards people first. The staff under him must be perceived as human beings with feelings and needs. They are not automations within a complex work machinery. One of the greatest needs of today's worker is to have a feeling that he is in control of his work place and not vice versa. The best way is to satisfy this need as far as possible. He must feel firstly, that his work is meaningful. To do this, the supervisor must delegate responsibility and limited authority for the man to execute his job well. The subordinate must be properly trained to assume responsibility and authority. Once he is ready to assume these, he can be made accountable for his job. Very often the supervisor assumes all responsibility and accountability for fear of losing control of the workplace. This makes workers under him pawns in a vast chessboard. Delegating accountability gives the worker a purpose in life and the need to do a job well. Most important is to sit with each worker and chalk out common objectives and agreed norms to achieve them. This gives workers a security as to what is expected of them. When he has met his objectives, he certainly has a feeling of achievement. This feeling of achievement is the greatest motivator.\n\nA humane attitude on the part of the supervisor towards his staff is necessary to",
+   "options": [
+    {
+     "key": "A",
+     "text": "get them to work.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "keep them happy.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "have a congenial atmosphere at workplace.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "get the best out of them.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "11",
+    "page": 3,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q12",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe Supervisor would have to change his attitude towards people first. The staff under him must be perceived as human beings with feelings and needs. They are not automations within a complex work machinery. One of the greatest needs of today's worker is to have a feeling that he is in control of his work place and not vice versa. The best way is to satisfy this need as far as possible. He must feel firstly, that his work is meaningful. To do this, the supervisor must delegate responsibility and limited authority for the man to execute his job well. The subordinate must be properly trained to assume responsibility and authority. Once he is ready to assume these, he can be made accountable for his job. Very often the supervisor assumes all responsibility and accountability for fear of losing control of the workplace. This makes workers under him pawns in a vast chessboard. Delegating accountability gives the worker a purpose in life and the need to do a job well. Most important is to sit with each worker and chalk out common objectives and agreed norms to achieve them. This gives workers a security as to what is expected of them. When he has met his objectives, he certainly has a feeling of achievement. This feeling of achievement is the greatest motivator.\n\nResponsibility and accountability make a worker",
+   "options": [
+    {
+     "key": "A",
+     "text": "shirk his duties.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "do his job properly.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "tense and frightened.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "vulnerable before his supervisors.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "12",
+    "page": 4,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q13",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe Supervisor would have to change his attitude towards people first. The staff under him must be perceived as human beings with feelings and needs. They are not automations within a complex work machinery. One of the greatest needs of today's worker is to have a feeling that he is in control of his work place and not vice versa. The best way is to satisfy this need as far as possible. He must feel firstly, that his work is meaningful. To do this, the supervisor must delegate responsibility and limited authority for the man to execute his job well. The subordinate must be properly trained to assume responsibility and authority. Once he is ready to assume these, he can be made accountable for his job. Very often the supervisor assumes all responsibility and accountability for fear of losing control of the workplace. This makes workers under him pawns in a vast chessboard. Delegating accountability gives the worker a purpose in life and the need to do a job well. Most important is to sit with each worker and chalk out common objectives and agreed norms to achieve them. This gives workers a security as to what is expected of them. When he has met his objectives, he certainly has a feeling of achievement. This feeling of achievement is the greatest motivator.\n\nSupervisors do not delegate responsibility and authority to their subordinates because",
+   "options": [
+    {
+     "key": "A",
+     "text": "subordinates are not capable enough.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "they can't trust their subordinates.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "they are apprehensive of losing their hold on the place of work.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "final responsibility is theirs.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "13",
+    "page": 4,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q14",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe Supervisor would have to change his attitude towards people first. The staff under him must be perceived as human beings with feelings and needs. They are not automations within a complex work machinery. One of the greatest needs of today's worker is to have a feeling that he is in control of his work place and not vice versa. The best way is to satisfy this need as far as possible. He must feel firstly, that his work is meaningful. To do this, the supervisor must delegate responsibility and limited authority for the man to execute his job well. The subordinate must be properly trained to assume responsibility and authority. Once he is ready to assume these, he can be made accountable for his job. Very often the supervisor assumes all responsibility and accountability for fear of losing control of the workplace. This makes workers under him pawns in a vast chessboard. Delegating accountability gives the worker a purpose in life and the need to do a job well. Most important is to sit with each worker and chalk out common objectives and agreed norms to achieve them. This gives workers a security as to what is expected of them. When he has met his objectives, he certainly has a feeling of achievement. This feeling of achievement is the greatest motivator.\n\nOrientation of subordinates to common objectives and how to achieve them is",
+   "options": [
+    {
+     "key": "A",
+     "text": "not very important.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "a must.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "not at all necessary.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "optional.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "14",
+    "page": 4,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q15",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe Supervisor would have to change his attitude towards people first. The staff under him must be perceived as human beings with feelings and needs. They are not automations within a complex work machinery. One of the greatest needs of today's worker is to have a feeling that he is in control of his work place and not vice versa. The best way is to satisfy this need as far as possible. He must feel firstly, that his work is meaningful. To do this, the supervisor must delegate responsibility and limited authority for the man to execute his job well. The subordinate must be properly trained to assume responsibility and authority. Once he is ready to assume these, he can be made accountable for his job. Very often the supervisor assumes all responsibility and accountability for fear of losing control of the workplace. This makes workers under him pawns in a vast chessboard. Delegating accountability gives the worker a purpose in life and the need to do a job well. Most important is to sit with each worker and chalk out common objectives and agreed norms to achieve them. This gives workers a security as to what is expected of them. When he has met his objectives, he certainly has a feeling of achievement. This feeling of achievement is the greatest motivator.\n\nThe greatest motivator is",
+   "options": [
+    {
+     "key": "A",
+     "text": "a good supervisor.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "a good environment.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "a sense of security.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "fulfilment of purpose.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "15",
+    "page": 4,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q16",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe greatest enemy of mankind, as people have discovered is not science, but war. Science merely reflects the social forces by which it is surrounded. It is found that when there is peace, science is constructive, when there is war, science is perverted to destructive ends. The weapons which science gives us do not necessarily create war, these make war increasingly more terrible. Until now, it has brought us to the doorstep of doom. Our main problem, therefore, is not to curb science, but to stop war - to substitute law for force, and international government for anarchy in the relations of one nation with another. That is a job in which everybody must participate, including the scientists. But the bomb of Hiroshima suddenly woke us up to the fact that we have very little time. The hour is late and our work has scarcely begun. Now we are face to face with this urgent question: \"Can education and tolerance, understanding and creative intelligence run fast enough to keep us abreast with our own mounting capacity to destroy?\" That is the question which we shall have to answer one way or the other in this generation. Science must help us in the answer, but the main decision lies within ourselves.\n\nAccording to the author, the real enemy of mankind is not science but war, because",
+   "options": [
+    {
+     "key": "A",
+     "text": "science during wars becomes destructive.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "science merely invents the weapons with which war is fought.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "the weapons that science invents necessarily lead to war.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the weapons invented by science do not cause war, though these make it more destructive.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "16",
+    "page": 4,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q17",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe greatest enemy of mankind, as people have discovered is not science, but war. Science merely reflects the social forces by which it is surrounded. It is found that when there is peace, science is constructive, when there is war, science is perverted to destructive ends. The weapons which science gives us do not necessarily create war, these make war increasingly more terrible. Until now, it has brought us to the doorstep of doom. Our main problem, therefore, is not to curb science, but to stop war - to substitute law for force, and international government for anarchy in the relations of one nation with another. That is a job in which everybody must participate, including the scientists. But the bomb of Hiroshima suddenly woke us up to the fact that we have very little time. The hour is late and our work has scarcely begun. Now we are face to face with this urgent question: \"Can education and tolerance, understanding and creative intelligence run fast enough to keep us abreast with our own mounting capacity to destroy?\" That is the question which we shall have to answer one way or the other in this generation. Science must help us in the answer, but the main decision lies within ourselves.\n\nWar can be stopped, if",
+   "options": [
+    {
+     "key": "A",
+     "text": "science is restricted to be utilised only during war time.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "weapons invented by science are not used to launch a war.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "we replace force and lawlessness by law and international government.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "science is not allowed to lead us to utter destruction.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "17",
+    "page": 5,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q18",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe greatest enemy of mankind, as people have discovered is not science, but war. Science merely reflects the social forces by which it is surrounded. It is found that when there is peace, science is constructive, when there is war, science is perverted to destructive ends. The weapons which science gives us do not necessarily create war, these make war increasingly more terrible. Until now, it has brought us to the doorstep of doom. Our main problem, therefore, is not to curb science, but to stop war - to substitute law for force, and international government for anarchy in the relations of one nation with another. That is a job in which everybody must participate, including the scientists. But the bomb of Hiroshima suddenly woke us up to the fact that we have very little time. The hour is late and our work has scarcely begun. Now we are face to face with this urgent question: \"Can education and tolerance, understanding and creative intelligence run fast enough to keep us abreast with our own mounting capacity to destroy?\" That is the question which we shall have to answer one way or the other in this generation. Science must help us in the answer, but the main decision lies within ourselves.\n\nAccording to the writer, the main problem we are faced with, is to",
+   "options": [
+    {
+     "key": "A",
+     "text": "prevent scientists from participating in destructive activities.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "stop scientific activities everywhere.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "stop science from reflecting social forces.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "abolish war.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "18",
+    "page": 5,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q19",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe greatest enemy of mankind, as people have discovered is not science, but war. Science merely reflects the social forces by which it is surrounded. It is found that when there is peace, science is constructive, when there is war, science is perverted to destructive ends. The weapons which science gives us do not necessarily create war, these make war increasingly more terrible. Until now, it has brought us to the doorstep of doom. Our main problem, therefore, is not to curb science, but to stop war - to substitute law for force, and international government for anarchy in the relations of one nation with another. That is a job in which everybody must participate, including the scientists. But the bomb of Hiroshima suddenly woke us up to the fact that we have very little time. The hour is late and our work has scarcely begun. Now we are face to face with this urgent question: \"Can education and tolerance, understanding and creative intelligence run fast enough to keep us abreast with our own mounting capacity to destroy?\" That is the question which we shall have to answer one way or the other in this generation. Science must help us in the answer, but the main decision lies within ourselves.\n\nOur mounting capacity to destroy can be kept under control by",
+   "options": [
+    {
+     "key": "A",
+     "text": "insight and constructive thinking.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "education and broadmindedness.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "encouraging social forces.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Both",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "19",
+    "page": 5,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q20",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe greatest enemy of mankind, as people have discovered is not science, but war. Science merely reflects the social forces by which it is surrounded. It is found that when there is peace, science is constructive, when there is war, science is perverted to destructive ends. The weapons which science gives us do not necessarily create war, these make war increasingly more terrible. Until now, it has brought us to the doorstep of doom. Our main problem, therefore, is not to curb science, but to stop war - to substitute law for force, and international government for anarchy in the relations of one nation with another. That is a job in which everybody must participate, including the scientists. But the bomb of Hiroshima suddenly woke us up to the fact that we have very little time. The hour is late and our work has scarcely begun. Now we are face to face with this urgent question: \"Can education and tolerance, understanding and creative intelligence run fast enough to keep us abreast with our own mounting capacity to destroy?\" That is the question which we shall have to answer one way or the other in this generation. Science must help us in the answer, but the main decision lies within ourselves.\n\nWhich of the following statements is not implied in the passage ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Science is misused for destructive purpose.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Neither science nor the weapons it invents, add to the horrors of war.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "People needlessly blame science for war.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The role of science in ensuring world peace is subsidiary to that of man.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "20",
+    "page": 5,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q21",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe goals of our present system of primary and secondary schooling are to prepare students for the examination system, which will take them to the best technical institutions in the country. While the teaching of science and mathematics has been upgraded over the years, the teaching of the humanities and social sciences continues to be straightjacketed in grotesque ways. Those areas of the Indian reality that ought to form the proper subject like caste, poverty and environmental degradation, if we are to create a responsible and aware body of citizens, form no part of the syllabus. The capacity to think independently and critically about problems that plague modern Indian society, which ought really to be a prominent part of the humanities curriculum, is perceived to be intractable from the point of view of the examiner. Lest the evaluation becomes subjective, every effort is made to reduce both history and economics to a series of facts; a one-to-one correlation between facts ensures proper systems of grading.\n\nAccording to the author, the present educational system ultimately helps the students in which of the following? A. Getting admission to renowned technical institutions. B. Understanding the real problems of the people. C. Acquiring various techniques to face the challenges of the future.",
+   "options": [
+    {
+     "key": "A",
+     "text": "A only",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "B only",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A and C",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "B and C",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "21",
+    "page": 6,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q22",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe goals of our present system of primary and secondary schooling are to prepare students for the examination system, which will take them to the best technical institutions in the country. While the teaching of science and mathematics has been upgraded over the years, the teaching of the humanities and social sciences continues to be straightjacketed in grotesque ways. Those areas of the Indian reality that ought to form the proper subject like caste, poverty and environmental degradation, if we are to create a responsible and aware body of citizens, form no part of the syllabus. The capacity to think independently and critically about problems that plague modern Indian society, which ought really to be a prominent part of the humanities curriculum, is perceived to be intractable from the point of view of the examiner. Lest the evaluation becomes subjective, every effort is made to reduce both history and economics to a series of facts; a one-to-one correlation between facts ensures proper systems of grading.\n\nAccording to the author, which of the following is the main reason leading to upgradation of teaching of science and mathematics?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Science and mathematics can solve our problems.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The syllabus of science and mathematics has been modified from time to time.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "It inculcates proper values for becoming an ideal citizen.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "22",
+    "page": 6,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q23",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe goals of our present system of primary and secondary schooling are to prepare students for the examination system, which will take them to the best technical institutions in the country. While the teaching of science and mathematics has been upgraded over the years, the teaching of the humanities and social sciences continues to be straightjacketed in grotesque ways. Those areas of the Indian reality that ought to form the proper subject like caste, poverty and environmental degradation, if we are to create a responsible and aware body of citizens, form no part of the syllabus. The capacity to think independently and critically about problems that plague modern Indian society, which ought really to be a prominent part of the humanities curriculum, is perceived to be intractable from the point of view of the examiner. Lest the evaluation becomes subjective, every effort is made to reduce both history and economics to a series of facts; a one-to-one correlation between facts ensures proper systems of grading.\n\nThe author seems to believe in which of the following? A. Objective evaluation is necessary for social sciences. B. The capacity to think can be developed by a properly designed curriculum of humanities and social sciences. C. Proper education can help a person to become a responsible and responsive citizen.",
+   "options": [
+    {
+     "key": "A",
+     "text": "A and B",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "B only",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "B and C",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A, B and C",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "23",
+    "page": 6,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q24",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe goals of our present system of primary and secondary schooling are to prepare students for the examination system, which will take them to the best technical institutions in the country. While the teaching of science and mathematics has been upgraded over the years, the teaching of the humanities and social sciences continues to be straightjacketed in grotesque ways. Those areas of the Indian reality that ought to form the proper subject like caste, poverty and environmental degradation, if we are to create a responsible and aware body of citizens, form no part of the syllabus. The capacity to think independently and critically about problems that plague modern Indian society, which ought really to be a prominent part of the humanities curriculum, is perceived to be intractable from the point of view of the examiner. Lest the evaluation becomes subjective, every effort is made to reduce both history and economics to a series of facts; a one-to-one correlation between facts ensures proper systems of grading.\n\nWhat seems to be the purpose of the author in writing this passage?",
+   "options": [
+    {
+     "key": "A",
+     "text": "To appreciate the present educational system.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "To reduce importance of science and mathematics in our system of education.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "To critically look into the method of teaching of science and mathematics.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "To point out the deficiencies in the curriculum and examination system.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "24",
+    "page": 6,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q25",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe goals of our present system of primary and secondary schooling are to prepare students for the examination system, which will take them to the best technical institutions in the country. While the teaching of science and mathematics has been upgraded over the years, the teaching of the humanities and social sciences continues to be straightjacketed in grotesque ways. Those areas of the Indian reality that ought to form the proper subject like caste, poverty and environmental degradation, if we are to create a responsible and aware body of citizens, form no part of the syllabus. The capacity to think independently and critically about problems that plague modern Indian society, which ought really to be a prominent part of the humanities curriculum, is perceived to be intractable from the point of view of the examiner. Lest the evaluation becomes subjective, every effort is made to reduce both history and economics to a series of facts; a one-to-one correlation between facts ensures proper systems of grading.\n\nWhat problems does the author see in the improvement of the teaching of humanities and social sciences? A. The present curriculum of these subjects. B. The difficulties of the examiners. C. The present system of evaluation.",
+   "options": [
+    {
+     "key": "A",
+     "text": "A only",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "A and B",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A and C",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A, B and C",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "25",
+    "page": 6,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q26",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30): Fill in the blank.\n\nThere is something wonderful ________ him.",
+   "options": [
+    {
+     "key": "A",
+     "text": "of",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "about",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "for",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "in",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "26",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q27",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30): Fill in the blank.\n\nDid the boys turn ________ for football practice?",
+   "options": [
+    {
+     "key": "A",
+     "text": "up",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "on",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "back",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "in",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "27",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q28",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30): Fill in the blank.\n\nI stayed in Mumbai ________ eight years.",
+   "options": [
+    {
+     "key": "A",
+     "text": "for",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "since",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "through",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "around",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "28",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q29",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30): Fill in the blank.\n\nThis is entirely ________ you and me.",
+   "options": [
+    {
+     "key": "A",
+     "text": "between",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "from",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "among",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "amidst",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "29",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q30",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30): Fill in the blank.\n\nMy brother ________ getting married next year.",
+   "options": [
+    {
+     "key": "A",
+     "text": "is",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "shall",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "was",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "will",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "30",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q31",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Each of these questions consists of a sentence which is divided into four parts, numbered (1) to (4). Only one part in each sentence is not acceptable in standard written English. Identify that part which contains an error.\n\nEach sentence is divided into four parts. Only one part is not acceptable in standard written English. Identify the part that contains an error.",
+   "options": [
+    {
+     "key": "A",
+     "text": "I learnt",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "from my father",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "that honesty was",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the best policy.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "31",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q32",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Each of these questions consists of a sentence which is divided into four parts, numbered (1) to (4). Only one part in each sentence is not acceptable in standard written English. Identify that part which contains an error.\n\nEach sentence is divided into four parts. Only one part is not acceptable in standard written English. Identify the part that contains an error.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Can anyone",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "imagine me",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "to wear",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "a red or blue tie ?",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "32",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q33",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Each of these questions consists of a sentence which is divided into four parts, numbered (1) to (4). Only one part in each sentence is not acceptable in standard written English. Identify that part which contains an error.\n\nEach sentence is divided into four parts. Only one part is not acceptable in standard written English. Identify the part that contains an error.",
+   "options": [
+    {
+     "key": "A",
+     "text": "My father and",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "my brother is",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "interested",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "in playing.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "33",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q34",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Each of these questions consists of a sentence which is divided into four parts, numbered (1) to (4). Only one part in each sentence is not acceptable in standard written English. Identify that part which contains an error.\n\nEach sentence is divided into four parts. Only one part is not acceptable in standard written English. Identify the part that contains an error.",
+   "options": [
+    {
+     "key": "A",
+     "text": "His reply",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "not only was prompt",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "but",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "also complete.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "34",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q35",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Each of these questions consists of a sentence which is divided into four parts, numbered (1) to (4). Only one part in each sentence is not acceptable in standard written English. Identify that part which contains an error.\n\nEach sentence is divided into four parts. Only one part is not acceptable in standard written English. Identify the part that contains an error.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Her joke",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "was so hilarious",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "that the whole class",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "bursted out in laughter.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "35",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q36",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of the following questions, out of the given alternatives,\n\nRajni often walks to school.",
+   "options": [
+    {
+     "key": "A",
+     "text": "rarely",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "never",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "always",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "sometimes",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "36",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q37",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of the following questions, out of the given alternatives,\n\nThe councillor had a huge party at his house after another victorious run for office.",
+   "options": [
+    {
+     "key": "A",
+     "text": "vanquished",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "dreadful",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "defeated",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "achieved",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "37",
+    "page": 7,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q38",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of the following questions, out of the given alternatives,\n\nHe was asked to accelerate the pace of work.",
+   "options": [
+    {
+     "key": "A",
+     "text": "slacken",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "tighten",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "check",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "supervise",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "38",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q39",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of the following questions, out of the given alternatives,\n\nMany people try to resist reforms in the society.",
+   "options": [
+    {
+     "key": "A",
+     "text": "oppose",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "fight",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "welcome",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "repel",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "39",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q40",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of the following questions, out of the given alternatives,\n\nOn her mother’s birthday, the young girl’s mind was usually filled with sad memories of her tragic death.",
+   "options": [
+    {
+     "key": "A",
+     "text": "incredulous",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "joyful",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "mysterious",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "boring",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "40",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q41",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : In each of the following questions, out of the given alternatives, choose the one which is nearest in meaning to the underlined word of the sentence.\n\nThe bullet wound proved to be fatal and the soldier died immediately.",
+   "options": [
+    {
+     "key": "A",
+     "text": "grievous",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "dangerous",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "deadly",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "serious",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "41",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q42",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : In each of the following questions, out of the given alternatives, choose the one which is nearest in meaning to the underlined word of the sentence.\n\nWe didn't believe in his statement, but subsequent events proved that he was right.",
+   "options": [
+    {
+     "key": "A",
+     "text": "later",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "many",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "few",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "earlier",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "42",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q43",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : In each of the following questions, out of the given alternatives, choose the one which is nearest in meaning to the underlined word of the sentence.\n\nHe is averse to the idea of holding elections now.",
+   "options": [
+    {
+     "key": "A",
+     "text": "agreeable",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "angry",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "opposed",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "convinced",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "43",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q44",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : In each of the following questions, out of the given alternatives, choose the one which is nearest in meaning to the underlined word of the sentence.\n\nThe notice said that the meeting would begin precisely at 9.30 AM.",
+   "options": [
+    {
+     "key": "A",
+     "text": "concisely",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "vaguely",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "approximately",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "exactly",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "44",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q45",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : In each of the following questions, out of the given alternatives, choose the one which is nearest in meaning to the underlined word of the sentence.\n\nFresh water is abundant in this country, but we must protect this important resource for future generations.",
+   "options": [
+    {
+     "key": "A",
+     "text": "plenty",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "ripe",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "absent",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "cheap",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "45",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q46",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Alottment",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Alotment",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Allotment",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Allottment",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "46",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q47",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Bilataral",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bilaterial",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Biletaral",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bilateral",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "47",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q48",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Emission",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Emession",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Emisson",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Emmesion",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "48",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q49",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Simaltaneous",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Simeltaneous",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Simultaneous",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Simultaneus",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "49",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q50",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Communication",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Comunication",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Comunicattion",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Communecation",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "50",
+    "page": 8,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q51",
+   "type": "MCQ",
+   "prompt": "How many numbers up to 800 are divisible by 24?",
+   "options": [
+    {
+     "key": "A",
+     "text": "30",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "29",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "33",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "26",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "51",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q52",
+   "type": "MCQ",
+   "prompt": "If 2/7 of a number increased by 25 gives 45, find the number.",
+   "options": [
+    {
+     "key": "A",
+     "text": "81",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "63",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "72",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "70",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "52",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q53",
+   "type": "MCQ",
+   "prompt": "The simplest fraction form of 0.6025 is __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "6025/10000",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "241/400",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "522/700",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "605/844",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "53",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q54",
+   "type": "MCQ",
+   "prompt": "(0.001)^(1/3) = ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "0.1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "0.01",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1.1",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "54",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q55",
+   "type": "MCQ",
+   "prompt": "Find the LCM of 4/3, 8/9 and 3/5.",
+   "options": [
+    {
+     "key": "A",
+     "text": "20",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "24",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1/24",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1/20",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "55",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q56",
+   "type": "MCQ",
+   "prompt": "What must be added to 581173 to make it exactly divisible by 11 ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "0",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "56",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q57",
+   "type": "MCQ",
+   "prompt": "The cost of 24 pens is ₹96. Find the cost of 16 such pens.",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹66",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹64",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹62",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹68",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "57",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q58",
+   "type": "MCQ",
+   "prompt": "A painter can paint a window every 3/4 hour. How many windows will he paint in 5 1/4 hours?",
+   "options": [
+    {
+     "key": "A",
+     "text": "7",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "9",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "5",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "58",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q59",
+   "type": "MCQ",
+   "prompt": "The average age of 7 members of Mahesh’s family is 25 yr. The average age of the same family 3 yr ago was __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "21 yr",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "22 yr",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "23 yr",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "24 yr",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "59",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q60",
+   "type": "MCQ",
+   "prompt": "Average of two numbers is 14.5 and square root of their product is 10. What are the numbers ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "16 and 9",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "25 and 4",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4 and 16",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "25 and 9",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "60",
+    "page": 9,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q61",
+   "type": "MCQ",
+   "prompt": "A school bus reduces its speed from 60 m/h to 40 m/h. What is the percentage decrease in speed?",
+   "options": [
+    {
+     "key": "A",
+     "text": "33.3%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "66.6%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "77.7%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "45%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "61",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q62",
+   "type": "MCQ",
+   "prompt": "A fruit seller had some apples. He sells 35% apples and still has 390 apples. Originally he had __________ apples.",
+   "options": [
+    {
+     "key": "A",
+     "text": "600",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "540",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "660",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "580",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "62",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q63",
+   "type": "MCQ",
+   "prompt": "A shopkeeper uses a weight of 960 g instead of 1000 g. What is his gain percentage? 1 1",
+   "options": [
+    {
+     "key": "A",
+     "text": "4%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "6%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4 1/6 %",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "6 1/4 %",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "63",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q64",
+   "type": "MCQ",
+   "prompt": "A man sold two books at ₹24 each. On one he got a profit of 20% and on the other he lost 20%. On the whole he __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "lost ₹1",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "gained ₹1",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "lost ₹2",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "gained ₹2",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "64",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q65",
+   "type": "MCQ",
+   "prompt": "In a ratio which is equal to 3 : 7, if the antecedent is 33, what is the consequent ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "37",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "77",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "73",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "70",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "65",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q66",
+   "type": "MCQ",
+   "prompt": "In what proportion must water be mixed with spirit to gain 12 1/2 % by selling it at cost price?",
+   "options": [
+    {
+     "key": "A",
+     "text": "2 : 7",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1 : 8",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1 : 9",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2 : 9",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "66",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q67",
+   "type": "MCQ",
+   "prompt": "A can do a piece of work in 15 days and B alone can do it in 10 days. B works at it for 5 days and then leaves. In how many days, A alone can finish the remaining work? 1 1",
+   "options": [
+    {
+     "key": "A",
+     "text": "7 days",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7 1/2 days",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "8 days",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "8 1/2 days",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "67",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q68",
+   "type": "MCQ",
+   "prompt": "A can give B a 40 m start and C 70 m start in a km race. How many metres start can B give C in a km race? 1 1 1",
+   "options": [
+    {
+     "key": "A",
+     "text": "31 m start",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "31 1/2 m start",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "31 1/4 m start",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "31 1/7 m start",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "68",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q69",
+   "type": "MCQ",
+   "prompt": "A sum becomes 10/9 times itself in 1 year. Find the rate of simple interest.",
+   "options": [
+    {
+     "key": "A",
+     "text": "11 1/2 %",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "11 1/9 %",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "12 1/2 %",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "12 1/9 %",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "69",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q70",
+   "type": "MCQ",
+   "prompt": "Find the compound interest on ₹20,000 at 12% per annum for 6 months, compounded quarterly.",
+   "options": [
+    {
+     "key": "A",
+     "text": "₹1415",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "₹1096",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "₹1218",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "₹1321",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "70",
+    "page": 10,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q71",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 71-72) : In a certain code : (i) pit dar na means you are good (ii) dar tok pa means good and bad (iii) tim na tok means they are bad.\n\nWhich word is used for 'they' in this code?",
+   "options": [
+    {
+     "key": "A",
+     "text": "na",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "tok",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "tim",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "pit",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "71",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q72",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 71-72) : In a certain code : (i) pit dar na means you are good (ii) dar tok pa means good and bad (iii) tim na tok means they are bad.\n\nFor the above question which statement is surplus?",
+   "options": [
+    {
+     "key": "A",
+     "text": "only (i)",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "only (ii)",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "(i) or (ii)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "72",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q73",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 73-74) : Complete the series by replacing ‘?’\n\n6, 11, 21, 36, 56, ‘?’",
+   "options": [
+    {
+     "key": "A",
+     "text": "51",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "42",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "81",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "91",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "73",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q74",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 73-74) : Complete the series by replacing ‘?’\n\n1, 2, 6, 24, ‘?’",
+   "options": [
+    {
+     "key": "A",
+     "text": "60",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "95",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "120",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "150",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "74",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q75",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 75-76) : In each of these questions, choose the incorrect term.\n\n11, 2, 21, 3, 32, 4, 41, 5, 51, 6",
+   "options": [
+    {
+     "key": "A",
+     "text": "32",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "51",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "11",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "21",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "75",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q76",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 75-76) : In each of these questions, choose the incorrect term.\n\n5, 10, 17, 24, 37",
+   "options": [
+    {
+     "key": "A",
+     "text": "10",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "17",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "24",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "37",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "76",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q77",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 77-78) : In each of the following questions, find out the alternative which will replace the question mark.\n\nTree : Forest : : Grass : ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Lawn",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Garden",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Park",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Field",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "77",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q78",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 77-78) : In each of the following questions, find out the alternative which will replace the question mark.\n\nEye : Myopia : : Teeth : ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Pyorrhoea",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Cataract",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Trachoma",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Eczema",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "78",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q79",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 79-80) : In each of the following questions, find the word which is different from the rest.\n\nChoose the word which is different from the rest.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Black",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Red",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Yellow",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Blue",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "79",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q80",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 79-80) : In each of the following questions, find the word which is different from the rest.\n\nChoose the word which is different from the rest.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Talk",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Smell",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Think",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Feel",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "80",
+    "page": 11,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q81",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 81-82) : In each of the following questions a conclusion is followed by statements I and II. Give your answer as (1) If the statement I alone is needed to draw the conclusion. (2) If the statement II alone is needed to draw the conclusion. (3) If both the statements I and II are needed to draw the conclusion. (4) If both the statements I and II are not sufficient to draw the conclusion.\n\nHe looks dangerous. I. He has a lean and hungry look. II. He thinks too much.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Statement I alone is needed to draw the conclusion.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Statement II alone is needed to draw the conclusion.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Both statements I and II are needed to draw the conclusion.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Statements I and II together are not sufficient to draw the conclusion.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "81",
+    "page": 12,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q82",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 81-82) : In each of the following questions a conclusion is followed by statements I and II. Give your answer as (1) If the statement I alone is needed to draw the conclusion. (2) If the statement II alone is needed to draw the conclusion. (3) If both the statements I and II are needed to draw the conclusion. (4) If both the statements I and II are not sufficient to draw the conclusion.\n\nThere is no toy which is not pretty. I. All toys are helpful in recreation. II. All toys are pretty.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Statement I alone is needed to draw the conclusion.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Statement II alone is needed to draw the conclusion.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Both statements I and II are needed to draw the conclusion.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Statements I and II together are not sufficient to draw the conclusion.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "82",
+    "page": 12,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q83",
+   "type": "MCQ",
+   "prompt": "If in a certain code 65312 is written as NOSRP and 7894 as VTMA then how will 3476 be written in the same code?",
+   "options": [
+    {
+     "key": "A",
+     "text": "SAVN",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "SANV",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "SNAV",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "SNVA",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "83",
+    "page": 12,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q84",
+   "type": "MCQ",
+   "prompt": "Gaurav walks 20 km. towards North. He turns left and walks 40 km. He again turns left and walks 20 km. Finally, he moves 20 km. after turning to the left. How far is he from his starting position?",
+   "options": [
+    {
+     "key": "A",
+     "text": "20 km.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "30 km.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "50 km.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "60 km.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "84",
+    "page": 12,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q85",
+   "type": "MCQ",
+   "prompt": "In a class of 39 students, Ravi is 7 ranks ahead of Sumit. If Sumit's rank is 17th from the last, what is Ravi's rank from the start?",
+   "options": [
+    {
+     "key": "A",
+     "text": "14th",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "15th",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "16th",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "17th",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "85",
+    "page": 12,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q86",
+   "type": "MCQ",
+   "prompt": "How many countries participated in the FIFA U-17 World Cup football championship held in India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Sixteen",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Twenty",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Twenty Four",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "86",
+    "page": 12,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q87",
+   "type": "MCQ",
+   "prompt": "Who among the following has been appointed as the Chairman of the Central Board of Film Certification (CBFC) in August 2017 by the Government of India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Prasoon Joshi",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Pahlaj Nihalani",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Anupam Kher",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "87",
+    "page": 12,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q88",
+   "type": "MCQ",
+   "prompt": "Which of the following cities has become the first city in the world to have its own Microsoft-designed font?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Tokyo",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Dubai",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "New York",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "London",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "88",
+    "page": 12,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q89",
+   "type": "MCQ",
+   "prompt": "Goods and Services Tax (GST) has been implemented in India from________2017.",
+   "options": [
+    {
+     "key": "A",
+     "text": "1 April",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1 May",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1 June",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1 July",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "89",
+    "page": 12,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q90",
+   "type": "MCQ",
+   "prompt": "Which Indian word(s) has/have been added in Oxford English Dictionary?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Jugaad",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Gulab Jamun",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Abba",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "90",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q91",
+   "type": "MCQ",
+   "prompt": "Who among the following pairs from Bollywood fraternity has been roped in by PC Jewellers as their brand ambassador?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Akshay Kumar and Twinkle Khanna",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Amitabh Bachchan and Jaya Bachchan",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Ajay Devgn and Kajol",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Shah Rukh Khan and Gauri Khan",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "91",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q92",
+   "type": "MCQ",
+   "prompt": "‘Vastra 2017’, the four-day 6th edition of India’s Premier International Trade Fair on Textiles, Apparel & Accessories took place in September 2017 in_______.",
+   "options": [
+    {
+     "key": "A",
+     "text": "New Delhi",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Jaipur",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Gandhinagar",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bhubaneswar",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "92",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q93",
+   "type": "MCQ",
+   "prompt": "“Garden Vareli” is a popular name in women clothing/apparel specially in sarees is from the house of__________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Bombay Dyeing",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Siyaram Silk",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Mafatlal Ind Ltd",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "93",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q94",
+   "type": "MCQ",
+   "prompt": "Which Indian Bollywood actress has been seen as the promoter of Ziah’ the newly introduced jewellery collection by Kalyan Jewellers?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Sonam Kapoor",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Parineeti Chopra",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Sonakshi Sinha",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Shilpa Shetty",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "94",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q95",
+   "type": "MCQ",
+   "prompt": "The Indian Constitution was enforced on ___________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "30th January, 1950",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "26th January, 1950",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "15th August, 1947",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "26th November, 1949",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "95",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q96",
+   "type": "MCQ",
+   "prompt": "The Governor of a State/UT is appointed by the",
+   "options": [
+    {
+     "key": "A",
+     "text": "Prime Minister.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "President.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Chief Minister of the State.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Chief Justice of India.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "96",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q97",
+   "type": "MCQ",
+   "prompt": "Which planet of our Solar system is known as the ‘Watery Planet’?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Mercury",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Earth",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Mars",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Jupiter",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "97",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q98",
+   "type": "MCQ",
+   "prompt": "The Gulf of Mannar is located in the",
+   "options": [
+    {
+     "key": "A",
+     "text": "Arabian Sea.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bering Sea.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Bay of Bengal.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Indian Ocean.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "98",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q99",
+   "type": "MCQ",
+   "prompt": "The main working memory used by the computer is________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "RAM",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "ROM",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "DVD",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "CD",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "99",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2020-bdes-gat-q100",
+   "type": "MCQ",
+   "prompt": "The Swedish Academy has selected Japanese born Kazuo Ishiguro (62) for the 2017 Nobel Prize in_________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "economic sciences",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "literature",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "physics",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "physiology or medicine",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2020,
+    "paperId": "nift-2020-bdes-gat",
+    "questionNo": "100",
+    "page": 13,
+    "sourceSha256": "61b6d7543dfb6e691532f98f6b1b591da73b51a1207bf51041107753161a4668",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2020)",
+    "verification": "review"
+   }
   }
  ]
 }
