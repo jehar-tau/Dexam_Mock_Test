@@ -8,6 +8,7 @@ import { readWorkedExplanation, workedFigureIndex } from "./worked-solution.js";
 import "./paper-workspace.css";
 
 const topicName = value => value?.replaceAll("-", " ") || "Unclassified";
+const formatMarks = value => (value < 0 ? "−" + Math.abs(value) : String(value)).replace(/\.0+$/, "");
 export function AttemptInsights({ questions, practicePath = "/dashboard/practice", onReviewOutcome }) {
   const { topics, sections, recommended } = buildAttemptInsights(questions);
   const summary = responseSummary(questions);
@@ -24,8 +25,11 @@ export function AttemptInsights({ questions, practicePath = "/dashboard/practice
       <ul>{outcomes.map(([key,count]) => <li key={key}>{onReviewOutcome ? <button type="button" aria-label={"Review " + outcomeLabels[key].toLowerCase() + " questions (" + count + ")"} onClick={() => onReviewOutcome(key)}><i data-outcome={key}/>{outcomeLabels[key]} <b>{count}</b></button> : <><i data-outcome={key}/>{outcomeLabels[key]} <b>{count}</b></>}</li>)}</ul>
     </section>
     <div className="analysis-columns">
-      <section className="analysis-panel"><h2>By question type</h2><table><thead><tr><th>Type</th><th>Answered</th><th>Correct</th><th>Accuracy</th></tr></thead>
-        <tbody>{sections.map(row => <tr key={row.key}><th scope="row">{row.key}</th><td>{row.answered}/{row.total}</td><td>{row.correct}</td><td>{row.accuracy == null ? "—" : row.accuracy + "%"}</td></tr>)}</tbody></table>
+      <section className="analysis-panel"><h2>By section</h2><table><thead><tr><th>Section</th><th>Answered</th><th>Correct</th><th>Accuracy</th><th>Marks</th></tr></thead>
+        <tbody>{sections.map(row => <tr key={row.key}><th scope="row">{row.key}</th><td>{row.answered}/{row.total}</td><td>{row.correct}</td><td>{row.accuracy == null ? "—" : row.accuracy + "%"}</td>
+          <td className="analysis-marks">{row.marks !== null ? <><b>{formatMarks(row.marks)}</b><small> / {row.available}</small></>
+            : <><b>{formatMarks(row.marksExcludingPartial)}</b><small> + partial</small></>}</td></tr>)}</tbody></table>
+        {sections.some(row => row.partialPending) && <p className="analysis-note">“+ partial” adds partial-credit marks, which are included in your total score above.</p>}
       </section>
       <section className="analysis-panel"><h2>Topic accuracy</h2>
         <ul className="analysis-bars">{topics.map(row => <li key={row.key}><span>{topicName(row.key)}</span><b>{row.accuracy == null ? "—" : row.accuracy + "%"}</b>
