@@ -117875,6 +117875,5406 @@
     "answerKeySource": "Prepp copy of the NTA M.Des GAT answer key, 5 Feb 2023",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q1",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nWhat is the cost price of the article if when it is sold for Rs. 168, a loss of 16% is incurred ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rs. 200",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Rs. 180",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rs. 220",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rs. 210",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "1",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q2",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nThe ratio of the ages of ‘A’ and ‘B’ ten years ago was 3 : 5. If the ratio of their present ages is 2 : 3, how old is ‘B’ today ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "40 years",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "30 years",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "60 years",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "24 years",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "2",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q3",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nChaitanya and Aditya started a business in partnership by investing Rs. 12,000 and Rs. 15,000 respectively. If, at the end of one year, Chaitanya’s share in the profit was Rs. 1200, what is the amount of the overall profit ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rs. 2400",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Rs. 2800",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rs. 3000",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rs. 2700",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "3",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q4",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nThe average of six numbers is 3.95. If the average of two of them is 3.4 while that of the other two is 3.85, what is the average of the remaining two numbers ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "4.8",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4.7",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4.6",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "4.5",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "4",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q5",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nIf 200% of a number is 800, what will be 0.5% of that number ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "2",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "20",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "200",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2000",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "5",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q6",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nOut of 100 students, 50 failed in English and 30 failed in Maths. If 12 students failed in both English and Maths, how many passed in both the subjects ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "8",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "20",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "32",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "50",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "6",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q7",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nHow much water should be added to 30 litre solution of water and alcohol containing 90% alcohol so as to reduce the content of alcohol to 80% ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "3.5 litres",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2.75 litres",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "6.5 litres",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3.75 litres",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "7",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q8",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nA boat goes downstream through certain distance in 1 hour and returns back in 1.5 hours. If the current is flowing at the speed of 3 km/hr, what is the speed of the boat in still water ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "12 km/hr",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "15 km/hr",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "13 km/hr",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "14 km/hr",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "8",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q9",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nTwo successive discounts of 30% followed by 25% are equivalent to a single discount of which of the following ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "45%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "55%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "47.5%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "9",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q10",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nMukesh scored 21 runs more than Girish in a cricket match. If, the sum of the runs scored by both of them together is 237, what are the runs scored by Girish ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "108",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "118",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "98",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "106",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "10",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q11",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\n“B” is 10% heavier than “A” and “C” is 10% lighter than “B”. Which of the following statements is TRUE ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Both “A” and “C” weigh equal",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "“C” is lighter than “A” by 9%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "“C” is heavier than “A” by 1%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "“C” is lighter than “A” by 1%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "11",
+    "page": 1,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q12",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nWhich of the following numbers does not fit in the following series ? 4 8 20 48 144 288 864",
+   "options": [
+    {
+     "key": "A",
+     "text": "8",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "20",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "48",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "144",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "12",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q13",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nA certain amount of profit is distributed among two business partners A and B in the ratio 3 : 1. If B’s investment of Rs. 4,000 is used for first six months only, what is A’s investment if it is used for the whole year ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rs. 5, 000",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Rs. 8,000",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rs. 4,000",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rs. 6,000",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "13",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q14",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nWhen a certain number is divided by either 4 or 6, the remainder of 2 is left. Which of the following could that number be ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "142",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "170",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "312",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "214",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "14",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q15",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nThe value of a vehicle is Rs.3,25,000. It was insured for 85% of its value. If, in an accident, the vehicle was totally damaged and the insurance company paid 90% of the insured value, what is the difference in the value of the vehicle and the insurance amount received ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rs.32,500",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Rs.48,750",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rs.76,375",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rs.81,250",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "15",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q16",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nEight men can complete a work in 36 days. If 4 men are withdrawn after 10 days, how many days would the remaining men require to complete the remaining work ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "52",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "56",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "609",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "64",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "16",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q17",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nSalaries of Ravi and Sumit are in the ratio 2 : 3. If the salary of each is increased by Rs. 4000, the new ratio becomes 40 : 57. What is Sumit's salary?\n\n(Corrected by DMocks: none of the printed options was right; the salary works out to Rs. 34,000, so option D now reads Rs. 34,000 (it read Rs. 38,000).)",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rs. 17,000",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Rs. 20,000",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rs. 25,500",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rs. 34,000",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "17",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q18",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nAn error 2% in excess is made while measuring the side of a square. The percentage of error in the calculated area of the square is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "2%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "2.02%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "4.04%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "18",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q19",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nThe price of 10 chairs is equal to that of 4 tables. The price of 15 chairs and 2 tables together is Rs. 4000. The total price of 12 chairs and 3 tables is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rs. 3500",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Rs. 3750",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rs. 3840",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rs. 3900",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "19",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q20",
+   "type": "MCQ",
+   "prompt": "Instructions : In the questions 1 to 20 mark the appropriate answer from the choices which are given\n\nA man on tour travels first 160 km at 64 km/hr and the next 160 km at 80 km/hr. The average speed for the first 320 km of the tour is:",
+   "options": [
+    {
+     "key": "A",
+     "text": "35.55 km/hr",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "36 km/hr",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "71.11 km/hr",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "71 km/hr",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "20",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q21",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 21 – 23): Read each sentence to find out whether there is any error in it. The error, if any, will be in one part of the sentence. The number of that part is the answer.\n\nRead the sentence to find the part with an error: What this company needs (a) / is not only qualified (b) / manpower but also (c) / dedicated workers (d)",
+   "options": [
+    {
+     "key": "A",
+     "text": "What this company needs",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "is not only qualified",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "manpower but also",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "dedicated workers",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "21",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q22",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 21 – 23): Read each sentence to find out whether there is any error in it. The error, if any, will be in one part of the sentence. The number of that part is the answer.\n\nRead the sentence to find the part with an error: Yesterday Ramesh got the (a) / information that his father (b) / died of accident (c) / while travelling in a car (d)",
+   "options": [
+    {
+     "key": "A",
+     "text": "Yesterday Ramesh got the",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "information that his father",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "died of accident",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "while travelling in a car",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "22",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q23",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 21 – 23): Read each sentence to find out whether there is any error in it. The error, if any, will be in one part of the sentence. The number of that part is the answer.\n\nRead the sentence to find the part with an error: In my opinion (a) / Balraj is very (b) / honest and can (c) / be depended (d)",
+   "options": [
+    {
+     "key": "A",
+     "text": "In my opinion",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Balraj is very",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "honest and can",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "be depended",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "23",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q24",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 24 – 27): In each of the following sentence, a word is bold (and underlined) and is\n\nHis servility makes him detestable",
+   "options": [
+    {
+     "key": "A",
+     "text": "Slavery",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "insolence",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "prudence",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "bravery",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "24",
+    "page": 2,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q25",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 24 – 27): In each of the following sentence, a word is bold (and underlined) and is\n\nShe handled the machine with deft fingers",
+   "options": [
+    {
+     "key": "A",
+     "text": "delicate",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "quick",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "clumsy",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "sturdy",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "25",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q26",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 24 – 27): In each of the following sentence, a word is bold (and underlined) and is\n\nHer debonair manners were noticed by everyone present in the party",
+   "options": [
+    {
+     "key": "A",
+     "text": "cheerless",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "courteous",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "pleasant",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "stiff",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "26",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q27",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 24 – 27): In each of the following sentence, a word is bold (and underlined) and is\n\nWe have no doubt about the veracity of his statement",
+   "options": [
+    {
+     "key": "A",
+     "text": "truthfulness",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "propriety",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "purity",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "falsity",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "27",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q28",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 28 – 30): Choose the word which is most nearly the SAME in meaning of the word or group of words given in CAPITALS, as used in the passage\n\nCARVE",
+   "options": [
+    {
+     "key": "A",
+     "text": "Drive",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "acquire",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "forget",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "cover",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "28",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q29",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 28 – 30): Choose the word which is most nearly the SAME in meaning of the word or group of words given in CAPITALS, as used in the passage\n\nLARGE",
+   "options": [
+    {
+     "key": "A",
+     "text": "uncontrolled",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "diverse",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "big",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "long",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "29",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q30",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 28 – 30): Choose the word which is most nearly the SAME in meaning of the word or group of words given in CAPITALS, as used in the passage\n\nPURPOSE",
+   "options": [
+    {
+     "key": "A",
+     "text": "Effect",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "reason",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "ability",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "use",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "30",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q31",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 31 – 33): Choose the word which is most nearly the OPPOSITE in meaning of the word or group of words given in CAPITALS, as used in the passage\n\nREINFORCE",
+   "options": [
+    {
+     "key": "A",
+     "text": "Remove",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "delink",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "simplify",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "weaken",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "31",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q32",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 31 – 33): Choose the word which is most nearly the OPPOSITE in meaning of the word or group of words given in CAPITALS, as used in the passage\n\nOVERLY",
+   "options": [
+    {
+     "key": "A",
+     "text": "Certainly",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "minutely",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "inwardly",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "casually",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "32",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q33",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 31 – 33): Choose the word which is most nearly the OPPOSITE in meaning of the word or group of words given in CAPITALS, as used in the passage\n\nTREAT",
+   "options": [
+    {
+     "key": "A",
+     "text": "Misbehave",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "disregard",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "unwind",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "consider",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "33",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q34",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 34 – 36): In each question below, there is a sentence of which some parts have been jumbled up. Rearrange these parts which are labelled P, Q, R and S to produce the correct sentence. Choose the proper sequence.\n\nI read an advertisement that said P: posh, air-conditioned Q: gentleman of taste R: are available for S: fully furnished rooms The Proper sequence should be:",
+   "options": [
+    {
+     "key": "A",
+     "text": "PQRS",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "PSRQ",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "PSQR",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "SRPQ",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "34",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q35",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 34 – 36): In each question below, there is a sentence of which some parts have been jumbled up. Rearrange these parts which are labelled P, Q, R and S to produce the correct sentence. Choose the proper sequence.\n\nIn the darkness P: the long, narrow beard Q: was clearly visible with R: the tall stooping figure of the doctor S: and the aquiline nose The Proper sequence should be:",
+   "options": [
+    {
+     "key": "A",
+     "text": "RQPS",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "PSQR",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "RSQP",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "QPRS",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "35",
+    "page": 3,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q36",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 34 – 36): In each question below, there is a sentence of which some parts have been jumbled up. Rearrange these parts which are labelled P, Q, R and S to produce the correct sentence. Choose the proper sequence.\n\nThough he dialled frequently P: on telephone Q: my brother could not contact me R: and had left no information S: as I had gone out of office The Proper sequence should be:",
+   "options": [
+    {
+     "key": "A",
+     "text": "QPRS",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "SQRP",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "QPSR",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "SPQR",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "36",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q37",
+   "type": "MCQ",
+   "prompt": "Choose one appropriate word to replace each number in the blanks: The last decade has been ...(37)... for management education and development. When the economies of most western countries were ...(38)... in early 1980s there were ...(39)... cuts in both in corporate training and in higher education. During the boom years of mid 1980s there was some ...(40)... in both areas. In early 1990s industrialised countries were in the ...(41)... of another service recession.\n\nChoose the word for blank (37).",
+   "options": [
+    {
+     "key": "A",
+     "text": "dogmatic",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "paradoxical",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "outstanding",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "sluggish",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "37",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q38",
+   "type": "MCQ",
+   "prompt": "Choose one appropriate word to replace each number in the blanks: The last decade has been ...(37)... for management education and development. When the economies of most western countries were ...(38)... in early 1980s there were ...(39)... cuts in both in corporate training and in higher education. During the boom years of mid 1980s there was some ...(40)... in both areas. In early 1990s industrialised countries were in the ...(41)... of another service recession.\n\nChoose the word for blank (38).",
+   "options": [
+    {
+     "key": "A",
+     "text": "galvanised",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "privatized",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "dominant",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "faltering",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "38",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q39",
+   "type": "MCQ",
+   "prompt": "Choose one appropriate word to replace each number in the blanks: The last decade has been ...(37)... for management education and development. When the economies of most western countries were ...(38)... in early 1980s there were ...(39)... cuts in both in corporate training and in higher education. During the boom years of mid 1980s there was some ...(40)... in both areas. In early 1990s industrialised countries were in the ...(41)... of another service recession.\n\nChoose the word for blank (39).",
+   "options": [
+    {
+     "key": "A",
+     "text": "severe",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "judicious",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "marginal",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "proportionate",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "39",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q40",
+   "type": "MCQ",
+   "prompt": "Choose one appropriate word to replace each number in the blanks: The last decade has been ...(37)... for management education and development. When the economies of most western countries were ...(38)... in early 1980s there were ...(39)... cuts in both in corporate training and in higher education. During the boom years of mid 1980s there was some ...(40)... in both areas. In early 1990s industrialised countries were in the ...(41)... of another service recession.\n\nChoose the word for blank (40).",
+   "options": [
+    {
+     "key": "A",
+     "text": "proactivity",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "curiosity",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "downsizing",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "reactivity",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "40",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q41",
+   "type": "MCQ",
+   "prompt": "Choose one appropriate word to replace each number in the blanks: The last decade has been ...(37)... for management education and development. When the economies of most western countries were ...(38)... in early 1980s there were ...(39)... cuts in both in corporate training and in higher education. During the boom years of mid 1980s there was some ...(40)... in both areas. In early 1990s industrialised countries were in the ...(41)... of another service recession.\n\nChoose the word for blank (41).",
+   "options": [
+    {
+     "key": "A",
+     "text": "area",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "mood",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "grip",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "light",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "41",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q42",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 42 – 45): In each question, an incomplete statement (Stem) followed by fillers is given.\n\nDespite his best efforts to conceal his anger ......",
+   "options": [
+    {
+     "key": "A",
+     "text": "we could detect that he was very happy",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "he failed to give us an impression of his agony",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "people came to know that he was annoyed",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "he could succeed in doing it easily",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "42",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q43",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 42 – 45): In each question, an incomplete statement (Stem) followed by fillers is given.\n\nEven if it rains I shall come means ......",
+   "options": [
+    {
+     "key": "A",
+     "text": "if I come it will not rain",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "if it rains I shall not come",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "I will certainly come whether it rains or not",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "whenever there is rain I shall come",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "43",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q44",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 42 – 45): In each question, an incomplete statement (Stem) followed by fillers is given.\n\nHis appearance is unsmiling but ......",
+   "options": [
+    {
+     "key": "A",
+     "text": "his heart is full of compassion for others",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "he looks very serious on most occasions",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "people are afraid of him",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "he is uncompromising on matters of task",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "44",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q45",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 42 – 45): In each question, an incomplete statement (Stem) followed by fillers is given.\n\nShe never visits any zoo because she is strong opponent of the idea of ......",
+   "options": [
+    {
+     "key": "A",
+     "text": "setting the animals free into forest",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "feeding the animals while others are watching",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "watching the animals in their natural abode",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "holding the animals in captivity for our joy",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "45",
+    "page": 4,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q46",
+   "type": "MCQ",
+   "prompt": "Instructions: Read the following passage carefully and answer the questions (46 to 70) given below it. Certain words/phrases in the passage are printed in bold to help you to locate them while answering some of the questions. Passage 1 : The past decade has upset many preconceptions about development and this, more than anything else, makes it difficult to be overly definite about what the next decade has in store. But there are a few things that one can assert with some confidence. First, education, health and productive employment are crucial both for growth and for equity. We have tended to assume that all of these are the consequences of rapid economic growth and that only growth can generate the resources required for these purposes. But increasingly, it appears that these are better seen as the causes rather than as consequences of development. Virtually every case of successful development involves a prior improvement in literacy, technical skills, health, status and access to productive work. Second, technological competence is the most important resource endowment and it explains a far larger proportion of growth in output and trade than more conventional factors like natural resources or capital accumulation. The competence required is not just in research. In fact, technological dynamism in the factory and the farm is more important than the presence of the large research establishment. Third, the environmental imperative can no longer be ignored. Today, as an international issue, it is second only next to disarmament. Nationally, the development consequences of environmental neglect are increasingly obvious. In the Indian context, there are at least two further factors which reinforce the above propositions. The first is population growth. Given the pace of expansion of the population and the workforce, human resource development acquired an added urgency. Population growth is also one, but not necessarily the most important factor, which underlines environmental stress in rural and urban areas. The second factor is that as a large country we cannot carve out an independent position in the system without building up a substantial capacity for self-reliant growth. The acquisition of technical competence is crucial for this purpose. Until now we have tended to treat human resource development, technology issues and environment as subsidiary to the main task of planning. The thrust has been on: Quantitative expansion of infrastructure and production with a focus on production targets like tonnes of steel, kwh of electricity, etc.; capacity targets like length, rail kilometrage and coverage of targets like a number of schools and students, number of villages electrified, etc.; Catching up with known technologies; Fuller use of natural resources; Maximum mobilisation of financial resources.\n\nAccording to this passage, we have so far placed more emphasis on which of the following ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Increased number of basic facilities and meeting a number of targets",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Optimum use of available natural resources",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Maximum utilisation of available finances",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "All of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "46",
+    "page": 5,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q47",
+   "type": "MCQ",
+   "prompt": "Instructions: Read the following passage carefully and answer the questions (46 to 70) given below it. Certain words/phrases in the passage are printed in bold to help you to locate them while answering some of the questions. Passage 1 : The past decade has upset many preconceptions about development and this, more than anything else, makes it difficult to be overly definite about what the next decade has in store. But there are a few things that one can assert with some confidence. First, education, health and productive employment are crucial both for growth and for equity. We have tended to assume that all of these are the consequences of rapid economic growth and that only growth can generate the resources required for these purposes. But increasingly, it appears that these are better seen as the causes rather than as consequences of development. Virtually every case of successful development involves a prior improvement in literacy, technical skills, health, status and access to productive work. Second, technological competence is the most important resource endowment and it explains a far larger proportion of growth in output and trade than more conventional factors like natural resources or capital accumulation. The competence required is not just in research. In fact, technological dynamism in the factory and the farm is more important than the presence of the large research establishment. Third, the environmental imperative can no longer be ignored. Today, as an international issue, it is second only next to disarmament. Nationally, the development consequences of environmental neglect are increasingly obvious. In the Indian context, there are at least two further factors which reinforce the above propositions. The first is population growth. Given the pace of expansion of the population and the workforce, human resource development acquired an added urgency. Population growth is also one, but not necessarily the most important factor, which underlines environmental stress in rural and urban areas. The second factor is that as a large country we cannot carve out an independent position in the system without building up a substantial capacity for self-reliant growth. The acquisition of technical competence is crucial for this purpose. Until now we have tended to treat human resource development, technology issues and environment as subsidiary to the main task of planning. The thrust has been on: Quantitative expansion of infrastructure and production with a focus on production targets like tonnes of steel, kwh of electricity, etc.; capacity targets like length, rail kilometrage and coverage of targets like a number of schools and students, number of villages electrified, etc.; Catching up with known technologies; Fuller use of natural resources; Maximum mobilisation of financial resources.\n\nAccording to the author at the national level, with passage of time, the effect of which of the following are being felt ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Lack of attention and action for protecting environmental wealth",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Expansion of work force of high quality",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Progressive degradation of technological competence in urban areas",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Emphasis on slow rate of disarmament as compared to other nations",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "47",
+    "page": 5,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q48",
+   "type": "MCQ",
+   "prompt": "Instructions: Read the following passage carefully and answer the questions (46 to 70) given below it. Certain words/phrases in the passage are printed in bold to help you to locate them while answering some of the questions. Passage 1 : The past decade has upset many preconceptions about development and this, more than anything else, makes it difficult to be overly definite about what the next decade has in store. But there are a few things that one can assert with some confidence. First, education, health and productive employment are crucial both for growth and for equity. We have tended to assume that all of these are the consequences of rapid economic growth and that only growth can generate the resources required for these purposes. But increasingly, it appears that these are better seen as the causes rather than as consequences of development. Virtually every case of successful development involves a prior improvement in literacy, technical skills, health, status and access to productive work. Second, technological competence is the most important resource endowment and it explains a far larger proportion of growth in output and trade than more conventional factors like natural resources or capital accumulation. The competence required is not just in research. In fact, technological dynamism in the factory and the farm is more important than the presence of the large research establishment. Third, the environmental imperative can no longer be ignored. Today, as an international issue, it is second only next to disarmament. Nationally, the development consequences of environmental neglect are increasingly obvious. In the Indian context, there are at least two further factors which reinforce the above propositions. The first is population growth. Given the pace of expansion of the population and the workforce, human resource development acquired an added urgency. Population growth is also one, but not necessarily the most important factor, which underlines environmental stress in rural and urban areas. The second factor is that as a large country we cannot carve out an independent position in the system without building up a substantial capacity for self-reliant growth. The acquisition of technical competence is crucial for this purpose. Until now we have tended to treat human resource development, technology issues and environment as subsidiary to the main task of planning. The thrust has been on: Quantitative expansion of infrastructure and production with a focus on production targets like tonnes of steel, kwh of electricity, etc.; capacity targets like length, rail kilometrage and coverage of targets like a number of schools and students, number of villages electrified, etc.; Catching up with known technologies; Fuller use of natural resources; Maximum mobilisation of financial resources.\n\nAccording to the author, which of the following factors support and strengthen his point of view? (A) Necessity of carrying out growth on the basis of our strength (B) Increased emphasis on production and coverage targets",
+   "options": [
+    {
+     "key": "A",
+     "text": "Either (A) or (B)",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Both (A) and (B)",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Only (A) and not (B)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Only (B) and not (A)",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "48",
+    "page": 5,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q49",
+   "type": "MCQ",
+   "prompt": "Instructions: Read the following passage carefully and answer the questions (46 to 70) given below it. Certain words/phrases in the passage are printed in bold to help you to locate them while answering some of the questions. Passage 1 : The past decade has upset many preconceptions about development and this, more than anything else, makes it difficult to be overly definite about what the next decade has in store. But there are a few things that one can assert with some confidence. First, education, health and productive employment are crucial both for growth and for equity. We have tended to assume that all of these are the consequences of rapid economic growth and that only growth can generate the resources required for these purposes. But increasingly, it appears that these are better seen as the causes rather than as consequences of development. Virtually every case of successful development involves a prior improvement in literacy, technical skills, health, status and access to productive work. Second, technological competence is the most important resource endowment and it explains a far larger proportion of growth in output and trade than more conventional factors like natural resources or capital accumulation. The competence required is not just in research. In fact, technological dynamism in the factory and the farm is more important than the presence of the large research establishment. Third, the environmental imperative can no longer be ignored. Today, as an international issue, it is second only next to disarmament. Nationally, the development consequences of environmental neglect are increasingly obvious. In the Indian context, there are at least two further factors which reinforce the above propositions. The first is population growth. Given the pace of expansion of the population and the workforce, human resource development acquired an added urgency. Population growth is also one, but not necessarily the most important factor, which underlines environmental stress in rural and urban areas. The second factor is that as a large country we cannot carve out an independent position in the system without building up a substantial capacity for self-reliant growth. The acquisition of technical competence is crucial for this purpose. Until now we have tended to treat human resource development, technology issues and environment as subsidiary to the main task of planning. The thrust has been on: Quantitative expansion of infrastructure and production with a focus on production targets like tonnes of steel, kwh of electricity, etc.; capacity targets like length, rail kilometrage and coverage of targets like a number of schools and students, number of villages electrified, etc.; Catching up with known technologies; Fuller use of natural resources; Maximum mobilisation of financial resources.\n\nWhich of the following statements is not true in the context of the passage ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "We have to emphasise new aspects of human resource development",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Technological competence has to be given due priority over more conventional factors",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "We will have a bright future by only catching up with known technologies",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "We cannot afford to ignore the importance of environment",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "49",
+    "page": 5,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q50",
+   "type": "MCQ",
+   "prompt": "Instructions: Read the following passage carefully and answer the questions (46 to 70) given below it. Certain words/phrases in the passage are printed in bold to help you to locate them while answering some of the questions. Passage 1 : The past decade has upset many preconceptions about development and this, more than anything else, makes it difficult to be overly definite about what the next decade has in store. But there are a few things that one can assert with some confidence. First, education, health and productive employment are crucial both for growth and for equity. We have tended to assume that all of these are the consequences of rapid economic growth and that only growth can generate the resources required for these purposes. But increasingly, it appears that these are better seen as the causes rather than as consequences of development. Virtually every case of successful development involves a prior improvement in literacy, technical skills, health, status and access to productive work. Second, technological competence is the most important resource endowment and it explains a far larger proportion of growth in output and trade than more conventional factors like natural resources or capital accumulation. The competence required is not just in research. In fact, technological dynamism in the factory and the farm is more important than the presence of the large research establishment. Third, the environmental imperative can no longer be ignored. Today, as an international issue, it is second only next to disarmament. Nationally, the development consequences of environmental neglect are increasingly obvious. In the Indian context, there are at least two further factors which reinforce the above propositions. The first is population growth. Given the pace of expansion of the population and the workforce, human resource development acquired an added urgency. Population growth is also one, but not necessarily the most important factor, which underlines environmental stress in rural and urban areas. The second factor is that as a large country we cannot carve out an independent position in the system without building up a substantial capacity for self-reliant growth. The acquisition of technical competence is crucial for this purpose. Until now we have tended to treat human resource development, technology issues and environment as subsidiary to the main task of planning. The thrust has been on: Quantitative expansion of infrastructure and production with a focus on production targets like tonnes of steel, kwh of electricity, etc.; capacity targets like length, rail kilometrage and coverage of targets like a number of schools and students, number of villages electrified, etc.; Catching up with known technologies; Fuller use of natural resources; Maximum mobilisation of financial resources.\n\nAccording to the author, which of the following is a less important factor resulting in environmental stress in rural and urban areas ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Rate of growth of population",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Availability of productive employment",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Continued environmental neglect",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rapid economic growth",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "50",
+    "page": 6,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q51",
+   "type": "MCQ",
+   "prompt": "Passage 2: Sometimes we went off the road and on a path through the pine forest. The floor of the forest was soft to walk on; the frost did not happen as it did on the road. But we did not mind the hardness of the road because we had nails in the soles and heels. The nails bit on the frozen ruts and with nailed boots it was good walking on the road and invigorating. It was lovely walking in the woods.\n\n'Frozen ruts' means",
+   "options": [
+    {
+     "key": "A",
+     "text": "very cold roads",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "wheel marks in which frost had become hard",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "the road covered with frost",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "hard roads covered with snow",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "51",
+    "page": 6,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q52",
+   "type": "MCQ",
+   "prompt": "Passage 2: Sometimes we went off the road and on a path through the pine forest. The floor of the forest was soft to walk on; the frost did not happen as it did on the road. But we did not mind the hardness of the road because we had nails in the soles and heels. The nails bit on the frozen ruts and with nailed boots it was good walking on the road and invigorating. It was lovely walking in the woods.\n\nThe floor of the forest was soft because",
+   "options": [
+    {
+     "key": "A",
+     "text": "the forest did not harden it on account of trees",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the travellers were wearing boots",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "the shoes had nails on their sole and heel",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "they enjoyed walking in the woods",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "52",
+    "page": 6,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q53",
+   "type": "MCQ",
+   "prompt": "Passage 2: Sometimes we went off the road and on a path through the pine forest. The floor of the forest was soft to walk on; the frost did not happen as it did on the road. But we did not mind the hardness of the road because we had nails in the soles and heels. The nails bit on the frozen ruts and with nailed boots it was good walking on the road and invigorating. It was lovely walking in the woods.\n\nWe did not mind the hardness of road because",
+   "options": [
+    {
+     "key": "A",
+     "text": "we had nailed boots on",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "it was good walking on the road",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "the walk was refreshing",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the nails bit on the frozen roads",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "53",
+    "page": 6,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q54",
+   "type": "MCQ",
+   "prompt": "Passage 2: Sometimes we went off the road and on a path through the pine forest. The floor of the forest was soft to walk on; the frost did not happen as it did on the road. But we did not mind the hardness of the road because we had nails in the soles and heels. The nails bit on the frozen ruts and with nailed boots it was good walking on the road and invigorating. It was lovely walking in the woods.\n\nWe found great joy on account of",
+   "options": [
+    {
+     "key": "A",
+     "text": "wearing nailed boots",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the good long walk on the road",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "walking occasionally through the forest",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "walking on frost with nailed boots on",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "54",
+    "page": 6,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q55",
+   "type": "MCQ",
+   "prompt": "Passage 3: Speech is great blessings but it can also be great curse, for while it helps us to make our intentions and desires known to our fellows, it can also if we use it carelessly, make our attitude completely misunderstood. A slip of the tongue, the use of unusual word, or of an ambiguous word, and so on, may create an enemy where we had hoped to win a friend. Again, different classes of people use different vocabularies, and the ordinary speech of an educated may strike an uneducated listener as pompous. Unwittingly, we may use a word which bears a different meaning to our listener from what it does to men of our own class. Thus speech is not a gift to use lightly without thought, but one which demands careful handling. Only a fool will express himself alike to all kinds and conditions of men.\n\nThe best way to win a friend is to avoid",
+   "options": [
+    {
+     "key": "A",
+     "text": "irony in speech",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "pomposity in speech",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "verbosity in speech",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "ambiguity in speech",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "55",
+    "page": 6,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q56",
+   "type": "MCQ",
+   "prompt": "Passage 3: Speech is great blessings but it can also be great curse, for while it helps us to make our intentions and desires known to our fellows, it can also if we use it carelessly, make our attitude completely misunderstood. A slip of the tongue, the use of unusual word, or of an ambiguous word, and so on, may create an enemy where we had hoped to win a friend. Again, different classes of people use different vocabularies, and the ordinary speech of an educated may strike an uneducated listener as pompous. Unwittingly, we may use a word which bears a different meaning to our listener from what it does to men of our own class. Thus speech is not a gift to use lightly without thought, but one which demands careful handling. Only a fool will express himself alike to all kinds and conditions of men.\n\nWhile talking to an uneducated person, we should use",
+   "options": [
+    {
+     "key": "A",
+     "text": "ordinary speech",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "his vocabulary",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "simple words",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "polite language",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "56",
+    "page": 6,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q57",
+   "type": "MCQ",
+   "prompt": "Passage 3: Speech is great blessings but it can also be great curse, for while it helps us to make our intentions and desires known to our fellows, it can also if we use it carelessly, make our attitude completely misunderstood. A slip of the tongue, the use of unusual word, or of an ambiguous word, and so on, may create an enemy where we had hoped to win a friend. Again, different classes of people use different vocabularies, and the ordinary speech of an educated may strike an uneducated listener as pompous. Unwittingly, we may use a word which bears a different meaning to our listener from what it does to men of our own class. Thus speech is not a gift to use lightly without thought, but one which demands careful handling. Only a fool will express himself alike to all kinds and conditions of men.\n\nIf one used the same style of language with everyone, one would sound",
+   "options": [
+    {
+     "key": "A",
+     "text": "flat",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "boring",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "foolish",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "democratic",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "57",
+    "page": 6,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q58",
+   "type": "MCQ",
+   "prompt": "Passage 3: Speech is great blessings but it can also be great curse, for while it helps us to make our intentions and desires known to our fellows, it can also if we use it carelessly, make our attitude completely misunderstood. A slip of the tongue, the use of unusual word, or of an ambiguous word, and so on, may create an enemy where we had hoped to win a friend. Again, different classes of people use different vocabularies, and the ordinary speech of an educated may strike an uneducated listener as pompous. Unwittingly, we may use a word which bears a different meaning to our listener from what it does to men of our own class. Thus speech is not a gift to use lightly without thought, but one which demands careful handling. Only a fool will express himself alike to all kinds and conditions of men.\n\nA 'slip of the tongue' means something said",
+   "options": [
+    {
+     "key": "A",
+     "text": "wrongly by choice",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "unintentionally",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "without giving proper thought",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "to hurt another person",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "58",
+    "page": 6,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q59",
+   "type": "MCQ",
+   "prompt": "Passage 4: The greatest thing this age can be proud of is the birth of man in the conciousness of men. In his drunken orgies of power and national pride man may flout and jeer at it. When organised national selfishness, racial antipathy and commercial self seeking begin to display their ugly deformities in all their nakedness, then comes the time for man to know that his salvation is not in political organisations and extended trade relations, not in any mechanical re-arrangement of social system but in a deeper transformation of life, in the liberation of consciousness, in love, in the realisation of God in man.\n\nIn this passage, the phrase \"God in man\" implies",
+   "options": [
+    {
+     "key": "A",
+     "text": "God having assumed the shape of man",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "neither fully godly nor fully human",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "man being transformed into God",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the divine qualities in man",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "59",
+    "page": 7,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q60",
+   "type": "MCQ",
+   "prompt": "Passage 4: The greatest thing this age can be proud of is the birth of man in the conciousness of men. In his drunken orgies of power and national pride man may flout and jeer at it. When organised national selfishness, racial antipathy and commercial self seeking begin to display their ugly deformities in all their nakedness, then comes the time for man to know that his salvation is not in political organisations and extended trade relations, not in any mechanical re-arrangement of social system but in a deeper transformation of life, in the liberation of consciousness, in love, in the realisation of God in man.\n\nThe author uses the expression 'ugly deformities' to show his indignation at",
+   "options": [
+    {
+     "key": "A",
+     "text": "political organizations",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the liberation of human consciousness",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "selfishness and materialism of the people",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the drunken orgies of power",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "60",
+    "page": 7,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q61",
+   "type": "MCQ",
+   "prompt": "Passage 4: The greatest thing this age can be proud of is the birth of man in the conciousness of men. In his drunken orgies of power and national pride man may flout and jeer at it. When organised national selfishness, racial antipathy and commercial self seeking begin to display their ugly deformities in all their nakedness, then comes the time for man to know that his salvation is not in political organisations and extended trade relations, not in any mechanical re-arrangement of social system but in a deeper transformation of life, in the liberation of consciousness, in love, in the realisation of God in man.\n\nAccording to the author, \"salvation\" of human beings lies in the",
+   "options": [
+    {
+     "key": "A",
+     "text": "extended trade relations",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "spiritual transformation of life",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "orgy of national pride",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "wholehearted participated in political",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "61",
+    "page": 7,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q62",
+   "type": "MCQ",
+   "prompt": "Passage 4: The greatest thing this age can be proud of is the birth of man in the conciousness of men. In his drunken orgies of power and national pride man may flout and jeer at it. When organised national selfishness, racial antipathy and commercial self seeking begin to display their ugly deformities in all their nakedness, then comes the time for man to know that his salvation is not in political organisations and extended trade relations, not in any mechanical re-arrangement of social system but in a deeper transformation of life, in the liberation of consciousness, in love, in the realisation of God in man.\n\nIn the phrase \"the birth of Man in the consciousness of men\", Man stands for",
+   "options": [
+    {
+     "key": "A",
+     "text": "power and arrogance",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "egocentricity",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "noble human qualities",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "an idealistic notion of the human self",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "62",
+    "page": 7,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q63",
+   "type": "MCQ",
+   "prompt": "Passage 4: The greatest thing this age can be proud of is the birth of man in the conciousness of men. In his drunken orgies of power and national pride man may flout and jeer at it. When organised national selfishness, racial antipathy and commercial self seeking begin to display their ugly deformities in all their nakedness, then comes the time for man to know that his salvation is not in political organisations and extended trade relations, not in any mechanical re-arrangement of social system but in a deeper transformation of life, in the liberation of consciousness, in love, in the realisation of God in man.\n\nPeople jeer at the 'birth of Man' in the human consciousness when they",
+   "options": [
+    {
+     "key": "A",
+     "text": "begin to think of themselves as God",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "become power hungry",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "restructure the social system",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "become mentally deranged",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "63",
+    "page": 7,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q64",
+   "type": "MCQ",
+   "prompt": "Passage 5: Laws of nature are not commands but statements of facts. The use of the word \"law\" in this context is rather unfortunate. It would be better to speak of uniformities in nature. This would do away with the elementary fallacy that a law implies a law giver. If a piece of matter does not obey a law of nature it is punished. On the contrary, we say that the law has been incorrectly stated.\n\nIf a piece of matter violates nature's law, it is not punished because",
+   "options": [
+    {
+     "key": "A",
+     "text": "it is not binding to obey it",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "there is no superior being to enforce the law of nature",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "it cannot be punished",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "it simply means that the facts have not been correctly stated by law",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "64",
+    "page": 7,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q65",
+   "type": "MCQ",
+   "prompt": "Passage 5: Laws of nature are not commands but statements of facts. The use of the word \"law\" in this context is rather unfortunate. It would be better to speak of uniformities in nature. This would do away with the elementary fallacy that a law implies a law giver. If a piece of matter does not obey a law of nature it is punished. On the contrary, we say that the law has been incorrectly stated.\n\nLaws of nature differ from man-made laws because",
+   "options": [
+    {
+     "key": "A",
+     "text": "the former state facts of Nature",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "they must be obeyed",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "they are natural",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "unlike human laws, they are systematic",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "65",
+    "page": 7,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q66",
+   "type": "MCQ",
+   "prompt": "Passage 5: Laws of nature are not commands but statements of facts. The use of the word \"law\" in this context is rather unfortunate. It would be better to speak of uniformities in nature. This would do away with the elementary fallacy that a law implies a law giver. If a piece of matter does not obey a law of nature it is punished. On the contrary, we say that the law has been incorrectly stated.\n\nThe laws of nature based on observation are",
+   "options": [
+    {
+     "key": "A",
+     "text": "conclusion about the nature of the universe.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "true and unfalsifiable.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "figments of the observer imagination.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "subject to change in the light of new facts.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "66",
+    "page": 7,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q67",
+   "type": "MCQ",
+   "prompt": "Passage 5: Laws of nature are not commands but statements of facts. The use of the word \"law\" in this context is rather unfortunate. It would be better to speak of uniformities in nature. This would do away with the elementary fallacy that a law implies a law giver. If a piece of matter does not obey a law of nature it is punished. On the contrary, we say that the law has been incorrectly stated.\n\nThe author is not happy with word 'law' because",
+   "options": [
+    {
+     "key": "A",
+     "text": "it connotes rigidity and harshness",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "it implies an agency which has made them",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "it does not convey the sense of nature's uniformity",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "it gives rise to false beliefs",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "67",
+    "page": 7,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q68",
+   "type": "MCQ",
+   "prompt": "Passage 6: I felt the wall of the tunnel shiver. The master alarm squealed through my earphones. Almost simultaneously, Jack yelled down to me that there was a warning light on. Fleeting but spectacular sights snapped into ans out of view, the snow, the shower of debris, the moon, looming close and big, the dazzling sunshine for once unfiltered by layers of air. The last twelve hours before re-entry were particular bone-chilling. During this period, I had to go up in to command module. Even after the fiery re-entry splashing down in 81o water in south pacific, we could still see our frosty breath inside the command module.\n\nThe word 'Command Module' used twice in the given passage indicates perhaps that it deals with",
+   "options": [
+    {
+     "key": "A",
+     "text": "an alarming journey",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "a commanding situation",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "a journey into outer space",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "a frightful battle",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "68",
+    "page": 8,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q69",
+   "type": "MCQ",
+   "prompt": "Passage 6: I felt the wall of the tunnel shiver. The master alarm squealed through my earphones. Almost simultaneously, Jack yelled down to me that there was a warning light on. Fleeting but spectacular sights snapped into ans out of view, the snow, the shower of debris, the moon, looming close and big, the dazzling sunshine for once unfiltered by layers of air. The last twelve hours before re-entry were particular bone-chilling. During this period, I had to go up in to command module. Even after the fiery re-entry splashing down in 81o water in south pacific, we could still see our frosty breath inside the command module.\n\nWhich one of the following reasons would one consider as more as possible for the warning lights to be on?",
+   "options": [
+    {
+     "key": "A",
+     "text": "There was a shower of debris.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Jack was yelling.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "A catastrophe was imminent.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The moon was looming close and big.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "69",
+    "page": 8,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q70",
+   "type": "MCQ",
+   "prompt": "Passage 6: I felt the wall of the tunnel shiver. The master alarm squealed through my earphones. Almost simultaneously, Jack yelled down to me that there was a warning light on. Fleeting but spectacular sights snapped into ans out of view, the snow, the shower of debris, the moon, looming close and big, the dazzling sunshine for once unfiltered by layers of air. The last twelve hours before re-entry were particular bone-chilling. During this period, I had to go up in to command module. Even after the fiery re-entry splashing down in 81o water in south pacific, we could still see our frosty breath inside the command module.\n\nThe statement that the dazzling sunshine was \"for once unfiltered by layers of air\" means",
+   "options": [
+    {
+     "key": "A",
+     "text": "that the sun was very hot",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "that there was no strong wind",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "that the air was unpolluted",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "none of above",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "70",
+    "page": 8,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q71",
+   "type": "MCQ",
+   "prompt": "Instructions : In (Qs 71 – 72) there is a question mark in a blank space in each question in which only one of the five alternative given under the question satisfies the same relationship as is found between two terms to the left of sign : : given in the question. Choose the correct alternative as your answer.\n\nLJH : KKI : : CIA : ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "BJB",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "BBB",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "DBB",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "CBZ",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "71",
+    "page": 8,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q72",
+   "type": "MCQ",
+   "prompt": "Instructions : In (Qs 71 – 72) there is a question mark in a blank space in each question in which only one of the five alternative given under the question satisfies the same relationship as is found between two terms to the left of sign : : given in the question. Choose the correct alternative as your answer.\n\n42 : 56 : : 110 : ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "132",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "136",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "144",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "148",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "72",
+    "page": 8,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q73",
+   "type": "MCQ",
+   "prompt": "Instructions : (Qs 73 – 74) Are based on letter series. In each question some letters are missing. The missing letters are given in the proper sequence as one of the alternatives among the five given under each question. Choose the correct alternative as your answer.\n\n–n–h–nhnn–hnh–nh",
+   "options": [
+    {
+     "key": "A",
+     "text": "n h h n n",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "h n h n h",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "n n h n h",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "h n h h n",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "73",
+    "page": 8,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q74",
+   "type": "MCQ",
+   "prompt": "Instructions : (Qs 73 – 74) Are based on letter series. In each question some letters are missing. The missing letters are given in the proper sequence as one of the alternatives among the five given under each question. Choose the correct alternative as your answer.\n\n–bab–aab––aaabab–aab",
+   "options": [
+    {
+     "key": "A",
+     "text": "a b a b b",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "b a b a b",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "b b a a b",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "a a a b a",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "74",
+    "page": 8,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q75",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 75 – 76): A, B, C and D are standing on the four corners of a square field as shown in the figure below : Now read the statement in each of the questions 75 – 76 carefully and select the correct alternative from amongst the five given under statement and indicate this by choosing the appropriate alternative as the answer.\n\nFrom the positions given above A and D go along the sides in the clockwise direction while B and C move in the anti-clockwise direction. If all of them move with the same speed and stop after moving a distance of 1 ½ side each, then",
+   "options": [
+    {
+     "key": "A",
+     "text": "A is south-east of D",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "B is east of A",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "C is west of A",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A is north of D",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "75",
+    "page": 9,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q76",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 75 – 76): A, B, C and D are standing on the four corners of a square field as shown in the figure below : Now read the statement in each of the questions 75 – 76 carefully and select the correct alternative from amongst the five given under statement and indicate this by choosing the appropriate alternative as the answer.\n\nFrom the positions in Q 75, C and A move along the sides in anti-clockwise direction distances of 1 ½ sides and one side respectively while D goes right across to the other side, then",
+   "options": [
+    {
+     "key": "A",
+     "text": "B is south-east of D",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "B is south-west of A",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "D is east of C",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "A is north of D",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "76",
+    "page": 9,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q77",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 77 – 78): Answer Each of these questions are based on the information given below : 1. 8 persons E, F, G, H, I, J, K and L are seated around a square table - two on each side. 2. There are 3 ladies who are not seated next to each other. 3. J i between L and F. 4. G is between I and F. 5. H, a lady member is second to the left of J. 6. F, a male member is seated opposite to E, a lady member. 7. There is a lady member between F and I.\n\nWho among the following is to the immediate left of F ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "G",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "I",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "J",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "H",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "77",
+    "page": 9,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q78",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 77 – 78): Answer Each of these questions are based on the information given below : 1. 8 persons E, F, G, H, I, J, K and L are seated around a square table - two on each side. 2. There are 3 ladies who are not seated next to each other. 3. J i between L and F. 4. G is between I and F. 5. H, a lady member is second to the left of J. 6. F, a male member is seated opposite to E, a lady member. 7. There is a lady member between F and I.\n\nWhat is true about J and K ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "J is male, K is female",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "J is female, K is male",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Both are female",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Both are male",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "78",
+    "page": 9,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q79",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 79 – 80): In each of the following questions there are three statements. Which are followed by three or four conclusions. Choose the conclusions which logically follow from the given statements.\n\nStatements: All the locks are keys. All the keys are bats. Some watches are bats Conclusions: 1. Some bats are locks. 2. Some watches are keys. 3. All the keys are locks.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only (1) and (2)",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only (1)",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Only (2)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Only (1) and (3)",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "79",
+    "page": 10,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q80",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 79 – 80): In each of the following questions there are three statements. Which are followed by three or four conclusions. Choose the conclusions which logically follow from the given statements.\n\nStatements: Some keys are staplers. Some staplers are stickers. All the stickers are pens. Conclusions: 1. Some pens are staplers. 2. Some stickers are keys. 3. No sticker is key. 4. Some staplers are keys.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only (1) and (2)",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only (2) and (4)",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Only (2) and (3)",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Only (1) and (4) and",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "80",
+    "page": 10,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q81",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 81 to 83) : Choose the correct option from those given and answer the question.\n\nIf the President is called the Prime Minister, the Prime Minister the Finance Minister, the Finance Minister the Defence Minister, the Defence Minister the Railway Minister and the Railway Minister is called the President, who acts as the Executive Head of the India ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Railway Minister",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Prime Minister",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "President",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Finance Minister",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "81",
+    "page": 10,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q82",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 81 to 83) : Choose the correct option from those given and answer the question.\n\nDANGER : NGERDA : : TWENTY : ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "ETNYTW",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "ENTWTY",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "ENTTWY",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "ENTYTW",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "82",
+    "page": 10,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q83",
+   "type": "MCQ",
+   "prompt": "Instructions (Qs 81 to 83) : Choose the correct option from those given and answer the question.\n\nIf February 10, 1992 is a Monday, what day was April 10, 1992 ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Friday",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Saturday",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Thursday",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Sunday",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "83",
+    "page": 10,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q84",
+   "type": "MCQ",
+   "prompt": "Instructions : Each of the questions (Qs 84 to 85) below consists of a question and two statements numbered ( I ) and ( II ). You have to decide whether the information provided in the statements is sufficient to answer the question. Read both the statements carefully and then decide the answer.\n\nAt what time did Nitin report to the school? ( I ) Nitin walks at the speed of 4 kmph. ( II ) Nitin’s house is 2 km away from the school.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Both (I) & (II) are together necessary",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Either (I) or (II) is sufficient",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Neither (I) nor (II) is sufficient",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Only (I) is sufficient",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "84",
+    "page": 10,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q85",
+   "type": "MCQ",
+   "prompt": "Instructions : Each of the questions (Qs 84 to 85) below consists of a question and two statements numbered ( I ) and ( II ). You have to decide whether the information provided in the statements is sufficient to answer the question. Read both the statements carefully and then decide the answer.\n\nIn a row of 15 students, who is standing at the middle position? (I)Rahul is standing 5th from the left end while Kishor is standing 5th from the right end of row. (II) Meena is standing equidistant from Rahul & Kishor",
+   "options": [
+    {
+     "key": "A",
+     "text": "Both (I) & (II) are together necessary",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only (II) is sufficient",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Neither (I) nor (II) is sufficient",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Either (I) or (II) is sufficient",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "85",
+    "page": 10,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q86",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nWhich of the following is a tropical grassland?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Taiga",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Savannah",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Pampas",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Prairies",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "86",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q87",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nThe river Sutlej, on which the Bhakra Dam has been built, originates from",
+   "options": [
+    {
+     "key": "A",
+     "text": "a spring in Vering",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "near Bara Lacha Pass in Lahul",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rakas lake in Tibet",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Mansarovar lake",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "87",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q88",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nWhich of the following is not a kharif crop?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Jute",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Maize",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Mustard",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rice",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "88",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q89",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nWhich of the following is an igneous rock?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Granite",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Limestone",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Slate",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Quartzite",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "89",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q90",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nWho is considered the father of Geometry?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Aristotle",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Euclid",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Pythagoras",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Kepler",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "90",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q91",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nAmjad Ali Khan is associated with which of the following musical instruments?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Sarod",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Veena",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Violin",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Sitar",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "91",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q92",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nWho is known as 'Indian Bismarck'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Kamaraj",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Vallabhbhai Patel",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nehru",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Rajaji",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "92",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q93",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nTripitakas are sacred books of _______________",
+   "options": [
+    {
+     "key": "A",
+     "text": "Buddhists",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Hindus",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Jains",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of the above",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "93",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q94",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nOne nanometre is equal to _______________",
+   "options": [
+    {
+     "key": "A",
+     "text": "10⁻⁶ metres",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "10⁻⁸ metres",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "10⁻⁹ metres",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "10⁻⁵ metres",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "94",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q95",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nThe 'Dronacharya Award' is given to...?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Sportsmen",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Coaches",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Umpires",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Sports Editors",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "95",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q96",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nWhich UN body deals with population problem?",
+   "options": [
+    {
+     "key": "A",
+     "text": "UNFPA",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "UNDP",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "UNICEF",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "UNESCO",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "96",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q97",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nWhich of the following is a military alliance?",
+   "options": [
+    {
+     "key": "A",
+     "text": "NATO",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "NAFTA",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "EEC",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "ASEAN",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "97",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q98",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nThe world famous 'Khajuraho' sculptures are located in",
+   "options": [
+    {
+     "key": "A",
+     "text": "Gujarat",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Madhya Pradesh",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Orissa",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Maharashtra",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "98",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q99",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nWho invented internal Combustion Engine?",
+   "options": [
+    {
+     "key": "A",
+     "text": "ROGER Bacon",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Karl Benz",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Dr. Alen M. Turing",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Otto",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "99",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2016-bdes-gat-q100",
+   "type": "MCQ",
+   "prompt": "SECTION 5 - GK & CURRENT AFFAIRS TEST (15 QUESTIONS)\n\nThe minimum age required to become a member of Rajya Sabha is",
+   "options": [
+    {
+     "key": "A",
+     "text": "21 years",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "25 years",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "30 years",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "35 years",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2016,
+    "paperId": "nift-2016-bdes-gat",
+    "questionNo": "100",
+    "page": 11,
+    "sourceSha256": "f9adf688ef7b9345f4aeabcf54cf3b1943a872d57479859f81f81badd6f5d3ca",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT answer key, 14 Feb 2016",
+    "verification": "review"
+   }
   }
  ]
 }
