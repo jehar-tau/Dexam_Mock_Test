@@ -90,6 +90,7 @@ export default function PortalPreview() {
           <Link to="/learn-preview">Learn</Link>
           <Link to="/community-preview">Community</Link>
           <Link to="/drawing-uploads-preview">Drawing uploads</Link>
+          <Link to="/drawing-tasks-preview">Drawing tasks</Link>
           <Link to="/question-report-preview">Question reporting</Link>
         </nav>
       </details>

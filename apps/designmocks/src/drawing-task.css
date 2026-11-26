@@ -1,0 +1,77 @@
+/* Drawing tasks: criteria, upload grace banner, AI estimate and review. */
+.drawing-criteria { display: grid; gap: .55rem; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.drawing-criteria h4, .drawing-photos h4 { margin: 0; font: 700 .72rem Figtree, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.drawing-criteria ul { margin: 0; padding: 0; list-style: none; display: grid; gap: .3rem; }
+.drawing-criteria li { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-bottom: 1px dashed var(--line); line-height: 1.4; }
+.drawing-criteria li:last-child { border-bottom: 0; }
+.drawing-criteria li b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.drawing-criteria li b::after { content: " marks"; font-weight: 500; color: var(--muted); font-size: .85em; }
+.drawing-criteria .drawing-instructions li { display: list-item; margin-inline-start: 1.1rem; list-style: disc; border: 0; padding: .1rem 0; }
+.drawing-criteria-note { margin: 0; color: var(--muted); font-size: .85rem; line-height: 1.5; }
+
+.drawing-grace { display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; padding: 1rem 1.25rem; border-radius: 14px; background: #1f3d30; color: #f4f3e8; }
+:root[data-theme="dark"] .drawing-grace { background: #0d1d18; border: 1px solid var(--line); }
+.drawing-grace h2 { margin: 0 0 .25rem; font: 700 1.35rem "Zilla Slab", Georgia, serif; color: #f4f3e8; }
+.drawing-grace p { margin: 0; line-height: 1.5; color: #dfe6d6; max-width: 46rem; }
+.drawing-grace-clock { display: grid; justify-items: center; flex: none; min-width: 6.5rem; padding: .5rem .9rem; border-radius: 12px; background: #dceba1; color: #162824 !important; }
+.drawing-grace-clock b { font: 700 1.9rem/1 Figtree, sans-serif; font-variant-numeric: tabular-nums; }
+.drawing-grace-clock small { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.drawing-grace[data-urgency="critical"] .drawing-grace-clock { background: #edc668; }
+
+.drawing-estimate { display: grid; gap: .8rem; padding: 1.1rem; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); }
+.drawing-estimate p { margin: 0; line-height: 1.55; }
+.drawing-estimate-eyebrow { justify-self: start; padding: .25rem .55rem; border-radius: 99px; background: var(--soft); color: var(--green); font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.drawing-estimate-top { display: grid; gap: .5rem; }
+.drawing-estimate-total { display: flex; align-items: baseline; gap: .1rem; }
+.drawing-estimate-total b { font: 700 2.8rem/1 "Zilla Slab", Georgia, serif; color: var(--green); font-variant-numeric: tabular-nums; }
+.drawing-estimate-total span { font-size: 1.1rem; font-weight: 700; color: var(--muted); }
+.drawing-estimate-summary { color: var(--ink); }
+.drawing-estimate-override { padding: .6rem .8rem; border-radius: 10px; background: var(--soft); font-size: .9rem; }
+.drawing-flags { margin: 0; padding: 0; list-style: none; display: grid; gap: .35rem; }
+.drawing-flags li { padding: .5rem .75rem; border-radius: 8px; border-inline-start: 4px solid var(--orange); background: color-mix(in srgb, var(--orange) 9%, var(--surface)); font-size: .9rem; line-height: 1.45; }
+.drawing-estimate-note { color: var(--muted); font-size: .88rem; }
+.drawing-scores { margin: 0; padding: 0; list-style: none; display: grid; gap: .85rem; }
+.drawing-score-head { display: flex; justify-content: space-between; gap: 1rem; font-weight: 700; }
+.drawing-score-head b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.drawing-score-head small { font-weight: 600; color: var(--muted); }
+.drawing-score-bar { display: block; height: 6px; margin: .35rem 0 .3rem; border-radius: 99px; background: var(--soft); overflow: hidden; }
+.drawing-score-bar i { display: block; height: 100%; border-radius: inherit; background: var(--green); }
+.drawing-scores p { color: var(--muted); font-size: .9rem; }
+.drawing-estimate-foot { color: var(--muted); font-size: .82rem; padding-top: .7rem; border-top: 1px solid var(--line); }
+.drawing-estimate .text-button, .drawing-estimate .button { justify-self: start; }
+.drawing-estimate-wait { display: flex; align-items: center; gap: .7rem; color: var(--muted); }
+.drawing-estimate-wait i { flex: none; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 2px solid var(--soft); border-top-color: var(--green); animation: drawing-spin 1s linear infinite; }
+@keyframes drawing-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .drawing-estimate-wait i { animation: none; border-color: var(--green); } }
+.drawing-estimate[data-state="not-attempted"] .drawing-estimate-total b { color: var(--muted); }
+
+.drawing-task-review { display: grid; gap: 1rem; padding: clamp(1rem, 2.5vw, 1.5rem); border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
+.drawing-task-review header { display: grid; gap: .5rem; }
+.drawing-task-review .eyebrow { margin: 0; }
+.drawing-task-prompt { margin: 0; font-size: 1.05rem; line-height: 1.6; max-width: 62rem; }
+.drawing-task-grid { display: grid; gap: 1rem; }
+@media (min-width: 900px) { .drawing-task-grid { grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); align-items: start; } }
+.drawing-task-main, .drawing-task-side { display: grid; gap: 1rem; min-width: 0; }
+.drawing-task-figure { margin: 0; padding: .5rem; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.drawing-task-figure img { display: block; width: 100%; height: auto; }
+.drawing-photos { display: grid; gap: .55rem; }
+.drawing-photos ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .6rem; }
+.drawing-photos li { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+.drawing-photos img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.drawing-photos-empty { margin: 0; padding: 1rem; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); }
+.drawing-model-notes { padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.drawing-model-notes summary { cursor: pointer; font-weight: 700; }
+.drawing-model-notes p { margin: .6rem 0 0; line-height: 1.6; white-space: pre-line; }
+@media (max-width: 560px) {
+  .drawing-grace { flex-direction: column; align-items: stretch; }
+  .drawing-grace-clock { justify-self: start; grid-auto-flow: column; justify-content: start; gap: .5rem; align-items: baseline; }
+  .drawing-estimate-top { grid-template-columns: 1fr; gap: .5rem; }
+}
+
+/* Review-only preview page */
+.drawing-preview { display: grid; gap: 1rem; }
+.drawing-preview h1 { margin: 0; }
+.drawing-preview > p { margin: 0; max-width: 46rem; color: var(--muted); }
+.drawing-preview h2 { margin: 1.25rem 0 0; font-size: 1.15rem; }
+.drawing-preview-attempt { display: grid; gap: 1rem; max-width: 46rem; }
+.drawing-preview-states { display: flex; flex-wrap: wrap; gap: .5rem; }

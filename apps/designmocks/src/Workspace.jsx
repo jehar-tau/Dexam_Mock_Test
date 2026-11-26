@@ -16,6 +16,7 @@ import { QuestionReport } from "./QuestionReport.jsx";
 import { DrawingUploads, DrawingUploadWindow } from "./DrawingUploads.jsx";
 import { AttemptAccessBoundary } from "./AttemptAccess.jsx";
 import { drawingMediaError } from "./drawing-upload.js";
+import { DrawingCriteria } from "./DrawingTask.jsx";
 import { createAnswerSyncQueue, validAttemptAnswer } from "./attempt-sync.js";
 import { createAttemptAnswerJournal, pruneDeviceAnswers } from "./attempt-answer-journal.js";
 import { AttemptInsights, AnswerReview } from "./AttemptInsights.jsx";
@@ -817,6 +818,7 @@ if(expandedAttemptScope){
             </label>
           ) : (
             <>
+              {q.drawing && <DrawingCriteria criteria={q.drawing.criteria} criteriaSource={q.drawing.criteriaSource} instructions={q.drawing.instructions} />}
               <div className="notice">
                 Draw on paper within the time limit and upload clear ordered pages.
                 A teacher can review submitted pages separately from the objective score.
