@@ -1,3 +1,4 @@
+import { encodeWorkedExplanation } from "./worked-solution.js";
 // Only imported by the development/staging review route. The drawings and
 // questions are original DMocks samples. This adapter has no network client.
 const illustration = (body, alt) => ({
@@ -15,14 +16,23 @@ const sign = illustration('<rect x="130" y="30" width="380" height="176" rx="8" 
   "A dark green sign with a large cream right arrow and the word STUDIO above smaller LEVEL TWO lettering.");
 const options = (...labels) => labels.map((label,index) => ({id:"ABCD"[index],label}));
 const bank = [
-  {id:"tiles", kind:"nat", topic:"observation", prompt:"How many square tiles form this mosaic?", figure:mosaic, key:{kind:"nat",accepted:[{exact:"9"}]}, explanation:"Read the occupied squares row by row. The first row has three tiles, the middle row has two and the last row has four. Their sum is nine."},
-  {id:"void", kind:"nat", topic:"observation", prompt:"How many completely enclosed empty unit squares are inside the mosaic?", figure:mosaic, key:{kind:"nat",accepted:[{exact:"1"}]}, explanation:"Only the empty centre cell has a tile on all four sides. The space above the right-hand extension remains connected to the outside."},
-  {id:"turn", kind:"msq", topic:"spatial-reasoning", prompt:"The motif is rotated a half-turn on the page. Which statements remain true?", figure:motif, options:options("The circle has the same diameter.","The square stays on the right of the circle.","The distance between the two centres stays the same.","The page position of each centre stays the same."), key:{kind:"msq",correct:["A","C"]}, explanation:"Rotation preserves lengths and the distance between points. A half-turn reverses the horizontal order and moves both centres."},
+  {id:"tiles", kind:"nat", topic:"observation", prompt:"How many square tiles form this mosaic?", figure:mosaic, key:{kind:"nat",accepted:[{exact:"9"}]}, explanation:"Count row by row so that no tile is counted twice.\n\n1. The top row has three tiles.\n2. The middle row has two tiles, one at each end.\n3. The bottom row has four tiles. Three plus two plus four is nine.\n\nTrap: Counting the empty centre as a tile because it is surrounded.\nFaster: Count the full 3 by 3 block, remove the empty centre, then add the extra tile: 9 − 1 + 1 = 9.", worked:true},
+  {id:"void", kind:"nat", topic:"observation", prompt:"How many completely enclosed empty unit squares are inside the mosaic?", figure:mosaic, key:{kind:"nat",accepted:[{exact:"1"}]}, explanation:"An empty square is enclosed only if tiles close it on all four sides.\n\n1. Check the centre cell: tiles sit above, below, left and right of it.\n2. Check the gap above the extra bottom-right tile: its top and right sides are open.\n3. Only the centre cell is enclosed, so the answer is one.\n\nTrap: Counting the open notch above the extra tile as a second enclosed square."},
+  {id:"turn", kind:"msq", topic:"spatial-reasoning", prompt:"The motif is rotated a half-turn on the page. Which statements remain true?", figure:motif, options:options("The circle has the same diameter.","The square stays on the right of the circle.","The distance between the two centres stays the same.","The page position of each centre stays the same."), key:{kind:"msq",correct:["A","C"]}, explanation:"A rotation moves shapes without stretching them, so sizes and distances survive while positions change.\n\n1. Lengths do not change under rotation, so the circle keeps its diameter.\n2. Distances between points are preserved, so the gap between the two centres stays the same.\n3. A half-turn swaps left and right and moves both centres on the page.\n\nOptions:\nA — correct: Rotation preserves the circle's size.\nB — wrong: A half-turn puts the square on the left.\nC — correct: Rotation preserves the distance between the centres.\nD — wrong: Both centres move to new page positions.\n\nTrap: Treating a half-turn like a vertical flip, which would keep left and right."},
   {id:"sign", kind:"msq", topic:"visual-hierarchy", prompt:"Which two features communicate the direction and destination on this sign?", figure:sign, options:options("The right-pointing arrow.","The corner radius.","The word STUDIO.","The number of corners."), key:{kind:"msq",correct:["A","C"]}, explanation:"The arrow gives the direction of travel. The destination name tells the reader where that direction leads."},
   {id:"mirror", kind:"mcq", topic:"spatial-reasoning", prompt:"If the motif is reflected in a vertical mirror, where is the circle relative to the square?", figure:motif, options:options("Above and to the left.","Above and to the right.","Below and to the left.","Below and to the right."), key:{kind:"mcq",correct:["B"]}, explanation:"A vertical reflection swaps left and right and preserves height. The higher circle moves to the right of the lower square."},
   {id:"type", kind:"mcq", topic:"visual-hierarchy", prompt:"Which change would most directly strengthen the hierarchy between the two lines of text?", figure:sign, options:options("Make both lines the same size.","Rotate both lines by 90 degrees.","Increase the size of STUDIO alone.","Add equal letter spacing to both lines."), key:{kind:"mcq",correct:["C"]}, explanation:"Increasing the destination name alone creates a larger size difference between the two lines. The secondary detail remains readable at its original size."},
 ];
 const duration = 12 * 60000;
+// Fictional media identities for the original figures so a worked solution can name its figure.
+const figureIdentity = figure => ({sha256: Array.from(figure.url.slice(-48)).map(c => c.charCodeAt(0).toString(16).padStart(2, "0")).join("").padEnd(64, "0").slice(0, 64), width: 640, height: 236});
+const tileAt = (x, y, colour) => ({tag:"rect", attrs:{x:String(206 + x * 56 + 3), y:String(32 + y * 56 + 3), width:"50", height:"50", fill:"none", stroke:colour, "stroke-width":"5", rx:"6"}});
+const rowLabel = (y, text) => ({tag:"text", attrs:{x:"470", y:String(32 + y * 56 + 36), "font-size":"22", "font-weight":"700", fill:"#c24728"}, text});
+const workedTiles = {version:1, keyIdea:"Count row by row so that no tile is counted twice.", steps:[
+  {text:"The top row has three tiles.", shapes:[0, 1, 2].map(x => tileAt(x, 0, "#c24728")).concat(rowLabel(0, "3"))},
+  {text:"The middle row has two tiles, one at each end.", shapes:[0, 2].map(x => tileAt(x, 1, "#c24728")).concat(rowLabel(1, "+ 2"))},
+  {text:"The bottom row has four tiles. Three plus two plus four is nine.", shapes:[0, 1, 2, 3].map(x => tileAt(x, 2, "#c24728")).concat(rowLabel(2, "+ 4 = 9"))},
+]};
 export const previewPaperId = "original-visual-design-paper-v1";
 const storageKey = "dmocks:preview:" + previewPaperId;
 
@@ -57,8 +67,9 @@ export function createPreviewPaper({storage, now = Date.now, example = false, fr
       const {outcome, marks} = grade(item, answer);
       score += marks;
       return {id:item.id, ordinal:i+1, kind:item.kind, topic:item.topic, prompt:item.prompt, options:item.options ?? [],
-        marking:{correct:4,wrong:item.kind === "nat" ? 0 : -1,partial:item.kind === "msq"}, points:4, answer, answerRevision:state.revisions[item.id] ?? 0, media:[{alt:item.figure.alt}],
-        ...(submitted ? {outcome, correctKey:item.key, explanation:item.explanation} : {})};
+        marking:{correct:4,wrong:item.kind === "nat" ? 0 : -1,partial:item.kind === "msq"}, points:4, answer, answerRevision:state.revisions[item.id] ?? 0, media:[{alt:item.figure.alt, ...figureIdentity(item.figure)}],
+        ...(submitted ? {outcome, correctKey:item.key, explanation:item.worked
+          ? encodeWorkedExplanation(item.explanation, {...workedTiles, figure:figureIdentity(item.figure)}) : item.explanation} : {})};
     });
     return {id:previewPaperId, title:"Visual design paper", status:submitted ? "submitted" : "active", score:submitted ? score : null, total:24,
       serverNow:new Date(now()).toISOString(), deadline:new Date(deadline).toISOString(), questions};
