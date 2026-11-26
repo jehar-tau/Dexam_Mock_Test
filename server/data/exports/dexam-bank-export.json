@@ -170317,6 +170317,1566 @@
     "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "ceed-2021-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (20 marks = 10+10) A comic book is to be illustrated that tells the story of Rohan. In the morning, when he goes to school, Rohan looks like the image given below, well dressed with combed hair and ironed clothes. But by the time he returns home, like any playful young boy, he has a dishevelled look with dirt and grime all over. In summer he loves to shoot mangoes out of the tree with his catapult and during monsoon he loves to play football despite the puddles. Create separate illustrations of the character in the following two situations 1. Rohan shooting the mango out of the tree. (10 marks) 2. Rohan kicking the football oblivious of the muddy ground after rains. (10 marks) Additional Instructions: • Make a line drawing using only pencils. Do not use any kind of colour. • Do not illustrate the surroundings, but only the boy and what he is physically interacting with. Do not draw the tree or the entire playground but only the catapult and immediate floor he is standing on if the composition requires it. Evaluation criteria: 1. Ability to keep the character consistent 2. Expression and body gesture of the character 3. Line quality and finish of the drawing",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2021/blocks/ceed-2021-b1.png",
+     "sha256": "2dbe95a09e30715f6b692caa44a3ced760401dc3659c404218f2e5f54a497308",
+     "width": 1620,
+     "height": 2150,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Ability to keep the character consistent — 6.5\n• Expression and body gesture of the character — 6.5\n• Line quality and finish of the drawing — 7",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2021,
+    "paperId": "ceed-2021",
+    "questionNo": "B1",
+    "page": 24,
+    "sourceSha256": "3cf5de9f8a0702e483ab22e4ad6349d217608aa266b22305599ef33407e61dec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2021-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Creativity (20 marks = 10x2) Building upon the visual elements given in the ten boxes, create recognizable images and give a title to each. A theme for each of the first three boxes has been given as printed in the answer booklet. Use only BLACK pencil/pen. Draw only within the boundaries of the boxes. Evaluation criteria: Originality and diversity of ideas, clarity and neatness of sketches",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2021/blocks/ceed-2021-b2.png",
+     "sha256": "873156c3cb2bb0dd15b9e0a21c2a3d5409bfdf6897569e8cf15549a80190ab55",
+     "width": 1612,
+     "height": 1168,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality of ideas — 6.5\n• Diversity of ideas — 6.5\n• Clarity and neatness of sketches — 7",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2021,
+    "paperId": "ceed-2021",
+    "questionNo": "B2",
+    "page": 25,
+    "sourceSha256": "3cf5de9f8a0702e483ab22e4ad6349d217608aa266b22305599ef33407e61dec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2021-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Visual Sensitivity (20 marks = 4x5) A rural hospital uses the following icon sytem to depict Male, Female, Cardiology, Casualty, Ophthalmology and Neurology. The hospital then decides to expand, and opens four new wards which are as follows: • COVID-19 Isolation Ward • Cancer Ward • Paediatric (Children) Ward • Maternity Ward Create icons for these four wards using only BLACK colour. All icons should follow the same visual language. Draw the icons in squares provided in the answer booklet. Evaluation criteria: 1. Consistency with given examples 2. Composition 3. Clarity of communication",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2021/blocks/ceed-2021-b3.png",
+     "sha256": "5c61470bed4d135d13b46fb8d0a012914d50ef20b58c154ea9618f1bddf850a8",
+     "width": 1600,
+     "height": 1990,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Consistency with given examples — 6.5\n• Composition — 6.5\n• Clarity of communication — 7",
+   "topic": "drawing-creative",
+   "subtopic": "visual sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2021,
+    "paperId": "ceed-2021",
+    "questionNo": "B3",
+    "page": 26,
+    "sourceSha256": "3cf5de9f8a0702e483ab22e4ad6349d217608aa266b22305599ef33407e61dec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2021-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Form sensitivity (20 marks) Image of a kid’s water bottle is shown below. Visualise a lunch box to pair with it. It should be matching in design language with relevant details. Sketch and render the bottle and the lunch box with required graphics. Evaluation Criteria: 1. Originality in the form of the lunch box, and its proportion 2. Visual consistency with the form of the water bottle. 3. Relevant details for the lunch box. 4. Surface shading 5. Quality of line/strokes",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2021/blocks/ceed-2021-b4.png",
+     "sha256": "989ad1b0b8ca134d07e22286a291b25d76f94fe9a9053f1a4603893d88db114b",
+     "width": 1581,
+     "height": 1900,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality in the form of the lunch box, and its proportion — 4\n• Visual consistency with the form of the water bottle — 4\n• Relevant details for the lunch box — 4\n• Surface shading — 4\n• Quality of line/strokes — 4",
+   "topic": "drawing-creative",
+   "subtopic": "form sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2021,
+    "paperId": "ceed-2021",
+    "questionNo": "B4",
+    "page": 27,
+    "sourceSha256": "3cf5de9f8a0702e483ab22e4ad6349d217608aa266b22305599ef33407e61dec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2021-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Problem identification (20 marks= 5 + 3x5) Shown below is a picture of a wash basin in a primary school. In the space provided in the answer booklet, list down ten various problems related to the possibility of a viral infection like COVID-19 spreading in the school. (5 marks) Identify three problems that you consider to be the most important and clearly illustrate them. You will be evaluated for: 1. Quality and diversity of your observation 2. Analytical skills 3. Communication",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2021/blocks/ceed-2021-b5.png",
+     "sha256": "826d1690935f49b148fa44a6d9f8377eff837376dd70714f15e03322fa5caf7b",
+     "width": 1566,
+     "height": 1739,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Quality and diversity of observation — 6.5\n• Analytical skills — 6.5\n• Communication — 7",
+   "topic": "drawing-creative",
+   "subtopic": "problem identification",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2021,
+    "paperId": "ceed-2021",
+    "questionNo": "B5",
+    "page": 28,
+    "sourceSha256": "3cf5de9f8a0702e483ab22e4ad6349d217608aa266b22305599ef33407e61dec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2022-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (20 marks) A sample is being collected for an RT-PCR swab test for COVID-19. The man collecting the sample is standing in a PPE (protective) suit. The lady who is being tested is sitting on a chair in front of him. She shows uneasiness through her facial expression when a swab is inserted in her nose. Draw a free-hand sketch of the moment described above. Drawing of surroundings is not necessary. Evaluation criteria: • Quality of composition • Observation and drawing skills • Expression of the person being tested • Scale and relative proportions • Use of light and shade",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2022/blocks/ceed-2022-b1.png",
+     "sha256": "c9ea1f2be027f3fab8a4b2e2d4fa2a6cbbf581c78c95d1d97dfd8b8c1f842fa2",
+     "width": 1609,
+     "height": 934,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Quality of composition — 4\n• Observation and drawing skills — 4\n• Expression of the person being tested — 4\n• Scale and relative proportions — 4\n• Use of light and shade — 4",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2022,
+    "paperId": "ceed-2022",
+    "questionNo": "B1",
+    "page": 24,
+    "sourceSha256": "197b200a5e4c2490a6ad0650afa4e980214b82c83908ccb597613907492ea80e",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2022-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Creativity (4 x 5 = 20 marks) Building upon the visual elements given in the five boxes, create recognizable images and give a title to each one. Use only BLACK pencil/pen. Draw only within the boundaries of the boxes. Evaluation criteria: • Originality – ability to produce unusual response • Emotional expressiveness – ability to communicate feelings and emotions nonverbally through figures • Humour / surprise – ability to depict conceptual and perceptual absurdity and amusing combinations • Richness – ability to create strong, sharp and distinct images",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2022/blocks/ceed-2022-b2.png",
+     "sha256": "6a147540d1e754de9500f5856ea668d74724c61e838ab566d4a5ffc8f6c53818",
+     "width": 1585,
+     "height": 782,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality – ability to produce unusual response — 5\n• Emotional expressiveness – ability to communicate feelings and emotions nonverbally through figures — 5\n• Humour / surprise – ability to depict conceptual and perceptual absurdity and amusing combinations — 5\n• Richness – ability to create strong, sharp and distinct images — 5",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2022,
+    "paperId": "ceed-2022",
+    "questionNo": "B2",
+    "page": 25,
+    "sourceSha256": "197b200a5e4c2490a6ad0650afa4e980214b82c83908ccb597613907492ea80e",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2022-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Visual Sensitivity (4x5 = 20 marks) Create visual icons in the boxes given, for the following in an Indian mela (fair/exhibition) 1. Information Desk 2. Craft zone 3. Children zone 4. Game zone Evaluation criteria: • Aesthetics of 2D form • Effectiveness to convey meaning • Consistency of visual language (style) • Composition",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2022/blocks/ceed-2022-b3.png",
+     "sha256": "a277b931d2c4c605f8da7db67556ea5217f0ada6d26cd89e426b284451f13d58",
+     "width": 1548,
+     "height": 817,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Aesthetics of 2D form — 5\n• Effectiveness to convey meaning — 5\n• Consistency of visual language (style) — 5\n• Composition — 5",
+   "topic": "drawing-creative",
+   "subtopic": "visual sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2022,
+    "paperId": "ceed-2022",
+    "questionNo": "B3",
+    "page": 26,
+    "sourceSha256": "197b200a5e4c2490a6ad0650afa4e980214b82c83908ccb597613907492ea80e",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2022-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Form sensitivity (20 marks) Three views of a building are shown below. Visualise the form of an electric iron (for ironing clothes) based on the image(s) of the given building. It should match the design language with relevant details. Sketch and render the form of the electric iron. Evaluation Criteria: • Sensitivity towards form • Consistency with the visual language of the form • Relevant details of the iron • Surface shading • Quality of lines/strokes",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2022/blocks/ceed-2022-b4.png",
+     "sha256": "b93298aa37eff20465db89f56e77006ec53777489a4dc249cee98a36bcda4b6e",
+     "width": 1606,
+     "height": 2196,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Sensitivity towards form — 4\n• Consistency with the visual language of the form — 4\n• Relevant details of the iron — 4\n• Surface shading — 4\n• Quality of lines/strokes — 4",
+   "topic": "drawing-creative",
+   "subtopic": "form sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2022,
+    "paperId": "ceed-2022",
+    "questionNo": "B4",
+    "page": 27,
+    "sourceSha256": "197b200a5e4c2490a6ad0650afa4e980214b82c83908ccb597613907492ea80e",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2022-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Problem identification (10 + 2x5 = 20 marks) Image source: thehindu.com Getting into the general compartment of a long-distance train is not a pleasant experience, especially for women, children, elderly and the disabled. The photo depicts one such scene. In the space provided in the answer booklet, list TEN unique design problems or opportunities in this situation. Each problem or opportunity could be based on either what you can observe in the photo or your experiences as a passenger. Each problem or opportunity should have potential for a design solution. For example, large crowds or less availability of seats are not design problems. (10 marks) Within the space provided clearly illustrate TWO design problems or opportunities that you consider to be the most important. (2x5 marks) Focus on depicting problems and opportunities. DO NOT provide solutions. Evaluation criteria: 1. Severity of the identified problems 2. Diversity of observations 3. Analytical skills 4. Communication",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2022/blocks/ceed-2022-b5.png",
+     "sha256": "a54710856b18104693b1693a5a866202288565a2da7e7d60acf987f6dcde24c9",
+     "width": 1612,
+     "height": 2114,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Severity of the identified problems — 5\n• Diversity of observations — 5\n• Analytical skills — 5\n• Communication — 5",
+   "topic": "drawing-creative",
+   "subtopic": "problem identification",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2022,
+    "paperId": "ceed-2022",
+    "questionNo": "B5",
+    "page": 28,
+    "sourceSha256": "197b200a5e4c2490a6ad0650afa4e980214b82c83908ccb597613907492ea80e",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2023-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (20 marks) Mr. Singh (5 Feet, 11 inches tall) is smiling and capturing a selfie of his entire family with his mobile phone held vertically. He is with his wife (5 feet tall), standing towards his left with her two mischievous kids. Pinky (girl) and Bablu (boy) are making funny expressions looking into the mobile. They all are standing facing a digital camera installed in the top corner of room. The size of the room is 12 x 12 x 12 feet. Draw the picture of the above description from the point of the view of a digital camera capturing this moment. Additional Instructions: • Use only pencils. • Do not illustrate the surroundings. Only draw the family. Evaluation criteria: • Imagination • Overall composition of the picture • Quality of lines • Attention to details • Anatomy and perspective",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2023/blocks/ceed-2023-b1.png",
+     "sha256": "9da78d5dcb9b118b29c3d19e85171a3655b25ce1f3bc46f9102ea71cbf87f2c6",
+     "width": 1618,
+     "height": 1352,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Imagination — 4\n• Overall composition of the picture — 4\n• Quality of lines — 4\n• Attention to details — 4\n• Anatomy and perspective — 4",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2023,
+    "paperId": "ceed-2023",
+    "questionNo": "B1",
+    "page": 25,
+    "sourceSha256": "5ac3dcaa4c4c5006d95474a36cb977edc2489f8978d184e2abcec96d73dfb2c3",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2023-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Creativity (20 marks = 4 x 5) Each of the boxes in the answer script shows some visual elements and the FIRST word for a title of the image. Draw recognizable images by interpreting the visual elements and give a title to the images using the given first word. Use only BLACK pencil/pen. Draw only within the boundaries of the boxes. Evaluation criteria: • Uniqueness: Ability to create unusual images • Diversity: Variation between the created images • Clarity: Effective use of the visual elements and title • Fun: Ability to use humor and surprise in the images and title",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2023/blocks/ceed-2023-b2.png",
+     "sha256": "771da5417276ced396b20dda3f5ab4876eb3d29b08805d399cba3254ac5f2adc",
+     "width": 1596,
+     "height": 1911,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Uniqueness: Ability to create unusual images — 5\n• Diversity: Variation between the created images — 5\n• Clarity: Effective use of the visual elements and title — 5\n• Fun: Ability to use humor and surprise in the images and title — 5",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2023,
+    "paperId": "ceed-2023",
+    "questionNo": "B2",
+    "page": 26,
+    "sourceSha256": "5ac3dcaa4c4c5006d95474a36cb977edc2489f8978d184e2abcec96d73dfb2c3",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2023-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Visual Sensitivity (20 marks) Create a new visual identity for Indian Women’s Hockey Association. The identity has to be original and should have the abbreviations ‘IWHA’ as part of the visual design. DO NOT draw from any existing designs. Evaluation criteria: • Creative visual representation • Effective communication of the concept • Visual Aesthetics • Composition",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2023/blocks/ceed-2023-b3.png",
+     "sha256": "facb87fb6f8e8b9ceeb5f0905d8c90dcfe7606fe6ef8d666ca7f2188f5d319e3",
+     "width": 1612,
+     "height": 593,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Creative visual representation — 5\n• Effective communication of the concept — 5\n• Visual Aesthetics — 5\n• Composition — 5",
+   "topic": "drawing-creative",
+   "subtopic": "visual sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2023,
+    "paperId": "ceed-2023",
+    "questionNo": "B3",
+    "page": 27,
+    "sourceSha256": "5ac3dcaa4c4c5006d95474a36cb977edc2489f8978d184e2abcec96d73dfb2c3",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2023-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Form sensitivity (20 marks) An abstract three-dimensional form is shown below. Visualise the form of a cutlery set (fork, bowl and glass) for 3-6 Yrs. children based on the image of the given form. It should match the design language with relevant details. Sketch and render the form of the cutlery set. Evaluation Criteria: • Consistency with the visual language of the form • Form should complement function • Relevant details of the product • Surface shading • Quality of lines/strokes",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2023/blocks/ceed-2023-b4.png",
+     "sha256": "a580bfcac1547186190f7a3a87ac439d053bea0e3f3ef8d7a4e1451d259ddf9e",
+     "width": 1609,
+     "height": 2030,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Consistency with the visual language of the form — 4\n• Form should complement function — 4\n• Relevant details of the product — 4\n• Surface shading — 4\n• Quality of lines/strokes — 4",
+   "topic": "drawing-creative",
+   "subtopic": "form sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2023,
+    "paperId": "ceed-2023",
+    "questionNo": "B4",
+    "page": 28,
+    "sourceSha256": "5ac3dcaa4c4c5006d95474a36cb977edc2489f8978d184e2abcec96d73dfb2c3",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2023-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Problem identification (20 marks= 5 x 4) Shown in the image above is an example of a bus-stop during the busy hours. Draw and annotate FIVE distinct design problems in this context. • Use only one visual for each problem. • Answer in the given space only. Evaluation Criteria: • Severity of the identified problem • Ability to make distinct observations • Ability to communicate through visuals",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2023/blocks/ceed-2023-b5.png",
+     "sha256": "096ab93e65cd0707eb3b46fba3898807b08e0799a8f37c94bab829b499a9979f",
+     "width": 1610,
+     "height": 1881,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Severity of the identified problem — 6.5\n• Ability to make distinct observations — 6.5\n• Ability to communicate through visuals — 7",
+   "topic": "drawing-creative",
+   "subtopic": "problem identification",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2023,
+    "paperId": "ceed-2023",
+    "questionNo": "B5",
+    "page": 29,
+    "sourceSha256": "5ac3dcaa4c4c5006d95474a36cb977edc2489f8978d184e2abcec96d73dfb2c3",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2024-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (20 marks = 4 x 5 marks) 7-year-old Chinnu has collected all her old toys in a carton. The carton weighs around 2 kg. Draw Chinnu lifting the box and keeping it in the top shelf of her cupboard in the 4 frames given in the answer sheet. Additional Instructions:  Use only pencils  Do not use colours Evaluation criteria:  Humour  Expressions  Body Language  Anticipation and exaggeration",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2024/blocks/ceed-2024-b1.png",
+     "sha256": "aef550fbb8cfbe027e012a937237134337927d072ace7241a3223a3a77922580",
+     "width": 1524,
+     "height": 857,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Humour — 5\n• Expressions — 5\n• Body Language — 5\n• Anticipation and exaggeration — 5",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2024,
+    "paperId": "ceed-2024",
+    "questionNo": "B1",
+    "page": 23,
+    "sourceSha256": "a22d5831606495e866311f2cc160a7c6ac1e64ac6e19d38236b9f0ae1f5e3a4d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2024-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Creativity (20 marks = 4 x 5 marks) Imagine the human head as a cube. With this scenario, illustrate the following interactions inside the given boxes (in the answer booklet) in this order: 1. Human-human 2. Human-animal 3. Human-environment 4. Human-object Use only BLACK pencil/pen. Draw only within the boundaries of the boxes. Write the titles below the boxes, in the space provided. Evaluation criteria:  Uniqueness: Ability to create unusual images  Diversity: Variation between each created image  Clarity: Effective use of visual elements and titles  Fun: Ability to use humor and surprise in the images and titles",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2024/blocks/ceed-2024-b2.png",
+     "sha256": "6901197ed2cd1c8f0c2d34901b603c66fee0d9479736686346c1b630579da5f4",
+     "width": 1522,
+     "height": 889,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Uniqueness: Ability to create unusual images — 5\n• Diversity: Variation between each created image — 5\n• Clarity: Effective use of visual elements and titles — 5\n• Fun: Ability to use humor and surprise in the images and titles — 5",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2024,
+    "paperId": "ceed-2024",
+    "questionNo": "B2",
+    "page": 23,
+    "sourceSha256": "a22d5831606495e866311f2cc160a7c6ac1e64ac6e19d38236b9f0ae1f5e3a4d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2024-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Visual Sensitivity (20 marks = 4 x 5 marks) Shown below are two letters A & B of an ornamental font. Using this font style create the word ‘Forest’ (the first letter in uppercase and the remaining in lowercase). Evaluation criteria:  Consistency in visual characteristics  Font anatomy  Proportion  Rendering skills",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2024/blocks/ceed-2024-b3.png",
+     "sha256": "0fbf235792a2d78690633ed65d0d453a9f4aa059e1df88417a39d717b1edaf2e",
+     "width": 1523,
+     "height": 1053,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Consistency in visual characteristics — 5\n• Font anatomy — 5\n• Proportion — 5\n• Rendering skills — 5",
+   "topic": "drawing-creative",
+   "subtopic": "visual sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2024,
+    "paperId": "ceed-2024",
+    "questionNo": "B3",
+    "page": 24,
+    "sourceSha256": "a22d5831606495e866311f2cc160a7c6ac1e64ac6e19d38236b9f0ae1f5e3a4d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2024-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Form sensitivity (20 marks = 5 x 4 marks) Inspired from the given three-dimensional form, conceptualise, sketch, and render a single seater furniture for a living room. Evaluation Criteria:  Consistency with the visual language of the form  Form should complement function  Relevant details of the product  Surface shading  Quality of lines/strokes",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2024/blocks/ceed-2024-b4.png",
+     "sha256": "287f4333982d85576da306ae39b7c3b5e4fb3541919b0e30a4d723652a1a0c41",
+     "width": 1472,
+     "height": 1366,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Consistency with the visual language of the form — 4\n• Form should complement function — 4\n• Relevant details of the product — 4\n• Surface shading — 4\n• Quality of lines/strokes — 4",
+   "topic": "drawing-creative",
+   "subtopic": "form sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2024,
+    "paperId": "ceed-2024",
+    "questionNo": "B4",
+    "page": 24,
+    "sourceSha256": "a22d5831606495e866311f2cc160a7c6ac1e64ac6e19d38236b9f0ae1f5e3a4d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2024-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Problem identification (20 marks= 5 + 3 x 5 marks) Shown below is the image of a rural kitchen. There are many challenges in using such setup for cooking and related activities. Draw and annotate FIVE distinct design problems in this context.  Use only one visual for each problem.  Answer in the given space only.  Adhere to no more than 5 problems. Evaluation Criteria:  Significance of the identified problems  Ability to identify unique problems  Ability to explain the problem through visuals",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2024/blocks/ceed-2024-b5.png",
+     "sha256": "8a1d4402df0b482ad9e18f4e3b6ffa6cea2088bc7e95abc0b6eebb2b4680d978",
+     "width": 1524,
+     "height": 1711,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Significance of the identified problems — 6.5\n• Ability to identify unique problems — 6.5\n• Ability to explain the problem through visuals — 7",
+   "topic": "drawing-creative",
+   "subtopic": "problem identification",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2024,
+    "paperId": "ceed-2024",
+    "questionNo": "B5",
+    "page": 25,
+    "sourceSha256": "a22d5831606495e866311f2cc160a7c6ac1e64ac6e19d38236b9f0ae1f5e3a4d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2025-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "SKETCHING: Mandatory question (20 marks = 4 x 5 marks) Two kids, Kaa and Kii, are on an adventure trip in a forest. While exploring, suddenly a bear emerges and starts chasing them. The kids start running in panic through the forest. A fox is watching the whole scene. Sketch this scene from the fox’s point of view. The sketch should be clear and visible. Additional Instructions: • Use only black/HB-series pencils • Do not use other colours • Draw only in the given space Evaluation Criteria: • Character and expressions • Proportion and composition • Quality of sketching • Environment and props",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2025/blocks/ceed-2025-b1.png",
+     "sha256": "7a2e9110a1ed2a9c98b81e228a60179320fc13aca166408f41521c63239a4471",
+     "width": 1606,
+     "height": 933,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Character and expressions — 5\n• Proportion and composition — 5\n• Quality of sketching — 5\n• Environment and props — 5",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2025,
+    "paperId": "ceed-2025",
+    "questionNo": "B1",
+    "page": 27,
+    "sourceSha256": "2034a846ef7fe6b030cad0acade36d599b2ccfa0a99e884edb17daba95812c2a",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2025-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "CREATIVITY: Mandatory question (20 marks = 4 x 5 marks) Shown below is a canvas with four frames containing certain elements. Create a meaningful sequence of visuals using the elements in the frames. Ensure that continuity is maintained across the frames by using additional prop(s) and/or character(s) as needed. You may choose to create the sequence either from left to right or right to left, but indicate the direction using an arrow. Give an appropriate title in the space provided. Evaluation criteria: 1. Imagination and Creative ideas 2. Composition 3. Drawing quality and clarity 4. Continuity in the sequence",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2025/blocks/ceed-2025-b2.png",
+     "sha256": "b057f2e0a111af27f8c620ec14369d8ff837e006877d690f906b275133722a93",
+     "width": 1617,
+     "height": 1996,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Imagination and Creative ideas — 5\n• Composition — 5\n• Drawing quality and clarity — 5\n• Continuity in the sequence — 5",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2025,
+    "paperId": "ceed-2025",
+    "questionNo": "B2",
+    "page": 28,
+    "sourceSha256": "2034a846ef7fe6b030cad0acade36d599b2ccfa0a99e884edb17daba95812c2a",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2025-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "VISUAL SENSITIVITY: Mandatory question (20 marks = 4 x 5 marks) Shown below are new animals that have been acquired by an Indian Zoo. A. Indian Grey Mongoose B. Honey Badger C. Indian Bison D. Indian Pangolin The Zoo wishes to create a signage to guide visitors around the enclosures of these animals. Create four icons using only BLACK colour to indicate the animal in the enclosure. All icons should be clear and visible, and have a consistent visual language. Draw the icons in the FOUR squares provided in the answer booklet. Evaluation criteria: 1. Consistency in the visual language 2. Representation of the animals 3. Visual composition 4. Clarity and neatness",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2025/blocks/ceed-2025-b3.png",
+     "sha256": "a16c4f14ad955657426d39e247d8c542537546a6239da1948716694992cd92d1",
+     "width": 1609,
+     "height": 2038,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Consistency in the visual language — 5\n• Representation of the animals — 5\n• Visual composition — 5\n• Clarity and neatness — 5",
+   "topic": "drawing-creative",
+   "subtopic": "visual sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2025,
+    "paperId": "ceed-2025",
+    "questionNo": "B3",
+    "page": 29,
+    "sourceSha256": "2034a846ef7fe6b030cad0acade36d599b2ccfa0a99e884edb17daba95812c2a",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2025-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "FORM SENSITIVITY: Mandatory question (20 marks = 4 x 5 marks) Shown on the left is a character-based design of a product. Inspired from this product, re-imagine, conceptualise, and render the tea flask given on the right. Make it clear and visible. Evaluation Criteria: • Characterization of the product • Relevant details and usability • Quality of sketching • Surface shading/rendering",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2025/blocks/ceed-2025-b4.png",
+     "sha256": "f8ab7e35577506a6094da01f253493c0490c50abd00662e19cd8bd8e3e35275c",
+     "width": 1600,
+     "height": 1441,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Characterization of the product — 5\n• Relevant details and usability — 5\n• Quality of sketching — 5\n• Surface shading/rendering — 5",
+   "topic": "drawing-creative",
+   "subtopic": "form sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2025,
+    "paperId": "ceed-2025",
+    "questionNo": "B4",
+    "page": 30,
+    "sourceSha256": "2034a846ef7fe6b030cad0acade36d599b2ccfa0a99e884edb17daba95812c2a",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2025-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "PROBLEM IDENTIFICATION: Mandatory question (20 marks = [5+5] + [5+5] marks) A typical vegetable cart, as seen in India, is shown below. A. Identify and list FIVE distinct problems from a buyer’s point of view and FIVE distinct problems from a seller’s point of view in this context. List the problems only in the given space. (5 + 5 marks) B. From the above-listed problems, draw and visually explain any ONE problem of the buyers, and any ONE problem of the sellers in the given boxes. (5 + 5 marks) Additional Instructions: 1. Do not limit yourself to the buyer and seller in the given image. 2. Write the identified problems only on the dotted lines. 3. Draw and visually explain the listed problems only in the given boxes. Evaluation Criteria: 1. Ability to identify unique and relevant problems in the given context 2. Severity of the problems identified 3. Ability to communicate problems through visuals 4. Presentation, clarity and neatness",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2025/blocks/ceed-2025-b5.png",
+     "sha256": "479b9448e25a79bf440c7a981191b99674515fc32b03fbd18ff14c84ed586ad1",
+     "width": 1587,
+     "height": 2219,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Ability to identify unique and relevant problems in the given context — 5\n• Severity of the problems identified — 5\n• Ability to communicate problems through visuals — 5\n• Presentation, clarity and neatness — 5",
+   "topic": "drawing-creative",
+   "subtopic": "problem identification",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2025,
+    "paperId": "ceed-2025",
+    "questionNo": "B5",
+    "page": 31,
+    "sourceSha256": "2034a846ef7fe6b030cad0acade36d599b2ccfa0a99e884edb17daba95812c2a",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2026-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching: Mandatory question (20 marks) One afternoon, seven years old Chinu and her pet dog are enjoying snacks in their kitchen. Chinu’s father suddenly enters the kitchen and sees this pleasant moment with a smile. Sketch the whole scene from the point of view of a chair kept nearby. Additional Instructions: • Use only black/HB-series pencils • Do not use other colours • Draw only in the given space Evaluation Criteria: • Character and Expressions • Proportion and Composition • Quality of Sketching • Environment and Props",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2026/blocks/ceed-2026-b1.png",
+     "sha256": "0df0056cd68065113c4ebe5dfe6905a55a3667c45427cfaa1c8d16408bb2cb05",
+     "width": 1576,
+     "height": 1081,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Character and Expressions — 5\n• Proportion and Composition — 5\n• Quality of Sketching — 5\n• Environment and Props — 5",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2026,
+    "paperId": "ceed-2026",
+    "questionNo": "B1",
+    "page": 25,
+    "sourceSha256": "6257148513365ab10a23385f8c2c8c36f86d12c10017a65dc9c86c36a2a30c08",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2026-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Creativity: Mandatory question (20 marks) In the given frames, sketch a story by incorporating the symbols shown below. Follow these instructions: • Give an appropriate title to the story. • Use ANY TWO symbols in each frame; Use each symbol ONLY ONCE in the whole story. • The symbols cannot be modified, but can be rotated, flipped or scaled proportionately. • You are free to sketch additional elements (backgrounds, characters, props etc.) to make the story meaningful. • Label the frames in the bottom left corners with the number 1,2,3, and 4 to indicate the sequence of your story. Evaluation criteria: • Originality • Graphical Narrative (Story Communication) • Humour and Surprise • Clarity and Neatness of Sketches",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2026/blocks/ceed-2026-b2.png",
+     "sha256": "8291326ee6ea85dd88d444fb24a74cf52d6148e64240000b160defe41e31eaae",
+     "width": 1612,
+     "height": 1696,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Originality — 5\n• Graphical Narrative (Story Communication) — 5\n• Humour and Surprise — 5\n• Clarity and Neatness of Sketches — 5",
+   "topic": "drawing-creative",
+   "subtopic": "creativity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2026,
+    "paperId": "ceed-2026",
+    "questionNo": "B2",
+    "page": 26,
+    "sourceSha256": "6257148513365ab10a23385f8c2c8c36f86d12c10017a65dc9c86c36a2a30c08",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2026-b3",
+   "type": "DESCRIPTIVE",
+   "prompt": "Visual sensitivity: Mandatory question (20 marks = 4 x 5 marks) A new museum with the theme “Indian Museum of Science” is being set up, which will cater primarily to Indian visitors. Create four icons based on the museum theme, to communicate the following sections to visitors: • Robotics • Energy Science • Ocean Science • Food Technology All icons should be clear and visible, and have a consistent visual language. Draw the icons in the FOUR squares provided in the answer booklet. Icons should only have visuals. DO NOT use text. Only BLACK & WHITE colours should be used for the icons. Evaluation Criteria: • Consistency of visual language • Thematic appropriateness • Effective communication • Composition, Clarity and Neatness",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2026/blocks/ceed-2026-b3.png",
+     "sha256": "0c5bdd01f6911dc50f1965521040a1c1fd5c93d5460ce633145c0e141d713bb8",
+     "width": 1618,
+     "height": 1154,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Consistency of visual language — 5\n• Thematic appropriateness — 5\n• Effective communication — 5\n• Composition, Clarity and Neatness — 5",
+   "topic": "drawing-creative",
+   "subtopic": "visual sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2026,
+    "paperId": "ceed-2026",
+    "questionNo": "B3",
+    "page": 27,
+    "sourceSha256": "6257148513365ab10a23385f8c2c8c36f86d12c10017a65dc9c86c36a2a30c08",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2026-b4",
+   "type": "DESCRIPTIVE",
+   "prompt": "Form sensitivity: Mandatory question (20 marks) Conceptualise and render a usable single seat furniture that is inspired by a sphere, for a living room. The sphere may be modified by cutting, adding, subtracting, deforming and repeating. However, the essence of the sphere should be retained. Evaluation Criteria: • Uniqueness of the form • Form-Function relevance and relationship • Detailing • Rendering quality",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2026/blocks/ceed-2026-b4.png",
+     "sha256": "db8e527ccf33a9436853082f2d38aaa391983d14082328c60f391b6c96f06b47",
+     "width": 1614,
+     "height": 601,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Uniqueness of the form — 5\n• Form-Function relevance and relationship — 5\n• Detailing — 5\n• Rendering quality — 5",
+   "topic": "drawing-creative",
+   "subtopic": "form sensitivity",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2026,
+    "paperId": "ceed-2026",
+    "questionNo": "B4",
+    "page": 28,
+    "sourceSha256": "6257148513365ab10a23385f8c2c8c36f86d12c10017a65dc9c86c36a2a30c08",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "ceed-2026-b5",
+   "type": "DESCRIPTIVE",
+   "prompt": "Problem identification: Mandatory question (20 marks) An elderly couple from Srinagar is travelling to Chennai for medical treatment. They will travel by train for most of their journey and plan to take a bus and auto rickshaws for all local commutes. Imagine their journey and identify FOUR distinct problems that they might face, which may need design solutions. Write the FOUR problems statements starting with the words “How can we…” for the given context, in the space provided on the answer booklet. (2 x 4 = 8 marks) For your reference, an example of \"How can we ...\" from another context: How can we - make science learning enjoyable for primary school children? Select any ONE of the four identified problems statements. Draw TWO potential design solutions for the selected problem statement in the boxes provided on the answer booklet. Write a short title for each solution in the space provided inside the box. (6 x 2 = 12 marks) Evaluation Criteria: • Variety and uniqueness of the problems • Relevance of the problems • Practical feasibility of the design solutions • Clarity in communication",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "ceed-2026/blocks/ceed-2026-b5.png",
+     "sha256": "1e040781513a9f12a5cefe5b89494caf7207c2734e89c72ff50b080dbd14fe23",
+     "width": 1605,
+     "height": 1171,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 20 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Variety and uniqueness of the problems — 5\n• Relevance of the problems — 5\n• Practical feasibility of the design solutions — 5\n• Clarity in communication — 5",
+   "topic": "drawing-creative",
+   "subtopic": "problem identification",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "ceed",
+    "year": 2026,
+    "paperId": "ceed-2026",
+    "questionNo": "B5",
+    "page": 29,
+    "sourceSha256": "6257148513365ab10a23385f8c2c8c36f86d12c10017a65dc9c86c36a2a30c08",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2020-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (30 minutes – 60 marks) Prof. Shastri was checking maths papers when she got a call from her husband. Mr. Shastri was upset that she forgot the diet lunch box that he had specially prepared for her. He was also annoyed that she left the dining table in a mess with all her papers and books piled up. He further accused her of cheating on her diet by eating canteen Pakodas and Aloo Parathas for lunch. Prof. Shastri tried to pacify him by saying that she had been working since morning as she needed to finish checking papers and writing her research proposal by 5 pm that evening and that she even had a headache from skipping lunch. Mr. Shastri was not convinced and reminded her that she hadn’t even read the diet book he had sent and was probably using it as a paper weight in her office. He concluded that she wasn’t serious about her health and proceeded to declare that he will not be cooking for her from then on. Prof. Shastri hung up the phone and in frustration ordered her fifth cup of tea from the canteen and her second plate of Pakodas. From the above description, sketch Prof. Shastri’s desk from her usual point of view. Note: • Make pencil sketches only • Do not use colours • Do not draw Prof. Shastri Evaluation Criteria: • Observation • Imagination • Selection & composition of objects • Quality of line • Presentation • Attention to detail",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2020/blocks/uceed-2020-b1.png",
+     "sha256": "5db826417c254bd112bcfd5da8967077a1490e059834f8abb6504c524fabc563",
+     "width": 1619,
+     "height": 1672,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 60 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Observation — 10\n• Imagination — 10\n• Selection & composition of objects — 10\n• Quality of line — 10\n• Presentation — 10\n• Attention to detail — 10",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 60.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2020,
+    "paperId": "uceed-2020",
+    "questionNo": "B1",
+    "page": 38,
+    "sourceSha256": "c511a4c9e2a28a0383a791d64c51f45369db98fcde927cb942fe88df256ffe33",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2021-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (30 minutes – 60 marks) [Note: 1) This question must be answered in the answer booklet provided by the invigilator 2) It is not mandatory for the candidates to mark the Part-B question as ‘answered’ at the bottom of the screen on the computer] You are sitting in a well ventilated drawing room. It is 9 in the morning and sun light is streaming through the window on the East casting shadows on the floor. A cat is resting on one of the sunlit patches. A newspaper is placed beside a cup of hot tea on a small side table. There are three freshly watered potted plants in the room; one on the floor and two on the window sill with the watering jug next to it. From the above description, sketch the scene from your point of view. Note: • Make pencil sketches only • Do not use colours Evaluation Criteria: • Observation • Imagination • Selection & composition of objects • Quality of line • Presentation • Attention to detail",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2021/blocks/uceed-2021-b1.png",
+     "sha256": "1ad7ad6751e7ad8351a881871b2a77d16d2a9ed507b90df009a75e21c1da1aab",
+     "width": 1620,
+     "height": 1886,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 60 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Observation — 10\n• Imagination — 10\n• Selection & composition of objects — 10\n• Quality of line — 10\n• Presentation — 10\n• Attention to detail — 10",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 60.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2021,
+    "paperId": "uceed-2021",
+    "questionNo": "B1",
+    "page": 38,
+    "sourceSha256": "9b70ddbdd3a5b427c037dbdc6f52cd77e8b2dc8950f0c76e44420f3678430208",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2022-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (Mandatory question) (30 minutes – 60 marks) Read and visualize the following: • A rat is spotted inside a school canteen. • A school boy is afraid and standing on a stool/chair. • A brave school girl is chasing the rat out of the canteen. • A tiffin box is falling on the floor. • Two school bags and two water bottles are kept on a table. • A few plates are broken and lying on the floor. • The canteen owner is watching this in shock, standing on top of the counter table. Sketch this scene from the canteen owner’s point of view. Note: • Make a pencil sketch only • Do not use colours Evaluation Criteria: • Perspective • Proportion • Composition • Observation • Imagination • Quality of sketch • Attention to detail",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2022/blocks/uceed-2022-b1.png",
+     "sha256": "afca4bdc84a238881a825034bda516568906b65fb6496761304fd9acd95c66a4",
+     "width": 1591,
+     "height": 1595,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 60 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Perspective — 8.5\n• Proportion — 8.5\n• Composition — 8.5\n• Observation — 8.5\n• Imagination — 8.5\n• Quality of sketch — 8.5\n• Attention to detail — 9",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 60.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2022,
+    "paperId": "uceed-2022",
+    "questionNo": "B1",
+    "page": 36,
+    "sourceSha256": "79e8111bad626bdeb7640f047507797f65298cd7e0ee64e8c934cd3ecc7403ff",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2023-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Sketching (30 minutes – 60 marks) Nandu is giving a dance exam in online mode in front of a laptop kept on a table. His mother is prompting from behind. While the exam is going on, his pet cat Poco is running around tumbling over a glass of water, a plate of biscuits and a few books. No one can stop Poco and the exam must go on. Visualize and draw the whole situation as if you are sitting on the floor witnessing the scene. Note: • Make pencil sketches only • Do not use colours Evaluation Criteria: • Observation • Imagination • Selection & composition of objects • Quality of lines • Presentation • Attention to details",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2023/blocks/uceed-2023-b1.png",
+     "sha256": "6babd90c14173e2b5f3d22cf985c661d8c3ebdef5b061f4fcbecceb4ed548cda",
+     "width": 1618,
+     "height": 1490,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 60 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Observation — 10\n• Imagination — 10\n• Selection & composition of objects — 10\n• Quality of lines — 10\n• Presentation — 10\n• Attention to details — 10",
+   "topic": "drawing-creative",
+   "subtopic": "sketching",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 60.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2023,
+    "paperId": "uceed-2023",
+    "questionNo": "B1",
+    "page": 42,
+    "sourceSha256": "e5779a1d0d2565b3e8a630e3cac09ee21b2b100e0618e82b4440c575448a5bb8",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2024-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "Drawing [50 Marks] On a Sunday morning, 5-year-old Geet, her grandmother and father are cleaning their old garage. It is a big garage with large open windows near the ceiling. It has an old bicycle, a football and other objects. The father is cleaning the cobwebs. The grandmother while cleaning, finds her old guitar which she used to play during her college days. She gets excited and starts playing it as Geet starts dancing around. The garage also has a lot of old memories of Geet’s sporty grandmother and her studious father. Geet’s school friend stands at the door of the garage watching this whole scene. Draw this scenario from the friend’s point of view. Note:  Use only pencil  Do not use colours Evaluation Criteria:  Perspective  Proportion  Composition  Observation  Imagination  Quality of sketch  Attention to detail",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2024/blocks/uceed-2024-b1.png",
+     "sha256": "5592f664724072c3b4dd14944f0e94e8d951e72a140003a7d3a2d185bc073209",
+     "width": 1524,
+     "height": 1287,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Perspective — 7\n• Proportion — 7\n• Composition — 7\n• Observation — 7\n• Imagination — 7\n• Quality of sketch — 7\n• Attention to detail — 8",
+   "topic": "drawing-creative",
+   "subtopic": "drawing",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2024,
+    "paperId": "uceed-2024",
+    "questionNo": "B1",
+    "page": 30,
+    "sourceSha256": "d4e4e8106d27384a6d96d5a90fc5c0c57bef6b3c0d76d91c617204a48cc75306",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2024-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "Design Aptitude [50 Marks] A six-year old girl is going to school for the first time. She needs to carry a lunch box in her school bag. Her lunch can contain typical Indian food items (both dry as well as liquid food items, such as Roti, Rice, Dosa, Dal, Sambar, etc.). Design a lunch box for her, considering her needs. Sketch your design, and visually explain the features of your design along with clear labels. Note:  Use only pencil. Do not use colours.  Explain your design only through visuals and short labels.  Do not write separate explanations. Evaluation Criteria:  Appropriateness of three-dimensional form and visual graphics  Provisions for fulfilling functional requirements  Considerations for product usability by the user  Attention to detail and explanation of features through visuals only  Clarity of the sketch and quality of presentation, and uniqueness of design.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2024/blocks/uceed-2024-b2.png",
+     "sha256": "5f2b13cc25cab992500d64c350ad4daaf0768c3d26eb8073fa617f7fc39b2046",
+     "width": 1524,
+     "height": 1005,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Appropriateness of three-dimensional form and visual graphics — 10\n• Provisions for fulfilling functional requirements — 10\n• Considerations for product usability by the user — 10\n• Attention to detail and explanation of features through visuals only — 10\n• Clarity of the sketch and quality of presentation, and uniqueness of design — 10",
+   "topic": "drawing-creative",
+   "subtopic": "design aptitude",
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2024,
+    "paperId": "uceed-2024",
+    "questionNo": "B2",
+    "page": 31,
+    "sourceSha256": "d4e4e8106d27384a6d96d5a90fc5c0c57bef6b3c0d76d91c617204a48cc75306",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2025-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "[50 Marks] Drawing The competitive examinations are finally over and you are going on a holiday. You are at the nearest railway station with your family and relatives, waiting for the train that you can see, arriving. The platform is bustling with activity. Other travellers with luggage, vendors and porters (and whatever else you are likely to observe) are also on the platform. Imagine and draw what you see, giving prominence to your family and relatives. Note: • Make pencil sketches only • Do not use colour Evaluation Criteria: • Observation • Composition of figures and objects • Sense of perspective and proportion • Quality of lines • Attention to details",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2025/blocks/uceed-2025-b1.png",
+     "sha256": "f2174488157655550c6cf81cceeca90af6febb8fda33f9840e0ab07b69858433",
+     "width": 1609,
+     "height": 1171,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Observation — 10\n• Composition of figures and objects — 10\n• Sense of perspective and proportion — 10\n• Quality of lines — 10\n• Attention to details — 10",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2025,
+    "paperId": "uceed-2025",
+    "questionNo": "B1",
+    "page": 25,
+    "sourceSha256": "b73fa91f2ecef26fad9f4b6c32529412ff1c272f730e161e6723a16640978005",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2025-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "[50 Marks] Design Aptitude A visit to a museum or a zoo is always something we look forward to with much excitement. But such visits are very tiring too; after about an hour or so we look for a place to sit – a chair or bench, that is never nearby. What if we could carry our own chair everywhere? Design a portable seating device that you could carry in your backpack or hand bag. It should be light enough to carry around, small enough to fit into your bag, easy to use, and good to look at. Show the seating device when: 1) it has just been taken out of the bag and 2) it is ready to sit on. Note • Make pencil sketches only • Do not use colour • Explain your design only through visuals and short labels. • Do not write separate explanations. Evaluation Criteria • Suitability of the design for the given context • Ease of carrying and use • Uniqueness of design • Attention to detail • Explanation of features through visuals only • Clarity of the sketch and quality of presentation",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2025/blocks/uceed-2025-b2.png",
+     "sha256": "b2e13899ffab841ee47d1e153ad58458c83b23d41bce91263e2d830707eb1921",
+     "width": 1617,
+     "height": 1471,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed; marks split equally):\n• Suitability of the design for the given context — 8.5\n• Ease of carrying and use — 8.5\n• Uniqueness of design — 8.5\n• Attention to detail — 8.5\n• Explanation of features through visuals only — 8.5\n• Clarity of the sketch and quality of presentation — 7.5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2025,
+    "paperId": "uceed-2025",
+    "questionNo": "B2",
+    "page": 26,
+    "sourceSha256": "b73fa91f2ecef26fad9f4b6c32529412ff1c272f730e161e6723a16640978005",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2026-b1",
+   "type": "DESCRIPTIVE",
+   "prompt": "[50 Marks] Mandatory question Drawing Krishna, an 8-year-old boy, is taking his pet dog – Scooby, for a walk in a park. Scooby is walking in front of Krishna. The boy is holding a 3 feet long leash in his left hand and an icecream cone in his right hand. Sky is clear and it is 5 o’clock in the evening. They are walking on a pathway which is lined with lamp posts on both the sides. These lamp posts are equidistant from each other. Scooby heard a sound, stopped walking, turned back and looked at Krishna. Draw this scene from the point of view of the dog. Evaluation Criteria: • Attention to details and observation (10 marks) • Sense of perspective (10 marks) • Visual composition (10 marks) • Quality of lines (10 marks) • Light and shade effect (10 marks) Note: • Make pencil sketches only • Do not use colours",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2026/blocks/uceed-2026-b1.png",
+     "sha256": "3f096b99e38241b2f91ba2bb835db5a1dddb95080b90502b44d92b56a62d1d2c",
+     "width": 1590,
+     "height": 1417,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed):\n• Attention to details and observation — 10\n• Sense of perspective — 10\n• Visual composition — 10\n• Quality of lines — 10\n• Light and shade effect — 10",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2026,
+    "paperId": "uceed-2026",
+    "questionNo": "B1",
+    "page": 31,
+    "sourceSha256": "22a138ca920b6659cfcfb3ef2ba6af296e72185336158c77ba8d59d43e7fc52d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "uceed-2026-b2",
+   "type": "DESCRIPTIVE",
+   "prompt": "[50 Marks] Mandatory question Design Aptitude Students often travel in long distance trains and stay at dormitories while going for interviews/exams from one city to another. During their travel and stay, students often struggle to keep their personal toiletries organized and accessible in toilets. Items may get misplaced, mixed up, or remain wet after use. Design a compact and portable toiletry organizer that helps students carry, store, and dry their items hygienically. It should be secure, easy to maintain and identifiable as a personal belonging. Sketch your design showing: a. How it looks in open condition for use. b. How it looks when packed and ready for carrying. Evaluation Criteria: • Suitability to meet basic functional requirement of the end user (10 marks) • Attention to detail and explanation of the features (10 Marks) • Uniqueness of the design solution (10 Marks) • Appropriateness of the three-dimensional form and visual graphics (10 Marks) • Quality of presentation (10 Marks) Note: • Make pencil sketches only • Do not use colours",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "uceed-2026/blocks/uceed-2026-b2.png",
+     "sha256": "a1e5eeb916e2834d241d748fb70be8d12c0b2c55c59c73ab0fa2156e4ff04fda",
+     "width": 1570,
+     "height": 1618,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing task, 50 marks. Scored on a photo of the student's drawing.\n\nEvaluation criteria (as printed):\n• Suitability to meet basic functional requirement of the end user — 10\n• Attention to detail and explanation of the features — 10\n• Uniqueness of the design solution — 10\n• Appropriateness of the three-dimensional form and visual graphics — 10\n• Quality of presentation — 10",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 50.0,
+   "holds": [],
+   "provenance": {
+    "exam": "uceed",
+    "year": 2026,
+    "paperId": "uceed-2026",
+    "questionNo": "B2",
+    "page": 32,
+    "sourceSha256": "22a138ca920b6659cfcfb3ef2ba6af296e72185336158c77ba8d59d43e7fc52d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
   }
  ]
 }
