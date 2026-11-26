@@ -390,6 +390,16 @@
     "keyedCount": 75
   },
   {
+    "id": "nid:nid-mdes-2017",
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-mdes-2017",
+    "questionCount": 67,
+    "objectiveCount": 67,
+    "drawingCount": 0,
+    "keyedCount": 67
+  },
+  {
     "id": "nid:nid-bdes-2016",
     "exam": "nid",
     "year": 2016,
