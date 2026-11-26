@@ -41,7 +41,7 @@ test('built search documents contain one canonical, real public text, and no per
     if (path === '/') {
       assert.deepEqual(JSON.parse(schema[1]), {'@context':'https://schema.org','@type':'WebSite',name:'DMocks',url:'https://dmocks.com/'});
       assert.match(html, /Read your five-question report/);
-      assert.match(html, /UCEED Part A Practice Mock 01 is the first planned paid paper/);
+      assert.match(html, /then open a worked solution for every question/);
       assert.doesNotMatch(html, /Opening soon|top ten|All India mocks|Community|Reviewed questions|reviewer feedback|interactive programmes|Illustrative preview/i);
     } else assert.equal(schema, null);
   }

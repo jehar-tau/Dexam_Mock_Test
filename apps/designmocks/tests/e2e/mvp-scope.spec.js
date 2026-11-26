@@ -26,7 +26,7 @@ async function fixture(page,{drawing=false,numericAlternatives=false,multipleSel
 }
 test('the public offer limits the pass to released papers and keeps checkout independently closed',async({page})=>{
  const provider=await stubPortalProvider(page,()=>undefined);await page.goto('/');await expect(page.getByRole('heading',{name:/Make your next attempt count/})).toBeVisible();expect(provider.calls).toEqual([]);
- await page.goto('/tests/nid');await expect(page.getByText('This exam is coming later and is outside the initial annual-pass offer.',{exact:true})).toBeVisible();await seedPortalSession(page,actor);await page.goto('/plans');
+ await page.goto('/tests/nid');await expect(page.getByRole('link',{name:'Browse free NID DAT papers'})).toHaveAttribute('href','/papers/nid');await seedPortalSession(page,actor);await page.goto('/plans');
  await expect(page.getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();await expect(page.getByText('Mock-test catalogue for UCEED, NID DAT, NIFT and CEED',{exact:true})).toHaveCount(0);await expect(page.getByRole('button',{name:/Pay .* with Razorpay/})).toBeDisabled();await expect(page.getByRole('checkbox')).toHaveCount(0);expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
 });
 test('a mismatched customer notice revision keeps the checkout switch closed', async ({ page }) => {
@@ -135,7 +135,7 @@ test('a production build cannot enable deferred modules or checkout with preview
  await page.goto('http://127.0.0.1:4899/plans');await expect(page.getByRole('checkbox')).toHaveCount(0);await expect(page.getByRole('button',{name:/Pay .* with Razorpay/})).toHaveCount(0);await expect(page.getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();
 });
 
-test('the closed public landing offers two available resources and identifies the sole planned paid paper', async ({ page }) => {
+test('the closed public landing offers the sample, the museum-sign exercise and free papers', async ({ page }) => {
   await page.goto('http://127.0.0.1:4899/');
   await expect(page.getByRole('link', { name: 'Join free', exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Student account', exact: true })).toHaveCount(0);
@@ -143,7 +143,7 @@ test('the closed public landing offers two available resources and identifies th
   await expect(features.getByRole('link')).toHaveCount(3);
   await expect(features.getByRole('link', { name: 'Start the free sample' })).toHaveAttribute('href', '/sample');
   await expect(features.getByRole('link', { name: 'Compare the museum signs' })).toHaveAttribute('href', '/practice/visual-hierarchy');
-  await expect(features.getByRole('link', { name: 'Read the UCEED Part A guide' })).toHaveAttribute('href', '/tests/uceed');
+  await expect(features.getByRole('link', { name: 'Browse free papers' })).toHaveAttribute('href', '/papers');
   await expect(page.locator('main')).not.toContainText(/opening soon|all india|top ten|reviewer|community|interactive programmes|illustrative preview/i);
   await expect(page.getByRole('heading', { name: 'Read your five-question report' })).toBeVisible();
   await page.locator('.hero-actions').getByRole('link', { name: 'Try 5 sample questions', exact: true }).click();

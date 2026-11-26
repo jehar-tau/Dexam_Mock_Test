@@ -838,11 +838,12 @@ function ExamDetail() {
           <h1>{exam.title}</h1>
           <p>{exam.description}</p>
           <p className="notice">
-            {exam.id === "uceed"
-              ? "UCEED Part A Practice Mock 01 is the first planned paid DMocks paper. The annual-pass page shows current purchase availability."
-              : "This exam is coming later and is outside the initial annual-pass offer."}
+            Free {exam.name} past papers are open on DMocks: take a complete paper with its original timer and marking, then review a worked solution for every question.
           </p>
-          <Button to="/sample">Try the free design practice sample</Button>
+          <div className="detail-actions">
+            <Button to={"/papers/" + exam.id}>Browse free {exam.name} papers</Button>
+            <Button to="/sample" quiet>Try the free design practice sample</Button>
+          </div>
           <p className="sample-disclosure">Five original visual questions, six minutes and feedback after submission. No account required.</p>
         </div>
         <div className={"detail-art exam-" + exam.id}>
@@ -1525,7 +1526,7 @@ function SampleResult() {
         </div>
       )}
       <div className="result-bottom">
-        <Button to="/plans">Explore one year of practice</Button>
+        <Button to="/papers">Take a full free paper</Button>
         <Button to="/sample" quiet>
           Try the sample again
         </Button>
