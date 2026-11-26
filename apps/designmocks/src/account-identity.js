@@ -22,13 +22,13 @@ export function authorizationHeaders(headers,token){
  return{...result,Authorization:'Bearer '+token};
 }
 
-// Role probes decide what a page shows, so pin the verified token and drop a reply if the account changed meanwhile.
-export function verifiedRoleCheck(auth, client, actorId, name, parentSignal) {
+// Pin each account-bound request and discard its reply when the session changes.
+export function verifiedAccountRpc(auth, client, actorId, name, args, parentSignal) {
   return withAccountDeadline(async signal => {
     const unavailable = { data: null, error: new Error('Account identity changed.') };
     const token = await verifiedAccountToken(auth, actorId, signal);
     if (!token) return unavailable;
-    const result = await client.rpc(name).setHeader('Authorization', 'Bearer ' + token).abortSignal(signal);
+    const result = await client.rpc(name, args).setHeader('Authorization', 'Bearer ' + token).abortSignal(signal);
     signal.throwIfAborted();
     const { data, error } = await auth.getSession();
     signal.throwIfAborted();
@@ -36,4 +36,8 @@ export function verifiedRoleCheck(auth, client, actorId, name, parentSignal) {
       ? result
       : unavailable;
   }, parentSignal);
+}
+
+export function verifiedRoleCheck(auth, client, actorId, name, parentSignal) {
+  return verifiedAccountRpc(auth, client, actorId, name, undefined, parentSignal);
 }

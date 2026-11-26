@@ -26,6 +26,7 @@ import {
 import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
 import { Theme } from "./ThemeToggle.jsx";
 import { HomeFreePapers } from "./HomeFreePapers.jsx";
+import { FreeSignupNotice } from './FreeSignupNotice.jsx';
 import { takeReturn } from "./return-path.js";
 import {Purchase} from "./Purchase.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
@@ -192,7 +193,7 @@ function Layout({ children }) {
       <a className="skip" href="#main">
         Skip to content
       </a>
-      {(!portalReady || stagingPortalMode || controlledPublicPortalMode) && (
+      {(!portalReady || stagingPortalMode || (controlledPublicPortalMode && !session)) && (
         <div className="preview-strip">
           {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "OWNER REVIEW" : controlledPublicPortalMode ? "FREE PAPERS" : stagingPortalMode ? "PRIVATE STAGING" : testLoginMode ? "PRIVATE SETUP" : "A FIRST LOOK"}{" "}
           <span>
@@ -983,7 +984,7 @@ function Account() {
   const navigate = useNavigate();
   // After a fresh Google sign-in, return to the page the student came from.
   useEffect(() => {
-    if (!callbackStarted || loading || !session) return;
+    if ((!callbackStarted && window.location.pathname !== '/account/callback') || loading || !session) return;
     if ((stagingPortalMode || controlledPublicPortalMode) && stagingAccess !== "allowed") return;
     const to = takeReturn();
     if (to) navigate(to, { replace: true });
@@ -1111,7 +1112,7 @@ function Account() {
                 onClick={login}
               >
                 <GoogleIcon />
-                {busy ? "Opening Google…" : stagingPortalMode ? "Sign in to staging with Google" : controlledPublicPortalMode ? "Sign in to test with Google" : testLoginMode ? "Test Google sign-in" : "Continue with Google"}
+                {busy ? "Opening Google…" : stagingPortalMode ? "Sign in to staging with Google" : controlledPublicPortalMode ? "Continue with Google" : testLoginMode ? "Test Google sign-in" : "Continue with Google"}
               </button>
             </>
             {!authReady && (
@@ -1120,7 +1121,7 @@ function Account() {
                 explore the full sample experience now.
               </div>
             )}
-            {controlledPublicPortalMode ? <p className="account-terms">Free papers need a Google account. The annual pass is not on sale yet.</p> : stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
+            {controlledPublicPortalMode ? <p className="account-terms">Free accounts are for students aged 18 or older. After Google sign-in, review the <Link to="/terms">Terms of Use</Link> and <Link to="/privacy">Privacy Notice</Link> before starting a paper.</p> : stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
               testLoginMode ? <p className="account-terms">Only server-approved test accounts can complete this check. It does not accept draft purchase terms, create an order or unlock a paid pass.</p> : <p className="account-terms">
               {checkoutReady
                 ? "Review the terms and privacy notice before continuing with Google. You can confirm a purchase separately in checkout."
@@ -1662,14 +1663,14 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tests" element={<Tests />} />
-        <Route path="/papers" element={<Papers />} />
-        <Route path="/papers/:exam" element={<Papers />} />
+        <Route path="/papers" element={<FreeSignupNotice><Papers /></FreeSignupNotice>} />
+        <Route path="/papers/:exam" element={<FreeSignupNotice><Papers /></FreeSignupNotice>} />
         <Route path="/practice/visual-hierarchy" element={<SignReadingExercise />} />
         <Route path="/tests/:exam" element={<ExamDetail />} />
         <Route path="/plans" element={<Plans />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/account/callback" element={<Account />} />
-        {!__DMOCKS_STAGING_REVIEW_PREVIEW__ && <Route element={stagingPortalMode || controlledPublicPortalMode ? <StagingPortalGate /> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
+        <Route path="/account" element={<FreeSignupNotice><Account /></FreeSignupNotice>} />
+        <Route path="/account/callback" element={<FreeSignupNotice><Account /></FreeSignupNotice>} />
+        {!__DMOCKS_STAGING_REVIEW_PREVIEW__ && <Route element={stagingPortalMode || controlledPublicPortalMode ? <FreeSignupNotice><StagingPortalGate /></FreeSignupNotice> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>
           <Route path="/dashboard" element={<Workspace />} />
           <Route path="/onboarding" element={<CandidateProfile />} />
           <Route path="/account/purchases" element={<PurchaseHistory />} />

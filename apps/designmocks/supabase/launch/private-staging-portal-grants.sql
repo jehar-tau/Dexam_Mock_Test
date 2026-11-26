@@ -116,5 +116,11 @@ grant execute on function
   public.topic_catalog()
 to authenticated;
 
+-- The historic staging recovery baseline predates the free sign-up notice.
+do $$ begin
+  if to_regprocedure('public.free_signup_notice()') is not null then
+    grant execute on function public.free_signup_notice() to authenticated;
+  end if;
+end $$;
 notify pgrst, 'reload schema';
 commit;

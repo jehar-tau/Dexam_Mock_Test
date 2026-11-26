@@ -52,7 +52,7 @@ try {
   for (const key of ["missingFunctions", "extraFunctions", "missingGrants", "changedDefinitions"]) {
     assert.deepEqual(delta[key], []);
   }
-  assert.equal(delta.extraGrants.length, 81);
+  assert.equal(delta.extraGrants.length, 82);
   assert.ok(delta.extraGrants.every(grant => grant.role === "authenticated"));
   for (const signature of [
     "public.create_community_article(text, text, text, text, uuid, uuid)",

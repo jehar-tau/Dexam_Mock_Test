@@ -31,10 +31,19 @@ returns void
 language plpgsql stable security invoker
 set search_path = pg_catalog
 as $$
+declare
+  notice jsonb;
 begin
   if current_user <> 'authenticated' then return; end if;
   if public.can_enter_staging_portal() is not true then
     raise exception 'Private staging requires an approved Google tester' using errcode = '42501';
+  end if;
+  -- Older recovery snapshots predate free student sign-up.
+  if to_regprocedure('public.free_signup_notice()') is null then return; end if;
+  if current_setting('request.path', true) in ('/rpc/free_signup_notice', '/rpc/accept_current_terms') then return; end if;
+  notice := public.free_signup_notice();
+  if notice is null or (notice->>'required')::boolean and not (notice->>'accepted')::boolean then
+    raise exception 'Accept the current DMocks terms and privacy notice first' using errcode = '42501';
   end if;
 end
 $$;

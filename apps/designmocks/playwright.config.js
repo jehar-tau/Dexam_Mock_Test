@@ -81,7 +81,7 @@ export default defineConfig({
       reuseExistingServer:false,timeout:60000,
     },
     {
-      command: "npm exec -- vite build --mode production --outDir test-results/controlled-public && npm exec -- vite preview --outDir test-results/controlled-public --host 127.0.0.1 --port 4797 --strictPort",
+      command: "node tests/build-controlled-signup-fixture.mjs && npm exec -- vite preview --outDir test-results/controlled-public --host 127.0.0.1 --port 4797 --strictPort",
       url: "http://127.0.0.1:4797",
       env: { VITE_DEPLOYMENT_ENV: "production", VITE_CONTROLLED_PUBLIC_PORTAL_ENABLED: "true",
         VITE_PORTAL_ENABLED: "false", VITE_TEST_LOGIN_ENABLED: "false", VITE_STAGING_PORTAL_ENABLED: "false",
