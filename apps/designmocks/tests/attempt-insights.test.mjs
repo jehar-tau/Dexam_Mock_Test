@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildAttemptInsights } from "../src/attempt-insights.mjs";
+import { buildAttemptInsights, reviewMarks } from "../src/attempt-insights.mjs";
 
 test("released attempt insights exclude drawings and dropped questions",()=>{
   const value=buildAttemptInsights([
@@ -83,4 +83,16 @@ test("original preview paper holds its clock on reload, grades saved revisions a
   assert.deepEqual(result.questions.map(q=>q.outcome),["correct","unanswered","partial","unanswered","wrong","unanswered"]);
   await assert.rejects(save("tiles","3",5));
   assert.equal((await createPreviewPaper(options).readAttempt()).data.score,result.score);
+});
+
+test("review marks come only from the released outcome and the question's own marking", () => {
+  const marking = { correct: 4, wrong: -1 };
+  assert.equal(reviewMarks({ kind: "mcq", outcome: "correct", marking }), "+4");
+  assert.equal(reviewMarks({ kind: "mcq", outcome: "incorrect", marking }), "−1");
+  assert.equal(reviewMarks({ kind: "nat", outcome: "wrong", marking: { correct: 4, wrong: 0 } }), "0");
+  assert.equal(reviewMarks({ kind: "mcq", outcome: "unanswered", marking }), "0");
+  assert.equal(reviewMarks({ kind: "msq", outcome: "partial", marking }), null);
+  assert.equal(reviewMarks({ kind: "mcq", outcome: "full_marks", points: 3 }), "+3");
+  assert.equal(reviewMarks({ kind: "mcq", outcome: "wrong" }), null);
+  assert.equal(reviewMarks({ kind: "drawing", outcome: "correct", marking }), null);
 });

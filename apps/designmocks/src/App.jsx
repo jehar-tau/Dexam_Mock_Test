@@ -24,6 +24,7 @@ import {
   SAMPLE_DURATION_MS,
 } from "./sample.mjs";
 import { Workspace, Attempt, AttemptSyncPreview } from "./Workspace.jsx";
+import { Theme } from "./ThemeToggle.jsx";
 import {Purchase} from "./Purchase.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
 import {postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
@@ -131,41 +132,6 @@ function Logo() {
         by <span>Design Exam Academy</span>
       </a>
     </div>
-  );
-}
-function Theme() {
-  const [dark, setDark] = useState(
-    typeof document !== "undefined" && document.documentElement.dataset.theme === "dark",
-  );
-  return (
-    <button
-      className="theme icon-button"
-      aria-label="Dark mode"
-      role="switch"
-      aria-checked={dark}
-      onClick={() => {
-        const next = !dark;
-        setDark(next);
-        document.documentElement.dataset.theme = next ? "dark" : "light";
-        try {
-          localStorage.setItem("designmocks-theme", next ? "dark" : "light");
-        } catch {}
-      }}
-    >
-      {dark ? (
-        <span aria-hidden="true">☀</span>
-      ) : (
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          aria-hidden="true"
-        >
-          <path d="M20 14A8 8 0 0 1 10 4a8.5 8.5 0 1 0 10 10Z" />
-        </svg>
-      )}
-    </button>
   );
 }
 function Button({ to, children, quiet = false, ...props }) {

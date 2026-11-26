@@ -44,3 +44,16 @@ export function responseSummary(questions) {
   for (const item of items) counts[releasedOutcome(item)]++;
   return {total: items.length, answered: summary?.answered ?? 0, accuracy: summary?.accuracy ?? null, counts};
 }
+
+const signed = value => value > 0 ? "+" + value : value < 0 ? "−" + Math.abs(value) : "0";
+// Marks are shown only where the released outcome fixes them exactly.
+export function reviewMarks(item) {
+  const outcome = releasedOutcome(item), marking = item?.marking ?? {};
+  if (outcome === "correct" || outcome === "full_marks") {
+    const value = Number.isFinite(marking.correct) ? marking.correct : item.points;
+    return Number.isFinite(value) ? signed(value) : null;
+  }
+  if (outcome === "wrong") return Number.isFinite(marking.wrong) ? signed(marking.wrong) : null;
+  if (outcome === "unanswered") return "0";
+  return null;
+}

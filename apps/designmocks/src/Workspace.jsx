@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Theme } from "./ThemeToggle.jsx";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Art, Arrow } from "./Art.jsx";
 import {postLaunchPreview} from "./launch-scope.js";
@@ -635,7 +636,7 @@ if(expandedAttemptScope){
         {!attempt.examResultsPending && <div className="review-toggle analysis-review-heading">
           <h2 ref={reviewHeading} tabIndex={-1}>Question review</h2>
           <button
-            className="text-button"
+            className={review ? "text-button" : "button"}
             aria-expanded={review}
             onClick={() => setReview(!review)}
           >
@@ -652,17 +653,34 @@ if(expandedAttemptScope){
   }
   return (
     <section className="wrap sample-run attempt-workspace">
-      <Link className="back-link" to={workspaceHref}>
-        ← Your workspace
-      </Link>
-      <div className="runner-top attempt-masthead">
-        <div>
+      <header className="attempt-bar" aria-label="Attempt status">
+        <Link className="attempt-exit" to={workspaceHref}>← Your workspace</Link>
+        <div className="attempt-bar-title">
           <span className="eyebrow">{demo ? "ORIGINAL DMOCKS SAMPLE" : "TIMED ATTEMPT"}</span>
           <h1>{attempt.title}</h1>
-          <p className="attempt-summary">{attempt.questions.length} questions <i>·</i> {paperSections(attempt.questions).length} sections</p>
         </div>
-
-      </div>
+        <p className="attempt-bar-count"><b>Question {index + 1}</b><small> of {attempt.questions.length}</small></p>
+        <div
+          className="timer"
+          role="timer"
+          aria-live="off"
+          aria-label="Time remaining"
+          data-urgency={left <= 60 ? "critical" : left <= 300 ? "low" : undefined}
+        >
+          <span>
+            {Math.floor(left / 3600)
+              .toString()
+              .padStart(2, "0")}
+            :{Math.floor(left / 60) % 60 < 10 ? "0" : ""}
+            {Math.floor(left / 60) % 60}:
+            {(left % 60).toString().padStart(2, "0")}
+          </span>
+          <small>remaining</small>
+        </div>
+        <Theme className="theme icon-button attempt-theme" />
+        <a className="attempt-jump" href="#attempt-navigator" onClick={event => {event.preventDefault(); const nav = document.getElementById("attempt-navigator"); nav?.focus(); nav?.scrollIntoView({block:"start"});}}>Questions</a>
+      </header>
+      <p className="attempt-summary">{attempt.questions.length} questions <i>·</i> {paperSections(attempt.questions).length} sections · answers save as you go</p>
       {error && !confirm && (
         <p className="error" role="alert">
           {error}
@@ -696,26 +714,6 @@ if(expandedAttemptScope){
           </nav>
         );
       })()}
-      <div className="attempt-clockbar">
-        <b>Question {index + 1}<small> of {attempt.questions.length}</small></b>
-        <div
-          className="timer"
-          role="timer"
-          aria-live="off"
-          aria-label="Time remaining"
-        >
-          <span>
-            {Math.floor(left / 3600)
-              .toString()
-              .padStart(2, "0")}
-            :{Math.floor(left / 60) % 60 < 10 ? "0" : ""}
-            {Math.floor(left / 60) % 60}:
-            {(left % 60).toString().padStart(2, "0")}
-          </span>
-          <small>remaining</small>
-        </div>
-      <a className="attempt-jump" href="#attempt-navigator" onClick={event => {event.preventDefault(); const nav = document.getElementById("attempt-navigator"); nav?.focus(); nav?.scrollIntoView({block:"start"});}}>Navigator ↓</a>
-      </div>
       <div className="runner-layout attempt-layout">
         <article className="question-panel">
           <div className="question-meta">
