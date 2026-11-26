@@ -180,6 +180,46 @@
     "keyedCount": 36
   },
   {
+    "id": "ceed:ceed-2020",
+    "exam": "ceed",
+    "year": 2020,
+    "paperId": "ceed-2020",
+    "questionCount": 41,
+    "objectiveCount": 41,
+    "drawingCount": 0,
+    "keyedCount": 41
+  },
+  {
+    "id": "ceed:ceed-2019",
+    "exam": "ceed",
+    "year": 2019,
+    "paperId": "ceed-2019",
+    "questionCount": 45,
+    "objectiveCount": 45,
+    "drawingCount": 0,
+    "keyedCount": 45
+  },
+  {
+    "id": "ceed:ceed-2018",
+    "exam": "ceed",
+    "year": 2018,
+    "paperId": "ceed-2018",
+    "questionCount": 41,
+    "objectiveCount": 41,
+    "drawingCount": 0,
+    "keyedCount": 41
+  },
+  {
+    "id": "ceed:ceed-2017",
+    "exam": "ceed",
+    "year": 2017,
+    "paperId": "ceed-2017",
+    "questionCount": 44,
+    "objectiveCount": 44,
+    "drawingCount": 0,
+    "keyedCount": 44
+  },
+  {
     "id": "nift:nift-2026-bdes-gat",
     "exam": "nift",
     "year": 2026,
