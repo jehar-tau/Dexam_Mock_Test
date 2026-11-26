@@ -4,9 +4,9 @@
     "exam": "uceed",
     "year": 2026,
     "paperId": "uceed-2026",
-    "questionCount": 57,
+    "questionCount": 59,
     "objectiveCount": 57,
-    "drawingCount": 0,
+    "drawingCount": 2,
     "keyedCount": 57
   },
   {
@@ -14,9 +14,9 @@
     "exam": "uceed",
     "year": 2025,
     "paperId": "uceed-2025",
-    "questionCount": 57,
+    "questionCount": 59,
     "objectiveCount": 57,
-    "drawingCount": 0,
+    "drawingCount": 2,
     "keyedCount": 57
   },
   {
@@ -24,9 +24,9 @@
     "exam": "uceed",
     "year": 2024,
     "paperId": "uceed-2024",
-    "questionCount": 57,
+    "questionCount": 59,
     "objectiveCount": 57,
-    "drawingCount": 0,
+    "drawingCount": 2,
     "keyedCount": 57
   },
   {
@@ -34,9 +34,9 @@
     "exam": "uceed",
     "year": 2023,
     "paperId": "uceed-2023",
-    "questionCount": 68,
+    "questionCount": 69,
     "objectiveCount": 68,
-    "drawingCount": 0,
+    "drawingCount": 1,
     "keyedCount": 68
   },
   {
@@ -44,9 +44,9 @@
     "exam": "uceed",
     "year": 2022,
     "paperId": "uceed-2022",
-    "questionCount": 64,
+    "questionCount": 65,
     "objectiveCount": 64,
-    "drawingCount": 0,
+    "drawingCount": 1,
     "keyedCount": 64
   },
   {
@@ -54,9 +54,9 @@
     "exam": "uceed",
     "year": 2021,
     "paperId": "uceed-2021",
-    "questionCount": 64,
+    "questionCount": 65,
     "objectiveCount": 64,
-    "drawingCount": 0,
+    "drawingCount": 1,
     "keyedCount": 64
   },
   {
@@ -64,9 +64,9 @@
     "exam": "uceed",
     "year": 2020,
     "paperId": "uceed-2020",
-    "questionCount": 66,
+    "questionCount": 67,
     "objectiveCount": 66,
-    "drawingCount": 0,
+    "drawingCount": 1,
     "keyedCount": 66
   },
   {
@@ -124,9 +124,9 @@
     "exam": "ceed",
     "year": 2026,
     "paperId": "ceed-2026",
-    "questionCount": 41,
+    "questionCount": 46,
     "objectiveCount": 41,
-    "drawingCount": 0,
+    "drawingCount": 5,
     "keyedCount": 41
   },
   {
@@ -134,9 +134,9 @@
     "exam": "ceed",
     "year": 2025,
     "paperId": "ceed-2025",
-    "questionCount": 42,
+    "questionCount": 47,
     "objectiveCount": 42,
-    "drawingCount": 0,
+    "drawingCount": 5,
     "keyedCount": 42
   },
   {
@@ -144,9 +144,9 @@
     "exam": "ceed",
     "year": 2024,
     "paperId": "ceed-2024",
-    "questionCount": 41,
+    "questionCount": 46,
     "objectiveCount": 41,
-    "drawingCount": 0,
+    "drawingCount": 5,
     "keyedCount": 41
   },
   {
@@ -154,9 +154,9 @@
     "exam": "ceed",
     "year": 2023,
     "paperId": "ceed-2023",
-    "questionCount": 39,
+    "questionCount": 44,
     "objectiveCount": 39,
-    "drawingCount": 0,
+    "drawingCount": 5,
     "keyedCount": 39
   },
   {
@@ -164,9 +164,9 @@
     "exam": "ceed",
     "year": 2022,
     "paperId": "ceed-2022",
-    "questionCount": 38,
+    "questionCount": 43,
     "objectiveCount": 38,
-    "drawingCount": 0,
+    "drawingCount": 5,
     "keyedCount": 38
   },
   {
@@ -174,9 +174,9 @@
     "exam": "ceed",
     "year": 2021,
     "paperId": "ceed-2021",
-    "questionCount": 36,
+    "questionCount": 41,
     "objectiveCount": 36,
-    "drawingCount": 0,
+    "drawingCount": 5,
     "keyedCount": 36
   },
   {
