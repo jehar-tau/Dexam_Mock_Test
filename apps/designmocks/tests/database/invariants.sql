@@ -193,6 +193,7 @@ set local role authenticated;
 select set_config('test.attempt_id',public.start_attempt('10000000-0000-4000-8000-000000000001')::text,true);
 select pg_temp.assert_true(public.start_attempt('10000000-0000-4000-8000-000000000001')::text=current_setting('test.attempt_id'),'resume same active attempt');
 select pg_temp.assert_true(not ((public.read_attempt(current_setting('test.attempt_id')::uuid)->'questions'->0) ? 'correctKey'),'key hidden before submission');
+select pg_temp.assert_true(not (public.read_attempt(current_setting('test.attempt_id')::uuid)->'questions'->1 ? 'awarded'),'item marks hidden before submission');
 select pg_temp.assert_true(not ((public.read_attempt(current_setting('test.attempt_id')::uuid)->'questions'->0) ? 'explanation'),'explanation hidden before submission');
 select pg_temp.reject('select * from dm_private.answer_keys','student keys inaccessible');
 select pg_temp.reject('select public.save_answer(current_setting(''test.attempt_id'')::uuid,''20000000-0000-4000-8000-000000000001'',''"Z"'')','legacy unrevisioned answer writer is private');
@@ -211,11 +212,20 @@ select pg_temp.assert_true(public.my_attempt_history()='[]'::jsonb,'history rema
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000001',true);
 reset role;
 update dm_private.answer_keys set key='{"kind":"mcq","correct":["A"]}',explanation='A later explanation' where question_id='20000000-0000-4000-8000-000000000001';
+select grade.marks as expected_partial_award
+  from dm_private.attempt_items i
+  cross join lateral dm_private.score_response(i.kind,i.key,i.answer,i.marking) grade
+  where i.attempt_id=current_setting('test.attempt_id')::uuid
+    and i.question_id='20000000-0000-4000-8000-000000000002' \gset
 set local role authenticated;
 select pg_temp.assert_true((public.submit_attempt(current_setting('test.attempt_id')::uuid)->>'score')::numeric=9,'MCQ snapshot + partial MSQ + NAT grading');
 select pg_temp.assert_true((public.submit_attempt(current_setting('test.attempt_id')::uuid)->>'total')::numeric=12,'drawing and dropped excluded from objective denominator');
 select pg_temp.assert_true((public.read_attempt(current_setting('test.attempt_id')::uuid)->>'uploadDeadline')::timestamptz=(public.read_attempt(current_setting('test.attempt_id')::uuid)->>'deadline')::timestamptz+interval '15 minutes','drawing upload grace starts from the fixed exam deadline');
 select pg_temp.assert_true((public.read_attempt(current_setting('test.attempt_id')::uuid)->'questions'->0) ? 'correctKey','submitted answer review available');
+select pg_temp.assert_true((select item->>'outcome'='partial' and item->'awarded'=to_jsonb(:'expected_partial_award'::numeric)
+  from jsonb_array_elements(public.read_attempt(current_setting('test.attempt_id')::uuid)->'questions') item
+  where item->>'id'='20000000-0000-4000-8000-000000000002'),
+  'submitted MSQ returns the exact partial mark for one correct choice in the frozen key');
 select pg_temp.assert_true(public.read_attempt(current_setting('test.attempt_id')::uuid)->'questions'->0->>'explanation'=current_setting('test.worked_solution'),'submitted answer review keeps the original frozen worked solution');
 select pg_temp.reject('select public.save_answer_revision(current_setting(''test.attempt_id'')::uuid,''20000000-0000-4000-8000-000000000001'',''"A"'',2)','submitted answers immutable');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000002',true);
