@@ -6,6 +6,26 @@ export const RULES_2027=freeze({
  ceed:{version:'iitb-2027-v1',exam:'ceed',cycle:2027,source:'https://www.ceed.iitb.ac.in/2027/downloads/CEED2027_Brochure.pdf',pages:'2–3',durationSeconds:3600,sections:{NAT:{count:8,correct:4,wrong:0},MSQ:{count:10,correct:4,wrong:-1,partial:true},MCQ:{count:26,correct:3,wrong:-0.5}},partB:{durationSeconds:7200,tasks:5,points:20}},
  nift:{version:'niftee-2027-bdes-v1',exam:'nift',programme:'bdes',cycle:2027,source:'https://nift.ac.in/sites/default/files/2026-10/Information%20Bulletin%20-NIFTEE%202027%20-16.10.2026.pdf',pages:'18–20',durationSeconds:7200,sections:{MCQ:{count:100,correct:1,wrong:-0.25}}},
 });
+const nidYearRules=new WeakSet();
+// A historic NID paper has no general 2027 scoring context. Its private,
+// reviewed release plan supplies the clock and marks for each exact question.
+export function createNidYearRule(plan){
+ if(plan?.format!=='dmocks-free-year-paper-v1'||plan.exam!=='nid'
+  ||!Number.isInteger(plan.year)||!Number.isInteger(plan.durationSeconds)
+  ||plan.durationSeconds<60||plan.durationSeconds>21600
+  ||typeof plan.sourcePaperId!=='string'||!Array.isArray(plan.questions)
+  ||new Set(plan.questions.map(item=>item.externalKey)).size!==plan.questions.length)
+  throw new Error('Validated NID year-paper plan required');
+ const questions=new Map(plan.questions.map(item=>[item.externalKey,{correct:item.marking.correct,wrong:item.marking.wrong}]));
+ if([...questions.values()].some(mark=>!Number.isFinite(mark.correct)||mark.correct<=0||mark.correct>100
+  ||!Number.isFinite(mark.wrong)||mark.wrong>0||mark.wrong< -100))
+  throw new Error('Invalid historical NID marking');
+ const rule=Object.freeze({version:'nid-historical-year-v1',exam:'nid',year:plan.year,
+  sourcePaperId:plan.sourcePaperId,durationSeconds:plan.durationSeconds,
+  markingReference:plan.markingReference,questions});
+ nidYearRules.add(rule);
+ return rule;
+}
 const number='[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)';
 const numeric=new RegExp(`^${number}$`);
 const range=new RegExp(`^(${number})\\s*(?:to|–|-)\\s*(${number})$`,'i');
@@ -96,8 +116,10 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  const issue=(code,field,extra={})=>issues.push({code,field,...extra});
  const blocked=()=>({runtime:null,issues});
  if(!question||typeof question!=='object'||Array.isArray(question)){issue('invalid-record','question');return blocked();}
- const verified=Boolean(rule&&rule===RULES_2027[String(question.provenance?.exam).toLowerCase()]);
- const allowAlternatives=verified&&(rule===RULES_2027.uceed||rule===RULES_2027.ceed)&&typeof question.answer?.raw==='string';
+ const nidYear=rule&&nidYearRules.has(rule)&&String(question.provenance?.exam).toLowerCase()==='nid'
+  &&question.provenance?.paperId===rule.sourcePaperId&&question.provenance?.year===rule.year;
+ const verified=Boolean(rule&&(rule===RULES_2027[String(question.provenance?.exam).toLowerCase()]||nidYear));
+ const allowAlternatives=verified&&(rule===RULES_2027.uceed||rule===RULES_2027.ceed||nidYear)&&typeof question.answer?.raw==='string';
  if(!verified)issue('context-unverified','provenance.exam');
  if(!Array.isArray(question.holds)||question.holds.length)issue('holds-unresolved','holds');
  if(typeof question.prompt!=='string'||!question.prompt.trim())issue('prompt-missing','prompt');
@@ -117,7 +139,7 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
   if(issues.length)return blocked();
   return{issues,runtime:{prompt:question.prompt,options:[],kind:'drawing',marking:{correct:rule.partB.points,wrong:0,humanReview:true},media,points:rule.partB.points,negativePoints:0,topic:question.topic||'drawing',key:{kind:'drawing',sourceExternalKey:question.externalKey},explanation:'Human review against the published task rubric.',context:{version:rule.version,exam:rule.exam,cycle:rule.cycle,source:rule.source,part:'B',section:'Part B',durationSeconds:rule.partB.durationSeconds}}};
  }
- const scheme=verified?rule.sections?.[question.type]:null;
+ const scheme=verified?(nidYear?rule.questions.get(question.externalKey):rule.sections?.[question.type]):null;
  if(verified&&!scheme)issue('section-unmodelled','type');
  if(question.answer?.status==='pending')issue('answer-pending','answer.status');
  if(question.answer?.status==='owner-adjudicated'&&!ownerAdjudicationEvidenceReady(question))issue('answer-adjudication','answer');
@@ -157,6 +179,9 @@ export function inspectRuntimeQuestion(question,{rule,mediaCatalog=[]}={}){
  key.sourceExternalKey=question.externalKey;
  const marking={correct:scheme.correct,wrong:scheme.wrong,...(scheme.partial?{partial:true}:{})};
  const explanation=solution?encodeWorkedExplanation(question.explanation,solution):question.explanation||`Answer key: ${raw}`;
- return{issues,runtime:{prompt:question.prompt,options,kind:question.type.toLowerCase(),marking,media,points:scheme.correct,negativePoints:Math.abs(scheme.wrong),topic:question.topic||'unclassified',key,explanation,context:{version:rule.version,exam:rule.exam,...(rule.programme?{programme:rule.programme}:{}),cycle:rule.cycle,source:rule.source}}};
+ const context=nidYear?{version:rule.version,exam:'nid',scope:'historical-year-paper',year:rule.year,
+  sourcePaperId:rule.sourcePaperId,durationSeconds:rule.durationSeconds,markingReference:rule.markingReference}
+  :{version:rule.version,exam:rule.exam,...(rule.programme?{programme:rule.programme}:{}),cycle:rule.cycle,source:rule.source};
+ return{issues,runtime:{prompt:question.prompt,options,kind:question.type.toLowerCase(),marking,media,points:scheme.correct,negativePoints:Math.abs(scheme.wrong),topic:question.topic||'unclassified',key,explanation,context}};
 }
 export function runtimeQuestion(question,options){return inspectRuntimeQuestion(question,options).runtime;}
