@@ -72,6 +72,9 @@ const PortalPreview = includeStudentPreview
 const PapersPreview = includeStudentPreview
   ? React.lazy(() => import("./PapersPreview.jsx"))
   : null;
+const DrawingTaskPreview = includeStudentPreview
+  ? React.lazy(() => import("./DrawingTaskPreview.jsx"))
+  : null;
 const TopicPractice = React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPractice })));
 const ExamMocks = React.lazy(() => import("./ExamMocks.jsx").then(module => ({ default: module.ExamMocks })));
 const Papers = React.lazy(() => import("./Papers.jsx"));
@@ -1692,6 +1695,7 @@ export default function App() {
         {includeStudentPreview && studentPreview && <>
           <Route path="/portal-preview/*" element={<PortalPreview />} />
           <Route path="/papers-preview" element={<PapersPreview />} />
+          <Route path="/drawing-tasks-preview" element={<DrawingTaskPreview />} />
           <Route path="/profile-preview" element={<CandidateProfilePreview />} />
           <Route path="/topic-practice-preview" element={<TopicPracticePreview />} />
           <Route path="/topic-practice-preview/released" element={<TopicPracticePreview />} />

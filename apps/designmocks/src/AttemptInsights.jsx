@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { buildAttemptInsights, outcomeLabels, releasedOutcome, responseSummary, reviewMarks } from "./attempt-insights.mjs";
 import { answerAlternativesLabel, releasedKeyLabel } from "./answer-key.js";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
+import { DrawingTaskReview } from "./DrawingTask.jsx";
 import { SolutionPanel } from "./WorkedSolution.jsx";
 import { readWorkedExplanation, workedFigureIndex } from "./worked-solution.js";
 import "./paper-workspace.css";
@@ -100,7 +101,10 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, ini
         </nav>
       </article></>}
     </>}
-    {drawings.map(item => <article key={item.id}><h3>{item.prompt}</h3>{item.answer && <p>Your notes: {item.answer}</p>}{item.explanation && <p>{item.explanation}</p>}<DrawingReviewStatus review={item.drawingReview}/></article>)}
+    {drawings.map((item, index) => item.drawingEstimate !== undefined ? <DrawingTaskReview key={item.id} label={item.label ?? `TASK ${index + 1}`}
+      prompt={item.prompt} figureUrl={media?.[item.id]?.[0]?.url} marks={item.marking?.max ?? 0} criteria={item.drawing?.criteria}
+      criteriaSource={item.drawing?.criteriaSource} instructions={item.drawing?.instructions} photos={item.drawingPhotos ?? []}
+      estimate={item.drawingEstimate} notes={item.explanation} /> : <article key={item.id}><h3>{item.prompt}</h3>{item.answer && <p>Your notes: {item.answer}</p>}{item.explanation && <p>{item.explanation}</p>}<DrawingReviewStatus review={item.drawingReview}/></article>)}
   </div>;
 }
 
