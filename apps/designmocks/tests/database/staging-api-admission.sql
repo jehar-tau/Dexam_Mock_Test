@@ -49,9 +49,62 @@ select dm_staging_api.check_admission();
 reset role;
 set local role service_role;
 select dm_staging_api.check_admission();
+-- Real RPCs for a new Google account, a second account, and a later notice revision.
+reset role;
+update dm_private.registration_policy set mode='open' where id;
+update public.launch_settings set policy_version=null where singleton;
+set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000191',true);
+select set_config('request.path','/rpc/free_signup_notice',true);
+select dm_staging_api.check_admission();
+do $$ begin
+  if public.free_signup_notice() <> '{"required":true,"accepted":false,"version":null}'::jsonb then
+    raise exception 'Unexpected fresh notice state';
+  end if;
+end $$;
+create function pg_temp.expect_notice_denied() returns void language plpgsql as $$
+begin
+  perform dm_staging_api.check_admission();
+  raise exception 'Expected the unsigned student request to be rejected';
+exception when insufficient_privilege then
+  if sqlerrm <> 'Accept the current DMocks terms and privacy notice first' then raise; end if;
+end $$;
+select set_config('request.path','/rpc/start_free_year_paper',true);
+select pg_temp.expect_notice_denied();
+
+reset role;
+update public.launch_settings set policy_version='dmocks-notices-v1-' || repeat('a',64) where singleton;
+set local role authenticated;
+select set_config('request.path','/rpc/accept_current_terms',true);
+select dm_staging_api.check_admission();
+select public.accept_current_terms('dmocks-notices-v1-' || repeat('a',64));
+select set_config('request.path','/rpc/start_free_year_paper',true);
+select dm_staging_api.check_admission();
+do $$ begin
+  if not (public.free_signup_notice()->>'accepted')::boolean then raise exception 'Acceptance was not retained'; end if;
+end $$;
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000190',true);
+select pg_temp.expect_notice_denied();
+select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000191',true);
+reset role;
+update public.launch_settings set policy_version='dmocks-notices-v1-' || repeat('b',64) where singleton;
+set local role authenticated;
+select pg_temp.expect_notice_denied();
+select set_config('request.path','/rpc/accept_current_terms',true);
+select dm_staging_api.check_admission();
+do $$ begin
+  perform public.accept_current_terms('dmocks-notices-v1-' || repeat('a',64));
+  raise exception 'Old notice was accepted';
+exception when raise_exception then
+  if sqlerrm <> 'Published terms are not ready' then raise; end if;
+end $$;
+reset role;
+do $$ begin
+  if has_function_privilege('anon','public.free_signup_notice()','execute') then raise exception 'Anonymous notice receipt access'; end if;
+end $$;
 rollback;
 
 select format('alter role authenticator in database %I reset pgrst.db_pre_request', current_database()) \gexec
 drop schema dm_staging_api cascade;
 update dm_private.registration_policy set mode='closed' where id;
-\echo 'PASS: private staging Data API hook checks the current tester allowlist.'
+\echo 'PASS: private staging Data API hook checks tester admission and exact-version free signup consent.'
