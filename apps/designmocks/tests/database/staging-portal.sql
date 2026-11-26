@@ -42,7 +42,34 @@ reset role;
 update dm_private.registration_policy set mode='open' where id;
 set local role authenticated;
 select set_config('request.jwt.claim.sub',:'approved',true);
-select pg_temp.staging_assert(not public.can_enter_staging_portal(),'open registration disables staging admission');
+select pg_temp.staging_assert(public.can_enter_staging_portal(),'open free sign-up admits a confirmed Google account');
+select set_config('request.jwt.claim.sub',:'unknown',true);
+select pg_temp.staging_assert(public.can_enter_staging_portal(),'open free sign-up admits a Google account outside the allowlist');
+select set_config('request.jwt.claim.sub',:'unconfirmed',true);
+select pg_temp.staging_assert(not public.can_enter_staging_portal(),'open free sign-up still denies an unconfirmed email');
+select set_config('request.jwt.claim.sub',:'wrong_provider',true);
+select pg_temp.staging_assert(not public.can_enter_staging_portal(),'open free sign-up still denies a non-Google provider');
+select set_config('request.jwt.claim.sub',:'anonymous',true);
+select pg_temp.staging_assert(not public.can_enter_staging_portal(),'open free sign-up still denies an anonymous account');
+reset role;
+alter table public.launch_settings disable trigger guard_sales_activation;
+update public.launch_settings set sales_enabled=true where singleton;
+alter table public.launch_settings enable trigger guard_sales_activation;
+set local role authenticated;
+select set_config('request.jwt.claim.sub',:'unknown',true);
+select pg_temp.staging_assert(not public.can_enter_staging_portal(),'open sign-up on test never admits while sales are on');
+reset role;
+alter table public.launch_settings disable trigger guard_sales_activation;
+update public.launch_settings set sales_enabled=false where singleton;
+alter table public.launch_settings enable trigger guard_sales_activation;
+update public.launch_settings set environment_mode='live' where singleton;
+set local role authenticated;
+select set_config('request.jwt.claim.sub',:'unknown',true);
+select pg_temp.staging_assert(not public.can_enter_staging_portal(),'open sign-up never admits through this portal on a live backend');
+reset role;
+update public.launch_settings set environment_mode='test' where singleton;
+set local role authenticated;
+select set_config('request.jwt.claim.sub',:'approved',true);
 
 reset role;
 update dm_private.registration_policy set mode='testers' where id;
@@ -56,4 +83,4 @@ delete from dm_private.registration_testers where email='approved@example.invali
 set local role authenticated;
 select pg_temp.staging_assert(not public.can_enter_staging_portal(),'allowlist revocation denies an existing session');
 rollback;
-\echo 'PASS: staging admission requires a confirmed allowlisted Google account and closed test sales.'
+\echo 'PASS: portal admission requires a confirmed Google account (allowlisted in testers mode, any in open mode) and closed test sales.'
