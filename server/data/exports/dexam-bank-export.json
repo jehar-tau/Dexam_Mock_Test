@@ -101199,8 +101199,8 @@
     }
    ],
    "answer": {
-    "raw": "B",
-    "status": "matched-source"
+    "raw": "C",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
@@ -101262,8 +101262,8 @@
     }
    ],
    "answer": {
-    "raw": "C",
-    "status": "matched-source"
+    "raw": "D",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
@@ -101649,8 +101649,8 @@
     }
    ],
    "answer": {
-    "raw": "A",
-    "status": "matched-source"
+    "raw": "B",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
@@ -101712,8 +101712,8 @@
     }
    ],
    "answer": {
-    "raw": "A",
-    "status": "matched-source"
+    "raw": "C",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
@@ -107841,8 +107841,8 @@
     }
    ],
    "answer": {
-    "raw": "D",
-    "status": "matched-source"
+    "raw": "B",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
@@ -108282,8 +108282,8 @@
     }
    ],
    "answer": {
-    "raw": "B",
-    "status": "matched-source"
+    "raw": "C",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
@@ -108345,8 +108345,8 @@
     }
    ],
    "answer": {
-    "raw": "A",
-    "status": "matched-source"
+    "raw": "C",
+    "status": "independently-solved"
    },
    "explanation": null,
    "topic": "visual-reasoning",
