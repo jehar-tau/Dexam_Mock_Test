@@ -190,6 +190,16 @@
     "keyedCount": 100
   },
   {
+    "id": "nift:nift-2025-mdes-gat",
+    "exam": "nift",
+    "year": 2025,
+    "paperId": "nift-2025-mdes-gat",
+    "questionCount": 120,
+    "objectiveCount": 120,
+    "drawingCount": 0,
+    "keyedCount": 120
+  },
+  {
     "id": "nift:nift-2024-bdes-gat",
     "exam": "nift",
     "year": 2024,
