@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { paperLabel } from './paper-years.mjs';
+import { paperLabel, paperLevel, paperSubtitle } from './paper-years.mjs';
 import { loadReleasedYearPapers, releasedYearPaperMap, releasedYearPaperGroups } from './free-year-papers.mjs';
 import { platform, cataloguePlatform } from './platform.js';
 import { useAuthState } from './useAuth.js';
@@ -12,6 +12,12 @@ import { ownedYearPaperAttempts } from './year-paper-attempts.mjs';
 import './papers.css';
 
 const examNames = { uceed: 'UCEED', ceed: 'CEED', nift: 'NIFT', nid: 'NID' };
+const examDetails = {
+  uceed: { body: 'IIT Bombay', level: 'B.Des. entrance' },
+  ceed: { body: 'IIT Bombay', level: 'M.Des. entrance' },
+  nift: { body: 'NIFT', level: 'B.Des. and M.Des. entrance' },
+  nid: { body: 'NID', level: 'B.Des. and M.Des. DAT' },
+};
 const exams = Object.keys(examNames);
 const catalogueRefreshMs = 10000;
 
@@ -19,8 +25,9 @@ export function PapersView({ releases = [], signedIn = false, onStart,
   busy = '', startError = '', releasesUnavailable = false, releasesLoading = false,
   onRefresh, authChecking = false, startUncertain = false, onCheckAttempts,
   checkingAttempts = false, savedAttempts = [], recoveryError = '', headingRef,
-  attemptsByPaper = new Map(), attemptsLoading = false, attemptsError = '', onRefreshAttempts }) {
-  const [selected, setSelected] = useState('uceed');
+  attemptsByPaper = new Map(), attemptsLoading = false, attemptsError = '', onRefreshAttempts,
+  initialExam = 'uceed', attemptHref = id => `/attempt/${id}`, attemptsHref = '/dashboard' }) {
+  const [selected, setSelected] = useState(initialExam);
   const [readyId, setReadyId] = useState('');
   const readyDialog = useRef(null), readyOpener = useRef(null), starting = useRef(false);
   const released = releasedYearPaperMap(releases);
@@ -49,10 +56,16 @@ export function PapersView({ releases = [], signedIn = false, onStart,
     try { await onStart(paperId); }
     finally { starting.current = false; }
   }
+  const years = visible.map(paper => paper.year);
+  const yearRange = years.length ? (Math.min(...years) === Math.max(...years) ? `${years[0]}` : `${Math.min(...years)}–${Math.max(...years)}`) : '—';
+  const exam = examDetails[selected];
   return <section className="wrap section year-papers">
     <span className="eyebrow">PAPERS / YEAR BY YEAR</span>
     <h1 ref={headingRef} tabIndex={-1}>Explore the <em>papers.</em></h1>
     <p className="year-papers-intro">Take a complete, reviewed past-year paper for free. Each paper appears here after its questions, figures, answer key and solutions are checked.</p>
+    <ul className="year-papers-promises" aria-label="Every released paper includes">
+      <li>Free to attempt</li><li>Original timer</li><li>That year’s marking</li><li>Solution for every question</li>
+    </ul>
     {authChecking && <p role="status">Checking your account…</p>}
     {releasesLoading && <p role="status">Checking released papers…</p>}
     {releasesUnavailable && <p role="alert" className="error">Couldn’t check released papers. Refresh the catalogue before starting one.</p>}
@@ -60,44 +73,78 @@ export function PapersView({ releases = [], signedIn = false, onStart,
     {startError && <p role="alert" className="error">{startError}</p>}
     {startUncertain && <div className="notice" role="status"><p>This start may already be saved. Check your attempts before starting another paper.</p>
       <button type="button" className="button quiet" disabled={checkingAttempts} onClick={onCheckAttempts}>{checkingAttempts ? 'Checking…' : 'Check saved attempts'}</button>
-      <Link to="/dashboard">View all attempts →</Link></div>}
+      <Link to={attemptsHref}>View all attempts →</Link></div>}
     {recoveryError && <p role="alert" className="error">{recoveryError}</p>}
     {attemptsLoading && <p role="status">Checking your saved papers…</p>}
     {attemptsError && <div className="notice" role="status"><p>Couldn’t check your saved papers. You can still open a released paper.</p>
       {onRefreshAttempts && <button type="button" className="button quiet" onClick={onRefreshAttempts}>Retry saved papers</button>}</div>}
-    {savedAttempts.length > 0 && <section aria-label="Saved active attempts"><h2>Your saved active attempts</h2><ul>{savedAttempts.map(item => <li key={item.id}><Link to={`/attempt/${item.id}`}>{item.title}</Link></li>)}</ul></section>}
+    {savedAttempts.length > 0 && <section aria-label="Saved active attempts"><h2>Your saved active attempts</h2><ul>{savedAttempts.map(item => <li key={item.id}><Link to={attemptHref(item.id)}>{item.title}</Link></li>)}</ul></section>}
     <div className="year-papers-tabs" role="group" aria-label="Choose an exam">
       {exams.map(exam => <button type="button" key={exam} aria-pressed={selected === exam} onClick={() => { closeReady(); setSelected(exam); }}>{examNames[exam]}<span>{papers.filter(paper => paper.exam === exam).length}</span></button>)}
     </div>
-    <div className="year-papers-summary"><div><span>SELECTED EXAM</span><h2>{examNames[selected]}</h2></div><p>{visible.length} released paper{visible.length === 1 ? '' : 's'} · {questionCount} questions</p></div>
-    <div className="year-papers-grid">
-      {visible.map(paper => <article className="year-paper-card" key={paper.id}>
-        <div className="year-paper-card-top"><span>{paper.year}</span><span className="year-paper-state">Free paper open</span></div>
-        <h3>{paperLabel(paper)}</h3>
-        <p>{paper.questionCount} questions in this paper</p>
-        {released.get(paper.id).map(part =>
-          <div className="year-paper-release" key={part.paperId}>
-            <p><strong>{part.partLabel}</strong> · {part.questionCount} questions · {Math.round(part.durationSeconds / 60)} min</p>
-            {attemptsByPaper.get(part.paperId)?.active && <p className="year-paper-own-attempt"><span>In progress</span>
-              <Link to={`/attempt/${attemptsByPaper.get(part.paperId).active.id}`}>Continue saved attempt →</Link></p>}
-            {attemptsByPaper.get(part.paperId)?.submitted && <p className="year-paper-own-attempt"><span>{attemptsByPaper.get(part.paperId).submitted.resultsPending
-              ? 'Result under review' : `Latest result ${attemptsByPaper.get(part.paperId).submitted.score} / ${attemptsByPaper.get(part.paperId).submitted.total}`}</span>
-              <Link to={`/attempt/${attemptsByPaper.get(part.paperId).submitted.id}`}>{attemptsByPaper.get(part.paperId).submitted.resultsPending
-                ? 'View result status →' : 'Review latest attempt →'}</Link></p>}
-            {signedIn && !attemptsByPaper.get(part.paperId)?.active ? <button type="button" className="button" disabled={!onStart || Boolean(busy) || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts}
-              onClick={event => { readyOpener.current = event.currentTarget; setReadyId(part.paperId); }}>{busy === part.paperId ? 'Opening…' : 'Start or resume free paper'}</button>
-              : signedIn ? null : authChecking ? <span role="status">Checking account…</span>
-                : <Link className="button" to="/account">Sign in to start free paper</Link>}
-          </div>)}
-      </article>)}
+    <div className="year-papers-layout">
+      <aside className="year-papers-summary" aria-labelledby="year-papers-exam">
+        <span>SELECTED EXAM</span>
+        <h2 id="year-papers-exam">{examNames[selected]}</h2>
+        <p className="year-papers-exam-line">{exam.body} · {exam.level}</p>
+        <dl className="year-papers-stats">
+          <div><dt>Papers</dt><dd>{visible.length}</dd></div>
+          <div><dt>Questions</dt><dd>{questionCount}</dd></div>
+          <div><dt>Years</dt><dd>{yearRange}</dd></div>
+        </dl>
+        <ol className="year-papers-steps">
+          <li><span><strong>Attempt</strong> the full paper against its original clock. Answers save as you go.</span></li>
+          <li><span><strong>Submit</strong> to see your marks under that year’s marking scheme.</span></li>
+          <li><span><strong>Review</strong> every question with the answer key and a worked explanation.</span></li>
+        </ol>
+      </aside>
+      <div className="year-papers-list">
+        {visible.map(paper => <article className="year-paper-card" key={paper.id} aria-labelledby={`paper-${paper.id}`}>
+          <div className="year-paper-card-top"><span className="year-paper-year" aria-hidden="true">{paper.year}</span><span className="year-paper-state">Free paper open</span></div>
+          <div className="year-paper-card-body">
+            <h3 id={`paper-${paper.id}`} className="visually-hidden">{examNames[paper.exam]} {paperLevel(paper)}{paperLabel(paper)}</h3>
+            {paperSubtitle(paper) !== 'Question paper' && <p className="year-paper-title" aria-hidden="true">{paperSubtitle(paper)}</p>}
+            {released.get(paper.id).length > 1 && <p className="year-paper-meta">{paper.questionCount} questions across {released.get(paper.id).length} parts</p>}
+            {released.get(paper.id).map(part => {
+              const own = attemptsByPaper.get(part.paperId);
+              return <div className="year-paper-release" key={part.paperId}>
+                <p className="year-paper-part"><strong>{part.partLabel}</strong><span>{part.questionCount} questions</span><span>{Math.round(part.durationSeconds / 60)} min</span></p>
+                <div className="year-paper-progress">
+                  {own?.active && <p className="year-paper-own-attempt" data-state="active"><span>In progress</span>
+                    <Link to={attemptHref(own.active.id)}>Continue saved attempt →</Link></p>}
+                  {own?.submitted && <p className="year-paper-own-attempt" data-state={own.submitted.resultsPending ? 'pending' : 'scored'}><span>{own.submitted.resultsPending
+                    ? 'Result under review' : `Latest result ${own.submitted.score} / ${own.submitted.total}`}</span>
+                    <Link to={attemptHref(own.submitted.id)}>{own.submitted.resultsPending
+                      ? 'View result status →' : 'Review latest attempt →'}</Link></p>}
+                  {signedIn && !own?.active && !own?.submitted && !attemptsLoading && <p className="year-paper-own-attempt" data-state="new"><span>Not attempted yet</span></p>}
+                </div>
+                <div className="year-paper-action">
+                  {signedIn && !own?.active ? <button type="button" className={own?.submitted ? 'button quiet' : 'button'} aria-describedby={`paper-${paper.id}`} disabled={!onStart || Boolean(busy) || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts}
+                    onClick={event => { readyOpener.current = event.currentTarget; setReadyId(part.paperId); }}>{busy === part.paperId ? 'Opening…' : 'Start or resume free paper'}</button>
+                    : signedIn ? null : authChecking ? <span role="status">Checking account…</span>
+                      : <Link className="button" to="/account">Sign in to start free paper</Link>}
+                </div>
+              </div>;
+            })}
+          </div>
+        </article>)}
+        {visible.length === 0 && !releasesLoading && !releasesUnavailable && <div className="year-papers-empty" role="status"><h3>No {examNames[selected]} paper released yet</h3><p>Complete papers will appear here after review. You can try the free sample meanwhile.</p></div>}
+      </div>
     </div>
-    {visible.length === 0 && !releasesLoading && !releasesUnavailable && <div className="year-papers-empty" role="status"><h3>No {examNames[selected]} paper released yet</h3><p>Complete papers will appear here after review. You can try the free sample meanwhile.</p></div>}
     <p className="year-papers-footer">Want to try the exam room now? <Link to="/sample">Take the free sample</Link>.</p>
     {readyPart && readyPaper && <dialog ref={readyDialog} className="year-paper-start-dialog" aria-labelledby="year-paper-start-title"
       onCancel={event => { event.preventDefault(); closeReady(); }}>
+      <span className="eyebrow">{examNames[readyPaper.exam]} · {readyPaper.year}</span>
       <h2 id="year-paper-start-title">Ready to open {examNames[readyPaper.exam]} {readyPaper.year} {readyPart.partLabel}?</h2>
-      <p>{readyPart.questionCount} questions · {Math.round(readyPart.durationSeconds / 60)} minutes</p>
-      <p>If this is your first start, the timer begins when you confirm. If you have already started this paper, you will resume the same saved attempt with its original deadline. The clock keeps running while you are away.</p>
+      <dl className="year-paper-start-facts">
+        <div><dt>Questions</dt><dd>{readyPart.questionCount}</dd></div>
+        <div><dt>Time</dt><dd>{Math.round(readyPart.durationSeconds / 60)} min</dd></div>
+      </dl>
+      <ul className="year-paper-start-rules">
+        <li>If this is your first start, the timer begins when you confirm.</li>
+        <li>If you have already started this paper, you will resume the same saved attempt with its original deadline.</li>
+        <li>The clock keeps running while you are away. Answers save as you go.</li>
+      </ul>
       <div className="year-paper-start-actions">
         <button type="button" className="button quiet" autoFocus onClick={closeReady}>Cancel</button>
         <button type="button" className="button" disabled={Boolean(busy) || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts}

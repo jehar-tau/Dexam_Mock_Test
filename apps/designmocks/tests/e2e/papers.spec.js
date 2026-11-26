@@ -85,7 +85,7 @@ test.describe('free year-paper release', () => {
     await page.keyboard.press('Enter');
     const dialog = page.getByRole('dialog', { name: 'Ready to open UCEED 2026 Part A?' });
     await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText('57 questions · 120 minutes');
+    await expect(dialog.locator('.year-paper-start-facts')).toContainText('57'); await expect(dialog.locator('.year-paper-start-facts')).toContainText('120 min');
     expect(provider.calls.filter(([name]) => name === 'start_free_year_paper')).toHaveLength(0);
     await dialog.getByRole('button', { name: 'Start or resume timed paper' }).click();
     await expect(page).toHaveURL('/attempt/' + attemptId);
@@ -251,4 +251,19 @@ test.describe('signed-out public year-paper catalogue', () => {
     await page.goto('/account');
     await expect(page.getByText('Google sign-in is being connected for this new app.', {exact:false})).toBeVisible();
   });
+});
+
+test('sign-in-free Papers preview shows saved progress states and opens the demo room', async ({ page }) => {
+  await page.goto('/papers-preview');
+  await expect(page.getByText('PAPERS PREVIEW')).toBeVisible();
+  const card = year => page.locator('.year-paper-card').filter({ hasText: `UCEED ${year} paper` });
+  await expect(card(2026)).toContainText('Not attempted yet');
+  await expect(card(2025).getByRole('link', { name: 'Continue saved attempt →' })).toHaveAttribute('href', '/portal-preview/paper');
+  await expect(card(2024)).toContainText('Latest result 142 / 300');
+  await expect(card(2023)).toContainText('Result under review');
+  await expect(page.locator('.year-papers-stats')).toContainText('2015–2026');
+  await card(2026).getByRole('button', { name: 'Start or resume free paper' }).click();
+  await page.getByRole('dialog', { name: 'Ready to open UCEED 2026 Part A?' }).getByRole('button', { name: 'Start or resume timed paper' }).click();
+  await expect(page).toHaveURL('/portal-preview/paper');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });

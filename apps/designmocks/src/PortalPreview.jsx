@@ -77,6 +77,7 @@ export default function PortalPreview() {
           <Link to="/tests">Exam guides</Link>
           <Link to="/plans">Plans</Link>
           <Link to="/sample">Free sample paper</Link>
+          <Link to="/papers-preview">Papers with saved progress</Link>
           <Link to="/portal-preview">Student overview</Link>
           {hostedStudentPreview && <Link to="/profile-preview">Student profile</Link>}
           <Link to="/exam-mocks-preview">Exam-wise mocks</Link>

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { yearPaperCatalogue, paperLabel } from '../src/paper-years.mjs';
+import { yearPaperCatalogue, paperLabel, paperSubtitle } from '../src/paper-years.mjs';
 import generated from '../src/paper-years.generated.json' with { type: 'json' };
 
 test('year-wise catalogue uses only empty-holds records and keeps same-year papers distinct', () => {
@@ -33,4 +33,12 @@ test('generated public metadata matches the canonical export without prompts, an
 test('paper labels distinguish samples and multiple papers', () => {
   assert.equal(paperLabel({ exam: 'ceed', year: 2016, paperId: 'ceed-2016-paper2' }), '2016 · Paper 2');
   assert.equal(paperLabel({ exam: 'nid', year: 2024, paperId: 'nid-bdes-sample-2024' }), '2024 sample paper');
+});
+
+test('card subtitles keep same-year NID B.Des. and M.Des. papers apart', () => {
+  assert.equal(paperSubtitle({ exam: 'uceed', year: 2026, paperId: 'uceed-2026' }), 'Question paper');
+  assert.equal(paperSubtitle({ exam: 'ceed', year: 2016, paperId: 'ceed-2016-paper2' }), 'Paper 2');
+  assert.equal(paperSubtitle({ exam: 'nid', year: 2018, paperId: 'nid-bdes-2018' }), 'B.Des. question paper');
+  assert.equal(paperSubtitle({ exam: 'nid', year: 2018, paperId: 'nid-mdes-2018' }), 'M.Des. question paper');
+  assert.equal(paperSubtitle({ exam: 'nid', year: 2024, paperId: 'nid-bdes-sample-2024' }), 'B.Des. sample paper');
 });
