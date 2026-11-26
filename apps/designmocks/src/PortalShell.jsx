@@ -11,7 +11,7 @@ export function PortalShell({ children }) {
   const { pathname } = useLocation();
   const previewRoute = (import.meta.env.DEV || __DMOCKS_STAGING_REVIEW_PREVIEW__) && studentPreview && (
     pathname === "/portal-preview" || pathname.startsWith("/portal-preview/") || pathname.startsWith("/learn-programme-preview") ||
-    ["/exam-mocks-preview", "/all-india-preview", "/topic-practice-preview", "/learn-preview", "/community-preview"].includes(pathname)
+    ["/exam-mocks-preview", "/all-india-preview", "/topic-practice-preview", "/topic-practice-preview/released", "/learn-preview", "/community-preview"].includes(pathname)
   );
   const expandedPreview = previewRoute && (postLaunchPreview || hostedStudentPreview);
   const previewNavigation = expandedPreview ? [

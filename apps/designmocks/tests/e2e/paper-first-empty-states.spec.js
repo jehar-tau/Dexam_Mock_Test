@@ -35,7 +35,7 @@ test('topic practice explains its released-paper source at 320px', async ({ page
   await expect(page.getByRole('button', { name: 'Start practice' })).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   await page.addScriptTag({ path: fileURLToPath(new URL('../../node_modules/axe-core/axe.min.js', import.meta.url)) });
-  expect((await page.evaluate(async () => (await window.axe.run('.topic-practice', {
+  expect(await page.evaluate(async () => (await window.axe.run('.topic-practice', {
     runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] },
   })).violations.map(item => item.id))).toEqual([]);
   expect(provider.calls.some(([name]) => name === 'start_topic_practice')).toBe(false);
