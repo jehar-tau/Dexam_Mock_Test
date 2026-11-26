@@ -15,6 +15,7 @@ import {openPrivateDMocksTransport} from './private-bank-provider.mjs';
 import {stableJson} from './question-bank-import.mjs';
 const ledgerVersions = {
   'pre-upgrade': 'dmocks-pre-upgrade-ledger-v1',
+  'free-portal-test': 'dmocks-free-portal-recovery-ledger-v1',
   'staging-before-permissions-repair': 'dmocks-staging-recovery-ledger-v1',
 };
 export const PRE_UPGRADE_LEDGER_VERSION = ledgerVersions['pre-upgrade'];
@@ -54,7 +55,7 @@ async function readRecoveryLedger(file, releaseSha, sourceVersions, sourceStage)
     && ledger.migrationVersions.every((version, index, versions) => typeof version === 'string'
       && knownVersions.has(version) && (index === 0 || versions[index - 1] < version)),
   `${label} must list known migration versions in order without duplicates`);
-  if (sourceStage === 'staging-before-permissions-repair') {
+  if (sourceStage !== 'pre-upgrade' && sourceStage !== 'mvp') {
     assert.deepEqual(ledger.migrationVersions, sourceVersions, 'Staging recovery ledger must match the complete source migration history');
   }
   return ledger;
@@ -71,12 +72,13 @@ export async function capturePrivateRecovery(config, {
   assert.ok(config.output, 'Choose a new private recovery directory');
   const sourceVersions = expectedVersions ?? (await readdir(new URL('../supabase/migrations', import.meta.url)))
     .filter(file => file.endsWith('.sql')).map(file => file.split('_')[0]).sort();
-  assert.ok(config.preUpgradeLedger === undefined || config.stagingLedger === undefined,
+  assert.ok([config.preUpgradeLedger, config.stagingLedger, config.freePortalLedger].filter(value => value !== undefined).length <= 1,
     'Choose only one recovery ledger');
-  const sourceStage = config.stagingLedger !== undefined ? 'staging-before-permissions-repair'
+  const sourceStage = config.freePortalLedger !== undefined ? 'free-portal-test'
+    : config.stagingLedger !== undefined ? 'staging-before-permissions-repair'
     : config.preUpgradeLedger !== undefined ? 'pre-upgrade' : 'mvp';
   const ledger = sourceStage === 'mvp' ? null : await readRecoveryLedger(
-    config.stagingLedger ?? config.preUpgradeLedger, config.releaseSha, sourceVersions, sourceStage,
+    config.freePortalLedger ?? config.stagingLedger ?? config.preUpgradeLedger, config.releaseSha, sourceVersions, sourceStage,
   );
   const versions = ledger?.migrationVersions ?? sourceVersions;
   const profile = ledger ? null : profileSha256 ?? createHash('sha256')
@@ -112,7 +114,7 @@ export async function capturePrivateRecovery(config, {
         const current = await connectionFactory(config.databaseUrl, databaseOptions);
         try {
           await checkRecoveryDatabaseSource(current, sourceCheck);
-          if (sourceStage === 'staging-before-permissions-repair') {
+          if (sourceStage !== 'pre-upgrade' && sourceStage !== 'mvp') {
             const schema = normalizeRecoverySchema(JSON.parse(await current.query(recoverySchemaQuery)));
             assert.equal(hash(schema), snapshot.schemaSha256, 'Staging schema or grants changed during capture');
           }
@@ -160,7 +162,7 @@ export async function restoreLocalRecoveryObjects({verified,url,key,ownerKey,ass
 function parseArgs([operation, ...args]) {
   assert.ok(['capture', 'verify'].includes(operation), 'Choose capture or verify');
   const allowed = operation === 'capture'
-    ? ['--output', '--release', '--pre-upgrade-ledger', '--staging-ledger']
+    ? ['--output', '--release', '--pre-upgrade-ledger', '--staging-ledger', '--free-portal-ledger']
     : ['--bundle', '--extract-to'];
   const options = {};
   for (let n = 0; n < args.length; n += 2) {
@@ -183,6 +185,7 @@ async function main() {
       databaseCaFile: process.env.DMOCKS_RECOVERY_DATABASE_CA_FILE,
       recoveryKey, releaseSha: options['--release'], output: options['--output'],
       preUpgradeLedger: options['--pre-upgrade-ledger'], stagingLedger: options['--staging-ledger'],
+      freePortalLedger: options['--free-portal-ledger'],
     });
     console.log(JSON.stringify(result));
   } else {

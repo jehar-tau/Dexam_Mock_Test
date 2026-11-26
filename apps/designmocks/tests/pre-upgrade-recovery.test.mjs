@@ -222,3 +222,17 @@ test('recovery downloads private bytes using the correct authentication for each
     assert.equal(captured.providerWritesPerformed, false);
   }
 }));
+
+test('free portal Test recovery records its own stage and fails closed on an ineligible provider', () => stagingFixture(async ({stagingLedger, ...config}, ledger) => {
+  await writeFile(stagingLedger, JSON.stringify({...ledger, version: 'dmocks-free-portal-recovery-ledger-v1'}));
+  const freeConfig = {...config, freePortalLedger: stagingLedger};
+  const closed = source({closedStaging: false, versions: sourceVersions});
+  await assert.rejects(capturePrivateRecovery(freeConfig, closed.options), /Free portal recovery requires/);
+  assert.equal(closed.calls.exports, 0);
+  const valid = source({closedStaging: true, versions: sourceVersions});
+  await assert.rejects(capturePrivateRecovery({...freeConfig, stagingLedger}, valid.options), /only one recovery ledger/);
+  await capturePrivateRecovery(freeConfig, valid.options);
+  const verified = await verifyRecoveryBundle({directory: config.output, key: config.recoveryKey});
+  assert.equal(verified.snapshot.sourceStage, 'free-portal-test');
+  assert.deepEqual(verified.snapshot.migrationVersions, sourceVersions);
+}));
