@@ -183046,6 +183046,1293 @@
     "answerKeySource": null,
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nid-bdes-2016-b89",
+   "type": "DESCRIPTIVE",
+   "prompt": "The water tap of the wash basin in a bathroom is leaking. It is mid-night and no professional help is available at that hour. Give five ideas to prevent water wastage and represent them through drawings with two-three lines of explanation each",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2016/blocks/nid-bdes-2016-b89.png",
+     "sha256": "5dd83d2eed274126b02bde5ea6eb5e542582e5b6c2b058040c6f64cbf18c84ee",
+     "width": 825,
+     "height": 1100,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks (NID does not print each task's marks for this paper; Part II's 30 marks are split equally). Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Originality and variety of the ideas — 3.5\n• Practicality of the ideas — 3.5\n• Clarity of sketches and explanations — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2016,
+    "paperId": "nid-bdes-2016",
+    "questionNo": "B89",
+    "page": 20,
+    "sourceSha256": "e0ef516921c400b0c72b1b3797e3419dd623971ad73ee035e920bafa97dc0c27",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2016-b90",
+   "type": "DESCRIPTIVE",
+   "prompt": "\"Once upon a time, monkeys had no long tails and elephants had very short trunks. Until one day...\" Complete the story and represent the same in FIVE frames given below with a caption of not more than two lines for each frame",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2016/blocks/nid-bdes-2016-b90.png",
+     "sha256": "f2d198dbfbd8ec43d60011e974da84363ff8eebc9b14f2c0ef0fcf33c39e68e2",
+     "width": 825,
+     "height": 612,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks (NID does not print each task's marks for this paper; Part II's 30 marks are split equally). Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Imagination and originality of the idea — 2.5\n• Clarity of the visual narrative — 2.5\n• Drawing quality and composition — 2.5\n• Expression of characters and situation — 2.5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2016,
+    "paperId": "nid-bdes-2016",
+    "questionNo": "B90",
+    "page": 22,
+    "sourceSha256": "e0ef516921c400b0c72b1b3797e3419dd623971ad73ee035e920bafa97dc0c27",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2016-b91",
+   "type": "DESCRIPTIVE",
+   "prompt": "Choose one of the three topics given below. Design a poster in Black and White only on the chosen topic. Give a caption to your poster. (i) Infant Mortality (ii) Rainwater harvesting (iii) Illiteracy Caption",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2016/blocks/nid-bdes-2016-b91.png",
+     "sha256": "64841ade4dff8de1f716117fbe6d496368bf9e8622dc8e563d5af574cad021ec",
+     "width": 825,
+     "height": 1100,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks (NID does not print each task's marks for this paper; Part II's 30 marks are split equally). Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Concept and message — 2.5\n• Originality — 2.5\n• Composition and layout — 2.5\n• Use of image and lettering — 2.5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2016,
+    "paperId": "nid-bdes-2016",
+    "questionNo": "B91",
+    "page": 25,
+    "sourceSha256": "e0ef516921c400b0c72b1b3797e3419dd623971ad73ee035e920bafa97dc0c27",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2017-b76",
+   "type": "DESCRIPTIVE",
+   "prompt": "If there was zero gravity on earth, draw yourself in your living room along with the things you would like to anchor?",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2017/blocks/nid-bdes-2017-b76.png",
+     "sha256": "4cf7e63eadafe01fecedffa8c6c47ca5edab053dab997bf22fca717520e3a647",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Imagination of the zero-gravity situation — 2.5\n• Choice of what is anchored and how — 2.5\n• Drawing quality and composition — 2.5\n• Self and room drawn in proportion — 2.5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-bdes-2017",
+    "questionNo": "B76",
+    "page": 21,
+    "sourceSha256": "d5625253d7c18bdbacdb3e6657a04c3e7288536358cca54db5b78ab0fe1452ec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2017-b77",
+   "type": "DESCRIPTIVE",
+   "prompt": "Create a poster advertisement to promote tourism as part of the ‘Incredible India’ campaign, using India’s national flower, India's national tree, India's national bird and India's national animal, as they are (in terms of form and colour combinations). You can use either the full form or any part of them (texture, pattern, silhouette, etc.), any number of times and in any combination (once as a part, another time as a whole, etc.)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2017/blocks/nid-bdes-2017-b77.png",
+     "sha256": "2181b623a343b93dc5fc9572c0bc97fdd98057db7e4102816d07efe29b6db7fb",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Use of the national flower, tree, bird and animal as given — 2.5\n• Concept and message for tourism — 2.5\n• Composition and layout — 2.5\n• Colour and visual appeal — 2.5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-bdes-2017",
+    "questionNo": "B77",
+    "page": 22,
+    "sourceSha256": "d5625253d7c18bdbacdb3e6657a04c3e7288536358cca54db5b78ab0fe1452ec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2017-b78",
+   "type": "DESCRIPTIVE",
+   "prompt": "Draw two opposites of the meaning \"Rock\" in two different frames and write a one line explanation accompanying each frame",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2017/blocks/nid-bdes-2017-b78.png",
+     "sha256": "c375b40502fae07ff0c9d6baf9893f9c9ac4d1b0b481bbc12986434fb6f65c03",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 5 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Two clear, contrasting meanings of \"Rock\" — 1.5\n• Clarity of the drawings — 1.5\n• One-line explanations — 2",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 5.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-bdes-2017",
+    "questionNo": "B78",
+    "page": 23,
+    "sourceSha256": "d5625253d7c18bdbacdb3e6657a04c3e7288536358cca54db5b78ab0fe1452ec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2017-b79",
+   "type": "DESCRIPTIVE",
+   "prompt": "Draw a woman holding a child, crying in her arms, with appropriate details including the background. Your drawing should be in black and white only (Do not use any colour)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2017/blocks/nid-bdes-2017-b79.png",
+     "sha256": "fa02a721a76c09fb3f6f4170d7e24365280d6bea76f9870bed318de04a31c39a",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 5 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Emotion and expression — 1\n• Proportion of the figures — 1\n• Background and details — 1\n• Black-and-white rendering — 2",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 5.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2017,
+    "paperId": "nid-bdes-2017",
+    "questionNo": "B79",
+    "page": 24,
+    "sourceSha256": "d5625253d7c18bdbacdb3e6657a04c3e7288536358cca54db5b78ab0fe1452ec",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2018-b65",
+   "type": "DESCRIPTIVE",
+   "prompt": "Given here is the silhouette of a few objects in a specific position with respect to each other. Imagine that the three objects are made of a) transparent glass, b) paper and c) wood respectively. In the given space below, draw the same arrangement of all the three objects without changing their relative position. Your drawing should be as large size as possible in the given space. Use shading to render material on the objects, such that the source of light is from the top right corner",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2018/blocks/nid-bdes-2018-b65.png",
+     "sha256": "7155e24dbee1177505e9b1ead9d19f352afb18532e880319b0feb2d026b65925",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Same arrangement and relative positions — 2.5\n• Rendering of glass, paper and wood — 2.5\n• Light from the top right, with shading — 2.5\n• Using the space at a large size — 2.5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2018,
+    "paperId": "nid-bdes-2018",
+    "questionNo": "B65",
+    "page": 19,
+    "sourceSha256": "a7a105f60b04f4c0e35f5d3115c04fb292b421df3bea3b54bb0ad58e2f812e9a",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2018-b66",
+   "type": "DESCRIPTIVE",
+   "prompt": "During a mishap due to short-circuit in the wiring of a multi story building, there was a fire on the ground floor near the staircase, which was spreading fast. A middle aged mother with her two children aged 4 and 7 were trapped in the balcony of the first floor. Neighbours of the society could find only a scooter, a 5 feet. tall ladder and some nylon rope of 12 feet. Depict the scenes showing how would the neighbours rescue the group and bring them down in the respective spaces provided. Do not use colour",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2018/blocks/nid-bdes-2018-b66.png",
+     "sha256": "6b5c81ffb8fa7b3caad28f48781b9838d065bbb57dab4878655800eeb25d6d4a",
+     "width": 800,
+     "height": 2246,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 14 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Workable rescue using only the scooter, ladder and rope — 3.5\n• Safety of the mother and both children — 3.5\n• Clarity of the scene sequence — 3.5\n• Drawing quality — 3.5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 14.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2018,
+    "paperId": "nid-bdes-2018",
+    "questionNo": "B66",
+    "page": 20,
+    "sourceSha256": "a7a105f60b04f4c0e35f5d3115c04fb292b421df3bea3b54bb0ad58e2f812e9a",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2018-b67",
+   "type": "DESCRIPTIVE",
+   "prompt": "“Ajay loved spending time gardening with his grandmother when he was a child. He remembers, once when he was 8 years old, by mistake he planted a seed of Corn along with a seed of Pea. Next morning when he went to the spot what he saw there was simply beyond his imagination. He still has the drawing of what grew on that spot. He felt amazed looking at the drawing of what he saw and wondered whether it was just his imagination or it actually happened.” Draw the drawing mentioned in the above paragraph. Use pencil or pen to draw. Shading or coloring is not required",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2018/blocks/nid-bdes-2018-b67.png",
+     "sha256": "494b7dd7b017bd704417ef23f13a0d8da17b056344c89d1ba4d176219eec1614",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 6 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Imagination of the corn–pea plant — 2\n• Drawing quality — 2\n• Composition — 2",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 6.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2018,
+    "paperId": "nid-bdes-2018",
+    "questionNo": "B67",
+    "page": 22,
+    "sourceSha256": "a7a105f60b04f4c0e35f5d3115c04fb292b421df3bea3b54bb0ad58e2f812e9a",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-b23",
+   "type": "DESCRIPTIVE",
+   "prompt": "Observe the image of the scene as given below. A person tries to enter the room by a ladder from outside the window and sees the scene inside the room. Visualise and draw the scene from the person’s point of view. No colour to be used. (15 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/blocks/nid-bdes-2019-b23.png",
+     "sha256": "6c8c737c5343f7d8fb64e4b6283a1956a24d482f65dec02e2ab13bc376085c69",
+     "width": 800,
+     "height": 1122,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 15 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Correct point of view and perspective — 4\n• Proportion and scale — 4\n• Observation and detail — 4\n• Line quality and shading — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "B23",
+    "page": 13,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-b24",
+   "type": "DESCRIPTIVE",
+   "prompt": "Imagine and draw a real life situation which represents “All that is gold does not glitter’’ in a meaningful way. Use the space given to draw and explain your interpretation in 5 lines. No colour to be used. (20 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/blocks/nid-bdes-2019-b24.png",
+     "sha256": "2ac06e587ed56a62390264db7c985868587dd3220eb096f3b36e77d57526989b",
+     "width": 800,
+     "height": 1122,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 20 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Meaningful interpretation of the proverb — 5\n• Originality of the situation — 5\n• Drawing quality — 5\n• Five-line explanation — 5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "B24",
+    "page": 14,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-b25",
+   "type": "DESCRIPTIVE",
+   "prompt": "To commemorate the 150th birth anniversary of Mahatma Gandhi, the Government of India has invited ideas to design a CIRCULAR postage stamp (Rs.20) from young minds. Depict your idea for the stamp in the given format. (you need to use colours). (15 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/blocks/nid-bdes-2019-b25.png",
+     "sha256": "8c81153c4064ae93336b26555392c2c0c3a1e24db9343f3c68b13df0309a09d1",
+     "width": 800,
+     "height": 1122,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 15 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Concept tied to Gandhi's 150th anniversary — 4\n• Fit to the circular stamp format and value — 4\n• Use of colour — 4\n• Visual clarity at stamp size — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "B25",
+    "page": 15,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2019-b26",
+   "type": "DESCRIPTIVE",
+   "prompt": "Visualise & draw the following as instructed. Do not use colour. Draw a person sitting at a dining table with a plate, stainless steel spoon and fork laid out in front of him/her. (8 marks) (6 marks) (6 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2019/blocks/nid-bdes-2019-b26.png",
+     "sha256": "85dd4d3a3227b55211c9b5c900da958275cb2f73606181517bcefed5673c171d",
+     "width": 800,
+     "height": 2260,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 20 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• A: person at the table with plate, spoon and fork – proportion and perspective — 5\n• B: ant's point of view from the spoon tip — 5\n• C: spoon and fork knotted – form and material — 5\n• Line quality and shading — 5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2019,
+    "paperId": "nid-bdes-2019",
+    "questionNo": "B26",
+    "page": 16,
+    "sourceSha256": "6b0898f2e34e8c5c57e0534a4fc3fc07345febb07489b1d6071d00f2f4b8486f",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2020-b22",
+   "type": "DESCRIPTIVE",
+   "prompt": "Draw the given pattern in the 2D cut out surfaces onto the respective (05 Marks) surfaces of the 3D cube. 3 2 3 1",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2020/blocks/nid-bdes-2020-b22.png",
+     "sha256": "d07281a2ac534c266e36a02d7ae290b63281dc3d6503f7ac63b3da8ba8481bb2",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 5 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Pattern placed on the right faces — 1.5\n• Correct orientation on each face — 1.5\n• Accuracy of the drawing — 2",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 5.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2020,
+    "paperId": "nid-bdes-2020",
+    "questionNo": "B22",
+    "page": 13,
+    "sourceSha256": "698d28faa05e6148785f65c9910fc8ce98b856484273c095b57cc09cf7c800c6",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2020-b23",
+   "type": "DESCRIPTIVE",
+   "prompt": "A drawing of a kitchen in given below. A three year old child enters the kitchen (12 Marks) and observes the scenario from the point marked (X) on the floor. Visualize and draw the scene from the child's point of view",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2020/blocks/nid-bdes-2020-b23.png",
+     "sha256": "d7459fbcb2ea1c92f7409ee9bfcd3e8033bc9f9b4c465460f26e40b6abf58b86",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 12 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Correct point of view and perspective — 3\n• Proportion and scale — 3\n• Observation and detail — 3\n• Line quality and shading — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 12.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2020,
+    "paperId": "nid-bdes-2020",
+    "questionNo": "B23",
+    "page": 14,
+    "sourceSha256": "698d28faa05e6148785f65c9910fc8ce98b856484273c095b57cc09cf7c800c6",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2020-b24",
+   "type": "DESCRIPTIVE",
+   "prompt": "Draw the following story sequentially in the given 3 frames and give a (13 Marks) suitable title of the story. (Use only Pencil, do not use color) One day a man was sitting under a big Jamun tree and taking rest. Suddenly noticed a great pumpkin creeper nearby. He was thinking the foolishness of God. He thought the God gave such a small fruit to this big tree and such a big pumpkin to this fragile and thin creeper. He thought he would have appreciated God's wisdom, if he would have done otherwise. Even as he was thinking this... A small Jamun fruit fell down on the man's head and startled him. 'O God' he then bowed down and continued to say 'you are right after all. If the big fruit like pumpkin had fallen from such a height, I would surely be dead'. Title:",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2020/blocks/nid-bdes-2020-b24.png",
+     "sha256": "9136136a8963e0b6851b8d595abe4fdb5fddb7959754149f089fe5afe97e0d22",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 13 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Imagination and originality of the idea — 2.5\n• Clarity of the visual narrative — 2.5\n• Drawing quality and composition — 2.5\n• Expression of characters and situation — 2.5\n• Suitable title — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 13.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2020,
+    "paperId": "nid-bdes-2020",
+    "questionNo": "B24",
+    "page": 16,
+    "sourceSha256": "698d28faa05e6148785f65c9910fc8ce98b856484273c095b57cc09cf7c800c6",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2020-b25",
+   "type": "DESCRIPTIVE",
+   "prompt": "You have an old bulb. Conceptualise 5 ways in which the bulb can be re-used (15 Marks) humorously. Describe in brief and draw your ideas in the space given below",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2020/blocks/nid-bdes-2020-b25.png",
+     "sha256": "ff61883d869fecd94aed215c857b5293d7cad98c32012741d0a1a891d7f3d7df",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 15 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Humour and originality — 5\n• Five different reuses — 5\n• Clarity of sketches and descriptions — 5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2020,
+    "paperId": "nid-bdes-2020",
+    "questionNo": "B25",
+    "page": 18,
+    "sourceSha256": "698d28faa05e6148785f65c9910fc8ce98b856484273c095b57cc09cf7c800c6",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2020-b26",
+   "type": "DESCRIPTIVE",
+   "prompt": "Imagine trees have started growing defensive mechanism to prevent themselves (15 Marks) from being cut. Conceptualise 3 such defensive mechanisms. Describe in brief and draw the ideas in the space given below",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2020/blocks/nid-bdes-2020-b26.png",
+     "sha256": "eb08e3cbca79791d8c12f8874586e9a4d1a2d8cb0c16f97578455c68d900b355",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 15 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Originality of the defence mechanisms — 5\n• Plausibility as a tree feature — 5\n• Clarity of sketches and descriptions — 5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2020,
+    "paperId": "nid-bdes-2020",
+    "questionNo": "B26",
+    "page": 20,
+    "sourceSha256": "698d28faa05e6148785f65c9910fc8ce98b856484273c095b57cc09cf7c800c6",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-2020-b27",
+   "type": "DESCRIPTIVE",
+   "prompt": "Rabindranath Tagore once said \"Where the mind is without fear and the head (10 Marks) is held high, where knowledge is free.\". Make a poster depicting the above idea along with a tag line. Tagline:",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-2020/blocks/nid-bdes-2020-b27.png",
+     "sha256": "4d8b6e4072b8035c3f31040ae7a1e0ed158ee717ae86027f8dc7aab42724e6e1",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Concept and message — 2\n• Originality — 2\n• Composition and layout — 2\n• Use of image and lettering — 2\n• Tagline — 2",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2020,
+    "paperId": "nid-bdes-2020",
+    "questionNo": "B27",
+    "page": 22,
+    "sourceSha256": "698d28faa05e6148785f65c9910fc8ce98b856484273c095b57cc09cf7c800c6",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-b28",
+   "type": "DESCRIPTIVE",
+   "prompt": "Modify the below given water tap considering the requirements for different users as mentioned below: 15 Marks a) A six year old child b) An artist c) A visually impaired person Draw the modified water tap for each of the users and write 3 points as to why you consider the modified idea of water tap suitable for them. a) For a six year old child             b) For an artist             c) For a visually impaired person",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/blocks/nid-bdes-sample-2023-b28.png",
+     "sha256": "007dc4241802d62ddcaf8a04dbf066cfc8fe60a61f5e3bc1abb808abf837542f",
+     "width": 910,
+     "height": 2398,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 15 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Design changes suit each user (child, artist, visually impaired person) — 5\n• Three reasons for each design — 5\n• Drawing quality — 5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "B28",
+    "page": 13,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-b29",
+   "type": "DESCRIPTIVE",
+   "prompt": "A fisherman and a kingfisher bird are having a heated argument by the bank of the river. In this context, develop and write a story of which the last line is already given to you. Also give a title to the story. 15 Marks",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/blocks/nid-bdes-sample-2023-b29.png",
+     "sha256": "891960d2179ce3ce628b29d481ff981c2b4dad89f437c059c9f13e41666c5bb3",
+     "width": 910,
+     "height": 1191,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 15 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Story leads naturally to the given last line — 4\n• Creativity of the plot — 4\n• Title — 4\n• Writing quality — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "B29",
+    "page": 15,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-b30",
+   "type": "DESCRIPTIVE",
+   "prompt": "Draw a complete proportionate sketch of a bicycle referring to the parts given on the next page. 15 Marks",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/blocks/nid-bdes-sample-2023-b30.png",
+     "sha256": "685f0d2ce0efbf3f99f8e62caaf5ace611ee8415f5962b5a07ed1cebb024cae3",
+     "width": 910,
+     "height": 1512,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 15 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Correct assembly of all given parts — 5\n• Proportion — 5\n• Line quality and detail — 5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "B30",
+    "page": 16,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2023-b31",
+   "type": "DESCRIPTIVE",
+   "prompt": "Your friend has come to visit you. He is looking at you from the window outside your room as shown in the image given below. 15 Marks Visualize and draw what he is seeing from his point of view",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2023/blocks/nid-bdes-sample-2023-b31.png",
+     "sha256": "b87063d7e1097ca2acf4929fbfe1190c2759565cfd61db35d72166b731bfed86",
+     "width": 910,
+     "height": 1191,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 15 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Correct point of view and perspective — 4\n• Proportion and scale — 4\n• Observation and detail — 4\n• Line quality and shading — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2023,
+    "paperId": "nid-bdes-sample-2023",
+    "questionNo": "B31",
+    "page": 18,
+    "sourceSha256": "5b8f4341d1d84024b366235980c1cfc60cbfd1458e4dd6a941e4120d3385bfbe",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-b21",
+   "type": "DESCRIPTIVE",
+   "prompt": "Rajiv and Sudip are neighbours and share the same wall. Rajiv has a big neem tree in his yard which provides shade to a portion of Sudip’s garden. Whenever the tree sheds leaves, Sudip feels the burden of having to clear his garden as well. Due to this Sudip has argued with Rajiv to cut down the tree so that he does not have to clear the fallen leaves anymore. Rajiv refuses to do so. How can you resolve this issue through 4 distinct ideas? Provide your ideas through illustration supported by text in the given space. (20 marks) 1)   2)   3)   4)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-b21.png",
+     "sha256": "20dd3cdc8a233cf5c618b567ea457f64f7605e3002861d20c61da7c632fb3651",
+     "width": 908,
+     "height": 2382,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 20 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Four distinct ideas — 5\n• Fairness to both neighbours and the tree — 5\n• Practicality — 5\n• Clarity of illustration and text — 5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "B21",
+    "page": 9,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-b22",
+   "type": "DESCRIPTIVE",
+   "prompt": "A thirsty crow is eyeing juices in a juice shop, which is located in a market. 22A) Imagine you are the crow. Draw this juice shop in the box given below. Feel free to add as many as elements in your view. (10 marks) 22B) In the given box, make a poster of crows demanding their right to drink juices from juice shops. You may use colour. (10 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-b22.png",
+     "sha256": "feb1ce58fb9f6b6af4e9f7a316ac11a2a9952e5c4f192ceea98faf8a3e78acca",
+     "width": 908,
+     "height": 2382,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 20 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• A: the shop from the crow's point of view — 5\n• A: detail and composition — 5\n• B: poster concept and message — 5\n• B: layout, lettering and colour — 5",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 20.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "B22",
+    "page": 11,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-b23",
+   "type": "DESCRIPTIVE",
+   "prompt": "Below is the image of a sink near the train washroom. (10 marks) TOILET List down 5 different categories of user groups. The user groups can be categorized by age groups, physical abilities etc. Describe the challenges that they will face while using the sink in the moving train. User group 05 Challenge faced by them",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-b23.png",
+     "sha256": "846f182ca1492c0e121e3a7a11c0797e7d508c09a124d29f9343f7127f09b28c",
+     "width": 908,
+     "height": 2382,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Five distinct user groups — 3.5\n• Real challenges in a moving train — 3.5\n• Clarity of the answers — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "B23",
+    "page": 13,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-b24",
+   "type": "DESCRIPTIVE",
+   "prompt": "A set of five images has been provided below. (1) (2) (3) (4) (5) 24A) Draw a sketch of the complete object that is represented in these images. The drawings should be in proportion to a human hand. (05 marks) 24B) Choose any one frame from Q 24 which you think could independently represent an alternate object and draw the object in the frame provided below. (05 marks)",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/blocks/nid-bdes-sample-2025-b24.png",
+     "sha256": "b4739c06f880b6dd0d460817558fb7b891e4be37f1316b39eb2664ca22a60d5a",
+     "width": 908,
+     "height": 1474,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• A: complete object in proportion to a hand — 3.5\n• B: convincing alternate object from one frame — 3.5\n• Drawing quality — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "B24",
+    "page": 15,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2018-b60",
+   "type": "DESCRIPTIVE",
+   "prompt": "a) Imagine and write a short story in the ruled space below, involving all the following objects: Comb, Scissor, Matchstick, Potato, and Ice-cream.         b) From your story, select a scenario that you find most interesting. In the box below, draw the scenario using pencil or pen. The scenario shouldn’t contain any text or dialogue. Use of colors or shading will NOT be considered during evaluation",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2018/blocks/nid-mdes-2018-b60.png",
+     "sha256": "f3b9eb0d0a9af8734c381549c8d3c793fcc13f32d3d8438f77d5701a7263a5a0",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 8 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Story uses all five objects — 2\n• Creativity of the story — 2\n• Scenario drawn without text — 2\n• Drawing clarity — 2",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 8.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2018,
+    "paperId": "nid-mdes-2018",
+    "questionNo": "B60",
+    "page": 23,
+    "sourceSha256": "ee046036fca7e3ccf3f8e8bbdb7a2150a657435fc46c1d404690e3c8d2152b3e",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2018-b61",
+   "type": "DESCRIPTIVE",
+   "prompt": "In the boxes given below, draw three existing objects that are operated / used by the thumb and index fingers only. Below each illustration mention the object drawn. Object:. Object:.",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2018/blocks/nid-mdes-2018-b61.png",
+     "sha256": "f14af5a512281a89856967bc3bf0823885e78d629ded444a020f9e2ba493b7fc",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 10 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Three correct thumb-and-index objects — 3.5\n• Accuracy of the drawings — 3.5\n• Labels — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 10.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2018,
+    "paperId": "nid-mdes-2018",
+    "questionNo": "B61",
+    "page": 24,
+    "sourceSha256": "ee046036fca7e3ccf3f8e8bbdb7a2150a657435fc46c1d404690e3c8d2152b3e",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-2018-b62",
+   "type": "DESCRIPTIVE",
+   "prompt": "A steel tube manufacturer, India Tubes Pvt. Ltd., is producing more tubes than its demand in the market. The excess production of tubes needs to be utilized in a meaningful manner so that the manufacturer not only avoids losses but may make good profits. As a creative genius, you are called upon to suggest different products that can be made out of these excess tubes produced by India Tubes. The challenge is to make simple products without having too many processes. The size of tubes produced varies from 4 mm to 10 mm outer diameter and of sufficient length for making any product by bending, cutting, joining, etc.. Using only pencil, draw 4 innovative products in the boxes below and under each sketch, give a self-descriptive name to the product",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-2018/blocks/nid-mdes-2018-b62.png",
+     "sha256": "57fbb08ad639a276b3eb81dc0c66df78a9153d29aca2059b24a1891c10f5a14b",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 12 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Four innovative tube products — 3\n• Simple to make by bending, cutting and joining — 3\n• Usefulness and market appeal — 3\n• Sketch quality and names — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 12.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2018,
+    "paperId": "nid-mdes-2018",
+    "questionNo": "B62",
+    "page": 25,
+    "sourceSha256": "ee046036fca7e3ccf3f8e8bbdb7a2150a657435fc46c1d404690e3c8d2152b3e",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-b18",
+   "type": "DESCRIPTIVE",
+   "prompt": "Look at the given drawing of a stapler for reference. Sketch an appropriate view of a person's hands holding the stapler and stapling bunch of papers to achieve the stapling as marked in the picture given below",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2021/blocks/nid-mdes-sample-2021-b18.png",
+     "sha256": "fd905863fc99c84fddeec71de73271621bbb7e2374d8c574ec633ce0adc113b6",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 5 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• Correct grip and hand position for stapling — 1.5\n• Hands and stapler in proportion — 1.5\n• Drawing quality — 2",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 5.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "B18",
+    "page": 7,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-b19",
+   "type": "DESCRIPTIVE",
+   "prompt": "Every year, the air quality reaches \"hazardous\" zone at the onset of the winter season in the National Capital Region, causing respiratory disorder and other illness. Q19A. How will you address this issue, creatively, practically and effectively? Describe your proposal in not more than 5 lines. Q19B. Visually depict your solution in details; annotate your drawings aptly, in the given space. Line drawing only, no colours to be used",
+   "options": [],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2021/blocks/nid-mdes-sample-2021-b19.png",
+     "sha256": "041c2f77148269b8a9fd7a38136264ced994746fbee173bce35702568ec84e96",
+     "width": 800,
+     "height": 1115,
+     "review": "approved"
+    }
+   ],
+   "answer": null,
+   "explanation": "Drawing/written task, 15 marks. Scored on a photo of the student's answer.\n\nEvaluation criteria (written by DMocks; NID does not print them):\n• A: practical, creative proposal (5 lines) — 4\n• B: detailed, annotated drawing of the solution — 4\n• Effectiveness of the solution — 4\n• Line drawing quality — 3",
+   "topic": "drawing-creative",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": 15.0,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "B19",
+    "page": 8,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": null,
+    "verification": "review"
+   }
   }
  ]
 }

@@ -354,9 +354,9 @@
     "exam": "nid",
     "year": 2025,
     "paperId": "nid-bdes-sample-2025",
-    "questionCount": 12,
+    "questionCount": 16,
     "objectiveCount": 12,
-    "drawingCount": 0,
+    "drawingCount": 4,
     "keyedCount": 12
   },
   {
@@ -394,9 +394,9 @@
     "exam": "nid",
     "year": 2023,
     "paperId": "nid-bdes-sample-2023",
-    "questionCount": 27,
+    "questionCount": 31,
     "objectiveCount": 27,
-    "drawingCount": 0,
+    "drawingCount": 4,
     "keyedCount": 27
   },
   {
@@ -414,9 +414,9 @@
     "exam": "nid",
     "year": 2021,
     "paperId": "nid-mdes-sample-2021",
-    "questionCount": 9,
+    "questionCount": 11,
     "objectiveCount": 9,
-    "drawingCount": 0,
+    "drawingCount": 2,
     "keyedCount": 9
   },
   {
@@ -424,9 +424,9 @@
     "exam": "nid",
     "year": 2020,
     "paperId": "nid-bdes-2020",
-    "questionCount": 21,
+    "questionCount": 27,
     "objectiveCount": 21,
-    "drawingCount": 0,
+    "drawingCount": 6,
     "keyedCount": 21
   },
   {
@@ -434,9 +434,9 @@
     "exam": "nid",
     "year": 2019,
     "paperId": "nid-bdes-2019",
-    "questionCount": 22,
+    "questionCount": 26,
     "objectiveCount": 22,
-    "drawingCount": 0,
+    "drawingCount": 4,
     "keyedCount": 22
   },
   {
@@ -444,9 +444,9 @@
     "exam": "nid",
     "year": 2018,
     "paperId": "nid-bdes-2018",
-    "questionCount": 64,
+    "questionCount": 67,
     "objectiveCount": 64,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 64
   },
   {
@@ -454,9 +454,9 @@
     "exam": "nid",
     "year": 2018,
     "paperId": "nid-mdes-2018",
-    "questionCount": 59,
+    "questionCount": 62,
     "objectiveCount": 59,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 59
   },
   {
@@ -464,9 +464,9 @@
     "exam": "nid",
     "year": 2017,
     "paperId": "nid-bdes-2017",
-    "questionCount": 75,
+    "questionCount": 79,
     "objectiveCount": 75,
-    "drawingCount": 0,
+    "drawingCount": 4,
     "keyedCount": 75
   },
   {
@@ -484,9 +484,9 @@
     "exam": "nid",
     "year": 2016,
     "paperId": "nid-bdes-2016",
-    "questionCount": 88,
+    "questionCount": 91,
     "objectiveCount": 88,
-    "drawingCount": 0,
+    "drawingCount": 3,
     "keyedCount": 88
   }
 ]
