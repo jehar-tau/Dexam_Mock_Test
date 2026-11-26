@@ -184,9 +184,9 @@
     "exam": "ceed",
     "year": 2020,
     "paperId": "ceed-2020",
-    "questionCount": 41,
+    "questionCount": 46,
     "objectiveCount": 41,
-    "drawingCount": 0,
+    "drawingCount": 5,
     "keyedCount": 41
   },
   {
@@ -194,9 +194,9 @@
     "exam": "ceed",
     "year": 2019,
     "paperId": "ceed-2019",
-    "questionCount": 45,
+    "questionCount": 53,
     "objectiveCount": 45,
-    "drawingCount": 0,
+    "drawingCount": 8,
     "keyedCount": 45
   },
   {
@@ -204,9 +204,9 @@
     "exam": "ceed",
     "year": 2018,
     "paperId": "ceed-2018",
-    "questionCount": 41,
+    "questionCount": 49,
     "objectiveCount": 41,
-    "drawingCount": 0,
+    "drawingCount": 8,
     "keyedCount": 41
   },
   {
@@ -214,9 +214,9 @@
     "exam": "ceed",
     "year": 2017,
     "paperId": "ceed-2017",
-    "questionCount": 44,
+    "questionCount": 52,
     "objectiveCount": 44,
-    "drawingCount": 0,
+    "drawingCount": 8,
     "keyedCount": 44
   },
   {
