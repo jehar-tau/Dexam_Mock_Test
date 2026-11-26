@@ -320,6 +320,16 @@
     "keyedCount": 12
   },
   {
+    "id": "nid:nid-mdes-sample-2025",
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-mdes-sample-2025",
+    "questionCount": 18,
+    "objectiveCount": 18,
+    "drawingCount": 0,
+    "keyedCount": 18
+  },
+  {
     "id": "nid:nid-bdes-sample-2024",
     "exam": "nid",
     "year": 2024,
