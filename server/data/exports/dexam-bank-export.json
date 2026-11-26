@@ -167761,6 +167761,708 @@
     "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q1",
+   "type": "MCQ",
+   "prompt": "Find the odd one out.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/nid-pdf/nid-bdes-sample-2025-q1.png",
+     "sha256": "8b379cb2e6e02ea61ad60566346549827a9fac321a68e4e9716ecf1dda73223d",
+     "width": 911,
+     "height": 799,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "1",
+    "page": 2,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q3",
+   "type": "MCQ",
+   "prompt": "The main reason why national parks and sanctuaries are being promoted over zoos is that it",
+   "options": [
+    {
+     "key": "A",
+     "text": "allows visitors to roam in the forest",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "allows animals to be in their natural habitat",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "allows restriction for the predators",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "allows for eco tourism to flourish",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "3",
+    "page": 3,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q4",
+   "type": "MCQ",
+   "prompt": "Observe the symbol, which is part of a logo. Which organisation does this symbol/logo belong to?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Central Vigilance Commission",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Fishery Management of India",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "National Fishery Management",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "National Vigilance Commission",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/nid-pdf/nid-bdes-sample-2025-q4.png",
+     "sha256": "f68acf3bdcb463db7c0ea0db58ecf81e6221285570697f3ed35dc100c5d220c8",
+     "width": 1345,
+     "height": 519,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "4",
+    "page": 3,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q5",
+   "type": "MCQ",
+   "prompt": "Given below are four times, as shown on an analogue clock with minute and hour hands. Identify the option in which the relationship between the minute and hour hand is different from the rest.",
+   "options": [
+    {
+     "key": "A",
+     "text": "3:16",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "10:15",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4:22",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "12:00",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "visual-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "5",
+    "page": 3,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q9",
+   "type": "MCQ",
+   "prompt": "Which material was not used in making and decorating the musical instrument 'Sitar'?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Wood",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Leather",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Pumpkin/Gourd",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bone",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "9",
+    "page": 4,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q10",
+   "type": "MCQ",
+   "prompt": "Identify the logo.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Accessible India Campaign",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Department of Empowerment of Persons with Disabilities",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Ministry of Social Justice and Empowerment",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Divyangjan Empowerment Initiative",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/nid-pdf/nid-bdes-sample-2025-q10.png",
+     "sha256": "02a581fd4277d94cdba267c3f7f2d9bd03bdeb1df14c1ab5f51d64339bfc37b5",
+     "width": 972,
+     "height": 659,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "10",
+    "page": 4,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q12",
+   "type": "MCQ",
+   "prompt": "Below are four Indian brand mascots. Which of these represents a brand of washing powder?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/nid-pdf/nid-bdes-sample-2025-q12.png",
+     "sha256": "aa5ccb72978e0a777eaa6397a13ad9c1f8c34a52aecd5856a4ca4084e48a96e2",
+     "width": 1363,
+     "height": 612,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "12",
+    "page": 5,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q14",
+   "type": "MCQ",
+   "prompt": "What is referred to as the Green Revolution in India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "The period after liberalization when the economy rose",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The period when honey and horticulture rose in India",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The period of development of high yielding plant varieties",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The period of development of milk cooperatives",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "14",
+    "page": 6,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q15",
+   "type": "MCQ",
+   "prompt": "What is common between common salt and silica gel?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Amorphous",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Precipitous",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Hygroscopic",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Gelatinous",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "materials",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "15",
+    "page": 6,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q16",
+   "type": "MCQ",
+   "prompt": "Identify the road signs in the order shown in the image.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Uneven Road, No Entry, Intersection, Speed limit, Narrow Road",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Speed Breaker, Prohibited Road, T Section, Height Limit, Bridge",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Speed Breaker, No Entry, Intersection, Height Limit, Narrow Road",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Uneven Road, Prohibited Road, Intersection, Speed Limit, Bridge",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/nid-pdf/nid-bdes-sample-2025-q16.png",
+     "sha256": "22909ccc102153e024803354765810f754ee4e9bdadfc8bdd4696427f0e9d8a0",
+     "width": 1072,
+     "height": 473,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "16",
+    "page": 6,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q17",
+   "type": "MCQ",
+   "prompt": "Following the relational equation given, choose the same relational equation from the options: \"Blue-Violet / Blue / Blue-Green\"",
+   "options": [
+    {
+     "key": "A",
+     "text": "Orange-Red / Orange / Yellow-Orange",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Red-Violet / Red / Red-Orange",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Green / Blue-Green / Yellow-Green",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Blue / Yellow / Red",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "colour-theory",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "17",
+    "page": 6,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-bdes-sample-2025-q18",
+   "type": "MCQ",
+   "prompt": "Carefully observe the blocks. The block with the question mark needs to be replaced with one of the blocks given. Choose the block which will fit correctly.",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-bdes-sample-2025/nid-pdf/nid-bdes-sample-2025-q18.png",
+     "sha256": "f74e6defcaad68ede5ecdac50fd5012aabb3864f6781bee7a3282a1819c084de",
+     "width": 1436,
+     "height": 893,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "pattern-recognition",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2025,
+    "paperId": "nid-bdes-sample-2025",
+    "questionNo": "18",
+    "page": 7,
+    "sourceSha256": "f3f4f07e7838bafe248dfb21945f1416263c53aa6f3a67e28d869467dff4bc3d",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
   }
  ]
 }
