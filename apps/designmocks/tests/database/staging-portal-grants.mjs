@@ -55,6 +55,7 @@ try {
   assert.equal(delta.extraGrants.length, 82);
   assert.ok(delta.extraGrants.every(grant => grant.role === "authenticated"));
   for (const signature of [
+    "public.approve_year_paper_revision(text, text)",
     "public.create_community_article(text, text, text, text, uuid, uuid)",
     "public.community_articles(text, text, jsonb, integer)",
     "public.set_community_like(uuid, boolean)",

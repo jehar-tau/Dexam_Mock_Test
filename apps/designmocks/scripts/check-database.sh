@@ -18,6 +18,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bootstrap.sql
 for migration in supabase/migrations/*.sql; do
   psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f "$migration"
 done
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/year-paper-revisions.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/invariants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/fresh-all-india-lineage.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-release.sql

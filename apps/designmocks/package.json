@@ -40,6 +40,7 @@
     "runtime:nid": "node scripts/materialize-nid-practice.mjs --ref origin/main",
     "runtime:nid-year": "node scripts/materialize-nid-year-paper.mjs",
     "paper:prepare": "node scripts/prepare-mvp-paper.mjs",
+    "papers:revise-free": "node scripts/year-paper-revision.mjs",
     "papers:prepare-free": "node scripts/prepare-free-year-paper.mjs",
     "drawing:advise": "node scripts/drawing-ai-advice.mjs",
     "drawing:cleanup": "node scripts/drawing-removal-cleanup.mjs",
