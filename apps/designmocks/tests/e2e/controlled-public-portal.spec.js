@@ -18,8 +18,14 @@ test.beforeEach(async ({ page }) => {
   await page.route("**/*", route => route.abort());
   await page.route(url => [site, "https://www.dmocks.com"].includes(url.origin), async route => {
     const url = new URL(route.request().url());
-    const response = await route.fetch({ url: artifact + url.pathname + url.search, maxRedirects: 0 });
-    return route.fulfill({ response });
+    // Keep fixture bytes independent of the browser request context during navigation.
+    const response = await fetch(artifact + url.pathname + url.search, {
+      redirect: "manual", headers: { "accept-encoding": "identity" },
+    });
+    const headers = Object.fromEntries(response.headers);
+    delete headers["content-encoding"];
+    delete headers["content-length"];
+    await route.fulfill({ status: response.status, headers, body: Buffer.from(await response.arrayBuffer()) });
   });
 });
 
