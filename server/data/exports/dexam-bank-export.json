@@ -167248,6 +167248,519 @@
     "answerKeySource": "NID_MDes_2017_answer_key",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-q1",
+   "type": "MCQ",
+   "prompt": "Which of the following is the logo of Amazon.com, Inc.?",
+   "options": [
+    {
+     "key": "A",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2021/nid-pdf/nid-mdes-sample-2021-q1.png",
+     "sha256": "cad89c832987d1b2ef2b5257b0cd61c3b8472438d2e456dde2597a089e8873c3",
+     "width": 1203,
+     "height": 457,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "1",
+    "page": 2,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-q2",
+   "type": "MCQ",
+   "prompt": "You associate the Swedish activist Greta Thunberg with the campaign related to",
+   "options": [
+    {
+     "key": "A",
+     "text": "Child Rights",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Poverty Eradication",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Environmental Conservation",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Gender Equality",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "2",
+    "page": 2,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-q3",
+   "type": "MCQ",
+   "prompt": "Which one of these principles is Velcro, a common fastener, based on?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Hook and Loop",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Cut and Paste",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Push and Pull",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Tick and Stick",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "3",
+    "page": 2,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-q4",
+   "type": "MCQ",
+   "prompt": "Identify the logo shown.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Aastha Channel",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Sunlife Financial",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nehru Planetarium",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of the above",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2021/nid-pdf/nid-mdes-sample-2021-q4.png",
+     "sha256": "bee8835e8c5ad3a125cbac007d90fb1834c268a152b1e3c2722f5ee4d457f1d2",
+     "width": 1438,
+     "height": 351,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-awareness",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "4",
+    "page": 2,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-q5",
+   "type": "MCQ",
+   "prompt": "Arrange these Art/Design movements in chronological order, from the oldest to the most recent: (1) Bauhaus, (2) Post-modernism, (3) Renaissance, (4) Impressionism.\n\n(Adapted by DMocks: NID asked for a written sequence; the four orders below are offered as options.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "3, 4, 1, 2",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3, 1, 4, 2",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4, 3, 1, 2",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3, 4, 2, 1",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "design-history",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "5",
+    "page": 2,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-q6",
+   "type": "MCQ",
+   "prompt": "Elon Musk is in the business of making",
+   "options": [
+    {
+     "key": "A",
+     "text": "Reusable Rockets, Solar roof tiles, Transportation Tunnels",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Transportation Tunnels, Shape shifting mobile phones, Solar roof tiles",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Haptic holograms, Transportation Tunnels, Reusable Rockets",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "High performance Gasoline, Transportation Tunnels, Solar roof tiles",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "6",
+    "page": 3,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-q11",
+   "type": "MCQ",
+   "prompt": "If \"INTEGRALS\" is the same as \"TRIANGLES\", then which one of the following is incorrect?",
+   "options": [
+    {
+     "key": "A",
+     "text": "\"ETHOS\" is the same as \"THEOS\"",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "\"ELEVEN PLUS TWO\" is the same as \"TWELVE PLUS ONE\"",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "\"CREATE\" is the same as \"REACT\"",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "\"SILENT\" is the same as \"LISTEN\"",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "11",
+    "page": 4,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-q15",
+   "type": "MCQ",
+   "prompt": "A young couple enters a party. The boy is dressed in blue and the girl is dressed in yellow. The room is lit with red coloured light. What colour will their respective dresses appear in the room?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Blue and Yellow",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Magenta and Orange",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Red and Red",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Black and Red",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "colour-theory",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "15",
+    "page": 5,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nid-mdes-sample-2021-q16",
+   "type": "MCQ",
+   "prompt": "A five-rupee coin (T) is rolled without slipping around another identical stationary five-rupee coin (H), with both touching each other at all times, until it returns to its starting position. In the process, how many times would coin T have rotated about its own axis?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Once",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Four times",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Twice",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Eight times",
+     "asset": null
+    }
+   ],
+   "assets": [
+    {
+     "role": "figure",
+     "path": "nid-mdes-sample-2021/nid-pdf/nid-mdes-sample-2021-q16.png",
+     "sha256": "31088161284cd6d5092394e128bb5122cf8fa65d0a098e7031cc7e2defc9ebab",
+     "width": 1443,
+     "height": 823,
+     "review": "approved"
+    }
+   ],
+   "answer": {
+    "raw": "C",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "spatial-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": true,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "block",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nid",
+    "year": 2021,
+    "paperId": "nid-mdes-sample-2021",
+    "questionNo": "16",
+    "page": 6,
+    "sourceSha256": "1ac008b0b7b63db77d775c38f69d828baea3a8dda0e692003a31b82b781025bb",
+    "extraction": "workstation",
+    "answerKeySource": "NID publishes no key for its sample papers: every answer solved by DMocks",
+    "verification": "review"
+   }
   }
  ]
 }
