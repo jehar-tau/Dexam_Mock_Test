@@ -128675,6 +128675,5406 @@
     "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2017)",
     "verification": "review"
    }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q1",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nTeaching, more than most other professions, has been transformed during the last hundred years from a small, highly skilled profession concerned with a minority of the population, to a large and important branch of public service. The profession has a great and honourable tradition, extending from the dawn of history until recent times, but any teacher in the modern world who allows himself to be inspired by the ideals of his predecessors is likely to be made sharply aware that it is not his function to teach what he thinks, but to instil such beliefs and prejudices as are thought useful by his employers.\n\nIn ancient times, the teaching profession was",
+   "options": [
+    {
+     "key": "A",
+     "text": "reserved for the upper class.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "reserved for a privileged few.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "open to all.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "limited to a highly skilled minority.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "1",
+    "page": 1,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q2",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nTeaching, more than most other professions, has been transformed during the last hundred years from a small, highly skilled profession concerned with a minority of the population, to a large and important branch of public service. The profession has a great and honourable tradition, extending from the dawn of history until recent times, but any teacher in the modern world who allows himself to be inspired by the ideals of his predecessors is likely to be made sharply aware that it is not his function to teach what he thinks, but to instil such beliefs and prejudices as are thought useful by his employers.\n\nWhat has transformed teaching into an important branch of public service is",
+   "options": [
+    {
+     "key": "A",
+     "text": "teaching skills.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "technical developments.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "utilitarian philosophy.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the demand of the employing industry.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "2",
+    "page": 1,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q3",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nTeaching, more than most other professions, has been transformed during the last hundred years from a small, highly skilled profession concerned with a minority of the population, to a large and important branch of public service. The profession has a great and honourable tradition, extending from the dawn of history until recent times, but any teacher in the modern world who allows himself to be inspired by the ideals of his predecessors is likely to be made sharply aware that it is not his function to teach what he thinks, but to instil such beliefs and prejudices as are thought useful by his employers.\n\nIn modern times, a successful teacher is primarily supposed to",
+   "options": [
+    {
+     "key": "A",
+     "text": "impart knowledge.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "impart new and latest skills.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "toe the lines preferred by those in authority.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "instil values he cherishes the most.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "3",
+    "page": 1,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q4",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nTeaching, more than most other professions, has been transformed during the last hundred years from a small, highly skilled profession concerned with a minority of the population, to a large and important branch of public service. The profession has a great and honourable tradition, extending from the dawn of history until recent times, but any teacher in the modern world who allows himself to be inspired by the ideals of his predecessors is likely to be made sharply aware that it is not his function to teach what he thinks, but to instil such beliefs and prejudices as are thought useful by his employers.\n\nThe modern teacher is not able to follow the ideals of his predecessors because",
+   "options": [
+    {
+     "key": "A",
+     "text": "of tremendous advancements in professional skills.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "of social and financial constraints.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "the students are not serious about studies.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the modern teacher has more interest in politics than in academic activity.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "4",
+    "page": 1,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q5",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nTeaching, more than most other professions, has been transformed during the last hundred years from a small, highly skilled profession concerned with a minority of the population, to a large and important branch of public service. The profession has a great and honourable tradition, extending from the dawn of history until recent times, but any teacher in the modern world who allows himself to be inspired by the ideals of his predecessors is likely to be made sharply aware that it is not his function to teach what he thinks, but to instil such beliefs and prejudices as are thought useful by his employers.\n\nThe author seems to",
+   "options": [
+    {
+     "key": "A",
+     "text": "be against the current trend in the teaching profession.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "approve the recent developments in the mode of teaching.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "be a traditionalist in his views.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "consider education as a part of public service.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "5",
+    "page": 1,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q6",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe manager of a well-known firm was interviewing applicants for the post of a night watchman he had advertised. He was very hard to please and always found something wrong with each man—one had long hair, another small eyes, a third was too thin and another too tall. Among the applicants interviewed by the manager for the post was one Ram Kishan. He watched all this as he sat in the verandah patiently waiting for his turn to be interviewed. He resolved to be prepared for anything. When his turn came, all went well. The manager found nothing wrong with his appearance, size or constitution. He was so handsome, tall and strong that the manager was really pleased to see such a well-built young man. “Is your health sound?”, said the manager at last. “No sir”, replied Ram Kishan, “not quite. I suffer from one serious complaint.” “What’s that?” asked the manager sharply. ‘Sleeplessness’ came the prompt reply. The manager was so pleased with the answer of the young man that without questioning him further, he appointed him.\n\nThe manager always found something wrong with each man. This shows that he",
+   "options": [
+    {
+     "key": "A",
+     "text": "was not interested in selecting anyone for the job.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "wanted a flawless person for the job.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "wanted the applicants to prove themselves fit for the job.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "had a habit of finding faults with others.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "6",
+    "page": 2,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q7",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe manager of a well-known firm was interviewing applicants for the post of a night watchman he had advertised. He was very hard to please and always found something wrong with each man—one had long hair, another small eyes, a third was too thin and another too tall. Among the applicants interviewed by the manager for the post was one Ram Kishan. He watched all this as he sat in the verandah patiently waiting for his turn to be interviewed. He resolved to be prepared for anything. When his turn came, all went well. The manager found nothing wrong with his appearance, size or constitution. He was so handsome, tall and strong that the manager was really pleased to see such a well-built young man. “Is your health sound?”, said the manager at last. “No sir”, replied Ram Kishan, “not quite. I suffer from one serious complaint.” “What’s that?” asked the manager sharply. ‘Sleeplessness’ came the prompt reply. The manager was so pleased with the answer of the young man that without questioning him further, he appointed him.\n\nThe manager rejected all other applicants for want of __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "good looks",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "vigilance",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "good health",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "wisdom",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "7",
+    "page": 2,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q8",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe manager of a well-known firm was interviewing applicants for the post of a night watchman he had advertised. He was very hard to please and always found something wrong with each man—one had long hair, another small eyes, a third was too thin and another too tall. Among the applicants interviewed by the manager for the post was one Ram Kishan. He watched all this as he sat in the verandah patiently waiting for his turn to be interviewed. He resolved to be prepared for anything. When his turn came, all went well. The manager found nothing wrong with his appearance, size or constitution. He was so handsome, tall and strong that the manager was really pleased to see such a well-built young man. “Is your health sound?”, said the manager at last. “No sir”, replied Ram Kishan, “not quite. I suffer from one serious complaint.” “What’s that?” asked the manager sharply. ‘Sleeplessness’ came the prompt reply. The manager was so pleased with the answer of the young man that without questioning him further, he appointed him.\n\nWhich of the following is incorrect?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Ram Kishan was ill and badly needed a job for his treatment.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "The manager did his job quite responsibly and dedicatedly.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "The other applicants were really not suited for the job.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Ram Kishan didn’t suffer from any ailment.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "8",
+    "page": 2,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q9",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe manager of a well-known firm was interviewing applicants for the post of a night watchman he had advertised. He was very hard to please and always found something wrong with each man—one had long hair, another small eyes, a third was too thin and another too tall. Among the applicants interviewed by the manager for the post was one Ram Kishan. He watched all this as he sat in the verandah patiently waiting for his turn to be interviewed. He resolved to be prepared for anything. When his turn came, all went well. The manager found nothing wrong with his appearance, size or constitution. He was so handsome, tall and strong that the manager was really pleased to see such a well-built young man. “Is your health sound?”, said the manager at last. “No sir”, replied Ram Kishan, “not quite. I suffer from one serious complaint.” “What’s that?” asked the manager sharply. ‘Sleeplessness’ came the prompt reply. The manager was so pleased with the answer of the young man that without questioning him further, he appointed him.\n\nWhy did Ram Kishan say that he suffered from sleeplessness?",
+   "options": [
+    {
+     "key": "A",
+     "text": "To test whether the manager could fail him.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "To prove that he knew well what his job required.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "To show that he was honest and truthful.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "To be frank and not to conceal anything.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "9",
+    "page": 2,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q10",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThe manager of a well-known firm was interviewing applicants for the post of a night watchman he had advertised. He was very hard to please and always found something wrong with each man—one had long hair, another small eyes, a third was too thin and another too tall. Among the applicants interviewed by the manager for the post was one Ram Kishan. He watched all this as he sat in the verandah patiently waiting for his turn to be interviewed. He resolved to be prepared for anything. When his turn came, all went well. The manager found nothing wrong with his appearance, size or constitution. He was so handsome, tall and strong that the manager was really pleased to see such a well-built young man. “Is your health sound?”, said the manager at last. “No sir”, replied Ram Kishan, “not quite. I suffer from one serious complaint.” “What’s that?” asked the manager sharply. ‘Sleeplessness’ came the prompt reply. The manager was so pleased with the answer of the young man that without questioning him further, he appointed him.\n\nThe manager recruited Ram Kishan for the welfare of __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "his own",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Ram Kishan",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "his firm",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the other applicants",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "10",
+    "page": 2,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q11",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nDuring their last year at school, a teacher gave his students a questionnaire about Life Skills. One conscientious student had breezed through the questions until he read the last one: “What is the first name of the woman who cleans at your floor in the school?’’ Surely this was some kind of joke. He had seen the cleaner several times. She was tall, dark-haired and in her 50s, but how would he know her name? He handed in his paper, leaving the last question blank. Just before the class ended, the student asked if the last question was important. “Absolutely”, said the teacher. “In your career, you will meet many people. All are significant. They deserve your attention and care, even if all you do is learn their name, smile and say ‘hello’”. That afternoon, the student found the cleaner. “I wanted to thank you for the work you do”, he said. “May I ask your name?”\n\nThe teacher gave the students this questionnaire “during their last year at school” because it tests skills that",
+   "options": [
+    {
+     "key": "A",
+     "text": "will be learned after school ends.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "were taught in the final year of school.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "are learned throughout all schooling.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "universities and colleges will require.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "11",
+    "page": 3,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q12",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nDuring their last year at school, a teacher gave his students a questionnaire about Life Skills. One conscientious student had breezed through the questions until he read the last one: “What is the first name of the woman who cleans at your floor in the school?’’ Surely this was some kind of joke. He had seen the cleaner several times. She was tall, dark-haired and in her 50s, but how would he know her name? He handed in his paper, leaving the last question blank. Just before the class ended, the student asked if the last question was important. “Absolutely”, said the teacher. “In your career, you will meet many people. All are significant. They deserve your attention and care, even if all you do is learn their name, smile and say ‘hello’”. That afternoon, the student found the cleaner. “I wanted to thank you for the work you do”, he said. “May I ask your name?”\n\nThe student in the passage was surprised by the last question because he assumed that",
+   "options": [
+    {
+     "key": "A",
+     "text": "learning is only academic.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the woman was not a cleaner.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "there would be multiple choices.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "he would know the cleaner’s name.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "12",
+    "page": 3,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q13",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nDuring their last year at school, a teacher gave his students a questionnaire about Life Skills. One conscientious student had breezed through the questions until he read the last one: “What is the first name of the woman who cleans at your floor in the school?’’ Surely this was some kind of joke. He had seen the cleaner several times. She was tall, dark-haired and in her 50s, but how would he know her name? He handed in his paper, leaving the last question blank. Just before the class ended, the student asked if the last question was important. “Absolutely”, said the teacher. “In your career, you will meet many people. All are significant. They deserve your attention and care, even if all you do is learn their name, smile and say ‘hello’”. That afternoon, the student found the cleaner. “I wanted to thank you for the work you do”, he said. “May I ask your name?”\n\nThe contents of the passage shows that the student",
+   "options": [
+    {
+     "key": "A",
+     "text": "put the theory into practice.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "had difficulty finding the cleaner.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "misunderstood the teacher’s point.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "wants to complete the questionnaire.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "13",
+    "page": 3,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q14",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nDuring their last year at school, a teacher gave his students a questionnaire about Life Skills. One conscientious student had breezed through the questions until he read the last one: “What is the first name of the woman who cleans at your floor in the school?’’ Surely this was some kind of joke. He had seen the cleaner several times. She was tall, dark-haired and in her 50s, but how would he know her name? He handed in his paper, leaving the last question blank. Just before the class ended, the student asked if the last question was important. “Absolutely”, said the teacher. “In your career, you will meet many people. All are significant. They deserve your attention and care, even if all you do is learn their name, smile and say ‘hello’”. That afternoon, the student found the cleaner. “I wanted to thank you for the work you do”, he said. “May I ask your name?”\n\nThe student in the passage learned the importance of __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "tactics",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "humility",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "politeness",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "lateral thinking",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "14",
+    "page": 3,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q15",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nDuring their last year at school, a teacher gave his students a questionnaire about Life Skills. One conscientious student had breezed through the questions until he read the last one: “What is the first name of the woman who cleans at your floor in the school?’’ Surely this was some kind of joke. He had seen the cleaner several times. She was tall, dark-haired and in her 50s, but how would he know her name? He handed in his paper, leaving the last question blank. Just before the class ended, the student asked if the last question was important. “Absolutely”, said the teacher. “In your career, you will meet many people. All are significant. They deserve your attention and care, even if all you do is learn their name, smile and say ‘hello’”. That afternoon, the student found the cleaner. “I wanted to thank you for the work you do”, he said. “May I ask your name?”\n\nThe teacher put the question about the cleaner on the questionnaire for the benefit of",
+   "options": [
+    {
+     "key": "A",
+     "text": "the cleaner.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the whole class.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "this particular student.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "the teacher himself /herself.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "15",
+    "page": 3,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q16",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThere was once a poor man who earned just a bare living for himself and his family. All day long he sang and passed time cheerfully, while his rich neighbours were busy and anxious about their riches and never sang. They wondered at the poor man’s joy and even complained that with his singing, he would not let them sleep. One of them, a very wealthy man said, “I will stop him being so cheerful and singing all the time.” He went to the poor man’s house while he was away and threw a bag of money into his room. When the poor man came home, he was very happy at first and cheerfully hid the bag of money. Soon, however, he began to fear it might be stolen or he might be accused of having stolen it, and he ceased to be cheerful and to sing. After a time, the rich man asked him, what made him so thin and sad. At first he did not dare to say but when the rich man told him that he knew his secret, he cried out, ‘Take back your money, then I shall be happy and free from care and shall sing as I used to”. Saying so, he flung the treasure at the rich man.\n\nWhat kept the wealthy man ‘anxious’?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Greed and insecurity",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Pride and jealousy",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Fear and frustration",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Sleeplessness",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "16",
+    "page": 3,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q17",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThere was once a poor man who earned just a bare living for himself and his family. All day long he sang and passed time cheerfully, while his rich neighbours were busy and anxious about their riches and never sang. They wondered at the poor man’s joy and even complained that with his singing, he would not let them sleep. One of them, a very wealthy man said, “I will stop him being so cheerful and singing all the time.” He went to the poor man’s house while he was away and threw a bag of money into his room. When the poor man came home, he was very happy at first and cheerfully hid the bag of money. Soon, however, he began to fear it might be stolen or he might be accused of having stolen it, and he ceased to be cheerful and to sing. After a time, the rich man asked him, what made him so thin and sad. At first he did not dare to say but when the rich man told him that he knew his secret, he cried out, ‘Take back your money, then I shall be happy and free from care and shall sing as I used to”. Saying so, he flung the treasure at the rich man.\n\nThe poor man was happy all day long because",
+   "options": [
+    {
+     "key": "A",
+     "text": "he had no money.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "of his carefree attitude.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "he had nothing to lose.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "he could support his family well.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "17",
+    "page": 3,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q18",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThere was once a poor man who earned just a bare living for himself and his family. All day long he sang and passed time cheerfully, while his rich neighbours were busy and anxious about their riches and never sang. They wondered at the poor man’s joy and even complained that with his singing, he would not let them sleep. One of them, a very wealthy man said, “I will stop him being so cheerful and singing all the time.” He went to the poor man’s house while he was away and threw a bag of money into his room. When the poor man came home, he was very happy at first and cheerfully hid the bag of money. Soon, however, he began to fear it might be stolen or he might be accused of having stolen it, and he ceased to be cheerful and to sing. After a time, the rich man asked him, what made him so thin and sad. At first he did not dare to say but when the rich man told him that he knew his secret, he cried out, ‘Take back your money, then I shall be happy and free from care and shall sing as I used to”. Saying so, he flung the treasure at the rich man.\n\nThe wealthy man complained that the poor man’s singing did not let him sleep. What do you think kept him awake?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Noise of the song",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Jealousy for the poor man",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Fear of losing his money",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Worries about the future",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "18",
+    "page": 3,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q19",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThere was once a poor man who earned just a bare living for himself and his family. All day long he sang and passed time cheerfully, while his rich neighbours were busy and anxious about their riches and never sang. They wondered at the poor man’s joy and even complained that with his singing, he would not let them sleep. One of them, a very wealthy man said, “I will stop him being so cheerful and singing all the time.” He went to the poor man’s house while he was away and threw a bag of money into his room. When the poor man came home, he was very happy at first and cheerfully hid the bag of money. Soon, however, he began to fear it might be stolen or he might be accused of having stolen it, and he ceased to be cheerful and to sing. After a time, the rich man asked him, what made him so thin and sad. At first he did not dare to say but when the rich man told him that he knew his secret, he cried out, ‘Take back your money, then I shall be happy and free from care and shall sing as I used to”. Saying so, he flung the treasure at the rich man.\n\n‘At first he did not dare to say …..' Why didn’t the poor man ‘dare to say’? He feared that",
+   "options": [
+    {
+     "key": "A",
+     "text": "his family might overhear him.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "the rich man would mock at him.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "the rich man might steal his money.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "he would have to return the rich man’s money.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "19",
+    "page": 4,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q20",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nThere was once a poor man who earned just a bare living for himself and his family. All day long he sang and passed time cheerfully, while his rich neighbours were busy and anxious about their riches and never sang. They wondered at the poor man’s joy and even complained that with his singing, he would not let them sleep. One of them, a very wealthy man said, “I will stop him being so cheerful and singing all the time.” He went to the poor man’s house while he was away and threw a bag of money into his room. When the poor man came home, he was very happy at first and cheerfully hid the bag of money. Soon, however, he began to fear it might be stolen or he might be accused of having stolen it, and he ceased to be cheerful and to sing. After a time, the rich man asked him, what made him so thin and sad. At first he did not dare to say but when the rich man told him that he knew his secret, he cried out, ‘Take back your money, then I shall be happy and free from care and shall sing as I used to”. Saying so, he flung the treasure at the rich man.\n\nThe poor man returned the money to the rich man to restore his __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "happiness",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "contentment",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "honesty",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "generosity",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "20",
+    "page": 4,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q21",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nWe all know what posters are. In these modern days of advertising, there is scarcely a road along which we travel without passing one or other examples of the poster adviser’s activity. These posters vary in type from illuminated, electric signs with their flashing, alternating lights, to the small hand-painted effusions which advertise local concerts in the village halls. Before we attempt a detailed study of the methods by which poster hoardings are filled with eye-catching designs, let us examine one or two basic principles which would apply to any well-planned poster campaign. In the place we must appreciate that our poster will be read, in most cases, by a mobile public. It differs from the press advertisements in that it is not carried into the home or office and read at leisure. It remains in one place, and its message, therefore, must be capable of being assimilated by the reader who is passing, often in a hurry, with other and more important business in his mind. Again, unlike the press advertisement, the poster cannot carry a long and detailed message: the man in the street has not sufficient time to read it in these days of haste and bustle.\n\nThe tone of the passage is essentially __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "critical",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "analytical",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "formal",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "objective",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "21",
+    "page": 4,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q22",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nWe all know what posters are. In these modern days of advertising, there is scarcely a road along which we travel without passing one or other examples of the poster adviser’s activity. These posters vary in type from illuminated, electric signs with their flashing, alternating lights, to the small hand-painted effusions which advertise local concerts in the village halls. Before we attempt a detailed study of the methods by which poster hoardings are filled with eye-catching designs, let us examine one or two basic principles which would apply to any well-planned poster campaign. In the place we must appreciate that our poster will be read, in most cases, by a mobile public. It differs from the press advertisements in that it is not carried into the home or office and read at leisure. It remains in one place, and its message, therefore, must be capable of being assimilated by the reader who is passing, often in a hurry, with other and more important business in his mind. Again, unlike the press advertisement, the poster cannot carry a long and detailed message: the man in the street has not sufficient time to read it in these days of haste and bustle.\n\nA poster need not be __________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "concise",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "attractive",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "colourful",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "illustrated",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "22",
+    "page": 4,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q23",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nWe all know what posters are. In these modern days of advertising, there is scarcely a road along which we travel without passing one or other examples of the poster adviser’s activity. These posters vary in type from illuminated, electric signs with their flashing, alternating lights, to the small hand-painted effusions which advertise local concerts in the village halls. Before we attempt a detailed study of the methods by which poster hoardings are filled with eye-catching designs, let us examine one or two basic principles which would apply to any well-planned poster campaign. In the place we must appreciate that our poster will be read, in most cases, by a mobile public. It differs from the press advertisements in that it is not carried into the home or office and read at leisure. It remains in one place, and its message, therefore, must be capable of being assimilated by the reader who is passing, often in a hurry, with other and more important business in his mind. Again, unlike the press advertisement, the poster cannot carry a long and detailed message: the man in the street has not sufficient time to read it in these days of haste and bustle.\n\nThe most striking feature of a poster is that it",
+   "options": [
+    {
+     "key": "A",
+     "text": "does not give the details of the message.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "conveys the message to a large section of people.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "entertains and also informs people.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "beautifies the place where it is put up.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "23",
+    "page": 4,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q24",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nWe all know what posters are. In these modern days of advertising, there is scarcely a road along which we travel without passing one or other examples of the poster adviser’s activity. These posters vary in type from illuminated, electric signs with their flashing, alternating lights, to the small hand-painted effusions which advertise local concerts in the village halls. Before we attempt a detailed study of the methods by which poster hoardings are filled with eye-catching designs, let us examine one or two basic principles which would apply to any well-planned poster campaign. In the place we must appreciate that our poster will be read, in most cases, by a mobile public. It differs from the press advertisements in that it is not carried into the home or office and read at leisure. It remains in one place, and its message, therefore, must be capable of being assimilated by the reader who is passing, often in a hurry, with other and more important business in his mind. Again, unlike the press advertisement, the poster cannot carry a long and detailed message: the man in the street has not sufficient time to read it in these days of haste and bustle.\n\nWhich of the following is most likely to make a poster deliver its purpose well?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Large size",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Use of fancy letters",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Colourful picture",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Catchy slogan",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "24",
+    "page": 4,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q25",
+   "type": "MCQ",
+   "prompt": "Read the passage and answer the question.\nWe all know what posters are. In these modern days of advertising, there is scarcely a road along which we travel without passing one or other examples of the poster adviser’s activity. These posters vary in type from illuminated, electric signs with their flashing, alternating lights, to the small hand-painted effusions which advertise local concerts in the village halls. Before we attempt a detailed study of the methods by which poster hoardings are filled with eye-catching designs, let us examine one or two basic principles which would apply to any well-planned poster campaign. In the place we must appreciate that our poster will be read, in most cases, by a mobile public. It differs from the press advertisements in that it is not carried into the home or office and read at leisure. It remains in one place, and its message, therefore, must be capable of being assimilated by the reader who is passing, often in a hurry, with other and more important business in his mind. Again, unlike the press advertisement, the poster cannot carry a long and detailed message: the man in the street has not sufficient time to read it in these days of haste and bustle.\n\nThe press advertisement is better than a poster in which of the following contexts?",
+   "options": [
+    {
+     "key": "A",
+     "text": "It reaches far and wide.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "It is a cheaper mode of communicating the message.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "It does not require illustrations or eye-catching pictures.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "The reader can assimilate the details as per his ease and convenience.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "25",
+    "page": 4,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q26",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30) : Choose the word which best expresses the meaning of the underlined word.\n\nThis is a lucrative business.",
+   "options": [
+    {
+     "key": "A",
+     "text": "questionable",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "challenging",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "dangerous",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "profitable",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "26",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q27",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30) : Choose the word which best expresses the meaning of the underlined word.\n\nHe gave a fictitious address.",
+   "options": [
+    {
+     "key": "A",
+     "text": "unknown",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "correct",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "fake",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "detailed",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "27",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q28",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30) : Choose the word which best expresses the meaning of the underlined word.\n\nLunatics generally have queer ideas.",
+   "options": [
+    {
+     "key": "A",
+     "text": "strange",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "good",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "complex",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "confusing",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "28",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q29",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30) : Choose the word which best expresses the meaning of the underlined word.\n\nHe felt incensed at the way he was treated.",
+   "options": [
+    {
+     "key": "A",
+     "text": "insulted",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "hurt",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "angry",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "tortured",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "29",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q30",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 26-30) : Choose the word which best expresses the meaning of the underlined word.\n\nThe drought in several parts of the city this year led to the onset of various diseases.",
+   "options": [
+    {
+     "key": "A",
+     "text": "outbreak",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "attack",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "assault",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "recession",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "30",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q31",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Choose the word which is opposite in meaning of the underlined word.\n\nI have vague memories of my childhood.",
+   "options": [
+    {
+     "key": "A",
+     "text": "clear",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "profound",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "sufficient",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "pleasant",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "31",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q32",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Choose the word which is opposite in meaning of the underlined word.\n\nThe rainfall was plentiful in this part during the last season.",
+   "options": [
+    {
+     "key": "A",
+     "text": "scanty",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "small",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "rare",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "handful",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "32",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q33",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Choose the word which is opposite in meaning of the underlined word.\n\nThe criminal was detained by the police.",
+   "options": [
+    {
+     "key": "A",
+     "text": "threatened",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "dismissed",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "protected",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "released",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "33",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q34",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Choose the word which is opposite in meaning of the underlined word.\n\nMr Rao is a frail young man.",
+   "options": [
+    {
+     "key": "A",
+     "text": "cheerful",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "happy",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "feeble",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "strong",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "34",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q35",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 31-35) : Choose the word which is opposite in meaning of the underlined word.\n\nThat was an exquisite piece of art which won the admiration of one and all.",
+   "options": [
+    {
+     "key": "A",
+     "text": "ugly",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "cheap",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "old",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "common",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "35",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q36",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Examplary",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Exemplary",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Examplery",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Exemplery",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "36",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q37",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Aforstation",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Aforestation",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Afforstation",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Afforestation",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "37",
+    "page": 5,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q38",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Greivance",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Grievance",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Griveance",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Grieveance",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "38",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q39",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Legendry",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Legendery",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Legendary",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Legandery",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "39",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q40",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 36-40) : In each of these questions, out of the given group of words, choose the correctly spelt word.\n\nChoose the correctly spelt word.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Predecessor",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Predeccesor",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Predicesor",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Predecesor",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "40",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q41",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : Choose the option that exhibits correct meaning of the italicized phrasal verbs in the following sentences.\n\nHe always runs down his brother only because the latter is poor.",
+   "options": [
+    {
+     "key": "A",
+     "text": "quarrels with",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "disagrees with",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "threatens",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "disparages",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "41",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q42",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : Choose the option that exhibits correct meaning of the italicized phrasal verbs in the following sentences.\n\nRohit is not cut out for this kind of work.",
+   "options": [
+    {
+     "key": "A",
+     "text": "trained",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "acquainted",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "suitable",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "physically fit",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "42",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q43",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : Choose the option that exhibits correct meaning of the italicized phrasal verbs in the following sentences.\n\nThe father was taken aback by his son's rude behaviour.",
+   "options": [
+    {
+     "key": "A",
+     "text": "surprised",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "hurt",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "annoyed",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "affected",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "43",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q44",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : Choose the option that exhibits correct meaning of the italicized phrasal verbs in the following sentences.\n\nAt my friend's tea party, I fell in with a strange fellow.",
+   "options": [
+    {
+     "key": "A",
+     "text": "had a quarrel with",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "met accidentally",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "had an argument with",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "made friends with",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "44",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q45",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 41-45) : Choose the option that exhibits correct meaning of the italicized phrasal verbs in the following sentences.\n\nThe servant needs to be told off.",
+   "options": [
+    {
+     "key": "A",
+     "text": "punished",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "scolded",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "praised",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "dismissed",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "45",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q46",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : Fill in the blank.\n\nThe new education policy provides a useful _________ for the planners to remove illiteracy.",
+   "options": [
+    {
+     "key": "A",
+     "text": "break-in",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "breakaway",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "break up",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "breakthrough",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "46",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q47",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : Fill in the blank.\n\nHe had to wait until his sister's train arrived _________ to take her to his house.",
+   "options": [
+    {
+     "key": "A",
+     "text": "as much as",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "as if",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "so much so",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "so as",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "47",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q48",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : Fill in the blank.\n\nWe are now confident __________ winning the match.",
+   "options": [
+    {
+     "key": "A",
+     "text": "to",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "in",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "of",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "towards",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "48",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q49",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : Fill in the blank.\n\nThis sort of situation will not be allowed to last ___________ long.",
+   "options": [
+    {
+     "key": "A",
+     "text": "until",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "up",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "till",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "for",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "49",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q50",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 46-50) : Fill in the blank.\n\nThe inspector of excise has to conduct regular checks and ___________ to visit the unit at least once a day.",
+   "options": [
+    {
+     "key": "A",
+     "text": "is required",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "requires",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "is requiring",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "required",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "language",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "50",
+    "page": 6,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q51",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 51-53): Complete the series by replacing '?'\n\nAB, EDC, FGHI, '?', OPQRST,",
+   "options": [
+    {
+     "key": "A",
+     "text": "JKLMN",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "JMKNL",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "NMLKJ",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "NMKLJ",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "51",
+    "page": 7,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q52",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 51-53): Complete the series by replacing '?'\n\n3, 11, 23, 39, 59, '?'",
+   "options": [
+    {
+     "key": "A",
+     "text": "63",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "73",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "83",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "93",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "52",
+    "page": 7,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q53",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 51-53): Complete the series by replacing '?'\n\n9472, 8563, 7654, ‘?’",
+   "options": [
+    {
+     "key": "A",
+     "text": "5473",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "6745",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "7754",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "3675",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "53",
+    "page": 7,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q54",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 54-56) : Study the following information to answer these questions. (i) In a family of 6 persons, there are two couples. (ii) The lawyer is the head of the family and has only two sons – Mukesh and Rakesh both teachers. (iii) Mrs. Reena and her mother-in-law both are lawyers. (iv) Mukesh's wife is a Doctor and they have a son, Ajay.\n\nWhich of the following is definitely a couple?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Lawyer-Teacher",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Doctor-Lawyer",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Teacher-Teacher",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "54",
+    "page": 7,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q55",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 54-56) : Study the following information to answer these questions. (i) In a family of 6 persons, there are two couples. (ii) The lawyer is the head of the family and has only two sons – Mukesh and Rakesh both teachers. (iii) Mrs. Reena and her mother-in-law both are lawyers. (iv) Mukesh's wife is a Doctor and they have a son, Ajay.\n\nWhat is the profession of Rakesh's wife?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Teacher",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Doctor",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Lawyer",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "55",
+    "page": 7,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q56",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 54-56) : Study the following information to answer these questions. (i) In a family of 6 persons, there are two couples. (ii) The lawyer is the head of the family and has only two sons – Mukesh and Rakesh both teachers. (iii) Mrs. Reena and her mother-in-law both are lawyers. (iv) Mukesh's wife is a Doctor and they have a son, Ajay.\n\nHow many male members are there in the family?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Two",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Three",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Four",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "56",
+    "page": 7,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q57",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 57-58): Find the odd one out.\n\n41, 43, 47, 53, 61, 71, 73, 81",
+   "options": [
+    {
+     "key": "A",
+     "text": "61",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "71",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "73",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "81",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "57",
+    "page": 7,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q58",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 57-58): Find the odd one out.\n\n835, 734, 642, 751, 853, 981, 532",
+   "options": [
+    {
+     "key": "A",
+     "text": "751",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "853",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "981",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "532",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "58",
+    "page": 7,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q59",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nStatements : All hands are limbs. All limbs are fingers. Some fingers are thumbs. Conclusions : I. Some thumbs being limbs is a possibility. II. All hands are fingers.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only conclusion I follows.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only conclusion II follows.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Either conclusion I or conclusion II follows.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Neither conclusion I nor conclusion II follows.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "59",
+    "page": 8,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q60",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nStatements : All teams are participants. All members are teams. No member is a captain. Conclusions : I. Atleast some participants are members. II. All teams being captains is a possibility.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only conclusion I follows.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only conclusion II follows.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Either conclusion I or conclusion II follows.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Neither conclusion I nor conclusion II follows.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "60",
+    "page": 8,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q61",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nStatements : Some slopes are mountains. No mountain is a river. Some rivers are ponds. Conclusions : I. All ponds being mountains is a possibility. II. All slopes being rivers is a possibility.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Only conclusion I follows.",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Only conclusion II follows.",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Either conclusion I or conclusion II follows.",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Neither conclusion I nor conclusion II follows.",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "61",
+    "page": 8,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q62",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nTwo railway tickets from city A to B and three tickets from city A to C cost 177. Three tickets from city A to B and two tickets from city A to C cost 173. The fare for city B from city A will be _________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "25",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "27",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "30",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "33",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "62",
+    "page": 8,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q63",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nR is sister of M. M is brother of H. D is mother of K. K is brother of M. How is R related to D?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Daughter",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Mother",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Sister",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Data inadequate",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "63",
+    "page": 8,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q64",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nIf Neena says, \"Anita's father Raman is the only son of my father-in-law Mahipal,\" then how is Bindu, who is the sister of Anita, related to Mahipal?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Niece",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Daughter",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Cousin",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "64",
+    "page": 8,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q65",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nIf in the number 38564927, first all the even digits are arranged in ascending order and then all the odd digits are arranged in ascending order, which digit will be fourth from the right end?",
+   "options": [
+    {
+     "key": "A",
+     "text": "3",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "5",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "6",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "analytical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "65",
+    "page": 8,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q66",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n55% of a number is more than one-third of that number by 52. What is two-fifth of that number?",
+   "options": [
+    {
+     "key": "A",
+     "text": "96",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "240",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "144",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "142",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "66",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q67",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nOne-fifth of a number is equal to 5/8th of another number. If 35 is added to the first number, it becomes four times of the second number. Find the second number.",
+   "options": [
+    {
+     "key": "A",
+     "text": "39",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "70",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "40",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "25",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "67",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q68",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nWhat least number would be subtracted from 427398 so that the remaining number is divisible by 15?",
+   "options": [
+    {
+     "key": "A",
+     "text": "13",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "16",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "11",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "68",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q69",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nFind the sum of the first 50 natural numbers.",
+   "options": [
+    {
+     "key": "A",
+     "text": "1275",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1025",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1235",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1205",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "69",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q70",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nHow many integers from 1 to 100 exist such that each is divisible by 6 and also has 6 as a digit.",
+   "options": [
+    {
+     "key": "A",
+     "text": "6",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "5",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "8",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "70",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q71",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nThree numbers are in the ratio 3 : 5 : 6. Sum of the greatest and the smallest numbers is equal to the sum of the middle number and 16. Find the smallest number.",
+   "options": [
+    {
+     "key": "A",
+     "text": "12",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "20",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "24",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "16",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "71",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q72",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nThrice a number diminished by 2 is 19. Find the number.",
+   "options": [
+    {
+     "key": "A",
+     "text": "5",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "6",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "72",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q73",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n2/3 of 1 2/5 of 75% of 540 = ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "378",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "456",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "252",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "332",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "73",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q74",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nOne litre of water is evaporated from 6 litres of a solution containing 5% salt. Find the percentage of salt in the remaining solution.",
+   "options": [
+    {
+     "key": "A",
+     "text": "5%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "9%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "6%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "74",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q75",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nRam deposited 10,000 in a bank. After 2 years he withdraws 4,000 and at the end of 5 years he receives an amount of 7,520. Find the rate of simple interest.",
+   "options": [
+    {
+     "key": "A",
+     "text": "6%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "5%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "75",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q76",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nA man crosses a stationary train in 12 minutes. The same train crosses a man in 54 seconds. What was the respective ratio between the speed of the train and the man?",
+   "options": [
+    {
+     "key": "A",
+     "text": "40 : 7",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "400 : 3",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "40 : 3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Cannot be determined",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "76",
+    "page": 9,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q77",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nIf 15.9273 – x = 11.0049, then the value of x is _________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "26.9322",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "4.9224",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "0.49224",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "4.9324",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "77",
+    "page": 10,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q78",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nA drum of water is 3/5th full; when 38 litres are drawn from it, it is just 1/8th full. Find the total capacity of the drum in litres.",
+   "options": [
+    {
+     "key": "A",
+     "text": "48 litres",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "84 litres",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "80 litres",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "118 litres",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "78",
+    "page": 10,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q79",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nA student X passes his examination with 618 marks, having scored 3% above the minimum. If another student Y had scored 852 marks, by what % would his score have been above the minimum?",
+   "options": [
+    {
+     "key": "A",
+     "text": "58%",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "5.8%",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "42%",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "4.2%",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "79",
+    "page": 10,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q80",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n3/48 is what part of 1/12?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1/4",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "3/4",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1/3",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "2/3",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "80",
+    "page": 10,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q81",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n9,000 is lent out in two parts at the rate of 5% SI and 7% SI. The simple interest on the whole sum at the end of 2 years is 954. Find the sum that is lent out at 5% rate of interest.",
+   "options": [
+    {
+     "key": "A",
+     "text": "7,650",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1,350",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "7,000",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "6,600",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "81",
+    "page": 10,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q82",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n3420/19 = ? / (0.01 × 7)\n\n(Corrected by DMocks: the printed form '?/0.01 × 7' only gives NIFT's answer when 0.01 × 7 is read as one denominator; the brackets make that explicit.)",
+   "options": [
+    {
+     "key": "A",
+     "text": "35/9",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "63/5",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "18/7",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "82",
+    "page": 10,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q83",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n(17)2 + (23)2 = ?",
+   "options": [
+    {
+     "key": "A",
+     "text": "718",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "818",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "988",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "828",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "83",
+    "page": 10,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q84",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nOn dividing 7865321 by a certain number, the quotient is 33612 and the remainder is 113. Find the divisor.",
+   "options": [
+    {
+     "key": "A",
+     "text": "243",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "234",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "423",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "432",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "84",
+    "page": 10,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q85",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nA, B and C can complete a piece of work in 10, 15 and 18 days respectively. In how many days would all of them complete the same work working together? 1 1",
+   "options": [
+    {
+     "key": "A",
+     "text": "14 days",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "7 days",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "4 days",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "independently-solved"
+   },
+   "explanation": null,
+   "topic": "numerical-reasoning",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "85",
+    "page": 10,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q86",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nPopular Indian film star Amitabh Bachchan is associated with which one of the following jewellery brands?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Amrapali Jewels",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Kalyan Jewellers",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Tribhovandas Bhimji Zaveri",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "PC Jewellers",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "86",
+    "page": 11,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q87",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n‘AJIO.COM’, the online clothing, accessories and footwear brand belongs to _________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Reliance",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Lifestyle",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Aditya Birla Group",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Bharti Retail",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "87",
+    "page": 11,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q88",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n‘inayat’, the designer jewellery collection is from the house of _________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Malabar Jewllers",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Tanishq",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Nakshatra",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "PC Jewellers",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "88",
+    "page": 11,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q89",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nWhich one of the following sports lifestyle clothing line is launched by cricketer Yuvraj Singh?",
+   "options": [
+    {
+     "key": "A",
+     "text": "True Blue",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "SKULT",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "YWC Fashion",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "SEVEN",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "89",
+    "page": 11,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q90",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nIndian Cricketer Virat Kohli endorses which one of the following Indian clothing brand?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Manyavar",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Fashion by Big Bazaar",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Pantaloons",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "90",
+    "page": 11,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q91",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nIn which of the following places world’s first Bollywood themed park is opened?",
+   "options": [
+    {
+     "key": "A",
+     "text": "London",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Singapore",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Hong Kong",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Dubai",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "91",
+    "page": 11,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q92",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nWho among the following is the brand ambassador of Arunachal Pradesh tourism?",
+   "options": [
+    {
+     "key": "A",
+     "text": "John Abraham",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Randeep Hooda",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Neil Nitin Mukesh",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Irrfan Khan",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "A",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "92",
+    "page": 11,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q93",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nCurrently, Kiran Bedi is the Lt Governor of _________.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Lakshadweep",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Daman and Diu",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Puducherry",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "None of these",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "93",
+    "page": 11,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q94",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nDonald Trump has been elected as the______ president of the United States of America.",
+   "options": [
+    {
+     "key": "A",
+     "text": "43rd",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "44th",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "45th",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "46th",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "94",
+    "page": 12,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q95",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n2018 Asian Games will be held in which country?",
+   "options": [
+    {
+     "key": "A",
+     "text": "China",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Indonesia",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Japan",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Sri Lanka",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "B",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "95",
+    "page": 12,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q96",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nIn which year was New Delhi inaugurated as the capital of India?",
+   "options": [
+    {
+     "key": "A",
+     "text": "1911",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "1921",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "1931",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "1941",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "96",
+    "page": 12,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q97",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n_________ city in Tamilnadu is also called the textile city.",
+   "options": [
+    {
+     "key": "A",
+     "text": "Tirunelveli",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Tanjore",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Coimbatore",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Nagapattinam",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "97",
+    "page": 12,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q98",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\n‘Pattachitra’ refers to the classical paintings of which one of the following states?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Tamil Nadu",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Bihar",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "West Bengal",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Odisha",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "D",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "98",
+    "page": 12,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q99",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nWho among the following Indians has been crowned with Mr. World 2016 title?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Advay Ramesh",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "Neeraj Chopra",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Rohit Khandelwal",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Vijender Singh",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "99",
+    "page": 12,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
+  },
+  {
+   "externalKey": "nift-2018-bdes-gat-q100",
+   "type": "MCQ",
+   "prompt": "Directions (Questions 59-61): Each of these questions has two statements followed by two conclusions numbered I and II. You have to take the given statements to be true even if they seem to be at variance from commonly known facts and then decide which of the given conclusions logically follows from the given statements disregarding commonly known facts. Mark answer as (1) if only conclusion I follows (2) if only conclusion II follows (3) if either conclusion I or conclusion II follows (4) if neither conclusion I nor conclusion II follows\n\nWhich of the following cities will host the Olympic games in 2020?",
+   "options": [
+    {
+     "key": "A",
+     "text": "Shanghai",
+     "asset": null
+    },
+    {
+     "key": "B",
+     "text": "New York",
+     "asset": null
+    },
+    {
+     "key": "C",
+     "text": "Tokyo",
+     "asset": null
+    },
+    {
+     "key": "D",
+     "text": "Melbourne",
+     "asset": null
+    }
+   ],
+   "assets": [],
+   "answer": {
+    "raw": "C",
+    "status": "matched-source"
+   },
+   "explanation": null,
+   "topic": "general-knowledge",
+   "subtopic": null,
+   "difficulty": "unassessed",
+   "estimatedSeconds": null,
+   "visualDependency": false,
+   "licence": "official-unlicensed",
+   "sourceKind": "official",
+   "display": "text",
+   "taskMarks": null,
+   "holds": [],
+   "provenance": {
+    "exam": "nift",
+    "year": 2018,
+    "paperId": "nift-2018-bdes-gat",
+    "questionNo": "100",
+    "page": 12,
+    "sourceSha256": "eef8d5fd83bf3bdf30c28709d23e41ae37307fac8096400e5d1a6373c9567362",
+    "extraction": "workstation",
+    "answerKeySource": "Prepp copy of the NIFT B.Des GAT sample paper answer key (2018)",
+    "verification": "review"
+   }
   }
  ]
 }
