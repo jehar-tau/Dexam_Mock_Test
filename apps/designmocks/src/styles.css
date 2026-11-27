@@ -1076,7 +1076,7 @@ svg {
   font-size: 0.875rem;
   margin: 18px 0 0;
 }
-.footer-top b {
+.footer-top > div > b {
   display: block;
   letter-spacing: 0.08em;
   font-size: 0.625rem;
@@ -2797,7 +2797,7 @@ svg {
     min-height: 40px;
     font-size: 0.8125rem;
   }
-  .footer-top b {
+  .footer-top > div > b {
     font-size: 0.625rem;
     line-height: 1.6;
   }
@@ -3430,7 +3430,7 @@ svg {
 .pass-price > span,
 .pass-price p,
 .pass-panel .eyebrow,
-.footer-top b,
+.footer-top > div > b,
 .footer-top > div > a:not(.logo),
 .footer-bottom,
 .footer-bottom > p,
@@ -3480,7 +3480,7 @@ svg {
 .answer-review article p {
   font-size: 1rem;
 }
-.footer-top b {
+.footer-top > div > b {
   letter-spacing: 0.035em;
 }
 .report-preview-top {
