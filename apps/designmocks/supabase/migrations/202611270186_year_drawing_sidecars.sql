@@ -316,7 +316,7 @@ returns boolean language sql stable security definer set search_path=pg_catalog,
 $$;
 
 -- Check the final registered row (the service sets pixel metadata after INSERT).
-create function dm_private.check_year_drawing_photo() returns trigger language plpgsql set search_path=pg_catalog,dm_private as $$
+create function dm_private.check_year_drawing_photo() returns trigger language plpgsql security definer set search_path=pg_catalog,dm_private as $$
 begin
   if exists(select from dm_private.drawing_uploads u join dm_private.attempts a on a.id=u.attempt_id
     where u.id=new.id and a.year_drawing_version is not null and (u.mime_type<>'image/jpeg' or u.pixel_width is null
@@ -325,5 +325,6 @@ begin
   end if;
   return null;
 end $$;
+revoke all on function dm_private.check_year_drawing_photo(),dm_private.year_drawing_upload_limit() from public,anon,authenticated,service_role;
 create constraint trigger check_year_drawing_photo after insert or update on dm_private.drawing_uploads
 deferrable initially deferred for each row execute function dm_private.check_year_drawing_photo();

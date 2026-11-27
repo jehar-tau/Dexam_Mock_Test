@@ -37,6 +37,25 @@ select pg_temp.year_prepare_assert(current_setting('test.submittedDrawing')::jso
   and current_setting('test.submittedDrawing')::jsonb#>>'{questions,57,explanation}' is not null
   and not public.can_upload_drawing(current_setting('test.drawingAttempt')::uuid,(current_setting('test.drawingResult')::jsonb#>>'{questions,57,id}')::uuid,1),
   'early submit ends upload window and shows no-photo review');
+-- The deferred validator executes after the SECURITY DEFINER registration
+-- returns. Force it to fire as the same service role that commits an Edge RPC.
+select set_config('test.uploadAttempt',public.start_free_year_paper(current_setting('test.year.paper')::uuid)::text,true);
+select set_config('test.uploadQuestion',public.read_attempt(current_setting('test.uploadAttempt')::uuid)#>>'{questions,57,id}',true);
+reset role;
+insert into storage.objects(bucket_id,name,metadata) values
+  ('drawing-submissions','drawings/10000000-0000-4000-8000-000000000386.jpg','{"mimetype":"image/jpeg","size":"300"}');
+set local role service_role;
+select set_config('request.jwt.claim.role','service_role',true);
+select public.register_drawing_upload('00000000-0000-4000-8000-000000000385',current_setting('test.uploadAttempt')::uuid,
+  current_setting('test.uploadQuestion')::uuid,'drawings/10000000-0000-4000-8000-000000000386.jpg',1,'image/jpeg',300,160,100,1);
+set constraints all immediate;
+set constraints all deferred;
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claim.role','authenticated',true);
+select pg_temp.year_prepare_assert(jsonb_array_length(public.my_drawing_uploads(current_setting('test.uploadAttempt')::uuid,
+  current_setting('test.uploadQuestion')::uuid))=1,'validated service-role upload survives the deferred commit check');
+select public.submit_attempt(current_setting('test.uploadAttempt')::uuid) is not null;
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000003101',true);
 do $$begin
   begin perform public.read_attempt(current_setting('test.drawingAttempt')::uuid); exception when others then
