@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { buildAttemptInsights, outcomeLabels, releasedOutcome, responseSummary, reviewMarks } from "./attempt-insights.mjs";
+import { buildAttemptInsights, outcomeLabels, roundMarks, releasedOutcome, responseSummary, reviewMarks } from "./attempt-insights.mjs";
 import { answerAlternativesLabel, releasedKeyLabel } from "./answer-key.js";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 import { DrawingTaskReview } from "./DrawingTask.jsx";
@@ -9,7 +9,7 @@ import { readWorkedExplanation, workedFigureIndex } from "./worked-solution.js";
 import "./paper-workspace.css";
 
 const topicName = value => value?.replaceAll("-", " ") || "Unclassified";
-const formatMarks = value => (value < 0 ? "−" + Math.abs(value) : String(value)).replace(/\.0+$/, "");
+const formatMarks = value => { const marks = roundMarks(value); return marks < 0 ? "−" + Math.abs(marks) : String(marks); };
 export function AttemptInsights({ questions, practicePath = "/dashboard/practice", onReviewOutcome }) {
   const { topics, sections, recommended } = buildAttemptInsights(questions);
   const summary = responseSummary(questions);

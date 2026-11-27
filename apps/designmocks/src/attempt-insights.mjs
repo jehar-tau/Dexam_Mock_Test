@@ -1,6 +1,13 @@
 const correctOutcomes = new Set(["correct", "full_marks"]);
 const releasedOutcomes = new Set([...correctOutcomes, "wrong", "incorrect", "partial", "unanswered"]);
 
+// Marks such as -0.71 add up with binary floating-point error
+// (3 + 5 × -0.71 = -0.5499999999999998). Papers mark in at most two decimals.
+export function roundMarks(value) {
+  const rounded = Math.round(value * 100) / 100;
+  return Object.is(rounded, -0) ? 0 : rounded;
+}
+
 function summarize(items, keyOf) {
   const groups = new Map();
   for (const item of items) {
@@ -33,8 +40,8 @@ function addMarks(rows, items, keyOf) {
     const group = items.filter(item => keyOf(item) === row.key);
     const values = group.map(knownMarks);
     const available = group.reduce((sum, item) => sum + (Number.isFinite(item.marking?.correct) ? item.marking.correct : Number.isFinite(item.points) ? item.points : 0), 0);
-    return { ...row, marks: values.every(value => value !== null) ? values.reduce((a, b) => a + b, 0) : null,
-      marksExcludingPartial: values.reduce((a, b) => a + (b ?? 0), 0), partialPending: values.filter(value => value === null).length, available };
+    return { ...row, marks: values.every(value => value !== null) ? roundMarks(values.reduce((a, b) => a + b, 0)) : null,
+      marksExcludingPartial: roundMarks(values.reduce((a, b) => a + (b ?? 0), 0)), partialPending: values.filter(value => value === null).length, available: roundMarks(available) };
   });
 }
 
