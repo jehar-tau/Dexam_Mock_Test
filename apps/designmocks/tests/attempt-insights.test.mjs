@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildAttemptInsights, reviewMarks, knownMarks, roundMarks } from "../src/attempt-insights.mjs";
+import { buildAttemptInsights, reviewMarks, knownMarks, roundMarks, displayMarks } from "../src/attempt-insights.mjs";
 
 test("released attempt insights exclude drawings and dropped questions",()=>{
   const value=buildAttemptInsights([
@@ -127,4 +127,12 @@ test("section marks round away floating-point error from fractional negative mar
   assert.equal(roundMarks(-0.004), 0);
   assert.ok(!Object.is(roundMarks(-0.004), -0));
   assert.equal(roundMarks(0.1 + 0.2), 0.3);
+});
+
+test("displayed scores round floating-point sums and leave missing values alone", () => {
+  assert.equal(displayMarks(61.33333333), 61.33);
+  assert.equal(displayMarks(3 + 5 * -0.71), -0.55);
+  assert.equal(displayMarks("142"), 142);
+  assert.equal(displayMarks(null), null);
+  assert.equal(displayMarks(undefined), undefined);
 });

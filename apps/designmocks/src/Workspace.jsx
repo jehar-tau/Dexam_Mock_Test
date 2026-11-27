@@ -5,6 +5,7 @@ import { Art, Arrow } from "./Art.jsx";
 import {postLaunchPreview, studentModuleReleased} from "./launch-scope.js";
 import { OverviewPapers, paperName } from "./OverviewPapers.jsx";
 import { overviewPaperProgress } from "./overview-papers.mjs";
+import { displayMarks } from "./attempt-insights.mjs";
 import { ownedYearPaperAttempts } from "./year-paper-attempts.mjs";
 import { controlledPublicPortalMode } from "./platform.js";
 import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
@@ -285,7 +286,7 @@ export function WorkspaceView({
                 </span>
                 <span>
                   {a.resultsPending ? "Awaiting release" : a.status === "submitted"
-                    ? `${a.score} / ${a.total}${postLaunchPreview&&a.cohortRank ? ` · Rank ${a.cohortRank}` : ""}`
+                    ? `${displayMarks(a.score)} / ${displayMarks(a.total)}${postLaunchPreview&&a.cohortRank ? ` · Rank ${a.cohortRank}` : ""}`
                     : "In progress"}
                 </span>
               </article>
@@ -736,8 +737,8 @@ if(expandedAttemptScope){
           <div className="sample-score" role="group" aria-label={cohort ? "All India result" : attempt.scoreKind === "drawing" ? "Drawing result" : "Objective result"}>
             {attempt.examResultsPending ? <><span>—</span><p>full result pending</p></> : <>
             <span>
-              {attempt.score}
-              <i>/{attempt.total}</i>
+              {displayMarks(attempt.score)}
+              <i>/{displayMarks(attempt.total)}</i>
             </span>
             <p>{cohort ? "All India marks" : attempt.scoreKind === "drawing" ? "drawing marks" : "objective marks"}</p>
             </>}
