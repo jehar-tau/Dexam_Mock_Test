@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {niftDrawingDuration} from './nift-drawing-clock.mjs';
 import { execFileSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
@@ -70,13 +71,14 @@ export function validateDrawingSidecar(plan, canonical, sourceDigests) {
         && drawing.alternatives.every(a => typeof a.id === 'string' && a.id && typeof a.label === 'string'), 'Invalid alternatives');
     }
   }
-  const supported = plan.timer === 'shared';
+  const niftDuration = niftDrawingDuration(plan);
+  const supported = plan.timer === 'shared' || niftDuration !== null;
   if (supported) {
-    assert.equal(plan.durationSeconds, 10800);
+    if (niftDuration === null) assert.equal(plan.durationSeconds, 10800);
     assert.equal(items.filter(i => !electiveKeys.has(i.externalKey)).reduce((sum,i) => sum+i.marking.max, electiveMarks), plan.drawingMarksTotal);
   }
   return { digest:sha256(stableJson(plan)), sourcePaperId:plan.sourcePaperId, sourceCommit:canonical.sourceCommit, exam:plan.exam,
-    year:plan.year, supported, timer:plan.timer, durationSeconds:plan.durationSeconds, uploadGraceSeconds:plan.uploadGraceSeconds,
+    year:plan.year, supported, timer:plan.timer, durationSeconds:niftDuration ?? plan.durationSeconds, uploadGraceSeconds:plan.uploadGraceSeconds,
     drawingMarksTotal:plan.drawingMarksTotal, sections:plan.sections, items };
 }
 
