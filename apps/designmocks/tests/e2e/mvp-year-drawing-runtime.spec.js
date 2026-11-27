@@ -17,6 +17,8 @@ test('historical drawing locks answers, accepts only photos during grace and exp
     yearDrawing:{maxMarks:20,sections:[]},serverNow:new Date().toISOString(),deadline:new Date(cutoff).toISOString(),
     uploadDeadline:new Date(submitted?Date.now()-1000:cutoff+600000).toISOString(),score:submitted?0:null,total:submitted?0:null,
     questions:[submitted?{...q,drawingEstimate:reevaluated?{status:'evaluating'}:{status:'awaiting_teacher',flags:['illegible','not_a_drawing'],canReevaluate:true},explanation:'Consider the proportions.'}:q]});
+  const photoId='30000000-0000-4000-8000-000000000386';
+  let savedPhoto;
   await page.route('https://dmocks-portal-fixture.supabase.co/**',async route=>{
     const req=route.request(),name=new URL(req.url()).pathname.split('/').at(-1);
     if(req.method()==='OPTIONS')return route.fulfill({headers,status:204});
@@ -31,9 +33,19 @@ test('historical drawing locks answers, accepts only photos during grace and exp
         expect(form.get('file').type).toBe('image/jpeg');
         const checked=await prepareDrawingImage(new Uint8Array(await form.get('file').arrayBuffer()),'image/jpeg');
         expect([checked.width,checked.height]).toEqual([48,96]);
+        savedPhoto=Buffer.from(checked.bytes);
         await uploadGate;
-        reply={id:'30000000-0000-4000-8000-000000000386',ordinal:1};
-      } else reply=req.postDataJSON().action==='list'?{items:[]}:{images:[],expiresAt:new Date().toISOString(),serverNow:new Date().toISOString()};
+        reply={id:photoId,ordinal:1};
+      } else {
+        const action=req.postDataJSON().action;
+        if(action==='page') {
+          expect(req.postDataJSON()).toEqual({attemptId,questionId,action:'page',id:photoId});
+          expect(req.headers().authorization).toBeTruthy();
+          return route.fulfill({headers,contentType:'application/octet-stream',body:savedPhoto});
+        }
+        const images=savedPhoto?[{id:photoId,ordinal:1,mimeType:'image/jpeg'}]:[];
+        reply=action==='list'?{items:images}:{delivery:'session',images,expiresAt:new Date(Date.now()+300000).toISOString(),serverNow:new Date().toISOString()};
+      }
     }
     return route.fulfill({headers,contentType:'application/json',body:JSON.stringify(reply)});
   });
@@ -66,6 +78,9 @@ test('historical drawing locks answers, accepts only photos during grace and exp
   await expect(finish).toBeEnabled();await finish.click();
   await page.getByRole('button',{name:'Open answer review'}).click();
   await expect(page.getByText('Score: awaiting teacher review.')).toBeVisible();
+  const uploaded=page.getByRole('img',{name:'Your drawing, page 1',exact:true});
+  await expect(uploaded).toHaveAttribute('src',/^blob:/);
+  await expect.poll(()=>uploaded.evaluate(img=>[img.naturalWidth,img.naturalHeight])).toEqual([48,96]);
   await expect(page.getByText('Parts of the drawing are hard to make out')).toHaveCount(0);
   await expect(page.locator('.drawing-flags,.drawing-estimate-note')).toHaveCount(0);
   await expect(page.getByRole('button',{name:'Add images'})).toHaveCount(0);

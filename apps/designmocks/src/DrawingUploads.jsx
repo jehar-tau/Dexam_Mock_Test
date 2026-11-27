@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import { drawingUploadWindow } from "./drawing-upload-window.js";
 import { checkDrawingFiles, drawingInventory, drawingPageReceipt, drawingUploadFailure, planDrawingPages } from "./drawing-upload.js";
 import { yearDrawingPhoto } from "./year-drawing-photo.mjs";
+import { openSessionDrawingPhotos } from "./session-drawing-photos.js";
 import { DrawingPhotoPreview } from "./DrawingPhotoPreview.jsx";
 import { DrawingPages } from "./DrawingInspection.jsx";
 
@@ -34,7 +35,7 @@ export function DrawingUploads({
     lifetime.current = controller;
     return () => controller.abort();
   }, []);
-  const openPages = useCallback(signal => invoke({ action: "open", attemptId, questionId }, signal), [invoke, attemptId, questionId]);
+  const openPages = useCallback(signal => openSessionDrawingPhotos(invoke, {attemptId, questionId}, signal), [invoke, attemptId, questionId]);
   useEffect(() => {
     const controller = new AbortController();
     invoke({ action: "list", attemptId, questionId }, controller.signal)
@@ -212,10 +213,25 @@ export function DrawingUploadWindow({ attempt, serverTime, invoke }) {
   </section>;
 }
 
-export const previewDrawingMedia = async (request) => request instanceof FormData
-  ? { id: crypto.randomUUID(), ordinal: Number(request.get("ordinal")) }
-  : request.action === "list" ? { items: [] } : request.action === "open" ? { images: [{ id: "preview", ordinal: 1,
-    url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23f2eadf'/%3E%3Cpath d='M80 240 L250 70 L420 240 Z' fill='none' stroke='%23211d1b' stroke-width='8'/%3E%3C/svg%3E" }] } : { removed: request.id };
+export async function previewDrawingMedia(request) {
+  if (request instanceof FormData) return {id: crypto.randomUUID(), ordinal: Number(request.get("ordinal"))};
+  if (request.action === "list") return {items: []};
+  if (request.action === "pages") {
+    const now = Date.now();
+    return {delivery: "session", serverNow: new Date(now).toISOString(), expiresAt: new Date(now + 300000).toISOString(),
+      images: [{id: "preview", ordinal: 1, mimeType: "image/png"}]};
+  }
+  if (request.action === "page") {
+    const canvas = document.createElement("canvas");
+    canvas.width = 500; canvas.height = 300;
+    const frame = canvas.getContext("2d");
+    frame.fillStyle = "#f2eadf"; frame.fillRect(0, 0, 500, 300);
+    frame.strokeStyle = "#211d1b"; frame.lineWidth = 8;
+    frame.beginPath(); frame.moveTo(80, 240); frame.lineTo(250, 70); frame.lineTo(420, 240); frame.closePath(); frame.stroke();
+    return await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
+  }
+  return {removed: request.id};
+}
 
 export function DrawingUploadsPreview() {
   return (

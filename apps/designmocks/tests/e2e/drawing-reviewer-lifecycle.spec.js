@@ -1,4 +1,5 @@
 import {expect,test} from "@playwright/test";
+import {fictionalDrawingResponse} from "./fictional-drawing-response.js";
 import {readFile} from "node:fs/promises";
 import {portalFixtureURL,seedPortalSession,stubPortalProvider} from "./portal-fixture.js";
 
@@ -35,7 +36,11 @@ async function fixture(page,{two=false}={}){
  await page.route(api+"/functions/v1/drawing-review-media",async route=>{
   if(route.request().method()==="OPTIONS")return route.fulfill({headers,status:204});
   state.mediaCalls++;const held=state.mediaHold,status=state.mediaStatus;if(held)await held.promise;
-  try{await route.fulfill({headers,status,json:status===200?{images:[{id:"original-fictional-page",ordinal:1,url:`data:image/png;base64,${bytes.toString("base64")}`}],serverNow:"2020-01-01T00:00:00Z",expiresAt:"2020-01-01T00:05:00Z"}:{error:"Private diagnostic must not render"}});}catch{}state.completedMedia++;
+  const images=[{id:"original-fictional-page",ordinal:1,url:`data:image/png;base64,${bytes.toString("base64")}`}];
+  try {
+   if(status===200) await fictionalDrawingResponse(route,route.request().postDataJSON(),{images},headers);
+   else await route.fulfill({headers,status,json:{error:"Private diagnostic must not render"}});
+  } catch {}state.completedMedia++;
  });
  await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/review/drawings");await page.getByRole("button",{name:"My reviews",exact:true}).click();await expect(page.getByText(prompt,{exact:true})).toBeVisible();
  return Object.assign(state,provider);

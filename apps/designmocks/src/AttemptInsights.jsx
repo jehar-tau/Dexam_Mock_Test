@@ -1,3 +1,4 @@
+import { openSessionDrawingPhotos } from "./session-drawing-photos.js";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { buildAttemptInsights, outcomeLabels, roundMarks, releasedOutcome, responseSummary, reviewMarks } from "./attempt-insights.mjs";
@@ -43,22 +44,23 @@ export function AttemptInsights({ questions, practicePath = "/dashboard/practice
 }
 
 function HistoricalDrawingReview({ item, index, attemptId, figureUrl, invoke, onReevaluate }) {
-  const [photos, setPhotos] = useState(item.drawingPhotos ?? []);
+  const [photos, setPhotos] = useState(invoke ? [] : item.drawingPhotos ?? []);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [retry, setRetry] = useState(0);
-  React.useEffect(() => {
-    if (!invoke || item.drawingEstimate?.status === "not_attempted") return;
+  React.useLayoutEffect(() => {
+    if (!invoke) return;
+    setPhotos([]);
+    if (item.drawingEstimate?.status === "not_attempted") return;
     const controller = new AbortController();
     let refresh;
     const open = async () => {
       try {
-        const result = await invoke({action:"open",attemptId,questionId:item.id}, controller.signal);
+        const result = await openSessionDrawingPhotos(invoke, {attemptId, questionId:item.id}, controller.signal);
         if (controller.signal.aborted) return;
         setPhotos(result.images);
         setError("");
-        const lifetime = Date.parse(result.expiresAt) - Date.parse(result.serverNow);
-        if (result.images.length && lifetime > 0) refresh = setTimeout(open, Math.max(1000, lifetime - 15000));
+        if (result.images.length) refresh = setTimeout(() => {result.dispose(); setPhotos([]); open();}, Math.max(0, result.remaining - Math.min(15000, result.remaining / 2)));
       } catch { if (!controller.signal.aborted) { setPhotos([]); setError("Couldn’t open your saved drawing photos."); } }
     };
     open();

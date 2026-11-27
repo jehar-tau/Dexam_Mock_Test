@@ -24,7 +24,7 @@ test("NIFT historical GAT submission opens the timed CAT break, resumes, then en
     if(name==="save_answer_revision"){const body=req.postDataJSON();savedAnswer=body.p_answer;reply={accepted:true,answer:savedAnswer,revision:body.p_revision};}
     if(name==="finish_nift_year_gat"){starts++;phase="cat";cutoff=Date.now()+10800000;reply=state();}
     if(name==="submit_attempt"){phase="completed";reply=state();}
-    if(name==="drawing-media")reply=req.postDataJSON().action==="list"?{items:[]}:{images:[],expiresAt:new Date().toISOString(),serverNow:new Date().toISOString()};
+    if(name==="drawing-media")reply=req.postDataJSON().action==="list"?{items:[]}:{delivery:'session',images:[],expiresAt:new Date(Date.now()+300000).toISOString(),serverNow:new Date().toISOString()};
     return route.fulfill({headers,contentType:"application/json",body:JSON.stringify(reply)});
   });
   await page.goto("/account"); await seedPortalSession(page,{id:student,email:"student@example.invalid"}); await page.goto("/attempt/"+id);
