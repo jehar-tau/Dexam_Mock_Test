@@ -37,6 +37,19 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha || inputs.ref }}
           persist-credentials: false
+      # Build tooling comes from this workflow's own commit, so a rollback can
+      # rebuild a main commit made before the tooling existed.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          path: .site-tools
+          sparse-checkout: apps/designmocks/scripts
+          persist-credentials: false
+      - name: Use the current build tooling
+        run: |
+          cp "$GITHUB_WORKSPACE/.site-tools/apps/designmocks/scripts/build-public-site.mjs" scripts/
+          cp "$GITHUB_WORKSPACE/.site-tools/apps/designmocks/scripts/check-live-site.mjs" scripts/
+          rm -rf "$GITHUB_WORKSPACE/.site-tools"
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
@@ -81,6 +94,5 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha || inputs.ref }}
           persist-credentials: false
       - run: node apps/designmocks/scripts/check-live-site.mjs https://dmocks.com

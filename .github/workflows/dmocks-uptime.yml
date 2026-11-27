@@ -1,0 +1,24 @@
+name: dmocks.com uptime
+
+# Every 30 minutes, checks that dmocks.com answers over HTTPS with its public
+# pages and scripts. A failed run emails the repository's watchers. Runs only
+# when the repository variable DMOCKS_PAGES_LIVE is "true".
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    if: vars.DMOCKS_PAGES_LIVE == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          sparse-checkout: apps/designmocks/scripts
+          persist-credentials: false
+      - run: node apps/designmocks/scripts/check-live-site.mjs https://dmocks.com
