@@ -176,6 +176,7 @@ svg {
   background: var(--action);
   color: var(--on-action);
   padding: 12px;
+  min-height: 44px;
 }
 .skip:focus {
   top: 12px;
@@ -1076,7 +1077,7 @@ svg {
   font-size: 0.875rem;
   margin: 18px 0 0;
 }
-.footer-top b {
+.footer-top > div > b {
   display: block;
   letter-spacing: 0.08em;
   font-size: 0.625rem;
@@ -2165,6 +2166,9 @@ svg {
     border-top: 1px solid var(--line);
     margin-top: 8px;
   }
+  .navigation .sign-in {
+    padding-left: 0;
+  }
   .header-controls {
     margin-left: auto;
   }
@@ -2797,7 +2801,7 @@ svg {
     min-height: 40px;
     font-size: 0.8125rem;
   }
-  .footer-top b {
+  .footer-top > div > b {
     font-size: 0.625rem;
     line-height: 1.6;
   }
@@ -3430,7 +3434,7 @@ svg {
 .pass-price > span,
 .pass-price p,
 .pass-panel .eyebrow,
-.footer-top b,
+.footer-top > div > b,
 .footer-top > div > a:not(.logo),
 .footer-bottom,
 .footer-bottom > p,
@@ -3480,7 +3484,7 @@ svg {
 .answer-review article p {
   font-size: 1rem;
 }
-.footer-top b {
+.footer-top > div > b {
   letter-spacing: 0.035em;
 }
 .report-preview-top {
@@ -4470,3 +4474,46 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .signup-notice .text-button { display: block; margin-top: 1.25rem; }
 
 .signup-notice form a, .account-terms a { text-decoration: underline; text-underline-offset: 0.15em; }
+
+/* Public pages: keep site-wide tap targets at 44px. The Learn block above
+   shrinks .icon-button to 34px for its own controls; the header theme switch
+   and the footer links stay full size. */
+.header-controls .icon-button {
+  width: 44px;
+  height: 44px;
+}
+.footer-top > div > a:not(.logo),
+.academy-footer-note a {
+  min-height: 44px;
+}
+.footer-bottom > div {
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 0;
+}
+.footer-bottom > div > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+/* Two-column phone footer: the longer heading wraps to two lines, so give
+   both headings two lines of height and the link rows line up. */
+@media (max-width: 520px) {
+  .footer-top > div:not(:first-child) > b {
+    min-height: 3.2em;
+  }
+}
+/* Exam guide actions: even spacing between the paper and sample buttons, and
+   room before the sample note underneath. */
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.detail-actions + .sample-disclosure {
+  margin-top: 14px;
+}
+/* Home exam ribbon links (UCEED, NID DAT, NIFT, CEED) at every width. */
+.exam-ribbon > a {
+  min-height: 44px;
+}

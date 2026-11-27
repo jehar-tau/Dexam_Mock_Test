@@ -198,7 +198,7 @@ export function FeatureShowcase() {
                 )}
                 {(!soon || feature.module === "exam-mocks") && (
                   <Link className="text-link" to={needsSignIn ? "/account" : feature.to}>
-                    {needsSignIn ? "Go to student account" : soon ? "Explore exam guides" : feature.link} <Arrow />
+                    {needsSignIn ? "Sign in free to start" : soon ? "Explore exam guides" : feature.link} <Arrow />
                   </Link>
                 )}
               </div>
