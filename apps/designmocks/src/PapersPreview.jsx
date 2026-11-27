@@ -5,6 +5,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PapersView } from "./Papers.jsx";
+import { programmeFromQuery } from "./paper-years.mjs";
 
 const id = n => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const rows = [
@@ -33,13 +34,13 @@ export const previewAttemptHref = attemptId => attemptId === id(103) || attemptI
 
 export default function PapersPreview() {
   const navigate = useNavigate();
-  const exam = new URLSearchParams(useLocation().search).get("exam");
+  const query = new URLSearchParams(useLocation().search), exam = query.get("exam");
   return <>
     <section className="wrap portal-preview-note" aria-label="Preview information">
       <span className="eyebrow">PAPERS PREVIEW</span>
       <p>Papers, years, question counts and timings match the public catalogue. The signed-in student, saved progress and scores are fictional. Starting a paper here opens the original six-question demo room, not a real year paper.</p>
     </section>
-    <PapersView releases={previewReleases} signedIn initialExam={["uceed", "ceed", "nift", "nid"].includes(exam) ? exam : "uceed"} attemptsByPaper={previewProgress}
+    <PapersView releases={previewReleases} signedIn initialExam={["uceed", "ceed", "nift", "nid"].includes(exam) ? exam : "uceed"} initialProgramme={programmeFromQuery(query)} attemptsByPaper={previewProgress}
       attemptHref={previewAttemptHref} attemptsHref="/portal-preview"
       onStart={async () => navigate("/portal-preview/paper")} />
   </>;

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { paperLabel, paperLevel, paperLevels, paperSubtitle } from './paper-years.mjs';
+import { inProgramme, paperLabel, paperLevel, paperSubtitle, programmeExams, programmeFromQuery, programmes } from './paper-years.mjs';
 import { loadReleasedYearPapers, releasedYearPaperMap, releasedYearPaperGroups } from './free-year-papers.mjs';
 import { platform, cataloguePlatform } from './platform.js';
 import { useAuthState } from './useAuth.js';
@@ -27,18 +27,18 @@ export function PapersView({ releases = [], signedIn = false, onStart,
   onRefresh, authChecking = false, startUncertain = false, onCheckAttempts,
   checkingAttempts = false, savedAttempts = [], recoveryError = '', headingRef,
   attemptsByPaper = new Map(), attemptsLoading = false, attemptsError = '', onRefreshAttempts,
-  initialExam = 'uceed', attemptHref = id => `/attempt/${id}`, attemptsHref = '/dashboard' }) {
-  const [selected, setSelected] = useState(initialExam);
-  const [level, setLevel] = useState('');
+  initialExam = 'uceed', initialProgramme = '', attemptHref = id => `/attempt/${id}`, attemptsHref = '/dashboard' }) {
+  const [programme, setProgramme] = useState(programmes.includes(initialProgramme) ? initialProgramme
+    : initialExam === 'ceed' ? 'M.Des.' : 'B.Des.');
+  const [selected, setSelected] = useState(programmeExams[programme].includes(initialExam) ? initialExam : programmeExams[programme][0]);
   const [readyId, setReadyId] = useState('');
   const readyDialog = useRef(null), readyOpener = useRef(null), starting = useRef(false);
   const released = releasedYearPaperMap(releases);
   const papers = releasedYearPaperGroups(releases);
   const readyPart = [...released.values()].flat().find(part => part.paperId === readyId);
   const readyPaper = readyPart && papers.find(paper => released.get(paper.id)?.some(part => part.paperId === readyId));
-  const examPapers = papers.filter(paper => paper.exam === selected);
-  const levels = paperLevels(examPapers);
-  const visible = level && levels.includes(level) ? examPapers.filter(paper => paperLevel(paper).trim() === level) : examPapers;
+  const programmePapers = papers.filter(paper => inProgramme(paper, programme));
+  const visible = programmePapers.filter(paper => paper.exam === selected);
   const questionCount = visible.reduce((total, paper) => total + paper.questionCount, 0);
   useEffect(() => {
     if (!readyPart || !readyDialog.current) return;
@@ -83,14 +83,20 @@ export function PapersView({ releases = [], signedIn = false, onStart,
     {attemptsError && <div className="notice" role="status"><p>Couldn’t check your saved papers. You can still open a released paper.</p>
       {onRefreshAttempts && <button type="button" className="button quiet" onClick={onRefreshAttempts}>Retry saved papers</button>}</div>}
     {savedAttempts.length > 0 && <section aria-label="Saved active attempts"><h2>Your saved active attempts</h2><ul>{savedAttempts.map(item => <li key={item.id}><Link to={attemptHref(item.id)}>{item.title}</Link></li>)}</ul></section>}
-    <div className="year-papers-tabs" role="group" aria-label="Choose an exam">
-      {exams.map(exam => <button type="button" key={exam} aria-pressed={selected === exam} onClick={() => { closeReady(); setSelected(exam); setLevel(''); }}>{examNames[exam]}<span>{papers.filter(paper => paper.exam === exam).length}</span></button>)}
+    <div className="year-papers-programmes" role="group" aria-label="Choose a programme">
+      {programmes.map(value => <button type="button" key={value} aria-pressed={programme === value} onClick={() => {
+        closeReady(); setProgramme(value);
+        if (!programmeExams[value].includes(selected)) setSelected(programmeExams[value][0]);
+      }}>{value} papers<span>{papers.filter(paper => inProgramme(paper, value)).length}</span></button>)}
+    </div>
+    <div className="year-papers-tabs" role="group" aria-label={`Choose a ${programme} exam`}>
+      {programmeExams[programme].map(exam => <button type="button" key={exam} aria-pressed={selected === exam} onClick={() => { closeReady(); setSelected(exam); }}>{examNames[exam]}<span>{programmePapers.filter(paper => paper.exam === exam).length}</span></button>)}
     </div>
     <div className="year-papers-layout">
       <aside className="year-papers-summary" aria-labelledby="year-papers-exam">
         <span>SELECTED EXAM</span>
         <h2 id="year-papers-exam">{examNames[selected]}</h2>
-        <p className="year-papers-exam-line">{exam.body} · {exam.level}</p>
+        <p className="year-papers-exam-line">{exam.body} · {exam.level.replace('B.Des. and M.Des.', programme)}</p>
         <dl className="year-papers-stats">
           <div><dt>Papers</dt><dd>{visible.length}</dd></div>
           <div><dt>Questions</dt><dd>{questionCount}</dd></div>
@@ -103,15 +109,12 @@ export function PapersView({ releases = [], signedIn = false, onStart,
         </ol>
       </aside>
       <div className="year-papers-list">
-        {levels.length > 0 && <div className="year-papers-levels" role="group" aria-label={`Choose a ${examNames[selected]} programme`}>
-          {['', ...levels].map(value => <button type="button" key={value || 'all'} aria-pressed={(level && levels.includes(level) ? level : '') === value}
-            onClick={() => { closeReady(); setLevel(value); }}>{value || 'All'}<span>{value ? examPapers.filter(paper => paperLevel(paper).trim() === value).length : examPapers.length}</span></button>)}
-        </div>}
         {visible.map(paper => <article className="year-paper-card" key={paper.id} aria-labelledby={`paper-${paper.id}`}>
           <div className="year-paper-card-top"><span className="year-paper-year" aria-hidden="true">{paper.year}</span><span className="year-paper-state">Free paper open</span></div>
           <div className="year-paper-card-body">
             <h3 id={`paper-${paper.id}`} className="visually-hidden">{examNames[paper.exam]} {paperLevel(paper)}{paperLabel(paper)}</h3>
-            {paperSubtitle(paper) !== 'Question paper' && <p className="year-paper-title" aria-hidden="true">{paperSubtitle(paper)}</p>}
+            {!['Question paper', ...released.get(paper.id).map(part => part.partLabel)].includes(paperSubtitle(paper, false)) &&
+              <p className="year-paper-title" aria-hidden="true">{paperSubtitle(paper, false)}</p>}
             {released.get(paper.id).length > 1 && <p className="year-paper-meta">{paper.questionCount} questions across {released.get(paper.id).length} parts</p>}
             {released.get(paper.id).map(part => {
               const own = attemptsByPaper.get(part.paperId);
@@ -130,20 +133,20 @@ export function PapersView({ releases = [], signedIn = false, onStart,
                   {signedIn && !own?.active ? <button type="button" className={own?.submitted ? 'button quiet' : 'button'} aria-describedby={`paper-${paper.id}`} disabled={!onStart || Boolean(busy) || releasesUnavailable || releasesLoading || startUncertain || checkingAttempts}
                     onClick={event => { readyOpener.current = event.currentTarget; setReadyId(part.paperId); }}>{busy === part.paperId ? 'Opening…' : 'Start or resume free paper'}</button>
                     : signedIn ? null : authChecking ? <span role="status">Checking account…</span>
-                      : <Link className="button" to="/account" onClick={() => rememberReturn(`/papers/${selected}`)}>Sign in to start free paper</Link>}
+                      : <Link className="button" to="/account" onClick={() => rememberReturn(`/papers/${selected}${programme === 'M.Des.' && selected !== 'ceed' ? '?programme=mdes' : ''}`)}>Sign in to start free paper</Link>}
                 </div>
               </div>;
             })}
           </div>
         </article>)}
-        {visible.length === 0 && !releasesLoading && !releasesUnavailable && <div className="year-papers-empty" role="status"><h3>No {examNames[selected]} paper released yet</h3><p>Complete papers will appear here after review. You can try the free sample meanwhile.</p></div>}
+        {visible.length === 0 && !releasesLoading && !releasesUnavailable && <div className="year-papers-empty" role="status"><h3>No {examNames[selected]} {selected === 'nid' || selected === 'nift' ? `${programme} ` : ''}paper released yet</h3><p>Complete papers will appear here after review. You can try the free sample meanwhile.</p></div>}
       </div>
     </div>
     <p className="year-papers-footer">Want to try the exam room now? <Link to="/sample">Take the free sample</Link>.</p>
     {readyPart && readyPaper && <dialog ref={readyDialog} className="year-paper-start-dialog" aria-labelledby="year-paper-start-title"
       onCancel={event => { event.preventDefault(); closeReady(); }}>
       <span className="eyebrow">{examNames[readyPaper.exam]} · {readyPaper.year}</span>
-      <h2 id="year-paper-start-title">Ready to open {examNames[readyPaper.exam]} {readyPaper.year} {readyPart.partLabel}?</h2>
+      <h2 id="year-paper-start-title">Ready to open {examNames[readyPaper.exam]} {paperLevel(readyPaper)}{readyPaper.year} {readyPart.partLabel}?</h2>
       <dl className="year-paper-start-facts">
         <div><dt>Questions</dt><dd>{readyPart.questionCount}</dd></div>
         <div><dt>Time</dt><dd>{Math.round(readyPart.durationSeconds / 60)} min</dd></div>
@@ -162,7 +165,7 @@ export function PapersView({ releases = [], signedIn = false, onStart,
   </section>;
 }
 
-function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefresh, headingRef, initialExam }) {
+function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefresh, headingRef, initialExam, initialProgramme }) {
   const services = useAccountServices(), navigate = useNavigate(), active = useRef(null), mutationBusy = useRef(false);
   const [busy, setBusy] = useState(''), [startError, setStartError] = useState('');
   const [startUncertain, setStartUncertain] = useState(false), [checkingAttempts, setCheckingAttempts] = useState(false);
@@ -224,14 +227,16 @@ function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefr
     onRefresh={onRefresh} startUncertain={startUncertain} onCheckAttempts={checkAttempts}
     checkingAttempts={checkingAttempts} savedAttempts={savedAttempts} recoveryError={recoveryError} headingRef={headingRef}
     attemptsByPaper={attemptsByPaper} attemptsLoading={attemptsLoading} attemptsError={attemptsError}
-    onRefreshAttempts={() => setAttemptRefresh(value => value + 1)} initialExam={initialExam}/>;
+    onRefreshAttempts={() => setAttemptRefresh(value => value + 1)} initialExam={initialExam} initialProgramme={initialProgramme}/>;
 }
 
 export default function Papers() {
   const { session, loading: authChecking } = useAuthState(), heading = useRef(null);
   const { exam: pathExam } = useParams();
-  const requestedExam = pathExam ?? new URLSearchParams(useLocation().search).get('exam');
+  const query = new URLSearchParams(useLocation().search);
+  const requestedExam = pathExam ?? query.get('exam');
   const initialExam = exams.includes(requestedExam) ? requestedExam : 'uceed';
+  const initialProgramme = programmeFromQuery(query);
   const [releases, setReleases] = useState([]), [releasesUnavailable, setReleasesUnavailable] = useState(false);
   const [releasesLoading, setReleasesLoading] = useState(Boolean(cataloguePlatform)), [refresh, setRefresh] = useState(0);
   useEffect(() => {
@@ -265,9 +270,9 @@ export default function Papers() {
   }, [refresh]);
   const onRefresh = cataloguePlatform ? () => setRefresh(value => value + 1) : undefined;
   if (authChecking || !session || !platform) return <PapersView releases={releases} releasesUnavailable={releasesUnavailable}
-    releasesLoading={releasesLoading} onRefresh={onRefresh} authChecking={authChecking} initialExam={initialExam}/>;
+    releasesLoading={releasesLoading} onRefresh={onRefresh} authChecking={authChecking} initialExam={initialExam} initialProgramme={initialProgramme}/>;
   return <AccountAccessBoundary key={session.user.id} actorId={session.user.id} headingRef={heading} kind="catalogue">
     <SignedInPapers releases={releases} releasesUnavailable={releasesUnavailable} releasesLoading={releasesLoading}
-      onRefresh={onRefresh} headingRef={heading} initialExam={initialExam}/>
+      onRefresh={onRefresh} headingRef={heading} initialExam={initialExam} initialProgramme={initialProgramme}/>
   </AccountAccessBoundary>;
 }

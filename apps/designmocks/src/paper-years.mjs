@@ -34,14 +34,26 @@ export function paperLevel(paper) {
   return /-bdes-/.test(paper.paperId) ? 'B.Des. ' : /-mdes-/.test(paper.paperId) ? 'M.Des. ' : '';
 }
 
-// Programme filter choices for an exam's papers; empty unless both appear.
-export function paperLevels(papers) {
-  const found = new Set(papers.map(paper => paperLevel(paper).trim()).filter(Boolean));
-  return found.size > 1 ? ['B.Des.', 'M.Des.'].filter(level => found.has(level)) : [];
+// The page lists B.Des. and M.Des. papers apart. UCEED is the B.Des. exam and
+// CEED the M.Des. exam; NID and NIFT papers carry the programme in their id.
+export const programmes = ['B.Des.', 'M.Des.'];
+export const programmeExams = { 'B.Des.': ['uceed', 'nid', 'nift'], 'M.Des.': ['ceed', 'nid', 'nift'] };
+export function paperProgramme(paper) {
+  if (paper.exam === 'uceed') return 'B.Des.';
+  if (paper.exam === 'ceed') return 'M.Des.';
+  return paperLevel(paper).trim();
+}
+// ?programme=mdes opens the M.Des. list; anything else follows the exam.
+export const programmeFromQuery = query => ({ bdes: 'B.Des.', mdes: 'M.Des.' })[query.get('programme')] ?? '';
+// A paper whose programme is unknown stays visible under both.
+export function inProgramme(paper, programme) {
+  const own = paperProgramme(paper);
+  return !own || own === programme;
 }
 
-export function paperSubtitle(paper) {
-  const level = paperLevel(paper);
+// showLevel is false where the page already separates B.Des. from M.Des.
+export function paperSubtitle(paper, showLevel = true) {
+  const level = showLevel ? paperLevel(paper) : '';
   const rest = paperLabel(paper).slice(String(paper.year).length).replace(/^\s*·\s*/, '').trim();
   const label = rest === 'paper' ? 'question paper' : rest;
   const text = level + label;
