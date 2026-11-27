@@ -306,3 +306,20 @@ test('the answer review shows a structured, step-by-step animated solution', asy
   await expect(options.locator('li[data-verdict="wrong"]')).toHaveCount(2);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
+
+test('an exam with B.Des. and M.Des. papers can be narrowed to one programme', async ({ page }) => {
+  await page.goto('/papers-preview?exam=nid');
+  await expect(page.getByRole('button', { name: /^NID\b/ })).toHaveAttribute('aria-pressed', 'true');
+  const levels = page.getByRole('group', { name: 'Choose a NID programme' });
+  await expect(levels.getByRole('button', { name: 'All 6' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.year-paper-card')).toHaveCount(6);
+  await levels.getByRole('button', { name: 'M.Des. 2' }).click();
+  await expect(page.locator('.year-paper-card')).toHaveCount(2);
+  await expect(page.locator('.year-paper-card').first()).toContainText('M.Des. sample paper');
+  await expect(page.locator('.year-papers-stats')).toContainText('2018–2025');
+  await page.getByRole('button', { name: /^UCEED\b/ }).click();
+  await expect(page.getByRole('group', { name: /programme$/ })).toHaveCount(0);
+  await page.getByRole('button', { name: /^NID\b/ }).click();
+  await expect(page.locator('.year-paper-card')).toHaveCount(6);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});

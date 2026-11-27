@@ -7,7 +7,7 @@ test('the student desk leads to each mock mode without presenting fictional pape
   await expect(desk.getByRole('heading', { name: 'A paper is in progress' })).toBeVisible();
   await expect(desk.getByRole('link', { name: 'Resume paper' })).toHaveAttribute('href', '/portal-preview/paper');
   const yearPapers = desk.locator('.overview-year-papers');
-  await expect(yearPapers).toContainText('4 of 17 released papers attempted');
+  await expect(yearPapers).toContainText('4 of 23 released papers attempted');
   await expect(yearPapers.getByRole('link', { name: 'Continue saved attempt →' })).toHaveAttribute('href', '/portal-preview/paper');
   await expect(yearPapers.getByRole('heading', { name: 'UCEED 2026 paper' })).toBeVisible();
   await expect(yearPapers.getByRole('link', { name: 'Open in Papers' })).toHaveAttribute('href', '/papers-preview?exam=uceed');
