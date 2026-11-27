@@ -23,6 +23,7 @@ export function yearPaperCatalogue(questions) {
 export function paperLabel(paper) {
   const suffix = paper.paperId.replace(new RegExp(`^${paper.exam}-?(?:bdes-|mdes-)?${paper.year}-?`), '');
   if (/sample/.test(paper.paperId)) return `${paper.year} sample paper`;
+  if (paper.exam === 'nift' && /-gat$/.test(paper.paperId)) return `${paper.year} GAT paper`;
   if (/mock/.test(paper.paperId)) return `${paper.year} practice mock`;
   const numbered = suffix.match(/paper-?(\d+)/);
   return numbered ? `${paper.year} · Paper ${numbered[1]}` : `${paper.year} paper`;
@@ -31,6 +32,12 @@ export function paperLabel(paper) {
 // Visible card title when the year is already shown large beside it.
 export function paperLevel(paper) {
   return /-bdes-/.test(paper.paperId) ? 'B.Des. ' : /-mdes-/.test(paper.paperId) ? 'M.Des. ' : '';
+}
+
+// Programme filter choices for an exam's papers; empty unless both appear.
+export function paperLevels(papers) {
+  const found = new Set(papers.map(paper => paperLevel(paper).trim()).filter(Boolean));
+  return found.size > 1 ? ['B.Des.', 'M.Des.'].filter(level => found.has(level)) : [];
 }
 
 export function paperSubtitle(paper) {

@@ -1,6 +1,7 @@
 // Sign-in-free review route for the Papers catalogue. Development and hosted
 // review builds only. Paper years, question counts and timings mirror the
-// public catalogue on 26 November 2026; the student, attempts and scores are fictional.
+// public catalogue on 26 November 2026 (NID timings are illustrative); the student,
+// attempts and scores are fictional.
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PapersView } from "./Papers.jsx";
@@ -13,9 +14,12 @@ const rows = [
   ["uceed", 2017, 82, 180, "Full paper"], ["uceed", 2015, 99, 180, "Full paper"],
   ["ceed", 2026, 41, 60, "Part A"], ["ceed", 2025, 42, 60, "Part A"], ["ceed", 2024, 41, 60, "Part A"],
   ["ceed", 2023, 39, 60, "Part A"], ["ceed", 2022, 38, 60, "Part A"], ["ceed", 2021, 36, 60, "Part A"],
+  ["nid", 2020, 21, 180, "Full paper", "nid-bdes-2020"], ["nid", 2019, 22, 180, "Full paper", "nid-bdes-2019"],
+  ["nid", 2018, 64, 180, "Full paper", "nid-bdes-2018"], ["nid", 2018, 59, 180, "Full paper", "nid-mdes-2018"],
+  ["nid", 2025, 12, 40, "Sample paper", "nid-bdes-sample-2025"], ["nid", 2025, 18, 30, "Sample paper", "nid-mdes-sample-2025"],
 ];
-export const previewReleases = rows.map(([exam, year, questionCount, minutes, partLabel], index) => ({
-  exam, year, sourcePaperId: `${exam}-${year}`, paperId: id(index + 1), questionCount,
+export const previewReleases = rows.map(([exam, year, questionCount, minutes, partLabel, sourcePaperId = `${exam}-${year}`], index) => ({
+  exam, year, sourcePaperId, paperId: id(index + 1), questionCount,
   durationSeconds: minutes * 60, partLabel,
 }));
 export const previewProgress = new Map([

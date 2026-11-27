@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { paperLabel, paperLevel, paperSubtitle } from './paper-years.mjs';
+import { paperLabel, paperLevel, paperLevels, paperSubtitle } from './paper-years.mjs';
 import { loadReleasedYearPapers, releasedYearPaperMap, releasedYearPaperGroups } from './free-year-papers.mjs';
 import { platform, cataloguePlatform } from './platform.js';
 import { useAuthState } from './useAuth.js';
@@ -29,13 +29,16 @@ export function PapersView({ releases = [], signedIn = false, onStart,
   attemptsByPaper = new Map(), attemptsLoading = false, attemptsError = '', onRefreshAttempts,
   initialExam = 'uceed', attemptHref = id => `/attempt/${id}`, attemptsHref = '/dashboard' }) {
   const [selected, setSelected] = useState(initialExam);
+  const [level, setLevel] = useState('');
   const [readyId, setReadyId] = useState('');
   const readyDialog = useRef(null), readyOpener = useRef(null), starting = useRef(false);
   const released = releasedYearPaperMap(releases);
   const papers = releasedYearPaperGroups(releases);
   const readyPart = [...released.values()].flat().find(part => part.paperId === readyId);
   const readyPaper = readyPart && papers.find(paper => released.get(paper.id)?.some(part => part.paperId === readyId));
-  const visible = papers.filter(paper => paper.exam === selected);
+  const examPapers = papers.filter(paper => paper.exam === selected);
+  const levels = paperLevels(examPapers);
+  const visible = level && levels.includes(level) ? examPapers.filter(paper => paperLevel(paper).trim() === level) : examPapers;
   const questionCount = visible.reduce((total, paper) => total + paper.questionCount, 0);
   useEffect(() => {
     if (!readyPart || !readyDialog.current) return;
@@ -81,7 +84,7 @@ export function PapersView({ releases = [], signedIn = false, onStart,
       {onRefreshAttempts && <button type="button" className="button quiet" onClick={onRefreshAttempts}>Retry saved papers</button>}</div>}
     {savedAttempts.length > 0 && <section aria-label="Saved active attempts"><h2>Your saved active attempts</h2><ul>{savedAttempts.map(item => <li key={item.id}><Link to={attemptHref(item.id)}>{item.title}</Link></li>)}</ul></section>}
     <div className="year-papers-tabs" role="group" aria-label="Choose an exam">
-      {exams.map(exam => <button type="button" key={exam} aria-pressed={selected === exam} onClick={() => { closeReady(); setSelected(exam); }}>{examNames[exam]}<span>{papers.filter(paper => paper.exam === exam).length}</span></button>)}
+      {exams.map(exam => <button type="button" key={exam} aria-pressed={selected === exam} onClick={() => { closeReady(); setSelected(exam); setLevel(''); }}>{examNames[exam]}<span>{papers.filter(paper => paper.exam === exam).length}</span></button>)}
     </div>
     <div className="year-papers-layout">
       <aside className="year-papers-summary" aria-labelledby="year-papers-exam">
@@ -100,6 +103,10 @@ export function PapersView({ releases = [], signedIn = false, onStart,
         </ol>
       </aside>
       <div className="year-papers-list">
+        {levels.length > 0 && <div className="year-papers-levels" role="group" aria-label={`Choose a ${examNames[selected]} programme`}>
+          {['', ...levels].map(value => <button type="button" key={value || 'all'} aria-pressed={(level && levels.includes(level) ? level : '') === value}
+            onClick={() => { closeReady(); setLevel(value); }}>{value || 'All'}<span>{value ? examPapers.filter(paper => paperLevel(paper).trim() === value).length : examPapers.length}</span></button>)}
+        </div>}
         {visible.map(paper => <article className="year-paper-card" key={paper.id} aria-labelledby={`paper-${paper.id}`}>
           <div className="year-paper-card-top"><span className="year-paper-year" aria-hidden="true">{paper.year}</span><span className="year-paper-state">Free paper open</span></div>
           <div className="year-paper-card-body">
