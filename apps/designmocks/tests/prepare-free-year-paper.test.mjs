@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {freeYearPaperProviderConfiguration,validateFreeYearPaperPlan} from '../scripts/prepare-free-year-paper.mjs';
 
+import {objectiveYearSources} from '../scripts/stage-free-year-sources.mjs';
+
 const canonical={records:[{exam:'uceed',type:'MCQ',externalKey:'uceed-fixture-q1',contentSha256:'a'.repeat(64),
   payload:{holds:[],provenance:{year:2023,paperId:'uceed-fixture'}}},
   {exam:'uceed',type:'DESCRIPTIVE',externalKey:'uceed-fixture-q2',contentSha256:'b'.repeat(64),
@@ -50,4 +52,10 @@ test('private paper preparation carries the audited expanded Test profile withou
   assert.equal(config.allowOrigin,env.DMOCKS_PAPER_ALLOW_ORIGIN);
   assert.equal(config.environment,'staging');
   assert.equal(freeYearPaperProviderConfiguration({...env,DMOCKS_BANK_PROFILE:'disabled'}).expandedStagingProfile,false);
+});
+
+test('source staging sends only the exact plan’s objective records',()=>{
+  const {planSha256}=validateFreeYearPaperPlan(plan,canonical);
+  assert.deepEqual(objectiveYearSources(plan,canonical,planSha256).records,[canonical.records[0]]);
+  assert.throws(()=>objectiveYearSources(plan,canonical,'b'.repeat(64)),/changed/);
 });

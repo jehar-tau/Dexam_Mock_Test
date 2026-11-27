@@ -4,7 +4,7 @@ import {parseArgs} from 'node:util';
 import {pathToFileURL} from 'node:url';
 import {loadFromGit} from './question-bank-import.mjs';
 import {compileNidYearPaperRuntime} from './nid-year-paper-runtime.mjs';
-import {bankProviderConfiguration,openPrivateBankProvider} from './private-bank-provider.mjs';
+import {bankProviderConfiguration,openFreeYearPaperProvider} from './private-bank-provider.mjs';
 
 export async function materializeNidYearPaper(plan,canonical,provider,{apply=false,expect}={}){
  const media=await provider.rpc('canonical_bank_media_manifest');
@@ -31,7 +31,7 @@ async function main(){
  if(!info.isFile()||info.size>2*1024*1024)throw new Error('Private NID plan is unreadable or too large');
  const plan=JSON.parse(await readFile(values.plan,'utf8'));
  const canonical=loadFromGit('origin/main');
- const provider=await openPrivateBankProvider(bankProviderConfiguration(process.env));
+ const provider=await openFreeYearPaperProvider(bankProviderConfiguration(process.env));
  const {records,...summary}=await materializeNidYearPaper(plan,canonical,provider,{apply:values.apply,expect:values.expect});
  console.log(JSON.stringify({mode:values.apply?'materialized':'dry-run',...summary}));
 }

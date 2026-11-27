@@ -112,12 +112,58 @@ const expandedStagingSnapshot = `select jsonb_build_object(
       'public.import_question_bank_batch(uuid,jsonb)',
       'public.finish_question_bank_import(uuid)']) signature),false))`;
 
+// On the public free portal, the operator may stage a year paper while checkout
+// stays closed. This audit only enables the named paper functions and bucket.
+const paperFunctions = new Map([
+  ['canonical_bank_media_manifest', ''],
+  ['stage_objective_year_sources', 'jsonb,text,jsonb'],
+  ['register_bank_media_assets', 'jsonb'],
+  ['upsert_nift_question_bank_runtime_batch', 'jsonb'],
+  ['upsert_question_bank_runtime_batch', 'jsonb'],
+  ['upsert_nid_year_runtime_batch', 'jsonb,jsonb'],
+  ['prepare_free_year_paper', 'jsonb'],
+  ['register_free_year_paper', 'uuid,text,integer,text,text,integer,text'],
+]);
+const freePaperAudit = `select jsonb_build_object(
+  'freeAdmission',exists(select 1 from dm_private.registration_policy where id and mode='open'),
+  'policyActive',exists(select 1 from public.launch_settings where singleton and
+    environment_mode='test' and sales_enabled is false and policy_version ~ '^dmocks-notices-v1-[0-9a-f]{64}$'),
+  'noticeInstalled',to_regprocedure('public.free_signup_notice()') is not null
+    and has_function_privilege('authenticated','public.free_signup_notice()','EXECUTE')
+    and not has_function_privilege('anon','public.free_signup_notice()','EXECUTE'),
+  'bucketPrivate',exists(select 1 from storage.buckets where id='paper-media' and public=false),
+  'paperServiceOnly',coalesce((select bool_and(to_regprocedure(fn) is not null
+    and has_function_privilege('service_role',to_regprocedure(fn),'EXECUTE')
+    and not has_function_privilege('anon',to_regprocedure(fn),'EXECUTE')
+    and not has_function_privilege('authenticated',to_regprocedure(fn),'EXECUTE'))
+    from unnest(array[${[...paperFunctions].map(([name,args])=>`'public.${name}(${args})'`).join(',')}]) fn),false))`;
+
+function scopeFreePaperTransport(provider) {
+  return {
+    origin: provider.origin,
+    rpc(name, body) {
+      if (!paperFunctions.has(name)) throw new Error('Unsupported year-paper operation');
+      return provider.rpc(name, body);
+    },
+    fetch(input, init={}) {
+      const url=new URL(input instanceof Request?input.url:input);
+      const method=(init.method ?? (input instanceof Request?input.method:'GET')).toUpperCase();
+      const bucketRead=method==='GET' && url.pathname==='/storage/v1/bucket/paper-media';
+      const objectRead=method==='GET' && /^\/storage\/v1\/object\/authenticated\/paper-media\/papers\/canonical\/[0-9a-f]{64}\.png$/.test(url.pathname);
+      const objectWrite=method==='POST' && /^\/storage\/v1\/object\/paper-media\/papers\/canonical\/[0-9a-f]{64}\.png$/.test(url.pathname)
+        && new Headers(init.headers ?? (input instanceof Request?input.headers:undefined)).get('x-upsert')==='false';
+      if (url.search || ![bucketRead,objectRead,objectWrite].includes(true)) throw new Error('Unsupported year-paper storage operation');
+      return provider.fetch(input, init);
+    },
+  };
+}
+
 async function defaultAuditDatabase(url, options) {
   const { openRecoveryPostgres } = await import('./recovery-postgres.mjs');
   return openRecoveryPostgres(url, options);
 }
 
-async function verifyExpandedStagingBankProfile(config, health, openDatabase) {
+async function verifyExpandedStagingBankProfile(config, health, openDatabase, yearPapers) {
   const origin = `https://${project.project_ref}.supabase.co`;
   if (config.expandedStagingProfile !== true || config.environment !== 'staging' ||
       config.url !== origin || config.allowOrigin !== origin || health.paymentMode !== 'test' ||
@@ -127,15 +173,20 @@ async function verifyExpandedStagingBankProfile(config, health, openDatabase) {
   try {
     database = await openDatabase(config.auditDatabaseUrl, { localOnly: false, databaseCaFile: config.auditDatabaseCaFile });
     const state = JSON.parse(await database.query(expandedStagingSnapshot));
-    if (['closedSettings', 'restrictedAdmission', 'testCheckoutClosed', 'profileDrift', 'bankServiceOnly']
+    if (['closedSettings', 'testCheckoutClosed', 'profileDrift', 'bankServiceOnly']
       .some(key => state?.[key] !== true))
       throw new Error('The expanded staging bank profile is not safe for import');
+    if (state.restrictedAdmission !== true) {
+      if (!yearPapers) throw new Error();
+      const paper = JSON.parse(await database.query(freePaperAudit));
+      if (['freeAdmission','policyActive','noticeInstalled','bucketPrivate','paperServiceOnly'].some(key=>paper?.[key] !== true)) throw new Error();
+    }
   } catch {
     throw new Error('The expanded staging bank profile is not safe for import');
   } finally { await database?.close(); }
 }
 
-export async function openPrivateBankProvider(config, { openDatabase = defaultAuditDatabase, ...options } = {}) {
+async function openProvider(config, { openDatabase = defaultAuditDatabase, ...options }, yearPapers) {
   const provider = openPrivateDMocksTransport(config, options);
   // Check the installed application before sending source rows, runtime plans or files.
   const health = await provider.rpc("admin_operational_health");
@@ -143,6 +194,9 @@ export async function openPrivateBankProvider(config, { openDatabase = defaultAu
     throw new Error("The approved target must have the current DMocks paid MVP profile");
   }
   if (health.apiProfileReady !== true)
-    await verifyExpandedStagingBankProfile(config, health, openDatabase);
-  return provider;
+    await verifyExpandedStagingBankProfile(config, health, openDatabase, yearPapers);
+  return yearPapers ? scopeFreePaperTransport(provider) : provider;
 }
+
+export const openPrivateBankProvider = (config, options={}) => openProvider(config, options, false);
+export const openFreeYearPaperProvider = (config, options={}) => openProvider(config, options, true);
