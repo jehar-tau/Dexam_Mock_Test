@@ -11,7 +11,7 @@ Until 27 Nov 2026, Codex built the site and uploaded it to OpenAI Sites by hand.
 1. A push to main runs "DesignMocks checks".
 2. When the checks pass, "Publish dmocks.com" builds that exact commit with
    `scripts/build-public-site.mjs`.
-3. It publishes the build on GitHub Pages.
+3. It publishes the build on GitHub Pages if that commit is still at the tip of main. An older CI run finishing later is skipped. A manual rollback can still publish its explicitly chosen ref.
 4. It runs `scripts/check-live-site.mjs` against dmocks.com.
 
 The build script makes the same 151 files, byte for byte, that Codex published
