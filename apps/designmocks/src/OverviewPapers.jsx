@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Arrow } from "./Art.jsx";
-import { paperLabel, paperLevel } from "./paper-years.mjs";
+import { paperLabel, paperLevel, paperProgramme } from "./paper-years.mjs";
 
 const examNames = { uceed: "UCEED", ceed: "CEED", nift: "NIFT", nid: "NID" };
 export const paperName = row => `${examNames[row.exam]} ${paperLevel(row)}${paperLabel(row)}`;
@@ -39,7 +39,7 @@ export function OverviewPapers({ progress, loading = false, error = "", onRetry,
           {progress.next ? <>
             <h3>{paperName(progress.next)}</h3>
             <p>{progress.next.questionCount} questions · {progress.next.minutes} min · free</p>
-            <Link className="button" to={`${papersHref}?exam=${progress.next.exam}`}>Open in Papers <Arrow size={17} /></Link>
+            <Link className="button" to={`${papersHref}?exam=${progress.next.exam}${progress.next.exam !== "ceed" && paperProgramme(progress.next) === "M.Des." ? "&programme=mdes" : ""}`}>Open in Papers <Arrow size={17} /></Link>
           </> : <p>You have attempted every released paper. New papers appear here after review.</p>}
         </article>
       </div>

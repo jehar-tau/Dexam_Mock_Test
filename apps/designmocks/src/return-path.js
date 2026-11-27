@@ -1,7 +1,7 @@
 // Remembers where a student was when they chose to sign in, so the Google
 // callback can return them there. Only Papers and workspace paths are allowed.
 const key = "dmocks:return-after-sign-in";
-const allowed = /^\/(?:papers(?:\/(?:uceed|ceed|nid|nift))?|dashboard(?:\/(?:practice|mocks|all-india|learn))?)(?:\?exam=(?:uceed|ceed|nid|nift))?$/;
+const allowed = /^\/(?:papers(?:\/(?:uceed|ceed|nid|nift))?|dashboard(?:\/(?:practice|mocks|all-india|learn))?)(?:\?(?:exam=(?:uceed|ceed|nid|nift)(?:&programme=(?:bdes|mdes))?|programme=(?:bdes|mdes)))?$/;
 
 export function safeReturnPath(path) {
   return typeof path === "string" && allowed.test(path) ? path : null;
