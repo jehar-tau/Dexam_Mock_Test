@@ -16,6 +16,7 @@ import { QuestionReport } from "./QuestionReport.jsx";
 import { DrawingUploads, DrawingUploadWindow } from "./DrawingUploads.jsx";
 import { AttemptAccessBoundary } from "./AttemptAccess.jsx";
 import { drawingMediaError } from "./drawing-upload.js";
+import { YearDrawingChoice, DrawingSubParts } from "./YearDrawingChoice.jsx";
 import { DrawingCriteria, DrawingGraceBanner } from "./DrawingTask.jsx";
 import { createAnswerSyncQueue, validAttemptAnswer } from "./attempt-sync.js";
 import { createAttemptAnswerJournal, pruneDeviceAnswers } from "./attempt-answer-journal.js";
@@ -552,6 +553,24 @@ if(expandedAttemptScope){
   const serverMillis = now + offset.current;
   const yearGrace = attempt?.yearDrawing && attempt.status === "active" && left === 0
     ? Math.max(0, Math.ceil((Date.parse(attempt.uploadDeadline) - serverMillis) / 1000)) : 0;
+  const chooseDrawing = async (questionId, alternative) => {
+    if (mutationBusy.current || !current()) return;
+    mutationBusy.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      await rpc("choose_year_drawing_task", {p_attempt_id:id, p_question_id:questionId, p_alternative:alternative});
+      const updated = await rpc("read_attempt", {p_id:id});
+      if (current() && updated.id === id) setAttempt(updated);
+    } catch (error) {
+      if (current()) setError(error?.message?.includes("Remove the uploaded pages")
+        ? "Remove your saved photos from the previous choice before switching."
+        : "Couldn’t save your drawing choice. Check your connection and reopen the task.");
+    } finally {
+      mutationBusy.current = false;
+      if (current()) setBusy(false);
+    }
+  };
   const record = (value, defer = false) => {
     if (!current() || !q || busy || Date.now() + offset.current >= Date.parse(attempt.deadline) || !validAttemptAnswer(q, value)) return;
     clearTimeout(saveTimer.current);
@@ -638,7 +657,7 @@ if(expandedAttemptScope){
       </section>
     );
   if (yearGrace > 0 && !mainPhotoWriting) {
-    const tasks = attempt.questions.filter(item => item.kind === "drawing");
+    const tasks = attempt.questions.filter(item => item.kind === "drawing" && item.drawingChoice?.uploadAllowed !== false);
     return <section className="wrap sample-run">
       <DrawingGraceBanner remainingSeconds={yearGrace} taskCount={tasks.length} />
       {tasks.map(item => <article key={item.id}><h2>{item.label}</h2><p>{item.prompt}</p>
@@ -855,6 +874,8 @@ if(expandedAttemptScope){
             </label>
           ) : (
             <>
+              <YearDrawingChoice question={q} busy={busy || photoBusy || left === 0} choose={chooseDrawing} />
+              <DrawingSubParts parts={q.drawing?.subParts} />
               {q.drawing && <DrawingCriteria criteria={q.drawing.criteria} criteriaSource={q.drawing.criteriaSource} instructions={q.drawing.instructions} />}
               <div className="notice">
                 Draw on paper within the time limit and upload clear ordered pages.
@@ -869,7 +890,7 @@ if(expandedAttemptScope){
                   disabled={busy || left === 0}
                 />
               </label>
-              <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} invoke={drawingInvoke} maxImages={q.drawing?.maxImages} historical={!!q.drawing} onWritingChange={q.drawing ? setMainPhotoWriting : undefined} />
+              {q.drawingChoice?.uploadAllowed !== false && <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} invoke={drawingInvoke} maxImages={q.drawing?.maxImages} historical={!!q.drawing} onWritingChange={q.drawing ? setMainPhotoWriting : undefined} />}
             </>
           )}
           {["nat", "drawing"].includes(q.kind) && (

@@ -52,10 +52,28 @@ export function validateDrawingSidecar(plan, canonical, sourceDigests) {
   const sectionKeys = plan.sections.flatMap(s => s.questionKeys ?? []);
   assert.ok(plan.tasks.every(t => sectionKeys.includes(t.externalKey)) && sectionKeys.every(k => plan.tasks.some(t => t.externalKey === k)), 'Unknown or ungrouped drawing task');
   assert.equal(plan.uploadGraceSeconds, 600);
-  const supported = plan.timer === 'shared' && !plan.sections.some(s => s.chooseOne) && !items.some(i=>i.drawing.alternatives?.length);
+  const electiveKeys = new Set();
+  let electiveMarks = 0;
+  for (const section of plan.sections.filter(s => s.chooseOne)) {
+    assert.ok(section.questionKeys?.length >= 2 && unique(section.questionKeys), 'Expected two or more distinct elective tasks');
+    const marks = section.questionKeys.map(key => {
+      assert.ok(!electiveKeys.has(key), 'Elective groups overlap');
+      electiveKeys.add(key);
+      return items.find(task => task.externalKey === key).marking.max;
+    });
+    assert.ok(marks.every(max => max === marks[0]), 'Choose-one tasks must have the same maximum');
+    electiveMarks += marks[0];
+  }
+  for (const {drawing} of items) {
+    if (drawing.alternatives) {
+      assert.ok(drawing.alternatives.length >= 2 && unique(drawing.alternatives.map(a => a.id))
+        && drawing.alternatives.every(a => typeof a.id === 'string' && a.id && typeof a.label === 'string'), 'Invalid alternatives');
+    }
+  }
+  const supported = plan.timer === 'shared';
   if (supported) {
     assert.equal(plan.durationSeconds, 10800);
-    assert.equal(items.reduce((sum,i)=>sum+i.marking.max,0),plan.drawingMarksTotal);
+    assert.equal(items.filter(i => !electiveKeys.has(i.externalKey)).reduce((sum,i) => sum+i.marking.max, electiveMarks), plan.drawingMarksTotal);
   }
   return { digest:sha256(stableJson(plan)), sourcePaperId:plan.sourcePaperId, sourceCommit:canonical.sourceCommit, exam:plan.exam,
     year:plan.year, supported, timer:plan.timer, durationSeconds:plan.durationSeconds, uploadGraceSeconds:plan.uploadGraceSeconds,
