@@ -7,10 +7,11 @@ for (const exam of ['UCEED', 'CEED', 'NIFT', 'NID']) {
   test(`year-wise Papers shows only reviewed ${exam} releases on desktop and mobile`, async ({ page }) => {
     await page.goto('/papers');
     await expect(page.getByRole('heading', { name: 'Explore the papers.' })).toBeVisible();
+    if (exam === 'CEED') await page.getByRole('button', { name: /^M\.Des\. papers/ }).click();
     await page.getByRole('button', { name: new RegExp(`^${exam}\\b`) }).click();
     await expect(page.getByRole('heading', { name: exam, exact: true })).toBeVisible();
     await expect(page.locator('.year-paper-card')).toHaveCount(0);
-    await expect(page.getByText(`No ${exam} paper released yet`)).toBeVisible();
+    await expect(page.getByText(exam === 'NID' || exam === 'NIFT' ? `No ${exam} B.Des. paper released yet` : `No ${exam} paper released yet`)).toBeVisible();
     await expect(page.getByRole('button', { name: /Start paper|Take paper/ })).toHaveCount(0);
   });
 }
@@ -20,7 +21,8 @@ test('same-year CEED releases remain separate', async ({ page }) => {
     exam:'ceed',year:2016,sourcePaperId:`ceed-2016-paper-${number}`,partLabel:'Part A',questionCount:10,durationSeconds:3600}));
   await stubPortalProvider(page, name => name === 'free_year_paper_catalog' ? releases : undefined);
   await page.goto('http://127.0.0.1:4599/papers');
-  await page.getByRole('button', { name: /^CEED\b/ }).click();
+  await page.getByRole('button', { name: /^M\.Des\. papers/ }).click();
+  await expect(page.getByRole('button', { name: /^CEED\b/ })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('heading', { name: '2016 · Paper 1' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '2016 · Paper 2' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Take the free sample' })).toHaveAttribute('href', '/sample');
@@ -29,10 +31,16 @@ test('same-year CEED releases remain separate', async ({ page }) => {
 test('Papers tabs work by keyboard, reflow at 320px and pass accessibility checks', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 850 });
   await page.goto('/papers');
-  const ceed = page.getByRole('button', { name: /^CEED\b/ });
-  await ceed.focus();
+  const mdes = page.getByRole('button', { name: /^M\.Des\. papers/ });
+  await mdes.focus();
   await page.keyboard.press('Enter');
+  await expect(mdes).toHaveAttribute('aria-pressed', 'true');
+  const ceed = page.getByRole('button', { name: /^CEED\b/ });
   await expect(ceed).toHaveAttribute('aria-pressed', 'true');
+  const nid = page.getByRole('button', { name: /^NID\b/ });
+  await nid.focus();
+  await page.keyboard.press('Enter');
+  await expect(nid).toHaveAttribute('aria-pressed', 'true');
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   await page.addScriptTag({ path: fileURLToPath(new URL('../../node_modules/axe-core/axe.min.js', import.meta.url)) });
   const violations = await page.evaluate(async () => (await window.axe.run('.year-papers', {
@@ -231,8 +239,9 @@ test.describe('signed-out public year-paper catalogue', () => {
     await expect(page.getByRole('button', {name:'UCEED 1',exact:true})).toBeVisible();
     releases = [first,added];
     await page.evaluate(() => window.dispatchEvent(new Event('focus')));
-    await expect(page.getByRole('button', {name:'CEED 1',exact:true})).toBeVisible();
-    await page.getByRole('button', {name:'CEED 1',exact:true}).click();
+    await expect(page.getByRole('button', {name:'M.Des. papers 1',exact:true})).toBeVisible();
+    await page.getByRole('button', {name:'M.Des. papers 1',exact:true}).click();
+    await expect(page.getByRole('button', {name:'CEED 1',exact:true})).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByRole('heading', {name:'2025 paper'})).toBeVisible();
     expect(provider.calls.filter(([name]) => name === 'free_year_paper_catalog')).toHaveLength(2);
     expect(provider.unexpected).toEqual([]);
@@ -307,19 +316,39 @@ test('the answer review shows a structured, step-by-step animated solution', asy
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 
-test('an exam with B.Des. and M.Des. papers can be narrowed to one programme', async ({ page }) => {
-  await page.goto('/papers-preview?exam=nid');
-  await expect(page.getByRole('button', { name: /^NID\b/ })).toHaveAttribute('aria-pressed', 'true');
-  const levels = page.getByRole('group', { name: 'Choose a NID programme' });
-  await expect(levels.getByRole('button', { name: 'All 6' })).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('.year-paper-card')).toHaveCount(6);
-  await levels.getByRole('button', { name: 'M.Des. 2' }).click();
-  await expect(page.locator('.year-paper-card')).toHaveCount(2);
-  await expect(page.locator('.year-paper-card').first()).toContainText('M.Des. sample paper');
+test('B.Des. and M.Des. papers are listed separately', async ({ page }) => {
+  await page.goto('/papers-preview');
+  const programmes = page.getByRole('group', { name: 'Choose a programme' });
+  await expect(programmes.getByRole('button', { name: 'B.Des. papers 15', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  const bdesExams = page.getByRole('group', { name: 'Choose a B.Des. exam' });
+  await expect(bdesExams.getByRole('button')).toHaveText(['UCEED11', 'NID4', 'NIFT0']);
+  await expect(page.locator('.year-paper-card')).toHaveCount(11);
+  await bdesExams.getByRole('button', { name: 'NID 4', exact: true }).click();
+  await expect(page.locator('.year-papers-exam-line')).toHaveText('NID · B.Des. DAT');
+  await expect(page.locator('.year-paper-card')).toHaveCount(4);
+  await expect(page.locator('.year-papers-list')).not.toContainText('M.Des.');
+  await programmes.getByRole('button', { name: 'M.Des. papers 8', exact: true }).click();
+  const mdesExams = page.getByRole('group', { name: 'Choose a M.Des. exam' });
+  await expect(mdesExams.getByRole('button')).toHaveText(['CEED6', 'NID2', 'NIFT0']);
+  await expect(mdesExams.getByRole('button', { name: 'NID 2', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.year-papers-exam-line')).toHaveText('NID · M.Des. DAT');
+  await expect(page.locator('.year-paper-card').first()).toContainText('Sample paper');
+  await expect(page.locator('.year-paper-card').first().locator('.year-paper-title')).toHaveCount(0);
   await expect(page.locator('.year-papers-stats')).toContainText('2018–2025');
-  await page.getByRole('button', { name: /^UCEED\b/ }).click();
-  await expect(page.getByRole('group', { name: /programme$/ })).toHaveCount(0);
-  await page.getByRole('button', { name: /^NID\b/ }).click();
+  await mdesExams.getByRole('button', { name: 'CEED 6', exact: true }).click();
   await expect(page.locator('.year-paper-card')).toHaveCount(6);
+  await programmes.getByRole('button', { name: /^B\.Des\. papers/ }).click();
+  await expect(bdesExams.getByRole('button', { name: 'UCEED 11', exact: true })).toHaveAttribute('aria-pressed', 'true');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
+test('a link can open the M.Des. list, and CEED always opens it', async ({ page }) => {
+  await page.goto('/papers-preview?exam=nid&programme=mdes');
+  await expect(page.getByRole('button', { name: 'M.Des. papers 8', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'NID 2', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.goto('/papers-preview?exam=ceed');
+  await expect(page.getByRole('button', { name: 'M.Des. papers 8', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'CEED 6', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.goto('/papers-preview?exam=uceed&programme=mdes');
+  await expect(page.getByRole('button', { name: 'CEED 6', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });

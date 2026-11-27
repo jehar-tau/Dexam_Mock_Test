@@ -43,12 +43,20 @@ test('card subtitles keep same-year NID B.Des. and M.Des. papers apart', () => {
   assert.equal(paperSubtitle({ exam: 'nid', year: 2024, paperId: 'nid-bdes-sample-2024' }), 'B.Des. sample paper');
 });
 
-test('NIFT GAT papers say GAT, and the programme filter appears only when both programmes exist', async () => {
-  const { paperSubtitle: subtitle, paperLevels } = await import('../src/paper-years.mjs');
+test('NIFT GAT papers say GAT, and every paper belongs to the B.Des. or M.Des. list', async () => {
+  const { paperSubtitle: subtitle, paperProgramme, inProgramme, programmeFromQuery } = await import('../src/paper-years.mjs');
   assert.equal(subtitle({ exam: 'nift', year: 2026, paperId: 'nift-2026-bdes-gat' }), 'B.Des. GAT paper');
   assert.equal(subtitle({ exam: 'nift', year: 2025, paperId: 'nift-2025-mdes-gat' }), 'M.Des. GAT paper');
   assert.equal(subtitle({ exam: 'nid', year: 2025, paperId: 'nid-mdes-sample-2025' }), 'M.Des. sample paper');
-  assert.deepEqual(paperLevels([{ paperId: 'nid-mdes-2018' }, { paperId: 'nid-bdes-2018' }, { paperId: 'nid-bdes-2019' }]), ['B.Des.', 'M.Des.']);
-  assert.deepEqual(paperLevels([{ paperId: 'nid-bdes-2018' }, { paperId: 'nid-bdes-2019' }]), []);
-  assert.deepEqual(paperLevels([{ paperId: 'uceed-2026' }, { paperId: 'uceed-2025' }]), []);
+  assert.equal(subtitle({ exam: 'nid', year: 2025, paperId: 'nid-mdes-sample-2025' }, false), 'Sample paper');
+  assert.equal(subtitle({ exam: 'nift', year: 2026, paperId: 'nift-2026-bdes-gat' }, false), 'GAT paper');
+  assert.equal(paperProgramme({ exam: 'uceed', paperId: 'uceed-2026' }), 'B.Des.');
+  assert.equal(paperProgramme({ exam: 'ceed', paperId: 'ceed-2026' }), 'M.Des.');
+  assert.equal(paperProgramme({ exam: 'nid', paperId: 'nid-mdes-2018' }), 'M.Des.');
+  assert.equal(paperProgramme({ exam: 'nift', paperId: 'nift-2026-bdes-gat' }), 'B.Des.');
+  assert.equal(inProgramme({ exam: 'ceed', paperId: 'ceed-2026' }, 'B.Des.'), false);
+  assert.equal(inProgramme({ exam: 'nift', paperId: 'nift-2026' }, 'B.Des.'), true);
+  assert.equal(inProgramme({ exam: 'nift', paperId: 'nift-2026' }, 'M.Des.'), true);
+  assert.equal(programmeFromQuery(new URLSearchParams('programme=mdes')), 'M.Des.');
+  assert.equal(programmeFromQuery(new URLSearchParams('programme=x')), '');
 });
