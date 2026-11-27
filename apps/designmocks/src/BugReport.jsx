@@ -8,7 +8,10 @@ import {purchaseSupportContext} from './purchase-history.js';
 
 const purchaseMode=environment.production?'live':'test';
 
-function ReportSession({actorId,linkedOrder}){
+// The footer link passes the page the student was on; a same-site path only.
+const reportedPage=state=>typeof state?.reportFrom==='string'&&/^\/(?!\/)/.test(state.reportFrom)?state.reportFrom:null;
+
+function ReportSession({actorId,linkedOrder,fromPage}){
  const{rpc,isCurrent,presentForCurrentAccount}=useAccountServices(),prefix=useId();
  const[draft,setDraft]=useState({title:'',description:''}),[errors,setErrors]=useState({}),[message,setMessage]=useState(''),[busy,setBusy]=useState(false),[pending,setPending]=useState(null);
  const[purchase,setPurchase]=useState(linkedOrder);
@@ -42,7 +45,7 @@ function ReportSession({actorId,linkedOrder}){
   if(!active()||action.current)return;
   let snapshot=request.current;
   if(!snapshot){
-   const prepared=prepareBugReport({...draft,purchaseOrder:purchase?.reference},window.location.href);setErrors(prepared.errors);
+   const prepared=prepareBugReport({...draft,purchaseOrder:purchase?.reference},fromPage?window.location.origin+fromPage:window.location.href);setErrors(prepared.errors);
    if(!prepared.request){(prepared.errors.title?title:description).current?.focus();return;}
    snapshot=prepared.request;request.current=snapshot;setPending(snapshot);
   }
@@ -68,6 +71,7 @@ function ReportSession({actorId,linkedOrder}){
  };
  return<>
   <form className="admin-form" noValidate onSubmit={event=>{event.preventDefault();void send();}}>
+   {fromPage&&<p className="bug-report-page-context">This report will note the page you came from: <code>{fromPage}</code></p>}
    {purchase&&<div className="notice"><p><strong>Linked order</strong> <code>{purchase.reference}</code></p>
     <button className="button quiet" type="button" disabled={Boolean(pending)} onClick={()=>{setPurchase(null);setMessage('');title.current?.focus();}}>Remove order link</button>
    </div>}
@@ -96,7 +100,7 @@ export function BugReport(){
  useLayoutEffect(()=>{if(previous.current!==scopeKey&&(document.activeElement===document.body||heading.current?.parentElement.contains(document.activeElement)))heading.current?.focus();previous.current=scopeKey;},[scopeKey]);
  return<section className="wrap section admin-page bug-report-page"><span className="eyebrow">HELP US IMPROVE</span><h1 ref={heading} tabIndex={-1}>Report a <em>problem.</em></h1>
   {loading?<p role="status">Checking your account…</p>:!session?<p>Please <Link to="/account">sign in</Link> to continue.</p>:<AccountAccessBoundary key={scopeKey} actorId={session.user.id} headingRef={heading}>
-   <ReportSession actorId={session.user.id} linkedOrder={purchaseSupportContext(location.state,session.user.id,purchaseMode)}/>
+   <ReportSession actorId={session.user.id} fromPage={reportedPage(location.state)} linkedOrder={purchaseSupportContext(location.state,session.user.id,purchaseMode)}/>
   </AccountAccessBoundary>}
  </section>;
 }
