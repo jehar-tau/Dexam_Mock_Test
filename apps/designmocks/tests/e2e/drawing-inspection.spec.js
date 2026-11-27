@@ -145,7 +145,8 @@ test("students can inspect only saved pages, then remove a page and clear its pr
     if(procedure==="my_exam_mock_session"||procedure==="my_exam_mock_report")return null;
     if(procedure==="drawing-media"){
       if(input.action==="list")return{items:state.items};
-      if(input.action==="open"){state.opens.push(input);return{images};}
+      if(input.action==="pages"){state.opens.push(input);return{images};}
+      if(input.action==="page")return{images};
       if(input.action==="remove"){state.removed.push(input);state.items=[];return{removed:input.id};}
     }
   });
@@ -158,7 +159,7 @@ test("students can inspect only saved pages, then remove a page and clear its pr
   await page.getByRole("button",{name:"Remove image 1",exact:true}).click();
   await expect(page.getByText("Drawing image removed.",{exact:true})).toBeVisible();
   await expect(page.getByRole("img",{name:"Your drawing page 1",exact:true})).toHaveCount(0);await expect(page.getByRole("button",{name:"View saved images",exact:true})).toHaveCount(0);
-  expect(state.opens).toEqual([{action:"open",attemptId,questionId}]);expect(state.removed).toEqual([{action:"remove",id:images[0].id}]);expect(provider.unexpected).toEqual([]);
+  expect(state.opens).toEqual([{action:"pages",attemptId,questionId}]);expect(state.removed).toEqual([{action:"remove",id:images[0].id}]);expect(provider.unexpected).toEqual([]);
 });
 
 test("private link lifetime uses the server clock when the device clock differs",async({page})=>{
@@ -214,6 +215,9 @@ test("switching accounts clears a student's inspection before the next attempt r
   await page.getByRole("button",{name:"View saved images",exact:true}).click();
   await page.getByRole("button",{name:"Inspect page 1, your drawing",exact:true}).click();
   await expect(page.getByRole("dialog",{name:"Your drawing page 1",exact:true})).toBeVisible();
+  const oldPhoto=await page.getByRole("dialog").getByRole("img").getAttribute("src");
+  expect(oldPhoto).toMatch(/^blob:/);
+  await page.evaluate(()=>{const revoke=URL.revokeObjectURL.bind(URL);window.revokedDrawingURLs=[];URL.revokeObjectURL=url=>{window.revokedDrawingURLs.push(url);revoke(url);};});
   switched=true;
   await seedPortalSession(page,{id:"00000000-0000-4000-8000-000000000482",email:"other-inspection@example.invalid"});
   const nextRead=page.waitForRequest(request=>request.url().endsWith("/rpc/read_attempt")&&request.method()==="POST");
@@ -222,6 +226,7 @@ test("switching accounts clears a student's inspection before the next attempt r
     channel.postMessage({event:"SIGNED_IN",session:JSON.parse(localStorage.getItem(key))});channel.close();
   });
   await nextRead;
+  await expect.poll(()=>page.evaluate(url=>window.revokedDrawingURLs.includes(url),oldPhoto)).toBe(true);
   await expect(page.getByRole("dialog")).toHaveCount(0);await expect(page.getByRole("img",{name:/Your drawing page/})).toHaveCount(0);
   await expect(page.getByText("Loading your attempt…",{exact:true})).toBeVisible();
   release();await finished;
@@ -252,7 +257,7 @@ test("leaving a student attempt cancels a pending private gallery and ignores it
     try{await route.fulfill({headers,json:{images}});}catch{/* The request is intentionally cancelled when its owner view unmounts. */}finally{completed();}
   });
   await page.goto("/account");await seedPortalSession(page,account);await page.goto("/attempt/"+attemptId);
-  const requested=page.waitForRequest(request=>request.url().endsWith("/drawing-media")&&request.method()==="POST"&&request.postDataJSON()?.action==="open");
+  const requested=page.waitForRequest(request=>request.url().endsWith("/drawing-media")&&request.method()==="POST"&&request.postDataJSON()?.action==="pages");
   await page.getByRole("button",{name:"View saved images",exact:true}).click();await requested;
   await page.getByRole("link",{name:"Back to your workspace",exact:true}).click();await expect(page).toHaveURL(/\/dashboard$/);
   release();await finished;

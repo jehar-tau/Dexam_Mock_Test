@@ -4,7 +4,7 @@ import { createClient } from "npm:@supabase/supabase-js@2.117.2";
 import { DrawingImageError, DRAWING_MAX_BYTES } from "../_shared/drawing-image.mjs";
 import { DRAWING_FORM_MAX_BYTES, drawingRequestBody } from "../_shared/drawing-request.mjs";
 import { validateDrawing } from "./validate.ts";
-import { DrawingLinksError, sameDrawingPages, signedDrawingPages } from "../_shared/drawing-links.mjs";
+import { sessionDrawingResponse } from "../_shared/session-drawing-pages.mjs";
 import { finishDrawingRemoval } from "../_shared/drawing-removal.mjs";
 
 const uuid = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
@@ -43,18 +43,14 @@ Deno.serve(async (request) => {
         if (listed.error) throw listed.error;
         return respond({ items: listed.data });
       }
-      if (action === "open" && isId(attemptId) && isId(questionId)) {
-        const pages = await admin.rpc("service_student_drawing_media_paths", {
-          p_student_id: user.id, p_attempt_id: attemptId, p_question_id: questionId,
+      if (action === "open") return respond({error: "Refresh DMocks to view protected photos."}, 409);
+      if ((action === "pages" || (action === "page" && isId(id))) && isId(attemptId) && isId(questionId)) {
+        return await sessionDrawingResponse({
+          pagesForViewer: () => admin.rpc("service_student_drawing_media_paths", {
+            p_student_id: user.id, p_attempt_id: attemptId, p_question_id: questionId,
+          }),
+          bucket, pageId: action === "page" ? id : undefined, admitted: async () => !(await stagingDenied()), headers,
         });
-        if (pages.error) return respond({ error: "Drawing pages are unavailable for this account." }, 403);
-        const signed = await signedDrawingPages(bucket, pages.data);
-        const current = await admin.rpc("service_student_drawing_media_paths", {
-          p_student_id: user.id, p_attempt_id: attemptId, p_question_id: questionId,
-        });
-        if (current.error || !sameDrawingPages(pages.data, current.data)) return respond({ error: "Drawing pages changed. Refresh your saved pages." }, 403);
-        if (await stagingDenied()) return stagingRejected();
-        return respond(signed);
       }
       if (action !== "remove" || !isId(id)) return respond({ error: "Invalid drawing action" }, 400);
       const removed = await admin.rpc("remove_drawing_upload", { p_student_id: user.id, p_id: id });
@@ -116,7 +112,6 @@ Deno.serve(async (request) => {
     }
     return respond({ id: registered.data, ordinal });
   } catch (error) {
-    if (error instanceof DrawingLinksError) return respond({ error: error.message }, error.status);
     if (error instanceof DrawingImageError) return respond({ error: error.message, code: error.code }, error.status);
     return respond({ error: error instanceof Error ? error.message : "Drawing request failed" }, 400);
   } finally { if (reserved) uploadBusy = false; }

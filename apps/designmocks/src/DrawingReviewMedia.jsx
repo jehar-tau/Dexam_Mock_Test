@@ -1,16 +1,19 @@
 import React, { useCallback } from "react";
 import { useAdminFunctions } from "./AdminAccess.jsx";
+import { openSessionDrawingPhotos } from "./session-drawing-photos.js";
 import { DrawingPages } from "./DrawingInspection.jsx";
 import { isAdminAccessFailure } from "./admin-access.js";
 
 async function loadDrawingPages(functions, reviewId, signal, onUnavailable) {
   if (!functions) throw new Error("Couldn’t open drawing pages. Refresh the queue and try again.");
-  const { data, error } = await functions.invoke("drawing-review-media", { body: { reviewId }, signal });
-  if (error) {
-    if(isAdminAccessFailure(error))onUnavailable?.(reviewId,error);
-    throw new Error("Couldn’t open drawing pages. Refresh the queue and try again.");
-  }
-  return data;
+  return openSessionDrawingPhotos(async (body, signal) => {
+    const {data, error} = await functions.invoke("drawing-review-media", {body, signal});
+    if (error) {
+      if (isAdminAccessFailure(error)) onUnavailable?.(reviewId, error);
+      throw new Error("Couldn’t open drawing pages. Refresh the queue and try again.");
+    }
+    return data;
+  }, {reviewId}, signal);
 }
 
 export function DrawingReviewMedia({ reviewId, load, onUnavailable }) {

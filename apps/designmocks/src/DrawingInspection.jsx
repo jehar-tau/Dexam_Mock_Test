@@ -82,7 +82,7 @@ export { DrawingInspectionDialog as PrivateImageInspectionDialog };
 function DrawingPagesSession({ load, anonymous = false, disabled = false }) {
   const [images, setImages] = useState(null), [selected, setSelected] = useState(null), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   const current = useRef(0), pending = useRef(null), expiry = useRef(null);
-  useEffect(() => () => { current.current++; pending.current?.abort(); clearTimeout(expiry.current); }, []);
+  useLayoutEffect(() => () => { current.current++; pending.current?.abort(); clearTimeout(expiry.current); }, []);
   const open = async () => {
     const started = performance.now();
     const sequence = ++current.current;
@@ -103,7 +103,7 @@ function DrawingPagesSession({ load, anonymous = false, disabled = false }) {
       const delay = Math.max(0, Math.min(300_000, remaining) - Math.max(0, performance.now() - started));
       expiry.current = setTimeout(() => {
         if (current.current !== sequence) return;
-        setImages(null); setSelected(null); setMessage("Private links expired. Open the images again to continue.");
+        controller.abort(); setImages(null); setSelected(null); setMessage("Private links expired. Open the images again to continue.");
       }, delay);
     } catch {
       if (!controller.signal.aborted && current.current === sequence) setMessage("Couldn’t open drawing pages. Refresh the queue or saved pages and try again.");

@@ -13,7 +13,7 @@ const endpoints = [
   ["community-media", {targetType: "post", targetId: actor}, "community_media_paths"],
   ["attempt-media", { attemptId: actor }, "read_attempt"],
   ["drawing-media", {}, null],
-  ["drawing-review-media", { reviewId: actor }, "admin_drawing_review_media_paths"],
+  ["drawing-review-media", { action: "page", reviewId: actor, id: actor }, "admin_drawing_review_media_paths"],
   ["bank-review-media", { externalKey: "fixture", reviewVersion: "fixture" }, "admin_bank_review_media_paths"],
   ["reported-question-media", { targetKey: "fixture", revision: 1 }, "admin_reported_question_media_paths"],
 ];
@@ -28,7 +28,7 @@ const emptyRequestErrors = {
 };
 
 
-Deno.test("private media checks staging admission before handling a request and before returning signed links", async (test) => {
+Deno.test("private media checks staging admission before handling a request and before delivering private media", async (test) => {
   const originalServe = Deno.serve;
   const originalFetch = globalThis.fetch;
   const environment = {
@@ -78,6 +78,7 @@ Deno.test("private media checks staging admission before handling a request and 
             if (afterSigning && calls.some(path => path.includes("/object/sign/"))) return afterSigning();
             return Response.json([{ id: actor, ordinal: 1, storagePath: mediaPath, width: 1, height: 1 }]);
           }
+          if (url.pathname.endsWith("/drawing-submissions/" + mediaPath)) return new Response(new Uint8Array([137,80,78,71,13,10,26,10]));
           if (url.pathname.includes("/object/sign/")) return Response.json([
             { path: endpoint === "community-media" ? communityPath : mediaPath, signedURL: "/object/sign/fixture.png?token=fictional-signature" },
           ]);
@@ -154,8 +155,10 @@ Deno.test("private media checks staging admission before handling a request and 
             assert.equal(response.status, status);
             assert.equal(response.headers.get("access-control-allow-origin"), from);
             const text = await response.text();
-            assert.equal(text.includes("fictional-signature"), status === 200);
-            assert.equal(calls.some(path => path.includes("/object/sign/")), stages.length === 2);
+            const protectedDrawing = endpoint === "drawing-review-media";
+            assert.equal(text.includes("fictional-signature"), !protectedDrawing && status === 200);
+            assert.equal(calls.some(path => path.includes("/object/sign/")), !protectedDrawing && stages.length === 2);
+            if (protectedDrawing && status === 200) assert.equal(response.headers.get("content-type"), "application/octet-stream");
             assert.equal(decisions.length, 0);
           }
         }

@@ -60,6 +60,7 @@ test("anonymous teacher images preserve browser orientation and every displayed 
 });
 
 test("an authenticated reviewer can page, claim, grade and finalize anonymous work", async ({ page }) => {
+  const fictionalPage = (await readFile(new URL("../fixtures/drawing-images/fictional-drawing.png",import.meta.url))).toString("base64");
   let drawing = availableDrawing;
   let enabled = true;
   const { calls, unexpected } = await stubProvider(page, (procedure, input) => {
@@ -81,7 +82,7 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
         return null;
       case "drawing-review-media":
         return { images: [{ id: "fixture-page", ordinal: 1,
-          url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='40'%3E%3Crect width='50' height='40' fill='%23305944'/%3E%3C/svg%3E" }] };
+          url: "data:image/png;base64," + fictionalPage }] };
       case "admin_review_drawing":
         drawing = { ...drawing, status: "reviewed", version: 2,
           criteria: input.p_criterion_marks, comments: input.p_comments, score: input.p_score };
@@ -141,7 +142,8 @@ test("an authenticated reviewer can page, claim, grade and finalize anonymous wo
   await expect(advisory).toHaveCount(0);
   expect(calls).toContainEqual(["my_drawing_review_page", { p_scope: "available", p_after: drawingId }]);
   expect(calls).toContainEqual(["admin_claim_drawing_review", { p_review_id: drawingId }]);
-  expect(calls).toContainEqual(["drawing-review-media", { reviewId: drawingId }]);
+  expect(calls).toContainEqual(["drawing-review-media", { action: "pages", reviewId: drawingId }]);
+  expect(calls).toContainEqual(["drawing-review-media", { action: "page", reviewId: drawingId, id: "fixture-page" }]);
   expect(calls).toContainEqual(["admin_review_drawing", { p_review_id: drawingId, p_expected_version: 1,
     p_criterion_marks: { Clarity: 16 }, p_comments: "The direction is legible from a distance.", p_score: 16, p_override_reason: null }]);
   expect(calls).toContainEqual(["admin_release_drawing_review", { p_review_id: drawingId, p_expected_version: 2 }]);

@@ -1,3 +1,4 @@
+import { fictionalDrawingResponse } from "./fictional-drawing-response.js";
 export const portalFixtureURL = "http://127.0.0.1:4599";
 const fixtureProject = "dmocks-portal-fixture";
 
@@ -58,6 +59,9 @@ export async function stubPortalProvider(page, respond, projectRef = fixtureProj
     if (result === undefined) {
       unexpected.push(path);
       return route.abort();
+    }
+    if (["drawing-media", "drawing-review-media"].includes(procedure) && ["pages", "page"].includes(input.action) && result?.images) {
+      return fictionalDrawingResponse(route, input, result, headers);
     }
     const status = result?.code === "42501" ? 403 : result?.code ? 400 : 200;
     return route.fulfill({ json: result, headers, status });
