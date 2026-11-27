@@ -1,6 +1,6 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
-import { rm } from "node:fs/promises";
+import { readFile, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { resolveAuthConfiguration } from "./src/authConfiguration.mjs";
 import { publicCatalogueConfiguration } from "./src/public-catalogue-config.mjs";
@@ -63,6 +63,16 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins: [react(), publicDiscovery(publicBuild), {
+      name: "drawing-decoder-notices",
+      apply: "build",
+      async generateBundle(_options, bundle) {
+        if (!Object.keys(bundle).some(file => file.endsWith(".wasm"))) return;
+        const decoder = new URL("./node_modules/@imagemagick/magick-wasm/", import.meta.url);
+        const notices = await Promise.all(["LICENSE", "NOTICE"].map(name => readFile(new URL(name, decoder), "utf8")));
+        this.emitFile({ type: "asset", fileName: "assets/drawing-decoder-notices.txt",
+          source: "DMocks drawing photo decoder. Source: https://github.com/dlemstra/magick-wasm/tree/0.0.46\n\n" + notices.join("\n\n") });
+      },
+    }, {
       name: "dmocks-learn-image-isolation",
       apply: "build",
       async writeBundle({dir}) {

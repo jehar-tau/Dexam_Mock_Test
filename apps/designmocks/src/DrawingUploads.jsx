@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import { drawingUploadWindow } from "./drawing-upload-window.js";
 import { checkDrawingFiles, drawingInventory, drawingPageReceipt, drawingUploadFailure, planDrawingPages } from "./drawing-upload.js";
 import { yearDrawingPhoto } from "./year-drawing-photo.mjs";
+import { DrawingPhotoPreview } from "./DrawingPhotoPreview.jsx";
 import { DrawingPages } from "./DrawingInspection.jsx";
 
 export function DrawingUploads({
@@ -17,7 +18,11 @@ export function DrawingUploads({
   const [message, setMessage] = useState("");
   const [loadAttempt, setLoadAttempt] = useState(0);
   const [pending, setPending] = useState([]);
+  const [drafts, setDrafts] = useState([]);
   const fileInput = useRef(null);
+  const previewHeading = useRef(null);
+  const selecting = drafts.length > 0;
+  useEffect(() => { if (selecting) previewHeading.current?.focus(); }, [selecting]);
   const lifetime = useRef(null);
   const writing = useRef(false);
   useLayoutEffect(() => {
@@ -42,29 +47,34 @@ export function DrawingUploads({
     setItems(null);
     setLoadAttempt(value => value + 1);
   };
-  const save = async pages => {
+  const setWriting = value => {
+    if (value === writing.current) return;
+    writing.current = value;
+    onWritingChange?.(value);
+  };
+  const save = async (pages, confirmed = false) => {
     const signal = lifetime.current.signal;
-    if (writing.current || signal.aborted || !pages.length) return;
-    writing.current = true;
-    onWritingChange?.(true);
+    if ((writing.current && !confirmed) || signal.aborted || !pages.length) return;
+    setWriting(true);
+    setDrafts([]);
     setBusy(true);
     setMessage("Saving drawing images…");
     let remaining = pages;
     try {
-      for (const {file, ordinal} of pages) {
+      for (const {file, ordinal, turns, name} of pages) {
         const form = new FormData();
         form.set("attemptId", attemptId);
         form.set("questionId", questionId);
         form.set("ordinal", String(ordinal));
-        if (historical) {
-          try { form.set("file", await yearDrawingPhoto(file)); }
+        if (turns) {
+          try { form.set("file", await yearDrawingPhoto(file, turns)); }
           catch (error) { setMessage(error.message); setPending([]); return; }
           signal.throwIfAborted();
         } else form.set("file", file);
         const result = await invoke(form, signal);
         signal.throwIfAborted();
         const id = drawingPageReceipt(result, ordinal);
-        setItems(current => [...current, {id, name: file.name, ordinal}]);
+        setItems(current => [...current, {id, name: name || file.name, ordinal}]);
         remaining = remaining.slice(1);
       }
       setPending([]);
@@ -77,12 +87,16 @@ export function DrawingUploads({
       setMessage(drawingUploadFailure(error));
       reload();
     } finally {
-      writing.current = false;
-      onWritingChange?.(false);
+      setWriting(false);
       if (!signal.aborted) setBusy(false);
     }
   };
-  const upload = event => {
+  const discardDrafts = () => {
+    setDrafts([]);
+    setMessage("");
+    setWriting(false);
+  };
+  const upload = async event => {
     const input = event.currentTarget;
     const files = [...input.files];
     input.value = "";
@@ -90,7 +104,24 @@ export function DrawingUploads({
     const {pages, error} = planDrawingPages(files, items, maxImages);
     const invalid = error || (historical ? null : checkDrawingFiles(files));
     if (invalid) { setMessage(invalid); return; }
-    void save(pages);
+    if (!historical) { void save(pages); return; }
+    const signal = lifetime.current.signal;
+    setWriting(true);
+    setBusy(true);
+    setMessage("Preparing your preview…");
+    try {
+      const ready = [];
+      for (const page of pages) {
+        const file = await yearDrawingPhoto(page.file);
+        signal.throwIfAborted();
+        ready.push({ ordinal: page.ordinal, file, name: page.file.name, turns: 0 });
+      }
+      setDrafts(ready);
+      setMessage("");
+    } catch (cause) {
+      if (!signal.aborted) setMessage(cause.message);
+      setWriting(false);
+    } finally { if (!signal.aborted) setBusy(false); }
   };
   return (
     <div className="drawing-uploads">
@@ -99,10 +130,17 @@ export function DrawingUploads({
         {historical ? `Add up to ${maxImages} photos in page order, up to 12 MB each. Photos are saved privately as JPEGs.` :
           "Upload up to five clear PNG, JPEG or WebP images in the order they should be reviewed. Each image can be up to 10 MB, 24 megapixels and 12,000 pixels on either side. Use still images."}
       </p>
-      <button className="button quiet" type="button" disabled={!items || busy || pending.length > 0 || items.length >= maxImages}
+      <button className="button quiet" type="button" disabled={!items || busy || pending.length > 0 || drafts.length > 0 || items.length >= maxImages}
         onClick={() => fileInput.current?.click()}>Add images</button>
       <input ref={fileInput} type="file" accept={historical ? "image/png,image/jpeg,image/heic,image/heif,.heic,.heif" : "image/png,image/jpeg,image/webp"} multiple hidden onChange={upload} />
-      {historical && <label className="text-button">Take a photo<input aria-label="Take a photo" type="file" accept="image/*" capture="environment" onChange={upload} disabled={!items || busy || pending.length > 0 || items.length >= maxImages} /></label>}
+      {historical && <label className="text-button">Take a photo<input aria-label="Take a photo" type="file" accept="image/*" capture="environment" onChange={upload} disabled={!items || busy || pending.length > 0 || drafts.length > 0 || items.length >= maxImages} /></label>}
+      {drafts.length > 0 && <section aria-label="Photo preview">
+        <h4 ref={previewHeading} tabIndex={-1}>Check your photos</h4>
+        <div className="drawing-photo-grid">{drafts.map(page => <DrawingPhotoPreview key={page.ordinal} page={page}
+          rotate={() => setDrafts(current => current.map(item => item.ordinal === page.ordinal ? { ...item, turns: (item.turns + 1) % 4 } : item))} />)}</div>
+        <button type="button" className="button" onClick={() => void save(drafts, true)}>Save {drafts.length === 1 ? "photo" : "photos"}</button>
+        <button type="button" className="text-button" onClick={discardDrafts}>Discard selection</button>
+      </section>}
       {pending.length > 0 && <div>
         {conflict && <p>Page {conflict.ordinal} already has a saved image. Inspect your saved pages before retrying.</p>}
         <button className="button quiet" type="button" disabled={!items || busy || Boolean(conflict)}
@@ -116,7 +154,7 @@ export function DrawingUploads({
         {items?.slice().sort((a, b) => a.ordinal - b.ordinal).map((item) => (
           <li key={item.id} value={item.ordinal}>
             <span>{item.name || `Image ${item.ordinal}`}</span>
-            <button className="text-button" type="button" disabled={busy} aria-label={`Remove ${item.name || `image ${item.ordinal}`}`} onClick={async () => {
+            <button className="text-button" type="button" disabled={busy || drafts.length > 0} aria-label={`Remove ${item.name || `image ${item.ordinal}`}`} onClick={async () => {
               const signal = lifetime.current.signal;
               if (writing.current || signal.aborted) return;
               writing.current = true;

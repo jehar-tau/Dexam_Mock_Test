@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { prepareDrawingImage } from '../../supabase/functions/_shared/drawing-image.mjs';
 import { portalFixtureURL, seedPortalSession } from './portal-fixture.js';
 
 test.use({baseURL:portalFixtureURL});
@@ -27,6 +28,8 @@ test('historical drawing locks answers, accepts only photos during grace and exp
       if(req.headers()['content-type']?.startsWith('multipart/')) {
         const form=await new Response(req.postDataBuffer(),{headers:{'Content-Type':req.headers()['content-type']}}).formData();
         expect(form.get('file').type).toBe('image/jpeg');
+        const checked=await prepareDrawingImage(new Uint8Array(await form.get('file').arrayBuffer()),'image/jpeg');
+        expect([checked.width,checked.height]).toEqual([48,96]);
         await uploadGate;
         reply={id:'30000000-0000-4000-8000-000000000386',ordinal:1};
       } else reply=req.postDataJSON().action==='list'?{items:[]}:{images:[],expiresAt:new Date().toISOString(),serverNow:new Date().toISOString()};
@@ -47,6 +50,15 @@ test('historical drawing locks answers, accepts only photos during grace and exp
   });
   await page.locator('input[type=file][multiple]').setInputFiles({name:'test-page.png',mimeType:'image/png',buffer:Buffer.from(png,'base64')});
   const finish=page.getByRole('button',{name:'Submit paper and finish uploads'});
+  await expect(finish).toBeDisabled();
+  await expect(page.getByRole('img',{name:'Page 1 before upload'})).toBeVisible();
+  await page.getByRole('button',{name:'Discard selection'}).click();
+  await expect(finish).toBeEnabled();
+  // A synthetic 96 x 48 HEIC of three color bars, created for this test.
+  const syntheticHeic = 'AAAAJGZ0eXBoZWljAAAAAG1pZjFNaVBybWlhZk1pSEJoZWljAAABhm1ldGEAAAAAAAAAIWhkbHIAAAAAAAAAAHBpY3QAAAAAAAAAAAAAAAAAAAAAJGRpbmYAAAAcZHJlZgAAAAAAAAABAAAADHVybCAAAAABAAAADnBpdG0AAAAAAAEAAAAjaWluZgAAAAAAAQAAABVpbmZlAgAAAAABAABodmMxAAAAAOZpcHJwAAAAxWlwY28AAAATY29scm5jbHgAAgACAAaAAAAADGNsbGkAywBAAAAAFGlzcGUAAAAAAAAAYAAAADAAAAAJaXJvdAAAAAAQcGl4aQAAAAADCAgIAAAAcWh2Y0MBA3AAAACwAAAAAAAe8AD8/fj4AAALA6AAAQAXQAEMAf//A3AAAAMAsAAAAwAAAwAecCShAAEAI0IBAQNwAAADALAAAAMAAAMAHqAUIEHBDE4h7kWVTcCAgYAgogABAAlEAcBhcshEU2QAAAAZaXBtYQAAAAAAAAABAAEGgQIDhAWGAAAAHmlsb2MAAAAARAAAAQABAAAAAQAAAboAAABhAAAAAW1kYXQAAAAAAAAAcQAAAF0oAa+jzYAqtP/7Af/8Yay8D/X5t74ea+NGth+MNj/5Tq810ymQ3b74CdxozUqzhry4eTBcVSivo15Ny3VIrv3JhdXo9m9bp3djnzpMZ/oumv0LGdA9S5xivn4RFmA=';
+  await page.locator('input[type=file][multiple]').setInputFiles({name:'phone.heic',mimeType:'image/heic',buffer:Buffer.from(syntheticHeic,'base64')});
+  await page.getByRole('button',{name:'Rotate page 1 clockwise'}).click({timeout:30000});
+  await page.getByRole('button',{name:'Save photo',exact:true}).click();
   await expect(finish).toBeDisabled();
   completeUpload();
   await expect(page.getByText('Drawing images saved privately.')).toBeVisible();
