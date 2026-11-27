@@ -121,6 +121,7 @@ const paperFunctions = new Map([
   ['upsert_nift_question_bank_runtime_batch', 'jsonb'],
   ['upsert_question_bank_runtime_batch', 'jsonb'],
   ['upsert_nid_year_runtime_batch', 'jsonb,jsonb'],
+  ['upsert_nift_year_runtime_batch', 'jsonb,jsonb'],
   ['prepare_free_year_paper', 'jsonb'],
   ['register_free_year_paper', 'uuid,text,integer,text,text,integer,text'],
 ]);

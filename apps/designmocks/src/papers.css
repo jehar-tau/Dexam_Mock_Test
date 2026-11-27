@@ -94,3 +94,12 @@
   .year-paper-start-actions { flex-direction:column-reverse; }
   .year-paper-start-actions .button { width:100%; }
 }
+
+/* B.Des. / M.Des. filter for exams that list both programmes */
+.year-papers-levels { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:.25rem; }
+.year-papers-levels button { display:inline-flex; gap:.5rem; align-items:center; min-height:40px; padding:.4rem .85rem; border:1px solid var(--line); border-radius:99px; background:var(--surface); color:var(--ink); font:600 .88rem Figtree,sans-serif; cursor:pointer; }
+.year-papers-levels button:hover { border-color:var(--green); }
+.year-papers-levels button[aria-pressed="true"] { border-color:var(--ink); background:var(--ink); color:var(--paper); }
+.year-papers-levels button span { color:var(--muted); font-size:.78rem; font-variant-numeric:tabular-nums; }
+.year-papers-levels button[aria-pressed="true"] span { color:inherit; opacity:.75; }
+.year-papers-levels button:focus-visible { outline:3px solid var(--orange); outline-offset:2px; }
