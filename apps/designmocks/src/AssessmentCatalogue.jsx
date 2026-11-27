@@ -86,6 +86,6 @@ export function AssessmentCatalogue({kind,View,Heading,viewProps={},SignedOut=nu
  const{session,loading}=useAuthState(),location=useLocation(),heading=useRef(null),key=JSON.stringify([kind,session?.user.id,location.key,location.search]),previous=useRef(key),spec=catalogueSpec(kind);
  useLayoutEffect(()=>{if(previous.current!==key&&(document.activeElement===document.body||heading.current?.parentElement.contains(document.activeElement)))heading.current?.focus();previous.current=key;},[key]);
  if(loading)return<section className="wrap section"><p role="status">Checking your account…</p></section>;
- if(!session)return<section className="wrap section"><h1>{spec.signIn}<em>.</em></h1>{SignedOut&&<SignedOut signUp={false}/>}<Link className="button" to="/account">Student sign in</Link></section>;
+ if(!session)return<section className="wrap section"><h1>{spec.signIn}<em>.</em></h1>{SignedOut&&<SignedOut signUp={false}/>}<Link className="button" to={kind==='allIndia'?'/account?for=all-india':'/account'}>Student sign in</Link></section>;
  return<PortalShell><section className={'section portal-module '+spec.className}><Heading headingRef={heading}/><AccountAccessBoundary key={key} kind="catalogue" actorId={session.user.id} headingRef={heading}><CatalogueSession kind={kind} View={View} viewProps={viewProps} headingRef={heading}/></AccountAccessBoundary></section></PortalShell>;
 }

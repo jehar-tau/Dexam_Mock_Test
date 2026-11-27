@@ -304,7 +304,7 @@ export function AllIndiaUpcoming({ signUp = true }) {
         {seats && <strong className={event.seatsLeft === 0 ? "all-india-seats-full" : undefined}>{seats}</strong>}
       </li>;
     })}</ul>
-    {signUp && <Link className="button" to="/account">Sign up free to reserve a seat</Link>}
+    {signUp && <Link className="button" to="/account?for=all-india">Sign up free to reserve a seat</Link>}
   </section>;
 }
 

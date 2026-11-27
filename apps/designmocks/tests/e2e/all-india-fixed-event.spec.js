@@ -39,7 +39,8 @@ for (const [device, viewport] of [['desktop', { width: 1280, height: 800 }], ['m
     await expect(upcoming.getByText('37 of 150 seats left', { exact: true })).toBeVisible();
     await expect(upcoming.getByText(/^Opens in 2 days/)).toBeVisible();
     await expect(upcoming.getByText(/180 minutes · free entry/)).toBeVisible();
-    await page.goto('/account');
+    await page.locator('#main').getByRole('link', { name: 'Student sign in', exact: true }).click();
+    await expect(page).toHaveURL('/account?for=all-india');
     await expect(page.getByRole('region', { name: 'Upcoming All India mocks' }).getByText('37 of 150 seats left', { exact: true })).toBeVisible();
     expect(provider.calls.some(([name]) => ['all_india_event_catalog', 'register_all_india_event'].includes(name))).toBe(false);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);

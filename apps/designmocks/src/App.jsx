@@ -974,6 +974,8 @@ function Plans() {
 }
 function Account() {
   const { session, loading, authError } = useAuthState();
+  // Students who come from All India see the upcoming events and seats left.
+  const allIndiaSignUp = new URLSearchParams(useLocation().search).get("for") === "all-india";
   const stagingAccess = useStagingPortalAccess(session);
   const workspaceAvailable = portalReady && stagingAccess === "allowed";
   const accountId = session?.user.id;
@@ -1057,7 +1059,7 @@ function Account() {
           Your papers, your attempts, your next step.
           <br /> All in one student workspace.
         </p>
-        {!session && !loading && studentModuleReleased('all-india') && platform &&
+        {!session && !loading && studentModuleReleased('all-india') && platform && allIndiaSignUp &&
           <React.Suspense fallback={null}><AllIndiaUpcoming signUp={false} /></React.Suspense>}
         <Art kind="ideas" />
       </div>
