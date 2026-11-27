@@ -16,7 +16,7 @@ export function Contact() {
   return <section className="wrap policy section">
     <span className="eyebrow">DMOCKS / CONTACT</span>
     <h1>Contact DMocks.</h1>
-    <p>For account, practice or purchase support, email the team. Include the page and a short description of the issue. Keep passwords, sign-in codes and card details out of your message.</p>
+    <p>For help with your account, free papers or topic practice, email the team. Include the page and a short description of the issue. Keep passwords and sign-in codes out of your message.</p>
     <OperatorDetails />
   </section>;
 }
