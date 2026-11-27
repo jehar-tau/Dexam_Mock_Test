@@ -42,6 +42,8 @@ test("one drawing with two photos counts once in navigation and the submit dialo
   const png=Buffer.from(await page.evaluate(()=>document.createElement("canvas").toDataURL("image/png").split(",")[1]),"base64");
   const files=[1,2].map(n=>({name:n+".png",mimeType:"image/png",buffer:png}));
   await page.locator('input[type="file"][multiple]').setInputFiles(files);
+  await total(1); // A selected preview is still unsaved.
+  await page.getByRole("button",{name:"Save photos",exact:true}).click();
   await expect(page.getByText("Drawing images saved privately.")).toBeVisible();await total(2);
   await expect(nav.getByRole("button",{name:"Go to question 2"})).toHaveAttribute("data-status","answered");
   await page.reload();await total(2);
