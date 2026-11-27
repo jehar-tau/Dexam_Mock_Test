@@ -24,6 +24,13 @@ test("blank, not-a-drawing and off-task flags set the total to zero", () => {
   }
 });
 
+test("the student never sees a model judgment or zero while awaiting a teacher", () => {
+  const view = drawingEstimateView({status: "awaiting_teacher", flags: ["not_a_drawing"], total: 0, canReevaluate: true}, criteria);
+  assert.deepEqual(view.flags, []);
+  assert.equal(view.total, null);
+  assert.equal(view.canReevaluate, true);
+});
+
 test("missing, negative and non-numeric scores show as zero", () => {
   const view = drawingEstimateView({ status: "ready", criteria: [{ id: "idea", score: -2 }, { id: "sketch", score: "4" }] }, criteria);
   assert.deepEqual(view.criteria.map(row => row.score), [0, 0]);

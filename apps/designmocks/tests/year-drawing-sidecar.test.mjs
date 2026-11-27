@@ -26,8 +26,8 @@ test('separate-session and choose-one plans stay ineligible for a shared-clock i
   const {plan,src,hash}=fixture();plan.timer='separate';assert.equal(validateDrawingSidecar(plan,src,hash).supported,false);
   plan.timer='shared';plan.sections[0].chooseOne=true;assert.equal(validateDrawingSidecar(plan,src,hash).supported,false);
 });
-test('no numeric estimate or unknown flags before calibration, and per-task page cap',()=>{
+test('no numeric estimate or model flags before calibration, and per-task page cap',()=>{
   const view=drawingEstimateView({status:'awaiting_teacher',flags:['illegible','invented'],score:100},[{id:'form',max:20}]);
-  assert.equal(view.total,null);assert.deepEqual(view.flags,['illegible']);
+  assert.equal(view.total,null);assert.deepEqual(view.flags,[]);
   assert.ok(planDrawingPages(['a','b'],[{ordinal:1}],2).error);
 });
