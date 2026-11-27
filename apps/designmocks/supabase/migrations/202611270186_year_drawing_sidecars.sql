@@ -17,6 +17,23 @@ alter table dm_private.year_drawing_versions enable row level security;
 revoke all on dm_private.year_drawing_versions from public,anon,authenticated,service_role;
 alter table dm_private.attempts add column year_drawing_version uuid references dm_private.year_drawing_versions(id);
 
+-- Historical papers with a separate session or an elective section need
+-- distinct rules. They remain ineligible until their rule is implemented.
+create function dm_private.year_drawing_choice_plan_ok(doc jsonb) returns boolean
+language sql immutable set search_path=pg_catalog as $$
+  select not exists(select from jsonb_array_elements(doc->'sections') s where s->'chooseOne'='true'::jsonb)
+    and not exists(select from jsonb_array_elements(doc->'items') t where t#>'{drawing,alternatives}' is not null)
+$$;
+create function dm_private.year_drawing_task_selected(p_attempt_id uuid,p_question_id uuid) returns boolean
+language sql stable set search_path=pg_catalog as $$ select true $$;
+create function dm_private.year_drawing_session_open(p_attempt_id uuid,p_question_id uuid) returns boolean
+language sql stable set search_path=pg_catalog as $$ select true $$;
+create function dm_private.year_drawing_choice_fields(p_attempt_id uuid,p_question_id uuid) returns jsonb
+language sql stable set search_path=pg_catalog as $$ select '{}'::jsonb $$;
+revoke all on function dm_private.year_drawing_choice_plan_ok(jsonb),dm_private.year_drawing_task_selected(uuid,uuid),
+  dm_private.year_drawing_session_open(uuid,uuid),dm_private.year_drawing_choice_fields(uuid,uuid)
+  from public,anon,authenticated,service_role;
+
 create function dm_private.install_year_drawing_sidecar(doc jsonb, reviewed_objective text) returns uuid
 language plpgsql set search_path=pg_catalog,dm_private,public as $$
 declare
@@ -31,7 +48,7 @@ begin
   if not dm_private.year_paper_ready(rel.paper_id) then raise exception 'Objective release changed'; end if;
   if doc->'supported' is distinct from 'true'::jsonb or (doc->>'durationSeconds')::integer<>10800
      or (doc->>'uploadGraceSeconds')::integer<>600 or jsonb_array_length(doc->'items') not between 1 and 40
-     or exists(select from jsonb_array_elements(doc->'sections') s where s->'chooseOne'='true'::jsonb) then
+     or not dm_private.year_drawing_choice_plan_ok(doc) then
      raise exception 'Unsupported drawing plan'; end if;
   select id into version_id from dm_private.year_drawing_versions where paper_id=rel.paper_id
     and objective_manifest=reviewed_objective and drawing_digest=doc->>'digest';
@@ -99,6 +116,8 @@ revoke all on function dm_private.year_drawing_ready(uuid) from public,anon,auth
 -- Enforce the authored page cap at commit too, including simultaneous requests.
 create function dm_private.year_drawing_upload_limit() returns trigger language plpgsql set search_path=pg_catalog,dm_private as $$
 begin
+  if not dm_private.year_drawing_task_selected(new.attempt_id,new.question_id)
+    or not dm_private.year_drawing_session_open(new.attempt_id,new.question_id) then raise exception 'Choose an open drawing task first'; end if;
   if new.ordinal > (select (i.key#>>'{drawing,maxImages}')::int from dm_private.attempt_items i
     where i.attempt_id=new.attempt_id and i.question_id=new.question_id) then raise exception 'Drawing task image limit reached'; end if;
   return new;
@@ -179,7 +198,7 @@ begin
       'answerRevision',i.answer_revision,
       'points',i.points,'negativePoints',i.negative_points,'marking',i.marking,'kind',i.kind,'media',i.media
     )||case when i.key ? 'drawing' and attempt.year_drawing_version is not null then jsonb_build_object(
-      'drawing',i.key->'drawing','label',i.key->'label')||case when attempt.status='submitted' then jsonb_build_object(
+      'drawing',i.key->'drawing','label',i.key->'label')||dm_private.year_drawing_choice_fields(i.attempt_id,i.question_id)||case when attempt.status='submitted' then jsonb_build_object(
       'drawingEstimate',dm_private.year_drawing_estimate(i.attempt_id,i.question_id)) else '{}'::jsonb end else '{}'::jsonb end
     ||case when attempt.status='submitted' and not exam_pending then (
       select jsonb_build_object('correctKey',i.key,'explanation',i.explanation,'outcome',grade.outcome,'awarded',grade.marks)
@@ -281,6 +300,7 @@ returns boolean language sql stable security definer set search_path=pg_catalog,
     select 1 from dm_private.attempts a
     join dm_private.attempt_items i on i.attempt_id=a.id
     where a.id=p_attempt_id and a.user_id=auth.uid() and i.question_id=p_question_id and i.kind='drawing'
+      and dm_private.year_drawing_task_selected(a.id,i.question_id) and dm_private.year_drawing_session_open(a.id,i.question_id)
       and p_ordinal<=coalesce((i.key#>>'{drawing,maxImages}')::int,5)
       and dm_private.drawing_upload_cutoff(a)>statement_timestamp()
       and not exists(select 1 from dm_private.drawing_uploads u
