@@ -8,6 +8,12 @@ export function roundMarks(value) {
   return Object.is(rounded, -0) ? 0 : rounded;
 }
 
+// Scores shown beside a total ("61.33 / 100"); leaves missing values alone.
+export function displayMarks(value) {
+  const number = Number(value);
+  return value == null || value === "" || !Number.isFinite(number) ? value : roundMarks(number);
+}
+
 function summarize(items, keyOf) {
   const groups = new Map();
   for (const item of items) {

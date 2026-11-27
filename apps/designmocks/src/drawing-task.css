@@ -60,7 +60,7 @@
 .drawing-photos img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 .drawing-photos-empty { margin: 0; padding: 1rem; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); }
 .drawing-model-notes { padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
-.drawing-model-notes summary { cursor: pointer; font-weight: 700; }
+.drawing-model-notes summary { padding-block: .8rem; cursor: pointer; font-weight: 700; }
 .drawing-model-notes p { margin: .6rem 0 0; line-height: 1.6; white-space: pre-line; }
 @media (max-width: 560px) {
   .drawing-grace { flex-direction: column; align-items: stretch; }

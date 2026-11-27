@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Arrow } from "./Art.jsx";
 import { paperLabel, paperLevel, paperProgramme } from "./paper-years.mjs";
+import { displayMarks } from "./attempt-insights.mjs";
 
 const examNames = { uceed: "UCEED", ceed: "CEED", nift: "NIFT", nid: "NID" };
 export const paperName = row => `${examNames[row.exam]} ${paperLevel(row)}${paperLabel(row)}`;
@@ -30,7 +31,7 @@ export function OverviewPapers({ progress, loading = false, error = "", onRetry,
           <span className="overview-kicker">LATEST RESULTS</span>
           {progress.results.length ? <ul>{progress.results.slice(0, 3).map(row => <li key={row.attempt.id}>
             <b>{paperName(row)}{partName(row)}</b>
-            <span>{row.attempt.resultsPending ? "Result under review" : `${row.attempt.score} / ${row.attempt.total}`}</span>
+            <span>{row.attempt.resultsPending ? "Result under review" : `${displayMarks(row.attempt.score)} / ${displayMarks(row.attempt.total)}`}</span>
             <Link to={attemptHref(row.attempt.id)}>{row.attempt.resultsPending ? "View status →" : "Review answers →"}</Link></li>)}</ul>
             : <p>Your marks and answer-by-answer review appear here after you submit a paper.</p>}
         </article>

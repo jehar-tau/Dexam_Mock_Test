@@ -4,6 +4,7 @@ import { useAuthState } from "./useAuth.js";
 import { portalItems, portalModules } from "./portalModel.mjs";
 import {postLaunchPreview,releasedStudentModuleNames}from'./launch-scope.js';
 import { hostedStudentPreview, studentPreview } from "./student-preview.js";
+import { checkoutReady } from "./platform.js";
 import {launchNavigation,deferredModules,studentNavigation}from'./launch-scope.mjs';
 
 export function PortalShell({ children }) {
@@ -44,8 +45,10 @@ export function PortalShell({ children }) {
 
 export function DeferredModule({module}){
  return<PortalShell><section className="wrap section"><span className="eyebrow">COMING LATER</span><h1>{deferredModules[module]??'This area'}<em>.</em></h1>
-  <p>This area is outside the first paid release. Your annual pass covers only the explicitly released papers in the catalogue.</p>
-  <Link className="button" to="/dashboard/mocks">View released papers</Link>
+  {checkoutReady?<><p>This area is outside the first paid release. Your annual pass covers only the explicitly released papers in the catalogue.</p>
+  <Link className="button" to="/dashboard/mocks">View released papers</Link></>
+  :<><p>This area opens later. Free year-wise papers, with answers and worked solutions, are open now.</p>
+  <Link className="button" to="/papers">Open year-wise Papers</Link></>}
  </section></PortalShell>;
 }
 

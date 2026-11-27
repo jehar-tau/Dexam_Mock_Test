@@ -281,7 +281,7 @@ function Layout({ children }) {
             <Link to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "/portal-preview" : "/account"}>
               {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Student preview" : "Student sign in"}
             </Link>
-            <Link to={session ? "/report" : "/contact"}>Report a problem</Link>
+            <Link to={session ? "/report" : "/contact"} state={session && location.pathname !== "/report" ? { reportFrom: location.pathname } : undefined}>Report a problem</Link>
           </div>
         </div>
         <div className="wrap academy-footer-note">

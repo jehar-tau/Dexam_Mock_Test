@@ -5,8 +5,9 @@ import { Art, Arrow } from "./Art.jsx";
 import {postLaunchPreview, studentModuleReleased} from "./launch-scope.js";
 import { OverviewPapers, paperName } from "./OverviewPapers.jsx";
 import { overviewPaperProgress } from "./overview-papers.mjs";
+import { displayMarks } from "./attempt-insights.mjs";
 import { ownedYearPaperAttempts } from "./year-paper-attempts.mjs";
-import { controlledPublicPortalMode } from "./platform.js";
+import { checkoutReady, controlledPublicPortalMode } from "./platform.js";
 import { AccountAccessBoundary, useAccountServices } from "./AccountAccess.jsx";
 import { withAccountDeadline } from "./account-request.js";
 import { attemptRecordFilter, loadOverview, overviewStartId } from "./overview-data.js";
@@ -169,7 +170,7 @@ export function WorkspaceView({
           <div className="overview-metrics" aria-label="Your progress at a glance">
             <article><span>COMPLETED PAPERS</span><strong>{data.analytics?.completed ?? 0}</strong><small>Submitted attempts</small></article>
             <article><span>OBJECTIVE ACCURACY</span><strong>{data.analytics?.objectiveAccuracy == null ? "—" : `${data.analytics.objectiveAccuracy}%`}</strong><small>{data.analytics?.objectiveAccuracy == null ? "After a released result" : `From ${data.analytics.objectiveAnswered} answered questions`}</small></article>
-            <article><span>{passLabel}</span><strong>{data.access?.active ? "Active" : "Not active"}</strong><small>{data.access?.active ? `Until ${new Date(data.access.expiresAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}` : <Link to="/plans">View the annual pass →</Link>}</small></article>
+            <article><span>{passLabel}</span><strong>{data.access?.active ? "Active" : "Not active"}</strong><small>{data.access?.active ? `Until ${new Date(data.access.expiresAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}` : checkoutReady ? <Link to="/plans">View the annual pass →</Link> : "Free papers need no pass"}</small></article>
             <article><span>RESULTS IN REVIEW</span><strong>{data.analytics?.waitingForResults ?? 0}</strong><small>Released after review</small></article>
           </div>
           {yearPapers && <OverviewPapers {...yearPapers} attemptHref={yearPapers.attemptHref ?? attemptHref} />}
@@ -239,7 +240,7 @@ export function WorkspaceView({
               </div>
             </>
           )}
-          {catalogueOnly && !data.access?.active && <p className="notice">An active pass is needed to start a released paper. <Link to="/plans">View the annual pass →</Link></p>}
+          {catalogueOnly && checkoutReady && !data.access?.active && <p className="notice">An active pass is needed to start a released paper. <Link to="/plans">View the annual pass →</Link></p>}
           <div className="overview-section-head"><div><span className="overview-kicker">{catalogueOnly?"PAPER CATALOGUE":"EXAM-WISE MOCKS"}</span><h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2></div>{!catalogueOnly&&<Link to={examHref}>View exam-wise mocks →</Link>}</div>
           {papers.length ? (
             <div className="paper-list">
@@ -263,8 +264,9 @@ export function WorkspaceView({
             </div>
           ) : (
             <div className="overview-empty-papers">
-              <div><span className="overview-kicker">RELEASE STATUS</span><h3>{catalogueOnly?"No papers have been released yet":"No exam-wise mock has been released yet"}</h3><p>{catalogueOnly?"Reviewed papers will appear here when they are published.":"Free year-wise papers are open now. Exam-wise mocks appear here when they are published."}</p></div>
-              {preview&&<Link className="overview-secondary-link" to={attemptHref("example-paper")}>Try an example paper <Arrow size={17}/></Link>}
+              <div><span className="overview-kicker">RELEASE STATUS</span><h3>{catalogueOnly?"No papers have been released yet":"No exam-wise mock has been released yet"}</h3><p>{catalogueOnly?(checkoutReady?"Reviewed papers will appear here when they are published.":"Free year-wise papers are open now. Reviewed papers will appear here when they are published."):"Free year-wise papers are open now. Exam-wise mocks appear here when they are published."}</p></div>
+              {preview?<Link className="overview-secondary-link" to={attemptHref("example-paper")}>Try an example paper <Arrow size={17}/></Link>
+                :(!catalogueOnly||!checkoutReady)&&<Link className="overview-secondary-link" to={papersHref}>Open year-wise Papers <Arrow size={17}/></Link>}
             </div>
           )}
           {!catalogueOnly && <><div className="overview-section-head"><div><span className="overview-kicker">YOUR RECORD</span><h2>Your recent attempts.</h2></div></div>
@@ -285,7 +287,7 @@ export function WorkspaceView({
                 </span>
                 <span>
                   {a.resultsPending ? "Awaiting release" : a.status === "submitted"
-                    ? `${a.score} / ${a.total}${postLaunchPreview&&a.cohortRank ? ` · Rank ${a.cohortRank}` : ""}`
+                    ? `${displayMarks(a.score)} / ${displayMarks(a.total)}${postLaunchPreview&&a.cohortRank ? ` · Rank ${a.cohortRank}` : ""}`
                     : "In progress"}
                 </span>
               </article>
@@ -736,8 +738,8 @@ if(expandedAttemptScope){
           <div className="sample-score" role="group" aria-label={cohort ? "All India result" : attempt.scoreKind === "drawing" ? "Drawing result" : "Objective result"}>
             {attempt.examResultsPending ? <><span>—</span><p>full result pending</p></> : <>
             <span>
-              {attempt.score}
-              <i>/{attempt.total}</i>
+              {displayMarks(attempt.score)}
+              <i>/{displayMarks(attempt.total)}</i>
             </span>
             <p>{cohort ? "All India marks" : attempt.scoreKind === "drawing" ? "drawing marks" : "objective marks"}</p>
             </>}

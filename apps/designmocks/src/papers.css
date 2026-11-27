@@ -46,14 +46,14 @@
 .year-paper-progress:empty { display:none; }
 .year-paper-action { grid-area:action; justify-self:end; }
 .year-paper-release .button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; text-decoration:none; text-align:center; white-space:nowrap; }
-.year-paper-own-attempt { display:flex; flex-wrap:wrap; align-items:center; gap:.35rem .7rem; margin:.3rem 0 0; font-size:.85rem; }
+.year-paper-own-attempt { display:flex; flex-wrap:wrap; align-items:center; gap:0 .7rem; margin:.1rem 0 0; font-size:.85rem; }
 .year-paper-own-attempt span { display:inline-flex; align-items:center; gap:.4rem; font-weight:700; color:var(--green); }
 .year-paper-own-attempt span::before { content:""; width:.5rem; height:.5rem; border-radius:50%; background:currentColor; }
 .year-paper-own-attempt[data-state="active"] span { color:var(--orange); }
 .year-paper-own-attempt[data-state="pending"] span { color:#9a6a12; }
 :root[data-theme="dark"] .year-paper-own-attempt[data-state="pending"] span { color:var(--yellow); }
 .year-paper-own-attempt[data-state="new"] span { color:var(--muted); font-weight:600; }
-.year-paper-own-attempt a { color:var(--green); text-decoration:underline; text-underline-offset:.15rem; font-weight:600; }
+.year-paper-own-attempt a { display:inline-flex; align-items:center; min-height:44px; color:var(--green); text-decoration:underline; text-underline-offset:.15rem; font-weight:600; }
 .year-paper-own-attempt a:focus-visible { outline:3px solid var(--orange); outline-offset:3px; }
 
 .year-papers-empty { padding:1.5rem; border:1px dashed var(--line); border-radius:.9rem; background:var(--surface); }

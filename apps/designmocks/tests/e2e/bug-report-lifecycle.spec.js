@@ -87,6 +87,15 @@ test('support context excludes URL query strings and fragments',async({page})=>{
  await expect.poll(()=>state.submissions.length).toBe(1);expect(state.submissions[0].p_page_url).toBe(portalFixtureURL+'/report');
 });
 
+test('the footer link reports the page the student came from, without its query',async({page})=>{
+ const state=await fixture(page,{path:'/privacy?fictional=private',waitForReports:false});
+ await page.getByRole('contentinfo').getByRole('link',{name:'Report a problem',exact:true}).click();
+ await expect(page).toHaveURL(portalFixtureURL+'/report');
+ await expect(page.getByText('This report will note the page you came from:',{exact:false})).toContainText('/privacy');
+ await fillReport(page);await page.getByRole('button',{name:'Send report',exact:true}).click();
+ await expect.poll(()=>state.submissions.length).toBe(1);expect(state.submissions[0].p_page_url).toBe(portalFixtureURL+'/privacy');
+});
+
 test('an SDK token change before notification cannot send another account private support draft',async({page})=>{
  const state=await fixture(page);await fillReport(page,'A private original fictional first-account draft');await seedPortalSession(page,second);await page.getByRole('button',{name:'Send report',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Report access could not be verified');await expect(page.getByLabel('Short title',{exact:true})).toHaveCount(0);expect(state.submissions).toEqual([]);
 });

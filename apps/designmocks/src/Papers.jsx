@@ -10,6 +10,7 @@ import { overviewStartId } from './overview-data.js';
 import { catalogueStartFailure, savedCatalogueAttempts } from './catalogue-data.js';
 import { ownedYearPaperAttempts } from './year-paper-attempts.mjs';
 import { rememberReturn } from './return-path.js';
+import { displayMarks } from './attempt-insights.mjs';
 import './papers.css';
 
 const examNames = { uceed: 'UCEED', ceed: 'CEED', nift: 'NIFT', nid: 'NID' };
@@ -124,7 +125,7 @@ export function PapersView({ releases = [], signedIn = false, onStart,
                   {own?.active && <p className="year-paper-own-attempt" data-state="active"><span>In progress</span>
                     <Link to={attemptHref(own.active.id)}>Continue saved attempt →</Link></p>}
                   {own?.submitted && <p className="year-paper-own-attempt" data-state={own.submitted.resultsPending ? 'pending' : 'scored'}><span>{own.submitted.resultsPending
-                    ? 'Result under review' : `Latest result ${own.submitted.score} / ${own.submitted.total}`}</span>
+                    ? 'Result under review' : `Latest result ${displayMarks(own.submitted.score)} / ${displayMarks(own.submitted.total)}`}</span>
                     <Link to={attemptHref(own.submitted.id)}>{own.submitted.resultsPending
                       ? 'View result status →' : 'Review latest attempt →'}</Link></p>}
                   {signedIn && !own?.active && !own?.submitted && !attemptsLoading && <p className="year-paper-own-attempt" data-state="new"><span>Not attempted yet</span></p>}
