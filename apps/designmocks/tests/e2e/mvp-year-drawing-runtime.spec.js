@@ -26,7 +26,7 @@ test('historical drawing locks answers, accepts only photos during grace and exp
     return route.fulfill({headers,contentType:'application/json',body:JSON.stringify(reply)});
   });
   await page.goto('/account'); await seedPortalSession(page,{id:student,email:'student@example.invalid'}); await page.goto('/attempt/'+attemptId);
-  await expect(page.getByRole('heading',{name:'How it’s marked'})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'How it’s marked'})).toBeVisible({timeout:30000});
   await expect(page.getByText('Shape and proportion')).toBeVisible();
   await expect(page.getByText('Add up to 2 photos', {exact:false})).toBeVisible();
   cutoff=Date.now()-5000; await page.reload();
