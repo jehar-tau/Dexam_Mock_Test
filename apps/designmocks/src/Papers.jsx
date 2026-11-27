@@ -11,6 +11,7 @@ import { catalogueStartFailure, savedCatalogueAttempts } from './catalogue-data.
 import { ownedYearPaperAttempts } from './year-paper-attempts.mjs';
 import { rememberReturn } from './return-path.js';
 import { displayMarks } from './attempt-insights.mjs';
+import { PortalShell } from './PortalShell.jsx';
 import './papers.css';
 
 const examNames = { uceed: 'UCEED', ceed: 'CEED', nift: 'NIFT', nid: 'NID' };
@@ -231,6 +232,15 @@ function SignedInPapers({ releases, releasesUnavailable, releasesLoading, onRefr
     onRefreshAttempts={() => setAttemptRefresh(value => value + 1)} initialExam={initialExam} initialProgramme={initialProgramme}/>;
 }
 
+function PapersSignIn({ returnTo, count }) {
+  return <section className="wrap section papers-sign-in">
+    <span className="eyebrow">PAPERS / YEAR BY YEAR</span>
+    <h1>Sign in to open <em>the papers.</em></h1>
+    <p>{count ? `${count} UCEED, CEED, NID and NIFT papers` : 'UCEED, CEED, NID and NIFT past papers'} are free inside your DMocks account, timed like the real exam, with a worked solution for every question.</p>
+    <Link className="button" to="/account" onClick={() => rememberReturn(returnTo)}>Sign in free with Google</Link>
+  </section>;
+}
+
 export default function Papers() {
   const { session, loading: authChecking } = useAuthState(), heading = useRef(null);
   const { exam: pathExam } = useParams();
@@ -270,10 +280,15 @@ export default function Papers() {
       document.removeEventListener('visibilitychange',onVisible);window.removeEventListener('focus',onFocus);};
   }, [refresh]);
   const onRefresh = cataloguePlatform ? () => setRefresh(value => value + 1) : undefined;
-  if (authChecking || !session || !platform) return <PapersView releases={releases} releasesUnavailable={releasesUnavailable}
+  // Without a backend (local design previews) the public catalogue still shows.
+  if (!platform) return <PapersView releases={releases} releasesUnavailable={releasesUnavailable}
     releasesLoading={releasesLoading} onRefresh={onRefresh} authChecking={authChecking} initialExam={initialExam} initialProgramme={initialProgramme}/>;
-  return <AccountAccessBoundary key={session.user.id} actorId={session.user.id} headingRef={heading} kind="catalogue">
+  if (authChecking) return <p className="wrap section" role="status">Checking your account…</p>;
+  // Owner decision, 28 November 2026: the papers open only inside the student
+  // portal, so a signed-out visitor is asked to sign in first.
+  if (!session) return <PapersSignIn returnTo={`/papers${pathExam ? '/' + initialExam : ''}${query.get('programme') ? '?programme=' + query.get('programme') : ''}`} count={releases.length}/>;
+  return <PortalShell><AccountAccessBoundary key={session.user.id} actorId={session.user.id} headingRef={heading} kind="catalogue">
     <SignedInPapers releases={releases} releasesUnavailable={releasesUnavailable} releasesLoading={releasesLoading}
       onRefresh={onRefresh} headingRef={heading} initialExam={initialExam} initialProgramme={initialProgramme}/>
-  </AccountAccessBoundary>;
+  </AccountAccessBoundary></PortalShell>;
 }

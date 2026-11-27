@@ -5,3 +5,6 @@ const released=new Set(releasedStudentModules(import.meta.env.VITE_RELEASED_STUD
 export const studentModuleReleased=module=>postLaunchPreview||released.has(module);
 export const releasedStudentModuleNames=Object.freeze([...released]);
 export const drawingReviewReleased=studentModuleReleased('drawing-review');
+export const lessonsReleased=studentModuleReleased('lessons');
+export const communityReleased=studentModuleReleased('community');
+export const examMocksReleased=studentModuleReleased('mocks');

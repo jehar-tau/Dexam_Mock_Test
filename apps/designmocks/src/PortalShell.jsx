@@ -25,9 +25,8 @@ export function PortalShell({ children }) {
     { to: "/community-preview", label: "Community", mark: "C" },
   ] : previewRoute ? [
     { ...launchNavigation[0], to: "/portal-preview" },
-    { ...launchNavigation[1], to: "/exam-mocks-preview" },
-    { ...launchNavigation[2] },
-    { ...launchNavigation[3], to: "/learn-preview" },
+    { ...launchNavigation[1] },
+    { ...launchNavigation[2], to: "/learn-preview" },
   ] : null;
   const navigation = previewNavigation ?? (postLaunchPreview ? portalItems : studentNavigation(releasedStudentModuleNames));
   return <div className="portal-shell">

@@ -42,7 +42,7 @@ test('a mismatched customer notice revision keeps the checkout switch closed', a
 });
 for(const[path,title]of[['/dashboard/all-india','All India mocks'],['/dashboard/practice','Topic practice'],['/dashboard/community','Community'],['/review/drawings','Drawing review']])test(`the MVP disables ${title} before any private module request`,async({page})=>{
  const provider=await stubPortalProvider(page,()=>undefined);await page.goto('/');await seedPortalSession(page,actor);await page.goto(path);await expect(page.getByText('COMING LATER',{exact:true})).toBeVisible();await expect(page.getByRole('heading',{name:title+'.',exact:true})).toBeVisible();
- const menu=page.getByRole('button',{name:'Student menu',exact:true});if(await menu.isVisible())await menu.click();const nav=page.getByRole('navigation',{name:'Student workspace',exact:true});await expect(nav.getByRole('link')).toHaveCount(4);await expect(nav.getByRole('link',{name:'Released papers',exact:true})).toHaveAttribute('href','/dashboard/mocks');await expect(nav.getByRole('link',{name:'Papers',exact:true})).toHaveAttribute('href','/papers');await expect(nav.getByRole('link',{name:'Learn',exact:true})).toHaveAttribute('href','/dashboard/learn');expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
+ const menu=page.getByRole('button',{name:'Student menu',exact:true});if(await menu.isVisible())await menu.click();const nav=page.getByRole('navigation',{name:'Student workspace',exact:true});await expect(nav.getByRole('link')).toHaveCount(3);await expect(nav.getByRole('link',{name:'Released papers',exact:true})).toHaveCount(0);await expect(nav.getByRole('link',{name:'Papers',exact:true})).toHaveAttribute('href','/papers');await expect(nav.getByRole('link',{name:'Learn',exact:true})).toHaveAttribute('href','/dashboard/learn');expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
 });
 test('the released-paper MVP starts, saves, submits and reviews its objective offering without deferred services',async({page})=>{
  const provider=await fixture(page);await page.goto('/dashboard/mocks');await expect(page.getByRole('heading',{name:'Released papers',level:1,exact:true})).toBeVisible();await page.getByRole('button',{name:'Start or resume',exact:true}).click();await expect(page).toHaveURL('/attempt/'+attempt);
@@ -55,7 +55,8 @@ test('released papers stays focused while Overview retains progress',async({page
  const analytics={completed:3,waitingForResults:0,objectiveAccuracy:75,objectiveAnswered:12,topics:[{topic:'Observation',accuracy:75,correct:9,answered:12}],exams:[],drawingReviews:{pending:0,released:0}};
  const provider=await fixture(page,{analytics});
  await page.goto('/dashboard');
- await expect(page.getByRole('heading',{name:'Your papers.'})).toBeVisible();
+ // Exam-wise mocks are hidden (owner, 28 Nov 2026), so Overview no longer lists them.
+ await expect(page.getByRole('heading',{name:'Your papers.'})).toHaveCount(0);
  await expect(page.getByRole('heading',{name:'Performance snapshot',exact:true})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Your topic picture',exact:true})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Your recent attempts.'})).toBeVisible();
@@ -131,7 +132,7 @@ test('released Learn opens every interactive programme without any private reque
  expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
 });
 test('a production build cannot enable deferred modules or checkout with preview flags',async({page})=>{
- await page.goto('http://127.0.0.1:4899/dashboard/community');await expect(page.getByText('COMING LATER',{exact:true})).toBeVisible();const menu=page.getByRole('button',{name:'Student menu',exact:true});if(await menu.isVisible())await menu.click();await expect(page.getByRole('navigation',{name:'Student workspace'}).getByRole('link')).toHaveCount(4);
+ await page.goto('http://127.0.0.1:4899/dashboard/community');await expect(page.getByText('COMING LATER',{exact:true})).toBeVisible();const menu=page.getByRole('button',{name:'Student menu',exact:true});if(await menu.isVisible())await menu.click();await expect(page.getByRole('navigation',{name:'Student workspace'}).getByRole('link')).toHaveCount(3);
  await page.goto('http://127.0.0.1:4899/plans');await expect(page.getByRole('checkbox')).toHaveCount(0);await expect(page.getByRole('button',{name:/Pay .* with Razorpay/})).toHaveCount(0);await expect(page.getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();
 });
 

@@ -16,7 +16,8 @@ test('explicit student releases open only their selected routes and navigation',
   const nav = page.getByRole('navigation', { name: 'Student workspace' });
   await expect(nav.getByRole('link', { name: 'All India mocks' })).toHaveAttribute('href', '/dashboard/all-india');
   await expect(nav.getByRole('link', { name: 'Topic practice' })).toHaveAttribute('href', '/dashboard/practice');
-  await expect(nav.getByRole('link', { name: 'Released papers' })).toHaveAttribute('href', '/dashboard/mocks');
+  await expect(nav.getByRole('link', { name: 'Released papers' })).toHaveCount(0);
+  await expect(nav.getByRole('link', { name: 'Papers', exact: true })).toHaveAttribute('href', '/papers');
   await expect(nav.getByRole('link', { name: 'Community' })).toHaveCount(0);
   await page.goto('/dashboard/practice');
   await expect(page.getByRole('heading', { name: /Build a topic/ })).toBeVisible();

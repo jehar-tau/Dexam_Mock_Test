@@ -19,7 +19,10 @@ for (const exam of ['UCEED', 'CEED', 'NIFT', 'NID']) {
 test('same-year CEED releases remain separate', async ({ page }) => {
   const releases = [1,2].map((number) => ({paperId:`10000000-0000-4000-8000-00000000300${number}`,
     exam:'ceed',year:2016,sourcePaperId:`ceed-2016-paper-${number}`,partLabel:'Part A',questionCount:10,durationSeconds:3600}));
-  await stubPortalProvider(page, name => name === 'free_year_paper_catalog' ? releases : undefined);
+  await stubPortalProvider(page, name => name === 'free_year_paper_catalog' ? releases :
+    name === 'finalize_my_expired_attempts' ? 0 : name === 'my_year_paper_attempts' ? [] : undefined);
+  await page.goto('http://127.0.0.1:4599/');
+  await seedPortalSession(page, { id: '00000000-0000-4000-8000-000000003009', email: 'fictional-ceed@example.invalid' });
   await page.goto('http://127.0.0.1:4599/papers');
   await page.getByRole('button', { name: /^M\.Des\. papers/ }).click();
   await expect(page.getByRole('button', { name: /^CEED\b/ })).toHaveAttribute('aria-pressed', 'true');
@@ -55,20 +58,23 @@ test.describe('free year-paper release', () => {
   const paperId = '10000000-0000-4000-8000-000000003001';
   const attemptId = '20000000-0000-4000-8000-000000003001';
   const release = { paperId, exam: 'uceed', year: 2026, sourcePaperId: 'uceed-2026', partLabel: 'Part A', questionCount: 57, durationSeconds: 7200 };
-  test('released fixed paper is free to browse and requests sign-in', async ({ page }) => {
+  test('signed-out Papers asks for sign-in inside the portal and keeps the requested list', async ({ page }) => {
     const provider = await stubPortalProvider(page, name => name === 'free_year_paper_catalog' ? [release] :
       name === 'public_all_india_top_ten' ? [] : undefined);
-    await page.goto('/papers');
-    const card = page.locator('.year-paper-card').filter({ hasText: '2026 paper' });
-    await expect(card).toContainText('Free paper open');
-    await expect(card.getByRole('link', { name: 'Sign in to start free paper' })).toHaveAttribute('href', '/account');
+    await page.goto('/papers/nid?programme=mdes');
+    await expect(page.getByRole('heading', { name: 'Sign in to open the papers.' })).toBeVisible();
+    await expect(page.locator('.year-paper-card')).toHaveCount(0);
+    await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Papers', exact: true })).toHaveCount(0);
+    const signIn = page.getByRole('link', { name: 'Sign in free with Google' });
+    await expect(signIn).toHaveAttribute('href', '/account');
     await page.setViewportSize({ width: 320, height: 850 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
     await page.addScriptTag({ path: fileURLToPath(new URL('../../node_modules/axe-core/axe.min.js', import.meta.url)) });
-    expect((await page.evaluate(async () => (await window.axe.run('.year-papers', {
+    expect((await page.evaluate(async () => (await window.axe.run('.papers-sign-in', {
       runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa'] },
     })).violations.map(item => item.id)))).toEqual([]);
-    expect(provider.calls.filter(([name]) => name === 'free_year_paper_catalog')).toHaveLength(1);
+    await signIn.click();
+    expect(await page.evaluate(() => sessionStorage.getItem('dmocks:return-after-sign-in'))).toBe('/papers/nid?programme=mdes');
     expect(provider.unexpected).toEqual([]);
   });
   test('signed-in free year paper starts without a pass on desktop and mobile', async ({ page }) => {
@@ -141,8 +147,13 @@ test.describe('free year-paper release', () => {
     const provider = await stubPortalProvider(page, name => {
       if (name === 'free_year_paper_catalog') return ++reads === 1 ? {code:'PGRST000',message:'Fictional network failure'} : [release];
       if (name === 'public_all_india_top_ten') return [];
+      if (name === 'finalize_my_expired_attempts') return 0;
+      if (name === 'my_year_paper_attempts') return [];
     });
+    await page.goto('/');
+    await seedPortalSession(page, actor);
     await page.goto('/papers');
+    await expect(page.locator('#student-navigation a[href="/papers"]')).toHaveCount(1);
     await expect(page.getByRole('alert')).toContainText('Couldn’t check released papers');
     await expect(page.getByRole('button', {name:'Refresh papers'})).toBeVisible();
     await page.getByRole('button', {name:'Refresh papers'}).click();

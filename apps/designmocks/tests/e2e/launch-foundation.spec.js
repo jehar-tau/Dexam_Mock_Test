@@ -141,13 +141,12 @@ test("the reduced dev preview links only to its local overview and exam example"
   if ((page.viewportSize()?.width ?? 1000) < 900)
     await page.getByRole("button", { name: "Student menu" }).click();
   const navigation = page.getByRole("navigation", { name: "Student workspace" });
-  await expect(navigation.getByRole("link")).toHaveCount(4);
+  await expect(navigation.getByRole("link")).toHaveCount(3);
   await expect(navigation.getByRole("link", { name: "Overview" })).toHaveAttribute("href", "/portal-preview");
+  await expect(navigation.getByRole("link", { name: "Papers" })).toHaveAttribute("href", "/papers");
   await expect(navigation.getByRole("link", { name: "Learn" })).toHaveAttribute("href", "/learn-preview");
-  const papers = navigation.getByRole("link", { name: "Released papers" });
-  await expect(papers).toHaveAttribute("href", "/exam-mocks-preview");
-  await papers.click();
-  await expect(page).toHaveURL(reducedPreviewOrigin + "/exam-mocks-preview");
+  await expect(navigation.getByRole("link", { name: "Released papers" })).toHaveCount(0);
+  await page.goto(reducedPreviewOrigin + "/exam-mocks-preview");
   await expect(page.getByRole("heading", { name: /Exam-wise mocks/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Sign in to continue/ })).toHaveCount(0);
   expect(providerRequests).toEqual([]);
