@@ -60,6 +60,11 @@ hashed scripts between deploys, so a page opened before a deploy keeps working.
   after the checks and the build.
 - **Rolling back:** Actions → "Publish dmocks.com" → Run workflow, with `ref`
   set to the last good main commit.
+  The build tooling always comes from current main, so any earlier main commit
+  can be rebuilt.
+- **Uptime:** `.github/workflows/dmocks-uptime.yml` runs the live check every
+  30 minutes once `DMOCKS_PAGES_LIVE=true`. GitHub emails the repository owner
+  when a run fails.
 - **Publishing without a code change** (for example, new notices): run the
   workflow on `main`.
 - **Caching:** GitHub Pages caches each HTML page for up to 10 minutes, so a
