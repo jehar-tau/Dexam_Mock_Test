@@ -1,11 +1,15 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { drawingUploadWindow } from "./drawing-upload-window.js";
 import { checkDrawingFiles, drawingInventory, drawingPageReceipt, drawingUploadFailure, planDrawingPages } from "./drawing-upload.js";
+import { yearDrawingPhoto } from "./year-drawing-photo.mjs";
 import { DrawingPages } from "./DrawingInspection.jsx";
 
 export function DrawingUploads({
   attemptId,
   questionId,
+  maxImages = 5,
+  historical = false,
+  onWritingChange,
   invoke,
 }) {
   const [items, setItems] = useState(null);
@@ -42,6 +46,7 @@ export function DrawingUploads({
     const signal = lifetime.current.signal;
     if (writing.current || signal.aborted || !pages.length) return;
     writing.current = true;
+    onWritingChange?.(true);
     setBusy(true);
     setMessage("Saving drawing images…");
     let remaining = pages;
@@ -51,7 +56,11 @@ export function DrawingUploads({
         form.set("attemptId", attemptId);
         form.set("questionId", questionId);
         form.set("ordinal", String(ordinal));
-        form.set("file", file);
+        if (historical) {
+          try { form.set("file", await yearDrawingPhoto(file)); }
+          catch (error) { setMessage(error.message); setPending([]); return; }
+          signal.throwIfAborted();
+        } else form.set("file", file);
         const result = await invoke(form, signal);
         signal.throwIfAborted();
         const id = drawingPageReceipt(result, ordinal);
@@ -69,6 +78,7 @@ export function DrawingUploads({
       reload();
     } finally {
       writing.current = false;
+      onWritingChange?.(false);
       if (!signal.aborted) setBusy(false);
     }
   };
@@ -77,8 +87,8 @@ export function DrawingUploads({
     const files = [...input.files];
     input.value = "";
     if (writing.current || pending.length || !items || !files.length) return;
-    const {pages, error} = planDrawingPages(files, items);
-    const invalid = error || checkDrawingFiles(files);
+    const {pages, error} = planDrawingPages(files, items, maxImages);
+    const invalid = error || (historical ? null : checkDrawingFiles(files));
     if (invalid) { setMessage(invalid); return; }
     void save(pages);
   };
@@ -86,13 +96,13 @@ export function DrawingUploads({
     <div className="drawing-uploads">
       <h3>Your drawing images</h3>
       <p>
-        Upload up to five clear PNG, JPEG or WebP images in the order they
-        should be reviewed. Each image can be up to 10 MB, 24 megapixels and
-        12,000 pixels on either side. Use still images.
+        {historical ? `Add up to ${maxImages} photos in page order, up to 12 MB each. Photos are saved privately as JPEGs.` :
+          "Upload up to five clear PNG, JPEG or WebP images in the order they should be reviewed. Each image can be up to 10 MB, 24 megapixels and 12,000 pixels on either side. Use still images."}
       </p>
-      <button className="button quiet" type="button" disabled={!items || busy || pending.length > 0 || items.length >= 5}
+      <button className="button quiet" type="button" disabled={!items || busy || pending.length > 0 || items.length >= maxImages}
         onClick={() => fileInput.current?.click()}>Add images</button>
-      <input ref={fileInput} type="file" accept="image/png,image/jpeg,image/webp" multiple hidden onChange={upload} />
+      <input ref={fileInput} type="file" accept={historical ? "image/png,image/jpeg,image/heic,image/heif,.heic,.heif" : "image/png,image/jpeg,image/webp"} multiple hidden onChange={upload} />
+      {historical && <label className="text-button">Take a photo<input aria-label="Take a photo" type="file" accept="image/*" capture="environment" onChange={upload} disabled={!items || busy || pending.length > 0 || items.length >= maxImages} /></label>}
       {pending.length > 0 && <div>
         {conflict && <p>Page {conflict.ordinal} already has a saved image. Inspect your saved pages before retrying.</p>}
         <button className="button quiet" type="button" disabled={!items || busy || Boolean(conflict)}
@@ -110,6 +120,7 @@ export function DrawingUploads({
               const signal = lifetime.current.signal;
               if (writing.current || signal.aborted) return;
               writing.current = true;
+              onWritingChange?.(true);
               setBusy(true);
               try {
                 const result = await invoke({ action: "remove", id: item.id }, signal);
@@ -126,6 +137,7 @@ export function DrawingUploads({
                 }
               } finally {
                 writing.current = false;
+                onWritingChange?.(false);
                 if (!signal.aborted) setBusy(false);
               }
             }}>Remove</button>
