@@ -37,7 +37,11 @@ test("NIFT historical GAT submission opens the timed CAT break, resumes, then en
   await expect(page.getByRole("heading",{name:"Your GAT is complete."})).toBeVisible(); await shot("transition");
   await page.reload();
   await expect(page.getByRole("timer",{name:"CAT time remaining"})).toBeVisible();
-  await page.getByRole("button",{name:"Open CAT drawing tasks"}).click();
+  await page.addScriptTag({path:"node_modules/axe-core/axe.min.js"});
+  expect(await page.evaluate(async()=> (await window.axe.run('[aria-labelledby="nift-cat-start-heading"]',
+    {runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21aa"]}})).violations.map(item=>item.id))).toEqual([]);
+  const openCat=page.getByRole("button",{name:"Open CAT drawing tasks"});
+  await openCat.focus(); await page.keyboard.press("Enter");
   await expect(page.getByText(cat.prompt)).toBeVisible(); await expect(page.getByText(gat.prompt)).toHaveCount(0);
   await shot("cat");
   cutoff=Date.now()-10000; await page.reload();
