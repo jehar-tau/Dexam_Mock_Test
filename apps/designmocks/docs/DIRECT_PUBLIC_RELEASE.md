@@ -1,5 +1,9 @@
 # Visual review and direct public release workflow (owner update, 24 November 2026)
 
+> **27 Nov 2026:** dmocks.com is moving from OpenAI Sites to GitHub Pages.
+> Step 5 below becomes automatic: `.github/workflows/dmocks-site.yml` builds and
+> publishes main after its checks pass. See `docs/HOSTING.md`.
+
 The owner wants accepted DMocks website changes published directly to
 `https://dmocks.com`. A separate development, staging and production environment
 programme is deferred until the complete application is built. The existing
