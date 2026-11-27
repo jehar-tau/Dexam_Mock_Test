@@ -42,3 +42,13 @@ test('card subtitles keep same-year NID B.Des. and M.Des. papers apart', () => {
   assert.equal(paperSubtitle({ exam: 'nid', year: 2018, paperId: 'nid-mdes-2018' }), 'M.Des. question paper');
   assert.equal(paperSubtitle({ exam: 'nid', year: 2024, paperId: 'nid-bdes-sample-2024' }), 'B.Des. sample paper');
 });
+
+test('NIFT GAT papers say GAT, and the programme filter appears only when both programmes exist', async () => {
+  const { paperSubtitle: subtitle, paperLevels } = await import('../src/paper-years.mjs');
+  assert.equal(subtitle({ exam: 'nift', year: 2026, paperId: 'nift-2026-bdes-gat' }), 'B.Des. GAT paper');
+  assert.equal(subtitle({ exam: 'nift', year: 2025, paperId: 'nift-2025-mdes-gat' }), 'M.Des. GAT paper');
+  assert.equal(subtitle({ exam: 'nid', year: 2025, paperId: 'nid-mdes-sample-2025' }), 'M.Des. sample paper');
+  assert.deepEqual(paperLevels([{ paperId: 'nid-mdes-2018' }, { paperId: 'nid-bdes-2018' }, { paperId: 'nid-bdes-2019' }]), ['B.Des.', 'M.Des.']);
+  assert.deepEqual(paperLevels([{ paperId: 'nid-bdes-2018' }, { paperId: 'nid-bdes-2019' }]), []);
+  assert.deepEqual(paperLevels([{ paperId: 'uceed-2026' }, { paperId: 'uceed-2025' }]), []);
+});
