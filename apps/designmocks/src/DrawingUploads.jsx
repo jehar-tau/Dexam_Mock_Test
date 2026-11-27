@@ -11,6 +11,7 @@ export function DrawingUploads({
   maxImages = 5,
   historical = false,
   onWritingChange,
+  onPageCount,
   invoke,
 }) {
   const [items, setItems] = useState(null);
@@ -19,6 +20,9 @@ export function DrawingUploads({
   const [loadAttempt, setLoadAttempt] = useState(0);
   const [pending, setPending] = useState([]);
   const [drafts, setDrafts] = useState([]);
+  useEffect(() => {
+    if (items) onPageCount?.(questionId, items.length);
+  }, [items, questionId, onPageCount]);
   const fileInput = useRef(null);
   const previewHeading = useRef(null);
   const selecting = drafts.length > 0;

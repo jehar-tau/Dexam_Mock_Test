@@ -43,7 +43,7 @@ export function drawingAdviceTarget(env, fetchImpl = fetch) {
   };
 }
 
-function imageList(items, role, limit) {
+export function imageList(items, role, limit, attemptId) {
   if (!Array.isArray(items) || items.length > limit) throw new Error("Invalid private review image inventory");
   let previous = 0;
   return items.map(file => {
@@ -57,7 +57,9 @@ function imageList(items, role, limit) {
       if (file.mimeType !== "image/png" || !digest.test(file.sha256 ?? "") || file.storagePath !== `papers/canonical/${file.sha256}.png`) {
         throw new Error("A prompt figure lacks verified canonical media");
       }
-    } else if (!mimes.has(file.mimeType) || !/^drawings\/[A-Za-z0-9_-]{1,100}\.(?:png|jpg|jpeg|webp)$/.test(file.storagePath ?? "") ||
+    } else if (!mimes.has(file.mimeType) || (!/^drawings\/[A-Za-z0-9_-]{1,100}\.(?:png|jpg|jpeg|webp)$/.test(file.storagePath ?? "") &&
+        !(uuid.test(attemptId ?? "") && file.mimeType === "image/jpeg" && file.storagePath?.startsWith(`attempts/${attemptId}/`) &&
+          /^attempts\/[a-f0-9-]+\/[a-z0-9][a-z0-9_-]{0,139}\/[1-5]\.jpg$/.test(file.storagePath) && file.storagePath.endsWith(`/${file.ordinal}.jpg`))) ||
         !Number.isInteger(file.orientation) || file.orientation < 1 || file.orientation > 8) {
       throw new Error("A drawing page lacks registered rendering metadata");
     }

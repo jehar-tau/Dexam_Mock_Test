@@ -25,7 +25,7 @@ export function drawingEstimateView(estimate, criteria = []) {
   if (status === "awaiting_teacher") {
     return { status, total: null, max, override: finite(estimate.override?.score) ? {
       score: Math.min(max, Math.max(0, half(estimate.override.score))), note: estimate.override.note ?? ""
-    } : null, flags: [...new Set((estimate.flags ?? []).filter(flag => Object.hasOwn(DRAWING_FLAG_LABELS, flag)))] };
+    } : null, flags: [], canReevaluate: estimate.canReevaluate === true };
   }
   if (status === "not_attempted") {
     return { status: "not_attempted", total: 0, max, criteria: [], flags: [], summary: "" };

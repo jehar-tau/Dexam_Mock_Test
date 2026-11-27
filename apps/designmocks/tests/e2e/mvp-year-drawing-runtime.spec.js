@@ -8,7 +8,7 @@ const questionId='20000000-0000-4000-8000-000000000386';
 const headers={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'*','Access-Control-Allow-Methods':'GET,POST,OPTIONS'};
 
 test('historical drawing locks answers, accepts only photos during grace and exposes calibrated review state',async({page})=>{
-  let cutoff=Date.now()+3600000, submitted=false, completeUpload;
+  let cutoff=Date.now()+3600000, submitted=false, completeUpload, reevaluated=false;
   const uploadGate = new Promise(resolve => { completeUpload = resolve; });
   const q={id:questionId,ordinal:1,kind:'drawing',label:'TASK B1',topic:'Form',prompt:'Draw two original shapes.',options:[],points:20,
     negativePoints:0,marking:{max:20},media:[],answer:null,answerRevision:0,
@@ -16,13 +16,14 @@ test('historical drawing locks answers, accepts only photos during grace and exp
   const attempt=()=>({id:attemptId,title:'Fictional authored year paper',status:submitted?'submitted':'active',
     yearDrawing:{maxMarks:20,sections:[]},serverNow:new Date().toISOString(),deadline:new Date(cutoff).toISOString(),
     uploadDeadline:new Date(submitted?Date.now()-1000:cutoff+600000).toISOString(),score:submitted?0:null,total:submitted?0:null,
-    questions:[submitted?{...q,drawingEstimate:{status:'awaiting_teacher',flags:['illegible']},explanation:'Consider the proportions.'}:q]});
+    questions:[submitted?{...q,drawingEstimate:reevaluated?{status:'evaluating'}:{status:'awaiting_teacher',flags:['illegible','not_a_drawing'],canReevaluate:true},explanation:'Consider the proportions.'}:q]});
   await page.route('https://dmocks-portal-fixture.supabase.co/**',async route=>{
     const req=route.request(),name=new URL(req.url()).pathname.split('/').at(-1);
     if(req.method()==='OPTIONS')return route.fulfill({headers,status:204});
     let reply=null;
     if(name==='user')reply={id:student,aud:'authenticated',app_metadata:{provider:'google'},user_metadata:{}};
     if(name==='read_attempt')reply=attempt();
+    if(name==='reevaluate_year_drawing'){expect(req.postDataJSON()).toEqual({p_attempt_id:attemptId,p_question_id:questionId});reevaluated=true;reply={status:'evaluating',canReevaluate:false};}
     if(name==='submit_attempt'){submitted=true;reply=attempt();}
     if(name==='drawing-media') {
       if(req.headers()['content-type']?.startsWith('multipart/')) {
@@ -65,6 +66,9 @@ test('historical drawing locks answers, accepts only photos during grace and exp
   await expect(finish).toBeEnabled();await finish.click();
   await page.getByRole('button',{name:'Open answer review'}).click();
   await expect(page.getByText('Score: awaiting teacher review.')).toBeVisible();
-  await expect(page.getByText('Parts of the drawing are hard to make out')).toBeVisible();
+  await expect(page.getByText('Parts of the drawing are hard to make out')).toHaveCount(0);
+  await expect(page.locator('.drawing-flags,.drawing-estimate-note')).toHaveCount(0);
   await expect(page.getByRole('button',{name:'Add images'})).toHaveCount(0);
+  await page.getByRole('button',{name:'Try re-evaluating'}).click();
+  await expect(page.getByText('Evaluating your drawing…', {exact:false})).toBeVisible();
 });

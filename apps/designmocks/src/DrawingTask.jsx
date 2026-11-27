@@ -1,4 +1,5 @@
 import React from "react";
+import { DrawingSubParts } from "./YearDrawingChoice.jsx";
 import { DRAWING_FLAG_LABELS, drawingEstimateView, formatMarks, graceClock } from "./drawing-estimate.mjs";
 import "./drawing-task.css";
 
@@ -43,7 +44,7 @@ export function DrawingEstimate({ estimate, criteria = [], onReevaluate, busy = 
   if (view.status === "awaiting_teacher") return <section className="drawing-estimate" data-state="awaiting-teacher">
     {view.override ? <p role="status"><b>Checked by DMocks: {formatMarks(view.override.score)}/{formatMarks(view.max)}.</b> {view.override.note}</p> :
       <p role="status"><b>Score: awaiting teacher review.</b> Your drawing was uploaded.</p>}
-    {view.flags.map(flag => <p key={flag}>{DRAWING_FLAG_LABELS[flag]}</p>)}
+    {view.canReevaluate && onReevaluate && <button type="button" className="button quiet" disabled={busy} onClick={onReevaluate}>{busy ? "Evaluating…" : "Try re-evaluating"}</button>}
   </section>;
   if (view.status === "evaluating") return <section className="drawing-estimate" data-state="evaluating" aria-busy="true">
     {head}
@@ -84,7 +85,7 @@ export function DrawingEstimate({ estimate, criteria = [], onReevaluate, busy = 
 
 // One drawing task in the answer review: the task, the student's photos, the
 // estimate, and the model notes.
-export function DrawingTaskReview({ label, prompt, figureUrl, figureAlt = "Figure for this drawing task", marks, criteria = [], criteriaSource, instructions = [], photos = [], estimate, notes, onReevaluate, busy }) {
+export function DrawingTaskReview({ label, prompt, figureUrl, figureAlt = "Figure for this drawing task", marks, criteria = [], criteriaSource, instructions = [], photos = [], estimate, notes, onReevaluate, busy, subParts, selectedAlternative }) {
   return <article className="drawing-task-review">
     <header>
       <span className="eyebrow">{label} · DRAWING · {formatMarks(marks)} MARKS</span>
@@ -98,6 +99,8 @@ export function DrawingTaskReview({ label, prompt, figureUrl, figureAlt = "Figur
           {photos.length ? <ul>{photos.map((photo, index) => <li key={photo.id ?? index}><img src={photo.url} alt={`Your drawing, page ${index + 1}`} /></li>)}</ul>
             : <p className="drawing-photos-empty">No photo uploaded.</p>}
         </div>
+        {selectedAlternative && <p>Your selected option: {selectedAlternative}</p>}
+        <DrawingSubParts parts={subParts} />
         {notes && <details className="drawing-model-notes"><summary>What a strong answer shows</summary><p>{notes}</p></details>}
       </div>
       <aside className="drawing-task-side">
