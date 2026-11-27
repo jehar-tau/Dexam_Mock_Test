@@ -16,7 +16,10 @@ async function fixture(page,kind,{identity=null,holdIdentity=false,holdRead=fals
  const config=modes[kind],state={identity,reads:[],finishedReads:0,starts:[],finishedStarts:0,startHold:null,startValue:attemptId,authHold:holdIdentity?deferred():null,heldAuth:0,readHold:holdRead?deferred():null,heldReads:0,activeReadHolds:[],savedActor:null,historyReads:[]};await stubPortalProvider(page,name=>{if(name==='public_all_india_top_ten')return[];});
  await page.route(api+'/auth/v1/user',async route=>{if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});const actor=state.identity??actorOf(route),held=state.authHold;if(held){state.heldAuth++;await held.promise;}await route.fulfill({headers,json:{id:actor,aud:'authenticated',app_metadata:{provider:'google'},user_metadata:{}}}).catch(()=>{});});
  await page.route(api+'/rest/v1/rpc/**',async route=>{
-  if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});const name=new URL(route.request().url()).pathname.split('/').at(-1),actor=actorOf(route);let data,status=200;
+  if(route.request().method()==='OPTIONS')return route.fulfill({headers,status:204});const name=new URL(route.request().url()).pathname.split('/').at(-1);
+  // Public All India schedule and top ten are anonymous reads with no actor.
+  if(['public_all_india_upcoming','public_all_india_top_ten'].includes(name))return route.fulfill({headers,json:[]}).catch(()=>{});
+  const actor=actorOf(route);let data,status=200;
   if(name===config.read){state.reads.push({name,actor});data=catalog(kind,actor);if(kind==='allIndia'&&state.savedActor===actor)data[0].attemptId=attemptId;const held=state.readHold;state.readHold=null;if(held){state.heldReads++;state.activeReadHolds.push(held);await held.promise;}}
   else if(name===config.start){state.starts.push({name,actor,input:route.request().postDataJSON()});state.savedActor=actor;data=state.startValue;const held=state.startHold;if(held)await held.promise;}
   else if(name==='my_attempt_history'){state.historyReads.push(actor);data=state.savedActor===actor?[{id:attemptId,title:'Original fictional saved active mock',status:'active',privateExtra:'discard'}]:[];}

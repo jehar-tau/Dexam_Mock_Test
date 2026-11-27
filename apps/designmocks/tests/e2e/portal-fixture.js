@@ -6,7 +6,7 @@ const adminLists = new Set([
   "admin_question_drafts", "admin_bank_questions", "admin_exam_mock_blueprints",
   "admin_all_india_events", "admin_reported_questions", "admin_learning_lessons", "admin_question_intake_assets",
   "admin_community_report_queue", "admin_ai_draft_requests",
-  "admin_drawing_reviewers", "admin_drawing_queue",
+  "admin_drawing_reviewers", "admin_drawing_queue", "admin_all_india_papers",
 ]);
 
 export function emptyAdminRead(procedure) {
@@ -54,8 +54,10 @@ export async function stubPortalProvider(page, respond, projectRef = fixtureProj
     const input = request.postDataJSON() ?? {};
     calls.push([procedure, input]);
     let result = respond(procedure, input);
-    // The Overview reads free year-paper progress; most fixtures predate it.
-    if (result === undefined && ['free_year_paper_catalog', 'my_year_paper_attempts'].includes(procedure)) result = [];
+    // The Overview reads free year-paper progress, and released All India pages read the public
+    // schedule, top ten and staged papers; most fixtures predate them.
+    if (result === undefined && ['free_year_paper_catalog', 'my_year_paper_attempts', 'public_all_india_upcoming',
+      'public_all_india_top_ten', 'admin_all_india_papers'].includes(procedure)) result = [];
     if (result === undefined) {
       unexpected.push(path);
       return route.abort();

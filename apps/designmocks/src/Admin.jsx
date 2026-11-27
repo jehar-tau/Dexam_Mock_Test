@@ -24,9 +24,11 @@ import { readSupportPage, supportPageLimit } from "./admin-support.js";
 import { readPrivacyQueue, privacyQueueLimit } from "./admin-privacy.js";
 import { AdminAccessBoundary, useAdminServices } from "./AdminAccess.jsx";
 import { adminRequestMessage } from "./admin-access.js";
-import {communityReleased,drawingReviewReleased,lessonsReleased,postLaunchPreview}from'./launch-scope.js';
+import { AdminAllIndia } from "./AdminAllIndia.jsx";
+import {communityReleased,drawingReviewReleased,lessonsReleased,postLaunchPreview,studentModuleReleased}from'./launch-scope.js';
+const allIndiaReleased=studentModuleReleased('all-india');
 const mvpDeskReads=new Set(['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_request_page','admin_launch_readiness',
- ...(drawingReviewReleased?['admin_drawing_queue']:[])]);
+ ...(drawingReviewReleased?['admin_drawing_queue']:[]),...(allIndiaReleased?['admin_all_india_events']:[])]);
 
 async function intakeRequest(functions, name, body, signal) {
   const { data, error } = await functions.invoke(name, { body, signal });
@@ -258,14 +260,6 @@ function AdminDesk({ session }) {
       reportError(e);
     }
   };
-  const releaseAllIndia = async (id) => {
-    try {
-      await rpc("admin_release_all_india_results", { p_event_id: id });
-      await load();
-    } catch (e) {
-      reportError(e);
-    }
-  };
   const refresh = async () => { if (!await load()) throw new Error("The administrator workspace could not be refreshed. Try again."); };
   const refreshQuestionReviews = async () => { await refresh(); assertCurrent(); setBankRefreshToken(value => value + 1); };
   const refreshLessons = refresh, refreshDrawings = refresh;
@@ -356,57 +350,8 @@ function AdminDesk({ session }) {
           </form>
           <IntakeExtractionQueue assets={intake} onExtract={extractIntake} onPromote={promoteIntake} onReject={rejectIntake} onTranscribe={transcribeIntake} onDownload={downloadIntake} onInspect={inspectIntake} onPrepareFigures={prepareIntakeFigures} />
           </>}
-          {drawingReviewReleased&&<>
-          <h2>Drawing review queue</h2>
-          <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings} {...drawingActions} />
-          <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
-          </>}
-          {communityReleased&&<>
-          <h2>Community moderation</h2>
-          <CommunityModerationQueue reports={communityReports} rpc={rpc} onRefresh={load} scopeKey={session.user.id} />
-          <CommunityContentModeration rpc={rpc} scopeKey={session.user.id} />
-          </>}
-          {lessonsReleased&&<LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />}
-          <ReportedQuestionQueue reports={questionReports} rpc={rpc} onChanged={refreshQuestionReviews} />
-          {postLaunchPreview&&<>
-          <h2>Add a question draft</h2>
-          <p>
-            Manual, extracted, and AI-generated questions all enter the same
-            human review queue. Approval does not directly edit the Git question
-            bank.
-          </p>
-          <form className="admin-form" onSubmit={addDraft}>
-            <label>
-              Source
-              <select name="sourceType">
-                <option value="manual">Manual</option>
-                <option value="pdf">PDF extraction</option>
-                <option value="photo">Photo extraction</option>
-                <option value="ai">AI draft</option>
-              </select>
-            </label>
-            <label>
-              Source name
-              <input name="sourceName" />
-            </label>
-            <label>
-              Question JSON
-              <textarea
-                name="payload"
-                rows="10"
-                required
-                placeholder={'{"prompt":"…","holds":[]}'}
-              />
-            </label>
-            <button className="button">Queue draft</button>
-          </form>
-          <AiQuestionDrafting requests={aiDrafts} onGenerate={generateAiDraft} />
-          <h2>All India mock events</h2>
-          <p>
-            Each event freezes one paper for every candidate, stays open for ten
-            days and keeps results in review for ten more days.
-          </p>
-          <button type="button" onClick={load}>Refresh event status</button>
+          {allIndiaReleased&&<AdminAllIndia rpc={rpc} events={allIndia} onChanged={load} reportError={reportError}
+            legacy={postLaunchPreview?<><h3>Legacy fresh-question events (preview only)</h3>
           <form className="admin-form" onSubmit={createAllIndia}>
             <label>
               Exam
@@ -457,33 +402,52 @@ function AdminDesk({ session }) {
             </label>
             <button className="button">Freeze and schedule event</button>
           </form>
-          <div className="admin-list">
-            {allIndia.map((event) => (
-              <article key={event.id}>
-                <b>
-                  {event.exam.toUpperCase()} · {event.title}
-                </b>
-                <span className="status-pill">
-                  {event.resultsReleasedAt
-                    ? "released"
-                    : `${event.attempts} attempts`}
-                </span>
-                <p>
-                  Attempt window:{" "}
-                  {new Date(event.startsAt).toLocaleString("en-IN")} –{" "}
-                  {new Date(event.endsAt).toLocaleString("en-IN")}
-                </p>
-                {!event.resultsReleasedAt && (
-                  <>
-                    <p>{event.pendingDrawingReviews} drawing reviews remaining. Review closes {new Date(event.reviewEndsAt).toLocaleString("en-IN")}.</p>
-                    <button type="button" disabled={!event.canRelease} onClick={() => releaseAllIndia(event.id)}>
-                      Release reviewed results
-                    </button>
-                  </>
-                )}
-              </article>
-            ))}
-          </div>
+          </>:null} />}
+          {drawingReviewReleased&&<>
+          <h2>Drawing review queue</h2>
+          <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings} {...drawingActions} />
+          <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
+          </>}
+          {communityReleased&&<>
+          <h2>Community moderation</h2>
+          <CommunityModerationQueue reports={communityReports} rpc={rpc} onRefresh={load} scopeKey={session.user.id} />
+          <CommunityContentModeration rpc={rpc} scopeKey={session.user.id} />
+          </>}
+          {lessonsReleased&&<LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />}
+          <ReportedQuestionQueue reports={questionReports} rpc={rpc} onChanged={refreshQuestionReviews} />
+          {postLaunchPreview&&<>
+          <h2>Add a question draft</h2>
+          <p>
+            Manual, extracted, and AI-generated questions all enter the same
+            human review queue. Approval does not directly edit the Git question
+            bank.
+          </p>
+          <form className="admin-form" onSubmit={addDraft}>
+            <label>
+              Source
+              <select name="sourceType">
+                <option value="manual">Manual</option>
+                <option value="pdf">PDF extraction</option>
+                <option value="photo">Photo extraction</option>
+                <option value="ai">AI draft</option>
+              </select>
+            </label>
+            <label>
+              Source name
+              <input name="sourceName" />
+            </label>
+            <label>
+              Question JSON
+              <textarea
+                name="payload"
+                rows="10"
+                required
+                placeholder={'{"prompt":"…","holds":[]}'}
+              />
+            </label>
+            <button className="button">Queue draft</button>
+          </form>
+          <AiQuestionDrafting requests={aiDrafts} onGenerate={generateAiDraft} />
           <h2>Exam-wise mock releases</h2>
           <div className="admin-list">
             {blueprints.map((m) => (
