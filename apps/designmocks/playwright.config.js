@@ -15,6 +15,7 @@ export default defineConfig({
   testMatch: scope === 'full' ? '**/*.spec.js' : [
     ...mvpFiles.map(file => '**/' + file),
     '**/student-release-modules.spec.js',
+    '**/drawing-review-release.spec.js',
     '**/overview-desk.spec.js',
     '**/all-india-ranking-consent.spec.js',
     '**/all-india-event-boundary.spec.js',
@@ -36,7 +37,7 @@ export default defineConfig({
     {
       command:"npm exec -- vite --host 127.0.0.1 --port 4788 --strictPort",
       url:"http://127.0.0.1:4788",
-      env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_RELEASED_STUDENT_MODULES:"all-india,practice",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"false",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:"fictional-portal-fixture"},
+      env:{VITE_DEPLOYMENT_ENV:"test",VITE_POST_LAUNCH_PREVIEW:"false",VITE_RELEASED_STUDENT_MODULES:"all-india,practice,drawing-review",VITE_PORTAL_ENABLED:"true",VITE_TEST_LOGIN_ENABLED:"false",VITE_STAGING_PORTAL_ENABLED:"false",VITE_CHECKOUT_ENABLED:"false",VITE_SUPABASE_URL:"https://dmocks-portal-fixture.supabase.co",VITE_SUPABASE_ANON_KEY:"sb_publishable_dmocks_browser_fixture",VITE_TERMS_VERSION:"fictional-portal-fixture"},
       reuseExistingServer:false,timeout:60000,
     },
     {

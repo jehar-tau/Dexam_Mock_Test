@@ -24,8 +24,9 @@ import { readSupportPage, supportPageLimit } from "./admin-support.js";
 import { readPrivacyQueue, privacyQueueLimit } from "./admin-privacy.js";
 import { AdminAccessBoundary, useAdminServices } from "./AdminAccess.jsx";
 import { adminRequestMessage } from "./admin-access.js";
-import {postLaunchPreview}from'./launch-scope.js';
-const mvpDeskReads=new Set(['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_request_page','admin_launch_readiness']);
+import {drawingReviewReleased,postLaunchPreview}from'./launch-scope.js';
+const mvpDeskReads=new Set(['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_request_page','admin_launch_readiness',
+ ...(drawingReviewReleased?['admin_drawing_queue']:[])]);
 
 async function intakeRequest(functions, name, body, signal) {
   const { data, error } = await functions.invoke(name, { body, signal });
@@ -353,9 +354,13 @@ function AdminDesk({ session }) {
             <button disabled={intakeUploading}>{intakeUploading ? "Uploading…" : "Upload for extraction"}</button>
           </form>
           <IntakeExtractionQueue assets={intake} onExtract={extractIntake} onPromote={promoteIntake} onReject={rejectIntake} onTranscribe={transcribeIntake} onDownload={downloadIntake} onInspect={inspectIntake} onPrepareFigures={prepareIntakeFigures} />
+          </>}
+          {drawingReviewReleased&&<>
           <h2>Drawing review queue</h2>
           <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings} {...drawingActions} />
           <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
+          </>}
+          {postLaunchPreview&&<>
           <h2>Community moderation</h2>
           <CommunityModerationQueue reports={communityReports} rpc={rpc} onRefresh={load} scopeKey={session.user.id} />
           <CommunityContentModeration rpc={rpc} scopeKey={session.user.id} />
