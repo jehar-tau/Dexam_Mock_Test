@@ -117,6 +117,13 @@ begin
   return job_token;
 end $$;
 
+-- A later historical elective rule can supply the confirmed alternative separately from autosaved notes.
+create function dm_private.year_drawing_alternative(p_attempt_id uuid,p_question_id uuid)
+returns jsonb language sql stable set search_path=pg_catalog,dm_private as $$
+  select answer->'alternative' from dm_private.attempt_items where attempt_id=p_attempt_id and question_id=p_question_id and kind='drawing'
+$$;
+revoke all on function dm_private.year_drawing_alternative(uuid,uuid) from public,anon,authenticated,service_role;
+
 create function public.service_year_drawing_context(p_lease uuid)
 returns jsonb language plpgsql security definer set search_path=pg_catalog, dm_private as $$
 declare
@@ -148,7 +155,7 @@ begin
       'width',asset.width,'height',asset.height,'sha256',asset.sha256));
   end loop;
   payload := jsonb_build_object('attemptId',item.attempt_id,'questionId',item.question_id,'prompt',item.prompt,'drawing',item.key->'drawing',
-    'alternative',item.answer->'alternative','maxScore',item.points,'pages',pages,'figures',figures);
+    'alternative',dm_private.year_drawing_alternative(item.attempt_id,item.question_id),'maxScore',item.points,'pages',pages,'figures',figures);
   return payload || jsonb_build_object('contextSha256',encode(sha256(convert_to(jsonb_build_array(payload,receipts)::text,'UTF8')),'hex'));
 end $$;
 
