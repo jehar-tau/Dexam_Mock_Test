@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildAttemptInsights, reviewMarks, knownMarks } from "../src/attempt-insights.mjs";
+import { buildAttemptInsights, reviewMarks, knownMarks, roundMarks } from "../src/attempt-insights.mjs";
 
 test("released attempt insights exclude drawings and dropped questions",()=>{
   const value=buildAttemptInsights([
@@ -114,4 +114,17 @@ test("section marks add exact marks and flag partial credit until the server sen
   assert.equal(withServer.marks, 6);
   assert.equal(knownMarks({ kind: "msq", outcome: "partial", awarded: 1.5 }), 1.5);
   assert.equal(reviewMarks({ kind: "msq", outcome: "partial", awarded: 2 }), "+2");
+});
+
+test("section marks round away floating-point error from fractional negative marks", () => {
+  const m = { correct: 3, wrong: -0.71 };
+  const questions = [{ kind: "mcq", outcome: "correct", answer: "A", marking: m },
+    ...Array.from({ length: 5 }, () => ({ kind: "mcq", outcome: "incorrect", answer: "B", marking: m }))];
+  const mcq = buildAttemptInsights(questions).sections.find(row => row.key === "MCQ");
+  assert.equal(3 + 5 * -0.71 === -0.55, false);
+  assert.equal(mcq.marks, -0.55);
+  assert.equal(mcq.marksExcludingPartial, -0.55);
+  assert.equal(roundMarks(-0.004), 0);
+  assert.ok(!Object.is(roundMarks(-0.004), -0));
+  assert.equal(roundMarks(0.1 + 0.2), 0.3);
 });
