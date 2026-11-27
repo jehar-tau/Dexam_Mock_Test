@@ -9,6 +9,7 @@ export function DrawingUploads({
   questionId,
   maxImages = 5,
   historical = false,
+  onWritingChange,
   invoke,
 }) {
   const [items, setItems] = useState(null);
@@ -45,6 +46,7 @@ export function DrawingUploads({
     const signal = lifetime.current.signal;
     if (writing.current || signal.aborted || !pages.length) return;
     writing.current = true;
+    onWritingChange?.(true);
     setBusy(true);
     setMessage("Saving drawing images…");
     let remaining = pages;
@@ -76,6 +78,7 @@ export function DrawingUploads({
       reload();
     } finally {
       writing.current = false;
+      onWritingChange?.(false);
       if (!signal.aborted) setBusy(false);
     }
   };
@@ -117,6 +120,7 @@ export function DrawingUploads({
               const signal = lifetime.current.signal;
               if (writing.current || signal.aborted) return;
               writing.current = true;
+              onWritingChange?.(true);
               setBusy(true);
               try {
                 const result = await invoke({ action: "remove", id: item.id }, signal);
@@ -133,6 +137,7 @@ export function DrawingUploads({
                 }
               } finally {
                 writing.current = false;
+                onWritingChange?.(false);
                 if (!signal.aborted) setBusy(false);
               }
             }}>Remove</button>

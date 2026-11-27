@@ -336,6 +336,10 @@ export function AttemptSession({actorId, services, id, workspaceHref = "/dashboa
     if(error)throw await drawingMediaError(error);return data;
   },[services]);
   const navigate = useNavigate();
+  const [mainPhotoWriting, setMainPhotoWriting] = useState(false);
+  const [gracePhotoWrites, setGracePhotoWrites] = useState(0);
+  const changeGraceWrites = React.useCallback(writing => setGracePhotoWrites(n => n + (writing ? 1 : -1)), []);
+  const photoBusy = mainPhotoWriting || gracePhotoWrites > 0;
   const [attempt, setAttempt] = useState(null),
     [loadedFor, setLoadedFor] = useState(null),
     [index, setIndex] = useState(0),
@@ -568,6 +572,7 @@ if(expandedAttemptScope){
   };
   const submit = async () => {
     if (!current() || mutationBusy.current) return;
+    if (photoBusy && Date.now() + offset.current < Date.parse(attempt.uploadDeadline)) return;
     mutationBusy.current=true;
     const queue = answerSync.current;
     clearTimeout(saveTimer.current);
@@ -619,7 +624,7 @@ if(expandedAttemptScope){
     }catch{if(current())setError("Couldn’t confirm Part B. Reopen this attempt to check the fixed session before trying again.");}
     finally{mutationBusy.current=false;if(current())setBusy(false);}
   };
-  const move = (next) => {if(current()){setIndex(next);setVisited((v)=>new Set(v).add(next));}};
+  const move = (next) => {if(current() && !photoBusy){setIndex(next);setVisited((v)=>new Set(v).add(next));}};
   if (!attempt || loadedFor !== `${userId}:${id}`)
     return (
       <section className="wrap page-intro">
@@ -632,13 +637,13 @@ if(expandedAttemptScope){
         <Link to="/dashboard">← Back to workspace</Link>
       </section>
     );
-  if (yearGrace > 0) {
+  if (yearGrace > 0 && !mainPhotoWriting) {
     const tasks = attempt.questions.filter(item => item.kind === "drawing");
     return <section className="wrap sample-run">
       <DrawingGraceBanner remainingSeconds={yearGrace} taskCount={tasks.length} />
       {tasks.map(item => <article key={item.id}><h2>{item.label}</h2><p>{item.prompt}</p>
-        <DrawingUploads attemptId={id} questionId={item.id} invoke={drawingInvoke} maxImages={item.drawing.maxImages} historical /></article>)}
-      <button className="button" type="button" disabled={busy} onClick={submit}>Submit paper and finish uploads</button>
+        <DrawingUploads attemptId={id} questionId={item.id} invoke={drawingInvoke} maxImages={item.drawing.maxImages} historical onWritingChange={changeGraceWrites} /></article>)}
+      <button className="button" type="button" disabled={busy || photoBusy} onClick={submit}>Submit paper and finish uploads</button>
       {error && <p role="alert">{error}</p>}
     </section>;
   }
@@ -712,6 +717,7 @@ if(expandedAttemptScope){
   }
   return (
     <section className="wrap sample-run attempt-workspace">
+      {yearGrace > 0 && <DrawingGraceBanner remainingSeconds={yearGrace} taskCount={attempt.questions.filter(item => item.kind === "drawing").length} />}
       <header className="attempt-bar" aria-label="Attempt status">
         <Link className="attempt-exit" to={workspaceHref}>← Your workspace</Link>
         <div className="attempt-bar-title">
@@ -761,7 +767,7 @@ if(expandedAttemptScope){
               const total = section.end - section.start + 1;
               const done = attempt.questions.slice(section.start, section.end + 1).filter((item) => hasAnswer(answerFor(item))).length;
               return (
-                <button key={section.start} type="button" disabled={busy} aria-current={section === here ? "true" : undefined} className={section === here ? "active" : ""} onClick={() => move(section.start)}>
+                <button key={section.start} type="button" disabled={busy || photoBusy} aria-current={section === here ? "true" : undefined} className={section === here ? "active" : ""} onClick={() => move(section.start)}>
                   <b>{section.kind.toUpperCase()}</b>
                   <small>{done}/{total} answered</small>
                 </button>
@@ -863,7 +869,7 @@ if(expandedAttemptScope){
                   disabled={busy || left === 0}
                 />
               </label>
-              <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} invoke={drawingInvoke} maxImages={q.drawing?.maxImages} historical={!!q.drawing} />
+              <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} invoke={drawingInvoke} maxImages={q.drawing?.maxImages} historical={!!q.drawing} onWritingChange={q.drawing ? setMainPhotoWriting : undefined} />
             </>
           )}
           {["nat", "drawing"].includes(q.kind) && (
@@ -899,7 +905,7 @@ if(expandedAttemptScope){
           <div className="runner-actions">
             <button
               className="text-button"
-              disabled={index === 0 || busy}
+              disabled={index === 0 || busy || photoBusy}
               onClick={() => move(index - 1)}
             >
               ← Previous
@@ -921,7 +927,7 @@ if(expandedAttemptScope){
             {index < attempt.questions.length - 1 && (
               <button
                 className="text-button"
-                disabled={busy}
+                disabled={busy || photoBusy}
                 onClick={() => {
                   setFlagged((items) => (items.includes(q.id) ? items : [...items, q.id]));
                   move(index + 1);
@@ -951,7 +957,7 @@ if(expandedAttemptScope){
             ) : (
               <button
                 className="button"
-                disabled={busy || left === 0}
+                disabled={busy || photoBusy || left === 0}
                 onClick={() => setConfirm(true)}
               >
                 Review & submit <Arrow />
@@ -961,7 +967,7 @@ if(expandedAttemptScope){
         </article>
         <PaperNavigation questions={attempt.questions} index={index} answered={item => hasAnswer(answerFor(item))}
           waiting={item => answerSync.current?.hasPending(item.id)} flagged={flagged} visited={visited}
-          move={move} busy={busy} canSubmit={!busy && left > 0} onSubmit={() => setConfirm(true)}/>
+          move={move} busy={busy || photoBusy} canSubmit={!busy && !photoBusy && left > 0} onSubmit={() => setConfirm(true)}/>
 
       </div>
       {confirm && (
@@ -982,7 +988,7 @@ if(expandedAttemptScope){
             : "Submission locks your answers."}</p>
           {error && <p className="error" role="alert">{error}</p>}
           <div>
-            <button className="button" disabled={busy} onClick={submit}>
+            <button className="button" disabled={busy || photoBusy} onClick={submit}>
               Submit & view report <Arrow />
             </button>
             <button
