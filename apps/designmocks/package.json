@@ -43,6 +43,7 @@
     "paper:prepare": "node scripts/prepare-mvp-paper.mjs",
     "papers:revise-free": "node scripts/year-paper-revision.mjs",
     "papers:prepare-free": "node scripts/prepare-free-year-paper.mjs",
+    "drawing:estimate-year": "node scripts/year-drawing-worker.mjs",
     "drawing:advise": "node scripts/drawing-ai-advice.mjs",
     "drawing:cleanup": "node scripts/drawing-removal-cleanup.mjs",
     "capacity:run": "node scripts/capacity-load.mjs",

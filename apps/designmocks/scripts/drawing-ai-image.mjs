@@ -15,7 +15,7 @@ function loadCodec() {
   return codec;
 }
 
-export async function prepareAdvisoryImage(bytes, file) {
+export async function prepareAdvisoryImage(bytes, file, longEdge) {
   if (bytes.length !== file.byteSize ||
       (file.sha256 && createHash("sha256").update(bytes).digest("hex") !== file.sha256)) {
     throw new Error("A private image differs from its registered bytes");
@@ -31,12 +31,17 @@ export async function prepareAdvisoryImage(bytes, file) {
     if (image.width !== file.width || image.height !== file.height) {
       throw new Error("The decoded image differs from its registered dimensions");
     }
-    if (input.orientation === 1) return input.bytes;
+    if (input.orientation === 1 && !longEdge) return input.bytes;
     image.orientation = input.orientation;
     image.autoOrient();
     const [width, height] = input.orientation >= 5 ? [input.height, input.width] : [input.width, input.height];
     if (image.orientation !== 1 || image.width !== width || image.height !== height) {
       throw new Error("A private image could not be normalized for advisory review");
+    }
+    if (longEdge) {
+      const scale = Math.min(1, longEdge / Math.max(width, height));
+      if (scale < 1) image.resize(Math.max(1, Math.round(width * scale)), Math.max(1, Math.round(height * scale)));
+      image.strip();
     }
     return image.write(MagickFormat.Png, data => Uint8Array.from(data));
   });

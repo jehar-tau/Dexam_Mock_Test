@@ -19,6 +19,7 @@ for migration in supabase/migrations/*.sql; do
   psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f "$migration"
 done
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -v test_year_drawing_runtime=true -f tests/database/year-paper-preparation.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/year-drawing-estimates.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/year-paper-revisions.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/invariants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/fresh-all-india-lineage.sql
