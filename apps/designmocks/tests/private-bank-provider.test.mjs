@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { once } from "node:events";
 import { createServer } from "node:http";
 import { test } from "node:test";
-import { openPrivateBankProvider } from "../scripts/private-bank-provider.mjs";
+import { openFreeYearPaperProvider, openPrivateBankProvider } from "../scripts/private-bank-provider.mjs";
 import { applyManifest, buildManifest } from "../scripts/question-bank-import.mjs";
 import project from "../supabase/project.json" with { type: "json" };
 
@@ -166,4 +166,36 @@ test("redirects send neither private bank rows nor media to a second origin", as
   assert.deepEqual(attempted, ["/rest/v1/rpc/admin_operational_health", "/rest/v1/rpc/begin_question_bank_import",
     "/rest/v1/rpc/import_question_bank_batch", "/rest/v1/rpc/admin_operational_health", "/storage/v1/object/paper-media/fictional.png"]);
   assert.equal(otherCalls, 0);
+});
+
+
+test('open free registration permits verified year-paper operations only', async () => {
+  const origin = `https://${project.project_ref}.supabase.co`;
+  const config = { url: origin, allowOrigin: origin, environment: 'staging',
+    serviceRoleKey: 'sb_secret_fictional', expandedStagingProfile: true,
+    auditDatabaseUrl: 'postgresql://fictional@localhost/test', auditDatabaseCaFile: '/fictional.pem' };
+  const base = { closedSettings: true, restrictedAdmission: false, testCheckoutClosed: true,
+    profileDrift: true, bankServiceOnly: true };
+  const paper = { freeAdmission: true, policyActive: true, noticeInstalled: true,
+    bucketPrivate: true, paperServiceOnly: true };
+  let requests = 0;
+  const fetchImpl = async () => { requests++; return Response.json({...health,apiProfileReady:false,paymentMode:'test'}); };
+  const options = checks => ({fetchImpl,openDatabase: async () => ({
+    query: async sql => JSON.stringify(sql.includes('free_signup_notice') ? checks : base), close: async () => {},
+  })});
+  await assert.rejects(openPrivateBankProvider(config, options(paper)), /not safe for import/);
+  for (const key of Object.keys(paper)) {
+    await assert.rejects(openFreeYearPaperProvider(config, options({...paper,[key]:false})), /not safe for import/);
+  }
+  const scoped = await openFreeYearPaperProvider(config, options(paper));
+  const reads = requests;
+  assert.throws(() => scoped.rpc('finish_question_bank_import',{}), /Unsupported/);
+  assert.throws(() => scoped.fetch(origin+'/rest/v1/rpc/finish_question_bank_import',{method:'POST'}), /Unsupported/);
+  const image = origin+'/storage/v1/object/paper-media/papers/canonical/'+'0'.repeat(64)+'.png';
+  assert.throws(() => scoped.fetch(image,{method:'DELETE'}), /Unsupported/);
+  assert.throws(() => scoped.fetch(image,{method:'POST',headers:{'x-upsert':'true'}}), /Unsupported/);
+  assert.equal(requests,reads);
+  await scoped.rpc('canonical_bank_media_manifest');
+  await scoped.fetch(image,{method:'POST',headers:{'x-upsert':'false'}});
+  assert.equal(requests,reads+2);
 });

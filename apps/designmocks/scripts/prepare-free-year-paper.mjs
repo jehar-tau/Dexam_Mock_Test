@@ -2,7 +2,7 @@ import {readFile, stat} from 'node:fs/promises';
 import {parseArgs} from 'node:util';
 import {pathToFileURL} from 'node:url';
 import {loadFromGit, sha256, stableJson} from './question-bank-import.mjs';
-import {bankProviderConfiguration,openPrivateBankProvider} from './private-bank-provider.mjs';
+import {bankProviderConfiguration,openFreeYearPaperProvider} from './private-bank-provider.mjs';
 
 const digest = /^[a-f0-9]{64}$/;
 const uuid = /^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/;
@@ -69,7 +69,7 @@ async function main() {
   if (values.digest) {console.log(JSON.stringify({mode:'review-digest',...summary}));return;}
   if (summary.planSha256!==values.expect) throw new Error('The plan changed after its review SHA-256 was recorded');
   if (!values.apply && !values.release) {console.log(JSON.stringify({mode:'dry-run',...summary}));return;}
-  const provider=await openPrivateBankProvider(freeYearPaperProviderConfiguration(process.env),
+  const provider=await openFreeYearPaperProvider(freeYearPaperProviderConfiguration(process.env),
   {acknowledgement:values.release?'RELEASE_FREE_YEAR_PAPER_ON':'PREPARE_FREE_YEAR_PAPER_ON'});
   const receipt=await provider.rpc('prepare_free_year_paper',{p_plan:plan});
   if (!uuid.test(receipt?.paperId??'') || !digest.test(receipt?.manifestSha256??'')
