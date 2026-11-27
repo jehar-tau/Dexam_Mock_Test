@@ -138,7 +138,7 @@
 .topic-answer-choices { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
 .topic-answer-choices button,
 .topic-choose {
-  min-height: 36px;
+  min-height: 44px;
   padding: .35rem .7rem;
   border: 1px solid color-mix(in srgb, var(--muted) 60%, var(--line));
   border-radius: .4rem;
@@ -206,7 +206,7 @@
 }
 .topic-notes h2 { font-size: 1rem; }
 .topic-notes p { margin: .2rem 0 0; font-size: .92rem; line-height: 1.5; }
-.topic-workspace-link, .all-india-result-link { color: var(--green); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+.topic-workspace-link, .all-india-result-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--green); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
 
 .all-india-layout { grid-template-columns: minmax(0, 1.85fr) minmax(15rem, 1fr); }
 .all-india-toolbar { padding: .9rem 1.2rem; border-bottom: 1px solid var(--line); }
@@ -310,7 +310,7 @@
 .topic-card .topic-size i { display: block; height: 100%; border-radius: inherit; background: var(--green); }
 .topic-card .topic-exam-label { display: none; }
 .topic-practice .topic-builder .topic-fields { grid-template-columns: minmax(0, 1fr); gap: .7rem; margin-block: .2rem 0; }
-.topic-card .topic-choose { grid-area: action; margin: 0; min-height: 36px; }
+.topic-card .topic-choose { grid-area: action; margin: 0; min-height: 44px; }
 .topic-card[data-selected] { border-color: var(--green); box-shadow: inset 0 0 0 1px var(--green); background: var(--surface); }
 .topic-card[data-small] { border-style: dashed; background: var(--surface); }
 .topic-builder .topic-kicker { display: block; }
