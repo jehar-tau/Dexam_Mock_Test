@@ -48,6 +48,8 @@ insert into dm_private.drawing_reviewers(user_id,enabled,changed_at) values (:'t
 insert into dm_private.papers(id,title,exam,duration_seconds) values (:'paper','Fictional authored drawing fixture','nid',1200);
 insert into dm_private.questions(id,paper_id,ordinal,prompt,options,kind,marking,points,topic)
 values (:'question',:'paper',1,'Current paper prompt is irrelevant to the frozen attempt.','[]','drawing','{"correct":20,"wrong":0}',20,'drawing');
+\ir fixtures/active-pass.sql
+select pg_temp.grant_test_pass(:'student');
 insert into dm_private.attempts(id,user_id,paper_id,status,deadline,submitted_at,score,total)
 values (:'attempt',:'student',:'paper','submitted',now()-interval '1 hour',now()-interval '1 hour',0,20);
 insert into dm_private.attempt_items(attempt_id,question_id,ordinal,prompt,options,kind,marking,media,points,negative_points,topic,key,explanation)

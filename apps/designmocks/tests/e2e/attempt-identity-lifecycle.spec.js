@@ -38,6 +38,8 @@ async function fixture(page,options={}){
    data=[];
   }
   else if(name==='drawing-media')data=multipart?{id:'30000000-0000-4000-8000-000000000961',ordinal:1}:input.action==='list'?{items:[]}:{images:[]};
+  // Pass pricing: the drawing upload shows the account's teacher-marking allowance.
+  else if(name==='my_drawing_marking_allowance')data={passActive:false,monthlyLimit:4,used:0,remaining:0};
   else if(name==='start_exam_mock_part_b'){if(state.startHold)await state.startHold.promise;data=partB;}
   else throw new Error('Unexpected fictional attempt request: '+name);
   if (state.examReplies && ['my_exam_mock_session', 'my_exam_mock_report'].includes(name)) await state.examReplies.promise;

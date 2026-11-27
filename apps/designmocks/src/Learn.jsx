@@ -68,9 +68,10 @@ export function LearnView({ lessons = [], progress, onOpen, onRefresh, busy = fa
             <h2>{l.title}</h2>
             {progress?.recommendation?.id === l.id && <span className="recommended-label">Recommended next</span>}
             <p>{l.summary}</p>
+            {l.locked ? <p className="pass-prompt">Comes with the pass. <Link to="/plans">See plans →</Link></p> :
             <button className="text-button" disabled={busy} onClick={() => onOpen(l)}>
               {l.completed ? "Review lesson" : "Start lesson"} →
-            </button>
+            </button>}
           </article>
         ))}
       </div>
@@ -136,7 +137,7 @@ function StudentLearn({headingRef,actorId}) {
   if(!active()||action.current)return;const snapshot={id:item.id,slug:item.slug},controller=new AbortController();action.current=controller;setSelection(snapshot);setLesson(null);setBusy(true);setMessage('');setUncertain(false);
   const timeout=new AbortController(),timer=setTimeout(()=>timeout.abort(),20000),signal=AbortSignal.any([lifetime.current.signal,controller.signal,timeout.signal]),current=()=>active()&&action.current===controller&&!controller.signal.aborted;
   try{const value=learningLessonResponse(await awaitAccountRequest(()=>rpc('read_learning_lesson',{p_slug:snapshot.slug},signal),signal),snapshot);if(current()){setLesson(value);focusLesson.current=true;}}
-  catch(error){if(current()){if(learningUnavailable(error))unavailable();else setMessage(learningReadMessage);}}
+  catch(error){if(current()){if(error?.hint==='dmocks_pass_required')setMessage('This lesson comes with the pass. The first lesson of each topic is free.');else if(learningUnavailable(error))unavailable();else setMessage(learningReadMessage);}}
   finally{clearTimeout(timer);if(action.current===controller){action.current=null;if(active())setBusy(false);}}
  };
  const complete=async()=>{

@@ -207,16 +207,24 @@ export function quizPassed(programme, progress, tierId) {
   return Boolean(entry && (entry.passedAt || entry.best.score >= tier.quiz.pass));
 }
 
+// Foundations is free. Exam standard, Exam hard and Mastery come with the pass.
+export const freeTierIds = Object.freeze(['foundations']);
+export const tierNeedsPass = tier => !freeTierIds.includes(tier.id);
+
 // unlockAll: the development preview's review switch opens every tier; students never get it.
-export function programmeSummary(programme, progress, { unlockAll = false } = {}) {
+// passActive: false locks the paid tiers in the browser for accounts without a pass.
+export function programmeSummary(programme, progress, { unlockAll = false, passActive = true } = {}) {
   const tiers = tiersOf(programme);
   const passed = tiers.map(tier => quizPassed(programme, progress, tier.id));
   const tierStates = tiers.map((tier, i) => {
     const lessons = tier.lessons.map(lesson => ({ lesson, ...lessonState(programme, progress, lesson.id) }));
+    const passLocked = !unlockAll && !passActive && tierNeedsPass(tier);
     // Open when it is the first tier, the previous quiz is passed, or the student has skipped ahead past it.
-    const open = unlockAll || i === 0 || passed[i - 1] || passed.slice(i).some(Boolean);
-    return { tier, open, lessons, lessonsDone: lessons.filter(l => l.status === 'complete').length, quiz: { best: progress.quizzes[tier.id]?.best ?? null, attempts: progress.quizzes[tier.id]?.attempts ?? 0, passed: passed[i] } };
+    const open = !passLocked && (unlockAll || i === 0 || passed[i - 1] || passed.slice(i).some(Boolean));
+    return { tier, open, passLocked, lessons, lessonsDone: lessons.filter(l => l.status === 'complete').length, quiz: { best: progress.quizzes[tier.id]?.best ?? null, attempts: progress.quizzes[tier.id]?.attempts ?? 0, passed: passed[i] } };
   });
+  const foundations = tierStates.find(state => state.tier.id === 'foundations');
+  const foundationsFinished = Boolean(foundations && (foundations.quiz.passed || (foundations.lessons.length > 0 && foundations.lessonsDone === foundations.lessons.length)));
   const all = tierStates.flatMap(t => t.lessons);
   const completed = all.filter(l => l.status === 'complete').length;
   const next = tierStates.filter(t => t.open).flatMap(t => t.lessons).find(l => l.status !== 'complete')?.lesson ?? null;
@@ -224,6 +232,7 @@ export function programmeSummary(programme, progress, { unlockAll = false } = {}
     tiers: tierStates, total: all.length, completed, percent: all.length ? Math.round(completed * 100 / all.length) : 0, next,
     checks: { answered: all.reduce((sum, l) => sum + l.answered, 0), correct: all.reduce((sum, l) => sum + l.correct, 0) },
     tiersPassed: passed.filter(Boolean).length,
+    foundationsFinished, passLockedTiers: tierStates.filter(state => state.passLocked).length,
   };
 }
 

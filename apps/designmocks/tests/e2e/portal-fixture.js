@@ -58,6 +58,9 @@ export async function stubPortalProvider(page, respond, projectRef = fixtureProj
     // schedule, top ten and staged papers; most fixtures predate them.
     if (result === undefined && ['free_year_paper_catalog', 'my_year_paper_attempts', 'public_all_india_upcoming',
       'public_all_india_top_ten', 'admin_all_india_papers'].includes(procedure)) result = [];
+    // Pass pricing reads (28 Nov 2026); fixtures that predate them see a free account.
+    if (result === undefined && procedure === 'my_drawing_marking_allowance') result = { passActive: false, monthlyLimit: 4, used: 0, remaining: 0 };
+    if (result === undefined && procedure === 'my_pass') result = { active: false, expiresAt: null, revoked: false, mode: 'test' };
     if (result === undefined) {
       unexpected.push(path);
       return route.abort();

@@ -17,6 +17,8 @@ function TopicPracticeHeading({ headingRef, preview }) {
   </header>;
 }
 
+// Server messages for the free allowance (one 10-question session a day).
+const freePracticeLimits = new Set(["Free accounts include one topic practice session a day", "Free topic practice sessions have 10 questions"]);
 export function TopicPracticeView({ catalog, onStart, initialExam = "", initialTopic = "", heading = true, embedded = false, blocked = false, preview = false, Example, workspaceHref }) {
   const location = useLocation();
   const topicControl = useRef(null);
@@ -140,7 +142,8 @@ export function TopicPracticeView({ catalog, onStart, initialExam = "", initialT
           {preview && <span>Preview only · no timer starts</span>}
         </div>
         {previewReceipt && <p className="topic-receipt" role="status">{previewReceipt}</p>}
-        {message && <p className="error" role="alert">{message}{message === "Complete your verified profile first" && <> <Link to="/onboarding">Complete your profile →</Link></>}</p>}
+        {message && <p className="error" role="alert">{message}{message === "Complete your verified profile first" && <> <Link to="/onboarding">Complete your profile →</Link></>}
+          {freePracticeLimits.has(message) && <> The pass opens unlimited topic practice. <Link className="pass-link" to="/plans">See plans →</Link></>}</p>}
       </form>
       {Example && <Example key={topic} topic={selectedPool ? topic : ""} />}
       </div>

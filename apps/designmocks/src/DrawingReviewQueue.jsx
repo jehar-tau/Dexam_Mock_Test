@@ -1,8 +1,11 @@
 import React, { useRef, useState } from "react";
 import { DrawingReviewMedia } from "./DrawingReviewMedia.jsx";
+import { PassPrompt } from "./PassPrompt.jsx";
 import { drawingAdvisoryMarks, MAX_DRAWING_CRITERIA, readFrozenDrawingRubric, totalDrawingMarks, validateDrawingReviewInput } from "./drawing-review.js";
 
 export function DrawingReviewStatus({ review }) {
+  if (review?.status === "pass_required") return <PassPrompt className="notice">Your drawing is saved. Teacher marking comes with the pass.</PassPrompt>;
+  if (review?.status === "monthly_limit") return <div className="notice"><b>This month’s 4 teacher-marked drawings are used.</b><br />Your drawing is saved. Drawings submitted from the 1st of next month are marked again.</div>;
   if (!review || review.status === "not_submitted") return <div className="notice"><b>No drawing submitted for review.</b></div>;
   if (review.status !== "released") return <div className="notice"><b>Human review pending.</b><br />Your objective score is separate. Feedback appears only after a teacher releases it.</div>;
   return <div className="drawing-feedback"><span className="eyebrow">RELEASED HUMAN REVIEW</span><h4>{review.score}/{review.maxScore} marks</h4><p>{review.comments}</p><dl>{Object.entries(review.criteria ?? {}).map(([name, mark]) => <React.Fragment key={name}><dt>{name}</dt><dd>{mark}</dd></React.Fragment>)}</dl></div>;

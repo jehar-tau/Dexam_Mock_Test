@@ -1,4 +1,4 @@
-import { resolveProviderOrder } from './provider-order.mjs';
+import { planOf, resolveProviderOrder } from './provider-order.mjs';
 import { reportCommerceFailure } from './commerce-operations.mjs';
 import { JsonRequestError, readJsonObject } from './request-json.mjs';
 
@@ -56,10 +56,14 @@ export function createOrderHandler({ createClient, readEnvironment, providerFetc
         return json({ error: 'Invalid checkout request.' }, failure.status);
       }
       deadline.signal.throwIfAborted();
-      if (input?.plan !== 'annual') return json({ error: 'Unknown plan' }, 400);
-      const { data: order, error } = await student.rpc('prepare_order');
+      const plan = input?.plan;
+      if (plan !== 'annual' && plan !== 'duo') return json({ error: 'Unknown plan' }, 400);
+      // The annual pass keeps the original call, which the paid launch profile allows.
+      const { data: order, error } = plan === 'annual' ? await student.rpc('prepare_order')
+        : await student.rpc('prepare_plan_order', { p_plan: plan });
       deadline.signal.throwIfAborted();
-      if (error || !order) return json({ error: 'Annual access is not available for purchase. Check your account and the published terms.' }, 409);
+      if (error || !order) return json({ error: 'This pass is not available for purchase. Check your account and the published terms.' }, 409);
+      if (planOf(order) !== plan) throw new Error('Checkout plan could not be verified.');
       const providerOrder = await resolveProviderOrder(order, { keyId: key, keySecret: secret,
         fetcher: providerFetch, signal: deadline.signal });
       deadline.signal.throwIfAborted();

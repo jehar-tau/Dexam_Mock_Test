@@ -6,6 +6,7 @@ import { answerAlternativesLabel, releasedKeyLabel } from "./answer-key.js";
 import { DrawingReviewStatus } from "./DrawingReviewQueue.jsx";
 import { DrawingTaskReview } from "./DrawingTask.jsx";
 import { SolutionPanel } from "./WorkedSolution.jsx";
+import { LockedSolution } from "./PassPrompt.jsx";
 import { readWorkedExplanation, workedFigureIndex } from "./worked-solution.js";
 import "./paper-workspace.css";
 
@@ -128,6 +129,7 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, inv
           </li>)}</ul>}
         <div className="analysis-response"><p><strong>Your answer:</strong> {answer || "Not answered"}</p>
           {key && <p><strong>{answerAlternativesLabel(item.correctKey) ? "Accepted answers" : "Correct answer"}</strong> {key}</p>}</div>
+        {item.solutionLocked && <LockedSolution />}
         {(solution || explanation) && <><button type="button" className="button quiet" aria-expanded={solutionOpen}
           aria-controls="review-worked-solution" onClick={() => setSolutionOpenFor(solutionOpen ? "" : item.id)}>
           {solutionOpen ? "Hide solution" : "View solution"}</button>

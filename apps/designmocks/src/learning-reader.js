@@ -2,7 +2,8 @@ const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value)
 const uuid=value=>typeof value==='string'&&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(value);
 const text=(value,min,max)=>typeof value==='string'&&[...value].length>=min&&[...value].length<=max;
 const base=value=>object(value)&&uuid(value.id)&&typeof value.slug==='string'&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value.slug)&&['uceed','ceed','nid','nift'].includes(value.exam)&&typeof value.topic==='string'&&text(value.title,5,160)&&text(value.summary,10,500)&&typeof value.completed==='boolean';
-const item=value=>Object.fromEntries(['id','slug','exam','topic','title','summary','completed'].map(key=>[key,value[key]]));
+// `locked`: the first lesson of each topic is free; the others come with the pass.
+const item=value=>({...Object.fromEntries(['id','slug','exam','topic','title','summary','completed'].map(key=>[key,value[key]])),locked:value.locked===true});
 const invalid=()=>new Error('Learning data could not be verified. Refresh lessons to try again.');
 export const learningListMessage='Couldn’t load the lesson list. Refresh lessons to try again.';
 export const learningReadMessage='Couldn’t open this lesson. Reload this lesson to try again.';

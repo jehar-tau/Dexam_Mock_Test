@@ -205,7 +205,7 @@ test("transient provider failures remain subject to the configured error budget"
 test("the example capacity plan rejects invalid public catalogue responses even under the error budget", async () => {
   const source = {...example, target: "http://127.0.0.1:4191", sessions: 1, activeAttempts: 0, iterations: 6,
     thresholds: {...example.thresholds, maxErrorRate: 1}};
-  const annual = {id: "annual", amount: 119300, currency: "INR", duration_months: 12};
+  const annual = {id: "annual", amount: 128400, currency: "INR", duration_months: 12};
   const responses = [
     Response.json([annual]),
     Response.json([]),

@@ -83,13 +83,14 @@ async function recordCommerceCheck(check, load, isExpected) {
 }
 
 let response = await request(
-  "/rest/v1/plans?select=id,amount,currency,duration_months",
+  "/rest/v1/plans?select=id,amount,currency,duration_months&order=id",
 );
 assert.equal(response.status, 200);
 assert.deepEqual(response.data, [
-  { id: "annual", amount: 119300, currency: "INR", duration_months: 12 },
+  { id: "annual", amount: 128400, currency: "INR", duration_months: 12 },
+  { id: "duo", amount: 214200, currency: "INR", duration_months: 12 },
 ]);
-results.push({ check: "authoritative annual plan", status: 200, passed: true });
+results.push({ check: "authoritative annual and Duo plans", status: 200, passed: true });
 for (const name of [
   "prepare_order",
   "my_pass",

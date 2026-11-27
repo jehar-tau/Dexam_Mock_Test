@@ -5,6 +5,7 @@ import { yearDrawingPhoto } from "./year-drawing-photo.mjs";
 import { openSessionDrawingPhotos } from "./session-drawing-photos.js";
 import { DrawingPhotoPreview } from "./DrawingPhotoPreview.jsx";
 import { DrawingPages } from "./DrawingInspection.jsx";
+import { DrawingMarkingNote } from "./PassPrompt.jsx";
 
 export function DrawingUploads({
   attemptId,
@@ -135,6 +136,7 @@ export function DrawingUploads({
         {historical ? `Add up to ${maxImages} photos in page order, up to 12 MB each. Photos are saved privately as JPEGs.` :
           "Upload up to five clear PNG, JPEG or WebP images in the order they should be reviewed. Each image can be up to 10 MB, 24 megapixels and 12,000 pixels on either side. Use still images."}
       </p>
+      <DrawingMarkingNote />
       <button className="button quiet" type="button" disabled={!items || busy || pending.length > 0 || drafts.length > 0 || items.length >= maxImages}
         onClick={() => fileInput.current?.click()}>Add images</button>
       <input ref={fileInput} type="file" accept={historical ? "image/png,image/jpeg,image/heic,image/heif,.heic,.heif" : "image/png,image/jpeg,image/webp"} multiple hidden onChange={upload} />

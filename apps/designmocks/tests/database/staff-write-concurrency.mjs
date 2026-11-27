@@ -251,7 +251,7 @@ try {
   await sql("begin;" + actor(first) + "select public.admin_set_launch_gate('privacy_terms',true,'Original fictional current approval.');commit;");
   const authorized = JSON.parse(await sql("begin;" + actor(reporter) + order + "commit;"));
   assert.equal(authorized.mode, "live");
-  assert.equal(authorized.amount, 119300);
+  assert.equal(authorized.amount, 128400);
   assert.equal(await sql(`select count(*) from dm_private.passes where user_id=${quote(reporter)};`), "0");
 } finally {
   await sql(remove);

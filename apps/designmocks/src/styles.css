@@ -4517,3 +4517,188 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .exam-ribbon > a {
   min-height: 44px;
 }
+
+/* Pass pricing (28 Nov 2026): plan choice, free vs pass, prompts, Duo invite. */
+.plan-choice {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 22px 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.plan-choice legend {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+  padding: 0;
+}
+.plan-choice label {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 14px 14px 14px 42px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.plan-choice label.is-selected {
+  border-color: var(--orange);
+  box-shadow: inset 0 0 0 1px var(--orange);
+}
+.plan-choice input {
+  position: absolute;
+  left: 14px;
+  top: 16px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--orange);
+}
+.plan-choice-name {
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+.plan-choice-price {
+  font-family: "Zilla Slab", serif;
+  font-size: 1.375rem;
+}
+.plan-choice-detail {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.free-vs-pass {
+  max-width: 1000px;
+  padding-bottom: 100px;
+}
+.free-vs-pass h2 {
+  font-size: 2.25rem;
+  margin: 8px 0 24px;
+}
+.free-vs-pass table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.free-vs-pass th,
+.free-vs-pass td {
+  text-align: left;
+  vertical-align: top;
+  padding: 14px 12px 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.free-vs-pass thead th {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.free-vs-pass tbody th {
+  width: 26%;
+}
+.free-vs-pass td:last-child {
+  color: var(--ink);
+  font-weight: 600;
+}
+.pass-prompt {
+  border-left: 3px solid var(--orange);
+  padding: 10px 14px;
+  background: var(--surface);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+.pass-prompt a,
+.pass-link {
+  font-weight: 700;
+  color: var(--orange);
+  white-space: nowrap;
+}
+.solution-locked .pass-prompt {
+  margin-top: 8px;
+}
+.drawing-marking-note {
+  margin: 10px 0 14px;
+  font-size: 0.875rem;
+}
+.duo-invite {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.duo-invite p {
+  font-size: 0.875rem;
+  margin: 6px 0 10px;
+}
+.duo-invite-link {
+  display: flex;
+  gap: 8px;
+}
+.duo-invite-link input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.8125rem;
+}
+.duo-claim {
+  padding-bottom: 100px;
+}
+.duo-claim > p {
+  max-width: 560px;
+  margin-inline: auto;
+}
+.duo-claim .button {
+  margin-top: 16px;
+}
+@media (max-width: 640px) {
+  .plan-choice {
+    grid-template-columns: 1fr;
+  }
+  .free-vs-pass h2 {
+    font-size: 1.75rem;
+  }
+  .free-vs-pass thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .free-vs-pass tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0;
+  }
+  .free-vs-pass tbody th {
+    grid-column: 1 / -1;
+    width: auto;
+    padding: 0 0 6px;
+    border: 0;
+  }
+  .free-vs-pass td {
+    border: 0;
+    padding: 0 10px 0 0;
+    font-size: 0.875rem;
+  }
+  .free-vs-pass td::before {
+    display: block;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .free-vs-pass td:nth-of-type(1)::before { content: "FREE ACCOUNT"; }
+  .free-vs-pass td:nth-of-type(2)::before { content: "WITH A PASS"; }
+  .duo-invite-link {
+    flex-direction: column;
+  }
+}

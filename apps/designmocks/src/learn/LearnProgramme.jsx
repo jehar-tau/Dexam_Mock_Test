@@ -8,7 +8,8 @@ import { hostedStudentPreview } from '../student-preview.js';
 import { useAuthState } from '../useAuth.js';
 import { learningPracticeLink } from '../practice-context.js';
 import { findProgramme } from './programmes/index.js';
-import { findLesson, formatMarks, formatSeconds, programmeSummary, quizLength, tiersOf } from './programme-model.js';
+import { findLesson, formatMarks, formatSeconds, programmeSummary, quizLength, tierNeedsPass, tiersOf } from './programme-model.js';
+import { usePassAccess } from '../pass-access.js';
 import { loadProgress, saveProgress } from './programme-storage.js';
 import { LessonPlayer, QuizPlayer } from './LessonPlayer.jsx';
 
@@ -21,8 +22,8 @@ function Ring({ percent }) {
 }
 const levelLabel = (tier, previous) => (previous && previous.level + 1 < tier.level ? `Levels ${previous.level + 1}–${tier.level}` : tier.level <= 2 && !previous ? `Levels 1–${tier.level}` : `Level ${tier.level}`);
 
-export function ProgrammeOverview({ programme, progress, open, notice, message, unlockAll = false }) {
-  const summary = programmeSummary(programme, progress, { unlockAll });
+export function ProgrammeOverview({ programme, progress, open, notice, message, unlockAll = false, passActive = true }) {
+  const summary = programmeSummary(programme, progress, { unlockAll, passActive });
   const practice = learningPracticeLink({ exam: programme.exams[0], topic: programme.topic });
   const tiered = summary.tiers.length > 1;
   return <section className="programme" aria-label={programme.title}>
@@ -37,6 +38,8 @@ export function ProgrammeOverview({ programme, progress, open, notice, message, 
       </div>
     </div>
     {message && <p className="programme-message" role="status">{message}</p>}
+    {summary.passLockedTiers > 0 && summary.foundationsFinished && <p className="pass-prompt" role="status">
+      <b>Foundations done.</b> Exam standard, Exam hard and Mastery come with the pass. <Link to="/plans">See plans →</Link></p>}
     {summary.tiers.map((state, t) => {
       const { tier } = state, quiz = tier.quiz, last = t === summary.tiers.length - 1;
       return <section key={tier.id} className={`tier${state.open ? '' : ' is-locked'}`} aria-label={tier.title}>
@@ -44,7 +47,8 @@ export function ProgrammeOverview({ programme, progress, open, notice, message, 
           <span className="tier-art"><StageMotif stage={tier.id} /></span>
           <h3>{tier.title}</h3>
           <span className="status-pill">{levelLabel(tier, summary.tiers[t - 1]?.tier)}</span>
-          {!state.open && <p className="programme-meta">Locked. Pass the {summary.tiers[t - 1].tier.title} quiz to open it, or pass this tier’s quiz to skip ahead.</p>}
+          {state.passLocked ? <p className="programme-meta">Comes with the pass. <Link to="/plans">See plans →</Link></p>
+            : !state.open && <p className="programme-meta">Locked. Pass the {summary.tiers[t - 1].tier.title} quiz to open it, or pass this tier’s quiz to skip ahead.</p>}
         </header>}
         <ol className="path">
           {state.lessons.map((entry, i) => {
@@ -68,7 +72,8 @@ export function ProgrammeOverview({ programme, progress, open, notice, message, 
               <p>{quizLength(quiz)} questions in {quiz.minutes} minutes{(quiz.marking ?? 'plain') === 'plain' ? '' : `, marked like ${quiz.marking.toUpperCase()}`}. {last ? `Aim for ${quiz.pass} fully correct.` : `${quiz.pass} right ${tiered ? 'opens the next tier' : 'is a pass'}.`}</p>
               <p className="programme-meta">{state.quiz.best ? `Best so far: ${formatMarks(state.quiz.best.marks)} of ${formatMarks(state.quiz.best.maxMarks)} in ${formatSeconds(state.quiz.best.seconds)} · ${state.quiz.attempts} attempt${state.quiz.attempts === 1 ? '' : 's'}${state.quiz.passed ? ' · passed' : ''}` : 'Not taken yet'}</p>
             </div>
-            <button type="button" className="pill quiet" onClick={() => open(`quiz-${tier.id}`)}>{state.quiz.best ? 'Try again' : state.open ? 'Take quiz' : 'Skip ahead'}</button>
+            {state.passLocked ? <Link className="pill quiet" to="/plans" aria-label={`${quiz.title} comes with the pass. See plans`}>See plans</Link>
+              : <button type="button" className="pill quiet" onClick={() => open(`quiz-${tier.id}`)}>{state.quiz.best ? 'Try again' : state.open ? 'Take quiz' : 'Skip ahead'}</button>}
           </li>
         </ol>
       </section>;
@@ -80,22 +85,27 @@ export function ProgrammeOverview({ programme, progress, open, notice, message, 
   </section>;
 }
 
-export function ProgrammeRunner({ programme, actorId, notice = '', seed = null, unlockAll = false }) {
+export function ProgrammeRunner({ programme, actorId, notice = '', seed = null, unlockAll = false, passActive = true }) {
   const [params, setParams] = useSearchParams();
   const [progress, setProgress] = useState(() => loadProgress(programme.slug, actorId));
   const [message, setMessage] = useState('');
   useEffect(() => { setProgress(loadProgress(programme.slug, actorId)); }, [programme.slug, actorId]);
   const update = next => { setProgress(next); if (!saveProgress(programme.slug, actorId, next)) setMessage('Progress could not be saved in this browser.'); };
   const view = params.get('lesson');
-  const open = id => { setMessage(''); setParams(id ? { lesson: id } : {}); };
+  // Keep the preview's `pass` switch while moving between lessons.
+  const keep = params.get('pass') ? { pass: params.get('pass') } : {};
+  const open = id => { setMessage(''); setParams(id ? { ...keep, lesson: id } : keep); };
   const tiers = tiersOf(programme);
   // `challenge` is the old name for the first tier's quiz.
-  const quizTier = view === 'challenge' ? tiers[0] : view?.startsWith('quiz-') ? tiers.find(tier => `quiz-${tier.id}` === view) : null;
+  // A tier that needs the pass cannot be opened from a link either.
+  const allowed = tier => unlockAll || passActive || !tierNeedsPass(tier);
+  const quizTier = [view === 'challenge' ? tiers[0] : view?.startsWith('quiz-') ? tiers.find(tier => `quiz-${tier.id}` === view) : null].find(tier => tier && allowed(tier)) ?? null;
   if (quizTier) return <QuizPlayer key={quizTier.id} tier={quizTier} isLastTier={quizTier === tiers[tiers.length - 1]} progress={progress} onProgress={update} onExit={() => open(null)} seed={seed} />;
-  const lesson = view ? findLesson(programme, view) : null;
+  const lessonTier = view ? tiers.find(tier => tier.lessons.some(entry => entry.id === view)) : null;
+  const lesson = view && lessonTier && allowed(lessonTier) ? findLesson(programme, view) : null;
   if (lesson) return <LessonPlayer key={lesson.id} lesson={lesson} progress={progress} onProgress={update} onExit={() => open(null)} seedBase={seed}
-    onComplete={() => { setParams({}); setMessage(`Lesson complete: ${lesson.title}.`); }} />;
-  return <ProgrammeOverview programme={programme} progress={progress} open={open} notice={notice} message={message} unlockAll={unlockAll} />;
+    onComplete={() => { setParams(keep); setMessage(`Lesson complete: ${lesson.title}.`); }} />;
+  return <ProgrammeOverview programme={programme} progress={progress} open={open} notice={notice} message={message} unlockAll={unlockAll} passActive={passActive} />;
 }
 
 function ProgrammeHeading({ headingRef }) {
@@ -107,13 +117,14 @@ export function LearnProgrammePage() {
   const { slug } = useParams();
   const programme = findProgramme(slug);
   const heading = useRef(null);
+  const pass = usePassAccess(session?.user.id);
   if (loading) return <p className="wrap" role="status">Checking your account…</p>;
   if (!session) return <section className="wrap section"><h1>Sign in to <em>learn.</em></h1><Link to="/account">Student sign in</Link></section>;
   return <PortalShell><section className="wrap section learn-page">
     <ProgrammeHeading headingRef={heading} />
     <p><Link to="/dashboard/learn">← All of Learn</Link></p>
     {programme
-      ? <ProgrammeRunner programme={programme} actorId={session.user.id} notice="Progress in interactive programmes is saved in this browser for now. Server-side saving arrives with the next Learn release." />
+      ? pass === 'unknown' ? <p role="status">Checking your pass…</p> : <ProgrammeRunner programme={programme} actorId={session.user.id} passActive={pass === 'active'} notice="Progress in interactive programmes is saved in this browser for now. Server-side saving arrives with the next Learn release." />
       : <p role="alert">This programme is not available. <Link to="/dashboard/learn">Back to Learn</Link></p>}
   </section></PortalShell>;
 }
@@ -128,13 +139,15 @@ export function LearnProgrammePreview() {
   const programme = findProgramme(slug);
   const seed = params.has('seed') ? Number(params.get('seed')) : null;
   const [unlockAll, setUnlockAll] = useState(readReviewUnlock);
+  // `?pass=none` previews what an account without a pass sees.
+  const passActive = params.get('pass') !== 'none';
   const toggle = on => { setUnlockAll(on); writeReviewUnlock(on); };
   return <PortalShell><section className="wrap section learn-page">
     <ProgrammeHeading />
     <p><Link to="/learn-preview">← Learn preview</Link></p>
     {!params.get('lesson') && <label className="review-unlock"><input type="checkbox" checked={unlockAll} onChange={e => toggle(e.target.checked)} /> Review mode: unlock every tier (this preview only; students still unlock tiers by passing quizzes)</label>}
     {programme
-      ? <ProgrammeRunner programme={programme} actorId="preview" notice={hostedStudentPreview
+      ? <ProgrammeRunner programme={programme} actorId="preview" passActive={passActive} notice={hostedStudentPreview
         ? "Staging review. Progress is saved only in this browser."
         : "Development preview. Progress is saved only in this browser."} seed={seed} unlockAll={unlockAll} />
       : <p role="alert">No programme with that name.</p>}

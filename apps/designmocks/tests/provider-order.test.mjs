@@ -5,11 +5,11 @@ import { resolveProviderOrder } from '../supabase/functions/_shared/provider-ord
 import { createOrderHandler } from '../supabase/functions/_shared/create-order.mjs';
 
 const internal = '00000000-0000-4000-8000-000000001999';
-const prepared = { id: internal, amount: 119300, currency: 'INR', mode: 'test', providerOrderId: null };
+const prepared = { id: internal, amount: 128400, currency: 'INR', mode: 'test', providerOrderId: null };
 const keyId = 'rzp_test_fictional', keySecret = 'fictional-secret';
 const provider = (patch = {}) => ({ entity: 'order', id: 'order_fictional', receipt: internal,
-  notes: { designmocks_order: internal }, amount: 119300, currency: 'INR', status: 'created',
-  amount_paid: 0, amount_due: 119300, partial_payment: false, ...patch });
+  notes: { designmocks_order: internal }, amount: 128400, currency: 'INR', status: 'created',
+  amount_paid: 0, amount_due: 128400, partial_payment: false, ...patch });
 const collection = items => ({ entity: 'collection', count: items.length, items });
 function world({ existing = null, lostCreate = false, barrier = 0 } = {}) {
   const state = { calls: [], created: existing, commits: 0, lookups: 0 };
@@ -33,7 +33,7 @@ function world({ existing = null, lostCreate = false, barrier = 0 } = {}) {
       return state.created ? Response.json(state.created) : Response.json({}, { status: 404 });
     }
     assert.equal(method, 'POST');
-    assert.deepEqual(JSON.parse(init.body), { amount: 119300, currency: 'INR', receipt: internal,
+    assert.deepEqual(JSON.parse(init.body), { amount: 128400, currency: 'INR', receipt: internal,
       partial_payment: false, notes: { designmocks_order: internal } });
     if (state.created) return Response.json({ error: 'Fictional duplicate receipt.' }, { status: 400 });
     state.created = provider();state.commits++;
@@ -75,7 +75,7 @@ test('another receipt, account note, amount, currency, ID or entity is never a r
   }
 });
 test('paid, partially paid, partial-enabled and inconsistent-due orders never open or create another checkout', async () => {
-  for (const patch of [{ status: 'paid', amount_paid: 119300, amount_due: 0 }, { amount_paid: 100, amount_due: 119200 },
+  for (const patch of [{ status: 'paid', amount_paid: 128400, amount_due: 0 }, { amount_paid: 100, amount_due: 128300 },
     { partial_payment: true }, { amount_due: 0 }, { amount_paid: '0' }, { status: 'refunded' }]) {
     const w = world({ existing: provider(patch) });await assert.rejects(resolveProviderOrder(prepared, w.options));
     assert.equal(w.state.calls.length, 1);assert.equal(w.state.commits, 0);
@@ -138,7 +138,7 @@ function handlerFixture({attach='order_fictional',keys=true,prepareError=false,i
 }
 test('the actual order handler recovers and binds the order without granting a pass or returning diagnostics',async()=>{
   const f=handlerFixture(),response=await f.handler(f.request());assert.equal(response.status,200);
-  assert.deepEqual(await response.json(),{orderId:'order_fictional',keyId,amount:119300,currency:'INR'});
+  assert.deepEqual(await response.json(),{orderId:'order_fictional',keyId,amount:128400,currency:'INR'});
   assert.deepEqual(f.calls,['getUser','prepare_order','attach_provider_order']);assert.equal(f.w.state.commits,1);
   assert.equal(response.headers.get('Cache-Control'),'no-store');assert.equal(response.headers.get('Access-Control-Allow-Origin'),origin);
 });
@@ -188,7 +188,7 @@ test('checkout accepts the annual plan request serialized by the browser SDK', a
     signal: new AbortController().signal,
   });
   assert.equal(error, null);
-  assert.deepEqual(data, {orderId: 'order_fictional', keyId, amount: 119300, currency: 'INR'});
+  assert.deepEqual(data, {orderId: 'order_fictional', keyId, amount: 128400, currency: 'INR'});
   assert.deepEqual(f.calls, ['getUser', 'prepare_order', 'attach_provider_order']);
 });
 
@@ -221,4 +221,45 @@ test('checkout can use its exact origin independently of the private portal', as
   delete settings.DMOCKS_CHECKOUT_ORIGIN;
   assert.equal((await preflight(portal)).status,204);
   assert.equal((await preflight(checkout)).status,403);
+});
+
+test('provider orders are created only at the server price of their own plan', async () => {
+  const duo = { ...prepared, plan: 'duo', amount: 214200 };
+  const fetcher = async (address, init = {}) => {
+    const url = new URL(address);
+    if ((init.method ?? 'GET') === 'GET') return Response.json(collection([]));
+    const body = JSON.parse(init.body);
+    assert.equal(url.pathname, '/v1/orders');assert.equal(body.amount, 214200);
+    return Response.json(provider({ amount: 214200, amount_due: 214200 }));
+  };
+  assert.equal(await resolveProviderOrder(duo, { keyId, keySecret, fetcher }), 'order_fictional');
+  for (const order of [{ ...prepared, plan: 'duo' }, { ...prepared, amount: 214200 }, { ...prepared, amount: 119300 }, { ...duo, plan: 'trio' }]) {
+    let called = false;
+    await assert.rejects(resolveProviderOrder(order, { keyId, keySecret, fetcher: async () => { called = true; } }));
+    assert.equal(called, false);
+  }
+});
+
+test('a Duo checkout prepares the Duo plan and refuses a server order for another plan', async () => {
+  const run = async prepareResult => {
+    const calls = [];
+    const settings = { PUBLIC_APP_ORIGIN: origin, SUPABASE_URL: 'http://127.0.0.1:63321', SUPABASE_ANON_KEY: 'fictional-anon',
+      SUPABASE_SERVICE_ROLE_KEY: 'fictional-service', RAZORPAY_KEY_ID: keyId, RAZORPAY_KEY_SECRET: keySecret };
+    const handler = createOrderHandler({ readEnvironment: key => settings[key], reportFailure: () => {},
+      providerFetch: async (address, init = {}) => (init.method ?? 'GET') === 'GET' ? Response.json(collection([]))
+        : Response.json(provider({ amount: 214200, amount_due: 214200 })),
+      createClient: () => ({ auth: { getUser: async () => ({ data: { user: { id: internal } }, error: null }) },
+        rpc: async (name, input) => { calls.push([name, input]);
+          return name === 'attach_provider_order' ? { data: 'order_fictional', error: null } : { data: prepareResult, error: null }; } }) });
+    const response = await handler(new Request(origin + '/functions/v1/create-order', { method: 'POST',
+      headers: { Origin: origin, Authorization: 'Bearer fictional-actor', 'Content-Type': 'application/json' }, body: JSON.stringify({ plan: 'duo' }) }));
+    return { response, calls };
+  };
+  const ok = await run({ ...prepared, plan: 'duo', amount: 214200 });
+  assert.equal(ok.response.status, 200);
+  assert.deepEqual(await ok.response.json(), { orderId: 'order_fictional', keyId, amount: 214200, currency: 'INR' });
+  assert.deepEqual(ok.calls[0], ['prepare_plan_order', { p_plan: 'duo' }]);
+  const mismatched = await run({ ...prepared, plan: 'annual' });
+  assert.equal(mismatched.response.status, 503);
+  assert.equal(mismatched.calls.some(([name]) => name === 'attach_provider_order'), false);
 });

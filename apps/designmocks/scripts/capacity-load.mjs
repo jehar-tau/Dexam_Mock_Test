@@ -93,7 +93,7 @@ export async function runCapacityTest(rawPlan, { fixtures = [], fetchImpl = fetc
     if (check === "public-annual-plan") {
       if (!Array.isArray(payload) || payload.length !== 1) return false;
       const [plan] = payload;
-      return plan?.id === "annual" && plan.amount === 119300 && plan.currency === "INR" && plan.duration_months === 12;
+      return plan?.id === "annual" && plan.amount === 128400 && plan.currency === "INR" && plan.duration_months === 12;
     }
     if (check === "accepted-revision") return payload?.accepted === true && payload.revision === fixture.revision;
     const sealed = payload?.id === fixture.attemptId && payload.status === "active"

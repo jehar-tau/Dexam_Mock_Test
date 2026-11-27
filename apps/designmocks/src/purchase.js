@@ -1,9 +1,11 @@
 import { withAccountDeadline } from './account-request.js';
+import { passPlans } from './config.js';
 
 const noticeRevisionChanged = Symbol('notice revision changed');
 
-export function purchaseOrder(value, expectedMode) {
-  if (!value || Array.isArray(value) || value.amount !== 119300 || value.currency !== 'INR' ||
+export function purchaseOrder(value, expectedMode, plan = 'annual') {
+  const expected = Object.hasOwn(passPlans, plan) ? passPlans[plan].amountMinor : null;
+  if (!value || Array.isArray(value) || expected === null || value.amount !== expected || value.currency !== 'INR' ||
       typeof value.orderId !== 'string' || !/^order_[A-Za-z0-9]{1,194}$/.test(value.orderId) ||
       typeof value.keyId !== 'string' || !/^rzp_(test|live)_[A-Za-z0-9]{1,180}$/.test(value.keyId))
     throw new Error('The checkout response could not be verified.');
@@ -91,8 +93,8 @@ export function createPurchaseFlow({ services, termsVersion, loadCheckout = load
     } catch { publish('pending'); }
     finally { confirming = false; }
   }
-  async function start(accepted) {
-    if (!current() || busy || confirming || status !== 'idle' || accepted !== true) return false;
+  async function start(accepted, plan = 'annual') {
+    if (!current() || busy || confirming || status !== 'idle' || accepted !== true || !Object.hasOwn(passPlans, plan)) return false;
     busy = true; publish('opening');
     try {
       if (typeof termsVersion !== 'string' || !termsVersion.trim()) throw new Error('Terms unavailable.');
@@ -103,16 +105,16 @@ export function createPurchaseFlow({ services, termsVersion, loadCheckout = load
           if (error?.code === '22023') throw noticeRevisionChanged;
           throw error;
         }
-        const { data, error } = await services.functions.invoke('create-order', { body: { plan: 'annual' }, signal });
+        const { data, error } = await services.functions.invoke('create-order', { body: { plan }, signal });
         signal.throwIfAborted(); if (error) throw error;
-        const order = purchaseOrder(data, expectedMode), Razorpay = await loadCheckout();
+        const order = purchaseOrder(data, expectedMode, plan), Razorpay = await loadCheckout();
         signal.throwIfAborted(); if (typeof Razorpay !== 'function') throw new Error('Checkout unavailable.');
         // Recheck the SDK's current cached session after server verification, then
         // construct/open synchronously in that same current-account operation.
         await services.presentForCurrentAccount(() => {
           signal.throwIfAborted(); if (!current()) throw new Error('Purchase access changed.');
           const owned = new Razorpay({ key: order.keyId, order_id: order.orderId, amount: order.amount, currency: order.currency,
-            name: 'DMocks', description: '12 months of access to the released paper catalogue', theme: { color: '#244735' },
+            name: 'DMocks', description: plan === 'duo' ? 'Duo pass: 12 months for you and one friend' : '12 months of access to the released paper catalogue', theme: { color: '#244735' },
             handler: () => {
               if (!current() || status !== 'checkout' || widget !== owned) return;
               publish('verifying'); closeWidget(); void confirm();

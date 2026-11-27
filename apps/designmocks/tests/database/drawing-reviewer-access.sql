@@ -49,11 +49,14 @@ insert into dm_private.attempt_items(attempt_id,question_id,ordinal,prompt,optio
 insert into dm_private.drawing_uploads(attempt_id,question_id,student_id,storage_path,ordinal,mime_type,byte_size)
   select i.attempt_id,i.question_id,a.user_id,'drawings/reviewer-fixture/'||i.attempt_id||'/'||i.ordinal||'.png',1,'image/png',1024
   from dm_private.attempt_items i join dm_private.attempts a on a.id=i.attempt_id;
+-- Queue paging needs more than a month's marking allowance; the allowance has its own test.
+alter table dm_private.drawing_reviews disable trigger drawing_reviews_pass_gate;
 insert into dm_private.drawing_reviews(id,attempt_id,question_id)
   select ('40000000-0000-4000-8000-'||lpad(i.ordinal::text,12,'0'))::uuid,i.attempt_id,i.question_id
   from dm_private.attempt_items i where i.attempt_id=:'student_attempt'
   union all select :'own_review'::uuid,i.attempt_id,i.question_id from dm_private.attempt_items i where i.attempt_id=:'teacher_attempt'
   union all select :'upload_open_review'::uuid,i.attempt_id,i.question_id from dm_private.attempt_items i where i.attempt_id=:'upload_open_attempt';
+alter table dm_private.drawing_reviews enable trigger drawing_reviews_pass_gate;
 
 set local role service_role;
 select set_config('request.jwt.claim.role','service_role',true);
