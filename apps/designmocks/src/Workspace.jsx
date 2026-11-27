@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Theme } from "./ThemeToggle.jsx";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Art, Arrow } from "./Art.jsx";
-import {postLaunchPreview, studentModuleReleased} from "./launch-scope.js";
+import {examMocksReleased, postLaunchPreview, studentModuleReleased} from "./launch-scope.js";
 import { OverviewPapers, paperName } from "./OverviewPapers.jsx";
 import { overviewPaperProgress } from "./overview-papers.mjs";
 import { displayMarks } from "./attempt-insights.mjs";
@@ -240,6 +240,8 @@ export function WorkspaceView({
               </div>
             </>
           )}
+          {/* Exam-wise mocks are hidden until the owner decides their purpose (28 Nov 2026). */}
+          {(catalogueOnly || preview || examMocksReleased) && <>
           {catalogueOnly && checkoutReady && !data.access?.active && <p className="notice">An active pass is needed to start a released paper. <Link to="/plans">View the annual pass →</Link></p>}
           <div className="overview-section-head"><div><span className="overview-kicker">{catalogueOnly?"PAPER CATALOGUE":"EXAM-WISE MOCKS"}</span><h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2></div>{!catalogueOnly&&<Link to={examHref}>View exam-wise mocks →</Link>}</div>
           {papers.length ? (
@@ -269,6 +271,7 @@ export function WorkspaceView({
                 :(!catalogueOnly||!checkoutReady)&&<Link className="overview-secondary-link" to={papersHref}>Open year-wise Papers <Arrow size={17}/></Link>}
             </div>
           )}
+          </>}
           {!catalogueOnly && <><div className="overview-section-head"><div><span className="overview-kicker">YOUR RECORD</span><h2>Your recent attempts.</h2></div></div>
           {record.length > 0 && <div className="overview-record-filters" role="group" aria-label="Filter your attempts">
             {recordFilters.map(([key,label,count]) => <button key={key} type="button" aria-pressed={recordFilter===key}

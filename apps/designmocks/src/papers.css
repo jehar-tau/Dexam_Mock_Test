@@ -109,3 +109,8 @@
   .year-papers-programmes { display:grid; grid-template-columns:1fr 1fr; width:100%; }
   .year-papers-programmes button { justify-content:center; padding:.5rem .4rem; font-size:.92rem; }
 }
+
+/* Signed-out visitors are asked to sign in before the papers open. */
+.papers-sign-in { display: grid; gap: 1rem; justify-items: start; max-width: 46rem; }
+.papers-sign-in h1, .papers-sign-in p { margin: 0; }
+.papers-sign-in p { color: var(--muted); font-size: 1.1rem; line-height: 1.6; }

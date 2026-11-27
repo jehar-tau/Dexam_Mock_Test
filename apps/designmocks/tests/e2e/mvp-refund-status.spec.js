@@ -10,7 +10,7 @@ test('a server-revoked pass prevents another paper start without charging again 
   if(name==='my_overview_analytics')return{completed:1,waitingForResults:0,objectiveAccuracy:75,objectiveAnswered:4,topics:[],exams:[],drawingReviews:{pending:0,released:0}};
   if(name==='available_papers')return[{id:'10000000-0000-4000-8000-000000001851',title:'Original fictional next objective paper',exam:'uceed',durationSeconds:900,qualityHeld:false}];
  });
- await page.goto('/');await seedPortalSession(page,actor);await page.goto('/dashboard');await expect(page.getByRole('button',{name:'Start or resume',exact:true})).toBeEnabled();state.revoked=true;
- await page.getByRole('button',{name:'Refresh workspace',exact:true}).click();await expect(page.getByText('Not active',{exact:true})).toBeVisible();await expect(page.getByRole('button',{name:'Start or resume',exact:true})).toBeDisabled();await expect(page.getByRole('link',{name:'Original fictional saved result',exact:false})).toHaveAttribute('href','/attempt/20000000-0000-4000-8000-000000001851');
+ await page.goto('/');await seedPortalSession(page,actor);await page.goto('/dashboard/mocks');await expect(page.getByRole('button',{name:'Start or resume',exact:true})).toBeEnabled();state.revoked=true;
+ await page.getByRole('button',{name:'Refresh papers',exact:true}).click();await expect(page.getByRole('button',{name:'Start or resume',exact:true})).toBeDisabled();await page.goto('/dashboard');await expect(page.getByText('Not active',{exact:true})).toBeVisible();await expect(page.getByRole('link',{name:'Original fictional saved result',exact:false})).toHaveAttribute('href','/attempt/20000000-0000-4000-8000-000000001851');
  expect(provider.calls.some(([name])=>['start_attempt','prepare_order','create-order','fulfil_verified_payment','record_verified_refund'].includes(name))).toBe(false);expect(provider.unexpected).toEqual([]);
 });

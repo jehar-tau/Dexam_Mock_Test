@@ -24,7 +24,7 @@ import { readSupportPage, supportPageLimit } from "./admin-support.js";
 import { readPrivacyQueue, privacyQueueLimit } from "./admin-privacy.js";
 import { AdminAccessBoundary, useAdminServices } from "./AdminAccess.jsx";
 import { adminRequestMessage } from "./admin-access.js";
-import {drawingReviewReleased,postLaunchPreview}from'./launch-scope.js';
+import {communityReleased,drawingReviewReleased,lessonsReleased,postLaunchPreview}from'./launch-scope.js';
 const mvpDeskReads=new Set(['admin_bug_report_page','admin_reported_questions','admin_operational_health','admin_privacy_request_page','admin_launch_readiness',
  ...(drawingReviewReleased?['admin_drawing_queue']:[])]);
 
@@ -112,7 +112,8 @@ function AdminDesk({ session }) {
             "admin_reported_questions", "admin_learning_lessons", "admin_drawing_queue", "admin_question_intake_assets",
             "admin_community_report_queue", "admin_ai_draft_requests", "admin_operational_health", "admin_privacy_request_page",
             "admin_launch_readiness"].map(name => {
-              if (!postLaunchPreview && !mvpDeskReads.has(name)) return [];
+              const released = (name === "admin_community_report_queue" && communityReleased) || (name === "admin_learning_lessons" && lessonsReleased);
+              if (!postLaunchPreview && !released && !mvpDeskReads.has(name)) return [];
               return read(name, pageArgs[name]);
             }),
       ), request.signal);
@@ -360,12 +361,12 @@ function AdminDesk({ session }) {
           <DrawingReviewQueue drawings={drawings} onRefresh={refreshDrawings} {...drawingActions} />
           <DrawingReviewerRoster rpc={rpc} refreshDrawings={refreshDrawings} />
           </>}
-          {postLaunchPreview&&<>
+          {communityReleased&&<>
           <h2>Community moderation</h2>
           <CommunityModerationQueue reports={communityReports} rpc={rpc} onRefresh={load} scopeKey={session.user.id} />
           <CommunityContentModeration rpc={rpc} scopeKey={session.user.id} />
-          <LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />
           </>}
+          {lessonsReleased&&<LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />}
           <ReportedQuestionQueue reports={questionReports} rpc={rpc} onChanged={refreshQuestionReviews} />
           {postLaunchPreview&&<>
           <h2>Add a question draft</h2>

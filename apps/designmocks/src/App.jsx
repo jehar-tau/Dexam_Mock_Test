@@ -30,7 +30,7 @@ import { FreeSignupNotice } from './FreeSignupNotice.jsx';
 import { takeReturn } from "./return-path.js";
 import {Purchase} from "./Purchase.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
-import {drawingReviewReleased,postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
+import {drawingReviewReleased,lessonsReleased,postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
 import { hostedStudentPreview, studentPreview } from "./student-preview.js";
 import {
   CandidateProfile,
@@ -224,7 +224,6 @@ function Layout({ children }) {
             id="navigation"
           >
             <NavLink to="/tests">Mock tests</NavLink>
-            <NavLink to="/papers">Papers</NavLink>
             <Link to="/#features">What’s inside</Link>
             <Link to="/#how">How it works</Link>
             <NavLink to="/plans">The annual pass</NavLink>
@@ -1683,7 +1682,7 @@ export default function App() {
           <Route path="/dashboard/mocks" element={studentModuleReleased('mocks')?<ExamMocks />:<Workspace catalogueOnly/>} />
           <Route path="/dashboard/all-india" element={studentModuleReleased('all-india')?<AllIndia />:<DeferredModule module="all-india"/>} />
           <Route path="/dashboard/practice" element={studentModuleReleased('practice')?<TopicPractice />:<DeferredModule module="practice"/>} />
-          <Route path="/dashboard/learn" element={postLaunchPreview?<Learn />:<LearnProgrammes />} />
+          <Route path="/dashboard/learn" element={postLaunchPreview||lessonsReleased?<Learn />:<LearnProgrammes />} />
           <Route path="/dashboard/learn/programme/:slug" element={<LearnProgrammePage />} />
           <Route path="/dashboard/community" element={studentModuleReleased('community')?<Community />:<DeferredModule module="community"/>} />
           <Route path="/dashboard/community/articles" element={studentModuleReleased('community')?<CommunityArticles />:<DeferredModule module="community"/>} />

@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Arrow } from "./Art.jsx";
 import { Motif, Reveal } from "./Motion.jsx";
-import { postLaunchPreview, studentModuleReleased } from "./launch-scope.js";
+import { studentModuleReleased } from "./launch-scope.js";
 import { releasedModules } from "./launch-scope.mjs";
 import { portalReady } from "./platform.js";
 import { useAuthState } from "./useAuth.js";
@@ -24,18 +24,6 @@ export const features = [
     points: ["Step-by-step programmes", "Fresh questions on every try", "From first ideas to exam level"],
     to: "/dashboard/learn",
     link: "Open Learn",
-  },
-  {
-    id: "mocks",
-    module: "exam-mocks",
-    motif: "mocks",
-    tone: "yellow",
-    eyebrow: "EXAM-WISE MOCKS",
-    title: "Sit the paper before the paper.",
-    copy: "Timed mocks shaped like the real exam, with its parts, its clock and its marking rules.",
-    points: ["UCEED, CEED, NIFT, NID DAT", "Reviewed questions"],
-    to: "/tests",
-    link: "See the mock tests",
   },
   {
     id: "practice",
@@ -164,8 +152,8 @@ export function FeatureShowcase() {
       </div>
       <div className="feature-grid">
         {features.map((feature) => {
-          const soon = Boolean(feature.module) && !(releasedModules[feature.module] && portalReady) && !(postLaunchPreview && portalReady)
-            && !(feature.module === "practice" && studentModuleReleased("practice") && !postLaunchPreview);
+          const released = releasedModules[feature.module] || studentModuleReleased(feature.module === "drawings" ? "drawing-review" : feature.module);
+          const soon = Boolean(feature.module) && !(released && portalReady);
           const needsSignIn = feature.to.startsWith("/dashboard") && !session;
           return (
             <Reveal
@@ -196,9 +184,9 @@ export function FeatureShowcase() {
                     Try a free visual hierarchy exercise <Arrow />
                   </Link>
                 )}
-                {(!soon || feature.module === "exam-mocks") && (
+                {!soon && (
                   <Link className="text-link" to={needsSignIn ? "/account" : feature.to}>
-                    {needsSignIn ? "Sign in free to start" : soon ? "Explore exam guides" : feature.link} <Arrow />
+                    {needsSignIn ? "Sign in free to start" : feature.link} <Arrow />
                   </Link>
                 )}
               </div>

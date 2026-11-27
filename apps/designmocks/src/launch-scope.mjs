@@ -13,7 +13,6 @@ export function allowReleasedLearn(portalReady) {
 }
 export const launchNavigation=Object.freeze([
  {to:'/dashboard',label:'Overview',mark:'O',end:true},
- {to:'/dashboard/mocks',label:'Released papers',mark:'M'},
  {to:'/papers',label:'Papers',mark:'Y'},
  {to:'/dashboard/learn',label:'Learn',mark:'L'},
 ]);
@@ -27,7 +26,9 @@ const studentModuleItems=Object.freeze({
 // released by name, like a student module. It adds no student navigation; it
 // opens /review/drawings, the account page's "Review drawings" link and the
 // Admin page's drawing queue and reviewer access.
-const staffReleaseModules=Object.freeze(['drawing-review']);
+// Owner decision, 28 November 2026: the written theory lessons beside Learn's
+// programmes are released by name too ("lessons"). They add no navigation.
+const staffReleaseModules=Object.freeze(['drawing-review','lessons']);
 export const releasableModuleNames=Object.freeze([...Object.keys(studentModuleItems),...staffReleaseModules]);
 export function releasedStudentModules(value){
  if(typeof value!=='string'||!value.trim())return [];
@@ -38,9 +39,11 @@ export function releasedStudentModules(value){
 export function studentNavigation(released){
  const enabled=new Set(released);
  return Object.freeze([
-  launchNavigation[0],enabled.has('mocks')?studentModuleItems.mocks:launchNavigation[1],launchNavigation[2],
+  // Owner decision, 28 November 2026: exam-wise mocks are hidden until their
+  // purpose is decided, and Papers lives in this menu for signed-in students.
+  launchNavigation[0],...(enabled.has('mocks')?[studentModuleItems.mocks]:[]),launchNavigation[1],
   ...['all-india','practice'].filter(name=>enabled.has(name)).map(name=>studentModuleItems[name]),
-  launchNavigation[3],
+  launchNavigation[2],
   ...(enabled.has('community')?[studentModuleItems.community]:[]),
  ]);
 }
