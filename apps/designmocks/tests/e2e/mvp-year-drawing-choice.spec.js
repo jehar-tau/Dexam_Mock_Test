@@ -31,7 +31,7 @@ test('student selects a printed option before adding drawing photos and sees eac
   await expect(option).toBeVisible({timeout:30000});
   await expect(page.getByRole('button',{name:'Add images'})).toHaveCount(0);
   await expect(page.getByText('i. A pencil outline')).toBeVisible();
-  await option.check();
+  await option.click();
   await expect(option).toBeChecked();await expect(page.getByRole('button',{name:'Add images'})).toBeEnabled();
   await page.reload();await expect(page.getByRole('radio',{name:'B. A busy street'})).toBeChecked();
 });
