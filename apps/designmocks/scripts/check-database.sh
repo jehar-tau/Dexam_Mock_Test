@@ -19,6 +19,7 @@ for migration in supabase/migrations/*.sql; do
   psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f "$migration"
 done
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -v test_year_drawing_runtime=true -f tests/database/year-paper-preparation.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/year-drawing-estimates.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/year-paper-revisions.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/invariants.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/fresh-all-india-lineage.sql
@@ -30,6 +31,7 @@ rpc_inventory="$(mktemp -d)"
 trap 'unlink "$rpc_inventory/source.json"; if [[ -f "$rpc_inventory/paid.json" ]]; then unlink "$rpc_inventory/paid.json"; fi; rmdir "$rpc_inventory"' EXIT
 psql "$test_db_url" -X -qAt -v ON_ERROR_STOP=1 -f supabase/audit/staging-rpc-inventory.sql > "$rpc_inventory/source.json"
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/stage-objective-year-sources.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/frozen-legacy-year-sources.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nift-historical-gat.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bank-import-finalization.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/canonical-media.sql

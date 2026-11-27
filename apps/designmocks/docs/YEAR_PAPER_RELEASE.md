@@ -68,3 +68,5 @@ With approved free registration open on the Test backend, the year-paper operato
 For a newly ingested paper, run `node scripts/stage-free-year-sources.mjs --plan /private/path/year-paper.json --expect PLAN_SHA256` and repeat with `--apply`. This imports only that plan's complete objective source group. Existing released papers and unrelated bank rows are protected. New records require the usual runtime conversion and authenticated reviewer decision.
 
 For historical NIFT B.Des or M.Des GAT, run `npm run runtime:nift-year -- --plan /private/path/year-paper.json --expect PLAN_SHA256` after loading verified media. Repeat with `--apply` to store the plan’s programme, timer, per-question marks, options, exact key and explanations for authenticated review.
+
+When a new paper reuses a retired source key from an unpublished exam mock, staging verifies that every affected attempt has finished and retains its original question, options, marks, keys, solution and registered private figures. A live paper, active attempt or incomplete snapshot still prevents the source update.

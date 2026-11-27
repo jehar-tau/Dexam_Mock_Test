@@ -44,7 +44,7 @@ export function DrawingEstimate({ estimate, criteria = [], onReevaluate, busy = 
   if (view.status === "awaiting_teacher") return <section className="drawing-estimate" data-state="awaiting-teacher">
     {view.override ? <p role="status"><b>Checked by DMocks: {formatMarks(view.override.score)}/{formatMarks(view.max)}.</b> {view.override.note}</p> :
       <p role="status"><b>Score: awaiting teacher review.</b> Your drawing was uploaded.</p>}
-    {view.flags.map(flag => <p key={flag}>{DRAWING_FLAG_LABELS[flag]}</p>)}
+    {view.canReevaluate && onReevaluate && <button type="button" className="button quiet" disabled={busy} onClick={onReevaluate}>{busy ? "Evaluating…" : "Try re-evaluating"}</button>}
   </section>;
   if (view.status === "evaluating") return <section className="drawing-estimate" data-state="evaluating" aria-busy="true">
     {head}
