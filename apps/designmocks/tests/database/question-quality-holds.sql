@@ -229,5 +229,24 @@ select pg_temp.quality_assert((select count(*)=20 from dm_private.question_repor
   'rate limits keep a bounded, attributable successful-report history');
 select pg_temp.quality_assert((select count(*)=9 from dm_private.question_review_events where target_key=:'case_key'),
   'threshold, dismissal, two reopenings, two retirements, two restorations and corrected-source release have immutable review events');
+-- Standalone questions can be reported without a sourceExternalKey.
+insert into dm_private.papers(title,exam,duration_seconds) values('Fictional standalone paper','ceed',900)
+  returning id as standalone_paper \gset
+insert into dm_private.questions(paper_id,ordinal,prompt,options,points,topic)
+  values(:'standalone_paper',1,'Standalone fixture','["First","Second"]',1,'fixture')
+  returning id as standalone_question \gset
+insert into dm_private.answer_keys(question_id,key,explanation)
+  values(:'standalone_question','{"kind":"mcq","correct":["A"]}','Standalone explanation.');
+insert into dm_private.reported_question_queue(target_key,identity_key,representative_question_id,report_count,snapshot,content_version)
+  values('standalone-case','question:'||:'standalone_question',:'standalone_question',5,
+    '{"prompt":"Earlier standalone question"}',dm_private.question_quality_version('{"prompt":"Earlier standalone question"}'));
+select pg_temp.quality_assert(not dm_private.paper_quality_held(:'standalone_paper'),
+  'a report on an older version of a standalone question allows the revised paper');
+update dm_private.reported_question_queue set content_version=null where target_key='standalone-case';
+select pg_temp.quality_assert(dm_private.paper_quality_held(:'standalone_paper'),
+  'a pending standalone question hold is visible immediately');
+update dm_private.reported_question_queue set status='dismissed' where target_key='standalone-case';
+select pg_temp.quality_assert(not dm_private.paper_quality_held(:'standalone_paper'),
+  'dismissing a standalone hold is visible in the same transaction');
 rollback;
 \echo 'PASS: versioned unique reporters, threshold quarantine, all-start fencing, fixed papers/clocks, human decisions, corrected sources, private figures and report limits.'
