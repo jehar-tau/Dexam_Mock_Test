@@ -53,7 +53,7 @@
 .year-paper-own-attempt[data-state="pending"] span { color:#9a6a12; }
 :root[data-theme="dark"] .year-paper-own-attempt[data-state="pending"] span { color:var(--yellow); }
 .year-paper-own-attempt[data-state="new"] span { color:var(--muted); font-weight:600; }
-.year-paper-own-attempt a { color:var(--green); text-decoration:underline; text-underline-offset:.15rem; font-weight:600; padding-block:.7rem; margin-block:-.7rem; }
+.year-paper-own-attempt a { color:var(--green); text-decoration:underline; text-underline-offset:.15rem; font-weight:600; }
 .year-paper-own-attempt a:focus-visible { outline:3px solid var(--orange); outline-offset:3px; }
 
 .year-papers-empty { padding:1.5rem; border:1px dashed var(--line); border-radius:.9rem; background:var(--surface); }
