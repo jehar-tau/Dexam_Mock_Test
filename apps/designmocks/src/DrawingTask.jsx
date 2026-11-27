@@ -40,6 +40,11 @@ export function DrawingEstimate({ estimate, criteria = [], onReevaluate, busy = 
   const view = drawingEstimateView(estimate, criteria);
   if (!view) return null;
   const head = <span className="drawing-estimate-eyebrow">AI estimate · not an official score</span>;
+  if (view.status === "awaiting_teacher") return <section className="drawing-estimate" data-state="awaiting-teacher">
+    {view.override ? <p role="status"><b>Checked by DMocks: {formatMarks(view.override.score)}/{formatMarks(view.max)}.</b> {view.override.note}</p> :
+      <p role="status"><b>Score: awaiting teacher review.</b> Your drawing was uploaded.</p>}
+    {view.flags.map(flag => <p key={flag}>{DRAWING_FLAG_LABELS[flag]}</p>)}
+  </section>;
   if (view.status === "evaluating") return <section className="drawing-estimate" data-state="evaluating" aria-busy="true">
     {head}
     <p className="drawing-estimate-wait" role="status"><i aria-hidden="true" />Evaluating your drawing… This usually takes a minute or two.</p>

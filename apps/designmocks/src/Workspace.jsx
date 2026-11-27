@@ -16,7 +16,7 @@ import { QuestionReport } from "./QuestionReport.jsx";
 import { DrawingUploads, DrawingUploadWindow } from "./DrawingUploads.jsx";
 import { AttemptAccessBoundary } from "./AttemptAccess.jsx";
 import { drawingMediaError } from "./drawing-upload.js";
-import { DrawingCriteria } from "./DrawingTask.jsx";
+import { DrawingCriteria, DrawingGraceBanner } from "./DrawingTask.jsx";
 import { createAnswerSyncQueue, validAttemptAnswer } from "./attempt-sync.js";
 import { createAttemptAnswerJournal, pruneDeviceAnswers } from "./attempt-answer-journal.js";
 import { AttemptInsights, AnswerReview } from "./AttemptInsights.jsx";
@@ -518,6 +518,20 @@ if(expandedAttemptScope){
   };
   const figures = item => <PaperFigures question={item} media={media} status={mediaStatus} broken={brokenFigures}
     onBroken={key => setBrokenFigures(value => ({...value, [key]: true}))} onRetry={retryFigures}/>;
+  const evaluating = attempt?.questions?.some(item => item.drawingEstimate?.status === "evaluating");
+  useEffect(() => {
+    if (!evaluating || !review || attempt.status !== "submitted") return;
+    let active = true, timer;
+    const refresh = async () => {
+      try {
+        const result = await rpc("read_attempt", {p_id: id});
+        if (active && current() && result.id === id) setAttempt(result);
+      } catch { /* retry transient errors while the review is visible */ }
+      if (active) timer = setTimeout(refresh, 10000);
+    };
+    timer = setTimeout(refresh, 10000);
+    return () => { active = false; clearTimeout(timer); };
+  }, [evaluating, review, id, services]);
   const previousIndex = useRef(0);
   useLayoutEffect(() => {
     if (index !== previousIndex.current) questionHeading.current?.focus();
@@ -531,6 +545,9 @@ if(expandedAttemptScope){
         ),
       )
     : 0;
+  const serverMillis = now + offset.current;
+  const yearGrace = attempt?.yearDrawing && attempt.status === "active" && left === 0
+    ? Math.max(0, Math.ceil((Date.parse(attempt.uploadDeadline) - serverMillis) / 1000)) : 0;
   const record = (value, defer = false) => {
     if (!current() || !q || busy || Date.now() + offset.current >= Date.parse(attempt.deadline) || !validAttemptAnswer(q, value)) return;
     clearTimeout(saveTimer.current);
@@ -586,14 +603,14 @@ if(expandedAttemptScope){
   useEffect(() => {
     if (
       attempt?.status === "active" &&
-      left === 0 &&
+      left === 0 && !yearGrace &&
       !busy &&
       !autoSubmitted.current
     ) {
       autoSubmitted.current = true;
       submit();
     }
-  }, [left, busy, attempt?.status, reconnects]);
+  }, [left, yearGrace, busy, attempt?.status, reconnects]);
   const startPartB=async partA=>{
     if(!current()||mutationBusy.current)return;mutationBusy.current=true;setBusy(true);setError("");
     try{const next=await rpc("start_exam_mock_part_b",{p_part_a_attempt:partA});
@@ -615,6 +632,16 @@ if(expandedAttemptScope){
         <Link to="/dashboard">← Back to workspace</Link>
       </section>
     );
+  if (yearGrace > 0) {
+    const tasks = attempt.questions.filter(item => item.kind === "drawing");
+    return <section className="wrap sample-run">
+      <DrawingGraceBanner remainingSeconds={yearGrace} taskCount={tasks.length} />
+      {tasks.map(item => <article key={item.id}><h2>{item.label}</h2><p>{item.prompt}</p>
+        <DrawingUploads attemptId={id} questionId={item.id} invoke={drawingInvoke} maxImages={item.drawing.maxImages} historical /></article>)}
+      <button className="button" type="button" disabled={busy} onClick={submit}>Submit paper and finish uploads</button>
+      {error && <p role="alert">{error}</p>}
+    </section>;
+  }
   if (attempt.status === "submitted") {
     const uploadWindow = <DrawingUploadWindow attempt={attempt} serverTime={now + offset.current} invoke={drawingInvoke} />;
     if (attempt.resultsPending) return <PendingAttemptResult title={attempt.title} reviewEndsAt={attempt.reviewEndsAt}>{uploadWindow}</PendingAttemptResult>;
@@ -636,7 +663,7 @@ if(expandedAttemptScope){
                 "Your drawing marks include released teacher reviews. Missing submissions receive zero marks."}
             </p> : <p>
               {demo ? "Sample marks follow the original paper’s answer key." : "Objective answers are marked with the paper’s reviewed key."}
-              {!demo && (expandedAttemptScope?" Drawing is excluded from this score and remains a separate teacher-reviewed submission.":" This report covers the objective paper you submitted.")}
+              {!demo && (attempt.yearDrawing ? ` The full paper is worth ${Number(attempt.total) + Number(attempt.yearDrawing.maxMarks)} marks, including ${attempt.yearDrawing.maxMarks} for drawing. Open the question review to see each task’s feedback.` : expandedAttemptScope?" Drawing is excluded from this score and remains a separate teacher-reviewed submission.":" This report covers the objective paper you submitted.")}
             </p>}
           </div>
           <div className="sample-score" role="group" aria-label={cohort ? "All India result" : attempt.scoreKind === "drawing" ? "Drawing result" : "Objective result"}>
@@ -673,7 +700,11 @@ if(expandedAttemptScope){
         </div>}
         {!attempt.examResultsPending && review && (
           <AnswerReview key={reviewFilter.revision} initialOutcome={reviewFilter.outcome} attempt={attempt} figures={figures}
-            media={media} mediaStatus={mediaStatus} onRetry={retryFigures}/>
+            media={media} mediaStatus={mediaStatus} onRetry={retryFigures} invokeDrawing={drawingInvoke} onReevaluate={async questionId => {
+              await rpc("reevaluate_year_drawing", { p_attempt_id: id, p_question_id: questionId });
+              const updated = await rpc("read_attempt", {p_id:id});
+              if (current()) setAttempt(updated);
+            }}/>
         )}
         {onRestart && <button type="button" className="button quiet" onClick={onRestart}>Start a fresh sample paper</button>}
       </section>
@@ -821,7 +852,7 @@ if(expandedAttemptScope){
               {q.drawing && <DrawingCriteria criteria={q.drawing.criteria} criteriaSource={q.drawing.criteriaSource} instructions={q.drawing.instructions} />}
               <div className="notice">
                 Draw on paper within the time limit and upload clear ordered pages.
-                A teacher can review submitted pages separately from the objective score.
+                {q.drawing ? "Your drawing feedback will appear in the question review." : "A teacher can review submitted pages separately from the objective score."}
               </div>
               <label className="drawing-note">
                 Your self-review notes (optional)
@@ -832,7 +863,7 @@ if(expandedAttemptScope){
                   disabled={busy || left === 0}
                 />
               </label>
-              <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} invoke={drawingInvoke} />
+              <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} invoke={drawingInvoke} maxImages={q.drawing?.maxImages} historical={!!q.drawing} />
             </>
           )}
           {["nat", "drawing"].includes(q.kind) && (

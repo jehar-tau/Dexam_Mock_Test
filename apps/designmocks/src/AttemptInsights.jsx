@@ -42,7 +42,43 @@ export function AttemptInsights({ questions, practicePath = "/dashboard/practice
   </section>;
 }
 
-export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, initialOutcome = ""}) {
+function HistoricalDrawingReview({ item, index, attemptId, figureUrl, invoke, onReevaluate }) {
+  const [photos, setPhotos] = useState(item.drawingPhotos ?? []);
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [retry, setRetry] = useState(0);
+  React.useEffect(() => {
+    if (!invoke || item.drawingEstimate?.status === "not_attempted") return;
+    const controller = new AbortController();
+    let refresh;
+    const open = async () => {
+      try {
+        const result = await invoke({action:"open",attemptId,questionId:item.id}, controller.signal);
+        if (controller.signal.aborted) return;
+        setPhotos(result.images);
+        setError("");
+        const lifetime = Date.parse(result.expiresAt) - Date.parse(result.serverNow);
+        if (result.images.length && lifetime > 0) refresh = setTimeout(open, Math.max(1000, lifetime - 15000));
+      } catch { if (!controller.signal.aborted) { setPhotos([]); setError("Couldn’t open your saved drawing photos."); } }
+    };
+    open();
+    return () => { controller.abort(); clearTimeout(refresh); };
+  }, [invoke, attemptId, item.id, retry, item.drawingEstimate?.status === "not_attempted"]);
+  return <>
+    <DrawingTaskReview label={item.label ?? `TASK ${index + 1}`} prompt={item.prompt}
+      figureUrl={figureUrl} marks={item.marking?.max ?? 0} criteria={item.drawing?.criteria}
+      criteriaSource={item.drawing?.criteriaSource} instructions={item.drawing?.instructions} photos={photos}
+      estimate={item.drawingEstimate} notes={item.explanation} busy={busy} onReevaluate={onReevaluate && (async () => {
+        setBusy(true);
+        try { await onReevaluate(item.id); setError(""); }
+        catch { setError("Couldn’t request re-evaluation. Reopen your result to check its status."); }
+        finally { setBusy(false); }
+      })} />
+    {error && <p role="alert">{error} <button className="text-button" onClick={() => setRetry(n => n+1)}>Reload photos</button></p>}
+  </>;
+}
+
+export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, invokeDrawing, onReevaluate, initialOutcome = ""}) {
   const { questions } = attempt;
   const [kind, setKind] = useState("");
   const [outcome, setOutcome] = useState(initialOutcome);
@@ -101,10 +137,8 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, ini
         </nav>
       </article></>}
     </>}
-    {drawings.map((item, index) => item.drawingEstimate !== undefined ? <DrawingTaskReview key={item.id} label={item.label ?? `TASK ${index + 1}`}
-      prompt={item.prompt} figureUrl={media?.[item.id]?.[0]?.url} marks={item.marking?.max ?? 0} criteria={item.drawing?.criteria}
-      criteriaSource={item.drawing?.criteriaSource} instructions={item.drawing?.instructions} photos={item.drawingPhotos ?? []}
-      estimate={item.drawingEstimate} notes={item.explanation} /> : <article key={item.id}><h3>{item.prompt}</h3>{item.answer && <p>Your notes: {item.answer}</p>}{item.explanation && <p>{item.explanation}</p>}<DrawingReviewStatus review={item.drawingReview}/></article>)}
+    {drawings.map((item, index) => item.drawingEstimate !== undefined ? <HistoricalDrawingReview key={item.id} item={item} index={index} attemptId={attempt.id}
+      figureUrl={media?.[item.id]?.[0]?.url} invoke={invokeDrawing} onReevaluate={onReevaluate} /> : <article key={item.id}><h3>{item.prompt}</h3>{item.answer && <p>Your notes: {item.answer}</p>}{item.explanation && <p>{item.explanation}</p>}<DrawingReviewStatus review={item.drawingReview}/></article>)}
   </div>;
 }
 

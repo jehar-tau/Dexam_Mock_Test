@@ -44,9 +44,9 @@ export function drawingInventory(result) {
   return items;
 }
 
-export function planDrawingPages(files, savedPages) {
+export function planDrawingPages(files, savedPages, maxImages = 5) {
   const used = new Set(savedPages.map(page => page.ordinal));
-  const free = [1, 2, 3, 4, 5].filter(ordinal => !used.has(ordinal));
+  const free = [1, 2, 3, 4, 5].filter(ordinal => ordinal <= maxImages && !used.has(ordinal));
   if (files.length > free.length) {
     return {error: free.length === 1 ? "Only one image slot is available. Select one image."
       : `Only ${free.length} image slots are available. Select fewer images.`};
