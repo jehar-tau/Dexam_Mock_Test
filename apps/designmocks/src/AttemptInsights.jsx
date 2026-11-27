@@ -68,7 +68,7 @@ function HistoricalDrawingReview({ item, index, attemptId, figureUrl, invoke, on
     <DrawingTaskReview label={item.label ?? `TASK ${index + 1}`} prompt={item.prompt}
       figureUrl={figureUrl} marks={item.marking?.max ?? 0} criteria={item.drawing?.criteria}
       criteriaSource={item.drawing?.criteriaSource} instructions={item.drawing?.instructions} photos={photos}
-      estimate={item.drawingEstimate} notes={item.explanation} busy={busy} onReevaluate={onReevaluate && (async () => {
+      estimate={item.drawingEstimate} notes={item.explanation} busy={busy} subParts={item.drawing?.subParts} selectedAlternative={item.drawingChoice?.alternative} onReevaluate={onReevaluate && (async () => {
         setBusy(true);
         try { await onReevaluate(item.id); setError(""); }
         catch { setError("Couldn’t request re-evaluation. Reopen your result to check its status."); }
@@ -85,7 +85,11 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, inv
   const [selectedId, setSelectedId] = useState("");
   const [solutionOpenFor, setSolutionOpenFor] = useState("");
   const objective = questions.map((item, index) => ({item, index})).filter(({item}) => releasedOutcome(item));
-  const drawings = questions.filter(item => item.kind === "drawing");
+  const drawingItems = questions.filter(item => item.kind === "drawing");
+  const drawings = drawingItems.filter(item => !item.drawingChoice?.group || item.drawingChoice.selected);
+  const skippedGroups = [...new Set(drawingItems
+    .filter(item => item.drawingChoice?.group && !item.drawingChoice.chosenQuestionId)
+    .map(item => item.drawingChoice.group))];
   const filtered = objective.filter(({item}) => (!kind || item.kind === kind) && (!outcome || releasedOutcome(item) === outcome));
   const chosen = filtered.find(({item}) => item.id === selectedId) ?? filtered[0];
   const item = chosen?.item;
@@ -137,6 +141,7 @@ export function AnswerReview({attempt, figures, media, mediaStatus, onRetry, inv
         </nav>
       </article></>}
     </>}
+    {skippedGroups.map(group => <p key={group}><strong>{group}</strong> · No task selected. 0 marks.</p>)}
     {drawings.map((item, index) => item.drawingEstimate !== undefined ? <HistoricalDrawingReview key={item.id} item={item} index={index} attemptId={attempt.id}
       figureUrl={media?.[item.id]?.[0]?.url} invoke={invokeDrawing} onReevaluate={onReevaluate} /> : <article key={item.id}><h3>{item.prompt}</h3>{item.answer && <p>Your notes: {item.answer}</p>}{item.explanation && <p>{item.explanation}</p>}<DrawingReviewStatus review={item.drawingReview}/></article>)}
   </div>;

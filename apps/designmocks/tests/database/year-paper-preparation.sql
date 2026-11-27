@@ -85,6 +85,7 @@ select set_config('test.year.attempt',public.start_free_year_paper(current_setti
 reset role;
 \if :{?test_year_drawing_runtime}
 \ir fixtures/year-drawing-sidecar.sql
+\ir fixtures/year-drawing-choice.sql
 \endif
 insert into dm_private.papers(id,title,exam,duration_seconds) values
   ('10000000-0000-4000-8000-000000003102','Fictional other paper 1','uceed',900),
