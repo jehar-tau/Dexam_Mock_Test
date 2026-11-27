@@ -44,13 +44,13 @@ The migration grants the new functions itself. The open free backend does not ru
 
    | Paper | Title | Opens (IST) | Closes (IST) | Results (IST) | Seats | Entry |
    |---|---|---|---|---|---|---|
-   | `nid-bdes-aim-1` | NID B.Des All India Mock · December 2026 | 11 Dec 00:00 | 14 Dec 00:00 | 17 Dec 10:00 | 150 | Free |
-   | `uceed-aim-2` | UCEED All India Mock · December 2026 | 11 Dec 00:00 | 14 Dec 00:00 | 17 Dec 10:00 | empty (no cap) | Free |
+   | `nid-bdes-aim-1` | NID B.Des All India Mock · December 2026 | 11 Dec 00:00 | 13 Dec 23:59 | 17 Dec 10:00 | 150 | Free |
+   | `uceed-aim-2` | UCEED All India Mock · December 2026 | 11 Dec 00:00 | 13 Dec 23:59 | 17 Dec 10:00 | empty (no cap) | Free |
 
-   Both papers run 3 hours, followed by 10 minutes for drawing photo uploads. The last start is therefore **13 Dec, 20:50 IST**.
+   Both papers run 3 hours, followed by 10 minutes for drawing photo uploads. The last start is therefore **13 Dec, 20:49 IST**.
 4. **Teachers.** Check that drawing reviewers have access: the `drawing-review` release is on and the reviewer roster is set on the Admin page. NID has 6 tasks per student, so a full NID event means up to 900 task reviews. UCEED has 2 tasks per student.
 5. **Release flag.** Set the repo variable `DMOCKS_RELEASED_STUDENT_MODULES` to `practice,drawing-review,community,lessons,all-india` and publish the site. A misspelt name empties the whole list.
-6. **Live check.** Signed out, `/dashboard/all-india` and `/account` show both events with "150 of 150 seats left" for NID. Signed in, **Reserve my seat** works and the countdown shows.
+6. **Live check.** Signed out, `/dashboard/all-india` and its sign-in link (`/account?for=all-india`) show both events with "150 of 150 seats left" for NID. Signed in, **Reserve my seat** works and the countdown shows.
 
 ### 2. During the window (11–13 Dec)
 

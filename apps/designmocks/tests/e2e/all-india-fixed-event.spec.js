@@ -25,11 +25,13 @@ function catalogueEvent(now, overrides = {}) {
 }
 
 for (const [device, viewport] of [['desktop', { width: 1280, height: 800 }], ['mobile', { width: 360, height: 760 }]]) {
-  test(`a signed-out visitor sees seats left on the All India and sign-up pages (${device})`, async ({ page }) => {
+  test(`a signed-out visitor sees seats left, the top ten and the sign-up page (${device})`, async ({ page }) => {
     await page.setViewportSize(viewport);
     const provider = await stubPortalProvider(page, name => {
       if (name === 'public_all_india_upcoming') return [schedule(Date.now())];
-      if (name === 'public_all_india_top_ten') return [];
+      if (name === 'public_all_india_top_ten') return [{ eventId: '10000000-0000-4000-8000-000000002960', exam: 'uceed',
+        title: 'Fictional earlier UCEED mock', releasedAt: new Date().toISOString(), sharingVersion: 1, topTen: [
+          { rank: 1, alias: 'Candidate-A1B2C3D4E5', score: 91, total: 100 }, { rank: 2, alias: 'Candidate-F6A7B8C9D0', score: 88, total: 100 }] }];
       if (name === 'free_signup_notice') return null;
       return undefined;
     });
@@ -39,6 +41,9 @@ for (const [device, viewport] of [['desktop', { width: 1280, height: 800 }], ['m
     await expect(upcoming.getByText('37 of 150 seats left', { exact: true })).toBeVisible();
     await expect(upcoming.getByText(/^Opens in 2 days/)).toBeVisible();
     await expect(upcoming.getByText(/180 minutes · free entry/)).toBeVisible();
+    const board = page.getByRole('region', { name: 'All India top ten' });
+    await expect(board.getByText('Candidate-A1B2C3D4E5', { exact: true })).toBeVisible();
+    await expect(board.getByText('91/100', { exact: true })).toBeVisible();
     await page.locator('#main').getByRole('link', { name: 'Student sign in', exact: true }).click();
     await expect(page).toHaveURL('/account?for=all-india');
     await expect(page.getByRole('region', { name: 'Upcoming All India mocks' }).getByText('37 of 150 seats left', { exact: true })).toBeVisible();
@@ -93,7 +98,7 @@ test('a full event explains that every seat is taken', async ({ page }) => {
   expect(provider.calls.some(([name]) => ['start_all_india_attempt', 'register_all_india_event'].includes(name))).toBe(false);
 });
 
-test('a registered student starts once, submits, waits for results, then sees rank and the top ten', async ({ page }) => {
+test('a registered student starts once, submits, waits for results, then sees rank', async ({ page }) => {
   const now = Date.now();
   let phase = 'open', submitted = false;
   const attempt = () => ({
@@ -141,8 +146,6 @@ test('a registered student starts once, submits, waits for results, then sees ra
   await page.goto('/dashboard/all-india');
   await expect(card.getByText('Rank 3 of 148 · 82/100 marks', { exact: true })).toBeVisible();
   await expect(card.getByRole('link', { name: 'View attempt', exact: true })).toHaveAttribute('href', '/attempt/' + attemptId);
-  const board = page.getByRole('region', { name: 'All India top ten' });
-  await expect(board.getByText('Candidate-A1B2C3D4E5', { exact: true })).toBeVisible();
-  await expect(board.getByText('91/100', { exact: true })).toBeVisible();
+  expect(provider.calls.some(([name]) => name === 'public_all_india_top_ten')).toBe(false);
   expect(provider.unexpected).toEqual([]);
 });

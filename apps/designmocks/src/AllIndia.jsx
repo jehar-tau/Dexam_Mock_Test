@@ -239,8 +239,7 @@ export function AllIndiaView({ events, onStart, onRegister, onShare, requestedEx
         {message && <p className="error" role="alert">{message}</p>}
       </section>
       <div className="all-india-rail"><EventGuide />
-        {exampleResults ? <AllIndiaHighlights example={exampleResults.filter(item => !selectedExam || item.exam === selectedExam)} />
-          : <AllIndiaHighlights rail />}
+        {exampleResults && <AllIndiaHighlights example={exampleResults.filter(item => !selectedExam || item.exam === selectedExam)} />}
       </div>
     </div>
     {readyEvent && <dialog ref={readyDialog} className="all-india-start-dialog" aria-labelledby="all-india-start-title"
