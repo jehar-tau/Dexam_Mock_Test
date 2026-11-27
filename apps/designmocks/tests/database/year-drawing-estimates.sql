@@ -77,4 +77,12 @@ set local role service_role;
 select public.service_claim_year_drawing(:'gate',:'scorer',null);
 reset role;
 select pg_temp.assert_score(not dm_private.year_drawing_estimate(:'attempt',:'task') ? 'total','model recalibration hides stale scores');
+-- An elective may be unselected under the historical-paper rules; verify the runtime hook is honored.
+create or replace function dm_private.year_drawing_task_selected(p_attempt_id uuid,p_question_id uuid) returns boolean
+language sql stable set search_path=pg_catalog as $$ select false $$;
+select pg_temp.assert_score(dm_private.year_drawing_estimate(:'attempt',:'task') is null,'unselected elective has no result card');
+delete from dm_private.year_drawing_jobs where attempt_id=:'attempt';
+update dm_private.attempts set status='active',submitted_at=null where id=:'attempt';
+update dm_private.attempts set status='submitted',submitted_at=now() where id=:'attempt';
+select pg_temp.assert_score(not exists(select from dm_private.year_drawing_jobs where attempt_id=:'attempt'),'unselected elective has no worker job');
 rollback;

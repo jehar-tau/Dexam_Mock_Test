@@ -25,6 +25,7 @@ begin
   insert into dm_private.year_drawing_jobs(attempt_id,question_id)
   select i.attempt_id,i.question_id from dm_private.attempt_items i
   where i.attempt_id=new.id and i.kind='drawing' and jsonb_typeof(i.key->'drawing')='object'
+    and dm_private.year_drawing_task_selected(i.attempt_id,i.question_id)
     and exists(select 1 from dm_private.drawing_uploads u where u.attempt_id=i.attempt_id and u.question_id=i.question_id and u.student_id=new.user_id)
   on conflict do nothing;
   return new;
@@ -35,6 +36,7 @@ for each row when (old.status='active' and new.status='submitted') execute funct
 insert into dm_private.year_drawing_jobs(attempt_id,question_id)
 select i.attempt_id,i.question_id from dm_private.attempt_items i join dm_private.attempts a on a.id=i.attempt_id
 where a.status='submitted' and i.kind='drawing' and jsonb_typeof(i.key->'drawing')='object'
+and dm_private.year_drawing_task_selected(i.attempt_id,i.question_id)
 and exists(select 1 from dm_private.drawing_uploads u where u.attempt_id=i.attempt_id and u.question_id=i.question_id and u.student_id=a.user_id);
 
 create or replace function dm_private.year_drawing_estimate(p_attempt_id uuid,p_question_id uuid)
@@ -46,7 +48,8 @@ declare
   checked jsonb;
 begin
   if not exists(select 1 from dm_private.attempts a join dm_private.attempt_items i on i.attempt_id=a.id
-    where a.id=p_attempt_id and a.status='submitted' and i.question_id=p_question_id and i.kind='drawing' and i.key ? 'drawing') then return null; end if;
+    where a.id=p_attempt_id and a.status='submitted' and i.question_id=p_question_id and i.kind='drawing' and i.key ? 'drawing'
+    and dm_private.year_drawing_task_selected(i.attempt_id,i.question_id)) then return null; end if;
   if not exists(select 1 from dm_private.drawing_uploads where attempt_id=p_attempt_id and question_id=p_question_id) then
     return jsonb_build_object('status','not_attempted','total',0,'canReevaluate',false);
   end if;
@@ -139,7 +142,8 @@ begin
   select * into job from dm_private.year_drawing_jobs where lease=p_lease and lease_expires>clock_timestamp() and result is null for update;
   if not found then raise exception 'Drawing lease expired' using errcode='55000'; end if;
   select user_id into strict owner_id from dm_private.attempts where id=job.attempt_id and status='submitted' for share;
-  select * into strict item from dm_private.attempt_items where attempt_id=job.attempt_id and question_id=job.question_id and kind='drawing' and key ? 'drawing' for share;
+  select * into strict item from dm_private.attempt_items where attempt_id=job.attempt_id and question_id=job.question_id and kind='drawing' and key ? 'drawing'
+    and dm_private.year_drawing_task_selected(attempt_id,question_id) for share;
   for page in select * from dm_private.drawing_uploads where attempt_id=job.attempt_id and question_id=job.question_id and student_id=owner_id order by ordinal for share loop
     receipts := receipts || jsonb_build_array(dm_private.drawing_advice_object_receipt('drawing-submissions',page.storage_path,page.mime_type,page.byte_size));
     pages := pages || jsonb_build_array(jsonb_build_object('ordinal', page.ordinal,'storagePath',page.storage_path,'mimeType',page.mime_type,
