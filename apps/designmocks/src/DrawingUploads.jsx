@@ -10,6 +10,7 @@ export function DrawingUploads({
   maxImages = 5,
   historical = false,
   onWritingChange,
+  onPageCount,
   invoke,
 }) {
   const [items, setItems] = useState(null);
@@ -17,6 +18,9 @@ export function DrawingUploads({
   const [message, setMessage] = useState("");
   const [loadAttempt, setLoadAttempt] = useState(0);
   const [pending, setPending] = useState([]);
+  useEffect(() => {
+    if (items) onPageCount?.(questionId, items.length);
+  }, [items, questionId, onPageCount]);
   const fileInput = useRef(null);
   const lifetime = useRef(null);
   const writing = useRef(false);
