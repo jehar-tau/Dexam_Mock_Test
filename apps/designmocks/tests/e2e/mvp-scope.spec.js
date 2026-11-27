@@ -26,7 +26,7 @@ async function fixture(page,{drawing=false,numericAlternatives=false,multipleSel
 }
 test('the public offer limits the pass to released papers and keeps checkout independently closed',async({page})=>{
  const provider=await stubPortalProvider(page,()=>undefined);await page.goto('/');await expect(page.getByRole('heading',{name:/Make your next attempt count/})).toBeVisible();expect(provider.calls).toEqual([]);
- await page.goto('/tests/nid');await expect(page.getByRole('link',{name:'Browse free NID DAT papers'})).toHaveAttribute('href','/papers/nid');await seedPortalSession(page,actor);await page.goto('/plans');
+ await page.goto('/tests/nid');await expect(page.getByRole('link',{name:'Browse free NID B.Des. papers'})).toHaveAttribute('href','/papers/nid');await expect(page.getByRole('link',{name:'Browse free NID M.Des. papers'})).toHaveAttribute('href','/papers/nid?programme=mdes');await seedPortalSession(page,actor);await page.goto('/plans');
  await expect(page.getByRole('listitem').filter({hasText:'Only the explicitly released papers listed in the catalogue'})).toBeVisible();await expect(page.getByText('Mock-test catalogue for UCEED, NID DAT, NIFT and CEED',{exact:true})).toHaveCount(0);await expect(page.getByRole('button',{name:/Pay .* with Razorpay/})).toBeDisabled();await expect(page.getByRole('checkbox')).toHaveCount(0);expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
 });
 test('a mismatched customer notice revision keeps the checkout switch closed', async ({ page }) => {

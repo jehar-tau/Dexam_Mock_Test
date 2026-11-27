@@ -845,7 +845,10 @@ function ExamDetail() {
             Free {exam.name} past papers are open on DMocks: take a complete paper with its original timer and marking, then review a worked solution for every question.
           </p>
           <div className="detail-actions">
-            <Button to={"/papers/" + exam.id}>Browse free {exam.name} papers</Button>
+            {exam.id === "nid" || exam.id === "nift" ? <>
+              <Button to={"/papers/" + exam.id}>Browse free {exam.id.toUpperCase()} B.Des. papers</Button>
+              <Button to={"/papers/" + exam.id + "?programme=mdes"} quiet>Browse free {exam.id.toUpperCase()} M.Des. papers</Button>
+            </> : <Button to={"/papers/" + exam.id}>Browse free {exam.name} papers</Button>}
             <Button to="/sample" quiet>Try the free design practice sample</Button>
           </div>
           <p className="sample-disclosure">Five original visual questions, six minutes and feedback after submission. No account required.</p>
