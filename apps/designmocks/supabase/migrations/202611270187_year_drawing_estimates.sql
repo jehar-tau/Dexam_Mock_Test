@@ -58,9 +58,14 @@ begin
   if job.result is null then
     if worker.seen_at > now() - interval '20 minutes' then estimate := '{"status":"evaluating"}';
     else estimate := '{"status":"awaiting_teacher","flags":[]}'; end if;
-  elsif job.result->>'status'='ready' and (worker.calibration_sha256 is null or worker.calibration_sha256 is distinct from job.calibration_sha256) then
-    estimate := jsonb_build_object('status','awaiting_teacher','flags',job.result->'flags');
-  else estimate := job.result;
+  elsif job.result->>'status'='ready' and worker.calibration_sha256 is not null
+      and worker.calibration_sha256=job.calibration_sha256 then
+    estimate := job.result;
+  elsif job.result->>'status'='unavailable' then
+    estimate := '{"status":"unavailable","flags":[]}';
+  else
+    -- A private model label is not student feedback until the model pair is calibrated.
+    estimate := '{"status":"awaiting_teacher","flags":[]}';
   end if;
   select jsonb_build_object('score',r.score,'note',coalesce(r.override_reason,r.comments,'')) into checked
     from dm_private.drawing_reviews r where r.attempt_id=p_attempt_id and r.question_id=p_question_id and r.status='released' and r.score is not null;

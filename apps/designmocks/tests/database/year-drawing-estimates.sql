@@ -48,10 +48,11 @@ select public.service_year_drawing_context(:'lease')->>'contextSha256' as contex
 select pg_temp.assert_score(public.service_claim_year_drawing(:'gate',null,null) is null,'one lease only');
 select pg_temp.reject_score(format('select public.service_finish_year_drawing(%L,%L,%L)',:'lease',:'context',
   '{"status":"ready","criteria":[{"id":"line","score":5,"reason":"Fictional."}],"flags":[],"summary":"Fixture."}'),'22023');
-select pg_temp.assert_score(public.service_finish_year_drawing(:'lease',:'context','{"status":"awaiting_teacher","flags":["blank"],"total":205}'),'gatekeeper-only result');
+select pg_temp.assert_score(public.service_finish_year_drawing(:'lease',:'context','{"status":"awaiting_teacher","flags":["not_a_drawing"],"total":205}'),'gatekeeper-only result');
 reset role;
 select pg_temp.assert_score(dm_private.year_drawing_estimate(:'attempt',:'task') =
-  '{"flags":["blank"],"status":"awaiting_teacher","canReevaluate":false}'::jsonb,'no mark without calibration');
+  '{"flags":[],"status":"awaiting_teacher","canReevaluate":false}'::jsonb,'an uncalibrated negative judgment never reaches the student');
+select pg_temp.assert_score((select result->'flags' from dm_private.year_drawing_jobs where attempt_id=:'attempt' and question_id=:'task')='["not_a_drawing"]','operator evidence remains private');
 set local role service_role;
 select pg_temp.assert_score(public.service_claim_year_drawing(:'gate',:'scorer',:'calibration') is null,'register calibrated pair subsequently');
 reset role;
@@ -68,7 +69,7 @@ select public.service_year_drawing_context(:'lease')->>'contextSha256' as contex
 select pg_temp.reject_score(format('select public.service_finish_year_drawing(%L,%L,%L)',:'lease',repeat('e',64),
   '{"status":"ready","flags":[]}'),'40001');
 select pg_temp.assert_score(public.service_finish_year_drawing(:'lease',:'context',
-  '{"status":"ready","criteria":[{"id":"line","score":50,"reason":"Fictional."}],"flags":[],"summary":"Fixture.","total":200}'),'stored validated grade');
+  '{"status":"ready","criteria":[{"id":"line","score":50,"reason":"Fictional."}],"flags":["illegible"],"summary":"Fixture.","total":200}'),'stored validated grade');
 select pg_temp.assert_score(not public.service_finish_year_drawing(:'lease',null,'{"status":"unavailable","flags":[]}'),'stale lease ignored');
 reset role;
 select pg_temp.assert_score((dm_private.year_drawing_estimate(:'attempt',:'task')->>'total')::numeric=5
@@ -76,7 +77,8 @@ select pg_temp.assert_score((dm_private.year_drawing_estimate(:'attempt',:'task'
 set local role service_role;
 select public.service_claim_year_drawing(:'gate',:'scorer',null);
 reset role;
-select pg_temp.assert_score(not dm_private.year_drawing_estimate(:'attempt',:'task') ? 'total','model recalibration hides stale scores');
+select pg_temp.assert_score(not dm_private.year_drawing_estimate(:'attempt',:'task') ? 'total'
+  and dm_private.year_drawing_estimate(:'attempt',:'task')->'flags'='[]','model recalibration hides stale scores and labels');
 -- An elective may be unselected under the historical-paper rules; verify the runtime hook is honored.
 create or replace function dm_private.year_drawing_task_selected(p_attempt_id uuid,p_question_id uuid) returns boolean
 language sql stable set search_path=pg_catalog as $$ select false $$;
