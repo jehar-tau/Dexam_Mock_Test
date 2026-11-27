@@ -4,3 +4,4 @@ export const postLaunchPreview=allowPostLaunchPreview(environment.deployment,imp
 const released=new Set(releasedStudentModules(import.meta.env.VITE_RELEASED_STUDENT_MODULES));
 export const studentModuleReleased=module=>postLaunchPreview||released.has(module);
 export const releasedStudentModuleNames=Object.freeze([...released]);
+export const drawingReviewReleased=studentModuleReleased('drawing-review');

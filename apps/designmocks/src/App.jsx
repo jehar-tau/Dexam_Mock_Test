@@ -30,7 +30,7 @@ import { FreeSignupNotice } from './FreeSignupNotice.jsx';
 import { takeReturn } from "./return-path.js";
 import {Purchase} from "./Purchase.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
-import {postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
+import {drawingReviewReleased,postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
 import { hostedStudentPreview, studentPreview } from "./student-preview.js";
 import {
   CandidateProfile,
@@ -1038,7 +1038,7 @@ function Account() {
   };
   useEffect(() => {
     setReviewerAccountId(null);
-    if (!postLaunchPreview || !accountId || !workspaceAvailable) return;
+    if (!drawingReviewReleased || !accountId || !workspaceAvailable) return;
     const controller = new AbortController();
     verifiedRoleCheck(platform.auth, platform, accountId, "can_review_drawings", controller.signal).then(({ data, error }) => {
       if (!controller.signal.aborted && !error && data === true) setReviewerAccountId(accountId);
@@ -1079,7 +1079,7 @@ function Account() {
             {sessionStatus && <p role="status">{sessionStatus}</p>}
             {workspaceAvailable && controlledPublicPortalMode && <Button to="/papers">Browse free papers</Button>}
             {workspaceAvailable && <Button to="/dashboard" quiet={controlledPublicPortalMode}>{stagingPortalMode ? "Open staging workspace" : "Open your workspace"}</Button>}
-            {postLaunchPreview && workspaceAvailable && reviewerAccountId === accountId && <Button to="/review/drawings" quiet>Review drawings</Button>}
+            {drawingReviewReleased && workspaceAvailable && reviewerAccountId === accountId && <Button to="/review/drawings" quiet>Review drawings</Button>}
             {workspaceAvailable && <Button to="/onboarding" quiet>
               Complete your profile
             </Button>}
@@ -1692,7 +1692,7 @@ export default function App() {
           <Route path="/dashboard/community/saved" element={studentModuleReleased('community')?<CommunitySaved />:<DeferredModule module="community"/>} />
           <Route path="/report" element={<BugReport />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/review/drawings" element={postLaunchPreview?<DrawingReviewerWorkspace />:<DeferredModule module="drawings"/>} />
+          <Route path="/review/drawings" element={drawingReviewReleased?<DrawingReviewerWorkspace />:<DeferredModule module="drawings"/>} />
           <Route path="/attempt/:id" element={<Attempt key={location.pathname} />} />
         </Route>}
         {includeStudentPreview && studentPreview && <>

@@ -23,10 +23,16 @@ const studentModuleItems=Object.freeze({
  practice:{to:'/dashboard/practice',label:'Topic practice',mark:'P'},
  community:{to:'/dashboard/community',label:'Community',mark:'C'},
 });
+// Owner decision, 27 November 2026: teacher marking of drawing photos is
+// released by name, like a student module. It adds no student navigation; it
+// opens /review/drawings, the account page's "Review drawings" link and the
+// Admin page's drawing queue and reviewer access.
+const staffReleaseModules=Object.freeze(['drawing-review']);
+export const releasableModuleNames=Object.freeze([...Object.keys(studentModuleItems),...staffReleaseModules]);
 export function releasedStudentModules(value){
  if(typeof value!=='string'||!value.trim())return [];
  const names=value.split(',').map(name=>name.trim());
- if(names.some(name=>!Object.hasOwn(studentModuleItems,name))||new Set(names).size!==names.length)return [];
+ if(names.some(name=>!releasableModuleNames.includes(name))||new Set(names).size!==names.length)return [];
  return names;
 }
 export function studentNavigation(released){

@@ -6,7 +6,8 @@
 //   DMOCKS_SUPABASE_PUBLISHABLE_KEY  the backend's public browser key (sb_publishable_…)
 //   DMOCKS_PUBLISHED_NOTICES_JSON    the reviewed customer notice bundle, as JSON text
 //     or DMOCKS_PUBLISHED_NOTICES_FILE, a path to the same JSON
-//   DMOCKS_RELEASED_STUDENT_MODULES  optional student modules to release (default "practice")
+//   DMOCKS_RELEASED_STUDENT_MODULES  optional modules to release (default "practice"); add
+//     "drawing-review" to open teacher marking of drawing photos
 // Flags:
 //   --cname <host>     write a CNAME file for GitHub Pages
 //   --inventory <file> write the SHA-256 of every output file
