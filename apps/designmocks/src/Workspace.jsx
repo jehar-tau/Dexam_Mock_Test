@@ -13,6 +13,8 @@ import { attemptRecordFilter, loadOverview, overviewStartId } from "./overview-d
 import { useAuthState } from "./useAuth.js";
 import { PortalShell } from "./PortalShell.jsx";
 import { QuestionReport } from "./QuestionReport.jsx";
+import { hasAnswer, isQuestionAnswered, drawingCountStatus } from "./attempt-progress.mjs";
+import { useDrawingPageCounts } from "./useDrawingPageCounts.js";
 import { DrawingUploads, DrawingUploadWindow } from "./DrawingUploads.jsx";
 import { AttemptAccessBoundary } from "./AttemptAccess.jsx";
 import { drawingMediaError } from "./drawing-upload.js";
@@ -300,10 +302,6 @@ export function WorkspaceView({
     </section>
   );
 }
-const hasAnswer = (answer) =>
-  Array.isArray(answer)
-    ? answer.length > 0
-    : answer !== null && answer !== undefined && answer !== "";
 export function PendingAttemptResult({ title, reviewEndsAt, children, allIndiaHref = "/dashboard/all-india", workspaceHref = "/dashboard" }) {
   const releaseDate = reviewEndsAt && !Number.isNaN(Date.parse(reviewEndsAt))
     ? new Date(reviewEndsAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
@@ -377,6 +375,9 @@ export function AttemptSession({actorId, services, id, workspaceHref = "/dashboa
   shownQuestion.current = q?.id;
   const userId = actorId;
   const answerFor = (item) => answerSync.current?.hasPending(item.id) ? answerSync.current.pendingAnswer(item.id) : item.answer;
+  const drawingPages = useDrawingPageCounts(attempt, rpc);
+  const answered = item => isQuestionAnswered(item, answerFor(item), drawingPages.counts);
+  const countStatus = drawingCountStatus(attempt?.questions ?? [], drawingPages.counts);
   useEffect(() => {
     let alive = true;const request=new AbortController();
     setAttempt(null);
@@ -703,7 +704,7 @@ if(expandedAttemptScope){
     return <section className="wrap sample-run">
       <DrawingGraceBanner remainingSeconds={yearGrace} taskCount={tasks.length} />
       {tasks.map(item => <article key={item.id}><h2>{item.label}</h2><p>{item.prompt}</p>
-        <DrawingUploads attemptId={id} questionId={item.id} invoke={drawingInvoke} maxImages={item.drawing.maxImages} historical onWritingChange={changeGraceWrites} /></article>)}
+        <DrawingUploads attemptId={id} questionId={item.id} invoke={drawingInvoke} maxImages={item.drawing.maxImages} historical onPageCount={drawingPages.report} onWritingChange={changeGraceWrites} /></article>)}
       <button className="button" type="button" disabled={busy || photoBusy} onClick={submit}>Submit paper and finish uploads</button>
       {error && <p role="alert">{error}</p>}
     </section>;
@@ -826,11 +827,11 @@ if(expandedAttemptScope){
           <nav className="exam-sections attempt-sections" aria-label="Sections">
             {sections.map((section) => {
               const total = section.end - section.start + 1;
-              const done = attempt.questions.slice(section.start, section.end + 1).filter((item) => hasAnswer(answerFor(item))).length;
+              const done = attempt.questions.slice(section.start, section.end + 1).filter(answered).length;
               return (
                 <button key={section.start} type="button" disabled={busy || photoBusy} aria-current={section === here ? "true" : undefined} className={section === here ? "active" : ""} onClick={() => move(section.start)}>
                   <b>{section.kind.toUpperCase()}</b>
-                  <small>{done}/{total} answered</small>
+                  <small>{section.kind === "drawing" && countStatus ? "—" : done}/{total} answered</small>
                 </button>
               );
             })}
@@ -932,7 +933,7 @@ if(expandedAttemptScope){
                   disabled={busy || left === 0}
                 />
               </label>
-              {q.drawingChoice?.uploadAllowed !== false && <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} invoke={drawingInvoke} maxImages={q.drawing?.maxImages} historical={!!q.drawing} onWritingChange={q.drawing ? setMainPhotoWriting : undefined} />}
+              {q.drawingChoice?.uploadAllowed !== false && <DrawingUploads key={`${id}:${q.id}`} attemptId={id} questionId={q.id} invoke={drawingInvoke} maxImages={q.drawing?.maxImages} historical={!!q.drawing} onPageCount={drawingPages.report} onWritingChange={q.drawing ? setMainPhotoWriting : undefined} />}
             </>
           )}
           {["nat", "drawing"].includes(q.kind) && (
@@ -1028,7 +1029,7 @@ if(expandedAttemptScope){
             )}
           </div>
         </article>
-        <PaperNavigation questions={attempt.questions} index={index} answered={item => hasAnswer(answerFor(item))}
+        <PaperNavigation questions={attempt.questions} index={index} answered={answered} countStatus={countStatus}
           waiting={item => answerSync.current?.hasPending(item.id)} flagged={flagged} visited={visited}
           move={move} busy={busy || photoBusy} canSubmit={!busy && !photoBusy && left > 0} onSubmit={() => setConfirm(true)}/>
 
@@ -1042,8 +1043,7 @@ if(expandedAttemptScope){
           <span className="eyebrow">A MOMENT TO CHECK</span>
           <h2>{gat ? "Finish your GAT?" : "Ready to submit?"}</h2>
           <p>
-            {attempt.questions.filter((item) => hasAnswer(answerFor(item))).length}{" "}
-            of {attempt.questions.length} answered. {flagged.length} marked to
+            {countStatus || `${attempt.questions.filter(answered).length} of ${attempt.questions.length} answered.`} {flagged.length} marked to
             revisit.
           </p>
           <p>{gat ? "Finishing GAT locks your answers and starts the three-hour CAT clock." : attempt.reviewEndsAt
