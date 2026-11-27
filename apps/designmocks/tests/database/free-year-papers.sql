@@ -26,6 +26,13 @@ select pg_temp.year_assert(not has_function_privilege('anon','public.register_fr
 select pg_temp.year_assert(not has_function_privilege('anon','public.my_year_paper_attempts()','EXECUTE')
   and has_function_privilege('authenticated','public.my_year_paper_attempts()','EXECUTE'),
   'only signed-in students may read their own year-paper attempt summary');
+select pg_temp.year_assert(
+  (select proconfig @> array['statement_timeout=8s']
+    from pg_proc where oid='public.free_year_paper_catalog()'::regprocedure)
+  and not exists(select from pg_proc
+    where oid='public.start_free_year_paper(uuid)'::regprocedure
+      and exists(select from unnest(proconfig) setting where setting like 'statement_timeout=%')),
+  'the catalogue API has a bounded timeout independent of the start API');
 select pg_temp.year_assert(public.free_year_paper_catalog()='[]'::jsonb,
   'published flag alone cannot list a free year paper');
 set local role authenticated;
