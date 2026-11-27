@@ -43,7 +43,7 @@ select pg_temp.test_assert((select terms_version=current_setting('test.acceptanc
  from public.profiles where user_id=auth.uid()),'the recorded consent identifies the exact published notice revision');
 select pg_temp.test_assert(public.can_enter_staging_portal(),'verified Google allowlisted tester is eligible');
 select set_config('test.acceptance.order',public.prepare_order()->>'id',true);
-select pg_temp.test_assert(public.prepare_order()->>'id'=current_setting('test.acceptance.order')and public.prepare_order()->>'mode'='test'and public.prepare_order()->>'amount'='119300','idempotent fixed-price Test order uses its own server mode');
+select pg_temp.test_assert(public.prepare_order()->>'id'=current_setting('test.acceptance.order')and public.prepare_order()->>'mode'='test'and public.prepare_order()->>'amount'='128400','idempotent fixed-price Test order uses its own server mode');
 select pg_temp.test_assert(public.my_pass()->>'mode'='test'and public.my_pass()->>'active'='false','opening Test checkout grants no pass');
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000001983',true);select public.accept_current_terms(current_setting('test.acceptance.notices'));
 select pg_temp.test_reject('select public.prepare_order()','unallowlisted Google account denied');

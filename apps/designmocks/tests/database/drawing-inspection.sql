@@ -17,6 +17,8 @@ insert into dm_private.papers(id,title,exam,duration_seconds,source_kind)
 insert into dm_private.questions(id,paper_id,ordinal,prompt,options,kind,marking,points,topic)
  values('20000000-0000-4000-8000-000000000461','10000000-0000-4000-8000-000000000461',1,
  'Draw an original fictional sign.','[]','drawing','{"correct":20,"wrong":0}',20,'drawing');
+\ir fixtures/active-pass.sql
+select pg_temp.grant_test_pass('00000000-0000-4000-8000-000000000461');
 insert into dm_private.attempts(id,user_id,paper_id,deadline,upload_deadline)
  values('30000000-0000-4000-8000-000000000461','00000000-0000-4000-8000-000000000461','10000000-0000-4000-8000-000000000461',
  now()+interval '15 minutes',now()+interval '30 minutes');

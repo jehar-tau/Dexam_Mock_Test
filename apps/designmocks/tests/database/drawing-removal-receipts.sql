@@ -38,6 +38,8 @@ values (:'paper','Fictional removal receipt paper','uceed',900,'catalogue');
 insert into dm_private.questions(id,paper_id,ordinal,prompt,options,kind,marking,points,topic)
 values (:'question',:'paper',1,'Draw a fictional sign.','[]','drawing','{"correct":20,"wrong":0}',20,'drawing'),
   (:'claimed_question',:'paper',2,'Draw a fictional chair.','[]','drawing','{"correct":20,"wrong":0}',20,'drawing');
+\ir fixtures/active-pass.sql
+select pg_temp.grant_test_pass(:'student');
 insert into dm_private.attempts(id,user_id,paper_id,deadline,upload_deadline)
 values (:'attempt',:'student',:'paper',now()+interval '15 minutes',now()+interval '30 minutes');
 insert into dm_private.attempt_items(attempt_id,question_id,ordinal,prompt,options,kind,marking,media,points,negative_points,topic,key,explanation)

@@ -1,19 +1,19 @@
 import test from'node:test';
 import assert from'node:assert/strict';
 import{createPurchaseFlow,purchaseOrder,purchasePass}from'../src/purchase.js';
-const order=()=>({orderId:'order_fictional123',keyId:'rzp_test_fictional123',amount:119300,currency:'INR'});
+const order=()=>({orderId:'order_fictional123',keyId:'rzp_test_fictional123',amount:128400,currency:'INR'});
 const waitFor=async predicate=>{for(let n=0;n<100&&!predicate();n++)await new Promise(resolve=>setTimeout(resolve,1));assert.ok(predicate());};
 function fixture(options={}){
  const state={current:true,active:false,mode:options.expectedMode??'test',status:[],calls:[],opened:0,closed:0,widgets:[],present:0,order:order(),failure:null};
  const access=()=>({active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null,mode:state.mode});
  class Checkout{constructor(options){this.options=options;this.events={};state.widgets.push(this);}on(name,action){this.events[name]=action;}open(){state.opened++;}close(){state.closed++;this.options.modal.ondismiss();}}
- const services={isCurrent:()=>state.current,async checkIdentity(signal){signal.throwIfAborted();if(!state.current)throw new Error('Changed account.');return true;},async presentForCurrentAccount(operation,signal){signal.throwIfAborted();state.present++;await services.checkIdentity(signal);return operation();},async rpc(name,input,signal){signal.throwIfAborted();state.calls.push(name);if(state.failure===name)throw new Error('Private provider diagnostic');if(name==='my_pass')return state.read?state.read():access();return null;},functions:{async invoke(name,{signal}){signal.throwIfAborted();state.calls.push(name);if(state.failure===name)throw new Error('Private merchant diagnostic');if(state.create)return state.create();return{data:state.order,error:null};}}};
+ const services={isCurrent:()=>state.current,async checkIdentity(signal){signal.throwIfAborted();if(!state.current)throw new Error('Changed account.');return true;},async presentForCurrentAccount(operation,signal){signal.throwIfAborted();state.present++;await services.checkIdentity(signal);return operation();},async rpc(name,input,signal){signal.throwIfAborted();state.calls.push(name);if(state.failure===name)throw new Error('Private provider diagnostic');if(name==='my_pass')return state.read?state.read():access();return null;},functions:{async invoke(name,{signal,body}){signal.throwIfAborted();state.calls.push(name);(state.bodies??=[]).push(body);if(state.failure===name)throw new Error('Private merchant diagnostic');if(state.create)return state.create();return{data:state.order,error:null};}}};
  const flow=createPurchaseFlow({services,termsVersion:'fictional-reviewed-terms',loadCheckout:async()=>{if(state.load)await state.load();return Checkout;},onChange:value=>state.status.push(value),pollMilliseconds:1,maximumPolls:2,requestMilliseconds:1000,confirmationMilliseconds:1000,...options});
  return{state,flow,services,latest:()=>state.status.at(-1)};
 }
 test('checkout receipts enforce exact plan price, currency and bounded provider identifiers',()=>{
  assert.deepEqual(purchaseOrder({...order(),privateIgnored:'not displayed'}),order());
- for(const[key,value]of[['amount',1193],['amount','119300'],['amount',119300.5],['currency','USD'],['orderId','https://wrong.invalid'],['orderId','order_'+ 'a'.repeat(195)],['keyId','sb_secret_never'],['keyId','rzp_test_']])assert.throws(()=>purchaseOrder({...order(),[key]:value}));
+ for(const[key,value]of[['amount',1193],['amount','128400'],['amount',128400.5],['currency','USD'],['orderId','https://wrong.invalid'],['orderId','order_'+ 'a'.repeat(195)],['keyId','sb_secret_never'],['keyId','rzp_test_']])assert.throws(()=>purchaseOrder({...order(),[key]:value}));
  assert.throws(()=>purchaseOrder(null));assert.throws(()=>purchaseOrder([]));
 });
 test('only a valid current server pass can display active access',()=>{
@@ -80,4 +80,18 @@ test('failure and dismissal require a server check rather than a second automati
 });
 test('stalled confirmation ends without fabricating paid access or repeating an order',async()=>{
  const{state,flow,latest}=fixture({confirmationMilliseconds:10,requestMilliseconds:1000});await flow.refresh();await flow.start(true);let release;state.read=()=>new Promise(resolve=>{release=resolve;});state.widgets[0].options.handler({});await waitFor(()=>latest().status==='pending');release({active:true,expiresAt:'2027-11-08T12:00:00Z',mode:'test'});await new Promise(resolve=>setTimeout(resolve,1));assert.equal(state.status.some(row=>row.status==='paid'),false);assert.equal(state.calls.filter(name=>name==='create-order').length,1);flow.dispose();
+});
+test('the Duo pass is checked at its own price and never at the annual price',()=>{
+ const duo={...order(),amount:214200};
+ assert.deepEqual(purchaseOrder(duo,'test','duo'),duo);
+ assert.throws(()=>purchaseOrder(order(),'test','duo'));
+ assert.throws(()=>purchaseOrder(duo,'test','annual'));
+ assert.throws(()=>purchaseOrder({...order(),amount:119300},'test','annual'));
+ assert.throws(()=>purchaseOrder(duo,'test','lifetime'));
+});
+test('a Duo checkout asks the server for the Duo plan',async()=>{
+ const{state,flow,latest}=fixture();state.order={...order(),amount:214200};await flow.refresh();
+ assert.equal(await flow.start(true,'lifetime'),false);
+ assert.equal(await flow.start(true,'duo'),true);assert.equal(latest().status,'checkout');
+ assert.deepEqual(state.bodies.at(-1),{plan:'duo'});flow.dispose();
 });

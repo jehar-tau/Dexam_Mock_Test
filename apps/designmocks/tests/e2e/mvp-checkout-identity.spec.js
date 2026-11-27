@@ -5,7 +5,7 @@ import{readPublishedNotices}from'../../scripts/published-notices.mjs';
 test.use({baseURL:'http://127.0.0.1:4999'});
 const noticeVersion=readPublishedNotices(fileURLToPath(new URL('../fixtures/fictional-published-notices.json',import.meta.url)),{allowFixture:true}).version;
 const first={id:'00000000-0000-4000-8000-000000001901',email:'fictional-checkout-first@example.invalid'},second={id:'00000000-0000-4000-8000-000000001902',email:'fictional-checkout-second@example.invalid'};
-const order=()=>({orderId:'order_fictionalCheckout123',keyId:'rzp_test_fictionalCheckout123',amount:119300,currency:'INR'});
+const order=()=>({orderId:'order_fictionalCheckout123',keyId:'rzp_test_fictionalCheckout123',amount:128400,currency:'INR'});
 const script=`window.checkoutFixture={opened:0,closed:0,options:[],widgets:[]};window.Razorpay=class{constructor(options){this.options=options;this.events={};window.checkoutFixture.options.push(options);window.checkoutFixture.widgets.push(this);}on(name,callback){this.events[name]=callback;return this;}open(){window.checkoutFixture.opened++;}close(){window.checkoutFixture.closed++;this.options.modal.ondismiss();}};`;
 async function setup(page,configure=()=>{}){
  const state={calls:[],auth:[],active:false,mode:'test',order:order(),holds:{},waits:{},fail:null,holdAuthAt:0,holdPresentation:false,afterOrder:false};configure(state);
@@ -25,6 +25,7 @@ async function setup(page,configure=()=>{}){
    return route.fulfill({headers,json:null});
   }
   if(name==='create-order'){state.afterOrder=true;return route.fulfill({headers,json:state.order});}
+  if(name==='my_duo_invite')return route.fulfill({headers,json:{status:'none'}});
   if(name==='my_pass')return route.fulfill({headers,json:{active:state.active,expiresAt:state.active?'2027-11-08T12:00:00Z':null,revoked:false,mode:state.mode}});
   if(state.releasedCatalogue){
    if(name==='available_papers')return route.fulfill({headers,json:state.releasedCatalogue});
@@ -40,7 +41,7 @@ async function setup(page,configure=()=>{}){
  await page.goto(state.accountFlow?'/account':'/plans');
  return state;
 }
-const pay=page=>page.getByRole('button',{name:'Pay ₹1,193 with Razorpay',exact:true});
+const pay=page=>page.getByRole('button',{name:'Pay ₹1,284 with Razorpay',exact:true});
 const consent=page=>page.getByRole('checkbox');
 const purchaseWrites=state=>state.calls.filter(({name})=>['accept_current_terms','create-order'].includes(name));
 
@@ -113,7 +114,7 @@ test('checkout links display the exact notice revision recorded with consent',as
  await expect(page.getByRole('heading',{name:'Terms and purchase.',exact:true})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Cancellation and refunds',exact:true})).toBeVisible();
  await expect(page.locator('[data-notice-version]')).toHaveAttribute('data-notice-version',noticeVersion);
- await expect(page.locator('.policy')).toContainText('₹1,193 for 12 calendar months');
+ await expect(page.locator('.policy')).toContainText('₹1,284 for 12 calendar months');
  await expect(page.locator('.policy')).toContainText('This fictional refund notice');
  await expect(page.getByRole('heading',{name:'Account eligibility',exact:true})).toBeVisible();
  await expect(page.locator('.policy')).toContainText('This fictional younger-student notice');

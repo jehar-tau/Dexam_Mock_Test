@@ -66,7 +66,7 @@ function runSmoke(stage, fixture, { staging = false, production = false, overrid
           process.env.DMOCKS_COMMERCE_STAGE === "configured" ? { event: "smoke.invalid" } : {});
         return webhook(request);
       }
-      if (url.pathname === "/rest/v1/plans") return Response.json([{ id: "annual", amount: 119300, currency: "INR", duration_months: 12 }]);
+      if (url.pathname === "/rest/v1/plans") return Response.json([{ id: "annual", amount: 128400, currency: "INR", duration_months: 12 }, { id: "duo", amount: 214200, currency: "INR", duration_months: 12 }]);
       if (fixture === "public-ranking" && url.pathname === "/rest/v1/rpc/public_all_india_top_ten") return Response.json([]);
       if (url.pathname.startsWith("/rest/v1/rpc/")) return Response.json({ code: "42501" }, { status: 401 });
       if (url.pathname === "/auth/v1/settings") return Response.json({ disable_signup: !${staging}, external: { google: ${staging} } });

@@ -17,6 +17,7 @@ import { QuestionReport } from "./QuestionReport.jsx";
 import { hasAnswer, isQuestionAnswered, drawingCountStatus } from "./attempt-progress.mjs";
 import { useDrawingPageCounts } from "./useDrawingPageCounts.js";
 import { DrawingUploads, DrawingUploadWindow } from "./DrawingUploads.jsx";
+import { LockedSolutionsPrompt } from "./PassPrompt.jsx";
 import { AttemptAccessBoundary } from "./AttemptAccess.jsx";
 import { drawingMediaError } from "./drawing-upload.js";
 import { YearDrawingChoice, DrawingSubParts } from "./YearDrawingChoice.jsx";
@@ -749,6 +750,7 @@ if(expandedAttemptScope){
           </div>
         </div>
         {error&&<p className="error" role="alert">{error}</p>}
+        {!demo && <LockedSolutionsPrompt count={attempt.lockedSolutions} />}
         {uploadWindow}
         {!attempt.examResultsPending && <>
         <AttemptInsights questions={attempt.questions} practicePath={practicePath} onReviewOutcome={value => {

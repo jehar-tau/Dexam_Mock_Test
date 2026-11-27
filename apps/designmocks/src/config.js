@@ -2,10 +2,18 @@ export const brand = {
   name: "DMocks",
   domain: "dmocks.com",
   description: "Design entrance mock tests.",
-  price: 1193,
+  price: 1284,
   currency: "INR",
   months: 12,
 };
+// Prices in rupees and paise (owner's plan, 28 November 2026). The server's
+// plan rows are authoritative; these values only label the page.
+export const passPlans = Object.freeze({
+  annual: Object.freeze({ id: "annual", name: "Annual pass", price: 1284, amountMinor: 128400, seats: 1 }),
+  duo: Object.freeze({ id: "duo", name: "Duo pass", price: 2142, amountMinor: 214200, seats: 2 }),
+});
+// What a free account gets. The server enforces each limit.
+export const freeAllowance = Object.freeze({ workedSolutionsPerPaper: 5, topicSessionsPerDay: 1, topicSessionQuestions: 10, drawingMarkingPerMonth: 4 });
 export const exams = [
   {
     id: "uceed",

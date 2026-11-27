@@ -29,6 +29,8 @@ insert into dm_private.questions(id,paper_id,ordinal,prompt,options,kind,marking
     1,'Create an original wayfinding sketch','[]','drawing','{"correct":20,"wrong":0}','[]',20,0,'drawing',true);
 insert into dm_private.answer_keys(question_id,key,explanation)
   values('20000000-0000-4000-8000-000000000081','{"kind":"self_review"}','Human review is separate.');
+\ir fixtures/active-pass.sql
+select pg_temp.grant_test_pass('00000000-0000-4000-8000-000000000081');
 insert into dm_private.attempts(id,user_id,paper_id,deadline,upload_deadline)
   values('30000000-0000-4000-8000-000000000081','00000000-0000-4000-8000-000000000081',
     '10000000-0000-4000-8000-000000000081',now()+interval '15 minutes',now()+interval '25 minutes');

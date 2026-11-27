@@ -15,7 +15,8 @@ test("the dedicated refunds page uses the cancellation text from the approved te
 test("the notice version identifies the exact approved text, offer and operator details", () => {
   const first = compilePublishedNotices(released);
   assert.match(first.version, /^dmocks-notices-v1-[a-f0-9]{64}$/);
-  assert.match(first.pages.terms[0].paragraph, /₹1,193 for 12 calendar months/);
+  assert.match(first.pages.terms[0].paragraph, /₹1,284 for 12 calendar months/);
+  assert.match(first.pages.terms[0].paragraph, /Duo pass costs ₹2,142/);
   assert.deepEqual(compilePublishedNotices({ ...released, terms: Object.fromEntries(Object.entries(released.terms).reverse()) }), first);
   for (const page of ["terms", "privacy"]) {
     for (const [field, paragraph] of Object.entries(released[page])) {

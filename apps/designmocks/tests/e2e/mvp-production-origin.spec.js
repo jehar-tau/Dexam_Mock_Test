@@ -67,7 +67,7 @@ test("the production artifact opens Google sign-in only from the approved origin
   expect(providerRequests).toEqual([]);
 
   await page.goto(approved + "/plans");
-  await expect(page.getByRole("button", { name: "Pay ₹1,193 with Razorpay", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Pay ₹1,284 with Razorpay", exact: true })).toHaveCount(0);
   await page.goto(approved + "/account");
   await expect(google).toBeEnabled();
   await google.click();
@@ -97,5 +97,6 @@ test("a signed-in student can open a Learn programme and load its published imag
   const illustration = await page.goto(approved + "/learn-images/illustrations/chair-post.jpg");
   expect(illustration?.ok()).toBe(true);
   expect(await illustration.headerValue("content-type")).toContain("image/jpeg");
-  expect(fixture.calls).toEqual([]);
+  // Only the student's own pass is read, to lock the paid Learn levels.
+  expect(fixture.calls.filter(([name]) => name !== "my_pass")).toEqual([]);
 });

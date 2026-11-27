@@ -129,7 +129,8 @@ test('released Learn opens every interactive programme without any private reque
  await expect(page.getByRole('heading',{name:'Learn by doing.',exact:true})).toBeVisible();
  const cards=page.locator('.programme-list article');await expect(cards).toHaveCount(28);await expect(page.locator('.programme-list .motif')).toHaveCount(28);
  await page.getByRole('link',{name:/Start programme/}).first().click();await expect(page).toHaveURL(/\/dashboard\/learn\/programme\//);await expect(page.locator('.tier-head').first()).toBeVisible();
- expect(provider.calls).toEqual([]);expect(provider.unexpected).toEqual([]);
+ // Only the student's own pass is read, to lock the paid Learn levels.
+ expect(provider.calls.filter(([name])=>name!=='my_pass')).toEqual([]);expect(provider.unexpected).toEqual([]);
 });
 test('a production build cannot enable deferred modules or checkout with preview flags',async({page})=>{
  await page.goto('http://127.0.0.1:4899/dashboard/community');await expect(page.getByText('COMING LATER',{exact:true})).toBeVisible();const menu=page.getByRole('button',{name:'Student menu',exact:true});if(await menu.isVisible())await menu.click();await expect(page.getByRole('navigation',{name:'Student workspace'}).getByRole('link')).toHaveCount(3);

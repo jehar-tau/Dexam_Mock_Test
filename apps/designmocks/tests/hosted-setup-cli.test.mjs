@@ -17,7 +17,7 @@ test("hosted setup requires every core endpoint in portal mode and every endpoin
     globalThis.fetch = async (target, request) => {
       const pathname = new URL(target).pathname;
       if (pathname === "/rest/v1/plans") {
-        return Response.json([{ id: "annual", amount: 119300, currency: "INR", duration_months: 12 }]);
+        return Response.json([{ id: "annual", amount: 128400, currency: "INR", duration_months: 12 }, { id: "duo", amount: 214200, currency: "INR", duration_months: 12 }]);
       }
       if (pathname === "/auth/v1/settings") {
         return Response.json({ disable_signup: false, external: { google: process.env.FIXTURE_GOOGLE !== "disabled" } });

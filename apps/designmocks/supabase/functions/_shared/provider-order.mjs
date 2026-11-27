@@ -5,8 +5,14 @@ const providerId = /^order_[A-Za-z0-9]{1,194}$/;
 const uuid = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 const unavailable = () => new Error('Checkout order could not be verified.');
 
+// Server prices in paise (owner's plan, 28 November 2026). The database plan
+// row is authoritative; this is a second check before any provider call.
+export const PLAN_AMOUNTS = Object.freeze({ annual: 128400, duo: 214200 });
+export const planOf = order => order?.plan ?? 'annual';
+const priced = order => Object.hasOwn(PLAN_AMOUNTS, planOf(order)) && PLAN_AMOUNTS[planOf(order)] === order.amount;
+
 function prepared(order, keyId, keySecret) {
-  if (!order || !uuid.test(order.id ?? '') || order.amount !== 119300 || order.currency !== 'INR' ||
+  if (!order || !uuid.test(order.id ?? '') || !priced(order) || order.currency !== 'INR' ||
       !['test', 'live'].includes(order.mode) || !keyMatchesMode(keyId, order.mode) ||
       !/^rzp_(?:test|live)_[A-Za-z0-9]{1,180}$/.test(keyId ?? '') ||
       typeof keySecret !== 'string' || !keySecret.length || keySecret.length > 1000 ||

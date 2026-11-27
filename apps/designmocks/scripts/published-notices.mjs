@@ -1,6 +1,6 @@
 import { readFileSync, statSync } from "node:fs";
 import { pathToFileURL } from "node:url";
-import { brand, money } from "../src/config.js";
+import { brand, money, passPlans } from "../src/config.js";
 import { operator } from "../src/operator.js";
 import { sha256, stableJson } from "./question-bank-import.mjs";
 
@@ -32,7 +32,7 @@ export function compilePublishedNotices(input, { allowFixture = false } = {}) {
   }
   pages.terms.unshift({
     heading: "The annual pass",
-    paragraph: `The annual pass costs ${money(brand.price)} for ${brand.months} calendar months from verified payment. It covers the explicitly released papers. You make one payment, with no automatic renewal.`,
+    paragraph: `The annual pass costs ${money(passPlans.annual.price)} for ${brand.months} calendar months from verified payment. The Duo pass costs ${money(passPlans.duo.price)} and gives the payer and one invited friend ${brand.months} calendar months each; the friend's months start when they claim the one-time invite, which lasts 30 days. A pass covers the explicitly released papers and the paid features listed on the plans page. You make one payment, with no automatic renewal.`,
   });
   const eligibility = pages.privacy.find(({ heading }) => heading === fields.privacy.youngerStudents);
   pages.terms.push({ heading: "Account eligibility", paragraph: eligibility.paragraph });

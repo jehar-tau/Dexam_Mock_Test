@@ -11,7 +11,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { brand, exams, money } from "./config.js";
+import { brand, exams, money, passPlans } from "./config.js";
 import { Art, Arrow, Spark, Stimulus, ChoiceArt, describeChoice } from "./Art.jsx";
 import { FeatureShowcase, FreePass, JoinLink, PublicPracticeOptions } from "./LandingFeatures.jsx";
 import { SignReadingExercise } from "./SignReadingExercise.jsx";
@@ -29,6 +29,7 @@ import { HomeFreePapers } from "./HomeFreePapers.jsx";
 import { FreeSignupNotice } from './FreeSignupNotice.jsx';
 import { takeReturn } from "./return-path.js";
 import {Purchase} from "./Purchase.jsx";
+import { DuoClaim, FreeVsPass, PlanChoice, duoExplanation } from "./Plans.jsx";
 import { PortalModule, DeferredModule } from "./PortalShell.jsx";
 import {drawingReviewReleased,lessonsReleased,postLaunchPreview,studentModuleReleased}from "./launch-scope.js";
 import { hostedStudentPreview, studentPreview } from "./student-preview.js";
@@ -593,8 +594,8 @@ const faqs = [
     "No. DMocks is a separate mock-test platform. The annual pass is for students who want to practise independently.",
   ],
   [
-    "What does the ₹1,193 pass cover?",
-    "Twelve months of access to the explicitly released paid papers shown before purchase, starting from a verified payment. One payment, no automatic renewal. Upcoming modules and unlisted exams are not included.",
+    "What does the ₹1,284 pass cover?",
+    "Twelve months from a verified payment: every worked solution, unlimited topic practice, every Learn level and teacher marking for 4 drawings a month. The Duo pass (₹2,142) gives the same to you and one friend. One payment, no automatic renewal.",
   ],
   [
     "Can I try the experience first?",
@@ -877,35 +878,38 @@ function ExamDetail() {
 function Plans() {
   const { session } = useAuthState();
   const heading=useRef(null);
+  const [plan, setPlan] = useState("annual");
+  const selected = passPlans[plan];
   return (
     <>
       <section className="wrap page-intro centered">
-        <span className="eyebrow">ONE SIMPLE PASS</span>
+        <span className="eyebrow">START FREE. GO FURTHER.</span>
         <h1 ref={heading} tabIndex={-1}>
           The DMocks <em>annual pass.</em>
         </h1>
         <p>
-          Mock-test practice that stands on its own.
-          <br /> A single annual pass for your design preparation.
+          A free account gets a taste of every part. One payment opens
+          <br /> the rest for 12 months, or share a Duo pass with a friend.
         </p>
       </section>
       <section className="wrap plan-layout">
         <div className="annual-card">
           <div className="annual-heading">
             <Spark />
-            <span>THE ANNUAL PASS</span>
+            <span>{selected.id === "duo" ? "THE DUO PASS" : "THE ANNUAL PASS"}</span>
             <span className="badge">One payment</span>
           </div>
           <h2>
             All your practice.
             <br /> One place.
           </h2>
+          <PlanChoice value={plan} onChange={setPlan} />
           <div className="annual-amount">
-            {money(brand.price)}
-            <span>/ one year</span>
+            {money(selected.price)}
+            <span>{selected.id === "duo" ? "/ two students, one year" : "/ one year"}</span>
           </div>
           <p className="annual-description">
-            Access starts after a verified payment and lasts for 12 months. No
+            {selected.id === "duo" ? duoExplanation : "Access starts after a verified payment and lasts for 12 months."} No
             automatic renewal.
           </p>
           <ul>
@@ -914,9 +918,10 @@ function Plans() {
               portalReady || postLaunchPreview
                 ? "Adapted practice questions based on student recollections"
                 : "The planned UCEED Part A Practice Mock 01 uses adapted questions based on student recollections",
-              "Timed attempts and saved progress",
-              "Answer review after submission",
-              "Your own student account",
+              "Every worked solution in those papers",
+              "Unlimited topic practice",
+              "Every Learn level, from Foundations to Mastery",
+              "Teacher marking for 4 drawings a month",
             ].map((t) => (
               <li key={t}>
                 <span aria-hidden="true">✓</span>
@@ -929,8 +934,8 @@ function Plans() {
               {controlledPublicPortalMode ? "Checkout is closed during controlled testing." : stagingPortalMode ? "Checkout is closed in staging." : "Paid access is not open in this preview. Explore the free sample while the separate sign-in and checkout are connected."}
             </div>
           )}
-          {session && checkoutReady ? <Purchase actorId={session.user.id} headingRef={heading}/> : session ? (
-            <button type="button" className="button full" disabled>Pay {money(brand.price)} with Razorpay <Arrow/></button>
+          {session && checkoutReady ? <Purchase actorId={session.user.id} headingRef={heading} plan={plan}/> : session ? (
+            <button type="button" className="button full" disabled>Pay {money(selected.price)} with Razorpay <Arrow/></button>
           ) : authReady ? (
             <Button to="/account?next=plans">Continue with Google <GoogleIcon/></Button>
           ) : null}
@@ -969,6 +974,7 @@ function Plans() {
           </p>
         </div>
       </section>
+      <FreeVsPass />
     </>
   );
 }
@@ -1616,7 +1622,7 @@ function Policies({ type }) {
         <>
           <h2>The annual pass</h2>
           <p>
-            The approved price is ₹1,193 for 12 calendar months of access to the explicitly released catalogue. It is
+            The annual pass is ₹1,284 for 12 calendar months. The Duo pass is ₹2,142 and gives the payer and one invited friend 12 months each; the friend’s 12 months start when they claim the invite. Each is
             one payment with no automatic renewal. The access period begins
             after the server verifies a successful payment. A checkout success
             screen alone does not grant access.
@@ -1678,6 +1684,7 @@ export default function App() {
         <Route path="/practice/visual-hierarchy" element={<SignReadingExercise />} />
         <Route path="/tests/:exam" element={<ExamDetail />} />
         <Route path="/plans" element={<Plans />} />
+        <Route path="/duo/:token" element={<DuoClaim />} />
         <Route path="/account" element={<FreeSignupNotice><Account /></FreeSignupNotice>} />
         <Route path="/account/callback" element={<FreeSignupNotice><Account /></FreeSignupNotice>} />
         {!__DMOCKS_STAGING_REVIEW_PREVIEW__ && <Route element={stagingPortalMode || controlledPublicPortalMode ? <FreeSignupNotice><StagingPortalGate /></FreeSignupNotice> : testLoginMode ? <ControlledLoginPortalNotice /> : <Outlet />}>

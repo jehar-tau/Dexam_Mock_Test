@@ -15,7 +15,7 @@ const provider = `https://${project.project_ref}.supabase.co`;
 const suppliedSite = process.env.DMOCKS_CHECKOUT_ARTIFACT_SITE;
 const app = fileURLToPath(new URL("../../", import.meta.url));
 const buyer = { id: "00000000-0000-4000-8000-000000001981", email: "checkout-artifact@example.invalid" };
-const pay = page => page.getByRole("button", { name: "Pay ₹1,193 with Razorpay", exact: true });
+const pay = page => page.getByRole("button", { name: "Pay ₹1,284 with Razorpay", exact: true });
 
 let scratch, site, expectedVersion;
 test.use({ baseURL: frontend, serviceWorkers: "block" });
@@ -94,7 +94,7 @@ test("the private checkout artifact uses the exact provider and opens only a ver
     if (name === "create-order") {
       expect(input).toEqual({ plan: "annual" });
       if (!admitted) return { code: "42501", message: "Fictional checkout approval is required" };
-      return { orderId: "order_FictionalArtifactOrder", keyId: "rzp_test_FictionalArtifact", amount: 119300, currency: "INR" };
+      return { orderId: "order_FictionalArtifactOrder", keyId: "rzp_test_FictionalArtifact", amount: 128400, currency: "INR" };
     }
   }, project.project_ref);
   await page.addInitScript(() => {
@@ -156,7 +156,7 @@ test("the private checkout artifact uses the exact provider and opens only a ver
   await page.getByRole("checkbox").check();
   await pay(page).click();
   await expect.poll(() => page.evaluate(() => window.openedCheckoutOrders)).toEqual([
-    { order_id: "order_FictionalArtifactOrder", key: "rzp_test_FictionalArtifact", amount: 119300, currency: "INR" },
+    { order_id: "order_FictionalArtifactOrder", key: "rzp_test_FictionalArtifact", amount: 128400, currency: "INR" },
   ]);
   expect(mocked.calls.filter(([name]) => ["accept_current_terms", "create-order"].includes(name))).toEqual([
     ["accept_current_terms", { p_version: version }], ["create-order", { plan: "annual" }],
