@@ -5,7 +5,7 @@ import{PortalShell}from'./PortalShell.jsx';
 import{AccountAccessBoundary,useAccountServices}from'./AccountAccess.jsx';
 import{withAccountDeadline}from'./account-request.js';
 import{overviewStartId}from'./overview-data.js';
-import{catalogueInput,catalogueSpec,catalogueStartFailure,rankingShareReceipt,savedCatalogueAttempts,validateCatalogue}from'./catalogue-data.js';
+import{catalogueInput,catalogueSpec,catalogueStartFailure,rankingShareReceipt,registrationInput,savedCatalogueAttempts,validateCatalogue}from'./catalogue-data.js';
 
 function CatalogueSession({kind,View,viewProps,headingRef}){
  const services=useAccountServices(),navigate=useNavigate(),spec=catalogueSpec(kind),scope=useRef(null),read=useRef(null),inFlight=useRef(false),inspectSaved=useRef(false);
@@ -27,6 +27,14 @@ function CatalogueSession({kind,View,viewProps,headingRef}){
   try{const attempt=await withAccountDeadline(async signal=>{const value=overviewStartId(await services.rpc(spec.start,input,signal));await services.checkIdentity(signal);return value;},scope.current.signal);if(current()&&window.location.href===address&&window.history.state?.key===historyKey)navigate('/attempt/'+attempt);}
   catch(error){if(current()){const failure=catalogueStartFailure(error);if(!failure.definitive){inspectSaved.current=true;setUnknown(true);}throw new Error(failure.message);}}
   finally{inFlight.current=false;if(current())setBusy(false);}
+ }
+ async function registerSeat(eventId){
+  if(!current()||inFlight.current||loading||unknown||!catalog)return;
+  const input=registrationInput(catalog,eventId);inFlight.current=true;setBusy(true);
+  try{await withAccountDeadline(signal=>services.rpc('register_all_india_event',input,signal),scope.current.signal);}
+  catch(error){if(current()){const failure=catalogueStartFailure(error);throw new Error(failure.definitive?failure.message:'Couldn’t confirm your seat. Refresh All India mocks to check it.');}return;}
+  finally{inFlight.current=false;if(current())setBusy(false);}
+  if(current())void load();
  }
  async function shareRank(eventId) {
   if (!current() || inFlight.current || read.current || loading || sharingUncertain) return;
@@ -71,13 +79,13 @@ function CatalogueSession({kind,View,viewProps,headingRef}){
   {(unknown||saved.length>0)&&<p><Link to="/dashboard">Check all your saved attempts →</Link></p>}
   {sharingMessage && <p role={sharingUncertain ? 'alert' : 'status'}>{sharingMessage}</p>}
   {catalog&&<View {...viewProps} heading={false} embedded blocked={unknown||busy} onStart={start}
-   {...(kind==='allIndia'?{events:catalog,onShare:shareRank,sharingBlocked:sharingUncertain||busy}:{catalog})}/>}
+   {...(kind==='allIndia'?{events:catalog,onShare:shareRank,onRegister:registerSeat,sharingBlocked:sharingUncertain||busy}:{catalog})}/>}
  </>;
 }
-export function AssessmentCatalogue({kind,View,Heading,viewProps={}}){
+export function AssessmentCatalogue({kind,View,Heading,viewProps={},SignedOut=null}){
  const{session,loading}=useAuthState(),location=useLocation(),heading=useRef(null),key=JSON.stringify([kind,session?.user.id,location.key,location.search]),previous=useRef(key),spec=catalogueSpec(kind);
  useLayoutEffect(()=>{if(previous.current!==key&&(document.activeElement===document.body||heading.current?.parentElement.contains(document.activeElement)))heading.current?.focus();previous.current=key;},[key]);
  if(loading)return<section className="wrap section"><p role="status">Checking your account…</p></section>;
- if(!session)return<section className="wrap section"><h1>{spec.signIn}<em>.</em></h1><Link className="button" to="/account">Student sign in</Link></section>;
+ if(!session)return<section className="wrap section"><h1>{spec.signIn}<em>.</em></h1>{SignedOut&&<SignedOut signUp={false}/>}<Link className="button" to={kind==='allIndia'?'/account?for=all-india':'/account'}>Student sign in</Link></section>;
  return<PortalShell><section className={'section portal-module '+spec.className}><Heading headingRef={heading}/><AccountAccessBoundary key={key} kind="catalogue" actorId={session.user.id} headingRef={heading}><CatalogueSession kind={kind} View={View} viewProps={viewProps} headingRef={heading}/></AccountAccessBoundary></section></PortalShell>;
 }

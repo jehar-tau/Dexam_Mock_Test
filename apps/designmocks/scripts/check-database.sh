@@ -27,6 +27,7 @@ psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/fresh-all-india-line
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-release.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-drawings.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-ranking-consent.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/all-india-fixed-papers.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/portal-grants.sql
 rpc_inventory="$(mktemp -d)"
 trap 'unlink "$rpc_inventory/source.json"; if [[ -f "$rpc_inventory/paid.json" ]]; then unlink "$rpc_inventory/paid.json"; fi; rmdir "$rpc_inventory"' EXIT

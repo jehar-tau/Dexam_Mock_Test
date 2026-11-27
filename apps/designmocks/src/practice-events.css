@@ -329,3 +329,18 @@
   .topic-browser .topic-card { padding: .7rem; }
   .topic-browser li.topic-card { flex-wrap: initial; }
 }
+
+/* All India seats, countdown and the signed-out schedule. */
+.all-india-seats { display: flex; flex-wrap: wrap; gap: .35rem .5rem; margin: .45rem 0 .2rem; padding: 0; list-style: none; font-size: .87rem; }
+.all-india-seats li { padding: .2rem .55rem; border: 1px solid var(--line); border-radius: 999px; background: var(--soft); color: var(--ink); }
+.all-india-seats .all-india-seats-full, .all-india-upcoming .all-india-seats-full { color: var(--orange); }
+.all-india-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: .5rem; }
+.all-india-actions .button { min-height: 44px; }
+.all-india-upcoming { margin: 1rem 0 1.5rem; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: .6rem; background: var(--surface); max-width: 46rem; }
+.all-india-upcoming h2 { margin: 0 0 .6rem; font-size: 1.15rem; }
+.all-india-upcoming ul { display: grid; gap: .75rem; margin: 0 0 1rem; padding: 0; list-style: none; }
+.all-india-upcoming li { display: grid; gap: .2rem; padding-top: .7rem; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+.all-india-upcoming li:first-child { padding-top: 0; border-top: 0; }
+.all-india-upcoming-exam { font-size: .78rem; font-weight: 700; letter-spacing: .06em; color: var(--muted); }
+.all-india-upcoming span { color: var(--muted); font-size: .9rem; }
+.all-india-upcoming strong { font-size: .95rem; }

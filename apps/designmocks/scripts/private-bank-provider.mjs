@@ -124,6 +124,7 @@ const paperFunctions = new Map([
   ['upsert_nift_year_runtime_batch', 'jsonb,jsonb'],
   ['prepare_free_year_paper', 'jsonb'],
   ['register_free_year_paper', 'uuid,text,integer,text,text,integer,text'],
+  ['stage_all_india_paper', 'jsonb,text'],
 ]);
 const freePaperAudit = `select jsonb_build_object(
   'freeAdmission',exists(select 1 from dm_private.registration_policy where id and mode='open'),

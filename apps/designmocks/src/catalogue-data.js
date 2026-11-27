@@ -44,6 +44,31 @@ export function validatePublicAllIndiaResults(input) {
  if (new Set(events.map(event => event.eventId)).size !== events.length) invalid();
  return events.filter(event => event.topTen.length > 0);
 }
+// Seats and entry are optional: older events carry neither.
+function eventSeats(item){
+ const entry=item.entry??'pass',seatCap=item.seatCap??null,seatsLeft=item.seatsLeft??null,registered=item.registered??false;
+ if(!['pass','free'].includes(entry)||typeof registered!=='boolean'||(seatCap!==null&&(!integer(seatCap)||seatCap<1))
+   ||(seatCap===null)!==(seatsLeft===null)||(seatCap!==null&&(!integer(seatsLeft)||seatsLeft>seatCap)))invalid();
+ return{entry,seatCap,seatsLeft,registered};
+}
+export function validatePublicAllIndiaUpcoming(input){
+ if(!Array.isArray(input)||input.length>8)invalid();
+ const rows=input.map(item=>{
+  if(!record(item)||!uuid(item.id)||!exam(item.exam)||!text(item.title)||!['startsAt','endsAt','lastStartAt','reviewEndsAt'].every(key=>date(item[key]))
+    ||!integer(item.durationSeconds)||item.durationSeconds===0||!integer(item.uploadGraceSeconds))invalid();
+  const{entry,seatCap,seatsLeft}=eventSeats(item);
+  return{id:item.id,exam:item.exam,title:item.title,startsAt:item.startsAt,endsAt:item.endsAt,lastStartAt:item.lastStartAt,
+   reviewEndsAt:item.reviewEndsAt,durationSeconds:item.durationSeconds,uploadGraceSeconds:item.uploadGraceSeconds,entry,seatCap,seatsLeft};
+ });
+ if(new Set(rows.map(row=>row.id)).size!==rows.length)invalid();
+ return rows;
+}
+export function registrationInput(catalog,id){
+ const event=catalog?.find(item=>item.id===id);
+ if(!event||!['scheduled','open'].includes(event.state)||event.registered||event.attemptId||event.seatsLeft===0)
+  throw Object.assign(new Error('Refresh these choices before reserving a seat.'),{code:'catalogue_selection'});
+ return{p_event_id:id};
+}
 export const catalogueKinds=Object.freeze({exam:{read:'exam_mock_catalog',start:'start_exam_mock',refresh:'Refresh exam mocks',className:'exam-mocks',signIn:'Sign in to take a mock'},allIndia:{read:'all_india_event_catalog',start:'start_all_india_attempt',refresh:'Refresh All India mocks',className:'all-india',signIn:'Sign in for All India mocks'},topic:{read:'topic_catalog',start:'start_topic_practice',refresh:'Refresh practice topics',className:'topic-practice',signIn:'Sign in to practise'}});
 export function catalogueSpec(kind){if(!Object.hasOwn(catalogueKinds,kind))invalid();return catalogueKinds[kind];}
 export function validateCatalogue(kind,input){
@@ -62,14 +87,14 @@ export function validateCatalogue(kind,input){
    if (result.rank > 10) invalid();
    result.sharing = resultSharing(item.result.sharing);
   }
-  return{id:item.id,exam:item.exam,title:item.title,state:item.state,startsAt:item.startsAt,endsAt:item.endsAt,lastStartAt:item.lastStartAt,reviewEndsAt:item.reviewEndsAt,durationSeconds:item.durationSeconds,uploadGraceSeconds:item.uploadGraceSeconds,qualityHeld:item.qualityHeld,attemptId:item.attemptId??null,result};
+  return{id:item.id,exam:item.exam,title:item.title,state:item.state,startsAt:item.startsAt,endsAt:item.endsAt,lastStartAt:item.lastStartAt,reviewEndsAt:item.reviewEndsAt,durationSeconds:item.durationSeconds,uploadGraceSeconds:item.uploadGraceSeconds,qualityHeld:item.qualityHeld,attemptId:item.attemptId??null,result,...eventSeats(item)};
  });
  const keys=rows.map(item=>kind==='topic'?JSON.stringify([item.exam,item.topic]):kind==='exam'?item.exam:item.id);if(new Set(keys).size!==keys.length)invalid();return rows;
 }
 export function catalogueInput(kind,catalog,input){
  catalogueSpec(kind);const fail=()=>{throw Object.assign(new Error('Refresh these choices before starting a mock.'),{code:'catalogue_selection'});};
  if(kind==='exam'){if(!catalog.some(item=>item.exam===input&&item.ready&&item.enabled))fail();return{p_exam:input};}
- if(kind==='allIndia'){if(!catalog.some(item=>item.id===input&&item.state==='open'&&!item.qualityHeld&&!item.attemptId))fail();return{p_event_id:input};}
+ if(kind==='allIndia'){if(!catalog.some(item=>item.id===input&&item.state==='open'&&!item.qualityHeld&&!item.attemptId&&(item.registered||item.seatsLeft!==0)))fail();return{p_event_id:input};}
  if(!record(input)||![10,20,30].includes(input.count)||![900,1800,2700].includes(input.duration)||!catalog.some(item=>item.exam===input.exam&&item.topic===input.topic&&item.questions>=input.count))fail();
  return{p_exam:input.exam,p_topic:input.topic,p_count:input.count,p_duration_seconds:input.duration};
 }
@@ -77,7 +102,7 @@ export function savedCatalogueAttempts(input){
  if(!Array.isArray(input)||input.some(item=>!record(item)||!uuid(item.id)||!text(item.title)||!['active','submitted'].includes(item.status))||new Set(input.map(item=>item.id)).size!==input.length)invalid();
  return input.filter(item=>item.status==='active').slice(0,10).map(item=>({id:item.id,title:item.title}));
 }
-const knownRejections=new Set(['An active pass is required','Complete your verified profile first','Finish an active attempt before starting another','Not enough reviewed questions for this practice','Not enough reviewed questions for every required section','This exam mock is not released','New starts are paused while a question is under human review','This All India mock is not open','This All India mock is not released','This All India mock is not open for new attempts','This All India mock can only be attempted once','There is no full attempt window available','The start window has closed']);
+const knownRejections=new Set(['An active pass is required','Complete your verified profile first','Finish an active attempt before starting another','Not enough reviewed questions for this practice','Not enough reviewed questions for every required section','This exam mock is not released','New starts are paused while a question is under human review','This All India mock is not open','This All India mock is not released','This All India mock is not open for new attempts','This All India mock can only be attempted once','There is no full attempt window available','The start window has closed','All seats for this All India mock are taken','Registration for this All India mock has closed','All India paper paused for fresh-question review']);
 export function catalogueStartFailure(error){
  if(error?.code==='catalogue_selection')return{definitive:true,message:'Refresh these choices before starting a mock.'};
  if(error?.code==='P0001'&&knownRejections.has(error.message))return{definitive:true,message:error.message};

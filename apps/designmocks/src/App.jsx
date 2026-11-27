@@ -97,6 +97,7 @@ const CommunityEditor = React.lazy(() => import("./CommunityEditor.jsx").then(mo
 const CommunityReader = React.lazy(() => import("./CommunityReader.jsx").then(module => ({ default: module.CommunityReader })));
 const CommunitySaved = React.lazy(() => import("./CommunitySaved.jsx").then(module => ({ default: module.CommunitySaved })));
 const AllIndiaHighlights = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaHighlights })));
+const AllIndiaUpcoming = React.lazy(() => import("./AllIndia.jsx").then(module => ({ default: module.AllIndiaUpcoming })));
 const TopicPracticePreview = includeStudentPreview
   ? React.lazy(() => import("./TopicPractice.jsx").then(module => ({ default: module.TopicPracticePreview }))) : null;
 const ExamMocksPreview = includeStudentPreview
@@ -973,6 +974,8 @@ function Plans() {
 }
 function Account() {
   const { session, loading, authError } = useAuthState();
+  // Students who come from All India see the upcoming events and seats left.
+  const allIndiaSignUp = new URLSearchParams(useLocation().search).get("for") === "all-india";
   const stagingAccess = useStagingPortalAccess(session);
   const workspaceAvailable = portalReady && stagingAccess === "allowed";
   const accountId = session?.user.id;
@@ -1056,6 +1059,8 @@ function Account() {
           Your papers, your attempts, your next step.
           <br /> All in one student workspace.
         </p>
+        {!session && !loading && studentModuleReleased('all-india') && platform && allIndiaSignUp &&
+          <React.Suspense fallback={null}><AllIndiaUpcoming signUp={false} /></React.Suspense>}
         <Art kind="ideas" />
       </div>
       <div className="account-card">

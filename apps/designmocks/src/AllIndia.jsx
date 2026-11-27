@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { platform } from "./platform.js";
 import { PortalShell } from "./PortalShell.jsx";
 import { AssessmentCatalogue } from "./AssessmentCatalogue.jsx";
-import { allIndiaExamSelection, assessmentExams, validatePublicAllIndiaResults } from "./catalogue-data.js";
+import { allIndiaExamSelection, assessmentExams, validatePublicAllIndiaResults, validatePublicAllIndiaUpcoming } from "./catalogue-data.js";
 import { eventTiming, nextEventBoundary } from "./all-india-timing.js";
 import "./practice-events.css";
 
@@ -19,6 +19,46 @@ const stateLabels = {
   scheduled: "Scheduled", open: "Open for starts", closing: "Starts closed",
   review: "In review", released: "Released", paused: "Paused",
 };
+
+export function countdownLabel(target, now) {
+  const left = Date.parse(target) - now;
+  if (!Number.isFinite(left) || left <= 0) return "";
+  const minutes = Math.ceil(left / 60000), days = Math.floor(minutes / 1440), hours = Math.floor((minutes % 1440) / 60), rest = minutes % 60;
+  const unit = (value, word) => `${value} ${word}${value === 1 ? "" : "s"}`;
+  if (days > 0) return unit(days, "day") + (hours ? ` ${unit(hours, "hour")}` : "");
+  if (hours > 0) return unit(hours, "hour") + (rest ? ` ${rest} min` : "");
+  return `${minutes} min`;
+}
+
+export function seatLabel(event) {
+  if (event.seatCap == null) return "";
+  if (event.seatsLeft === 0) return `All ${event.seatCap} seats are taken`;
+  return `${event.seatsLeft} of ${event.seatCap} seats left`;
+}
+
+function useMinuteClock(enabled) {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!enabled) return;
+    const timer = window.setInterval(() => setNow(Date.now()), 30000);
+    return () => window.clearInterval(timer);
+  }, [enabled]);
+  return now;
+}
+
+const seatsFull = event => event.seatsLeft === 0 && !event.registered;
+
+function EventSeats({ event, now }) {
+  const opens = event.state === "scheduled" ? countdownLabel(event.startsAt, now) : "";
+  const seats = seatLabel(event);
+  if (!opens && !seats && event.entry !== "free" && !event.registered) return null;
+  return <ul className="all-india-seats">
+    {event.entry === "free" && <li>Free entry</li>}
+    {opens && <li><b>Opens in {opens}</b></li>}
+    {seats && <li className={event.seatsLeft === 0 ? "all-india-seats-full" : undefined}>{seats}</li>}
+    {event.registered && !event.attemptId && <li><b>Your seat is reserved</b></li>}
+  </ul>;
+}
 
 function eventDetails(event, now) {
   if (eventTiming(event, now).needsRefresh) return "The event window has changed. Refresh All India mocks to check its current status.";
@@ -67,13 +107,14 @@ function EventWindow({ event }) {
 
 function EventGuide() {
   return <aside className="all-india-guide"><h2>How events work</h2>
-    <dl><div><dt>Before the cutoff</dt><dd>Start once per account. Everyone receives the same fixed paper.</dd></div>
+    <dl><div><dt>Before the window</dt><dd>Reserve your seat. Capped events fill first come, first served.</dd></div>
+      <div><dt>During the window</dt><dd>Start once, at any time before the last start. Everyone receives the same fixed paper and its own timer.</dd></div>
       <div><dt>During your attempt</dt><dd>Your timer keeps running if you disconnect. Reopen your attempt to continue.</dd></div>
-      <div><dt>After review</dt><dd>Your rank appears once results are released. Eligible students can choose to share their result under an alias. Reviewed questions may then enter exam-wise mocks.</dd></div></dl>
+      <div><dt>After review</dt><dd>Your rank appears once results are released. Drawings are marked by teachers first. Students in the top ten can choose to share their result under an alias.</dd></div></dl>
   </aside>;
 }
 
-export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelectExam, heading = true, embedded = false,
+export function AllIndiaView({ events, onStart, onRegister, onShare, requestedExam, onSelectExam, heading = true, embedded = false,
   blocked = false, sharingBlocked = false, previewStarted, exampleResults, previewMockHref, attemptHref = id => `/attempt/${id}` }) {
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
@@ -83,6 +124,7 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
   const starting = useRef(false);
   const [stateFilter, setStateFilter] = useState("");
   const preview = Boolean(exampleResults);
+  const seatClock = useMinuteClock(!preview && events.some(event => event.state === "scheduled"));
   const [now, setNow] = useState(() => preview ? Date.parse("2027-01-09T09:15:00+05:30") : Date.now());
   const { selectedExam, visibleEvents } = allIndiaExamSelection(events, requestedExam);
   const filteredEvents = visibleEvents.filter(event => !stateFilter || event.state === stateFilter);
@@ -123,6 +165,15 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
     catch (error) { setMessage(error.message); }
     finally { starting.current = false; setBusy(""); }
   };
+  const register = async id => {
+    if (starting.current || busy || blocked || !onRegister) return;
+    starting.current = true;
+    setBusy("seat:" + id);
+    setMessage("");
+    try { await onRegister(id); }
+    catch (error) { setMessage(error.message); }
+    finally { starting.current = false; setBusy(""); }
+  };
   const closeReady = () => {
     setReadyId("");
     window.requestAnimationFrame(() => { if (readyOpener.current?.isConnected && !readyOpener.current.disabled) readyOpener.current.focus(); });
@@ -152,6 +203,7 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
               <div className="all-india-event-meta"><span>{event.exam.toUpperCase()}</span>
                 <span className={'all-india-state all-india-state-' + event.state}>{eventTiming(event, now).needsRefresh ? "Refresh status" : stateLabels[event.state]}</span></div>
               <h3>{event.title}</h3><p>{eventDetails(event, now)}</p>
+              <EventSeats event={event} now={seatClock} />
               {event.state !== "released" && event.durationSeconds > 0 && <p>
                 {event.durationSeconds / 60} minutes for the exam{event.uploadGraceSeconds > 0 ? `, plus ${event.uploadGraceSeconds / 60} minutes for drawing uploads.` : "."}
               </p>}
@@ -169,11 +221,16 @@ export function AllIndiaView({ events, onStart, onShare, requestedExam, onSelect
                   {event.state === "released" && previewMockHref && <Link className="all-india-result-link" to={previewMockHref}>See exam-wise mock example →</Link>}</>
                 : <Link className="button quiet" to={attemptHref(event.attemptId)}>
                   {event.state === "released" ? "View attempt" : "Open attempt"}</Link>)
-                : <button type="button" className={event.state === "open" ? "button" : "all-india-unavailable"}
-                  disabled={event.state !== "open" || eventTiming(event, now).needsRefresh || Boolean(busy) || blocked || previewStarted === event.id}
+                : <div className="all-india-actions">
+                  {onRegister && event.state === "scheduled" && !event.registered && event.seatsLeft !== 0 &&
+                    <button type="button" className="button" disabled={Boolean(busy) || blocked}
+                      onClick={() => register(event.id)}>{busy === "seat:" + event.id ? "Reserving…" : "Reserve my seat"}</button>}
+                  {(event.state !== "scheduled" || !onRegister) && <button type="button"
+                  className={event.state === "open" && !seatsFull(event) ? "button" : "all-india-unavailable"}
+                  disabled={event.state !== "open" || seatsFull(event) || eventTiming(event, now).needsRefresh || Boolean(busy) || blocked || previewStarted === event.id}
                   onClick={click => { readyOpener.current = click.currentTarget; setMessage(""); setReadyId(event.id); }}>
-                  {previewStarted === event.id ? "Preview started" : busy === event.id ? "Opening…" : eventTiming(event, now).needsRefresh ? "Refresh event status" : event.state === "open" ? "Start once" : "Unavailable"}
-                </button>}
+                  {previewStarted === event.id ? "Preview started" : busy === event.id ? "Opening…" : eventTiming(event, now).needsRefresh ? "Refresh event status" : seatsFull(event) ? "All seats taken" : event.state === "open" ? "Start once" : "Unavailable"}
+                </button>}</div>}
               {previewStarted === event.id && <p className="all-india-receipt" role="status">Preview attempt created once: {event.id}</p>}
             </div>
           </article>) : <p className="all-india-empty" role="status">{stateFilter ? "No events match these filters." : selectedExam
@@ -213,10 +270,44 @@ function useExamFilter() {
 
 export function AllIndia() {
   const filter = useExamFilter();
-  return <AssessmentCatalogue kind="allIndia" Heading={AllIndiaHeading} View={AllIndiaView} viewProps={filter} />;
+  return <AssessmentCatalogue kind="allIndia" Heading={AllIndiaHeading} View={AllIndiaView} viewProps={filter}
+    SignedOut={AllIndiaSignedOut} />;
 }
 
-export function AllIndiaHighlights({ example = null }) {
+function AllIndiaSignedOut() {
+  return <><AllIndiaUpcoming signUp={false} /><AllIndiaHighlights rail /></>;
+}
+
+// Signed-out visitors see the schedule and seats left (no questions), then sign up.
+export function AllIndiaUpcoming({ signUp = true }) {
+  const [events, setEvents] = useState([]);
+  const now = useMinuteClock(events.length > 0);
+  useEffect(() => {
+    if (!platform) return;
+    let current = true;
+    rpc("public_all_india_upcoming").then(validatePublicAllIndiaUpcoming).then(rows => {
+      if (current) setEvents(rows);
+    }).catch(() => { if (current) setEvents([]); });
+    return () => { current = false; };
+  }, []);
+  if (!events.length) return null;
+  return <section className="all-india-upcoming" aria-labelledby="all-india-upcoming-title">
+    <h2 id="all-india-upcoming-title">Upcoming All India mocks</h2>
+    <ul>{events.map(event => {
+      const opens = countdownLabel(event.startsAt, now), seats = seatLabel(event);
+      return <li key={event.id}>
+        <span className="all-india-upcoming-exam">{event.exam.toUpperCase()}</span>
+        <b>{event.title}</b>
+        <span>{when(event.startsAt)} – {when(event.endsAt)} · {event.durationSeconds / 60} minutes{event.entry === "free" ? " · free entry" : ""}</span>
+        {opens && <span>Opens in {opens}</span>}
+        {seats && <strong className={event.seatsLeft === 0 ? "all-india-seats-full" : undefined}>{seats}</strong>}
+      </li>;
+    })}</ul>
+    {signUp && <Link className="button" to="/account?for=all-india">Sign up free to reserve a seat</Link>}
+  </section>;
+}
+
+export function AllIndiaHighlights({ example = null, rail = false }) {
   const [events, setEvents] = useState([]);
   useEffect(() => {
     if (example || !platform) return;
@@ -229,8 +320,9 @@ export function AllIndiaHighlights({ example = null }) {
   const rankings = example ?? events;
   if (!rankings.length) return null;
   return <section id={example ? "all-india-example-ranks" : undefined} tabIndex={example ? -1 : undefined}
-    className={example ? "all-india-example-ranks" : "wrap section all-india-highlights"}>
-    {example ? <h2>Example rankings</h2> : <><span className="eyebrow">ALL INDIA RESULTS</span>
+    aria-label={rail ? "All India top ten" : undefined}
+    className={example || rail ? "all-india-example-ranks" : "wrap section all-india-highlights"}>
+    {example ? <h2>Example rankings</h2> : rail ? <h2>All India top ten</h2> : <><span className="eyebrow">ALL INDIA RESULTS</span>
       <h2>See where practice <em>leads.</em></h2></>}
     {rankings.map(event => <article key={event.eventId}><h3>{event.exam.toUpperCase()} · {event.title}</h3>
       <ol>{event.topTen.map(result => <li key={result.alias}>
