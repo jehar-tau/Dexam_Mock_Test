@@ -58,7 +58,7 @@ export function validateDrawingSidecar(plan, canonical, sourceDigests) {
     assert.equal(items.reduce((sum,i)=>sum+i.marking.max,0),plan.drawingMarksTotal);
   }
   return { digest:sha256(stableJson(plan)), sourcePaperId:plan.sourcePaperId, sourceCommit:canonical.sourceCommit, exam:plan.exam,
-    year:plan.year, supported, durationSeconds:plan.durationSeconds, uploadGraceSeconds:plan.uploadGraceSeconds,
+    year:plan.year, supported, timer:plan.timer, durationSeconds:plan.durationSeconds, uploadGraceSeconds:plan.uploadGraceSeconds,
     drawingMarksTotal:plan.drawingMarksTotal, sections:plan.sections, items };
 }
 

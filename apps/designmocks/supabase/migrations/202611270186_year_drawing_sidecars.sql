@@ -19,6 +19,11 @@ alter table dm_private.attempts add column year_drawing_version uuid references 
 
 -- Historical papers with a separate session or an elective section need
 -- distinct rules. They remain ineligible until their rule is implemented.
+create function dm_private.year_drawing_duration_ok(doc jsonb) returns boolean
+language sql immutable set search_path=pg_catalog as $$
+  select doc->>'timer'='shared' and (doc->>'durationSeconds')::integer=10800
+$$;
+revoke all on function dm_private.year_drawing_duration_ok(jsonb) from public,anon,authenticated,service_role;
 create function dm_private.year_drawing_choice_plan_ok(doc jsonb) returns boolean
 language sql immutable set search_path=pg_catalog as $$
   select not exists(select from jsonb_array_elements(doc->'sections') s where s->'chooseOne'='true'::jsonb)
@@ -46,16 +51,16 @@ begin
     and exam=doc->>'exam' and paper_year=(doc->>'year')::integer and review_sha256=reviewed_objective for update;
   perform dm_private.lock_year_paper(rel.paper_id);
   if not dm_private.year_paper_ready(rel.paper_id) then raise exception 'Objective release changed'; end if;
-  if doc->'supported' is distinct from 'true'::jsonb or (doc->>'durationSeconds')::integer<>10800
+  if doc->'supported' is distinct from 'true'::jsonb or dm_private.year_drawing_duration_ok(doc) is not true
      or (doc->>'uploadGraceSeconds')::integer<>600 or jsonb_array_length(doc->'items') not between 1 and 40
      or not dm_private.year_drawing_choice_plan_ok(doc) then
      raise exception 'Unsupported drawing plan'; end if;
   select id into version_id from dm_private.year_drawing_versions where paper_id=rel.paper_id
     and objective_manifest=reviewed_objective and drawing_digest=doc->>'digest';
   if version_id is null then
-    insert into dm_private.papers(title,exam,duration_seconds) values('Private drawing section',rel.exam,10800) returning id into version_id;
+    insert into dm_private.papers(title,exam,duration_seconds) values('Private drawing section',rel.exam,(doc->>'durationSeconds')::integer) returning id into version_id;
     insert into dm_private.year_drawing_versions(id,paper_id,objective_manifest,drawing_digest,duration_seconds,grace_seconds,marks,sections)
-      values(version_id,rel.paper_id,reviewed_objective,doc->>'digest',10800,600,(doc->>'drawingMarksTotal')::numeric,doc->'sections');
+      values(version_id,rel.paper_id,reviewed_objective,doc->>'digest',(doc->>'durationSeconds')::integer,600,(doc->>'drawingMarksTotal')::numeric,doc->'sections');
     for task in select value from jsonb_array_elements(doc->'items') loop
       task_ordinal:=task_ordinal+1;
       select * into strict source from dm_private.bank_questions where external_key=task->>'externalKey' for share;

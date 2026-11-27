@@ -4,7 +4,7 @@ insert into auth.users(id) values('00000000-0000-4000-8000-000000000385');
 insert into dm_private.bank_questions(external_key,content_sha256,exam,question_type,topic,licence,payload,source_commit)
 values('fictional-year-b1',repeat('b',64),'uceed','DESCRIPTIVE','drawing','owner-provided',
   '{"provenance":{"paperId":"uceed-2026"},"holds":[],"assets":[],"taskMarks":20,"prompt":"Draw two shapes.","explanation":"Look for a clear relationship between your two forms."}',repeat('c',40));
-select set_config('test.sidecar',jsonb_build_object('sourcePaperId','uceed-2026','exam','uceed','year',2026,'supported',true,
+select set_config('test.sidecar',jsonb_build_object('sourcePaperId','uceed-2026','exam','uceed','year',2026,'supported',true,'timer','shared',
   'digest',repeat('1',64),'durationSeconds',10800,'uploadGraceSeconds',600,'drawingMarksTotal',20,
   'sections','[{"plan":"objective"},{"questionKeys":["fictional-year-b1"]}]'::jsonb,
   'items',jsonb_build_array(jsonb_build_object('externalKey','fictional-year-b1','contentSha256',repeat('b',64),
