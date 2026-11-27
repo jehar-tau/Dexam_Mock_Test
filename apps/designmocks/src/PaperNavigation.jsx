@@ -13,15 +13,15 @@ export function paperSections(questions) {
 
 const filters = {all: "All questions", answered: "Answered", marked: "Marked for review", unanswered: "Visited without answer", fresh: "Not visited"};
 
-export function PaperNavigation({questions, index, answered, waiting, flagged, visited, move, busy, canSubmit, onSubmit}) {
+export function PaperNavigation({questions, index, answered, countStatus, waiting, flagged, visited, move, busy, canSubmit, onSubmit}) {
   const [filter, setFilter] = useState("all");
   const status = (i) => answered(questions[i]) ? "answered" : visited.has(i) ? "unanswered" : "fresh";
   const matches = (i, name) => name === "all" || (name === "marked" ? flagged.includes(questions[i].id) : status(i) === name);
   const counts = Object.fromEntries(Object.keys(filters).map(name => [name, questions.filter((_, i) => matches(i, name)).length]));
   return <aside className="attempt-navigation" id="attempt-navigator" aria-label="Question navigator" tabIndex={-1}>
     <div className="attempt-nav-heading"><span className="eyebrow">PAPER PROGRESS</span><h2>Question navigator</h2>
-      <p><b>{counts.answered}</b> of {questions.length} answered</p>
-      <progress value={counts.answered} max={questions.length || 1} aria-label="Paper answered" />
+      <p>{countStatus || <><b>{counts.answered}</b> of {questions.length} answered</>}</p>
+      <progress value={countStatus ? undefined : counts.answered} max={questions.length || 1} aria-label="Paper answered" />
     </div>
     <label className="attempt-filter">Show questions
       <select value={filter} onChange={event => setFilter(event.target.value)}>

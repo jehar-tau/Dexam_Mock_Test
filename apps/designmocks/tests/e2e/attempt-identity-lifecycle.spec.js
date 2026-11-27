@@ -32,6 +32,11 @@ async function fixture(page,options={}){
    status=state.figureStatus??200;
    data=status===200?{media:{[questionId]:[{url:state.figureUrl??'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/%3E'}]}}:{error:'Fictional media failure'};
   }
+  else if(name==='my_drawing_uploads'){
+   expect(who).toBe(first.id);
+   expect(input).toEqual({p_attempt_id:attemptId,p_question_id:questionId});
+   data=[];
+  }
   else if(name==='drawing-media')data=multipart?{id:'30000000-0000-4000-8000-000000000961',ordinal:1}:input.action==='list'?{items:[]}:{images:[]};
   else if(name==='start_exam_mock_part_b'){if(state.startHold)await state.startHold.promise;data=partB;}
   else throw new Error('Unexpected fictional attempt request: '+name);
