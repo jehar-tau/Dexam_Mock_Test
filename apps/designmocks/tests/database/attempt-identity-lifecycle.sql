@@ -27,9 +27,24 @@ select pg_temp.attempt_reject('select public.start_attempt('''||:'paper'||''')',
 select set_config('request.jwt.claim.sub',:'first',true);
 select public.start_attempt(:'paper')as attempt\gset
 select pg_temp.attempt_assert(public.start_attempt(:'paper')=:'attempt'::uuid,'reconnecting reuses the same active attempt and clock');
-select pg_temp.attempt_assert(public.read_attempt(:'attempt')->>'status'='active'and jsonb_array_length(public.read_attempt(:'attempt')->'questions')=2 and not(public.read_attempt(:'attempt')->'questions'->0?'correctKey'),'only the owner opens the frozen paper without the key');
-select public.read_attempt(:'attempt')->>'deadline'as deadline_before\gset
+select public.read_attempt(:'attempt') as active_snapshot \gset
+select pg_temp.attempt_assert(
+  :'active_snapshot'::jsonb @> '{"status":"active","score":null,"total":null,"resultsPending":false,"examResultsPending":false,"drawingUploadTasks":[]}'
+  and jsonb_array_length(:'active_snapshot'::jsonb->'questions')=2
+  and not exists (
+    select from jsonb_array_elements(:'active_snapshot'::jsonb->'questions') as item
+    where item ?| array['correctKey','explanation','outcome','drawingReview']
+  ),
+  'an owned active snapshot contains frozen questions without marks, keys or drawing grades'
+);
+select :'active_snapshot'::jsonb->>'deadline' as deadline_before \gset
 select pg_temp.attempt_assert(public.save_answer_revision(:'attempt',:'question','"B"',100)@>'{"accepted":true,"revision":100,"answer":"B"}'::jsonb,'accepted receipt includes exact canonical answer and revision');
+select public.read_attempt(:'attempt') as resumed_snapshot \gset
+select pg_temp.attempt_assert(
+  :'resumed_snapshot'::jsonb->>'deadline'=:'deadline_before'
+  and :'resumed_snapshot'::jsonb->'questions'->0 @> '{"answer":"B","answerRevision":100}',
+  'reconnect returns the saved answer and revision on the original clock'
+);
 select pg_temp.attempt_assert(public.save_answer_revision(:'attempt',:'question','"A"',100)@>'{"accepted":false,"revision":100,"answer":"B"}'::jsonb,'a lost commit is reconciled without replacing the accepted equal revision');
 select pg_temp.attempt_assert(public.save_answer_revision(:'attempt',:'question','"A"',99)@>'{"accepted":false,"revision":100,"answer":"B"}'::jsonb,'an older device cannot overwrite the canonical answer');
 select pg_temp.attempt_reject('select public.save_answer_revision('''||:'attempt'||''','''||:'question'||''',''"A"'',0)','Invalid answer revision');
