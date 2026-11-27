@@ -22,6 +22,11 @@ export function drawingEstimateView(estimate, criteria = []) {
   const max = criteria.reduce((sum, item) => sum + (finite(item.max) ? item.max : 0), 0);
   if (!estimate) return null;
   const status = estimate.status;
+  if (status === "awaiting_teacher") {
+    return { status, total: null, max, override: finite(estimate.override?.score) ? {
+      score: Math.min(max, Math.max(0, half(estimate.override.score))), note: estimate.override.note ?? ""
+    } : null, flags: [...new Set((estimate.flags ?? []).filter(flag => Object.hasOwn(DRAWING_FLAG_LABELS, flag)))] };
+  }
   if (status === "not_attempted") {
     return { status: "not_attempted", total: 0, max, criteria: [], flags: [], summary: "" };
   }
