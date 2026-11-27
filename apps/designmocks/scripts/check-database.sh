@@ -29,6 +29,7 @@ rpc_inventory="$(mktemp -d)"
 trap 'unlink "$rpc_inventory/source.json"; if [[ -f "$rpc_inventory/paid.json" ]]; then unlink "$rpc_inventory/paid.json"; fi; rmdir "$rpc_inventory"' EXIT
 psql "$test_db_url" -X -qAt -v ON_ERROR_STOP=1 -f supabase/audit/staging-rpc-inventory.sql > "$rpc_inventory/source.json"
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/stage-objective-year-sources.sql
+psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/nift-historical-gat.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/bank-import-finalization.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/canonical-media.sql
 psql "$test_db_url" -X -v ON_ERROR_STOP=1 -f tests/database/verified-runtime.sql
