@@ -151,32 +151,52 @@ async function audit(page) {
   expect(await page.evaluate(async () => (await window.axe.run(".community-page", { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] } })).violations.map(item => `${item.id}: ${item.nodes.map(node => node.target.join(" ")).join(" | ")}`))).toEqual([]);
 }
 
-test("an article is written with formatting, kept as a draft across a reload, published and read", async ({ page }) => {
+
+// Types into the rich editor the way a student does: "## " starts a heading,
+// "- " a list, "**…**" bold and "> " a quote. Returns the stored text it produces.
+async function typeArticle(page, { short = false } = {}) {
+  const editor = page.getByRole("textbox", { name: "Article", exact: true });
+  await editor.click();
+  await page.keyboard.press(process.platform === "darwin" ? "Meta+A" : "Control+A"); await page.keyboard.press("Backspace");
+  if (short) { await page.keyboard.type("too short"); return "too short"; }
+  await page.keyboard.type("## My plan"); await page.keyboard.press("Enter");
+  await page.keyboard.type(paragraph.repeat(3).trim()); await page.keyboard.press("Enter");
+  await page.keyboard.type("- **Warm up** with ten gesture sketches"); await page.keyboard.press("Enter");
+  await page.keyboard.type("Time one full composition"); await page.keyboard.press("Enter"); await page.keyboard.press("Enter");
+  await page.keyboard.type("> Finish early, review slowly.");
+  return `## My plan\n\n${paragraph.repeat(3).trim()}\n\n- **Warm up** with ten gesture sketches\n- Time one full composition\n\n> Finish early, review slowly.`;
+}
+
+test("an article is written with formatting, kept as a draft across a reload, published and read", async ({ page }, info) => {
   const state = backend(); await state.install(page); await signIn(page, asha, "/dashboard/community/write");
   await expect(page.getByRole("heading", { name: /Write it/ })).toBeVisible();
   await page.getByLabel("Exam", { exact: true }).selectOption("nid");
   await page.getByLabel("Topic", { exact: true }).fill("Studio test");
   await page.getByLabel("Title", { exact: true }).fill("How I planned my studio test week");
-  const article = page.getByLabel("Article", { exact: true });
-  await article.fill("My plan");
-  await page.getByRole("toolbar", { name: "Formatting" }).getByRole("button", { name: "Heading", exact: true }).click();
-  await expect(article).toHaveValue("## My plan");
-  await article.fill(body);
-  await page.getByRole("group", { name: "Editor view" }).getByRole("button", { name: "Preview", exact: true }).click();
-  const preview = page.getByRole("region", { name: "Article preview" });
-  await expect(preview.getByRole("heading", { name: "My plan", level: 3 })).toBeVisible();
-  await expect(preview.getByRole("listitem")).toHaveCount(2);
-  await expect(preview.locator("strong")).toHaveText("Warm up");
-  await expect(preview.locator("blockquote")).toHaveText("Finish early, review slowly.");
+  const article = page.getByRole("textbox", { name: "Article", exact: true });
+  const stored = await typeArticle(page);
+  // What you see while writing is the formatted article.
+  await expect(article.getByRole("heading", { name: "My plan", level: 2 })).toBeVisible();
+  await expect(article.getByRole("listitem")).toHaveCount(2);
+  await expect(article.locator("strong")).toHaveText("Warm up");
+  await expect(article.locator("blockquote")).toHaveText("Finish early, review slowly.");
+  // Selecting text shows the small formatting bar.
+  await article.getByRole("heading", { name: "My plan" }).dblclick();
+  const bar = page.getByRole("toolbar", { name: "Format selected text" });
+  await expect(bar.getByRole("button", { name: "Heading", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.getByLabel("Exam", { exact: true }).scrollIntoViewIfNeeded();
+  await page.screenshot({ path: info.outputPath("write-editor.png") });
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(page.getByRole("status").filter({ hasText: /Draft (saved at|is up to date)/ })).toBeVisible();
   expect(state.drafts).toHaveLength(1);
+  expect(state.drafts[0].body).toBe(stored);
 
   await page.reload();
   const drafts = page.getByRole("region", { name: "Your drafts" });
   await drafts.getByRole("button", { name: "Continue “How I planned my studio test week”" }).click();
   await expect(page.getByLabel("Title", { exact: true })).toHaveValue("How I planned my studio test week");
-  await expect(page.getByLabel("Article", { exact: true })).toHaveValue(body);
+  await expect(page.getByRole("textbox", { name: "Article", exact: true }).getByRole("heading", { name: "My plan", level: 2 })).toBeVisible();
+  await expect(page.getByRole("textbox", { name: "Article", exact: true }).locator("blockquote")).toHaveText("Finish early, review slowly.");
   await expect(page.getByLabel("Exam", { exact: true })).toHaveValue("nid");
 
   await page.getByRole("button", { name: "Publish article", exact: true }).click();
@@ -203,19 +223,19 @@ test("contact details are refused before and at the server, and markup is never 
   const state = backend(); await state.install(page); await signIn(page, asha, "/dashboard/community/write");
   await page.getByLabel("Topic", { exact: true }).fill("Notes");
   await page.getByLabel("Title", { exact: true }).fill("A fictional title about notes");
-  await page.getByLabel("Article", { exact: true }).fill(`${body}\n\nCall 98765 43210 for my notes.`);
+  await typeArticle(page); await page.keyboard.press("Enter"); await page.keyboard.press("Enter"); await page.keyboard.type("Call 98765 43210 for my notes.");
   await page.getByRole("button", { name: "Publish article", exact: true }).click();
   const alert = page.getByRole("alert");
   await expect(alert).toContainText("Remove the phone number"); await expect(alert).toBeFocused();
   expect(called(state, "create_community_article")).toHaveLength(0);
 
-  await page.getByLabel("Article", { exact: true }).fill("too short");
+  await typeArticle(page, { short: true });
   await page.getByRole("button", { name: "Publish article", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText("at least 200 characters");
 
   // The server is the authority even when the browser check passes.
   state.refuseContact = true;
-  await page.getByLabel("Article", { exact: true }).fill(`${body}\n\n<img src=x onerror="window.__xss=1"> <script>window.__xss=1</script>`);
+  await typeArticle(page); await page.keyboard.press("Enter"); await page.keyboard.press("Enter"); await page.keyboard.type(`<img src=x onerror="window.__xss=1"> <script>window.__xss=1</script>`);
   await page.getByRole("button", { name: "Publish article", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText("Remove phone numbers, email addresses, social handles");
   await expect(page.getByRole("alert")).not.toContainText("private-fixture-diagnostic");
@@ -252,48 +272,41 @@ test("a reader likes and unlikes, and Top follows the likes", async ({ page }) =
   await expect(page.getByText("No articles yet for this exam.")).toBeVisible();
 });
 
-test("a reader saves into a new folder, finds it under Saved, renames the folder and removes the save", async ({ page }) => {
+test("one tap saves a post and a guide; Saved lists both in one place and removes them", async ({ page }) => {
   const state = backend(); const post = state.seed(asha, "A fictional article worth keeping");
   await state.install(page); await signIn(page, ravi, `/dashboard/community/post/${post.id}`);
   const save = page.getByRole("button", { name: "Save", exact: true });
   await save.click();
-  const dialog = page.getByRole("dialog", { name: "Save to folders" });
-  await expect(dialog.getByLabel("New folder (optional)")).toHaveValue("Saved");
-  await dialog.getByLabel("New folder (optional)").fill("NID studio test");
-  await dialog.getByRole("button", { name: "Save", exact: true }).click();
-  await expect(dialog).toHaveCount(0);
-  const saved = page.getByRole("button", { name: "Saved in 1 folder", exact: true });
-  await expect(saved).toBeVisible(); await expect(saved).toBeFocused();
+  const saved = page.getByRole("button", { name: "Saved", exact: true });
+  await expect(saved).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("Saved. Find it under Saved.")).toBeVisible();
   expect(state.saves).toHaveLength(1);
+  expect(state.folders.map(folder => folder.name)).toEqual(["Saved"]);
+  await expect(page.getByRole("dialog")).toHaveCount(0);
 
-  await saved.click();
-  await expect(dialog.getByLabel("NID studio test")).toBeChecked();
-  await page.keyboard.press("Escape");
-  await expect(dialog).toHaveCount(0); await expect(saved).toBeFocused();
+  await page.goto("/dashboard/community/read/how-to-review-a-mock-test");
+  await page.getByRole("button", { name: /^Save: How to review a mock test/ }).click();
+  await expect(page.getByRole("button", { name: /^Saved: How to review a mock test/ })).toHaveAttribute("aria-pressed", "true");
 
   await page.getByRole("navigation", { name: "Community sections" }).getByRole("link", { name: "Saved", exact: true }).click();
-  const folder = page.getByRole("region", { name: "Folder NID studio test" });
-  await expect(folder.getByRole("link", { name: "A fictional article worth keeping" })).toBeVisible();
-  await expect(page.getByRole("region", { name: "Your folders" }).getByRole("button", { name: /NID studio test \(1\)/ })).toHaveAttribute("aria-pressed", "true");
-  await folder.getByRole("button", { name: "Rename folder" }).click();
-  await folder.getByLabel("Folder name").fill("Studio prep");
-  await folder.getByRole("button", { name: "Save name" }).click();
-  const renamed = page.getByRole("region", { name: "Folder Studio prep" });
-  await expect(renamed.getByRole("heading", { name: "Studio prep" })).toBeFocused();
-
-  // A second folder with the same name is refused with a sentence, not a diagnostic.
-  await page.getByLabel("New folder", { exact: true }).fill("studio PREP");
-  await page.getByRole("button", { name: "Create folder" }).click();
-  await expect(page.getByText("You already have a folder with that name.")).toBeVisible();
-  await page.getByRole("region", { name: "Your folders" }).getByRole("button", { name: /Studio prep/ }).click();
-
-  await renamed.getByRole("button", { name: "Remove from folder: A fictional article worth keeping" }).click();
-  await expect(renamed.getByText("Nothing saved here yet.")).toBeVisible();
+  const guides = page.getByRole("region", { name: "Guides" }), posts = page.getByRole("region", { name: "From students" });
+  await expect(guides.getByRole("link", { name: /How to review a mock test/ })).toBeVisible();
+  await expect(posts.getByRole("link", { name: "A fictional article worth keeping" })).toBeVisible();
+  await expect(page.getByText(/folder/i)).toHaveCount(0);
+  await posts.getByRole("button", { name: "Remove from Saved: A fictional article worth keeping" }).click();
+  await expect(posts.getByText("Tap Save on a student’s article or discussion to keep it here.")).toBeVisible();
   expect(state.saves).toHaveLength(0);
-  await renamed.getByRole("button", { name: "Delete folder" }).click();
-  await renamed.getByRole("button", { name: "Yes, delete folder" }).click();
-  await expect(page.getByText("No folders yet.")).toBeVisible();
-  expect(state.folders).toHaveLength(0);
+  await guides.getByRole("button", { name: /^Remove from Saved: How to review a mock test/ }).click();
+  await expect(guides.getByText(/to keep it here/)).toBeVisible();
+
+  // Saving again reuses the same "Saved" folder.
+  await page.goto(`/dashboard/community/post/${post.id}`);
+  await page.getByRole("button", { name: "Save", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Saved", exact: true })).toBeVisible();
+  expect(state.folders).toHaveLength(1);
+  await page.getByRole("button", { name: "Saved", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Save", exact: true })).toBeVisible();
+  expect(state.saves).toHaveLength(0);
 });
 
 test("a reader comments, and blocking an author hides their replies and articles until unblocked", async ({ page }) => {
@@ -351,19 +364,17 @@ test("the new pages work from the keyboard and pass the accessibility audit with
   await audit(page); await fits();
   const like = page.getByRole("button", { name: /^Like/ }); await like.focus(); await page.keyboard.press("Space");
   await expect(page.getByRole("button", { name: "Liked · 1", exact: true })).toBeFocused();
-  await page.getByRole("button", { name: "Saved in 1 folder" }).focus(); await page.keyboard.press("Enter");
-  const dialog = page.getByRole("dialog", { name: "Save to folders" });
-  await expect(dialog.getByLabel("Saved", { exact: true })).toBeChecked();
-  await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
-  expect(await page.evaluate(async () => (await window.axe.run("dialog[open]", { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] } })).violations.map(item => item.id))).toEqual([]);
-  await page.keyboard.press("Escape");
+  const savedButton = page.getByRole("button", { name: "Saved", exact: true });
+  await expect(savedButton).toHaveAttribute("aria-pressed", "true");
+  await savedButton.focus(); await page.keyboard.press("Enter");
+  await expect(page.getByRole("button", { name: "Save", exact: true })).toHaveAttribute("aria-pressed", "false");
+  await page.keyboard.press("Enter");
+  await expect(savedButton).toHaveAttribute("aria-pressed", "true");
   await page.goto("/dashboard/community/saved");
-  await expect(page.getByRole("region", { name: "Folder Saved" }).getByRole("link")).toBeVisible(); await audit(page); await fits();
+  await expect(page.getByRole("region", { name: "From students" }).getByRole("link")).toBeVisible(); await audit(page); await fits();
   await page.goto("/dashboard/community/write");
-  await page.getByLabel("Article", { exact: true }).fill(body);
-  await page.getByRole("group", { name: "Editor view" }).getByRole("button", { name: "Preview" }).click();
-  await expect(page.getByRole("region", { name: "Article preview" })).toBeVisible(); await audit(page); await fits();
-  await page.getByRole("group", { name: "Editor view" }).getByRole("button", { name: "Write" }).click(); await audit(page);
+  await typeArticle(page);
+  await expect(page.getByRole("textbox", { name: "Article", exact: true }).getByRole("heading", { name: "My plan" })).toBeVisible(); await audit(page); await fits();
   // The existing discussions page gains only the section links.
   await page.goto("/dashboard/community/write");
   await expect(page.getByRole("navigation", { name: "Community sections" }).getByRole("link")).toHaveText(["Articles", "Discussions", "Saved", "Write"]);

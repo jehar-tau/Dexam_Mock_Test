@@ -62,3 +62,16 @@
 /* Public guide pages (/guides). */
 .guides-page .guides-intro { max-width: 62ch; color: var(--muted); font-size: 1.05rem; }
 .guide-cta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; }
+
+/* One-tap save (SaveGuideButton.jsx). */
+.editorial-byline-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.save-button { display: inline-flex; align-items: center; gap: 6px; }
+.save-button.is-saved { color: var(--green); border-color: var(--green); }
+
+/* Community → Saved (CommunitySaved.jsx). */
+.community-saved-section { margin: 1.5rem 0 2rem; }
+.saved-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.saved-list li { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1rem 0; border-top: 1px solid var(--line); }
+.saved-list h3 { margin: .25rem 0; font-size: 1.15rem; }
+.saved-list small { color: var(--muted); }
+.saved-note { font-size: .85rem; }

@@ -1,141 +1,119 @@
-import React, { useEffect, useId, useRef, useState } from "react";
+// Community → Saved: one list, no folders. Guides saved on this device come first, then
+// student posts saved on the server (every folder an older version created is included).
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { CommunityFrame, communityDate, useCommunityRpc } from "./CommunityFrame.jsx";
-import { COMMUNITY_FOLDER_LIMIT, communityFailure, communityFolderName, communitySavedInput, validateCommunityBlocked, validateCommunityFolder,
-  validateCommunityFolders, validateCommunitySaved } from "./community-library.js";
+import { communityFailure, communitySavedInput, validateCommunityBlocked, validateCommunityFolders, validateCommunitySaved } from "./community-library.js";
+import { useAuthState } from "./useAuth.js";
+import { editorialArticles } from "./community-editorial.js";
+import { editorialPath } from "./CommunityEditorial.jsx";
+import { EDITORIAL_THEMES, editorialExamLabel } from "./community-editorial.mjs";
+import { onSavedGuidesChange, savedGuides, setGuideSaved } from "./saved-guides.js";
 
-function SavedSession() {
-  const rpc = useCommunityRpc(), newId = useId(), renameId = useId();
-  const [folders, setFolders] = useState(null), [selected, setSelected] = useState(null), [page, setPage] = useState(null), [pageLoading, setPageLoading] = useState(false);
-  const [blocked, setBlocked] = useState(null), [status, setStatus] = useState(""), [busy, setBusy] = useState(false);
-  const [newName, setNewName] = useState(""), [renaming, setRenaming] = useState(null), [confirmDelete, setConfirmDelete] = useState(false);
-  const scope = useRef(null), pageRequest = useRef(null), folderHeading = useRef(null);
+function SavedGuides({ actor }) {
+  const [items, setItems] = useState(() => savedGuides(actor));
+  useEffect(() => onSavedGuidesChange(() => setItems(savedGuides(actor))), [actor]);
+  const guides = items.map(item => ({ ...item, article: editorialArticles.find(article => article.slug === item.slug) })).filter(item => item.article);
+  return <section aria-labelledby="saved-guides-heading" className="community-saved-section">
+    <h2 id="saved-guides-heading">Guides</h2>
+    {guides.length === 0 ? <p className="muted">Tap <b>Save</b> on any guide in <Link to="/dashboard/community">Articles</Link> to keep it here.</p>
+      : <ul className="saved-list">{guides.map(({ article, savedAt }) => <li key={article.slug}>
+        <div>
+          <span className="eyebrow">{EDITORIAL_THEMES[article.theme]} · {editorialExamLabel(article)}</span>
+          <h3><Link to={editorialPath(article.slug)}>{article.title}</Link></h3>
+          <small>{article.minutes} min read · saved {communityDate(savedAt)}</small>
+        </div>
+        <button type="button" className="text-button" aria-label={`Remove from Saved: ${article.title}`} onClick={() => setGuideSaved(actor, article.slug, false)}>Remove</button>
+      </li>)}</ul>}
+    <p className="muted saved-note">Saved guides are kept on this device.</p>
+  </section>;
+}
 
-  async function loadFolders(signal, keep = null) {
-    const value = validateCommunityFolders(await rpc("community_folders", {}, signal));
-    if (signal.aborted) return;
-    setFolders(value);
-    setSelected(current => value.some(folder => folder.id === (keep ?? current)) ? keep ?? current : value[0]?.id ?? null);
-  }
+function SavedPosts() {
+  const rpc = useCommunityRpc();
+  const [items, setItems] = useState(null), [status, setStatus] = useState(""), [busy, setBusy] = useState(false);
+  const scope = useRef(null), heading = useRef(null);
   useEffect(() => {
     const controller = new AbortController(); scope.current = controller;
-    loadFolders(controller.signal).catch(() => { if (!controller.signal.aborted) { setFolders([]); setStatus("Couldn’t load your folders. Refresh to try again."); } });
+    (async () => {
+      try {
+        const folders = validateCommunityFolders(await rpc("community_folders", {}, controller.signal));
+        const all = [];
+        for (const folder of folders) {
+          let cursor = null;
+          do {
+            const page = validateCommunitySaved(await rpc("community_saved", communitySavedInput(folder.id, cursor), controller.signal), folder.id);
+            all.push(...page.items.map(item => ({ ...item, folderId: folder.id })));
+            cursor = page.nextCursor;
+          } while (cursor && all.length < 500);
+        }
+        const unique = [...new Map(all.sort((a, b) => b.savedAt.localeCompare(a.savedAt)).map(item => [item.postId, item])).values()];
+        if (!controller.signal.aborted) setItems(unique);
+      } catch { if (!controller.signal.aborted) { setItems([]); setStatus("Couldn’t load your saved posts. Refresh to try again."); } }
+    })();
+    return () => controller.abort();
+  }, [rpc]);
+  const remove = async item => {
+    const signal = scope.current?.signal;
+    if (busy || !signal || signal.aborted) return;
+    setBusy(true); setStatus("");
+    try {
+      await rpc("set_community_saves", { p_post_id: item.postId, p_folder_ids: [] }, signal);
+      if (!signal.aborted) { setItems(list => list.filter(other => other.postId !== item.postId)); setStatus("Removed from Saved."); heading.current?.focus(); }
+    } catch (error) { if (!signal.aborted) setStatus(communityFailure(error, "Not removed. Try again.")); }
+    finally { if (!signal.aborted) setBusy(false); }
+  };
+  return <section aria-labelledby="saved-posts-heading" className="community-saved-section">
+    <h2 id="saved-posts-heading" ref={heading} tabIndex={-1}>From students</h2>
+    {status && <p role="status" className="notice">{status}</p>}
+    {items === null ? <p role="status">Loading saved posts…</p> : items.length === 0
+      ? <p className="muted">Tap <b>Save</b> on a student’s article or discussion to keep it here.</p>
+      : <ul className="saved-list">{items.map(item => <li key={item.postId}>
+        {item.available ? <div>
+          <span className="eyebrow">{item.kind === "article" ? "Article" : "Discussion"} · {item.exam.toUpperCase()} · {item.topic}</span>
+          <h3><Link to={`/dashboard/community/post/${item.postId}`}>{item.title}</Link></h3>
+          <small>By {item.author} · saved {communityDate(item.savedAt)}</small>
+        </div> : <div><p className="muted">This post is no longer available. Saved {communityDate(item.savedAt)}.</p></div>}
+        <button type="button" className="text-button" disabled={busy} aria-label={item.available ? `Remove from Saved: ${item.title}` : "Remove from Saved: unavailable post"} onClick={() => remove(item)}>Remove</button>
+      </li>)}</ul>}
+  </section>;
+}
+
+function BlockedAuthors() {
+  const rpc = useCommunityRpc();
+  const [blocked, setBlocked] = useState(null), [status, setStatus] = useState("");
+  useEffect(() => {
+    const controller = new AbortController();
     (async () => {
       try { const value = validateCommunityBlocked(await rpc("community_blocked", {}, controller.signal)); if (!controller.signal.aborted) setBlocked(value); }
       catch { if (!controller.signal.aborted) setBlocked([]); }
     })();
-    return () => { controller.abort(); pageRequest.current?.abort(); };
+    return () => controller.abort();
   }, [rpc]);
-  async function loadPage(folderId, previous = null) {
-    const session = scope.current?.signal; if (!session || session.aborted) return;
-    pageRequest.current?.abort();
-    const controller = new AbortController(); pageRequest.current = controller;
-    const signal = AbortSignal.any([session, controller.signal]);
-    setPageLoading(true);
-    try {
-      const value = validateCommunitySaved(await rpc("community_saved", communitySavedInput(folderId, previous?.nextCursor ?? null), signal), folderId);
-      if (signal.aborted) return;
-      setPage(previous ? { ...value, items: [...previous.items, ...value.items.filter(item => !previous.items.some(old => old.postId === item.postId))] } : value);
-    } catch (error) {
-      if (signal.aborted) return;
-      if (!previous) setPage(null);
-      setStatus(communityFailure(error, "Couldn’t load this folder. Try again."));
-    } finally { if (pageRequest.current === controller) setPageLoading(false); }
-  }
-  useEffect(() => { setPage(null); setRenaming(null); setConfirmDelete(false); if (selected) loadPage(selected); }, [selected]);
+  const unblock = async item => {
+    try { await rpc("remove_community_block", { p_handle: item.handle }); setBlocked(list => list.filter(other => other.handle !== item.handle)); setStatus(`${item.author} is unblocked.`); }
+    catch (error) { setStatus(communityFailure(error, "Not unblocked. Try again.")); }
+  };
+  if (!blocked?.length && !status) return null;
+  return <section aria-label="Blocked authors" className="community-blocked">
+    <h2>Blocked authors</h2>
+    {status && <p role="status">{status}</p>}
+    {blocked?.length > 0 && <ul>{blocked.map(item => <li key={item.handle}><span>{item.author} · blocked {communityDate(item.createdAt)}</span>
+      <button type="button" className="text-button" onClick={() => unblock(item)}>Unblock {item.author}</button></li>)}</ul>}
+  </section>;
+}
 
-  async function run(action, fallback) {
-    const signal = scope.current?.signal;
-    if (busy || !signal || signal.aborted) return;
-    setBusy(true); setStatus("");
-    try { await action(signal); }
-    catch (error) { if (!signal.aborted) setStatus(error?.details || error?.status ? communityFailure(error, fallback) : error instanceof Error ? error.message : fallback); }
-    finally { if (!signal.aborted) setBusy(false); }
-  }
-  const create = event => { event.preventDefault(); return run(async signal => {
-    const folder = validateCommunityFolder(await rpc("save_community_folder", { p_folder_id: null, p_name: communityFolderName(newName) }, signal));
-    if (signal.aborted) return;
-    setNewName(""); await loadFolders(signal, folder.id); setStatus(`Folder “${folder.name}” created.`);
-  }, "Folder not created. Try again."); };
-  const rename = event => { event.preventDefault(); return run(async signal => {
-    const folder = validateCommunityFolder(await rpc("save_community_folder", { p_folder_id: selected, p_name: communityFolderName(renaming) }, signal));
-    if (signal.aborted) return;
-    setRenaming(null); await loadFolders(signal, folder.id); setPage(current => current && { ...current, folder: { id: folder.id, name: folder.name } });
-    setStatus(`Folder renamed to “${folder.name}”.`); folderHeading.current?.focus();
-  }, "Folder not renamed. Try again."); };
-  const remove = () => run(async signal => {
-    const name = current?.name;
-    await rpc("delete_community_folder", { p_folder_id: selected }, signal);
-    if (signal.aborted) return;
-    await loadFolders(signal); setStatus(`Folder “${name}” deleted. The posts themselves are untouched.`);
-  }, "Folder not deleted. Try again.");
-  const unsave = item => run(async signal => {
-    await rpc("remove_community_save", { p_post_id: item.postId, p_folder_id: selected }, signal);
-    if (signal.aborted) return;
-    setPage(value => value && { ...value, items: value.items.filter(other => other.postId !== item.postId) });
-    await loadFolders(signal, selected); setStatus("Removed from this folder."); folderHeading.current?.focus();
-  }, "Not removed. Try again.");
-  const unblock = item => run(async signal => {
-    await rpc("remove_community_block", { p_handle: item.handle }, signal);
-    if (signal.aborted) return;
-    setBlocked(list => list.filter(other => other.handle !== item.handle)); setStatus(`${item.author} is unblocked.`);
-  }, "Not unblocked. Try again.");
-
-  const current = folders?.find(folder => folder.id === selected) ?? null;
-  if (folders === null) return <p role="status">Loading your folders…</p>;
+function SavedSession() {
+  const { session } = useAuthState();
   return <div className="community-saved">
-    {status && <p role="status" className="notice">{status}</p>}
-    <div className="community-saved-layout">
-      <section aria-label="Your folders" className="community-folders">
-        <h2>Folders</h2>
-        {folders.length === 0 ? <p className="muted">No folders yet. Open any article and choose Save, or create a folder here.</p> : <ul>
-          {folders.map(folder => <li key={folder.id}><button type="button" aria-pressed={folder.id === selected} onClick={() => setSelected(folder.id)}>{folder.name} <span className="muted">({folder.count})</span></button></li>)}
-        </ul>}
-        {folders.length < COMMUNITY_FOLDER_LIMIT && <form className="admin-form" onSubmit={create}>
-          <label htmlFor={newId}>New folder</label>
-          <input id={newId} value={newName} maxLength={60} disabled={busy} onChange={event => setNewName(event.target.value)} />
-          <button className="button quiet" type="submit" disabled={busy}>Create folder</button>
-        </form>}
-      </section>
-      {current && <section aria-label={`Folder ${current.name}`} className="community-folder" aria-busy={pageLoading}>
-        <h2 ref={folderHeading} tabIndex={-1}>{current.name}</h2>
-        <div className="community-actions">
-          {renaming === null ? <button type="button" className="text-button" disabled={busy} onClick={() => setRenaming(current.name)}>Rename folder</button>
-            : <form className="admin-form" onSubmit={rename}><label htmlFor={renameId}>Folder name</label>
-              <input id={renameId} value={renaming} maxLength={60} disabled={busy} autoFocus onChange={event => setRenaming(event.target.value)} />
-              <button className="button quiet" type="submit" disabled={busy}>Save name</button>
-              <button type="button" className="text-button" onClick={() => setRenaming(null)}>Cancel rename</button></form>}
-          {confirmDelete ? <span className="community-confirm">Delete this folder and its {current.count} saved {current.count === 1 ? "entry" : "entries"}? <button type="button" className="text-button" disabled={busy} onClick={remove}>Yes, delete folder</button> <button type="button" className="text-button" onClick={() => setConfirmDelete(false)}>Keep folder</button></span>
-            : <button type="button" className="text-button" disabled={busy} onClick={() => setConfirmDelete(true)}>Delete folder</button>}
-        </div>
-        {!page && pageLoading && <p role="status">Loading saved posts…</p>}
-        {page && page.items.length === 0 && <p className="muted">Nothing saved here yet.</p>}
-        <div className="community-feed">
-          {page?.items.map(item => <article key={item.postId}>
-            {item.available ? <>
-              <span className="eyebrow">{item.kind === "article" ? "Article" : "Discussion"} · {item.exam} · {item.topic}</span>
-              <h3><Link to={`/dashboard/community/post/${item.postId}`}>{item.title}</Link></h3>
-              <p>{item.excerpt}</p>
-              <small>By {item.author} · saved {communityDate(item.savedAt)}</small>
-            </> : <p className="muted">This post is no longer available. Saved {communityDate(item.savedAt)}.</p>}
-            <button type="button" className="text-button" disabled={busy} aria-label={item.available ? `Remove from folder: ${item.title}` : "Remove from folder: unavailable post"} onClick={() => unsave(item)}>Remove from folder</button>
-          </article>)}
-        </div>
-        {page?.nextCursor && <button type="button" className="button quiet" aria-disabled={pageLoading} onClick={() => { if (!pageLoading) loadPage(selected, page); }}>{pageLoading ? "Loading…" : "Load more saved posts"}</button>}
-      </section>}
-    </div>
-    <section aria-label="Blocked authors" className="community-blocked">
-      <h2>Blocked authors</h2>
-      {blocked === null ? <p role="status">Loading…</p> : blocked.length === 0 ? <p className="muted">You haven’t blocked anyone. Blocking hides an author’s posts and replies from you; they are not told.</p> : <ul>
-        {blocked.map(item => <li key={item.handle}><span>{item.author} · blocked {communityDate(item.createdAt)}</span>
-          <button type="button" className="text-button" disabled={busy} onClick={() => unblock(item)}>Unblock {item.author}</button></li>)}
-      </ul>}
-    </section>
+    {session && <SavedGuides actor={session.user.id} />}
+    <SavedPosts />
+    <BlockedAuthors />
   </div>;
 }
 
 export function CommunitySaved() {
-  return <CommunityFrame title="Your prep" accent="library." intro="Everything you saved, in folders only you can see.">
+  return <CommunityFrame title="Saved" accent="for later." intro="Guides and posts you saved, in one place.">
     <SavedSession />
   </CommunityFrame>;
 }
