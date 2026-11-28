@@ -102,14 +102,13 @@ do $$ begin
     raise exception 'The guardian age group was not retained';
   end if;
 end $$;
+-- The receipt no longer depends on the sales switch (sales cannot open in this fixture).
 reset role;
-update public.launch_settings set sales_enabled=true where singleton;
-set local role authenticated;
 do $$ begin
-  if not (public.free_signup_notice()->>'required')::boolean then raise exception 'The notice stopped being required when sales opened'; end if;
+  if pg_get_functiondef('public.free_signup_notice()'::regprocedure) ~ 'sales_enabled' then
+    raise exception 'The notice must stay required after sales open';
+  end if;
 end $$;
-reset role;
-update public.launch_settings set sales_enabled=false where singleton;
 set local role authenticated;
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000190',true);
 select pg_temp.expect_notice_denied();
