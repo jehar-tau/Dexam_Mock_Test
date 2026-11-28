@@ -24,9 +24,13 @@ concurrency:
 jobs:
   build:
     # Off until the owner sets the repository variable DMOCKS_PAGES_ENABLED=true (docs/HOSTING.md).
+    # Automatic runs publish only the commit that is still the head of main. Checks for
+    # several quick merges finish out of order; an older commit finishing last must not
+    # replace a newer build (it happened on 28 Nov 2026). The newest merge publishes itself.
     if: >-
       vars.DMOCKS_PAGES_ENABLED == 'true' && (github.event_name == 'workflow_dispatch' ||
-      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'))
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+        && github.event.workflow_run.head_sha == github.sha))
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
