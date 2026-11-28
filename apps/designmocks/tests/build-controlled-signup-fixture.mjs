@@ -13,7 +13,7 @@ try {
   const path = join(scratch, 'notices.json');
   await writeFile(path, JSON.stringify(notice));
   execFileSync(process.execPath, [join(app,'node_modules/vite/bin/vite.js'),'build','--mode','production','--outDir','test-results/controlled-public'], {
-    cwd:app, stdio:'inherit', env:{...process.env, DMOCKS_PUBLISHED_NOTICES_FILE:path, VITE_TERMS_VERSION:compilePublishedNotices(notice).version},
+    cwd:app, stdio:'inherit', env:{...process.env, DMOCKS_PUBLISHED_NOTICES_FILE:path, VITE_TERMS_VERSION:compilePublishedNotices(notice, {freeSignup:true}).version},
   });
 } finally {
   await rm(scratch,{recursive:true,force:true});

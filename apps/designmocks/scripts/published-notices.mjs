@@ -10,7 +10,7 @@ const fields = {
     retention: "Retention and account requests", youngerStudents: "Younger students" },
 };
 
-export function compilePublishedNotices(input, { allowFixture = false } = {}) {
+export function compilePublishedNotices(input, { allowFixture = false, freeSignup = false } = {}) {
   if (input?.schemaVersion !== 1 || Object.keys(input).length !== 4
     || (input.scope !== "release" && !(allowFixture && input.scope === "fixture"))) {
     throw new Error("A reviewed customer notice bundle is required");
@@ -32,7 +32,10 @@ export function compilePublishedNotices(input, { allowFixture = false } = {}) {
   }
   pages.terms.unshift({
     heading: "The annual pass",
-    paragraph: `The annual pass costs ${money(passPlans.annual.price)} for ${brand.months} calendar months from verified payment. The Duo pass costs ${money(passPlans.duo.price)} and gives the payer and one invited friend ${brand.months} calendar months each; the friend's months start when they claim the one-time invite, which lasts 30 days. A pass covers the explicitly released papers and the paid features listed on the plans page. You make one payment, with no automatic renewal.`,
+    // Keep the approved pilot terms byte-for-byte until the paid notice is activated.
+    paragraph: freeSignup
+      ? "The annual pass costs ₹1,193 for 12 calendar months from verified payment. It covers the explicitly released papers. You make one payment, with no automatic renewal."
+      : `The annual pass costs ${money(passPlans.annual.price)} for ${brand.months} calendar months from verified payment. The Duo pass costs ${money(passPlans.duo.price)} and gives the payer and one invited friend ${brand.months} calendar months each; the friend's months start when they claim the one-time invite, which lasts 30 days. A pass covers the explicitly released papers and the paid features listed on the plans page. You make one payment, with no automatic renewal.`,
   });
   const eligibility = pages.privacy.find(({ heading }) => heading === fields.privacy.youngerStudents);
   pages.terms.push({ heading: "Account eligibility", paragraph: eligibility.paragraph });
