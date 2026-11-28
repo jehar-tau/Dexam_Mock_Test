@@ -64,6 +64,8 @@ test("the controlled public build opens only approved Google tester access and n
   await expect(page.getByRole("heading", { name: /Welcome to your next attempt/ })).toHaveCount(0);
   await page.goto("/plans");
   await expect(page.getByText("The pass is not on sale yet. Your free account works today.")).toBeVisible();
+  await expect(page.locator(".annual-card").getByRole("listitem").filter({ hasText: "Past papers and All India mocks stay free for everyone" })).toBeVisible();
+  await expect(page.getByText(/student recollections|explicitly released papers listed|theory lesson/)).toHaveCount(0);
   await expect(page.getByRole("button", { name: /Pay .* with Razorpay/ })).toBeDisabled();
   expect(unexpected).toEqual([]);
 });

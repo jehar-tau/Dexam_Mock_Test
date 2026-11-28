@@ -927,7 +927,14 @@ function Plans() {
             automatic renewal.
           </p>
           <ul>
-            {[
+            {(controlledPublicPortalMode ? [
+              // The live portal: papers are free; the pass adds these (docs/PASS_PRICING.md).
+              "Every worked solution in every released paper",
+              "Unlimited topic practice, 10, 20 or 30 questions at a time",
+              "Every Learn level, from Foundations to Mastery",
+              "Teacher marking for 4 drawings a month",
+              "Past papers and All India mocks stay free for everyone",
+            ] : [
               "Only the explicitly released papers listed in the catalogue",
               portalReady || postLaunchPreview
                 ? "Adapted practice questions based on student recollections"
@@ -936,7 +943,7 @@ function Plans() {
               "Unlimited topic practice",
               "Every Learn level, from Foundations to Mastery",
               "Teacher marking for 4 drawings a month",
-            ].map((t) => (
+            ]).map((t) => (
               <li key={t}>
                 <span aria-hidden="true">✓</span>
                 {t}

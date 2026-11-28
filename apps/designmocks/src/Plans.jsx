@@ -13,7 +13,7 @@ export const freeVsPass = Object.freeze([
   ["Year-wise papers", "Every released paper, timed, with the answer key", "The same papers"],
   ["Worked solutions", `The first ${freeAllowance.workedSolutionsPerPaper} questions of each paper`, "Every question"],
   ["Topic practice", `One ${freeAllowance.topicSessionQuestions}-question session a day`, "Unlimited sessions of 10, 20 or 30 questions"],
-  ["Learn", "The Foundations level and the first theory lesson of each topic", "Exam standard, Exam hard and Mastery, and every theory lesson"],
+  ["Learn", "The Foundations level of every programme", "Exam standard, Exam hard and Mastery"],
   ["Teacher drawing marking", "Not included", `${freeAllowance.drawingMarkingPerMonth} drawings a month`],
 ]);
 
