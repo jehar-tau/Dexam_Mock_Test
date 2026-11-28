@@ -5,11 +5,7 @@
 import { ARTICLE_EXAMS, articleStats, parseArticle } from "./community-article.mjs";
 import { IMAGES } from "./learn/decks/images.js";
 
-// Owner's decision, 28 Nov 2026: editorial articles carry the owner's name.
-// Credential added by the owner on 28 Nov 2026.
-export const EDITORIAL_AUTHOR = Object.freeze({ name: "Snehalkumar Shinde", initials: "SS", credential: "NID Bengaluru",
-  bio: "Snehalkumar Shinde studied design at NID Bengaluru and writes the DMocks guides for students preparing for NID, UCEED, NIFT and CEED." });
-export const EDITORIAL_DATE = "2026-11-28";
+export { EDITORIAL_AUTHOR, EDITORIAL_DATE } from "./editorial-author.mjs";
 export const EDITORIAL_THEMES = Object.freeze({ planning: "Planning", papers: "Papers & time", mindset: "Mindset", skills: "Skills" });
 export const EDITORIAL_COVERS = Object.freeze(["clock", "calendar", "sketch", "eye", "cube", "path", "calm", "conversation", "papers", "compass", "balance", "home", "bulb", "target"]);
 

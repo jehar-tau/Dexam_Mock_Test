@@ -5,14 +5,18 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
+import { readdirSync } from 'node:fs';
 import { pageHead } from '../src/search-pages.mjs';
 
 const app = fileURLToPath(new URL('../', import.meta.url));
 const headings = new Map([
   ['/', /next attempt/i], ['/tests', /mock tests/i], ['/tests/uceed', /UCEED Part A/],
   ['/plans', /annual pass/i], ['/sample', /practice sample/i], ['/practice/visual-hierarchy', /visual hierarchy/i],
+  ['/guides', /Read what\s+works/i],
 ]);
 const indexedPaths = [...headings.keys()];
+const guidePaths = readdirSync(fileURLToPath(new URL('../src/community-editorial/', import.meta.url)))
+  .filter(name => name.endsWith('.md')).map(name => '/guides/' + name.slice(0, -3));
 
 test('built search documents contain one canonical, real public text, and no personal results', async t => {
   const dir = await mkdtemp(join(tmpdir(), 'dmocks-search-'));
@@ -24,7 +28,7 @@ test('built search documents contain one canonical, real public text, and no per
   const read = relative => readFile(join(dir, relative), 'utf8');
   const sitemap = await read('sitemap.xml');
   const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
-  assert.deepEqual(locations.sort(), indexedPaths.map(path => 'https://dmocks.com' + path).sort());
+  assert.deepEqual(locations.sort(), [...indexedPaths, ...guidePaths].map(path => 'https://dmocks.com' + path).sort());
   assert.equal(await read('robots.txt'), 'User-agent: *\nAllow: /\n\nSitemap: https://dmocks.com/sitemap.xml\n');
   const titles = new Set();
   for (const path of indexedPaths) {
@@ -46,6 +50,19 @@ test('built search documents contain one canonical, real public text, and no per
     } else assert.equal(schema, null);
   }
   assert.equal(titles.size, indexedPaths.length);
+  assert.ok(guidePaths.length >= 20);
+  for (const path of guidePaths) {
+    const html = await read(path.slice(1) + '.html');
+    assert.equal([...html.matchAll(/rel="canonical" href="(.*?)"/g)].map(match => match[1]).join(), 'https://dmocks.com' + path);
+    assert.match(html, /<meta [^>]*name="robots" content="index, follow"/);
+    assert.match(html, /<h1 id="editorial-title">[^<]{8,}<\/h1>/);
+    assert.doesNotMatch(html, /href="(?:mailto:|\/(?:admin|dashboard)(?:\/|"))/);
+    const schema = JSON.parse(html.match(/<script[^>]+type="application\/ld\+json">(.*?)<\/script>/)[1]);
+    assert.equal(schema['@type'], 'Article');
+    assert.equal(schema.author.name, 'Snehalkumar Shinde');
+    titles.add(html.match(/<title[^>]*>([^<]+)<\/title>/)[1]);
+  }
+  assert.equal(titles.size, indexedPaths.length + guidePaths.length);
   for (const path of ['account', 'account/callback', 'sample/result', 'admin', 'dashboard', 'papers', 'contact', 'terms', 'privacy', 'refunds', 'tests/nid', 'tests/nift', 'tests/ceed', '404']) {
     const html = await read(path + '.html');
     assert.match(html, /name="robots" content="noindex, nofollow"/);
