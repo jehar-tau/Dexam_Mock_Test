@@ -50,6 +50,7 @@ import { AttemptInsightsPreview } from "./AttemptInsights.jsx";
 import { AccountPrivacyPanel, AccountPrivacyPreview } from "./AccountPrivacy.jsx";
 import { ExamPartTransitionPreview } from "./ExamPartTransition.jsx";
 import { useAuthState } from "./useAuth.js";
+import { FounderNote, HeroExamPaths, HomeNumbers } from "./HomeHighlights.jsx";
 import { guardianConsent, minimumAge } from "./age-consent.js";
 import { ProfileGate } from "./ProfileGate.jsx";
 import { clearDeviceAnswers } from "./attempt-answer-journal.js";
@@ -782,7 +783,7 @@ function Home() {
       <section className="wrap hero">
         <div className="hero-copy">
           <span className="eyebrow">
-            <i className="small-dot orange" /> DESIGN ENTRANCE PRACTICE / 2027
+            <i className="small-dot orange" /> UCEED · CEED · NID DAT · NIFT / 2027
           </span>
           <h1>
             Make your
@@ -792,6 +793,7 @@ function Home() {
           <p>
             Take complete UCEED, CEED, NID and NIFT past papers for free, timed like the real exam, with a worked solution for every question.
           </p>
+          <HeroExamPaths />
           <div className="hero-actions">
             <Link to="/papers" className="button join-button">
               Browse free papers <Arrow size={17} />
@@ -808,8 +810,12 @@ function Home() {
             <span>Sample needs no sign-in</span>
           </div>
         </div>
-        <HeroQuestion />
+        <div className="hero-side">
+          <HeroQuestion />
+          <FounderNote />
+        </div>
       </section>
+      <HomeNumbers />
       <HomeFreePapers />
       {portalReady || postLaunchPreview ? <PortalHomeSections /> : <PublicHomeSections />}
       <section className="wrap final-cta">
