@@ -4707,3 +4707,10 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
 .signup-notice .age-group { margin: 1rem 0; padding: 0; border: 0; display: grid; gap: .6rem; }
 .signup-notice .age-group legend { font-weight: 700; margin-bottom: .4rem; }
 .signup-notice .age-group .terms-checkbox { margin-block: 0; }
+
+/* Required profile step (ProfileGate.jsx). */
+.profile-gate { width: min(40rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 1.5rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--paper); color: var(--ink); }
+.profile-gate::backdrop { background: rgb(20 30 25 / .55); }
+.profile-gate h2 { margin: .4rem 0 .6rem; font-size: clamp(1.6rem, 5vw, 2.2rem); }
+.profile-gate-links { margin-top: 1rem; font-size: .9rem; }
+.candidate-profile-form .profile-consent { align-items: flex-start; gap: .6rem; line-height: 1.5; }

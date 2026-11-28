@@ -3,9 +3,10 @@ import {Link,useLocation}from'react-router-dom';
 import {useAuthState}from'./useAuth.js';
 import {AccountAccessBoundary,useAccountServices}from'./AccountAccess.jsx';
 import {CandidatePhoneVerification}from'./CandidatePhoneVerification.jsx';
-import {candidateExams,candidateProfileDefaults,candidateProfileResponse,candidateSaveFailure,normalizeCandidateProfile,validateCandidateProfile}from'./profileModel.mjs';
+import {candidateExams,candidateProfileDefaults,candidateProfileResponse,candidateSaveFailure,indianStates,normalizeCandidateProfile,profileDetailsComplete,studyStages,validateCandidateProfile}from'./profileModel.mjs';
+import {guardianConsent}from'./age-consent.js';
 
-export function CandidateProfileForm({initial={},initialPhoneVerified=false,onSave,preview=false}){
+export function CandidateProfileForm({initial={},initialPhoneVerified=false,onSave,onSaved=null,preview=false,extended=false,marketingAllowed=true,submitLabel='Save profile'}){
  const[value,setValue]=useState(()=>({...candidateProfileDefaults(),...initial,exams:[...(initial.exams??[])]}));
  const[savedPhone,setSavedPhone]=useState(()=>({number:initial.phone,verified:initialPhoneVerified}));
  const[errors,setErrors]=useState({}),[message,setMessage]=useState(''),[busy,setBusy]=useState(false),[uncertain,setUncertain]=useState(false);
@@ -15,7 +16,7 @@ export function CandidateProfileForm({initial={},initialPhoneVerified=false,onSa
  const change=(field,next)=>setValue(current=>({...current,[field]:next}));
  const submit=async event=>{
   event.preventDefault();if(action.current||uncertain||lifetime.current.signal.aborted)return;
-  const result=validateCandidateProfile(value);setErrors(result.errors);setMessage('');if(!result.valid){invalidFocus.current=true;return;}
+  const result=validateCandidateProfile(value,{extended});setErrors(result.errors);setMessage('');if(!result.valid){invalidFocus.current=true;return;}
   const snapshot=Object.freeze({...result.profile,exams:Object.freeze([...result.profile.exams])}),controller=new AbortController();action.current=controller;setBusy(true);
   const timeout=new AbortController(),timer=setTimeout(()=>timeout.abort(),20000),signal=AbortSignal.any([controller.signal,lifetime.current.signal,timeout.signal]);
   const current=()=>!controller.signal.aborted&&!lifetime.current.signal.aborted&&action.current===controller;
@@ -24,6 +25,7 @@ export function CandidateProfileForm({initial={},initialPhoneVerified=false,onSa
    setValue({...snapshot,exams:[...snapshot.exams]});
    if(!preview)setSavedPhone({number:saved.values.phone,verified:saved.phoneVerified});
    setMessage(preview?'Preview profile saved for this session.':'Profile saved.');
+   onSaved?.(saved);
   }catch(error){if(current()){const failure=candidateSaveFailure(error);setUncertain(failure.uncertain);setMessage(failure.message);}}
   finally{clearTimeout(timer);if(action.current===controller){action.current=null;if(!lifetime.current.signal.aborted)setBusy(false);}}
  };
@@ -54,27 +56,42 @@ export function CandidateProfileForm({initial={},initialPhoneVerified=false,onSa
   {canVerifyPhone&&!locked&&<CandidatePhoneVerification key={savedPhone.number} phone={savedPhone.number} onVerified={confirmPhone}/>}
   <div className="profile-field"><label htmlFor={prefix+'-year'}>Appearing year</label><select id={prefix+'-year'} {...attributes('appearingYear')} value={value.appearingYear} onChange={event=>change('appearingYear',event.target.value)} disabled={locked}>{Array.from({length:15},(_,n)=>2026+n).map(year=><option key={year}>{year}</option>)}</select>{error('appearingYear')}</div>
   <div className="profile-field"><label htmlFor={prefix+'-city'}>City</label><input id={prefix+'-city'} {...attributes('city')} value={value.city} onChange={event=>change('city',event.target.value)} autoComplete="address-level2" disabled={locked}/>{error('city')}</div>
+  {extended&&<div className="profile-field"><label htmlFor={prefix+'-stage'}>Where you are now</label><select id={prefix+'-stage'} {...attributes('studyStage')} value={value.studyStage} onChange={event=>change('studyStage',event.target.value)} disabled={locked}><option value="">Choose one</option>{studyStages.map(([id,label])=><option key={id} value={id}>{label}</option>)}</select>{error('studyStage')}</div>}
+  {extended&&<div className="profile-field"><label htmlFor={prefix+'-state'}>State</label><select id={prefix+'-state'} {...attributes('state')} value={value.state} onChange={event=>change('state',event.target.value)} autoComplete="address-level1" disabled={locked}><option value="">Choose your state</option>{indianStates.map(state=><option key={state}>{state}</option>)}</select>{error('state')}</div>}
   <fieldset aria-describedby={errors.exams?prefix+'-exams-error':undefined} disabled={locked}><legend>Exams you are preparing for</legend>{candidateExams.map(([id,label],index)=><label className="profile-check" key={id}><input ref={index===0?node=>{fields.current.exams=node;}:undefined} type="checkbox" checked={value.exams.includes(id)} onChange={event=>change('exams',event.target.checked?[...value.exams,id]:value.exams.filter(exam=>exam!==id))}/>{label}</label>)}{error('exams')}</fieldset>
-  <button className="button" disabled={locked}>{busy?'Saving…':'Save profile'}</button>{message&&<p role="status">{message}</p>}
+  {extended&&marketingAllowed&&<label className="profile-check profile-consent"><input type="checkbox" checked={value.marketingConsent===true} disabled={locked} onChange={event=>change('marketingConsent',event.target.checked)}/>Yes, DMocks and Design Exam Academy may contact me by phone, WhatsApp or email about courses, classes near me and offers. Optional. I can change this any time in my profile.</label>}
+  <button className="button" disabled={locked}>{busy?'Saving…':submitLabel}</button>{message&&<p role="status">{message}</p>}
  </form>;
 }
-function ProfileSession(){
+// `required` is the blocking step (ProfileGate): no reload control, and `onComplete`
+// runs once every detail is saved.
+export function ProfileSession({required=false,onComplete=null}){
  const{rpc,isCurrent}=useAccountServices(),[profile,setProfile]=useState(null),[reading,setReading]=useState(false),[error,setError]=useState(''),[generation,setGeneration]=useState(0);
+ const[marketingAllowed,setMarketingAllowed]=useState(!guardianConsent);
  const lifetime=useRef(null),request=useRef(null);
  useLayoutEffect(()=>{const controller=new AbortController();lifetime.current=controller;return()=>{controller.abort();request.current?.abort();};},[]);
  const load=async()=>{
   request.current?.abort();const controller=new AbortController();request.current=controller;setProfile(null);setReading(true);setError('');
   const timer=setTimeout(()=>controller.abort(),20000),current=()=>!lifetime.current.signal.aborted&&request.current===controller&&isCurrent();
-  try{const next=candidateProfileResponse(await rpc('my_candidate_profile',{},AbortSignal.any([lifetime.current.signal,controller.signal])));if(current()){setProfile(next);setGeneration(value=>value+1);}}
+  try{const signal=AbortSignal.any([lifetime.current.signal,controller.signal]);const next=candidateProfileResponse(await rpc('my_candidate_profile',{},signal));
+   // A student who confirmed they are 16 or 17 is never asked for marketing permission.
+   if(guardianConsent){const notice=await rpc('free_signup_notice',undefined,signal).catch(()=>null);if(current())setMarketingAllowed(notice?.ageGroup==='18_plus');}
+   if(current()){setProfile(next);setGeneration(value=>value+1);}}
   catch{if(current())setError('Couldn’t load your profile. Reload your profile to try again.');}
   finally{clearTimeout(timer);if(current()){request.current=null;setReading(false);}}
  };
  useEffect(()=>{void load();},[rpc]);
- const save=async(value,{signal})=>candidateProfileResponse(await rpc('save_candidate_profile',{p_display_name:value.displayName,p_phone:value.phone,p_appearing_year:value.appearingYear,p_city:value.city,p_exams:value.exams},signal),value);
- return<><p>These details personalise papers and cohort results.</p>
-  <button type="button" className="button quiet" onClick={()=>void load()}>Reload profile</button><p>Reloading replaces the current draft with saved details.</p>
+ const save=async(value,{signal})=>{
+  const base={p_display_name:value.displayName,p_phone:value.phone,p_appearing_year:value.appearingYear,p_city:value.city,p_exams:value.exams};
+  const extra=profile?.extended?{p_study_stage:value.studyStage,p_state:value.state,p_marketing_consent:marketingAllowed&&value.marketingConsent===true}:{};
+  return candidateProfileResponse(await rpc('save_candidate_profile',{...base,...extra},signal),{...value,marketingConsent:extra.p_marketing_consent??value.marketingConsent},{extended:profile?.extended});
+ };
+ const saved=next=>{if(onComplete&&profileDetailsComplete(next))onComplete(next);};
+ return<>{!required&&<><p>These details personalise papers and cohort results.</p>
+  <button type="button" className="button quiet" onClick={()=>void load()}>Reload profile</button><p>Reloading replaces the current draft with saved details.</p></>}
   {reading&&<p role="status">Loading your profile…</p>}{error&&<p role="alert" className="error">{error}</p>}
-  {profile&&<CandidateProfileForm key={generation} initial={profile.values} initialPhoneVerified={profile.phoneVerified} onSave={save}/>}</>;
+  {profile&&<CandidateProfileForm key={generation} initial={profile.values} initialPhoneVerified={profile.phoneVerified} onSave={save} onSaved={saved}
+   extended={profile.extended} marketingAllowed={marketingAllowed} submitLabel={required?'Save and continue':'Save profile'}/>}</>;
 }
 export function CandidateProfile(){
  const{session,loading}=useAuthState(),location=useLocation(),heading=useRef(null),scopeKey=(session?.user.id??'signed-out')+':'+location.key,previous=useRef(scopeKey);

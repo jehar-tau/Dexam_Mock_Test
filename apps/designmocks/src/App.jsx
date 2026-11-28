@@ -51,6 +51,7 @@ import { AccountPrivacyPanel, AccountPrivacyPreview } from "./AccountPrivacy.jsx
 import { ExamPartTransitionPreview } from "./ExamPartTransition.jsx";
 import { useAuthState } from "./useAuth.js";
 import { guardianConsent, minimumAge } from "./age-consent.js";
+import { ProfileGate } from "./ProfileGate.jsx";
 import { clearDeviceAnswers } from "./attempt-answer-journal.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import { StagingAccessMessage, StagingPortalGate, useStagingPortalAccess } from "./StagingPortal.jsx";
@@ -262,6 +263,7 @@ function Layout({ children }) {
       <main id="main" tabIndex="-1">
         {children}
       </main>
+      <ProfileGate />
       <footer>
         <div className="wrap footer-top">
           <div>

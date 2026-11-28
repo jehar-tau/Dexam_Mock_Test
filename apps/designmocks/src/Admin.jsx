@@ -15,6 +15,7 @@ import { withAccountDeadline } from "./account-request.js";
 import { LaunchReadiness } from "./LaunchReadiness.jsx";
 import { IntakeDraftFigures, IntakeExtractionQueue } from "./IntakeExtractionQueue.jsx";
 import { intakePhotoBlob } from "./intake-review.js";
+import { AdminStudentContacts } from "./AdminStudentContacts.jsx";
 import { BankReviewBrowser } from "./BankReviewBrowser.jsx";
 import { NidPracticeBlueprints } from "./NidPracticeBlueprints.jsx";
 import { ReportedQuestionQueue } from "./ReportedQuestionQueue.jsx";
@@ -413,6 +414,7 @@ function AdminDesk({ session }) {
           <CommunityModerationQueue reports={communityReports} rpc={rpc} onRefresh={load} scopeKey={session.user.id} />
           <CommunityContentModeration rpc={rpc} scopeKey={session.user.id} />
           </>}
+          <AdminStudentContacts rpc={rpc} />
           {lessonsReleased&&<LearningLessonEditor lessons={lessons} rpc={rpc} refresh={refreshLessons} />}
           <ReportedQuestionQueue reports={questionReports} rpc={rpc} onChanged={refreshQuestionReviews} />
           {postLaunchPreview&&<>
