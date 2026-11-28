@@ -93,6 +93,7 @@ const LearnProgrammes = __DMOCKS_INCLUDE_LEARN__
 const LearnProgrammePage = __DMOCKS_INCLUDE_LEARN__
   ? React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePage }))) : LearnSignIn;
 const Community = React.lazy(() => import("./Community.jsx").then(module => ({ default: module.Community })));
+const CommunityEditorialReader = React.lazy(() => import("./CommunityEditorial.jsx").then(module => ({ default: module.CommunityEditorialReader })));
 const CommunityArticles = React.lazy(() => import("./CommunityArticles.jsx").then(module => ({ default: module.CommunityArticles })));
 const CommunityEditor = React.lazy(() => import("./CommunityEditor.jsx").then(module => ({ default: module.CommunityEditor })));
 const CommunityReader = React.lazy(() => import("./CommunityReader.jsx").then(module => ({ default: module.CommunityReader })));
@@ -1696,8 +1697,10 @@ export default function App() {
           <Route path="/dashboard/practice" element={studentModuleReleased('practice')?<TopicPractice />:<DeferredModule module="practice"/>} />
           <Route path="/dashboard/learn" element={postLaunchPreview||lessonsReleased?<Learn />:<LearnProgrammes />} />
           <Route path="/dashboard/learn/programme/:slug" element={<LearnProgrammePage />} />
-          <Route path="/dashboard/community" element={studentModuleReleased('community')?<Community />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community" element={studentModuleReleased('community')?<CommunityArticles />:<DeferredModule module="community"/>} />
           <Route path="/dashboard/community/articles" element={studentModuleReleased('community')?<CommunityArticles />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/discussions" element={studentModuleReleased('community')?<Community />:<DeferredModule module="community"/>} />
+          <Route path="/dashboard/community/read/:slug" element={studentModuleReleased('community')?<CommunityEditorialReader />:<DeferredModule module="community"/>} />
           <Route path="/dashboard/community/write" element={studentModuleReleased('community')?<CommunityEditor />:<DeferredModule module="community"/>} />
           <Route path="/dashboard/community/post/:id" element={studentModuleReleased('community')?<CommunityReader />:<DeferredModule module="community"/>} />
           <Route path="/dashboard/community/saved" element={studentModuleReleased('community')?<CommunitySaved />:<DeferredModule module="community"/>} />

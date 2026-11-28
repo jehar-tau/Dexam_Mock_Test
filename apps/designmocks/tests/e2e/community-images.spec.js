@@ -38,7 +38,7 @@ async function fixture(page,{existing=false}={}){
     if(state.lostOrdinal===ordinal){state.lostOrdinal=null;return route.abort();}
     return route.fulfill({headers,json:{id:image.id,ordinal,reused:Boolean(saved)}});
   });
-  await page.goto("/account");await seedPortalSession(page,student);await page.goto("/dashboard/community");
+  await page.goto("/account");await seedPortalSession(page,student);await page.goto("/dashboard/community/discussions");
   await expect(page.getByRole("heading",{name:/Ask clearly/})).toBeVisible();
   return Object.assign(state,provider);
 }

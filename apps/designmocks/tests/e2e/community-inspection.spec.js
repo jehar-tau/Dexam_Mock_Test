@@ -37,7 +37,7 @@ async function fixture(page,{clock=false,linkLifetime=300000}={}){
   const input=request.postDataJSON();return route.fulfill({headers,status:state.signingStatus??200,json:state.signingStatus?{error:"private-inspection-diagnostic"}:
    {media:input.targetType==="post"?[media(0),media(1),media(2)]:input.targetId===commentId?[media(1,true)]:[],serverNow:"2026-01-01T00:00:00Z",expiresAt:new Date(Date.parse("2026-01-01T00:00:00Z")+linkLifetime).toISOString()}});
  });
- await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");await page.getByRole("button",{name:"Open discussion",exact:true}).click();await expect(inspect(page)).toBeVisible();return state;
+ await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community/discussions");await page.getByRole("button",{name:"Open discussion",exact:true}).click();await expect(inspect(page)).toBeVisible();return state;
 }
 
 test("members inspect current PNG, JPEG, WebP and legacy solution images without another signing request",async({page})=>{

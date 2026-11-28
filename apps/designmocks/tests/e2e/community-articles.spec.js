@@ -335,7 +335,7 @@ test("a reader comments, and blocking an author hides their replies and articles
   await cards(page).filter({ hasText: "starts a conversation" }).getByRole("link").click();
   await page.getByRole("button", { name: "Block this author" }).click();
   await page.getByRole("button", { name: "Yes, block" }).click();
-  await expect(page).toHaveURL(/\/dashboard\/community\/articles$/);
+  await expect(page).toHaveURL(/\/dashboard\/community$/);
   await expect(page.getByText("You blocked Asha.", { exact: false })).toBeVisible();
   await expect(cards(page)).toHaveCount(1);
 });
@@ -372,11 +372,34 @@ test("the new pages work from the keyboard and pass the accessibility audit with
 test("the released build keeps every Community page behind Coming later and makes no Community request", async ({ page }) => {
   const provider = await stubPortalProvider(page, () => undefined);
   await page.goto("http://127.0.0.1:4999/"); await seedPortalSession(page, ravi);
-  for (const path of ["/dashboard/community/articles", "/dashboard/community/write", "/dashboard/community/saved", "/dashboard/community/post/a0000000-0000-4000-8000-000000000001"]) {
+  for (const path of ["/dashboard/community", "/dashboard/community/articles", "/dashboard/community/discussions", "/dashboard/community/read/how-to-review-a-mock-test", "/dashboard/community/write", "/dashboard/community/saved", "/dashboard/community/post/a0000000-0000-4000-8000-000000000001"]) {
     await page.goto("http://127.0.0.1:4999" + path);
     await expect(page.getByText("COMING LATER", { exact: true })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Community.", exact: true })).toBeVisible();
     await expect(page.getByRole("navigation", { name: "Community sections" })).toHaveCount(0);
   }
   expect(provider.calls).toEqual([]); expect(provider.unexpected).toEqual([]);
+});
+
+test("Articles opens with the DMocks guides, filters them and reads one", async ({ page }) => {
+  const state = backend(); await state.install(page); await signIn(page, ravi, "/dashboard/community");
+  const guides = page.getByRole("region", { name: "Guides from DMocks" }).locator(".editorial-feed > li");
+  await expect(guides.first()).toBeVisible();
+  const total = await guides.count(); expect(total).toBeGreaterThanOrEqual(20);
+  await expect(page.getByRole("link", { name: "Write an article" }).first()).toHaveAttribute("href", "/dashboard/community/write");
+  await page.getByRole("group", { name: "Article theme" }).getByRole("button", { name: "Mindset", exact: true }).click();
+  await expect(guides).not.toHaveCount(total);
+  for (const text of await guides.locator(".eyebrow").allTextContents()) expect(text).toMatch(/^Mindset/);
+  await page.getByRole("group", { name: "Article theme" }).getByRole("button", { name: "All", exact: true }).click();
+  await expect(guides).toHaveCount(total);
+  await audit(page);
+  await guides.first().getByRole("heading").getByRole("link").click();
+  await expect(page).toHaveURL(/\/dashboard\/community\/read\/how-to-review-a-mock-test$/);
+  await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
+  await expect(page.locator(".editorial-byline")).toContainText("Snehalkumar Shinde");
+  await expect(page.getByRole("region", { name: "Keep reading" }).locator("li")).toHaveCount(3);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+  await audit(page);
+  await page.getByRole("link", { name: "← All articles" }).click();
+  await expect(page).toHaveURL(/\/dashboard\/community$/);
 });

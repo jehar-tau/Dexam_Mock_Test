@@ -47,9 +47,9 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
     catch (error) { if (!signal.aborted) setNotice(communityFailure(error, fallback)); }
     finally { if (!signal.aborted) setWorking(false); }
   }
-  if (!valid) return <p role="alert" className="error">This link is not a Community post. <Link to="/dashboard/community/articles">Back to articles</Link></p>;
+  if (!valid) return <p role="alert" className="error">This link is not a Community post. <Link to="/dashboard/community">Back to articles</Link></p>;
   if (!header) return <div>
-    <p><Link to="/dashboard/community/articles">Back to articles</Link></p>
+    <p><Link to="/dashboard/community">Back to articles</Link></p>
     {broken ? <p role="alert" className="error">This post could not be verified. Refresh and try again.</p>
       : <p role="status">{threadLoading || !message ? "Loading…" : message}</p>}
     {!threadLoading && (message || broken) && <button type="button" className="button quiet" onClick={() => onOpen(id)}>Try again</button>}
@@ -63,7 +63,7 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
   }, "That like didn’t save. Try again.");
   const blockAuthor = () => act(async signal => {
     await rpc("set_community_block", { p_post_id: id, p_comment_id: null }, signal);
-    if (!signal.aborted) navigate("/dashboard/community/articles", { state: { notice: `You blocked ${header.author}. Their posts and replies are hidden from you. Unblock from Saved.` } });
+    if (!signal.aborted) navigate("/dashboard/community", { state: { notice: `You blocked ${header.author}. Their posts and replies are hidden from you. Unblock from Saved.` } });
   }, "Couldn’t block this author. Try again.");
   const blockReply = commentId => act(async signal => {
     await rpc("set_community_block", { p_post_id: null, p_comment_id: commentId }, signal);
@@ -76,7 +76,7 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
     setReportTarget({ postId, commentId, label: comment ? `Reply by ${comment.author || "Student"}: ${comment.body.slice(0, 200)}` : thread.title });
   }
   return <div className="community-reader">
-    <p><Link to={isArticle ? "/dashboard/community/articles" : "/dashboard/community"}>{isArticle ? "Back to articles" : "Back to discussions"}</Link></p>
+    <p><Link to={isArticle ? "/dashboard/community" : "/dashboard/community/discussions"}>{isArticle ? "Back to articles" : "Back to discussions"}</Link></p>
     {(notice || message) && <p role="status" className="notice">{notice || message}</p>}
     <article aria-labelledby="community-reader-title">
       <span className="eyebrow">{thread.exam} · {thread.topic}{locked ? " · Locked" : ""}</span>
