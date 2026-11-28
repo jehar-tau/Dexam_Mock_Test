@@ -279,7 +279,7 @@ function AllIndiaSignedOut() {
 }
 
 // Signed-out visitors see the schedule and seats left (no questions), then sign up.
-export function AllIndiaUpcoming({ signUp = true }) {
+export function AllIndiaUpcoming({ signUp = true, action = null, className = "all-india-upcoming" }) {
   const [events, setEvents] = useState([]);
   const now = useMinuteClock(events.length > 0);
   useEffect(() => {
@@ -291,7 +291,7 @@ export function AllIndiaUpcoming({ signUp = true }) {
     return () => { current = false; };
   }, []);
   if (!events.length) return null;
-  return <section className="all-india-upcoming" aria-labelledby="all-india-upcoming-title">
+  return <section className={className} aria-labelledby="all-india-upcoming-title">
     <h2 id="all-india-upcoming-title">Upcoming All India mocks</h2>
     <ul>{events.map(event => {
       const opens = countdownLabel(event.startsAt, now), seats = seatLabel(event);
@@ -304,6 +304,7 @@ export function AllIndiaUpcoming({ signUp = true }) {
       </li>;
     })}</ul>
     {signUp && <Link className="button" to="/account?for=all-india">Sign up free to reserve a seat</Link>}
+    {action}
   </section>;
 }
 
