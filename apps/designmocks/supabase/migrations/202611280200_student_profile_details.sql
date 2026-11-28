@@ -4,6 +4,9 @@
 -- not accepted from a student who confirmed they are 16 or 17 (202611280199): India's
 -- DPDP Act does not allow advertising targeted at children. Administrators can download
 -- the contact details of students who gave permission.
+--
+-- Apply only after dmocks.com runs the site version that reads these fields: older
+-- sites reject a profile reply with fields they don't know.
 begin;
 
 alter table public.profiles
