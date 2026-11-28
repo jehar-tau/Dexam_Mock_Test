@@ -212,13 +212,12 @@ async function storageCall(provider, url, init, okStatuses = [200]) {
   return response;
 }
 
-// Upload each figure once, read it back and verify the bytes, then register it.
+// Upload each figure once and verify the stored bytes before staging the plan.
 async function uploadFigures(provider, plan, mediaDir) {
   const bucket = await (await storageCall(provider, `${provider.origin}/storage/v1/bucket/paper-media`, {method: 'GET'})).json();
   if (bucket?.public !== false) fail('The paper-media bucket must be private');
   const figures = new Map();
   for (const item of plan.questions) for (const figure of item.runtime.media) figures.set(figure.sha256, figure);
-  const records = [];
   for (const figure of figures.values()) {
     const bytes = await readFile(path.join(mediaDir, `${figure.sha256}.png`));
     verifyAssetBytes(figure, bytes);
@@ -228,14 +227,8 @@ async function uploadFigures(provider, plan, mediaDir) {
     const stored = Buffer.from(await (await storageCall(provider,
       `${provider.origin}/storage/v1/object/authenticated/${objectPath}`, {method: 'GET'})).arrayBuffer());
     verifyAssetBytes(figure, stored);
-    records.push({sha256: figure.sha256, storagePath: `papers/canonical/${figure.sha256}.png`,
-      width: figure.width, height: figure.height, byteSize: bytes.length});
   }
-  for (let offset = 0; offset < records.length; offset += 25) {
-    const batch = records.slice(offset, offset + 25);
-    if (await provider.rpc('register_bank_media_assets', {p_records: batch}) !== batch.length) fail('Figure registration failed');
-  }
-  return records.length;
+  return figures.size;
 }
 
 async function main() {

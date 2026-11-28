@@ -35,11 +35,11 @@ The migration grants the new functions itself. The open free backend does not ru
 
 ### 1. Set up (by 9 Dec)
 
-1. **Migration.** Apply the migration above to the live backend.
+1. **Migration.** Apply `202611280196_fixed_all_india_papers.sql` and `202611280198_all_india_private_media.sql` to enable private All India staging. Pass pricing and free limits are a separate release.
 2. **Stage each paper.** Run from `apps/designmocks` with the server environment used for year papers (`DMOCKS_SUPABASE_URL`, `DMOCKS_SUPABASE_SERVICE_ROLE_KEY`, `DMOCKS_PAPER_ALLOW_ORIGIN`, `DMOCKS_PAPER_ENVIRONMENT`):
    - `node scripts/all-india-paper.mjs digest --plan <private>/plan.json` prints `planSha256`. It must match the digest Claude recorded.
    - `node scripts/all-india-paper.mjs stage --plan <private>/plan.json --expect <planSha256>` is a dry run that checks every figure.
-   - Add `--apply` to upload the figures (each one is read back and checked) and stage the paper hidden. Record `paperId` and `manifestSha256`.
+   - Add `--apply` to upload the figures and read each one back for verification. The staging RPC registers the figures in the same transaction as the hidden paper. Record `paperId` and `manifestSha256`.
 3. **Schedule both events.** On the Admin page, under **All India mock events → Schedule event**:
 
    | Paper | Title | Opens (IST) | Closes (IST) | Results (IST) | Seats | Entry |
