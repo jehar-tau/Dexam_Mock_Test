@@ -41,7 +41,11 @@ export function compilePublishedNotices(input, { allowFixture = false, freeSignu
   pages.terms.push({ heading: "Account eligibility", paragraph: eligibility.paragraph });
   const version = "dmocks-notices-v1-" + sha256(stableJson({ scope: input.scope, brand: brand.name, operator, pages }));
   const refunds = pages.terms.filter(({ heading }) => heading === fields.terms.refunds);
-  return { version, pages: { ...pages, refunds } };
+  // The youngest age the published eligibility text allows ("aged 16 or older"); 18 when
+  // the text names none. Below 18 the sign-up asks for a parent or guardian's agreement.
+  const named = Number(/\baged (1[3-9]) or older\b/i.exec(eligibility.paragraph)?.[1]);
+  const minimumAge = Number.isInteger(named) ? named : 18;
+  return { version, minimumAge, pages: { ...pages, refunds } };
 }
 
 export function readPublishedNotices(file, options) {

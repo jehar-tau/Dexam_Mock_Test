@@ -67,10 +67,18 @@ Do these in order, on the owner's go:
 
 1. **Owner:** set the live Razorpay key id, key secret and webhook secret as
    Supabase function secrets. Nobody else handles these values.
-2. **Codex:** apply `202611280197_pass_pricing_and_free_limits.sql` and deploy
-   `create-order` (see above).
+2. **Codex:** apply `202611280197_pass_pricing_and_free_limits.sql` and
+   `202611280199_age_group_consent.sql`, and deploy `create-order` (see above).
+   199 must be applied before step 4 whenever the new notice admits under-18s.
 3. **Owner:** approve the paid Terms wording (₹1,284 and the Duo pass). If the
    text changes, update the `DMOCKS_PUBLISHED_NOTICES_JSON` secret.
+   **Age (owner's decision, 28 Nov 2026: 16 and over, with a parent or guardian's
+   agreement under 18):** the Privacy "Younger students" paragraph must say
+   "aged 16 or older". The site reads that phrase: with it, sign-up asks
+   "I am 18 or older" / "I am 16 or 17, and a parent or guardian … agrees", the
+   choice is saved with the acceptance, and checkout adds "I am 18 or older, or
+   my parent or guardian is making or has approved this payment". Without it the
+   site stays 18+ only.
 4. **Codex:** activate the paid notice version on the backend. Its id is what
    `node scripts/published-notices.mjs <notices.json>` prints (the paid text;
    the free-signup text is only used while checkout is closed).
@@ -78,7 +86,9 @@ Do these in order, on the owner's go:
    `DMOCKS_CHECKOUT_ENABLED=true` and run Actions → "Publish dmocks.com" on
    `main`. The build log says `Checkout OPEN` and prints the notice version;
    it must equal the version from step 4.
-6. **Check:** sign in as a student, accept the new notice, open `/plans` and see
+6. **Check:** with migration 199 every signed-in student, old or new, is asked
+   once to accept the new notice (and choose an age group) before using the
+   portal, also after sales open. Sign in as a student, accept the new notice, open `/plans` and see
    the Pay button for both passes. The owner makes the first real payment and
    confirms the pass appears after the webhook.
 

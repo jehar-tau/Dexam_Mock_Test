@@ -7,9 +7,10 @@ import{money,passPlans}from'./config.js';
 import{DuoInvitePanel}from'./Plans.jsx';
 import{Arrow}from'./Art.jsx';
 import{environment}from'./environment.js';
+import{guardianConsent}from'./age-consent.js';
 
 function PurchaseSession({plan}){
- const services=useAccountServices(),flow=useRef(null),[state,setState]=useState({status:'checking',error:''}),[accepted,setAccepted]=useState(false);
+ const services=useAccountServices(),flow=useRef(null),[state,setState]=useState({status:'checking',error:''}),[accepted,setAccepted]=useState(false),[guardian,setGuardian]=useState(!guardianConsent);
  useEffect(()=>{const value=createPurchaseFlow({services,termsVersion,onChange:setState,expectedMode:environment.production?'live':'test'});flow.current=value;void value.refresh();return()=>{value.dispose();if(flow.current===value)flow.current=null;};},[services]);
  const busy=['checking','opening','checkout','verifying'].includes(state.status),canPay=state.status==='idle',price=passPlans[plan]?.price??passPlans.annual.price;
  return<>
@@ -20,7 +21,8 @@ function PurchaseSession({plan}){
     <Link to="/refunds">Cancellation and refunds</Link>
    </div>
    <label className="terms-checkbox"><input type="checkbox" checked={accepted&&state.status!=='notices-changed'} disabled={!canPay} onChange={event=>setAccepted(event.target.checked)}/><span>I accept the <Link to="/terms">purchase terms</Link> and <Link to="/privacy">privacy notice</Link>.</span></label>
-   <button type="button" className="button full" disabled={!canPay||!accepted} onClick={()=>void flow.current?.start(accepted,plan)}>
+   {guardianConsent&&<label className="terms-checkbox"><input type="checkbox" checked={guardian} disabled={!canPay} onChange={event=>setGuardian(event.target.checked)}/><span>I am 18 or older, or my parent or guardian is making or has approved this payment.</span></label>}
+   <button type="button" className="button full" disabled={!canPay||!accepted||!guardian} onClick={()=>void flow.current?.start(accepted,plan)}>
     {state.status==='verifying'?'Confirming your payment…':state.status==='opening'?'Opening Razorpay…':'Pay '+money(price)+' with Razorpay'}<Arrow/>
    </button>
   </>}

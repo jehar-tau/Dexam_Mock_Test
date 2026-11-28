@@ -4702,3 +4702,8 @@ button.net-cell{cursor:pointer}button.net-cell:focus-visible{outline:3px solid v
     flex-direction: column;
   }
 }
+
+/* Sign-up age choice (age-consent.js). */
+.signup-notice .age-group { margin: 1rem 0; padding: 0; border: 0; display: grid; gap: .6rem; }
+.signup-notice .age-group legend { font-weight: 700; margin-bottom: .4rem; }
+.signup-notice .age-group .terms-checkbox { margin-block: 0; }
