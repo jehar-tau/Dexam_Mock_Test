@@ -18,14 +18,16 @@ export const publicPages = new Map([
   ['/tests/nift', {title: 'NIFT practice availability | DMocks', description: 'Check the status of NIFT practice on DMocks and find the official exam information.', index: false}],
   ['/privacy', {title: 'Privacy and sample data | DMocks', description: 'Read how DMocks handles the free sample and learn about account privacy.', index: false, shell: true}],
   ['/terms', {title: 'Terms and access | DMocks', description: 'Read the DMocks terms and access information.', index: false, shell: true}],
+  ['/guides', {title: 'Guides for NID, UCEED, NIFT and CEED preparation | DMocks', description: 'Free guides on exam strategy, time management and calm under pressure for design entrance exams, by an NID Bengaluru alumnus.'}],
   ['/refunds', {title: 'Cancellations and refunds | DMocks', description: 'Read the current DMocks cancellation and refund information.', index: false, shell: true}],
 ]);
 
 const escape = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const tag = 'data-dmocks-head';
-export function pageHead(pathname, publicBuild) {
+// `override` supplies the entry for pages outside this map (the guides, see guide-pages.mjs).
+export function pageHead(pathname, publicBuild, override = null) {
   const path = pathname.replace(/\/+$/, '') || '/';
-  const page = publicPages.get(path);
+  const page = override ?? publicPages.get(path);
   const title = escape(page?.title ?? 'DMocks');
   const indexed = publicBuild && page && page.index !== false;
   const tags = [`<title ${tag}>${title}</title>`, `<meta ${tag} name="robots" content="${indexed ? 'index, follow' : 'noindex, nofollow'}">`];
@@ -33,8 +35,14 @@ export function pageHead(pathname, publicBuild) {
   if (indexed) {
     const url = siteOrigin + path;
     tags.push(`<link ${tag} rel="canonical" href="${url}">`, `<meta ${tag} property="og:site_name" content="DMocks">`,
-      `<meta ${tag} property="og:type" content="website">`, `<meta ${tag} property="og:title" content="${title}">`,
+      `<meta ${tag} property="og:type" content="${page.article ? 'article' : 'website'}">`, `<meta ${tag} property="og:title" content="${title}">`,
       `<meta ${tag} property="og:description" content="${escape(page.description)}">`, `<meta ${tag} property="og:url" content="${url}">`);
+    if (page.article) {
+      const article = {'@context': 'https://schema.org', '@type': 'Article', headline: page.article.headline, description: page.description,
+        author: {'@type': 'Person', name: page.article.author}, datePublished: page.article.datePublished,
+        publisher: {'@type': 'Organization', name: 'DMocks', url: siteOrigin}, mainEntityOfPage: url};
+      tags.push(`<script ${tag} type="application/ld+json">${JSON.stringify(article).replaceAll('<', '\\u003c')}</script>`);
+    }
     if (path === '/') {
       const website = {'@context': 'https://schema.org', '@type': 'WebSite', name: 'DMocks', url};
       tags.push(`<script ${tag} type="application/ld+json">${JSON.stringify(website)}</script>`);

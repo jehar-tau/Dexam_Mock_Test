@@ -6,7 +6,7 @@ if (!/^https:\/\/[a-z0-9.-]+$/.test(origin)) throw new Error("Give the site orig
 const expect = {
   "/": 200, "/papers": 200, "/papers/uceed": 200, "/papers/ceed": 200, "/papers/nid": 200, "/papers/nift": 200,
   "/tests/uceed": 200, "/tests/nid": 200, "/sample": 200, "/terms": 200, "/privacy": 200, "/dashboard": 200,
-  "/robots.txt": 200, "/sitemap.xml": 200, "/checkout": 404, "/papers-preview": 404, "/portal-preview": 404,
+  "/guides": 200, "/guides/how-to-review-a-mock-test": 200, "/robots.txt": 200, "/sitemap.xml": 200, "/checkout": 404, "/papers-preview": 404, "/portal-preview": 404,
 };
 let failed = 0;
 const fetchWithRetry = async path => {

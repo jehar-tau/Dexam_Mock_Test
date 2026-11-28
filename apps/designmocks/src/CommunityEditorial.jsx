@@ -14,20 +14,20 @@ const examName = exam => exam === "nid" ? "NID" : exam.toUpperCase();
 const published = new Date(`${EDITORIAL_DATE}T00:00:00+05:30`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 export const editorialPath = slug => `/dashboard/community/read/${slug}`;
 
-function Byline({ minutes }) {
+export function Byline({ minutes }) {
   return <p className="editorial-byline">
     <span className="editorial-avatar" aria-hidden="true">{EDITORIAL_AUTHOR.initials}</span>
     <span><b>{EDITORIAL_AUTHOR.name}</b><span className="editorial-meta">{EDITORIAL_AUTHOR.credential} · {published} · {minutes} min read</span></span>
   </p>;
 }
 
-export function EditorialCard({ article, featured = false, headingLevel = 3 }) {
+export function EditorialCard({ article, featured = false, headingLevel = 3, pathFor = editorialPath }) {
   const Heading = `h${headingLevel}`;
   return <li className={`editorial-card${featured ? " is-featured" : ""}`}>
-    <Link to={editorialPath(article.slug)} tabIndex={-1} aria-hidden="true"><ArticleCover cover={article.cover} theme={article.theme} seed={article.slug} photo={editorialPhoto(article)} /></Link>
+    <Link to={pathFor(article.slug)} tabIndex={-1} aria-hidden="true"><ArticleCover cover={article.cover} theme={article.theme} seed={article.slug} photo={editorialPhoto(article)} /></Link>
     <div className="editorial-card-text">
       <span className="eyebrow">{EDITORIAL_THEMES[article.theme]} · {editorialExamLabel(article)}</span>
-      <Heading><Link to={editorialPath(article.slug)}>{article.title}</Link></Heading>
+      <Heading><Link to={pathFor(article.slug)}>{article.title}</Link></Heading>
       <p>{article.dek}</p>
       <p className="editorial-meta">{EDITORIAL_AUTHOR.name}, {EDITORIAL_AUTHOR.credential} · {article.minutes} min read</p>
     </div>
@@ -35,7 +35,7 @@ export function EditorialCard({ article, featured = false, headingLevel = 3 }) {
 }
 
 // The reading-first top of Community → Articles.
-export function EditorialFeed({ articles = editorialArticles }) {
+export function EditorialFeed({ articles = editorialArticles, pathFor = editorialPath, write = true }) {
   const examId = useId();
   const [theme, setTheme] = useState(null), [exam, setExam] = useState("");
   const shown = filterEditorial(articles, { theme, exam: exam || null });
@@ -53,22 +53,29 @@ export function EditorialFeed({ articles = editorialArticles }) {
           <option value="">All exams</option>{ARTICLE_EXAMS.map(value => <option key={value} value={value}>{examName(value)}</option>)}
         </select>
       </label>
-      <Link className="button editorial-write" to="/dashboard/community/write">Write an article</Link>
+      {write && <Link className="button editorial-write" to="/dashboard/community/write">Write an article</Link>}
     </div>
     <p className="sr-only" role="status">{filtered ? `${shown.length} ${shown.length === 1 ? "article" : "articles"} shown.` : ""}</p>
     {shown.length === 0 ? <p>No guides match these filters yet.</p>
-      : <ul className="editorial-feed">{shown.map((article, index) => <EditorialCard key={article.slug} article={article} featured={index === 0 && !filtered} />)}</ul>}
+      : <ul className="editorial-feed">{shown.map((article, index) => <EditorialCard key={article.slug} article={article} featured={index === 0 && !filtered} pathFor={pathFor} />)}</ul>}
   </section>;
 }
 
 // A photo carries its Wikimedia Commons credit; otherwise the drawn cover.
-function ReaderCover({ article }) {
+export function ReaderCover({ article }) {
   const photo = editorialPhoto(article);
   if (!photo) return <ArticleCover cover={article.cover} theme={article.theme} seed={article.slug} />;
   return <figure className="editorial-figure">
     <ArticleCover cover={article.cover} theme={article.theme} seed={article.slug} photo={photo} />
     <figcaption>Photo: <a href={photo.source} target="_blank" rel="noreferrer">{photo.author}</a>, {photo.licenseUrl ? <a href={photo.licenseUrl} target="_blank" rel="noreferrer">{photo.license}</a> : photo.license}, via Wikimedia Commons.</figcaption>
   </figure>;
+}
+
+export function AboutAuthor() {
+  return <aside className="editorial-author" aria-label="About the author">
+    <span className="editorial-avatar" aria-hidden="true">{EDITORIAL_AUTHOR.initials}</span>
+    <p><b>{EDITORIAL_AUTHOR.name}</b> {EDITORIAL_AUTHOR.bio.replace(EDITORIAL_AUTHOR.name + " ", "")}</p>
+  </aside>;
 }
 
 export function WriteArticleCta() {
@@ -97,10 +104,7 @@ export function CommunityEditorialReader() {
         <Byline minutes={article.minutes} />
         <ReaderCover article={article} />
         <CommunityArticle source={article.body} />
-        <aside className="editorial-author" aria-label="About the author">
-          <span className="editorial-avatar" aria-hidden="true">{EDITORIAL_AUTHOR.initials}</span>
-          <p><b>{EDITORIAL_AUTHOR.name}</b> {EDITORIAL_AUTHOR.bio.replace(EDITORIAL_AUTHOR.name + " ", "")}</p>
-        </aside>
+        <AboutAuthor />
         <WriteArticleCta />
         <p><Link to="/dashboard/community/discussions">Have a question about this? Ask in Discussions →</Link></p>
         <section className="editorial-next" aria-labelledby="editorial-next-heading">

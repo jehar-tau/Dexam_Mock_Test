@@ -93,6 +93,8 @@ const LearnProgrammes = __DMOCKS_INCLUDE_LEARN__
 const LearnProgrammePage = __DMOCKS_INCLUDE_LEARN__
   ? React.lazy(() => import("./learn/LearnProgramme.jsx").then(module => ({ default: module.LearnProgrammePage }))) : LearnSignIn;
 const Community = React.lazy(() => import("./Community.jsx").then(module => ({ default: module.Community })));
+const LazyGuidesIndex = React.lazy(() => import("./PublicGuides.jsx").then(module => ({ default: module.GuidesIndex })));
+const LazyGuideReader = React.lazy(() => import("./PublicGuides.jsx").then(module => ({ default: module.GuideReader })));
 const CommunityEditorialReader = React.lazy(() => import("./CommunityEditorial.jsx").then(module => ({ default: module.CommunityEditorialReader })));
 const CommunityArticles = React.lazy(() => import("./CommunityArticles.jsx").then(module => ({ default: module.CommunityArticles })));
 const CommunityEditor = React.lazy(() => import("./CommunityEditor.jsx").then(module => ({ default: module.CommunityEditor })));
@@ -229,6 +231,7 @@ function Layout({ children }) {
             <NavLink to="/tests">Mock tests</NavLink>
             <Link to="/#features">What’s inside</Link>
             <Link to="/#how">How it works</Link>
+            <NavLink to="/guides">Guides</NavLink>
             <NavLink to="/plans">The annual pass</NavLink>
             <NavLink to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "/portal-preview" : session ? "/dashboard" : "/account"} className="sign-in">
               {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Student preview" : session ? "Your dashboard" : "Student sign in"} <Arrow size={16} />
@@ -273,6 +276,7 @@ function Layout({ children }) {
             <Link to="/tests/nid">NID DAT</Link>
             <Link to="/tests/nift">NIFT</Link>
             <Link to="/tests/ceed">CEED</Link>
+            <Link to="/guides">Preparation guides</Link>
           </div>
           <div>
             <b>MAKE YOUR NEXT MOVE</b>
@@ -1685,7 +1689,10 @@ function ControlledLoginPortalNotice() {
   </section>;
 }
 
-export default function App() {
+// `prerendered` passes eagerly imported pages to the build-time renderer
+// (scripts/render-public-page.jsx); the browser loads them lazily.
+export default function App({ prerendered = null }) {
+  const GuidesIndex = prerendered?.GuidesIndex ?? LazyGuidesIndex, GuideReader = prerendered?.GuideReader ?? LazyGuideReader;
   const location = useLocation();
   return (
     <Layout>
@@ -1777,6 +1784,8 @@ export default function App() {
           <Route path="/exam-part-transition-preview" element={<ExamPartTransitionPreview />} />
         )}
 
+        <Route path="/guides" element={<GuidesIndex />} />
+        <Route path="/guides/:slug" element={<GuideReader />} />
         <Route path="/sample" element={<Sample />} />
         <Route path="/sample/result" element={<SampleResult />} />
         <Route path="/privacy" element={<Policies type="privacy" />} />
