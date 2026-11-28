@@ -56,9 +56,9 @@ export const features = [
     motif: "community",
     tone: "yellow",
     eyebrow: "COMMUNITY",
-    title: "Stuck? Ask the room.",
-    copy: "Talk through questions and solutions with other aspirants in moderated threads. No direct messages.",
-    points: ["Question and solution threads", "Moderated"],
+    title: "Read what works. Then ask.",
+    copy: "Guides on exam strategy, time management and calm under pressure, written by an NID Bengaluru alumnus. When you are stuck, ask in moderated discussions. No direct messages.",
+    points: ["Guides for NID, UCEED, NIFT and CEED", "Moderated discussions"],
     to: "/dashboard/community",
     link: "Open Community",
   },
@@ -147,7 +147,7 @@ export function FeatureShowcase() {
           </h2>
         </div>
         <p>
-          Explore the free sample and see which features are planned.
+          Every part opens with a free student account. Sign in with Google and start where you like.
         </p>
       </div>
       <div className="feature-grid">

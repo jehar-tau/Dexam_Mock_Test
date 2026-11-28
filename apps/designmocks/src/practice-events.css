@@ -344,3 +344,9 @@
 .all-india-upcoming-exam { font-size: .78rem; font-weight: 700; letter-spacing: .06em; color: var(--muted); }
 .all-india-upcoming span { color: var(--muted); font-size: .9rem; }
 .all-india-upcoming strong { font-size: .95rem; }
+
+/* Home page: the next All India mocks, under the hero. */
+.home-all-india { margin-top: 1.5rem; }
+.home-all-india .home-all-india-card { max-width: none; margin: 0; }
+.home-all-india .home-all-india-card ul { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.home-all-india .home-all-india-card li { padding-top: 0; border-top: 0; }

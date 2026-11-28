@@ -63,7 +63,7 @@ test("the controlled public build opens only approved Google tester access and n
   await expect(page.getByText("Sign-up is not open for this account yet.")).toBeVisible();
   await expect(page.getByRole("heading", { name: /Welcome to your next attempt/ })).toHaveCount(0);
   await page.goto("/plans");
-  await expect(page.getByText("Checkout is closed during controlled testing.")).toBeVisible();
+  await expect(page.getByText("The pass is not on sale yet. Your free account works today.")).toBeVisible();
   await expect(page.getByRole("button", { name: /Pay .* with Razorpay/ })).toBeDisabled();
   expect(unexpected).toEqual([]);
 });

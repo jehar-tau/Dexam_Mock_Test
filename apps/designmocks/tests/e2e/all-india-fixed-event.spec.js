@@ -52,6 +52,29 @@ for (const [device, viewport] of [['desktop', { width: 1280, height: 800 }], ['m
   });
 }
 
+for (const [device, viewport] of [['desktop', { width: 1280, height: 800 }], ['mobile', { width: 360, height: 760 }]]) {
+  test(`the home page lists the next All India mocks with a free sign-up (${device})`, async ({ page }, info) => {
+    await page.setViewportSize(viewport);
+    await stubPortalProvider(page, name => {
+      if (name === 'public_all_india_upcoming') return [schedule(Date.now())];
+      if (name === 'public_all_india_top_ten') return [];
+      if (name === 'free_signup_notice') return null;
+      return undefined;
+    });
+    await page.goto('/');
+    const upcoming = page.getByRole('region', { name: 'Upcoming All India mocks' });
+    await expect(upcoming.getByText('Fictional NID All India Mock', { exact: true })).toBeVisible();
+    await expect(upcoming.getByText('37 of 150 seats left', { exact: true })).toBeVisible();
+    await upcoming.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: info.outputPath(`home-all-india-${device}.png`) });
+    await upcoming.getByRole('link', { name: 'Sign up free to reserve a seat' }).click();
+    await expect(page).toHaveURL('/account?for=all-india');
+    await page.goto('/');
+    await expect(page.getByRole('region', { name: 'Upcoming All India mocks' })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);
+  });
+}
+
 test('a student reserves a seat before the window and sees the countdown', async ({ page }) => {
   const now = Date.now();
   let registered = false;

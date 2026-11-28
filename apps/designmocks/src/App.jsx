@@ -608,15 +608,15 @@ const faqs = [
   ],
   [
     "Is it free to join?",
-    "Student accounts are free when registration opens. The five-question sample is available now without an account.",
+    "Yes. Sign in with Google for a free student account. It opens every released past paper with its original timer and answer key, the Learn programmes, topic practice, the All India mocks and the Community. The five-question sample needs no account at all.",
   ],
   [
     "What about Learn, Topic practice, All India mocks, Community and drawing review?",
-    "They are all part of DMocks and are opening in stages. Anything marked Opening soon on this page is not open to students yet, and the annual pass covers only the released papers listed before you pay.",
+    "They are open now with a free student account. Anything still marked Opening soon on this page is not open yet. The annual pass page lists exactly what a pass adds.",
   ],
   [
     "Can I sign in and pay today?",
-    "The annual-pass page shows which sign-in and payment options are available. You can explore the free sample at any time.",
+    "You can sign in and practise today. The annual pass is not on sale yet; the annual pass page will say when it opens. Nothing is charged until you choose to buy a pass.",
   ],
 ];
 function FAQs() {
@@ -643,9 +643,22 @@ function FAQs() {
     </section>
   );
 }
+// The next All India mocks, read live from the public schedule; nothing shows
+// when no event is scheduled.
+function HomeAllIndiaUpcoming() {
+  const { session } = useAuthState();
+  if (!studentModuleReleased("all-india") || !platform || stagingPortalMode) return null;
+  return <React.Suspense fallback={null}>
+    <div className="wrap home-all-india">
+      <AllIndiaUpcoming className="all-india-upcoming home-all-india-card" signUp={!session}
+        action={session ? <Link className="button" to="/dashboard/all-india">Reserve your seat</Link> : null} />
+    </div>
+  </React.Suspense>;
+}
 function PortalHomeSections() {
   return (
     <>
+      <HomeAllIndiaUpcoming />
       <div className="exam-ribbon wrap">
         <span>YOUR NEXT CHAPTER</span>
         {exams.map((e) => (
@@ -932,7 +945,7 @@ function Plans() {
           </ul>
           {!checkoutReady && (
             <div className="notice">
-              {controlledPublicPortalMode ? "Checkout is closed during controlled testing." : stagingPortalMode ? "Checkout is closed in staging." : "Paid access is not open in this preview. Explore the free sample while the separate sign-in and checkout are connected."}
+              {controlledPublicPortalMode ? "The pass is not on sale yet. Your free account works today." : stagingPortalMode ? "Checkout is closed in staging." : "Paid access is not open in this preview. Explore the free sample while the separate sign-in and checkout are connected."}
             </div>
           )}
           {session && checkoutReady ? <Purchase actorId={session.user.id} headingRef={heading} plan={plan}/> : session ? (
