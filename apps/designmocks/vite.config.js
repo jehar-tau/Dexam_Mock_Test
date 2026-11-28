@@ -59,7 +59,9 @@ export default defineConfig(({ command, mode }) => {
 
   // The informational Site is the accepted search surface. Staging, merchant Test,
   // and the separately gated commercial portal do not publish this discovery profile.
-  const publicBuild = mode === "production" && deployment === "production" && !portalEnabled && !checkoutEnabled
+  // On sales day the public portal keeps its discovery pages with checkout open.
+  const publicBuild = mode === "production" && deployment === "production" && !portalEnabled
+    && (!checkoutEnabled || auth.controlledPublicPortalMode)
     && env.VITE_TEST_LOGIN_ENABLED !== "true" && env.VITE_STAGING_PORTAL_ENABLED !== "true";
 
   return {

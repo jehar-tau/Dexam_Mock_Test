@@ -9,9 +9,12 @@ export function resolveAuthConfiguration({
   if ([portalEnabled, testLoginEnabled, stagingPortalEnabled, controlledPublicPortalEnabled].filter(Boolean).length > 1)
     throw new Error("Choose one mode for sign-in or portal access.");
   if (controlledPublicPortalEnabled) {
-    if (mode !== "production" || deployment !== "production" || checkoutEnabled === true ||
+    if (mode !== "production" || deployment !== "production" ||
         !stagingTarget?.url || url !== stagingTarget.url || !productionOrigin)
-      throw new Error("Controlled public portal requires the approved origin, designated Test project and closed checkout.");
+      throw new Error("Controlled public portal requires the approved origin and designated Test project.");
+    // Sales day: checkout opens on the public portal only with the reviewed paid notices compiled in.
+    if (checkoutEnabled === true && (typeof termsVersion !== "string" || !publishedNoticeVersionPattern.test(termsVersion) || noticeVersion !== termsVersion))
+      throw new Error("Opening checkout on the public portal requires matching reviewed customer notices.");
     if (origin !== productionOrigin) return closed;
   }
   if (testLoginEnabled && !["development", "staging", "test"].includes(deployment))
@@ -63,7 +66,7 @@ export function resolveAuthConfiguration({
     testLoginMode: testLoginEnabled,
     stagingPortalMode: stagingPortalEnabled,
     controlledPublicPortalMode: controlledPublicPortalEnabled,
-    checkoutReady: portalEnabled && checkoutEnabled === true && typeof noticeVersion === "string" && noticeVersion === termsVersion,
+    checkoutReady: (portalEnabled || controlledPublicPortalEnabled) && checkoutEnabled === true && typeof noticeVersion === "string" && noticeVersion === termsVersion,
   };
 }
 

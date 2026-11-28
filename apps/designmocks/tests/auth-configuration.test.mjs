@@ -66,9 +66,22 @@ test("controlled public testing opens only the approved domain and Test project 
   for (const origin of ["https://www.dmocks.com", "http://127.0.0.1:4190", "https://dmocks.com.example.invalid"])
     assert.deepEqual(resolveAuthConfiguration({ ...input, origin }), closed);
   for (const patch of [{ mode: "test" }, { deployment: "test" }, { url: "https://other.supabase.co" },
-    { stagingTarget: undefined }, { checkoutEnabled: true }, { portalEnabled: true },
+    { stagingTarget: undefined }, { checkoutEnabled: true }, { checkoutEnabled: true, termsVersion: "fixture", noticeVersion: "fixture" },
+    { checkoutEnabled: true, termsVersion: "dmocks-notices-v1-" + "a".repeat(64), noticeVersion: "dmocks-notices-v1-" + "b".repeat(64) },
+    { portalEnabled: true },
     { testLoginEnabled: true }, { stagingPortalEnabled: true }, { key: "sb_secret_bad" }])
     assert.throws(() => resolveAuthConfiguration({ ...input, ...patch }), JSON.stringify(patch));
+});
+test("sales day opens checkout on the public portal only with matching reviewed notices", () => {
+  const version = "dmocks-notices-v1-" + "c".repeat(64);
+  const input = { ...base, mode: "production", deployment: "production", origin: productionOrigin,
+    productionOrigin, stagingTarget: { url: base.url, origin: "https://private-staging.example" },
+    controlledPublicPortalEnabled: true, checkoutEnabled: true, termsVersion: version, noticeVersion: version };
+  assert.deepEqual(resolveAuthConfiguration(input),
+    { ...closed, authReady: true, portalReady: true, controlledPublicPortalMode: true, checkoutReady: true });
+  assert.deepEqual(resolveAuthConfiguration({ ...input, origin: "https://www.dmocks.com" }), closed);
+  assert.equal(resolveAuthConfiguration({ ...input, checkoutEnabled: false }).checkoutReady, false);
+  assert.throws(() => resolveAuthConfiguration({ ...input, noticeVersion: undefined }), /reviewed customer notices/);
 });
 const checkoutOrigin = "https://merchant-test.example";
 const checkoutNoticeVersion = "dmocks-notices-v1-" + "a".repeat(64);
