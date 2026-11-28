@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import { EDITORIAL_AUTHOR } from "./editorial-author.mjs";
 
 // The live catalogue on 28 Nov 2026: 49 year-wise papers, 3,200 questions (PORTAL_SOURCE_OF_TRUTH.md).
-// Monthly figures follow the owner's plan: a fresh All India paper for UCEED and NID B.Des. every
-// month (about 57 + 6 questions), which then joins topic practice. Update these when that changes.
+// Monthly figures: owner's commitment, 28 Nov 2026, to four new mock papers a month (UCEED, CEED,
+// NID and NIFT, about 215 questions), which then join topic practice. Keep these true: if fewer
+// papers are published, lower the numbers.
 export const homeNumbers = Object.freeze([
   { value: "3,200", label: "questions with worked solutions" },
   { value: "49", label: "complete past papers, free" },
-  { value: "2", label: "new mock papers every month" },
-  { value: "60+", label: "new practice questions every month" },
+  { value: "4", label: "new mock papers every month" },
+  { value: "200+", label: "new practice questions every month" },
 ]);
 
 export const examPaths = Object.freeze([
