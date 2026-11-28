@@ -66,6 +66,8 @@ jobs:
           DMOCKS_SUPABASE_PUBLISHABLE_KEY: ${{ vars.DMOCKS_SUPABASE_PUBLISHABLE_KEY }}
           DMOCKS_PUBLISHED_NOTICES_JSON: ${{ secrets.DMOCKS_PUBLISHED_NOTICES_JSON }}
           DMOCKS_RELEASED_STUDENT_MODULES: ${{ vars.DMOCKS_RELEASED_STUDENT_MODULES || 'practice' }}
+          # Sales day only (docs/PASS_PRICING.md). Unset or anything but 'true' keeps checkout closed.
+          DMOCKS_CHECKOUT_ENABLED: ${{ vars.DMOCKS_CHECKOUT_ENABLED }}
         run: node scripts/build-public-site.mjs --cname dmocks.com --keep-assets "$GITHUB_WORKSPACE/asset-history"
       - run: printf 'Publishing commit %s\n' "$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4

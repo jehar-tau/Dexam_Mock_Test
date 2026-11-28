@@ -243,7 +243,6 @@ export function WorkspaceView({
           )}
           {/* Exam-wise mocks are hidden until the owner decides their purpose (28 Nov 2026). */}
           {(catalogueOnly || preview || examMocksReleased) && <>
-          {catalogueOnly && checkoutReady && !data.access?.active && <p className="notice">An active pass is needed to start a released paper. <Link to="/plans">View the annual pass →</Link></p>}
           <div className="overview-section-head"><div><span className="overview-kicker">{catalogueOnly?"PAPER CATALOGUE":"EXAM-WISE MOCKS"}</span><h2 id="your-papers">{catalogueOnly?"Released papers.":"Your papers."}</h2></div>{!catalogueOnly&&<Link to={examHref}>View exam-wise mocks →</Link>}</div>
           {papers.length ? (
             <div className="paper-list">
@@ -267,9 +266,9 @@ export function WorkspaceView({
             </div>
           ) : (
             <div className="overview-empty-papers">
-              <div><span className="overview-kicker">RELEASE STATUS</span><h3>{catalogueOnly?"No papers have been released yet":"No exam-wise mock has been released yet"}</h3><p>{catalogueOnly?(checkoutReady?"Reviewed papers will appear here when they are published.":"Free year-wise papers are open now. Reviewed papers will appear here when they are published."):"Free year-wise papers are open now. Exam-wise mocks appear here when they are published."}</p></div>
+              <div><span className="overview-kicker">RELEASE STATUS</span><h3>{catalogueOnly?"No papers have been released yet":"No exam-wise mock has been released yet"}</h3><p>{catalogueOnly?"Free year-wise papers are open now. Reviewed papers will appear here when they are published.":"Free year-wise papers are open now. Exam-wise mocks appear here when they are published."}</p></div>
               {preview?<Link className="overview-secondary-link" to={attemptHref("example-paper")}>Try an example paper <Arrow size={17}/></Link>
-                :(!catalogueOnly||!checkoutReady)&&<Link className="overview-secondary-link" to={papersHref}>Open year-wise Papers <Arrow size={17}/></Link>}
+                :<Link className="overview-secondary-link" to={papersHref}>Open year-wise Papers <Arrow size={17}/></Link>}
             </div>
           )}
           </>}

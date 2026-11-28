@@ -1,6 +1,7 @@
 // Builds the public dmocks.com frontend from this checkout without any
 // operator machine: the controlled student portal on the DMocks Test backend,
-// with checkout and sales closed. Used by .github/workflows/dmocks-site.yml.
+// with checkout and sales closed unless DMOCKS_CHECKOUT_ENABLED=true.
+// Used by .github/workflows/dmocks-site.yml.
 //
 // Inputs (environment):
 //   DMOCKS_SUPABASE_PUBLISHABLE_KEY  the backend's public browser key (sb_publishable_…)
@@ -8,6 +9,9 @@
 //     or DMOCKS_PUBLISHED_NOTICES_FILE, a path to the same JSON
 //   DMOCKS_RELEASED_STUDENT_MODULES  optional modules to release (default "practice"); add
 //     "drawing-review" to open teacher marking of drawing photos
+//   DMOCKS_CHECKOUT_ENABLED          "true" only on sales day (docs/PASS_PRICING.md): opens
+//     the pass checkout on /plans and compiles the full paid notices. The backend must
+//     have that notice version active, the pricing migration applied and live keys set.
 // Flags:
 //   --cname <host>     write a CNAME file for GitHub Pages
 //   --inventory <file> write the SHA-256 of every output file
@@ -37,11 +41,14 @@ if (process.env.DMOCKS_PUBLISHED_NOTICES_JSON) {
   writeFileSync(noticesFile, process.env.DMOCKS_PUBLISHED_NOTICES_JSON);
 }
 if (!noticesFile) throw new Error("Set DMOCKS_PUBLISHED_NOTICES_JSON or DMOCKS_PUBLISHED_NOTICES_FILE");
-const notices = readPublishedNotices(noticesFile, { freeSignup: true });
+const checkout = process.env.DMOCKS_CHECKOUT_ENABLED === "true";
+// While checkout is closed the free-signup notice stays word-for-word what students accepted.
+const notices = readPublishedNotices(noticesFile, { freeSignup: !checkout });
+console.log(`Checkout ${checkout ? "OPEN" : "closed"}; notice version ${notices.version}`);
 
 const env = Object.fromEntries(Object.entries(process.env).filter(([name]) => !/^(VITE_|DMOCKS_)/.test(name)));
 Object.assign(env, {
-  VITE_DEPLOYMENT_ENV: "production", VITE_PORTAL_ENABLED: "false", VITE_CHECKOUT_ENABLED: "false",
+  VITE_DEPLOYMENT_ENV: "production", VITE_PORTAL_ENABLED: "false", VITE_CHECKOUT_ENABLED: checkout ? "true" : "false",
   VITE_PUBLIC_CATALOG_ENABLED: "false", VITE_CONTROLLED_PUBLIC_PORTAL_ENABLED: "true",
   VITE_SUPABASE_URL: `https://${project.project_ref}.supabase.co`, VITE_SUPABASE_ANON_KEY: key,
   VITE_TERMS_VERSION: notices.version, DMOCKS_PUBLISHED_NOTICES_FILE: noticesFile,

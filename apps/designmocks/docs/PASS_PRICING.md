@@ -55,3 +55,33 @@ Before checkout opens, the owner also needs to:
   `prepare_plan_order(text)`, `my_duo_invite()`, `redeem_duo_invite(text)` and
   `my_drawing_marking_allowance()` to its RPC manifest first. The profile is
   not applied to the open free backend today.
+
+## Sales day: opening checkout on dmocks.com
+
+The public site runs as the "controlled public portal" on the DMocks Test
+backend. Checkout opens there with one repository variable, but only after the
+backend is ready, because a signed-in student is let in only when the site's
+compiled notice version matches the version active on the backend.
+
+Do these in order, on the owner's go:
+
+1. **Owner:** set the live Razorpay key id, key secret and webhook secret as
+   Supabase function secrets. Nobody else handles these values.
+2. **Codex:** apply `202611280197_pass_pricing_and_free_limits.sql` and deploy
+   `create-order` (see above).
+3. **Owner:** approve the paid Terms wording (₹1,284 and the Duo pass). If the
+   text changes, update the `DMOCKS_PUBLISHED_NOTICES_JSON` secret.
+4. **Codex:** activate the paid notice version on the backend. Its id is what
+   `node scripts/published-notices.mjs <notices.json>` prints (the paid text;
+   the free-signup text is only used while checkout is closed).
+5. **Same moment as step 4:** set the repository variable
+   `DMOCKS_CHECKOUT_ENABLED=true` and run Actions → "Publish dmocks.com" on
+   `main`. The build log says `Checkout OPEN` and prints the notice version;
+   it must equal the version from step 4.
+6. **Check:** sign in as a student, accept the new notice, open `/plans` and see
+   the Pay button for both passes. The owner makes the first real payment and
+   confirms the pass appears after the webhook.
+
+**Closing checkout again:** delete `DMOCKS_CHECKOUT_ENABLED` and republish, and
+re-activate the free-signup notice version on the backend at the same time.
+Otherwise signed-in students are stopped at the notice check.
