@@ -8,8 +8,8 @@ import { useAuthState } from "./useAuth.js";
 export function CommunityNav() {
   const item = (to, label, end = false) => <NavLink to={to} end={end} className={({ isActive }) => isActive ? "active" : undefined}>{label}</NavLink>;
   return <nav className="community-nav" aria-label="Community sections">
-    {item("/dashboard/community/articles", "Articles")}
-    {item("/dashboard/community", "Discussions", true)}
+    {item("/dashboard/community", "Articles", true)}
+    {item("/dashboard/community/discussions", "Discussions")}
     {item("/dashboard/community/saved", "Saved")}
     {item("/dashboard/community/write", "Write")}
   </nav>;

@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { CommunityFrame, communityDate, useCommunityRpc } from "./CommunityFrame.jsx";
 import { communityArticleInput, communityArticleQuery, mergeCommunityArticles, validateCommunityArticles } from "./community-library.js";
 import { ARTICLE_EXAMS } from "./community-article.mjs";
+import { EditorialFeed, WriteArticleCta } from "./CommunityEditorial.jsx";
 
 const plural = (count, word) => `${count} ${word}${count === 1 ? "" : "s"}`;
 
@@ -31,6 +32,7 @@ function ArticlesSession() {
   const articles = data?.articles ?? [];
   return <section aria-label="Community articles" aria-busy={loading}>
     {typeof location.state?.notice === "string" && <p role="status" className="notice">{location.state.notice}</p>}
+    <h2 id="student-articles-heading" className="student-articles-heading">From students</h2>
     <div className="community-toolbar">
       <div role="group" aria-label="Article order" className="community-segments">
         {[["latest", "Latest"], ["top", "Top"]].map(([value, label]) => <button key={value} type="button" aria-pressed={query.sort === value}
@@ -60,7 +62,9 @@ function ArticlesSession() {
 }
 
 export function CommunityArticles() {
-  return <CommunityFrame title="Read what" accent="worked." intro="Long-form notes from students and teachers on how they prepared. Save the ones worth returning to.">
+  return <CommunityFrame title="Read what" accent="works." intro="Exam strategy, time management and calm under pressure, for NID, UCEED, NIFT and CEED. Read, save, and add what worked for you.">
+    <EditorialFeed />
+    <WriteArticleCta />
     <ArticlesSession />
   </CommunityFrame>;
 }

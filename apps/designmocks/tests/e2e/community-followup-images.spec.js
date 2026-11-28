@@ -55,7 +55,7 @@ async function fixture(page,{foreign=false,full=false,locked=false,otherThread=f
   if(state.holdUpload)await state.holdUpload.promise;
   try{if(state.lostOrdinal===ordinal){state.lostOrdinal=null;return await route.abort();}await route.fulfill({headers,json:{id:image.id,ordinal,reused:Boolean(saved)}});}catch{}finally{state.uploadCompleted++;}
  });
- await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");
+ await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community/discussions");
  const title=otherThread?"Another original fictional discussion":"Original fictional saved discussion";
  await page.locator(".community-feed article").filter({has:page.getByRole("heading",{name:title,exact:true})}).getByRole("button",{name:"Open discussion",exact:true}).click();await expect(page.getByRole("region",{name:"Discussion thread",exact:true})).toBeVisible();
  return state;

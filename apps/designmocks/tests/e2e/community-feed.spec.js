@@ -52,7 +52,7 @@ async function fixture(page,{long=false}={}){
   state.uploads++;if(state.holdUpload)await state.holdUpload.promise;
   try{await route.fulfill({headers,json:{id:"30000000-0000-4000-8000-000000000801",ordinal:1,reused:false}});}catch{}
  });
- await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");await expect(cards(page)).toHaveCount(25);
+ await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community/discussions");await expect(cards(page)).toHaveCount(25);
  return state;
 }
 const more=page=>feed(page).getByRole("button",{name:"Load more discussions",exact:true});

@@ -58,7 +58,7 @@ async function fixture(page, { long = false } = {}) {
     else throw new Error("Unexpected fictional procedure: " + name);
     return route.fulfill({ headers, json: value });
   });
-  await stubPortalIdentity(page); await page.goto("/account"); await seedPortalSession(page, actor); await page.goto("/dashboard/community");
+  await stubPortalIdentity(page); await page.goto("/account"); await seedPortalSession(page, actor); await page.goto("/dashboard/community/discussions");
   await page.getByRole("button", { name: "Open discussion", exact: true }).click();
   await expect(page.getByRole("region", { name: "Discussion thread", exact: true })).toBeVisible();
   return state;

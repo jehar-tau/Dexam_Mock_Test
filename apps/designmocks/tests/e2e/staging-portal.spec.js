@@ -236,7 +236,7 @@ test("an admitted tester can open Community and loses access after revocation", 
   }, project.project_ref);
   await page.goto("/account");
   await seedPortalSession(page, tester, project.project_ref);
-  await page.goto("/dashboard/community");
+  await page.goto("/dashboard/community/discussions");
   await expect(page.getByRole("heading", {name: /Ask clearly/})).toBeVisible();
   await expect(page.getByText("No discussions match these filters.")).toBeVisible();
   expect(calls.filter(([name]) => name === "community_feed")).toHaveLength(1);

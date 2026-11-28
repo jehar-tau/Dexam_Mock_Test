@@ -64,7 +64,7 @@ async function fixture(page,options={}){
   state.assets.set(id,[{...samples[0],id:"30000000-0000-4000-8000-000000000651",ordinal}]);
   return route.fulfill({headers,json:{id:"30000000-0000-4000-8000-000000000651",ordinal}});
  });
- await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community");await expect(page.getByRole("heading",{name:/Ask clearly/})).toBeVisible();
+ await stubPortalIdentity(page);await page.goto("/account");await seedPortalSession(page,actor);await page.goto("/dashboard/community/discussions");await expect(page.getByRole("heading",{name:/Ask clearly/})).toBeVisible();
  state.addImage=id=>state.assets.set(id,[{...samples[0],id:"30000000-0000-4000-8000-000000000651",ordinal:1}]);return state;
 }
 async function compose(page,images=[]){await page.getByLabel("Topic",{exact:true}).fill("fictional");await page.getByLabel("Question title",{exact:true}).fill(post().title);await page.getByLabel("Your approach or question",{exact:true}).fill(post().body);await page.getByLabel("Question images (optional, up to 3)",{exact:true}).setInputFiles(images);}
