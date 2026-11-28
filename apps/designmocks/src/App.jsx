@@ -50,6 +50,7 @@ import { AttemptInsightsPreview } from "./AttemptInsights.jsx";
 import { AccountPrivacyPanel, AccountPrivacyPreview } from "./AccountPrivacy.jsx";
 import { ExamPartTransitionPreview } from "./ExamPartTransition.jsx";
 import { useAuthState } from "./useAuth.js";
+import { guardianConsent, minimumAge } from "./age-consent.js";
 import { clearDeviceAnswers } from "./attempt-answer-journal.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import { StagingAccessMessage, StagingPortalGate, useStagingPortalAccess } from "./StagingPortal.jsx";
@@ -1162,7 +1163,7 @@ function Account() {
                 explore the full sample experience now.
               </div>
             )}
-            {controlledPublicPortalMode ? <p className="account-terms">Free accounts are for students aged 18 or older. After Google sign-in, review the <Link to="/terms">Terms of Use</Link> and <Link to="/privacy">Privacy Notice</Link> before starting a paper.</p> : stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
+            {controlledPublicPortalMode ? <p className="account-terms">{guardianConsent ? `Free accounts are for students aged ${minimumAge} or older; if you are under 18, a parent or guardian must agree first.` : "Free accounts are for students aged 18 or older."} After Google sign-in, review the <Link to="/terms">Terms of Use</Link> and <Link to="/privacy">Privacy Notice</Link> before starting a paper.</p> : stagingPortalMode ? <p className="account-terms">Only approved testers can enter the staging workspace. Checkout is closed.</p> :
               testLoginMode ? <p className="account-terms">Only server-approved test accounts can complete this check. It does not accept draft purchase terms, create an order or unlock a paid pass.</p> : <p className="account-terms">
               {checkoutReady
                 ? "Review the terms and privacy notice before continuing with Google. You can confirm a purchase separately in checkout."

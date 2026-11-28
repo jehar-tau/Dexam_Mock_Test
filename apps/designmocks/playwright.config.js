@@ -10,7 +10,7 @@ if(!['mvp','full'].includes(scope))throw new Error('Choose the mvp or full brows
 const fallbackRunner = process.env.DMOCKS_E2E_FALLBACK_RUNNER === '1';
 // The default PR gate covers the student launch and the bank ingestion slice.
 // Claude-owned Learn/Community and deferred reviewer journeys remain in `full`.
-const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','controlled-public-portal.spec.js','staging-portal.spec.js','staging-review.spec.js','staging-paid-pilot.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','intake-canonical.spec.js','ai-draft-canonical.spec.js'];
+const mvpFiles=['mvp-*.spec.js','controlled-login.spec.js','controlled-public-portal.spec.js','controlled-public-guardian.spec.js','staging-portal.spec.js','staging-review.spec.js','staging-paid-pilot.spec.js','profile-lifecycle.spec.js','account-privacy-lifecycle.spec.js','account-export.spec.js','attempt-identity-lifecycle.spec.js','overview-identity-lifecycle.spec.js','overview-scores.spec.js','bug-report-lifecycle.spec.js','question-quality.spec.js','launch-foundation.spec.js','bank-review-browser.spec.js','question-export-download.spec.js','nid-practice-blueprints.spec.js','nid-question-bindings.spec.js','intake-canonical.spec.js','ai-draft-canonical.spec.js'];
 export default defineConfig({
   testMatch: scope === 'full' ? '**/*.spec.js' : [
     ...mvpFiles.map(file => '**/' + file),
@@ -90,6 +90,19 @@ export default defineConfig({
         VITE_CHECKOUT_ENABLED: "false", VITE_PUBLIC_CATALOG_ENABLED: "false",
         VITE_SUPABASE_URL: `https://${project.project_ref}.supabase.co`,
         VITE_SUPABASE_ANON_KEY: "sb_publishable_dmocks_controlled_public_fixture" },
+      reuseExistingServer: false, timeout: 60_000,
+    },
+    {
+      // The same public build with a notice that admits 16- and 17-year-olds with a guardian.
+      command: "node tests/build-controlled-signup-fixture.mjs && npm exec -- vite preview --outDir test-results/controlled-public-guardian --host 127.0.0.1 --port 4796 --strictPort",
+      url: "http://127.0.0.1:4796",
+      env: { VITE_DEPLOYMENT_ENV: "production", VITE_CONTROLLED_PUBLIC_PORTAL_ENABLED: "true",
+        VITE_PORTAL_ENABLED: "false", VITE_TEST_LOGIN_ENABLED: "false", VITE_STAGING_PORTAL_ENABLED: "false",
+        VITE_CHECKOUT_ENABLED: "false", VITE_PUBLIC_CATALOG_ENABLED: "false",
+        VITE_SUPABASE_URL: `https://${project.project_ref}.supabase.co`,
+        VITE_SUPABASE_ANON_KEY: "sb_publishable_dmocks_controlled_public_fixture",
+        DMOCKS_FIXTURE_OUT_DIR: "test-results/controlled-public-guardian",
+        DMOCKS_FIXTURE_ELIGIBILITY: "This fictional notice admits students aged 16 or older. A student under 18 needs a parent or guardian's agreement." },
       reuseExistingServer: false, timeout: 60_000,
     },
     {

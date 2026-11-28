@@ -58,7 +58,7 @@ select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000191'
 select set_config('request.path','/rpc/free_signup_notice',true);
 select dm_staging_api.check_admission();
 do $$ begin
-  if public.free_signup_notice() <> '{"required":true,"accepted":false,"version":null}'::jsonb then
+  if public.free_signup_notice() <> '{"required":true,"accepted":false,"version":null,"ageGroup":null}'::jsonb then
     raise exception 'Unexpected fresh notice state';
   end if;
 end $$;
@@ -82,7 +82,35 @@ select set_config('request.path','/rpc/start_free_year_paper',true);
 select dm_staging_api.check_admission();
 do $$ begin
   if not (public.free_signup_notice()->>'accepted')::boolean then raise exception 'Acceptance was not retained'; end if;
+  if public.free_signup_notice()->'ageGroup' <> 'null'::jsonb then raise exception 'An age group appeared without being chosen'; end if;
 end $$;
+-- A notice that admits 16- and 17-year-olds records the age group the student confirmed.
+do $$ begin
+  perform public.accept_current_terms('dmocks-notices-v1-' || repeat('a',64), 'under_16');
+  raise exception 'An unknown age group was accepted';
+exception when invalid_parameter_value then
+  if sqlerrm <> 'Choose an age group' then raise; end if;
+end $$;
+do $$ begin
+  perform public.accept_current_terms('dmocks-notices-v1-' || repeat('a',64), null);
+  raise exception 'A missing age group was accepted';
+exception when invalid_parameter_value then null;
+end $$;
+select public.accept_current_terms('dmocks-notices-v1-' || repeat('a',64), '16_17_guardian');
+do $$ begin
+  if public.free_signup_notice()->>'ageGroup' <> '16_17_guardian' or not (public.free_signup_notice()->>'accepted')::boolean then
+    raise exception 'The guardian age group was not retained';
+  end if;
+end $$;
+reset role;
+update public.launch_settings set sales_enabled=true where singleton;
+set local role authenticated;
+do $$ begin
+  if not (public.free_signup_notice()->>'required')::boolean then raise exception 'The notice stopped being required when sales opened'; end if;
+end $$;
+reset role;
+update public.launch_settings set sales_enabled=false where singleton;
+set local role authenticated;
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000190',true);
 select pg_temp.expect_notice_denied();
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000191',true);
@@ -101,6 +129,7 @@ end $$;
 reset role;
 do $$ begin
   if has_function_privilege('anon','public.free_signup_notice()','execute') then raise exception 'Anonymous notice receipt access'; end if;
+  if has_function_privilege('anon','public.accept_current_terms(text,text)','execute') then raise exception 'Anonymous age-group acceptance'; end if;
 end $$;
 rollback;
 
