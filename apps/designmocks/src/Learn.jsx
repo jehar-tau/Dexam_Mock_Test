@@ -10,7 +10,7 @@ import { programmes } from "./learn/programmes/index.js";
 import { loadProgress } from "./learn/programme-storage.js";
 import { TopicMotif } from "./TopicMotion.jsx";
 import { programmeSummary } from "./learn/programme-model.js";
-function LearnHeading({headingRef}){return<><span className="eyebrow">LEARN, THEN PRACTISE</span><h1 ref={headingRef} tabIndex={headingRef?-1:undefined}>Build the idea.<br/>Then <em>use it.</em></h1><p>Short theory lessons connect directly to topic practice.</p></>;}
+function LearnHeading({headingRef}){return<><span className="eyebrow">LEARN, THEN PRACTISE</span><h1 ref={headingRef} tabIndex={headingRef?-1:undefined}>Build the idea.<br/>Then <em>use it.</em></h1><p>Interactive programmes build one idea at a time, then connect to topic practice.</p></>;}
 export function ProgrammeList({ actorId, linkFor }) {
   if (!programmes.length) return null;
   return <div className="programme-list" aria-label="Interactive programmes">
