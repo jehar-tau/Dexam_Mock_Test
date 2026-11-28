@@ -9,6 +9,8 @@ import { EDITORIAL_THEMES, editorialExamLabel, relatedEditorial } from "./commun
 import { editorialArticles, findEditorial } from "./community-editorial.js";
 import { guidePath } from "./guide-pages.mjs";
 import "./community-editorial.css";
+import { useAuthState } from "./useAuth.js";
+import { SaveGuideButton } from "./SaveGuideButton.jsx";
 
 function PractiseCta() {
   return <aside className="community-write-cta guide-cta" aria-label="Practise for free">
@@ -31,7 +33,7 @@ export function GuidesIndex() {
 }
 
 export function GuideReader() {
-  const { slug } = useParams();
+  const { slug } = useParams(), { session } = useAuthState();
   const article = findEditorial(slug);
   if (!article) return <section className="wrap section guides-page">
     <h1>This guide is not <em>here.</em></h1>
@@ -43,7 +45,7 @@ export function GuideReader() {
       <span className="eyebrow">{EDITORIAL_THEMES[article.theme]} · {editorialExamLabel(article)}</span>
       <h1 id="editorial-title">{article.title}</h1>
       <p className="editorial-dek">{article.dek}</p>
-      <Byline minutes={article.minutes} />
+      <div className="editorial-byline-row"><Byline minutes={article.minutes} />{session && <SaveGuideButton actor={session.user.id} slug={article.slug} title={article.title} />}</div>
       <ReaderCover article={article} />
       <CommunityArticle source={article.body} />
       <AboutAuthor />

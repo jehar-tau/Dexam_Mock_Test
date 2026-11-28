@@ -8,6 +8,7 @@ import { ArticleCover } from "./ArticleCover.jsx";
 import { ARTICLE_EXAMS } from "./community-article.mjs";
 import { EDITORIAL_AUTHOR, EDITORIAL_DATE, EDITORIAL_THEMES, editorialExamLabel, editorialPhoto, filterEditorial, relatedEditorial } from "./community-editorial.mjs";
 import { editorialArticles, findEditorial } from "./community-editorial.js";
+import { SaveGuideButton } from "./SaveGuideButton.jsx";
 import "./community-editorial.css";
 
 const examName = exam => exam === "nid" ? "NID" : exam.toUpperCase();
@@ -101,7 +102,7 @@ export function CommunityEditorialReader() {
         <span className="eyebrow">{EDITORIAL_THEMES[article.theme]} · {editorialExamLabel(article)}</span>
         <h1 id="editorial-title" ref={heading} tabIndex={-1}>{article.title}</h1>
         <p className="editorial-dek">{article.dek}</p>
-        <Byline minutes={article.minutes} />
+        <div className="editorial-byline-row"><Byline minutes={article.minutes} /><SaveGuideButton actor={session.user.id} slug={article.slug} title={article.title} /></div>
         <ReaderCover article={article} />
         <CommunityArticle source={article.body} />
         <AboutAuthor />

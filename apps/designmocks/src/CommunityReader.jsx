@@ -5,7 +5,7 @@ import { CommunityThread } from "./CommunityThread.jsx";
 import { CommunityReporting } from "./CommunityReporting.jsx";
 import { CommunityImages } from "./CommunityImages.jsx";
 import { CommunityArticle } from "./CommunityArticle.jsx";
-import { CommunitySaveDialog } from "./CommunitySaveDialog.jsx";
+import { toggleQuickSave } from "./community-quick-save.js";
 import { PendingImages, PendingText } from "./Community.jsx";
 import { communityDate } from "./CommunityFrame.jsx";
 import { articleStats } from "./community-article.mjs";
@@ -24,7 +24,7 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
   onRetryTextPost, onRetryTextReply, onStopTextPost, onStopTextReply }) {
   const { id } = useParams(), navigate = useNavigate(), location = useLocation();
   const open = useRef(onOpen); open.current = onOpen;
-  const [like, setLike] = useState(null), [folderIds, setFolderIds] = useState(null), [saving, setSaving] = useState(false), [working, setWorking] = useState(false);
+  const [like, setLike] = useState(null), [folderIds, setFolderIds] = useState(null), [working, setWorking] = useState(false);
   const [notice, setNotice] = useState(typeof location.state?.notice === "string" ? location.state.notice : ""), [confirmBlock, setConfirmBlock] = useState(false);
   const [reportTarget, setReportTarget] = useState(null), title = useRef(null), saveButton = useRef(null), reportOpener = useRef(null), scope = useRef(null), focused = useRef(null);
   const valid = uuid.test(id ?? "");
@@ -88,7 +88,10 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
     <div className="community-reader-actions" role="group" aria-label="Post actions">
       {header.isMine ? <span>{likes} {likes === 1 ? "like" : "likes"}</span>
         : <button type="button" className="button quiet" aria-pressed={liked} aria-disabled={working} onClick={toggleLike}>{liked ? "Liked" : "Like"} · {likes}</button>}
-      <button type="button" className="button quiet" ref={saveButton} aria-disabled={working} onClick={() => { if (!working) setSaving(true); }}>{folders.length ? `Saved in ${folders.length} ${folders.length === 1 ? "folder" : "folders"}` : "Save"}</button>
+      <button type="button" className={`button quiet save-button${folders.length ? " is-saved" : ""}`} ref={saveButton} aria-pressed={folders.length > 0} aria-disabled={working}
+        onClick={() => act(async signal => { const next = await toggleQuickSave(rpc, id, folders.length > 0, signal); if (!signal.aborted) { setFolderIds(next); setNotice(next.length ? "Saved. Find it under Saved." : "Removed from Saved."); } }, "Not saved. Try again.")}>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z" fill={folders.length ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>
+        {folders.length ? "Saved" : "Save"}</button>
       <button type="button" className="text-button" disabled={busy} onClick={event => report(id, null, event.currentTarget)}>Report</button>
       {!header.isMine && (confirmBlock
         ? <span className="community-confirm">Hide everything from {header.author}? <button type="button" className="text-button" disabled={working} onClick={blockAuthor}>Yes, block</button> <button type="button" className="text-button" onClick={() => setConfirmBlock(false)}>Cancel</button></span>
@@ -100,11 +103,6 @@ function ReaderView({ thread, threadLoading, message, busy, rpc, onOpen, onComme
     <CommunityThread key={thread.id} embedded thread={thread} busy={busy || working} pendingPost={pendingPost} pendingReply={pendingReply}
       pendingTextPost={pendingTextPost} pendingTextReply={pendingTextReply} replyFormVersion={replyFormVersion} loading={threadLoading}
       onOpen={() => onOpen(id)} onMore={onMoreComments} onComment={onComment} onHelpful={onHelpful} onReport={report} onAddImages={onAddImages} onBlock={blockReply} />
-    {saving && <CommunitySaveDialog postId={id} selected={folders} rpc={rpc} onClose={value => {
-      setSaving(false);
-      if (value) { setFolderIds(value); setNotice(value.length ? "Saved. Find it under Saved." : "Removed from your folders."); }
-      saveButton.current?.focus();
-    }} />}
     {reportTarget && <CommunityReporting target={reportTarget} onSubmit={onReport} onClose={() => { setReportTarget(null); if (reportOpener.current?.isConnected) reportOpener.current.focus(); }} />}
   </div>;
 }
