@@ -54,7 +54,7 @@ async function fixture(page, { long = false } = {}) {
     if (name === "community_feed") value = communityFeedFixture([post],input);
     else if (name === "community_thread" || name === "community_reply_context") value = { ...post, comments, version: 1, nextCursor: null,
       ...(input.p_anchor_id ? { anchorId: input.p_anchor_id, hasEarlier: false } : {}) };
-    else if (name === "public_all_india_top_ten") value = [];
+    else if (name === "public_all_india_top_ten" || name === "public_all_india_upcoming") value = [];
     else throw new Error("Unexpected fictional procedure: " + name);
     return route.fulfill({ headers, json: value });
   });

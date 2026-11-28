@@ -28,7 +28,7 @@ async function fixture(page,{clock=false,linkLifetime=300000}={}){
   else if(name==="community_thread"||name==="community_reply_context"){
    if(input.p_cursor&&state.holdMore)await state.holdMore.promise;
    value={...post,comments:input.p_cursor?[row(nextId,0)]:[row(commentId,1)],version:1,nextCursor:!input.p_cursor&&state.hasMore?{createdAt:"2026-01-01T00:00:00.123456Z",id:commentId,snapshotAt:"2026-01-02T00:00:00.654321Z",version:1}:null};
-  }else if(name==="public_all_india_top_ten")value=[];
+  }else if(name==="public_all_india_top_ten"||name==="public_all_india_upcoming")value=[];
   else throw new Error("Unexpected fictional inspector procedure: "+name);
   try{await route.fulfill({headers,json:value});}catch{}finally{state.completed++;}
  });

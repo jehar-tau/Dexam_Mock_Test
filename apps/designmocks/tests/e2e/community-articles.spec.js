@@ -252,48 +252,41 @@ test("a reader likes and unlikes, and Top follows the likes", async ({ page }) =
   await expect(page.getByText("No articles yet for this exam.")).toBeVisible();
 });
 
-test("a reader saves into a new folder, finds it under Saved, renames the folder and removes the save", async ({ page }) => {
+test("one tap saves a post and a guide; Saved lists both in one place and removes them", async ({ page }) => {
   const state = backend(); const post = state.seed(asha, "A fictional article worth keeping");
   await state.install(page); await signIn(page, ravi, `/dashboard/community/post/${post.id}`);
   const save = page.getByRole("button", { name: "Save", exact: true });
   await save.click();
-  const dialog = page.getByRole("dialog", { name: "Save to folders" });
-  await expect(dialog.getByLabel("New folder (optional)")).toHaveValue("Saved");
-  await dialog.getByLabel("New folder (optional)").fill("NID studio test");
-  await dialog.getByRole("button", { name: "Save", exact: true }).click();
-  await expect(dialog).toHaveCount(0);
-  const saved = page.getByRole("button", { name: "Saved in 1 folder", exact: true });
-  await expect(saved).toBeVisible(); await expect(saved).toBeFocused();
+  const saved = page.getByRole("button", { name: "Saved", exact: true });
+  await expect(saved).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("Saved. Find it under Saved.")).toBeVisible();
   expect(state.saves).toHaveLength(1);
+  expect(state.folders.map(folder => folder.name)).toEqual(["Saved"]);
+  await expect(page.getByRole("dialog")).toHaveCount(0);
 
-  await saved.click();
-  await expect(dialog.getByLabel("NID studio test")).toBeChecked();
-  await page.keyboard.press("Escape");
-  await expect(dialog).toHaveCount(0); await expect(saved).toBeFocused();
+  await page.goto("/dashboard/community/read/how-to-review-a-mock-test");
+  await page.getByRole("button", { name: /^Save: How to review a mock test/ }).click();
+  await expect(page.getByRole("button", { name: /^Saved: How to review a mock test/ })).toHaveAttribute("aria-pressed", "true");
 
   await page.getByRole("navigation", { name: "Community sections" }).getByRole("link", { name: "Saved", exact: true }).click();
-  const folder = page.getByRole("region", { name: "Folder NID studio test" });
-  await expect(folder.getByRole("link", { name: "A fictional article worth keeping" })).toBeVisible();
-  await expect(page.getByRole("region", { name: "Your folders" }).getByRole("button", { name: /NID studio test \(1\)/ })).toHaveAttribute("aria-pressed", "true");
-  await folder.getByRole("button", { name: "Rename folder" }).click();
-  await folder.getByLabel("Folder name").fill("Studio prep");
-  await folder.getByRole("button", { name: "Save name" }).click();
-  const renamed = page.getByRole("region", { name: "Folder Studio prep" });
-  await expect(renamed.getByRole("heading", { name: "Studio prep" })).toBeFocused();
-
-  // A second folder with the same name is refused with a sentence, not a diagnostic.
-  await page.getByLabel("New folder", { exact: true }).fill("studio PREP");
-  await page.getByRole("button", { name: "Create folder" }).click();
-  await expect(page.getByText("You already have a folder with that name.")).toBeVisible();
-  await page.getByRole("region", { name: "Your folders" }).getByRole("button", { name: /Studio prep/ }).click();
-
-  await renamed.getByRole("button", { name: "Remove from folder: A fictional article worth keeping" }).click();
-  await expect(renamed.getByText("Nothing saved here yet.")).toBeVisible();
+  const guides = page.getByRole("region", { name: "Guides" }), posts = page.getByRole("region", { name: "From students" });
+  await expect(guides.getByRole("link", { name: /How to review a mock test/ })).toBeVisible();
+  await expect(posts.getByRole("link", { name: "A fictional article worth keeping" })).toBeVisible();
+  await expect(page.getByText(/folder/i)).toHaveCount(0);
+  await posts.getByRole("button", { name: "Remove from Saved: A fictional article worth keeping" }).click();
+  await expect(posts.getByText("Tap Save on a student’s article or discussion to keep it here.")).toBeVisible();
   expect(state.saves).toHaveLength(0);
-  await renamed.getByRole("button", { name: "Delete folder" }).click();
-  await renamed.getByRole("button", { name: "Yes, delete folder" }).click();
-  await expect(page.getByText("No folders yet.")).toBeVisible();
-  expect(state.folders).toHaveLength(0);
+  await guides.getByRole("button", { name: /^Remove from Saved: How to review a mock test/ }).click();
+  await expect(guides.getByText(/to keep it here/)).toBeVisible();
+
+  // Saving again reuses the same "Saved" folder.
+  await page.goto(`/dashboard/community/post/${post.id}`);
+  await page.getByRole("button", { name: "Save", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Saved", exact: true })).toBeVisible();
+  expect(state.folders).toHaveLength(1);
+  await page.getByRole("button", { name: "Saved", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Save", exact: true })).toBeVisible();
+  expect(state.saves).toHaveLength(0);
 });
 
 test("a reader comments, and blocking an author hides their replies and articles until unblocked", async ({ page }) => {
@@ -351,14 +344,14 @@ test("the new pages work from the keyboard and pass the accessibility audit with
   await audit(page); await fits();
   const like = page.getByRole("button", { name: /^Like/ }); await like.focus(); await page.keyboard.press("Space");
   await expect(page.getByRole("button", { name: "Liked · 1", exact: true })).toBeFocused();
-  await page.getByRole("button", { name: "Saved in 1 folder" }).focus(); await page.keyboard.press("Enter");
-  const dialog = page.getByRole("dialog", { name: "Save to folders" });
-  await expect(dialog.getByLabel("Saved", { exact: true })).toBeChecked();
-  await page.addScriptTag({ path: fileURLToPath(new URL("../../node_modules/axe-core/axe.min.js", import.meta.url)) });
-  expect(await page.evaluate(async () => (await window.axe.run("dialog[open]", { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] } })).violations.map(item => item.id))).toEqual([]);
-  await page.keyboard.press("Escape");
+  const savedButton = page.getByRole("button", { name: "Saved", exact: true });
+  await expect(savedButton).toHaveAttribute("aria-pressed", "true");
+  await savedButton.focus(); await page.keyboard.press("Enter");
+  await expect(page.getByRole("button", { name: "Save", exact: true })).toHaveAttribute("aria-pressed", "false");
+  await page.keyboard.press("Enter");
+  await expect(savedButton).toHaveAttribute("aria-pressed", "true");
   await page.goto("/dashboard/community/saved");
-  await expect(page.getByRole("region", { name: "Folder Saved" }).getByRole("link")).toBeVisible(); await audit(page); await fits();
+  await expect(page.getByRole("region", { name: "From students" }).getByRole("link")).toBeVisible(); await audit(page); await fits();
   await page.goto("/dashboard/community/write");
   await page.getByLabel("Article", { exact: true }).fill(body);
   await page.getByRole("group", { name: "Editor view" }).getByRole("button", { name: "Preview" }).click();

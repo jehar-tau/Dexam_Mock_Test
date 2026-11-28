@@ -42,7 +42,7 @@ async function fixture(page,{long=false}={}){
    value={id:saved.id,postId:saved.id,parentId:null,status:"visible",postStatus:"visible",canUpload:true,replayed:false};held=state.holdWrite;
   }else if(name==="community_thread"){
    const selected=state.posts.find(p=>p.id===input.p_post_id);value={...selected,comments:[],version:1,nextCursor:null};
-  }else if(name==="public_all_india_top_ten")value=[];
+  }else if(name==="public_all_india_top_ten"||name==="public_all_india_upcoming")value=[];
   else throw new Error("Unexpected fictional feed procedure: "+name);
   if(held)await held.promise;
   try{await route.fulfill({headers,status,json:value});}catch{}finally{if(name==="community_feed")state.completed++;}
