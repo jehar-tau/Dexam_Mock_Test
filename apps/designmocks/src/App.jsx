@@ -230,8 +230,8 @@ function Layout({ children }) {
             <Link to="/#features">What’s inside</Link>
             <Link to="/#how">How it works</Link>
             <NavLink to="/plans">The annual pass</NavLink>
-            <NavLink to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "/portal-preview" : "/account"} className="sign-in">
-              {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Student preview" : "Student sign in"} <Arrow size={16} />
+            <NavLink to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "/portal-preview" : session ? "/dashboard" : "/account"} className="sign-in">
+              {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Student preview" : session ? "Your dashboard" : "Student sign in"} <Arrow size={16} />
             </NavLink>
           </nav>
           <div className="header-controls">
@@ -280,8 +280,8 @@ function Layout({ children }) {
             <Link to="/sample">Try the sample</Link>
             <Link to="/papers">Year-wise papers</Link>
             <Link to="/plans">One-year pass</Link>
-            <Link to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "/portal-preview" : "/account"}>
-              {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Student preview" : "Student sign in"}
+            <Link to={__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "/portal-preview" : session ? "/dashboard" : "/account"}>
+              {__DMOCKS_STAGING_REVIEW_PREVIEW__ && hostedStudentPreview ? "Student preview" : session ? "Your dashboard" : "Student sign in"}
             </Link>
             <Link to={session ? "/report" : "/contact"} state={session && location.pathname !== "/report" ? { reportFrom: location.pathname } : undefined}>Report a problem</Link>
           </div>

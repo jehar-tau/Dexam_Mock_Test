@@ -56,7 +56,8 @@ test("administrators draft, edit, publish and withdraw a lesson that students ca
   await expect(editor.getByText("Lesson draft saved.")).toBeVisible();
 
   await openAs(student, "/dashboard/learn");
-  await expect(page.getByText("No theory lessons have been published yet.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Interactive programmes" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Theory lessons", exact: true })).toHaveCount(0);
   await openAs(administrator, "/admin");
   const card = editor.getByRole("article", { name: fixture.title });
   await card.getByRole("button", { name: "Edit draft" }).press("Enter");
@@ -93,7 +94,8 @@ test("administrators draft, edit, publish and withdraw a lesson that students ca
   await card.getByRole("button", { name: "Withdraw lesson" }).click();
   await expect(editor.getByText("Lesson withdrawn from Learn.")).toBeVisible();
   await openAs(student, "/dashboard/learn");
-  await expect(page.getByText("No theory lessons have been published yet.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Interactive programmes" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Theory lessons", exact: true })).toHaveCount(0);
   await expect(page.getByText(revisedBody)).toHaveCount(0);
   expect(calls.filter(([name]) => name === "admin_set_learning_publication")).toEqual([
     ["admin_set_learning_publication", { p_id: fixture.id, p_expected_version: 2, p_publish: true, p_reason: "Original lesson with documented permission." }],
@@ -126,7 +128,8 @@ test("a student with an open lesson loses the reader when the lesson is withdraw
   await expect(page.getByText(fixture.body)).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Start lesson" })).toHaveCount(0);
   await page.getByRole("button", { name: "Refresh lessons" }).click();
-  await expect(page.getByText("No theory lessons have been published yet.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Interactive programmes" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Theory lessons", exact: true })).toHaveCount(0);
   expect(calls).toContainEqual(["complete_learning_lesson", { p_lesson_id: fixture.id }]);
   expect(unexpected).toEqual([]);
 });

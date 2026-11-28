@@ -81,7 +81,7 @@ test('known read permission denial clears the reader and a fresh check never rep
 });
 
 test('withdrawal discards the open body and cannot record a new completion',async({page})=>{
- const state=await fixture(page);await start(page).click();await expect(complete(page)).toBeEnabled();state.published=false;state.completeFailure={code:'P0001',message:'Lesson not found'};await complete(page).click();await expect(page.getByRole('status')).toHaveText('This lesson is no longer available.');await expect(page.getByText(lesson.body,{exact:true})).toHaveCount(0);await expect(start(page)).toHaveCount(0);expect(state.completed[first.id]).toBe(false);await page.getByRole('button',{name:'Refresh lessons',exact:true}).click();await expect(page.getByText('No theory lessons have been published yet.',{exact:true})).toBeVisible();expect(state.writes).toHaveLength(1);
+ const state=await fixture(page);await start(page).click();await expect(complete(page)).toBeEnabled();state.published=false;state.completeFailure={code:'P0001',message:'Lesson not found'};await complete(page).click();await expect(page.getByRole('status')).toHaveText('This lesson is no longer available.');await expect(page.getByText(lesson.body,{exact:true})).toHaveCount(0);await expect(start(page)).toHaveCount(0);expect(state.completed[first.id]).toBe(false);await page.getByRole('button',{name:'Refresh lessons',exact:true}).click();await expect(page.getByRole('heading',{name:'Theory lessons',exact:true})).toHaveCount(0);expect(state.writes).toHaveLength(1);
 });
 
 test('long lesson text supports focused reading, both themes and keyboard completion at 320px',async({page})=>{
