@@ -32,6 +32,8 @@ export function ProgrammeList({ actorId, linkFor }) {
   </div>;
 }
 export function LearnView({ lessons = [], progress, onOpen, onRefresh, busy = false, message = "", heading = true, programmeActor = null, programmeLink = null }) {
+  // With the interactive programmes on screen, an empty theory-lesson list is left out.
+  const showLessons = !programmeActor || lessons.length > 0 || Boolean(message);
   return (
     <section className={heading?"wrap section learn-page":"learn-content"}>
       {heading&&<LearnHeading/>}
@@ -54,9 +56,9 @@ export function LearnView({ lessons = [], progress, onOpen, onRefresh, busy = fa
         </div>
       )}
       {message && <p role="status">{message}</p>}
-      {onRefresh && <button className="button quiet" disabled={busy} onClick={onRefresh}>Refresh lessons</button>}
-      {programmeActor && <h2>Theory lessons</h2>}
-      {lessons.length === 0 && !message && <p>No theory lessons have been published yet.</p>}
+      {onRefresh && showLessons && <button className="button quiet" disabled={busy} onClick={onRefresh}>Refresh lessons</button>}
+      {programmeActor && showLessons && <h2>Theory lessons</h2>}
+      {lessons.length === 0 && !message && !programmeActor && <p>No theory lessons have been published yet.</p>}
       <div className="learn-grid">
         {lessons.map((l) => (
           <article key={l.id}>
