@@ -35,6 +35,16 @@ test("notice compilation requires complete text and accepts fictional content on
   assert.throws(() => compilePublishedNotices({ ...released, privateReviewNote: "Fictional internal note" }), /reviewed customer notice/);
 });
 
+test("the closed-checkout pilot preserves the approved free-signup terms and digest", () => {
+  const { pages, version } = compilePublishedNotices(released, { freeSignup: true });
+  const paid = compilePublishedNotices(released);
+  assert.equal(pages.terms[0].paragraph,
+    "The annual pass costs ₹1,193 for 12 calendar months from verified payment. It covers the explicitly released papers. You make one payment, with no automatic renewal.");
+  assert.notEqual(version, paid.version);
+  assert.deepEqual(pages.terms.slice(1), paid.pages.terms.slice(1));
+  assert.deepEqual(pages.privacy, paid.pages.privacy);
+});
+
 test("terms and privacy publish the same approved account eligibility text", () => {
   const approved = "DesignMocks is for students aged 18 or older. By creating an account you confirm that you are at least 18 years old.";
   const { pages } = compilePublishedNotices({

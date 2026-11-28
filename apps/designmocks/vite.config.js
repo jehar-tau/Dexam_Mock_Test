@@ -32,6 +32,7 @@ export default defineConfig(({ command, mode }) => {
   }
   const compiledNotices = readPublishedNotices(env.DMOCKS_PUBLISHED_NOTICES_FILE, {
     allowFixture: command === "serve" && deployment === "test" && mode !== "production",
+    freeSignup: env.VITE_CONTROLLED_PUBLIC_PORTAL_ENABLED === "true" && !checkoutEnabled,
   });
   const notices = compiledNotices?.version === env.VITE_TERMS_VERSION ? compiledNotices : null;
   const stagingTarget = { url: `https://${project.project_ref}.supabase.co`, origin: project.staging_frontend_origin };

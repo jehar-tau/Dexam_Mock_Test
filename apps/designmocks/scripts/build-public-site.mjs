@@ -37,7 +37,7 @@ if (process.env.DMOCKS_PUBLISHED_NOTICES_JSON) {
   writeFileSync(noticesFile, process.env.DMOCKS_PUBLISHED_NOTICES_JSON);
 }
 if (!noticesFile) throw new Error("Set DMOCKS_PUBLISHED_NOTICES_JSON or DMOCKS_PUBLISHED_NOTICES_FILE");
-const notices = readPublishedNotices(noticesFile);
+const notices = readPublishedNotices(noticesFile, { freeSignup: true });
 
 const env = Object.fromEntries(Object.entries(process.env).filter(([name]) => !/^(VITE_|DMOCKS_)/.test(name)));
 Object.assign(env, {
