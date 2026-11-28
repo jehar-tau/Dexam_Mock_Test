@@ -647,7 +647,7 @@ function FAQs() {
 // when no event is scheduled.
 function HomeAllIndiaUpcoming() {
   const { session } = useAuthState();
-  if (!studentModuleReleased("all-india") || !platform) return null;
+  if (!studentModuleReleased("all-india") || !platform || stagingPortalMode) return null;
   return <React.Suspense fallback={null}>
     <div className="wrap home-all-india">
       <AllIndiaUpcoming className="all-india-upcoming home-all-india-card" signUp={!session}
