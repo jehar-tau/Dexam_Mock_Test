@@ -5,7 +5,7 @@ per public route (`papers.html`, `papers/nid.html`…) and `404.html` for every
 other path. The backend (sign-in, papers, attempts, figures) is the DMocks Test
 Supabase project and does not move with the frontend.
 
-Until 27 Nov 2026, Codex built the site and uploaded it to OpenAI Sites by hand.
+Until 28 Nov 2026, Codex built the site and uploaded it to OpenAI Sites by hand.
 `.github/workflows/dmocks-site.yml` now does the same job on GitHub:
 
 1. A push to main runs "DesignMocks checks".
@@ -29,30 +29,32 @@ hashed scripts between deploys, so a page opened before a deploy keeps working.
 | `DMOCKS_RELEASED_STUDENT_MODULES` | variable, optional | defaults to `practice` |
 | `DMOCKS_PAGES_LIVE` | variable | `true` once dmocks.com points at GitHub Pages; turns on the live check |
 
-## Moving dmocks.com (one time)
+## How dmocks.com reaches GitHub Pages (since 28 Nov 2026)
 
-1. **Turn on Pages.** In Settings → Pages, set Source to "GitHub Actions" and
-   Custom domain to `dmocks.com`. Leave "Enforce HTTPS" for step 5.
-2. **Add the settings.** Add the variables and the secret above, with
-   `DMOCKS_PAGES_ENABLED=true`.
-3. **Publish once.** Run Actions → "Publish dmocks.com" → Run workflow on
-   `main`. The site is not reachable yet, because DNS still points at Sites.
-4. **Switch DNS at GoDaddy** (the domaincontrol.com nameservers). Do this at a
-   quiet hour.
-   - Replace the two `A` records for `@` (172.66.3.26 and 162.159.143.30) with
-     GitHub's four: `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and
-     `185.199.111.153`.
-   - Add `CNAME www → jehar-tau.github.io`.
-5. **Turn on HTTPS.** Wait until Settings → Pages shows the DNS check as
-   passed and the certificate as issued (usually minutes, at most about an
-   hour). Then tick "Enforce HTTPS". Set `DMOCKS_PAGES_LIVE=true` and run
-   `node scripts/check-live-site.mjs https://dmocks.com`.
-6. **Sign in as a test student** and open a paper. Sign-in is unchanged
-   because the domain is unchanged.
-7. **Keep the last Sites version for a week** as the fallback. Then stop the
-   Codex publishing automation and cancel Sites.
+GitHub could not issue its own HTTPS certificate for dmocks.com (it stuck twice,
+on 27 and 28 Nov), so Cloudflare's free plan sits in front of GitHub Pages:
 
-**Fallback during the move:** put the two old `A` records back at GoDaddy.
+- **Registrar:** GoDaddy. The nameservers point at Cloudflare
+  (`plato.ns.cloudflare.com`, `rosalie.ns.cloudflare.com`).
+- **DNS:** Cloudflare, in the owner's account. `dmocks.com` has two `A` records,
+  `185.199.108.153` and `185.199.109.153` (GitHub Pages), both **proxied**.
+- **HTTPS:** Cloudflare's Universal certificate serves visitors. SSL/TLS mode is
+  **Full** (not Full strict), because GitHub answers Cloudflare with its
+  `*.github.io` certificate. "Always Use HTTPS" is on. Leave "Enforce HTTPS"
+  in GitHub Settings → Pages off.
+- **www:** still GoDaddy forwarding (`A` records 15.197.225.128 and
+  3.33.251.168, DNS only), a 302 to https://dmocks.com.
+- **Kept from Sites:** the `_cf-custom-hostname` and `_openai-site-verification`
+  TXT records. Delete them once Sites no longer lists dmocks.com.
+
+**Checking which host answers:** a GitHub response carries an
+`x-github-request-id` header, for example
+`curl -sI https://dmocks.com/robots.txt | grep -i x-github`.
+
+**Rolling the domain back to Sites:** in Cloudflare → DNS, set the two `A`
+records back to `172.66.3.26` and `162.159.143.30` with the proxy **off** (DNS
+only). Sites must still list dmocks.com as its custom domain for this to work.
+While the records are proxied, the old Sites addresses answer "error 1034".
 
 ## Everyday publishing and rollback
 
