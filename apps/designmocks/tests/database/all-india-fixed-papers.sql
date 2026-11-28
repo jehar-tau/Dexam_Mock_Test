@@ -24,10 +24,10 @@ insert into public.profiles(user_id,display_name,phone_e164,phone_verified_at,ap
   select md5('fixed-student-'||n)::uuid,'Fictional student '||n,'+9199800000'||lpad(n::text,2,'0'),
     now(),2027,'Pune',array['nid'],now() from generate_series(1,4)n;
 
--- One registered private figure, as the operator upload leaves it.
-insert into dm_private.bank_media_assets(sha256,storage_path,width,height,byte_size)
-  values(repeat('e',64),'papers/canonical/'||repeat('e',64)||'.png',640,480,2048);
-insert into storage.buckets(id,name,public) values('paper-media','paper-media',false) on conflict do nothing;
+-- The upload exists in private storage before the new figure has a bank reference.
+insert into storage.buckets(id,name,public,allowed_mime_types)
+  values('paper-media','paper-media',false,array['image/png']) on conflict(id) do update
+  set public=false, allowed_mime_types=excluded.allowed_mime_types;
 insert into storage.objects(bucket_id,name,metadata)
   values('paper-media','papers/canonical/'||repeat('e',64)||'.png','{"mimetype":"image/png","size":"2048"}');
 
@@ -55,6 +55,9 @@ insert into fixed_plan values('{
   ]}');
 
 -- Staging is service-only and exact.
+select pg_temp.fixed_assert(not has_function_privilege('anon','public.stage_all_india_paper(jsonb,text)','EXECUTE')
+  and not has_function_privilege('service_role','dm_private.stage_all_india_paper(jsonb,text)','EXECUTE'),
+  'only the public service wrapper is an operator entry point');
 set local role authenticated;
 select set_config('request.jwt.claim.role','authenticated',true);
 select set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000196',true);
@@ -72,6 +75,13 @@ select pg_temp.fixed_reject($q$select public.stage_all_india_paper((select jsonb
   'plan total does not match');
 select pg_temp.fixed_reject($q$select public.stage_all_india_paper((select jsonb_set(plan,'{questions,0,runtime,media,0,sha256}','"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"') from fixed_plan),repeat('a',64))$q$,
   'not a registered private image');
+select pg_temp.fixed_reject($q$select public.register_bank_media_assets(jsonb_build_array(jsonb_build_object(
+  'sha256',repeat('e',64),'storagePath','papers/canonical/'||repeat('e',64)||'.png',
+  'width',640,'height',480,'byteSize',2048)))$q$,'Image is not referenced by the active canonical bank');
+reset role;
+select pg_temp.fixed_assert(not exists(select 1 from dm_private.bank_media_assets where sha256=repeat('e',64)),
+  'a rejected plan leaves its new figure unregistered');
+set local role service_role;
 select set_config('test.staged',public.stage_all_india_paper((select plan from fixed_plan),repeat('a',64))::text,true);
 select pg_temp.fixed_assert((current_setting('test.staged')::jsonb->>'objectiveCount')::integer=1
   and (current_setting('test.staged')::jsonb->>'drawingCount')::integer=1
@@ -82,6 +92,9 @@ select pg_temp.fixed_assert((public.stage_all_india_paper((select plan from fixe
   'an exact retry returns the same staged paper');
 select pg_temp.fixed_reject('select public.stage_all_india_paper((select plan from fixed_plan),repeat(''b'',64))','already staged with a different plan');
 reset role;
+select pg_temp.fixed_assert(exists(select 1 from dm_private.bank_media_assets
+  where sha256=repeat('e',64) and width=640 and height=480 and byte_size=2048),
+  'the accepted plan registers its private figure without an active bank reference');
 
 -- Hidden everywhere else: inactive bank rows, unpublished paper, no practice or year-paper listing.
 select pg_temp.fixed_assert((select count(*)=2 and bool_and(not active and owner_approved and rights_confirmed and licence='dmocks-original'
