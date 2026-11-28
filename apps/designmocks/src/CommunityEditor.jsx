@@ -1,22 +1,21 @@
 import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CommunityFrame, CommunityRules, communityDate, useCommunityRpc } from "./CommunityFrame.jsx";
-import { CommunityArticle } from "./CommunityArticle.jsx";
-import { ARTICLE_BODY, ARTICLE_EXAMS, ARTICLE_TITLE, ARTICLE_TOPIC_MAX, applyFormat, articleProblems, articleStats, normalizeArticle } from "./community-article.mjs";
+import { ARTICLE_BODY, ARTICLE_EXAMS, ARTICLE_TITLE, ARTICLE_TOPIC_MAX, articleProblems, articleStats, normalizeArticle } from "./community-article.mjs";
+import { ArticleEditor } from "./ArticleEditor.jsx";
 import { communityFailure, validateCommunityDraftReceipt, validateCommunityDrafts } from "./community-library.js";
 
 const uuid = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 const empty = { exam: "uceed", topic: "", title: "", body: "" };
-const tools = [["heading", "Heading"], ["subheading", "Subheading"], ["bold", "Bold"], ["italic", "Italic"], ["bullet", "Bulleted list"], ["number", "Numbered list"], ["quote", "Quote"], ["rule", "Divider"]];
 const snapshot = fields => JSON.stringify([fields.exam, fields.topic, fields.title, fields.body]);
 const clock = () => new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
 
 function EditorSession() {
-  const rpc = useCommunityRpc(), navigate = useNavigate(), bodyId = useId(), problemsId = useId(), examId = useId();
-  const [fields, setFields] = useState(empty), [mode, setMode] = useState("write"), [drafts, setDrafts] = useState(null);
+  const rpc = useCommunityRpc(), navigate = useNavigate(), bodyId = useId(), bodyLabel = useId(), problemsId = useId(), examId = useId();
+  const [fields, setFields] = useState(empty), [drafts, setDrafts] = useState(null);
   const [draftId, setDraftId] = useState(null), [status, setStatus] = useState(""), [problems, setProblems] = useState(null), [busy, setBusy] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(null);
-  const textarea = useRef(null), selection = useRef(null), problemList = useRef(null);
+  const problemList = useRef(null), titleInput = useRef(null);
   const live = useRef({ fields, draftId: null, saved: snapshot(empty), saving: null, requestId: null, published: false }), scope = useRef(null);
   live.current.fields = fields;
   useEffect(() => {
@@ -27,10 +26,6 @@ function EditorSession() {
     })();
     return () => controller.abort();
   }, [rpc]);
-  useLayoutEffect(() => {
-    if (!selection.current || !textarea.current) return;
-    textarea.current.focus(); textarea.current.setSelectionRange(selection.current[0], selection.current[1]); selection.current = null;
-  }, [fields.body]);
   useLayoutEffect(() => { if (problems) problemList.current?.focus(); }, [problems]);
 
   function change(patch) {
@@ -68,8 +63,8 @@ function EditorSession() {
     await saveDraft({ quiet: true });
     const next = { exam: draft.exam ?? "uceed", topic: draft.topic, title: draft.title, body: draft.body };
     live.current.draftId = draft.id; live.current.saved = snapshot(next); live.current.requestId = null;
-    setDraftId(draft.id); setFields(next); setProblems(null); setMode("write"); setStatus(`Opened draft “${draft.title || "Untitled"}”.`);
-    textarea.current?.focus();
+    setDraftId(draft.id); setFields(next); setProblems(null); setStatus(`Opened draft “${draft.title || "Untitled"}”.`);
+    titleInput.current?.focus();
   }
   async function deleteDraft(draft) {
     const signal = scope.current?.signal; if (!signal) return;
@@ -79,12 +74,6 @@ function EditorSession() {
       setDrafts(list => list.filter(item => item.id !== draft.id)); setConfirmDelete(null); setStatus("Draft deleted.");
       if (live.current.draftId === draft.id) { live.current.draftId = null; live.current.saved = snapshot(empty); setDraftId(null); setFields(empty); }
     } catch (error) { if (!signal.aborted) setStatus(communityFailure(error, "Draft not deleted. Try again.")); }
-  }
-  function format(kind) {
-    const input = textarea.current; if (!input) return;
-    const result = applyFormat(fields.body, input.selectionStart, input.selectionEnd, kind);
-    if ([...result.value].length > ARTICLE_BODY.max) return;
-    selection.current = [result.selectionStart, result.selectionEnd]; change({ body: result.value });
   }
   async function publish(event) {
     event.preventDefault();
@@ -112,31 +101,22 @@ function EditorSession() {
   const stats = articleStats(fields.body), characters = [...fields.body].length;
   return <div className="community-editor">
     <form className="admin-form" onSubmit={publish} noValidate aria-describedby={problems ? problemsId : undefined}>
-      <fieldset className="community-fields" aria-label="New article" disabled={busy}>
-        <div><label htmlFor={examId}>Exam</label>
-          <select id={examId} value={fields.exam} onChange={event => change({ exam: event.target.value })}>
-            {ARTICLE_EXAMS.map(exam => <option key={exam} value={exam}>{exam.toUpperCase()}</option>)}
-          </select></div>
-        <label>Topic
-          <input value={fields.topic} maxLength={ARTICLE_TOPIC_MAX} onChange={event => change({ topic: event.target.value })} placeholder="For example: Time management" /></label>
-        <label>Title
-          <input value={fields.title} maxLength={ARTICLE_TITLE.max} onChange={event => change({ title: event.target.value })} /></label>
-        <div role="group" aria-label="Editor view" className="community-segments">
-          <button type="button" aria-pressed={mode === "write"} onClick={() => setMode("write")}>Write</button>
-          <button type="button" aria-pressed={mode === "preview"} onClick={() => setMode("preview")}>Preview</button>
+      <fieldset className="community-fields story-fields" aria-label="New article" disabled={busy}>
+        <div className="story-meta">
+          <div className="story-exam"><label htmlFor={examId}>Exam</label>
+            <select id={examId} value={fields.exam} onChange={event => change({ exam: event.target.value })}>
+              {ARTICLE_EXAMS.map(exam => <option key={exam} value={exam}>{exam.toUpperCase()}</option>)}
+            </select></div>
+          <label className="story-topic">Topic
+            <input value={fields.topic} maxLength={ARTICLE_TOPIC_MAX} onChange={event => change({ topic: event.target.value })} placeholder="For example: Time management" /></label>
         </div>
-        {mode === "write" ? <div className="community-editor-body">
-          <div role="toolbar" aria-label="Formatting" aria-controls={bodyId} className="community-editor-tools">
-            {tools.map(([kind, label]) => <button key={kind} type="button" onClick={() => format(kind)}>{label}</button>)}
-          </div>
-          <label htmlFor={bodyId}>Article</label>
-          <textarea id={bodyId} ref={textarea} value={fields.body} maxLength={ARTICLE_BODY.max} rows={18} onChange={event => change({ body: event.target.value })}
-            placeholder="Start with what you wish someone had told you." />
-        </div> : <section className="community-preview" aria-label="Article preview">
-          <span className="eyebrow">{fields.exam} · {fields.topic.trim() || "Topic"}</span>
-          <h2>{fields.title.trim() || "Untitled"}</h2>
-          {fields.body.trim() ? <CommunityArticle source={fields.body} /> : <p className="muted">Nothing to preview yet.</p>}
-        </section>}
+        <label className="sr-only" htmlFor={bodyId + "-title"}>Title</label>
+        <textarea id={bodyId + "-title"} ref={titleInput} className="story-title" rows={1} value={fields.title} maxLength={ARTICLE_TITLE.max} placeholder="Title"
+          onChange={event => { change({ title: event.target.value.replace(/\n/g, " ") }); event.target.style.height = "auto"; event.target.style.height = event.target.scrollHeight + "px"; }}
+          onKeyDown={event => { if (event.key === "Enter") { event.preventDefault(); document.getElementById(bodyId)?.focus(); } }} />
+        <span id={bodyLabel} className="sr-only">Article</span>
+        <ArticleEditor id={bodyId} labelledBy={bodyLabel} value={fields.body} disabled={busy} placeholder="Tell your story… Start with what you wish someone had told you."
+          onChange={body => { if ([...body].length <= ARTICLE_BODY.max) change({ body }); }} />
         <p className="muted">{stats.words} words · {stats.minutes} min read · {characters.toLocaleString("en-IN")} of 20,000 characters</p>
         <CommunityRules />
         {problems && <div id={problemsId} ref={problemList} tabIndex={-1} role="alert" className="error"><p>Before this can be published:</p><ul>{problems.map(problem => <li key={problem}>{problem}</li>)}</ul></div>}
@@ -144,7 +124,7 @@ function EditorSession() {
           <button className="button" type="submit">{busy ? "Publishing…" : "Publish article"}</button>
           <button className="button quiet" type="button" onClick={() => saveDraft()}>Save draft</button>
         </div>
-        <small>You can add up to three images from the article’s page after publishing. Published articles can’t be edited yet, so preview first.</small>
+        <small>Select text for bold, italic, headings and quotes, or type ## for a heading. You can add up to three images from the article’s page after publishing. Published articles can’t be edited yet, so read it through first.</small>
       </fieldset>
     </form>
     {status && <p role="status">{status}</p>}

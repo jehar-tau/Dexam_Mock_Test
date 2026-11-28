@@ -151,32 +151,52 @@ async function audit(page) {
   expect(await page.evaluate(async () => (await window.axe.run(".community-page", { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] } })).violations.map(item => `${item.id}: ${item.nodes.map(node => node.target.join(" ")).join(" | ")}`))).toEqual([]);
 }
 
-test("an article is written with formatting, kept as a draft across a reload, published and read", async ({ page }) => {
+
+// Types into the rich editor the way a student does: "## " starts a heading,
+// "- " a list, "**…**" bold and "> " a quote. Returns the stored text it produces.
+async function typeArticle(page, { short = false } = {}) {
+  const editor = page.getByRole("textbox", { name: "Article", exact: true });
+  await editor.click();
+  await page.keyboard.press(process.platform === "darwin" ? "Meta+A" : "Control+A"); await page.keyboard.press("Backspace");
+  if (short) { await page.keyboard.type("too short"); return "too short"; }
+  await page.keyboard.type("## My plan"); await page.keyboard.press("Enter");
+  await page.keyboard.type(paragraph.repeat(3).trim()); await page.keyboard.press("Enter");
+  await page.keyboard.type("- **Warm up** with ten gesture sketches"); await page.keyboard.press("Enter");
+  await page.keyboard.type("Time one full composition"); await page.keyboard.press("Enter"); await page.keyboard.press("Enter");
+  await page.keyboard.type("> Finish early, review slowly.");
+  return `## My plan\n\n${paragraph.repeat(3).trim()}\n\n- **Warm up** with ten gesture sketches\n- Time one full composition\n\n> Finish early, review slowly.`;
+}
+
+test("an article is written with formatting, kept as a draft across a reload, published and read", async ({ page }, info) => {
   const state = backend(); await state.install(page); await signIn(page, asha, "/dashboard/community/write");
   await expect(page.getByRole("heading", { name: /Write it/ })).toBeVisible();
   await page.getByLabel("Exam", { exact: true }).selectOption("nid");
   await page.getByLabel("Topic", { exact: true }).fill("Studio test");
   await page.getByLabel("Title", { exact: true }).fill("How I planned my studio test week");
-  const article = page.getByLabel("Article", { exact: true });
-  await article.fill("My plan");
-  await page.getByRole("toolbar", { name: "Formatting" }).getByRole("button", { name: "Heading", exact: true }).click();
-  await expect(article).toHaveValue("## My plan");
-  await article.fill(body);
-  await page.getByRole("group", { name: "Editor view" }).getByRole("button", { name: "Preview", exact: true }).click();
-  const preview = page.getByRole("region", { name: "Article preview" });
-  await expect(preview.getByRole("heading", { name: "My plan", level: 3 })).toBeVisible();
-  await expect(preview.getByRole("listitem")).toHaveCount(2);
-  await expect(preview.locator("strong")).toHaveText("Warm up");
-  await expect(preview.locator("blockquote")).toHaveText("Finish early, review slowly.");
+  const article = page.getByRole("textbox", { name: "Article", exact: true });
+  const stored = await typeArticle(page);
+  // What you see while writing is the formatted article.
+  await expect(article.getByRole("heading", { name: "My plan", level: 2 })).toBeVisible();
+  await expect(article.getByRole("listitem")).toHaveCount(2);
+  await expect(article.locator("strong")).toHaveText("Warm up");
+  await expect(article.locator("blockquote")).toHaveText("Finish early, review slowly.");
+  // Selecting text shows the small formatting bar.
+  await article.getByRole("heading", { name: "My plan" }).dblclick();
+  const bar = page.getByRole("toolbar", { name: "Format selected text" });
+  await expect(bar.getByRole("button", { name: "Heading", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.getByLabel("Exam", { exact: true }).scrollIntoViewIfNeeded();
+  await page.screenshot({ path: info.outputPath("write-editor.png") });
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
   await expect(page.getByRole("status").filter({ hasText: /Draft (saved at|is up to date)/ })).toBeVisible();
   expect(state.drafts).toHaveLength(1);
+  expect(state.drafts[0].body).toBe(stored);
 
   await page.reload();
   const drafts = page.getByRole("region", { name: "Your drafts" });
   await drafts.getByRole("button", { name: "Continue “How I planned my studio test week”" }).click();
   await expect(page.getByLabel("Title", { exact: true })).toHaveValue("How I planned my studio test week");
-  await expect(page.getByLabel("Article", { exact: true })).toHaveValue(body);
+  await expect(page.getByRole("textbox", { name: "Article", exact: true }).getByRole("heading", { name: "My plan", level: 2 })).toBeVisible();
+  await expect(page.getByRole("textbox", { name: "Article", exact: true }).locator("blockquote")).toHaveText("Finish early, review slowly.");
   await expect(page.getByLabel("Exam", { exact: true })).toHaveValue("nid");
 
   await page.getByRole("button", { name: "Publish article", exact: true }).click();
@@ -203,19 +223,19 @@ test("contact details are refused before and at the server, and markup is never 
   const state = backend(); await state.install(page); await signIn(page, asha, "/dashboard/community/write");
   await page.getByLabel("Topic", { exact: true }).fill("Notes");
   await page.getByLabel("Title", { exact: true }).fill("A fictional title about notes");
-  await page.getByLabel("Article", { exact: true }).fill(`${body}\n\nCall 98765 43210 for my notes.`);
+  await typeArticle(page); await page.keyboard.press("Enter"); await page.keyboard.press("Enter"); await page.keyboard.type("Call 98765 43210 for my notes.");
   await page.getByRole("button", { name: "Publish article", exact: true }).click();
   const alert = page.getByRole("alert");
   await expect(alert).toContainText("Remove the phone number"); await expect(alert).toBeFocused();
   expect(called(state, "create_community_article")).toHaveLength(0);
 
-  await page.getByLabel("Article", { exact: true }).fill("too short");
+  await typeArticle(page, { short: true });
   await page.getByRole("button", { name: "Publish article", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText("at least 200 characters");
 
   // The server is the authority even when the browser check passes.
   state.refuseContact = true;
-  await page.getByLabel("Article", { exact: true }).fill(`${body}\n\n<img src=x onerror="window.__xss=1"> <script>window.__xss=1</script>`);
+  await typeArticle(page); await page.keyboard.press("Enter"); await page.keyboard.press("Enter"); await page.keyboard.type(`<img src=x onerror="window.__xss=1"> <script>window.__xss=1</script>`);
   await page.getByRole("button", { name: "Publish article", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText("Remove phone numbers, email addresses, social handles");
   await expect(page.getByRole("alert")).not.toContainText("private-fixture-diagnostic");
@@ -353,10 +373,8 @@ test("the new pages work from the keyboard and pass the accessibility audit with
   await page.goto("/dashboard/community/saved");
   await expect(page.getByRole("region", { name: "From students" }).getByRole("link")).toBeVisible(); await audit(page); await fits();
   await page.goto("/dashboard/community/write");
-  await page.getByLabel("Article", { exact: true }).fill(body);
-  await page.getByRole("group", { name: "Editor view" }).getByRole("button", { name: "Preview" }).click();
-  await expect(page.getByRole("region", { name: "Article preview" })).toBeVisible(); await audit(page); await fits();
-  await page.getByRole("group", { name: "Editor view" }).getByRole("button", { name: "Write" }).click(); await audit(page);
+  await typeArticle(page);
+  await expect(page.getByRole("textbox", { name: "Article", exact: true }).getByRole("heading", { name: "My plan" })).toBeVisible(); await audit(page); await fits();
   // The existing discussions page gains only the section links.
   await page.goto("/dashboard/community/write");
   await expect(page.getByRole("navigation", { name: "Community sections" }).getByRole("link")).toHaveText(["Articles", "Discussions", "Saved", "Write"]);
