@@ -45,7 +45,7 @@ export function GuideReader() {
       <p className="editorial-dek">{article.dek}</p>
       <Byline minutes={article.minutes} />
       <ReaderCover article={article} />
-      <CommunityArticle source={article.body} />
+      <CommunityArticle source={article.body} top={2} />
       <AboutAuthor />
       <PractiseCta />
       <p><Link to="/account">Have a question about this? Create a free account and ask in the Community →</Link></p>

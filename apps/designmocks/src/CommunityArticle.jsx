@@ -12,11 +12,14 @@ function Inline({ parts }) {
   });
 }
 
-export function CommunityArticle({ source }) {
+// `top` is the HTML level of a "##" section: 3 inside a post under its own h2,
+// 2 when the article sits directly under the page's h1 (the guides).
+export function CommunityArticle({ source, top = 3 }) {
   const blocks = useMemo(() => parseArticle(source), [source]);
+  const Section = `h${top}`, Subsection = `h${top + 1}`;
   return <div className="community-article">
     {blocks.map((block, index) => {
-      if (block.type === "heading") return block.level === 2 ? <h3 key={index}><Inline parts={block.inline} /></h3> : <h4 key={index}><Inline parts={block.inline} /></h4>;
+      if (block.type === "heading") return block.level === 2 ? <Section key={index}><Inline parts={block.inline} /></Section> : <Subsection key={index}><Inline parts={block.inline} /></Subsection>;
       if (block.type === "list") {
         const items = block.items.map((item, position) => <li key={position}><Inline parts={item} /></li>);
         return block.ordered ? <ol key={index}>{items}</ol> : <ul key={index}>{items}</ul>;
