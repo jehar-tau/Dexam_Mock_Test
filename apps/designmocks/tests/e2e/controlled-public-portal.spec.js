@@ -6,7 +6,7 @@ import project from "../../supabase/project.json" with { type: "json" };
 import { seedPortalSession, stubPortalProvider } from "./portal-fixture.js";
 
 const fixture = JSON.parse(readFileSync(new URL("../fixtures/fictional-published-notices.json", import.meta.url), "utf8"));
-const version = compilePublishedNotices({...fixture, scope:"release"}).version;
+const version = compilePublishedNotices({...fixture, scope:"release"}, {freeSignup:true}).version;
 const exempt = {required:false, accepted:false, version:null};
 const site = project.frontend_origin;
 const artifactPort = Number(process.env.DMOCKS_CONTROLLED_PUBLIC_TEST_PORT || 4797);
