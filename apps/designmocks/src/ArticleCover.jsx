@@ -120,7 +120,15 @@ const motifs = {
   </g>,
 };
 
-export function ArticleCover({ cover, theme, seed = "", className = "" }) {
+// A build without Learn content ships no photos, so a missing photo falls back to the drawing.
+export function ArticleCover({ photo = null, ...props }) {
+  const [failed, setFailed] = React.useState(false);
+  if (photo && !failed) return <img className={`editorial-cover editorial-photo cover-${props.theme} ${props.className ?? ""}`.trim()} src={photo.src}
+    width={photo.width} height={photo.height} alt="" loading="lazy" decoding="async" onError={() => setFailed(true)} />;
+  return <DrawnCover {...props} />;
+}
+
+function DrawnCover({ cover, theme, seed = "", className = "" }) {
   const n = hash(seed || cover), cx = 80 + (n % 480), cy = 60 + ((n >> 5) % 240), r = 150 + ((n >> 9) % 70);
   return <svg className={`editorial-cover cover-${theme} ${className}`.trim()} viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
     <rect className="ec-cover-bg" width="640" height="360" />

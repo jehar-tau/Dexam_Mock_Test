@@ -5,6 +5,7 @@ dek: If you avoid the drawing section because you "can't draw", start here: what
 exams: all
 theme: skills
 cover: sketch
+photo: warli
 ---
 
 One of the questions students ask most is some version of this: "I can't draw. Can I still get into design?" The honest answer is that design entrance tests do ask you to draw, so avoiding it is not a plan. The good news is that the kind of drawing they ask for can be learned, step by step, by almost anyone willing to practise a little every day.

@@ -5,6 +5,7 @@ dek: Horizon lines, vanishing points and a visual library you can draw from with
 exams: uceed, ceed
 theme: skills
 cover: sketch
+photo: hampi
 ---
 
 UCEED Part B gives you a drawing task on paper, and CEED Part B is made of sketching and design tasks. In both, you are often asked to draw a scene, an object or a situation without any reference in front of you. Two skills carry most of that weight: perspective, which makes your drawing feel like real space, and memory drawing, which gives you something to put in that space.

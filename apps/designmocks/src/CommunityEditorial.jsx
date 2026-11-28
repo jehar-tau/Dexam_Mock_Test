@@ -6,7 +6,7 @@ import { CommunityNav } from "./CommunityFrame.jsx";
 import { CommunityArticle } from "./CommunityArticle.jsx";
 import { ArticleCover } from "./ArticleCover.jsx";
 import { ARTICLE_EXAMS } from "./community-article.mjs";
-import { EDITORIAL_AUTHOR, EDITORIAL_DATE, EDITORIAL_THEMES, editorialExamLabel, filterEditorial, relatedEditorial } from "./community-editorial.mjs";
+import { EDITORIAL_AUTHOR, EDITORIAL_DATE, EDITORIAL_THEMES, editorialExamLabel, editorialPhoto, filterEditorial, relatedEditorial } from "./community-editorial.mjs";
 import { editorialArticles, findEditorial } from "./community-editorial.js";
 import "./community-editorial.css";
 
@@ -17,19 +17,19 @@ export const editorialPath = slug => `/dashboard/community/read/${slug}`;
 function Byline({ minutes }) {
   return <p className="editorial-byline">
     <span className="editorial-avatar" aria-hidden="true">{EDITORIAL_AUTHOR.initials}</span>
-    <span><b>{EDITORIAL_AUTHOR.name}</b><span className="editorial-meta">{published} · {minutes} min read</span></span>
+    <span><b>{EDITORIAL_AUTHOR.name}</b><span className="editorial-meta">{EDITORIAL_AUTHOR.credential} · {published} · {minutes} min read</span></span>
   </p>;
 }
 
 export function EditorialCard({ article, featured = false, headingLevel = 3 }) {
   const Heading = `h${headingLevel}`;
   return <li className={`editorial-card${featured ? " is-featured" : ""}`}>
-    <Link to={editorialPath(article.slug)} tabIndex={-1} aria-hidden="true"><ArticleCover cover={article.cover} theme={article.theme} seed={article.slug} /></Link>
+    <Link to={editorialPath(article.slug)} tabIndex={-1} aria-hidden="true"><ArticleCover cover={article.cover} theme={article.theme} seed={article.slug} photo={editorialPhoto(article)} /></Link>
     <div className="editorial-card-text">
       <span className="eyebrow">{EDITORIAL_THEMES[article.theme]} · {editorialExamLabel(article)}</span>
       <Heading><Link to={editorialPath(article.slug)}>{article.title}</Link></Heading>
       <p>{article.dek}</p>
-      <p className="editorial-meta">{EDITORIAL_AUTHOR.name} · {article.minutes} min read</p>
+      <p className="editorial-meta">{EDITORIAL_AUTHOR.name}, {EDITORIAL_AUTHOR.credential} · {article.minutes} min read</p>
     </div>
   </li>;
 }
@@ -61,6 +61,16 @@ export function EditorialFeed({ articles = editorialArticles }) {
   </section>;
 }
 
+// A photo carries its Wikimedia Commons credit; otherwise the drawn cover.
+function ReaderCover({ article }) {
+  const photo = editorialPhoto(article);
+  if (!photo) return <ArticleCover cover={article.cover} theme={article.theme} seed={article.slug} />;
+  return <figure className="editorial-figure">
+    <ArticleCover cover={article.cover} theme={article.theme} seed={article.slug} photo={photo} />
+    <figcaption>Photo: <a href={photo.source} target="_blank" rel="noreferrer">{photo.author}</a>, {photo.licenseUrl ? <a href={photo.licenseUrl} target="_blank" rel="noreferrer">{photo.license}</a> : photo.license}, via Wikimedia Commons.</figcaption>
+  </figure>;
+}
+
 export function WriteArticleCta() {
   return <aside className="community-write-cta" aria-label="Write for the community">
     <p><b>Cleared an exam, or learning something that works?</b> Write it up for the next student. Every article is open to the whole community.</p>
@@ -85,8 +95,12 @@ export function CommunityEditorialReader() {
         <h1 id="editorial-title" ref={heading} tabIndex={-1}>{article.title}</h1>
         <p className="editorial-dek">{article.dek}</p>
         <Byline minutes={article.minutes} />
-        <ArticleCover cover={article.cover} theme={article.theme} seed={article.slug} />
+        <ReaderCover article={article} />
         <CommunityArticle source={article.body} />
+        <aside className="editorial-author" aria-label="About the author">
+          <span className="editorial-avatar" aria-hidden="true">{EDITORIAL_AUTHOR.initials}</span>
+          <p><b>{EDITORIAL_AUTHOR.name}</b> {EDITORIAL_AUTHOR.bio.replace(EDITORIAL_AUTHOR.name + " ", "")}</p>
+        </aside>
         <WriteArticleCta />
         <p><Link to="/dashboard/community/discussions">Have a question about this? Ask in Discussions →</Link></p>
         <section className="editorial-next" aria-labelledby="editorial-next-heading">

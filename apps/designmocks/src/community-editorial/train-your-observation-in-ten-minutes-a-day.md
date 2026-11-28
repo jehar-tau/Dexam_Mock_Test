@@ -5,6 +5,7 @@ dek: A short daily routine, a set of small drills and a weekly check that turn l
 exams: all
 theme: skills
 cover: eye
+photo: konark-sun-temple
 ---
 
 Students often ask how to "improve observation", as if it were a talent you either have or don't. It isn't. Observation is a habit of paying attention on purpose, and habits grow with small, regular practice. Ten focused minutes a day will do more for you than one long session on a Sunday.

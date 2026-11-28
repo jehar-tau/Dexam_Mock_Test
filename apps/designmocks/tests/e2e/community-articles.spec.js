@@ -386,6 +386,8 @@ test("Articles opens with the DMocks guides, filters them and reads one", async 
   const guides = page.getByRole("region", { name: "Guides from DMocks" }).locator(".editorial-feed > li");
   await expect(guides.first()).toBeVisible();
   const total = await guides.count(); expect(total).toBeGreaterThanOrEqual(20);
+  await expect(guides.locator("img.editorial-photo")).toHaveCount(8); // openly licensed photos on some covers
+  await expect(guides.first()).toContainText("Snehalkumar Shinde, NID Bengaluru");
   await expect(page.getByRole("link", { name: "Write an article" }).first()).toHaveAttribute("href", "/dashboard/community/write");
   await page.getByRole("group", { name: "Article theme" }).getByRole("button", { name: "Mindset", exact: true }).click();
   await expect(guides).not.toHaveCount(total);
@@ -397,9 +399,18 @@ test("Articles opens with the DMocks guides, filters them and reads one", async 
   await expect(page).toHaveURL(/\/dashboard\/community\/read\/how-to-review-a-mock-test$/);
   await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
   await expect(page.locator(".editorial-byline")).toContainText("Snehalkumar Shinde");
+  await expect(page.locator(".editorial-byline")).toContainText("NID Bengaluru");
+  await expect(page.getByRole("complementary", { name: "About the author" })).toContainText("studied design at NID Bengaluru");
   await expect(page.getByRole("region", { name: "Keep reading" }).locator("li")).toHaveCount(3);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
   await audit(page);
   await page.getByRole("link", { name: "← All articles" }).click();
   await expect(page).toHaveURL(/\/dashboard\/community$/);
+  // A photo cover loads and carries its credit in the reader.
+  await page.goto("/dashboard/community/read/drawing-when-you-think-you-cannot-draw");
+  const photo = page.locator(".editorial-reader figure img.editorial-photo");
+  await expect(photo).toHaveAttribute("src", "/learn-images/warli.jpg");
+  await expect.poll(() => photo.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+  await expect(page.locator(".editorial-reader figcaption")).toContainText("via Wikimedia Commons");
+  await audit(page);
 });

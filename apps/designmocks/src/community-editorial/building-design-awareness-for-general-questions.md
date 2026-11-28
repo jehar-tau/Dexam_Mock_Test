@@ -5,6 +5,7 @@ dek: How to stop cramming trivia and start understanding the made world, with a 
 exams: nid, nift, uceed
 theme: skills
 cover: bulb
+photo: bauhaus
 ---
 
 "How do I prepare for design GK?" is one of the most common questions students ask, usually followed by "is there a book that covers everything?" There isn't. The made world is too big for one book. What you can build is design awareness: the habit of noticing how things around you are designed, and a system for remembering what you learn.

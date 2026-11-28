@@ -5,6 +5,7 @@ dek: What later admission stages usually look for when you explain your work, an
 exams: nid, ceed
 theme: skills
 cover: conversation
+photo: braun-sk4-radio-phonograph
 ---
 
 After the written test, some design admissions move on to stages where you make something under observation, show your work, or talk with a panel. For NID DAT, candidates shortlisted after Prelims go on to the Mains stage, and its format is set out in each year's handbook. After CEED, institutes you apply to may run their own tests or interviews, described in their admission notices. Formats change, so always read the current year's documents before you prepare.

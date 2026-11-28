@@ -5,6 +5,7 @@ dek: A repeatable path from a one-word theme to a clear, original idea on paper,
 exams: nift
 theme: skills
 cover: bulb
+photo: phulkari
 ---
 
 The NIFT CAT is a paper-based test of observation, concept, colour and illustration. Many students practise illustration and colour for months, then freeze when a question hands them a theme and asks for an idea. The drawing is ready, but the concept isn't.

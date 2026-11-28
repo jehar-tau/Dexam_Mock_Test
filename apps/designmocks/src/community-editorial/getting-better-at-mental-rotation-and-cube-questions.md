@@ -5,6 +5,7 @@ dek: Paper models, net rules, painted-cube formulas and a timed drill routine th
 exams: uceed, ceed
 theme: skills
 cover: cube
+photo: wassily-chair
 ---
 
 Spatial questions are the ones many students skip on sight. A folded net, a stack of blocks, a shape rotated to an odd angle: they look like pure instinct, so people assume they either "get it" or they don't. In fact, most of these questions can be solved with a few reliable rules and a lot of handled practice.

@@ -3,9 +3,12 @@
 // and voice are in docs/community/EDITORIAL_STYLE.md. The body uses the same
 // Markdown subset as student articles and is rendered by CommunityArticle.
 import { ARTICLE_EXAMS, articleStats, parseArticle } from "./community-article.mjs";
+import { IMAGES } from "./learn/decks/images.js";
 
 // Owner's decision, 28 Nov 2026: editorial articles carry the owner's name.
-export const EDITORIAL_AUTHOR = Object.freeze({ name: "Snehalkumar Shinde", initials: "SS", note: "DMocks" });
+// Credential added by the owner on 28 Nov 2026.
+export const EDITORIAL_AUTHOR = Object.freeze({ name: "Snehalkumar Shinde", initials: "SS", credential: "NID Bengaluru",
+  bio: "Snehalkumar Shinde studied design at NID Bengaluru and writes the DMocks guides for students preparing for NID, UCEED, NIFT and CEED." });
 export const EDITORIAL_DATE = "2026-11-28";
 export const EDITORIAL_THEMES = Object.freeze({ planning: "Planning", papers: "Papers & time", mindset: "Mindset", skills: "Skills" });
 export const EDITORIAL_COVERS = Object.freeze(["clock", "calendar", "sketch", "eye", "cube", "path", "calm", "conversation", "papers", "compass", "balance", "home", "bulb", "target"]);
@@ -55,7 +58,7 @@ export function parseEditorial(raw, file = "") {
   const body = match[2].trim();
   const { words, minutes } = articleStats(body);
   return Object.freeze({
-    slug: meta.slug ?? "", title: meta.title ?? "", dek: meta.dek ?? "", theme: meta.theme ?? "", cover: meta.cover ?? "",
+    slug: meta.slug ?? "", title: meta.title ?? "", dek: meta.dek ?? "", theme: meta.theme ?? "", cover: meta.cover ?? "", photo: meta.photo || null,
     exams: Object.freeze(exams), allExams: exams.length === ARTICLE_EXAMS.length, body, words, minutes, file,
   });
 }
@@ -70,6 +73,8 @@ export function editorialProblems(article) {
   if (!article.dek || article.dek.length > 200) problems.push(`${name}: dek must be 1–200 characters`);
   if (!EDITORIAL_THEMES[article.theme]) problems.push(`${name}: unknown theme "${article.theme}"`);
   if (!EDITORIAL_COVERS.includes(article.cover)) problems.push(`${name}: unknown cover "${article.cover}"`);
+  // Photos come from the openly licensed, credited set in src/learn/decks/images.js.
+  if (article.photo && !IMAGES[article.photo]) problems.push(`${name}: unknown photo "${article.photo}"`);
   if (!article.exams.length || article.exams.some(exam => !ARTICLE_EXAMS.includes(exam))) problems.push(`${name}: exams must be "all" or from ${ARTICLE_EXAMS.join(", ")}`);
   if (article.words < 700 || article.words > 1900) problems.push(`${name}: ${article.words} words; keep it between 700 and 1,900`);
   if (/^#\s/m.test(article.body)) problems.push(`${name}: use ## and ### headings only`);
@@ -93,6 +98,10 @@ export function relatedEditorial(article, list, count = 3) {
   const others = list.filter(other => other.slug !== article.slug);
   const shared = other => other.exams.some(exam => article.exams.includes(exam));
   return [...others.filter(other => other.theme === article.theme), ...others.filter(other => other.theme !== article.theme && shared(other))].slice(0, count);
+}
+
+export function editorialPhoto(article) {
+  return article.photo && IMAGES[article.photo] ? { id: article.photo, ...IMAGES[article.photo] } : null;
 }
 
 export function editorialExamLabel(article) {

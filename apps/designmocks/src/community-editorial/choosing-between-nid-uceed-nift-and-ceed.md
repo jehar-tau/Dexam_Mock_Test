@@ -5,6 +5,7 @@ dek: How the four design entrance exams differ in format and marking, and a simp
 exams: all
 theme: planning
 cover: compass
+photo: channapatna-toys
 ---
 
 Most students don't struggle with one exam. They struggle with four names that all seem to say "design", and a quiet fear of picking the wrong one. The good news is that the four papers are different enough that, once you look at how each one actually works, the choice gets much clearer.
