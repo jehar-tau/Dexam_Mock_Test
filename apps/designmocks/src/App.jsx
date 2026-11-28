@@ -52,6 +52,7 @@ import { ExamPartTransitionPreview } from "./ExamPartTransition.jsx";
 import { useAuthState } from "./useAuth.js";
 import { guardianConsent, minimumAge } from "./age-consent.js";
 import { ProfileGate } from "./ProfileGate.jsx";
+import { prerenderedMain } from "./prerendered.js";
 import { clearDeviceAnswers } from "./attempt-answer-journal.js";
 import { authCallbackMessage } from "./authConfiguration.mjs";
 import { StagingAccessMessage, StagingPortalGate, useStagingPortalAccess } from "./StagingPortal.jsx";
@@ -1699,6 +1700,12 @@ function ControlledLoginPortalNotice() {
   </section>;
 }
 
+// While a page's code loads, keep its build-time HTML on screen (no blank, no jump).
+function RouteFallback({ pathname }) {
+  const html = prerenderedMain(pathname);
+  return html ? <div style={{ display: "contents" }} dangerouslySetInnerHTML={{ __html: html }} />
+    : <p className="wrap" role="status">Opening your workspace…</p>;
+}
 // `prerendered` passes eagerly imported pages to the build-time renderer
 // (scripts/render-public-page.jsx); the browser loads them lazily.
 export default function App({ prerendered = null }) {
@@ -1706,7 +1713,7 @@ export default function App({ prerendered = null }) {
   const location = useLocation();
   return (
     <Layout>
-      <React.Suspense fallback={<p className="wrap" role="status">Opening your workspace…</p>}>
+      <React.Suspense fallback={<RouteFallback pathname={location.pathname} />}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tests" element={<Tests />} />

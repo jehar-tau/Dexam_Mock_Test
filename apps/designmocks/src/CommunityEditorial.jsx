@@ -103,7 +103,7 @@ export function CommunityEditorialReader() {
         <p className="editorial-dek">{article.dek}</p>
         <Byline minutes={article.minutes} />
         <ReaderCover article={article} />
-        <CommunityArticle source={article.body} />
+        <CommunityArticle source={article.body} top={2} />
         <AboutAuthor />
         <WriteArticleCta />
         <p><Link to="/dashboard/community/discussions">Have a question about this? Ask in Discussions →</Link></p>
